@@ -15,6 +15,8 @@ import type ColorSpace from 'colorjs.io';
 import type { ColorObject, ColorTypes as DefaultColorTypes } from 'colorjs.io';
 import Color from 'colorjs.io';
 
+import { isDebug } from '@adobe/spectrum-wc-core/utils/index.js';
+
 // ─────────────────────────
 //     TYPES
 // ─────────────────────────
@@ -153,20 +155,20 @@ const VALID_GET_COLOR_FORMATS = ['srgb', 'hsv', 'hsl'] as const;
 const COLOR_PARSE_HELP_URL = 'https://github.com/WICG/color-api/issues/196';
 
 /**
- * Emits a Dev Mode parse warning when `window.__swc.DEBUG` is enabled. Guarded by
- * a `typeof window` check so the controller is safe to evaluate in non-browser
- * (SSR / Node unit test) environments where `window` is undefined. Centralizes
- * the otherwise-repeated warn blocks.
+ * Emits a Dev Mode parse warning when dev validation is active. Gated by
+ * `isDebug()`, which is `false` in production and in non-browser (SSR / Node
+ * unit test) environments where `window` is undefined, so the controller stays
+ * safe to evaluate server-side. Centralizes the otherwise-repeated warn blocks.
  */
 function debugWarn(
   host: ReactiveElement | undefined,
   message: string,
   error: unknown
 ): void {
-  if (typeof window === 'undefined' || !window.__swc?.DEBUG) {
+  if (!isDebug()) {
     return;
   }
-  window.__swc.warn(host, message, COLOR_PARSE_HELP_URL, {
+  window.__swc?.warn(host, message, COLOR_PARSE_HELP_URL, {
     issues: [error instanceof Error ? error.message : 'Unknown error'],
   });
 }

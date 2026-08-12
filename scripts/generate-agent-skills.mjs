@@ -30,7 +30,7 @@
  *   node scripts/generate-agent-skills.mjs
  *
  * Install (once the site is deployed):
- *   npx skills add spectrum-web-components.adobe.com
+ *   npx skills add https://spectrum-web-components.adobe.com
  */
 
 import {
@@ -664,7 +664,9 @@ function main() {
   );
 
   console.log(`index.json → ${indexPath}`);
-  console.log('\nInstall:\n  npx skills add spectrum-web-components.adobe.com');
+  console.log(
+    '\nInstall:\n  npx skills add https://spectrum-web-components.adobe.com'
+  );
 }
 
 main();

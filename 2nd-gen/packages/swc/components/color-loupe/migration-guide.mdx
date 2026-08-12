@@ -1,26 +1,48 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Color Loupe/Migration guide" />
+<Meta title="Color loupe/Migration guide" />
 
 # Color loupe migration guide
 
 Replace `<sp-color-loupe>` with `<swc-color-loupe>`, update the import, and remove any `--mod-colorloupe-*` or `--spectrum-picked-color` CSS overrides.
 
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/color-loupe
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
+
+// After
+import '@adobe/spectrum-wc/components/color-loupe/swc-color-loupe.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/color-loupe/swc-color-loupe.js`) registers and loads only that component's bundle.
+
 ## What changed
 
 ### Renamed
 
-| Area        | Spectrum 1                                               | Spectrum 2                                  |
-| ----------- | -------------------------------------------------------- | ------------------------------------------- |
-| Tag name    | `sp-color-loupe`                                         | `swc-color-loupe`                           |
-| Import path | `@spectrum-web-components/color-loupe/sp-color-loupe.js` | `@adobe/spectrum-wc/components/color-loupe` |
+| Area        | Spectrum 1                                               | Spectrum 2                                                     |
+| ----------- | -------------------------------------------------------- | -------------------------------------------------------------- |
+| Tag name    | `sp-color-loupe`                                         | `swc-color-loupe`                                              |
+| Import path | `@spectrum-web-components/color-loupe/sp-color-loupe.js` | `@adobe/spectrum-wc/components/color-loupe/swc-color-loupe.js` |
 
 ### Removed in Spectrum 2
 
 | Removed                                       | Replacement                                                                               |
 | --------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | `--spectrum-picked-color` CSS custom property | Use the `color` attribute (see [step 3](#3-set-the-picked-color-via-the-color-attribute)) |
-| All `--mod-colorloupe-*` CSS override hooks   | None — the customization surface is intentionally removed                                 |
+| All `--mod-colorloupe-*` CSS override hooks   | None (the customization surface is intentionally removed)                                 |
 
 ## Update your code
 
@@ -31,7 +53,7 @@ Replace `<sp-color-loupe>` with `<swc-color-loupe>`, update the import, and remo
 import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
 
 // After
-import '@adobe/spectrum-wc/components/color-loupe';
+import '@adobe/spectrum-wc/components/color-loupe/swc-color-loupe.js';
 ```
 
 ### 2. Rename the tag
@@ -113,7 +135,7 @@ The loupe is a visual-only, presentational element with no interactive role. No 
 
 ## Checklist
 
-- [ ] Update the import from `@spectrum-web-components/color-loupe/sp-color-loupe.js` to `@adobe/spectrum-wc/components/color-loupe`
+- [ ] Update the import from `@spectrum-web-components/color-loupe/sp-color-loupe.js` to `@adobe/spectrum-wc/components/color-loupe/swc-color-loupe.js`
 - [ ] Rename every `<sp-color-loupe>` tag to `<swc-color-loupe>`
 - [ ] Remove all `--spectrum-picked-color` and `--mod-colorloupe-*` CSS overrides
 - [ ] Set the displayed color via the `color` attribute (or `element.color` in JavaScript)

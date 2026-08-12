@@ -12,7 +12,8 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   HoverController,
@@ -38,6 +39,11 @@ import {
  * (hover/focus open/close), and `PlacementController` integration (pixel positioning).
  *
  * @slot - Text label displayed in the tooltip.
+ *
+ * @fires swc-open - Dispatched when the tooltip begins to open, before the transition plays.
+ * @fires swc-close - Dispatched when the tooltip begins to close, before the transition plays.
+ * @fires swc-after-open - Dispatched after the tooltip finishes opening, once the transition completes.
+ * @fires swc-after-close - Dispatched after the tooltip finishes closing, once the transition completes.
  */
 export abstract class TooltipBase
   extends SpectrumElement
@@ -279,14 +285,13 @@ export abstract class TooltipBase
     if (this.for) {
       const root = this.getRootNode() as Document | ShadowRoot;
       const trigger = root.getElementById(this.for);
-      if (!trigger && window.__swc?.DEBUG) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> for="${this.for}" did not resolve to an element in the current tree root. Check that the referenced id exists in the same document tree root.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/tooltip/',
-          { level: 'high' }
-        );
-      }
+      warnIf(
+        this,
+        !trigger,
+        `<${this.localName}> for="${this.for}" did not resolve to an element in the current tree root. Check that the referenced id exists in the same document tree root.`,
+        'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
+        { level: 'high' }
+      );
       return trigger;
     }
     return null;
@@ -466,10 +471,47 @@ export abstract class TooltipBase
     if (this.disabled && this.open) {
       this.open = false;
     }
+
+    if (changedProperties.has('variant')) {
+      const constructor = this.constructor as typeof TooltipBase;
+      validateEnum(this, {
+        prop: 'variant',
+        value: this.variant,
+        valid: constructor.VARIANTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
+      });
+    }
+    if (changedProperties.has('placement')) {
+      const constructor = this.constructor as typeof TooltipBase;
+      validateEnum(this, {
+        prop: 'placement',
+        value: this.placement,
+        valid: constructor.PLACEMENTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
+      });
+    }
   }
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
+    if (changedProperties.has('variant')) {
+      const constructor = this.constructor as typeof TooltipBase;
+      validateEnum(this, {
+        prop: 'variant',
+        value: this.variant,
+        valid: constructor.VARIANTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
+      });
+    }
+    if (changedProperties.has('placement')) {
+      const constructor = this.constructor as typeof TooltipBase;
+      validateEnum(this, {
+        prop: 'placement',
+        value: this.placement,
+        valid: constructor.PLACEMENTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
+      });
+    }
     if (changedProperties.has('offset')) {
       this.style.setProperty(
         '--_swc-tooltip-animation-distance',

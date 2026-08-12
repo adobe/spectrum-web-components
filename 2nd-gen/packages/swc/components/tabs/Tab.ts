@@ -11,7 +11,7 @@
  */
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { TabBase } from '@spectrum-web-components/core/components/tabs';
+import { TabBase } from '@adobe/spectrum-wc-core/components/tabs';
 
 import styles from './tab.css';
 
@@ -24,13 +24,23 @@ import styles from './tab.css';
  * [migration guide](?path=/docs/components-tabs-migration-guide--docs).
  *
  * @element swc-tab
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @slot - Text label of the tab
  * @slot icon - Optional icon displayed before the label
  *
+ * @cssprop --swc-tab-height - Block size of the tab.
+ * @cssprop --swc-tab-padding-block - Block padding of the tab.
+ * @cssprop --swc-tab-padding-block-end - Block-end padding of the tab.
+ * @cssprop --swc-tab-text-color - Color of the tab label text.
+ *
  * @example
  * <swc-tab tab-id="settings">Settings</swc-tab>
+ *
+ * @cssprop --swc-tab-text-color - Text color of the tab label.
+ * @cssprop --swc-tab-height - Block size of the tab.
+ * @cssprop --swc-tab-padding-block - Block-start padding of the tab.
+ * @cssprop --swc-tab-padding-block-end - Block-end padding of the tab.
  */
 export class Tab extends TabBase {
   // ─────────────────────────────

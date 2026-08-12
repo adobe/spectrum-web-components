@@ -158,7 +158,7 @@ Constants use `as const` to preserve literal types. When a shared constraint typ
 Sizes validate against the shared `ElementSize` union defined in `SizedMixin`. Use `as const satisfies readonly ElementSize[]` to catch typos at compile time:
 
 ```typescript
-import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js';
+import type { ElementSize } from '@adobe/spectrum-wc-core/mixins/index.js';
 
 export const BADGE_VALID_SIZES = ['s', 'm', 'l', 'xl'] as const satisfies readonly ElementSize[];
 ```
@@ -348,7 +348,7 @@ A complete types file for a component with sized variants and an S1/S2 color spl
  * @todo The S1 types can be removed once we are no longer maintaining 1st-gen.
  */
 
-import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js';
+import type { ElementSize } from '@adobe/spectrum-wc-core/mixins/index.js';
 
 // ──────────────────
 //     SHARED

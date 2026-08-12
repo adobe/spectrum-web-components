@@ -10,19 +10,20 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
+  ACTION_BUTTON_STATIC_COLORS,
   ACTION_BUTTON_VALID_SIZES,
   type ActionButtonSize,
   type ActionButtonStaticColor,
-} from '@spectrum-web-components/core/components/action-button';
-import { ButtonBase } from '@spectrum-web-components/core/components/button';
-
-import { renderPendingSpinner } from '../button/pending-spinner.js';
+} from '@adobe/spectrum-wc-core/components/action-button';
+import { ButtonBase } from '@adobe/spectrum-wc-core/components/button';
+import { PendingMixin } from '@adobe/spectrum-wc-core/mixins';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils';
 
 import pendingSpinnerStyles from '../../stylesheets/_lit-styles/pending-spinner.css';
 import styles from './action-button.css';
@@ -31,7 +32,7 @@ import styles from './action-button.css';
  * A compact action button for toolbars, action groups, and icon-first chrome.
  *
  * @element swc-action-button
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @slot - Visible button label.
  * @slot icon - Optional leading icon displayed before the label.
@@ -62,6 +63,7 @@ import styles from './action-button.css';
  * @cssprop --swc-action-button-background-color-disabled - Background color when disabled or pending.
  * @cssprop --swc-action-button-border-color-disabled - Border color when disabled or pending.
  * @cssprop --swc-action-button-content-color-disabled - Text and icon color when disabled or pending.
+ * @cssprop --swc-action-button-down-state-transform - Transform applied to the button in the pressed (down) state. Defaults to a scale/translate effect; set to `none` to disable.
  *
  * @example
  * <swc-action-button>Edit</swc-action-button>
@@ -72,7 +74,7 @@ import styles from './action-button.css';
  *   Edit
  * </swc-action-button>
  */
-export class ActionButton extends ButtonBase {
+export class ActionButton extends PendingMixin(ButtonBase) {
   // ────────────────────
   //     API OVERRIDES
   // ────────────────────
@@ -110,9 +112,11 @@ export class ActionButton extends ButtonBase {
     }
     if (isAriaPassthrough) {
       if (name === 'aria-haspopup') {
-        this._ariaHasPopup = value ?? undefined;
+        this._ariaHasPopup = (value ??
+          undefined) as ActionButton['_ariaHasPopup'];
       } else {
-        this._ariaExpanded = value ?? undefined;
+        this._ariaExpanded = (value ??
+          undefined) as ActionButton['_ariaExpanded'];
       }
       if (value !== null) {
         this._ariaForwardingInProgress = true;
@@ -143,15 +147,37 @@ export class ActionButton extends ButtonBase {
   // Forwarded to the inner <button> for menu-trigger patterns; stripped from
   // the host after reading to avoid duplicate ARIA state on both elements.
   @state()
-  private _ariaHasPopup?: string;
+  private _ariaHasPopup?:
+    | 'false'
+    | 'true'
+    | 'menu'
+    | 'listbox'
+    | 'tree'
+    | 'grid'
+    | 'dialog';
 
   @state()
-  private _ariaExpanded?: string;
+  private _ariaExpanded?: 'true' | 'false';
 
   // Guard against re-entrant attributeChangedCallback: removeAttribute fires a
   // second callback with value=null; the guard prevents that from clearing the
   // state we just set.
   private _ariaForwardingInProgress = false;
+
+  protected override update(changedProperties: PropertyValues): void {
+    if (
+      changedProperties.has('staticColor') &&
+      this.staticColor !== undefined
+    ) {
+      validateEnum(this, {
+        prop: 'static-color',
+        value: this.staticColor,
+        valid: ACTION_BUTTON_STATIC_COLORS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-action-button--docs',
+      });
+    }
+    super.update(changedProperties);
+  }
 
   // ──────────────────────────────
   //     RENDERING & STYLING
@@ -184,9 +210,9 @@ export class ActionButton extends ButtonBase {
       >
         <slot name="icon"></slot>
         <span class="swc-ActionButton-label">
-          <slot></slot>
+          <slot @slotchange=${this.slotText.handleSlotChange}></slot>
         </span>
-        ${renderPendingSpinner(this.pending, this.pendingActive)}
+        ${this.renderPendingState()}
       </button>
     `;
   }

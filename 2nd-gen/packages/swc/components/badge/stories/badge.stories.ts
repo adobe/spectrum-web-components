@@ -25,7 +25,7 @@ import {
   type BadgeSize,
   FIXED_VALUES,
   type FixedValues,
-} from '@spectrum-web-components/core/components/badge/index.js';
+} from '@adobe/spectrum-wc-core/components/badge/index.js';
 
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
@@ -100,7 +100,8 @@ argTypes.subtle = {
  * Similar to [status lights](/docs/components-status-light--docs), they use color and text to convey status or category information.
  *
  * Badges come in three styles: bold fill (default), subtle fill, and outline.
- * Choose one style consistently within a product - `outline` and `subtle` fill draw similar attention levels.
+ * Choose one style consistently within a product. The `outline` and `subtle`
+ * attributes draw similar attention levels.
  * Reserve bold fill for high-attention badging only.
  */
 const meta: Meta = {
@@ -112,10 +113,6 @@ const meta: Meta = {
   parameters: {
     docs: {
       subtitle: `Display small amounts of color-categorized metadata to get a user's attention.`,
-    },
-    design: {
-      type: 'figma',
-      url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=36806-6551',
     },
     stackblitz: {
       url: 'https://stackblitz.com/edit/vitejs-vite-aqp4tpvf?file=src%2Fmy-element.ts',
@@ -404,6 +401,7 @@ export const TextWrapping: Story = {
   `,
   tags: ['behaviors'],
 };
+TextWrapping.storyName = 'Text wrapping';
 
 export const Inline: Story = {
   render: (args) => html`

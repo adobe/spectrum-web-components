@@ -80,10 +80,15 @@ Debug-mode validation should run in `update()` so warnings appear before the ren
 
 ```ts
 protected override update(changedProperties: PropertyValues): void {
+  // Validate variant, size, etc. via the shared helpers, before super.update
+  // so warnings appear before the render.
+  validateEnum(this, {
+    prop: 'variant',
+    value: this.variant,
+    valid: BadgeBase.VARIANTS,
+    url: '…',
+  });
   super.update(changedProperties);
-  if (window.__swc?.DEBUG) {
-    // Validate variant, size, etc.
-  }
 }
 ```
 
@@ -117,13 +122,13 @@ protected override firstUpdated(changed: PropertyValues<this>): void {
 
 ```ts
 protected override update(changedProperties: PropertyValues): void {
+  validateEnum(this, {
+    prop: 'variant',
+    value: this.variant,
+    valid: BadgeBase.VARIANTS,
+    url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-badge--docs',
+  });
   super.update(changedProperties);
-  if (window.__swc?.DEBUG) {
-    const constructor = this.constructor as typeof BadgeBase;
-    if (!constructor.VARIANTS.includes(this.variant)) {
-      window.__swc.warn(this, /* ... */);
-    }
-  }
 }
 ```
 

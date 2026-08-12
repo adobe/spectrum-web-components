@@ -1,6 +1,6 @@
 {
-  "name": "@spectrum-web-components/core",
-  "version": "0.3.0",
+  "name": "@adobe/spectrum-wc-core",
+  "version": "2.0.0-beta.2",
   "description": "Abstract base classes for Spectrum Web Components",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -15,6 +15,10 @@
   },
   "type": "module",
   "exports": {
+    "./components/accordion": {
+      "types": "./dist/components/accordion/index.d.ts",
+      "import": "./dist/components/accordion/index.js"
+    },
     "./components/action-button": {
       "types": "./dist/components/action-button/index.d.ts",
       "import": "./dist/components/action-button/index.js"
@@ -22,10 +26,6 @@
     "./components/alert-banner": {
       "types": "./dist/components/alert-banner/index.d.ts",
       "import": "./dist/components/alert-banner/index.js"
-    },
-    "./components/accordion": {
-      "types": "./dist/components/accordion/index.d.ts",
-      "import": "./dist/components/accordion/index.js"
     },
     "./components/asset": {
       "types": "./dist/components/asset/index.d.ts",
@@ -55,6 +55,18 @@
       "types": "./dist/components/button-group/index.d.ts",
       "import": "./dist/components/button-group/index.js"
     },
+    "./components/card": {
+      "types": "./dist/components/card/index.d.ts",
+      "import": "./dist/components/card/index.js"
+    },
+    "./components/color-handle": {
+      "types": "./dist/components/color-handle/index.d.ts",
+      "import": "./dist/components/color-handle/index.js"
+    },
+    "./components/color-handle/index.js": {
+      "types": "./dist/components/color-handle/index.d.ts",
+      "import": "./dist/components/color-handle/index.js"
+    },
     "./components/divider": {
       "types": "./dist/components/divider/index.d.ts",
       "import": "./dist/components/divider/index.js"
@@ -63,9 +75,21 @@
       "types": "./dist/components/divider/index.d.ts",
       "import": "./dist/components/divider/index.js"
     },
+    "./components/dropzone": {
+      "types": "./dist/components/dropzone/index.d.ts",
+      "import": "./dist/components/dropzone/index.js"
+    },
+    "./components/dropzone/index.js": {
+      "types": "./dist/components/dropzone/index.d.ts",
+      "import": "./dist/components/dropzone/index.js"
+    },
     "./components/icon": {
       "types": "./dist/components/icon/index.d.ts",
       "import": "./dist/components/icon/index.js"
+    },
+    "./components/infield-button": {
+      "types": "./dist/components/infield-button/index.d.ts",
+      "import": "./dist/components/infield-button/index.js"
     },
     "./components/illustrated-message": {
       "types": "./dist/components/illustrated-message/index.d.ts",
@@ -74,6 +98,18 @@
     "./components/meter": {
       "types": "./dist/components/meter/index.d.ts",
       "import": "./dist/components/meter/index.js"
+    },
+    "./components/popover": {
+      "types": "./dist/components/popover/index.d.ts",
+      "import": "./dist/components/popover/index.js"
+    },
+    "./components/popover/index.js": {
+      "types": "./dist/components/popover/index.d.ts",
+      "import": "./dist/components/popover/index.js"
+    },
+    "./components/progress-bar": {
+      "types": "./dist/components/progress-bar/index.d.ts",
+      "import": "./dist/components/progress-bar/index.js"
     },
     "./components/progress-circle": {
       "types": "./dist/components/progress-circle/index.d.ts",
@@ -123,6 +159,22 @@
       "types": "./dist/controllers/language-resolution.d.ts",
       "import": "./dist/controllers/language-resolution.js"
     },
+    "./controllers/live-selection-controller/index.js": {
+      "types": "./dist/controllers/live-selection-controller/index.d.ts",
+      "import": "./dist/controllers/live-selection-controller/index.js"
+    },
+    "./controllers/page-scroll-lock-controller.js": {
+      "types": "./dist/controllers/page-scroll-lock-controller/index.d.ts",
+      "import": "./dist/controllers/page-scroll-lock-controller/index.js"
+    },
+    "./controllers/pending-controller": {
+      "types": "./dist/controllers/pending-controller/index.d.ts",
+      "import": "./dist/controllers/pending-controller/index.js"
+    },
+    "./controllers/pending-controller/index.js": {
+      "types": "./dist/controllers/pending-controller/index.d.ts",
+      "import": "./dist/controllers/pending-controller/index.js"
+    },
     "./controllers/placement-controller": {
       "types": "./dist/controllers/placement-controller/index.d.ts",
       "import": "./dist/controllers/placement-controller/index.js"
@@ -130,6 +182,42 @@
     "./controllers/placement-controller/index.js": {
       "types": "./dist/controllers/placement-controller/index.d.ts",
       "import": "./dist/controllers/placement-controller/index.js"
+    },
+    "./controllers/slot-attribute-propagation-controller.js": {
+      "types": "./dist/controllers/slot-attribute-propagation-controller/index.d.ts",
+      "import": "./dist/controllers/slot-attribute-propagation-controller/index.js"
+    },
+    "./controllers/slot-presence-controller": {
+      "types": "./dist/controllers/slot-presence-controller/index.d.ts",
+      "import": "./dist/controllers/slot-presence-controller/index.js"
+    },
+    "./controllers/slot-presence-controller/index.js": {
+      "types": "./dist/controllers/slot-presence-controller/index.d.ts",
+      "import": "./dist/controllers/slot-presence-controller/index.js"
+    },
+    "./controllers/slot-text-controller": {
+      "types": "./dist/controllers/slot-text-controller/index.d.ts",
+      "import": "./dist/controllers/slot-text-controller/index.js"
+    },
+    "./controllers/slot-text-controller/index.js": {
+      "types": "./dist/controllers/slot-text-controller/index.d.ts",
+      "import": "./dist/controllers/slot-text-controller/index.js"
+    },
+    "./directives": {
+      "types": "./dist/directives/index.d.ts",
+      "import": "./dist/directives/index.js"
+    },
+    "./directives/index.js": {
+      "types": "./dist/directives/index.d.ts",
+      "import": "./dist/directives/index.js"
+    },
+    "./directives/pending-spinner": {
+      "types": "./dist/directives/pending-spinner/index.d.ts",
+      "import": "./dist/directives/pending-spinner/index.js"
+    },
+    "./directives/pending-spinner/index.js": {
+      "types": "./dist/directives/pending-spinner/index.d.ts",
+      "import": "./dist/directives/pending-spinner/index.js"
     },
     "./element": {
       "types": "./dist/element/index.d.ts",
@@ -159,14 +247,6 @@
       "types": "./dist/mixins/index.d.ts",
       "import": "./dist/mixins/index.js"
     },
-    "./mixins/observe-slot-presence.js": {
-      "types": "./dist/mixins/observe-slot-presence.d.ts",
-      "import": "./dist/mixins/observe-slot-presence.js"
-    },
-    "./mixins/observe-slot-text.js": {
-      "types": "./dist/mixins/observe-slot-text.d.ts",
-      "import": "./dist/mixins/observe-slot-text.js"
-    },
     "./mixins/sized-mixin.js": {
       "types": "./dist/mixins/sized-mixin.d.ts",
       "import": "./dist/mixins/sized-mixin.js"
@@ -179,6 +259,10 @@
       "types": "./dist/utils/capitalize.d.ts",
       "import": "./dist/utils/capitalize.js"
     },
+    "./utils/dismissible-stack.js": {
+      "types": "./dist/utils/dismissible-stack.d.ts",
+      "import": "./dist/utils/dismissible-stack.js"
+    },
     "./utils/get-label-from-slot.js": {
       "types": "./dist/utils/get-label-from-slot.d.ts",
       "import": "./dist/utils/get-label-from-slot.js"
@@ -186,6 +270,10 @@
     "./utils/index.js": {
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.js"
+    },
+    "./utils/resolve-trigger.js": {
+      "types": "./dist/utils/resolve-trigger.d.ts",
+      "import": "./dist/utils/resolve-trigger.js"
     }
   },
   "main": "./dist/index.js",
@@ -201,14 +289,14 @@
   },
   "typesVersions": {
     "*": {
+      "components/accordion": [
+        "dist/components/accordion/index.d.ts"
+      ],
       "components/action-button": [
         "dist/components/action-button/index.d.ts"
       ],
       "components/alert-banner": [
         "dist/components/alert-banner/index.d.ts"
-      ],
-      "components/accordion": [
-        "dist/components/accordion/index.d.ts"
       ],
       "components/asset": [
         "dist/components/asset/index.d.ts"
@@ -231,20 +319,41 @@
       "components/button-group": [
         "dist/components/button-group/index.d.ts"
       ],
+      "components/card": [
+        "dist/components/card/index.d.ts"
+      ],
+      "components/color-handle": [
+        "dist/components/color-handle/index.d.ts"
+      ],
+      "components/color-handle/index.js": [
+        "dist/components/color-handle/index.d.ts"
+      ],
       "components/divider": [
         "dist/components/divider/index.d.ts"
       ],
       "components/divider/index.js": [
         "dist/components/divider/index.d.ts"
       ],
+      "components/dropzone": [
+        "dist/components/dropzone/index.d.ts"
+      ],
+      "components/dropzone/index.js": [
+        "dist/components/dropzone/index.d.ts"
+      ],
       "components/icon": [
         "dist/components/icon/index.d.ts"
+      ],
+      "components/infield-button": [
+        "dist/components/infield-button/index.d.ts"
       ],
       "components/illustrated-message": [
         "dist/components/illustrated-message/index.d.ts"
       ],
       "components/meter": [
         "dist/components/meter/index.d.ts"
+      ],
+      "components/progress-bar": [
+        "dist/components/progress-bar/index.d.ts"
       ],
       "components/progress-circle": [
         "dist/components/progress-circle/index.d.ts"
@@ -282,11 +391,50 @@
       "controllers/language-resolution.js": [
         "dist/controllers/language-resolution.d.ts"
       ],
+      "controllers/live-selection-controller/index.js": [
+        "dist/controllers/live-selection-controller/index.d.ts"
+      ],
+      "controllers/page-scroll-lock-controller.js": [
+        "dist/controllers/page-scroll-lock-controller/index.d.ts"
+      ],
+      "controllers/pending-controller": [
+        "dist/controllers/pending-controller/index.d.ts"
+      ],
+      "controllers/pending-controller/index.js": [
+        "dist/controllers/pending-controller/index.d.ts"
+      ],
       "controllers/placement-controller": [
         "dist/controllers/placement-controller/index.d.ts"
       ],
       "controllers/placement-controller/index.js": [
         "dist/controllers/placement-controller/index.d.ts"
+      ],
+      "controllers/slot-attribute-propagation-controller.js": [
+        "dist/controllers/slot-attribute-propagation-controller/index.d.ts"
+      ],
+      "controllers/slot-presence-controller": [
+        "dist/controllers/slot-presence-controller/index.d.ts"
+      ],
+      "controllers/slot-presence-controller/index.js": [
+        "dist/controllers/slot-presence-controller/index.d.ts"
+      ],
+      "controllers/slot-text-controller": [
+        "dist/controllers/slot-text-controller/index.d.ts"
+      ],
+      "controllers/slot-text-controller/index.js": [
+        "dist/controllers/slot-text-controller/index.d.ts"
+      ],
+      "directives": [
+        "dist/directives/index.d.ts"
+      ],
+      "directives/index.js": [
+        "dist/directives/index.d.ts"
+      ],
+      "directives/pending-spinner": [
+        "dist/directives/pending-spinner/index.d.ts"
+      ],
+      "directives/pending-spinner/index.js": [
+        "dist/directives/pending-spinner/index.d.ts"
       ],
       "element": [
         "dist/element/index.d.ts"
@@ -308,12 +456,6 @@
       ],
       "mixins/index.js": [
         "dist/mixins/index.d.ts"
-      ],
-      "mixins/observe-slot-presence.js": [
-        "dist/mixins/observe-slot-presence.d.ts"
-      ],
-      "mixins/observe-slot-text.js": [
-        "dist/mixins/observe-slot-text.d.ts"
       ],
       "mixins/sized-mixin.js": [
         "dist/mixins/sized-mixin.d.ts"

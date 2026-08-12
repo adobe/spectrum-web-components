@@ -12,7 +12,14 @@
 
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { computeBorderAlpha } from '@adobe/spectrum-wc-core/components/color-handle';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+
+/**
+ * Minimum inner-border opacity (matches the existing `transparent-black-200`
+ * token) so the default look on mid/dark colors is unchanged.
+ */
+export const COLOR_LOUPE_ALPHA_FLOOR = 0.12;
 
 /**
  * A visual magnifier that shows the currently picked color, including
@@ -45,4 +52,21 @@ export abstract class ColorLoupeBase extends SpectrumElement {
    */
   @property({ type: String })
   public color = 'rgba(255, 0, 0, 0.5)';
+
+  // ──────────────────────────
+  //     ADAPTIVE CONTRAST
+  // ──────────────────────────
+
+  /**
+   * The adaptive inner-border opacity for the current `color`, derived by the
+   * white-first strategy (shared with `<swc-color-handle>`) so the loupe
+   * chrome meets WCAG 1.4.11 (≥3:1) across the color spectrum. The white
+   * outer border is unchanged; the rendering layer applies this value to the
+   * inner border only.
+   *
+   * @internal
+   */
+  protected get borderAlpha(): number {
+    return computeBorderAlpha(this.color, { floor: COLOR_LOUPE_ALPHA_FLOOR });
+  }
 }

@@ -148,9 +148,9 @@ Plus the host receives `role="meter progressbar"` (invalid combined ARIA role st
 
 | 1st-gen import | 2nd-gen equivalent | Status |
 | --- | --- | --- |
-| `SpectrumElement` from `@spectrum-web-components/base` | `@spectrum-web-components/core/element/index.js` | Available |
-| `SizedMixin` from `@spectrum-web-components/base` | `@spectrum-web-components/core/mixins/index.js` | Available |
-| `LanguageResolutionController` from `reactive-controllers` | `@spectrum-web-components/core/controllers/language-resolution.js` | Available |
+| `SpectrumElement` from `@spectrum-web-components/base` | `@adobe/spectrum-wc-core/element/index.js` | Available |
+| `SizedMixin` from `@spectrum-web-components/base` | `@adobe/spectrum-wc-core/mixins/index.js` | Available |
+| `LanguageResolutionController` from `reactive-controllers` | `@adobe/spectrum-wc-core/controllers/language-resolution.js` | Available |
 | `getLabelFromSlot` from `shared` | Not needed in 2nd-gen — the named `label` slot with `aria-labelledby` requires no text extraction | N/A |
 | `ObserveSlotText` from `shared` | Not needed in 2nd-gen — `label`-slot presence tracked via `slotchange` in `LinearProgressMixin`; no text extraction | N/A |
 | `<sp-field-label>` rendered in shadow | `<swc-field-label>` does **not** exist yet | **Not migrated** — 2nd-gen renders plain `<span class="swc-Meter-label">` / `<span class="swc-Meter-value">` (SWC-namespaced selectors; `<span>` because `role="meter"` is not pair-able with native `<label>`). See B8 in [Must ship](#must-ship--breaking-or-a11y-required). |

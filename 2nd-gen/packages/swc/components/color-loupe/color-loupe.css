@@ -10,8 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
+/* The inner-border opacity is set adaptively by the component (white-first
+   contrast); the floor here matches the existing `transparent-black-200`
+   token and is the fallback before the component computes a value. The outer
+   border stays the fixed white halo: the loupe stays visible if either the
+   inner dark border or the white outer border meets 3:1 against the
+   underlying color. */
 :host {
   --_swc-color-loupe-width: token("color-loupe-width");
+  --_swc-color-loupe-border-alpha: 0.12;
 
   display: block;
   position: absolute;
@@ -40,13 +47,17 @@
 }
 
 /* Shared positioning for the stacked loupe layers (the transparency
-   checkerboard and the color fill). Both sit inset by the loupe border. The
-   checkerboard pattern itself comes from the shared `.swc-OpacityCheckerboard`
-   fragment added to the styles array. */
+   checkerboard and the color fill). Both sit inset by the loupe border,
+   matching the SVG outline's own `translate(2, 2)` (see ColorLoupe.ts),
+   which is a physical offset that SVG never mirrors for RTL. `top`/`left`
+   are used here instead of logical `inset-block-start`/`inset-inline-start`
+   so the fill stays physically aligned with that outline in both
+   directions; the checkerboard pattern itself comes from the shared
+   `.swc-OpacityCheckerboard` fragment added to the styles array. */
 .swc-ColorLoupe-layer {
   position: absolute;
-  inset-block-start: 2px;
-  inset-inline-start: 2px;
+  top: token("color-loupe-outer-border-width");
+  left: token("color-loupe-outer-border-width");
   inline-size: 100%;
   block-size: 100%;
 }
@@ -64,10 +75,11 @@
   block-size: inherit;
 }
 
-/* Inner border: thin stroke separating color fill from the loupe edge */
+/* Inner border: thin stroke separating color fill from the loupe edge. Alpha
+   is adaptive (see the `:host` comment above); the color itself stays black. */
 .swc-ColorLoupe-innerBorder {
   fill: none;
-  stroke: token("color-loupe-inner-border");
+  stroke: rgb(0 0 0 / var(--_swc-color-loupe-border-alpha));
   stroke-width: token("color-loupe-inner-border-width");
 }
 

@@ -13,12 +13,13 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   LINEAR_PROGRESS_VALID_SIZES,
   LinearProgressMixin,
   SizedMixin,
-} from '@spectrum-web-components/core/mixins/index.js';
+} from '@adobe/spectrum-wc-core/mixins/index.js';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import { METER_VARIANTS, type MeterVariant } from './Meter.types.js';
 
@@ -68,16 +69,12 @@ export abstract class MeterBase extends LinearProgressMixin(
   protected override willUpdate(changes: PropertyValues): void {
     const constructor = this.constructor as typeof MeterBase;
     if (!constructor.VARIANTS.includes(this.variant)) {
-      if (window.__swc?.DEBUG) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
-          'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
-          {
-            issues: [...constructor.VARIANTS],
-          }
-        );
-      }
+      validateEnum(this, {
+        prop: 'variant',
+        value: this.variant,
+        valid: constructor.VARIANTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
+      });
       // Unknown variant: fall back to the default so the reflected
       // attribute and fill color always resolve to a valid variant.
       // Normalizing in `willUpdate` (Lit's input-normalization hook) folds

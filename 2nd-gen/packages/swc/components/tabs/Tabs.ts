@@ -12,7 +12,7 @@
 import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { TabsBase } from '@spectrum-web-components/core/components/tabs';
+import { TabsBase } from '@adobe/spectrum-wc-core/components/tabs';
 
 import styles from './tabs.css';
 
@@ -27,10 +27,12 @@ import styles from './tabs.css';
  * `aria-orientation` are co-located on the same inner element.
  *
  * @element swc-tabs
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @slot - Tab items (`swc-tab` elements)
  * @slot tab-panel - Tab panel content (`swc-tab-panel` elements)
+ *
+ * @cssprop --swc-tabs-indicator-color - Color of the selected tab indicator.
  *
  * @example
  * <swc-tabs selected="1" accessible-label="Product details">
@@ -39,6 +41,8 @@ import styles from './tabs.css';
  *   <swc-tab-panel tab-id="1">Product overview content</swc-tab-panel>
  *   <swc-tab-panel tab-id="2">Technical specifications</swc-tab-panel>
  * </swc-tabs>
+ *
+ * @cssprop --swc-tabs-indicator-color - Color of the selection indicator.
  */
 export class Tabs extends TabsBase {
   /**

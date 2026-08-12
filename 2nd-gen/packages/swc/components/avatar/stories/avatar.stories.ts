@@ -15,9 +15,10 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Avatar } from '@adobe/spectrum-wc/avatar';
-import { AVATAR_VALID_SIZES } from '@spectrum-web-components/core/components/avatar/index.js';
+import { AVATAR_VALID_SIZES } from '@adobe/spectrum-wc-core/components/avatar/index.js';
 
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
+import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 
 // ────────────────
 //    METADATA
@@ -59,7 +60,6 @@ const meta: Meta = {
     docs: {
       subtitle: 'A circular profile image for identifying a person or entity.',
     },
-    // @todo Add Figma design link: design: { type: 'figma', url: '<avatar-node-url>' }
     stackblitz: {
       url: 'https://stackblitz.com/edit/vitejs-vite-bfsrbyma?file=src%2Fmy-element.ts',
     },
@@ -206,6 +206,10 @@ export const Outline: Story = {
   tags: ['options'],
 };
 
+// ──────────────────────────────
+//    STATES STORIES
+// ──────────────────────────────
+
 export const Disabled: Story = {
   render: (args) => html`
     <swc-avatar
@@ -220,7 +224,7 @@ export const Disabled: Story = {
     alt: 'Jane Doe',
     size: '500',
   },
-  tags: ['options'],
+  tags: ['states'],
 };
 
 // ──────────────────────────────
@@ -228,26 +232,29 @@ export const Disabled: Story = {
 // ──────────────────────────────
 
 export const InActionButton: Story = {
-  // TODO: Replace <button> with <swc-action-button> once that component is migrated to 2nd-gen.
   render: (args) => html`
-    <button
-      type="button"
-      style="display:inline-flex;align-items:center;gap:8px;padding:4px 12px;cursor:pointer;"
-    >
-      <swc-avatar
-        src=${args.src}
-        alt=${args.alt}
-        size=${args.size}
-      ></swc-avatar>
+    <swc-action-button>
+      <swc-avatar slot="icon" src=${args.src} alt="" decorative></swc-avatar>
       Jane Doe
-    </button>
+    </swc-action-button>
+    <swc-action-button accessible-label="Jane Doe">
+      <swc-avatar slot="icon" src=${args.src} alt="" decorative></swc-avatar>
+    </swc-action-button>
+    <swc-action-button size="xl">
+      <swc-avatar slot="icon" src=${args.src} alt="" decorative></swc-avatar>
+      Jane Doe
+    </swc-action-button>
+    <swc-action-button size="xl" accessible-label="Jane Doe">
+      <swc-avatar slot="icon" src=${args.src} alt="" decorative></swc-avatar>
+    </swc-action-button>
   `,
   args: {
     src: PLACEHOLDER_SRC,
-    alt: 'Jane Doe',
-    size: '100',
   },
   tags: ['behaviors'],
+  parameters: {
+    flexLayout: 'row-wrap',
+  },
 };
 
 // ────────────────────────────────

@@ -29,6 +29,14 @@
  *    `<Canvas of={Stories.ExportName} />` reference.
  * 4. **No broken story references** — every `<Canvas of={...} />` in MDX
  *    points to an export that exists in the stories module.
+ * 5. **Sentence-case `###`/`####` headings** (component and internal genres
+ *    only; patterns and controllers have not been audited for this yet).
+ *    Only the first word, acronyms, and known proper-noun phrases may start
+ *    with a capital letter.
+ * 6. **Sentence-case stories meta `title`** (component and internal genres
+ *    only) — the `title` in the stories module is the docs-page and sidebar
+ *    label; each `/`-separated segment must be sentence case. Not rendered as
+ *    a markdown heading, so Check 5 does not cover it.
  *
  * Usage (standalone):
  *   yarn lint:docs-pages
@@ -288,6 +296,60 @@ function extractCanvasReferences(content, binding) {
   return refs;
 }
 
+/**
+ * Multi-word proper-noun phrases allowed to keep title case inside an
+ * otherwise sentence-case heading (component/pattern names referenced by
+ * name, e.g. "In Action Button"). Extend this list as new components are
+ * referenced from headings.
+ */
+const PROPER_NOUN_PHRASES = ['Action button', 'Avatar group'];
+
+/**
+ * Extract all `###`/`####` heading texts (heading level 3 or deeper) in
+ * document order, along with their 1-based line number.
+ */
+function extractSubHeadings(content) {
+  const headings = [];
+  const lines = content.split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    const m = lines[i].match(/^(#{3,4})\s+(.+?)\s*$/);
+    if (m) {
+      headings.push({ level: m[1].length, text: m[2].trim(), line: i + 1 });
+    }
+  }
+  return headings;
+}
+
+/**
+ * Check whether a heading follows sentence case: only the first word may
+ * start with a capital letter, unless a later word is a recognized acronym
+ * (fully uppercase) or part of a known proper-noun phrase.
+ *
+ * Tolerates:
+ * - Inline code spans (`` `foo` ``), stripped before word-splitting.
+ * - Fully uppercase words (acronyms: ARIA, CSS, SVG, WCAG, RTL, API, ...).
+ * - Multi-word proper-noun phrases in `PROPER_NOUN_PHRASES`.
+ */
+function isSentenceCase(heading) {
+  let text = heading.replace(/`[^`]*`/g, '');
+  for (const phrase of PROPER_NOUN_PHRASES) {
+    text = text.split(phrase).join('');
+  }
+  const words = text.split(/\s+/).filter(Boolean);
+  for (let i = 1; i < words.length; i++) {
+    const word = words[i].replace(/[^A-Za-z]/g, '');
+    if (!word) {
+      continue;
+    }
+    const isAllCaps = word === word.toUpperCase() && /[A-Z]/.test(word);
+    const startsUpper = /^[A-Z]/.test(word);
+    if (startsUpper && !isAllCaps) {
+      return false;
+    }
+  }
+  return true;
+}
+
 // ────────────────────────────────────────────────────────────────────────────
 //   Stories file inspection
 // ────────────────────────────────────────────────────────────────────────────
@@ -371,6 +433,50 @@ function parseStoryTags(storiesPath) {
   return stories;
 }
 
+/**
+ * Extract the `title` string from a stories module's `const meta` object.
+ *
+ * The `title` becomes the Storybook sidebar node and the docs-page heading
+ * (component MDX uses `<Meta of={Stories} />`, so the page title is derived
+ * from this field, not from any markdown heading). Returns `null` when no
+ * meta `title` is found.
+ */
+function extractStoriesTitle(storiesPath) {
+  const content = fs.readFileSync(storiesPath, 'utf8');
+
+  // Locate the `const meta ... = {` object and brace-match its body so we
+  // only read the meta-level `title`, not a `title` nested elsewhere.
+  const metaMatch = content.match(/const\s+meta\b[^=]*=\s*\{/);
+  if (!metaMatch) {
+    return null;
+  }
+  const openIdx = content.indexOf('{', metaMatch.index);
+  if (openIdx === -1) {
+    return null;
+  }
+  let depth = 0;
+  let closeIdx = -1;
+  for (let i = openIdx; i < content.length; i++) {
+    const ch = content[i];
+    if (ch === '{') {
+      depth++;
+    } else if (ch === '}') {
+      depth--;
+      if (depth === 0) {
+        closeIdx = i;
+        break;
+      }
+    }
+  }
+  if (closeIdx === -1) {
+    return null;
+  }
+
+  const body = content.slice(openIdx, closeIdx + 1);
+  const titleMatch = body.match(/\btitle:\s*(['"])(.+?)\1/);
+  return titleMatch ? titleMatch[2] : null;
+}
+
 // ────────────────────────────────────────────────────────────────────────────
 //   Per-file check
 // ────────────────────────────────────────────────────────────────────────────
@@ -420,6 +526,18 @@ function checkMdx(absPath) {
       );
     }
     lastIndex = Math.max(lastIndex, idx);
+  }
+
+  // Check 5: Sentence-case ###/#### headings (component and internal genres
+  // only; patterns and controllers have not been audited for this yet)
+  if (rules.genre === 'component' || rules.genre === 'internal') {
+    for (const h of extractSubHeadings(content)) {
+      if (!isSentenceCase(h.text)) {
+        errors.push(
+          `${relPath}:${h.line}: heading "${h.text}" is not sentence case (capitalize only the first word, acronyms, and known proper nouns)`
+        );
+      }
+    }
   }
 
   // Check 2a: <DocsFooter /> presence
@@ -478,6 +596,25 @@ function checkMdx(absPath) {
         errors.push(
           `${relPath}: story \`${name}\` is tagged \`${sectionTag}\` in ${path.relative(repoRoot, storiesPath)} but has no <Canvas of={${importInfo.binding}.${name}} /> reference in the MDX`
         );
+      }
+    }
+  }
+
+  // Check 6: Sentence-case stories meta `title` (component and internal
+  // genres only, matching Check 5's scope). The title is the sidebar node and
+  // docs-page label; it is not a markdown heading, so Check 5 misses it. Each
+  // `/`-separated segment is its own label and must be sentence case.
+  if (rules.genre === 'component' || rules.genre === 'internal') {
+    const title = extractStoriesTitle(storiesPath);
+    if (title) {
+      for (const segment of title.split('/')) {
+        const label = segment.trim();
+        if (label && !isSentenceCase(label)) {
+          errors.push(
+            `${path.relative(repoRoot, storiesPath)}: meta title segment "${label}" is not sentence case (capitalize only the first word, acronyms, and known proper nouns; component names are sentence case, e.g. 'Action button')`
+          );
+          break;
+        }
       }
     }
   }

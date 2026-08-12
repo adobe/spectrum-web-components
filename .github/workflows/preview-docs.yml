@@ -94,6 +94,10 @@ jobs:
           yarn workspace @spectrum-web-components/1st-gen docs:build
 
       - name: Build Gen1 Storybook
+        env:
+          # Cross-link to this PR's gen2 preview (prod-mode build) instead of
+          # the default production URL.
+          SWC_GEN2_STORYBOOK_URL: https://swcpreviews.z13.web.core.windows.net/${{ steps.pr_hash.outputs.hash }}/docs/gen2-storybook-prod/
         run: yarn workspace @spectrum-web-components/1st-gen storybook:build
 
       - name: Build Gen2 Storybook (dev mode)
@@ -108,6 +112,10 @@ jobs:
         # No NODE_ENV override: this is the same production-trimmed build
         # that publish-2ndgen-docs.yml deploys to the live site, so
         # reviewers can validate exactly what will end up on prod.
+        env:
+          # Cross-link to this PR's gen1 preview instead of the default
+          # production URL.
+          SWC_GEN1_STORYBOOK_URL: https://swcpreviews.z13.web.core.windows.net/${{ steps.pr_hash.outputs.hash }}/docs/gen1-storybook/
         run: yarn workspace @adobe/spectrum-wc storybook:build --output-dir storybook-static-prod
 
       ## --- DEPLOY TO AZURE BLOB STORAGE --- ##
@@ -237,7 +245,7 @@ jobs:
         run: cd 1st-gen && yarn playwright install --with-deps
 
       - name: Run Playwright tests
-        run: cd 1st-gen && yarn playwright test projects/documentation/e2e/published.spec.ts
+        run: cd 1st-gen && yarn playwright test projects/documentation/e2e/
         env:
           DOC_PREVIEW_URL: ${{ needs.build_and_deploy_job.outputs.first_gen_docs_url }}
           SWC_DIR: pr-${{ github.event.pull_request.number }}

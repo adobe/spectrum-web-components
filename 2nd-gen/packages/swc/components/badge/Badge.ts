@@ -21,7 +21,7 @@ import {
   BADGE_VARIANTS_COLOR,
   BadgeBase,
   type BadgeVariant,
-} from '@spectrum-web-components/core/components/badge';
+} from '@adobe/spectrum-wc-core/components/badge';
 
 import styles from './badge.css';
 
@@ -30,13 +30,13 @@ import styles from './badge.css';
  * Badges are typically used to indicate status, categories, or provide supplementary information.
  *
  * @element swc-badge
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @example
  * <swc-badge variant="positive">New</swc-badge>
  *
  * @example
- * <swc-badge variant="neutral" fixed="fill">
+ * <swc-badge variant="neutral" fixed="block-end">
  *   <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
  *   Verified
  * </swc-badge>
@@ -79,7 +79,11 @@ export class Badge extends BadgeBase {
    */
   static override readonly VALID_SIZES = BADGE_VALID_SIZES;
 
-  // Re-declare to ensure reflect: true is honoured on the concrete element class (inherited @property alone is insufficient in ES2022 class-field semantics).
+  /**
+   * The semantic or non-semantic color variant of the badge.
+   *
+   * @default neutral
+   */
   @property({ type: String, reflect: true })
   public override variant: BadgeVariant = 'neutral';
 
@@ -119,7 +123,7 @@ export class Badge extends BadgeBase {
           `
         )}
         <div class="swc-Badge-label">
-          <slot></slot>
+          <slot @slotchange=${this.slotText.handleSlotChange}></slot>
         </div>
       </div>
     `;

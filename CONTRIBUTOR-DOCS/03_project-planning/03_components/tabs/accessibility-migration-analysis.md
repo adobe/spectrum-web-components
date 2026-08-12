@@ -142,7 +142,7 @@ This doc describes how `swc-tabs` (with `swc-tab` and `swc-tab-panel`) should be
 | [Focus order (WCAG 2.4.3)](https://www.w3.org/TR/WCAG22/#focus-order) | Tab from the tablist should move to meaningful content (`tabpanel` with `tabindex="0"` when needed, or first focusable in panel) per APG guidance. |
 | [Name, role, value (WCAG 4.1.2)](https://www.w3.org/TR/WCAG22/#name-role-value) | Each tab needs a name; state (`aria-selected`) must update; panels hidden with `hidden` or equivalent must not leave stale state exposed. |
 
-**Bottom line:** Choose automatic vs manual activation from real performance and DOM shape; implement APG keyboard tables for the chosen model; keep tab↔panel references valid in the composed tree (see Shadow DOM below).
+**Bottom line:** Choose automatic vs manual activation from real performance and DOM shape; implement APG keyboard tables for the chosen model; keep tab↔panel references valid in the composed tree (see Shadow DOM below). For `swc-tabs`, that resolved to `automatic` as the default (Q20 in migration-plan.md): panel content is always in the light DOM, and matching React Spectrum/React Aria `Tabs` was prioritized once the APG precondition for automatic activation was confirmed to hold.
 
 ---
 
@@ -167,7 +167,7 @@ This doc describes how `swc-tabs` (with `swc-tab` and `swc-tab-panel`) should be
 | **Hidden panels** | Inactive panels use `hidden` (or visibility/display patterns that hide from AT) per APG; do not leave inert content falsely exposed. |
 | **`tabindex` on `tabpanel`** | Per [automatic activation example](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/examples/tabs-automatic/), `tabindex="0"` on `tabpanel` helps users move from tablist into panel content when the first element inside is not focusable. [Manual example](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/examples/tabs-manual/) may omit `tabpanel` tabindex when the first child is focusable — match APG for your story variants. |
 | **Vertical orientation** | If the tablist is vertical, set `aria-orientation="vertical"` and arrow key mapping consistent with APG (Up/Down or Left/Right per spec and docs). |
-| **Activation mode (API)** | Mirror 1st-gen `auto` (boolean, default off = manual): `auto` false — arrows move focus only; Enter, Space, or click select; `auto` true — selection follows focus when arrows move between tabs. Document and test both modes; default manual matches lazy or heavy panels. |
+| **Activation mode (API)** | Expose both modes via `keyboard-activation`: `manual` — arrows move focus only; Enter, Space, or click select; `automatic` — selection follows focus when arrows move between tabs. Document and test both modes. **Superseded (Q20, see migration-plan.md):** default is `automatic`, not `manual`, to match React Spectrum/React Aria `Tabs` — `swc-tab-panel` content is always in the light DOM (not lazily mounted), so the "default manual matches lazy or heavy panels" reasoning below does not apply to our default; it's retained as guidance for consumers who lazy-render their own panel content. |
 
 ### Shadow DOM and cross-root ARIA Issues
 
@@ -225,7 +225,7 @@ When implementation gaps appear, classify missing behavior:
 ## Summary checklist
 
 - [ ] `tablist` / `tab` / `tabpanel` roles and labelling match APG.
-- [ ] Automatic vs manual activation documented and tested; default matches content loading model.
+- [x] Automatic vs manual activation documented and tested; default is `automatic` (Q20), matching React Spectrum/React Aria `Tabs` and the component's always-in-DOM panel content.
 - [ ] Roving `tabindex` and arrows use `FocusgroupNavigationController` where appropriate ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)); tabs-only logic stays in component unless promoted to shared infra deliberately.
 - [ ] `aria-controls` / `aria-labelledby` valid in composed tree (no silent cross-root ID failures).
 - [ ] `tabpanel` focus behavior matches APG for focusable vs non-focusable first content.

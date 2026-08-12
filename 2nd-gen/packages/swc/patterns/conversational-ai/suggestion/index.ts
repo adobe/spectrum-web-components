@@ -9,16 +9,4 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { defineElement } from '@spectrum-web-components/core/element/index.js';
-
-import { SuggestionGroup } from './SuggestionGroup.js';
-
 export * from './SuggestionGroup.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'swc-suggestion-group': SuggestionGroup;
-  }
-}
-
-defineElement('swc-suggestion-group', SuggestionGroup);

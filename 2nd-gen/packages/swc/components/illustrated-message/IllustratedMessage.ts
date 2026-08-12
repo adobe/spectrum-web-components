@@ -12,13 +12,24 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { IllustratedMessageBase } from '@spectrum-web-components/core/components/illustrated-message';
+import { IllustratedMessageBase } from '@adobe/spectrum-wc-core/components/illustrated-message';
 
 import styles from './illustrated-message.css';
 
 /**
  * @element swc-illustrated-message
- * @since 2.0.0
+ * @since 2.0.0-beta.1
+ *
+ * @cssprop --swc-illustrated-message-max-inline-size - Maximum inline size of the message.
+ * @cssprop --swc-illustrated-message-illustration-size - Inline and block size of the illustration when no directional override is set.
+ * @cssprop --swc-illustrated-message-illustration-inline-size - Inline size override for the illustration.
+ * @cssprop --swc-illustrated-message-illustration-block-size - Block size override for the illustration.
+ * @cssprop --swc-illustrated-message-illustration-color - Color of the illustration.
+ * @cssprop --swc-illustrated-message-illustration-to-content - Spacing between the illustration and the heading/description content.
+ * @cssprop --swc-illustrated-message-heading-font-size - Font size of the heading.
+ * @cssprop --swc-illustrated-message-heading-line-height - Line height of the heading.
+ * @cssprop --swc-illustrated-message-description-font-size - Font size of the description.
+ * @cssprop --swc-illustrated-message-description-line-height - Line height of the description.
  *
  * @example
  * <swc-illustrated-message>
@@ -33,6 +44,17 @@ import styles from './illustrated-message.css';
  *   <h3 slot="heading">No results found.</h3>
  *   <span slot="description">Try adjusting your search or filters.</span>
  * </swc-illustrated-message>
+ *
+ * @cssprop --swc-illustrated-message-max-inline-size - Maximum inline size of the component.
+ * @cssprop --swc-illustrated-message-illustration-size - Square size of the illustration (width and height). Defaults to 96px for `size="s"` and `size="m"`, 160px for `size="l"`.
+ * @cssprop --swc-illustrated-message-illustration-inline-size - Illustration inline size override. Falls back to `--swc-illustrated-message-illustration-size`.
+ * @cssprop --swc-illustrated-message-illustration-block-size - Illustration block size override. Falls back to `--swc-illustrated-message-illustration-size`.
+ * @cssprop --swc-illustrated-message-illustration-color - Color applied to the SVG illustration via `currentcolor`.
+ * @cssprop --swc-illustrated-message-illustration-to-content - Gap between the illustration and the heading/description area.
+ * @cssprop --swc-illustrated-message-heading-font-size - Font size of the heading.
+ * @cssprop --swc-illustrated-message-heading-line-height - Line height of the heading.
+ * @cssprop --swc-illustrated-message-description-font-size - Font size of the description.
+ * @cssprop --swc-illustrated-message-description-line-height - Line height of the description.
  */
 export class IllustratedMessage extends IllustratedMessageBase {
   // ──────────────────────────────
@@ -46,8 +68,11 @@ export class IllustratedMessage extends IllustratedMessageBase {
   protected override render(): TemplateResult {
     return html`
       <div class="swc-IllustratedMessage">
-        <div class="swc-IllustratedMessage-illustration">
-          <slot></slot>
+        <div
+          class="swc-IllustratedMessage-illustration"
+          ?hidden=${!this.hasIllustration}
+        >
+          <slot @slotchange=${this.slotText.handleSlotChange}></slot>
         </div>
         <div class="swc-IllustratedMessage-content">
           <slot

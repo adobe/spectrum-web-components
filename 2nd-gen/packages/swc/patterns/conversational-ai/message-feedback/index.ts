@@ -9,16 +9,4 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { defineElement } from '@spectrum-web-components/core/element/index.js';
-
-import { MessageFeedback } from './MessageFeedback.js';
-
 export * from './MessageFeedback.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'swc-message-feedback': MessageFeedback;
-  }
-}
-
-defineElement('swc-message-feedback', MessageFeedback);

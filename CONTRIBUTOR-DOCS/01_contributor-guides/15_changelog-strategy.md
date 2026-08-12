@@ -47,7 +47,7 @@ Run `yarn changeset` to start the interactive CLI. It will list every package in
 | Package | When to select |
 |---|---|
 | `@adobe/spectrum-wc` | Any component change (new component, feature, bug fix) |
-| `@spectrum-web-components/core` | Changes to shared core logic (mixins, controllers, base classes) |
+| `@adobe/spectrum-wc-core` | Changes to shared core logic (mixins, controllers, base classes) |
 
 Skip all `@spectrum-web-components/*` 1st-gen packages — those follow a separate process. If your PR changes both core and a component, run `yarn changeset` twice and create one changeset for each package.
 
@@ -116,12 +116,12 @@ Bump types follow [semantic versioning](https://semver.org/) — the version num
 ### Rules
 
 - **One changeset per PR** is the default. Most PRs touch a single component and need a single changeset. Create multiple changesets only when the PR contains changes with different bump types (e.g., a minor addition and a patch fix).
-- **Select the right package** in the changeset frontmatter. The `linked` config in `.changeset/config.json` keeps `@adobe/spectrum-wc` and `@spectrum-web-components/core` at the same version automatically — you only need to list the one you touched:
+- **Select the right package** in the changeset frontmatter. The `linked` config in `.changeset/config.json` keeps `@adobe/spectrum-wc` and `@adobe/spectrum-wc-core` at the same version automatically — you only need to list the one you touched:
 
   | What changed | Frontmatter |
   |---|---|
   | Component change (e.g., added `<swc-checkbox>`) | `'@adobe/spectrum-wc': minor` |
-  | Core change (e.g., new mixin in core) | `'@spectrum-web-components/core': minor` |
+  | Core change (e.g., new mixin in core) | `'@adobe/spectrum-wc-core': minor` |
   | Both core and component in the same PR | Create **two changesets** — one for each package, each describing its own change |
 
 - **Write for consumers, not contributors.** Describe user-visible impact, not implementation details. Use **past simple tense** ("Added", "Fixed", "Removed" — not "Adds", "Fixing", "Will remove"). When a change requires consumer action, append a `Consumer action:` note; for changes that need no action, omit it.

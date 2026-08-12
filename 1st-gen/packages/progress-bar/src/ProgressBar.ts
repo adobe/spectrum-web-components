@@ -50,6 +50,10 @@ export class ProgressBar extends SizedMixin(
   @property({ type: Boolean, reflect: true })
   public indeterminate = false;
 
+  /**
+   * @deprecated The `label` string attribute will be replaced by a `label`
+   * named slot in a future release.
+   */
   @property({ type: String, reflect: true })
   public label = '';
 
@@ -82,9 +86,17 @@ export class ProgressBar extends SizedMixin(
   }
   private _overBackground: boolean = false;
 
+  /**
+   * @deprecated The `side-label` attribute will be replaced by
+   * `label-position="side"` in a future release.
+   */
   @property({ type: Boolean, reflect: true, attribute: 'side-label' })
   public sideLabel = false;
 
+  /**
+   * @deprecated The `progress` property will be replaced by `value` in a
+   * future release.
+   */
   @property({ type: Number })
   public progress = 0;
 
@@ -176,6 +188,33 @@ export class ProgressBar extends SizedMixin(
     }
 
     if (window.__swc?.DEBUG) {
+      if (changes.has('label') && this.label.length > 0) {
+        window.__swc.warn(
+          this,
+          `The "label" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use a "label" named slot, or set "aria-label" or "aria-labelledby" on the element instead.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/#accessibility',
+          { level: 'deprecation' }
+        );
+      }
+      if (changes.has('sideLabel') && this.sideLabel) {
+        window.__swc.warn(
+          this,
+          `The "side-label" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use label-position="side" instead.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/',
+          { level: 'deprecation' }
+        );
+      }
+      if (changes.has('progress') && this.progress !== 0) {
+        window.__swc.warn(
+          this,
+          `The "progress" property on <${this.localName}> has been deprecated and will be removed in a future release. Use the "value" attribute instead.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/',
+          { level: 'deprecation' }
+        );
+      }
+    }
+
+    if (window.__swc?.DEBUG) {
       if (
         !this.label &&
         !this.getAttribute('aria-label') &&
@@ -190,7 +229,7 @@ export class ProgressBar extends SizedMixin(
             type: 'accessibility',
             issues: [
               'value supplied to the "label" attribute, which will be displayed visually as part of the element, or',
-              'text content supplied directly to the <sp-progress-circle> element, or',
+              'text content supplied directly to the <sp-progress-bar> element, or',
               'value supplied to the "aria-label" attribute, which will only be provided to screen readers, or',
               'an element ID reference supplied to the "aria-labelledby" attribute, which will be provided by screen readers and will need to be managed manually by the parent application.',
             ],

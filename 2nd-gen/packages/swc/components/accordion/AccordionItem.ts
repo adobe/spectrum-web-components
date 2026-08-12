@@ -15,14 +15,9 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 
-import { AccordionItemBase } from '@spectrum-web-components/core/components/accordion';
+import { AccordionItemBase } from '@adobe/spectrum-wc-core/components/accordion';
 
-import '../icon/swc-icon.js';
-
-import { Chevron75Icon } from '../icon/elements/Chevron75Icon.js';
-import { Chevron100Icon } from '../icon/elements/Chevron100Icon.js';
-import { Chevron200Icon } from '../icon/elements/Chevron200Icon.js';
-import { Chevron300Icon } from '../icon/elements/Chevron300Icon.js';
+import '../ui-icons/swc-ui-icon.js';
 
 import styles from './accordion-item.css';
 
@@ -30,7 +25,7 @@ import styles from './accordion-item.css';
  * An accordion item component that wraps a single expandable content section.
  *
  * @element swc-accordion-item
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @fires swc-accordion-item-toggle - Dispatched when the item open state is
  *   toggled. Cancelable; `preventDefault()` reverts the change.
@@ -80,20 +75,6 @@ export class AccordionItem extends AccordionItemBase {
   //     RENDERING
   // ──────────────────────────────
 
-  private chevronForSize(): TemplateResult {
-    switch (this.size) {
-      case 's':
-        return Chevron75Icon();
-      case 'l':
-        return Chevron200Icon();
-      case 'xl':
-        return Chevron300Icon();
-      case 'm':
-      default:
-        return Chevron100Icon();
-    }
-  }
-
   private handleHeaderKeydown(event: Event): void {
     if ((event as KeyboardEvent).key === ' ') {
       // Space requires preventDefault to suppress page scroll; toggle is then
@@ -124,9 +105,11 @@ export class AccordionItem extends AccordionItemBase {
         @click=${this.toggle}
         @keydown=${this.handleHeaderKeydown}
       >
-        <swc-icon class="swc-AccordionItem-indicator" aria-hidden="true">
-          ${this.chevronForSize()}
-        </swc-icon>
+        <swc-ui-icon
+          class="swc-AccordionItem-indicator"
+          icon="chevron"
+          size=${this.size ?? 'm'}
+        ></swc-ui-icon>
         <span class="swc-AccordionItem-label">
           <slot name="label"></slot>
         </span>
@@ -137,7 +120,7 @@ export class AccordionItem extends AccordionItemBase {
         <div class="swc-AccordionItem-row">
           ${this.renderHeadingWrapper(button)}
           ${when(
-            this.slotContentIsPresent,
+            this.hasActions,
             () => html`
               <div class="swc-AccordionItem-actions">
                 <slot name="actions"></slot>

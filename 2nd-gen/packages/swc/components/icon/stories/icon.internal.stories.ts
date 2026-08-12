@@ -17,7 +17,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import {
   ICON_VALID_SIZES,
   type IconSize,
-} from '@spectrum-web-components/core/components/icon';
+} from '@adobe/spectrum-wc-core/components/icon';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
@@ -89,7 +89,7 @@ export const Playground: Story = {
   tags: ['dev'],
   render: (args) => template(args, iconSvg),
   args: {
-    label: 'Search',
+    'accessible-label': 'Search',
     size: 'm',
   },
 };
@@ -102,7 +102,7 @@ export const Overview: Story = {
   tags: ['overview'],
   render: (args) => template(args, iconSvg),
   args: {
-    label: 'Search',
+    'accessible-label': 'Search',
     size: 'm',
   },
 };
@@ -113,7 +113,13 @@ export const Overview: Story = {
 
 export const Anatomy: Story = {
   render: (args) =>
-    template({ ...args, label: args.label || 'Chevron icon' }, iconSvg),
+    template(
+      {
+        ...args,
+        'accessible-label': args['accessible-label'] || 'Chevron icon',
+      },
+      iconSvg
+    ),
   tags: ['anatomy'],
 };
 
@@ -125,7 +131,11 @@ export const Sizes: Story = {
   render: (args) => html`
     ${ICON_VALID_SIZES.map((size) =>
       template(
-        { ...args, label: args.label || sizeLabels[size], size },
+        {
+          ...args,
+          'accessible-label': args['accessible-label'] || sizeLabels[size],
+          size,
+        },
         iconSvg
       )
     )}
@@ -138,15 +148,25 @@ export const Sizes: Story = {
 
 export const Sources: Story = {
   render: (args) =>
-    template({ ...args, label: args.label || 'Chevron icon' }, iconSvg),
+    template(
+      {
+        ...args,
+        'accessible-label': args['accessible-label'] || 'Chevron icon',
+      },
+      iconSvg
+    ),
   tags: ['options'],
 };
 
 export const SharedTemplates: Story = {
   render: (args) =>
-    template({ ...args, label: args.label || 'Chevron' }, Chevron100Icon()),
+    template(
+      { ...args, 'accessible-label': args['accessible-label'] || 'Chevron' },
+      Chevron100Icon()
+    ),
   tags: ['options'],
 };
+SharedTemplates.storyName = 'Shared templates';
 
 export const AvailableIcons: Story = {
   render: (args) => {
@@ -165,7 +185,10 @@ export const AvailableIcons: Story = {
         (entry) => html`
           <div style=${styleMap(iconCardStyles)}>
             ${template(
-              { ...args, label: args.label || entry.name },
+              {
+                ...args,
+                'accessible-label': args['accessible-label'] || entry.name,
+              },
               entry.icon
             )}
             <code>${entry.name}</code>
@@ -184,6 +207,7 @@ export const AvailableIcons: Story = {
     flexLayout: 'row-wrap',
   },
 };
+AvailableIcons.storyName = 'Available icons';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

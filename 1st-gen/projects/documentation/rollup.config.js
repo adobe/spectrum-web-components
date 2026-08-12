@@ -38,6 +38,16 @@ const stringReplaceHtml = (source) => {
         ? `("/${process.env.SWC_DIR}/sw.js", {scope: "/${process.env.SWC_DIR}/"})`
         : '("/sw.js")'
     )
+    .replace(
+      // @web/rollup-plugin-html emits chunk/entry references relative to
+      // each HTML file's own directory (e.g. `../swc.[hash].js`), which
+      // only resolves correctly when the page URL has a trailing slash.
+      // Runs last so it only catches refs the absolute-path replaces
+      // above didn't already touch, rewriting them to domain-absolute
+      // paths so asset loading doesn't depend on the request URL's shape.
+      /(src|href)="(?:\.\.?\/)*(swc\.[^"]+)"/g,
+      process.env.SWC_DIR ? `$1="/${process.env.SWC_DIR}/$2"` : '$1="/$2"'
+    )
     .replace('type="module"', 'type="module" async')
     .replace(/ crossorigin="anonymous"/g, '');
 };
@@ -245,10 +255,6 @@ export default async () => {
         {
           find: '@swc-packages-internal',
           replacement: path.resolve('../../packages'),
-        },
-        {
-          find: /^@spectrum-web-components\/core\/(.*)$/,
-          replacement: path.resolve('../../../2nd-gen/packages/core/dist/$1'),
         },
       ],
     })

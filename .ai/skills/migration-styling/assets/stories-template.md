@@ -58,7 +58,7 @@ import {
   type [Component]Size,
   type [Component]Variant,
   // …add other types used in satisfies constraints below
-} from '@spectrum-web-components/core/components/[component]';
+} from '@adobe/spectrum-wc-core/components/[component]';
 
 // ────────────────
 //    METADATA

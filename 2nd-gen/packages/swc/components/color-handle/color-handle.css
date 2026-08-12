@@ -1,0 +1,127 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/* The dark-border opacity is set adaptively by the component (white-first
+   contrast, SWC-2295); the floor here matches the 1st-gen static 42% and is
+   the fallback before the component computes a value. The dark→white→dark
+   stack (outer box-shadow, white host border, inner inset border) provides the
+   additive dual-border: the handle stays visible if either the dark borders or
+   the white separator meet 3:1 against the underlying color. */
+:host {
+  --_swc-color-handle-border-alpha: 0.42;
+  --_swc-color-handle-border-color: rgb(0 0 0 / var(--_swc-color-handle-border-alpha));
+
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  z-index: 1;
+  inline-size: token("color-handle-size");
+  block-size: token("color-handle-size");
+
+  /* Center the handle on its coordinate; the outer border is drawn as a
+     box-shadow so it is not counted in the handle's size (Figma box model). */
+  margin-block: calc(-1 * calc(token("color-handle-size") / 2));
+  margin-inline: calc(-1 * calc(token("color-handle-size") / 2));
+  border-color: token("white");
+  border-style: solid;
+  border-width: token("color-handle-border-width");
+  border-radius: 100%;
+  box-shadow: 0 0 0 token("color-handle-outer-border-width") var(--_swc-color-handle-border-color);
+  touch-action: none;
+  user-select: none;
+  transition: all token("animation-duration-100") ease-in-out;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Invisible hit area so the handle is easy to grab on the parent track. */
+:host::after {
+  position: absolute;
+  inset-block: calc(50% - calc(token("color-control-track-width") / 2));
+  inset-inline: calc(50% - calc(token("color-control-track-width") / 2));
+  inline-size: token("color-control-track-width");
+  block-size: token("color-control-track-width");
+  border-radius: 100%;
+  content: "";
+}
+
+.swc-ColorHandle-inner {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  border-radius: 100%;
+  overflow: hidden;
+}
+
+/* Stacked layers filling the inner circle: the checkerboard sits behind the
+   color fill so transparent colors reveal it. */
+.swc-ColorHandle-layer {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+/* Color fill — the picked color set by the component, with the inner dark ring
+   drawn as an inset shadow above the fill so it reads against bright hues. */
+.swc-ColorHandle-colorFill {
+  background: var(--swc-color-handle-picked-color);
+  border-radius: 100%;
+  box-shadow: inset 0 0 0 token("color-handle-inner-border-width") var(--_swc-color-handle-border-color);
+}
+
+/* Grown handle is the focus indicator (no separate ring). The handle is not
+   focusable on its own; the parent color component sets `focused` when it has
+   keyboard/programmatic focus. A directly-focusable path (a parent assigning
+   `tabindex` plus a `:focus-visible` rule) will be added when a parent picker
+   is migrated and can exercise it. */
+:host([focused]) {
+  inline-size: token("color-handle-size-key-focus");
+  block-size: token("color-handle-size-key-focus");
+  margin-block: calc(-1 * token("color-handle-size"));
+  margin-inline: calc(-1 * token("color-handle-size"));
+  outline: none;
+}
+
+/* Outline-only handle: hide the color swatch, keep the border chrome. */
+:host(:not([fill])) .swc-ColorHandle-inner {
+  display: none;
+}
+
+:host([disabled]) {
+  background: token("disabled-background-color");
+  border-color: token("disabled-content-color");
+  box-shadow: none;
+  pointer-events: none;
+}
+
+:host([disabled]) .swc-ColorHandle-inner {
+  display: none;
+}
+
+@media (forced-colors: active) {
+  :host {
+    forced-color-adjust: none;
+  }
+
+  .swc-ColorHandle-colorFill {
+    forced-color-adjust: none;
+  }
+
+  :host([disabled]) {
+    background: Canvas;
+    border-color: GrayText;
+  }
+}

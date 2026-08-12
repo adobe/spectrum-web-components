@@ -36,6 +36,7 @@
     - Badge
     - Button
     - Button Group
+    - Card
     - Checkbox
     - Close Button
     - Color Field
@@ -47,6 +48,7 @@
     - Field Label
     - Grid
     - Help Text
+    - Icon
     - Illustrated Message
     - Infield Button
     - Infield Progress Circle
@@ -66,6 +68,7 @@
     - Search
     - Sidenav
     - Slider
+    - Split View
     - Status Light
     - Swatch
     - Swatch Group
@@ -73,6 +76,8 @@
     - Tabs
     - Tag
     - Tags
+    - Text Area
+    - Text Field
     - Textfield
     - Thumbnail
     - Toast
@@ -80,6 +85,8 @@
 - [Milestones](04_milestones/README.md)
 - Strategies
     - [Focus Management Strategy: 2nd-Gen Proposal](05_strategies/focus-management-strategy-rfc.md)
+    - [Forms Strategy: 2nd-Gen Proposal](05_strategies/forms-strategy-rfc.md)
+    - [RFC: 2nd-gen icon strategy (Spectrum 2)](05_strategies/icon-rfc.md)
 
 </details>
 

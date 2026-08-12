@@ -31,7 +31,7 @@ import '@adobe/spectrum-wc/swc.css';
 
 This will load the Spectrum 2 tokens, typography, and base app styles.
 
-Adobe Clean Spectrum VF fonts load separately — see the [Fonts guide](/docs/guides-customization-fonts--docs).
+Load Adobe Clean Spectrum VF fonts separately. See the [Fonts guide](/docs/guides-customization-fonts--docs).
 
 ## Set the application color scheme
 
@@ -45,9 +45,9 @@ Apply `swc-theme` plus one color class on a root element. Nested SWC components 
 </html>
 ```
 
-- `swc-theme--light` — light color scheme.
-- `swc-theme--dark` — dark color scheme.
-- `swc-theme--adaptive` — follows the user's OS setting.
+- `swc-theme--light`: light color scheme.
+- `swc-theme--dark`: dark color scheme.
+- `swc-theme--adaptive`: follows the user's OS setting.
 
 ## Use your first component
 
@@ -65,10 +65,30 @@ import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
 You can open that component's documentation page for the feature overview, accessibility guidance, and the full API. For this example, see [Badge](/docs/components-badge--docs).
 
+## Use your first pattern
+
+Patterns use the same per-element side-effect imports as components. Include only the pattern elements your application uses:
+
+```ts
+import '@adobe/spectrum-wc/patterns/conversational-ai/response-status/swc-response-status.js';
+```
+
+```html
+<swc-response-status loading></swc-response-status>
+```
+
+Import a pattern's public class or types from its index path without registering the custom element:
+
+```ts
+import type { ResponseStatus } from '@adobe/spectrum-wc/patterns/conversational-ai/response-status';
+```
+
+See the [Conversational AI pattern overview](/docs/patterns-conversational-ai-pattern-overview--docs) for the available elements and their registration imports.
+
 ## Where to look next
 
-- **Components** — individual building blocks: badge, button, avatar, progress-circle, and more.
-- **Patterns** — higher-level UI flows composed of components.
-- **Guides** — deeper setup: theme color schemes, fonts, customization, accessibility.
-- **[Support and compatibility](/docs/resources-support-and-compatibility--docs)** — versioning, APIs, and browser support for `@adobe/spectrum-wc`.
-- **[Changelog](/docs/resources-changelog--docs)** — release notes for `@adobe/spectrum-wc`.
+- **Components**: individual building blocks such as badge, button, avatar, progress circle, and more
+- **Patterns**: higher-level UI flows composed of components
+- **Guides**: deeper setup for theme color schemes, fonts, customization, and accessibility
+- **[Support and compatibility](/docs/resources-support-and-compatibility--docs)**: versioning, APIs, and browser support for `@adobe/spectrum-wc`
+- **[Changelog](/docs/resources-changelog--docs)**: release notes for `@adobe/spectrum-wc`

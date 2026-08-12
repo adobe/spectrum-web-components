@@ -26,15 +26,17 @@ export const TABS_DEFAULT_DIRECTION =
 /**
  * How keyboard focus interacts with selection (Spectrum Design / S2 naming).
  *
- * - **`manual`**: Arrow keys move focus; Enter or Space activates (default).
- * - **`automatic`**: Selection follows focus as the user arrows between tabs.
+ * - **`automatic`**: Selection follows focus as the user arrows between tabs
+ *   (default, matches React Spectrum/React Aria `Tabs`).
+ * - **`manual`**: Arrow keys move focus; Enter or Space activates. Prefer this
+ *   for tab panels that are expensive to render or not fully present in the DOM.
  */
 export const KEYBOARD_ACTIVATIONS = ['manual', 'automatic'] as const;
 
 export type KeyboardActivation = (typeof KEYBOARD_ACTIVATIONS)[number];
 
 export const KEYBOARD_ACTIVATION_DEFAULT =
-  'manual' as const satisfies KeyboardActivation;
+  'automatic' as const satisfies KeyboardActivation;
 
 /**
  * Tab list density (Spectrum Design `density` naming).

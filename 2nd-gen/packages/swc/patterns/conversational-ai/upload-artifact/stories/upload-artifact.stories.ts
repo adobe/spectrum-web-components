@@ -14,7 +14,7 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '../index.js';
+import '../swc-upload-artifact.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-upload-artifact');
 
@@ -30,8 +30,10 @@ argTypes.type = {
 
 /**
  * Shared upload artifact primitive used across conversational AI surfaces such as prompt field and user message.
- * Supports both **`card`** and **`media`** types with a unified slot model.
- * For several attachments at once, see **Multi-artifact** and **[Prompt field → Artifact](/docs/patterns-conversational-ai-prompt-field--readme#artifact)**.
+ * Supports **`card`** and **`media`** types with a unified slot model.
+ * Use one layout type per attachment strip: cards only, or media tiles only (with or without badge).
+ * When uploads mix images and documents, normalize to all media tiles.
+ * For several attachments at once, see **Multi-card**, **Multi-media**, and **[Prompt field → Artifact](/docs/patterns-conversational-ai-prompt-field--docs#artifact)**.
  */
 const meta: Meta = {
   title: 'Conversational AI/Upload artifact',
@@ -41,12 +43,14 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
+      packagePath: 'patterns/conversational-ai/upload-artifact',
       subtitle:
-        'Card and media tiles for attachments; combine multiple in a strip (see Multi-artifact gallery) or slot them into the prompt field artifact region.',
+        'Card and media tiles for attachments. Use one layout type per strip; normalize mixed uploads to media with badges.',
     },
     layout: 'padded',
   },
   excludeStories: ['meta'],
+  tags: ['migrated'],
 };
 
 export default meta;
@@ -97,14 +101,14 @@ export const Overview: Story = {
   tags: ['overview'],
 };
 
-export const MultiArtifact: Story = {
+export const MultiCard: Story = {
   render: () => html`
     <div
       style="display:flex;flex-direction:column;gap:16px;max-inline-size:720px;"
     >
       <p class="swc-Detail swc-Detail--sizeS" style="margin:0;">
-        Mirrors the prompt-field Attachment strip: cards and media tiles
-        together, plus an extra card to stress-test wrapping at narrow widths.
+        Multiple card artifacts in one strip. Do not combine cards with media
+        tiles in the same composer session.
       </p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">
         <swc-upload-artifact type="card" dismissible>
@@ -112,32 +116,63 @@ export const MultiArtifact: Story = {
           <span slot="title">Brand guidelines</span>
           <span slot="subtitle">PDF</span>
         </swc-upload-artifact>
-        <swc-upload-artifact type="media" dismissible>
-          <div
-            slot="thumbnail"
-            style="inline-size:100%;block-size:100%;min-block-size:120px;background:linear-gradient(135deg,#6366f1,#ec4899);"
-            role="img"
-            aria-label="Campaign still"
-          ></div>
-        </swc-upload-artifact>
-        <swc-upload-artifact type="media" dismissible>
-          <div
-            slot="thumbnail"
-            style="inline-size:100%;block-size:100%;min-block-size:120px;background:linear-gradient(135deg,#0ea5e9,#22c55e);"
-            role="img"
-            aria-label="Storyboard frame"
-          ></div>
-        </swc-upload-artifact>
         <swc-upload-artifact type="card" dismissible>
           <div slot="thumbnail" role="img" aria-label="Spreadsheet"></div>
           <span slot="title">Q2 metrics draft</span>
           <span slot="subtitle">XLSX</span>
+        </swc-upload-artifact>
+        <swc-upload-artifact type="card" dismissible>
+          <div slot="thumbnail" role="img" aria-label="Deck"></div>
+          <span slot="title">Executive summary</span>
+          <span slot="subtitle">PPTX</span>
         </swc-upload-artifact>
       </div>
     </div>
   `,
   tags: ['options'],
 };
+
+export const MultiMedia: Story = {
+  render: () => html`
+    <div
+      style="display:flex;flex-direction:column;gap:16px;max-inline-size:720px;"
+    >
+      <p class="swc-Detail swc-Detail--sizeS" style="margin:0;">
+        Multiple media tiles in one strip, with and without a badge. Use media
+        only, not mixed with cards.
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">
+        <swc-upload-artifact type="media" dismissible>
+          <img
+            slot="thumbnail"
+            src="https://picsum.photos/id/64/68/68"
+            alt="Campaign still"
+            style="inline-size:100%;block-size:100%;object-fit:cover;"
+          />
+        </swc-upload-artifact>
+        <swc-upload-artifact type="media" dismissible>
+          <div
+            slot="thumbnail"
+            role="img"
+            aria-label="Document preview"
+            style="inline-size:100%;block-size:100%;background:#f3f3f3;"
+          ></div>
+          <span slot="badge">PDF</span>
+        </swc-upload-artifact>
+        <swc-upload-artifact type="media" dismissible>
+          <img
+            slot="thumbnail"
+            src="https://picsum.photos/id/56/68/68"
+            alt="Storyboard frame"
+            style="inline-size:100%;block-size:100%;object-fit:cover;"
+          />
+        </swc-upload-artifact>
+      </div>
+    </div>
+  `,
+  tags: ['options'],
+};
+MultiCard.storyName = 'Multi artifact';
 
 export const Card: Story = {
   render: () => html`
@@ -156,7 +191,29 @@ export const Media: Story = {
   render: () => html`
     <div style="inline-size:240px;">
       <swc-upload-artifact type="media" dismissible>
-        <div slot="thumbnail" role="img" aria-label="Campaign preview"></div>
+        <img
+          slot="thumbnail"
+          src="https://picsum.photos/id/823/68/68"
+          alt="Campaign preview"
+          style="inline-size:100%;block-size:100%;object-fit:cover;"
+        />
+      </swc-upload-artifact>
+    </div>
+  `,
+  tags: ['options'],
+};
+
+export const MediaWithBadge: Story = {
+  render: () => html`
+    <div style="inline-size:240px;">
+      <swc-upload-artifact type="media" dismissible>
+        <img
+          slot="thumbnail"
+          src="https://picsum.photos/id/823/68/68"
+          alt="Mixed attachment preview"
+          style="inline-size:100%;block-size:100%;object-fit:cover;"
+        />
+        <span slot="badge">PDF</span>
       </swc-upload-artifact>
     </div>
   `,
@@ -179,3 +236,4 @@ export const TextOverflow: Story = {
   `,
   tags: ['options'],
 };
+TextOverflow.storyName = 'Text overflow';

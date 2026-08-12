@@ -14,7 +14,7 @@ import { html } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../index.js';
+import '../swc-upload-artifact.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
 import meta, { Overview } from '../stories/upload-artifact.stories.js';
@@ -43,16 +43,21 @@ export const OverviewTest: Story = {
       async () => {
         expect(el.type).toBe('card');
         expect(el.dismissible).toBe(true);
-        expect(el.dismissLabel).toBe('Remove attachment');
+        expect(el.dismissLabel).toBe('');
+        expect(el.getAttribute('role')).toBe('group');
+        expect(el.getAttribute('aria-label')).toBe('Hilton commercial assets');
 
         const dismissButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
           '.swc-UploadArtifact-dismiss'
         );
-        const icon = dismissButton?.querySelector('swc-icon');
-        expect(dismissButton?.getAttribute('aria-label')).toBe(
-          'Remove attachment'
+        const dismissIcon = dismissButton?.querySelector(
+          '.swc-UploadArtifact-dismiss-icon'
         );
-        expect(icon?.getAttribute('aria-hidden')).toBe('true');
+        expect(dismissButton?.getAttribute('aria-label')).toBe(
+          'Remove Hilton commercial assets'
+        );
+        expect(dismissButton?.tabIndex).toBe(0);
+        expect(dismissIcon?.getAttribute('aria-hidden')).toBe('true');
       }
     );
   },
@@ -128,6 +133,34 @@ export const DismissEventTest: Story = {
   },
 };
 
+export const DismissSizeOverrideTest: Story = {
+  render: () => html`
+    <swc-upload-artifact
+      dismissible
+      style="--swc-upload-artifact-dismiss-inline-size: 40px; --swc-upload-artifact-dismiss-block-size: 36px;"
+    >
+      Hilton commercial assets
+    </swc-upload-artifact>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<UploadArtifact>(
+      canvasElement,
+      'swc-upload-artifact'
+    );
+
+    await step('consumer dismiss-size overrides are preserved', async () => {
+      const dismissButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-UploadArtifact-dismiss'
+      );
+      const dismissButtonStyle =
+        dismissButton && getComputedStyle(dismissButton);
+
+      expect(dismissButtonStyle?.inlineSize).toBe('40px');
+      expect(dismissButtonStyle?.blockSize).toBe('36px');
+    });
+  },
+};
+
 export const MediaPreviewOnlyTest: Story = {
   render: () => html`
     <div style="inline-size:240px;">
@@ -149,6 +182,59 @@ export const MediaPreviewOnlyTest: Story = {
 
     await step('media artifact has type="media"', async () => {
       expect(el.type).toBe('media');
+    });
+  },
+};
+
+export const MediaBadgeTest: Story = {
+  render: () => html`
+    <div style="display:flex;gap:16px;">
+      <swc-upload-artifact type="media" dismissible>
+        <img
+          slot="thumbnail"
+          src="https://picsum.photos/id/823/68/68"
+          alt="Tagged preview"
+          style="inline-size:100%;block-size:100%;object-fit:cover;"
+        />
+        <span slot="badge">PDF</span>
+      </swc-upload-artifact>
+      <swc-upload-artifact type="media" dismissible>
+        <img
+          slot="thumbnail"
+          src="https://picsum.photos/id/64/68/68"
+          alt="Plain preview"
+          style="inline-size:100%;block-size:100%;object-fit:cover;"
+        />
+      </swc-upload-artifact>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const artifacts = canvasElement.querySelectorAll('swc-upload-artifact');
+
+    await step(
+      'badge slot renders a bottom-left overlay when content is provided',
+      async () => {
+        const withBadge = artifacts[0] as UploadArtifact;
+        await withBadge.updateComplete;
+
+        const badge = withBadge.shadowRoot?.querySelector(
+          '.swc-UploadArtifact-badge'
+        );
+        expect(badge).toBeTruthy();
+        expect(
+          withBadge.querySelector('[slot="badge"]')?.textContent?.trim()
+        ).toBe('PDF');
+      }
+    );
+
+    await step('badge overlay is omitted when the slot is empty', async () => {
+      const withoutBadge = artifacts[1] as UploadArtifact;
+      await withoutBadge.updateComplete;
+
+      const badge = withoutBadge.shadowRoot?.querySelector(
+        '.swc-UploadArtifact-badge'
+      );
+      expect(badge).toBeNull();
     });
   },
 };

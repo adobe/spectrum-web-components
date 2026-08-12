@@ -11,16 +11,15 @@
  */
 
 import { PropertyValues } from 'lit';
-import { property, state } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import {
-  ObserveSlotPresence,
-  ObserveSlotText,
-  SizedMixin,
-} from '@spectrum-web-components/core/mixins/index.js';
+import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot-presence-controller/index.js';
+import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import { warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
 
-import { BUTTON_VALID_SIZES } from './Button.types.js';
+import { BUTTON_VALID_SIZES, type ButtonSize } from './Button.types.js';
 
 /**
  * Abstract base class for all button-like components. Owns shared semantic
@@ -32,18 +31,11 @@ import { BUTTON_VALID_SIZES } from './Button.types.js';
  * PickerButton, and InfieldButton can extend this base without inheriting
  * the `swc-button` visual surface.
  *
- * @slot - Visible button label.
- * @slot icon - Optional leading icon.
- *
  * @attribute {ElementSize} size - The size of the button.
- *
- * @todo We currently have 3 levels of mixins on this class, but the mixin
- * composition guide recommends a maximum of 2. Explore reducing after milestone 2.
  */
-export abstract class ButtonBase extends SizedMixin(
-  ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
-  { validSizes: BUTTON_VALID_SIZES }
-) {
+export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
+  validSizes: BUTTON_VALID_SIZES,
+}) {
   static override shadowRootOptions: ShadowRootInit = {
     ...SpectrumElement.shadowRootOptions,
     delegatesFocus: true,
@@ -54,18 +46,18 @@ export abstract class ButtonBase extends SizedMixin(
   // ──────────────────
 
   /**
+   * The size of the button.
+   *
+   * @default m
+   */
+  declare public size: ButtonSize;
+
+  /**
    * Whether the button is disabled. Removes focusability and prevents
    * interaction.
    */
   @property({ type: Boolean, reflect: true })
   public disabled: boolean = false;
-
-  /**
-   * Whether the button is in a pending (busy) state. The button remains
-   * focusable but activation is suppressed.
-   */
-  @property({ type: Boolean, reflect: true })
-  public pending: boolean = false;
 
   /**
    * Accessible label forwarded to the internal `<button>` element as
@@ -74,61 +66,36 @@ export abstract class ButtonBase extends SizedMixin(
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel?: string;
 
-  /**
-   * Custom accessible label used during the pending state. When omitted,
-   * the pending label is derived from the resolved non-busy accessible name
-   * plus a busy suffix (e.g. "Save, busy").
-   */
-  @property({ type: String, attribute: 'pending-label' })
-  public pendingLabel?: string;
+  // ──────────────────────
+  //     CONTROLLERS
+  // ──────────────────────
 
   /**
-   * Tracks whether the pending visual (disabled colors + spinner) is currently
-   * active. Set to `true` after a 1-second delay once `pending` becomes true,
-   * so the button does not immediately flash to its unavailable appearance.
-   * Protected so subclasses can reference it in their `classMap` binding.
+   * Observes whether an icon is slotted into `[slot="icon"]`.
+   *
+   * @internal
    */
-  @state()
-  protected pendingActive: boolean = false;
+  protected slotPresence = new SlotPresenceController(this, '[slot="icon"]');
+
+  /**
+   * Observes whether the default slot has a meaningful text label. The default
+   * slot must bind `@slotchange=${this.slotText.handleSlotChange}` for changes
+   * after the first render to be tracked.
+   *
+   * @internal
+   */
+  protected slotText = new SlotTextController(this);
 
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
 
-  private _pendingTimer: ReturnType<typeof setTimeout> | null = null;
-
   protected get hasIcon(): boolean {
-    return this.slotContentIsPresent;
+    return this.slotPresence.isPresent;
   }
 
   protected get hasLabel(): boolean {
-    return this.slotHasContent;
-  }
-
-  /**
-   * Resolves the accessible name for the button from `accessibleLabel` or
-   * visible text content. Returns `null` when no accessible name is
-   * determinable.
-   *
-   * @internal
-   */
-  protected getResolvedAccessibleName(): string | null {
-    return this.accessibleLabel ?? (this.textContent?.trim() || null);
-  }
-
-  /**
-   * Derives the pending-state accessible label. Prefers an explicit
-   * `pendingLabel`, then falls back to the resolved non-busy accessible
-   * name plus a ", busy" suffix, then a fixed "Busy" fallback.
-   *
-   * @internal
-   */
-  protected getPendingAccessibleName(): string {
-    if (this.pendingLabel) {
-      return this.pendingLabel;
-    }
-    const resolvedName = this.getResolvedAccessibleName();
-    return resolvedName ? `${resolvedName}, busy` : 'Busy';
+    return this.slotText.hasContent;
   }
 
   /**
@@ -143,7 +110,6 @@ export abstract class ButtonBase extends SizedMixin(
   > {
     return {
       disabled: this.disabled,
-      'aria-disabled': this.pending && !this.disabled ? 'true' : undefined,
     };
   }
 
@@ -156,73 +122,31 @@ export abstract class ButtonBase extends SizedMixin(
 
   public override disconnectedCallback(): void {
     this.removeEventListener('click', this.handleClick, true);
-    if (this._pendingTimer !== null) {
-      clearTimeout(this._pendingTimer);
-      this._pendingTimer = null;
-    }
-    this.pendingActive = false;
     super.disconnectedCallback();
   }
 
   /**
-   * Suppresses click activation while the button is `disabled` or `pending`.
+   * Suppresses click activation while the button is `disabled`.
    *
    * Slotted icon content lives in the light DOM, so pointer clicks on icons
    * bypass the disabled inner `<button>` and bubble on the host. The host
    * listener (capture) and inner `@click` binding both call this handler.
    */
   protected readonly handleClick = (event: Event): void => {
-    if (this.disabled || this.pending) {
+    if (this.disabled) {
       event.preventDefault();
       event.stopImmediatePropagation();
     }
   };
 
   protected override update(changedProperties: PropertyValues): void {
-    if (changedProperties.has('pending')) {
-      if (this.pending) {
-        this._pendingTimer = setTimeout(() => {
-          if (this.pending) {
-            const internalButton = this.renderRoot.querySelector('button');
-            if (internalButton) {
-              internalButton.style.setProperty(
-                '--_swc-button-pending-inline-size',
-                `${internalButton.offsetWidth}px`
-              );
-            }
-            this.pendingActive = true;
-          }
-          this._pendingTimer = null;
-        }, 1000);
-      } else {
-        if (this._pendingTimer !== null) {
-          clearTimeout(this._pendingTimer);
-          this._pendingTimer = null;
-        }
-        this.renderRoot
-          .querySelector('button')
-          ?.style.removeProperty('--_swc-button-pending-inline-size');
-        this.pendingActive = false;
-      }
-    }
     super.update(changedProperties);
-    if (window.__swc?.DEBUG) {
-      if (this.pending && this.disabled) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> should not set both "pending" and "disabled" simultaneously. Use "pending" to keep the button focusable while unavailable, or "disabled" to fully remove it from the tab order.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/button/#pending',
-          { issues: ['pending + disabled'] }
-        );
-      }
-      if (this.hasIcon && !this.hasLabel && !this.accessibleLabel) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> with an icon and no label must have an "accessible-label" attribute to be accessible.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/button/#icon-only',
-          { issues: ['accessible-label'] }
-        );
-      }
-    }
+    warnIf(
+      this,
+      this.hasIcon && !this.hasLabel && !this.accessibleLabel,
+      `<${this.localName}> with an icon and no label must have an "accessible-label" attribute to be accessible.`,
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
+      { type: 'accessibility', issues: ['accessible-label'] }
+    );
   }
 }

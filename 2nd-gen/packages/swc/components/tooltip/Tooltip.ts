@@ -11,7 +11,7 @@
  */
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { TooltipBase } from '@spectrum-web-components/core/components/tooltip';
+import { TooltipBase } from '@adobe/spectrum-wc-core/components/tooltip';
 
 import styles from './tooltip.css';
 
@@ -19,7 +19,7 @@ import styles from './tooltip.css';
  * A tooltip component that displays a brief, contextual message near a trigger element.
  *
  * @element swc-tooltip
- * @since 2.0.0
+ * @since 2.0.0-beta.1
  *
  * @example
  * <button id="save-btn">Save</button>

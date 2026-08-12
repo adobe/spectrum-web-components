@@ -86,7 +86,7 @@ export default {
     '../core/**/stories/**',
     '../core/**/test/**',
   ],
-  outdir: '.storybook',
+  outdir: 'dist',
   litelement: true,
   dev: false,
   plugins: [statusPlugin()],

@@ -86,7 +86,7 @@ These two rules share the same glob (`2nd-gen/**/stories/**`) and work as a pair
 - **stories-format**: File structure and technical conventions
   - Visual separators, meta configuration, required tags, layout parameters
   - `render` vs `args` patterns, `flexLayout` usage
-  - Static color three-story pattern, image asset conventions
+  - Static color single-story pattern, image asset conventions
 
 #### Component README
 
@@ -286,6 +286,13 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - **How to invoke**: Say "write tests for [component] migration", "add migration tests for [component]", or "phase 6 migration for [component]"
 - Use when: Implementation is feature-complete and the approved `migration-plan.md` can be used to derive the must-ship test matrix before review
 - Provides: Test coverage checklist, unit/a11y/play-function patterns, test-running verification, and plan-driven coverage checks for breaking changes and regressions
+
+#### VRT authoring (`vrt-authoring`)
+
+- **purpose**: Author dedicated Storybook visual regression stories for 2nd-gen components
+- **How to invoke**: Say "add VRT for [component]", "write visual regression stories", or mention `.vrt.ts`, Chromatic, forced-colors VRT, global styles VRT, or custom-property VRT
+- Use when: Adding or reviewing `test/vrt/*.vrt.ts` files during migration or test cleanup
+- Provides: Dedicated VRT file shape, shared helper usage, pseudo-state/forced-colors patterns, and custom-property coverage checks against the generated API metadata
 
 #### Migration — conformance sub-task (`migration-conformance`)
 

@@ -16,22 +16,19 @@ import { property } from 'lit/decorators.js';
 import {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,
-} from '@spectrum-web-components/core/controllers/language-resolution.js';
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
+} from '@adobe/spectrum-wc-core/controllers/language-resolution.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import {
+  isDebug,
+  validateEnum,
+  warnIf,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   PROGRESS_CIRCLE_VALID_SIZES,
   ProgressCircleStaticColor,
 } from './ProgressCircle.types.js';
-
-/**
- * @todo SWC-2037 Extract shared progress logic (ARIA, label, clamping, formatting,
- * indeterminate derivation) into a `ProgressBase` mixin or abstract class in
- * `core/components/progress/` so that both `ProgressCircleBase` and a future
- * `ProgressBarBase` can extend it. Also add `formatOptions` support for
- * progress-bar's custom value labels (e.g. "3 of 10", "45 MB / 100 MB").
- */
 
 /**
  * A progress circle component that visually represents the completion progress of a task.
@@ -158,36 +155,12 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   }
 
   private warnDeprecatedLightDomChildren(): void {
-    if (!window.__swc?.DEBUG) {
-      return;
-    }
-    if (!ProgressCircleBase.hasMeaningfulLightDomChildren(this)) {
-      return;
-    }
-    window.__swc.warn(
+    warnIf(
       this,
+      ProgressCircleBase.hasMeaningfulLightDomChildren(this),
       `<${this.localName}> no longer has a default slot. Light DOM children are not rendered and are not used for an accessible name. Use the "label" attribute or property, or "aria-label" / "aria-labelledby" on the host instead.`,
-      'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/components-progress-circle--docs',
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle--docs',
       { level: 'deprecation' }
-    );
-  }
-
-  private warnMissingAccessibleName(): void {
-    if (!window.__swc?.DEBUG) {
-      return;
-    }
-    window.__swc?.warn(
-      this,
-      `<${this.localName}> requires an accessible name. A default label of "${ProgressCircleBase.DEFAULT_LABEL}" has been applied, but a more specific label should be provided via:`,
-      'https://opensource.adobe.com/spectrum-web-components/second-gen/?path=/docs/components-progress-circle--docs',
-      {
-        type: 'accessibility',
-        issues: [
-          'value supplied to the "label" attribute, which will be displayed visually as part of the element, or',
-          'value supplied to the "aria-label" attribute, which will only be provided to screen readers, or',
-          'an element ID reference supplied to the "aria-labelledby" attribute, which will be provided by screen readers and will need to be managed manually by the parent application.',
-        ],
-      }
     );
   }
 
@@ -198,6 +171,7 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
         this.progress = clamped;
       }
     }
+
     super.willUpdate(changes);
   }
 
@@ -238,10 +212,37 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     // Apply default accessible name fallback after handling explicit label changes.
     if (changes.has('label') && !this.hasAccessibleName()) {
       this.setAttribute('aria-label', ProgressCircleBase.DEFAULT_LABEL);
-      this.warnMissingAccessibleName();
+      warnIf(
+        this,
+        true,
+        `<${this.localName}> requires an accessible name. A default label of "${ProgressCircleBase.DEFAULT_LABEL}" has been applied, but a more specific label should be provided via:`,
+        'https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle--docs',
+        {
+          type: 'accessibility',
+          issues: [
+            'value supplied to the "label" attribute, which will be displayed visually as part of the element, or',
+            'value supplied to the "aria-label" attribute, which will only be provided to screen readers, or',
+            'an element ID reference supplied to the "aria-labelledby" attribute, which will be provided by screen readers and will need to be managed manually by the parent application.',
+          ],
+        }
+      );
     }
 
-    if (window.__swc?.DEBUG) {
+    if (changes.has('staticColor') && this.staticColor !== undefined) {
+      const constructor = this.constructor as typeof ProgressCircleBase;
+      validateEnum(this, {
+        prop: 'static-color',
+        value: this.staticColor,
+        valid: constructor.STATIC_COLORS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle--docs',
+      });
+    }
+
+    // Guard the call site: `hasMeaningfulLightDomChildren` traverses the light
+    // DOM and the message is built eagerly as an argument, so both would run on
+    // every `updated()` (including production) if passed straight to `warnIf`.
+    // `isDebug()` skips that work entirely when validation is off.
+    if (isDebug()) {
       this.warnDeprecatedLightDomChildren();
     }
   }

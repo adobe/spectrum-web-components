@@ -14,6 +14,7 @@ The purpose of this documentation is to help SWC engineers understand:
 2. **What features are new** and need implementation
 3. **What features are deprecated** and should be removed or flagged
 4. **What structural changes** affect render methods
+5. **What existing issues** have been logged in the component's gen1 implementation
 
 Write for an engineer who will scan this document to estimate migration work. Every section should answer: "What do I need to change in the web component?"
 

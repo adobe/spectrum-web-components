@@ -14,17 +14,17 @@ import { html, LitElement } from 'lit';
 import { state } from 'lit/decorators.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../index.js';
-import '../../conversation-turn/index.js';
-import '../../system-message/index.js';
-import '../../user-message/index.js';
-import '../../response-status/index.js';
-import '../../message-feedback/index.js';
-import '../../message-sources/index.js';
-import '../../suggestion/index.js';
-import '../../suggestion-item/index.js';
-import '../../prompt-field/index.js';
-import '../../upload-artifact/index.js';
+import '../swc-conversation-thread.js';
+import '../../conversation-turn/swc-conversation-turn.js';
+import '../../system-message/swc-system-message.js';
+import '../../user-message/swc-user-message.js';
+import '../../response-status/swc-response-status.js';
+import '../../message-feedback/swc-message-feedback.js';
+import '../../message-sources/swc-message-sources.js';
+import '../../suggestion/swc-suggestion-group.js';
+import '../../suggestion-item/swc-suggestion-item.js';
+import '../../prompt-field/swc-prompt-field.js';
+import '../../upload-artifact/swc-upload-artifact.js';
 
 import { uniqueId } from '../../../../utils/id.js';
 
@@ -48,12 +48,14 @@ const meta: Meta = {
   component: 'swc-conversation-thread',
   parameters: {
     docs: {
+      packagePath: 'patterns/conversational-ai/conversation-thread',
       subtitle:
         'Stacks conversation turns and enables roving keyboard focus between them.',
     },
     layout: 'padded',
   },
   excludeStories: ['meta'],
+  tags: ['migrated'],
 };
 
 export { meta };
@@ -68,7 +70,7 @@ const threadExampleSource = `<div style="max-inline-size: 720px;">
     </swc-conversation-turn>
     <swc-conversation-turn type="system">
       <swc-system-message>
-        <swc-response-status slot="status">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</swc-response-status>
+        <swc-response-status slot="status" status="complete"><span slot="label">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</span></swc-response-status>
         <div class="swc-Typography--prose">
           <h3>Big idea/core narrative: The warmth of welcome</h3>
           <p>Hospitality begins the moment our customers set foot off their plane.</p>
@@ -97,9 +99,11 @@ const renderThread = () => html`
 
       <swc-conversation-turn type="system">
         <swc-system-message>
-          <swc-response-status slot="status">
-            I interpreted your request as an executive narrative task and
-            prioritized a concise, audience-ready structure.
+          <swc-response-status slot="status" status="complete">
+            <span slot="label">
+              I interpreted your request as an executive narrative task and
+              prioritized a concise, audience-ready structure.
+            </span>
           </swc-response-status>
           <div class="swc-Typography--prose">
             <h3>Big idea/core narrative: The warmth of welcome</h3>
@@ -128,10 +132,51 @@ type DemoArtifact = {
   id: string;
   title: string;
   subtitle: string;
-  /** Present only for image uploads; used to render `type="media"` in the thread. */
+  /** Image preview URL when the attachment is a visual file. */
   thumbnailUrl?: string;
   objectUrl?: string;
+  /** File-type label for non-image media tiles (for example, "PDF"). */
+  badge?: string;
 };
+
+const getFileBadge = (fileName: string): string | undefined => {
+  const match = fileName.toLowerCase().match(/\.([a-z0-9]+)$/);
+  if (!match) {
+    return 'FILE';
+  }
+
+  const extension = match[1];
+  if (/^(png|jpe?g|gif|webp|bmp|svg|avif)$/.test(extension)) {
+    return undefined;
+  }
+
+  if (extension === 'pdf') {
+    return 'PDF';
+  }
+
+  return extension.toUpperCase();
+};
+
+const renderDemoArtifactThumbnail = (
+  artifact: DemoArtifact
+): ReturnType<typeof html> =>
+  artifact.thumbnailUrl
+    ? html`
+        <img
+          slot="thumbnail"
+          src=${artifact.thumbnailUrl}
+          alt=${artifact.title}
+          style="inline-size:100%;block-size:100%;object-fit:cover;"
+        />
+      `
+    : html`
+        <div
+          slot="thumbnail"
+          role="img"
+          aria-label=${artifact.title}
+          style="inline-size:100%;block-size:100%;background:#f3f3f3;"
+        ></div>
+      `;
 
 type DemoTurn = {
   id: string;
@@ -139,7 +184,6 @@ type DemoTurn = {
   text: string;
   artifacts?: DemoArtifact[];
   loading?: boolean;
-  statusOpen?: boolean;
   sourcesOpen?: boolean;
   feedbackStatus?: 'positive' | 'negative' | undefined;
 };
@@ -149,6 +193,32 @@ const DEMO_SUGGESTIONS = [
   'Generate congratulatory poster',
   'Summarize development pipeline',
 ] as const;
+
+const renderDemoResponseStatusSteps = (complete: boolean) => html`
+  <swc-response-status-step status="complete">
+    <span slot="label">Read source context</span>
+    <span slot="description">
+      Reviewed the prompt, uploaded assets, and prior conversation context.
+    </span>
+  </swc-response-status-step>
+  <swc-response-status-step status=${complete ? 'complete' : 'active'}>
+    <span slot="label">Draft response structure</span>
+    <span slot="description">
+      Organizing the answer into a concise narrative with supporting proof
+      points.
+    </span>
+  </swc-response-status-step>
+  ${complete
+    ? html`
+        <swc-response-status-step status="complete">
+          <span slot="label">Prepare next-step suggestions</span>
+          <span slot="description">
+            Created follow-up prompts that match the generated response.
+          </span>
+        </swc-response-status-step>
+      `
+    : ''}
+`;
 
 const buildAssistantReply = (prompt: string): string => {
   const normalized = prompt.trim() || 'your request';
@@ -167,7 +237,6 @@ class ConversationFullPatternDemo extends LitElement {
       id: 'system-1',
       role: 'system',
       text: 'I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.',
-      statusOpen: false,
       sourcesOpen: false,
     },
   ];
@@ -227,7 +296,6 @@ class ConversationFullPatternDemo extends LitElement {
       role: 'system',
       text: '',
       loading: true,
-      statusOpen: false,
       sourcesOpen: false,
     };
 
@@ -314,12 +382,15 @@ class ConversationFullPatternDemo extends LitElement {
         typeof file.size === 'number'
           ? `${Math.max(1, Math.round(file.size / 1024))} KB`
           : 'Attachment';
+      const fileName = file.name || 'Attachment';
+
       return {
         id: uniqueId(`artifact-${index}`),
-        title: file.name || 'Attachment',
+        title: fileName,
         subtitle: sizeLabel,
         thumbnailUrl: objectUrl,
         objectUrl,
+        badge: isImage ? undefined : getFileBadge(fileName),
       } satisfies DemoArtifact;
     });
 
@@ -383,19 +454,6 @@ class ConversationFullPatternDemo extends LitElement {
     this.artifacts = this.artifacts.filter((item) => item.id !== artifactId);
   };
 
-  private handleStatusToggle = (event: Event): void => {
-    const toggleEvent = event as CustomEvent<{ open?: boolean }>;
-    const statusHost = event.target as HTMLElement | null;
-    const turnId = statusHost?.getAttribute('data-status-id');
-    const open = toggleEvent.detail?.open;
-    if (!turnId || typeof open !== 'boolean') {
-      return;
-    }
-    this.turns = this.turns.map((turn) =>
-      turn.id === turnId ? { ...turn, statusOpen: open } : turn
-    );
-  };
-
   private handleSourcesToggle = (event: Event): void => {
     const toggleEvent = event as CustomEvent<{ open?: boolean }>;
     const sourcesHost = event.target as HTMLElement | null;
@@ -413,31 +471,16 @@ class ConversationFullPatternDemo extends LitElement {
     return this.turns.map((turn) => {
       if (turn.role === 'user') {
         return html`
-          ${(turn.artifacts ?? []).map((artifact) =>
-            artifact.thumbnailUrl
-              ? html`
-                  <swc-conversation-turn type="user">
-                    <swc-user-message type="media">
-                      <img
-                        slot="thumbnail"
-                        src=${artifact.thumbnailUrl}
-                        alt=${artifact.title}
-                        style="inline-size:100%;block-size:100%;object-fit:cover;"
-                      />
-                      <span slot="title">${artifact.title}</span>
-                      <span slot="subtitle">${artifact.subtitle}</span>
-                    </swc-user-message>
-                  </swc-conversation-turn>
-                `
-              : html`
-                  <swc-conversation-turn type="user">
-                    <swc-user-message type="card">
-                      <div slot="thumbnail" role="img" aria-label="File"></div>
-                      <span slot="title">${artifact.title}</span>
-                      <span slot="subtitle">${artifact.subtitle}</span>
-                    </swc-user-message>
-                  </swc-conversation-turn>
-                `
+          ${(turn.artifacts ?? []).map(
+            (artifact) => html`
+              <swc-conversation-turn type="user">
+                <swc-user-message type="media">
+                  ${renderDemoArtifactThumbnail(artifact)}
+                  <span slot="title">${artifact.title}</span>
+                  <span slot="subtitle">${artifact.subtitle}</span>
+                </swc-user-message>
+              </swc-conversation-turn>
+            `
           )}
           ${turn.text
             ? html`
@@ -454,19 +497,18 @@ class ConversationFullPatternDemo extends LitElement {
           <swc-system-message>
             ${turn.loading
               ? html`
-                  <swc-response-status
-                    slot="status"
-                    loading
-                  ></swc-response-status>
+                  <swc-response-status slot="status" status="active" open>
+                    <span slot="label">Draft response structure</span>
+                    ${renderDemoResponseStatusSteps(false)}
+                  </swc-response-status>
                 `
               : html`
-                  <swc-response-status
-                    slot="status"
-                    data-status-id=${turn.id}
-                    ?open=${!!turn.statusOpen}
-                  >
-                    Draft complete. I used your latest prompt to generate this
-                    response.
+                  <swc-response-status slot="status" status="complete" open>
+                    <span slot="label">
+                      Draft complete. I used your latest prompt to generate this
+                      response.
+                    </span>
+                    ${renderDemoResponseStatusSteps(true)}
                   </swc-response-status>
                 `}
             ${turn.loading
@@ -522,32 +564,16 @@ class ConversationFullPatternDemo extends LitElement {
       (artifact) => html`
         <swc-upload-artifact
           slot="artifact"
-          type=${artifact.thumbnailUrl ? 'media' : 'card'}
+          type="media"
           dismissible
           data-artifact-id=${artifact.id}
         >
-          ${artifact.thumbnailUrl
+          ${renderDemoArtifactThumbnail(artifact)}
+          ${artifact.badge
             ? html`
-                <img
-                  slot="thumbnail"
-                  src=${artifact.thumbnailUrl}
-                  alt=${artifact.title}
-                  style="inline-size:100%;block-size:100%;object-fit:cover;"
-                />
+                <span slot="badge">${artifact.badge}</span>
               `
-            : html`
-                <div
-                  slot="thumbnail"
-                  role="img"
-                  aria-label="File thumbnail"
-                ></div>
-              `}
-          ${artifact.thumbnailUrl
-            ? ''
-            : html`
-                <span slot="title">${artifact.title}</span>
-                <span slot="subtitle">${artifact.subtitle}</span>
-              `}
+            : ''}
         </swc-upload-artifact>
       `
     );
@@ -598,7 +624,6 @@ class ConversationFullPatternDemo extends LitElement {
         @swc-message-feedback-change=${this.handleFeedback}
         @swc-suggestion=${this.handleSuggestion}
         @swc-upload-artifact-dismiss=${this.handleDismiss}
-        @swc-response-status-toggle=${this.handleStatusToggle}
         @swc-message-sources-toggle=${this.handleSourcesToggle}
       >
         <div class="swc-ConversationFullPatternDemo-scroll">
@@ -616,6 +641,15 @@ class ConversationFullPatternDemo extends LitElement {
             @swc-prompt-field-upload-click=${this.handleUploadClick}
           >
             ${this.renderArtifacts()}
+            <p slot="legal" class="swc-PromptField-legal-disclaimer">
+              Responses are generated using AI, and may be inaccurate. Check
+              before using.
+              <a
+                href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+              >
+                AI User Guidelines
+              </a>
+            </p>
           </swc-prompt-field>
           <input
             id=${this.fileInputId}
@@ -644,7 +678,17 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
     </swc-conversation-turn>
     <swc-conversation-turn type="system">
       <swc-system-message>
-        <swc-response-status slot="status">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</swc-response-status>
+        <swc-response-status slot="status" status="complete" open>
+          <span slot="label">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</span>
+          <swc-response-status-step status="complete">
+            <span slot="label">Read source context</span>
+            <span slot="description">Reviewed the prompt, uploaded assets, and prior conversation context.</span>
+          </swc-response-status-step>
+          <swc-response-status-step status="complete">
+            <span slot="label">Draft response structure</span>
+            <span slot="description">Organized the answer into a concise narrative with supporting proof points.</span>
+          </swc-response-status-step>
+        </swc-response-status>
         <div class="swc-Typography--prose">
           <p>Great direction. I suggest a 12-slide structure...</p>
         </div>
@@ -657,15 +701,24 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
   </swc-conversation-thread>
 
   <swc-prompt-field>
-    <swc-upload-artifact slot="artifact" type="card" dismissible>
+    <swc-upload-artifact slot="artifact" type="media" dismissible>
       <div
         slot="thumbnail"
         role="img"
-        aria-label="File thumbnail"
+        aria-label="Hilton commercial assets"
+        style="inline-size:100%;block-size:100%;background:#f3f3f3;"
       ></div>
-      <span slot="title">Hilton commercial assets</span>
-      <span slot="subtitle">2026</span>
+      <span slot="badge">PDF</span>
     </swc-upload-artifact>
+    <p slot="legal" class="swc-PromptField-legal-disclaimer">
+      Responses are generated using AI, and may be inaccurate. Check before
+      using.
+      <a
+        href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+      >
+        AI User Guidelines
+      </a>
+    </p>
   </swc-prompt-field>
 </div>`;
 

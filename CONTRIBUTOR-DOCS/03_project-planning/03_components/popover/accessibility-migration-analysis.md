@@ -17,6 +17,9 @@
     - [When to use something else](#when-to-use-something-else)
     - [What it is not](#what-it-is-not)
     - [Related](#related)
+- [2nd-gen design update (amends this analysis) — Q4](#2nd-gen-design-update-amends-this-analysis--q4)
+    - [Trigger-side ARIA the popover now owns](#trigger-side-aria-the-popover-now-owns)
+    - [Keyboard, focus, and dismissal (by mode)](#keyboard-focus-and-dismissal-by-mode)
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
@@ -72,6 +75,41 @@ This document sets accessibility expectations for 2nd-gen **Popover** in Spectru
 
 ---
 
+## 2nd-gen design update (amends this analysis) — Q4
+
+> This section supersedes the original "role-free, no-behavior shell" framing and the "modals do not use the host" statements below, per the agreed [migration plan](./migration-plan.md). The original sections remain accurate for **default-mode surface semantics** (the popover surface carries no inherent role; slotted content owns its pattern's ARIA), but the popover is no longer behavior-free, and it now has a modal mode. Where the older text conflicts with the items here, this section wins.
+
+> **Amendment (dialog surface, both modes).** The popover surface is now a **dialog in both modes**, not a roleless container in the default mode. The default-mode `<div popover="auto">` carries `role="dialog"`, forwards `accessible-label` as `aria-label`, is programmatically focusable (`tabindex="-1"`), and moves focus into itself on open (restoring to the trigger on close); the trigger carries `aria-haspopup="dialog"` in both modes; a missing accessible name is dev-warned in both modes. This supersedes the "no inherent role in default mode", "focus is consumer/pattern-managed", and "`aria-haspopup` only while modal" statements in the items below.
+>
+> **Why this is consistent with the primitive concern.** `<swc-popover>` is **not** the shared positioning host for `menu` / `listbox` / `combobox` content. Those components build directly on the shared **`PlacementController`** (the positioning engine) with their own roles and focus; they do **not** wrap the `<swc-popover>` component. The reusable primitive is the **controller**, not the surface. With no consumer needing the surface to be roleless, `<swc-popover>` owns being an accessible **dialog** (the surface for contextual help, coachmark, color editor, and similar), which is what makes a bare popover announce and seat focus for assistive technology. Menu/picker/combobox are tracked as `PlacementController` consumers, not host consumers.
+
+The 2nd-gen `<swc-popover>` is a **self-contained, opinionated** component, not a styles-only positioning shell. Two behavior modes, selected by the `modal` attribute:
+
+- **Default (non-modal):** renders an internal `<div popover="auto" role="dialog">`, opened via `showPopover()`. The browser provides native top-layer rendering and light-dismiss (Escape, click-outside); the component adds dialog semantics (role, forwarded `accessible-label`, focus-in/restore) per the amendment above. Page behind stays interactive and scrollable.
+- **Modal (`modal` attribute):** renders an internal `<dialog>`, opened via `showModal()`. The browser provides **`role="dialog"`, a focus trap, background inert, and Escape via the `cancel` event** natively; the component wires backdrop-click-to-close. **This replaces the original "modals do not use the host" guidance** — anchored modal popovers are now in scope for `<swc-popover>`.
+
+### Trigger-side ARIA the popover now owns
+
+When a trigger is resolved (via `for="<id>"` or the `trigger-element` setter), the popover wires ARIA **on the trigger** (or its inner focusable element discovered across an open shadow boundary), rather than leaving it entirely to consumers:
+
+| Attribute | When | Justification |
+| --- | --- | --- |
+| `ariaControlsElements = [popover]` | Durably, as soon as the trigger resolves (not gated on open) | Communicates the controls relationship across shadow roots without string-ID fragility (element-reference IDL; mirrors the tooltip plan). WCAG 4.1.2. |
+| `aria-expanded` | `"false"` on resolve; `"true"`/`"false"` on open/close | Disclosure-style state on the trigger so AT announces expanded/collapsed. WCAG 4.1.2; APG button-with-popup / disclosure. |
+| `aria-haspopup="dialog"` | While a trigger is resolved, in **both** modes | Signals that activating the trigger opens a dialog. The surface is a dialog in both modes, so the trigger always advertises it. Removed when the trigger relationship is torn down. |
+
+The surface carries `role="dialog"` in both modes (see the amendment above); this trigger-side wiring advertises that dialog to assistive technology from the control side.
+
+### Keyboard, focus, and dismissal (by mode)
+
+- **Default mode:** Escape and click-outside dismiss natively via `popover="auto"`. **No focus trap** (the page behind stays interactive), but focus **moves into** the dialog surface on open and **restores** to the trigger on close, like a non-modal dialog. The accessible name comes from `accessible-label` (forwarded as `aria-label`), required as in modal mode.
+- **Modal mode:** native `<dialog>` focus trap and Escape (`cancel`); backdrop-click is wired by the component. The internal `<dialog>` lives in the popover's shadow root, so a host `aria-label` or `aria-labelledby` does **not** reach it. The component therefore exposes an **`accessible-label`** attribute (the project's standard `accessibleLabel` pattern) and forwards it as `aria-label` onto the internal `<dialog>`; consumers set that to name the dialog. A modal popover opened with no `accessible-label` is an authoring bug and is dev-warned (`window.__swc.warn`).
+- **Cross-mechanism Escape coordination:** the component registers with a shared `dismissibleStack` on open and unregisters on close, so when multiple dismissibles of different mechanisms are open (e.g. a modal popover plus a tooltip), Escape resolves to the topmost.
+
+`prefers-reduced-motion` still governs any open/close transitions (see [Guidelines that apply](#guidelines-that-apply)).
+
+---
+
 ## ARIA and WCAG context
 
 ### Pattern in the APG
@@ -119,7 +157,11 @@ Component tag may change until API freeze; this section describes the **position
 
 ### Shadow DOM and cross-root ARIA Issues
 
-None: target is a host that does not require `aria-labelledby` / `aria-describedby` targets to live in a different shadow root than the labelled content. If a small shadow exists for a tip, keep labels and ARIA in the **light** tree for composed patterns. Shared **style-only** CSS has no ID-ref concerns.
+**Default mode:** none — the surface is a roleless container, so slotted/light-DOM content keeps its own `aria-labelledby` / `aria-describedby` wiring and there is nothing to name across the boundary.
+
+**Modal mode:** the internal `<dialog>` is rendered in the popover's shadow root, so it _is_ separated from the consumer's light-DOM content. A host `aria-label`, or an `aria-labelledby` IDREF on the host, does not reach it. The component resolves this by owning the forwarding: the `accessible-label` attribute is reflected as `aria-label` onto the internal `<dialog>` (the standard `accessibleLabel` pattern). The trigger-side relationship (`ariaControlsElements`, `aria-expanded`, `aria-haspopup`) already uses the element-reference IDL to cross the boundary outward to the trigger.
+
+> **Follow-up — cross-root naming/description parity with React Spectrum `Dialog`.** RSP's `Dialog` exposes `role` (`dialog` | `alertdialog`), `aria-label`, `aria-labelledby`, `aria-describedby`, and `aria-details`. `<swc-popover>` currently covers only the name, via `accessible-label` (→ `aria-label`). The IDREF-based props are blocked by the same shadow boundary as the name: a heading or description in the consumer's slotted light DOM cannot be referenced by an IDREF on the internal surface. The supported path is the element-reference IDL we already use outward for the trigger (`ariaControlsElements`) — here applied **inward**, setting `ariaLabelledByElements` / `ariaDescribedByElements` on the surface to resolved slotted elements, exposed through `labelledby` / `describedby` attributes that take ids in the host's own tree. Not built in this migration; add when a consumer needs heading-based naming or a described dialog. `alertdialog` is intentionally out of scope (it belongs in a separate `<swc-alert-dialog>`, not a popover variant); `aria-details` is deferred unless a concrete need appears.
 
 ### Accessibility tree expectations
 

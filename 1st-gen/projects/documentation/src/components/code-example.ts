@@ -28,6 +28,7 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
 
 import { toHtmlTemplateString } from '../utils/templates.js';
+import { preloadThemeFragments } from '../utils/theme-fragments.js';
 import { copyNode } from './copy-to-clipboard.js';
 import { TrackTheme } from './layout.js';
 
@@ -207,6 +208,12 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
     super.connectedCallback?.();
     window.addEventListener('resize', this.shouldManageTabOrderForScrolling);
     this.trackTheme();
+    if (this.showDemo) {
+      // A nested `sp-theme` in the demo (e.g. system="express") needs its
+      // own CSS fragment loaded; the global theme picker only loads
+      // fragments for the combination it's currently set to.
+      preloadThemeFragments(this.liveHTML);
+    }
   }
 
   public override disconnectedCallback(): void {

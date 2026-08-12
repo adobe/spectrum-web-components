@@ -9,12 +9,12 @@ import * as IllustratedMessageStories from './stories/illustrated-message.storie
 
 ## Anatomy
 
-An illustrated message consists of four slots:
+An illustrated message consists of:
 
-1. **Default slot**: decorative or informative SVG illustration displayed above (vertical) or beside (horizontal) the heading and description. Decorative SVGs must have `aria-hidden="true"`. Informative SVGs must have `role="img"` and `aria-label`.
-2. **`heading` slot**: consumer-provided `<h2>`–`<h6>` element. The component does not own the heading tag; the consumer chooses the level to match the document outline. The component warns in development if a non-heading element is used.
-3. **`description` slot** (optional): supporting text that elaborates on the heading. May contain phrasing content or links.
-4. **`actions` slot** (optional): one or more interactive controls displayed below the description. The component automatically propagates its `size` to slotted elements.
+- **Illustration**, provided through the default slot: decorative or informative SVG displayed above (vertical) or beside (horizontal) the heading and description. Decorative SVGs must have `aria-hidden="true"`. Informative SVGs must have `role="img"` and `aria-label`.
+- **Heading**, provided through the `heading` slot: a consumer-provided `<h2>`–`<h6>` element. The component does not own the heading tag; the consumer chooses the level to match the document outline. The component warns in development if a non-heading element is used.
+- **Description** (optional), provided through the `description` slot: supporting text that elaborates on the heading. May contain phrasing content or links.
+- **Actions** (optional), provided through the `actions` slot: one or more interactive controls displayed below the description. The component automatically propagates its `size` to slotted elements.
 
 <Canvas of={IllustratedMessageStories.Anatomy} />
 
@@ -24,9 +24,11 @@ An illustrated message consists of four slots:
 
 Illustrated messages come in three sizes to fit various contexts:
 
-- **Small (`s`)**: 96px illustration, compact spacing, for space-constrained contexts
-- **Medium (`m`)**: 96px illustration, standard spacing, the default
-- **Large (`l`)**: 160px illustration, reduced spacing, for prominent empty states
+Each size uses a progressively larger heading/description type scale from small to medium to large.
+
+- **Small (`s`)**: 96px illustration, smaller heading/description type, for space-constrained contexts
+- **Medium (`m`)**: 96px illustration, default type scale
+- **Large (`l`)**: 160px illustration, larger heading/description type, a tighter illustration-to-content gap, for prominent empty states
 
 <Canvas of={IllustratedMessageStories.Sizes} />
 
@@ -55,7 +57,7 @@ Common patterns:
 
 ### Actions
 
-The `actions` slot accepts one or more interactive controls displayed below the description. The illustrated message automatically propagates its `size` to every slotted element so buttons remain visually consistent without manual coordination. Use a single `<swc-button>` for a primary call-to-action, or a `<swc-button-group>` when two actions are needed.
+The `actions` slot accepts one or more interactive controls displayed below the description. The illustrated message automatically propagates its `size` to every slotted element, so slotted buttons match the message size automatically. Use a single `<swc-button>` for a primary call-to-action, or a `<swc-button-group>` when two actions are needed.
 
 <Canvas of={IllustratedMessageStories.Actions} />
 

@@ -50,8 +50,8 @@ const S2IconsPackagePath = path.dirname(
   )
 );
 
-const S1IconsDir = path.join(S1IconsPackagePath, 'dist/18');
-const S2IconsDir = path.join(S2IconsPackagePath, 'dist/assets/svg');
+const S1IconsDir = path.join(S1IconsPackagePath, 'dist/18').replace(/\\/g, '/');
+const S2IconsDir = path.join(S2IconsPackagePath, 'dist/assets/svg').replace(/\\/g, '/');
 const keepColors = '';
 
 const ensureDirectoryExists = (dirPath) => {
@@ -116,7 +116,7 @@ export const getComponentName = (i) => {
 };
 
 async function buildIcons(icons, tag, iconsNameList) {
-  icons.forEach((i) => {
+  for (const i of icons) {
     const svg = fs.readFileSync(i, 'utf-8');
     let id = path
       .basename(i, '.svg')
@@ -146,7 +146,7 @@ async function buildIcons(icons, tag, iconsNameList) {
     );
 
     if (!Number.isNaN(Number(ComponentName[0]))) {
-      return;
+      continue;
     }
 
     $('*').each((index, el) => {
@@ -201,22 +201,19 @@ async function buildIcons(icons, tag, iconsNameList) {
         }
     `;
 
-    prettier
-      .format(iconLiteral, {
-        printWidth: 100,
-        tabWidth: 2,
-        useTabs: false,
-        semi: true,
-        singleQuote: true,
-        trailingComma: 'all',
-        bracketSpacing: true,
-        jsxBracketSameLine: false,
-        arrowParens: 'avoid',
-        parser: 'typescript',
-      })
-      .then((icon) => {
-        fs.writeFileSync(location, icon, 'utf-8');
-      });
+    const icon = await prettier.format(iconLiteral, {
+      printWidth: 100,
+      tabWidth: 2,
+      useTabs: false,
+      semi: true,
+      singleQuote: true,
+      trailingComma: 'all',
+      bracketSpacing: true,
+      jsxBracketSameLine: false,
+      arrowParens: 'avoid',
+      parser: 'typescript',
+    });
+    fs.writeFileSync(location, icon, 'utf-8');
 
     const exportString = `export {${ComponentName}Icon} from './${tag}/${id}.js';\r\n`;
     fs.appendFileSync(
@@ -276,33 +273,23 @@ async function buildIcons(icons, tag, iconsNameList) {
         }
         `;
 
-    prettier
-      .format(iconElement, {
-        printWidth: 100,
-        tabWidth: 2,
-        useTabs: false,
-        semi: true,
-        singleQuote: true,
-        trailingComma: 'all',
-        bracketSpacing: true,
-        jsxBracketSameLine: false,
-        arrowParens: 'avoid',
-        parser: 'typescript',
-      })
-      .then((iconElementFile) => {
-        fs.writeFileSync(
-          path.join(
-            rootDir,
-            'packages',
-            'icons-workflow',
-            'src',
-            'elements',
-            `Icon${id}.ts`
-          ),
-          iconElementFile,
-          'utf-8'
-        );
-      });
+    const iconElementFile = await prettier.format(iconElement, {
+      printWidth: 100,
+      tabWidth: 2,
+      useTabs: false,
+      semi: true,
+      singleQuote: true,
+      trailingComma: 'all',
+      bracketSpacing: true,
+      jsxBracketSameLine: false,
+      arrowParens: 'avoid',
+      parser: 'typescript',
+    });
+    fs.writeFileSync(
+      path.join(rootDir, 'packages', 'icons-workflow', 'src', 'elements', `Icon${id}.ts`),
+      iconElementFile,
+      'utf-8'
+    );
 
     const iconRegistration = `
         ${disclaimer}
@@ -319,32 +306,23 @@ async function buildIcons(icons, tag, iconsNameList) {
         }
         `;
 
-    prettier
-      .format(iconRegistration, {
-        printWidth: 100,
-        tabWidth: 2,
-        useTabs: false,
-        semi: true,
-        singleQuote: true,
-        trailingComma: 'all',
-        bracketSpacing: true,
-        jsxBracketSameLine: false,
-        arrowParens: 'avoid',
-        parser: 'typescript',
-      })
-      .then((iconRegistrationFile) => {
-        fs.writeFileSync(
-          path.join(
-            rootDir,
-            'packages',
-            'icons-workflow',
-            'icons',
-            `${iconElementName}.ts`
-          ),
-          iconRegistrationFile,
-          'utf-8'
-        );
-      });
+    const iconRegistrationFile = await prettier.format(iconRegistration, {
+      printWidth: 100,
+      tabWidth: 2,
+      useTabs: false,
+      semi: true,
+      singleQuote: true,
+      trailingComma: 'all',
+      bracketSpacing: true,
+      jsxBracketSameLine: false,
+      arrowParens: 'avoid',
+      parser: 'typescript',
+    });
+    fs.writeFileSync(
+      path.join(rootDir, 'packages', 'icons-workflow', 'icons', `${iconElementName}.ts`),
+      iconRegistrationFile,
+      'utf-8'
+    );
 
     const importStatement = `\r\nimport '@spectrum-web-components/icons-workflow/icons/${iconElementName}.js';`;
     const metadata = `{name: '${Case.sentence(
@@ -352,7 +330,7 @@ async function buildIcons(icons, tag, iconsNameList) {
     )}', tag: '<${iconElementName}>', story: (size: string): TemplateResult => html\`<${iconElementName} size=\$\{size\}></${iconElementName}>\`},\r\n`;
     manifestImports += importStatement;
     manifestListings += metadata;
-  });
+  }
 }
 
 const iconsV1 = (await fg(`${S1IconsDir}/**.svg`)).sort();
