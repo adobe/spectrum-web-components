@@ -49,19 +49,19 @@ export default meta;
 // Helpers
 
 // Main badge permutations: every variant x size (base coverage across all 6
-// semantic and 19 non-semantic variants), outline (semantic variants only,
-// since badge.css only defines outline overrides for
+// semantic and 19 non-semantic variants), outline x size (semantic variants
+// only, since badge.css only defines outline overrides for
 // `:host([outline][variant="..."])` on the six semantic variants), and
-// subtle (every variant, since subtle has its own background override for
-// both semantic and non-semantic variants). Outline and subtle are each
-// rendered at a single representative size rather than crossed with the
-// full size range: badge.css has no `[outline]`/`[subtle]` + `[size]`
-// interaction, so a per-size sweep of either would just repeat the same
-// relative treatment already established by the base size sweep above.
+// subtle x size (every variant, since subtle has its own background
+// override for both semantic and non-semantic variants).
 const BADGE_PERMUTATIONS = createPermutations([
   { variant: BADGE_VARIANTS, size: BADGE_VALID_SIZES },
-  { variant: BADGE_VARIANTS_SEMANTIC, outline: [true] },
-  { variant: BADGE_VARIANTS, subtle: [true] },
+  {
+    variant: BADGE_VARIANTS_SEMANTIC,
+    outline: [true],
+    size: BADGE_VALID_SIZES,
+  },
+  { variant: BADGE_VARIANTS, subtle: [true], size: BADGE_VALID_SIZES },
 ]);
 
 const isOutlinePermutation = (permutation: Record<string, unknown>) =>
@@ -228,11 +228,11 @@ const permutationContent = () => html`
 // VRT stories
 
 // Every variant (6 semantic + 19 non-semantic) x size, outline (semantic
-// only) and subtle (all variants) at a representative size, fixed
-// positioning, icon anatomy (label-only, icon+label, icon-only) across
-// sizes, text wrapping, and CJK line-height. Rendered once in light/ltr and
-// once in dark/rtl below (that combination covers both axes), all in a
-// single story so it costs one snapshot.
+// only) x size, and subtle (all variants) x size, fixed positioning, icon
+// anatomy (label-only, icon+label, icon-only) across sizes, text wrapping,
+// and CJK line-height. Rendered once in light/ltr and once in dark/rtl
+// below (that combination covers both axes), all in a single story so it
+// costs one snapshot.
 export const Permutations: Story = {
   render: () => html`
     ${theme(permutationContent(), 'light', 'ltr')}
