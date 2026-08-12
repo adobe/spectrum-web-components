@@ -15,6 +15,7 @@ import { property } from 'lit/decorators.js';
 
 import { PendingController } from '../controllers/pending-controller/index.js';
 import type { PendingSpinnerResult } from '../directives/pending-spinner/index.js';
+import { warnIf } from '../utils/index.js';
 
 // Abstract-capable so the mixin can be applied over abstract base classes such
 // as `ButtonBase`; `new` alone cannot construct an abstract class.
@@ -137,14 +138,13 @@ export function PendingMixin<
       // every host that applies this mixin necessarily has a `disabled`
       // property.
       const hasDisabled = 'disabled' in this && this.disabled === true;
-      if (window.__swc?.DEBUG && this.pending && hasDisabled) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> should not set both "pending" and "disabled" simultaneously. Use "pending" to keep the element focusable while unavailable, or "disabled" to fully remove it from the tab order.`,
-          'https://opensource.adobe.com/spectrum-web-components/',
-          { issues: ['pending + disabled'] }
-        );
-      }
+      warnIf(
+        this,
+        this.pending && hasDisabled,
+        `<${this.localName}> should not set both "pending" and "disabled" simultaneously. Use "pending" to keep the element focusable while unavailable, or "disabled" to fully remove it from the tab order.`,
+        'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
+        { issues: ['pending + disabled'] }
+      );
     }
   }
   return PendingElement as unknown as T & Constructor<PendingInterface>;

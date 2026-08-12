@@ -14,6 +14,7 @@ import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller/index.js';
 import {
@@ -113,13 +114,13 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
       const oldValue = this._dropEffect;
       this._dropEffect = value;
       this.requestUpdate('dropEffect', oldValue);
-    } else if (window.__swc?.DEBUG) {
-      window.__swc?.warn(
-        this,
-        `<${this.localName}> "dropEffect" received an invalid value: "${value}". Must be one of: ${DROP_EFFECTS.join(', ')}.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/dropzone/#options',
-        { type: 'api' }
-      );
+    } else {
+      validateEnum(this, {
+        prop: 'drop-effect',
+        value,
+        valid: DROP_EFFECTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-dropzone--docs',
+      });
     }
   }
 

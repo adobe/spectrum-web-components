@@ -10,18 +10,20 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
+  ACTION_BUTTON_STATIC_COLORS,
   ACTION_BUTTON_VALID_SIZES,
   type ActionButtonSize,
   type ActionButtonStaticColor,
 } from '@adobe/spectrum-wc-core/components/action-button';
 import { ButtonBase } from '@adobe/spectrum-wc-core/components/button';
 import { PendingMixin } from '@adobe/spectrum-wc-core/mixins';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils';
 
 import pendingSpinnerStyles from '../../stylesheets/_lit-styles/pending-spinner.css';
 import styles from './action-button.css';
@@ -110,9 +112,11 @@ export class ActionButton extends PendingMixin(ButtonBase) {
     }
     if (isAriaPassthrough) {
       if (name === 'aria-haspopup') {
-        this._ariaHasPopup = value ?? undefined;
+        this._ariaHasPopup = (value ??
+          undefined) as ActionButton['_ariaHasPopup'];
       } else {
-        this._ariaExpanded = value ?? undefined;
+        this._ariaExpanded = (value ??
+          undefined) as ActionButton['_ariaExpanded'];
       }
       if (value !== null) {
         this._ariaForwardingInProgress = true;
@@ -143,15 +147,37 @@ export class ActionButton extends PendingMixin(ButtonBase) {
   // Forwarded to the inner <button> for menu-trigger patterns; stripped from
   // the host after reading to avoid duplicate ARIA state on both elements.
   @state()
-  private _ariaHasPopup?: string;
+  private _ariaHasPopup?:
+    | 'false'
+    | 'true'
+    | 'menu'
+    | 'listbox'
+    | 'tree'
+    | 'grid'
+    | 'dialog';
 
   @state()
-  private _ariaExpanded?: string;
+  private _ariaExpanded?: 'true' | 'false';
 
   // Guard against re-entrant attributeChangedCallback: removeAttribute fires a
   // second callback with value=null; the guard prevents that from clearing the
   // state we just set.
   private _ariaForwardingInProgress = false;
+
+  protected override update(changedProperties: PropertyValues): void {
+    if (
+      changedProperties.has('staticColor') &&
+      this.staticColor !== undefined
+    ) {
+      validateEnum(this, {
+        prop: 'static-color',
+        value: this.staticColor,
+        valid: ACTION_BUTTON_STATIC_COLORS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-action-button--docs',
+      });
+    }
+    super.update(changedProperties);
+  }
 
   // ──────────────────────────────
   //     RENDERING & STYLING

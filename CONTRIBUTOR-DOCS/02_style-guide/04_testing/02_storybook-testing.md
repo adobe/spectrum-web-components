@@ -470,7 +470,7 @@ If the source story is not tagged `!test`, spread it directly — it already car
 
 ### Testing dev mode warnings
 
-Ensure there is a test for **every** dev mode warning in the component's source code. Search the component class and its base class for calls to `window.__swc.warn` to find them all. Common warning categories include, but are not limited to:
+Ensure there is a test for **every** dev mode warning in the component's source code. Search the component class and its base class for calls to the shared validation helpers (`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`), plus any remaining direct `window.__swc.warn`, to find them all. Common warning categories include, but are not limited to:
 
 - **Deprecation** — a property or attribute has been renamed or replaced
 - **Accessibility** — a required label, `aria-label`, or role is missing
