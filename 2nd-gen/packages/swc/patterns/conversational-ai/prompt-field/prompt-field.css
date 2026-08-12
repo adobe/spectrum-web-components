@@ -54,9 +54,9 @@
   padding: token("spacing-300");
   background: radial-gradient(circle at right bottom in oklch, var(--swc-prompt-field-bg-stop-1) 0%, var(--swc-prompt-field-bg-stop-2) 35%, var(--swc-prompt-field-bg-stop-3) 82%, var(--swc-prompt-field-bg-stop-4) 100%);
   border-radius: 24px;
-
-  /* prettier-ignore */
-  box-shadow: var(--swc-prompt-field-prominent-outer-glow, 0 0 0 0 transparent,) 0 -3px 10px 1px var(--swc-prompt-field-drop-shadow-color);
+  box-shadow:
+    0 20px 20px -24px var(--swc-prompt-field-prominent-outer-glow-color, transparent),
+    0 -3px 10px 1px var(--swc-prompt-field-drop-shadow-color);
   overflow: hidden;
   transition:
     --swc-prompt-field-con-hue-opacity 700ms cubic-bezier(0.32, 0.72, 0, 1),
@@ -272,10 +272,9 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-
-  /* prettier-ignore */
   box-shadow:
-    var(--swc-prompt-field-prominent-inset-glow, inset 0 0 0 0 transparent,) inset 0 0 0 1px var(--swc-prompt-field-border-color),
+    inset 0 -20px 20px -24px var(--swc-prompt-field-prominent-inset-glow-color, transparent),
+    inset 0 0 0 1px var(--swc-prompt-field-border-color),
     inset 0 6px 15px 0 var(--swc-prompt-field-inset-shadow-color),
     inset 0 0 0 0 transparent,
     inset 0 -5px 21.6px 0 rgb(255 255 255 / 4%),
@@ -291,9 +290,9 @@
 }
 
 :host([generating]) .swc-PromptField-inset-shadow {
-  /* prettier-ignore */
   box-shadow:
-    var(--swc-prompt-field-prominent-inset-glow, inset 0 0 0 0 transparent,) inset 0 0 0 1px var(--swc-prompt-field-border-color),
+    inset 0 -20px 20px -24px var(--swc-prompt-field-prominent-inset-glow-color, transparent),
+    inset 0 0 0 1px var(--swc-prompt-field-border-color),
     inset 0 6px 15px 0 var(--swc-prompt-field-inset-shadow-color),
     inset 0 -32px 100px -50px light-dark(rgb(254 246 255), oklch(from var(--swc-prompt-field-brand) 44.18% 0.1934 calc(h - 1.8))),
     inset 0 -5px 21.6px 0 rgb(255 255 255 / 4%),
@@ -445,22 +444,28 @@
 
 /* Prominent-only extra outward/inset glow, unconditional across idle/generating/hover --
    flattens to transparent only when focused (see .swc-PromptField-box's own focus rule
-   below, which already sets both to a transparent placeholder of the same shape for
-   every variant; this rule just gives prominent something real to flatten FROM). These
-   are plain (non-@property) custom properties set on :host, so they reach both
-   .swc-PromptField-box and .swc-PromptField-inset-shadow purely through inheritance --
-   no descendant combinator needed, and no cascade-order concern versus the focus rule,
-   since an explicit declaration on a descendant always beats an inherited value
-   regardless of source order. Trailing comma + prettier-ignore for the same reason as
-   the focus rule's own use of this pattern (see Found #2/#5 in research.md): the
-   var()'s OWN value needs the comma to compose with box-shadow's other shadow layers,
-   and Prettier strips it if left unprotected. */
-:host([variant="prominent"]) {
-  /* prettier-ignore */
-  --swc-prompt-field-prominent-outer-glow: 0 20px 20px -24px light-dark(oklch(from var(--swc-prompt-field-brand) 85.78% 0.1222 calc(h + 0.4)), oklch(from var(--swc-prompt-field-brand) 37.57% 0.1726 calc(h - 2.6))),;
+   below). These are plain (non-@property) custom properties set on :host, so they reach
+   both .swc-PromptField-box and .swc-PromptField-inset-shadow purely through inheritance
+   -- no descendant combinator needed, and no cascade-order concern versus the focus
+   rule, since an explicit declaration on a descendant always beats an inherited value
+   regardless of source order.
 
-  /* prettier-ignore */
-  --swc-prompt-field-prominent-inset-glow: inset 0 -20px 20px -24px light-dark(oklch(from var(--swc-prompt-field-brand) 85.78% 0.1222 calc(h + 0.4)), oklch(from var(--swc-prompt-field-brand) 37.57% 0.1726 calc(h - 2.6))),;
+   These hold ONLY a color, not a whole shadow shorthand chunk: every consuming site
+   hardcodes the shadow's offset/blur/spread as a literal (`0 20px 20px -24px`/
+   `inset 0 -20px 20px -24px`) and only the color comes from this variable, defaulting
+   to transparent via the var()'s own fallback. This is deliberately NOT the
+   trailing-comma "conditionally-prepended shadow segment" pattern used elsewhere in this
+   file (Found #2/#5) -- baking a trailing comma into a plain custom property's OWN
+   declared value (as opposed to using one inside a var() fallback ARGUMENT, which is a
+   different, working code path) reproducibly breaks Chromium's box-shadow computation
+   for the entire property, collapsing it to `none` (confirmed by disabling this exact
+   rule via CSSOM and watching box-shadow become valid again). Keeping the shadow's shape
+   a fixed literal at every site and varying only the color sidesteps the bug entirely,
+   and also removes any shadow-list-length mismatch risk (Found #5) since the shape never
+   changes -- only ever a color transitioning to/from transparent. */
+:host([variant="prominent"]) {
+  --swc-prompt-field-prominent-outer-glow-color: light-dark(oklch(from var(--swc-prompt-field-brand) 85.78% 0.1222 calc(h + 0.4)), oklch(from var(--swc-prompt-field-brand) 37.57% 0.1726 calc(h - 2.6)));
+  --swc-prompt-field-prominent-inset-glow-color: light-dark(oklch(from var(--swc-prompt-field-brand) 85.78% 0.1222 calc(h + 0.4)), oklch(from var(--swc-prompt-field-brand) 37.57% 0.1726 calc(h - 2.6)));
 }
 
 /* Prominent: real brand-derived values (see research.md / .brand-derivation-output.txt).
@@ -549,29 +554,8 @@
   --swc-prompt-field-border-color: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%));
   --swc-prompt-field-inset-shadow-color: transparent;
   --swc-prompt-field-drop-shadow-color: transparent;
-
-  /* Trailing comma is baked into the value on purpose: box-shadow: var(--x, ) <shadow2>
-     needs "<shadow1>, <shadow2>" when --x is set, and "<shadow2>" alone (empty
-     fallback) when it isn't; the comma has to live inside the variable's own value
-     for both cases to produce valid box-shadow syntax. Omitting it here previously made
-     the WHOLE box-shadow property invalid (two shadow segments with no separator),
-     which computed to "none" instead of the intended flattened-but-still-transparent
-     shadow -- caught by comparing computed box-shadow at idle vs. focus, not by eye.
-     prettier-ignore is required on both declarations below: Prettier silently strips a
-     trailing comma before `;` in a custom-property value (verified empirically), which
-     re-breaks this exact bug on the next format-on-save/CI run if left unprotected.
-     The var()'s own fallback (at each of this variable's consuming sites) must ALSO be a
-     same-shaped placeholder shadow, not empty -- an empty fallback makes the idle shadow
-     list one item SHORTER than the focused list, which shifts every later shadow's index
-     by one during the box-shadow transition and made the real border-color hairline
-     briefly interpolate against this glow layer instead of itself on blur (visible as
-     the border flashing transparent). Confirmed via research.md's "Found #5". */
-
-  /* prettier-ignore */
-  --swc-prompt-field-prominent-outer-glow: 0 20px 20px -24px transparent,;
-
-  /* prettier-ignore */
-  --swc-prompt-field-prominent-inset-glow: inset 0 -20px 20px -24px transparent,;
+  --swc-prompt-field-prominent-outer-glow-color: transparent;
+  --swc-prompt-field-prominent-inset-glow-color: transparent;
 }
 
 /* Generating-only extra outward glow, layered under the base drop shadow (see the base
@@ -579,9 +563,9 @@
    above (subtle's real value is wired; balanced/prominent fall back to 50% until their
    own real-color pass). */
 :host([generating]) .swc-PromptField-box {
-  /* prettier-ignore */
   box-shadow:
-    var(--swc-prompt-field-prominent-outer-glow, 0 0 0 0 transparent,) 0 -3px 10px 1px var(--swc-prompt-field-drop-shadow-color),
+    0 20px 20px -24px var(--swc-prompt-field-prominent-outer-glow-color, transparent),
+    0 -3px 10px 1px var(--swc-prompt-field-drop-shadow-color),
     0 6px 83px rgb(from light-dark(oklch(from var(--swc-prompt-field-brand) 85.68% 0.0856 calc(h + 35.2)), oklch(from var(--swc-prompt-field-brand) 26.22% 0.105 calc(h - 314.8))) r g b / var(--swc-prompt-field-spread-shadow-opacity, 50%));
 }
 
