@@ -68,7 +68,7 @@ const ILLUSTRATED_MESSAGE_PROPERTY_CASES: readonly IllustratedMessagePropertyCas
     { property: '--swc-illustrated-message-illustration-size', value: '40px' },
     {
       property: '--swc-illustrated-message-illustration-inline-size',
-      value: '200px',
+      value: '350px',
     },
     {
       property: '--swc-illustrated-message-illustration-block-size',
