@@ -61,12 +61,15 @@ jobs:
             echo "Found $GEN1_COUNT 1st-gen changeset(s)"
           fi
 
-  # Throwaway snapshot publish: every push to main (continuous `next`), manual
-  # workflow_dispatch, and snapshot-release-labeled PRs. Never touches main, never
-  # commits, never opens a PR. Runs alongside (not instead of) the `release` job below -
-  # both are triggered by the same push event but never conflict (separate jobs/runners,
-  # and the run-level concurrency group only dedupes overlapping *workflow runs*, not
-  # jobs within one run).
+  # Throwaway snapshot publish: gated on has_changesets, same as check-changesets - so
+  # this only runs on a push to main that happens to have 1st-gen changesets pending at
+  # that moment, not on every push. `next` is therefore not a true continuous build of
+  # every main commit; it only refreshes when a push coincides with a pending changeset.
+  # Also runs for manual workflow_dispatch and snapshot-release-labeled PRs. Never
+  # touches main, never commits, never opens a PR. Runs alongside (not instead of) the
+  # `release` job below - both are triggered by the same push event but never conflict
+  # (separate jobs/runners, and the run-level concurrency group only dedupes overlapping
+  # *workflow runs*, not jobs within one run).
   snapshot:
     needs: check-changesets
     if: needs.check-changesets.outputs.has_changesets == 'true'

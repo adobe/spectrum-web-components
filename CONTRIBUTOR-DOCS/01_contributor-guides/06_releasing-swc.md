@@ -114,7 +114,7 @@ yarn add @spectrum-web-components/button@snapshot-test
 
 ### Pre-release (`next` throwaway snapshot)
 
-Every push to `main` also publishes a throwaway `next` snapshot for both generations — this is unrelated to the Version PR flow below and never touches `main`'s protection or history.
+A push to `main` that has pending changesets also publishes a throwaway `next` snapshot for that generation — this is unrelated to the Version PR flow below and never touches `main`'s protection or history. It's gated the same way the Version PR step is (pending changesets present), so it is not a build of every single commit on `main`; a push with no pending changesets for that generation does not refresh `next`.
 
 **What gets published:**
 
