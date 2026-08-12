@@ -47,7 +47,7 @@ This doc tells you how **`swc-text-area`** should work for **accessibility**. It
 ### What it is
 
 - A **multi-line text input** for longer, open-ended text (comments, descriptions). The accessible semantics come from a real `<textarea>` in the component's shadow root; `swc-text-area` does not set a host-level ARIA role.
-- Optionally grows vertically to fit its content (`grows`). Its visible label, help text, and error message render directly inside `swc-text-area`'s own shadow root via the `LabellingController` — the same in-shadow label/help-text model as `swc-text-field`, not an externally associated `swc-field-label`/`swc-help-text` component.
+- Optionally grows vertically to fit its content (`grows`; a rename to `autosize` is proposed in review, to be resolved during the API phase). Its visible label, help text, and error message render directly inside `swc-text-area`'s own shadow root via the `LabellingController` — the same in-shadow label/help-text model as `swc-text-field`, not an externally associated `swc-field-label`/`swc-help-text` component.
 
 ### When to use something else
 
