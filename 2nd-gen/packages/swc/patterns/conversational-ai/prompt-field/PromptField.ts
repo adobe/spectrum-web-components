@@ -285,12 +285,7 @@ export class PromptField extends SpectrumElement {
     this._handleSendClick();
   }
 
-  /** Focuses the textarea for pointerdowns that don't land on a focusable
-   * descendant, so clicking blank space in the card (padding, gaps between
-   * rows) behaves like clicking the textarea itself. A `slot` boundary
-   * counts as focusable here too, so clicks inside a slotted artifact tile
-   * are left to that tile's own interaction model instead of falling
-   * through. */
+  /** Focuses the textarea when a pointerdown doesn't land on a focusable descendant. */
   private _handlePromptSurfacePointerDown(event: PointerEvent): void {
     if (this.disabled) {
       return;

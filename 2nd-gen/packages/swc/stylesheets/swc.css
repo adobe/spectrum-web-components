@@ -47,7 +47,7 @@
   color-scheme: light dark;
 }
 
-/* Registered globally (not in prompt-field.css) since @property's initial-value doesn't reach elements declared in the same shadow root that consumes it. Interim hardcoded default pending formal delivery from the tokens team. */
+/* Interim hardcoded default pending formal delivery from the tokens team; registered here (not in prompt-field.css) so its initial-value reaches shadow-root consumers. */
 @property --swc-prompt-field-brand-color {
   syntax: "<color>";
   inherits: true;

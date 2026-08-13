@@ -96,7 +96,7 @@
    AI brand treatment: variables
    ───────────────────────────────────── */
 
-/* --swc-prompt-field-brand-color is registered globally in swc.css: @property's initial-value doesn't reach elements declared in the same shadow root that consumes it. */
+/* --swc-prompt-field-brand-color's @property is registered in swc.css, not here -- see that file for why. */
 
 /* Ambient hue-sweep opacity (idle vs. generating, per variant, hover). */
 @property --_swc-prompt-field-con-hue-opacity {
@@ -204,7 +204,7 @@
     --_swc-prompt-field-outer-stop-3: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 78.78% 0.1692 calc(h - 254) / 40%) l c h / 4%), oklch(from oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) l c h / 40%));
   }
 
-  /* :not() must live inside :host()'s own argument -- ":host(X):not(Y)" fails to match in Chromium. :has() must live outside it instead -- ":host(:has(X))" never matches in Chromium, but ":host(...):has(X)" does. :has() targets the input area specifically (not :focus-within on the host), so focusing the slotted legal link doesn't count as focusing the composer. */
+  /* :not() inside :host(), :has() outside it -- both fail the other way in Chromium. */
   :host(:not([generating])) &:has(.swc-PromptField-input-area:focus-within) {
     --_swc-prompt-field-outer-shadow: light-dark(rgb(0 0 0 / 5%), rgb(0 0 0 / 3%));
     --_swc-prompt-field-outer-hue: transparent;
@@ -455,7 +455,7 @@
   --_swc-prompt-field-spread-shadow-opacity: 50%;
 }
 
-/* Typing recedes the treatment, but only while idle; generating's wash persists through focus. :has() lives outside :host()'s own argument -- ":host(:has(X))" never matches in Chromium, but ":host(...) selector:has(X)" does. It targets the input area specifically so focusing the slotted legal link doesn't count as focusing the composer. */
+/* Typing recedes the treatment, but only while idle; generating's wash persists through focus. */
 :host(:not([generating])) .swc-PromptField-box:has(.swc-PromptField-input-area:focus-within) {
   --_swc-prompt-field-con-hue-opacity: 0%;
   --_swc-prompt-field-bg-stop-1: light-dark(white, token("gray-75"));
@@ -547,10 +547,7 @@
   gap: token("spacing-300");
   align-items: start;
 
-  /* Dismiss badge is centered on the tile's top-right corner (see
-   * upload-artifact.css), so half of the larger (32px media) badge floats
-   * above the tile; reserve that much clearance above the row, same as
-   * --multiple's --_swc-prompt-field-artifact-badge-clearance below. */
+  /* Reserves clearance for the dismiss badge floating above the tile's top-right corner, same as --multiple below. */
   --_swc-prompt-field-artifact-badge-clearance: 16px;
 
   padding-block-start: var(--_swc-prompt-field-artifact-badge-clearance);
@@ -1034,7 +1031,7 @@
   }
 }
 
-/* Idle focus otherwise relies on the textarea's own cursor as the indicator (no ring); prefers-contrast: more gets an explicit ring around the card instead. :has() lives outside :host()'s own argument -- ":host(:has(X))" never matches in Chromium, but ":host selector:has(X)" does. It targets the input area specifically so focusing the slotted legal link doesn't count as focusing the composer. */
+/* Idle focus otherwise relies on the textarea's own cursor as the indicator (no ring); prefers-contrast: more gets an explicit ring around the card instead. */
 @media (prefers-contrast: more) {
   :host .swc-PromptField-box:has(.swc-PromptField-input-area:focus-within) {
     outline: token("focus-indicator-thickness") solid token("gray-900");
