@@ -875,12 +875,6 @@
   cursor: default;
 }
 
-.swc-PromptField-textarea:focus-visible {
-  border-radius: token("corner-radius-75");
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-ring-gap");
-}
-
 /* Own single-row grid animates 0fr <-> 1fr; overflow/min-block-size live on the row wrapper below, not here, since 0fr only resolves to a true 0 on the grid item, not the container. */
 .swc-PromptField-leading-actions {
   display: grid;
@@ -1044,5 +1038,13 @@
 @media (prefers-reduced-motion: reduce) {
   .swc-PromptField-artifacts-scroll {
     scroll-behavior: auto;
+  }
+}
+
+/* Idle focus otherwise relies on the textarea's own cursor as the indicator (no ring); prefers-contrast: more gets an explicit ring around the whole card instead. */
+@media (prefers-contrast: more) {
+  :host(:focus-within) .swc-PromptField-outer-border {
+    outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+    outline-offset: token("focus-ring-gap");
   }
 }
