@@ -553,6 +553,14 @@
   flex-wrap: wrap;
   gap: token("spacing-300");
   align-items: start;
+
+  /* Dismiss badge is centered on the tile's top-right corner (see
+   * upload-artifact.css), so half of the larger (32px media) badge floats
+   * above the tile; reserve that much clearance above the row, same as
+   * --multiple's --swc-prompt-field-artifact-badge-clearance below. */
+  --swc-prompt-field-artifact-badge-clearance: 16px;
+
+  padding-block-start: var(--swc-prompt-field-artifact-badge-clearance);
 }
 
 .swc-PromptField-artifacts--single > slot {
