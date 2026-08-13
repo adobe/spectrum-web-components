@@ -42,6 +42,7 @@
     - Color Field
     - Color Handle
     - Color Loupe
+    - Combobox
     - Divider
     - Dropzone
     - Field Group

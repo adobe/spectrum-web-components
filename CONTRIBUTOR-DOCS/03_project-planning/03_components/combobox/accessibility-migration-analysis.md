@@ -1,0 +1,242 @@
+<!-- Generated breadcrumbs - DO NOT EDIT -->
+
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Combobox / Combobox accessibility migration analysis
+
+<!-- Document title (editable) -->
+
+# Combobox accessibility migration analysis
+
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [Overview](#overview)
+    - [Also read](#also-read)
+    - [What it is](#what-it-is)
+    - [When to use something else](#when-to-use-something-else)
+    - [What it is not](#what-it-is-not)
+    - [Related](#related)
+- [ARIA and WCAG context](#aria-and-wcag-context)
+    - [Pattern in the APG](#pattern-in-the-apg)
+    - [Guidelines that apply](#guidelines-that-apply)
+- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Recommendations: `<swc-combobox>`](#recommendations-swc-combobox)
+    - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
+    - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
+    - [Accessibility tree expectations](#accessibility-tree-expectations)
+    - [Keyboard and focus](#keyboard-and-focus)
+- [Testing](#testing)
+    - [Automated tests](#automated-tests)
+- [Summary checklist](#summary-checklist)
+- [References](#references)
+
+</details>
+
+<!-- Document content (editable) -->
+
+## Overview
+
+This doc tells you how **`swc-combobox`** should work for **accessibility**. It matches the goal of **WCAG 2.2 Level AA**. `swc-combobox` is the 2nd-gen replacement for 1st-gen `sp-combobox`: a single-line text input paired with a filterable listbox of options, where the user can type a value, pick a suggestion, or both.
+
+A combobox is a text field with a popup listbox bolted on, and 1st-gen models that literally — `Combobox` extends `Textfield`. So the label, help text, error message, and form-participation guidance for `swc-combobox` is the **same** as [`swc-text-field`](../text-field/accessibility-migration-analysis.md)'s, driven by the same shared controllers. This doc does not re-derive that shared guidance; it references the text-field doc and concentrates on what a combobox adds on top of a text field: the `combobox`/`listbox`/`option` role trio, the expanded/active-descendant states, the cross-root wiring between the input and its options, filtering/autocomplete behavior, and the keyboard model for moving through suggestions.
+
+### Also read
+
+- [Text field accessibility migration analysis](../text-field/accessibility-migration-analysis.md) — the base component `sp-combobox` extends. Its label, help-text, error, placeholder, `autocomplete`/`inputmode`, validation-icon, and form-association guidance apply to `swc-combobox` unchanged and are not repeated here.
+- [Forms strategy: 2nd-gen proposal](../../05_strategies/forms-strategy-rfc.md) — the canonical direction for form participation (ElementInternals/FACE), role placement, the `accessible-label`/`accessible-labelledby`/`accessible-describedby` naming table, and the axe-core policy this doc follows.
+- A combobox rendering-and-styling migration analysis is forthcoming; layout, CSS, and DOM-structure changes belong there, not here.
+
+### What it is
+
+- An **editable combobox with a list-autocomplete popup**: a real `<input role="combobox">` in the component's shadow root, a `listbox` of `option`s that filters as the user types, and a trigger button that toggles the popup. The value-bearing role (`combobox`) is supplied by the inner `<input>`, exactly as `swc-text-field`'s `textbox` role is — `swc-combobox` does not set a host-level ARIA role (see [ARIA roles, states, and properties](#aria-roles-states-and-properties)).
+- Its label, help text, and error message are rendered inside `swc-combobox`'s own shadow root by the **`LabellingController`**, the same way `swc-text-field` renders them — not by an externally associated `swc-field-label`/`swc-help-text`.
+- Its options are author-supplied elements (menu-item-like children), the same content model `sp-combobox` accepts through its default slot. The listbox and its options do **not** have to live in the same shadow root as the input; see [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues).
+
+### When to use something else
+
+- A closed set of choices where **freeform typing is not wanted** — use a picker (`select`-like) rather than a combobox. A combobox is specifically for "type **or** pick"; if custom text can never be valid, the extra textbox affordance is a liability, not a feature.
+- A short, always-visible set of mutually exclusive choices — use a radio group.
+- Plain open-ended text with no suggestions — use [`swc-text-field`](../text-field/accessibility-migration-analysis.md). Note that `swc-text-field` deliberately does **not** carry combobox behavior: its `autocomplete` property must not be widened to the combobox-only `'list'`/`'none'` tokens 1st-gen shares between the two.
+
+### What it is not
+
+- Not a menu or a menu button. A combobox's popup is a `listbox` of selectable values that fills a form field, not a `menu` of commands that perform actions. Do not reach for menu semantics (`role="menu"`/`menuitem`) to build the popup even though 1st-gen composes it from `sp-menu`/`sp-menu-item` internally.
+- Not a multi-select control. `swc-combobox` selects a single value. Multi-value entry (token/tag input) is a different pattern and out of scope for this migration.
+
+### Related
+
+- [`swc-text-field`](../text-field/accessibility-migration-analysis.md) — the base class; shared label/help/error/form guidance lives there.
+- The shared controllers this component composes: **`LabellingController`** ([SWC-2466](https://jira.corp.adobe.com/browse/SWC-2466)) and **`FieldAssociationController`** ([SWC-2467](https://jira.corp.adobe.com/browse/SWC-2467)) — the same two `swc-text-field` depends on — plus two the text field does not need: the [`FocusgroupNavigationController`](../../../../2nd-gen/packages/core/controllers/focusgroup-navigation-controller/focusgroup-navigation-controller.mdx) and the [`LiveSelectionController`](../../../../2nd-gen/packages/core/controllers/live-selection-controller/live-selection-controller.mdx) for option traversal and single-selection enforcement (see [Recommendations](#recommendations-swc-combobox)).
+- 1st-gen `sp-combobox` renders its options a second time inside its own shadow root (see [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)); the duplicate-rendering hack is a direct cause of option-announcement bugs such as [SWC-592](https://jira.corp.adobe.com/browse/SWC-592).
+
+---
+
+## ARIA and WCAG context
+
+### Pattern in the APG
+
+- The APG **does** name this widget: the [combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/), specifically the [editable combobox with list autocomplete](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-list/) example. Unlike `swc-text-field` (which has no named APG pattern because a native `<input>` covers it), a combobox is a genuine composite widget: a `combobox` role on the input, a `listbox` popup it controls via `aria-controls`, and `option` children whose active one is pointed at by `aria-activedescendant`. There is no single native HTML element that supplies all of this, so the ARIA wiring is real work, not a native-semantics fallback.
+- Even so, the base of the widget is still a native `<input>`. Keep it: the input supplies the editable text, the caret, text selection, IME composition, and the `combobox` role by way of the explicit `role="combobox"` on a real text input. `swc-combobox` layers `aria-expanded`, `aria-controls`, `aria-activedescendant`, and `aria-autocomplete` on top of that native input rather than reconstructing a textbox from a non-editable element.
+- **Single host role holds.** The combobox exposes exactly one host-facing role, `combobox`, and it lives on the inner input — never conditionally swapped, never set on the host. The `listbox` and `option` roles belong to *different elements* (the popup and its children), not to alternate configurations of one host, so the project's single-host-role policy is satisfied without a dual-role decision. The one composition question the migration must settle — whether options are their own custom element and where the listbox lives — is answered in [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues); it does not change the host's role.
+
+### Guidelines that apply
+
+| Idea | Plain meaning |
+| --- | --- |
+| [Info and relationships (1.3.1)](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html) | The `combobox`/`listbox`/`option` relationships (`aria-controls`, `aria-activedescendant`, `aria-selected`) must be real programmatic associations, not just visual adjacency — and they must resolve even when the options are in a different shadow root than the input (see [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)). |
+| [Name, role, value (4.1.2)](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html) | Every state the widget can be in — collapsed/expanded, which option is active, what the current value is, disabled, invalid — must be exposed to AT, not conveyed visually alone. 1st-gen has an open sev1 here ([SWC-1195](https://jira.corp.adobe.com/browse/SWC-1195): missing accessible name in the disabled state). |
+| [Labels or instructions (3.3.2)](https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html) and [Label in name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) | The field needs one real, stable accessible name — the same requirement as `swc-text-field`. 1st-gen has an open issue here ([SWC-1152](https://jira.corp.adobe.com/browse/SWC-1152)), made worse by its double-labelling (see [ARIA roles, states, and properties](#aria-roles-states-and-properties)). |
+| [Use of color (1.4.1)](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html) | Disabled and invalid states must not be signalled by color alone. 1st-gen has an open sev2 here ([SWC-1127](https://jira.corp.adobe.com/browse/SWC-1127)). |
+| [Error identification (3.3.1)](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html) | When `invalid`, the error text must be visible and exposed via `aria-describedby`/`aria-errormessage` — inherited unchanged from the text-field guidance. |
+| [Language of parts (3.1.2)](https://www.w3.org/WAI/WCAG22/Understanding/language-of-parts.html) | When an option's text is in a different language than the surrounding page, its `lang` must be exposed on the option element so AT pronounces it correctly. 1st-gen loses this today because it re-renders options as shadow-DOM copies that do not carry the author's `lang` ([SWC-2359](https://jira.corp.adobe.com/browse/SWC-2359)); using the real author elements as the options (see [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)) fixes it structurally. |
+| [Focus visible (2.4.7)](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html) | DOM focus stays on the input the entire time the popup is open; the "focused" option is indicated by `aria-activedescendant`, not by moving focus. The active option needs a visible active-style indicator distinct from the input's own focus ring. |
+| [Status messages (4.1.3)](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html) | Result-count and pending/loading changes happen without the user moving focus. Any announcement of "N results" or "loading" must be measured, not a flood — see [ARIA roles, states, and properties](#aria-roles-states-and-properties); do not default help text or the listbox to an assertive live region. |
+
+**Bottom line:** the text-field layer (label, help, error, form participation, native input behavior) is already solved by the shared controllers and documented in the text-field doc. The combobox-specific accessibility work is (1) getting the `combobox`/`listbox`/`option` roles and their `aria-controls`/`aria-activedescendant`/`aria-expanded`/`aria-selected` wiring correct, (2) making that wiring resolve **across shadow roots** so options can be the author's real elements instead of shadow-DOM duplicates, and (3) keeping DOM focus on the input while the `FocusgroupNavigationController` drives which option is *active*.
+
+---
+
+## Related 1st-gen accessibility (Jira)
+
+| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
+| --- | --- | --- | --- | --- |
+| [SWC-1195](https://jira.corp.adobe.com/browse/SWC-1195) | Bug | Blocked | Unresolved | Form field is missing an accessible name — `sp-combobox` (disabled tab) ([WCAG 4.1.2](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html)), sev1 |
+| [SWC-1152](https://jira.corp.adobe.com/browse/SWC-1152) | Bug | To Do | Unresolved | Accessible name missing — `sp-combobox` (disabled, invalid tab) ([WCAG 2.5.3](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html)) |
+| [SWC-1127](https://jira.corp.adobe.com/browse/SWC-1127) | Bug | To Do | Unresolved | Color alone conveys the state of a control — `sp-combobox` (disabled, invalid) ([WCAG 1.4.1](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)) |
+| [SWC-592](https://jira.corp.adobe.com/browse/SWC-592) | Bug | To Do | Unresolved | Combobox a11y issues speaking the options |
+| [SWC-2359](https://jira.corp.adobe.com/browse/SWC-2359) | Bug | In Progress | Unresolved | Combobox should support `lang` on menu item ([WCAG 3.1.2](https://www.w3.org/WAI/WCAG22/Understanding/language-of-parts.html)) |
+| [SWC-874](https://jira.corp.adobe.com/browse/SWC-874) | Epic | Blocked | Unresolved | Refactor combobox (accessibility) |
+| [SWC-710](https://jira.corp.adobe.com/browse/SWC-710) | Story | To Do | Unresolved | Refactor `sp-combobox` for accessibility |
+| [SWC-711](https://jira.corp.adobe.com/browse/SWC-711) | Story | To Do | Unresolved | Fix CSS in the refactored combobox PR, sev1 |
+| [SWC-712](https://jira.corp.adobe.com/browse/SWC-712) | Story | To Do | Unresolved | Update unit tests as needed based on the WAI-ARIA APG, sev1 |
+| [SWC-616](https://jira.corp.adobe.com/browse/SWC-616) | Story | Done | Fixed | RFC: combobox — refactor for accessibility |
+| [SWC-1045](https://jira.corp.adobe.com/browse/SWC-1045) | Story | Done | Fixed | Migrate combobox to `FormFieldMixin`, adding a `placeholder` property |
+| [SWC-1320](https://jira.corp.adobe.com/browse/SWC-1320) | Story | Done | Fixed | Align slotted field-label CSS with the standalone field-label component |
+| [SWC-1255](https://jira.corp.adobe.com/browse/SWC-1255) | Bug | Done | Fixed | Pending-state controller uses a semantically incorrect progress circle with accessibility issues |
+| [SWC-534](https://jira.corp.adobe.com/browse/SWC-534) | Story | Done | Fixed | Extend `ComboboxOption` to support the disabled state of menu items |
+| [SWC-23](https://jira.corp.adobe.com/browse/SWC-23) | Story | To Do | Unresolved | `sp-combobox` value is not equivalent to the currently selected menu item |
+| [SWC-634](https://jira.corp.adobe.com/browse/SWC-634) | Bug | Done | Cannot Reproduce | Escape/delete key doesn't work in Japanese (IME) input |
+| [SWC-1373](https://jira.corp.adobe.com/browse/SWC-1373) | Story | To Do | Unresolved | Spike: compare semantics across menu, action menu, combobox, and picker |
+| [SWC-1346](https://jira.corp.adobe.com/browse/SWC-1346) | Epic | Done | Deferred | Implement `FormFieldMixin` across components |
+| [SWC-772](https://jira.corp.adobe.com/browse/SWC-772) | Story | Done | Fixed | RFC: form element patterns |
+| [SWC-320](https://jira.corp.adobe.com/browse/SWC-320) | Story | Done | Deferred | Improve form association for input elements |
+| [SWC-196](https://jira.corp.adobe.com/browse/SWC-196) | Epic | Done | Duplicate | Loosening the API for form input elements |
+| [SWC-48](https://jira.corp.adobe.com/browse/SWC-48) | Epic | Done | Deferred | RFC: recommendations for form-associated custom elements (`ElementInternals`) |
+| [SWC-372](https://jira.corp.adobe.com/browse/SWC-372) | Story | Done | Fixed | docs(combobox): documentation audit |
+| [SWC-123](https://jira.corp.adobe.com/browse/SWC-123) | Story | Done | Deferred | test(combobox): refactor test structure |
+
+---
+
+## Recommendations: `<swc-combobox>`
+
+Component tag may change until API freeze. Shared label/help/error/form-association guidance is inherited from [`swc-text-field`](../text-field/accessibility-migration-analysis.md#recommendations-swc-text-field) and is not repeated in full here; the rows below cover what a combobox adds or changes.
+
+### ARIA roles, states, and properties
+
+| Topic | What to do |
+| --- | --- |
+| **Host role** | None. The host element sets no `role`. The inner, real `<input>` carries an explicit `role="combobox"`, which is the widget's single value-bearing role — placed on the shadow-DOM control for the same reason `swc-text-field`'s `textbox` role is: a combobox exposes a **live value** and an expanded state to AT, and per the [forms strategy §3.2](../../05_strategies/forms-strategy-rfc.md#32-where-aria-roles-live) a value-bearing role must live on the same node as its value, so it stays on the inner control rather than being hoisted to the host via `ElementInternals`. Do not add a `role` to the host. |
+| **Accessible name — one writer** | Same three-source model as `swc-text-field`, wired by the **`LabellingController`**: `accessible-labelledby` (highest precedence) → `accessible-label` → slotted visible label. Fix 1st-gen's **double-labelling bug** in the process: 1st-gen sets both `aria-label` **and** `aria-labelledby` on the same input (`aria-labelledby="label applied-label pending-label"` alongside `aria-label`), which is a conflicting, two-writer setup and a direct contributor to [SWC-1152](https://jira.corp.adobe.com/browse/SWC-1152)/[SWC-1195](https://jira.corp.adobe.com/browse/SWC-1195). 2nd-gen must set exactly one naming mechanism, from one render pass. The same name is applied to the `listbox` (via `aria-labelledby`/`aria-label` in the same root as the listbox) so the popup is named too. |
+| **`aria-expanded`** | Set `aria-expanded="true"` on the input when the listbox is open and `"false"` when closed. This is the collapsed/expanded state and must always be present (both values), unlike `aria-invalid` which is only set when true. 1st-gen already does this; keep it, but drive it from the same `open` state the popup visibility uses so they can never disagree. |
+| **`aria-controls` → the listbox** | The input's `aria-controls` must reference the `listbox` element. When the listbox lives in a **different shadow root** than the input (the recommended structure — see [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)), set it through the **`ariaControlsElements`** element-reference property rather than an IDREF string, which cannot cross a shadow boundary. 1st-gen only sets `aria-controls` while open and via a same-root IDREF (`aria-controls="listbox-menu"`); the element-reference form is what makes a cross-root listbox possible. |
+| **`aria-activedescendant` → the active option** | While the popup is open and the user arrows through options, the input's `aria-activedescendant` points at the currently active `option`. DOM focus never leaves the input. Set this through the single-element reflection property **`ariaActiveDescendantElement`** (not the pluralized name; `aria-activedescendant` references exactly one element) so it resolves to the real option element even across a shadow boundary. This is the linchpin of the hybrid approach and replaces 1st-gen's shadow-DOM-`id` lookup (`shadowRoot.getElementById(activeDescendant.value)`). Clear it (no active option) when the caret moves within the text (<kbd>Home</kbd>/<kbd>End</kbd>/<kbd>ArrowLeft</kbd>/<kbd>ArrowRight</kbd>) or the popup closes. |
+| **`aria-autocomplete`** | Set `aria-autocomplete="list"` when the popup offers filtered suggestions and `"none"` when it does not, on the input. Keep this decoupled from the native `autocomplete` attribute (which must be `off` on the input so the browser's own autofill/history UI does not compete with the listbox). This mirrors 1st-gen's split but should use a combobox-owned property type, not the widened text-field type. |
+| **Options: `role="option"` + `aria-selected`** | Each option exposes `role="option"`. The **selected** option (the one matching the field's value) carries `aria-selected="true"`; the **active** option (arrow-key focus) is indicated by `aria-activedescendant` from the input, not by `aria-selected`. 1st-gen conflates these — it writes `aria-selected` to track the *active* descendant during arrow navigation (`el.setAttribute('aria-selected', … === activeDescendant …)`), which mis-reports selection to AT. Keep the two concepts distinct: `aria-selected` = chosen value; `aria-activedescendant` = keyboard-active row. |
+| **Selection enforcement** | Use the **`LiveSelectionController`** in `'single'` mode: options own their own `selected` state and dispatch a change event, and the controller deselects the others when one becomes selected. This is the correct controller for menu-item-like children that flip their own state (as `sp-menu-item` does), rather than a host-authoritative `SelectionController`. The field's value updates from the selected option's text/value on selection. |
+| **Option traversal** | Use the **`FocusgroupNavigationController`** to compute which option is next/previous under the arrow keys, but **do not let it move DOM focus** — see [Keyboard and focus](#keyboard-and-focus). The combobox uses the controller's `setActiveItem()` / active-change event to track the active option and reflect it through `ariaActiveDescendantElement`; focus stays in the input for typing. Set `skipDisabled: true` so disabled options are skipped during arrow traversal, matching 1st-gen's `do…while` that steps over `disabled` options. |
+| **Trigger button** | The chevron/picker button that toggles the popup is a pointer affordance only. It is **not** a separate tab stop (`tabindex="-1"`) and its state duplicates the input's, so it must not introduce a second, competing set of `aria-expanded`/`aria-controls` announcements the way 1st-gen's `sp-picker-button` does (it currently carries its own `aria-controls`, `aria-expanded`, `aria-label`, and `aria-labelledby`). Keep it out of the accessibility tree as an interactive control, or expose it only as a decorative toggle; the input is the combobox. |
+| **Pending / loading** | The pending (loading) state must be announced without flooding. Do not reuse 1st-gen's approach wholesale: [SWC-1255](https://jira.corp.adobe.com/browse/SWC-1255) flagged its progress circle as semantically incorrect. Expose "loading" as a bounded status tied to the field (a labelled busy state), not an assertive live region, and never `aria-live="assertive"`. The pending spinner itself is decorative (`aria-hidden`); the pending *label* carries the text. |
+| **Placeholder, `aria-invalid`, required, validation icon, `autocomplete`/`inputmode`** | Inherited unchanged from [`swc-text-field`](../text-field/accessibility-migration-analysis.md#aria-roles-states-and-properties): placeholder is never the accessible name (drop the placeholder→`aria-label` fallback and dev-warn instead); `aria-invalid` only when actually invalid; native `required` rather than `aria-required`; the validation icon stays `aria-hidden="true"` and is never the sole signal of invalid state (addresses [SWC-1127](https://jira.corp.adobe.com/browse/SWC-1127)); `autocomplete` keeps its input-purpose value and `inputmode` is added. |
+| **Result count (optional, measured)** | If the design calls for announcing how many suggestions match, associate a concise, debounced status ("3 results") tied to the combobox — never an assertive region, and never per-keystroke without debouncing. Treat this as opt-in, not default, to avoid over-announcing under [WCAG 4.1.3](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html). |
+
+### Shadow DOM and cross-root ARIA Issues
+
+**This is the defining accessibility problem for the combobox migration, and it is the opposite of the text field's.** `swc-text-field` resolves its cross-root concern by *removing* the boundary — label, input, and help text all render in one shadow root. `swc-combobox` cannot do that, because a combobox is inherently a **three-role, multi-element** widget: the `combobox` input, the `listbox`, and the `option`s. The APG's model, and every IDREF that connects these (`aria-controls`, `aria-activedescendant`, and the listbox's `aria-labelledby`), assumes all three share one DOM tree so the IDREFs resolve.
+
+**1st-gen's workaround, and why it hurts.** To keep the IDREFs resolvable, 1st-gen renders the options **twice**: the author's slotted `sp-menu-item`s feed a hidden `<slot>` (read into `optionEls`), and a *second* copy is rendered inside the component's own shadow root via `repeat(availableOptions …)` with `id=option.value`. `aria-activedescendant` then points at those shadow-DOM copies, resolved with `shadowRoot.getElementById(...)`. This duplicate-rendering hack is a recurring source of real defects:
+
+- The shadow copies do not carry the author's element state, so per-option `lang` is lost ([SWC-2359](https://jira.corp.adobe.com/browse/SWC-2359), [WCAG 3.1.2](https://www.w3.org/WAI/WCAG22/Understanding/language-of-parts.html)).
+- Two element sets representing one logical option list is a structural cause of the option-announcement bugs tracked in [SWC-592](https://jira.corp.adobe.com/browse/SWC-592).
+- The `aria-selected` bookkeeping has to be mirrored across both copies, which is where 1st-gen conflates *active* and *selected* (see [ARIA roles, states, and properties](#aria-roles-states-and-properties)).
+
+**2nd-gen's fix: element references instead of IDREFs, so the options can stay put.** Use the **hybrid model** from the [web-component form-strategy demos](https://nikkimk.github.io/web-component-form-strategy-demos/demo-hybrid.html): the `combobox` input and the `listbox` may live in `swc-combobox`'s shadow root, while the **`option`s remain the author's real elements** (in the light DOM, or in a separate popover component's root) — they no longer need to share the input's root. The IDREF relationships that would normally require a shared tree are set instead through the ARIA **element-reference reflection** properties, which resolve across shadow boundaries:
+
+- `aria-controls` (input → listbox): **`ariaControlsElements`** = `[listboxElement]`.
+- `aria-activedescendant` (input → active option): **`ariaActiveDescendantElement`** = `activeOptionElement` (single element; note the singular property name).
+- The listbox's name and the options' `aria-labelledby`, where needed, use the same element-reference pattern rather than IDREF strings.
+
+Because these are element references, the active option can be the **author's own element** — carrying its own `lang`, text, and `role="option"` — with no shadow-DOM duplicate to keep in sync. This removes the double-render, fixes the `lang` loss structurally, and lets `aria-selected` be written once, on the real option. Element reflection is the same capability `swc-text-field` uses for `accessible-labelledby`/`accessible-describedby`; browser support baseline is the same (Chromium 135+, Safari 16.4+, Firefox 136+). Verify option and active-descendant exposure manually where support lags, per the [forms strategy §3.4 axe policy](../../05_strategies/forms-strategy-rfc.md#34-axe-core-policy).
+
+**axe-core will report expected false positives here.** Two from the forms strategy's [known-false-positives list](../../05_strategies/forms-strategy-rfc.md#34-axe-core-policy) apply directly: `aria-required-children` fires on the `listbox` because axe does not traverse a slot or a cross-root reference to find the `option` children, and `label` fires on the roleless host. Add story- or test-level exclusions **with a written `// reason:` comment**, not a silent global disable, and lean on manual AT testing for the relationships axe cannot follow across roots.
+
+### Accessibility tree expectations
+
+- **Collapsed, labeled, empty:** role `combobox` on the input; name from `accessible-labelledby`/`accessible-label`/slotted label (one source); `aria-expanded="false"`; value empty; no `aria-activedescendant`. Description from same-root `aria-describedby` when help text is slotted.
+- **Expanded, arrowing through options:** input still has role `combobox` and DOM focus; `aria-expanded="true"`; `aria-controls` resolves to the `listbox`; `aria-activedescendant` resolves to the active `option`. The listbox exposes role `listbox` with its own accessible name; each option exposes role `option`, its own text (and its own `lang` when set), and `aria-selected="true"` only on the option matching the field value — *not* on the merely-active option.
+- **Value selected:** the input's value reflects the chosen option's text; the matching option is `aria-selected="true"`; the popup collapses (`aria-expanded="false"`) and `aria-activedescendant` is cleared. Exactly one option is selected (`LiveSelectionController`, single mode).
+- **Pending / loading:** a bounded, labelled busy state associated with the field; the spinner adds no separate interactive node (it is `aria-hidden`); no assertive live region.
+- **Invalid:** `aria-invalid="true"`; error text visible and reachable via `aria-describedby`/`aria-errormessage`; the alert icon stays `aria-hidden="true"` and is not the only signal of the state.
+- **Disabled vs. readonly:** `disabled` removes the field from the tab order and the popup cannot open; `readonly` keeps the field focusable and its value selectable but non-editable and non-expandable. These must be programmatically distinct outcomes, not just CSS — and the disabled state must still expose the field's accessible name (the specific 1st-gen gap in [SWC-1195](https://jira.corp.adobe.com/browse/SWC-1195)).
+
+### Keyboard and focus
+
+DOM focus stays on the input for the entire interaction; this is an **active-descendant** widget, not a roving-tabindex one. That distinction is the single most important keyboard note for the migration, because the combobox composes the `FocusgroupNavigationController` — whose default job is roving tabindex — and must deliberately **not** use it that way.
+
+- **One tab stop.** The input is the only Tab stop. Attach the shadow root with `delegatesFocus: true` so focus lands on the real `<input>`. The trigger button is `tabindex="-1"` and the options are never in the tab order.
+- **Active option ≠ focused option.** As the user presses <kbd>ArrowDown</kbd>/<kbd>ArrowUp</kbd>, the `FocusgroupNavigationController` computes the next/previous eligible option via `setActiveItem()` (which by design does **not** call `focus()`), the combobox listens to its active-change event, and reflects the new active option through `ariaActiveDescendantElement`. Focus never moves to the option. If the controller ever moved DOM focus into the listbox, the user could no longer type — so the combobox uses the controller for traversal math and active-item tracking only, not for focus movement.
+- **Keys** (matching the [APG list-autocomplete combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-list/) and preserving 1st-gen behavior where it already conforms):
+  - <kbd>ArrowDown</kbd> — open the popup if closed and move the active option to the next (first, if none active); <kbd>Alt</kbd> + <kbd>ArrowDown</kbd> opens without moving.
+  - <kbd>ArrowUp</kbd> — open the popup if closed and move the active option to the previous (last, if none active).
+  - <kbd>Enter</kbd> — select the active option and close the popup; if no option is active, submit the enclosing form as a plain text field would.
+  - <kbd>Escape</kbd> — close the popup if open; if already closed, clear the input value (preserve 1st-gen's behavior).
+  - <kbd>Home</kbd> / <kbd>End</kbd> — move the caret to the start/end of the input text and clear the active option (do not treat these as first/last-option jumps; the caret takes priority in an editable combobox).
+  - <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> — move the caret and clear the active option.
+  - Printable characters — type into the input and refilter the list; a new keystroke clears the active option (the user is typing, not choosing).
+- **`skipDisabled`.** Configure the `FocusgroupNavigationController` with `skipDisabled: true` so arrow traversal steps over disabled options, matching 1st-gen. Disabled options remain in the listbox for screen reader context but are not selectable.
+- **IME / composition.** Do not let <kbd>Escape</kbd> or <kbd>Enter</kbd> handling swallow composition events. 1st-gen has a related report ([SWC-634](https://jira.corp.adobe.com/browse/SWC-634), Cannot Reproduce) for Japanese input; when the combobox intercepts <kbd>Escape</kbd> to clear/close, it must yield to IME composition cancellation first, mirroring the text field's [SWC-1870](https://jira.corp.adobe.com/browse/SWC-1870) concern.
+- **Focus-visible on the active option.** The active option needs a visible active indicator that is distinct from the input's focus ring and from the *selected* option's styling, so sighted keyboard users can tell "the row I'm on" from "the value I've chosen."
+
+---
+
+## Testing
+
+### Automated tests
+
+| Kind of test | What to check |
+| --- | --- |
+| **Unit** | `aria-expanded` toggles with `open` and is always present (both `true`/`false`); `ariaControlsElements` resolves to the listbox and `ariaActiveDescendantElement` resolves to the active option element (not a stale shadow-DOM copy) across a shadow boundary; `aria-activedescendant` clears on caret-move keys and on close; `aria-selected="true"` appears only on the option matching the value, never on the merely-active option; `LiveSelectionController` keeps exactly one option selected in single mode; `FocusgroupNavigationController` traversal skips disabled options and never moves DOM focus off the input; exactly one accessible-name mechanism is set on the input (no `aria-label` + `aria-labelledby` together); `FieldAssociationController` submits the value, resets, and disables via an ancestor `<fieldset disabled>`. |
+| **aXe + Storybook** | Stories for collapsed, expanded, selected, pending, invalid, disabled, and readonly. Document the expected `aria-required-children` and `label` false positives with `// reason:` exclusions per the [forms strategy axe policy](../../05_strategies/forms-strategy-rfc.md#34-axe-core-policy) rather than disabling axe globally. A per-option `lang` story asserting the author's `lang` survives onto the real option element (regression guard for [SWC-2359](https://jira.corp.adobe.com/browse/SWC-2359)). A no-accessible-name story that dev-warns rather than silently borrowing the placeholder. |
+| **Playwright ARIA snapshots** | `role=combobox` with the correct name, value, `expanded` state, and (when open) `controls`/`activedescendant`; the `listbox` with its name and `option` children carrying correct `selected` state; snapshots across top/side label positions and default/error/disabled/readonly/pending states from the design spec's state matrix. |
+| **Manual screen reader** | Cross-root `aria-activedescendant`/`aria-controls` exposure verified in NVDA, JAWS, and VoiceOver — and specifically in **Firefox**, where `ElementInternals`/element-reflection ARIA is least consistent (per the forms strategy). Confirm: opening announces the listbox and count sensibly (not floodily); arrowing announces each option once, including its `lang`; selecting announces the chosen value; the disabled field still announces its name. |
+
+---
+
+## Summary checklist
+
+- [ ] Host sets no `role`; the inner `<input>` carries the single `combobox` role; no host-role hoist via `ElementInternals`.
+- [ ] Exactly one accessible-name mechanism on the input — 1st-gen's simultaneous `aria-label` + `aria-labelledby` double-labelling is removed (addresses [SWC-1152](https://jira.corp.adobe.com/browse/SWC-1152)/[SWC-1195](https://jira.corp.adobe.com/browse/SWC-1195)).
+- [ ] `aria-expanded` is always present and driven from the same `open` state as popup visibility.
+- [ ] `aria-controls` and `aria-activedescendant` are set via `ariaControlsElements` / `ariaActiveDescendantElement` element references, so the listbox and options resolve across shadow roots — no shadow-DOM duplicate of the option list.
+- [ ] Options are the author's real elements; per-option `lang` survives (fixes [SWC-2359](https://jira.corp.adobe.com/browse/SWC-2359)); no double-rendering.
+- [ ] `aria-selected` marks the chosen value only; the keyboard-active option is conveyed by `aria-activedescendant`, not `aria-selected` (fixes 1st-gen's active/selected conflation).
+- [ ] `LiveSelectionController` enforces single selection; `FocusgroupNavigationController` drives arrow traversal with `skipDisabled: true` and **never** moves DOM focus off the input.
+- [ ] DOM focus stays on the input throughout; one Tab stop with `delegatesFocus: true`; trigger button is `tabindex="-1"`.
+- [ ] Keyboard model matches the APG list-autocomplete combobox; <kbd>Home</kbd>/<kbd>End</kbd>/arrow-left/right move the caret and clear the active option; <kbd>Escape</kbd> yields to IME composition before clearing/closing.
+- [ ] Pending/loading is a bounded, labelled busy state (not an assertive live region); the spinner is `aria-hidden`; addresses [SWC-1255](https://jira.corp.adobe.com/browse/SWC-1255).
+- [ ] Disabled vs. readonly are programmatically distinct; the disabled field still exposes its accessible name (fixes [SWC-1195](https://jira.corp.adobe.com/browse/SWC-1195)).
+- [ ] Disabled/invalid state is not conveyed by color alone (fixes [SWC-1127](https://jira.corp.adobe.com/browse/SWC-1127)).
+- [ ] Shared label/help/error/form guidance is inherited from `swc-text-field` via `LabellingController` + `FieldAssociationController`, not reimplemented.
+- [ ] Expected axe false positives (`aria-required-children`, `label`) are excluded with written `// reason:` rationales, and cross-root exposure is verified by manual AT testing including Firefox.
+
+## References
+
+- [Web component form strategy demos](https://github.com/nikkimk/web-component-form-strategy-demos/tree/main) and the [hybrid demo](https://nikkimk.github.io/web-component-form-strategy-demos/demo-hybrid.html) — the cross-root element-reference model (`ariaControlsElements`, `ariaActiveDescendantElement`) this doc's listbox/option wiring follows.
+- [Forms strategy: 2nd-gen proposal (this repo)](../../05_strategies/forms-strategy-rfc.md) — role placement, the `accessible-label`/`accessible-labelledby`/`accessible-describedby` naming table, and the axe-core policy.
+- [Text field accessibility migration analysis (this repo)](../text-field/accessibility-migration-analysis.md) — the base component; shared label/help/error/form guidance.
+- [WAI-ARIA](https://www.w3.org/TR/wai-aria-1.2/), [WCAG 2.2](https://www.w3.org/TR/WCAG22/), [APG: read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
+- [APG: combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) and the [editable combobox with list autocomplete example](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-list/)
+- [`FocusgroupNavigationController` (this repo)](../../../../2nd-gen/packages/core/controllers/focusgroup-navigation-controller/focusgroup-navigation-controller.mdx) and [`LiveSelectionController` (this repo)](../../../../2nd-gen/packages/core/controllers/live-selection-controller/live-selection-controller.mdx) — option traversal and single-selection enforcement.
+- [React Spectrum: ComboBox](https://react-spectrum.adobe.com/ComboBox) — S2 API reference (selection vs. input value, `menuTrigger`, loading state, sections).
+- 1st-gen: [`sp-combobox`](../../../../1st-gen/packages/combobox/README.md), [`sp-textfield`](../../../../1st-gen/packages/textfield/README.md)
+- Jira: [SWC-2452](https://jira.corp.adobe.com/browse/SWC-2452) (gen2 combobox epic), [SWC-2453](https://jira.corp.adobe.com/browse/SWC-2453) (this a11y analysis), [SWC-2455](https://jira.corp.adobe.com/browse/SWC-2455) (file structure, API, TypeScript, accessibility), [SWC-1888](https://jira.corp.adobe.com/browse/SWC-1888) (RFC: form field strategy for 2nd-gen migration)
