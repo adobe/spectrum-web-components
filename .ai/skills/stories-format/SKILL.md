@@ -10,6 +10,17 @@ Enforce consistent formatting and technical structure for Storybook stories file
 
 **See also**: `.ai/skills/stories-documentation/SKILL.md` for guidance on WHAT to author in the per-unit MDX (content, patterns, examples).
 
+## When to use this skill
+
+- Authoring or reviewing a `.stories.ts` file for a 2nd-gen component, pattern, or controller
+- Any file matching the globs below is open or being created — treat that as a trigger to apply this skill's file structure, meta configuration, and tagging conventions
+- Adding a new story (Playground, Options, States, Behaviors, Accessibility, etc.) and needing the right tags, layout parameters, or naming convention
+
+## How to invoke
+
+- Say "add a story for [feature]", "fix the stories file structure", or "review this .stories.ts file"
+- Or open/create any of the files below — apply this skill's structure and conventions to it
+
 ## Scope
 
 Apply to all `.stories.ts` files in:

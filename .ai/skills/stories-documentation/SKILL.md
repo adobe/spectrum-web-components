@@ -10,6 +10,17 @@ Authoring guide for the per-unit MDX file that powers each Storybook Docs page. 
 
 **See also**: `.ai/skills/stories-format/SKILL.md` for the stories file (`.stories.ts`) structure and conventions.
 
+## When to use this skill
+
+- Authoring or reviewing a per-unit `<unit>.mdx` docs page for a 2nd-gen component, internal component, pattern, or controller
+- Any file matching the globs below is open or being created — treat that as a trigger to apply this skill's section order, authoring patterns, and verification process
+- Verifying documentation prose against the component's actual implementation to avoid hallucinated attributes, slots, or ARIA claims
+
+## How to invoke
+
+- Say "write the docs page for [component]", "author the per-unit MDX for [component]", or "review this MDX docs page"
+- Or open/create any of the files below — apply this skill's authoring standards to it
+
 ## Scope
 
 Apply to per-unit MDX files in:

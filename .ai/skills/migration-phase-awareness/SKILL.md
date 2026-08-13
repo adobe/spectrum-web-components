@@ -7,13 +7,18 @@ description: Keeps multi-phase migration obligations in context during a session
 
 When working on any part of a 1st-gen to 2nd-gen component migration, maintain explicit awareness of which phase is active, which phases are complete, and what obligations remain — even when the conversation drifts to other topics.
 
-## When this rule applies
+## When to use this skill
 
 Apply any time:
 
 - A migration-\* skill has been invoked in the current session
 - You are editing files that are part of a 2nd-gen component migration
 - The user references a migration phase or a component being migrated
+
+## How to invoke
+
+- Active automatically for the duration of a session once any `migration-*` skill runs — no separate invocation needed
+- Say "check migration phase status" or "what's left for this migration" to surface it explicitly mid-session
 
 ## Before declaring a phase complete
 

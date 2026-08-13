@@ -5,7 +5,15 @@ description: Generates GitHub pull request and issue descriptions — title, lab
 
 # GitHub description guidelines
 
-If a ticket (GitHub issue or Jira ticket) is not provided by the prompt, prompt the user to supply one before generating the description or pull request content.
+## When to use this skill
+
+- Drafting a GitHub PR description or issue description
+- Filling in the accessibility testing checklist, author/reviewer checklists, or manual test cases for a PR body
+
+## How to invoke
+
+- Say "write a PR description", "draft a GitHub issue for this", or "create the PR body"
+- If no linked ticket (GitHub issue or Jira ticket) is provided, prompt the user to supply one before generating the description or pull request content
 
 When prompted to create a GitHub description, output the following:
 

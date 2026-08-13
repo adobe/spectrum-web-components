@@ -8,9 +8,15 @@ globs: '**/*.md,**/*.mdx'
 
 Converts markdown files to MDX format compatible with Storybook rendering.
 
-## When to apply
+## When to use this skill
 
-Apply this rule when converting `.md` files to `.mdx` files for display in Storybook, particularly for documentation pages in the 2nd-gen SWC Storybook guides.
+- Converting a `.md` file to `.mdx` for Storybook rendering, particularly documentation pages in the 2nd-gen SWC Storybook guides
+- A `.md` or `.mdx` file relevant to Storybook docs is in context and needs the `Meta` import, HTML-comment-to-JSX-comment conversion, or other conversion steps below applied
+
+## How to invoke
+
+- Say "convert this doc to MDX", "make this Storybook-renderable", or "convert this README to .mdx for Storybook"
+- Or open a `.md` file destined for the 2nd-gen Storybook guides and apply this skill's conversion steps
 
 ## Conversion steps
 

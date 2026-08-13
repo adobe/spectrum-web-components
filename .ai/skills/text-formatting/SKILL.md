@@ -6,6 +6,17 @@ globs: '**/*.md, **/*.txt, **/*.mdx'
 
 # Text formatting conventions
 
+## When to use this skill
+
+- Writing or editing any `.md`, `.txt`, or `.mdx` content — a file matching those extensions being in context is itself a trigger to apply these conventions
+- Drafting prose for PR descriptions, Jira tickets, component docs, or per-unit MDX pages
+- Reviewing existing prose for heading case, em dashes, `<kbd>` formatting, or Jira ticket references
+
+## How to invoke
+
+- Say "check the formatting on this", "fix the heading case", or "apply text formatting conventions"
+- Or write/edit any markdown or MDX prose — apply these conventions as you go, not just on request
+
 ## Capitalization rules
 
 - Use sentence case for all headings and section titles (capitalize first word only)
