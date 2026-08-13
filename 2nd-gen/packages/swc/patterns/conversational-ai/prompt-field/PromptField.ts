@@ -28,7 +28,6 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 
-import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import {
   focusgroupNavigationActiveChange,
   type FocusgroupNavigationActiveChangeDetail,
@@ -40,6 +39,7 @@ import {
   getActiveElement,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
+import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 import '../../../components/ui-icons/swc-ui-icon.js';
 
@@ -541,6 +541,14 @@ export class PromptField extends SpectrumElement {
       '.swc-PromptField-artifacts-scroll-prev'
     );
 
+    // The chevrons are swc-action-buttons with delegatesFocus, so the active
+    // element is their inner shadow <button>, not the host. Match either the
+    // host itself or an element inside its shadow root.
+    const isChevron = (host: Element | null | undefined): boolean =>
+      !!host &&
+      (active === host ||
+        (active.getRootNode() as ShadowRoot | null)?.host === host);
+
     // From the active tile: Tab reveals its Close button. Shift+Tab is left
     // to native default, which (roving tabindex leaves every other tile at
     // -1) exits the group entirely regardless of which tile is active.
@@ -583,7 +591,7 @@ export class PromptField extends SpectrumElement {
     // wherever focus was before the page turned) — its Close button when
     // visible, mirroring the forward tile -> Close -> Next chain in reverse,
     // otherwise the tile itself.
-    if (active === nextButton && event.shiftKey) {
+    if (isChevron(nextButton) && event.shiftKey) {
       const activeTile = this._artifactNavigation.getActiveItem();
       if (activeTile) {
         event.preventDefault();
@@ -594,7 +602,7 @@ export class PromptField extends SpectrumElement {
 
     // From the Prev chevron: plain Tab moves forward into the roving
     // controller's current active tile, for the same reason as above.
-    if (active === prevButton && !event.shiftKey) {
+    if (isChevron(prevButton) && !event.shiftKey) {
       const activeTile = this._artifactNavigation.getActiveItem();
       if (activeTile) {
         event.preventDefault();
@@ -908,18 +916,22 @@ export class PromptField extends SpectrumElement {
         >
           ${this._artifactScrollOverflow
             ? html`
-                <button
-                  type="button"
+                <swc-action-button
+                  quiet
+                  size="s"
                   class="swc-PromptField-artifacts-scroll-prev"
-                  aria-label=${this.artifactScrollPrevLabel}
+                  accessible-label=${this.artifactScrollPrevLabel}
                   aria-disabled=${!this._artifactCanScrollPrev}
                   tabindex=${this._artifactCanScrollPrev ? nothing : -1}
                   @click=${this._handleArtifactScrollPrev}
                 >
-                  <swc-icon size="s" aria-hidden="true">
-                    ${Chevron75Icon()}
-                  </swc-icon>
-                </button>
+                  <swc-ui-icon
+                    slot="icon"
+                    icon="chevron"
+                    size="s"
+                    aria-hidden="true"
+                  ></swc-ui-icon>
+                </swc-action-button>
               `
             : nothing}
           <div
@@ -963,18 +975,22 @@ export class PromptField extends SpectrumElement {
           </div>
           ${this._artifactScrollOverflow
             ? html`
-                <button
-                  type="button"
+                <swc-action-button
+                  quiet
+                  size="s"
                   class="swc-PromptField-artifacts-scroll-next"
-                  aria-label=${this.artifactScrollNextLabel}
+                  accessible-label=${this.artifactScrollNextLabel}
                   aria-disabled=${!this._artifactCanScrollNext}
                   tabindex=${this._artifactCanScrollNext ? nothing : -1}
                   @click=${this._handleArtifactScrollNext}
                 >
-                  <swc-icon size="s" aria-hidden="true">
-                    ${Chevron75Icon()}
-                  </swc-icon>
-                </button>
+                  <swc-ui-icon
+                    slot="icon"
+                    icon="chevron"
+                    size="s"
+                    aria-hidden="true"
+                  ></swc-ui-icon>
+                </swc-action-button>
               `
             : nothing}
         </div>
@@ -984,26 +1000,26 @@ export class PromptField extends SpectrumElement {
 
   private _renderSendButton(): TemplateResult {
     return html`
-      <button
+      <swc-action-button
         class="swc-PromptField-send"
         ?disabled=${!this._isPopulated || this.disabled}
-        aria-label=${this.sendLabel}
+        accessible-label=${this.sendLabel}
         @click=${this._handleSendClick}
       >
-        <swc-icon aria-hidden="true">${ChevronUpIcon()}</swc-icon>
-      </button>
+        <swc-icon slot="icon" aria-hidden="true">${ChevronUpIcon()}</swc-icon>
+      </swc-action-button>
     `;
   }
 
   private _renderStopButton(): TemplateResult {
     return html`
-      <button
+      <swc-action-button
         class="swc-PromptField-stop"
-        aria-label=${this.stopLabel}
+        accessible-label=${this.stopLabel}
         @click=${this._handleStopClick}
       >
-        <swc-icon aria-hidden="true">${StopIcon()}</swc-icon>
-      </button>
+        <swc-icon slot="icon" aria-hidden="true">${StopIcon()}</swc-icon>
+      </swc-action-button>
     `;
   }
 
@@ -1070,14 +1086,17 @@ export class PromptField extends SpectrumElement {
                 .inert=${this.collapsed}
               >
                 <div class="swc-PromptField-leading-actions-row">
-                  <button
+                  <swc-action-button
+                    quiet
                     class="swc-PromptField-upload"
-                    aria-label=${this.uploadLabel}
+                    accessible-label=${this.uploadLabel}
                     ?disabled=${this.disabled}
                     @click=${this._handleUploadClick}
                   >
-                    <swc-icon aria-hidden="true">${PlusIcon()}</swc-icon>
-                  </button>
+                    <swc-icon slot="icon" aria-hidden="true">
+                      ${PlusIcon()}
+                    </swc-icon>
+                  </swc-action-button>
                 </div>
               </div>
               ${showStop ? this._renderStopButton() : this._renderSendButton()}

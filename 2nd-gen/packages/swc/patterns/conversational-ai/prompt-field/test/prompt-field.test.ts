@@ -23,6 +23,24 @@ import { getComponent, withWarningSpy } from '../../../../utils/test-utils.js';
 import { PromptField } from '../PromptField.js';
 import { meta, Overview } from '../stories/prompt-field.stories.js';
 
+/**
+ * The scroll chevrons are `swc-action-button`s with `delegatesFocus`, so
+ * focusing one lands the active element on its inner shadow `<button>`, not on
+ * the host. Treat focus as "on" a chevron when the active element is the host
+ * itself or lives inside its shadow root.
+ */
+const focusIsWithinChevron = (host: Element | null | undefined): boolean => {
+  const active = getActiveElement();
+  if (!active || !host) {
+    return false;
+  }
+  if (active === host) {
+    return true;
+  }
+  const root = active.getRootNode();
+  return root instanceof ShadowRoot && root.host === host;
+};
+
 export default {
   ...meta,
   title: 'Conversational AI/Prompt field/Tests',
@@ -310,7 +328,12 @@ export const ArtifactScrollPaginationTest: Story = {
         el.artifactScrollPrevLabel = 'Show earlier attachments';
         el.artifactScrollNextLabel = 'Show later attachments';
         await el.updateComplete;
-        expect(nextButton?.ariaLabel).toBe('Show later attachments');
+        // The chevron is an swc-action-button; the accessible name is passed
+        // via accessible-label (which the component forwards to its inner
+        // button's aria-label).
+        expect(nextButton?.getAttribute('accessible-label')).toBe(
+          'Show later attachments'
+        );
       }
     );
 
@@ -340,9 +363,9 @@ export const ArtifactScrollPaginationTest: Story = {
           clientWidth / 2
         );
         expect(
-          el.shadowRoot?.querySelector<HTMLButtonElement>(
-            '.swc-PromptField-artifacts-scroll-prev'
-          )?.ariaLabel
+          el.shadowRoot
+            ?.querySelector('.swc-PromptField-artifacts-scroll-prev')
+            ?.getAttribute('accessible-label')
         ).toBe('Show earlier attachments');
 
         const tiles = scrollEl
@@ -613,7 +636,7 @@ export const ArtifactFocusOrderTest: Story = {
         const nextButton = getNextButton();
         expect(nextButton).toBeTruthy();
         expect(event.defaultPrevented).toBe(true);
-        expect(getActiveElement()).toBe(nextButton);
+        expect(focusIsWithinChevron(nextButton)).toBe(true);
       }
     );
 
@@ -654,7 +677,7 @@ export const ArtifactFocusOrderTest: Story = {
         const prevButton = getPrevButton();
         expect(prevButton?.getAttribute('aria-disabled')).toBe('false');
         prevButton?.focus();
-        expect(getActiveElement()).toBe(prevButton);
+        expect(focusIsWithinChevron(prevButton)).toBe(true);
 
         const secondScrollEnd = waitForScrollEnd(scrollEl);
         scrollEl?.scrollTo({ left: 0, behavior: 'instant' });
@@ -662,7 +685,7 @@ export const ArtifactFocusOrderTest: Story = {
         await el.updateComplete;
 
         expect(getPrevButton()?.getAttribute('aria-disabled')).toBe('true');
-        expect(getActiveElement()).toBe(prevButton);
+        expect(focusIsWithinChevron(prevButton)).toBe(true);
       }
     );
 
@@ -758,7 +781,7 @@ export const ArtifactChevronPagingFocusTest: Story = {
         await scrollEnd;
         await el.updateComplete;
 
-        expect(getActiveElement()).toBe(nextButton);
+        expect(focusIsWithinChevron(nextButton)).toBe(true);
       }
     );
 
@@ -806,7 +829,7 @@ export const ArtifactChevronPagingFocusTest: Story = {
         await backPage;
         await el.updateComplete;
 
-        expect(getActiveElement()).toBe(prevButton);
+        expect(focusIsWithinChevron(prevButton)).toBe(true);
 
         const tilesAfterPagingBack = visibleTiles();
         expect(

@@ -282,32 +282,35 @@
   aspect-ratio: 1 / 1;
 }
 
+/* Scroll chevrons are quiet swc-action-buttons. The round face, hover, and
+ * focus ring come from the component's own custom properties. The ::before
+ * mask (an opaque panel extending toward the strip) sits at z-index -1, behind
+ * the shadow-DOM button face, and caps the scrolling tiles at the strip edge.
+ * No ::after is needed: the shadow button face is a descendant that paints
+ * above the negative-z mask, so the face is never hidden by it. */
 .swc-PromptField-artifacts-scroll-prev,
 .swc-PromptField-artifacts-scroll-next {
-  display: inline-flex;
   position: absolute;
   inset-block-start: calc((var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px)) / 2);
   z-index: 4;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px);
-  block-size: var(--swc-prompt-field-artifact-scroll-button-block-size, 32px);
-  padding: 0;
-  color: token("gray-800");
-  background: var(--_swc-prompt-field-artifact-scroll-button-background);
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-800");
   cursor: pointer;
   transform: translateY(-50%);
 
-  --_swc-prompt-field-artifact-scroll-button-background: token("gray-100");
   --_swc-prompt-field-artifact-scroll-icon-transform: none;
+  --swc-action-button-min-block-size: var(--swc-prompt-field-artifact-scroll-button-block-size, 32px);
+  --swc-action-button-icon-size: token("ui-icon-small");
+  --swc-action-button-edge-to-visual-only: calc((var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) - token("ui-icon-small")) / 2);
+  --swc-action-button-border-radius: token("corner-radius-800");
+  --swc-action-button-content-color-default: token("gray-800");
+  --swc-action-button-content-color-hover: token("gray-800");
+  --swc-action-button-background-color-default: token("gray-100");
+  --swc-action-button-background-color-hover: token("gray-200");
+  --swc-action-button-down-state-transform: none;
 }
 
 /* aria-disabled, not the disabled attribute, and hidden with opacity, not
  * display/visibility: a chevron at the end of the strip stays mounted and
- * keeps any focus it already has (native disabled and display/visibility
+ * keeps any focus it already has (the disabled property and display/visibility
  * removal both blur it), so the button never needs a manual focus-redirect
  * when scrolling makes it unusable. */
 .swc-PromptField-artifacts-scroll-prev[aria-disabled="true"],
@@ -324,10 +327,8 @@
  * not landing on a clean device pixel, which can leave a 1px unpainted
  * sliver at a mask boundary that touches its edge exactly.
  *
- * z-index: -1, not 0: the button's own :focus-visible outline paints with
- * its background/border layer, before z-index: 0 positioned descendants,
- * so a z-index: 0 mask paints over (hides) the outline. A negative z-index
- * puts this mask in the layer painted before that, so the outline is never
+ * z-index: -1 keeps the mask behind the shadow button face and its focus
+ * ring, which paint in the descendants layer above it, so neither is
  * covered. */
 .swc-PromptField-artifacts-scroll-prev::before,
 .swc-PromptField-artifacts-scroll-next::before {
@@ -336,17 +337,6 @@
   z-index: -1;
   inline-size: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + (token("spacing-400") / 2) + 2px);
   block-size: calc(var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px));
-  pointer-events: none;
-  content: "";
-}
-
-.swc-PromptField-artifacts-scroll-prev::after,
-.swc-PromptField-artifacts-scroll-next::after {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: var(--_swc-prompt-field-artifact-scroll-button-background);
-  border-radius: inherit;
   pointer-events: none;
   content: "";
 }
@@ -371,25 +361,9 @@
   background: token("background-layer-2-color");
 }
 
-.swc-PromptField-artifacts-scroll-prev:hover,
-.swc-PromptField-artifacts-scroll-next:hover {
-  --_swc-prompt-field-artifact-scroll-button-background: token("gray-200");
-}
-
-.swc-PromptField-artifacts-scroll-prev swc-icon,
-.swc-PromptField-artifacts-scroll-next swc-icon {
-  display: inline-flex;
-  position: relative;
-  z-index: 2;
-  align-items: center;
-  justify-content: center;
+.swc-PromptField-artifacts-scroll-prev swc-ui-icon,
+.swc-PromptField-artifacts-scroll-next swc-ui-icon {
   transform: var(--_swc-prompt-field-artifact-scroll-icon-transform);
-}
-
-.swc-PromptField-artifacts-scroll-prev:focus-visible,
-.swc-PromptField-artifacts-scroll-next:focus-visible {
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-ring-gap");
 }
 
 :host(:dir(rtl)) .swc-PromptField-artifacts-scroll-prev {
@@ -476,63 +450,26 @@
   display: none;
 }
 
-/* Upload button (quiet, left side) */
-
+/* Upload button (quiet swc-action-button, left side). Square icon-only size,
+ * corner radius, and colors are pinned via the component's custom properties
+ * to preserve the pattern's look; geometry (edge-to-visual-only) may need a
+ * VRT tune to land an exact 32x32. */
 .swc-PromptField-upload {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--swc-prompt-field-upload-inline-size, 32px);
-  block-size: var(--swc-prompt-field-upload-block-size, 32px);
-  padding: 0;
-  color: token("gray-800");
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-500");
+  --swc-action-button-min-block-size: var(--swc-prompt-field-upload-block-size, 32px);
+  --swc-action-button-edge-to-visual-only: calc((var(--swc-prompt-field-upload-inline-size, 32px) - token("workflow-icon-medium")) / 2);
+  --swc-action-button-icon-size: token("workflow-icon-medium");
+  --swc-action-button-border-radius: token("corner-radius-500");
+  --swc-action-button-content-color-default: token("gray-800");
+  --swc-action-button-content-color-hover: token("gray-800");
+  --swc-action-button-background-color-hover: token("gray-75");
+  --swc-action-button-content-color-disabled: token("gray-400");
+  --swc-action-button-background-color-disabled: transparent;
 }
 
-.swc-PromptField-upload:hover {
-  color: token("gray-800");
-  background: token("gray-75");
-}
-
-.swc-PromptField-upload:disabled {
-  color: token("gray-400");
-  background: transparent;
-}
-
-.swc-PromptField-upload swc-icon {
-  --swc-icon-inline-size: token("workflow-icon-medium");
-  --swc-icon-block-size: token("workflow-icon-medium");
-}
-
-/* Send button (filled circle, right side) */
-
-.swc-PromptField-send {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--swc-prompt-field-send-inline-size, 32px);
-  block-size: var(--swc-prompt-field-send-block-size, 32px);
-  padding: 0;
-  color: token("gray-25");
-  background: token("neutral-background-color-default");
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-full");
-}
-
-.swc-PromptField-stop {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--swc-prompt-field-stop-inline-size, 32px);
-  block-size: var(--swc-prompt-field-stop-block-size, 32px);
-  padding: 0;
-  color: token("gray-25");
-  background: token("gray-900");
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-full");
-}
+/* Send/stop are filled round swc-action-buttons. The round look and colors are
+ * reproduced through the component's custom properties: corner-radius-full on a
+ * square (min-block-size + edge-to-visual-only) yields a circle. The exact
+ * square geometry may need a VRT tune. */
 
 /* Anchored to .controls's own bottom-right, so it re-aligns on its own as .controls grows or shrinks with either row's content. */
 .swc-PromptField-send,
@@ -540,46 +477,34 @@
   position: absolute;
   inset-block-end: 0;
   inset-inline-end: 0;
-  transition: background token("animation-duration-100") ease;
+
+  --swc-action-button-min-block-size: var(--swc-prompt-field-send-block-size, 32px);
+  --swc-action-button-edge-to-visual-only: calc((var(--swc-prompt-field-send-inline-size, 32px) - token("workflow-icon-medium")) / 2);
+  --swc-action-button-icon-size: token("workflow-icon-medium");
+  --swc-action-button-border-radius: token("corner-radius-full");
+  --swc-action-button-down-state-transform: perspective(64px) translate3d(0, 0, -1px);
 }
 
-.swc-PromptField-send:disabled {
-  color: token("gray-400");
-  background: token("gray-100");
+/* Send button (filled neutral circle) */
+.swc-PromptField-send {
+  --swc-action-button-content-color-default: token("gray-25");
+  --swc-action-button-content-color-hover: token("gray-25");
+  --swc-action-button-content-color-down: token("gray-25");
+  --swc-action-button-background-color-default: token("neutral-background-color-default");
+  --swc-action-button-background-color-hover: token("neutral-background-color-hover");
+  --swc-action-button-background-color-down: token("neutral-background-color-default");
+  --swc-action-button-content-color-disabled: token("gray-400");
+  --swc-action-button-background-color-disabled: token("gray-100");
 }
 
-.swc-PromptField-send:focus-visible,
-.swc-PromptField-stop:focus-visible {
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-ring-gap");
-}
-
-.swc-PromptField-send:active,
-.swc-PromptField-stop:active {
-  transform: perspective(64px) translate3d(0, 0, -1px);
-  transition: transform token("animation-duration-200") ease;
-  transition-timing-function: token("animation-ease-in-out");
-  will-change: transform;
-}
-
-.swc-PromptField-send:hover:not(:disabled) {
-  background: token("neutral-background-color-hover");
-}
-
-.swc-PromptField-send swc-icon {
-  --swc-icon-inline-size: token("workflow-icon-medium");
-  --swc-icon-block-size: token("workflow-icon-medium");
-}
-
-/* Stop button (filled black circle, right side) */
-
-.swc-PromptField-stop:hover {
-  background: token("gray-800");
-}
-
-.swc-PromptField-stop swc-icon {
-  --swc-icon-inline-size: token("workflow-icon-medium");
-  --swc-icon-block-size: token("workflow-icon-medium");
+/* Stop button (filled black circle) */
+.swc-PromptField-stop {
+  --swc-action-button-content-color-default: token("gray-25");
+  --swc-action-button-content-color-hover: token("gray-25");
+  --swc-action-button-content-color-down: token("gray-25");
+  --swc-action-button-background-color-default: token("gray-900");
+  --swc-action-button-background-color-hover: token("gray-800");
+  --swc-action-button-background-color-down: token("gray-900");
 }
 
 /* ─────────────────────────────────────
