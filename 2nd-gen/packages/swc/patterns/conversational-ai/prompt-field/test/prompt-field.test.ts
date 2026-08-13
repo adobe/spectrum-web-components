@@ -14,7 +14,10 @@ import { html, nothing, render } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { getActiveElement } from '@adobe/spectrum-wc-core/utils/index.js';
+import {
+  deepContains,
+  getActiveElement,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import '../../upload-artifact/swc-upload-artifact.js';
 import '../swc-prompt-field.js';
@@ -24,17 +27,8 @@ import { PromptField } from '../PromptField.js';
 import { meta, Overview } from '../stories/prompt-field.stories.js';
 
 /** True when focus is on a chevron or its inner shadow button. */
-const focusIsWithinChevron = (host: Element | null | undefined): boolean => {
-  const active = getActiveElement();
-  if (!active || !host) {
-    return false;
-  }
-  if (active === host) {
-    return true;
-  }
-  const root = active.getRootNode();
-  return root instanceof ShadowRoot && root.host === host;
-};
+const focusIsWithinChevron = (host: Element | null | undefined): boolean =>
+  !!host && deepContains(host, getActiveElement());
 
 export default {
   ...meta,
