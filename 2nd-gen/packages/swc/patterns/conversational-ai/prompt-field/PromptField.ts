@@ -285,6 +285,33 @@ export class PromptField extends SpectrumElement {
     this._handleSendClick();
   }
 
+  /** Focuses the textarea for pointerdowns that don't land on a focusable
+   * descendant, so clicking blank space in the card (padding, gaps between
+   * rows) behaves like clicking the textarea itself. A `slot` boundary
+   * counts as focusable here too, so clicks inside a slotted artifact tile
+   * are left to that tile's own interaction model instead of falling
+   * through. */
+  private _handlePromptSurfacePointerDown(event: PointerEvent): void {
+    if (this.disabled) {
+      return;
+    }
+    const box = event.currentTarget as HTMLElement;
+    let target = event.target as Element | null;
+    while (target && target !== box && !this._isFocusableOrSlotted(target)) {
+      target = target.parentElement;
+    }
+    if (target === box) {
+      event.preventDefault();
+      this._textarea?.focus();
+    }
+  }
+
+  private _isFocusableOrSlotted(element: Element): boolean {
+    return element.matches(
+      'button, a[href], input, textarea, select, [tabindex], slot'
+    );
+  }
+
   private _handleSendClick(): void {
     if (!this._isPopulated || this.disabled) {
       return;
@@ -1029,7 +1056,10 @@ export class PromptField extends SpectrumElement {
     return html`
       <div class="swc-PromptField">
         <div class="swc-PromptField-outer-border">
-          <div class="swc-PromptField-box">
+          <div
+            class="swc-PromptField-box"
+            @pointerdown=${this._handlePromptSurfacePointerDown}
+          >
             <span class="swc-PromptField-hue-sweep"></span>
             <span class="swc-PromptField-gloss"></span>
             <span class="swc-PromptField-inset-shadow"></span>
