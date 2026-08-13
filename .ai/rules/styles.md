@@ -1,6 +1,6 @@
 ---
 description: Rules for consistent styling in component CSS
-globs: *.css
+globs: '*.css'
 alwaysApply: true
 ---
 

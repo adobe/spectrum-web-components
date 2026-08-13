@@ -22,7 +22,7 @@
  *   4. Symlinks — .cursor/ and .claude/ adapter symlinks point to .ai/ sources
  *   5. Docs pages — per-unit MDX docs pages for 2nd-gen components, internal
  *      components, patterns, and controllers conform to the per-unit MDX
- *      authoring standards in `.ai/skills/stories-documentation/SKILL.md`
+ *      authoring standards in `.ai/rules/stories-documentation.md`
  *
  * Exits with code 1 if any check has errors; warnings are printed but do not fail.
  *

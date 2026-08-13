@@ -12,13 +12,18 @@ All rules and skills now live in **`.ai/`** — a tool-agnostic, plain-markdown 
 - No sync step, no duplication, no drift between tools
 - New contributors or tools start from `AGENTS.md` at the repo root, which bootstraps everything
 
-### Why only two rules remain
+### Rules carry both `globs:` and `paths:` frontmatter
 
-Rules carry Cursor-style `alwaysApply` / `globs` frontmatter that Cursor honors live via its per-file symlinks. Claude Code cannot read that frontmatter — it inlines every file it can see, so a directory symlink to a large `rules/` folder loads every rule into every session regardless of `alwaysApply` or `globs`. With 14 rule files that was ~35K tokens inlined on every Claude Code session, defeating the on-demand design this directory is built around.
+Rule files use Cursor-style `globs` / `alwaysApply` frontmatter, which Cursor honors live via its per-file `.mdc` symlinks. Claude Code does **not** read `globs` — it has its own path-scoping mechanism, a `paths:` frontmatter field (YAML list of glob patterns) on files under `.claude/rules/`. A rule file without `paths:` loads unconditionally into every session; a rule file with `paths:` loads only when Claude reads a file matching one of those patterns — this works through the `.claude/rules → ../.ai/rules` directory symlink too, since Claude Code resolves symlinked paths when matching.
 
-The fix: only rules that are genuinely **`alwaysApply: true`** (`branch-naming`, `styles`) stay as rules. Every other rule — including glob-scoped ones — has been converted into a real `.ai/skills/*/SKILL.md` entry, since skills are already loaded on-demand by every adapter (`.cursor/skills`, `.claude/skills` are directory symlinks to `.ai/skills/`) and cost nothing until explicitly invoked. `.claude/rules` still points at `.ai/rules/`, but that directory now holds only the two always-active files, so the token cost drops with it.
+Every rule file in `.ai/rules/` that has a Cursor `globs:` value also carries an equivalent `paths:` list, so both tools apply the same conditional loading. Rules genuinely meant to always be in context (`branch-naming`, `styles.md`'s `alwaysApply: true`) have no `paths:` and load unconditionally in both tools, as intended.
 
-**Trade-off to be aware of:** a `globs:` field on a skill (e.g. `stories-format`, `component-readme`, `text-formatting`) is documentation of relevance, not an enforced trigger. Cursor's rule frontmatter guaranteed those rules fired whenever a matching file was open; as skills, they instead rely on the agent matching the task to the skill's description (or the user invoking it by name). If a task doesn't clearly signal its intent, a glob-scoped skill can go unread where the old rule would have fired unconditionally. This is the accepted cost of removing the token-inlining problem — call it out if you hit a case where guidance that used to be automatic no longer surfaces.
+### Rules vs. skills: how to choose
+
+- **Path-scoped rule** — the guidance is tied to a specific set of file paths (e.g. "when editing a `.stories.ts` file" or "when editing a component README"). Give it both `globs:` (Cursor) and `paths:` (Claude) so it loads deterministically whenever a matching file is in context, in either tool — no risk of it going unread just because a task's intent wasn't explicit.
+- **Skill** — the guidance is tied to a task or intent, not a file path (e.g. "draft a Jira ticket", "run a consistency pass"). There's no glob to scope it by, so it's invoked on demand: the agent matches the task to the skill's description, or the user names it explicitly.
+
+Getting this wrong in either direction has a real cost: forcing task-scoped guidance into a rule with no natural `paths:` value means it's either always-inlined (wasting tokens) or never triggers; forcing file-scoped guidance into a skill loses the deterministic trigger a path-scoped rule gives you and depends on the agent guessing intent.
 
 ## CI integration
 
@@ -49,9 +54,11 @@ Additional, more specific rules can be found in the `rules` directory in either 
 
 ### Available rules
 
-Only two rules remain — both genuinely `alwaysApply: true`. Everything that used to be an on-demand or glob-scoped rule is now a skill in the [Available skills](#available-skills) catalog below (see [Why only two rules remain](#why-only-two-rules-remain)).
+Two rules are always-active (`alwaysApply: true`, no `paths:`). Everything else with a natural file-path scope is a **path-scoped rule** — it carries both `globs:` (Cursor) and `paths:` (Claude) so it loads only when a matching file is in context, in either tool. Guidance with no natural file-path scope is a skill instead — see [Available skills](#available-skills).
 
-#### Styles
+#### Always-active rules
+
+##### Styles
 
 - **stylelint_compliance**: Auto-fixes based on `stylelint.config.js` unless rewriting more than 30% of the line
 - **copyrights**: Must reflect the current year
@@ -61,7 +68,7 @@ Only two rules remain — both genuinely `alwaysApply: true`. Everything that us
 - **duplicate_properties**: Warn about or suggest fixes; keep the definition that honors the CSS cascade
 - Applies to: `*.css` files
 
-#### Branch naming
+##### Branch naming
 
 - **branch_format**: Recommends `username/type-description[-swc-XXX]` format
   - Uses conventional commit types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`
@@ -69,10 +76,57 @@ Only two rules remain — both genuinely `alwaysApply: true`. Everything that us
   - Lowercase letters and numbers only, words separated by dashes
   - Severity: Warning (recommended, not required)
 
+#### Path-scoped rules
+
+##### Text formatting
+
+- **heading_case**: Enforces sentence case in headings with specific exceptions
+- Applies to: `**/*.md`, `**/*.txt`, `**/*.mdx`
+
+##### Storybook stories (documentation + format)
+
+These two rules share the same glob/path set (`2nd-gen/**/stories/**` and `2nd-gen/**/*.mdx` respectively) and work as a pair: `stories-documentation` defines _what_ to document, `stories-format` defines _how_ to structure the file.
+
+- **stories-documentation**: Content patterns for each documentation section
+  - Sections: overview, anatomy, options, states, behaviors, accessibility
+  - 1st-gen to 2nd-gen comparison guidance
+  - Verification process to prevent hallucinated attributes, slots, or ARIA claims
+  - Applies to: `2nd-gen/packages/swc/components/*/*.mdx`, `2nd-gen/packages/swc/patterns/*/*/*.mdx`, `2nd-gen/packages/core/controllers/*/*.mdx`
+- **stories-format**: File structure and technical conventions
+  - Visual separators, meta configuration, required tags, layout parameters
+  - `render` vs `args` patterns, `flexLayout` usage
+  - Static color single-story pattern, image asset conventions
+  - Applies to: `2nd-gen/packages/swc/components/*/stories/**`, `2nd-gen/packages/swc/patterns/*/*/stories/**`, `2nd-gen/packages/core/controllers/*/stories/**`
+
+##### Component README
+
+- **document_structure**: Required sections for 1st-gen component READMEs
+  - Sections: overview, usage, anatomy, options, states, behaviors, accessibility
+  - Starts with `## Overview`, not `# Component Name`
+- **code_examples**: All examples must include accessible labels and unique IDs
+- **sp_tabs**: Must include `selected`, `auto`, and `label` attributes
+- Applies to: `1st-gen/packages/*/README.md`
+
+##### Contributor docs
+
+- **nav_update**: Run the nav script when adding, removing, renaming, or moving files under `CONTRIBUTOR-DOCS/`
+- **link_validation**: Fix broken links automatically when the fix is clear; ask when intent is unclear
+- Applies to: `CONTRIBUTOR-DOCS/**`
+- Points to the `contributor-docs-nav` skill for the full Operator/Maintainer workflow
+
+##### Storybook MDX conversion
+
+- **imports**: Add `Meta` import from `@storybook/addon-docs/blocks`
+- **meta_tag**: Add `<Meta title="..." />` matching the document's main heading
+- **comments**: Convert all `<!-- -->` HTML comments to `{/* */}` JSX comments
+- **preserve_content**: Keep all markdown syntax, HTML elements, links, and formatting unchanged
+- Applies to: `**/*.md`, `**/*.mdx`
+
 ### When rules and skills are activated
 
-**Always-applied rules:** `branch-naming` and `styles` use `alwaysApply: true` and are always in context.
-**Skills:** Everything else — including what used to be glob-scoped rules (`stories-format`, `stories-documentation`, `component-readme`, `contributor-doc-update` folded into `contributor-docs-nav`, `storybook-mdx-conversion`, `text-formatting`) and on-demand rules (`jira-ticket`, `github-description`, `code-conformance`, `consistency-pass`, `deep-understanding`, `migration-phase-awareness`) — is a skill, invoked on demand (see [Available skills](#available-skills)).
+**Always-active rules:** `branch-naming` and `styles` use `alwaysApply: true` and no `paths:` — always in context, in both Cursor and Claude Code.
+**Path-scoped rules:** `text-formatting`, `stories-documentation`, `stories-format`, `component-readme`, `contributor-doc-update`, `storybook-mdx-conversion` carry both `globs:` (Cursor) and `paths:` (Claude) — loaded only when a matching file is in context, deterministically, in both tools.
+**Skills:** Guidance with no natural file-path scope — `jira-ticket`, `github-description`, `code-conformance`, `consistency-pass`, `deep-understanding`, `migration-phase-awareness`, `contributor-docs-nav`, and the rest of the [Available skills](#available-skills) catalog — invoked on demand by the agent matching task intent, or by explicit request.
 **Config-based rules:** The `config.json` also defines structured validation for editors and other tooling to verify branch names, Jira ticket drafts, text-formatting, etc.:
 
 - **text_formatting.headings**: Sentence case enforcement with technical term exceptions
@@ -87,33 +141,34 @@ Only two rules remain — both genuinely `alwaysApply: true`. Everything that us
 - **jira_tickets.labels**: Validates allowed label values
 - **jira_tickets.issue_types**: Ensures correct issue type selection
 
-| Rule/skill                     | Always applied | Skill (on-demand) | Config-based | Glob                              |
-| ------------------------------ | :------------: | :---------------: | :----------: | --------------------------------- |
-| branch-naming                  |       x        |                   |              | —                                 |
-| styles                         |       x        |                   |              | `*.css`                           |
-| text-formatting                |                |         x         |              | `**/*.md`, `**/*.txt`, `**/*.mdx` |
-| stories-documentation          |                |         x         |              | `2nd-gen/**/stories/**`           |
-| stories-format                 |                |         x         |              | `2nd-gen/**/stories/**`           |
-| component-readme               |                |         x         |              | `1st-gen/packages/*/README.md`    |
-| contributor-docs-nav           |                |         x         |              | `CONTRIBUTOR-DOCS/**`             |
-| storybook-mdx-conversion       |                |         x         |              | —                                 |
-| deep-understanding             |                |         x         |              | —                                 |
-| code-conformance               |                |         x         |              | —                                 |
-| consistency-pass               |                |         x         |              | —                                 |
-| migration-phase-awareness      |                |         x         |              | —                                 |
-| github-description             |                |         x         |              | —                                 |
-| jira-ticket                    |                |         x         |              | —                                 |
-| text_formatting.headings       |                |                   |      x       | —                                 |
-| text_formatting.patterns       |                |                   |      x       | —                                 |
-| git.validationPattern          |                |                   |      x       | —                                 |
-| git.validationMessage          |                |                   |      x       | —                                 |
-| git.branchNameTemplate         |                |                   |      x       | —                                 |
-| git.types                      |                |                   |      x       | —                                 |
-| jira_tickets.title_format      |                |                   |      x       | —                                 |
-| jira_tickets.required_sections |                |                   |      x       | —                                 |
-| jira_tickets.templates         |                |                   |      x       | —                                 |
-| jira_tickets.labels            |                |                   |      x       | —                                 |
-| jira_tickets.issue_types       |                |                   |      x       | —                                 |
+| Rule/skill                     | Always active | Path-scoped rule | Skill (on-demand) | Config-based | Glob / paths                      |
+| ------------------------------ | :-----------: | :--------------: | :---------------: | :----------: | --------------------------------- |
+| branch-naming                  |       x       |                  |                   |              | —                                 |
+| styles                         |       x       |                  |                   |              | `*.css`                           |
+| text-formatting                |               |        x         |                   |              | `**/*.md`, `**/*.txt`, `**/*.mdx` |
+| stories-documentation          |               |        x         |                   |              | `2nd-gen/**/*.mdx`                |
+| stories-format                 |               |        x         |                   |              | `2nd-gen/**/stories/**`           |
+| component-readme               |               |        x         |                   |              | `1st-gen/packages/*/README.md`    |
+| contributor-doc-update         |               |        x         |                   |              | `CONTRIBUTOR-DOCS/**`             |
+| storybook-mdx-conversion       |               |        x         |                   |              | `**/*.md`, `**/*.mdx`             |
+| contributor-docs-nav           |               |                  |         x         |              | —                                 |
+| deep-understanding             |               |                  |         x         |              | —                                 |
+| code-conformance               |               |                  |         x         |              | —                                 |
+| consistency-pass               |               |                  |         x         |              | —                                 |
+| migration-phase-awareness      |               |                  |         x         |              | —                                 |
+| github-description             |               |                  |         x         |              | —                                 |
+| jira-ticket                    |               |                  |         x         |              | —                                 |
+| text_formatting.headings       |               |                  |                   |      x       | —                                 |
+| text_formatting.patterns       |               |                  |                   |      x       | —                                 |
+| git.validationPattern          |               |                  |                   |      x       | —                                 |
+| git.validationMessage          |               |                  |                   |      x       | —                                 |
+| git.branchNameTemplate         |               |                  |                   |      x       | —                                 |
+| git.types                      |               |                  |                   |      x       | —                                 |
+| jira_tickets.title_format      |               |                  |                   |      x       | —                                 |
+| jira_tickets.required_sections |               |                  |                   |      x       | —                                 |
+| jira_tickets.templates         |               |                  |                   |      x       | —                                 |
+| jira_tickets.labels            |               |                  |                   |      x       | —                                 |
+| jira_tickets.issue_types       |               |                  |                   |      x       | —                                 |
 
 ### Usage
 
@@ -163,7 +218,7 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 #### Contributor docs navigation
 
 - **purpose**: Run the CONTRIBUTOR-DOCS nav script to update breadcrumbs and TOCs, and handle link verification
-- **How to invoke**: Say “update contributor docs nav”, “regenerate TOC”, “fix broken links in CONTRIBUTOR-DOCS”, “run the nav script”, or mention CONTRIBUTOR-DOCS with "update", "nav", "links", or "verify". Also invoked when you add, remove, rename, or move files under `CONTRIBUTOR-DOCS/` or change H1/H2/H3 headings.
+- **How to invoke**: Say “update contributor docs nav”, “regenerate TOC”, “fix broken links in CONTRIBUTOR-DOCS”, or “run the nav script”. Also pointed to by the `contributor-doc-update` path-scoped rule, which fires whenever a `CONTRIBUTOR-DOCS/**` file is in context.
 - Use when: Updating contributor docs structure, regenerating navigation, or fixing reported broken links
 - Provides: Operator workflow (run script, verify, fix links), Maintainer workflow (when to update script). Full instructions in `.ai/skills/contributor-docs-nav/references/ai-agent-instructions.md`
 
@@ -180,41 +235,6 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - **How to invoke**: Ask to create a GitHub PR or issue description; prompts for a linked ticket if none is provided
 - Use when: Drafting a PR or issue description, including the required accessibility testing checklist
 - Provides: Title format, PR template (author/reviewer checklists, manual test cases, accessibility testing checklist), severity classification, allowed labels
-
-#### Component README
-
-- **purpose**: Guidelines for 1st-gen component README documentation structure and accessibility compliance
-- **How to invoke**: Ask to reorganize, create, or review a component README, or add accessibility documentation to one
-- Use when: Editing or creating `1st-gen/packages/*/README.md`
-- Provides: Required section order (Overview → Usage → Anatomy → Options → States → Behaviors → Accessibility), accessible code example requirements, `<sp-tabs>` usage pattern, accessibility section requirements
-
-#### Storybook MDX conversion
-
-- **purpose**: Convert Markdown contributor docs to MDX for Storybook rendering
-- **How to invoke**: Ask to convert a `.md` contributor doc to `.mdx` for Storybook
-- Use when: Converting a Markdown file to MDX for the 2nd-gen SWC Storybook guides
-- Provides: Import/Meta-tag conventions, HTML-comment-to-JSX-comment conversion, content-preservation rules
-
-#### Text formatting
-
-- **purpose**: Text formatting and capitalization conventions for documentation and tickets
-- **How to invoke**: Applies whenever writing or editing `.md`, `.txt`, or `.mdx` content, PR/Jira descriptions, or component docs
-- Use when: Writing headings, lists, keyboard keys, WCAG references, or any prose in markdown/MDX
-- Provides: Sentence-case heading rules, markdown emphasis conventions, CSS-class-in-prose table, `<kbd>` key formatting, em dash replacement rules, no-Jira-ticket-references-in-docs rule
-
-#### Stories documentation
-
-- **purpose**: Authoring guide for the per-unit MDX docs page for 2nd-gen components, internal components, patterns, and controllers
-- **How to invoke**: Applies when authoring or reviewing a per-unit `<unit>.mdx` docs page
-- Use when: Writing Anatomy/Options/States/Behaviors/Accessibility prose, 1st-gen comparison notes, or verifying documentation against the component implementation
-- Provides: Canonical section order, per-story title rules, 1st-gen-to-2nd-gen comparison guidance, verification process to prevent hallucinated attributes/slots/ARIA claims; pairs with `stories-format`
-
-#### Stories format
-
-- **purpose**: Enforces file structure, meta configuration, tags, and layout parameters for 2nd-gen Storybook `.stories.ts` files
-- **How to invoke**: Applies when authoring or reviewing a 2nd-gen component, pattern, or controller `.stories.ts` file
-- Use when: Structuring a stories file — Playground/Overview/Anatomy/Options/States/Behaviors/Accessibility story sections, static-color pattern, image assets
-- Provides: Required meta fields, story tags, `flexLayout` and static-color decorator patterns, story naming conventions; pairs with `stories-documentation`
 
 #### Code conformance
 
@@ -398,33 +418,36 @@ Canonical content lives in **`.ai/`** (this directory). Tool-specific directorie
 └── <skill-name>/SKILL.md         ← canonical, tool-agnostic source of truth
 
 .cursor/rules/
-└── *.mdc → ../../.ai/rules/*.md  (per-file symlinks; Cursor expects .mdc)
+└── *.mdc → ../../.ai/rules/*.md  (per-file symlinks; Cursor expects .mdc; reads `globs`/`alwaysApply`)
 .cursor/skills/ → ../.ai/skills/  (directory symlink)
 
-.claude/rules/ → ../.ai/rules/    (directory symlink; Claude Code reads .md)
+.claude/rules/ → ../.ai/rules/    (directory symlink; Claude Code reads .md; reads `paths`/`alwaysApply`, not `globs`)
 .claude/skills/ → ../.ai/skills/  (directory symlink)
 ```
 
-Editing any `.ai/rules/*.md` file immediately updates what both Cursor and Claude Code see — no sync step required.
+Editing any `.ai/rules/*.md` file immediately updates what both Cursor and Claude Code see — no sync step required. Each tool reads its own frontmatter key for path-scoping (`globs` for Cursor, `paths` for Claude Code), so a rule meant to be conditional in both needs both keys set to equivalent patterns.
 
 ### Adding a new rule
 
-> Before adding a rule, ask whether it should be a rule at all. Claude Code cannot honor `alwaysApply` / `globs` frontmatter — it inlines every file under `.claude/rules` into every session regardless (see [Why only two rules remain](#why-only-two-rules-remain)). Add a new file to `.ai/rules/` only if it is genuinely `alwaysApply: true`; everything else — including glob-scoped guidance — belongs in `.ai/skills/` instead.
+> Before adding a rule, decide whether the guidance has a natural file-path scope. If it does, give it both `globs:` and `paths:` so it loads deterministically in Cursor and Claude Code alike (see [Rules vs. skills: how to choose](#rules-vs-skills-how-to-choose)). If it doesn't — the guidance is about a task or intent, not a file path — write it as a skill instead.
 
-1. Create `rule-name.md` in `.ai/rules/` with YAML frontmatter (`globs`, `alwaysApply`).
+1. Create `rule-name.md` in `.ai/rules/` with YAML frontmatter:
+   - `globs:` — Cursor's glob pattern(s), comma-separated in one string if there are several
+   - `paths:` — the same patterns as a YAML list, one item per glob, for Claude Code. **Quote each item** — an unquoted value starting with `*` (e.g. `**/*.mdx`) parses as an invalid YAML alias, not a literal string
+   - `alwaysApply: false` (omit `globs`/`paths` entirely and set `alwaysApply: true` instead if the rule should always be in context)
 2. Add one per-file symlink for Cursor (required — Cursor needs `.mdc` extension):
 
    ```sh
    ln -s “../../.ai/rules/rule-name.md” “.cursor/rules/rule-name.mdc”
    ```
 
-   `.claude/rules/` is a directory symlink pointing at `.ai/rules/`, so it picks up the new file automatically — no extra step needed.
+   `.claude/rules/` is a directory symlink pointing at `.ai/rules/`, so it picks up the new file automatically — no extra step needed. Claude Code resolves `paths:` matches through that symlink.
 
 3. Register it in the tables in this README (rules catalog) and in [`AGENTS.md`](../AGENTS.md).
 
 ### Adding a new skill
 
-1. Create `.ai/skills/<skill-name>/SKILL.md` with `name` and `description` frontmatter. If the skill is relevant to a specific set of file paths, add a `globs:` field (quote the value if it starts with `*`, e.g. `globs: '**/*.mdx'` — otherwise it parses as an invalid YAML alias) — this documents relevance but does not auto-trigger the skill the way a Cursor rule glob would (see the trade-off note above).
+1. Create `.ai/skills/<skill-name>/SKILL.md` with `name` and `description` frontmatter. Skills are for task/intent-scoped guidance with no natural file-path trigger — if the guidance belongs to a specific set of files, write a path-scoped rule instead (see above) so it loads deterministically rather than depending on the agent matching intent.
 2. Register it in the skills catalog below and in [`AGENTS.md`](../AGENTS.md).
 3. Both `.cursor/skills/` and `.claude/skills/` pick it up automatically via directory symlinks.
 
@@ -472,6 +495,7 @@ Verify:
 ls -la .cursor/rules/
 # branch-naming.mdc -> ../../.ai/rules/branch-naming.md
 # styles.mdc -> ../../.ai/rules/styles.md
+# ... one entry per file in .ai/rules/
 
 ls -la .cursor/
 # skills -> ../.ai/skills

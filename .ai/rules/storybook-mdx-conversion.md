@@ -1,22 +1,20 @@
 ---
-name: storybook-mdx-conversion
 description: Converts contributor documentation from Markdown to MDX for Storybook rendering — adds imports, Meta tag, and converts HTML comments to JSX comments without altering any other content.
 globs: '**/*.md,**/*.mdx'
+paths:
+  - '**/*.md'
+  - '**/*.mdx'
+alwaysApply: false
 ---
 
 # Storybook MDX conversion
 
 Converts markdown files to MDX format compatible with Storybook rendering.
 
-## When to use this skill
+## When to apply
 
 - Converting a `.md` file to `.mdx` for Storybook rendering, particularly documentation pages in the 2nd-gen SWC Storybook guides
-- A `.md` or `.mdx` file relevant to Storybook docs is in context and needs the `Meta` import, HTML-comment-to-JSX-comment conversion, or other conversion steps below applied
-
-## How to invoke
-
-- Say "convert this doc to MDX", "make this Storybook-renderable", or "convert this README to .mdx for Storybook"
-- Or open a `.md` file destined for the 2nd-gen Storybook guides and apply this skill's conversion steps
+- Applies automatically when Claude reads a matching `.md`/`.mdx` file (Cursor: via `globs`; Claude Code: via `paths`); ask explicitly ("convert this doc to MDX") to apply it outside that trigger
 
 ## Conversion steps
 

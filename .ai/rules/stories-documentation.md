@@ -1,25 +1,24 @@
 ---
-name: stories-documentation
 description: Authoring guide for the per-unit MDX docs page for 2nd-gen components, internal components, patterns, and controllers. Covers section content, accessible examples, and 1st-gen comparison notes. Story prose lives in MDX, not in JSDoc above story exports.
 globs: 2nd-gen/packages/swc/components/*/*.mdx, 2nd-gen/packages/swc/patterns/*/*/*.mdx, 2nd-gen/packages/core/controllers/*/*.mdx
+paths:
+  - '2nd-gen/packages/swc/components/*/*.mdx'
+  - '2nd-gen/packages/swc/patterns/*/*/*.mdx'
+  - '2nd-gen/packages/core/controllers/*/*.mdx'
+alwaysApply: false
 ---
 
 # Per-unit MDX authoring standards
 
 Authoring guide for the per-unit MDX file that powers each Storybook Docs page. Applies to all four 2nd-gen genres: components, internal components, patterns, and controllers.
 
-**See also**: `.ai/skills/stories-format/SKILL.md` for the stories file (`.stories.ts`) structure and conventions.
+**See also**: `.ai/rules/stories-format.md` for the stories file (`.stories.ts`) structure and conventions.
 
-## When to use this skill
+## When to apply
 
 - Authoring or reviewing a per-unit `<unit>.mdx` docs page for a 2nd-gen component, internal component, pattern, or controller
-- Any file matching the globs below is open or being created — treat that as a trigger to apply this skill's section order, authoring patterns, and verification process
+- Applies automatically when Claude reads a file matching the globs below (Cursor: via `globs`; Claude Code: via `paths`)
 - Verifying documentation prose against the component's actual implementation to avoid hallucinated attributes, slots, or ARIA claims
-
-## How to invoke
-
-- Say "write the docs page for [component]", "author the per-unit MDX for [component]", or "review this MDX docs page"
-- Or open/create any of the files below — apply this skill's authoring standards to it
 
 ## Scope
 

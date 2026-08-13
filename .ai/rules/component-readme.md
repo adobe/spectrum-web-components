@@ -1,16 +1,18 @@
 ---
-name: component-readme
 description: Guidelines for component README documentation structure and accessibility compliance
 globs: 1st-gen/packages/*/README.md
+paths:
+  - '1st-gen/packages/*/README.md'
+alwaysApply: false
 ---
 
 # Component README documentation guidelines
 
-Use this skill when editing or creating component README files in `1st-gen/packages/*/README.md`.
+Applies automatically when Claude reads a file matching `1st-gen/packages/*/README.md` (Cursor: via `globs`; Claude Code: via `paths`). Use it explicitly too when asked to work on component README documentation outside that trigger.
 
-## When to use this skill
+## When to apply
 
-- A file matching `1st-gen/packages/*/README.md` is being edited or created — treat that file being in context as a trigger to apply this skill, even without an explicit request
+- Editing or creating a file matching `1st-gen/packages/*/README.md`
 - The user requests any of the following:
   - Reorganize or restructure a component README
   - Update component documentation
@@ -18,11 +20,6 @@ Use this skill when editing or creating component README files in `1st-gen/packa
   - Create documentation for a new component
   - Review README structure for a11y compliance
   - Standardize README format
-
-## How to invoke
-
-- Say "reorganize this component README", "add accessibility docs to [component]'s README", "review this README for a11y", or "standardize this README's format"
-- Or open/edit any `1st-gen/packages/*/README.md` file — apply this skill's structure and conventions to it
 
 ## Required document structure
 

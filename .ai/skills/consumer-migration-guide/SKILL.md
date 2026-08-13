@@ -75,7 +75,7 @@ Verify claims against the real implementation and docs before writing:
 - Write for **application developers upgrading their code**, not only for component maintainers
 - Prefer **before/after examples**, explicit upgrade actions, and rollout guidance over implementation detail
 - Do not invent upgrade paths. If a mapping is uncertain, omit it and ask the user rather than guessing — wrong instructions can break consumer apps
-- Em dashes and Jira ticket references are prohibited in this guide; see `.ai/skills/text-formatting/SKILL.md`
+- Em dashes and Jira ticket references are prohibited in this guide; see `.ai/rules/text-formatting.md`
 
 ### Scope: minimal, public API only
 

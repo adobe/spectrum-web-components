@@ -1,7 +1,6 @@
 ---
 name: contributor-docs-nav
 description: Run the CONTRIBUTOR-DOCS nav script to update breadcrumbs and TOCs, and handle link verification. Use when updating contributor docs structure, regenerating navigation, or fixing broken links.
-globs: CONTRIBUTOR-DOCS/**
 ---
 
 # Contributor docs navigation
@@ -16,12 +15,13 @@ You are a documentation maintainer. Broken links and stale navigation are bugs, 
 
 - A file or folder under CONTRIBUTOR-DOCS is added, removed, renamed, or moved
 - Document H1, H2, or H3 headings are changed
-- The user asks to update contributor docs navigation, regenerate TOC, validate or verify links, or fix broken links in CONTRIBUTOR-DOCS
+- The user asks to update contributor docs navigation, regenerate TOC, or fix broken links in CONTRIBUTOR-DOCS
+- The contributor-doc-update rule is triggered (editing CONTRIBUTOR-DOCS structure)
 
 ## How to invoke
 
-- Say "update contributor docs nav", "regenerate TOC", "fix broken links in CONTRIBUTOR-DOCS", "run the nav script", or mention CONTRIBUTOR-DOCS with "update", "nav", "links", or "verify"
-- Or add, remove, rename, or move files under `CONTRIBUTOR-DOCS/` or change H1/H2/H3 headings — run the nav script whenever this happens, not only when explicitly asked
+- Say "update contributor docs nav", "regenerate TOC", "fix broken links in CONTRIBUTOR-DOCS", or "run the nav script"
+- Or add, remove, rename, or move files under `CONTRIBUTOR-DOCS/` or change H1/H2/H3 headings — the agent should run the nav script and may use this skill
 
 ## Quick reference
 
@@ -33,7 +33,7 @@ You are a documentation maintainer. Broken links and stale navigation are bugs, 
    cd CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs
    node update-nav.js
    ```
-3. **After running**: Confirm the script completes without errors. Verify success, report results (files updated, link counts — the script updates breadcrumbs, TOC, and validates all links in ~20–200ms for the tree). Fix straightforward link errors automatically; ask the user when the fix is ambiguous (e.g. target file removed, multiple anchor matches).
+3. **After running**: Verify success, report results (files updated, link counts). Fix straightforward link errors automatically; ask the user when the fix is ambiguous (e.g. target file removed, multiple anchor matches).
 
 ### Maintainer: update the script
 
@@ -47,9 +47,3 @@ For complete Operator and Maintainer workflows, debugging, link-verification han
 **.ai/skills/contributor-docs-nav/references/ai-agent-instructions.md**
 
 That document is the single source of truth for when to run, how to run, responsibilities, debugging, handling link verification errors, maintainer process, script architecture, and testing checklist.
-
-### If that file is missing
-
-1. Search for `**/ai-agent-instructions.md` and find the one under `.ai/skills/contributor-docs-nav/references/`.
-2. Read it to confirm it contains the nav update instructions.
-3. Update this skill with the correct path, inform the user, then run the nav process.

@@ -13,8 +13,8 @@ description:
 See also:
 
 - [`documentation`](../documentation/SKILL.md) — Adobe content writing standards
-- [`stories-format`](../stories-format/SKILL.md) — stories file structure
-- [`stories-documentation`](../stories-documentation/SKILL.md) — per-unit MDX authoring patterns
+- [`stories-format`](../../rules/stories-format.md) — stories file structure
+- [`stories-documentation`](../../rules/stories-documentation.md) — per-unit MDX authoring patterns
 
 ## Mindset
 
@@ -65,7 +65,7 @@ If no source is available at authoring time, limit the prose to technically veri
 
 If Phase 5 (migration-styling) was completed, `2nd-gen/packages/swc/components/[component]/stories/[component].stories.ts` likely already exists with Playground, Overview, Anatomy, Options, States, and Behaviors stories — all structurally correct, no story-level JSDoc, and the Accessibility story body left as a `// TODO` comment. Phase 7's job is to:
 
-1. Create (or augment) `2nd-gen/packages/swc/components/[component]/[component].mdx` as the per-component docs page — see [`stories-documentation`](../stories-documentation/SKILL.md) for the full template, including the canonical section order, required imports, `<DocsHeader />` / `<DocsFooter />` placement, and per-section authoring patterns.
+1. Create (or augment) `2nd-gen/packages/swc/components/[component]/[component].mdx` as the per-component docs page — see [`stories-documentation`](../../rules/stories-documentation.md) for the full template, including the canonical section order, required imports, `<DocsHeader />` / `<DocsFooter />` placement, and per-section authoring patterns.
 2. Author the prose for each section (`## Anatomy`, `## Options`, `## States`, `## Behaviors`, `## Accessibility`) in the per-component MDX, with a `<Canvas of={Stories.StoryName} />` reference under each `### Story Title` heading (for `hideTitle=false` sections) or directly under the `## Section` heading (for `hideTitle=true` sections like Anatomy and Accessibility).
 3. Complete the Accessibility story body in the stories file — it was left as a `// TODO` in Phase 5. Add the Features / Best practices prose into `## Accessibility` in the MDX.
 4. Add any stories that were deferred or were not CSS-visible enough to include in Phase 5. For each new story, add a `<Canvas>` reference and accompanying prose to the MDX.
@@ -84,7 +84,7 @@ If the docs need to describe behavior that differs from the approved migration p
 
 ### Step 3: Write the per-component MDX prose and finalize JSDoc on `Component.ts`
 
-Author the prose for each section in the per-component MDX following the patterns in [`stories-documentation`](../stories-documentation/SKILL.md). Drop the `'autodocs'` tag from the Playground story (keep `'dev'`) so the MDX is the unit's Docs page rather than a duplicate.
+Author the prose for each section in the per-component MDX following the patterns in [`stories-documentation`](../../rules/stories-documentation.md). Drop the `'autodocs'` tag from the Playground story (keep `'dev'`) so the MDX is the unit's Docs page rather than a duplicate.
 
 Then add or update JSDoc on the public API surface in `2nd-gen/packages/swc/components/[component]/Component.ts` — `@property` decorators, public methods, dispatched events, slots. This is the developer-facing API doc that the `<ApiTable />` block renders from the Custom Elements Manifest. It is **not** the same as story-level JSDoc (which is not used).
 
@@ -141,7 +141,7 @@ Do not write "when to use" guidance without a verified source. Limit description
 
 ### Other formatting rules
 
-Em dashes, Jira ticket references, and filler closing sentences are prohibited by the shared formatting rules in `.ai/skills/text-formatting/SKILL.md` and `.ai/skills/stories-documentation/SKILL.md`. Those rules are active in context — apply them here.
+Em dashes, Jira ticket references, and filler closing sentences are prohibited by the shared formatting rules in `.ai/rules/text-formatting.md` and `.ai/rules/stories-documentation.md`. Those rules are active in context — apply them here.
 
 ---
 

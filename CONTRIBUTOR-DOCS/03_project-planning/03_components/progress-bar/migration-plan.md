@@ -512,7 +512,7 @@ Exact keyframe geometry, duration token, and fallback width are **Q2** — to be
 #### General
 
 - [ ] JSDoc on `ProgressBar.base.ts` and `ProgressBar.ts` — `indeterminate`, `@slot label`, `@slot description`, and the six `@cssprop` shared-surface tags
-- [ ] Storybook stories: Playground, Overview, Anatomy, Sizes, LabelPosition (top vs side), Values (0/25/50/75/100%), CustomRange, Indeterminate, ValueLabel, FormatOptions, StaticColors (combined), Accessibility — per [stories-format](../../../../.ai/skills/stories-format/SKILL.md) and [stories-documentation](../../../../.ai/skills/stories-documentation/SKILL.md). Author per-component MDX at `progress-bar.mdx`.
+- [ ] Storybook stories: Playground, Overview, Anatomy, Sizes, LabelPosition (top vs side), Values (0/25/50/75/100%), CustomRange, Indeterminate, ValueLabel, FormatOptions, StaticColors (combined), Accessibility — per [stories-format](../../../../.ai/rules/stories-format.md) and [stories-documentation](../../../../.ai/rules/stories-documentation.md). Author per-component MDX at `progress-bar.mdx`.
 - [ ] Storybook `subtitle` plain text; JSDoc above meta carries the longer description
 - [ ] Tag stories: `migrated` on meta; `overview`, `anatomy`, `options`, `states` (indeterminate), `behaviors`, `a11y` on matching stories
 

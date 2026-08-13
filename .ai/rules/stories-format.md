@@ -1,25 +1,24 @@
 ---
-name: stories-format
 description: Enforces consistent file structure, section separators, meta configuration, story tags, and layout parameters for 2nd-gen Storybook stories files. Story prose lives in per-unit MDX; the stories file is definitions-only.
 globs: 2nd-gen/packages/swc/components/*/stories/**, 2nd-gen/packages/swc/patterns/*/*/stories/**, 2nd-gen/packages/core/controllers/*/stories/**
+paths:
+  - '2nd-gen/packages/swc/components/*/stories/**'
+  - '2nd-gen/packages/swc/patterns/*/*/stories/**'
+  - '2nd-gen/packages/core/controllers/*/stories/**'
+alwaysApply: false
 ---
 
 # Storybook stories format standards
 
 Enforce consistent formatting and technical structure for Storybook stories files in 2nd-gen components, patterns, and controllers.
 
-**See also**: `.ai/skills/stories-documentation/SKILL.md` for guidance on WHAT to author in the per-unit MDX (content, patterns, examples).
+**See also**: `.ai/rules/stories-documentation.md` for guidance on WHAT to author in the per-unit MDX (content, patterns, examples).
 
-## When to use this skill
+## When to apply
 
 - Authoring or reviewing a `.stories.ts` file for a 2nd-gen component, pattern, or controller
-- Any file matching the globs below is open or being created — treat that as a trigger to apply this skill's file structure, meta configuration, and tagging conventions
+- Applies automatically when Claude reads a file matching the globs below (Cursor: via `globs`; Claude Code: via `paths`)
 - Adding a new story (Playground, Options, States, Behaviors, Accessibility, etc.) and needing the right tags, layout parameters, or naming convention
-
-## How to invoke
-
-- Say "add a story for [feature]", "fix the stories file structure", or "review this .stories.ts file"
-- Or open/create any of the files below — apply this skill's structure and conventions to it
 
 ## Scope
 
@@ -169,7 +168,7 @@ The per-unit MDX file (`<unit>.mdx`) is the source of truth for the docs page la
 - **Upcoming features** — `## Upcoming features` + prose only (no `<Canvas>`); placed before the footer so it reads as forward-looking notes after the current API/behavior
 - **API** — handled by `<DocsFooter />` (rendered automatically with `<ApiTable />` for components and patterns; omitted for controllers)
 
-See `.ai/skills/stories-documentation/SKILL.md` for full per-section authoring patterns including genre-specific notes (component vs pattern vs controller vs internal).
+See `.ai/rules/stories-documentation.md` for full per-section authoring patterns including genre-specific notes (component vs pattern vs controller vs internal).
 
 **What you need to do**: tag each story by section (`anatomy`, `options`, `states`, `behaviors`, `a11y`), then reference it from the per-unit MDX via `<Canvas of={Stories.StoryName} />`.
 
@@ -339,7 +338,7 @@ Do not use a `section-order` parameter on stories. The previous `section-order` 
 ### Exclusion tags
 
 - `'!dev'` - Exclude from the development Storybook sidebar without affecting tests
-- `'!test'` - Exclude from **all three** automated test runners simultaneously: Vitest play functions, aXe WCAG compliance, and VRT snapshots. Use only when testing would produce false positives due to context the test runner cannot see — the canonical case is static-color stories, where axe evaluates contrast against the page background rather than the decorator gradient. **When you apply `'!test'` to a story, you must add a corresponding test story with a custom render and `parameters: { staticColorsDemo: true }` to restore behavioral coverage.** Do not apply `'!test'` because a story is complex, has no `play` function, or has a real accessibility issue. See [Excluding stories from tests](../../../CONTRIBUTOR-DOCS/02_style-guide/04_testing/01_testing-overview.md#excluding-stories-from-tests).
+- `'!test'` - Exclude from **all three** automated test runners simultaneously: Vitest play functions, aXe WCAG compliance, and VRT snapshots. Use only when testing would produce false positives due to context the test runner cannot see — the canonical case is static-color stories, where axe evaluates contrast against the page background rather than the decorator gradient. **When you apply `'!test'` to a story, you must add a corresponding test story with a custom render and `parameters: { staticColorsDemo: true }` to restore behavioral coverage.** Do not apply `'!test'` because a story is complex, has no `play` function, or has a real accessibility issue. See [Excluding stories from tests](../../CONTRIBUTOR-DOCS/02_style-guide/04_testing/01_testing-overview.md#excluding-stories-from-tests).
 
 ## Story types
 
@@ -715,4 +714,4 @@ See `asset.stories.ts` for complete examples.
 - [ ] No `description-only` tag on any story
 - [ ] All stories accessible with meaningful content
 - [ ] Image assets: use `picsum.photos` with static IDs (if applicable)
-- [ ] Per-unit MDX file exists at the unit root and references each section-tagged story via `<Canvas of={Stories.StoryName} />` (see `.ai/skills/stories-documentation/SKILL.md`)
+- [ ] Per-unit MDX file exists at the unit root and references each section-tagged story via `<Canvas of={Stories.StoryName} />` (see `.ai/rules/stories-documentation.md`)

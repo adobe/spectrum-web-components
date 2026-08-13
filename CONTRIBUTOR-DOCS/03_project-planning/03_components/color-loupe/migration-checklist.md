@@ -267,7 +267,7 @@ This checklist tracks the full 2nd-gen migration of the **`<sp-color-loupe>`** c
 > Goal: Create complete, accurate, and accessible Storybook stories following the 2nd-gen stories format.
 
 - [ ] `color-loupe.stories.ts` created in `2nd-gen/packages/swc/components/color-loupe/stories/`
-- [ ] Stories follow the format defined in `.ai/skills/stories-format/SKILL.md`
+- [ ] Stories follow the format defined in `.ai/rules/stories-format.md`
 - [ ] Meta object includes: `title`, `component`, `args`, `argTypes`, `render`, `parameters.docs.subtitle`, `tags: ['migrated']`
 - [ ] JSDoc description above meta object explains the component's purpose
 - [ ] **Playground** story — `['autodocs', 'dev']` tags, most common use case args
