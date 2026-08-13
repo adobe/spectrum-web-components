@@ -1641,3 +1641,50 @@ export const EscapeClosesTopmostTooltipTest: Story = {
     );
   },
 };
+
+// Two sibling tooltips: opening the second must close the first, since
+// `popover="manual"` dropped the native auto singleton that used to do this.
+export const SingletonClosesPreviousTooltipTest: Story = {
+  render: () => html`
+    <swc-button id="tt-singleton-trigger-a">First</swc-button>
+    <swc-tooltip for="tt-singleton-trigger-a" delay="0" placement="top">
+      First tooltip
+    </swc-tooltip>
+    <swc-button id="tt-singleton-trigger-b">Second</swc-button>
+    <swc-tooltip for="tt-singleton-trigger-b" delay="0" placement="top">
+      Second tooltip
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tooltips = canvasElement.querySelectorAll<Tooltip>('swc-tooltip');
+    const [tooltipA, tooltipB] = tooltips;
+    const triggerA = canvasElement.querySelector(
+      '#tt-singleton-trigger-a'
+    ) as Button;
+    const triggerB = canvasElement.querySelector(
+      '#tt-singleton-trigger-b'
+    ) as Button;
+    await tooltipA.updateComplete;
+    await tooltipB.updateComplete;
+
+    await step(
+      'hovering the first trigger opens the first tooltip',
+      async () => {
+        await hoverOpen(triggerA, tooltipA);
+        expect(tooltipA.open, 'first tooltip is open').toBe(true);
+      }
+    );
+
+    await step('opening the second tooltip closes the first one', async () => {
+      await hoverOpen(triggerB, tooltipB);
+      expect(tooltipB.open, 'second tooltip is open').toBe(true);
+      await waitFor(() => expect(tooltipA.open).toBe(false), {
+        timeout: 1000,
+      });
+      expect(
+        tooltipA.matches(':popover-open'),
+        'first tooltip left the top layer'
+      ).toBe(false);
+    });
+  },
+};

@@ -38,6 +38,10 @@ import {
   type TooltipVariant,
 } from './Tooltip.types.js';
 
+// Currently shown tooltip. `popover="manual"` drops the native auto singleton, so
+// restore it explicitly: one tooltip open at a time across all instances.
+let openTooltip: TooltipBase | null = null;
+
 /**
  * Abstract base class for the Tooltip component.
  * Handles all non-rendering logic: property declarations, popover lifecycle,
@@ -552,6 +556,13 @@ export abstract class TooltipBase
     const openChanged = changedProperties.has('open');
     if (openChanged) {
       if (this.open) {
+        // Close any other open tooltip first. Assign after requestClose() so the
+        // other's updated() (else branch) does not clear the reference we take.
+        if (openTooltip && openTooltip !== this) {
+          openTooltip.requestClose();
+        }
+        // eslint-disable-next-line @typescript-eslint/no-this-alias -- singleton registration, not a closure capture
+        openTooltip = this;
         // Join the dismissible stack and Escape handling while open (both torn
         // down on close below). Capture phase so preventDefault() beats the
         // native popover light-dismiss (see handleKeyDown).
@@ -575,6 +586,9 @@ export abstract class TooltipBase
           this.showPopover();
         }
       } else {
+        if (openTooltip === this) {
+          openTooltip = null;
+        }
         unregisterDismissible(this);
         document.removeEventListener('keydown', this.handleKeyDown, {
           capture: true,
@@ -621,6 +635,10 @@ export abstract class TooltipBase
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
+    // Release the singleton so a detached node is not retained.
+    if (openTooltip === this) {
+      openTooltip = null;
+    }
     this.removeEventListener('beforetoggle', this.handleBeforeToggle);
     this.removeEventListener('toggle', this.handleToggle);
     this.removeEventListener('transitionend', this.handleTransitionEnd);
