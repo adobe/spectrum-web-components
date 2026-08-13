@@ -52,6 +52,7 @@ function renderPromptField(
       label=${storyArgs.label ?? 'Prompt'}
       placeholder=${storyArgs.placeholder ?? defaultPlaceholder}
       .value=${storyArgs.value ?? ''}
+      variant=${storyArgs.variant ?? 'balanced'}
       ?disabled=${storyArgs.disabled ?? false}
       ?generating=${storyArgs.generating ?? false}
       ?collapsed=${storyArgs.collapsed ?? false}
