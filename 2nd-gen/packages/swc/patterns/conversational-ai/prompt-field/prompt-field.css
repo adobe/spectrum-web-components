@@ -52,6 +52,13 @@
   padding-block-start: token("spacing-100");
 }
 
+/* Same focus-indicator token the textarea's own :focus-visible ring uses
+ * (below), so a file dragged anywhere over the field reads as the same
+ * "focused" affordance rather than a distinct drop-target treatment. */
+.swc-PromptField-box.dragged {
+  border-color: token("focus-indicator-color");
+}
+
 /* ─────────────────────────────────────
    Input area (artifact + text area)
    ───────────────────────────────────── */

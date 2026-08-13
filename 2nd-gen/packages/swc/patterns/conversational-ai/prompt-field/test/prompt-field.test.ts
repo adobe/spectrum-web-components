@@ -23,6 +23,14 @@ import { getComponent, withWarningSpy } from '../../../../utils/test-utils.js';
 import { PromptField } from '../PromptField.js';
 import { meta, Overview } from '../stories/prompt-field.stories.js';
 
+const makeDragEvent = (type: string, dt?: DataTransfer): DragEvent =>
+  new DragEvent(type, {
+    cancelable: true,
+    bubbles: true,
+    composed: true,
+    dataTransfer: dt,
+  });
+
 export default {
   ...meta,
   title: 'Conversational AI/Prompt field/Tests',
@@ -869,5 +877,100 @@ export const SingleArtifactFocusTest: Story = {
         expect(getActiveElement()).toBe(artifact);
       }
     );
+  },
+};
+
+export const DragAndDropTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<PromptField>(
+      canvasElement,
+      'swc-prompt-field'
+    );
+    const box = el.shadowRoot?.querySelector('.swc-PromptField-box');
+
+    await step(
+      'dragging a file over the field marks the box dragged',
+      async () => {
+        el.dispatchEvent(makeDragEvent('dragover', new DataTransfer()));
+        await el.updateComplete;
+        expect(box?.classList.contains('dragged')).toBe(true);
+      }
+    );
+
+    await step(
+      'dragleave clears the dragged state after the debounce',
+      async () => {
+        el.dispatchEvent(makeDragEvent('dragleave'));
+        // The debounce is 100ms; wait past it with a buffer.
+        await new Promise((resolve) => setTimeout(resolve, 150));
+        await el.updateComplete;
+        expect(box?.classList.contains('dragged')).toBe(false);
+      }
+    );
+
+    await step(
+      'dropping files fires swc-prompt-field-drop with the dropped files and clears dragged',
+      async () => {
+        el.dispatchEvent(makeDragEvent('dragover', new DataTransfer()));
+        await el.updateComplete;
+
+        const dt = new DataTransfer();
+        dt.items.add(new File(['hello'], 'hello.txt', { type: 'text/plain' }));
+
+        let detail: { files: File[] } | undefined;
+        el.addEventListener(
+          'swc-prompt-field-drop',
+          (event) => {
+            detail = (event as CustomEvent<{ files: File[] }>).detail;
+          },
+          { once: true }
+        );
+
+        el.dispatchEvent(makeDragEvent('drop', dt));
+        await el.updateComplete;
+
+        expect(detail?.files.length).toBe(1);
+        expect(detail?.files[0].name).toBe('hello.txt');
+        expect(box?.classList.contains('dragged')).toBe(false);
+      }
+    );
+
+    await step(
+      'dropping with no files does not fire swc-prompt-field-drop',
+      async () => {
+        el.dispatchEvent(makeDragEvent('dragover', new DataTransfer()));
+        await el.updateComplete;
+
+        let fired = false;
+        el.addEventListener(
+          'swc-prompt-field-drop',
+          () => {
+            fired = true;
+          },
+          { once: true }
+        );
+
+        el.dispatchEvent(makeDragEvent('drop', new DataTransfer()));
+        await el.updateComplete;
+
+        expect(fired).toBe(false);
+      }
+    );
+
+    await step('disabled mode rejects the drag entirely', async () => {
+      el.mode = 'disabled';
+      await el.updateComplete;
+
+      const event = makeDragEvent('dragover', new DataTransfer());
+      el.dispatchEvent(event);
+      await el.updateComplete;
+
+      expect(event.dataTransfer?.dropEffect).toBe('none');
+      expect(box?.classList.contains('dragged')).toBe(false);
+
+      el.mode = 'default';
+      await el.updateComplete;
+    });
   },
 };

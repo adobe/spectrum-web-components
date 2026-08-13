@@ -24,6 +24,7 @@ import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 
 import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import {
+  DragAndDropController,
   focusgroupNavigationActiveChange,
   type FocusgroupNavigationActiveChangeDetail,
   FocusgroupNavigationController,
@@ -69,6 +70,9 @@ export type PromptFieldMode = 'default' | 'loading' | 'disabled';
  * @fires swc-prompt-field-stop - Dispatched when stop generation is requested in loading mode.
  * @fires swc-prompt-field-upload-click - Dispatched when upload affordance is activated.
  * Consumers should handle file picker flow externally.
+ * @fires swc-prompt-field-drop - Dispatched when files are dropped anywhere on the field.
+ * Detail: `{ files: File[] }`. Consumers should build and slot `swc-upload-artifact`
+ * elements from `files` externally, same as the upload-click flow.
  */
 export class PromptField extends SpectrumElement {
   private readonly labelId = uniqueId('swc-prompt-field-label');
@@ -187,6 +191,36 @@ export class PromptField extends SpectrumElement {
   );
 
   private _pendingArtifactDismiss?: { artifact: HTMLElement; index: number };
+
+  /** Whether a file is currently being dragged over the field. Drives the same visual as the textarea's own focus ring. */
+  @state()
+  private _dragged = false;
+
+  /** Accepts a drag anywhere on the host and hands dropped files off via `swc-prompt-field-drop`; disabled mode rejects the drag entirely. */
+  private readonly _dragAndDrop = new DragAndDropController(this, {
+    isDragged: () => this._dragged,
+    shouldAccept: () => !this._isDisabled,
+    onDragEnter: () => {
+      this._dragged = true;
+    },
+    onDragLeave: () => {
+      this._dragged = false;
+    },
+    onDrop: (event) => {
+      this._dragged = false;
+      const files = Array.from(event.dataTransfer?.files ?? []);
+      if (files.length === 0) {
+        return;
+      }
+      this.dispatchEvent(
+        new CustomEvent('swc-prompt-field-drop', {
+          bubbles: true,
+          composed: true,
+          detail: { files },
+        })
+      );
+    },
+  });
 
   public static override get styles(): CSSResultArray {
     return [styles];
@@ -980,7 +1014,12 @@ export class PromptField extends SpectrumElement {
 
     return html`
       <div class="swc-PromptField">
-        <div class="swc-PromptField-box">
+        <div
+          class=${classMap({
+            'swc-PromptField-box': true,
+            dragged: this._dragged,
+          })}
+        >
           <div
             class="swc-PromptField-input-area${hasArtifacts
               ? ' has-artifact'
