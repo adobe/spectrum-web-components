@@ -1,7 +1,7 @@
 ---
 name: text-formatting
 description: Text formatting and capitalization rules for documentation and tickets
-globs: **/*.md, **/*.txt, **/*.mdx
+globs: '**/*.md, **/*.txt, **/*.mdx'
 ---
 
 # Text formatting conventions

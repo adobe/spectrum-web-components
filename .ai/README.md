@@ -18,6 +18,8 @@ Rules carry Cursor-style `alwaysApply` / `globs` frontmatter that Cursor honors 
 
 The fix: only rules that are genuinely **`alwaysApply: true`** (`branch-naming`, `styles`) stay as rules. Every other rule — including glob-scoped ones — has been converted into a real `.ai/skills/*/SKILL.md` entry, since skills are already loaded on-demand by every adapter (`.cursor/skills`, `.claude/skills` are directory symlinks to `.ai/skills/`) and cost nothing until explicitly invoked. `.claude/rules` still points at `.ai/rules/`, but that directory now holds only the two always-active files, so the token cost drops with it.
 
+**Trade-off to be aware of:** a `globs:` field on a skill (e.g. `stories-format`, `component-readme`, `text-formatting`) is documentation of relevance, not an enforced trigger. Cursor's rule frontmatter guaranteed those rules fired whenever a matching file was open; as skills, they instead rely on the agent matching the task to the skill's description (or the user invoking it by name). If a task doesn't clearly signal its intent, a glob-scoped skill can go unread where the old rule would have fired unconditionally. This is the accepted cost of removing the token-inlining problem — call it out if you hit a case where guidance that used to be automatic no longer surfaces.
+
 ## CI integration
 
 - `yarn lint:ai` runs `.ai/scripts/validate.js`, which checks story tags, AGENTS.md paths, config schema, symlinks, and per-unit MDX docs pages. Catches broken internal links, symlinks, misconfigured rules, and structural drift in `<unit>.mdx` files before merge
@@ -422,7 +424,7 @@ Editing any `.ai/rules/*.md` file immediately updates what both Cursor and Claud
 
 ### Adding a new skill
 
-1. Create `.ai/skills/<skill-name>/SKILL.md`.
+1. Create `.ai/skills/<skill-name>/SKILL.md` with `name` and `description` frontmatter. If the skill is relevant to a specific set of file paths, add a `globs:` field (quote the value if it starts with `*`, e.g. `globs: '**/*.mdx'` — otherwise it parses as an invalid YAML alias) — this documents relevance but does not auto-trigger the skill the way a Cursor rule glob would (see the trade-off note above).
 2. Register it in the skills catalog below and in [`AGENTS.md`](../AGENTS.md).
 3. Both `.cursor/skills/` and `.claude/skills/` pick it up automatically via directory symlinks.
 
