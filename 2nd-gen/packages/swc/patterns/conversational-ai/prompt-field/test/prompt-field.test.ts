@@ -348,8 +348,7 @@ export const ArtifactScrollPaginationTest: Story = {
         const tiles = scrollEl
           ?.querySelector('slot')
           ?.assignedElements({ flatten: true }) as HTMLElement[] | undefined;
-        // proximity is the default strictness, so it is omitted from the
-        // computed value ('inline'); only mandatory would be serialized.
+        // Computed scroll-snap-type omits proximity (the default); only mandatory serializes.
         const snapType = getComputedStyle(scrollEl!).scrollSnapType;
         expect(snapType).toContain('inline');
         expect(snapType).not.toContain('mandatory');

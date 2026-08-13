@@ -702,10 +702,7 @@ export class PromptField extends SpectrumElement {
       return;
     }
 
-    // Scroll to the tile that starts the next/previous page rather than a
-    // blind clientWidth: near the end only one item may remain, and a full
-    // page-width would overshoot and then snap back. scrollIntoView lands on
-    // the tile's snap point directly and clamps to the content edge.
+    // Scroll the page-start tile into view: snap-aligned, clamps at the edge.
     const scrollRect = scrollEl.getBoundingClientRect();
     const pageStart = this._isRtl()
       ? scrollRect.right - direction * scrollEl.clientWidth
