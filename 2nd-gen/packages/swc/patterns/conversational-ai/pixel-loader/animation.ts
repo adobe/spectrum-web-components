@@ -11,7 +11,7 @@
  */
 
 import type { Cell } from './data.js';
-import { TOTAL_FRAMES } from './data.js';
+import { CYCLE_FRAMES } from './data.js';
 
 /**
  * Per-cell entry/exit choreography, driven via the Web Animations API rather
@@ -30,10 +30,15 @@ import { TOTAL_FRAMES } from './data.js';
  * compositor.
  */
 
-const Y_START = -26;
-const Y_OVERSHOOT = 1;
+// Vertical offsets are expressed as a percentage of a single cell's height so
+// the motion scales with `--swc-pixel-loader-size` rather than being a fixed
+// pixel distance. Entry distance is per-cell (see `buildCellKeyframes`): each
+// cell falls from the top of the frame down its column to its settled row, so
+// pixels visibly rain from the top and fill bottom-up while staying inside the
+// box (no clipping needed).
+const Y_OVERSHOOT = 6;
 const Y_SETTLED = 0;
-const Y_EXIT = 26;
+const Y_EXIT = 200;
 
 const EASE_DROP = 'cubic-bezier(0.333, 0, 0.667, 1)';
 const EASE_RECOVER = 'cubic-bezier(0.333, 0, 0.833, 1)';
@@ -41,7 +46,7 @@ const EASE_EXIT = 'cubic-bezier(0.563, 0, 0.906, 0.757)';
 const EASE_FADE = 'cubic-bezier(0.167, 0.167, 0.833, 0.833)';
 
 function frameOffset(frame: number): number {
-  return Math.min(1, Math.max(0, frame / TOTAL_FRAMES));
+  return Math.min(1, Math.max(0, frame / CYCLE_FRAMES));
 }
 
 /**
@@ -52,33 +57,49 @@ function frameOffset(frame: number): number {
  * interleave freely.
  */
 export function buildCellKeyframes(cell: Cell): Keyframe[] {
+  // Start each cell at the top of the frame (row 0) so it falls down its column
+  // to its settled row: bottom rows fall the furthest, the top row barely
+  // moves, and the whole icon reads as raining in from the top.
+  const entryStart = -Math.max(0, cell.row) * 100;
+
   const keyframes: Keyframe[] = [
     {
       offset: frameOffset(cell.stagger),
-      transform: `translateY(${Y_START}px)`,
+      transform: `translateY(${entryStart}%)`,
       easing: EASE_DROP,
     },
     {
       offset: frameOffset(cell.stagger + 10),
-      transform: `translateY(${Y_OVERSHOOT}px)`,
+      transform: `translateY(${Y_OVERSHOOT}%)`,
       easing: EASE_RECOVER,
     },
     {
       offset: frameOffset(cell.stagger + 13),
-      transform: `translateY(${Y_SETTLED}px)`,
+      transform: `translateY(${Y_SETTLED}%)`,
     },
     {
       offset: frameOffset(cell.exitStart),
-      transform: `translateY(${Y_SETTLED}px)`,
+      transform: `translateY(${Y_SETTLED}%)`,
       easing: EASE_EXIT,
     },
     {
       offset: frameOffset(cell.exitStart + 12),
-      transform: `translateY(${Y_EXIT}px)`,
+      transform: `translateY(${Y_EXIT}%)`,
     },
-    { offset: frameOffset(cell.fadeIn[0]), opacity: 0, easing: EASE_FADE },
-    { offset: frameOffset(cell.fadeIn[1]), opacity: 1 },
-    { offset: frameOffset(cell.fadeOut[0]), opacity: 1, easing: EASE_FADE },
+    // No entry fade: the pixel appears solid at the top of the frame and falls
+    // in. Opacity stays 0 until the fall starts, then steps straight to full.
+    { offset: frameOffset(cell.stagger), opacity: 0 },
+    { offset: frameOffset(cell.stagger + 1), opacity: 1 },
+    // Keep the fade on the way out, but a touch quicker: hold solid briefly,
+    // then fade over the last part of the exit fall.
+    { offset: frameOffset(cell.fadeOut[0]), opacity: 1 },
+    {
+      offset: frameOffset(
+        cell.fadeOut[0] + (cell.fadeOut[1] - cell.fadeOut[0]) * 0.55
+      ),
+      opacity: 1,
+      easing: EASE_FADE,
+    },
     { offset: frameOffset(cell.fadeOut[1]), opacity: 0 },
   ];
 
@@ -101,5 +122,5 @@ export function buildReducedMotionKeyframes(cell: Cell): Keyframe[] {
 }
 
 /** Fully settled appearance: full opacity, zero Y-offset. */
-export const SETTLED_TRANSFORM = `translateY(${Y_SETTLED}px)`;
+export const SETTLED_TRANSFORM = `translateY(${Y_SETTLED}%)`;
 export const SETTLED_OPACITY = 1;

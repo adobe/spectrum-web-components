@@ -49,8 +49,17 @@ export interface Cell {
 }
 
 export const TOTAL_FRAMES = 72;
-export const FPS = 30;
-export const DURATION_MS = (TOTAL_FRAMES / FPS) * 1000;
+
+// An empty beat after the pixels have fully dropped out, before they fall back
+// in. Extending the cycle past the content frames (rather than the content
+// itself) delays the next entry so the exit has room to finish first.
+const EXIT_PAUSE_FRAMES = 4;
+export const CYCLE_FRAMES = TOTAL_FRAMES + EXIT_PAUSE_FRAMES;
+
+// One full assemble/hold/disassemble cycle plus the trailing pause. Per-cell
+// frame timings are ratios of `CYCLE_FRAMES`; the ~2800ms of content keeps its
+// pace and the pause is added on top.
+export const DURATION_MS = Math.round((2800 / TOTAL_FRAMES) * CYCLE_FRAMES);
 
 function computeStaggerValues(
   positions: readonly CellPosition[],

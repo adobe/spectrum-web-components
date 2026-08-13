@@ -55,7 +55,10 @@ export type { PixelLoaderIconName, PixelLoaderPresetName } from './data.js';
  * @cssprop --swc-pixel-loader-color - Color of the pixel cells. Defaults to `currentcolor`, so the loader inherits the surrounding text color unless overridden.
  */
 export class PixelLoader extends SpectrumElement {
-  private static readonly CORNER_RADIUS = '2px';
+  // Relative so the rounding scales with `--swc-pixel-loader-size` and reads as
+  // a soft "squircle" pixel at every size (a fixed px radius looks square when
+  // the loader is enlarged).
+  private static readonly CORNER_RADIUS = '30%';
 
   /** Duration of the "finish the current build" ease before an icon swap. */
   private static readonly FINISH_MS = 200;
