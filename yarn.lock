@@ -29597,6 +29597,9 @@ __metadata:
     stylelint-order: "npm:7.0.1"
     typescript-eslint: "npm:8.54.0"
     yargs: "npm:17.7.2"
+  dependenciesMeta:
+    keytar@7.9.0:
+      built: false
   languageName: unknown
   linkType: soft
 
