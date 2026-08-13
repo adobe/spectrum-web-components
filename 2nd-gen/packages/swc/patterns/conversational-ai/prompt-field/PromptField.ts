@@ -10,7 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
+import {
+  CSSResultArray,
+  html,
+  nothing,
+  PropertyValues,
+  TemplateResult,
+} from 'lit';
 import {
   property,
   query,
@@ -46,6 +52,12 @@ import styles from './prompt-field.css';
 export interface PromptFieldSubmitDetail {
   value: string;
 }
+
+// Native CSS textarea auto-sizing; when true, the JS fallback is skipped.
+const SUPPORTS_FIELD_SIZING =
+  typeof CSS !== 'undefined' &&
+  typeof CSS.supports === 'function' &&
+  CSS.supports('field-sizing', 'content');
 
 /**
  * Prompt entry surface for conversational AI flows.
@@ -146,6 +158,9 @@ export class PromptField extends SpectrumElement {
   @query('.swc-PromptField-artifacts-scroll')
   private _artifactScrollEl?: HTMLDivElement;
 
+  @query('.swc-PromptField-textarea')
+  private _textarea?: HTMLTextAreaElement;
+
   @queryAssignedElements({ slot: 'legal', flatten: true })
   private _assignedLegalElements!: HTMLElement[];
 
@@ -223,8 +238,27 @@ export class PromptField extends SpectrumElement {
     super.disconnectedCallback();
   }
 
-  protected override updated(): void {
+  protected override updated(changedProperties: PropertyValues<this>): void {
     this._warnIfMissingLegalContent();
+    if (changedProperties.has('value')) {
+      this._autosizeTextarea();
+    }
+  }
+
+  // Fallback for browsers without field-sizing: content, which is not yet
+  // widely supported. Grows the textarea to fit content, up to the CSS
+  // max-block-size clamp (past which overflow-y scrolls). Gated to value
+  // changes so unrelated re-renders don't force a layout reflow.
+  private _autosizeTextarea(): void {
+    if (SUPPORTS_FIELD_SIZING) {
+      return;
+    }
+    const textarea = this._textarea;
+    if (!textarea) {
+      return;
+    }
+    textarea.style.height = 'auto';
+    textarea.style.height = `${textarea.scrollHeight}px`;
   }
 
   private _handleInput(event: Event): void {

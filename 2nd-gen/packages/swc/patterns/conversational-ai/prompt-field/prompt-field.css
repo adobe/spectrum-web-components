@@ -839,6 +839,10 @@
    Textarea
    ───────────────────────────────────── */
 
+/* Auto-grows to fit content, clamped between the min/max rows; overflow-y
+ * takes over once the max is reached. field-sizing: content handles this
+ * natively where supported; it is not yet widely supported, so
+ * _autosizeTextarea() in PromptField.ts is the fallback. */
 .swc-PromptField-textarea {
   field-sizing: content;
   display: block;
@@ -854,6 +858,7 @@
   color: token("gray-900");
   background: transparent;
   border: none;
+  overflow-y: auto;
   resize: none;
   outline: none;
 }
