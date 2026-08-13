@@ -61,6 +61,8 @@
     - Meter
     - Number Field
     - Opacity Checkerboard
+    - Option
+    - Option Group
     - Picker Button
     - Popover
     - Progress Bar

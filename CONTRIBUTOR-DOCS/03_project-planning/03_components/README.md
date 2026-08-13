@@ -122,6 +122,10 @@
     - [Opacity checkerboard accessibility migration analysis](opacity-checkerboard/accessibility-migration-analysis.md)
     - [Opacity Checkerboard migration plan](opacity-checkerboard/migration-plan.md)
     - [Opacity Checkerboard migration roadmap](opacity-checkerboard/rendering-and-styling-migration-analysis.md)
+- Option
+    - [Option accessibility migration analysis](option/accessibility-migration-analysis.md)
+- Option Group
+    - [Option group accessibility migration analysis](option-group/accessibility-migration-analysis.md)
 - Picker Button
     - [Picker button migration roadmap](picker-button/rendering-and-styling-migration-analysis.md)
 - Popover
