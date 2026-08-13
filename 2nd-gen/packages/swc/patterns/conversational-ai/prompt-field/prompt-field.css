@@ -919,7 +919,7 @@
 
 .swc-PromptField-upload:hover {
   color: token("gray-800");
-  background: token("gray-75");
+  background: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 14%);
 }
 
 .swc-PromptField-upload:disabled {
@@ -971,7 +971,7 @@
 
 .swc-PromptField-send:disabled {
   color: token("gray-400");
-  background: token("gray-100");
+  background: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 11%);
 }
 
 .swc-PromptField-send:focus-visible,
