@@ -17,6 +17,7 @@ export { iconForSize } from './icon-for-size.js';
 export { forcePseudoState } from './pseudo-state.js';
 export type { ForcedPseudoState } from './pseudo-state.js';
 export {
+  captionedItem,
   coveredCustomProperties,
   customPropertyRows,
   forcedColorsVrtParameters,

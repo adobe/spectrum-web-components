@@ -103,6 +103,22 @@ export const row = (children: unknown, label?: string) =>
       `;
 
 /**
+ * Wraps a single item with a caption underneath, for permutations where the
+ * row heading alone doesn't identify the item (e.g. a container size or
+ * shape that isn't otherwise visible in the rendered output). Stack inside
+ * `row()` so the row heading conveys the shared axis (e.g. variant) and each
+ * caption conveys the axis that varies within the row (e.g. size).
+ */
+export const captionedItem = (content: unknown, label: string) => html`
+  <div
+    style="display: flex; flex-direction: column; align-items: center; gap: var(--swc-spacing-100);"
+  >
+    ${content}
+    <span class="swc-Detail swc-Detail--sizeM">${label}</span>
+  </div>
+`;
+
+/**
  * Partitions permutations by the value of `key` (e.g. 'variant') so each
  * group can render as its own labeled `row()`, making a dense matrix easier
  * to scan by variant. Permutations without the key fall into a 'default'
