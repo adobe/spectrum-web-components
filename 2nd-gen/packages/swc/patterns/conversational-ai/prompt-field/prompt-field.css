@@ -10,20 +10,30 @@
  * governing permissions and limitations under the License.
  */
 
-/* Layering, back to front: .swc-PromptField-outer-border (padded gradient ring) wraps
-   .swc-PromptField-box (the card), which stacks three absolutely positioned decorative
-   overlays -- .swc-PromptField-hue-sweep (ambient animated glow, generating only), then
-   .swc-PromptField-gloss (static neutral sheen), then .swc-PromptField-inset-shadow
-   (border hairline + inset highlights) -- on top of the box's own gradient background,
-   below the real slotted content. --swc-prompt-field-brand-color (an OKLCH hue) drives every
-   color in every layer via oklch(from var(--swc-prompt-field-brand-color) ...); retheming
-   means overriding that one property. */
+/*
+  .swc-PromptField-outer-border  (padded gradient ring)
+  ┌─────────────────────────────────────────────────────┐
+  │ .swc-PromptField-box  (card, gradient background)   │
+  │ ┌───────────────────────────────────────────────┐   │
+  │ │ .swc-PromptField-hue-sweep   (animated glow,   │   │  back
+  │ │                               generating only) │   │    │
+  │ │ .swc-PromptField-gloss       (static sheen)     │   │    │
+  │ │ .swc-PromptField-inset-shadow (border hairline  │   │    ▼
+  │ │                               + highlights)     │   │  front
+  │ │ slotted content (input, controls, ...)          │   │
+  │ └───────────────────────────────────────────────┘   │
+  └─────────────────────────────────────────────────────┘
+
+  Every color above derives from --swc-prompt-field-brand-color (one OKLCH
+  hue) via oklch(from var(--swc-prompt-field-brand-color) ...); retheming
+  means overriding that single property.
+*/
 
 :host {
   display: block;
   inline-size: 100%;
 
-  /* @property's initial-value doesn't reach elements when declared in the same shadow root that uses it; this explicit declaration is required too. */
+  /* @property can't yet be scoped to a shadow root; see https://shadow-dom-css.adobe.com/features/at-property/. */
   --swc-prompt-field-brand-color: oklch(73.58% 0.2376 322.4deg);
 }
 
