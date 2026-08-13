@@ -541,14 +541,6 @@ export class PromptField extends SpectrumElement {
       '.swc-PromptField-artifacts-scroll-prev'
     );
 
-    // The chevrons are swc-action-buttons with delegatesFocus, so the active
-    // element is their inner shadow <button>, not the host. Match either the
-    // host itself or an element inside its shadow root.
-    const isChevron = (host: Element | null | undefined): boolean =>
-      !!host &&
-      (active === host ||
-        (active.getRootNode() as ShadowRoot | null)?.host === host);
-
     // From the active tile: Tab reveals its Close button. Shift+Tab is left
     // to native default, which (roving tabindex leaves every other tile at
     // -1) exits the group entirely regardless of which tile is active.
@@ -591,7 +583,9 @@ export class PromptField extends SpectrumElement {
     // wherever focus was before the page turned) — its Close button when
     // visible, mirroring the forward tile -> Close -> Next chain in reverse,
     // otherwise the tile itself.
-    if (isChevron(nextButton) && event.shiftKey) {
+    // deepContains, not ===: the chevron is an swc-action-button with
+    // delegatesFocus, so `active` is its inner shadow <button>, not the host.
+    if (nextButton && deepContains(nextButton, active) && event.shiftKey) {
       const activeTile = this._artifactNavigation.getActiveItem();
       if (activeTile) {
         event.preventDefault();
@@ -602,7 +596,7 @@ export class PromptField extends SpectrumElement {
 
     // From the Prev chevron: plain Tab moves forward into the roving
     // controller's current active tile, for the same reason as above.
-    if (isChevron(prevButton) && !event.shiftKey) {
+    if (prevButton && deepContains(prevButton, active) && !event.shiftKey) {
       const activeTile = this._artifactNavigation.getActiveItem();
       if (activeTile) {
         event.preventDefault();

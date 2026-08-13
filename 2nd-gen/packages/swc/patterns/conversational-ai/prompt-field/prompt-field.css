@@ -282,12 +282,6 @@
   aspect-ratio: 1 / 1;
 }
 
-/* Scroll chevrons are quiet swc-action-buttons. The round face, hover, and
- * focus ring come from the component's own custom properties. The ::before
- * mask (an opaque panel extending toward the strip) sits at z-index -1, behind
- * the shadow-DOM button face, and caps the scrolling tiles at the strip edge.
- * No ::after is needed: the shadow button face is a descendant that paints
- * above the negative-z mask, so the face is never hidden by it. */
 .swc-PromptField-artifacts-scroll-prev,
 .swc-PromptField-artifacts-scroll-next {
   position: absolute;
