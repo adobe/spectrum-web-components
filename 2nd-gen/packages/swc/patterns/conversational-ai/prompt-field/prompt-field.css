@@ -1041,10 +1041,10 @@
   }
 }
 
-/* Idle focus otherwise relies on the textarea's own cursor as the indicator (no ring); prefers-contrast: more gets an explicit ring around the whole card instead. */
+/* Idle focus otherwise relies on the textarea's own cursor as the indicator (no ring); prefers-contrast: more gets an explicit ring around the card instead. :has() targets the input area specifically so focusing the slotted legal link doesn't count as focusing the composer. */
 @media (prefers-contrast: more) {
-  :host(:focus-within) .swc-PromptField-outer-border {
-    outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  :host(:has(.swc-PromptField-input-area:focus-within)) .swc-PromptField-box {
+    outline: token("focus-indicator-thickness") solid token("gray-900");
     outline-offset: token("focus-ring-gap");
   }
 }
