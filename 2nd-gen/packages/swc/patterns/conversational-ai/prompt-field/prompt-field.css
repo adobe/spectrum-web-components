@@ -15,12 +15,10 @@
   ┌─────────────────────────────────────────────────────┐
   │ .swc-PromptField-box  (card, gradient background)   │
   │ ┌───────────────────────────────────────────────┐   │
-  │ │ .swc-PromptField-hue-sweep   (animated glow,   │   │  back
-  │ │                               generating only) │   │    │
-  │ │ .swc-PromptField-gloss       (static sheen)     │   │    │
-  │ │ .swc-PromptField-inset-shadow (border hairline  │   │    ▼
-  │ │                               + highlights)     │   │  front
-  │ │ slotted content (input, controls, ...)          │   │
+  │ │ ::before      (animated glow, generating only) │   │  back
+  │ │ .swc-PromptField-gloss   (static sheen)         │   │    │
+  │ │ ::after       (border hairline + highlights)    │   │    ▼
+  │ │ slotted content (input, controls, ...)          │   │  front
   │ └───────────────────────────────────────────────┘   │
   └─────────────────────────────────────────────────────┘
 
@@ -220,7 +218,7 @@
   }
 }
 
-.swc-PromptField-inset-shadow {
+.swc-PromptField-box::after {
   position: absolute;
   inset: 0;
   border-radius: inherit;
@@ -232,16 +230,17 @@
     inset 0 -5px 21.6px 0 rgb(255 255 255 / 4%),
     inset 0 24px 32px 0 rgb(255 255 255 / 4%);
   pointer-events: none;
+  content: "";
   transition: box-shadow 700ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .swc-PromptField-inset-shadow {
+  .swc-PromptField-box::after {
     transition: none;
   }
 }
 
-:host([generating]) .swc-PromptField-inset-shadow {
+:host([generating]) .swc-PromptField-box::after {
   box-shadow:
     inset 0 -20px 20px -24px var(--_swc-prompt-field-prominent-inset-glow-color, transparent),
     inset 0 0 0 1px var(--_swc-prompt-field-border-color),
@@ -259,7 +258,7 @@
 }
 
 /* Rotation/translation scale with the card's own width via atan()/clamp() below. */
-.swc-PromptField-hue-sweep {
+.swc-PromptField-box::before {
   position: absolute;
   inset: -44px;
   background:
@@ -267,19 +266,20 @@
     radial-gradient(70% 60% at 5% 80% in oklch, oklch(from light-dark(rgb(254 246 255), oklch(from var(--swc-prompt-field-brand-color) 44.18% 0.1934 calc(h - 1.8))) l c h / var(--_swc-prompt-field-con-hue-opacity)), transparent),
     radial-gradient(70% 50% at 40% 80% in oklch, oklch(from light-dark(oklch(from var(--swc-prompt-field-brand-color) 95.64% 0.036 calc(h + 0.6)), oklch(from var(--swc-prompt-field-brand-color) 31.55% 0.1704 calc(h - 24.5))) l c h / var(--_swc-prompt-field-con-hue-opacity)), transparent);
   pointer-events: none;
+  content: "";
 
   --_swc-prompt-field-rotation: 7deg;
   --_swc-prompt-field-translation: 44px;
 }
 
 @supports (rotate: atan(1px / 1cqw)) {
-  .swc-PromptField-hue-sweep {
+  .swc-PromptField-box::before {
     --_swc-prompt-field-rotation: atan(30px / 50cqw);
     --_swc-prompt-field-translation: clamp(44px, 44px * (800px / 100cqw), 72px);
   }
 }
 
-:host([generating]) .swc-PromptField-hue-sweep {
+:host([generating]) .swc-PromptField-box::before {
   animation:
     swc-prompt-field-hue-translate 2s linear infinite,
     swc-prompt-field-hue-rotate 3s linear infinite,
@@ -287,7 +287,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :host([generating]) .swc-PromptField-hue-sweep {
+  :host([generating]) .swc-PromptField-box::before {
     animation: none;
   }
 }

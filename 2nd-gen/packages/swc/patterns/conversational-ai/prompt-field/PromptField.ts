@@ -1055,9 +1055,7 @@ export class PromptField extends SpectrumElement {
             class="swc-PromptField-box"
             @pointerdown=${this._handlePromptSurfacePointerDown}
           >
-            <span class="swc-PromptField-hue-sweep"></span>
             <span class="swc-PromptField-gloss"></span>
-            <span class="swc-PromptField-inset-shadow"></span>
             <div
               class="swc-PromptField-input-area${hasArtifacts
                 ? ' has-artifact'
