@@ -295,10 +295,19 @@ jobs:
           (cd 1st-gen && yarn changeset version)
           yarn install --refresh-lockfile
 
+      # Uses RELEASE_BOT_TOKEN (a PAT), not the default GITHUB_TOKEN: GitHub's own
+      # loop-prevention means a PR/branch created with GITHUB_TOKEN does not trigger
+      # other workflows (lint/test/VRT) on itself. Since this PR rewrites every 1st-gen
+      # package's version + the lockfile, it needs those checks to actually run before a
+      # human merges it. A PAT carries a distinct identity so normal pull_request-
+      # triggered workflows fire as they would for any other PR. No bypass-actor grant is
+      # needed on this token - it never pushes to a protected branch, only to
+      # changeset-release/1st-gen.
       - name: Open or update the 1st-gen Version PR
         if: needs.check-changesets.outputs.has_changesets == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
+          token: ${{ secrets.RELEASE_BOT_TOKEN }}
           commit-message: 'chore: release 1st-gen packages'
           title: 'chore: release 1st-gen packages'
           branch: changeset-release/1st-gen

@@ -196,10 +196,15 @@ jobs:
           (cd 2nd-gen && yarn changeset version)
           yarn install --refresh-lockfile
 
+      # Uses RELEASE_BOT_TOKEN, not the default GITHUB_TOKEN - see the identical comment
+      # above the 1st-gen Version PR step in publish.yml for why: a GITHUB_TOKEN-created
+      # PR doesn't trigger this repo's own pull_request-based CI (lint/test/VRT) on
+      # itself, and this PR rewrites every 2nd-gen package's version + the lockfile.
       - name: Open or update the 2nd-gen Version PR
         if: needs.check-changesets.outputs.has_changesets == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
+          token: ${{ secrets.RELEASE_BOT_TOKEN }}
           commit-message: 'chore: release 2nd-gen packages'
           title: 'chore: release 2nd-gen packages (beta)'
           branch: changeset-release/2nd-gen
