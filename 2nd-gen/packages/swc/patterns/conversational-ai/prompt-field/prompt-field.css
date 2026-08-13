@@ -1045,6 +1045,5 @@
 @media (prefers-contrast: more) {
   :host .swc-PromptField-box:has(.swc-PromptField-input-area:focus-within) {
     outline: token("focus-indicator-thickness") solid token("gray-900");
-    outline-offset: token("focus-ring-gap");
   }
 }
