@@ -23,12 +23,7 @@ import { getComponent, withWarningSpy } from '../../../../utils/test-utils.js';
 import { PromptField } from '../PromptField.js';
 import { meta, Overview } from '../stories/prompt-field.stories.js';
 
-/**
- * The scroll chevrons are `swc-action-button`s with `delegatesFocus`, so
- * focusing one lands the active element on its inner shadow `<button>`, not on
- * the host. Treat focus as "on" a chevron when the active element is the host
- * itself or lives inside its shadow root.
- */
+/** True when focus is on a chevron or its inner shadow button. */
 const focusIsWithinChevron = (host: Element | null | undefined): boolean => {
   const active = getActiveElement();
   if (!active || !host) {
@@ -328,9 +323,7 @@ export const ArtifactScrollPaginationTest: Story = {
         el.artifactScrollPrevLabel = 'Show earlier attachments';
         el.artifactScrollNextLabel = 'Show later attachments';
         await el.updateComplete;
-        // The chevron is an swc-action-button; the accessible name is passed
-        // via accessible-label (which the component forwards to its inner
-        // button's aria-label).
+        // Accessible name is passed via accessible-label on the action button.
         expect(nextButton?.getAttribute('accessible-label')).toBe(
           'Show later attachments'
         );

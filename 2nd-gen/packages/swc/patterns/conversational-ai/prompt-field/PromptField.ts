@@ -583,8 +583,7 @@ export class PromptField extends SpectrumElement {
     // wherever focus was before the page turned) — its Close button when
     // visible, mirroring the forward tile -> Close -> Next chain in reverse,
     // otherwise the tile itself.
-    // deepContains, not ===: the chevron is an swc-action-button with
-    // delegatesFocus, so `active` is its inner shadow <button>, not the host.
+    // deepContains: focus delegates to the chevron's inner shadow button.
     if (nextButton && deepContains(nextButton, active) && event.shiftKey) {
       const activeTile = this._artifactNavigation.getActiveItem();
       if (activeTile) {

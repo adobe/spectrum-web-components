@@ -444,10 +444,7 @@
   display: none;
 }
 
-/* Upload button (quiet swc-action-button, left side). Square icon-only size,
- * corner radius, and colors are pinned via the component's custom properties
- * to preserve the pattern's look; geometry (edge-to-visual-only) may need a
- * VRT tune to land an exact 32x32. */
+/* Upload button (quiet, left side) */
 .swc-PromptField-upload {
   --swc-action-button-min-block-size: var(--swc-prompt-field-upload-block-size, 32px);
   --swc-action-button-edge-to-visual-only: calc((var(--swc-prompt-field-upload-inline-size, 32px) - token("workflow-icon-medium")) / 2);
@@ -460,10 +457,7 @@
   --swc-action-button-background-color-disabled: transparent;
 }
 
-/* Send/stop are filled round swc-action-buttons. The round look and colors are
- * reproduced through the component's custom properties: corner-radius-full on a
- * square (min-block-size + edge-to-visual-only) yields a circle. The exact
- * square geometry may need a VRT tune. */
+/* Send/stop buttons (filled round, anchored bottom-right) */
 
 /* Anchored to .controls's own bottom-right, so it re-aligns on its own as .controls grows or shrinks with either row's content. */
 .swc-PromptField-send,
