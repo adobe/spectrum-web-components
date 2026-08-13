@@ -10,7 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
+import {
+  CSSResultArray,
+  html,
+  nothing,
+  PropertyValues,
+  TemplateResult,
+} from 'lit';
 import {
   property,
   query,
@@ -35,17 +41,23 @@ import {
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
+import '../../../components/ui-icons/swc-ui-icon.js';
 
 import { uniqueId } from '../../../utils/id.js';
 import { ChevronUpIcon, PlusIcon, StopIcon } from '../utils/icons/index.js';
 
+import visuallyHiddenStyles from '../../../stylesheets/_lit-styles/visually-hidden.css';
 import styles from './prompt-field.css';
 
 export interface PromptFieldSubmitDetail {
   value: string;
 }
 
-export type PromptFieldMode = 'default' | 'loading' | 'disabled';
+// Native CSS textarea auto-sizing; when true, the JS fallback is skipped.
+const SUPPORTS_FIELD_SIZING =
+  typeof CSS !== 'undefined' &&
+  typeof CSS.supports === 'function' &&
+  CSS.supports('field-sizing', 'content');
 
 /**
  * Prompt entry surface for conversational AI flows.
@@ -66,18 +78,26 @@ export type PromptFieldMode = 'default' | 'loading' | 'disabled';
  * Detail: `{ value: string }`
  * @fires swc-prompt-field-submit - Dispatched when send is triggered.
  * Detail: `{ value: string }`
- * @fires swc-prompt-field-stop - Dispatched when stop generation is requested in loading mode.
+ * @fires swc-prompt-field-stop - Dispatched when stop generation is requested while generating.
  * @fires swc-prompt-field-upload-click - Dispatched when upload affordance is activated.
  * Consumers should handle file picker flow externally.
  */
 export class PromptField extends SpectrumElement {
   private readonly labelId = uniqueId('swc-prompt-field-label');
 
-  /** Visual mode for the prompt field action/interaction state. */
-  @property({ type: String, reflect: true })
-  public mode: PromptFieldMode = 'default';
+  /** Disables the textarea and all actions. */
+  @property({ type: Boolean, reflect: true })
+  public disabled = false;
 
-  /** Accessible label shown above the textarea. */
+  /** Shows the stop button in place of send while a response is generating. */
+  @property({ type: Boolean, reflect: true })
+  public generating = false;
+
+  /** Starts as a single-line layout with send/stop inline instead of the default layout with a separate action bar; the textarea still wraps and grows with content either way. */
+  @property({ type: Boolean, reflect: true })
+  public collapsed = false;
+
+  /** Accessible name for the textarea; visually hidden. */
   @property({ type: String })
   public label = 'Prompt';
 
@@ -89,7 +109,7 @@ export class PromptField extends SpectrumElement {
   @property({ type: String, attribute: 'send-label' })
   public sendLabel = 'Send';
 
-  /** Accessible label for the stop action button in loading mode. */
+  /** Accessible label for the stop action button while generating. */
   @property({ type: String, attribute: 'stop-label' })
   public stopLabel = 'Stop generating';
 
@@ -118,19 +138,22 @@ export class PromptField extends SpectrumElement {
   @property({ type: String })
   public value = '';
 
-  /** Minimum visible textarea rows before growth. */
+  /** Minimum visible textarea rows before growth; unset relies on the natural single-line height. */
   @property({ type: Number, attribute: 'min-rows' })
-  public minRows = 1;
+  public minRows?: number;
 
-  /** Maximum visible textarea rows before internal scrolling. */
+  /** Maximum visible textarea rows before internal scrolling; unset relies on max-block-size alone. */
   @property({ type: Number, attribute: 'max-rows' })
-  public maxRows = 4;
+  public maxRows?: number;
 
   @queryAssignedElements({ slot: 'artifact', flatten: true })
   private _assignedArtifactElements!: HTMLElement[];
 
   @query('.swc-PromptField-artifacts-scroll')
   private _artifactScrollEl?: HTMLDivElement;
+
+  @query('.swc-PromptField-textarea')
+  private _textarea?: HTMLTextAreaElement;
 
   @queryAssignedElements({ slot: 'legal', flatten: true })
   private _assignedLegalElements!: HTMLElement[];
@@ -189,7 +212,7 @@ export class PromptField extends SpectrumElement {
   private _pendingArtifactDismiss?: { artifact: HTMLElement; index: number };
 
   public static override get styles(): CSSResultArray {
-    return [styles];
+    return [styles, visuallyHiddenStyles];
   }
 
   public override connectedCallback(): void {
@@ -209,8 +232,27 @@ export class PromptField extends SpectrumElement {
     super.disconnectedCallback();
   }
 
-  protected override updated(): void {
+  protected override updated(changedProperties: PropertyValues<this>): void {
     this._warnIfMissingLegalContent();
+    if (changedProperties.has('value')) {
+      this._autosizeTextarea();
+    }
+  }
+
+  // Fallback for browsers without field-sizing: content, which is not yet
+  // widely supported. Grows the textarea to fit content, up to the CSS
+  // max-block-size clamp (past which overflow-y scrolls). Gated to value
+  // changes so unrelated re-renders don't force a layout reflow.
+  private _autosizeTextarea(): void {
+    if (SUPPORTS_FIELD_SIZING) {
+      return;
+    }
+    const textarea = this._textarea;
+    if (!textarea) {
+      return;
+    }
+    textarea.style.height = 'auto';
+    textarea.style.height = `${textarea.scrollHeight}px`;
   }
 
   private _handleInput(event: Event): void {
@@ -231,14 +273,14 @@ export class PromptField extends SpectrumElement {
     }
 
     event.preventDefault();
-    if (this._isLoading || this._isDisabled) {
+    if (this.generating || this.disabled) {
       return;
     }
     this._handleSendClick();
   }
 
   private _handleSendClick(): void {
-    if (!this._isPopulated || this._isDisabled) {
+    if (!this._isPopulated || this.disabled) {
       return;
     }
     this.dispatchEvent(
@@ -795,22 +837,13 @@ export class PromptField extends SpectrumElement {
   }
 
   private get _normalizedMinRows(): number {
-    return Math.max(1, Math.floor(this.minRows || 1));
+    return this.minRows ? Math.max(1, Math.floor(this.minRows)) : 1;
   }
 
-  private get _normalizedMaxRows(): number {
-    return Math.max(
-      this._normalizedMinRows,
-      Math.floor(this.maxRows || this._normalizedMinRows)
-    );
-  }
-
-  private get _isLoading(): boolean {
-    return this.mode === 'loading';
-  }
-
-  private get _isDisabled(): boolean {
-    return this.mode === 'disabled';
+  private get _normalizedMaxRows(): number | undefined {
+    return this.maxRows
+      ? Math.max(this._normalizedMinRows, Math.floor(this.maxRows))
+      : undefined;
   }
 
   private _handleLegalSlotChange(): void {
@@ -953,7 +986,7 @@ export class PromptField extends SpectrumElement {
     return html`
       <button
         class="swc-PromptField-send"
-        ?disabled=${!this._isPopulated || this._isDisabled}
+        ?disabled=${!this._isPopulated || this.disabled}
         aria-label=${this.sendLabel}
         @click=${this._handleSendClick}
       >
@@ -974,8 +1007,17 @@ export class PromptField extends SpectrumElement {
     `;
   }
 
+  /** Placeholder for the future pixel-loader idle/generating indicator. */
+  private _renderStatusIcon(): TemplateResult {
+    return html`
+      <span class="swc-PromptField-status-icon" aria-hidden="true">
+        <swc-ui-icon icon="asterisk" size="xl"></swc-ui-icon>
+      </span>
+    `;
+  }
+
   protected override render(): TemplateResult {
-    const showStop = this._isLoading;
+    const showStop = this.generating;
     const hasArtifacts = (this._assignedArtifactElements?.length ?? 0) > 0;
 
     return html`
@@ -987,50 +1029,59 @@ export class PromptField extends SpectrumElement {
               : ''}"
           >
             ${this._renderArtifact()}
-            <div class="swc-PromptField-text-area">
-              <span id=${this.labelId} class="swc-PromptField-label">
-                ${this.label}
-              </span>
-              <textarea
-                class="swc-PromptField-textarea"
-                .value=${this.value}
-                placeholder=${this.placeholder}
-                aria-labelledby=${this.labelId}
-                aria-label=${ifDefined(
-                  this.accessibleLabel.trim().length > 0
-                    ? this.accessibleLabel.trim()
-                    : undefined
-                )}
-                aria-placeholder=${ifDefined(this.placeholder || undefined)}
-                ?disabled=${this._isDisabled}
-                rows=${this._normalizedMinRows}
-                style=${styleMap({
-                  '--swc-prompt-field-textarea-min-rows': String(
-                    this._normalizedMinRows
-                  ),
-                  '--swc-prompt-field-textarea-max-rows': String(
-                    this._normalizedMaxRows
-                  ),
-                })}
-                @input=${this._handleInput}
-                @keydown=${this._handleTextareaKeydown}
-              ></textarea>
-            </div>
-          </div>
-
-          <div class="swc-PromptField-action-bar">
-            <div class="swc-PromptField-leading-actions">
-              <button
-                class="swc-PromptField-upload"
-                aria-label=${this.uploadLabel}
-                ?disabled=${this._isDisabled}
-                @click=${this._handleUploadClick}
+            <span
+              id=${this.labelId}
+              class="swc-PromptField-label swc-VisuallyHidden"
+            >
+              ${this.label}
+            </span>
+            <div class="swc-PromptField-controls">
+              <div class="swc-PromptField-text-group">
+                ${this._renderStatusIcon()}
+                <textarea
+                  class="swc-PromptField-textarea"
+                  .value=${this.value}
+                  placeholder=${this.placeholder}
+                  aria-labelledby=${this.labelId}
+                  aria-label=${ifDefined(
+                    this.accessibleLabel.trim().length > 0
+                      ? this.accessibleLabel.trim()
+                      : undefined
+                  )}
+                  aria-placeholder=${ifDefined(this.placeholder || undefined)}
+                  ?disabled=${this.disabled}
+                  rows=${this._normalizedMinRows}
+                  style=${styleMap({
+                    '--swc-prompt-field-textarea-min-rows': String(
+                      this._normalizedMinRows
+                    ),
+                    '--swc-prompt-field-textarea-max-rows':
+                      this._normalizedMaxRows !== undefined
+                        ? String(this._normalizedMaxRows)
+                        : undefined,
+                  })}
+                  @input=${this._handleInput}
+                  @keydown=${this._handleTextareaKeydown}
+                ></textarea>
+              </div>
+              <div
+                class="swc-PromptField-leading-actions"
+                aria-hidden=${ifDefined(this.collapsed ? 'true' : undefined)}
+                .inert=${this.collapsed}
               >
-                <swc-icon aria-hidden="true">${PlusIcon()}</swc-icon>
-              </button>
+                <div class="swc-PromptField-leading-actions-row">
+                  <button
+                    class="swc-PromptField-upload"
+                    aria-label=${this.uploadLabel}
+                    ?disabled=${this.disabled}
+                    @click=${this._handleUploadClick}
+                  >
+                    <swc-icon aria-hidden="true">${PlusIcon()}</swc-icon>
+                  </button>
+                </div>
+              </div>
+              ${showStop ? this._renderStopButton() : this._renderSendButton()}
             </div>
-
-            ${showStop ? this._renderStopButton() : this._renderSendButton()}
           </div>
         </div>
         ${this._renderLegalFooter()}
