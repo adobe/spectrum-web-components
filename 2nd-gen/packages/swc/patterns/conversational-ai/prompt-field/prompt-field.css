@@ -56,6 +56,7 @@
 .swc-PromptField-box {
   display: flex;
   position: relative;
+  z-index: 0;
   flex: 1 1 auto;
   flex-direction: column;
   min-inline-size: 0;
@@ -221,6 +222,7 @@
 .swc-PromptField-box::after {
   position: absolute;
   inset: 0;
+  z-index: -1;
   border-radius: inherit;
   box-shadow:
     inset 0 -20px 20px -24px var(--_swc-prompt-field-prominent-inset-glow-color, transparent),
@@ -253,6 +255,7 @@
 .swc-PromptField-gloss {
   position: absolute;
   inset: 0;
+  z-index: -1;
   background: linear-gradient(to bottom in oklch, light-dark(oklch(from white l c h / 75%), oklch(from black l c h / 40%)) 0% 37%, light-dark(oklch(from white l c h / 15%), oklch(from black l c h / 12%)) 83% 100%);
   pointer-events: none;
 }
@@ -261,6 +264,7 @@
 .swc-PromptField-box::before {
   position: absolute;
   inset: -44px;
+  z-index: -1;
   background:
     radial-gradient(50% 50% at -20% 100% in oklch, oklch(from light-dark(oklch(from var(--swc-prompt-field-brand-color) 95.17% 0.0271 calc(h + 32.1)), oklch(from var(--swc-prompt-field-brand-color) 50.12% 0.1912 calc(h - 313.3))) l c h / var(--_swc-prompt-field-con-hue-opacity)), transparent),
     radial-gradient(70% 60% at 5% 80% in oklch, oklch(from light-dark(rgb(254 246 255), oklch(from var(--swc-prompt-field-brand-color) 44.18% 0.1934 calc(h - 1.8))) l c h / var(--_swc-prompt-field-con-hue-opacity)), transparent),
