@@ -225,11 +225,11 @@ Use [`FocusgroupNavigationController`](../../../../2nd-gen/packages/core/control
 ## References
 
 - [Forms Strategy: 2nd-Gen Proposal (this repo)](../../05_strategies/forms-strategy-rfc.md), specifically the [naming table](../../05_strategies/forms-strategy-rfc.md#4-naming-table) and [open questions](../../05_strategies/forms-strategy-rfc.md#6-open-questions).
-- [Web component form strategy demos](https://github.com/nikkimk/web-component-form-strategy-demos/tree/main) — the proof of concept this doc's controller composition follows.
+- [Web component form strategy demos](https://github.com/nikkimk/web-component-form-strategy-demos/tree/main): the proof of concept this doc's controller composition follows, specifically [`radio-group-controller.js`](https://github.com/nikkimk/web-component-form-strategy-demos/blob/main/radio-group-controller.js) and [`my-radiogroup.js`](https://github.com/nikkimk/web-component-form-strategy-demos/blob/main/my-radiogroup.js).
 - [WAI-ARIA APG: Radio Group pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)
 - [WAI-ARIA](https://www.w3.org/TR/wai-aria-1.2/), [WCAG 2.2](https://www.w3.org/TR/WCAG22/), [APG: read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [React Spectrum: RadioGroup](https://react-spectrum.adobe.com/RadioGroup)
-- [`LiveSelectionController` (this repo)](../../../../2nd-gen/packages/core/controllers/live-selection-controller/live-selection-controller.mdx) — documents why it is the wrong fit for radio groups
+- [`LiveSelectionController` (this repo)](../../../../2nd-gen/packages/core/controllers/live-selection-controller/live-selection-controller.mdx): documents why it is the wrong fit for radio groups
 - [`FocusgroupNavigationController` (this repo)](../../../../2nd-gen/packages/core/controllers/focusgroup-navigation-controller/focusgroup-navigation-controller.mdx)
 - [`SlotAttributePropagationController` (this repo)](../../../../2nd-gen/packages/core/controllers/slot-attribute-propagation-controller/slot-attribute-propagation-controller.mdx)
 - 1st-gen: [`sp-radio`/`sp-radio-group`](../../../../1st-gen/packages/radio/README.md), [`sp-field-group`](../../../../1st-gen/packages/field-group/README.md), [`sp-help-text`](../../../../1st-gen/packages/help-text/README.md)
