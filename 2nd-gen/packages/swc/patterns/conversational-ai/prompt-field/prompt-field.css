@@ -65,23 +65,23 @@
   flex-direction: column;
   min-inline-size: 0;
   padding: token("spacing-300");
-  background: radial-gradient(circle at right bottom in oklch, var(--swc-prompt-field-bg-stop-1) 0%, var(--swc-prompt-field-bg-stop-2) 35%, var(--swc-prompt-field-bg-stop-3) 82%, var(--swc-prompt-field-bg-stop-4) 100%);
+  background: radial-gradient(circle at right bottom in oklch, var(--_swc-prompt-field-bg-stop-1) 0%, var(--_swc-prompt-field-bg-stop-2) 35%, var(--_swc-prompt-field-bg-stop-3) 82%, var(--_swc-prompt-field-bg-stop-4) 100%);
   border-radius: 24px;
   box-shadow:
-    0 20px 20px -24px var(--swc-prompt-field-prominent-outer-glow-color, transparent),
-    0 -3px 10px 1px var(--swc-prompt-field-drop-shadow-color);
+    0 20px 20px -24px var(--_swc-prompt-field-prominent-outer-glow-color, transparent),
+    0 -3px 10px 1px var(--_swc-prompt-field-drop-shadow-color);
   overflow: clip;
   transition:
-    --swc-prompt-field-con-hue-opacity 700ms cubic-bezier(0.32, 0.72, 0, 1),
-    --swc-prompt-field-bg-stop-1 700ms cubic-bezier(0.32, 0.72, 0, 1),
-    --swc-prompt-field-bg-stop-2 700ms cubic-bezier(0.32, 0.72, 0, 1),
-    --swc-prompt-field-bg-stop-3 700ms cubic-bezier(0.32, 0.72, 0, 1),
-    --swc-prompt-field-bg-stop-4 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --_swc-prompt-field-con-hue-opacity 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --_swc-prompt-field-bg-stop-1 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --_swc-prompt-field-bg-stop-2 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --_swc-prompt-field-bg-stop-3 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --_swc-prompt-field-bg-stop-4 700ms cubic-bezier(0.32, 0.72, 0, 1),
     box-shadow 700ms cubic-bezier(0.32, 0.72, 0, 1);
 
-  --swc-prompt-field-border-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), rgb(255 255 255 / 5%));
-  --swc-prompt-field-drop-shadow-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 58.26% 0.2265 calc(h - 0.4) / 5%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 5%));
-  --swc-prompt-field-inset-shadow-color: rgb(255 255 255 / 4%);
+  --_swc-prompt-field-border-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), rgb(255 255 255 / 5%));
+  --_swc-prompt-field-drop-shadow-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 58.26% 0.2265 calc(h - 0.4) / 5%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 5%));
+  --_swc-prompt-field-inset-shadow-color: rgb(255 255 255 / 4%);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -106,50 +106,50 @@
 }
 
 /* Ambient hue-sweep opacity (idle vs. generating, per variant, hover). */
-@property --swc-prompt-field-con-hue-opacity {
+@property --_swc-prompt-field-con-hue-opacity {
   syntax: "<percentage>";
   inherits: true;
   initial-value: 0%;
 }
 
 /* Card wash gradient stops (idle vs. generating, per variant, hover). */
-@property --swc-prompt-field-bg-stop-1 {
+@property --_swc-prompt-field-bg-stop-1 {
   syntax: "<color>";
   inherits: true;
   initial-value: #0000;
 }
 
-@property --swc-prompt-field-bg-stop-2 {
+@property --_swc-prompt-field-bg-stop-2 {
   syntax: "<color>";
   inherits: true;
   initial-value: #0000;
 }
 
-@property --swc-prompt-field-bg-stop-3 {
+@property --_swc-prompt-field-bg-stop-3 {
   syntax: "<color>";
   inherits: true;
   initial-value: #0000;
 }
 
-@property --swc-prompt-field-bg-stop-4 {
+@property --_swc-prompt-field-bg-stop-4 {
   syntax: "<color>";
   inherits: true;
   initial-value: #0000;
 }
 
-@property --swc-prompt-field-outer-stop-1 {
+@property --_swc-prompt-field-outer-stop-1 {
   syntax: "<color>";
   inherits: true;
   initial-value: #0000;
 }
 
-@property --swc-prompt-field-outer-stop-2 {
+@property --_swc-prompt-field-outer-stop-2 {
   syntax: "<color>";
   inherits: true;
   initial-value: #0000;
 }
 
-@property --swc-prompt-field-outer-stop-3 {
+@property --_swc-prompt-field-outer-stop-3 {
   syntax: "<color>";
   inherits: true;
   initial-value: #0000;
@@ -166,58 +166,58 @@
   padding: 6px;
   container-type: inline-size;
 
-  --swc-prompt-field-outer-shadow: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 0%));
+  --_swc-prompt-field-outer-shadow: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 0%));
 
-  background: linear-gradient(to right in oklch, var(--swc-prompt-field-outer-stop-1) 0%, var(--swc-prompt-field-outer-stop-2) 37%, var(--swc-prompt-field-outer-stop-3) 77%);
+  background: linear-gradient(to right in oklch, var(--_swc-prompt-field-outer-stop-1) 0%, var(--_swc-prompt-field-outer-stop-2) 37%, var(--_swc-prompt-field-outer-stop-3) 77%);
   border-radius: 30px;
   box-shadow:
-    0 2px 4px var(--swc-prompt-field-outer-shadow),
-    0 6px 16px -10px var(--swc-prompt-field-outer-hue);
+    0 2px 4px var(--_swc-prompt-field-outer-shadow),
+    0 6px 16px -10px var(--_swc-prompt-field-outer-hue);
   transition:
-    --swc-prompt-field-outer-stop-1 700ms cubic-bezier(0.32, 0.72, 0, 1),
-    --swc-prompt-field-outer-stop-2 700ms cubic-bezier(0.32, 0.72, 0, 1),
-    --swc-prompt-field-outer-stop-3 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --_swc-prompt-field-outer-stop-1 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --_swc-prompt-field-outer-stop-2 700ms cubic-bezier(0.32, 0.72, 0, 1),
+    --_swc-prompt-field-outer-stop-3 700ms cubic-bezier(0.32, 0.72, 0, 1),
     box-shadow 700ms cubic-bezier(0.32, 0.72, 0, 1);
 
   :host([variant="subtle"]) & {
-    --swc-prompt-field-outer-shadow: rgb(0 0 0 / 5%);
-    --swc-prompt-field-outer-hue: transparent;
-    --swc-prompt-field-outer-stop-1: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
-    --swc-prompt-field-outer-stop-2: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
-    --swc-prompt-field-outer-stop-3: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
+    --_swc-prompt-field-outer-shadow: rgb(0 0 0 / 5%);
+    --_swc-prompt-field-outer-hue: transparent;
+    --_swc-prompt-field-outer-stop-1: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
+    --_swc-prompt-field-outer-stop-2: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
+    --_swc-prompt-field-outer-stop-3: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
 
     &:hover {
-      --swc-prompt-field-outer-shadow: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 0%));
-      --swc-prompt-field-outer-hue: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 67.5% 0.2134 calc(h - 292.3) / 50%) l c h / 20%), oklch(from oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) l c h / 0%));
-      --swc-prompt-field-outer-stop-1: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 60%) l c h / 2%), rgb(255 255 255 / 2%));
-      --swc-prompt-field-outer-stop-2: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 67.5% 0.2134 calc(h - 292.3) / 50%) l c h / 2%), rgb(255 255 255 / 2%));
-      --swc-prompt-field-outer-stop-3: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 78.78% 0.1692 calc(h - 254) / 40%) l c h / 2%), rgb(255 255 255 / 2%));
+      --_swc-prompt-field-outer-shadow: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 0%));
+      --_swc-prompt-field-outer-hue: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 67.5% 0.2134 calc(h - 292.3) / 50%) l c h / 20%), oklch(from oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) l c h / 0%));
+      --_swc-prompt-field-outer-stop-1: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 60%) l c h / 2%), rgb(255 255 255 / 2%));
+      --_swc-prompt-field-outer-stop-2: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 67.5% 0.2134 calc(h - 292.3) / 50%) l c h / 2%), rgb(255 255 255 / 2%));
+      --_swc-prompt-field-outer-stop-3: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 78.78% 0.1692 calc(h - 254) / 40%) l c h / 2%), rgb(255 255 255 / 2%));
     }
   }
 
   /* Unlike subtle, balanced/prominent rings are unconditionally colored (no hover-only reveal). */
   :host([variant="balanced"]) & {
-    --swc-prompt-field-outer-hue: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 67.5% 0.2134 calc(h - 292.3) / 50%) l c h / 30%), oklch(from oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) l c h / 0%));
-    --swc-prompt-field-outer-stop-1: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 60%) l c h / 3%), rgb(255 255 255 / 2%));
-    --swc-prompt-field-outer-stop-2: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 67.5% 0.2134 calc(h - 292.3) / 50%) l c h / 3%), rgb(255 255 255 / 2%));
-    --swc-prompt-field-outer-stop-3: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 78.78% 0.1692 calc(h - 254) / 40%) l c h / 3%), rgb(255 255 255 / 2%));
+    --_swc-prompt-field-outer-hue: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 67.5% 0.2134 calc(h - 292.3) / 50%) l c h / 30%), oklch(from oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) l c h / 0%));
+    --_swc-prompt-field-outer-stop-1: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 60%) l c h / 3%), rgb(255 255 255 / 2%));
+    --_swc-prompt-field-outer-stop-2: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 67.5% 0.2134 calc(h - 292.3) / 50%) l c h / 3%), rgb(255 255 255 / 2%));
+    --_swc-prompt-field-outer-stop-3: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 78.78% 0.1692 calc(h - 254) / 40%) l c h / 3%), rgb(255 255 255 / 2%));
   }
 
   /* Prominent's dark-mode ring stops are also brand-derived, unlike balanced/subtle's flat fallback. */
   :host([variant="prominent"]) & {
-    --swc-prompt-field-outer-hue: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 67.5% 0.2134 calc(h - 292.3) / 50%) l c h / 40%), oklch(from oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) l c h / 40%));
-    --swc-prompt-field-outer-stop-1: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 60%) l c h / 4%), oklch(from oklch(from var(--swc-prompt-field-brand-color) 23.18% 0.1116 calc(h - 3.1)) l c h / 40%));
-    --swc-prompt-field-outer-stop-2: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 67.5% 0.2134 calc(h - 292.3) / 50%) l c h / 4%), oklch(from oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) l c h / 40%));
-    --swc-prompt-field-outer-stop-3: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 78.78% 0.1692 calc(h - 254) / 40%) l c h / 4%), oklch(from oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) l c h / 40%));
+    --_swc-prompt-field-outer-hue: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 67.5% 0.2134 calc(h - 292.3) / 50%) l c h / 40%), oklch(from oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) l c h / 40%));
+    --_swc-prompt-field-outer-stop-1: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 60%) l c h / 4%), oklch(from oklch(from var(--swc-prompt-field-brand-color) 23.18% 0.1116 calc(h - 3.1)) l c h / 40%));
+    --_swc-prompt-field-outer-stop-2: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 67.5% 0.2134 calc(h - 292.3) / 50%) l c h / 4%), oklch(from oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) l c h / 40%));
+    --_swc-prompt-field-outer-stop-3: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 78.78% 0.1692 calc(h - 254) / 40%) l c h / 4%), oklch(from oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) l c h / 40%));
   }
 
   /* :not() must live inside :host()'s own argument -- ":host(X):not(Y)" fails to match in Chromium. */
   :host(:focus-within:not([generating])) & {
-    --swc-prompt-field-outer-shadow: light-dark(rgb(0 0 0 / 5%), rgb(0 0 0 / 3%));
-    --swc-prompt-field-outer-hue: transparent;
-    --swc-prompt-field-outer-stop-1: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
-    --swc-prompt-field-outer-stop-2: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
-    --swc-prompt-field-outer-stop-3: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
+    --_swc-prompt-field-outer-shadow: light-dark(rgb(0 0 0 / 5%), rgb(0 0 0 / 3%));
+    --_swc-prompt-field-outer-hue: transparent;
+    --_swc-prompt-field-outer-stop-1: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
+    --_swc-prompt-field-outer-stop-2: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
+    --_swc-prompt-field-outer-stop-3: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
   }
 }
 
@@ -232,9 +232,9 @@
   inset: 0;
   border-radius: inherit;
   box-shadow:
-    inset 0 -20px 20px -24px var(--swc-prompt-field-prominent-inset-glow-color, transparent),
-    inset 0 0 0 1px var(--swc-prompt-field-border-color),
-    inset 0 6px 15px 0 var(--swc-prompt-field-inset-shadow-color),
+    inset 0 -20px 20px -24px var(--_swc-prompt-field-prominent-inset-glow-color, transparent),
+    inset 0 0 0 1px var(--_swc-prompt-field-border-color),
+    inset 0 6px 15px 0 var(--_swc-prompt-field-inset-shadow-color),
     inset 0 0 0 0 transparent,
     inset 0 -5px 21.6px 0 rgb(255 255 255 / 4%),
     inset 0 24px 32px 0 rgb(255 255 255 / 4%);
@@ -250,9 +250,9 @@
 
 :host([generating]) .swc-PromptField-inset-shadow {
   box-shadow:
-    inset 0 -20px 20px -24px var(--swc-prompt-field-prominent-inset-glow-color, transparent),
-    inset 0 0 0 1px var(--swc-prompt-field-border-color),
-    inset 0 6px 15px 0 var(--swc-prompt-field-inset-shadow-color),
+    inset 0 -20px 20px -24px var(--_swc-prompt-field-prominent-inset-glow-color, transparent),
+    inset 0 0 0 1px var(--_swc-prompt-field-border-color),
+    inset 0 6px 15px 0 var(--_swc-prompt-field-inset-shadow-color),
     inset 0 -32px 100px -50px light-dark(rgb(254 246 255), oklch(from var(--swc-prompt-field-brand-color) 44.18% 0.1934 calc(h - 1.8))),
     inset 0 -5px 21.6px 0 rgb(255 255 255 / 4%),
     inset 0 24px 32px 0 rgb(255 255 255 / 4%);
@@ -270,19 +270,19 @@
   position: absolute;
   inset: -44px;
   background:
-    radial-gradient(50% 50% at -20% 100% in oklch, oklch(from light-dark(oklch(from var(--swc-prompt-field-brand-color) 95.17% 0.0271 calc(h + 32.1)), oklch(from var(--swc-prompt-field-brand-color) 50.12% 0.1912 calc(h - 313.3))) l c h / var(--swc-prompt-field-con-hue-opacity)), transparent),
-    radial-gradient(70% 60% at 5% 80% in oklch, oklch(from light-dark(rgb(254 246 255), oklch(from var(--swc-prompt-field-brand-color) 44.18% 0.1934 calc(h - 1.8))) l c h / var(--swc-prompt-field-con-hue-opacity)), transparent),
-    radial-gradient(70% 50% at 40% 80% in oklch, oklch(from light-dark(oklch(from var(--swc-prompt-field-brand-color) 95.64% 0.036 calc(h + 0.6)), oklch(from var(--swc-prompt-field-brand-color) 31.55% 0.1704 calc(h - 24.5))) l c h / var(--swc-prompt-field-con-hue-opacity)), transparent);
+    radial-gradient(50% 50% at -20% 100% in oklch, oklch(from light-dark(oklch(from var(--swc-prompt-field-brand-color) 95.17% 0.0271 calc(h + 32.1)), oklch(from var(--swc-prompt-field-brand-color) 50.12% 0.1912 calc(h - 313.3))) l c h / var(--_swc-prompt-field-con-hue-opacity)), transparent),
+    radial-gradient(70% 60% at 5% 80% in oklch, oklch(from light-dark(rgb(254 246 255), oklch(from var(--swc-prompt-field-brand-color) 44.18% 0.1934 calc(h - 1.8))) l c h / var(--_swc-prompt-field-con-hue-opacity)), transparent),
+    radial-gradient(70% 50% at 40% 80% in oklch, oklch(from light-dark(oklch(from var(--swc-prompt-field-brand-color) 95.64% 0.036 calc(h + 0.6)), oklch(from var(--swc-prompt-field-brand-color) 31.55% 0.1704 calc(h - 24.5))) l c h / var(--_swc-prompt-field-con-hue-opacity)), transparent);
   pointer-events: none;
 
-  --swc-prompt-field-rotation: 7deg;
-  --swc-prompt-field-translation: 44px;
+  --_swc-prompt-field-rotation: 7deg;
+  --_swc-prompt-field-translation: 44px;
 }
 
 @supports (rotate: atan(1px / 1cqw)) {
   .swc-PromptField-hue-sweep {
-    --swc-prompt-field-rotation: atan(30px / 50cqw);
-    --swc-prompt-field-translation: clamp(44px, 44px * (800px / 100cqw), 72px);
+    --_swc-prompt-field-rotation: atan(30px / 50cqw);
+    --_swc-prompt-field-translation: clamp(44px, 44px * (800px / 100cqw), 72px);
   }
 }
 
@@ -305,7 +305,7 @@
   }
 
   25% {
-    rotate: var(--swc-prompt-field-rotation);
+    rotate: var(--_swc-prompt-field-rotation);
   }
 
   50% {
@@ -313,7 +313,7 @@
   }
 
   75% {
-    rotate: calc(-1 * var(--swc-prompt-field-rotation));
+    rotate: calc(-1 * var(--_swc-prompt-field-rotation));
   }
 
   100% {
@@ -327,7 +327,7 @@
   }
 
   50% {
-    translate: 0 var(--swc-prompt-field-translation);
+    translate: 0 var(--_swc-prompt-field-translation);
   }
 
   100% {
@@ -350,138 +350,138 @@
 }
 
 :host([variant="subtle"]:not([generating])) .swc-PromptField-box {
-  --swc-prompt-field-con-hue-opacity: 0%;
-  --swc-prompt-field-bg-stop-1: light-dark(white, token("gray-75"));
-  --swc-prompt-field-bg-stop-2: light-dark(white, token("gray-75"));
-  --swc-prompt-field-bg-stop-3: light-dark(white, token("gray-75"));
-  --swc-prompt-field-bg-stop-4: light-dark(white, token("gray-75"));
-  --swc-prompt-field-border-color: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%));
-  --swc-prompt-field-drop-shadow-color: transparent;
+  --_swc-prompt-field-con-hue-opacity: 0%;
+  --_swc-prompt-field-bg-stop-1: light-dark(white, token("gray-75"));
+  --_swc-prompt-field-bg-stop-2: light-dark(white, token("gray-75"));
+  --_swc-prompt-field-bg-stop-3: light-dark(white, token("gray-75"));
+  --_swc-prompt-field-bg-stop-4: light-dark(white, token("gray-75"));
+  --_swc-prompt-field-border-color: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%));
+  --_swc-prompt-field-drop-shadow-color: transparent;
 }
 
 :host([variant="subtle"]:not([generating])) :where(.swc-PromptField-outer-border:hover) .swc-PromptField-box {
-  --swc-prompt-field-con-hue-opacity: 12.5%;
-  --swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.18% 0.0231 calc(h - 44.5)) 30%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 40%));
-  --swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 91.32% 0.0721 calc(h + 0.1)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) 40%));
-  --swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.52% 0.0222 calc(h - 294.6)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.18% 0.1116 calc(h - 3.1)) 40%));
-  --swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 22.42% 0.072 calc(h - 288.8)) 40%));
-  --swc-prompt-field-border-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), rgb(255 255 255 / 5%));
-  --swc-prompt-field-drop-shadow-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 58.26% 0.2265 calc(h - 0.4) / 5%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 5%));
+  --_swc-prompt-field-con-hue-opacity: 12.5%;
+  --_swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.18% 0.0231 calc(h - 44.5)) 30%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 40%));
+  --_swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 91.32% 0.0721 calc(h + 0.1)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) 40%));
+  --_swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.52% 0.0222 calc(h - 294.6)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.18% 0.1116 calc(h - 3.1)) 40%));
+  --_swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 22.42% 0.072 calc(h - 288.8)) 40%));
+  --_swc-prompt-field-border-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), rgb(255 255 255 / 5%));
+  --_swc-prompt-field-drop-shadow-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 58.26% 0.2265 calc(h - 0.4) / 5%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 5%));
 }
 
 /* Unlike subtle, balanced/prominent never override border-color/drop-shadow-color -- always the box's own base values. */
 :host([variant="balanced"]:not([generating])) .swc-PromptField-box {
-  --swc-prompt-field-con-hue-opacity: 12.5%;
-  --swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.18% 0.0231 calc(h - 44.5)) 12.5%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 20%));
-  --swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 91.32% 0.0721 calc(h + 0.1)) 12.5%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) 20%));
-  --swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.52% 0.0222 calc(h - 294.6)) 12.5%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.18% 0.1116 calc(h - 3.1)) 20%));
-  --swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 12.5%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 22.42% 0.072 calc(h - 288.8)) 20%));
+  --_swc-prompt-field-con-hue-opacity: 12.5%;
+  --_swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.18% 0.0231 calc(h - 44.5)) 12.5%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 20%));
+  --_swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 91.32% 0.0721 calc(h + 0.1)) 12.5%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) 20%));
+  --_swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.52% 0.0222 calc(h - 294.6)) 12.5%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.18% 0.1116 calc(h - 3.1)) 20%));
+  --_swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 12.5%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 22.42% 0.072 calc(h - 288.8)) 20%));
 }
 
 :host([variant="balanced"]:not([generating])) :where(.swc-PromptField-outer-border:hover) .swc-PromptField-box {
-  --swc-prompt-field-con-hue-opacity: 20%;
-  --swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.18% 0.0231 calc(h - 44.5)) 30%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 40%));
-  --swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 91.32% 0.0721 calc(h + 0.1)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) 40%));
-  --swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.52% 0.0222 calc(h - 294.6)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.18% 0.1116 calc(h - 3.1)) 40%));
-  --swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 22.42% 0.072 calc(h - 288.8)) 40%));
+  --_swc-prompt-field-con-hue-opacity: 20%;
+  --_swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.18% 0.0231 calc(h - 44.5)) 30%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 40%));
+  --_swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 91.32% 0.0721 calc(h + 0.1)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) 40%));
+  --_swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.52% 0.0222 calc(h - 294.6)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.18% 0.1116 calc(h - 3.1)) 40%));
+  --_swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 22.42% 0.072 calc(h - 288.8)) 40%));
 }
 
 /* Only a color on purpose: every consuming site hardcodes the shadow's own shape and varies just this. A trailing comma baked into a custom property's OWN value (unlike inside a var() fallback) reproducibly breaks Chromium's box-shadow to `none` -- don't reintroduce that pattern here. */
 :host([variant="prominent"]) {
-  --swc-prompt-field-prominent-outer-glow-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 85.78% 0.1222 calc(h + 0.4)), oklch(from var(--swc-prompt-field-brand-color) 37.57% 0.1726 calc(h - 2.6)));
-  --swc-prompt-field-prominent-inset-glow-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 85.78% 0.1222 calc(h + 0.4)), oklch(from var(--swc-prompt-field-brand-color) 37.57% 0.1726 calc(h - 2.6)));
+  --_swc-prompt-field-prominent-outer-glow-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 85.78% 0.1222 calc(h + 0.4)), oklch(from var(--swc-prompt-field-brand-color) 37.57% 0.1726 calc(h - 2.6)));
+  --_swc-prompt-field-prominent-inset-glow-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 85.78% 0.1222 calc(h + 0.4)), oklch(from var(--swc-prompt-field-brand-color) 37.57% 0.1726 calc(h - 2.6)));
 }
 
 :host([variant="prominent"]:not([generating])) .swc-PromptField-box {
-  --swc-prompt-field-con-hue-opacity: 75%;
-  --swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.18% 0.0231 calc(h - 44.5)) 30%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 20%));
-  --swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 91.32% 0.0721 calc(h + 0.1)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) 20%));
-  --swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.52% 0.0222 calc(h - 294.6)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.18% 0.1116 calc(h - 3.1)) 20%));
-  --swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 22.42% 0.072 calc(h - 288.8)) 20%));
+  --_swc-prompt-field-con-hue-opacity: 75%;
+  --_swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.18% 0.0231 calc(h - 44.5)) 30%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 20%));
+  --_swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 91.32% 0.0721 calc(h + 0.1)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) 20%));
+  --_swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.52% 0.0222 calc(h - 294.6)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.18% 0.1116 calc(h - 3.1)) 20%));
+  --_swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 22.42% 0.072 calc(h - 288.8)) 20%));
 }
 
 :host([variant="prominent"]:not([generating])) :where(.swc-PromptField-outer-border:hover) .swc-PromptField-box {
-  --swc-prompt-field-con-hue-opacity: 100%;
-  --swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.18% 0.0231 calc(h - 44.5)) 30%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 40%));
-  --swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 91.32% 0.0721 calc(h + 0.1)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) 40%));
-  --swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.52% 0.0222 calc(h - 294.6)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.18% 0.1116 calc(h - 3.1)) 40%));
-  --swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 22.42% 0.072 calc(h - 288.8)) 40%));
+  --_swc-prompt-field-con-hue-opacity: 100%;
+  --_swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.18% 0.0231 calc(h - 44.5)) 30%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 40%));
+  --_swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 91.32% 0.0721 calc(h + 0.1)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) 40%));
+  --_swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.52% 0.0222 calc(h - 294.6)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.18% 0.1116 calc(h - 3.1)) 40%));
+  --_swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 22.42% 0.072 calc(h - 288.8)) 40%));
 }
 
 :host([variant="subtle"][generating]) .swc-PromptField-box {
-  --swc-prompt-field-con-hue-opacity: 20%;
-  --swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 90.63% 0.0456 calc(h - 45.1)) 20%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 20%));
-  --swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.64% 0.036 calc(h + 0.6)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 26.65% 0.1587 calc(h - 40.2)) 20%));
-  --swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 25.8% 0.0855 calc(h - 290.4)) 20%));
-  --swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 85.78% 0.1222 calc(h + 0.4)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 37.57% 0.1726 calc(h - 2.6)) 20%));
-  --swc-prompt-field-spread-shadow-opacity: 30%;
+  --_swc-prompt-field-con-hue-opacity: 20%;
+  --_swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 90.63% 0.0456 calc(h - 45.1)) 20%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 20%));
+  --_swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.64% 0.036 calc(h + 0.6)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 26.65% 0.1587 calc(h - 40.2)) 20%));
+  --_swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 25.8% 0.0855 calc(h - 290.4)) 20%));
+  --_swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 85.78% 0.1222 calc(h + 0.4)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 37.57% 0.1726 calc(h - 2.6)) 20%));
+  --_swc-prompt-field-spread-shadow-opacity: 30%;
 }
 
 :host([variant="subtle"][generating]) :where(.swc-PromptField-outer-border:hover) .swc-PromptField-box {
-  --swc-prompt-field-con-hue-opacity: 75%;
-  --swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 90.63% 0.0456 calc(h - 45.1)) 20%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 20%));
-  --swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.64% 0.036 calc(h + 0.6)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 26.65% 0.1587 calc(h - 40.2)) 20%));
-  --swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 25.8% 0.0855 calc(h - 290.4)) 20%));
-  --swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 85.78% 0.1222 calc(h + 0.4)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 37.57% 0.1726 calc(h - 2.6)) 20%));
-  --swc-prompt-field-spread-shadow-opacity: 30%;
+  --_swc-prompt-field-con-hue-opacity: 75%;
+  --_swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 90.63% 0.0456 calc(h - 45.1)) 20%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 20%));
+  --_swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.64% 0.036 calc(h + 0.6)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 26.65% 0.1587 calc(h - 40.2)) 20%));
+  --_swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 25.8% 0.0855 calc(h - 290.4)) 20%));
+  --_swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 85.78% 0.1222 calc(h + 0.4)) 20%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 37.57% 0.1726 calc(h - 2.6)) 20%));
+  --_swc-prompt-field-spread-shadow-opacity: 30%;
 }
 
 :host([variant="balanced"][generating]) .swc-PromptField-box {
-  --swc-prompt-field-con-hue-opacity: 50%;
-  --swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 90.63% 0.0456 calc(h - 45.1)) 50%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 50%));
-  --swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.64% 0.036 calc(h + 0.6)) 50%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 26.65% 0.1587 calc(h - 40.2)) 50%));
-  --swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 50%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 25.8% 0.0855 calc(h - 290.4)) 50%));
-  --swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 85.78% 0.1222 calc(h + 0.4)) 50%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 37.57% 0.1726 calc(h - 2.6)) 50%));
-  --swc-prompt-field-spread-shadow-opacity: 50%;
+  --_swc-prompt-field-con-hue-opacity: 50%;
+  --_swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 90.63% 0.0456 calc(h - 45.1)) 50%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 50%));
+  --_swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.64% 0.036 calc(h + 0.6)) 50%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 26.65% 0.1587 calc(h - 40.2)) 50%));
+  --_swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 50%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 25.8% 0.0855 calc(h - 290.4)) 50%));
+  --_swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 85.78% 0.1222 calc(h + 0.4)) 50%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 37.57% 0.1726 calc(h - 2.6)) 50%));
+  --_swc-prompt-field-spread-shadow-opacity: 50%;
 }
 
 :host([variant="balanced"][generating]) :where(.swc-PromptField-outer-border:hover) .swc-PromptField-box {
-  --swc-prompt-field-con-hue-opacity: 100%;
-  --swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 90.63% 0.0456 calc(h - 45.1)) 75%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 75%));
-  --swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.64% 0.036 calc(h + 0.6)) 75%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 26.65% 0.1587 calc(h - 40.2)) 75%));
-  --swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 75%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 25.8% 0.0855 calc(h - 290.4)) 75%));
-  --swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 85.78% 0.1222 calc(h + 0.4)) 75%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 37.57% 0.1726 calc(h - 2.6)) 75%));
-  --swc-prompt-field-spread-shadow-opacity: 50%;
+  --_swc-prompt-field-con-hue-opacity: 100%;
+  --_swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 90.63% 0.0456 calc(h - 45.1)) 75%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 75%));
+  --_swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.64% 0.036 calc(h + 0.6)) 75%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 26.65% 0.1587 calc(h - 40.2)) 75%));
+  --_swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 75%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 25.8% 0.0855 calc(h - 290.4)) 75%));
+  --_swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 85.78% 0.1222 calc(h + 0.4)) 75%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 37.57% 0.1726 calc(h - 2.6)) 75%));
+  --_swc-prompt-field-spread-shadow-opacity: 50%;
 }
 
 :host([variant="prominent"][generating]) .swc-PromptField-box {
-  --swc-prompt-field-con-hue-opacity: 75%;
-  --swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 90.63% 0.0456 calc(h - 45.1)) 100%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 75%));
-  --swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.64% 0.036 calc(h + 0.6)) 100%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 26.65% 0.1587 calc(h - 40.2)) 75%));
-  --swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 100%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 25.8% 0.0855 calc(h - 290.4)) 75%));
-  --swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 85.78% 0.1222 calc(h + 0.4)) 100%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 37.57% 0.1726 calc(h - 2.6)) 75%));
-  --swc-prompt-field-spread-shadow-opacity: 50%;
+  --_swc-prompt-field-con-hue-opacity: 75%;
+  --_swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 90.63% 0.0456 calc(h - 45.1)) 100%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 75%));
+  --_swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.64% 0.036 calc(h + 0.6)) 100%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 26.65% 0.1587 calc(h - 40.2)) 75%));
+  --_swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 100%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 25.8% 0.0855 calc(h - 290.4)) 75%));
+  --_swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 85.78% 0.1222 calc(h + 0.4)) 100%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 37.57% 0.1726 calc(h - 2.6)) 75%));
+  --_swc-prompt-field-spread-shadow-opacity: 50%;
 }
 
 :host([variant="prominent"][generating]) :where(.swc-PromptField-outer-border:hover) .swc-PromptField-box {
-  --swc-prompt-field-con-hue-opacity: 100%;
-  --swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 90.63% 0.0456 calc(h - 45.1)) 100%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 100%));
-  --swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.64% 0.036 calc(h + 0.6)) 100%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 26.65% 0.1587 calc(h - 40.2)) 100%));
-  --swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 100%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 25.8% 0.0855 calc(h - 290.4)) 100%));
-  --swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 85.78% 0.1222 calc(h + 0.4)) 100%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 37.57% 0.1726 calc(h - 2.6)) 100%));
-  --swc-prompt-field-spread-shadow-opacity: 50%;
+  --_swc-prompt-field-con-hue-opacity: 100%;
+  --_swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 90.63% 0.0456 calc(h - 45.1)) 100%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 100%));
+  --_swc-prompt-field-bg-stop-2: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.64% 0.036 calc(h + 0.6)) 100%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 26.65% 0.1587 calc(h - 40.2)) 100%));
+  --_swc-prompt-field-bg-stop-3: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 100%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 25.8% 0.0855 calc(h - 290.4)) 100%));
+  --_swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 85.78% 0.1222 calc(h + 0.4)) 100%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 37.57% 0.1726 calc(h - 2.6)) 100%));
+  --_swc-prompt-field-spread-shadow-opacity: 50%;
 }
 
 /* Typing recedes the treatment, but only while idle; generating's wash persists through focus. */
 :host(:focus-within:not([generating])) .swc-PromptField-box {
-  --swc-prompt-field-con-hue-opacity: 0%;
-  --swc-prompt-field-bg-stop-1: light-dark(white, token("gray-75"));
-  --swc-prompt-field-bg-stop-2: light-dark(white, token("gray-75"));
-  --swc-prompt-field-bg-stop-3: light-dark(white, token("gray-75"));
-  --swc-prompt-field-bg-stop-4: light-dark(white, token("gray-75"));
-  --swc-prompt-field-border-color: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%));
-  --swc-prompt-field-inset-shadow-color: transparent;
-  --swc-prompt-field-drop-shadow-color: transparent;
-  --swc-prompt-field-prominent-outer-glow-color: transparent;
-  --swc-prompt-field-prominent-inset-glow-color: transparent;
+  --_swc-prompt-field-con-hue-opacity: 0%;
+  --_swc-prompt-field-bg-stop-1: light-dark(white, token("gray-75"));
+  --_swc-prompt-field-bg-stop-2: light-dark(white, token("gray-75"));
+  --_swc-prompt-field-bg-stop-3: light-dark(white, token("gray-75"));
+  --_swc-prompt-field-bg-stop-4: light-dark(white, token("gray-75"));
+  --_swc-prompt-field-border-color: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%));
+  --_swc-prompt-field-inset-shadow-color: transparent;
+  --_swc-prompt-field-drop-shadow-color: transparent;
+  --_swc-prompt-field-prominent-outer-glow-color: transparent;
+  --_swc-prompt-field-prominent-inset-glow-color: transparent;
 }
 
 /* Generating-only extra outward glow; --spread-shadow-opacity is set per variant above. */
 :host([generating]) .swc-PromptField-box {
   box-shadow:
-    0 20px 20px -24px var(--swc-prompt-field-prominent-outer-glow-color, transparent),
-    0 -3px 10px 1px var(--swc-prompt-field-drop-shadow-color),
-    0 6px 83px rgb(from light-dark(oklch(from var(--swc-prompt-field-brand-color) 85.68% 0.0856 calc(h + 35.2)), oklch(from var(--swc-prompt-field-brand-color) 26.22% 0.105 calc(h - 314.8))) r g b / var(--swc-prompt-field-spread-shadow-opacity, 50%));
+    0 20px 20px -24px var(--_swc-prompt-field-prominent-outer-glow-color, transparent),
+    0 -3px 10px 1px var(--_swc-prompt-field-drop-shadow-color),
+    0 6px 83px rgb(from light-dark(oklch(from var(--swc-prompt-field-brand-color) 85.68% 0.0856 calc(h + 35.2)), oklch(from var(--swc-prompt-field-brand-color) 26.22% 0.105 calc(h - 314.8))) r g b / var(--_swc-prompt-field-spread-shadow-opacity, 50%));
 }
 
 /* stylelint-enable no-descending-specificity */
@@ -557,10 +557,10 @@
   /* Dismiss badge is centered on the tile's top-right corner (see
    * upload-artifact.css), so half of the larger (32px media) badge floats
    * above the tile; reserve that much clearance above the row, same as
-   * --multiple's --swc-prompt-field-artifact-badge-clearance below. */
-  --swc-prompt-field-artifact-badge-clearance: 16px;
+   * --multiple's --_swc-prompt-field-artifact-badge-clearance below. */
+  --_swc-prompt-field-artifact-badge-clearance: 16px;
 
-  padding-block-start: var(--swc-prompt-field-artifact-badge-clearance);
+  padding-block-start: var(--_swc-prompt-field-artifact-badge-clearance);
 }
 
 .swc-PromptField-artifacts--single > slot {
@@ -591,7 +591,7 @@
    * upload-artifact.css), so half of the larger (32px media) badge floats
    * above the tile. Reserve that much clearance above the row so the
    * scroll container's overflow-y: hidden doesn't clip it flat. */
-  --swc-prompt-field-artifact-badge-clearance: 16px;
+  --_swc-prompt-field-artifact-badge-clearance: 16px;
 }
 
 .swc-PromptField-artifacts-row {
@@ -606,7 +606,7 @@
   border-radius: token("corner-radius-100");
   overflow: visible;
 
-  --swc-prompt-field-artifact-fade-solid: token("background-layer-2-color");
+  --_swc-prompt-field-artifact-fade-solid: token("background-layer-2-color");
 }
 
 /* Spans the badge-clearance strip too (not just the tile height): a
@@ -619,26 +619,26 @@
   inset-block-start: 0;
   z-index: 3;
   inline-size: token("spacing-400");
-  block-size: calc(var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px));
+  block-size: calc(var(--_swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px));
   pointer-events: none;
 }
 
 .swc-PromptField-artifacts-fade--start {
   inset-inline-start: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + (token("spacing-400") / 2));
-  background: linear-gradient(to right, var(--swc-prompt-field-artifact-fade-solid), transparent);
+  background: linear-gradient(to right, var(--_swc-prompt-field-artifact-fade-solid), transparent);
 }
 
 .swc-PromptField-artifacts-fade--end {
   inset-inline-end: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + (token("spacing-400") / 2));
-  background: linear-gradient(to left, var(--swc-prompt-field-artifact-fade-solid), transparent);
+  background: linear-gradient(to left, var(--_swc-prompt-field-artifact-fade-solid), transparent);
 }
 
 :host(:dir(rtl)) .swc-PromptField-artifacts-fade--start {
-  background: linear-gradient(to left, var(--swc-prompt-field-artifact-fade-solid), transparent);
+  background: linear-gradient(to left, var(--_swc-prompt-field-artifact-fade-solid), transparent);
 }
 
 :host(:dir(rtl)) .swc-PromptField-artifacts-fade--end {
-  background: linear-gradient(to right, var(--swc-prompt-field-artifact-fade-solid), transparent);
+  background: linear-gradient(to right, var(--_swc-prompt-field-artifact-fade-solid), transparent);
 }
 
 /* padding-block-start reserves room for the dismiss badge, which is
@@ -649,7 +649,7 @@
   box-sizing: border-box;
   inline-size: 100%;
   max-inline-size: 100%;
-  padding-block-start: var(--swc-prompt-field-artifact-badge-clearance, 0);
+  padding-block-start: var(--_swc-prompt-field-artifact-badge-clearance, 0);
   padding-inline: token("spacing-75");
   overflow-x: auto;
   overflow-y: hidden;
@@ -724,7 +724,7 @@
 .swc-PromptField-artifacts-scroll-next {
   display: inline-flex;
   position: absolute;
-  inset-block-start: calc((var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px)) / 2);
+  inset-block-start: calc((var(--_swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px)) / 2);
   z-index: 4;
   flex: 0 0 auto;
   align-items: center;
@@ -770,10 +770,10 @@
 .swc-PromptField-artifacts-scroll-prev::before,
 .swc-PromptField-artifacts-scroll-next::before {
   position: absolute;
-  inset-block-start: calc((var(--swc-prompt-field-artifact-scroll-button-block-size, 32px) - var(--swc-prompt-field-artifact-badge-clearance, 0) - var(--swc-prompt-field-artifact-media-block-size, 68px)) / 2);
+  inset-block-start: calc((var(--swc-prompt-field-artifact-scroll-button-block-size, 32px) - var(--_swc-prompt-field-artifact-badge-clearance, 0) - var(--swc-prompt-field-artifact-media-block-size, 68px)) / 2);
   z-index: -1;
   inline-size: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + (token("spacing-400") / 2) + 2px);
-  block-size: calc(var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px));
+  block-size: calc(var(--_swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px));
   pointer-events: none;
   content: "";
 }
