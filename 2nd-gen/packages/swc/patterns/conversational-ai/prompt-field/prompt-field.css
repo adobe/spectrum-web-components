@@ -216,7 +216,12 @@
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
-  scroll-snap-type: inline mandatory;
+
+  /* proximity, not mandatory: the has-scroll-prev/next classes change
+   * scroll-padding-inline when a chevron appears, and mandatory would force an
+   * instant re-snap to the new alignment (a visible yank). Paging still lands
+   * aligned because it scrollIntoViews the target tile. */
+  scroll-snap-type: inline proximity;
   scroll-padding-inline: token("spacing-75");
   scrollbar-color: token("gray-400") transparent;
 }
