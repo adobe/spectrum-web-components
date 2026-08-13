@@ -39,11 +39,10 @@
 .swc-PromptField-box {
   display: flex;
   flex-direction: column;
-  gap: token("spacing-300");
   padding: token("spacing-300");
   background: token("background-layer-2-color");
   border: 1px solid transparent;
-  border-radius: token("corner-radius-800");
+  border-radius: 24px;
   box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
   overflow: hidden;
 }
@@ -68,6 +67,51 @@
 /* Keep the compact 8px gap between the artifact strip and textarea. */
 .swc-PromptField-input-area.has-artifact {
   gap: token("spacing-100");
+}
+
+/* ─────────────────────────────────────
+   Controls (status icon, textarea, upload button, send/stop button)
+   ───────────────────────────────────── */
+
+/* Spike: text-group stays plain flex flow (not a grid track) so it can grow past one line; only leading-actions' own reveal animates, in its own grid below. */
+.swc-PromptField-controls {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  gap: 0;
+  transition: gap token("animation-duration-200") token("animation-ease-in-out");
+}
+
+:host(:not([collapsed])) .swc-PromptField-controls {
+  gap: token("spacing-500");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-PromptField-controls {
+    transition: none;
+  }
+}
+
+/* Right padding clears the absolutely positioned send/stop button below, so multi-line text doesn't run under it. */
+.swc-PromptField-text-group {
+  display: flex;
+  gap: token("spacing-200");
+  align-items: center;
+  min-inline-size: 0;
+  min-block-size: var(--swc-prompt-field-send-block-size, 32px);
+  padding-inline-start: token("spacing-75");
+  padding-inline-end: calc(var(--swc-prompt-field-send-inline-size, 32px) + token("spacing-300"));
+}
+
+.swc-PromptField-status-icon {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  align-self: start;
+  justify-content: center;
+  inline-size: token("workflow-icon-medium");
+  block-size: token("workflow-icon-medium");
+  color: token("gray-700");
 }
 
 /* ─────────────────────────────────────
@@ -357,39 +401,29 @@
 }
 
 /* ─────────────────────────────────────
-   Text area (label + textarea)
+   Textarea
    ───────────────────────────────────── */
 
-.swc-PromptField-text-area {
-  display: flex;
-  flex-direction: column;
-  gap: token("spacing-75");
-  padding-inline: token("spacing-100");
-}
-
-.swc-PromptField-label {
-  display: block;
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-100");
-  font-weight: token("regular-font-weight");
-  line-height: token("line-height-100");
-  color: token("neutral-subdued-content-color-default");
-}
-
+/* Auto-grows to fit content, clamped between the min/max rows; overflow-y
+ * takes over once the max is reached. field-sizing: content handles this
+ * natively where supported; it is not yet widely supported, so
+ * _autosizeTextarea() in PromptField.ts is the fallback. */
 .swc-PromptField-textarea {
   field-sizing: content;
   display: block;
-  inline-size: 100%;
-  min-block-size: calc(token("font-size-100") * token("line-height-100") * var(--swc-prompt-field-textarea-min-rows, 1));
-  max-block-size: calc(token("font-size-100") * token("line-height-100") * var(--swc-prompt-field-textarea-max-rows, 4));
+  flex: 1 1 0%;
+  min-inline-size: 0;
+  min-block-size: calc(token("font-size-200") * token("line-height-200") * var(--swc-prompt-field-textarea-min-rows, 1));
+  max-block-size: min(calc(token("font-size-200") * token("line-height-200") * var(--swc-prompt-field-textarea-max-rows, 999)), var(--swc-prompt-field-max-block-size, 40vh));
   padding: 0;
   font-family: token("sans-serif-font");
-  font-size: token("font-size-100");
+  font-size: token("font-size-200");
   font-weight: token("regular-font-weight");
-  line-height: token("line-height-100");
+  line-height: token("line-height-200");
   color: token("gray-900");
   background: transparent;
   border: none;
+  overflow-y: auto;
   resize: none;
   outline: none;
 }
@@ -409,20 +443,33 @@
   outline-offset: token("focus-ring-gap");
 }
 
-/* ─────────────────────────────────────
-   Action bar
-   ───────────────────────────────────── */
-
-.swc-PromptField-action-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/* Own single-row grid animates 0fr <-> 1fr; overflow/min-block-size live on the row wrapper below, not here, since 0fr only resolves to a true 0 on the grid item, not the container. */
+.swc-PromptField-leading-actions {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows token("animation-duration-200") token("animation-ease-in-out"),
+    opacity token("animation-duration-100") token("animation-ease-in-out");
 }
 
-.swc-PromptField-leading-actions {
-  display: inline-flex;
+:host(:not([collapsed])) .swc-PromptField-leading-actions {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-PromptField-leading-actions {
+    transition: none;
+  }
+}
+
+.swc-PromptField-leading-actions-row {
+  display: flex;
   gap: token("spacing-75");
   align-items: center;
+  min-block-size: 0;
+  overflow: hidden;
 }
 
 .swc-PromptField-file-input {
@@ -472,7 +519,6 @@
   background: token("neutral-background-color-default");
   border: 1px solid transparent;
   border-radius: token("corner-radius-full");
-  transition: background token("animation-duration-100") ease;
 }
 
 .swc-PromptField-stop {
@@ -486,6 +532,14 @@
   background: token("gray-900");
   border: 1px solid transparent;
   border-radius: token("corner-radius-full");
+}
+
+/* Anchored to .controls's own bottom-right, so it re-aligns on its own as .controls grows or shrinks with either row's content. */
+.swc-PromptField-send,
+.swc-PromptField-stop {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-end: 0;
   transition: background token("animation-duration-100") ease;
 }
 
