@@ -32,9 +32,6 @@
 :host {
   display: block;
   inline-size: 100%;
-
-  /* @property can't yet be scoped to a shadow root; see https://shadow-dom-css.adobe.com/features/at-property/. */
-  --swc-prompt-field-brand-color: oklch(73.58% 0.2376 322.4deg);
 }
 
 *,
@@ -99,12 +96,7 @@
    AI brand treatment: variables
    ───────────────────────────────────── */
 
-/* Interim hardcoded default pending formal delivery from the tokens team. */
-@property --swc-prompt-field-brand-color {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: oklch(73.58% 0.2376 322.4deg);
-}
+/* --swc-prompt-field-brand-color is registered globally in swc.css: @property's initial-value doesn't reach elements declared in the same shadow root that consumes it. */
 
 /* Ambient hue-sweep opacity (idle vs. generating, per variant, hover). */
 @property --_swc-prompt-field-con-hue-opacity {

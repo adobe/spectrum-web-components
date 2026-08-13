@@ -46,3 +46,10 @@
 .swc-theme--adaptive {
   color-scheme: light dark;
 }
+
+/* Registered globally (not in prompt-field.css) since @property's initial-value doesn't reach elements declared in the same shadow root that consumes it. Interim hardcoded default pending formal delivery from the tokens team. */
+@property --swc-prompt-field-brand-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(73.58% 0.2376 322.4deg);
+}
