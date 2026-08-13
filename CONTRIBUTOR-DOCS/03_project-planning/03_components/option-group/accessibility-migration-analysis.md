@@ -44,13 +44,14 @@ Like `swc-option`, its reason for existing is **role ownership**: it carries `ro
 
 ### Also read
 
+- [Listbox accessibility migration analysis](../listbox/accessibility-migration-analysis.md) — the `role="listbox"` container that holds option groups (standalone, or inside a combobox/picker).
 - [Combobox accessibility migration analysis](../combobox/accessibility-migration-analysis.md) — the consumer; options and option groups are its accepted children.
 - [Option accessibility migration analysis](../option/accessibility-migration-analysis.md) — the `swc-option` rows this component groups; the sibling-label and unique-`value` rules are shared and defined there and in the combobox doc.
 - [Menu group accessibility migration analysis](../menu-group/accessibility-migration-analysis.md) — the `role="group"` sibling in the menu family; same grouping idea, different (menu) context.
 
 ### What it is
 
-- A **labeled group of options** inside a listbox: `role="group"` on the host, an accessible name for the group (from a slotted label or a label property), and one or more `swc-option` children in its default slot.
+- A **labeled group of options** inside a listbox: `role="group"` on the host, an accessible name for the group (from a slotted label or a label property), and one or more `swc-option` children in its default slot. Like an option, its parent may be a [`swc-listbox`](../listbox/accessibility-migration-analysis.md) (standalone), a [`swc-combobox`](../combobox/accessibility-migration-analysis.md), or a picker; in a combobox or picker it is authored in the parent's light DOM and projected by slot into the `swc-listbox` the parent renders in its shadow DOM.
 - **The role lives on the `swc-option-group` host**, set via `ElementInternals` (`internals.role = 'group'`), for the same reason `swc-option` owns `role="option"`: the real, author-supplied element carries the correct role, so grouping survives across the shadow boundary between the combobox input and its options.
 - A structural container only. It groups and labels; it is never itself selectable, focusable, or the target of `aria-activedescendant`.
 
@@ -68,7 +69,7 @@ Like `swc-option`, its reason for existing is **role ownership**: it carries `ro
 
 ### Related
 
-- [`swc-combobox`](../combobox/accessibility-migration-analysis.md) and [`swc-option`](../option/accessibility-migration-analysis.md) — the container and the leaf this component sits between.
+- [`swc-listbox`](../listbox/accessibility-migration-analysis.md), [`swc-combobox`](../combobox/accessibility-migration-analysis.md), and [`swc-option`](../option/accessibility-migration-analysis.md) — the containers and the leaf this component sits between.
 - [`swc-menu-group`](../menu-group/accessibility-migration-analysis.md) — the menu-family analogue.
 
 ---
@@ -123,7 +124,7 @@ Component tag may change until API freeze. `swc-option-group` is new in 2nd-gen;
 
 The group's own label renders in its shadow root and associates same-root (`aria-labelledby`/`aria-label`), so the group has no internal cross-root problem. The cross-root relationship is the same one the option has with the combobox: the combobox input, which may live in a different shadow root, references the **options** (not the group) via `ariaActiveDescendantElement`, and those references resolve because the options are the author's real elements. The group adds a containment layer that AT reads structurally; it does not need an IDREF from the input.
 
-What `swc-option-group` must guarantee: `role="group"` and the group name live on the referenceable host, and the option children are not re-rendered as shadow copies (which would strip their `value`/`lang`/state and break the combobox's references). Expected axe-core note: the same `aria-required-children` false positive the combobox and listbox trigger applies through the group when options are slotted or cross-root; document it as a written exclusion on the composed story per the [forms strategy axe policy](../../05_strategies/forms-strategy-rfc.md#34-axe-core-policy), not a silent disable.
+Because `swc-option-group` adds **one more nesting level** between the listbox and the option, it is the specific case that most needs verification: when a combobox or picker projects a group (and its options) by slot into its shadow `swc-listbox`, the parent's `ariaActiveDescendantElement` reference to an option *inside* the group must still resolve in real assistive technology. This is tracked on the combobox side; see [`swc-combobox`'s Shadow DOM section](../combobox/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues). What `swc-option-group` must guarantee: `role="group"` and the group name live on the referenceable host, and the option children are not re-rendered as shadow copies (which would strip their `value`/`lang`/state and break the combobox's references). Expected axe-core note: the same `aria-required-children` false positive the combobox and listbox trigger applies through the group when options are slotted or cross-root; document it as a written exclusion on the composed story per the [forms strategy axe policy](../../05_strategies/forms-strategy-rfc.md#34-axe-core-policy), not a silent disable.
 
 ### Accessibility tree expectations
 
