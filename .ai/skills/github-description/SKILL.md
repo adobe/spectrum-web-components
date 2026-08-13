@@ -1,7 +1,6 @@
 ---
+name: github-description
 description: Generates GitHub pull request and issue descriptions — title, labels, and body — following Spectrum Web Components conventions. Prompts for a linked ticket if none is provided.
-globs:
-alwaysApply: false
 ---
 
 # GitHub description guidelines
@@ -88,7 +87,7 @@ Examples:
 
 ## Labels
 
-Use the following labels to categorize pull requests. Only use labels that exist in the repository. GitHub labels are separate from Jira labels; for Jira tickets use the jira-ticket rule and `config.json`.
+Use the following labels to categorize pull requests. Only use labels that exist in the repository. GitHub labels are separate from Jira labels; for Jira tickets use the jira-ticket skill and `config.json`.
 
 ### Priority and release labels
 

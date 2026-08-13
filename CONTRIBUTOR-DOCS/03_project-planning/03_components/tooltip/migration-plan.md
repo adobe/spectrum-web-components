@@ -876,7 +876,7 @@ Decisions made after the initial plan was approved and implementation had begun.
 
 **Decision:** Poll `getComputedStyle(tooltip).opacity === '1'` inside Vitest's `waitFor`. The `:host(:popover-open) { opacity: 1 }` rule in the shadow DOM CSS makes computed opacity a reliable indicator that the tooltip is fully visible and the entrance transition has completed. The poll also checks `tooltip.matches(':popover-open')` to confirm the popover is in the top layer.
 
-**Files changed:** `tooltip.stories.ts` (all 7 play functions), `.ai/rules/stories-format.md` (play function guidance section), `memory/feedback_play_functions_vrt_vitest.md`.
+**Files changed:** `tooltip.stories.ts` (all 7 play functions), `.ai/skills/stories-format/SKILL.md` (play function guidance section), `memory/feedback_play_functions_vrt_vitest.md`.
 
 ---
 

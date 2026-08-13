@@ -1,7 +1,7 @@
 ---
+name: component-readme
 description: Guidelines for component README documentation structure and accessibility compliance
 globs: 1st-gen/packages/*/README.md
-alwaysApply: false
 ---
 
 # Component README documentation guidelines

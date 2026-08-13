@@ -1,6 +1,6 @@
 ---
+name: jira-ticket
 description: Guidelines for drafting and formatting Jira tickets
-alwaysApply: false
 ---
 
 # Jira ticket guidelines
@@ -432,7 +432,7 @@ h2. Resources
 
 ## Labels
 
-Use the following labels to categorize tickets appropriately. Jira labels are separate from GitHub labels; for PR/issue descriptions use the github-description rule. Use the labels defined in `config.json` (jira_tickets.labels) or the list below.
+Use the following labels to categorize tickets appropriately. Jira labels are separate from GitHub labels; for PR/issue descriptions use the github-description skill. Use the labels defined in `config.json` (jira_tickets.labels) or the list below.
 
 - `a11y`: Accessibility-related issues and improvements
 - `API`: Changes to component APIs or interfaces

@@ -30,7 +30,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '../..');
 
-// Tags defined in .ai/rules/stories-format.md
+// Tags defined in .ai/skills/stories-format/SKILL.md
 const ALLOWED_TAGS = new Set([
   'anatomy',
   'options',

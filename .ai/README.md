@@ -12,6 +12,12 @@ All rules and skills now live in **`.ai/`** — a tool-agnostic, plain-markdown 
 - No sync step, no duplication, no drift between tools
 - New contributors or tools start from `AGENTS.md` at the repo root, which bootstraps everything
 
+### Why only two rules remain
+
+Rules carry Cursor-style `alwaysApply` / `globs` frontmatter that Cursor honors live via its per-file symlinks. Claude Code cannot read that frontmatter — it inlines every file it can see, so a directory symlink to a large `rules/` folder loads every rule into every session regardless of `alwaysApply` or `globs`. With 14 rule files that was ~35K tokens inlined on every Claude Code session, defeating the on-demand design this directory is built around.
+
+The fix: only rules that are genuinely **`alwaysApply: true`** (`branch-naming`, `styles`) stay as rules. Every other rule — including glob-scoped ones — has been converted into a real `.ai/skills/*/SKILL.md` entry, since skills are already loaded on-demand by every adapter (`.cursor/skills`, `.claude/skills` are directory symlinks to `.ai/skills/`) and cost nothing until explicitly invoked. `.claude/rules` still points at `.ai/rules/`, but that directory now holds only the two always-active files, so the token cost drops with it.
+
 ## CI integration
 
 - `yarn lint:ai` runs `.ai/scripts/validate.js`, which checks story tags, AGENTS.md paths, config schema, symlinks, and per-unit MDX docs pages. Catches broken internal links, symlinks, misconfigured rules, and structural drift in `<unit>.mdx` files before merge
@@ -41,21 +47,7 @@ Additional, more specific rules can be found in the `rules` directory in either 
 
 ### Available rules
 
-#### Text formatting
-
-- **heading_case**: Enforces sentence case in headings with specific exceptions
-  - Applies to: `.md`, `.txt`, `.mdx` files
-  - Exceptions: Technical terms and acronyms
-
-#### Jira tickets
-
-- **ticket_title**: Validates Jira ticket title format
-  - Optional component in brackets
-  - Max length: 80 characters
-- **required_sections**: Ensures required sections are present
-- **templates**: Enforces template structure for different ticket types
-- **labels**: Validates that only allowed labels are used
-- **issue_types**: Ensures correct issue type selection
+Only two rules remain — both genuinely `alwaysApply: true`. Everything that used to be an on-demand or glob-scoped rule is now a skill in the [Available skills](#available-skills) catalog below (see [Why only two rules remain](#why-only-two-rules-remain)).
 
 #### Styles
 
@@ -75,68 +67,10 @@ Additional, more specific rules can be found in the `rules` directory in either 
   - Lowercase letters and numbers only, words separated by dashes
   - Severity: Warning (recommended, not required)
 
-#### Storybook stories (documentation + format)
+### When rules and skills are activated
 
-These two rules share the same glob (`2nd-gen/**/stories/**`) and work as a pair: `stories-documentation` defines _what_ to document, `stories-format` defines _how_ to structure the file.
-
-- **stories-documentation**: Content patterns for each documentation section
-  - Sections: overview, anatomy, options, states, behaviors, accessibility
-  - 1st-gen to 2nd-gen comparison guidance
-  - Verification process to prevent hallucinated attributes, slots, or ARIA claims
-- **stories-format**: File structure and technical conventions
-  - Visual separators, meta configuration, required tags, layout parameters
-  - `render` vs `args` patterns, `flexLayout` usage
-  - Static color single-story pattern, image asset conventions
-
-#### Component README
-
-- **document_structure**: Required sections for 1st-gen component READMEs
-  - Sections: overview, usage, anatomy, options, states, behaviors, accessibility
-  - Starts with `## Overview`, not `# Component Name`
-- **code_examples**: All examples must include accessible labels and unique IDs
-- **sp_tabs**: Must include `selected`, `auto`, and `label` attributes
-- Applies to: `1st-gen/packages/*/README.md`
-
-#### Contributor docs
-
-- **nav_update**: Run the nav script when adding, removing, renaming, or moving files under `CONTRIBUTOR-DOCS/`
-- **link_validation**: Fix broken links automatically when the fix is clear; ask when intent is unclear
-- Applies to: `CONTRIBUTOR-DOCS/**`
-
-#### GitHub description
-
-- **title_format**: `[Component] Brief description` in present tense, under 80 characters
-- **description_structure**: Must follow the pull request template with motivation, related issues, and acceptance criteria
-- **severity_classification**: SEV1 (critical) through SEV5 (trivial)
-- **labels**: Use only labels that exist in the repository
-
-#### Storybook MDX conversion
-
-- **imports**: Add `Meta` import from `@storybook/addon-docs/blocks`
-- **meta_tag**: Add `<Meta title="..." />` matching the document's main heading
-- **comments**: Convert all `<!-- -->` HTML comments to `{/* */}` JSX comments
-- **preserve_content**: Keep all markdown syntax, HTML elements, links, and formatting unchanged
-
-#### Code conformance
-
-- **lint_first**: Run ESLint, Stylelint, and Prettier before any manual review so mechanical errors are resolved first
-- **typescript**: Review against the TypeScript style guide (`CONTRIBUTOR-DOCS/02_style-guide/02_typescript/`)
-- **css**: Review against the CSS style guide (`CONTRIBUTOR-DOCS/02_style-guide/01_css/`)
-- **tests**: Review against the testing style guide (`CONTRIBUTOR-DOCS/02_style-guide/04_testing/`)
-- **stories**: Review against `.ai/rules/stories-format.md` and `.ai/rules/stories-documentation.md`
-- **guideline_gaps**: Surface uncovered-but-correct patterns to the user as proposed PR comments; do not change the guideline directly
-- Applies to: 2nd-gen component files (on-demand)
-
-#### Deep understanding (rule)
-
-- **apply_intelligently**: Use for non-trivial work (multiple files, new area, complex behavior); do not use for simple, self-contained requests (e.g. creating a regex, one-line fix, single known file) to avoid wasting tokens and overloading context. Before writing non-trivial code, do deep research on the relevant part of the codebase first.
-- **action** (when the rule applies): Scope → deep read → write persistent report (e.g. research.md at repo root) → pause for user review → proceed only after validation. Full workflow in `.ai/skills/deep-understanding/SKILL.md`
-- **rationale**: The written report is the review surface; wrong research leads to wrong plan and wrong code (garbage in, garbage out)
-
-### When rules are activated
-
-**Always-applied rules:** Rules use `alwaysApply: true` to activate automatically, or `globs` to activate when matching files are edited.
-**On-demand rules:** Rules with `alwaysApply: false` and no globs are on-demand only (activated by `@` mentioning them in chat).
+**Always-applied rules:** `branch-naming` and `styles` use `alwaysApply: true` and are always in context.
+**Skills:** Everything else — including what used to be glob-scoped rules (`stories-format`, `stories-documentation`, `component-readme`, `contributor-doc-update` folded into `contributor-docs-nav`, `storybook-mdx-conversion`, `text-formatting`) and on-demand rules (`jira-ticket`, `github-description`, `code-conformance`, `consistency-pass`, `deep-understanding`, `migration-phase-awareness`) — is a skill, invoked on demand (see [Available skills](#available-skills)).
 **Config-based rules:** The `config.json` also defines structured validation for editors and other tooling to verify branch names, Jira ticket drafts, text-formatting, etc.:
 
 - **text_formatting.headings**: Sentence case enforcement with technical term exceptions
@@ -151,31 +85,33 @@ These two rules share the same glob (`2nd-gen/**/stories/**`) and work as a pair
 - **jira_tickets.labels**: Validates allowed label values
 - **jira_tickets.issue_types**: Ensures correct issue type selection
 
-| Rule                           | Always applied | On-demand | Config-based | Glob                              |
-| ------------------------------ | :------------: | :-------: | :----------: | --------------------------------- |
-| text-formatting                |       x        |           |              | `**/*.md`, `**/*.txt`, `**/*.mdx` |
-| styles                         |       x        |           |              | `*.css`                           |
-| branch-naming                  |       x        |           |              | —                                 |
-| stories-documentation          |       x        |           |              | `2nd-gen/**/stories/**`           |
-| stories-format                 |       x        |           |              | `2nd-gen/**/stories/**`           |
-| deep-understanding             |                |     x     |              | —                                 |
-| code-conformance               |                |     x     |              | —                                 |
-| component-readme               |                |     x     |              | `1st-gen/packages/*/README.md`    |
-| contributor-doc-update         |                |     x     |              | `CONTRIBUTOR-DOCS/**`             |
-| github-description             |                |     x     |              | —                                 |
-| jira-ticket                    |                |     x     |              | —                                 |
-| storybook-mdx-conversion       |                |     x     |              | —                                 |
-| text_formatting.headings       |                |           |      x       | —                                 |
-| text_formatting.patterns       |                |           |      x       | —                                 |
-| git.validationPattern          |                |           |      x       | —                                 |
-| git.validationMessage          |                |           |      x       | —                                 |
-| git.branchNameTemplate         |                |           |      x       | —                                 |
-| git.types                      |                |           |      x       | —                                 |
-| jira_tickets.title_format      |                |           |      x       | —                                 |
-| jira_tickets.required_sections |                |           |      x       | —                                 |
-| jira_tickets.templates         |                |           |      x       | —                                 |
-| jira_tickets.labels            |                |           |      x       | —                                 |
-| jira_tickets.issue_types       |                |           |      x       | —                                 |
+| Rule/skill                     | Always applied | Skill (on-demand) | Config-based | Glob                              |
+| ------------------------------ | :------------: | :---------------: | :----------: | --------------------------------- |
+| branch-naming                  |       x        |                   |              | —                                 |
+| styles                         |       x        |                   |              | `*.css`                           |
+| text-formatting                |                |         x         |              | `**/*.md`, `**/*.txt`, `**/*.mdx` |
+| stories-documentation          |                |         x         |              | `2nd-gen/**/stories/**`           |
+| stories-format                 |                |         x         |              | `2nd-gen/**/stories/**`           |
+| component-readme               |                |         x         |              | `1st-gen/packages/*/README.md`    |
+| contributor-docs-nav           |                |         x         |              | `CONTRIBUTOR-DOCS/**`             |
+| storybook-mdx-conversion       |                |         x         |              | —                                 |
+| deep-understanding             |                |         x         |              | —                                 |
+| code-conformance               |                |         x         |              | —                                 |
+| consistency-pass               |                |         x         |              | —                                 |
+| migration-phase-awareness      |                |         x         |              | —                                 |
+| github-description             |                |         x         |              | —                                 |
+| jira-ticket                    |                |         x         |              | —                                 |
+| text_formatting.headings       |                |                   |      x       | —                                 |
+| text_formatting.patterns       |                |                   |      x       | —                                 |
+| git.validationPattern          |                |                   |      x       | —                                 |
+| git.validationMessage          |                |                   |      x       | —                                 |
+| git.branchNameTemplate         |                |                   |      x       | —                                 |
+| git.types                      |                |                   |      x       | —                                 |
+| jira_tickets.title_format      |                |                   |      x       | —                                 |
+| jira_tickets.required_sections |                |                   |      x       | —                                 |
+| jira_tickets.templates         |                |                   |      x       | —                                 |
+| jira_tickets.labels            |                |                   |      x       | —                                 |
+| jira_tickets.issue_types       |                |                   |      x       | —                                 |
 
 ### Usage
 
@@ -225,9 +161,79 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 #### Contributor docs navigation
 
 - **purpose**: Run the CONTRIBUTOR-DOCS nav script to update breadcrumbs and TOCs, and handle link verification
-- **How to invoke**: Say “update contributor docs nav”, “regenerate TOC”, “fix broken links in CONTRIBUTOR-DOCS”, or “run the nav script”. Also invoked when you add, remove, rename, or move files under `CONTRIBUTOR-DOCS/` or change H1/H2/H3 headings (the contributor-doc-update rule may trigger; the skill holds the full workflow).
+- **How to invoke**: Say “update contributor docs nav”, “regenerate TOC”, “fix broken links in CONTRIBUTOR-DOCS”, “run the nav script”, or mention CONTRIBUTOR-DOCS with "update", "nav", "links", or "verify". Also invoked when you add, remove, rename, or move files under `CONTRIBUTOR-DOCS/` or change H1/H2/H3 headings.
 - Use when: Updating contributor docs structure, regenerating navigation, or fixing reported broken links
 - Provides: Operator workflow (run script, verify, fix links), Maintainer workflow (when to update script). Full instructions in `.ai/skills/contributor-docs-nav/references/ai-agent-instructions.md`
+
+#### Jira ticket
+
+- **purpose**: Draft and format Jira tickets — title, labels, severity, description — following Spectrum Web Components conventions
+- **How to invoke**: Ask to create, draft, or format a Jira ticket (bug, RFC, or feature/research ticket)
+- Use when: Writing a Jira ticket for a bug report, RFC, or feature/research request
+- Provides: Jira markup syntax rules, title format, general/bug/RFC templates (RFC generates three sequential tickets: authoring, internal shepherding, external shepherding), severity classification (SEV1–SEV5), allowed labels and issue types (`.ai/config.json` `jira_tickets`)
+
+#### GitHub description
+
+- **purpose**: Generate GitHub PR and issue descriptions — title, labels, and body — following Spectrum Web Components conventions
+- **How to invoke**: Ask to create a GitHub PR or issue description; prompts for a linked ticket if none is provided
+- Use when: Drafting a PR or issue description, including the required accessibility testing checklist
+- Provides: Title format, PR template (author/reviewer checklists, manual test cases, accessibility testing checklist), severity classification, allowed labels
+
+#### Component README
+
+- **purpose**: Guidelines for 1st-gen component README documentation structure and accessibility compliance
+- **How to invoke**: Ask to reorganize, create, or review a component README, or add accessibility documentation to one
+- Use when: Editing or creating `1st-gen/packages/*/README.md`
+- Provides: Required section order (Overview → Usage → Anatomy → Options → States → Behaviors → Accessibility), accessible code example requirements, `<sp-tabs>` usage pattern, accessibility section requirements
+
+#### Storybook MDX conversion
+
+- **purpose**: Convert Markdown contributor docs to MDX for Storybook rendering
+- **How to invoke**: Ask to convert a `.md` contributor doc to `.mdx` for Storybook
+- Use when: Converting a Markdown file to MDX for the 2nd-gen SWC Storybook guides
+- Provides: Import/Meta-tag conventions, HTML-comment-to-JSX-comment conversion, content-preservation rules
+
+#### Text formatting
+
+- **purpose**: Text formatting and capitalization conventions for documentation and tickets
+- **How to invoke**: Applies whenever writing or editing `.md`, `.txt`, or `.mdx` content, PR/Jira descriptions, or component docs
+- Use when: Writing headings, lists, keyboard keys, WCAG references, or any prose in markdown/MDX
+- Provides: Sentence-case heading rules, markdown emphasis conventions, CSS-class-in-prose table, `<kbd>` key formatting, em dash replacement rules, no-Jira-ticket-references-in-docs rule
+
+#### Stories documentation
+
+- **purpose**: Authoring guide for the per-unit MDX docs page for 2nd-gen components, internal components, patterns, and controllers
+- **How to invoke**: Applies when authoring or reviewing a per-unit `<unit>.mdx` docs page
+- Use when: Writing Anatomy/Options/States/Behaviors/Accessibility prose, 1st-gen comparison notes, or verifying documentation against the component implementation
+- Provides: Canonical section order, per-story title rules, 1st-gen-to-2nd-gen comparison guidance, verification process to prevent hallucinated attributes/slots/ARIA claims; pairs with `stories-format`
+
+#### Stories format
+
+- **purpose**: Enforces file structure, meta configuration, tags, and layout parameters for 2nd-gen Storybook `.stories.ts` files
+- **How to invoke**: Applies when authoring or reviewing a 2nd-gen component, pattern, or controller `.stories.ts` file
+- Use when: Structuring a stories file — Playground/Overview/Anatomy/Options/States/Behaviors/Accessibility story sections, static-color pattern, image assets
+- Provides: Required meta fields, story tags, `flexLayout` and static-color decorator patterns, story naming conventions; pairs with `stories-documentation`
+
+#### Code conformance
+
+- **purpose**: Review 2nd-gen component files against project style guides, run linters, and surface guideline gaps
+- **How to invoke**: Say "check code conformance", "audit this component's style", or as part of the `migration-conformance` sub-task
+- Use when: Reviewing or auditing 2nd-gen TypeScript, CSS, test, or Storybook story files for style conformance
+- Provides: Per-domain review checklists (TypeScript, CSS, tests, stories) with style-guide links, lint commands to run first, guideline-gap reporting format
+
+#### Consistency pass
+
+- **purpose**: Run a consistency and validity self-audit on changed files and the migration plan
+- **How to invoke**: Say "consistency pass", "check my work", or "validity pass"; also run proactively before declaring a migration phase or significant task complete
+- Use when: Before declaring any migration phase (especially API, styling, testing, documentation) or significant implementation task complete
+- Provides: Code-conformance check (delegates to `code-conformance`), plan-validity check (implementation vs. plan, cascading updates across plan sections), reporting format
+
+#### Migration phase awareness
+
+- **purpose**: Keep multi-phase migration obligations in context during a session and emit Migration Checkpoint blocks at phase completion
+- **How to invoke**: Active whenever a `migration-*` skill is in use or migration files are being edited
+- Use when: Declaring a migration phase complete, or when work drifts away from an in-progress migration
+- Provides: Phase-completion checklist (skill quality gate, plan alignment, plan checklist update, consistency pass, status table), Migration Checkpoint block format, resume-prompt format for drifted work
 
 #### Component migration (rendering and styling)
 
@@ -401,6 +407,8 @@ Editing any `.ai/rules/*.md` file immediately updates what both Cursor and Claud
 
 ### Adding a new rule
 
+> Before adding a rule, ask whether it should be a rule at all. Claude Code cannot honor `alwaysApply` / `globs` frontmatter — it inlines every file under `.claude/rules` into every session regardless (see [Why only two rules remain](#why-only-two-rules-remain)). Add a new file to `.ai/rules/` only if it is genuinely `alwaysApply: true`; everything else — including glob-scoped guidance — belongs in `.ai/skills/` instead.
+
 1. Create `rule-name.md` in `.ai/rules/` with YAML frontmatter (`globs`, `alwaysApply`).
 2. Add one per-file symlink for Cursor (required — Cursor needs `.mdc` extension):
 
@@ -462,7 +470,6 @@ Verify:
 ls -la .cursor/rules/
 # branch-naming.mdc -> ../../.ai/rules/branch-naming.md
 # styles.mdc -> ../../.ai/rules/styles.md
-# ... (one entry per rule)
 
 ls -la .cursor/
 # skills -> ../.ai/skills

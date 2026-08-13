@@ -26,7 +26,7 @@
 The stories file has two distinct phases of work:
 
 - **Phase 4 (Styling):** A minimal scaffold is created to enable visual verification of CSS in Storybook. It contains the correct structure — HELPERS, Playground, Overview, Anatomy, Options, States, and Behaviors — with no story-level JSDoc, and the Accessibility story is left as a `// TODO` comment.
-- **Phase 7 (Documentation):** Authors the per-component MDX docs page (`<component>.mdx`) at the component root and finalizes the stories file (complete the Accessibility story, add any deferred stories). Story prose lives in MDX, not in JSDoc above story exports. The meta-level JSDoc above `const meta` is the only retained JSDoc — it powers the docs-page `<Description />`. See `.ai/rules/stories-documentation.md` for the per-component MDX template.
+- **Phase 7 (Documentation):** Authors the per-component MDX docs page (`<component>.mdx`) at the component root and finalizes the stories file (complete the Accessibility story, add any deferred stories). Story prose lives in MDX, not in JSDoc above story exports. The meta-level JSDoc above `const meta` is the only retained JSDoc — it powers the docs-page `<Description />`. See `.ai/skills/stories-documentation/SKILL.md` for the per-component MDX template.
 
 If Phase 4 has been completed, **do not recreate the file** — augment the existing scaffold.
 
@@ -48,7 +48,7 @@ Use the `migration-styling` skill's [`assets/stories-template.md`](../../../../.
 
 With the Phase 4 scaffold in place:
 
-1. **Author the per-component MDX docs page** (`<component>.mdx` at the component root). This is the docs surface: it composes `<DocsHeader />`, prose for each section (`## Anatomy`, `## Options`, `## States`, `## Behaviors`, `## Accessibility`), `<Canvas of={Stories.MyStory} />` references for each tagged story, and `<DocsFooter />`. See the [stories documentation standards](../../../../../.ai/rules/stories-documentation.md) for the full template and per-section authoring patterns.
+1. **Author the per-component MDX docs page** (`<component>.mdx` at the component root). This is the docs surface: it composes `<DocsHeader />`, prose for each section (`## Anatomy`, `## Options`, `## States`, `## Behaviors`, `## Accessibility`), `<Canvas of={Stories.MyStory} />` references for each tagged story, and `<DocsFooter />`. See the [stories documentation standards](../../../../../.ai/skills/stories-documentation/SKILL.md) for the full template and per-section authoring patterns.
 2. **Complete the Accessibility story body** in the stories file. Document built-in accessibility features (keyboard, ARIA, focus) and best practices in the `## Accessibility` section of the per-component MDX; the story itself just provides the canvas.
 3. **Drop the `'autodocs'` tag** from the Playground story (keep `'dev'`) so the per-component MDX is the unit's Docs page rather than a duplicate auto-generated one.
 4. **Add or update the meta-level JSDoc** above `const meta: Meta = { ... }` to describe the component's purpose and link to related components. This is the only JSDoc retained in the stories file; it renders via `<Description />` at the top of the docs page. Do **not** add JSDoc above any individual story export.
