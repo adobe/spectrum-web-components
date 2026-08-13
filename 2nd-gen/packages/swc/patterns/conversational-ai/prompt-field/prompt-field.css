@@ -211,8 +211,8 @@
     --_swc-prompt-field-outer-stop-3: light-dark(oklch(from oklch(from var(--swc-prompt-field-brand-color) 78.78% 0.1692 calc(h - 254) / 40%) l c h / 4%), oklch(from oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) l c h / 40%));
   }
 
-  /* :not() must live inside :host()'s own argument -- ":host(X):not(Y)" fails to match in Chromium. */
-  :host(:focus-within:not([generating])) & {
+  /* :not() must live inside :host()'s own argument -- ":host(X):not(Y)" fails to match in Chromium. :has() targets the input area specifically (not :focus-within on the host), so focusing the slotted legal link doesn't count as focusing the composer. */
+  :host(:has(.swc-PromptField-input-area:focus-within):not([generating])) & {
     --_swc-prompt-field-outer-shadow: light-dark(rgb(0 0 0 / 5%), rgb(0 0 0 / 3%));
     --_swc-prompt-field-outer-hue: transparent;
     --_swc-prompt-field-outer-stop-1: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
@@ -462,8 +462,8 @@
   --_swc-prompt-field-spread-shadow-opacity: 50%;
 }
 
-/* Typing recedes the treatment, but only while idle; generating's wash persists through focus. */
-:host(:focus-within:not([generating])) .swc-PromptField-box {
+/* Typing recedes the treatment, but only while idle; generating's wash persists through focus. :has() targets the input area specifically so focusing the slotted legal link doesn't count as focusing the composer. */
+:host(:has(.swc-PromptField-input-area:focus-within):not([generating])) .swc-PromptField-box {
   --_swc-prompt-field-con-hue-opacity: 0%;
   --_swc-prompt-field-bg-stop-1: light-dark(white, token("gray-75"));
   --_swc-prompt-field-bg-stop-2: light-dark(white, token("gray-75"));
