@@ -18,7 +18,8 @@ type SWCWarningOptions = {
   level?: WarningLevel;
   issues?: string[];
 };
-type BrandedSWCWarningID = `${ElementLocalName}:${WarningType}:${WarningLevel}`;
+type BrandedSWCWarningID =
+  `${ElementLocalName}:${WarningType}:${WarningLevel}:${string}`;
 
 /**
  * ARIA element-reflection properties (IDRef-free associations). Not yet in the
