@@ -702,17 +702,17 @@ export class PromptField extends SpectrumElement {
       return;
     }
 
-    scrollEl.scrollBy({
-      left: direction * scrollEl.clientWidth * (this._isRtl() ? -1 : 1),
-    });
-
+    // Scroll to the tile that starts the next/previous page rather than a
+    // blind clientWidth: near the end only one item may remain, and a full
+    // page-width would overshoot and then snap back. scrollIntoView lands on
+    // the tile's snap point directly and clamps to the content edge.
     const scrollRect = scrollEl.getBoundingClientRect();
     const pageStart = this._isRtl()
       ? scrollRect.right - direction * scrollEl.clientWidth
       : scrollRect.left + direction * scrollEl.clientWidth;
-    this._artifactNavigation.setActiveItem(
-      this._findArtifactAtOrPastBoundary(pageStart)
-    );
+    const target = this._findArtifactAtOrPastBoundary(pageStart);
+    this._artifactNavigation.setActiveItem(target);
+    target.scrollIntoView({ block: 'nearest', inline: 'start' });
   }
 
   // aria-disabled, not disabled: a chevron the user just activated stays
