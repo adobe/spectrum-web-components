@@ -499,11 +499,6 @@
   padding-inline: 0;
 }
 
-/* Keep the compact 8px gap between the artifact strip and textarea. */
-.swc-PromptField-input-area.has-artifact {
-  gap: token("spacing-100");
-}
-
 /* ─────────────────────────────────────
    Controls (status icon, textarea, upload button, send/stop button)
    ───────────────────────────────────── */
