@@ -499,7 +499,7 @@ export const Accessibility: Story = {
             role="toolbar"
             aria-label="Document actions, vertical"
             aria-orientation="vertical"
-            style="display: flex; flex-direction: column; gap: var(--swc-spacing-400);"
+            style="display: flex; flex-direction: column; gap: var(--swc-spacing-400); inline-size: fit-content;"
           >
             <swc-action-group
               accessible-label="Edit actions"

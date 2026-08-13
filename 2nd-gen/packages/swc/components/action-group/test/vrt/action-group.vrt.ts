@@ -241,11 +241,11 @@ const focusRingContent = () =>
     'Focus ring (compact, not clipped by neighbors)'
   );
 
-// An `inline-flex` column hugs the widest group, then `align-items: stretch`
-// plus the group's `min-inline-size: 100%` make the shorter group match.
-// A block-level `display: flex` parent would stretch both groups to the
-// page instead. The second group uses a longer label so a hug regression
-// (uneven right edges) is visible.
+// `inline-size: fit-content` shrinks the wrapper to its widest child's
+// content width without forcing overflow if the row is narrower.
+// `align-items: stretch` then makes the shorter group match, together with
+// the group's own `min-inline-size: 100%`. The second group uses a longer
+// label so a hug regression (uneven right edges) is visible.
 const toolbarContent = () =>
   row(
     html`
@@ -253,7 +253,7 @@ const toolbarContent = () =>
         role="toolbar"
         aria-label="Document actions"
         aria-orientation="vertical"
-        style="display: inline-flex; flex-direction: column; gap: var(--swc-spacing-400);"
+        style="display: flex; flex-direction: column; gap: var(--swc-spacing-400); inline-size: fit-content;"
       >
         ${renderGroup({
           orientation: 'vertical',
