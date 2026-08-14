@@ -16,6 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import '../swc-pixel-loader.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
+import { exitStartOf } from '../animation.js';
 import { ICONS, PRESETS } from '../data.js';
 import { PixelLoader } from '../PixelLoader.js';
 import { meta, Overview } from '../stories/pixel-loader.stories.js';
@@ -194,7 +195,7 @@ export const BuildDirectionTest: Story = {
         Math.min(
           ...brush
             .filter((cell) => cell.row === row)
-            .map((cell) => cell.exitStart)
+            .map((cell) => exitStartOf(cell))
         );
 
       expect(earliestStagger(bottomRow)).toBeLessThan(earliestStagger(topRow));
@@ -254,6 +255,7 @@ export const PausedTest: Story = {
         expect(el.hasAttribute('paused')).toBe(true);
         const [first] = cells(el);
         expect(first.style.opacity).toBe('1');
+        expect(first.style.scale).toBe('1');
         expect(first.getAnimations()).toHaveLength(0);
       }
     );
@@ -285,9 +287,10 @@ export const PausedTest: Story = {
       expect(first.getAnimations().length).toBeGreaterThan(0);
 
       // The settled inline styles from the paused frame must be cleared so the
-      // animation restarts from the CSS base instead of leaving artifacts.
+      // animation restarts cleanly instead of leaving artifacts.
       expect(first.style.opacity).toBe('');
-      expect(first.style.transform).toBe('');
+      expect(first.style.translate).toBe('');
+      expect(first.style.scale).toBe('');
     });
   },
 };
@@ -316,38 +319,25 @@ export const ReducedMotionTest: Story = {
     const query = { matches: false };
     internals._reducedMotionQuery = query;
 
-    const keyframesOf = (cell: HTMLElement): Keyframe[] => {
-      const [animation] = cell.getAnimations();
-      expect(animation).toBeDefined();
-      return (animation.effect as KeyframeEffect | null)?.getKeyframes() ?? [];
-    };
+    await step('reduced motion freezes on the settled icon', async () => {
+      query.matches = true;
+      internals._handleReducedMotionChange();
+      await el.updateComplete;
 
-    await step(
-      'reduced motion keeps animating with an opacity-only fade',
-      async () => {
-        query.matches = true;
-        internals._handleReducedMotionChange();
-        await el.updateComplete;
+      const [first] = cells(el);
+      // Matches React Spectrum: no running animation, settled appearance.
+      expect(first.getAnimations()).toHaveLength(0);
+      expect(first.style.scale).toBe('1');
+      expect(first.style.opacity).toBe('1');
+    });
 
-        const [first] = cells(el);
-        // Still animating (not frozen), but with no falling transform.
-        const keyframes = keyframesOf(first);
-        expect(keyframes.some((frame) => 'opacity' in frame)).toBe(true);
-        expect(keyframes.every((frame) => !('transform' in frame))).toBe(true);
-      }
-    );
+    await step('leaving reduced motion restarts the animation', async () => {
+      query.matches = false;
+      internals._handleReducedMotionChange();
+      await el.updateComplete;
 
-    await step(
-      'leaving reduced motion restores the falling build',
-      async () => {
-        query.matches = false;
-        internals._handleReducedMotionChange();
-        await el.updateComplete;
-
-        const [first] = cells(el);
-        const keyframes = keyframesOf(first);
-        expect(keyframes.some((frame) => 'transform' in frame)).toBe(true);
-      }
-    );
+      const [first] = cells(el);
+      expect(first.getAnimations().length).toBeGreaterThan(0);
+    });
   },
 };

@@ -17,22 +17,21 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 import {
-  buildCellKeyframes,
-  buildReducedMotionKeyframes,
+  cellScaleKeyframes,
+  cellTranslateKeyframes,
+  durationForCells,
+  groupOpacityKeyframes,
+  loopFramesFor,
   SETTLED_OPACITY,
-  SETTLED_TRANSFORM,
+  SETTLED_SCALE,
+  SETTLED_TRANSLATE,
 } from './animation.js';
 import type {
   Cell,
   PixelLoaderIconName,
   PixelLoaderPresetName,
 } from './data.js';
-import {
-  DURATION_MS,
-  ICONS,
-  PIXEL_LOADER_PRESET_NAMES,
-  PRESETS,
-} from './data.js';
+import { ICONS, PIXEL_LOADER_PRESET_NAMES, PRESETS } from './data.js';
 import {
   computeCornerRadii,
   CornerRadii,
@@ -55,10 +54,8 @@ export type { PixelLoaderIconName, PixelLoaderPresetName } from './data.js';
  * @cssprop --swc-pixel-loader-color - Color of the pixel cells. Defaults to `currentcolor`, so the loader inherits the surrounding text color unless overridden.
  */
 export class PixelLoader extends SpectrumElement {
-  // Relative so the rounding scales with `--swc-pixel-loader-size` and reads as
-  // a soft "squircle" pixel at every size (a fixed px radius looks square when
-  // the loader is enlarged).
-  private static readonly CORNER_RADIUS = '30%';
+  // Square pixels: no corner rounding.
+  private static readonly CORNER_RADIUS = '0';
 
   /** Duration of the "finish the current build" ease before an icon swap. */
   private static readonly FINISH_MS = 200;
@@ -169,9 +166,13 @@ export class PixelLoader extends SpectrumElement {
       this._presetIndex = 0;
     }
 
-    // Resync on `paused` too: pausing must stop the preset ticker so a frozen
-    // loader holds one icon instead of cycling on a timer.
-    if (changed.has('preset') || changed.has('paused')) {
+    // Resync the ticker on `paused` (freeze stops cycling) and on each
+    // `_presetIndex` step, since every icon's cycle duration differs.
+    if (
+      changed.has('preset') ||
+      changed.has('paused') ||
+      changed.has('_presetIndex')
+    ) {
       this._syncTicker();
     }
 
@@ -200,6 +201,15 @@ export class PixelLoader extends SpectrumElement {
       typeof window.matchMedia === 'function' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
     );
+  }
+
+  /**
+   * Whether the loader renders its frozen, fully-settled appearance with no
+   * animation: when explicitly `paused`, or when the user has requested reduced
+   * motion (matching the React Spectrum loader, which stops the animation).
+   */
+  private get _isStatic(): boolean {
+    return this.paused || this._prefersReducedMotion();
   }
 
   private _isValidPreset(preset: string): preset is PixelLoaderPresetName {
@@ -244,16 +254,16 @@ export class PixelLoader extends SpectrumElement {
   private _syncTicker(): void {
     this._stopTicker();
 
-    // Reduced motion still cycles (the fade communicates activity); only an
-    // explicit `paused` stops the ticker.
     const icons = this._presetIcons();
-    if (!icons || !this.isConnected || this.paused) {
+    if (!icons || !this.isConnected || this._isStatic) {
       return;
     }
 
+    // Advance one icon per cycle; the interval is the current icon's own
+    // (dynamic) cycle duration.
     this._ticker = window.setInterval(() => {
       this._presetIndex = (this._presetIndex + 1) % icons.length;
-    }, DURATION_MS);
+    }, durationForCells(this._activeCells.cells));
   }
 
   private _stopTicker(): void {
@@ -277,11 +287,11 @@ export class PixelLoader extends SpectrumElement {
 
   private _shouldCommitIconImmediately(): boolean {
     // Nothing to finish when a preset drives the display, when the loader is
-    // paused (frozen), when no build is running, or when the icon already
-    // matches.
+    // frozen (paused or reduced motion), when no build is running, or when the
+    // icon already matches.
     return (
       Boolean(this._resolvedPreset) ||
-      this.paused ||
+      this._isStatic ||
       this._animations.length === 0 ||
       this._displayedIcon === this.icon
     );
@@ -292,10 +302,17 @@ export class PixelLoader extends SpectrumElement {
    * then swaps to the requested `icon` and builds it. This softens a mid-build
    * icon change into "finish assembling, then transition" instead of a snap.
    */
+  private _container(): HTMLElement | null {
+    return (
+      this.shadowRoot?.querySelector<HTMLElement>('.swc-PixelLoader') ?? null
+    );
+  }
+
   private _finishThenSwap(): void {
     const cellEls = this._cellEls();
+    const container = this._container();
 
-    // Snapshot each pixel's current animated value onto inline styles, cancel
+    // Snapshot each element's current animated value onto inline styles, cancel
     // the loop, then ease from that value to settled.
     this._animations.forEach((animation) => {
       try {
@@ -306,16 +323,22 @@ export class PixelLoader extends SpectrumElement {
     });
     this._cancelAnimations();
 
+    const options: KeyframeAnimationOptions = {
+      duration: PixelLoader.FINISH_MS,
+      easing: PixelLoader.EASE_FINISH,
+      fill: 'forwards',
+    };
     const finishing = cellEls.map((cellEl) =>
       cellEl.animate(
-        [{ opacity: SETTLED_OPACITY, transform: SETTLED_TRANSFORM }],
-        {
-          duration: PixelLoader.FINISH_MS,
-          easing: PixelLoader.EASE_FINISH,
-          fill: 'forwards',
-        }
+        [{ translate: SETTLED_TRANSLATE, scale: SETTLED_SCALE }],
+        options
       )
     );
+    if (container) {
+      finishing.push(
+        container.animate([{ opacity: SETTLED_OPACITY }], options)
+      );
+    }
     this._animations = finishing;
 
     const token = ++this._finishToken;
@@ -332,44 +355,65 @@ export class PixelLoader extends SpectrumElement {
     this._cancelAnimations();
 
     const cellEls = this._cellEls();
+    const container = this._container();
     const { cells, isPreset } = this._activeCells;
-    // `paused` freezes on the settled frame; reduced motion still animates, but
-    // with an opacity-only fade (no falling transform).
-    const renderStatic = this.paused;
-    const reducedMotion = this._prefersReducedMotion();
+    // `paused` and reduced motion both freeze on the fully-settled icon.
+    const renderStatic = this._isStatic;
 
+    // Clear any inline values a previous render left behind so a stale value
+    // never becomes the Web Animations implicit offset-0 keyframe on the next
+    // play (the "artifact from the previous cycle" when toggling `paused`).
+    cellEls.forEach((cellEl) => {
+      cellEl.style.removeProperty('translate');
+      cellEl.style.removeProperty('scale');
+      cellEl.style.removeProperty('opacity');
+    });
+    container?.style.removeProperty('opacity');
+
+    if (renderStatic) {
+      cellEls.forEach((cellEl, index) => {
+        if (!cells[index]) {
+          return;
+        }
+        cellEl.style.translate = SETTLED_TRANSLATE;
+        cellEl.style.scale = SETTLED_SCALE;
+        cellEl.style.opacity = String(SETTLED_OPACITY);
+      });
+      if (container) {
+        container.style.opacity = String(SETTLED_OPACITY);
+      }
+      return;
+    }
+
+    const total = loopFramesFor(cells);
+    const options: KeyframeAnimationOptions = {
+      duration: durationForCells(cells),
+      iterations: isPreset ? 1 : Infinity,
+      fill: 'forwards',
+      easing: 'linear',
+    };
+
+    // Each cell runs a `translate` drop and a `scale` pop (separate animations
+    // for their differing per-segment easings); the container runs one opacity
+    // envelope so overlapping cells never stack their alpha.
     cellEls.forEach((cellEl, index) => {
       const cell = cells[index];
-
-      // Clear any inline transform/opacity a previous render left behind. The
-      // static path writes these inline, and a stale value would otherwise
-      // become the Web Animations implicit offset-0 keyframe on the next play,
-      // starting the build from the settled frame instead of the CSS base
-      // (opacity 0). That is the "artifact from the previous cycle" seen when
-      // toggling `paused`.
-      cellEl.style.removeProperty('transform');
-      cellEl.style.removeProperty('opacity');
-
       if (!cell) {
         return;
       }
-
-      if (renderStatic) {
-        cellEl.style.transform = SETTLED_TRANSFORM;
-        cellEl.style.opacity = String(SETTLED_OPACITY);
-        return;
-      }
-
-      const keyframes = reducedMotion
-        ? buildReducedMotionKeyframes(cell)
-        : buildCellKeyframes(cell);
-      const animation = cellEl.animate(keyframes, {
-        duration: DURATION_MS,
-        iterations: isPreset ? 1 : Infinity,
-        fill: 'forwards',
-      });
-      this._animations.push(animation);
+      this._animations.push(
+        cellEl.animate(cellTranslateKeyframes(cell, total), options)
+      );
+      this._animations.push(
+        cellEl.animate(cellScaleKeyframes(cell, total), options)
+      );
     });
+
+    if (container) {
+      this._animations.push(
+        container.animate(groupOpacityKeyframes(total), options)
+      );
+    }
   }
 
   private _renderCell(cell: Cell, radii: CornerRadii): TemplateResult {

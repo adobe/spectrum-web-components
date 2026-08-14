@@ -36,10 +36,12 @@
 
 .swc-PixelLoader-cell {
   background: currentcolor;
-  opacity: 0;
 
-  /* Grid placement, transform and border-radius are per-cell and set inline;
-     see PixelLoader.ts. */
+  /* The settled cell is fully visible; the animation gates entry/exit
+     visibility through `scale` (per cell) and the container's opacity envelope.
+     Grid placement, translate/scale and border-radius are per-cell and set
+     inline; see PixelLoader.ts. */
+  transform-origin: center;
 }
 
 @media (forced-colors: active) {

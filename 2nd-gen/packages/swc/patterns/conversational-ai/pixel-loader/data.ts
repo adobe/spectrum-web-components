@@ -48,18 +48,8 @@ export interface Cell {
   fadeOut: readonly [number, number];
 }
 
-export const TOTAL_FRAMES = 72;
-
-// An empty beat after the pixels have fully dropped out, before they fall back
-// in. Extending the cycle past the content frames (rather than the content
-// itself) delays the next entry so the exit has room to finish first.
-const EXIT_PAUSE_FRAMES = 4;
-export const CYCLE_FRAMES = TOTAL_FRAMES + EXIT_PAUSE_FRAMES;
-
-// One full assemble/hold/disassemble cycle plus the trailing pause. Per-cell
-// frame timings are ratios of `CYCLE_FRAMES`; the ~2800ms of content keeps its
-// pace and the pause is added on top.
-export const DURATION_MS = Math.round((2800 / TOTAL_FRAMES) * CYCLE_FRAMES);
+// The loop length and duration are derived per icon from its stagger spread;
+// see `loopFramesFor`/`durationForCells` in animation.ts.
 
 function computeStaggerValues(
   positions: readonly CellPosition[],
