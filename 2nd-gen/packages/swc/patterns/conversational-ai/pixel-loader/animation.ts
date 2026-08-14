@@ -51,9 +51,16 @@ const Y_START = (-26 / 3) * 100;
 const Y_OVERSHOOT = (1 / 3) * 100;
 const Y_EXIT = (26 / 3) * 100;
 
+/**
+ * The "settle" curve a cell eases along as it comes to rest. Shared: it is both
+ * the drop's recover segment here and the finish-then-swap ease in PixelLoader,
+ * which must match so an interrupted build settles identically to a normal one.
+ */
+export const SETTLE_EASING = 'cubic-bezier(0.333, 0, 0.833, 1)';
+
 const EASE = {
   drop: 'cubic-bezier(0.333, 0, 0.667, 1)',
-  recover: 'cubic-bezier(0.333, 0, 0.833, 1)',
+  recover: SETTLE_EASING,
   exit: 'cubic-bezier(0.563, 0, 0.906, 0.757)',
   fade: 'cubic-bezier(0.167, 0.167, 0.833, 0.833)',
   scaleIn: 'cubic-bezier(0.505, 0.015, 0.42, 0.938)',

@@ -22,6 +22,7 @@ import {
   durationForCells,
   groupOpacityKeyframes,
   loopFramesFor,
+  SETTLE_EASING,
   SETTLED_OPACITY,
   SETTLED_SCALE,
   SETTLED_TRANSLATE,
@@ -54,13 +55,17 @@ export type { PixelLoaderIconName, PixelLoaderPresetName } from './data.js';
  * @cssprop --swc-pixel-loader-color - Color of the pixel cells. Defaults to `currentcolor`, so the loader inherits the surrounding text color unless overridden.
  */
 export class PixelLoader extends SpectrumElement {
-  // Square pixels: no corner rounding.
-  private static readonly CORNER_RADIUS = '0';
+  // Relative so the rounding scales with `--swc-pixel-loader-size` and reads as
+  // a soft "squircle" pixel at every size (a fixed px radius looks square when
+  // the loader is enlarged). Only outward-facing corners round; see geometry.ts.
+  private static readonly CORNER_RADIUS = '30%';
 
   /** Duration of the "finish the current build" ease before an icon swap. */
   private static readonly FINISH_MS = 200;
 
-  private static readonly EASE_FINISH = 'cubic-bezier(0.333, 0, 0.833, 1)';
+  // Settle an interrupted build along the same curve a cell recovers with in a
+  // normal drop, so a finish-then-swap comes to rest identically.
+  private static readonly EASE_FINISH = SETTLE_EASING;
 
   /** Icon to display. Ignored while `preset` is set. */
   @property({ type: String, reflect: true })
@@ -85,6 +90,13 @@ export class PixelLoader extends SpectrumElement {
   private _presetIndex = 0;
 
   private _animations: Animation[] = [];
+
+  // Cached shadow-root lookups. The container and cell elements are stable
+  // between renders, so query them once and reuse across `_playCells` /
+  // `_finishThenSwap` calls (including the render-less reduced-motion and pause
+  // paths). Invalidated in `updated` since a new icon/preset re-renders cells.
+  private _containerCache: HTMLElement | null = null;
+  private _cellElsCache: HTMLElement[] | null = null;
 
   private _ticker: number | null = null;
 
@@ -161,6 +173,11 @@ export class PixelLoader extends SpectrumElement {
 
   protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
+
+    // A re-render can replace the cell elements (icon/preset changes the count),
+    // so drop the cached lookups before anything below re-queries them.
+    this._containerCache = null;
+    this._cellElsCache = null;
 
     if (changed.has('preset')) {
       this._presetIndex = 0;
@@ -279,10 +296,10 @@ export class PixelLoader extends SpectrumElement {
   }
 
   private _cellEls(): HTMLElement[] {
-    return Array.from(
+    return (this._cellElsCache ??= Array.from(
       this.shadowRoot?.querySelectorAll<HTMLElement>('.swc-PixelLoader-cell') ??
         []
-    );
+    ));
   }
 
   private _shouldCommitIconImmediately(): boolean {
@@ -303,9 +320,8 @@ export class PixelLoader extends SpectrumElement {
    * icon change into "finish assembling, then transition" instead of a snap.
    */
   private _container(): HTMLElement | null {
-    return (
-      this.shadowRoot?.querySelector<HTMLElement>('.swc-PixelLoader') ?? null
-    );
+    return (this._containerCache ??=
+      this.shadowRoot?.querySelector<HTMLElement>('.swc-PixelLoader') ?? null);
   }
 
   private _finishThenSwap(): void {

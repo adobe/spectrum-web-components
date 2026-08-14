@@ -110,7 +110,7 @@ const SAMPLE_ICONS = [
 
 export const Icons: Story = {
   render: (args) => html`
-    ${SAMPLE_ICONS.map((icon) => template({ ...args, icon }))}
+    ${SAMPLE_ICONS.map((icon) => template({ ...args, icon, paused: true }))}
   `,
   tags: ['options'],
   parameters: { flexLayout: 'row-wrap' },
@@ -118,10 +118,9 @@ export const Icons: Story = {
 
 export const Presets: Story = {
   render: (args) => html`
-    ${PIXEL_LOADER_PRESET_NAMES.map((preset) => template({ ...args, preset }))}
+    ${template({ ...args, preset: 'mega' })}
   `,
   tags: ['options'],
-  parameters: { flexLayout: 'row-wrap' },
 };
 
 // ──────────────────────────────
