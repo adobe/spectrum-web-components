@@ -282,6 +282,48 @@ export const Steps: Story = {
   tags: ['options'],
 };
 
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+export const StepDisclosure: Story = {
+  render: () => html`
+    <swc-response-status
+      status="complete"
+      open
+      accessible-label="Execution steps"
+    >
+      <span slot="label">Thought for 9 seconds</span>
+      <swc-response-status-step status="complete" open>
+        <span slot="label">Looked through documentation</span>
+        <span slot="description">
+          Scanned 12 internal knowledge base articles matching the query context
+          and extracted key sections.
+        </span>
+      </swc-response-status-step>
+      <swc-response-status-step status="complete">
+        <span slot="label">
+          Searching web for: Carnival cruise trip packages Europe Asia
+        </span>
+        <span slot="description">
+          Found 8 relevant results across travel aggregators and official cruise
+          line sites.
+        </span>
+      </swc-response-status-step>
+      <swc-response-status-step status="complete">
+        <span slot="label">Compose response</span>
+        <span slot="description">
+          Synthesizing findings into a structured comparison of available
+          packages with pricing and availability.
+        </span>
+      </swc-response-status-step>
+    </swc-response-status>
+  `,
+  tags: ['behaviors'],
+};
+
+StepDisclosure.storyName = 'Step disclosure';
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORY
 // ────────────────────────────────

@@ -73,11 +73,7 @@
   overflow: hidden;
 }
 
-.swc-ResponseStatus-row--button .swc-ResponseStatus-headerTrail {
-  flex: 1;
-  min-inline-size: 0;
-}
-
+.swc-ResponseStatus-row--button .swc-ResponseStatus-headerTrail,
 .swc-ResponseStatus-row--button .swc-ResponseStatus-headerTrailViewport {
   flex: 1;
   min-inline-size: 0;
@@ -138,21 +134,19 @@
   border-radius: 50%;
   opacity: 0.45;
   animation: swc-response-status-dot-pulse 1.1s token("animation-ease-in-out") infinite;
+  animation-delay: calc(sibling-index() * 0.15s);
 }
 
 .swc-ResponseStatus-dot:nth-child(1) {
   color: token("gray-500");
-  animation-delay: 0s;
 }
 
 .swc-ResponseStatus-dot:nth-child(2) {
   color: token("gray-600");
-  animation-delay: 0.15s;
 }
 
 .swc-ResponseStatus-dot:nth-child(3) {
   color: token("gray-800");
-  animation-delay: 0.3s;
 }
 
 @keyframes swc-response-status-dot-pulse {
@@ -175,12 +169,14 @@
    Chevron direction
    ───────────────────────────────────── */
 
-.swc-ResponseStatus-chevron {
+.swc-ResponseStatus-chevron,
+.swc-ResponseStatus-step-chevron {
   flex-shrink: 0;
   transition: transform token("animation-duration-100") ease;
 }
 
-.swc-ResponseStatus-chevron--down {
+.swc-ResponseStatus-chevron--down,
+.swc-ResponseStatus-step-chevron--down {
   transform: rotate(90deg);
 }
 
@@ -211,7 +207,9 @@
   flex-shrink: 0;
 }
 
-.swc-ResponseStatus-panel {
+/* Shared collapse mechanics for the header panel and per-step detail panels */
+.swc-ResponseStatus-panel,
+.swc-ResponseStatus-step-detailPanel {
   interpolate-size: allow-keywords;
   display: block;
   visibility: hidden;
@@ -222,7 +220,8 @@
     visibility token("animation-duration-200") linear;
 }
 
-.swc-ResponseStatus-panel--open {
+.swc-ResponseStatus-panel--open,
+.swc-ResponseStatus-step-detailPanel--open {
   visibility: visible;
   block-size: auto;
 }
@@ -381,6 +380,20 @@
 .swc-ResponseStatus-step-detail {
   max-inline-size: 340px;
   margin-block: token("spacing-75") 0;
+}
+
+/* Per-step disclosure (mirrors the header row + panel mechanics) */
+
+.swc-ResponseStatus-step-toggle {
+  display: flex;
+  gap: token("spacing-100");
+  align-items: center;
+  inline-size: 100%;
+  padding: 0;
+  color: inherit;
+  text-align: start;
+  background: transparent;
+  border: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -60,7 +60,9 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
       'swc-response-status'
     );
     await waitForCustomElement(page, 'swc-response-status-step');
-    const toggle = root.locator('button[aria-expanded="true"]');
+    // The header disclosure is the only expanded button carrying an aria-label;
+    // per-step disclosures take their accessible name from the step title text.
+    const toggle = root.locator('button[aria-expanded="true"][aria-label]');
     await expect(toggle).toHaveCount(1, { timeout: 10000 });
     await expect(toggle).toHaveAttribute(
       'aria-label',
@@ -72,6 +74,24 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
     );
   });
 
+  test('should expose per-step disclosures with the active step expanded', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'patterns-conversational-ai-response-status--steps',
+      'swc-response-status'
+    );
+    await waitForCustomElement(page, 'swc-response-status-step');
+    // Steps story order: complete, active, complete, stopped. Only the active
+    // step auto-expands; the header disclosure is excluded via [aria-label].
+    const stepToggles = root.locator('button[aria-expanded]:not([aria-label])');
+    await expect(stepToggles).toHaveCount(4, { timeout: 10000 });
+    await expect(
+      root.locator('button[aria-expanded="true"]:not([aria-label])')
+    ).toHaveCount(1);
+  });
+
   test('should expose collapsed disclosure with slotted label', async ({
     page,
   }) => {
@@ -81,7 +101,7 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
       'swc-response-status'
     );
     await waitForCustomElement(page, 'swc-response-status-step');
-    const toggle = root.locator('button[aria-expanded="false"]');
+    const toggle = root.locator('button[aria-expanded="false"][aria-label]');
     await expect(toggle).toHaveCount(1);
     await expect(toggle).toHaveAttribute(
       'aria-label',

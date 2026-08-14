@@ -325,3 +325,79 @@ export const AgenticApiTest: Story = {
     });
   },
 };
+
+export const StepDisclosureTest: Story = {
+  render: () => agenticMarkup,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+
+    const stepToggles = (): HTMLButtonElement[] =>
+      Array.from(
+        el.shadowRoot?.querySelectorAll<HTMLButtonElement>(
+          '.swc-ResponseStatus-step-toggle'
+        ) ?? []
+      );
+
+    await step(
+      'auto-expands the active step and collapses the rest',
+      async () => {
+        await waitFor(
+          () => {
+            const expanded = stepToggles().map((toggle) =>
+              toggle.getAttribute('aria-expanded')
+            );
+            // agenticMarkup order: complete, active, complete.
+            expect(expanded).toEqual(['false', 'true', 'false']);
+          },
+          { timeout: 2000 }
+        );
+      }
+    );
+
+    await step('each step toggle controls its own description', async () => {
+      for (const toggle of stepToggles()) {
+        const controls = toggle.getAttribute('aria-controls');
+        expect(controls).toBeTruthy();
+        expect(el.shadowRoot?.getElementById(controls as string)).toBeTruthy();
+      }
+    });
+
+    await step(
+      'expands a collapsed step and emits a step-toggle event',
+      async () => {
+        let captured: CustomEvent<{ open: boolean; index: number }> | undefined;
+        el.addEventListener('swc-response-status-step-toggle', (event) => {
+          captured = event as CustomEvent<{ open: boolean; index: number }>;
+        });
+
+        stepToggles()[0]?.click();
+        await el.updateComplete;
+
+        expect(captured?.detail).toEqual({ open: true, index: 0 });
+        expect(captured?.bubbles).toBe(true);
+        expect(captured?.composed).toBe(true);
+        expect(stepToggles()[0]?.getAttribute('aria-expanded')).toBe('true');
+      }
+    );
+
+    await step('collapses the active step independently', async () => {
+      let captured: CustomEvent<{ open: boolean; index: number }> | undefined;
+      el.addEventListener('swc-response-status-step-toggle', (event) => {
+        captured = event as CustomEvent<{ open: boolean; index: number }>;
+      });
+
+      stepToggles()[1]?.click();
+      await el.updateComplete;
+
+      expect(captured?.detail).toEqual({ open: false, index: 1 });
+      // Other steps keep their own state; index 0 stays expanded from before.
+      const expanded = stepToggles().map((toggle) =>
+        toggle.getAttribute('aria-expanded')
+      );
+      expect(expanded).toEqual(['true', 'false', 'false']);
+    });
+  },
+};

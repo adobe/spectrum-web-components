@@ -48,6 +48,7 @@ export type ResponseStatusStepData = {
   label: string;
   description: string;
   status: ResponseStatusStepStatus;
+  open: boolean;
 };
 
 /**
@@ -58,6 +59,8 @@ export type ResponseStatusStepData = {
  * @slot - `<swc-response-status-step>` elements.
  * @fires swc-response-status-toggle - Dispatched when the user opens or closes the panel.
  * Detail: `{ open: boolean }`
+ * @fires swc-response-status-step-toggle - Dispatched when the user expands or collapses
+ * a step's description. Detail: `{ open: boolean, index: number }`
  */
 export class ResponseStatus extends SpectrumElement {
   private static readonly STATUS_LABEL_CLASS =
@@ -79,6 +82,14 @@ export class ResponseStatus extends SpectrumElement {
 
   @state()
   private _steps: ResponseStatusStepData[] = [];
+
+  /**
+   * User-driven per-step disclosure overrides, keyed by step index. Present only
+   * for steps the user has toggled; absent entries fall back to the auto rule
+   * (open while `status="active"` or when the step declares `open`).
+   */
+  @state()
+  private _stepOpenOverrides = new Map<number, boolean>();
 
   @state()
   private _labelSlotText = '';
@@ -135,7 +146,7 @@ export class ResponseStatus extends SpectrumElement {
     new MutationController(this, {
       config: {
         attributes: true,
-        attributeFilter: ['slot', 'status'],
+        attributeFilter: ['slot', 'status', 'open'],
         characterData: true,
         childList: true,
         subtree: true,
@@ -190,7 +201,8 @@ export class ResponseStatus extends SpectrumElement {
       (step, index) =>
         step.label === right[index]?.label &&
         step.description === right[index]?.description &&
-        step.status === right[index]?.status
+        step.status === right[index]?.status &&
+        step.open === right[index]?.open
     );
   }
 
@@ -247,6 +259,7 @@ export class ResponseStatus extends SpectrumElement {
       label,
       description: this._readStepDescription(element),
       status,
+      open: element.hasAttribute('open'),
     };
   }
 
@@ -436,19 +449,46 @@ export class ResponseStatus extends SpectrumElement {
     return this._steps.length > 0;
   }
 
+  private _emitToggle<T>(type: string, detail: T): void {
+    this.dispatchEvent(
+      new CustomEvent<T>(type, { bubbles: true, composed: true, detail })
+    );
+  }
+
   private _handleToggle(): void {
     if (!this._showPanel) {
       return;
     }
 
     this.open = !this.open;
-    this.dispatchEvent(
-      new CustomEvent('swc-response-status-toggle', {
-        bubbles: true,
-        composed: true,
-        detail: { open: this.open },
-      })
-    );
+    this._emitToggle('swc-response-status-toggle', { open: this.open });
+  }
+
+  // Resolved disclosure state for a step: a user override wins; otherwise the
+  // step auto-expands while it declares `open` or is the active step.
+  private _isStepOpen(step: ResponseStatusStepData, index: number): boolean {
+    const override = this._stepOpenOverrides.get(index);
+    if (override !== undefined) {
+      return override;
+    }
+
+    return step.open || step.status === 'active';
+  }
+
+  private _handleStepToggle(event: Event): void {
+    const button = event.currentTarget as HTMLElement;
+    const index = Number(button.dataset.index);
+    const step = this._steps[index];
+    if (Number.isNaN(index) || !step) {
+      return;
+    }
+
+    const next = !this._isStepOpen(step, index);
+    const overrides = new Map(this._stepOpenOverrides);
+    overrides.set(index, next);
+    this._stepOpenOverrides = overrides;
+
+    this._emitToggle('swc-response-status-step-toggle', { open: next, index });
   }
 
   private _renderThreeDots(): TemplateResult {
@@ -461,12 +501,13 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
-  private _renderChevron(open: boolean): TemplateResult {
+  private _renderChevron(
+    open: boolean,
+    baseClass = 'swc-ResponseStatus-chevron'
+  ): TemplateResult {
     return html`
       <swc-icon
-        class=${open
-          ? 'swc-ResponseStatus-chevron swc-ResponseStatus-chevron--down'
-          : 'swc-ResponseStatus-chevron'}
+        class=${open ? `${baseClass} ${baseClass}--down` : baseClass}
         style="--swc-icon-inline-size:10px;--swc-icon-block-size:10px;"
         aria-hidden="true"
       >
@@ -584,6 +625,52 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
+  private _renderStepBody(
+    step: ResponseStatusStepData,
+    index: number
+  ): TemplateResult {
+    // Steps without a description have nothing to disclose; render a plain title.
+    if (!step.description) {
+      return html`
+        <div class="swc-ResponseStatus-step-body">
+          <p class="swc-ResponseStatus-step-title swc-Detail swc-Detail--sizeS">
+            ${step.label}
+          </p>
+        </div>
+      `;
+    }
+
+    const open = this._isStepOpen(step, index);
+    const detailId = `${this.panelId}-detail-${index}`;
+
+    return html`
+      <div class="swc-ResponseStatus-step-body">
+        <button
+          class="swc-ResponseStatus-step-toggle"
+          data-index=${index}
+          aria-expanded=${open}
+          aria-controls=${detailId}
+          @click=${this._handleStepToggle}
+        >
+          <span
+            class="swc-ResponseStatus-step-title swc-Detail swc-Detail--sizeS"
+          >
+            ${step.label}
+          </span>
+          ${this._renderChevron(open, 'swc-ResponseStatus-step-chevron')}
+        </button>
+        <div
+          id=${detailId}
+          class="swc-ResponseStatus-step-detailPanel ${open
+            ? 'swc-ResponseStatus-step-detailPanel--open'
+            : ''}"
+        >
+          ${this._renderStepDetail(step.description)}
+        </div>
+      </div>
+    `;
+  }
+
   private _renderStepTimeline(): TemplateResult {
     const steps = this._steps;
     const lastIndex = steps.length - 1;
@@ -608,14 +695,7 @@ export class ResponseStatus extends SpectrumElement {
                     `
                   : ''}
               </div>
-              <div class="swc-ResponseStatus-step-body">
-                <p
-                  class="swc-ResponseStatus-step-title swc-Detail swc-Detail--sizeS"
-                >
-                  ${step.label}
-                </p>
-                ${this._renderStepDetail(step.description)}
-              </div>
+              ${this._renderStepBody(step, index)}
             </li>
           `
         )}
