@@ -85,14 +85,20 @@ Only one child is in the <kbd>Tab</kbd> sequence at a time. Arrow keys move that
 
 #### Toolbar composition
 
-`swc-action-group` never sets `role="toolbar"` or `aria-orientation` on itself, in any mode or orientation. Those two attributes only become available once you wrap one or more `swc-action-group` elements in your own element to build an actual toolbar landmark:
+`swc-action-group` never sets `role="toolbar"` or `aria-orientation` on itself, in any mode or orientation. Those two attributes only become available once you wrap one or more `swc-action-group` elements in your own element to build an actual toolbar landmark.
+
+Additional considerations for toolbars:
 
 - Put `role="toolbar"` and a label on that wrapper element, not on `swc-action-group`. Nesting multiple named groups inside one outer toolbar is the supported pattern for grouping related clusters of actions.
 - If the wrapper stacks its groups vertically, also set `aria-orientation="vertical"` on the wrapper itself. `role="toolbar"` defaults to horizontal per the [ARIA `aria-orientation` reference](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-orientation), and assistive technology assumes that until told otherwise.
 - Each inner `swc-action-group`'s own `orientation` attribute is unrelated to the wrapper's `aria-orientation`: it only controls that group's own arrow-key direction, not the wrapper's ARIA state.
-- If the wrapper stacks vertical groups and you want them to share a width, give the wrapper `inline-size: fit-content`. Every group then shrinks to fit the longest label across all of them, while still narrowing further if the surrounding layout is tighter than that. Give the wrapper an explicit `inline-size` value instead for a fixed toolbar width, and each `swc-action-group` fills it automatically.
+- To control the width of vertical groups, use `inline-size: fit-content` on the wrapper. This will cap the total width to the longest label among the groups. For a fixed toolbar width, give the wrapper an explicit `max-inline-size` value.
 
 The first example below is a standalone group with no wrapper at all. `role="toolbar"` and `aria-orientation` are optional, wrapper-only additions, not requirements for using `swc-action-group`.
+
+<Canvas of={ActionGroupStories.Accessibility} />
+
+#### ARIA roles and behaviors
 
 1. **Fixed role**: the host always exposes `role="group"`. It never switches to `role="toolbar"` or `role="radiogroup"`, and this role is not author-overridable.
 2. **Naming**: `accessible-label` reflects to `aria-label` on the host. `aria-labelledby` remains valid as an alternative. Providing one is recommended whenever the strip has a distinct purpose.
@@ -100,12 +106,10 @@ The first example below is a standalone group with no wrapper at all. `role="too
 
 ### Best practices
 
-- Provide `accessible-label` whenever the group's purpose is not obvious from surrounding context.
-- When combining multiple `swc-action-group` elements into a toolbar, wrap them in a single outer `role="toolbar"` element with its own label rather than nesting `role="toolbar"` landmarks.
-- When that toolbar wrapper stacks its groups vertically, set `aria-orientation="vertical"` on the wrapper. Assistive technology assumes a toolbar is horizontal until told otherwise.
-- Use `disabled` on the group to disable every child at once rather than disabling each `swc-action-button` individually.
-
-<Canvas of={ActionGroupStories.Accessibility} />
+- Name the group when the strip has a distinct purpose (for example, "Text formatting" or "Zoom controls"). A visual cluster alone does not give screen reader users a group name.
+- Give every icon-only child its own `accessible-label`. The group's name describes the cluster, but it does not substitute for each child's accessible name.
+- Prefer the group's `disabled` attribute when the whole strip is unavailable, so users can still <kbd>Tab</kbd> into the group and discover that those actions exist. Disable an individual child only when that one control should leave the <kbd>Tab</kbd> and arrow-key sequence.
+- Keep related actions in one group so they share a single <kbd>Tab</kbd> stop. Split unrelated clusters into separate groups, each with its own optional name.
 
 ## Upcoming features
 
