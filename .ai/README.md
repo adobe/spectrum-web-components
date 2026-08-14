@@ -33,24 +33,23 @@ Getting this wrong in either direction has a real cost: forcing task-scoped guid
 
 ## Rules
 
-Rules defined in the `config.json` follow this structure:
+`.ai/config.json` holds structured, config-based validation data that editors and tooling read directly — branch naming pattern, Jira ticket templates and labels, text-formatting exceptions, and editor/language preferences. It's flat top-level sections, not a generic rule registry:
 
 ```json
 {
-  "version": 1,
-  "rules": {
-    "category": {
-      "rule_name": {
-        "enabled": true,
-        "pattern": "regex_pattern",
-        "message": "Error message"
-      }
-    }
-  }
+  "git": {
+    "validationPattern": "^[a-z0-9]+\\/(feat|fix|...)-[a-z0-9-]+(-swc-[0-9]+)?$",
+    "types": ["feat", "fix", "docs", "..."]
+  },
+  "jira_tickets": {
+    "title_format": { "max_length": 80 },
+    "labels": { "...": "..." }
+  },
+  "text_formatting": { "headings": { "case": "sentence" } }
 }
 ```
 
-Additional, more specific rules can be found in the `rules` directory in either a `json` or `md` format.
+See [Config-based rules](#when-rules-and-skills-are-activated) below for the full key list. Narrative, per-topic guidance — the kind a human or agent reads rather than a validator parses — lives in the `.ai/rules/` and `.ai/skills/` markdown files instead.
 
 ### Available rules
 
@@ -121,6 +120,7 @@ These two rules share the same glob/path set (`2nd-gen/**/stories/**` and `2nd-g
 - **comments**: Convert all `<!-- -->` HTML comments to `{/* */}` JSX comments
 - **preserve_content**: Keep all markdown syntax, HTML elements, links, and formatting unchanged
 - Applies to: `**/*.md`, `**/*.mdx`
+- For manual, one-off conversions only — the automated `yarn generate:contributor-docs` script already converts all of `CONTRIBUTOR-DOCS/` and shouldn't be hand-duplicated; see the rule file for the full distinction
 
 ### When rules and skills are activated
 
@@ -346,8 +346,8 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 #### Deep understanding (`deep-understanding`)
 
 - **purpose**: Require a thorough deep-read of the relevant codebase before planning or implementing; write findings to a persistent markdown file (e.g. `research.md`) so the user can review and correct before any work proceeds
-- **How to invoke**: Enforced by an **always-applied rule** — at session start and before any code writing, the agent does deep research and writes a report; no need to ask. You can still say “read this folder in depth and write research.md” or “study [system] in great detail” to scope or reinforce.
-- Use when: Every session and whenever the task touches non-trivial code; the written report is required before planning or implementation
+- **How to invoke**: Applied intelligently by the agent for non-trivial work (multiple files, new area, complex behavior) before planning or writing code — no rule enforces this automatically. Say “read this folder in depth and write research.md” or “study [system] in great detail” to invoke or reinforce it explicitly.
+- Use when: The task is non-trivial and would benefit from a written understanding pass first; skip it for simple, self-contained requests (a one-line fix, a single known file, a quick question)
 - Provides: Workflow (scope → deep read → write report → pause for review → proceed only after validation). Written artifact is the review surface
 
 #### Conventional commits
@@ -438,7 +438,7 @@ Editing any `.ai/rules/*.md` file immediately updates what both Cursor and Claud
 2. Add one per-file symlink for Cursor (required — Cursor needs `.mdc` extension):
 
    ```sh
-   ln -s “../../.ai/rules/rule-name.md” “.cursor/rules/rule-name.mdc”
+   ln -s "../../.ai/rules/rule-name.md" ".cursor/rules/rule-name.mdc"
    ```
 
    `.claude/rules/` is a directory symlink pointing at `.ai/rules/`, so it picks up the new file automatically — no extra step needed. Claude Code resolves `paths:` matches through that symlink.

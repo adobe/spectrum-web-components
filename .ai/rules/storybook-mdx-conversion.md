@@ -11,9 +11,11 @@ alwaysApply: false
 
 Converts markdown files to MDX format compatible with Storybook rendering.
 
+> **Relationship to `generate-contributor-docs.mjs`:** the entire `CONTRIBUTOR-DOCS/` tree is already converted to Storybook `.mdx` automatically by `yarn generate:contributor-docs` (`2nd-gen/packages/swc/.storybook/scripts/generate-contributor-docs.mjs`), which also runs before every `yarn storybook` / `yarn storybook:build`. That script's output is regenerated wholesale and not meant to be hand-edited. This rule is for everything that script doesn't cover: converting a standalone `.md` file to `.mdx` by hand (e.g. a one-off doc outside `CONTRIBUTOR-DOCS/`, or manual spot-conversion during authoring) using the same conventions.
+
 ## When to apply
 
-- Converting a `.md` file to `.mdx` for Storybook rendering, particularly documentation pages in the 2nd-gen SWC Storybook guides
+- Converting a standalone `.md` file to `.mdx` by hand, outside the automated `generate-contributor-docs.mjs` pipeline
 - Applies automatically when Claude reads a matching `.md`/`.mdx` file (Cursor: via `globs`; Claude Code: via `paths`); ask explicitly ("convert this doc to MDX") to apply it outside that trigger
 
 ## Conversion steps
