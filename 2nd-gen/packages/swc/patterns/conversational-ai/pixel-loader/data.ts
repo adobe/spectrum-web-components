@@ -36,12 +36,6 @@ export interface Cell {
   row: number;
 
   /**
-   * Marks a cell for the high-DPI subpixel-seam nudge. Only ever `true` on the
-   * hand-authored `aiLogo`.
-   */
-  outer: boolean;
-
-  /**
    * Frame at which this cell starts dropping in. All downstream timing (exit,
    * fade, loop length) is derived from this by `animation.ts`; see
    * `exitStartOf`/`loopFramesFor`.
@@ -112,7 +106,6 @@ export function buildCells(
   return positions.map(([col, row], index) => ({
     col,
     row: row + rowOffset,
-    outer: false,
     stagger: staggerValues[index],
   }));
 }
@@ -122,18 +115,18 @@ export function buildCells(
  * uses irregular stagger steps.
  */
 const aiLogo: Cell[] = [
-  { col: 3, row: 6, outer: true, stagger: 0 },
-  { col: 1, row: 5, outer: true, stagger: 2 },
-  { col: 5, row: 5, outer: true, stagger: 4 },
-  { col: 2, row: 4, outer: false, stagger: 6 },
-  { col: 4, row: 4, outer: false, stagger: 8 },
-  { col: 0, row: 3, outer: true, stagger: 10 },
-  { col: 6, row: 3, outer: true, stagger: 14 },
-  { col: 2, row: 2, outer: false, stagger: 16 },
-  { col: 4, row: 2, outer: false, stagger: 18 },
-  { col: 1, row: 1, outer: true, stagger: 20 },
-  { col: 5, row: 1, outer: true, stagger: 22 },
-  { col: 3, row: 0, outer: true, stagger: 24 },
+  { col: 3, row: 6, stagger: 0 },
+  { col: 1, row: 5, stagger: 2 },
+  { col: 5, row: 5, stagger: 4 },
+  { col: 2, row: 4, stagger: 6 },
+  { col: 4, row: 4, stagger: 8 },
+  { col: 0, row: 3, stagger: 10 },
+  { col: 6, row: 3, stagger: 14 },
+  { col: 2, row: 2, stagger: 16 },
+  { col: 4, row: 2, stagger: 18 },
+  { col: 1, row: 1, stagger: 20 },
+  { col: 5, row: 1, stagger: 22 },
+  { col: 3, row: 0, stagger: 24 },
 ];
 
 const brush = buildCells(

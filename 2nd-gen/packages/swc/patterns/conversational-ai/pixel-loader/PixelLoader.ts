@@ -157,7 +157,7 @@ export class PixelLoader extends SpectrumElement {
     this._playCells();
   };
 
-  protected override willUpdate(changed: PropertyValues<this>): void {
+  protected override willUpdate(changed: PropertyValues): void {
     // Removing the preset returns to single-icon mode: show the requested icon
     // right away rather than trying to finish a preset build that isn't there.
     if (changed.has('preset') && !this._resolvedPreset) {
@@ -171,7 +171,7 @@ export class PixelLoader extends SpectrumElement {
     }
   }
 
-  protected override updated(changed: PropertyValues<this>): void {
+  protected override updated(changed: PropertyValues): void {
     super.updated(changed);
 
     // A re-render can replace the cell elements (icon/preset changes the count),
