@@ -237,6 +237,13 @@ const config: StorybookConfig = {
         },
   viteFinal: async (config) => {
     return mergeConfig(config, {
+      // Storybook already copies `public/` into the build output via `staticDirs`.
+      // Vite's default publicDir (also `public/`) would copy the same tree
+      // concurrently during `storybook build`, and the two copies race on
+      // node's non-recursive `mkdir`, intermittently throwing
+      // `EEXIST` (e.g. on `.well-known/agent-skills/.../guides`). Disable Vite's
+      // copy so `staticDirs` is the single writer.
+      publicDir: false,
       css: {
         transformer: 'postcss',
       },
