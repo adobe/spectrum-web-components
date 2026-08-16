@@ -19,6 +19,7 @@ import '../swc-user-message.js';
 
 import { getComponent, getComponents } from '../../../../utils/test-utils.js';
 import { meta, Overview } from '../stories/user-message.stories.js';
+import { UserMessageAttachment } from '../user-message-attachment/UserMessageAttachment.js';
 import { UserMessage } from '../UserMessage.js';
 
 export default {
@@ -39,9 +40,9 @@ export const OverviewTest: Story = {
       'swc-user-message'
     );
 
-    await step('uses copy type by default', async () => {
-      expect(el.type).toBe('copy');
-      expect(el.getAttribute('type')).toBe('copy');
+    await step('renders a default slot with no attachments class', async () => {
+      expect(el.classList.contains('has-attachments')).toBe(false);
+      expect(el.shadowRoot?.querySelector('slot:not([name])')).toBeTruthy();
     });
   },
 };
@@ -55,52 +56,66 @@ export const TypeAndSlotTest: Story = {
     );
 
     await step(
-      'type reflects to the host and drives card structure',
+      'a single card attachment marks the host and gets the hero row',
       async () => {
-        el.type = 'card';
         el.innerHTML = `
-        <div
-          slot="thumbnail"
-          role="img"
-          aria-label="File preview"
-        ></div>
-        <span slot="title">Brand guidelines</span>
-        <span slot="subtitle">PDF</span>
+        <swc-user-message-attachment type="card">
+          <div slot="thumbnail" role="img" aria-label="File preview"></div>
+          <span slot="title">Brand guidelines</span>
+          <span slot="subtitle">PDF</span>
+        </swc-user-message-attachment>
       `;
         await el.updateComplete;
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await el.updateComplete;
 
-        const title = el.shadowRoot?.querySelector('.swc-UserMessage-title');
-        const subtitle = el.shadowRoot?.querySelector(
-          '.swc-UserMessage-subtitle'
+        const attachment = el.querySelector<UserMessageAttachment>(
+          'swc-user-message-attachment'
+        )!;
+        await attachment.updateComplete;
+
+        const heroFilesBox = el.shadowRoot?.querySelector(
+          '.swc-UserMessage-attachments-files--single'
         );
-        expect(el.getAttribute('type')).toBe('card');
+        const title = attachment.shadowRoot?.querySelector(
+          '.swc-UserMessageAttachment-title'
+        );
+        const subtitle = attachment.shadowRoot?.querySelector(
+          '.swc-UserMessageAttachment-subtitle'
+        );
+        expect(el.classList.contains('has-attachments')).toBe(true);
+        expect(heroFilesBox).toBeTruthy();
         expect(title).toBeTruthy();
         expect(subtitle).toBeTruthy();
       }
     );
 
     await step(
-      'media type renders the media attachment container',
+      'a single media attachment gets the hero grid tile',
       async () => {
-        el.type = 'media';
         el.innerHTML = `
-        <div slot="thumbnail" role="img" aria-label="Preview"></div>
-        <span slot="title">Preview image</span>
-        <span slot="subtitle">PNG</span>
+        <swc-user-message-attachment type="media">
+          <div slot="thumbnail" role="img" aria-label="Preview"></div>
+          <span slot="title">Preview image</span>
+          <span slot="subtitle">PNG</span>
+        </swc-user-message-attachment>
       `;
         await el.updateComplete;
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await el.updateComplete;
 
-        const attachment = el.shadowRoot?.querySelector(
-          '.swc-UserMessage-attachment--media'
+        const heroMediaBox = el.shadowRoot?.querySelector(
+          '.swc-UserMessage-attachments-media--single'
         );
-        expect(el.getAttribute('type')).toBe('media');
-        expect(attachment).toBeTruthy();
+        expect(el.classList.contains('has-attachments')).toBe(true);
+        expect(heroMediaBox).toBeTruthy();
       }
     );
 
-    await step('copy type uses the default slot text path', async () => {
-      el.type = 'copy';
+    await step('plain text uses the default slot text path', async () => {
       el.innerHTML = `Can you summarize this document?`;
+      await el.updateComplete;
+      await new Promise((resolve) => requestAnimationFrame(resolve));
       await el.updateComplete;
 
       const textSlot =
@@ -111,14 +126,14 @@ export const TypeAndSlotTest: Story = {
         .join('')
         .trim();
 
-      expect(el.getAttribute('type')).toBe('copy');
+      expect(el.classList.contains('has-attachments')).toBe(false);
       expect(assignedText).toBe('Can you summarize this document?');
     });
   },
 };
 
-export const DefaultSlotHiddenForAttachmentTypesTest: Story = {
-  name: 'Default slot not used for card and media',
+export const MixedCopyAndAttachmentsTest: Story = {
+  name: 'Copy text and attachments render together',
   ...Overview,
   play: async ({ canvasElement, step }) => {
     const el = await getComponent<UserMessage>(
@@ -126,45 +141,166 @@ export const DefaultSlotHiddenForAttachmentTypesTest: Story = {
       'swc-user-message'
     );
 
-    const attachmentMarkup = (label: string) => `
-        <p data-test-default-slotted>${label}</p>
-        <div slot="thumbnail" role="img" aria-label="Preview"></div>
-        <span slot="title">T</span>
-        <span slot="subtitle">S</span>
-      `;
-
-    for (const type of ['card', 'media'] as const) {
-      await step(
-        `type="${type}": no unnamed slot; default-slot children are not shown`,
-        async () => {
-          el.type = type;
-          el.innerHTML = attachmentMarkup(
-            'Default copy that must not appear in the bubble for attachment types.'
-          );
-          await el.updateComplete;
-
-          expect(el.shadowRoot?.querySelector('slot:not([name])')).toBeNull();
-
-          const leaked = el.querySelector<HTMLElement>(
-            '[data-test-default-slotted]'
-          );
-          expect(leaked).toBeTruthy();
-          const { width, height } = leaked!.getBoundingClientRect();
-          expect(width * height).toBe(0);
-        }
-      );
-    }
-
     await step(
-      'type="copy" keeps an unnamed (default) slot in the shadow root',
+      'text alongside an attachment is assigned to the default slot, not dropped',
       async () => {
-        el.type = 'copy';
-        el.innerHTML = 'Visible copy text';
+        el.innerHTML = `
+        <p data-test-default-slotted>Reviewed the attached file, thoughts?</p>
+        <swc-user-message-attachment type="media">
+          <div slot="thumbnail" role="img" aria-label="Preview"></div>
+        </swc-user-message-attachment>
+      `;
+        await el.updateComplete;
+        await new Promise((resolve) => requestAnimationFrame(resolve));
         await el.updateComplete;
 
-        const defaultSlot =
+        const textSlot =
           el.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
-        expect(defaultSlot).toBeTruthy();
+        expect(textSlot).toBeTruthy();
+        expect(
+          textSlot
+            ?.assignedNodes({ flatten: true })
+            .includes(el.querySelector('[data-test-default-slotted]')!)
+        ).toBe(true);
+        expect(el.classList.contains('has-attachments')).toBe(true);
+      }
+    );
+  },
+};
+
+function attachmentsMarkup(mediaCount: number, cardCount: number): string {
+  const media = Array.from(
+    { length: mediaCount },
+    (_, index) => `
+      <swc-user-message-attachment type="media">
+        <div slot="thumbnail" role="img" aria-label="Photo ${index + 1}"></div>
+      </swc-user-message-attachment>
+    `
+  ).join('');
+
+  const cards = Array.from(
+    { length: cardCount },
+    (_, index) => `
+      <swc-user-message-attachment type="card">
+        <div slot="thumbnail" role="img" aria-label="File icon"></div>
+        <span slot="title">File ${index + 1}</span>
+        <span slot="subtitle">1 MB</span>
+      </swc-user-message-attachment>
+    `
+  ).join('');
+
+  return media + cards;
+}
+
+export const AttachmentsGroupingTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<UserMessage>(
+      canvasElement,
+      'swc-user-message'
+    );
+
+    await step(
+      'media count at or below the visible limit renders no disclosure',
+      async () => {
+        el.open = false;
+        el.innerHTML = attachmentsMarkup(4, 1);
+        await el.updateComplete;
+
+        const overflow = el.shadowRoot?.querySelector(
+          '.swc-UserMessage-attachments-overflow'
+        );
+        expect(overflow).toBeNull();
+        const toggle = el.shadowRoot?.querySelector(
+          '.swc-UserMessage-attachments-toggle'
+        );
+        expect(toggle).toBeNull();
+
+        const mediaChildren = Array.from(el.children).filter(
+          (child) => child.getAttribute('type') !== 'card'
+        );
+        const cardChildren = Array.from(el.children).filter(
+          (child) => child.getAttribute('type') === 'card'
+        );
+        expect(
+          mediaChildren.every((child) => !child.hasAttribute('hidden'))
+        ).toBe(true);
+        expect(
+          cardChildren.every((child) => !child.hasAttribute('hidden'))
+        ).toBe(true);
+        expect(
+          mediaChildren.every(
+            (child) => child.getAttribute('slot') === 'attachment-media'
+          )
+        ).toBe(true);
+        expect(
+          cardChildren.every(
+            (child) => child.getAttribute('slot') === 'attachment-card'
+          )
+        ).toBe(true);
+      }
+    );
+
+    await step(
+      'media count above the visible limit hides overflow tiles and shows the disclosure',
+      async () => {
+        el.open = false;
+        el.innerHTML = attachmentsMarkup(6, 0);
+        await el.updateComplete;
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await el.updateComplete;
+
+        const overflow = el.shadowRoot?.querySelector(
+          '.swc-UserMessage-attachments-overflow'
+        );
+        expect(overflow).toBeTruthy();
+        expect(overflow?.getAttribute('aria-expanded')).toBe('false');
+        expect(overflow?.textContent?.trim()).toContain('View all (6)');
+
+        const mediaChildren = Array.from(el.children);
+        expect(mediaChildren.slice(0, 4).some((child) => child.hidden)).toBe(
+          false
+        );
+        expect(mediaChildren.slice(4).every((child) => child.hidden)).toBe(
+          true
+        );
+      }
+    );
+
+    await step(
+      'clicking the disclosure reveals overflow tiles and fires the toggle event',
+      async () => {
+        let detail: { open: boolean } | undefined;
+        el.addEventListener(
+          'swc-user-message-toggle',
+          (event) => {
+            detail = (event as CustomEvent<{ open: boolean }>).detail;
+          },
+          { once: true }
+        );
+
+        const overflow = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-UserMessage-attachments-overflow'
+        );
+        overflow?.click();
+        await el.updateComplete;
+
+        expect(el.open).toBe(true);
+        expect(detail?.open).toBe(true);
+        // Stays in the DOM (fades out via CSS) rather than being removed.
+        expect(
+          el.shadowRoot?.querySelector('.swc-UserMessage-attachments-overflow')
+        ).not.toBeNull();
+        expect(overflow?.hidden).toBe(true);
+
+        const toggle = el.shadowRoot?.querySelector(
+          '.swc-UserMessage-attachments-toggle'
+        );
+        expect(toggle?.getAttribute('aria-expanded')).toBe('true');
+        expect(toggle?.textContent?.trim()).toContain('Show less');
+        expect(Array.from(el.children).every((child) => !child.hidden)).toBe(
+          true
+        );
       }
     );
   },
@@ -193,15 +329,17 @@ export const LongTextWrapTest: Story = {
       style="max-inline-size: 640px; margin-block-start: 32px; padding-inline: 1px;"
     >
       <swc-conversation-turn type="user">
-        <swc-user-message type="card">
-          <div
-            slot="thumbnail"
-            style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);"
-            role="img"
-            aria-label="File"
-          ></div>
-          <span slot="title">${longUnbrokenFileName}</span>
-          <span slot="subtitle">PDF</span>
+        <swc-user-message>
+          <swc-user-message-attachment type="card">
+            <div
+              slot="thumbnail"
+              style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);"
+              role="img"
+              aria-label="File"
+            ></div>
+            <span slot="title">${longUnbrokenFileName}</span>
+            <span slot="subtitle">PDF</span>
+          </swc-user-message-attachment>
         </swc-user-message>
       </swc-conversation-turn>
     </div>

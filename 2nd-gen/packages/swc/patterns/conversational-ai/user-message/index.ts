@@ -9,4 +9,21 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
+
+import './user-message-attachment/index.js';
+
+import { UserMessageAttachment } from './user-message-attachment/UserMessageAttachment.js';
+import { UserMessage } from './UserMessage.js';
+
 export * from './UserMessage.js';
+export * from './user-message-attachment/UserMessageAttachment.js';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-user-message': UserMessage;
+    'swc-user-message-attachment': UserMessageAttachment;
+  }
+}
+
+defineElement('swc-user-message', UserMessage);

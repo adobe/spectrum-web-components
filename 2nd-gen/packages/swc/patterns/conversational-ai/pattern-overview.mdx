@@ -174,7 +174,7 @@ A column-aligned slot for one participant. Set `type="user"` or `type="system"` 
 
 #### `swc-user-message`
 
-The user's message bubble. Explicit `type="copy"`, `type="card"`, or `type="media"` controls the rendering for text, file attachments, and image attachments respectively.
+The user's message bubble. `type="copy"` renders plain text; `type="attachments"` accepts one or more `<swc-user-message-attachment>` children for file and image attachments, grouping and sizing them automatically (a single attachment gets a larger "hero" tile than a grouped one).
 
 <Canvas
   of={UserMessageStories.Content}
