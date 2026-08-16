@@ -76,8 +76,13 @@ const permutationContent = () =>
 // VRT stories
 
 // Every AI brand treatment variant (subtle, balanced, prominent) x
-// generating state (idle, generating): 6 permutations, one snapshot.
+// generating state (idle, generating): 6 permutations. Rendered once in
+// light/ltr and once in dark/rtl (that combination covers both axes) in a
+// single story so it costs one snapshot.
 export const Variants: Story = {
-  render: () => theme(permutationContent(), 'light', 'ltr'),
+  render: () => html`
+    ${theme(permutationContent(), 'light', 'ltr')}
+    ${theme(permutationContent(), 'dark', 'rtl')}
+  `,
   parameters: vrtParameters,
 };
