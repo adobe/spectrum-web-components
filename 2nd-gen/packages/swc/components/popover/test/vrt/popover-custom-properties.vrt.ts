@@ -21,11 +21,11 @@ import {
   coveredCustomProperties,
   theme,
   verifyCustomPropertyCoverage,
-  vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
 import customElementsManifest from '../../../../dist/custom-elements.json';
 import {
   openManyPopoversForVrt,
+  popoverVrtParameters,
   PROPERTY_GROUP_GAP,
   propertyCompareRow,
   vrtPage,
@@ -112,6 +112,6 @@ const openAndVerifyCoverage = async (
 
 export const CustomProperties: Story = {
   render: () => theme(modPropertiesContent(), 'light', 'ltr'),
-  parameters: vrtParameters,
+  parameters: popoverVrtParameters,
   play: openAndVerifyCoverage,
 };

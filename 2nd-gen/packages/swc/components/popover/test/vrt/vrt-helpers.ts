@@ -16,6 +16,44 @@ import type { StoryObj as Story } from '@storybook/web-components';
 
 import { Popover } from '@adobe/spectrum-wc/popover';
 
+import {
+  forcedColorsVrtParameters,
+  vrtParameters,
+} from '../../../../.storybook/helpers/index.js';
+
+// `.swc-Popover` paints `filter: drop-shadow` outside its border box; pad VRT
+// canvases so Chromatic does not crop the halo at story edges. Inline bleed is
+// larger because open surfaces (especially size `l` and side placements) paint
+// in the top layer and do not expand their ancestor's in-flow width.
+export const SURFACE_SHADOW_BLEED = 24;
+export const INLINE_SHADOW_BLEED = 48;
+
+// Wide enough for side `start`/`end` alignment variants and size `l` (576px)
+// surfaces centered on a trigger with inline shadow bleed on both sides.
+export const VRT_MIN_INLINE_SIZE = 900;
+
+// Open bottom surfaces sit in the top layer and do not expand their ancestor's
+// box, so reserve in-flow space below the last bottom-opening row for `theme()`
+// backgrounds and snapshot bleed. Internal scroll sizing is unchanged.
+export const BOTTOM_SURFACE_RESERVE = 72;
+
+const popoverCanvasPadding = `padding-block: ${SURFACE_SHADOW_BLEED}px; padding-block-end: ${SURFACE_SHADOW_BLEED + BOTTOM_SURFACE_RESERVE}px; padding-inline: ${INLINE_SHADOW_BLEED}px;`;
+
+export const popoverVrtParameters = {
+  ...vrtParameters,
+  styles: {
+    ...vrtParameters.styles,
+    paddingBlock: `${SURFACE_SHADOW_BLEED}px`,
+    paddingBlockEnd: `${SURFACE_SHADOW_BLEED + BOTTOM_SURFACE_RESERVE}px`,
+    paddingInline: `${INLINE_SHADOW_BLEED}px`,
+  },
+};
+
+export const popoverForcedColorsVrtParameters = {
+  ...popoverVrtParameters,
+  chromatic: forcedColorsVrtParameters.chromatic,
+};
+
 // Open popovers escape into the top layer, so spacing keeps adjacent
 // surfaces from overlapping. GROUP_GAP separates labeled rows on a page;
 // PROPERTY_GROUP_GAP separates custom-property groups; PAIR_GAP separates
@@ -57,8 +95,14 @@ export const stack = (
   `;
 };
 
-export const vrtPage = (children: unknown, groupGap = GROUP_GAP) => html`
-  <div style="display: flex; flex-direction: column; gap: ${groupGap}px;">
+export const vrtPage = (
+  children: unknown,
+  groupGap = GROUP_GAP,
+  minInlineSize = VRT_MIN_INLINE_SIZE
+) => html`
+  <div
+    style="display: flex; flex-direction: column; gap: ${groupGap}px; min-inline-size: ${minInlineSize}px; ${popoverCanvasPadding}"
+  >
     ${children}
   </div>
 `;
@@ -72,7 +116,7 @@ export const propertyCompareRow = (
     style="display: flex; flex-direction: column; gap: var(--swc-spacing-100);"
   >
     <span class="swc-Detail swc-Detail--sizeM">${label}</span>
-    <div style="display: flex; gap: ${PAIR_GAP}px;">
+    <div style="display: flex; gap: ${PAIR_GAP}px; justify-content: center;">
       ${reference} ${override}
     </div>
   </div>

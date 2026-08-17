@@ -24,14 +24,11 @@ import {
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 
+import { theme } from '../../../../.storybook/helpers/index.js';
 import {
-  forcedColorsVrtParameters,
-  theme,
-  vrtParameters,
-} from '../../../../.storybook/helpers/index.js';
-import {
-  GROUP_GAP,
   openManyPopoversForVrt,
+  popoverForcedColorsVrtParameters,
+  popoverVrtParameters,
   stack,
   type StackLayout,
   vrtPage,
@@ -165,7 +162,9 @@ const modalRow = (prefix: string) =>
 // sets `max-block-size` / `overflow: auto`), so this needs plain content
 // long enough to exceed it, not a second nested scroll region — an inner
 // `overflow: auto` wrapper would give a visibly distinct nested scrollbar in
-// addition to the outer one.
+// addition to the outer one. Bottom shadow bleed comes from `vrtPage`'s extra
+// `padding-block-end`; capping `--swc-placement-available-height` here would
+// change the scroll scenario under test.
 const scrollableContent = `
   <div style="display: flex; flex-direction: column; gap: 8px; max-inline-size: 220px;">
     <span class="swc-Title swc-Title--sizeS">Release notes</span>
@@ -219,7 +218,7 @@ const permutationContent = (prefix: string) =>
 
 export const Permutations: Story = {
   render: () => theme(permutationContent('permutations'), 'light', 'ltr'),
-  parameters: vrtParameters,
+  parameters: popoverVrtParameters,
   play: openManyPopoversForVrt,
 };
 
@@ -229,18 +228,20 @@ export const PermutationsRtl: Story = {
     theme(
       html`
         <div
-          style="display: flex; flex-direction: column; align-items: center; gap: ${GROUP_GAP}px; min-inline-size: 900px; margin-block-end: 72px;"
+          style="display: flex; flex-direction: column; align-items: center;"
         >
-          ${(['start', 'end'] as const).map((base) =>
-            placementGroup(base, 'permutations-rtl')
-          )}
-          ${hideArrowRow('permutations-rtl')}
+          ${vrtPage(html`
+            ${(['start', 'end'] as const).map((base) =>
+              placementGroup(base, 'permutations-rtl')
+            )}
+            ${hideArrowRow('permutations-rtl')}
+          `)}
         </div>
       `,
       'dark',
       'rtl'
     ),
-  parameters: vrtParameters,
+  parameters: popoverVrtParameters,
   play: openManyPopoversForVrt,
 };
 PermutationsRtl.storyName = 'Permutations (RTL)';
@@ -260,7 +261,7 @@ export const ForcedColors: Story = {
       'light',
       'ltr'
     ),
-  parameters: forcedColorsVrtParameters,
+  parameters: popoverForcedColorsVrtParameters,
   play: openManyPopoversForVrt,
 };
 
@@ -274,7 +275,7 @@ export const ForcedColors: Story = {
 export const Nested: Story = {
   render: () => html`
     <div
-      style="display: grid; place-items: center; min-block-size: 360px; padding: 64px;"
+      style="display: grid; place-items: center; min-block-size: 360px; padding: 96px 128px;"
     >
       <swc-button id="nested-outer-trigger">Open outer</swc-button>
       <swc-popover
@@ -316,5 +317,5 @@ export const Nested: Story = {
       )
     );
   },
-  parameters: vrtParameters,
+  parameters: popoverVrtParameters,
 };
