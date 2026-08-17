@@ -94,9 +94,13 @@
   padding-block-start: token("spacing-100");
 }
 
-/* Default cursor when disabled, like a native input. */
-:host([disabled]) .swc-PromptField-box {
+/* Inert when disabled: default cursor, and the card ignores pointer input so hover treatments don't fire. */
+:host([disabled]) {
   cursor: default;
+}
+
+:host([disabled]) .swc-PromptField-outer-border {
+  pointer-events: none;
 }
 
 /* ─────────────────────────────────────
