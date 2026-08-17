@@ -935,7 +935,8 @@ modalClickBlocking.parameters = {
  * clicking non-focusable content inside it, even when the trigger and the Overlay share
  * a focusable ancestor (e.g. a `tabindex="0"` wrapper). Click "Button #1" or "Button #2"
  * below, then click the popover text; the popover should remain open. "Button #3" (no
- * focusable wrapper) is included as a working control for comparison.
+ * focusable wrapper) is included as a working control for comparison. Each popover is
+ * rendered already `open` so the fixed, non-closing state is captured as the VRT baseline.
  */
 export const focusableAncestorWrapper = (): TemplateResult => html`
   <div style="display: flex; flex-direction: column; gap: 24px; margin: 40px;">
@@ -945,6 +946,7 @@ export const focusableAncestorWrapper = (): TemplateResult => html`
         Button #1
       </sp-action-button>
       <sp-overlay
+        open
         type="auto"
         placement="right"
         trigger="focusable-ancestor-trigger-1@click"
@@ -961,6 +963,7 @@ export const focusableAncestorWrapper = (): TemplateResult => html`
         Button #2
       </sp-button>
       <sp-overlay
+        open
         type="auto"
         placement="right"
         trigger="focusable-ancestor-trigger-2@click"
@@ -977,6 +980,7 @@ export const focusableAncestorWrapper = (): TemplateResult => html`
         Button #3
       </sp-action-button>
       <sp-overlay
+        open
         type="auto"
         placement="right"
         trigger="focusable-ancestor-trigger-3@click"
@@ -988,13 +992,3 @@ export const focusableAncestorWrapper = (): TemplateResult => html`
     </div>
   </div>
 `;
-
-focusableAncestorWrapper.swc_vrt = {
-  skip: true,
-};
-
-focusableAncestorWrapper.parameters = {
-  chromatic: { disableSnapshot: true },
-};
-
-focusableAncestorWrapper.tags = ['dev'];
