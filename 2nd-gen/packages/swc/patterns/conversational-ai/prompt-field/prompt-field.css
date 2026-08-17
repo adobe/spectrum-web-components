@@ -845,11 +845,14 @@
 }
 
 .swc-PromptField-leading-actions-row {
+  overflow-clip-margin: calc(token("focus-ring-gap") + token("focus-indicator-thickness"));
   display: flex;
   gap: token("spacing-75");
   align-items: center;
   min-block-size: 0;
-  overflow: hidden;
+
+  /* clip the collapse animation but leave room for the upload button's focus ring (Firefox clips it under overflow: hidden). */
+  overflow: clip;
 }
 
 /* Upload button (quiet, left side) */
