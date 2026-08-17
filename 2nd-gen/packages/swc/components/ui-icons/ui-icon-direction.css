@@ -14,9 +14,15 @@
  * A4U exposes no per-icon mirror flag, so directional icons are mirrored in RTL via
  * this curated, hand-maintained list rather than per-icon metadata (icon-rfc.md,
  * section 11). First pass: chevrons and arrows. Icons not listed here (checkmarks,
- * crosses, and similar non-directional art) never flip. Consuming components no
- * longer need their own RTL mirror rule for these icons; this is the single place
- * that owns the decision.
+ * crosses, the corner-triangle hold-affordance marker, kept physically anchored to
+ * its corner in both directions to match 1st-gen, and similar non-directional or
+ * physically-anchored art) never flip. Consuming components no longer need their
+ * own RTL mirror rule for these icons; this is the single place that owns the
+ * decision.
+ *
+ * The selector list below must stay in sync with `DIRECTIONAL_UI_ICONS` in
+ * ui-icon-direction.ts, the source of truth `ui-icons.test.ts` checks every
+ * `UI_ICONS` entry against.
  *
  * Both conditions must live inside :host()'s own argument as one compound selector
  * (:host(:dir(rtl)[icon="..."])). Chaining an attribute selector after a closing
