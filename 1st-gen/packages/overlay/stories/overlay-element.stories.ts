@@ -931,59 +931,37 @@ modalClickBlocking.parameters = {
 };
 
 /**
- * Regression coverage for GH-5731: an `[type="auto"]` Overlay should stay open when
- * clicking non-focusable content inside it, even when the trigger and the Overlay share
- * a focusable ancestor (e.g. a `tabindex="0"` wrapper). Click "Button #1" or "Button #2"
- * below, then click the popover text; the popover should remain open. "Button #3" (no
- * focusable wrapper) is included as a working control for comparison. Each popover is
- * rendered already `open` so the fixed, non-closing state is captured as the VRT baseline.
+ * Shared markup for the GH-5731 regression stories below: a trigger, optionally wrapped
+ * in a focusable ancestor, with an `[type="auto"]` `sp-overlay` rendered already `open`
+ * so the fixed state is captured as the VRT baseline. `receives-focus="false"` keeps the
+ * snapshot static; each `sp-overlay` only needs one open popover at a time, since the
+ * browser's native `popover="auto"` behavior only allows a single auto popover open at
+ * once, so these are three separate stories rather than one combined story.
  */
-export const focusableAncestorWrapper = (): TemplateResult => html`
-  <div style="display: flex; flex-direction: column; gap: 24px; margin: 40px;">
-    <div tabindex="0" style="display: flex; flex-direction: column; gap: 8px;">
-      <p>Wrapped in a focusable ancestor (tabindex="0")</p>
-      <sp-action-button id="focusable-ancestor-trigger-1" variant="primary">
-        Button #1
-      </sp-action-button>
+const focusableAncestorTemplate = ({
+  id,
+  label,
+  description,
+  wrapped,
+}: {
+  id: string;
+  label: string;
+  description: string;
+  wrapped: boolean;
+}): TemplateResult => html`
+  <div style="margin: 40px;">
+    <p>${description}</p>
+    <div
+      ?tabindex=${wrapped ? 0 : undefined}
+      style="display: inline-flex; flex-direction: column; align-items: flex-start; gap: 8px;"
+    >
+      <sp-action-button id=${id} variant="primary">${label}</sp-action-button>
       <sp-overlay
         open
         type="auto"
         placement="right"
-        trigger="focusable-ancestor-trigger-1@click"
-      >
-        <sp-popover style="padding: 10px">
-          Click me: I should not close the popover.
-        </sp-popover>
-      </sp-overlay>
-    </div>
-
-    <div tabindex="0" style="display: flex; flex-direction: column; gap: 8px;">
-      <p>Wrapped in a focusable ancestor (tabindex="0")</p>
-      <sp-button id="focusable-ancestor-trigger-2" variant="primary">
-        Button #2
-      </sp-button>
-      <sp-overlay
-        open
-        type="auto"
-        placement="right"
-        trigger="focusable-ancestor-trigger-2@click"
-      >
-        <sp-popover style="padding: 10px">
-          Click me: I should not close the popover.
-        </sp-popover>
-      </sp-overlay>
-    </div>
-
-    <div style="display: flex; flex-direction: column; gap: 8px;">
-      <p>No focusable ancestor (control)</p>
-      <sp-action-button id="focusable-ancestor-trigger-3" variant="primary">
-        Button #3
-      </sp-action-button>
-      <sp-overlay
-        open
-        type="auto"
-        placement="right"
-        trigger="focusable-ancestor-trigger-3@click"
+        receives-focus="false"
+        trigger="${id}@click"
       >
         <sp-popover style="padding: 10px">
           Click me: I should not close the popover.
@@ -992,3 +970,27 @@ export const focusableAncestorWrapper = (): TemplateResult => html`
     </div>
   </div>
 `;
+
+export const focusableAncestorWrapper = (): TemplateResult =>
+  focusableAncestorTemplate({
+    id: 'focusable-ancestor-trigger-1',
+    label: 'Button #1',
+    description: 'Wrapped in a focusable ancestor (tabindex="0")',
+    wrapped: true,
+  });
+
+export const focusableAncestorWrapperButtonTrigger = (): TemplateResult =>
+  focusableAncestorTemplate({
+    id: 'focusable-ancestor-trigger-2',
+    label: 'Button #2',
+    description: 'Wrapped in a focusable ancestor (tabindex="0")',
+    wrapped: true,
+  });
+
+export const noFocusableAncestorControl = (): TemplateResult =>
+  focusableAncestorTemplate({
+    id: 'focusable-ancestor-trigger-3',
+    label: 'Button #3',
+    description: 'No focusable ancestor (control)',
+    wrapped: false,
+  });
