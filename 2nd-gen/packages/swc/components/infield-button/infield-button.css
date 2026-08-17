@@ -99,6 +99,7 @@
 /* ── Icon slot ────────────────────────────────────── */
 
 ::slotted([slot="icon"]) {
+  box-sizing: border-box;
   flex-shrink: 0;
   inline-size: var(--_swc-infield-button-icon-size);
   block-size: var(--_swc-infield-button-icon-size);
