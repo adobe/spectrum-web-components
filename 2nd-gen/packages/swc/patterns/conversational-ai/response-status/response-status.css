@@ -134,19 +134,21 @@
   border-radius: 50%;
   opacity: 0.45;
   animation: swc-response-status-dot-pulse 1.1s token("animation-ease-in-out") infinite;
-  animation-delay: calc(sibling-index() * 0.15s);
 }
 
 .swc-ResponseStatus-dot:nth-child(1) {
   color: token("gray-500");
+  animation-delay: 0s;
 }
 
 .swc-ResponseStatus-dot:nth-child(2) {
   color: token("gray-600");
+  animation-delay: 0.15s;
 }
 
 .swc-ResponseStatus-dot:nth-child(3) {
   color: token("gray-800");
+  animation-delay: 0.3s;
 }
 
 @keyframes swc-response-status-dot-pulse {
