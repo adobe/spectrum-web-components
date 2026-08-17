@@ -843,6 +843,40 @@ describe('sp-overlay', () => {
       expect(slider.value).to.equal(19.5);
       expect(el.open).to.be.true;
     });
+    it('does not close when clicking non-focusable content and the trigger sits inside a focusable ancestor (GH-5731)', async () => {
+      const test = await fixture(html`
+        <div>
+          <div tabindex="0">
+            <sp-button id="trigger-5731" variant="primary">
+              Button popover
+            </sp-button>
+            <sp-overlay trigger="trigger-5731@click" placement="bottom">
+              <sp-popover tip>
+                <p id="content-5731">Not focusable content</p>
+              </sp-popover>
+            </sp-overlay>
+          </div>
+        </div>
+      `);
+      const button = test.querySelector('sp-button') as Button;
+      const el = test.querySelector('sp-overlay') as Overlay;
+      const content = test.querySelector(
+        '#content-5731'
+      ) as HTMLParagraphElement;
+
+      expect(el.open).to.be.false;
+
+      const opened = oneEvent(el, 'sp-opened');
+      await mouseClickOn(button);
+      await opened;
+
+      expect(el.open).to.be.true;
+
+      await mouseClickOn(content);
+      await elementUpdated(el);
+
+      expect(el.open).to.be.true;
+    });
   });
   describe('[type="manual"]', () => {
     opensDeclaratively('manual');

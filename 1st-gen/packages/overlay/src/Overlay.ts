@@ -726,6 +726,30 @@ export class Overlay extends ComputedOverlayBase {
   }
 
   /**
+   * Tracks whether the most recent `pointerdown` originated from within this overlay's
+   * own composed subtree. A click on non-focusable overlay content (e.g. plain text)
+   * can resolve focus onto a focusable ancestor shared by the trigger and the overlay
+   * (e.g. an ancestor with `tabindex`), which otherwise looks identical to focus leaving
+   * the overlay entirely once it reaches `closeOnFocusOut`.
+   *
+   * This is only meaningful for a `focusout` caused by that same `pointerdown`. Browsers
+   * apply the default focus-change behavior of `pointerdown`/`mousedown` (and so any
+   * resulting `focusout`) before dispatching the matching `pointerup` of the same
+   * gesture, so clearing the flag on `pointerup` prevents a `pointerdown` that causes no
+   * focus change at all (e.g. clicking already-focused content) from being read later by
+   * an unrelated focus change, such as a subsequent keyboard `Tab`.
+   */
+  private lastPointerdownWasWithinOverlay = false;
+
+  private trackPointerdownOrigin = (event: PointerEvent): void => {
+    this.lastPointerdownWasWithinOverlay = event.composedPath().includes(this);
+  };
+
+  private clearPointerdownOrigin = (): void => {
+    this.lastPointerdownWasWithinOverlay = false;
+  };
+
+  /**
    * Handles the focus out event to close the overlay if the focus moves outside of it.
    *
    * This method ensures that the overlay is closed when the focus moves to an element
@@ -735,6 +759,18 @@ export class Overlay extends ComputedOverlayBase {
    * @param {FocusEvent} event - The focus out event.
    */
   private closeOnFocusOut = (event: FocusEvent): void => {
+    // Consume the flag immediately so a stale value from an earlier click cannot
+    // affect a later, unrelated focus change (e.g. a keyboard Tab away).
+    const pointerdownWasWithinOverlay = this.lastPointerdownWasWithinOverlay;
+    this.lastPointerdownWasWithinOverlay = false;
+
+    // The interaction that caused this focus change started within the overlay,
+    // even though focus may have resolved onto an ancestor outside of it. Treat
+    // focus as still within the overlay.
+    if (pointerdownWasWithinOverlay) {
+      return;
+    }
+
     // If the related target (newly focused element) is not known, do nothing.
     if (!event.relatedTarget) {
       return;
@@ -829,10 +865,32 @@ export class Overlay extends ComputedOverlayBase {
     // Handle focus events for auto type overlays.
     if (this.type === 'auto') {
       if (this.open) {
+        listenerRoot.addEventListener(
+          'pointerdown',
+          this.trackPointerdownOrigin,
+          { capture: true }
+        );
+        listenerRoot.addEventListener(
+          'pointerup',
+          this.clearPointerdownOrigin,
+          {
+            capture: true,
+          }
+        );
         listenerRoot.addEventListener('focusout', this.closeOnFocusOut, {
           capture: true,
         });
       } else {
+        listenerRoot.removeEventListener(
+          'pointerdown',
+          this.trackPointerdownOrigin,
+          { capture: true }
+        );
+        listenerRoot.removeEventListener(
+          'pointerup',
+          this.clearPointerdownOrigin,
+          { capture: true }
+        );
         listenerRoot.removeEventListener('focusout', this.closeOnFocusOut, {
           capture: true,
         });

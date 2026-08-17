@@ -929,3 +929,72 @@ modalClickBlocking.parameters = {
   tags: ['!dev'],
   chromatic: { disableSnapshot: true },
 };
+
+/**
+ * Regression coverage for GH-5731: an `[type="auto"]` Overlay should stay open when
+ * clicking non-focusable content inside it, even when the trigger and the Overlay share
+ * a focusable ancestor (e.g. a `tabindex="0"` wrapper). Click "Button #1" or "Button #2"
+ * below, then click the popover text; the popover should remain open. "Button #3" (no
+ * focusable wrapper) is included as a working control for comparison.
+ */
+export const focusableAncestorWrapper = (): TemplateResult => html`
+  <div style="display: flex; flex-direction: column; gap: 24px; margin: 40px;">
+    <div tabindex="0" style="display: flex; flex-direction: column; gap: 8px;">
+      <p>Wrapped in a focusable ancestor (tabindex="0")</p>
+      <sp-action-button id="focusable-ancestor-trigger-1" variant="primary">
+        Button #1
+      </sp-action-button>
+      <sp-overlay
+        type="auto"
+        placement="right"
+        trigger="focusable-ancestor-trigger-1@click"
+      >
+        <sp-popover style="padding: 10px">
+          Click me: I should not close the popover.
+        </sp-popover>
+      </sp-overlay>
+    </div>
+
+    <div tabindex="0" style="display: flex; flex-direction: column; gap: 8px;">
+      <p>Wrapped in a focusable ancestor (tabindex="0")</p>
+      <sp-button id="focusable-ancestor-trigger-2" variant="primary">
+        Button #2
+      </sp-button>
+      <sp-overlay
+        type="auto"
+        placement="right"
+        trigger="focusable-ancestor-trigger-2@click"
+      >
+        <sp-popover style="padding: 10px">
+          Click me: I should not close the popover.
+        </sp-popover>
+      </sp-overlay>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <p>No focusable ancestor (control)</p>
+      <sp-action-button id="focusable-ancestor-trigger-3" variant="primary">
+        Button #3
+      </sp-action-button>
+      <sp-overlay
+        type="auto"
+        placement="right"
+        trigger="focusable-ancestor-trigger-3@click"
+      >
+        <sp-popover style="padding: 10px">
+          Click me: I should not close the popover.
+        </sp-popover>
+      </sp-overlay>
+    </div>
+  </div>
+`;
+
+focusableAncestorWrapper.swc_vrt = {
+  skip: true,
+};
+
+focusableAncestorWrapper.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
+focusableAncestorWrapper.tags = ['dev'];
