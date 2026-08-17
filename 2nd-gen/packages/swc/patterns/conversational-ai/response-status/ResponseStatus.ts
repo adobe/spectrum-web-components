@@ -91,6 +91,16 @@ export class ResponseStatus extends SpectrumElement {
   @state()
   private _stepOpenOverrides = new Map<number, boolean>();
 
+  /**
+   * Indices of open steps whose description overflows its capped height. Only
+   * these get a keyboard-focusable scroll region, so non-overflowing details
+   * never enter the tab order.
+   */
+  @state()
+  private _overflowingSteps = new Set<number>();
+
+  private _detailResizeObserver: ResizeObserver | null = null;
+
   @state()
   private _labelSlotText = '';
 
@@ -160,6 +170,15 @@ export class ResponseStatus extends SpectrumElement {
   public override connectedCallback(): void {
     super.connectedCallback();
 
+    // Width changes reflow the description text, which can start or stop
+    // overflow without any reactive state changing; re-measure on resize.
+    if (typeof ResizeObserver === 'function' && !this._detailResizeObserver) {
+      this._detailResizeObserver = new ResizeObserver(() => {
+        this._syncDetailOverflow();
+      });
+      this._detailResizeObserver.observe(this);
+    }
+
     this._syncSlotContent();
   }
 
@@ -167,8 +186,24 @@ export class ResponseStatus extends SpectrumElement {
     this._applyLabelRoll();
   }
 
+  protected override updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
+
+    // Re-measure when what is shown (or its open state) changes. Label-roll
+    // updates do not affect overflow, so they are intentionally excluded.
+    if (
+      changed.has('_steps') ||
+      changed.has('_stepOpenOverrides') ||
+      changed.has('open')
+    ) {
+      this._syncDetailOverflow();
+    }
+  }
+
   public override disconnectedCallback(): void {
     this._clearLabelRollTimers();
+    this._detailResizeObserver?.disconnect();
+    this._detailResizeObserver = null;
     super.disconnectedCallback();
   }
 
@@ -475,6 +510,49 @@ export class ResponseStatus extends SpectrumElement {
     return step.open || step.status === 'active';
   }
 
+  private _setsEqual(left: Set<number>, right: Set<number>): boolean {
+    if (left.size !== right.size) {
+      return false;
+    }
+    for (const value of left) {
+      if (!right.has(value)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // Measures which open step descriptions overflow their capped height so only
+  // those expose a focusable scroll region (see `_overflowingSteps`).
+  private _syncDetailOverflow(): void {
+    if (!this.open) {
+      if (this._overflowingSteps.size > 0) {
+        this._overflowingSteps = new Set();
+      }
+      return;
+    }
+
+    const scrollRegions = this.shadowRoot?.querySelectorAll<HTMLElement>(
+      '.swc-ResponseStatus-step-detailScroll'
+    );
+
+    const next = new Set<number>();
+    scrollRegions?.forEach((region) => {
+      const index = Number(region.dataset.stepIndex);
+      const step = this._steps[index];
+      if (Number.isNaN(index) || !step || !this._isStepOpen(step, index)) {
+        return;
+      }
+      if (region.scrollHeight - region.clientHeight > 1) {
+        next.add(index);
+      }
+    });
+
+    if (!this._setsEqual(next, this._overflowingSteps)) {
+      this._overflowingSteps = next;
+    }
+  }
+
   private _handleStepToggle(event: Event): void {
     const button = event.currentTarget as HTMLElement;
     const index = Number(button.dataset.index);
@@ -665,7 +743,13 @@ export class ResponseStatus extends SpectrumElement {
             ? 'swc-ResponseStatus-step-detailPanel--open'
             : ''}"
         >
-          <div class="swc-ResponseStatus-step-detailScroll" tabindex="0">
+          <div
+            class="swc-ResponseStatus-step-detailScroll"
+            data-step-index=${index}
+            tabindex=${ifDefined(
+              this._overflowingSteps.has(index) ? '0' : undefined
+            )}
+          >
             ${this._renderStepDetail(step.description)}
           </div>
         </div>
