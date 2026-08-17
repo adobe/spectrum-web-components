@@ -98,6 +98,7 @@ const renderGroup = ({
 // so the permutation objects share one uniform shape.
 type Treatment =
   | 'default'
+  | 'default-vertical'
   | 'compact-horizontal'
   | 'compact-vertical'
   | 'quiet'
@@ -105,6 +106,7 @@ type Treatment =
 
 const TREATMENT_LABELS: Record<Treatment, string> = {
   default: 'Default',
+  'default-vertical': 'Default (vertical)',
   'compact-horizontal': 'Compact (horizontal)',
   'compact-vertical': 'Compact (vertical)',
   quiet: 'Quiet',
@@ -118,6 +120,13 @@ const GROUP_PERMUTATIONS = createPermutations([
     compact: [false],
     quiet: [false],
     orientation: ['horizontal'],
+  },
+  {
+    treatment: ['default-vertical'],
+    size: ACTION_GROUP_VALID_SIZES,
+    compact: [false],
+    quiet: [false],
+    orientation: ['vertical'],
   },
   {
     treatment: ['compact-horizontal'],
@@ -211,6 +220,11 @@ const justifiedContent = () =>
         style: 'inline-size: 320px;',
         labels: ['Cut', 'Copy to clipboard', 'Paste'],
       }),
+      renderGroup({
+        justified: true,
+        orientation: 'vertical',
+        style: 'inline-size: 320px;',
+      }),
     ],
     'Justified'
   );
@@ -227,6 +241,34 @@ const focusRingContent = () =>
     'Focus ring (compact, not clipped by neighbors)'
   );
 
+// `inline-size: fit-content` shrinks the wrapper to its widest child's
+// content width without forcing overflow if the row is narrower.
+// `align-items: stretch` then makes the shorter group match, together with
+// the group's own `min-inline-size: 100%`. The second group uses a longer
+// label so a hug regression (uneven right edges) is visible.
+const toolbarContent = () =>
+  row(
+    html`
+      <div
+        role="toolbar"
+        aria-label="Document actions"
+        aria-orientation="vertical"
+        style="display: flex; flex-direction: column; gap: var(--swc-spacing-400); inline-size: fit-content;"
+      >
+        ${renderGroup({
+          orientation: 'vertical',
+          accessibleLabel: 'Edit actions',
+        })}
+        ${renderGroup({
+          orientation: 'vertical',
+          accessibleLabel: 'View actions',
+          labels: ['Zoom in', 'Zoom out', 'Zoom to fit'],
+        })}
+      </div>
+    `,
+    'Toolbar (vertical)'
+  );
+
 const focusMiddleChild = ({
   canvasElement,
 }: {
@@ -237,13 +279,14 @@ const focusMiddleChild = ({
 
 const permutationContent = () => html`
   ${treatmentRows()} ${compactButtonCountContent()} ${justifiedContent()}
-  ${disabledContent()}
+  ${disabledContent()} ${toolbarContent()}
 `;
 
 // VRT stories
 
 // Default/compact/quiet swept across every size, the quiet+compact boolean
-// interaction, justified, and disabled. Rendered once in light/ltr and once
+// interaction, justified, disabled, and a vertical toolbar.
+// Rendered once in light/ltr and once
 // in dark/rtl (single story, one snapshot, both axes covered).
 //
 // Static-color rendering is intentionally not covered here: `static-color`

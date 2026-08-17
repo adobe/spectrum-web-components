@@ -25,9 +25,9 @@ import {
 } from './ActionGroup.types.js';
 
 /**
- * An action group clusters related action buttons together with composite
- * keyboard navigation: one Tab stop into the strip, arrow keys move among
- * `swc-action-button` and `swc-action-menu` children.
+ * An action group clusters related actions together with consistent
+ * spacing, sizing, and orientation. It treats the whole strip as a single
+ * stop in the keyboard sequence, with arrow keys moving between children.
  *
  * This base class owns the accessibility semantics, `accessible-label` →
  * `aria-label` management, `disabled` state contract, and child collection logic.
@@ -76,12 +76,12 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
    * `FocusgroupNavigationController` moves focus with the Up/Down arrow
    * keys instead of Left/Right.
    *
-   * Note: this property does NOT set `aria-orientation` on the host.
-   * `aria-orientation` is only a supported ARIA attribute on roles that
-   * expose it (`toolbar`, `listbox`, `menu`, etc.) — `role="group"` does
-   * not, regardless of the roving-tabindex keyboard model implemented in
-   * JS. Setting it fails axe's `aria-allowed-attr` rule. Matches the same
-   * decision already made for `swc-button-group`.
+   * Note: this property does NOT set `aria-orientation` on the host. The
+   * host's role is fixed to `role="group"`, and `aria-orientation` is only
+   * a supported ARIA attribute on roles that expose it (`toolbar`,
+   * `listbox`, `menu`, etc.), not `group`, regardless of this component's
+   * roving-tabindex keyboard model. Setting it anyway fails axe's
+   * `aria-allowed-attr` rule.
    *
    * @default horizontal
    */
@@ -92,7 +92,7 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
    * Accessible label for the group. Reflected to `aria-label` on the host.
    *
    * Providing a label is recommended whenever the strip has a distinct
-   * purpose (e.g. "Text formatting" or "Alignment"). An empty value removes
+   * purpose (e.g., "Image adjustments" or "Edit"). An empty value removes
    * the `aria-label` attribute.
    */
   @property({ type: String, attribute: 'accessible-label' })
@@ -103,7 +103,7 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
    *
    * Sets `aria-disabled="true"` on the host and propagates `aria-disabled`
    * to each managed child. Children remain keyboard-reachable so that screen
-   * reader users can still discover the group — native `disabled` is not
+   * reader users can still discover the group. Native `disabled` is not
    * applied to children.
    */
   @property({ type: Boolean, reflect: true })

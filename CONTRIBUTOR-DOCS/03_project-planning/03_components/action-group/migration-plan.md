@@ -223,6 +223,7 @@ This full modifier surface will not be carried forward to 2nd-gen.
 | **A1** | `emphasized` group-level propagation | `emphasized` is deprecated in 1st-gen `sp-action-button` with a `window.__swc.warn()` runtime warning and has no announced timeline for 2nd-gen. If `swc-action-button` adds it in a future release, action-group propagation follows as an additive change. |
 | **A2** | Consumer migration guidance for `swc-segmented-control` / `swc-toggle-button-group` | `selects` and `selected` are dropped. When those components ship in 2nd-gen, the consumer migration guide can document the upgrade path. No code change to action-group. |
 | **A3** | `orientation="both"` (vertical and horizontal arrow keys) | Possible future extension of `FocusgroupNavigationController` direction. Not in current scope. |
+| **A4** | `truncate` propagation to slotted children when `justified` | Depends on `swc-action-button` shipping a `truncate` property (mirrors `swc-button`'s existing `truncate`). Once available, `swc-action-group` propagates `truncate` to slotted children when `justified` is set, so equal-width justified buttons clip an overflowing label with an ellipsis instead of wrapping or overflowing their fixed width. Not implemented until `swc-action-button` ships `truncate`. |
 
 ---
 
@@ -245,7 +246,7 @@ These are derived from the 1st-gen implementation, the [accessibility migration 
 | `compact` | `boolean` | `false` | `compact` | **Confirmed** (Figma). Figma labels this "Density: Compact". Buttons visually join; shared borders collapse. Quiet mode disables compact styling (same as 1st-gen). |
 | `disabled` | `boolean` | `false` | `disabled` | **Confirmed** (a11y analysis). New in 2nd-gen. Uses `aria-disabled="true"` on host and propagates to children; children remain keyboard-reachable per APG guidance (SWC-621). |
 | `justified` | `boolean` | `false` | `justified` | **Inferred** (SWC convention). Children fill available width equally. React S2 uses `isJustified`; 2nd-gen SWC convention drops the `is` prefix on booleans; `justified` follows that pattern. |
-| `label` | `string` | `''` | `label` | **Confirmed** (a11y analysis). Reflects to `aria-label` on host. Recommended whenever the strip has a distinct purpose. |
+| `accessibleLabel` | `string` | `''` | `accessible-label` | **Confirmed** (implemented, shipped as `accessible-label`, not `label`). Reflects to `aria-label` on host. Named `accessible-label` rather than `label` to keep the attribute unambiguous as accessible-name-only. It produces no visible rendering, unlike properties elsewhere in 2nd-gen that use "label" to mean visible text. Matches the same rename already shipped for `swc-action-button` (see its migration plan's B7). Recommended whenever the strip has a distinct purpose. |
 | `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | `orientation` | **Inferred** (Figma "Orientation" property, React S2 `orientation` prop, established `swc-button-group` convention). Breaking rename from `vertical` boolean. 1st-gen `vertical` gets `@deprecated` JSDoc + `window.__swc.warn()` runtime warning. |
 | `quiet` | `boolean` | `false` | `quiet` | **Confirmed** (1st-gen carryover). Propagates to children. Quiet disables compact border-join styling. |
 | `selected` | removed | n/a | removed | **Dropped**. No accessible path to forward `aria-pressed`/`aria-checked` from `swc-action-button` host to its inner `<button>`; action-button's forwarding covers only `aria-haspopup`/`aria-expanded`. Selection UX moves to `swc-toggle-button-group` / `swc-segmented-control`. |
@@ -316,7 +317,7 @@ Source: [accessibility migration analysis](./accessibility-migration-analysis.md
 - **Child roles:** `swc-action-button` stays `role="button"` only. No `role="radio"` or `role="checkbox"` on children.
 - **`aria-orientation`:** Not set on the host. `role="group"` does not support `aria-orientation` per the ARIA spec, regardless of the roving-tabindex keyboard model `FocusgroupNavigationController` implements — setting it fails axe's `aria-allowed-attr` rule. Matches the decision already made for `swc-button-group`. Keyboard direction is driven entirely by the `orientation` property via `FocusgroupNavigationController.setOptions({ direction })`.
 - **`aria-disabled`:** When `disabled` is set on the group, the host receives `aria-disabled="true"` and each child receives `aria-disabled="true"`. Children remain in the Tab/Arrow sequence and are discoverable but must not activate. `ButtonBase.getForwardedButtonAttributes()` currently derives `aria-disabled` only from the component's own `pending` state — it does not forward a host-level `aria-disabled` attribute set by an external parent. **Decision (Phase 3):** add `aria-disabled` to action-button's `attributeChangedCallback` intercept, following the same pattern as `aria-haspopup`/`aria-expanded`.
-- **Group name:** `label` → `aria-label` on host. `aria-labelledby` remains valid. Labeling the group is recommended whenever the strip has a distinct purpose.
+- **Group name:** `accessible-label` → `aria-label` on host. `aria-labelledby` remains valid. Labeling the group is recommended whenever the strip has a distinct purpose.
 - **`FormFieldMixin`:** Must not be applied. `swc-action-group` is a composite keyboard widget, not a form field. SWC-1612 is a ticket that uses `FormFieldMixin` for `sp-action-group`; that must not carry into the 2nd-gen migration. The `label` property could be mistaken for a field-label association, but it is used only to provide `aria-label` on the group — not for form association.
 - **Toolbar composition:** Storybook and docs must show `role="toolbar"` on an outer wrapper with named `swc-action-group` clusters as inner groups, per the APG toolbar example:
 
@@ -428,7 +429,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 
 - [x] Host always `role="group"`; never author-overridable; no `toolbar`, `radiogroup`, or other role
 - [x] `aria-orientation` is **not** set on the host — `role="group"` doesn't support it per the ARIA spec (matches `swc-button-group`); `FocusgroupNavigationController` direction is wired from the `orientation` property directly, independent of any ARIA attribute
-- [x] `label` → `aria-label` on host; empty `label` removes `aria-label`
+- [x] `accessible-label` → `aria-label` on host. Empty `accessible-label` removes `aria-label`
 - [x] `swc-action-button` children stay `role="button"` only; no `role="radio"` or `role="checkbox"` assigned by action-group
 - [x] Group `disabled`: host `aria-disabled="true"`, children `aria-disabled="true"`; children remain keyboard-reachable (SWC-621)
 
@@ -452,7 +453,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 #### Behavior
 
 - [x] Host `role="group"` in all orientations and density combinations
-- [x] `label` → `aria-label` on host; empty label removes it
+- [x] `accessible-label` → `aria-label` on host. Empty `accessible-label` removes it
 - [x] `aria-orientation` is never present on the host in either orientation (matches `swc-button-group`'s existing Playwright assertion pattern); `orientation="vertical"` still drives `FocusgroupNavigationController` direction
 - [x] Roving tabindex: one `tabindex="0"`, rest `tabindex="-1"`; verified after slot change and after click
 - [x] Group `disabled`: host `aria-disabled="true"`; all children `aria-disabled="true"`; Tab reaches group; arrow moves within
@@ -474,17 +475,18 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 
 #### General
 
-- [ ] JSDoc on all public props, slots, events, and CSS custom properties
-- [ ] Storybook stories: overview, anatomy (slot types), sizes, styles (default/quiet), density (default/compact), orientation (horizontal/vertical), justified, disabled, static-color, toolbar wrapper composition (`ToolbarComposition` story added ahead of this pass, to back the a11y-snapshot test; still needs the MDX prose pass below)
-- [ ] Distinguish `swc-action-group` vs `swc-button-group` in docs: composite keyboard navigation vs independent Tab stops
+- [x] JSDoc on all public props, slots, events, and CSS custom properties
+- [x] Storybook stories: overview, anatomy (slot types), sizes, styles (default/quiet), density (default/compact), orientation (horizontal/vertical), justified, static-color, disabled, toolbar wrapper composition. `static-color` is documented (`### Static colors` in `action-group.mdx`, tagged `'options', '!test'`) but excluded from automated aXe/VRT coverage, since action-group has no static-color-specific CSS of its own; it only propagates the attribute to children, and propagation itself is covered by unit tests (`action-group.test.ts`).
+- [x] Distinguish `swc-action-group` vs `swc-button-group` in docs: composite keyboard navigation vs independent Tab stops
 
 #### Breaking changes
 
-- [ ] Consumer migration guide: `vertical` → `orientation="vertical"`
-- [ ] Consumer migration guide: remove `role` overrides from `<sp-action-group>`; move `role="toolbar"` to a parent wrapper
-- [ ] Consumer migration guide: `selects` and `selected` removed; consumers using selection UX should migrate to `swc-toggle-button-group` (toggle/multi) or `swc-segmented-control` (exclusive choice) when those ship in 2nd-gen
-- [ ] Consumer migration guide: children no longer receive `role="radio"`/`role="checkbox"` from action-group; update any consumer code or tests that asserted those roles
-- [ ] Consumer migration guide: `--mod-actiongroup-*` properties removed; document any `--swc-*` replacements
+- [x] Consumer migration guide: `vertical` → `orientation="vertical"`
+- [x] Consumer migration guide: `label` → `accessible-label`. Both reflect to `aria-label` on host, only the attribute name changed
+- [x] Consumer migration guide: remove `role` overrides from `<sp-action-group>` and move `role="toolbar"` to a parent wrapper
+- [x] Consumer migration guide: `selects` and `selected` removed. Consumers using selection UX should migrate to `swc-toggle-button-group` (toggle/multi) or `swc-segmented-control` (exclusive choice) when those ship in 2nd-gen
+- [x] Consumer migration guide: children no longer receive `role="radio"`/`role="checkbox"` from action-group. Update any consumer code or tests that asserted those roles
+- [x] Consumer migration guide: `--mod-actiongroup-*` properties removed. Document any `--swc-*` replacements
 
 ### Review
 
@@ -493,6 +495,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 - [ ] PR created with description referencing Epic SWC-2212
 - [ ] Peer engineer sign-off
 - [ ] All `TODO` comments added to code during implementation are audited and filed as follow-up Jira tickets under Epic SWC-2212 (see Deferred implementation tickets below) — do this once, at the end, after all `TODO`s for the migration are in
+- [ ] Consolidate `accessibility-migration-analysis.md` and `rendering-and-styling-migration-analysis.md` into this plan: fold any content not already captured here, then delete both files. The accessibility analysis's selection-state guidance (`selects`/`selected` treated as live API) is stale and must NOT be carried forward. B7 already resolved this as Dropped. Do this once, at the end, after all other Review items are complete.
 
 ---
 
@@ -528,6 +531,7 @@ Create these tickets before this migration PR closes. Link each to Epic SWC-2212
 - [Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md)
 - [FocusgroupNavigationController source](../../../../2nd-gen/packages/core/controllers/focusgroup-navigation-controller/src/)
 - [Action button accessibility migration analysis](../action-button/accessibility-migration-analysis.md)
+- [Action button migration plan — B7 `label` → `accessible-label` rename rationale](../action-button/migration-plan.md#must-ship--breaking-or-a11y-required)
 - [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md)
 - [Button group accessibility migration analysis](../button-group/accessibility-migration-analysis.md)
 - [React Spectrum S2 ActionButtonGroup](https://react-spectrum.adobe.com/s2/ActionButtonGroup.html)

@@ -35,10 +35,10 @@ test.describe('ActionGroup - ARIA Snapshots', () => {
       'swc-action-group'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - group "Text formatting":
-        - button "Bold"
-        - button "Italic"
-        - button "Underline"
+      - group "Image adjustments":
+        - button "Crop"
+        - button "Rotate"
+        - button "Flip"
     `);
   });
 
@@ -63,12 +63,12 @@ test.describe('ActionGroup - ARIA Snapshots', () => {
       'swc-action-group'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - group "horizontal":
-        - button "horizontal 1"
-        - button "horizontal 2"
-      - group "vertical":
-        - button "vertical 1"
-        - button "vertical 2"
+      - group "Image adjustments, horizontal":
+        - button "Crop"
+        - button "Rotate"
+      - group "Image adjustments, vertical":
+        - button "Crop"
+        - button "Rotate"
     `);
   });
 

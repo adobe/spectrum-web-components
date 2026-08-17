@@ -39,6 +39,8 @@
 
 :host([orientation="vertical"]) .swc-ActionGroup {
   flex-direction: column;
+  inline-size: max-content;
+  min-inline-size: 100%;
 }
 
 /* ── Sizes ────────────────────────────────────────── */
