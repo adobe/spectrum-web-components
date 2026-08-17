@@ -200,7 +200,7 @@ export function groupOpacityKeyframes(total: number): Keyframe[] {
 // each fading over `ROW_FADE`, with `ROW_HOLD` assembled between. Grouping by
 // row (rather than per cell) both removes the falling/scaling motion and keeps
 // this loop shorter than the full per-cell build.
-const ROW_STEP = 4;
+const ROW_STEP = 6;
 const ROW_FADE = 16;
 const ROW_HOLD = ms2f(600);
 
