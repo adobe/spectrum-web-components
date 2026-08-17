@@ -848,10 +848,6 @@
   overflow: hidden;
 }
 
-.swc-PromptField-file-input {
-  display: none;
-}
-
 /* Upload button (quiet, left side) */
 
 .swc-PromptField-upload {
