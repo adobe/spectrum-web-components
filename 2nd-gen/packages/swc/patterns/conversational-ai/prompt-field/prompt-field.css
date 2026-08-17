@@ -107,12 +107,11 @@
 /* stylelint-disable no-descending-specificity -- flagged pairs are mutually exclusive variant/state combinations, never simultaneously active. */
 
 .swc-PromptField-outer-border {
+  --_swc-prompt-field-outer-shadow: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 0%));
+
   display: flex;
   padding: 6px;
   container-type: inline-size;
-
-  --_swc-prompt-field-outer-shadow: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 0%));
-
   background: linear-gradient(to right in oklch, var(--_swc-prompt-field-outer-stop-1) 0%, var(--_swc-prompt-field-outer-stop-2) 37%, var(--_swc-prompt-field-outer-stop-3) 77%);
   border-radius: 30px;
   box-shadow:
@@ -215,6 +214,9 @@
 
 /* Rotation/translation scale with the card's own width via atan()/clamp() below. */
 .swc-PromptField-box::before {
+  --_swc-prompt-field-rotation: 7deg;
+  --_swc-prompt-field-translation: 44px;
+
   position: absolute;
   inset: -44px;
   z-index: -1;
@@ -224,9 +226,6 @@
     radial-gradient(70% 50% at 40% 80% in oklch, oklch(from light-dark(oklch(from var(--swc-prompt-field-brand-color) 95.64% 0.036 calc(h + 0.6)), oklch(from var(--swc-prompt-field-brand-color) 31.55% 0.1704 calc(h - 24.5))) l c h / var(--_swc-prompt-field-con-hue-opacity)), transparent);
   pointer-events: none;
   content: "";
-
-  --_swc-prompt-field-rotation: 7deg;
-  --_swc-prompt-field-translation: 44px;
 }
 
 @supports (rotate: atan(1px / 1cqw)) {
@@ -499,14 +498,13 @@
    ───────────────────────────────────── */
 
 .swc-PromptField-artifacts--single {
+  /* Reserves clearance for the dismiss badge floating above the tile's top-right corner, same as --multiple below. */
+  --_swc-prompt-field-artifact-badge-clearance: 16px;
+
   display: flex;
   flex-wrap: wrap;
   gap: token("spacing-300");
   align-items: start;
-
-  /* Reserves clearance for the dismiss badge floating above the tile's top-right corner, same as --multiple below. */
-  --_swc-prompt-field-artifact-badge-clearance: 16px;
-
   padding-block-start: var(--_swc-prompt-field-artifact-badge-clearance);
 }
 
@@ -532,13 +530,13 @@
 }
 
 .swc-PromptField-artifacts--multiple {
-  min-inline-size: 0;
-
   /* Dismiss badges are centered on each tile's top-right corner (see
    * upload-artifact.css), so half of the larger (32px media) badge floats
    * above the tile. Reserve that much clearance above the row so the
    * scroll container's overflow-y: hidden doesn't clip it flat. */
   --_swc-prompt-field-artifact-badge-clearance: 16px;
+
+  min-inline-size: 0;
 }
 
 .swc-PromptField-artifacts-row {
@@ -547,13 +545,13 @@
 }
 
 .swc-PromptField-artifacts-viewport {
+  --_swc-prompt-field-artifact-fade-solid: token("background-layer-2-color");
+
   position: relative;
   flex: 1 1 auto;
   min-inline-size: 0;
   border-radius: token("corner-radius-100");
   overflow: visible;
-
-  --_swc-prompt-field-artifact-fade-solid: token("background-layer-2-color");
 }
 
 /* Spans the badge-clearance strip too (not just the tile height): a
@@ -669,6 +667,9 @@
 
 .swc-PromptField-artifacts-scroll-prev,
 .swc-PromptField-artifacts-scroll-next {
+  --_swc-prompt-field-artifact-scroll-button-background: token("gray-100");
+  --_swc-prompt-field-artifact-scroll-icon-transform: none;
+
   display: inline-flex;
   position: absolute;
   inset-block-start: calc((var(--_swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px)) / 2);
@@ -685,9 +686,6 @@
   border-radius: token("corner-radius-800");
   cursor: pointer;
   transform: translateY(-50%);
-
-  --_swc-prompt-field-artifact-scroll-button-background: token("gray-100");
-  --_swc-prompt-field-artifact-scroll-icon-transform: none;
 }
 
 /* aria-disabled, not the disabled attribute, and hidden with opacity, not
@@ -737,9 +735,9 @@
 }
 
 .swc-PromptField-artifacts-scroll-prev {
-  inset-inline-start: 0;
-
   --_swc-prompt-field-artifact-scroll-icon-transform: scaleX(-1);
+
+  inset-inline-start: 0;
 }
 
 .swc-PromptField-artifacts-scroll-prev::before {
@@ -969,15 +967,15 @@
 
 /* Typography lives on the slot so it inherits into slotted legal content without ::slotted() per property (see illustrated-message). The neutral link-color vars inherit down to inline links in a .swc-Typography--links paragraph, giving them the subdued secondary color instead of accent blue. */
 slot[name="legal"] {
-  font-size: token("font-size-75");
-  line-height: token("line-height-font-size-75");
-  color: token("neutral-content-color-default");
-  text-align: center;
-
   --swc-link-text-color-default: token("neutral-content-color-default");
   --swc-link-text-color-hover: token("neutral-content-color-hover");
   --swc-link-text-color-down: token("neutral-content-color-down");
   --swc-link-text-color-focus: token("neutral-content-color-key-focus");
+
+  font-size: token("font-size-75");
+  line-height: token("line-height-font-size-75");
+  color: token("neutral-content-color-default");
+  text-align: center;
 }
 
 ::slotted([slot="legal"]) {
