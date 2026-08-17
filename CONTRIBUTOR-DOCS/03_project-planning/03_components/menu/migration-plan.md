@@ -37,8 +37,9 @@
     - [Related components and ordering notes](#related-components-and-ordering-notes)
     - [User confirmation needed](#user-confirmation-needed)
 - [Changes overview](#changes-overview)
-    - [Must ship — breaking or a11y-required](#must-ship--breaking-or-a11y-required)
-    - [Additive — ships when ready, zero breakage for consumers already on 2nd-gen](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)
+    - [Must ship](#must-ship)
+    - [Additive](#additive)
+    - [Deferred to later phases](#deferred-to-later-phases)
     - [Disposition of remaining 1st-gen members](#disposition-of-remaining-1st-gen-members)
 - [2nd-gen API decisions](#2nd-gen-api-decisions)
     - [Public API](#public-api)
@@ -65,7 +66,7 @@
 
 > **Epic [SWC-1980](https://jira.corp.adobe.com/browse/SWC-1980)** · Planning output. Must be reviewed before implementation begins.
 >
-> This plan scopes **`swc-menu`** only: the trigger + a `PlacementController`-anchored surface + shadow-internal `role="menu"` host (see [Architecture](#architecture-core-vs-swc-split)). `swc-menu-item` and `swc-menu-group` each already have a standalone accessibility migration analysis in `CONTRIBUTOR-DOCS` and are expected to get their own `migration-plan.md` — this plan treats them as **dependencies**, not in-scope deliverables (see [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites)). A `swc-menu-separator` a11y doc also exists, but this plan decided against building that element at all ([Q14](#blockers-and-open-questions)) — that decision needs epic-level confirmation since it conflicts with that doc's premise. Selection (`selects`/`value`/`selectedItems`/`selectOrToggleItem`) is the one exception to that boundary: for this first pass it's scoped to `swc-menu` only — one selection mode for the whole menu, matching React Spectrum's own foundational `Menu.selectionMode` pattern (section-level/mixed selection is documented there as a distinctly more advanced pattern, introduced later, not the basic case). So Phase B stays **in this plan** — see [Implementation phasing](#implementation-phasing). Per-group independent selection mode (enabling mixed menus, different sections running different modes at once) is a real future need, noted in [Behavioral semantics — Mixed menus](#behavioral-semantics), but explicitly **out of scope for this pass** — not scheduled, not a `swc-menu-group` plan dependency yet. [B1](#must-ship--breaking-or-a11y-required), [B3](#must-ship--breaking-or-a11y-required), and [B8](#must-ship--breaking-or-a11y-required) below touch `swc-menu-group`/`swc-menu-item` because `swc-menu`'s own architecture forces them; treat those as provisional pending sign-off from the sibling plans, not as this plan overriding their ownership. The 1st-gen API surface below documents the full `@spectrum-web-components/menu` package (Menu, MenuItem, MenuGroup, MenuDivider) for reference, since 1st-gen ships them together.
+> This plan scopes **`swc-menu`** only: the trigger + a `PlacementController`-anchored surface + shadow-internal `role="menu"` host (see [Architecture](#architecture-core-vs-swc-split)). `swc-menu-item` and `swc-menu-group` each already have a standalone accessibility migration analysis in `CONTRIBUTOR-DOCS` and are expected to get their own `migration-plan.md` — this plan treats them as **dependencies**, not in-scope deliverables (see [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites)). A `swc-menu-separator` a11y doc also exists, but this plan decided against building that element at all ([Q14](#blockers-and-open-questions)) — that decision needs epic-level confirmation since it conflicts with that doc's premise. Selection (`selects`/`value`/`selectedItems`/`selectOrToggleItem`) is the one exception to that boundary: for this first pass it's scoped to `swc-menu` only — one selection mode for the whole menu, matching React Spectrum's own foundational `Menu.selectionMode` pattern (section-level/mixed selection is documented there as a distinctly more advanced pattern, introduced later, not the basic case). So Phase B stays **in this plan** — see [Implementation phasing](#implementation-phasing). Per-group independent selection mode (enabling mixed menus, different sections running different modes at once) is a real future need, noted in [Behavioral semantics — Mixed menus](#behavioral-semantics), but explicitly **out of scope for this pass** — not scheduled, not a `swc-menu-group` plan dependency yet. [B1](#deferred-to-later-phases), [B3](#deferred-to-later-phases), and [B8](#must-ship) below touch `swc-menu-group`/`swc-menu-item` because `swc-menu`'s own architecture forces them; treat those as provisional pending sign-off from the sibling plans, not as this plan overriding their ownership. The 1st-gen API surface below documents the full `@spectrum-web-components/menu` package (Menu, MenuItem, MenuGroup, MenuDivider) for reference, since 1st-gen ships them together.
 
 ---
 
@@ -84,7 +85,7 @@
 
 ### Most blocking open questions
 
-- **[Q4](#blocking-for-swc-menu)** — name the APG-vs-React-Spectrum-S2 conflict on disabled-row focusability ([B7](#must-ship--breaking-or-a11y-required)) as an explicit decision instead of an unstated default.
+- **[Q4](#blocking-for-swc-menu)** — name the APG-vs-React-Spectrum-S2 conflict on disabled-row focusability ([B7](#must-ship)) as an explicit decision instead of an unstated default.
 - **[Q14](#blockers-and-open-questions)** — decided (reuse `swc-divider`, no `swc-menu-separator` element), but this drops a planned component from the epic and conflicts with the existing menu-separator a11y doc; needs confirmation at the epic level before it's final.
 
 ---
@@ -245,7 +246,7 @@ Representative simplified shape (not exhaustive; mobile-drilldown branches omitt
 | `escapeKeyBehavior` | `'clearSelection' \| 'none'` | `'clearSelection'` | What <kbd>Escape</kbd> does to the current selection. React Spectrum's own docs carry a caveat this plan should keep: "Most experiences should not modify this option as it eliminates a keyboard user's ability to easily clear selection." |
 | `autoFocus` | `boolean \| FocusStrategy` | — | Initial focus placement on open. |
 | `shouldFocusWrap` | `boolean` | — | Circular keyboard navigation. |
-| `size` | `'S' \| 'M' \| 'L' \| 'XL'` | `'M'` | Matches the Figma sizes ([A1](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)). |
+| `size` | `'S' \| 'M' \| 'L' \| 'XL'` | `'M'` | Matches the Figma sizes ([A1](#additive)). |
 | `hideLinkOutIcon` | `boolean` | — | Hides the default link-out icon on `target="_blank"` items. |
 
 ### MenuItem
@@ -282,7 +283,7 @@ Representative simplified shape (not exhaustive; mobile-drilldown branches omitt
 
 | Prop | Type | Notes |
 | --- | --- | --- |
-| `isUnavailable` | `boolean` | Default `false`. When true, disables the item's default action and shows contextual help (info icon instead of chevron) instead. Matches the Figma `Unavailable` property ([A3](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)). |
+| `isUnavailable` | `boolean` | Default `false`. When true, disables the item's default action and shows contextual help (info icon instead of chevron) instead. Matches the Figma `Unavailable` property ([A3](#deferred-to-later-phases)). |
 
 ### Divider
 
@@ -330,15 +331,15 @@ Two prose constraints from the React Spectrum docs, not yet in the [Menu accessi
 
 The `swc-action-menu` and `swc-menu-item` plans should each use `PlacementController` the same way — see [Q13](#cross-component-follow-ups-not-blocking-swc-menu) for the a11y-doc updates that follow from this.
 
-`swc-menu-item`'s `submenu` slot (cascading submenus) anchors the same way, directly via `PlacementController` in the item's own shadow tree — see [B3](#must-ship--breaking-or-a11y-required).
+`swc-menu-item`'s `submenu` slot (cascading submenus) anchors the same way, directly via `PlacementController` in the item's own shadow tree — see [B3](#deferred-to-later-phases).
 
 ### Implementation phasing
 
 `swc-menu`'s own implementation ships in three stages, each substantially smaller than one big PR:
 
-- **Phase A — bare menu-button host (this pass).** Trigger, `PlacementController` anchoring, shadow-internal `role="menu"`, plain `swc-menu-item` children only — label plus a single leading visual (icon **or** image, not both as separate features, and not combined with description/value/badge/unavailable content). Disabled rows and link items are in scope. **No submenus, no `swc-menu-group`, no divider/separator.** Applies: [B2](#must-ship--breaking-or-a11y-required), [B4–B10](#must-ship--breaking-or-a11y-required) (not B1 or B3 — see Phase B). This is the smallest reviewable slice: a flat list of commands behind a trigger, matching the menu-button APG pattern with nothing else layered on. Nothing blocks starting this now.
-- **Phase B — structural completeness.** Not scheduled; ships when there's a concrete need. Adds `swc-menu-item` submenus (anchored via `PlacementController`, [B3](#must-ship--breaking-or-a11y-required)), `swc-menu-group` composition ([B1](#must-ship--breaking-or-a11y-required) — the inheritance-break decision applies whenever this ships), `swc-divider` as separator ([Q14](#blockers-and-open-questions)), and the richer item content already scoped as Additive: [A3](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) (`Unavailable`), [A5](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) (highlight badge), [A6](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) (external-link indicator).
-- **Phase C — selection engine.** [A2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen): a single selection mode for the whole menu (single/multiple), matching React Spectrum's own foundational `Menu.selectionMode` pattern — not per-group. Ships as a follow-up ticket **under this same plan**, not a separate `migration-plan.md`, whenever it's scheduled ([Q2](#blockers-and-open-questions): not blocking — the Figma-vs-a11y-doc conflict doesn't need resolving first, it's just something to clean up whenever this phase is picked up). Per-group independent selection mode (mixed menus, see [Behavioral semantics — Mixed menus](#behavioral-semantics)) is a further-future enhancement beyond Phase C — React Spectrum's own docs treat it as an advanced pattern layered on top of the basic case, not something to design into the first selection pass. Not scheduled.
+- **Phase A — bare menu-button host (this pass).** Trigger, `PlacementController` anchoring, shadow-internal `role="menu"`, plain `swc-menu-item` children only — label plus a single leading visual (icon **or** image, not both as separate features, and not combined with description/value/badge/unavailable content). Disabled rows and link items are in scope. **No submenus, no `swc-menu-group`, no divider/separator.** Applies: [B2](#must-ship), [B4–B10](#must-ship) (not B1 or B3 — see Phase B). This is the smallest reviewable slice: a flat list of commands behind a trigger, matching the menu-button APG pattern with nothing else layered on. Nothing blocks starting this now.
+- **Phase B — structural completeness.** Not scheduled; ships when there's a concrete need. Adds `swc-menu-item` submenus (anchored via `PlacementController`, [B3](#deferred-to-later-phases)), `swc-menu-group` composition ([B1](#deferred-to-later-phases) — the inheritance-break decision applies whenever this ships), `swc-divider` as separator ([Q14](#blockers-and-open-questions)), and the richer item content already scoped as Additive: [A3](#deferred-to-later-phases) (`Unavailable`), [A5](#deferred-to-later-phases) (highlight badge), [A6](#deferred-to-later-phases) (external-link indicator).
+- **Phase C — selection engine.** [A2](#deferred-to-later-phases): a single selection mode for the whole menu (single/multiple), matching React Spectrum's own foundational `Menu.selectionMode` pattern — not per-group. Ships as a follow-up ticket **under this same plan**, not a separate `migration-plan.md`, whenever it's scheduled ([Q2](#blockers-and-open-questions): not blocking — the Figma-vs-a11y-doc conflict doesn't need resolving first, it's just something to clean up whenever this phase is picked up). Per-group independent selection mode (mixed menus, see [Behavioral semantics — Mixed menus](#behavioral-semantics)) is a further-future enhancement beyond Phase C — React Spectrum's own docs treat it as an advanced pattern layered on top of the basic case, not something to design into the first selection pass. Not scheduled.
 
 Per [Q5](#blockers-and-open-questions), `picker`/`combobox`/`action-menu`'s dependency on selection doesn't change Phase C's timing: none has a concrete migration scheduled, so there's no case for pulling selection into Phase A pre-emptively. If a real deadline shows up later, pull a minimal single-select into scope then — cheaper than carrying unused selection code through review now on a hypothetical.
 
@@ -370,80 +371,58 @@ Per [Q5](#blockers-and-open-questions), `picker`/`combobox`/`action-menu`'s depe
 > - **Breaking changes** are assessed on merit — some must ship now to avoid a second, more disruptive migration event later.
 > - **Additive changes** can be deferred and will not cause consumer breakage when they do ship.
 
-**Recommended phasing:** most of the Must-ship items below ship in **Phase A** (this pass) — a bare menu-button host with plain items, no submenus, no groups, no dividers. [B1](#must-ship--breaking-or-a11y-required) and [B3](#must-ship--breaking-or-a11y-required) are **Phase B** (structural completeness — submenus, groups, dividers), not scheduled. [A2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) (the selection engine) is **Phase C**, shipped as a follow-up whenever scheduled — not gated on [Q2](#blockers-and-open-questions), which is decided (not blocking). See [Implementation phasing](#implementation-phasing) for the full breakdown.
+This pass ships a simple menu: trigger, `role="menu"` list, plain items (label + icon or image), roving-tabindex navigation, `PlacementController` for anchoring. Everything else (submenus, groups, dividers, selection) is deferred — see [Implementation phasing](#implementation-phasing).
 
-### Must ship — breaking or a11y-required
+### Must ship
 
-#### API and naming
-
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
-| --- | --- | --- | --- | --- |
-| **B1** *(Phase B, not this pass — no `swc-menu-group` in the first pass)* | `swc-menu-group` no longer extends the full menu host | `MenuGroup extends Menu` — inherits selection engine, roving tabindex, `value`, etc., and overrides `ownRole`/`controlsRovingTabindex` to suppress most of it | `swc-menu-group` is a plain grouping/labeling primitive (per a11y analysis); no selection or roving-tabindex API of its own | Consumers using `sp-menu-group` only for grouping + `header` slot see no functional change; any (unsupported) reliance on inherited `Menu` API on a group instance breaks. Source: [Menu group a11y doc](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-2nd-gen). |
-| **B2** | Link items drop the proxy double-activation pattern | `href` items fire `change` via `Menu`'s click handling in addition to native anchor navigation ([SWC-923](https://jira.corp.adobe.com/browse/SWC-923)) | Real `<a href>` descendant is the only activation path; no proxy `change` dispatch for link rows | Consumers listening for `change` on link-style items must switch to listening on the anchor itself or the native `click`/navigation. |
-| **B3** *(Phase B, not this pass — no submenus in the first pass)* | Submenu implementation moves off `sp-overlay` + `Menu`'s overlay-event relay | `MenuItem` embeds `sp-overlay`; `Menu.handleSubmenuOpened/Closed` relay `sp-menu-submenu-opened`/`closed` | Submenu trigger + child `role="menu"` live in `swc-menu-item`'s shadow tree, positioned directly via the shared `PlacementController` — the same pattern `Tooltip.base.ts` already uses — **not** wrapped in `<swc-popover>` (decided, see [Architecture](#architecture-core-vs-swc-split)) | Consumers depending on the `sp-menu-submenu-opened`/`closed` event names or on `sp-overlay` internals need the [consumer migration guide](https://jira.corp.adobe.com/browse/SWC-1223) treatment for the new event/anchoring model. |
-| **B4** | In-menu keyboard navigation controller | `RovingTabindexController` | `FocusgroupNavigationController` ([PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129) — already shipped; `Tabs.base.ts` already consumes it) | Internal implementation change; no public API impact expected, but any consumer code reaching into `rovingTabindexController` (marked `protected`, so unlikely) breaks. |
-| **B9** | `ignore` property dropped | Exists so a descendant `sp-menu` can opt out of an ancestor's selection/roving-tabindex management — a use case tied to `Menu`-family elements nesting inside each other (e.g. `MenuGroup extends Menu`) | Not carried forward: once `swc-menu-group` stops extending `swc-menu` ([B1](#must-ship--breaking-or-a11y-required)) and submenus move to `swc-menu-item`'s own shadow tree ([B3](#must-ship--breaking-or-a11y-required)), the ancestor-scoped-management model this property exists for no longer exists | No known external consumer use case identified from the packages checked in [Dependencies](#dependencies); flag in the consumer migration guide in case one exists. |
-| **B10** | `getNeighboringFocusableElement()` not carried forward as public API | Public method for finding the next/previous focusable menu item, used internally alongside `RovingTabindexController` | Superseded by `FocusgroupNavigationController` ([B4](#must-ship--breaking-or-a11y-required)) internals; not re-exposed as a public `Menu` method | Consumers calling this method directly (unlikely, given its low-level nature) need an alternative; none identified from the 1st-gen consumer packages checked. |
-
-#### Styling and visuals
-
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
-| --- | --- | --- | --- | --- |
-| **B5** | `--mod-*` modifier surface removed | Limited but present (e.g. `--mod-menu-item-label-icon-color-disabled`) | No `--mod-*` properties exposed; new `--swc-*` properties only where justified | Consumers overriding `--mod-menu-item-*` must migrate to any newly-exposed `--swc-*` equivalent or drop the override. |
-
-#### Accessibility and behavior
-
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
-| --- | --- | --- | --- | --- |
-| **B6** | Internal `role="menu"` moves into shadow DOM | 1st-gen `sp-menu` sets `role="menu"` (`this.ownRole`) directly on its own custom element host, in `connectedCallback`, unconditionally unless the author pre-set a `role` attribute or set `ignore` (`Menu.ts:1633-1637`: `if (!this.hasAttribute('role') && !this.ignore) { this.setAttribute('role', this.ownRole); }`) | `role="menu"` lives in `swc-menu`'s shadow tree; the custom element host is not the ARIA menu node | Consumers relying on `sp-menu`'s host element carrying `role="menu"`/menu semantics directly must adopt the full `swc-menu` host (trigger + `PlacementController`-positioned surface + shadow menu) instead of the bare list. Source: [Menu a11y doc — What it is not](./accessibility-migration-analysis.md#what-it-is-not); confirmed against 1st-gen source. |
-| **B7** | Disabled row semantics standardized | Disabled handling varies by path | `aria-disabled="true"`, no action on Enter/Space, item **stays focusable and in the roving set** — this is `FocusgroupNavigationController`'s own default (`skipDisabled: false`), not an override `swc-menu` has to implement; the controller's stated best practice is "use `aria-disabled=\"true\"` instead of native `disabled`" for exactly this reason. Matches WAI-ARIA APG's "focusability of disabled controls" guidance; overrides React Spectrum's `disabledKeys`, which removes disabled items from focus entirely — pending sign-off, [Q4](#blocking-for-swc-menu) | Non-breaking for consumers already using `disabled`; clarifies previously inconsistent behavior. |
-| **B8** | No interactive descendants in `swc-menu-item` content | Not explicitly enforced in 1st-gen | Only textual/decorative content (text, icons, images) allowed as item children; interactive descendants (buttons, etc.) break keyboard/AT navigation and should be disallowed or warned against | New constraint sourced from [React Spectrum's Menu docs](https://react-spectrum.adobe.com/Menu) ("Interactive elements... within menu items are not allowed"), not currently stated in the [Menu a11y analysis](./accessibility-migration-analysis.md). Recommend folding into that doc and, since it is item-content-shaped, the `swc-menu-item` a11y doc — see [Q10](#cross-component-follow-ups-not-blocking-swc-menu), which also reconciles this with the Figma "Notifications" example's switch-styled rows. Any 1st-gen consumer relying on an interactive descendant inside `sp-menu-item` would need to restructure. |
-
-### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
-
-| # | What is added | Notes |
+| # | What changes | 1st-gen → 2nd-gen |
 | --- | --- | --- |
-| **A1** | `xl` size | Figma shows `S / M / L / XL` for menu group and item sizing; 1st-gen only ships `s / m / l`. Consistent with the `xl`-size pattern already added elsewhere in 2nd-gen. |
-| **A2** | Selection semantics: on `swc-menu`, a top-level selection mode for ungrouped items plus aggregate `value`/`selectedItems` across the whole menu; on `swc-menu-group`, its own independent selection mode (decided, see [Behavioral semantics — Mixed menus](#behavioral-semantics)) — together these enable **mixed menus**, different sections running different selection modes at once | Deferred per [a11y Migration scope](./accessibility-migration-analysis.md#migration-scope-current) — the reviewed Figma file's dedicated "Changes in S2 Menu" frame and a live multi-select "Examples" frame show this is real design intent, not just a property-table inference, but decided ([Q2](#blockers-and-open-questions)) that this doesn't need to block anything — it stays Additive regardless. Also decided ([Q5](#blockers-and-open-questions)) to keep this Additive rather than pull it into Phase A for `picker`/`combobox`, since neither has a scheduled migration yet. Whenever this phase is picked up, the `swc-menu`-owned half moves to Must-ship **in this same plan**; the `swc-menu-group`-owned half is that plan's to implement, coordinated but not authored here. |
-| **A3** *(Phase B, not this pass)* | `Unavailable` menu item state | New in the Figma source; matches React S2's `UnavailableMenuItemTrigger` (contextual-help-on-hover pattern, also shown in the Figma "Examples" frame via an info icon + description tooltip on a "Delete" row). Figma ships the contextual-help bubble as its own sized component (S/M/L/XL, matching the triggering item's size), not a single fixed-size tooltip. No 1st-gen equivalent. |
-| **A4** *(this pass, Phase A)* | `Show thumbnail` as an alternative to icon | New in the Figma source. Phase A's leading visual is icon **or** image/thumbnail — one or the other, not both, and not combined with description/value/badge/unavailable content (those stay Phase B). No 1st-gen equivalent (1st-gen only has the `icon` slot). |
-| **A5** *(Phase B, not this pass)* | `Show highlight badge` menu item option | New in the Figma source (e.g. a "New" badge at the row's trailing edge). No 1st-gen equivalent. |
-| **A6** *(Phase B, not this pass)* | External-link indicator | Matches React S2's `hideLinkOutIcon`/link-out icon behavior for `target="_blank"` items. 1st-gen has no dedicated link-out affordance. |
-| **A7** | Printable character navigation | Optional enhancement noted in the a11y analysis; not combobox typeahead. **Confirmed cheap to add**: the controller already exposes `focusFirstItemByTextPrefix(prefix)` for exactly this (matches by trimmed `aria-label`, then `aria-labelledby`, then `textContent`, case-insensitive, respects `skipDisabled`) — `swc-menu` would only need to buffer keystrokes and call it, no controller changes required. Still optional/deferred; not blocked on anything if picked up later. |
-| **A8** | Mobile tray / drilldown presentation | 1st-gen's `mobileView` implementation is substantial (touch heuristics, submenu projection/restoration, back-row rendering) but is out of scope per the a11y analysis, with no committed 2nd-gen replacement timeline. Flagged as Additive rather than dropped outright pending a product decision — see [Q8](#blockers-and-open-questions). |
+| **B2** | Link items | Proxy `change` on `href` items removed; real `<a>` is the only activation path ([SWC-923](https://jira.corp.adobe.com/browse/SWC-923)) |
+| **B4** | Keyboard controller | `RovingTabindexController` → `FocusgroupNavigationController` (already shipped, used by `Tabs`) |
+| **B5** | CSS custom properties | `--mod-*` removed; `--swc-*` only where needed |
+| **B6** | `role="menu"` | Moves from the host element into shadow DOM |
+| **B7** | Disabled rows | `aria-disabled="true"`, stays focusable/in the roving set — the controller's own default |
+| **B8** | Item content | Text/icon/image only; no interactive descendants |
+| **B9** | `ignore` property | Dropped — no use case once nested `Menu`-in-`Menu` inheritance is gone |
+| **B10** | `getNeighboringFocusableElement()` | Dropped as public API, superseded by the controller |
+
+### Additive
+
+| # | What's added | Note |
+| --- | --- | --- |
+| **A1** | `xl` size | Figma adds `xl` to 1st-gen's `s`/`m`/`l` |
+| **A4** | Image as an alternative to icon | One or the other, not both; no 1st-gen equivalent |
+
+### Deferred to later phases
+
+| # | Item |
+| --- | --- |
+| **B1** | `swc-menu-group` stops extending `swc-menu` (breaking, whenever groups ship) |
+| **B3** | Submenus move to `swc-menu-item`'s own shadow tree via `PlacementController` |
+| **A2** | Selection (menu-level and group-level mode) |
+| **A3** | `Unavailable` item state |
+| **A5** | Highlight badge |
+| **A6** | External-link indicator |
+| **A7** | Printable-character navigation (cheap when picked up — controller already supports it) |
+| **A8** | Mobile drilldown — dropped, no replacement planned |
+
+`swc-menu-separator` isn't being built; `swc-divider` is composed directly instead ([Q14](#blockers-and-open-questions)).
 
 ### Disposition of remaining 1st-gen members
 
-Every `Menu` member from the [1st-gen API surface](#1st-gen-api-surface) inventory, mapped to where it lands. `MenuItem`, `MenuGroup`, and `MenuDivider` members are listed only where `swc-menu`'s own architecture forces a disposition ([B1](#must-ship--breaking-or-a11y-required), [B3](#must-ship--breaking-or-a11y-required), [B8](#must-ship--breaking-or-a11y-required)); everything else on those elements is out of scope for this plan and owned by their own plans (see the note below the table).
+`MenuItem`/`MenuGroup`/`MenuDivider` members not listed here are out of scope for this plan.
 
-| 1st-gen member | Kind | 2nd-gen disposition |
-| --- | --- | --- |
-| `label` | property | Keep (Phase A) |
-| `ignore` | property | Drop ([B9](#must-ship--breaking-or-a11y-required)) |
-| `mobileView` | property | Drop, out of scope ([A8](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)) |
-| `mobileBackLabel` | property | Drop, out of scope ([A8](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)) |
-| `selects` | property | Defer to Phase B ([A2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)); becomes `swc-menu`'s top-level mode for ungrouped items — `swc-menu-group` gets its own analogous, independent property (decided, [Behavioral semantics — Mixed menus](#behavioral-semantics)), not inherited from `swc-menu` |
-| `value` | property | Defer to Phase B ([A2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)); stays on `swc-menu` as the aggregate across the whole menu, including nested groups |
-| `valueSeparator` | property | Defer to Phase B ([A2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)); aggregate-related, stays on `swc-menu` |
-| `selected` | property | Defer to Phase B ([A2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)); aggregate-related, stays on `swc-menu` |
-| `selectedItems` | property | Defer to Phase B ([A2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)); stays on `swc-menu` as the aggregate across the whole menu, including nested groups |
-| `size` (`s`/`m`/`l` via `SizedMixin`) | property | Keep, extended with `xl` ([A1](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)) |
-| `focus()` (override) | method | Keep (Phase A), folded into open/close + `FocusgroupNavigationController` focus management |
-| `focusOnFirstSelectedItem()` | method | Defer to Phase B — meaningless without selection state |
-| `selectOrToggleItem()` | method | Defer to Phase B ([A2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)) |
-| `getNeighboringFocusableElement()` | method | Drop as public API ([B10](#must-ship--breaking-or-a11y-required)) |
-| `openMobileSubmenu()` / `closeMobileSubmenu()` / `resetMobileSubmenus()` | method | Drop, out of scope ([A8](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)) |
-| `handleSubmenuOpened()` / `handleSubmenuClosed()` | method | Drop, superseded by the new submenu model ([B3](#must-ship--breaking-or-a11y-required)) |
-| `change` event (href-link path) | event | Drop, superseded by native anchor activation ([B2](#must-ship--breaking-or-a11y-required)) |
-| `change` event (selection path) | event | Defer to Phase B ([A2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)); see [Events (2nd-gen)](#public-api) for the Phase A event surface |
-| `close` event | event | Renamed/superseded by `swc-close`/`swc-after-close` (see [Events (2nd-gen)](#public-api)) |
-| `sp-menu-submenu-opened` / `sp-menu-submenu-closed` | event | Superseded by the new submenu model ([B3](#must-ship--breaking-or-a11y-required)); exact submenu-level event surface owned jointly with the `swc-menu-item` plan |
-| default slot | slot | Keep (Phase A) |
-| `mobile-submenu` slot | slot | Drop, out of scope ([A8](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)) |
-
-`MenuItem`'s `noWrap`, `submenuElement`, and `_mobileSubmenuProjected`, `MenuGroup`'s inherited API (covered wholesale by [B1](#must-ship--breaking-or-a11y-required)), and the `sp-menu-item-added` event are out of scope for this plan; their disposition belongs to the `swc-menu-item`/`swc-menu-group` plans referenced in [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites).
-
-There is no `sp-menu-divider` → `swc-menu-separator` rename: decided ([Q14](#blockers-and-open-questions)) that `swc-menu-separator` does not exist as its own element. `swc-menu` (and `swc-action-menu`) compose the existing `swc-divider` directly — 1st-gen's `MenuDivider` already just reused `divider.css`, and 2nd-gen's `Divider.base.ts` already implements `role="separator"`. This narrows the epic's scope and conflicts with the existing menu-separator a11y doc; see [User confirmation needed](#user-confirmation-needed).
+| 1st-gen member | Disposition |
+| --- | --- |
+| `label`, `size`, default slot | Keep (Phase A); `size` extends with `xl` |
+| `focus()` | Keep, folded into controller focus management |
+| `ignore` | Drop (B9) |
+| `getNeighboringFocusableElement()` | Drop (B10) |
+| `mobileView`, `mobileBackLabel`, `openMobileSubmenu()`/`closeMobileSubmenu()`/`resetMobileSubmenus()`, `mobile-submenu` slot | Drop, out of scope (A8) |
+| `handleSubmenuOpened()`/`handleSubmenuClosed()`, `sp-menu-submenu-opened`/`closed` | Drop, superseded by the new submenu model (B3) |
+| `change` (href path) | Drop, superseded by native anchor activation (B2) |
+| `selects`, `value`, `valueSeparator`, `selected`, `selectedItems`, `selectOrToggleItem()`, `change` (selection path) | Defer (A2) |
+| `close` event | Renamed to `swc-close`/`swc-after-close` |
 
 ---
 
@@ -462,7 +441,7 @@ These are derived from the 1st-gen implementation, the accessibility migration a
 | Property | Type | Default | Attribute | Notes |
 | --- | --- | --- | --- | --- |
 | `label` | `string` | `''` | `label` | **Inferred** carry-forward from 1st-gen; accessible name for the trigger. |
-| `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | `size` | **Open question** on default (1st-gen has no default); `xl` addition is **Inferred** from Figma ([A1](#must-ship--breaking-or-a11y-required)). |
+| `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | `size` | **Open question** on default (1st-gen has no default); `xl` addition is **Inferred** from Figma ([A1](#additive)). |
 | `open` | `boolean` | `false` | `open` | **Inferred**, matching the menu-button pattern's open/close state, parallel to `swc-action-menu`. |
 | `disabled` | `boolean` | `false` | `disabled` | **Inferred** carry-forward for the trigger. |
 | `trigger` | — | — | — | **Decided: not included** ([Q6](#blockers-and-open-questions)). React Spectrum S2's `MenuTrigger.trigger` has no 1st-gen equivalent and no current consumer request; `swc-menu` leaves trigger-invocation entirely to how the consumer wires the trigger, matching 1st-gen. Can be added additively later without a breaking change if a concrete need arises. |
@@ -482,7 +461,7 @@ Additional Figma-confirmed presentation modes for `swc-menu-item` (documented he
 - Default / hover / disabled states
 - Selection: none / single / multi-select (checkbox) / multi-select (switch) — **open question**, see [Q2](#blockers-and-open-questions)
 - Show leading icon, show drill-in (submenu chevron), show description, show value — **Confirmed**, map to existing 1st-gen slots/behavior
-- Show thumbnail, show highlight badge, show external link, unavailable — **Inferred** additive, no 1st-gen equivalent ([A3](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)–[A6](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen))
+- Show thumbnail, show highlight badge, show external link, unavailable — **Inferred** additive, no 1st-gen equivalent ([A3](#deferred-to-later-phases)–[A6](#deferred-to-later-phases))
 
 #### Slots (2nd-gen)
 
@@ -503,7 +482,7 @@ Phase A (no selection):
 
 Phase C (selection) will add a `change`-equivalent event whenever it's scheduled ([Q2](#blockers-and-open-questions): not blocking); whether it's named `change` (matching React Spectrum S2 and 1st-gen) or a `swc-`-prefixed equivalent is an open question for that follow-up ticket, not this plan.
 
-Submenu open/close events (on `swc-menu-item`) are owned jointly with the `swc-menu-item` plan; this plan only asserts that 1st-gen's `sp-menu-submenu-opened`/`sp-menu-submenu-closed` are superseded by the new anchoring model ([B3](#must-ship--breaking-or-a11y-required)).
+Submenu open/close events (on `swc-menu-item`) are owned jointly with the `swc-menu-item` plan; this plan only asserts that 1st-gen's `sp-menu-submenu-opened`/`sp-menu-submenu-closed` are superseded by the new anchoring model ([B3](#deferred-to-later-phases)).
 
 #### CSS custom properties (2nd-gen)
 
@@ -518,7 +497,7 @@ Initial expectation for Menu is a small reviewed set; the thin 1st-gen `--mod-*`
 - **Open/close and focus return** follow the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/): opening moves focus into the menu; closing returns focus to the trigger (or the parent menu item, for submenus). **Confirmed** per a11y analysis.
 - **In-menu movement (Phase A, concrete config).** `swc-menu` constructs `FocusgroupNavigationController` with `direction: 'vertical'` — this is the controller's own documented "Vertical menu" use case, not a novel application. Specific option decisions, grounded in the [controller's own docs](../../../../2nd-gen/packages/core/controllers/focusgroup-navigation-controller/focusgroup-navigation-controller.mdx):
   - **`wrap: true`** (decided — controller default is `false`). Matches menu-button convention (<kbd>ArrowDown</kbd> from the last item goes to the first, and vice versa); the controller default is toolbar-oriented, not menu-oriented, so this needs an explicit override.
-  - **`skipDisabled: false`** (the controller's own default — no override needed). This is the concrete mechanism behind [B7](#must-ship--breaking-or-a11y-required): disabled items stay in the roving set and reachable by arrow keys, matching the controller's stated best practice to "use `aria-disabled=\"true\"` instead of native `disabled` when items should remain focusable for discoverability." B7 is not a preference layered on top of the controller — it's what happens if `swc-menu` does nothing.
+  - **`skipDisabled: false`** (the controller's own default — no override needed). This is the concrete mechanism behind [B7](#must-ship): disabled items stay in the roving set and reachable by arrow keys, matching the controller's stated best practice to "use `aria-disabled=\"true\"` instead of native `disabled` when items should remain focusable for discoverability." B7 is not a preference layered on top of the controller — it's what happens if `swc-menu` does nothing.
   - **`memory: true`** (controller default). Governs <kbd>Tab</kbd>-out-and-back-in re-entry point; likely a non-issue for a menu that closes on blur rather than staying open while focus leaves it, but worth confirming once Phase A's open/close model is implemented rather than assumed.
   - <kbd>Home</kbd> / <kbd>End</kbd> jump to the first/last item — built in, no configuration needed.
   - `pageStep` — not needed; menus aren't the paginated-grid use case this option targets.
@@ -527,7 +506,7 @@ Initial expectation for Menu is a small reviewed set; the thin 1st-gen `--mod-*`
   - **Not `aria-activedescendant`** — real DOM focus via roving `tabindex`, matching the a11y analysis's explicit rejection of that pattern.
 - **Submenus** are owned by `swc-menu-item`'s `submenu` slot (own shadow-tree trigger + child `role="menu"`, anchored directly via `PlacementController` — **not** `swc-popover`), not a nested `swc-menu` in the list. **Confirmed** ([Q3](#blockers-and-open-questions)).
 - **Selection** (single/multiple, checkbox/switch visuals) is real design intent per the Figma "Changes in S2 Menu" and "Examples" frames, but still an **open question** for timing/scope — see [Q2](#blockers-and-open-questions). Decided to stay Additive/Phase B rather than pulled forward for `picker`/`combobox` ([Q5](#blockers-and-open-questions)).
-- **Mixed menus — decided: `selectionMode` (or equivalent naming) exists at both levels.** `swc-menu` owns a selection mode for its own top-level, ungrouped items plus the aggregate `value`/`selectedItems` across the whole menu (all groups included); `swc-menu-group` independently owns its own selection mode for the items inside it. This matches React Spectrum's `Menu.selectionMode` + `MenuSection.selectionMode` split exactly, and it structurally enables mixed menus — a plain command section, a single-select section, and a multi-select section can coexist because each group sets its own mode independently of the menu's default. 1st-gen got this for free via `MenuGroup extends Menu` (each group inherited the full `selects` API); that inheritance is gone by design ([Q11](#blockers-and-open-questions), [B1](#must-ship--breaking-or-a11y-required)), so Phase B adds a purpose-built, smaller selection-mode property to `swc-menu-group` rather than reintroducing inheritance — this is a Phase B addition to the `swc-menu-group` plan, not something this plan implements. **Still open, and separate from the mechanism above:** the Figma "Changes in S2 Menu" note quoted in [Q2](#blockers-and-open-questions) recommends *against* mixing checkbox sections with other menu types "for a better user experience." That's UX guidance, not necessarily a hard API restriction — the API permits mixing either way once both levels exist; whether authors *should* is a Design question to resolve as part of [Q2](#blockers-and-open-questions). Not a Phase A concern; Phase A ships no selection at all.
+- **Mixed menus — decided: `selectionMode` (or equivalent naming) exists at both levels.** `swc-menu` owns a selection mode for its own top-level, ungrouped items plus the aggregate `value`/`selectedItems` across the whole menu (all groups included); `swc-menu-group` independently owns its own selection mode for the items inside it. This matches React Spectrum's `Menu.selectionMode` + `MenuSection.selectionMode` split exactly, and it structurally enables mixed menus — a plain command section, a single-select section, and a multi-select section can coexist because each group sets its own mode independently of the menu's default. 1st-gen got this for free via `MenuGroup extends Menu` (each group inherited the full `selects` API); that inheritance is gone by design ([Q11](#blockers-and-open-questions), [B1](#deferred-to-later-phases)), so Phase B adds a purpose-built, smaller selection-mode property to `swc-menu-group` rather than reintroducing inheritance — this is a Phase B addition to the `swc-menu-group` plan, not something this plan implements. **Still open, and separate from the mechanism above:** the Figma "Changes in S2 Menu" note quoted in [Q2](#blockers-and-open-questions) recommends *against* mixing checkbox sections with other menu types "for a better user experience." That's UX guidance, not necessarily a hard API restriction — the API permits mixing either way once both levels exist; whether authors *should* is a Design question to resolve as part of [Q2](#blockers-and-open-questions). Not a Phase A concern; Phase A ships no selection at all.
 - **Mobile tray/drilldown** is out of scope for this migration. **Confirmed** exclusion; timeline for a future implementation is an **open question** ([Q8](#blockers-and-open-questions)).
 
 ### Accessibility semantics notes (2nd-gen)
@@ -582,9 +561,9 @@ Planned rendering shape:
 
 **Phase A (this migration, no selection):**
 
-- [ ] `Menu.types.ts`: define allowed slot children — `swc-menu-item` this pass; extend the type to include `swc-menu-group` and `swc-divider` in Phase B, not now — size union (pending [xl decision](#must-ship--breaking-or-a11y-required)), and open/close state shape
+- [ ] `Menu.types.ts`: define allowed slot children — `swc-menu-item` this pass; extend the type to include `swc-menu-group` and `swc-divider` in Phase B, not now — size union (pending [xl decision](#additive)), and open/close state shape
 - [ ] `Menu.base.ts`: retain open/close orchestration, accessible-name handling, and disallowed-child warnings; do not retain 1st-gen's `selects`/`value`/`selectedItems` — decided to stay Additive/Phase B ([Q5](#blockers-and-open-questions), see [Implementation phasing](#implementation-phasing))
-- [ ] *(Phase B, not this pass)* `swc-menu-group` does not share a base class with `swc-menu`; it ships as an independent, lighter-weight component per the decided break from 1st-gen's `MenuGroup extends Menu` inheritance ([B1](#must-ship--breaking-or-a11y-required), [Q11](#blockers-and-open-questions))
+- [ ] *(Phase B, not this pass)* `swc-menu-group` does not share a base class with `swc-menu`; it ships as an independent, lighter-weight component per the decided break from 1st-gen's `MenuGroup extends Menu` inheritance ([B1](#deferred-to-later-phases), [Q11](#blockers-and-open-questions))
 - [ ] *(Phase B, not this pass)* Compose `swc-divider` directly as the menu separator; no `swc-menu-separator` element to build ([Q14](#blockers-and-open-questions))
 
 **Phase B (follow-up ticket, selection):**
@@ -596,7 +575,7 @@ Planned rendering shape:
 #### Alignment checks
 
 - [ ] Verify final shadow-tree structure (trigger + `role="menu"` co-location) against 2nd-gen source once implemented, per the a11y analysis's repeated "verify in 2nd-gen source" callouts
-- [ ] *(Not this pass — Phase B/C items)* Selection (single/multi-checkbox/multi-switch), `Unavailable`, and highlight badge stay deferred per the phasing above ([Q2](#blockers-and-open-questions) — decided, not blocking); thumbnail is in scope for this pass (Phase A, [A4](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen))
+- [ ] *(Not this pass — Phase B/C items)* Selection (single/multi-checkbox/multi-switch), `Unavailable`, and highlight badge stay deferred per the phasing above ([Q2](#blockers-and-open-questions) — decided, not blocking); thumbnail is in scope for this pass (Phase A, [A4](#additive))
 
 ### Styling
 
@@ -626,15 +605,15 @@ Planned rendering shape:
 
 - [ ] Disabled `swc-menu-item` rows expose `aria-disabled="true"` and do not run their action on Enter/Space, while remaining in the roving set
 - [ ] Open/close and initial/return focus satisfy the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)
-- [ ] In-menu navigation (arrow keys, Home, End) uses `FocusgroupNavigationController` configured `direction: 'vertical'`, `wrap: true` (decided — override the controller's `false` default), `skipDisabled: false` (controller default, matches [B7](#must-ship--breaking-or-a11y-required)); not `aria-activedescendant` — see [Behavioral semantics](#behavioral-semantics)
-- [ ] If shipped, printable character navigation is consistent between top-level and submenu lists ([A7](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen))
+- [ ] In-menu navigation (arrow keys, Home, End) uses `FocusgroupNavigationController` configured `direction: 'vertical'`, `wrap: true` (decided — override the controller's `false` default), `skipDisabled: false` (controller default, matches [B7](#must-ship)); not `aria-activedescendant` — see [Behavioral semantics](#behavioral-semantics)
+- [ ] If shipped, printable character navigation is consistent between top-level and submenu lists ([A7](#deferred-to-later-phases))
 - [ ] 1st-gen defects in [Open gen1 issues](#open-gen1-issues) and the [a11y analysis's Jira table](./accessibility-migration-analysis.md#related-1st-gen-accessibility-jira) are retested or explicitly superseded
 
 ### Testing
 
 - [ ] Port applicable coverage from [`1st-gen/packages/menu/test/menu.test.ts`](../../../../1st-gen/packages/menu/test/menu.test.ts) (core `Menu` behavior — child registration, focus management, close-on-select for non-selects items)
 - [ ] *(Phase C, not this pass)* [`menu-selects.test.ts`](../../../../1st-gen/packages/menu/test/menu-selects.test.ts) coverage ports when selection ships; track as a follow-up ticket alongside the deferred selection work (decided to stay Additive, [Q5](#blockers-and-open-questions))
-- [ ] *(Phase B, not this pass)* [`submenu.test.ts`](../../../../1st-gen/packages/menu/test/submenu.test.ts) coverage (open/close, deep-tree focus) ports when submenus ship; drop the `mobile view` and `touch interactions` describe blocks regardless, or track them against [A8](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)
+- [ ] *(Phase B, not this pass)* [`submenu.test.ts`](../../../../1st-gen/packages/menu/test/submenu.test.ts) coverage (open/close, deep-tree focus) ports when submenus ship; drop the `mobile view` and `touch interactions` describe blocks regardless, or track them against [A8](#deferred-to-later-phases)
 - [ ] Do **not** port [`menu-memory.test.ts`](../../../../1st-gen/packages/menu/test/menu-memory.test.ts) coverage as-is if it exercises the mobile drilldown/projection paths being dropped; re-scope to whatever memory-leak surface remains
 - [ ] Add Playwright `menu.a11y.spec.ts` with `toMatchAriaSnapshot`
 
@@ -662,7 +641,7 @@ Planned rendering shape:
 
 #### Breaking changes
 
-- [ ] Document [B1](#must-ship--breaking-or-a11y-required)–[B10](#must-ship--breaking-or-a11y-required) in the consumer migration guide ([SWC-1223](https://jira.corp.adobe.com/browse/SWC-1223))
+- [ ] Document [B1](#deferred-to-later-phases)–[B10](#must-ship) in the consumer migration guide ([SWC-1223](https://jira.corp.adobe.com/browse/SWC-1223))
 
 ### Review
 
@@ -688,17 +667,17 @@ Grouped by whether the question is about `swc-menu` itself or about a sibling co
 | Q3 | Whether `swc-menu`'s trigger surface and `swc-menu-item`'s submenus anchor via `PlacementController` directly or wrap `<swc-popover>`. | **Decided: `PlacementController` directly.** `Tooltip.base.ts` already ships this exact pattern, and the popover a11y doc's own [2nd-gen design update](../popover/accessibility-migration-analysis.md#2nd-gen-design-update-amends-this-analysis--q4) rules out wrapping (`<swc-popover>` is a `role="dialog"` component; menu/listbox/combobox are explicitly PlacementController consumers, not host consumers). No credible alternative — settled, not reopened for review. |
 | Q5 | Whether `picker`/`combobox`/`action-menu`'s dependency on `sp-menu`'s selection engine means `swc-menu` needs baseline single-select in Phase A. | **Decided: Additive, stays in Phase B.** No concrete migration for any of those three consumers is scheduled yet, so there's no live deadline forcing selection earlier. Shipping Phase A without it keeps the first PR reviewable against the menu-button pattern alone; if a real deadline emerges later, pull a minimal single-select into scope then — cheaper than carrying unused selection code through review now on a hypothetical. |
 | Q6 | Whether `swc-menu` should own trigger-invocation semantics (`press`/`longPress`/`contextMenu`) via a `trigger` property. | **Decided: no `trigger` property in Phase A.** 1st-gen never had one — the consumer composes the trigger externally and wires its own click/keydown handling. Adding speculative API surface with no current consumer request works against a smaller, simpler API; the property can be added additively later without a breaking change if a concrete need shows up (e.g. `contextMenu` support). |
-| Q11 | Whether `swc-menu-group` breaks from 1st-gen's `MenuGroup extends Menu` inheritance. | **Decided: yes, ship the break** ([B1](#must-ship--breaking-or-a11y-required)). Keeping the inheritance ties `swc-menu-group`'s public surface to everything `Menu` grows into over time (selection, printable-character nav, whatever comes next) — unbounded scope creep for a component whose entire job is grouping and labeling. 2nd-gen is greenfield with no consumers yet, so breaking it now is free; breaking it later would be a real migration. |
+| Q11 | Whether `swc-menu-group` breaks from 1st-gen's `MenuGroup extends Menu` inheritance. | **Decided: yes, ship the break** ([B1](#deferred-to-later-phases)). Keeping the inheritance ties `swc-menu-group`'s public surface to everything `Menu` grows into over time (selection, printable-character nav, whatever comes next) — unbounded scope creep for a component whose entire job is grouping and labeling. 2nd-gen is greenfield with no consumers yet, so breaking it now is free; breaking it later would be a real migration. |
 | Q12 | Whether `swc-menu` and `swc-action-menu` should share a base class/controller. | **Decided: no shared base for now.** `swc-action-menu` doesn't exist yet — designing a shared abstraction against one real implementation and one hypothetical one risks extracting the wrong thing. Ship `swc-menu`'s own base class; once `swc-action-menu` is built, diff the two and extract only what's proven identical (most likely: open/close event contract, `PlacementController` setup). Revisit then, not now. |
 | Q14 | Whether `swc-menu-separator` should exist as its own custom element or `swc-menu` should compose `swc-divider` directly. | **Decided: reuse `swc-divider`, no `swc-menu-separator` element.** 1st-gen's `MenuDivider` already does nothing but wrap `divider.css` and set `role="separator"` — 2nd-gen's `Divider.base.ts` already sets that same role. A whole second custom element with zero behavioral delta is pure duplication (two Storybook entries, two test suites, two docs pages, for the same output). Any menu-specific spacing goes in `swc-menu`'s own stylesheet targeting a slotted `swc-divider`, not a new element. **This changes scope for the epic** — it removes `swc-menu-separator` as a deliverable and conflicts with the existing [menu-separator accessibility migration analysis](../menu-separator/accessibility-migration-analysis.md), which documents `swc-menu-separator` as a real, intended component. Surface this to whoever owns that epic-level scoping decision before treating it as final. |
 | Q2 | Whether the Figma-vs-a11y-doc conflict on selection scope (Design's "Changes in S2 Menu"/"Examples" frames show real intent; the a11y doc still defers all selection) needs resolving before this plan is complete. | **Decided: not blocking.** Selection ships as Additive (Phase C) regardless of how that conflict resolves — the classification doesn't change whether it's "real" or "hypothetical." Correcting the a11y doc's "Migration scope" section is still worth doing, and the should-authors-mix-sections UX question (raised by Ruben) is still real, but neither gates this plan; pick both up whenever Phase C is actually scheduled. |
-| Q8 | Whether 1st-gen's mobile drilldown/tray implementation is dropped with a committed future-epic replacement, or dropped with no replacement plan. | **Decided: out of scope.** No replacement is being committed to as part of this epic. [A8](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen) stands as the record of what's dropped and why; revisit only if a future product need brings mobile tray back into scope somewhere. |
+| Q8 | Whether 1st-gen's mobile drilldown/tray implementation is dropped with a committed future-epic replacement, or dropped with no replacement plan. | **Decided: out of scope.** No replacement is being committed to as part of this epic. [A8](#deferred-to-later-phases) stands as the record of what's dropped and why; revisit only if a future product need brings mobile tray back into scope somewhere. |
 
 ### Blocking for swc-menu
 
 | # | Item | Blocking? | Status | Owner |
 | --- | --- | --- | --- | --- |
-| Q4 | [B7](#must-ship--breaking-or-a11y-required) (disabled rows stay focusable/in the roving set) follows WAI-ARIA APG's permissive guidance, but this plan's own [React Spectrum S2 API surface](#react-spectrum-s2-api-surface) section quotes React Spectrum's `disabledKeys` as making items "cannot be selected, focused, or otherwise interacted with" — the opposite behavior. This plan's source-priority rules rank React implementation #1 for behavior; B7 currently resolves the conflict in APG's favor without naming it. Weighs in further toward APG now that it's confirmed to be `FocusgroupNavigationController`'s own default (`skipDisabled: false`) — following React Spectrum instead would mean actively overriding the controller, not just picking a default. Still needs to be a named decision, not an assumed one, given the source-priority conflict. | Yes | Open — affects B7's final wording and the Accessibility checklist | Accessibility reviewer |
+| Q4 | [B7](#must-ship) (disabled rows stay focusable/in the roving set) follows WAI-ARIA APG's permissive guidance, but this plan's own [React Spectrum S2 API surface](#react-spectrum-s2-api-surface) section quotes React Spectrum's `disabledKeys` as making items "cannot be selected, focused, or otherwise interacted with" — the opposite behavior. This plan's source-priority rules rank React implementation #1 for behavior; B7 currently resolves the conflict in APG's favor without naming it. Weighs in further toward APG now that it's confirmed to be `FocusgroupNavigationController`'s own default (`skipDisabled: false`) — following React Spectrum instead would mean actively overriding the controller, not just picking a default. Still needs to be a named decision, not an assumed one, given the source-priority conflict. | Yes | Open — affects B7's final wording and the Accessibility checklist | Accessibility reviewer |
 
 ### Cross-component follow-ups (not blocking `swc-menu`)
 
@@ -706,7 +685,7 @@ These surfaced while drafting this plan but are about a sibling component's own 
 
 | # | Item | Status | Owner |
 | --- | --- | --- | --- |
-| Q10 | React Spectrum's Menu docs state "Interactive elements... within menu items are not allowed" ([B8](#must-ship--breaking-or-a11y-required)) and "Sections without a header must have an `aria-label`." Neither constraint is currently written into the [Menu a11y analysis](./accessibility-migration-analysis.md) or the menu-item/menu-group equivalents — fold in there. Separately, the Figma "Examples" frame shows toggle-switch visuals inside menu item rows (a "Notifications" menu with switch-styled "Push notifications"/"Badge" items) — confirm this is a switch-*styled* `menuitemcheckbox` row (matching the "Multi-select (switch)" property noted under [Q2](#blockers-and-open-questions)) and not a separately-focusable nested control, so it doesn't contradict B8. | Open | Design + accessibility reviewer |
+| Q10 | React Spectrum's Menu docs state "Interactive elements... within menu items are not allowed" ([B8](#must-ship)) and "Sections without a header must have an `aria-label`." Neither constraint is currently written into the [Menu a11y analysis](./accessibility-migration-analysis.md) or the menu-item/menu-group equivalents — fold in there. Separately, the Figma "Examples" frame shows toggle-switch visuals inside menu item rows (a "Notifications" menu with switch-styled "Push notifications"/"Badge" items) — confirm this is a switch-*styled* `menuitemcheckbox` row (matching the "Multi-select (switch)" property noted under [Q2](#blockers-and-open-questions)) and not a separately-focusable nested control, so it doesn't contradict B8. | Open | Design + accessibility reviewer |
 | Q13 | The `swc-menu`, `swc-action-menu`, and `swc-menu-item` accessibility analyses all still describe anchoring as "`swc-popover` (or similar)" or via `swc-popover` outright, predating the popover a11y doc's `PlacementController` amendment. Correct all three docs to reference `PlacementController` directly, matching the decided model ([Q3](#blockers-and-open-questions)). | Open — doesn't block this plan, but should not wait long | Accessibility reviewer + menu-item/action-menu doc owners |
 | Q15 | Migration order among `swc-menu`, `swc-menu-item`, and `swc-menu-group` is not yet decided (`swc-divider` already exists, and `swc-menu-separator` isn't being built — [Q14](#blockers-and-open-questions)). `swc-popover` is **not a sequencing variable** — it shipped in [PR #6356](https://github.com/adobe/spectrum-web-components/pull/6356) (merged 2026-07-14, before this plan was drafted) and `swc-menu` doesn't depend on it anyway. Each menu-family component either has or will have its own plan; sequencing among them is what remains open. | Open | Ticket owner |
 
@@ -747,7 +726,7 @@ These surfaced while drafting this plan but are about a sibling component's own 
 - [spectrum-web-components PR #6356 — gen2 Popover migration](https://github.com/adobe/spectrum-web-components/pull/6356) (merged 2026-07-14)
 - Figma file `Mngz9H7WZLbrCvGQf3GnsY` (same file key as the ticket's `S2/Web (Desktop scale)` link, titled "🚫 S2 / Web (Deprecated)"; confirmed with Design as the only file, no replacement — [Q1](#blockers-and-open-questions)): cover (`0:1`), "Menu" properties/sizes/variants frame (`125485:35276`), component library (`125485:44694`), "Changes in S2 Menu" (`37252:5063`), "Examples" (`37252:4608`)
 - Epic: [SWC-1980](https://jira.corp.adobe.com/browse/SWC-1980) - Menu migration epic. Related: [SWC-1981](https://jira.corp.adobe.com/browse/SWC-1981) (a11y recommendations, prerequisite to this plan), [SWC-1223](https://jira.corp.adobe.com/browse/SWC-1223) (consumer migration documentation)
-- SWC-923: `menu-item` with `href` triggers link twice ([B2](#must-ship--breaking-or-a11y-required))
+- SWC-923: `menu-item` with `href` triggers link twice ([B2](#must-ship))
 - SWC-1332: custom content as submenu not keyboard accessible
 - SWC-1517: submenu item focus outline on hover (Safari)
 - SWC-963: Epic — align menu components with APG; reduce semantic confusion
