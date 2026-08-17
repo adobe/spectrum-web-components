@@ -987,9 +987,13 @@ slot[name="legal"] {
   }
 }
 
-/* Idle focus otherwise relies on the textarea's own cursor as the indicator (no ring); prefers-contrast: more gets an explicit ring around the card instead. */
-@media (prefers-contrast: more) {
+/* Idle focus otherwise relies on the textarea's own cursor as the indicator (no ring); higher-contrast and forced-colors users get an explicit focus ring plus an always-visible card boundary (which forced-colors renders as an opaque system-colored border). */
+@media (prefers-contrast: more), (forced-colors: active) {
   :host .swc-PromptField-box:focus-within {
     outline: token("focus-indicator-thickness") solid token("gray-900");
+  }
+
+  .swc-PromptField-outer-border {
+    border: 2px solid color-mix(in oklch, var(--swc-prompt-field-brand-color), transparent 65%);
   }
 }
