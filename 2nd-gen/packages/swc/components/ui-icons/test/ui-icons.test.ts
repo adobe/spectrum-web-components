@@ -18,7 +18,10 @@ import { UiIcon } from '@adobe/spectrum-wc/ui-icons';
 import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 
 import { getComponent } from '../../../utils/test-utils.js';
+import type { UiIconName } from '../icon-set/index.js';
+import { UI_ICONS } from '../icon-set/index.js';
 import meta, { Overview } from '../stories/ui-icons.internal.stories.js';
+import { DIRECTIONAL_UI_ICONS } from '../ui-icon-direction.js';
 import type { UiIconArt } from '../ui-icons.types.js';
 import { resolveUiIconArt } from '../ui-icons.types.js';
 
@@ -189,46 +192,63 @@ export const LabelTogglingTest: Story = {
 // TEST: RTL mirroring
 // ──────────────────────────────────────────────────────────────
 
-export const DirectionalIconMirrorsInRtlTest: Story = {
+// Iterates every entry in UI_ICONS against DIRECTIONAL_UI_ICONS rather than
+// hand-picking one directional and one non-directional icon: adding an icon to
+// UI_ICONS without deciding whether it belongs in DIRECTIONAL_UI_ICONS now fails
+// this test immediately instead of silently shipping an icon nobody made a
+// mirroring decision for.
+export const DirectionalMirroringTest: Story = {
   render: () => html`
-    <swc-ui-icon
-      icon="chevron"
-      dir="rtl"
-      accessible-label="Expand"
-    ></swc-ui-icon>
+    <div id="rtl-wrapper" dir="rtl">
+      ${Object.keys(UI_ICONS).map(
+        (name) => html`
+          <swc-ui-icon
+            icon=${name}
+            data-icon=${name}
+            accessible-label=${name}
+          ></swc-ui-icon>
+        `
+      )}
+    </div>
+    <div id="ltr-wrapper" dir="ltr">
+      ${Object.keys(UI_ICONS).map(
+        (name) => html`
+          <swc-ui-icon
+            icon=${name}
+            data-icon=${name}
+            accessible-label=${name}
+          ></swc-ui-icon>
+        `
+      )}
+    </div>
   `,
   play: async ({ canvasElement, step }) => {
-    const icon = await getComponent<UiIcon>(canvasElement, 'swc-ui-icon');
-
-    await step('mirrors a curated directional icon under RTL', async () => {
-      expect(
-        getComputedStyle(icon).scale,
-        'chevron is horizontally mirrored in RTL'
-      ).toBe('-1 1');
-    });
-  },
-};
-
-// chevron and arrow are two independent :host() selector clauses in
-// ui-icon-direction.css, not one dynamically-generated rule, so each is
-// tested explicitly; a typo in one clause wouldn't be caught by testing
-// only the other.
-export const SecondDirectionalIconMirrorsInRtlTest: Story = {
-  render: () => html`
-    <swc-ui-icon icon="arrow" dir="rtl" accessible-label="Go"></swc-ui-icon>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const icon = await getComponent<UiIcon>(canvasElement, 'swc-ui-icon');
+    const rtlWrapper = canvasElement.querySelector(
+      '#rtl-wrapper'
+    ) as HTMLElement;
+    const ltrWrapper = canvasElement.querySelector(
+      '#ltr-wrapper'
+    ) as HTMLElement;
 
     await step(
-      'mirrors the other curated directional icon under RTL',
+      'every icon mirrors under RTL iff it is in the directional set',
       async () => {
-        expect(
-          getComputedStyle(icon).scale,
-          'arrow is horizontally mirrored in RTL'
-        ).toBe('-1 1');
+        for (const name of Object.keys(UI_ICONS) as UiIconName[]) {
+          const icon = rtlWrapper.querySelector(`[data-icon="${name}"]`)!;
+          const expected = DIRECTIONAL_UI_ICONS.has(name) ? '-1 1' : 'none';
+          expect(getComputedStyle(icon).scale, `${name} under RTL`).toBe(
+            expected
+          );
+        }
       }
     );
+
+    await step('no icon mirrors under LTR, directional or not', async () => {
+      for (const name of Object.keys(UI_ICONS) as UiIconName[]) {
+        const icon = ltrWrapper.querySelector(`[data-icon="${name}"]`)!;
+        expect(getComputedStyle(icon).scale, `${name} under LTR`).toBe('none');
+      }
+    });
   },
 };
 
@@ -271,48 +291,6 @@ export const DirectionalIconMirrorsWithInheritedRtlTest: Story = {
     );
 
     wrapper.setAttribute('dir', 'ltr');
-  },
-};
-
-export const DirectionalIconUnmirroredInLtrTest: Story = {
-  render: () => html`
-    <swc-ui-icon
-      icon="chevron"
-      dir="ltr"
-      accessible-label="Expand"
-    ></swc-ui-icon>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const icon = await getComponent<UiIcon>(canvasElement, 'swc-ui-icon');
-
-    await step('does not mirror under LTR', async () => {
-      expect(getComputedStyle(icon).scale, 'chevron is unmirrored in LTR').toBe(
-        'none'
-      );
-    });
-  },
-};
-
-export const NonDirectionalIconUnaffectedInRtlTest: Story = {
-  render: () => html`
-    <swc-ui-icon
-      icon="checkmark"
-      dir="rtl"
-      accessible-label="Done"
-    ></swc-ui-icon>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const icon = await getComponent<UiIcon>(canvasElement, 'swc-ui-icon');
-
-    await step(
-      'leaves a non-directional icon unmirrored under RTL',
-      async () => {
-        expect(
-          getComputedStyle(icon).scale,
-          'checkmark is not in the curated directional list, so it never flips'
-        ).toBe('none');
-      }
-    );
   },
 };
 
