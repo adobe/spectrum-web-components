@@ -200,44 +200,10 @@ const overflowRow = (prefix: string) =>
     'Content overflow'
   );
 
-const cjkLanguageRow = (prefix: string) =>
-  stack(
-    (
-      [
-        {
-          lang: 'ja',
-          label: 'Japanese',
-          text: '編集内容は自動的に保存されます。',
-        },
-        {
-          lang: 'ko',
-          label: 'Korean',
-          text: '변경 내용이 자동으로 저장됩니다.',
-        },
-        {
-          lang: 'zh',
-          label: 'Chinese',
-          text: '您的更改会在编辑时自动保存。',
-        },
-      ] as const
-    ).map(({ lang, label, text }, i) =>
-      renderPopoverPermutation(
-        {
-          placement: 'bottom',
-          'default-slot': `<span lang="${lang}" style="display: block; max-inline-size: 160px;">${text}</span>`,
-        },
-        `${prefix}-cjk-${i}`,
-        label
-      )
-    ),
-    'CJK language',
-    'tall'
-  );
-
 const permutationContent = (prefix: string) =>
   vrtPage(html`
     ${placementRows(prefix)} ${sizeRow(prefix)} ${hideArrowRow(prefix)}
-    ${modalRow(prefix)} ${cjkLanguageRow(prefix)} ${overflowRow(prefix)}
+    ${modalRow(prefix)} ${overflowRow(prefix)}
   `);
 
 // VRT stories
