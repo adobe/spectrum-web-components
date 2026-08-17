@@ -111,7 +111,13 @@ export const Playground: Story = {
     placeholder: defaultPlaceholder,
     value: '',
   },
-  parameters: { flexLayout: 'column-center' },
+  parameters: {
+    styles: {
+      'inline-size': '800px',
+      'max-inline-size': '90vw',
+      'margin-inline': 'auto',
+    },
+  },
   tags: ['dev'],
 };
 
