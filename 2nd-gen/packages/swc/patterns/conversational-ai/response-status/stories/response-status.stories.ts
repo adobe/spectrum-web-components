@@ -348,7 +348,17 @@ export const LongDescription: Story = {
           filed numbers and the summary tables, and flagging any line items that
           need a second pass. Compiling the supporting excerpts so the final
           response can cite them directly, then ranking them by relevance to the
-          original question before moving on to the next repository.
+          original question before moving on to the next repository. Checking
+          the footnotes and appendices for revised figures that supersede the
+          values printed in the main tables, and noting where management
+          commentary reframes a metric compared with the prior fiscal year.
+          Building a short provenance trail for each number so a reviewer can
+          trace it back to the exact page and paragraph it came from.
+          Normalizing currencies and reporting periods so figures from different
+          sources can be compared on equal footing, then setting aside anything
+          that cannot be reconciled for a follow-up query. Finally, drafting a
+          concise summary of the most material findings and the open questions
+          that still need confirmation before the response is composed.
         </span>
       </swc-response-status-step>
       <swc-response-status-step status="active">
