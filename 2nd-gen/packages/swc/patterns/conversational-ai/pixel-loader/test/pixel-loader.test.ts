@@ -15,7 +15,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../swc-pixel-loader.js';
 
-import { getComponent } from '../../../../utils/test-utils.js';
+import { getComponent, withWarningSpy } from '../../../../utils/test-utils.js';
 import { exitStartOf } from '../animation.js';
 import { ICONS, PRESETS } from '../data.js';
 import { PixelLoader } from '../PixelLoader.js';
@@ -301,9 +301,16 @@ export const PausedTest: Story = {
 
 // Reaches the private reduced-motion query and its change handler so the OS
 // setting can be simulated deterministically (the harness cannot flip the real
-// `prefers-reduced-motion` media query).
+// `prefers-reduced-motion` media query). The stub carries no-op listener
+// methods so `disconnectedCallback`'s `removeEventListener` cleanup doesn't
+// throw when the element tears down.
+type MediaQueryStub = {
+  matches: boolean;
+  addEventListener: () => void;
+  removeEventListener: () => void;
+};
 type ReducedMotionInternals = {
-  _reducedMotionQuery: { matches: boolean } | null;
+  _reducedMotionQuery: MediaQueryStub | null;
   _handleReducedMotionChange: () => void;
 };
 
@@ -316,7 +323,11 @@ export const ReducedMotionTest: Story = {
     );
 
     const internals = el as unknown as ReducedMotionInternals;
-    const query = { matches: false };
+    const query: MediaQueryStub = {
+      matches: false,
+      addEventListener: () => {},
+      removeEventListener: () => {},
+    };
     internals._reducedMotionQuery = query;
 
     const opacityOffsets = (cellEl: HTMLElement): number[] =>
@@ -362,6 +373,106 @@ export const ReducedMotionTest: Story = {
         // A `translate` drop and a `scale` pop per cell.
         expect(first.getAnimations()).toHaveLength(2);
       }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Dev mode warnings
+// ──────────────────────────────────────────────────────────────
+
+export const InvalidIconWarningTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<PixelLoader>(
+      canvasElement,
+      'swc-pixel-loader'
+    );
+
+    await step(
+      'warns for an unknown icon, then falls back to aiLogo',
+      async () =>
+        withWarningSpy(async (warnCalls) => {
+          el.icon = 'not-an-icon' as unknown as PixelLoader['icon'];
+          await el.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'a warning is emitted for the invalid icon'
+          ).toBeGreaterThan(0);
+          expect(
+            String(warnCalls[0]?.[1] || ''),
+            'warning message references icon'
+          ).toContain('icon');
+          // The silent fallback still renders the aiLogo cells.
+          expect(cells(el)).toHaveLength(ICONS.aiLogo.length);
+        })
+    );
+  },
+};
+
+export const ValidIconNoWarningTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<PixelLoader>(
+      canvasElement,
+      'swc-pixel-loader'
+    );
+
+    await step('does not warn for a valid icon', async () =>
+      withWarningSpy(async (warnCalls) => {
+        el.icon = 'hourglass';
+        await el.updateComplete;
+
+        expect(warnCalls.length, 'no warnings for a valid icon').toBe(0);
+      })
+    );
+  },
+};
+
+export const InvalidPresetWarningTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<PixelLoader>(
+      canvasElement,
+      'swc-pixel-loader'
+    );
+
+    await step('warns for an unknown preset, then drops the preset', async () =>
+      withWarningSpy(async (warnCalls) => {
+        el.preset = 'not-a-preset' as unknown as PixelLoader['preset'];
+        await el.updateComplete;
+
+        expect(
+          warnCalls.length,
+          'a warning is emitted for the invalid preset'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0]?.[1] || ''),
+          'warning message references preset'
+        ).toContain('preset');
+        // Preset is dropped: the `icon` (aiLogo) drives the render instead.
+        expect(cells(el)).toHaveLength(ICONS.aiLogo.length);
+      })
+    );
+  },
+};
+
+export const ValidPresetNoWarningTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<PixelLoader>(
+      canvasElement,
+      'swc-pixel-loader'
+    );
+
+    await step('does not warn for a valid preset', async () =>
+      withWarningSpy(async (warnCalls) => {
+        el.preset = 'mega';
+        await el.updateComplete;
+
+        expect(warnCalls.length, 'no warnings for a valid preset').toBe(0);
+      })
     );
   },
 };

@@ -15,6 +15,7 @@ import { property, state } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils';
 
 import {
   cellScaleKeyframes,
@@ -35,7 +36,12 @@ import type {
   PixelLoaderIconName,
   PixelLoaderPresetName,
 } from './data.js';
-import { ICONS, PIXEL_LOADER_PRESET_NAMES, PRESETS } from './data.js';
+import {
+  ICONS,
+  PIXEL_LOADER_ICON_NAMES,
+  PIXEL_LOADER_PRESET_NAMES,
+  PRESETS,
+} from './data.js';
 import {
   computeCornerRadii,
   CornerRadii,
@@ -56,6 +62,10 @@ export type { PixelLoaderIconName, PixelLoaderPresetName } from './data.js';
  * - `full`: the per-cell falling-and-scaling build.
  */
 type AnimationMode = 'static' | 'reduced' | 'full';
+
+/** Docs URL attributed to dev-mode validation warnings. */
+const DOCS_URL =
+  'https://spectrum-web-components.adobe.com/?path=/docs/patterns-conversational-ai-pixel-loader--docs';
 
 /**
  * The Conversational AI pixel loader: an assembling/disassembling "pixel-fall"
@@ -170,7 +180,37 @@ export class PixelLoader extends SpectrumElement {
     this._playCells();
   };
 
+  // Dev-only warnings for invalid `icon` / `preset` values. Both silently fall
+  // back (icon -> aiLogo, preset -> dropped), so surface the misuse in DEBUG
+  // builds. `undefined`/`""` mean "no preset" and never warn; the literal
+  // `"undefined"` is the Storybook "unset" sentinel `_resolvedPreset` guards
+  // against, so it is excluded here too.
+  private _validateProps(changed: PropertyValues): void {
+    if (changed.has('icon')) {
+      validateEnum(this, {
+        prop: 'icon',
+        value: this.icon,
+        valid: PIXEL_LOADER_ICON_NAMES,
+        url: DOCS_URL,
+      });
+    }
+
+    // Cast for the runtime value: an attribute can carry any string, and the
+    // `"undefined"` sentinel is not part of the declared type.
+    const preset = this.preset as string | undefined;
+    if (changed.has('preset') && preset && preset !== 'undefined') {
+      validateEnum(this, {
+        prop: 'preset',
+        value: preset,
+        valid: PIXEL_LOADER_PRESET_NAMES,
+        url: DOCS_URL,
+      });
+    }
+  }
+
   protected override willUpdate(changed: PropertyValues): void {
+    this._validateProps(changed);
+
     // Removing the preset returns to single-icon mode: show the requested icon
     // right away rather than trying to finish a preset build that isn't there.
     if (changed.has('preset') && !this._resolvedPreset) {

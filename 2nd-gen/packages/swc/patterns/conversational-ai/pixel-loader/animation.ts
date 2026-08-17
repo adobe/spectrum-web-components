@@ -22,25 +22,25 @@
 import type { Cell } from './data.js';
 
 const FPS = 30;
-const ms2f = (ms: number): number => (ms * FPS) / 1000;
+const msToFrames = (ms: number): number => (ms * FPS) / 1000;
 
 // Frames from a cell's launch to its settled rest, and to fall back out.
 const DROP_SETTLE = 13;
 const EXIT_FALL = 12;
 // Constant assembled hold every cell observes after it settles.
-const HOLD_FRAMES = ms2f(1400);
+const HOLD_FRAMES = msToFrames(1400);
 
 // Per-cell scale pop: entrance 10% -> 100% completing `ENT_LEAD` frames before
 // the cell settles; exit 100% -> 30% starting as the cell begins to fall away.
-const ENT_DUR = ms2f(150);
-const ENT_LEAD = ms2f(150);
+const ENT_DUR = msToFrames(150);
+const ENT_LEAD = msToFrames(150);
 const ENT_FLOOR = 0.1;
-const EXIT_DUR = ms2f(230);
+const EXIT_DUR = msToFrames(230);
 const EXIT_FLOOR = 0.3;
 
 // Group opacity envelope applied once to the cell-grid container.
-const OP_FADE_IN = ms2f(400);
-const OP_FADE_OUT = ms2f(400);
+const OP_FADE_IN = msToFrames(400);
+const OP_FADE_OUT = msToFrames(400);
 
 // Per-cell vertical offsets as a percentage of a cell's height (so the fall
 // scales with `--swc-pixel-loader-size`). These are RSP's px offsets (-26/1/26)
@@ -202,7 +202,7 @@ export function groupOpacityKeyframes(total: number): Keyframe[] {
 // this loop shorter than the full per-cell build.
 const ROW_STEP = 6;
 const ROW_FADE = 16;
-const ROW_HOLD = ms2f(600);
+const ROW_HOLD = msToFrames(600);
 
 /** Distinct rows of `cells`, bottom-up (visual bottom first) to match the build. */
 function rowsBottomUp(cells: readonly Cell[]): number[] {
