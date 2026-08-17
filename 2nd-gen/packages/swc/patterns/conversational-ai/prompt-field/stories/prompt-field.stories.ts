@@ -64,6 +64,11 @@ function renderPromptField(
       'Show more attachments'}
       min-rows=${ifDefined(storyArgs['min-rows'] || undefined)}
       max-rows=${ifDefined(storyArgs['max-rows'] || undefined)}
+      style=${ifDefined(
+        storyArgs['--swc-prompt-field-brand-color']
+          ? `--swc-prompt-field-brand-color: ${storyArgs['--swc-prompt-field-brand-color']}`
+          : undefined
+      )}
     >
       ${slots}
     </swc-prompt-field>
