@@ -68,7 +68,7 @@
   flex-direction: column;
   min-inline-size: 0;
   padding: token("spacing-300");
-  background: radial-gradient(circle at right bottom in oklch, var(--_swc-prompt-field-bg-stop-1) 0%, var(--_swc-prompt-field-bg-stop-2) 35%, var(--_swc-prompt-field-bg-stop-3) 82%, var(--_swc-prompt-field-bg-stop-4) 100%);
+  background: radial-gradient(circle at var(--_swc-prompt-field-wash-x, right) bottom in oklch, var(--_swc-prompt-field-bg-stop-1) 0%, var(--_swc-prompt-field-bg-stop-2) 35%, var(--_swc-prompt-field-bg-stop-3) 82%, var(--_swc-prompt-field-bg-stop-4) 100%);
   border-radius: 24px;
   box-shadow:
     0 20px 20px -24px var(--_swc-prompt-field-prominent-outer-glow-color, transparent),
@@ -124,7 +124,7 @@
   display: flex;
   padding: 6px;
   container-type: inline-size;
-  background: linear-gradient(to right in oklch, var(--_swc-prompt-field-outer-stop-1) 0%, var(--_swc-prompt-field-outer-stop-2) 37%, var(--_swc-prompt-field-outer-stop-3) 77%);
+  background: linear-gradient(var(--_swc-prompt-field-outer-dir, to right) in oklch, var(--_swc-prompt-field-outer-stop-1) 0%, var(--_swc-prompt-field-outer-stop-2) 37%, var(--_swc-prompt-field-outer-stop-3) 77%);
   border-radius: 30px;
   box-shadow:
     0 2px 4px var(--_swc-prompt-field-outer-shadow),
@@ -238,6 +238,19 @@
     radial-gradient(70% 50% at 40% 80% in oklch, oklch(from light-dark(oklch(from var(--swc-prompt-field-brand-color) 95.64% 0.036 calc(h + 0.6)), oklch(from var(--swc-prompt-field-brand-color) 31.55% 0.1704 calc(h - 24.5))) l c h / var(--_swc-prompt-field-con-hue-opacity)), transparent);
   pointer-events: none;
   content: "";
+}
+
+/* RTL: mirror the ambient brand gradients to the opposite side. */
+:host(:dir(rtl)) .swc-PromptField-box {
+  --_swc-prompt-field-wash-x: left;
+}
+
+:host(:dir(rtl)) .swc-PromptField-box::before {
+  transform: scaleX(-1);
+}
+
+:host(:dir(rtl)) .swc-PromptField-outer-border {
+  --_swc-prompt-field-outer-dir: to left;
 }
 
 @supports (rotate: atan(1px / 1cqw)) {
