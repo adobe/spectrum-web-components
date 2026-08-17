@@ -665,7 +665,7 @@ export class ResponseStatus extends SpectrumElement {
             ? 'swc-ResponseStatus-step-detailPanel--open'
             : ''}"
         >
-          <div class="swc-ResponseStatus-step-detailScroll">
+          <div class="swc-ResponseStatus-step-detailScroll" tabindex="0">
             ${this._renderStepDetail(step.description)}
           </div>
         </div>
