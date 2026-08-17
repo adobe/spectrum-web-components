@@ -40,15 +40,21 @@
 }
 
 .swc-UploadArtifact-dismiss {
+  /* 20px round gray circle rendered by swc-action-button. Width is content
+   * driven (icon + 2 * edge-to-text), squared against the min-block-size. */
+  --swc-action-button-min-block-size: var(--swc-upload-artifact-dismiss-visual-size, 20px);
+  --swc-action-button-icon-size: var(--swc-upload-artifact-dismiss-icon-inline-size, 8px);
+  --swc-action-button-edge-to-text: calc((var(--swc-upload-artifact-dismiss-visual-size, 20px) - var(--swc-upload-artifact-dismiss-icon-inline-size, 8px)) / 2);
+  --swc-action-button-edge-to-visual: var(--swc-action-button-edge-to-text);
+  --swc-action-button-border-radius: token("corner-radius-full");
+  --swc-action-button-background-color-default: token("gray-200");
+  --swc-action-button-background-color-hover: token("gray-300");
+  --swc-action-button-content-color-default: token("gray-700");
+
   position: absolute;
   z-index: 2;
-  padding: 0;
-  background: transparent;
-  border: none;
-  cursor: default;
 }
 
-.swc-UploadArtifact-dismiss-visual,
 .swc-UploadArtifact-dismiss-icon {
   pointer-events: none;
 }
@@ -58,107 +64,18 @@
   flex: 0 0 auto;
   inline-size: var(--swc-upload-artifact-dismiss-icon-inline-size, 8px);
   block-size: var(--swc-upload-artifact-dismiss-icon-block-size, 8px);
-  color: token("gray-700");
 }
 
 .swc-UploadArtifact-dismiss[hidden] {
   display: none;
 }
 
-.swc-UploadArtifact-dismiss:hover {
-  background: transparent;
-}
-
-.swc-UploadArtifact-dismiss:focus-visible {
-  /* Round to match the visible circular icon: the hit target (24px card /
-   * 32px media) is deliberately larger than the 20px visible icon, so an
-   * unrounded ring at the box's own edge reads as a square around the whole
-  * touch area rather than a ring around the icon. */
-  border-radius: token("corner-radius-full");
-  outline: token("focus-indicator-thickness") solid var(--swc-upload-artifact-focus-indicator-color);
-}
-
-:host([type="card"]) .swc-UploadArtifact-dismiss {
-  /* The surface is inset spacing-50 (2px) from the host, and its rounded
-   * corner's own visible tip sits a further radius * (1 - cos(45deg))
-   * inward from that box corner along the diagonal. Both terms shift the
-   * badge in by half its resolved hit-target size so its center lands on the
-   * tip of the curve, not the corner of the invisible bounding box. */
-  inset-block-start: calc(token("spacing-50") - var(--swc-upload-artifact-dismiss-block-size, 24px) * 0.5 + token("corner-radius-medium-default") * 0.293);
-  inset-inline-end: calc(token("spacing-50") - var(--swc-upload-artifact-dismiss-inline-size, 24px) * 0.5 + token("corner-radius-medium-default") * 0.293);
-  inline-size: var(--swc-upload-artifact-dismiss-inline-size, 24px);
-  block-size: var(--swc-upload-artifact-dismiss-block-size, 24px);
-}
-
-:host([type="card"]) .swc-UploadArtifact-dismiss-visual {
-  position: absolute;
-  inset: token("spacing-50");
-  background: token("gray-200");
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-full");
-}
-
-:host([type="card"]) .swc-UploadArtifact-dismiss-icon {
-  display: flex;
-  position: absolute;
-  inset: token("spacing-50");
-  align-items: center;
-  justify-content: center;
-}
-
+/* Center the 20px circle on the tile's rounded top-right corner tip: half the
+ * circle in from the corner, plus radius * (1 - cos(45deg)) along the curve. */
+:host([type="card"]) .swc-UploadArtifact-dismiss,
 :host([type="media"]) .swc-UploadArtifact-dismiss {
-  /* The surface is inset spacing-50 (2px) from the host, and its rounded
-   * corner's own visible tip sits a further radius * (1 - cos(45deg))
-   * inward from that box corner along the diagonal. Both terms shift the
-   * badge in by half its resolved hit-target size so its center lands on the
-   * tip of the curve, not the corner of the invisible bounding box. */
-  inset-block-start: calc(token("spacing-50") - var(--swc-upload-artifact-dismiss-block-size, 32px) * 0.5 + token("corner-radius-medium-default") * 0.293);
-  inset-inline-end: calc(token("spacing-50") - var(--swc-upload-artifact-dismiss-inline-size, 32px) * 0.5 + token("corner-radius-medium-default") * 0.293);
-  inline-size: var(--swc-upload-artifact-dismiss-inline-size, 32px);
-  block-size: var(--swc-upload-artifact-dismiss-block-size, 32px);
-}
-
-:host([type="media"]) .swc-UploadArtifact-dismiss-visual {
-  position: absolute;
-  inset-block-start: 6px;
-  inset-inline-end: 6px;
-  inline-size: 20px;
-  block-size: 20px;
-  background: token("gray-200");
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-full");
-}
-
-:host([type="media"]) .swc-UploadArtifact-dismiss-icon {
-  display: flex;
-  position: absolute;
-  inset-block-start: 6px;
-  inset-inline-end: 6px;
-  align-items: center;
-  justify-content: center;
-  inline-size: 20px;
-  block-size: 20px;
-}
-
-/* card: 24px hit target, 20px icon inset 2px (spacing-50) on each side.
- * -1px leaves a 1px gap around the icon without extending past the box. */
-:host([type="card"]) .swc-UploadArtifact-dismiss:focus-visible {
-  outline-offset: -1px;
-}
-
-/* media: 32px hit target, 20px icon inset 6px on each side. -4px, not -2px:
- * the media dismiss button's own hit-box overhangs the tile by 2px
- * (inset-block-start/inline-end: calc(spacing-75 4px - 6px) = -2px), so a
- * -2px ring landed exactly on the tile's true edge with zero buffer against
- * the strip's overflow clipping. -4px gives it real margin, leaving a 2px
- * gap around the icon. */
-:host([type="media"]) .swc-UploadArtifact-dismiss:focus-visible {
-  outline-offset: -4px;
-}
-
-:host([type="card"]) .swc-UploadArtifact-dismiss:hover .swc-UploadArtifact-dismiss-visual,
-:host([type="media"]) .swc-UploadArtifact-dismiss:hover .swc-UploadArtifact-dismiss-visual {
-  background: token("gray-300");
+  inset-block-start: calc(token("spacing-50") - var(--swc-upload-artifact-dismiss-visual-size, 20px) * 0.5 + token("corner-radius-medium-default") * 0.293);
+  inset-inline-end: calc(token("spacing-50") - var(--swc-upload-artifact-dismiss-visual-size, 20px) * 0.5 + token("corner-radius-medium-default") * 0.293);
 }
 
 .swc-UploadArtifact {
@@ -381,15 +298,4 @@
 
 :host([type="media"]) .swc-UploadArtifact-subtitle {
   line-height: token("line-height-font-size-75");
-}
-
-/* The dismiss button's visible circle is a decorative <span>, not a real
- * border on the button itself, so forced-colors mode has nothing to key
- * off of by default and the circle's background can disappear entirely.
- * The transparent border declared alongside `background` above exists so
- * this rule has something to color in; it's a no-op outside forced-colors. */
-@media (forced-colors: active) {
-  .swc-UploadArtifact-dismiss-visual {
-    border-color: ButtonBorder;
-  }
 }
