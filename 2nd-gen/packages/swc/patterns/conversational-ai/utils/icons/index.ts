@@ -51,24 +51,6 @@ export const ChevronUpIcon = (): TemplateResult => html`
   </svg>
 `;
 
-/** Three-dots icon — used for the loading / AI-thinking state. */
-export const ThreeDotsIcon = (): TemplateResult => html`
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    <path
-      fill="currentColor"
-      d="M12 13.2174C12.6628 13.2174 13.2 12.6801 13.2 12.0174C13.2 11.3546 12.6628 10.8174 12 10.8174C11.3373 10.8174 10.8 11.3546 10.8 12.0174C10.8 12.6801 11.3373 13.2174 12 13.2174Z"
-    />
-    <path
-      fill="currentColor"
-      d="M7.2 13.2174C7.86274 13.2174 8.4 12.6801 8.4 12.0174C8.4 11.3546 7.86274 10.8174 7.2 10.8174C6.53726 10.8174 6 11.3546 6 12.0174C6 12.6801 6.53726 13.2174 7.2 13.2174Z"
-    />
-    <path
-      fill="currentColor"
-      d="M16.8 13.2174C17.4627 13.2174 18 12.6801 18 12.0174C18 11.3546 17.4627 10.8174 16.8 10.8174C16.1372 10.8174 15.6 11.3546 15.6 12.0174C15.6 12.6801 16.1372 13.2174 16.8 13.2174Z"
-    />
-  </svg>
-`;
-
 /** Circle outline — used for pending/active agentic steps. */
 export const CircleOutlineIcon = (): TemplateResult => html`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">

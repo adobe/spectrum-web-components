@@ -39,21 +39,16 @@
 .swc-PromptField-box {
   display: flex;
   flex-direction: column;
-  gap: token("spacing-300");
   padding: token("spacing-300");
   background: token("background-layer-2-color");
   border: 1px solid transparent;
-  border-radius: token("corner-radius-800");
+  border-radius: 24px;
   box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
   overflow: hidden;
 }
 
-/* Outer ring only for keyboard focus on the textarea (PromptField toggles
- * `.swc-PromptField-box--keyboard-focus`; `:focus-visible` alone cannot
- * distinguish Tab vs click on text inputs). */
-.swc-PromptField-box.swc-PromptField-box--keyboard-focus {
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-ring-gap");
+.swc-PromptField-box:has(.swc-PromptField-input-area.has-artifact) {
+  padding-block-start: token("spacing-100");
 }
 
 /* ─────────────────────────────────────
@@ -64,32 +59,77 @@
   display: flex;
   flex-direction: column;
   gap: token("spacing-300");
+  min-inline-size: 0;
   padding-block-start: 0;
-  padding-inline: token("spacing-100");
+  padding-inline: 0;
 }
 
-/* Figma: input area uses 8px top padding only when an artifact row is shown. */
+/* Keep the compact 8px gap between the artifact strip and textarea. */
 .swc-PromptField-input-area.has-artifact {
-  padding-block-start: token("spacing-100");
+  gap: token("spacing-100");
+}
+
+/* ─────────────────────────────────────
+   Controls (status icon, textarea, upload button, send/stop button)
+   ───────────────────────────────────── */
+
+/* Spike: text-group stays plain flex flow (not a grid track) so it can grow past one line; only leading-actions' own reveal animates, in its own grid below. */
+.swc-PromptField-controls {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  gap: 0;
+  transition: gap token("animation-duration-200") token("animation-ease-in-out");
+}
+
+:host(:not([collapsed])) .swc-PromptField-controls {
+  gap: token("spacing-500");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-PromptField-controls {
+    transition: none;
+  }
+}
+
+/* Right padding clears the absolutely positioned send/stop button below, so multi-line text doesn't run under it. */
+.swc-PromptField-text-group {
+  display: flex;
+  gap: token("spacing-200");
+  align-items: center;
+  min-inline-size: 0;
+  min-block-size: var(--swc-prompt-field-send-block-size, 32px);
+  padding-inline-start: token("spacing-75");
+  padding-inline-end: calc(var(--swc-prompt-field-send-inline-size, 32px) + token("spacing-300"));
+}
+
+.swc-PromptField-status-icon {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  align-self: start;
+  justify-content: center;
+  inline-size: token("workflow-icon-medium");
+  block-size: token("workflow-icon-medium");
+  color: token("gray-700");
 }
 
 /* ─────────────────────────────────────
    Uploaded artifacts
    ───────────────────────────────────── */
 
-.swc-PromptField-artifacts {
+.swc-PromptField-artifacts--single {
   display: flex;
   flex-wrap: wrap;
   gap: token("spacing-300");
   align-items: start;
 }
 
-.swc-PromptField-artifacts > slot {
+.swc-PromptField-artifacts--single > slot {
   display: contents;
 }
 
-/* Mixed card/media artifacts support horizontal flow with wrapping. */
-.swc-PromptField-artifacts > slot::slotted(*) {
+.swc-PromptField-artifacts--single > slot::slotted(*) {
   flex: 0 0 auto;
 }
 
@@ -98,14 +138,7 @@
   flex-basis: auto;
 }
 
-/* Multi-artifact card layout targets 3+ cards per row responsively. */
-.swc-PromptField-artifacts--multiple > slot::slotted([type="card"]) {
-  flex-shrink: 1;
-  flex-basis: auto;
-}
-
-/* Prompt-field media artifact uses 68×68 preview tile. */
-.swc-PromptField-artifacts > slot::slotted([type="media"]) {
+.swc-PromptField-artifacts--single > slot::slotted([type="media"]) {
   inline-size: var(--swc-prompt-field-artifact-media-inline-size, 68px);
   min-inline-size: var(--swc-prompt-field-artifact-media-min-inline-size, 68px);
   block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
@@ -113,39 +146,284 @@
   aspect-ratio: 1 / 1;
 }
 
+.swc-PromptField-artifacts--multiple {
+  min-inline-size: 0;
+
+  /* Dismiss badges are centered on each tile's top-right corner (see
+   * upload-artifact.css), so half of the larger (32px media) badge floats
+   * above the tile. Reserve that much clearance above the row so the
+   * scroll container's overflow-y: hidden doesn't clip it flat. */
+  --swc-prompt-field-artifact-badge-clearance: 16px;
+}
+
+.swc-PromptField-artifacts-row {
+  position: relative;
+  inline-size: 100%;
+}
+
+.swc-PromptField-artifacts-viewport {
+  position: relative;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  border-radius: token("corner-radius-100");
+  overflow: visible;
+
+  --swc-prompt-field-artifact-fade-solid: token("background-layer-2-color");
+}
+
+/* Spans the badge-clearance strip too (not just the tile height): a
+ * scrolling tile's corner badge lives partly in that clearance zone, and a
+ * fade that stopped at the tile's own top edge would leave the badge's
+ * upper half unmasked while its lower half fades, splitting it visually
+ * in two. */
+.swc-PromptField-artifacts-fade {
+  position: absolute;
+  inset-block-start: 0;
+  z-index: 3;
+  inline-size: token("spacing-400");
+  block-size: calc(var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px));
+  pointer-events: none;
+}
+
+.swc-PromptField-artifacts-fade--start {
+  inset-inline-start: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + (token("spacing-400") / 2));
+  background: linear-gradient(to right, var(--swc-prompt-field-artifact-fade-solid), transparent);
+}
+
+.swc-PromptField-artifacts-fade--end {
+  inset-inline-end: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + (token("spacing-400") / 2));
+  background: linear-gradient(to left, var(--swc-prompt-field-artifact-fade-solid), transparent);
+}
+
+:host(:dir(rtl)) .swc-PromptField-artifacts-fade--start {
+  background: linear-gradient(to left, var(--swc-prompt-field-artifact-fade-solid), transparent);
+}
+
+:host(:dir(rtl)) .swc-PromptField-artifacts-fade--end {
+  background: linear-gradient(to right, var(--swc-prompt-field-artifact-fade-solid), transparent);
+}
+
+/* padding-block-start reserves room for the dismiss badge, which is
+ * centered on each tile's top-right corner (upload-artifact.css) and so
+ * floats half outside the tile; overflow-y: hidden below would otherwise
+ * clip it flat. */
+.swc-PromptField-artifacts-scroll {
+  box-sizing: border-box;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  padding-block-start: var(--swc-prompt-field-artifact-badge-clearance, 0);
+  padding-inline: token("spacing-75");
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: inline mandatory;
+  scroll-padding-inline: token("spacing-75");
+  scrollbar-color: token("gray-400") transparent;
+}
+
+/* Chevrons and their opaque mask are overlay siblings positioned outside
+ * this scroll container, not part of its own clipping bounds, so the
+ * native scrollIntoView() call in _focusArtifact() (PromptField.ts) has no
+ * awareness of them: it can treat a tile as "already in view" while a
+ * chevron is still visually covering it, leaving keyboard focus (and its
+ * ring) hidden behind an opaque circle. Reserving that much scroll-padding
+ * on the side a chevron is showing makes the browser bring a tile fully
+ * clear of it before considering it in view. */
+.swc-PromptField-artifacts-scroll.has-scroll-prev {
+  scroll-padding-inline-start: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + token("spacing-400") + token("spacing-75"));
+}
+
+.swc-PromptField-artifacts-scroll.has-scroll-next {
+  scroll-padding-inline-end: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + token("spacing-400") + token("spacing-75"));
+}
+
+.swc-PromptField-artifacts-scroll::-webkit-scrollbar {
+  background: transparent;
+}
+
+.swc-PromptField-artifacts-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.swc-PromptField-artifacts-tiles {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: start;
+  inline-size: max-content;
+  min-inline-size: 100%;
+  block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
+}
+
+.swc-PromptField-artifacts-tiles > slot {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  gap: token("spacing-100");
+  align-items: start;
+}
+
+.swc-PromptField-artifacts-tiles > slot::slotted(*) {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+.swc-PromptField-artifacts-tiles > slot::slotted([type="card"]) {
+  inline-size: var(--swc-prompt-field-artifact-card-inline-size, 240px);
+  min-inline-size: var(--swc-prompt-field-artifact-card-inline-size, 240px);
+  max-inline-size: var(--swc-prompt-field-artifact-card-inline-size, 240px);
+}
+
+.swc-PromptField-artifacts-tiles > slot::slotted([type="media"]) {
+  inline-size: var(--swc-prompt-field-artifact-media-inline-size, 68px);
+  min-inline-size: var(--swc-prompt-field-artifact-media-min-inline-size, 68px);
+  max-inline-size: var(--swc-prompt-field-artifact-media-inline-size, 68px);
+  block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
+  min-block-size: var(--swc-prompt-field-artifact-media-min-block-size, 68px);
+  aspect-ratio: 1 / 1;
+}
+
+.swc-PromptField-artifacts-scroll-prev,
+.swc-PromptField-artifacts-scroll-next {
+  display: inline-flex;
+  position: absolute;
+  inset-block-start: calc((var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px)) / 2);
+  z-index: 4;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px);
+  block-size: var(--swc-prompt-field-artifact-scroll-button-block-size, 32px);
+  padding: 0;
+  color: token("gray-800");
+  background: var(--_swc-prompt-field-artifact-scroll-button-background);
+  border: 1px solid transparent;
+  border-radius: token("corner-radius-800");
+  cursor: pointer;
+  transform: translateY(-50%);
+
+  --_swc-prompt-field-artifact-scroll-button-background: token("gray-100");
+  --_swc-prompt-field-artifact-scroll-icon-transform: none;
+}
+
+/* aria-disabled, not the disabled attribute, and hidden with opacity, not
+ * display/visibility: a chevron at the end of the strip stays mounted and
+ * keeps any focus it already has (native disabled and display/visibility
+ * removal both blur it), so the button never needs a manual focus-redirect
+ * when scrolling makes it unusable. */
+.swc-PromptField-artifacts-scroll-prev[aria-disabled="true"],
+.swc-PromptField-artifacts-scroll-next[aria-disabled="true"] {
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* inline-size matches the fade's own inset (button + half of spacing-400)
+ * so the mask's inner edge lines up exactly with where the fade begins,
+ * with no dead opaque zone between them; the extra 2px and the outer edge
+ * (inset-inline-start/end below) overlapping 2px past the row's own edge
+ * are unrelated to that and only guard against calc()-derived positions
+ * not landing on a clean device pixel, which can leave a 1px unpainted
+ * sliver at a mask boundary that touches its edge exactly.
+ *
+ * z-index: -1, not 0: the button's own :focus-visible outline paints with
+ * its background/border layer, before z-index: 0 positioned descendants,
+ * so a z-index: 0 mask paints over (hides) the outline. A negative z-index
+ * puts this mask in the layer painted before that, so the outline is never
+ * covered. */
+.swc-PromptField-artifacts-scroll-prev::before,
+.swc-PromptField-artifacts-scroll-next::before {
+  position: absolute;
+  inset-block-start: calc((var(--swc-prompt-field-artifact-scroll-button-block-size, 32px) - var(--swc-prompt-field-artifact-badge-clearance, 0) - var(--swc-prompt-field-artifact-media-block-size, 68px)) / 2);
+  z-index: -1;
+  inline-size: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + (token("spacing-400") / 2) + 2px);
+  block-size: calc(var(--swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px));
+  pointer-events: none;
+  content: "";
+}
+
+.swc-PromptField-artifacts-scroll-prev::after,
+.swc-PromptField-artifacts-scroll-next::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--_swc-prompt-field-artifact-scroll-button-background);
+  border-radius: inherit;
+  pointer-events: none;
+  content: "";
+}
+
+.swc-PromptField-artifacts-scroll-prev {
+  inset-inline-start: 0;
+
+  --_swc-prompt-field-artifact-scroll-icon-transform: scaleX(-1);
+}
+
+.swc-PromptField-artifacts-scroll-prev::before {
+  inset-inline-start: -2px;
+  background: token("background-layer-2-color");
+}
+
+.swc-PromptField-artifacts-scroll-next {
+  inset-inline-end: 0;
+}
+
+.swc-PromptField-artifacts-scroll-next::before {
+  inset-inline-end: -2px;
+  background: token("background-layer-2-color");
+}
+
+.swc-PromptField-artifacts-scroll-prev:hover,
+.swc-PromptField-artifacts-scroll-next:hover {
+  --_swc-prompt-field-artifact-scroll-button-background: token("gray-200");
+}
+
+.swc-PromptField-artifacts-scroll-prev swc-icon,
+.swc-PromptField-artifacts-scroll-next swc-icon {
+  display: inline-flex;
+  position: relative;
+  z-index: 2;
+  align-items: center;
+  justify-content: center;
+  transform: var(--_swc-prompt-field-artifact-scroll-icon-transform);
+}
+
+.swc-PromptField-artifacts-scroll-prev:focus-visible,
+.swc-PromptField-artifacts-scroll-next:focus-visible {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
+}
+
+:host(:dir(rtl)) .swc-PromptField-artifacts-scroll-prev {
+  --_swc-prompt-field-artifact-scroll-icon-transform: none;
+}
+
+:host(:dir(rtl)) .swc-PromptField-artifacts-scroll-next {
+  --_swc-prompt-field-artifact-scroll-icon-transform: scaleX(-1);
+}
+
 /* ─────────────────────────────────────
-   Text area (label + textarea)
+   Textarea
    ───────────────────────────────────── */
 
-.swc-PromptField-text-area {
-  display: flex;
-  flex-direction: column;
-  gap: token("spacing-75");
-}
-
-.swc-PromptField-label {
-  display: block;
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-100");
-  font-weight: token("regular-font-weight");
-  line-height: token("line-height-100");
-  color: token("neutral-subdued-content-color-default");
-}
-
+/* Auto-grows to fit content, clamped between the min/max rows; overflow-y
+ * takes over once the max is reached. field-sizing: content handles this
+ * natively where supported; it is not yet widely supported, so
+ * _autosizeTextarea() in PromptField.ts is the fallback. */
 .swc-PromptField-textarea {
   field-sizing: content;
   display: block;
-  inline-size: 100%;
-  min-block-size: calc(token("font-size-100") * token("line-height-100") * var(--swc-prompt-field-textarea-min-rows, 1));
-  max-block-size: calc(token("font-size-100") * token("line-height-100") * var(--swc-prompt-field-textarea-max-rows, 4));
+  flex: 1 1 0%;
+  min-inline-size: 0;
+  min-block-size: calc(token("font-size-200") * token("line-height-200") * var(--swc-prompt-field-textarea-min-rows, 1));
+  max-block-size: min(calc(token("font-size-200") * token("line-height-200") * var(--swc-prompt-field-textarea-max-rows, 999)), var(--swc-prompt-field-max-block-size, 40vh));
   padding: 0;
   font-family: token("sans-serif-font");
-  font-size: token("font-size-100");
+  font-size: token("font-size-200");
   font-weight: token("regular-font-weight");
-  line-height: token("line-height-100");
+  line-height: token("line-height-200");
   color: token("gray-900");
   background: transparent;
   border: none;
+  overflow-y: auto;
   resize: none;
   outline: none;
 }
@@ -159,20 +437,39 @@
   cursor: default;
 }
 
-/* ─────────────────────────────────────
-   Action bar
-   ───────────────────────────────────── */
-
-.swc-PromptField-action-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.swc-PromptField-textarea:focus-visible {
+  border-radius: token("corner-radius-75");
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
 }
 
+/* Own single-row grid animates 0fr <-> 1fr; overflow/min-block-size live on the row wrapper below, not here, since 0fr only resolves to a true 0 on the grid item, not the container. */
 .swc-PromptField-leading-actions {
-  display: inline-flex;
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows token("animation-duration-200") token("animation-ease-in-out"),
+    opacity token("animation-duration-100") token("animation-ease-in-out");
+}
+
+:host(:not([collapsed])) .swc-PromptField-leading-actions {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-PromptField-leading-actions {
+    transition: none;
+  }
+}
+
+.swc-PromptField-leading-actions-row {
+  display: flex;
   gap: token("spacing-75");
   align-items: center;
+  min-block-size: 0;
+  overflow: hidden;
 }
 
 .swc-PromptField-file-input {
@@ -222,7 +519,6 @@
   background: token("neutral-background-color-default");
   border: 1px solid transparent;
   border-radius: token("corner-radius-full");
-  transition: background token("animation-duration-100") ease;
 }
 
 .swc-PromptField-stop {
@@ -236,6 +532,14 @@
   background: token("gray-900");
   border: 1px solid transparent;
   border-radius: token("corner-radius-full");
+}
+
+/* Anchored to .controls's own bottom-right, so it re-aligns on its own as .controls grows or shrinks with either row's content. */
+.swc-PromptField-send,
+.swc-PromptField-stop {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-end: 0;
   transition: background token("animation-duration-100") ease;
 }
 
@@ -299,6 +603,8 @@
   color: inherit;
 }
 
-.swc-PromptField-artifacts[hidden] {
-  display: none !important;
+@media (prefers-reduced-motion: reduce) {
+  .swc-PromptField-artifacts-scroll {
+    scroll-behavior: auto;
+  }
 }

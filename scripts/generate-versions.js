@@ -85,17 +85,14 @@ generateVersion(secondGenPkgPath, secondGenOutputPath, {
   generationName: '2nd-gen',
 });
 
-// Get 2nd-gen version for use as coreVersion in 1st-gen
-const secondGenPkg = JSON.parse(fs.readFileSync(secondGenPkgPath, 'utf-8'));
-const secondGenVersion = secondGenPkg.version;
-
-// Generate 1st-gen version (with reference to core version)
+// Generate 1st-gen version. coreVersion defaults to 1st-gen's own package
+// version, since @spectrum-web-components/base is 1st-gen's own core base
+// package and has no relationship to 2nd-gen's version.
 const firstGenPkgPath = path.join(root, '1st-gen/tools/base/package.json');
 const firstGenOutputPath = path.join(root, '1st-gen/tools/base/src/version.ts');
 
 generateVersion(firstGenPkgPath, firstGenOutputPath, {
   generationName: '1st-gen',
-  coreVersion: secondGenVersion,
 });
 
 console.log('\n✓ All version files generated successfully');

@@ -245,7 +245,7 @@ jobs:
         run: cd 1st-gen && yarn playwright install --with-deps
 
       - name: Run Playwright tests
-        run: cd 1st-gen && yarn playwright test projects/documentation/e2e/published.spec.ts
+        run: cd 1st-gen && yarn playwright test projects/documentation/e2e/
         env:
           DOC_PREVIEW_URL: ${{ needs.build_and_deploy_job.outputs.first_gen_docs_url }}
           SWC_DIR: pr-${{ github.event.pull_request.number }}

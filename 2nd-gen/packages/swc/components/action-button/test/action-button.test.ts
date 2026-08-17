@@ -614,6 +614,69 @@ export const PendingBehaviorTest: Story = {
   },
 };
 
+export const DynamicLabelBehaviorTest: Story = {
+  render: () => html`
+    <swc-action-button>
+      <svg
+        slot="icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 36 36"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          d="M33.567 8.2L27.8 2.432a1.215 1.215 0 0 0-1.717 0L23 5.516 30.485 13l3.082-3.083a1.215 1.215 0 0 0 0-1.717zM21.586 7l-3.805 3.805 7.414 7.415 3.805-3.805zM3 29.788V37h7.212L23.414 23.8l-7.414-7.415zM6 32v-1.591l9.914-9.914 1.591 1.591L7.591 32z"
+        />
+      </svg>
+      Edit
+    </swc-action-button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const button = await getComponent<ActionButton>(
+      canvasElement,
+      'swc-action-button'
+    );
+    const internalButton = button.renderRoot.querySelector('button');
+    const labelNode = [...button.childNodes].find(
+      (node) => node.textContent?.trim() === 'Edit'
+    ) as ChildNode;
+
+    await step('starts icon+label, not icon-only', async () => {
+      expect(
+        internalButton?.classList.contains('swc-ActionButton--iconOnly'),
+        'icon-only class is absent while a label is slotted'
+      ).toBe(false);
+    });
+
+    await step(
+      'removing the label after first render adds icon-only',
+      async () => {
+        labelNode.remove();
+        // slotchange dispatches asynchronously after the assignment.
+        await Promise.resolve();
+        await button.updateComplete;
+
+        expect(
+          internalButton?.classList.contains('swc-ActionButton--iconOnly'),
+          'icon-only class is added once the label is removed'
+        ).toBe(true);
+      }
+    );
+
+    await step('re-adding a label removes icon-only', async () => {
+      button.append('Edit');
+      await Promise.resolve();
+      await button.updateComplete;
+
+      expect(
+        internalButton?.classList.contains('swc-ActionButton--iconOnly'),
+        'icon-only class is removed once a label is slotted again'
+      ).toBe(false);
+    });
+  },
+};
+DynamicLabelBehaviorTest.storyName = 'Dynamic label behavior';
+
 export const IconOnlyAriaTest: Story = {
   render: () => html`
     <swc-action-button accessible-label="Edit" pending>

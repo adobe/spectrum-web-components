@@ -141,6 +141,8 @@
     - [Side navigation accessibility migration analysis](sidenav/accessibility-migration-analysis.md)
 - Slider
     - [Slider migration roadmap](slider/rendering-and-styling-migration-analysis.md)
+- Split View
+    - [Split view accessibility migration analysis](split-view/accessibility-migration-analysis.md)
 - Status Light
     - [Status light accessibility migration analysis](status-light/accessibility-migration-analysis.md)
     - [Status Light migration roadmap](status-light/rendering-and-styling-migration-analysis.md)
@@ -158,6 +160,10 @@
     - [Tag migration roadmap](tag/rendering-and-styling-migration-analysis.md)
 - Tags
     - [Tags migration roadmap](tags/rendering-and-styling-migration-analysis.md)
+- Text Area
+    - [Text area accessibility migration analysis](text-area/accessibility-migration-analysis.md)
+- Text Field
+    - [Text field accessibility migration analysis](text-field/accessibility-migration-analysis.md)
 - Textfield
     - [Textfield and Textarea migration roadmap](textfield/rendering-and-styling-migration-analysis.md)
 - Thumbnail
@@ -181,3 +187,5 @@ This section provides a **component-centric view** of individual components and 
 Each component has its own folder (kebab-case). Inside you'll find analysis and planning docs for that component—for example, **rendering-and-styling-migration-analysis.md** for Spectrum 2 CSS-to-SWC migration. The same structure is intended for future peer docs (e.g. a11y analysis, comparative API analysis).
 
 For a workstream-centric view of the same work, see [Workstreams](../02_workstreams/README.md). For how the two views fit together, see the [Project planning overview](../README.md).
+
+When migrating a **form field** (text field, checkbox, radio, picker, combobox, and similar), start from the canonical [forms strategy](../05_strategies/forms-strategy-rfc.md): it defines the ElementInternals/FACE decision, the label/help/error pattern, IDREF and cross-root rules, and the axe policy that Phase 3 and Phase 4 of the [washing machine workflow](../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md) depend on.
