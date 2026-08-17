@@ -56,6 +56,7 @@
    ───────────────────────────────────── */
 
 .swc-PromptField-box {
+  --_swc-prompt-field-recede-surface: token("background-layer-2-color");
   --_swc-prompt-field-border-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), rgb(255 255 255 / 5%));
   --_swc-prompt-field-drop-shadow-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 58.26% 0.2265 calc(h - 0.4) / 5%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 5%));
   --_swc-prompt-field-inset-shadow-color: rgb(255 255 255 / 4%);
@@ -300,10 +301,10 @@
 
 :host([variant="subtle"]:not([generating])) .swc-PromptField-box {
   --_swc-prompt-field-con-hue-opacity: 0%;
-  --_swc-prompt-field-bg-stop-1: light-dark(white, token("gray-75"));
-  --_swc-prompt-field-bg-stop-2: light-dark(white, token("gray-75"));
-  --_swc-prompt-field-bg-stop-3: light-dark(white, token("gray-75"));
-  --_swc-prompt-field-bg-stop-4: light-dark(white, token("gray-75"));
+  --_swc-prompt-field-bg-stop-1: var(--_swc-prompt-field-recede-surface);
+  --_swc-prompt-field-bg-stop-2: var(--_swc-prompt-field-recede-surface);
+  --_swc-prompt-field-bg-stop-3: var(--_swc-prompt-field-recede-surface);
+  --_swc-prompt-field-bg-stop-4: var(--_swc-prompt-field-recede-surface);
   --_swc-prompt-field-border-color: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%));
   --_swc-prompt-field-drop-shadow-color: transparent;
 }
@@ -414,10 +415,10 @@
 /* Typing recedes the treatment, but only while idle; generating's wash persists through focus. :focus-within on the box scopes to composer focus (the legal footer is outside the box), so a focused legal link doesn't recede it. */
 :host(:not([generating])) .swc-PromptField-box:focus-within {
   --_swc-prompt-field-con-hue-opacity: 0%;
-  --_swc-prompt-field-bg-stop-1: light-dark(white, token("gray-75"));
-  --_swc-prompt-field-bg-stop-2: light-dark(white, token("gray-75"));
-  --_swc-prompt-field-bg-stop-3: light-dark(white, token("gray-75"));
-  --_swc-prompt-field-bg-stop-4: light-dark(white, token("gray-75"));
+  --_swc-prompt-field-bg-stop-1: var(--_swc-prompt-field-recede-surface);
+  --_swc-prompt-field-bg-stop-2: var(--_swc-prompt-field-recede-surface);
+  --_swc-prompt-field-bg-stop-3: var(--_swc-prompt-field-recede-surface);
+  --_swc-prompt-field-bg-stop-4: var(--_swc-prompt-field-recede-surface);
   --_swc-prompt-field-border-color: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%));
   --_swc-prompt-field-inset-shadow-color: transparent;
   --_swc-prompt-field-drop-shadow-color: transparent;
