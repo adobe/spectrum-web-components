@@ -36,9 +36,7 @@ const defaultLegalDisclaimer = html`
 `;
 
 const legalDisclaimerSlot = html`
-  <p slot="legal" class="swc-PromptField-legal-disclaimer">
-    ${defaultLegalDisclaimer}
-  </p>
+  <p slot="legal" class="swc-Typography--links">${defaultLegalDisclaimer}</p>
 `;
 
 type PromptFieldStoryArgs = typeof args;
