@@ -91,7 +91,7 @@
 }
 
 :host([size="m"]) {
-  --swc-close-button-icon-size: token("ui-icon-medium");
+  --swc-close-button-icon-size: token("ui-icon-large");
   --swc-close-button-size: token("component-height-100");
 }
 
