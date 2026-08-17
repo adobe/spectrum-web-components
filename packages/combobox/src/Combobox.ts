@@ -407,6 +407,7 @@ export class Combobox extends Textfield {
         return html`
             ${this.renderStateIcons()}
             <input
+                dir="auto"
                 aria-activedescendant=${ifDefined(
                     this.activeDescendant
                         ? `${this.activeDescendant.value}`
