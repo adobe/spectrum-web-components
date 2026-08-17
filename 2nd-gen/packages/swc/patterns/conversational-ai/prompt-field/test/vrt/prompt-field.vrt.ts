@@ -30,6 +30,8 @@ const meta: Meta = {
   title: 'Conversational AI/Prompt field/Prompt field VRT',
   component: 'swc-prompt-field',
   tags: ['dev'],
+  // Snapshot-only; without explicit argTypes the auto-generated controls also surface the component's private @state, so drop the panel.
+  parameters: { controls: { disable: true } },
 };
 
 export default meta;
