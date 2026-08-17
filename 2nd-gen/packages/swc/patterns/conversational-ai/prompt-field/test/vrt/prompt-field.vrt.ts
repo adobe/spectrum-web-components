@@ -17,6 +17,7 @@ import '../../swc-prompt-field.js';
 
 import {
   createPermutations,
+  forcedColorsVrtParameters,
   groupPermutationsBy,
   row,
   theme,
@@ -90,4 +91,12 @@ export const Variants: Story = {
     ${theme(permutationContent(), 'dark', 'rtl')}
   `,
   parameters: vrtParameters,
+};
+
+// Forced-colors replaces the whole palette, so it gets its own story:
+// checks the opaque card boundary the treatment falls back to when the
+// gradients are dropped.
+export const ForcedColors: Story = {
+  render: () => theme(permutationContent(), 'light', 'ltr'),
+  parameters: forcedColorsVrtParameters,
 };
