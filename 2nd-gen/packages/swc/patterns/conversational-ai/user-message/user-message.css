@@ -93,6 +93,7 @@
 }
 
 :host([type="card"]) .swc-UserMessage-thumbnail ::slotted(*) {
+  box-sizing: border-box;
   flex-shrink: 0;
   inline-size: 32px;
   block-size: 32px;
@@ -114,6 +115,7 @@
 }
 
 :host([type="media"]) .swc-UserMessage-thumbnail ::slotted(*) {
+  box-sizing: border-box;
   position: absolute;
   inset: 0;
   inline-size: 100%;
