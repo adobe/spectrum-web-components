@@ -109,6 +109,9 @@
 .swc-PromptField-outer-border {
   --_swc-prompt-field-outer-shadow: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 0%));
 
+  /* Flat ring stops for subtle (idle) and the receded focus state; shared across both rules. */
+  --_swc-prompt-field-outer-recede-stop: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
+
   display: flex;
   padding: 6px;
   container-type: inline-size;
@@ -126,9 +129,9 @@
   :host([variant="subtle"]) & {
     --_swc-prompt-field-outer-shadow: rgb(0 0 0 / 5%);
     --_swc-prompt-field-outer-hue: transparent;
-    --_swc-prompt-field-outer-stop-1: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
-    --_swc-prompt-field-outer-stop-2: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
-    --_swc-prompt-field-outer-stop-3: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
+    --_swc-prompt-field-outer-stop-1: var(--_swc-prompt-field-outer-recede-stop);
+    --_swc-prompt-field-outer-stop-2: var(--_swc-prompt-field-outer-recede-stop);
+    --_swc-prompt-field-outer-stop-3: var(--_swc-prompt-field-outer-recede-stop);
 
     &:hover {
       --_swc-prompt-field-outer-shadow: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 0%));
@@ -159,9 +162,9 @@
   :host(:not([generating])) &:focus-within {
     --_swc-prompt-field-outer-shadow: light-dark(rgb(0 0 0 / 5%), rgb(0 0 0 / 3%));
     --_swc-prompt-field-outer-hue: transparent;
-    --_swc-prompt-field-outer-stop-1: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
-    --_swc-prompt-field-outer-stop-2: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
-    --_swc-prompt-field-outer-stop-3: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
+    --_swc-prompt-field-outer-stop-1: var(--_swc-prompt-field-outer-recede-stop);
+    --_swc-prompt-field-outer-stop-2: var(--_swc-prompt-field-outer-recede-stop);
+    --_swc-prompt-field-outer-stop-3: var(--_swc-prompt-field-outer-recede-stop);
   }
 }
 
