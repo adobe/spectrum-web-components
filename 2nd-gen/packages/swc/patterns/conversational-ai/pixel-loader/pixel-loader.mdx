@@ -47,11 +47,10 @@ swc-pixel-loader {
 
 ## States
 
-### States
-
 `paused` renders the fully-settled appearance (full size, full opacity, no
-offset) with no animation. The loader also freezes this way when the user has
-requested reduced motion (see Accessibility).
+offset) with no animation. Under reduced motion the loader fades the grid in
+and out one row at a time in place, without the falling or scaling motion (see
+Accessibility).
 
 <Canvas of={PixelLoaderStories.States} />
 
@@ -66,9 +65,10 @@ features:
   `aria-valuemin` / `aria-valuemax` since progress is always indeterminate
 - The `label` property (default `"Loading"`) sets the accessible name via
   `aria-label`
-- When the user has requested reduced motion, the animation stops and the
-  loader renders the fully-settled icon (the same frozen appearance as
-  `paused`), avoiding the falling and scaling motion entirely.
+- When the user has requested reduced motion, the loader drops the falling and
+  scaling motion: it instead fades the grid in and out one row at a time
+  (bottom-up) in place, so it still signals that something is loading while
+  honoring the reduced-motion preference.
 
 ### Best practices
 

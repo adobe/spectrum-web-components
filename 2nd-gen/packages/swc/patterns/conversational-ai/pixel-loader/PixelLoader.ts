@@ -22,6 +22,9 @@ import {
   durationForCells,
   groupOpacityKeyframes,
   loopFramesFor,
+  reducedMotionDuration,
+  reducedMotionKeyframes,
+  reducedMotionLoopFrames,
   SETTLE_EASING,
   SETTLED_OPACITY,
   SETTLED_SCALE,
@@ -43,6 +46,16 @@ import styles from './pixel-loader.css';
 
 export { PIXEL_LOADER_ICON_NAMES, PIXEL_LOADER_PRESET_NAMES } from './data.js';
 export type { PixelLoaderIconName, PixelLoaderPresetName } from './data.js';
+
+/**
+ * How the loader animates, derived once from `paused` and the reduced-motion
+ * preference (see `_animationMode`). Every play/ticker/commit decision keys off
+ * this rather than re-testing the two conditions:
+ * - `static`: frozen on the settled frame (`paused`).
+ * - `reduced`: an in-place, row-by-row opacity fade (`prefers-reduced-motion`).
+ * - `full`: the per-cell falling-and-scaling build.
+ */
+type AnimationMode = 'static' | 'reduced' | 'full';
 
 /**
  * The Conversational AI pixel loader: an assembling/disassembling "pixel-fall"
@@ -174,10 +187,18 @@ export class PixelLoader extends SpectrumElement {
   protected override updated(changed: PropertyValues): void {
     super.updated(changed);
 
-    // A re-render can replace the cell elements (icon/preset changes the count),
-    // so drop the cached lookups before anything below re-queries them.
-    this._containerCache = null;
-    this._cellElsCache = null;
+    // The rendered cells only change when the active icon does (icon swap,
+    // preset, or preset step); drop the cached lookups for just those cases so
+    // cell-preserving updates (e.g. toggling `paused`) reuse them rather than
+    // re-querying the shadow root.
+    if (
+      changed.has('_displayedIcon') ||
+      changed.has('preset') ||
+      changed.has('_presetIndex')
+    ) {
+      this._containerCache = null;
+      this._cellElsCache = null;
+    }
 
     if (changed.has('preset')) {
       this._presetIndex = 0;
@@ -220,13 +241,22 @@ export class PixelLoader extends SpectrumElement {
     );
   }
 
+  /** The single source of truth for how the loader animates right now. */
+  private get _animationMode(): AnimationMode {
+    if (this.paused) {
+      return 'static';
+    }
+    return this._prefersReducedMotion() ? 'reduced' : 'full';
+  }
+
   /**
-   * Whether the loader renders its frozen, fully-settled appearance with no
-   * animation: when explicitly `paused`, or when the user has requested reduced
-   * motion (matching the React Spectrum loader, which stops the animation).
+   * Duration of one loader cycle for `cells`, in ms. Reduced motion runs the
+   * shorter row-fade cycle instead of the full per-cell falling build.
    */
-  private get _isStatic(): boolean {
-    return this.paused || this._prefersReducedMotion();
+  private _cycleDuration(cells: readonly Cell[]): number {
+    return this._animationMode === 'reduced'
+      ? reducedMotionDuration(cells)
+      : durationForCells(cells);
   }
 
   private _isValidPreset(preset: string): preset is PixelLoaderPresetName {
@@ -250,6 +280,11 @@ export class PixelLoader extends SpectrumElement {
     return preset ? PRESETS[preset] : undefined;
   }
 
+  /** Cells for a named icon, guarding against an unknown name. */
+  private _cellsForIcon(name: PixelLoaderIconName): Cell[] {
+    return ICONS[name] ?? ICONS.aiLogo;
+  }
+
   /**
    * Resolves the cells for the icon currently on screen in one place, so
    * `render()` and `_playCells()` each do a single preset lookup instead of
@@ -263,7 +298,7 @@ export class PixelLoader extends SpectrumElement {
       : this._displayedIcon;
 
     return {
-      cells: ICONS[iconName] ?? ICONS.aiLogo,
+      cells: this._cellsForIcon(iconName),
       isPreset: Boolean(icons),
     };
   }
@@ -271,16 +306,21 @@ export class PixelLoader extends SpectrumElement {
   private _syncTicker(): void {
     this._stopTicker();
 
+    // Reduced motion still cycles (the fade communicates activity); only the
+    // static (paused) mode stops the preset ticker.
     const icons = this._presetIcons();
-    if (!icons || !this.isConnected || this._isStatic) {
+    if (!icons || !this.isConnected || this._animationMode === 'static') {
       return;
     }
 
-    // Advance one icon per cycle; the interval is the current icon's own
-    // (dynamic) cycle duration.
+    // Advance one icon per cycle. The interval is the current preset icon's own
+    // cycle duration (reduced motion swaps in its shorter row-fade cycle), so
+    // the ticker stays in step. Derive its cells from the `icons` list already
+    // resolved above rather than re-resolving the preset via `_activeCells`.
+    const cells = this._cellsForIcon(icons[this._presetIndex % icons.length]);
     this._ticker = window.setInterval(() => {
       this._presetIndex = (this._presetIndex + 1) % icons.length;
-    }, durationForCells(this._activeCells.cells));
+    }, this._cycleDuration(cells));
   }
 
   private _stopTicker(): void {
@@ -303,12 +343,12 @@ export class PixelLoader extends SpectrumElement {
   }
 
   private _shouldCommitIconImmediately(): boolean {
-    // Nothing to finish when a preset drives the display, when the loader is
-    // frozen (paused or reduced motion), when no build is running, or when the
-    // icon already matches.
+    // Only the full falling build has a drop to finish before swapping. Presets,
+    // the static and reduced modes (no falling build to settle), an idle loader,
+    // and an already-matching icon all commit the new icon immediately.
     return (
       Boolean(this._resolvedPreset) ||
-      this._isStatic ||
+      this._animationMode !== 'full' ||
       this._animations.length === 0 ||
       this._displayedIcon === this.icon
     );
@@ -373,8 +413,7 @@ export class PixelLoader extends SpectrumElement {
     const cellEls = this._cellEls();
     const container = this._container();
     const { cells, isPreset } = this._activeCells;
-    // `paused` and reduced motion both freeze on the fully-settled icon.
-    const renderStatic = this._isStatic;
+    const mode = this._animationMode;
 
     // Clear any inline values a previous render left behind so a stale value
     // never becomes the Web Animations implicit offset-0 keyframe on the next
@@ -386,7 +425,8 @@ export class PixelLoader extends SpectrumElement {
     });
     container?.style.removeProperty('opacity');
 
-    if (renderStatic) {
+    // Static (paused): hold the fully-settled frame with no animation.
+    if (mode === 'static') {
       cellEls.forEach((cellEl, index) => {
         if (!cells[index]) {
           return;
@@ -401,13 +441,31 @@ export class PixelLoader extends SpectrumElement {
       return;
     }
 
-    const total = loopFramesFor(cells);
     const options: KeyframeAnimationOptions = {
-      duration: durationForCells(cells),
+      duration: this._cycleDuration(cells),
       iterations: isPreset ? 1 : Infinity,
       fill: 'forwards',
       easing: 'linear',
     };
+
+    // Reduced motion: fade the grid in and out one row at a time in place, with
+    // no transform and no group envelope, so it still signals activity without
+    // the falling or scaling motion.
+    if (mode === 'reduced') {
+      const rowTotal = reducedMotionLoopFrames(cells);
+      cellEls.forEach((cellEl, index) => {
+        const cell = cells[index];
+        if (!cell) {
+          return;
+        }
+        this._animations.push(
+          cellEl.animate(reducedMotionKeyframes(cell, cells, rowTotal), options)
+        );
+      });
+      return;
+    }
+
+    const total = loopFramesFor(cells);
 
     // Each cell runs a `translate` drop and a `scale` pop (separate animations
     // for their differing per-segment easings); the container runs one opacity

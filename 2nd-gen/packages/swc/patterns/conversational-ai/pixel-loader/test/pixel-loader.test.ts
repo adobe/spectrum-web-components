@@ -319,25 +319,49 @@ export const ReducedMotionTest: Story = {
     const query = { matches: false };
     internals._reducedMotionQuery = query;
 
-    await step('reduced motion freezes on the settled icon', async () => {
+    const opacityOffsets = (cellEl: HTMLElement): number[] =>
+      (cellEl.getAnimations()[0].effect as KeyframeEffect)
+        .getKeyframes()
+        .map((frame) => frame.computedOffset);
+
+    await step('reduced motion fades in place, one row at a time', async () => {
       query.matches = true;
       internals._handleReducedMotionChange();
       await el.updateComplete;
 
-      const [first] = cells(el);
-      // Matches React Spectrum: no running animation, settled appearance.
-      expect(first.getAnimations()).toHaveLength(0);
-      expect(first.style.scale).toBe('1');
-      expect(first.style.opacity).toBe('1');
+      const cellEls = cells(el);
+      const [first] = cellEls;
+      const anims = first.getAnimations();
+      // A single opacity track per cell: no falling or scaling transform.
+      expect(anims).toHaveLength(1);
+      const props = new Set(
+        (anims[0].effect as KeyframeEffect)
+          .getKeyframes()
+          .flatMap((frame) => Object.keys(frame))
+      );
+      expect(props.has('opacity')).toBe(true);
+      expect(props.has('translate')).toBe(false);
+      expect(props.has('scale')).toBe(false);
+
+      // Timed by row: aiLogo cells 1 and 2 share row 5, so they fade together,
+      // while cell 0 (row 6) fades on a different beat.
+      expect(opacityOffsets(cellEls[1])).toEqual(opacityOffsets(cellEls[2]));
+      expect(opacityOffsets(cellEls[0])).not.toEqual(
+        opacityOffsets(cellEls[1])
+      );
     });
 
-    await step('leaving reduced motion restarts the animation', async () => {
-      query.matches = false;
-      internals._handleReducedMotionChange();
-      await el.updateComplete;
+    await step(
+      'leaving reduced motion restores the full falling build',
+      async () => {
+        query.matches = false;
+        internals._handleReducedMotionChange();
+        await el.updateComplete;
 
-      const [first] = cells(el);
-      expect(first.getAnimations().length).toBeGreaterThan(0);
-    });
+        const [first] = cells(el);
+        // A `translate` drop and a `scale` pop per cell.
+        expect(first.getAnimations()).toHaveLength(2);
+      }
+    );
   },
 };

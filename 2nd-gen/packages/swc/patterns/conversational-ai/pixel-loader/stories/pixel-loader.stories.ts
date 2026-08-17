@@ -51,7 +51,7 @@ const meta: Meta = {
       packagePath: 'patterns/conversational-ai/pixel-loader',
       subtitle: 'Assembling/disassembling pixel icon loading indicator.',
     },
-    layout: 'padded',
+    layout: 'centered',
   },
   excludeStories: ['meta'],
   tags: ['migrated'],

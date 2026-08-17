@@ -21,12 +21,9 @@
  */
 export type CellPosition = readonly [col: number, row: number];
 
-export type StaggerMode = 'individual' | 'grouped' | 'by-row';
-
 export interface BuildCellsOptions {
   /** Frame step between consecutively staggered cells. */
   staggerInterval?: number;
-  stagger?: StaggerMode;
   /** Shifts every cell's row to center icons that don't use all 7 rows. */
   rowOffset?: number;
 }
@@ -46,30 +43,19 @@ export interface Cell {
 // The loop length and duration are derived per icon from its stagger spread;
 // see `loopFramesFor`/`durationForCells` in animation.ts.
 
+// Rows assemble bottom-to-top; cells within a row stagger by `interval`, and
+// consecutive rows overlap by one stagger step so the reveal reads as a
+// continuous wave rather than strictly row-by-row. Bottom-up (highest row index
+// first) matches the hand-authored `aiLogo`, so the icon builds and clears from
+// the bottom; ascending order would reverse the intended motion.
 function computeStaggerValues(
   positions: readonly CellPosition[],
-  mode: StaggerMode,
   interval: number
 ): number[] {
-  if (mode === 'individual') {
-    return positions.map((_, index) => index * interval);
-  }
-
-  // Sort rows bottom-to-top (highest row index, the visual bottom, first) so
-  // the icon assembles from the bottom up and the earliest exit starts at the
-  // bottom, matching the hand-authored `aiLogo`. Ascending order would build
-  // and clear top-down, reversing the intended motion.
   const rows = Array.from(new Set(positions.map(([, row]) => row))).sort(
     (a, b) => b - a
   );
 
-  if (mode === 'by-row') {
-    return positions.map(([, row]) => rows.indexOf(row) * interval);
-  }
-
-  // grouped (default): rows processed bottom-to-top; cells within a row
-  // stagger by `interval`; consecutive rows overlap by one stagger step so
-  // the reveal reads as a continuous wave rather than strictly row-by-row.
   const staggerValues = new Array<number>(positions.length).fill(0);
   let rowStart = 0;
 
@@ -96,12 +82,8 @@ export function buildCells(
   positions: readonly CellPosition[],
   options: BuildCellsOptions = {}
 ): Cell[] {
-  const { staggerInterval = 2, stagger = 'grouped', rowOffset = 0 } = options;
-  const staggerValues = computeStaggerValues(
-    positions,
-    stagger,
-    staggerInterval
-  );
+  const { staggerInterval = 2, rowOffset = 0 } = options;
+  const staggerValues = computeStaggerValues(positions, staggerInterval);
 
   return positions.map(([col, row], index) => ({
     col,
@@ -146,7 +128,7 @@ const brush = buildCells(
     [6, 1],
     [6, 0],
   ],
-  { staggerInterval: 2, stagger: 'grouped' }
+  { staggerInterval: 2 }
 );
 
 const eye = buildCells(
@@ -170,7 +152,7 @@ const eye = buildCells(
     [3, 0],
     [4, 0],
   ],
-  { staggerInterval: 2, stagger: 'grouped', rowOffset: 1 }
+  { staggerInterval: 2, rowOffset: 1 }
 );
 
 const hourglass = buildCells(
@@ -209,7 +191,7 @@ const hourglass = buildCells(
     [5, 0],
     [6, 0],
   ],
-  { staggerInterval: 1, stagger: 'grouped' }
+  { staggerInterval: 1 }
 );
 
 const mag = buildCells(
@@ -229,7 +211,7 @@ const mag = buildCells(
     [2, 0],
     [3, 0],
   ],
-  { staggerInterval: 2, stagger: 'grouped' }
+  { staggerInterval: 2 }
 );
 
 const crop = buildCells(
@@ -253,7 +235,7 @@ const crop = buildCells(
     [5, 1],
     [1, 0],
   ],
-  { staggerInterval: 2, stagger: 'grouped' }
+  { staggerInterval: 2 }
 );
 
 const flower = buildCells(
@@ -272,7 +254,7 @@ const flower = buildCells(
     [5, 1],
     [1, 0],
   ],
-  { staggerInterval: 2, stagger: 'grouped' }
+  { staggerInterval: 2 }
 );
 
 const image = buildCells(
@@ -313,7 +295,7 @@ const image = buildCells(
     [5, 0],
     [6, 0],
   ],
-  { staggerInterval: 1, stagger: 'grouped' }
+  { staggerInterval: 1 }
 );
 
 const lasso = buildCells(
@@ -335,7 +317,7 @@ const lasso = buildCells(
     [4, 0],
     [5, 0],
   ],
-  { staggerInterval: 2, stagger: 'grouped' }
+  { staggerInterval: 2 }
 );
 
 const page = buildCells(
@@ -368,7 +350,7 @@ const page = buildCells(
     [3, 0],
     [4, 0],
   ],
-  { staggerInterval: 1, stagger: 'grouped' }
+  { staggerInterval: 1 }
 );
 
 const wand = buildCells(
@@ -384,7 +366,7 @@ const wand = buildCells(
     [0, 0],
     [4, 0],
   ],
-  { staggerInterval: 2, stagger: 'grouped' }
+  { staggerInterval: 2 }
 );
 
 const bargraph = buildCells(
@@ -409,7 +391,7 @@ const bargraph = buildCells(
     [5, 1],
     [6, 0],
   ],
-  { staggerInterval: 2, stagger: 'grouped' }
+  { staggerInterval: 2 }
 );
 
 const trefoil = buildCells(
@@ -427,7 +409,7 @@ const trefoil = buildCells(
     [3, 1],
     [3, 0],
   ],
-  { staggerInterval: 2, stagger: 'grouped' }
+  { staggerInterval: 2 }
 );
 
 const dial = buildCells(
@@ -445,7 +427,7 @@ const dial = buildCells(
     [2, 0],
     [3, 0],
   ],
-  { staggerInterval: 2, stagger: 'grouped', rowOffset: 1 }
+  { staggerInterval: 2, rowOffset: 1 }
 );
 
 const folder = buildCells(
@@ -471,7 +453,7 @@ const folder = buildCells(
     [1, 0],
     [2, 0],
   ],
-  { staggerInterval: 1, stagger: 'grouped', rowOffset: 1 }
+  { staggerInterval: 1, rowOffset: 1 }
 );
 
 const arrow = buildCells(
@@ -488,7 +470,7 @@ const arrow = buildCells(
     [5, 0],
     [6, 0],
   ],
-  { staggerInterval: 2, stagger: 'grouped', rowOffset: 2 }
+  { staggerInterval: 2, rowOffset: 2 }
 );
 
 const cloud = buildCells(
@@ -510,7 +492,7 @@ const cloud = buildCells(
     [3, 0],
     [4, 0],
   ],
-  { staggerInterval: 1, stagger: 'grouped', rowOffset: 1 }
+  { staggerInterval: 1, rowOffset: 1 }
 );
 
 const comment = buildCells(
@@ -534,7 +516,7 @@ const comment = buildCells(
     [4, 0],
     [5, 0],
   ],
-  { staggerInterval: 1, stagger: 'grouped' }
+  { staggerInterval: 1 }
 );
 
 const filter = buildCells(
@@ -559,7 +541,7 @@ const filter = buildCells(
     [5, 0],
     [6, 0],
   ],
-  { staggerInterval: 1, stagger: 'grouped' }
+  { staggerInterval: 1 }
 );
 
 const microphone = buildCells(
@@ -583,7 +565,7 @@ const microphone = buildCells(
     [2, 0],
     [3, 0],
   ],
-  { staggerInterval: 1, stagger: 'grouped' }
+  { staggerInterval: 1 }
 );
 
 const pencil = buildCells(
@@ -606,7 +588,7 @@ const pencil = buildCells(
     [4, 0],
     [5, 0],
   ],
-  { staggerInterval: 2, stagger: 'grouped' }
+  { staggerInterval: 2 }
 );
 
 const potion = buildCells(
@@ -634,7 +616,7 @@ const potion = buildCells(
     [4, 0],
     [5, 0],
   ],
-  { staggerInterval: 1, stagger: 'grouped' }
+  { staggerInterval: 1 }
 );
 
 const slider = buildCells(
@@ -656,7 +638,7 @@ const slider = buildCells(
     [6, 1],
     [2, 0],
   ],
-  { staggerInterval: 1, stagger: 'grouped', rowOffset: 1 }
+  { staggerInterval: 1, rowOffset: 1 }
 );
 
 const timeline = buildCells(
@@ -685,7 +667,7 @@ const timeline = buildCells(
     [4, 0],
     [5, 0],
   ],
-  { staggerInterval: 1, stagger: 'grouped' }
+  { staggerInterval: 1 }
 );
 
 const eyedrop = buildCells(
@@ -709,7 +691,7 @@ const eyedrop = buildCells(
     [5, 0],
     [6, 0],
   ],
-  { staggerInterval: 1, stagger: 'grouped' }
+  { staggerInterval: 1 }
 );
 
 const adobeA = buildCells(
@@ -738,7 +720,7 @@ const adobeA = buildCells(
     [3, 1],
     [4, 1],
   ],
-  { staggerInterval: 2, stagger: 'grouped' }
+  { staggerInterval: 2 }
 );
 
 const adobeD = buildCells(
@@ -766,7 +748,7 @@ const adobeD = buildCells(
     [4, 1],
     [5, 1],
   ],
-  { staggerInterval: 2, stagger: 'grouped' }
+  { staggerInterval: 2 }
 );
 
 const adobeO = buildCells(
@@ -790,7 +772,7 @@ const adobeO = buildCells(
     [3, 2],
     [4, 2],
   ],
-  { staggerInterval: 2, stagger: 'grouped', rowOffset: -1 }
+  { staggerInterval: 2, rowOffset: -1 }
 );
 
 const adobeB = buildCells(
@@ -818,7 +800,7 @@ const adobeB = buildCells(
     [1, 1],
     [2, 1],
   ],
-  { staggerInterval: 2, stagger: 'grouped' }
+  { staggerInterval: 2 }
 );
 
 const adobeE = buildCells(
@@ -841,7 +823,7 @@ const adobeE = buildCells(
     [3, 2],
     [4, 2],
   ],
-  { staggerInterval: 2, stagger: 'grouped', rowOffset: -1 }
+  { staggerInterval: 2, rowOffset: -1 }
 );
 
 export const PIXEL_LOADER_ICON_NAMES = [

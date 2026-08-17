@@ -196,6 +196,64 @@ export function groupOpacityKeyframes(total: number): Keyframe[] {
   ];
 }
 
+// Reduced-motion row fade cadence (frames): rows reveal/clear `ROW_STEP` apart,
+// each fading over `ROW_FADE`, with `ROW_HOLD` assembled between. Grouping by
+// row (rather than per cell) both removes the falling/scaling motion and keeps
+// this loop shorter than the full per-cell build.
+const ROW_STEP = 4;
+const ROW_FADE = 16;
+const ROW_HOLD = ms2f(600);
+
+/** Distinct rows of `cells`, bottom-up (visual bottom first) to match the build. */
+function rowsBottomUp(cells: readonly Cell[]): number[] {
+  return Array.from(new Set(cells.map((cell) => cell.row))).sort(
+    (a, b) => b - a
+  );
+}
+
+/** Loop length in frames for the reduced-motion row fade. */
+export function reducedMotionLoopFrames(cells: readonly Cell[]): number {
+  const rowSpread = (rowsBottomUp(cells).length - 1) * ROW_STEP;
+  // Fade the last row in, hold, then fade rows out over the same spread.
+  return rowSpread + ROW_FADE + ROW_HOLD + rowSpread + ROW_FADE;
+}
+
+/** Duration of one reduced-motion row-fade cycle, in ms. */
+export function reducedMotionDuration(cells: readonly Cell[]): number {
+  return (reducedMotionLoopFrames(cells) / FPS) * 1000;
+}
+
+/**
+ * Reduced-motion keyframes for one cell: an `opacity` fade with no transform,
+ * timed by the cell's row so the grid fades in one row at a time (bottom-up),
+ * holds, then fades out row by row. Honors `prefers-reduced-motion` by dropping
+ * the falling and scaling motion while still signalling that something loads.
+ */
+export function reducedMotionKeyframes(
+  cell: Cell,
+  cells: readonly Cell[],
+  total: number
+): Keyframe[] {
+  const rows = rowsBottomUp(cells);
+  const order = rows.indexOf(cell.row);
+  const allIn = (rows.length - 1) * ROW_STEP + ROW_FADE;
+  const inStart = order * ROW_STEP;
+  const outStart = allIn + ROW_HOLD + order * ROW_STEP;
+  const frames: Keyframe[] = [
+    { offset: 0, opacity: 0, easing: EASE.fade },
+    { offset: offset(inStart, total), opacity: 0, easing: EASE.fade },
+    { offset: offset(inStart + ROW_FADE, total), opacity: 1, easing: 'linear' },
+    { offset: offset(outStart, total), opacity: 1, easing: EASE.fade },
+    {
+      offset: offset(outStart + ROW_FADE, total),
+      opacity: 0,
+      easing: 'linear',
+    },
+    { offset: 1, opacity: 0 },
+  ];
+  return dedupe(frames);
+}
+
 /** Fully settled appearance: full size, full opacity, no vertical offset. */
 export const SETTLED_TRANSLATE = '0 0px';
 export const SETTLED_SCALE = '1';
