@@ -22,31 +22,31 @@ import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controll
 import styles from './action-group.css';
 
 /**
- * An action group clusters related action buttons together with composite
- * keyboard navigation: one Tab stop into the strip, arrow keys move among
- * `swc-action-button` and `swc-action-menu` children.
+ * An action group clusters related actions together with consistent
+ * spacing, sizing, and orientation.
  *
- * Unlike `swc-button-group`, which lets Tab reach each button independently,
- * action group owns composite navigation (one Tab stop; arrow keys move
- * among items).
+ * Unlike `swc-button-group`, where each button is reachable independently
+ * via the keyboard, action group treats the whole strip as a single stop,
+ * with arrow keys moving between its children. See the Keyboard navigation
+ * section for the full key list.
  *
  * @element swc-action-group
  * @since 2.0.0
  *
  * @slot - One or more `swc-action-button` or `swc-action-menu` elements.
  *
- * @cssprop --swc-action-group-gap - Space between children. Defaults to the medium spacing token (small spacing token at `xs`/`s` sizes).
+ * @cssprop --swc-action-group-gap - Space between children. Scales with the `size` attribute across all five sizes. Defaults to the medium spacing token when no size is set.
  *
  * @example
- * <swc-action-group accessible-label="Text formatting">
- *   <swc-action-button>Bold</swc-action-button>
- *   <swc-action-button>Italic</swc-action-button>
+ * <swc-action-group accessible-label="Image adjustments">
+ *   <swc-action-button>Crop</swc-action-button>
+ *   <swc-action-button>Rotate</swc-action-button>
  * </swc-action-group>
  *
  * @example
- * <swc-action-group orientation="vertical" accessible-label="Alignment">
- *   <swc-action-button>Left</swc-action-button>
- *   <swc-action-button>Center</swc-action-button>
+ * <swc-action-group orientation="vertical" accessible-label="Edit">
+ *   <swc-action-button>Cut</swc-action-button>
+ *   <swc-action-button>Copy</swc-action-button>
  * </swc-action-group>
  */
 export class ActionGroup extends ActionGroupBase {
@@ -141,7 +141,7 @@ export class ActionGroup extends ActionGroupBase {
    * Watches for `disabled` and `aria-disabled` attribute changes on individual
    * managed children. `slotchange` does not fire when an existing child's
    * disabled state changes, so without this observer the navigation controller
-   * would hold a stale tab-stop assignment (e.g. btn1 retaining tabindex=0
+   * would hold a stale tab-stop assignment (e.g., btn1 retaining tabindex=0
    * after becoming disabled) and Tab could no longer enter the group.
    */
   private childObserver?: MutationObserver;
