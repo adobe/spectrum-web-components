@@ -106,6 +106,7 @@ export const Playground: Story = {
     placeholder: defaultPlaceholder,
     value: '',
   },
+  parameters: { flexLayout: 'column-center' },
   tags: ['dev'],
 };
 
