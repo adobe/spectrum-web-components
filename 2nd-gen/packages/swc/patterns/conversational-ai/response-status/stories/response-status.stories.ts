@@ -324,6 +324,46 @@ export const StepDisclosure: Story = {
 
 StepDisclosure.storyName = 'Step disclosure';
 
+export const LongDescription: Story = {
+  render: () => html`
+    <swc-response-status
+      status="active"
+      open
+      accessible-label="Execution steps"
+    >
+      <span slot="label">Reviewing internal documentation</span>
+      <swc-response-status-step status="complete">
+        <span slot="label">Looked through documentation</span>
+        <span slot="description">
+          Scanned 12 internal knowledge base articles matching the query
+          context.
+        </span>
+      </swc-response-status-step>
+      <swc-response-status-step status="active">
+        <span slot="label">Reviewing internal documentation</span>
+        <span slot="description">
+          Prioritizing data from your documents like the ‘2023 Annual Report’
+          and press releases related to Hilton. Cross-referencing each source
+          against the quarterly figures, reconciling discrepancies between the
+          filed numbers and the summary tables, and flagging any line items that
+          need a second pass. Compiling the supporting excerpts so the final
+          response can cite them directly, then ranking them by relevance to the
+          original question before moving on to the next repository.
+        </span>
+      </swc-response-status-step>
+      <swc-response-status-step status="active">
+        <span slot="label">Compose response</span>
+        <span slot="description">
+          Synthesizing findings into a structured comparison.
+        </span>
+      </swc-response-status-step>
+    </swc-response-status>
+  `,
+  tags: ['behaviors'],
+};
+
+LongDescription.storyName = 'Long description';
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORY
 // ────────────────────────────────

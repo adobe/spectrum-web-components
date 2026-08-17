@@ -398,6 +398,43 @@
   border: none;
 }
 
+/* Description caps at a max height; shorter content stays auto. Override the
+   custom property to tune the cap. */
+.swc-ResponseStatus-step-detailScroll {
+  max-block-size: var(--swc-response-status-step-detail-max-block-size, 120px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Bottom fade cue while the description overflows and is not scrolled to the
+   end. Scroll-driven: with no overflow the scroll timeline is inactive, so the
+   base (unmasked) style applies and short descriptions never fade. */
+@supports (animation-timeline: scroll()) {
+  /* Longhands, not the `animation` shorthand: the shorthand resets
+     `animation-timeline` to auto, which would disable the scroll timeline. */
+  .swc-ResponseStatus-step-detailScroll {
+    animation-timeline: scroll(self block);
+    animation-name: swc-response-status-detail-fade;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+  }
+
+  @keyframes swc-response-status-detail-fade {
+    0%,
+    85% {
+      mask-image: linear-gradient(
+        to bottom,
+        rgb(0 0 0 / 100%) calc(100% - 24px),
+        rgb(0 0 0 / 0%) 100%
+      );
+    }
+
+    100% {
+      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 100%), rgb(0 0 0 / 100%));
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .swc-ResponseStatus-headerTrailStrip,
   .swc-ResponseStatus-headerTrailLine {
@@ -423,5 +460,11 @@
   .swc-ResponseStatus-dot,
   .swc-ResponseStatus-step-line {
     background: CanvasText;
+  }
+
+  /* Keep every line fully legible in forced colors; rely on the scrollbar. */
+  .swc-ResponseStatus-step-detailScroll {
+    mask-image: none;
+    animation: none;
   }
 }

@@ -77,6 +77,12 @@ status.addEventListener('swc-response-status-step-toggle', (event) => {
 
 <Canvas of={ResponseStatusStories.StepDisclosure} />
 
+### Long description
+
+A step description shorter than the cap keeps its natural height. When it exceeds the cap, the description scrolls within the step and shows a fade at the bottom edge while there is more content below. Override the cap with the `--swc-response-status-step-detail-max-block-size` custom property (defaults to `120px`).
+
+<Canvas of={ResponseStatusStories.LongDescription} />
+
 ### Label update cadence
 
 Header-label cadence is consumer-managed. The component rolls the header label whenever its text changes; your app decides when to update that text. If you stream rapid status updates, keep each visible label readable for about 1 second before replacing it.
