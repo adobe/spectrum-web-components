@@ -422,11 +422,7 @@
   @keyframes swc-response-status-detail-fade {
     0%,
     85% {
-      mask-image: linear-gradient(
-        to bottom,
-        rgb(0 0 0 / 100%) calc(100% - 24px),
-        rgb(0 0 0 / 0%) 100%
-      );
+      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 100%) calc(100% - 24px), rgb(0 0 0 / 0%) 100%);
     }
 
     100% {
