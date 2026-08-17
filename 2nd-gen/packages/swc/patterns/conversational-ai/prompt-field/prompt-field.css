@@ -95,57 +95,7 @@
    AI brand treatment: variables
    ───────────────────────────────────── */
 
-/* --swc-prompt-field-brand-color's @property is registered in swc.css, not here -- see that file for why. */
-
-/* Ambient hue-sweep opacity (idle vs. generating, per variant, hover). */
-@property --_swc-prompt-field-con-hue-opacity {
-  syntax: "<percentage>";
-  inherits: true;
-  initial-value: 0%;
-}
-
-/* Card wash gradient stops (idle vs. generating, per variant, hover). */
-@property --_swc-prompt-field-bg-stop-1 {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: #0000;
-}
-
-@property --_swc-prompt-field-bg-stop-2 {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: #0000;
-}
-
-@property --_swc-prompt-field-bg-stop-3 {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: #0000;
-}
-
-@property --_swc-prompt-field-bg-stop-4 {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: #0000;
-}
-
-@property --_swc-prompt-field-outer-stop-1 {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: #0000;
-}
-
-@property --_swc-prompt-field-outer-stop-2 {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: #0000;
-}
-
-@property --_swc-prompt-field-outer-stop-3 {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: #0000;
-}
+/* con-hue-opacity, bg-stop-1..4, and outer-stop-1..3 are @property-registered in swc.css, not here: a shadow-root @property registration doesn't make its property animatable for that root's own elements, which would flash every transition. */
 
 /* ─────────────────────────────────────
    AI brand treatment: ring, card, and state rules

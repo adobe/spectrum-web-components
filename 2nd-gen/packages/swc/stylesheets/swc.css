@@ -47,9 +47,57 @@
   color-scheme: light dark;
 }
 
-/* Interim hardcoded default pending formal delivery from the tokens team; registered here (not in prompt-field.css) so its initial-value reaches shadow-root consumers. */
+/* Prompt field @property registrations live here, not in prompt-field.css: @property declared inside a shadow root neither delivers its initial-value nor makes the property animatable for that root's own elements. brand-color's default is an interim hardcoded value pending formal delivery from the tokens team. */
 @property --swc-prompt-field-brand-color {
   syntax: "<color>";
   inherits: true;
   initial-value: oklch(73.58% 0.2376 322.4deg);
+}
+
+@property --_swc-prompt-field-con-hue-opacity {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 0%;
+}
+
+@property --_swc-prompt-field-bg-stop-1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0000;
+}
+
+@property --_swc-prompt-field-bg-stop-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0000;
+}
+
+@property --_swc-prompt-field-bg-stop-3 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0000;
+}
+
+@property --_swc-prompt-field-bg-stop-4 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0000;
+}
+
+@property --_swc-prompt-field-outer-stop-1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0000;
+}
+
+@property --_swc-prompt-field-outer-stop-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0000;
+}
+
+@property --_swc-prompt-field-outer-stop-3 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0000;
 }
