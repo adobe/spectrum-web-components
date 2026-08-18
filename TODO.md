@@ -4,4 +4,4 @@
 - Set up barebones 2nd-gen testing
   - Including A11Y testing
 - Set up barebones 2nd-gen Spectrum 2 token ingestion
-- Write barebones 2nd-gen Badge tests.
+- Write barebones 2nd-gen Badge tests
