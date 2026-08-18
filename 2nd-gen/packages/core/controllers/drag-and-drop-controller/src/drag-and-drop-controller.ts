@@ -90,6 +90,7 @@ export class DragAndDropController implements ReactiveController {
   private readonly _host: ReactiveElement;
   private readonly _options: DragAndDropControllerOptions;
   private _dragLeaveTimer: ReturnType<typeof setTimeout> | null = null;
+  private _abortController: AbortController | null = null;
 
   constructor(host: ReactiveElement, options: DragAndDropControllerOptions) {
     this._host = host;
@@ -98,24 +99,24 @@ export class DragAndDropController implements ReactiveController {
   }
 
   public hostConnected(): void {
-    this._host.addEventListener('dragover', this._onDragOver as EventListener);
+    this._abortController = new AbortController();
+    const { signal } = this._abortController;
+    this._host.addEventListener('dragover', this._onDragOver as EventListener, {
+      signal,
+    });
     this._host.addEventListener(
       'dragleave',
-      this._onDragLeave as EventListener
+      this._onDragLeave as EventListener,
+      { signal }
     );
-    this._host.addEventListener('drop', this._onDrop as EventListener);
+    this._host.addEventListener('drop', this._onDrop as EventListener, {
+      signal,
+    });
   }
 
   public hostDisconnected(): void {
-    this._host.removeEventListener(
-      'dragover',
-      this._onDragOver as EventListener
-    );
-    this._host.removeEventListener(
-      'dragleave',
-      this._onDragLeave as EventListener
-    );
-    this._host.removeEventListener('drop', this._onDrop as EventListener);
+    this._abortController?.abort();
+    this._abortController = null;
     this._clearDragLeaveTimer();
   }
 
