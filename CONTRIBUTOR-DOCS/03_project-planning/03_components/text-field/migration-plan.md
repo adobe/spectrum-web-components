@@ -72,8 +72,8 @@
 
 ### Most blocking open questions
 
-- **Q1** in [Design](#design): confirm removal of the `quiet` variant in S2. Sourced from the rendering-and-styling analysis (not the a11y analysis), so it still needs Design/rendering sign-off; it defines the public attribute surface.
-- **Q7** in [Architecture and behavior](#architecture-and-behavior): field-family sharing model — small shared base vs shared controllers — for `number-field`, `color-field`, and `text-area`.
+- **Q7** in [Architecture and behavior](#architecture-and-behavior): field-family sharing model — small shared base vs shared controllers — for `number-field`, `color-field`, and `text-area`. This is now the single genuinely-blocking question.
+- **Q1** in [Design](#design): remove `quiet` — **effectively decided** (three sources agree; only Design acknowledgment of the breaking change remains). Use case maps to the inline variant (Q17).
 
 **Resolved since drafting:** **Q6** (single-line / `swc-text-area` split) and **Q10** (`label` → `accessible-label`, drop the placeholder-as-accessible-name fallback) are confirmed by the [accessibility analysis](./accessibility-migration-analysis.md), the plan's source of truth. **Q8** (the two shared controllers) is a sequenced dependency owned by separate Epic SWC-2323 tickets and lands later; it does **not** block this planning ticket or the plan itself.
 
@@ -240,7 +240,7 @@ Migrate `swc-text-field` **first among the field family**, but only **after** th
 
 | #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
-| B1 | Remove `quiet` | `quiet` attribute renders a no-background field | Attribute removed (S2 drops the quiet variant; source: [rendering analysis](../textfield/rendering-and-styling-migration-analysis.md#css-spectrum-2-changes)) | Remove `quiet`; no replacement. |
+| B1 | Remove `quiet` | `quiet` attribute renders a no-background field | Attribute removed (sources: [rendering analysis](../textfield/rendering-and-styling-migration-analysis.md#css-spectrum-2-changes) + Figma matrix) | Remove `quiet`; dense/table use case maps to the inline variant (Q17). |
 | B2 | Rename `label` → `accessible-label` | `label` sets `aria-label` and falls back to `placeholder` | `accessible-label` sets `aria-label`; placeholder fallback removed and dev-warned; visible label is slotted and rendered in-shadow (source: [a11y analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties)) | Rename `label` → `accessible-label`, or provide a slotted visible label. Unlabeled fields now dev-warn. |
 | B3 | Split multiline into `swc-text-area` | `sp-textfield[multiline]` | `swc-text-field` is single-line only; use `swc-text-area` for multiline | Replace `<sp-textfield multiline>` with `<swc-text-area>`; `grows`/`rows` move there. |
 | B4 | Drop truncated-value tooltip | `TruncatedValueTooltipController` + `tooltip-placement` | Removed; full value reachable natively; optional pointer-only `title` (source: [a11y analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties)) | Remove `tooltip-placement`; no replacement needed. |
@@ -273,7 +273,7 @@ Migrate `swc-text-field` **first among the field family**, but only **after** th
 | A2 | In-field pending state | Uses `infield-progress-circle` (not yet built). |
 | A3 | Side-label position | Ownership (`swc-text-field` vs `field-label`) is Q2. |
 | A4 | Required-without-asterisk styling | S2 adds `isRequiredWithoutAsterisk`; needs Design confirmation (Q4). |
-| A5 | Inline text-field variant | New in S2, not yet in Spectrum CSS or SWC. |
+| A5 | Inline text-field variant | New in S2; **published in Figma** (the source of truth) as a separate "Text field (In-line)" component — corrects the earlier "not in Figma yet." Not yet built in SWC. Additive; whether to schedule it now is Q17. |
 | A6 | `prefix` affix | RS supports; not in Figma yet; anticipate as future `LabellingController` surface. |
 | A7 | In-field ContextualHelp | RS supports; future `LabellingController` description source. |
 
@@ -307,7 +307,7 @@ These are derived from the 1st-gen implementation, the [accessibility migration 
 | `readonly` | `boolean` | `false` | `readonly` (reflect) | **Confirmed.** Focusable, non-editable; distinct from `disabled`. |
 | `required` | `boolean` | `false` | `required` (reflect) | **Confirmed.** Native `required`; no `aria-required`. |
 | `invalid` | `boolean` | `false` | `invalid` (reflect) | **Confirmed.** Drives `aria-invalid`/`aria-errormessage`. |
-| `valid` | `boolean` | `false` | `valid` (reflect) | **Inferred.** Keep for the checkmark; confirm S2 keeps an explicit valid state. |
+| `valid` | `boolean` | `false` | `valid` (reflect) | **Inferred.** Keep for the checkmark; confirm S2 keeps an explicit valid state. The received S2 state matrix shows only default and error states (no valid/checkmark column) — a soft signal to verify the checkmark still exists in S2 before keeping this. |
 | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | `size` (reflect) | **Inferred.** Give an explicit default `m` (drop `noDefaultSize`). |
 | `disabled` | `boolean` | `false` | `disabled` (reflect) | **Confirmed.** Removed from tab order; `formDisabledCallback` cascade. |
 | `allowedKeys` | `string` | `''` | `allowed-keys` | **Open question (Q11).** Niche 1st-gen quirk; carry forward or drop. |
@@ -316,7 +316,7 @@ These are derived from the 1st-gen implementation, the [accessibility migration 
 
 #### Visual matrix (2nd-gen)
 
-**Provisional — pending Figma `S2 / Web (Desktop scale)` and `spectrum-css@spectrum-two`.** Expected axes: sizes `s/m/l/xl`; states default / hover / focus (keyboard vs pointer) / disabled / readonly / invalid / valid; label position top vs side (Q2). No `quiet` column (removed). Character count and in-field pending are additive (A1, A2).
+**Visual axes confirmed by the received S2 state matrix (2026-08-18); exact token values still to be extracted from Figma (the source of truth) — Q20.** Axes: sizes `s`/`m`/`l`/`xl`; label position **top and side** (both first-class, present at every size — Q2); states default / hover / focus+hover / focus+not-hover / disabled; content empty / value / placeholder; invalid (red border + trailing AlertTriangle + error message). No `quiet` column (removed — Q1). **Not shown in the matrix:** a `readonly` treatment (Q3) and an explicit valid/checkmark state — both unconfirmed. Character count and in-field pending remain additive (A1, A2).
 
 #### Slots (2nd-gen)
 
@@ -336,7 +336,8 @@ Initial expectation for Text field is a small reviewed set (likely field width/m
 
 ### Behavioral semantics
 
-- **Validation:** keep native constraint validation via a real `<input>`; `checkValidity()` remains public. Reflect `required`/`pattern`/`minlength`/`maxlength` to the native input. Suppress the native validation bubble in favor of the inline error message — mechanism deferred to the forms-strategy work (Q19).
+- **Validation:** keep native constraint validation via a real `<input>`; `checkValidity()` remains public. Reflect `required`/`pattern`/`minlength`/`maxlength` to the native input. Suppress the native validation bubble in favor of the inline error message — mechanism and the full validation-behavior model (RS `native` vs `aria`, custom `validate`, server errors) deferred to the forms-strategy work (Q19).
+- **Form reset:** `FieldAssociationController.formResetCallback()` restores a defined **default value** (the RS `defaultValue` concept — typically the initial attribute value). The reset target must be specified, not left implicit.
 - **Events:** keep `input` and `change` (composed, bubbling), matching native semantics.
 - **Selection API:** keep `setSelectionRange()` and `select()`.
 - **Focus:** `delegatesFocus: true`; keyboard focus via `:focus-visible`.
@@ -434,6 +435,7 @@ Planned rendering shape:
 - [ ] Validation icon stays `aria-hidden="true"`
 - [ ] `readonly` vs `disabled` distinct in tab order (not just visually)
 - [ ] Help/error container does not default to `aria-live="assertive"`
+- [ ] Border and focus-ring meet 3:1 non-text contrast ([WCAG 1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)) against S2 tokens (re-check SWC-214)
 
 ### Testing
 
@@ -474,41 +476,46 @@ Planned rendering shape:
 
 ## Blockers and open questions
 
+> **Update — design context received (2026-08-18).** The full S2 state × variant matrix is available (all four sizes × top/side × five states × content/error variants) — captured in the [Visual matrix](#visual-matrix-2nd-gen) subsection. Also received: a separate "Text field (In-line)" component (Q17/A5) and label-overflow guidance (Q24). Not covered: `readonly` (Q3) or an explicit valid state. Figma is the source of truth; exact token values still pending extraction (Q20).
+
 ### Design
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q1 | Confirm removal of the `quiet` variant in S2 (breaking). Source: rendering analysis. | Yes | Open — needs Design sign-off | Design |
-| Q2 | Side-label position: owned by `swc-text-field` or `field-label`? | No | Open (additive, A3) | Design + Architecture |
-| Q3 | `readonly` visual treatment (RS applies none) — confirm or specify. | No | Open | Design |
+| Q1 | Remove `quiet` (breaking). Removal confirmed by spectrum-css + rendering analysis + Figma matrix; the "keep it" impression is only 1st-gen's legacy docs. Use case maps to the inline variant (Q17, B1). | Yes | Effectively decided — Design to acknowledge breaking-change impact | Design |
+| Q2 | Side-label ownership: `swc-text-field` or `field-label`? Matrix confirms side-label as first-class at every size, so the label renderer owns a top⇄side switch — leans toward the field/`LabellingController`. | No | Open (additive, A3) — ownership open | Design + Architecture |
+| Q3 | `readonly` visual treatment (RS applies none) — confirm or specify. The received S2 state matrix has **no `readonly` column**, so this stays unconfirmed. | No | Open | Design |
 | Q4 | Required-without-asterisk styling (`isRequiredWithoutAsterisk`) — in scope? | No | Open (additive, A4) | Design |
-| Q5 | Validation icon updates (AlertTriangle; size-specific checkmarks). | No | Confirmed by rendering analysis; verify sizing in Figma | Design + implementation |
+| Q5 | Validation icon updates (AlertTriangle; size-specific checkmarks). AlertTriangle appears on the trailing edge of the error rows in the S2 matrix (confirms the invalid icon). | No | Confirmed by rendering analysis + state matrix; verify sizing in Figma | Design + implementation |
+| Q24 | Label text overflow / wrapping behavior (top and side): long labels wrap to multiple lines in Figma (per the "Prototyping edge cases" guidance), and side-label must reflow as the label column grows. Confirm wrap-vs-truncate and how side-label reflows — a `LabellingController` + layout concern (relates to Q2). Note: the Figma guidance describes Figma-prototyping workarounds, not necessarily component behavior. | No | Open — surfaced by design (2026-08-18) | Design + Architecture |
+| Q25 | Non-text contrast (WCAG 1.4.11): re-evaluate border and focus-ring contrast for 3:1 against Spectrum 2 tokens — SWC-214 was Won't Fix under the old theme; don't assume that holds. | No | Open | Design + Styling |
 
 ### Architecture and behavior
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
 | Q6 | Single-line `swc-text-field` vs multiline `swc-text-area` split. | — | Confirmed by the a11y analysis (plan source of truth) | Architecture |
-| Q7 | Field-family sharing model: shared base class vs shared controllers for `number-field`/`color-field`/`text-area`. | Yes | Open — recommend shared controllers + small base | Architecture |
+| Q7 | Field-family sharing model for `number-field`/`color-field`/`text-area`: shared base (à la `ButtonBase`) vs controllers-only vs shared mixin. Lean: shared controllers + small base; hinges on `LabellingController` rendering scope (Q8). | Yes | Open | Architecture |
 | Q9 | Drop `TruncatedValueTooltipController` and `tooltip-placement`. | No | Confirmed by a11y analysis; confirm no consumer relies on it | Accessibility reviewer |
 | Q10 | `label` → `accessible-label` rename + remove placeholder-as-accessible-name fallback (dev-warn). | — | Confirmed by a11y analysis (plan source of truth) | Accessibility + API |
 | Q11 | Carry forward or drop `allowedKeys`. | No | Open — lean drop (niche, undocumented) | API |
 | Q12 | Remove reflected `focused` attribute in favor of `:focus-visible`/`:focus-within`. | No | Inferred | Implementation |
 | Q13 | Simplify `type` handling with `validateEnum`; drop the `_type` reflection quirk. | No | Inferred | Implementation |
 | Q14 | `autocomplete` dedicated token type (drop combobox tokens) + add `inputmode`. | No | Confirmed by a11y analysis | Accessibility + API |
-| Q19 | Native validation bubble suppression (`novalidate`/`formnovalidate`). | No | Deferred to forms-strategy work | Architecture |
+| Q19 | Validation behavior model: RS `native` vs `aria`, native-bubble suppression, and whether to expose custom `validate` / server-error APIs. Deferred to forms-strategy (SWC-1888; ties to its `setValidity()` pass-through). | No | Deferred to forms-strategy work (SWC-1888) | Architecture |
 
 ### Scope and prerequisites
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
 | Q8 | `LabellingController` (SWC-2466) and `FieldAssociationController` (SWC-2467) do not yet exist in `2nd-gen/packages/core/controllers/` (verified), but are **separate tickets under Epic SWC-2323** that land later. They do **not** block this planning ticket; `swc-text-field` implementation (Phase 3+) consumes them once available. | No | Resolved — sequenced dependency, separate epic tickets | Ticket owner / Architecture |
-| Q22 | Shared label/required/help/error `_lit-styles/` fragment — name and ownership (created with the controllers, consumed by `text-field`). | No | Open | CSS reviewer + Architecture |
+| Q22 | Shared label/required/help/error `_lit-styles/` fragment — name and ownership (created with the controllers, consumed by `text-field`). This is effectively the CSS half of Q7/Q8; decide it alongside the sharing model. | No | Open | CSS reviewer + Architecture |
+| Q23 | In-field ContextualHelp (A7) placement: the plan describes it as **in-field**, but React Spectrum's `contextualHelp` places the element **next to the label**, not inside the input frame — reconcile against the S2 Figma before treating placement as settled. Regardless of placement, the `LabellingController` should model description sources (help text, error message, contextual help, `prefix`) as an **extensible set** so A6/A7 can be added without an API redesign. No 2nd-gen `contextual-help` component exists yet. | No | Open — deferred feature; confirm the controller API anticipates it | Accessibility + Architecture |
 | Q15 | In-field pending state depends on `infield-progress-circle` (not built). | No | Deferred (additive, A2) | Scope |
 | Q16 | Character count deferred. | No | Deferred (additive, A1) | Scope |
-| Q17 | Inline text-field variant deferred (not in Spectrum CSS/Figma yet). | No | Deferred (additive, A5) | Scope |
+| Q17 | Inline text-field variant is **published in Figma** (separate "Text field (In-line)" component; Figma is the source of truth) — the earlier "not in Figma/Spectrum CSS yet" rationale is stale and not the deciding factor. It is a new **additive** S2 variant not yet built in SWC; default is to defer until scheduled unless prioritized into this migration. | No | Deferred (additive, A5) — defer unless prioritized | Scope |
 | Q18 | Pull non-a11y gen1 `sp-textfield` Jira issues into the Open gen1 issues table. | No | Open — needs Jira export | Ticket owner |
-| Q20 | Provide Figma `S2 / Web (Desktop scale)` PNG and a `spectrum-css@spectrum-two` sibling checkout to finalize the visual matrix and styling baseline. | No (blocks finalizing visuals) | Open | Ticket owner |
+| Q20 | Finalize the visual matrix and styling baseline from Figma `S2 / Web (Desktop scale)` — **the source of truth**. The state × variant matrix is now available (see the 2026-08-18 note) and is **complete on the visual axis** (all four sizes × top/side × five states × content/error variants) except `readonly` (Q3) and an explicit valid state. **Tokens live in Figma** but need deeper inspection to extract exact values (spacing, radius, focus-ring width); a `spectrum-css@spectrum-two` checkout is an optional cross-reference, not a prerequisite. | No (blocks finalizing token values) | Open — visual matrix complete; token values pending deeper Figma inspection | Ticket owner |
 | Q21 | Consolidate doc folder slug to `text-field` (move `rendering-and-styling-migration-analysis.md` out of `textfield/`). | No | Open — recommend `text-field` | Ticket owner |
 
 ---
