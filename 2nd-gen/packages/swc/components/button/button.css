@@ -124,7 +124,7 @@ slot[name="icon"]::slotted(*) {
   --swc-button-content-color-hover: token("white");
   --swc-button-content-color-down: token("white");
   --swc-button-content-color-focus: token("white");
-  --swc-button-background-color-default: rgb(255 255 255 / 20%);
+  --swc-button-background-color-default: token("accent-background-color-default");
   --swc-button-background-color-hover: token("accent-background-color-hover");
   --swc-button-background-color-down: token("accent-background-color-down");
   --swc-button-background-color-focus: token("accent-background-color-key-focus");
@@ -188,7 +188,7 @@ slot[name="icon"]::slotted(*) {
 
 :host([static-color="white"]) {
   --swc-button-focus-indicator-color: token("static-white-focus-indicator-color");
-  --swc-button-background-color-default: rgb(255 255 255 / 80%);
+  --swc-button-background-color-default: rgb(255 255 255 / 40%);
   --swc-button-background-color-hover: rgb(255 255 255 / 96%);
   --swc-button-background-color-down: rgb(255 255 255 / 96%);
   --swc-button-background-color-focus: rgb(255 255 255 / 96%);
