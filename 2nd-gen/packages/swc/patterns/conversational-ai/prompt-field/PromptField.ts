@@ -219,10 +219,10 @@ export class PromptField extends SpectrumElement {
   @state()
   private _dragged = false;
 
-  /** Accepts a drag anywhere on the host and hands dropped files off via `swc-prompt-field-drop`; disabled mode rejects the drag entirely. */
+  /** Accepts a drag anywhere on the host and hands dropped files off via `swc-prompt-field-drop`; the disabled field rejects the drag entirely. */
   private readonly _dragAndDrop = new DragAndDropController(this, {
     isDragged: () => this._dragged,
-    shouldAccept: () => !this._isDisabled,
+    shouldAccept: () => !this.disabled,
     onDragEnter: () => {
       this._dragged = true;
     },

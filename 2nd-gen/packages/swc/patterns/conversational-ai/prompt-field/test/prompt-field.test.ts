@@ -967,8 +967,8 @@ export const DragAndDropTest: Story = {
       }
     );
 
-    await step('disabled mode rejects the drag entirely', async () => {
-      el.mode = 'disabled';
+    await step('disabled field rejects the drag entirely', async () => {
+      el.disabled = true;
       await el.updateComplete;
 
       const event = makeDragEvent('dragover', new DataTransfer());
@@ -978,7 +978,7 @@ export const DragAndDropTest: Story = {
       expect(event.dataTransfer?.dropEffect).toBe('none');
       expect(box?.classList.contains('dragged')).toBe(false);
 
-      el.mode = 'default';
+      el.disabled = false;
       await el.updateComplete;
     });
   },
