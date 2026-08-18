@@ -52,11 +52,11 @@
 }
 
 .swc-Divider--staticWhite {
-  --swc-divider-background-color: token("transparent-white-200");
+  --swc-divider-background-color: rgb(255 255 255 / 16%);
 }
 
 .swc-Divider--staticWhite:where(.swc-Divider--sizeL) {
-  --swc-divider-background-color: token("transparent-white-800");
+  --swc-divider-background-color: rgb(255 255 255 / 80%);
 }
 
 .swc-Divider--staticBlack {
@@ -64,7 +64,7 @@
 }
 
 .swc-Divider--staticBlack:where(.swc-Divider--sizeL) {
-  --swc-divider-background-color: token("transparent-black-800");
+  --swc-divider-background-color: rgb(0 0 0 / 80%);
 }
 
 @media (forced-colors: active) {

@@ -338,7 +338,7 @@
   font-weight: token("medium-font-weight");
   line-height: token("line-height-font-size-75");
   color: token("gray-25");
-  background: token("transparent-black-700");
+  background: rgb(0 0 0 / 64%);
   border-radius: token("corner-radius-400");
 }
 

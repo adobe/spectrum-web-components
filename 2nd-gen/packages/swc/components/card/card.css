@@ -132,7 +132,7 @@
       z-index: 2;
       border-radius: var(--_swc-card-base-border-radius);
       pointer-events: none;
-      outline: token("focus-indicator-thickness") solid token("transparent-white-600");
+      outline: token("focus-indicator-thickness") solid rgb(255 255 255 / 48%);
       outline-offset: calc(token("focus-indicator-thickness") * -1);
       content: "";
     }

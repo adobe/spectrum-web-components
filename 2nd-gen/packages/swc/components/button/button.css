@@ -188,10 +188,10 @@ slot[name="icon"]::slotted(*) {
 
 :host([static-color="white"]) {
   --swc-button-focus-indicator-color: token("static-white-focus-indicator-color");
-  --swc-button-background-color-default: token("transparent-white-800");
-  --swc-button-background-color-hover: token("transparent-white-900");
-  --swc-button-background-color-down: token("transparent-white-900");
-  --swc-button-background-color-focus: token("transparent-white-900");
+  --swc-button-background-color-default: rgb(255 255 255 / 80%);
+  --swc-button-background-color-hover: rgb(255 255 255 / 96%);
+  --swc-button-background-color-down: rgb(255 255 255 / 96%);
+  --swc-button-background-color-focus: rgb(255 255 255 / 96%);
   --swc-button-content-color-default: token("black");
   --swc-button-content-color-hover: token("black");
   --swc-button-content-color-down: token("black");
@@ -202,29 +202,29 @@ slot[name="icon"]::slotted(*) {
 }
 
 :host([static-color="white"][variant="secondary"]) {
-  --swc-button-background-color-default: token("transparent-white-100");
-  --swc-button-background-color-hover: token("transparent-white-200");
-  --swc-button-background-color-down: token("transparent-white-200");
-  --swc-button-background-color-focus: token("transparent-white-200");
-  --swc-button-content-color-default: token("transparent-white-800");
-  --swc-button-content-color-hover: token("transparent-white-900");
-  --swc-button-content-color-down: token("transparent-white-900");
-  --swc-button-content-color-focus: token("transparent-white-900");
+  --swc-button-background-color-default: rgb(255 255 255 / 12%);
+  --swc-button-background-color-hover: rgb(255 255 255 / 16%);
+  --swc-button-background-color-down: rgb(255 255 255 / 16%);
+  --swc-button-background-color-focus: rgb(255 255 255 / 16%);
+  --swc-button-content-color-default: rgb(255 255 255 / 80%);
+  --swc-button-content-color-hover: rgb(255 255 255 / 96%);
+  --swc-button-content-color-down: rgb(255 255 255 / 96%);
+  --swc-button-content-color-focus: rgb(255 255 255 / 96%);
 }
 
 :host([static-color="white"][fill-style="outline"]) {
   --swc-button-background-color-default: token("transparent-white-25");
-  --swc-button-background-color-hover: token("transparent-white-100");
-  --swc-button-background-color-down: token("transparent-white-100");
-  --swc-button-background-color-focus: token("transparent-white-100");
-  --swc-button-border-color-default: token("transparent-white-800");
-  --swc-button-border-color-hover: token("transparent-white-900");
-  --swc-button-border-color-down: token("transparent-white-900");
-  --swc-button-border-color-focus: token("transparent-white-900");
-  --swc-button-content-color-default: token("transparent-white-800");
-  --swc-button-content-color-hover: token("transparent-white-900");
-  --swc-button-content-color-down: token("transparent-white-900");
-  --swc-button-content-color-focus: token("transparent-white-900");
+  --swc-button-background-color-hover: rgb(255 255 255 / 12%);
+  --swc-button-background-color-down: rgb(255 255 255 / 12%);
+  --swc-button-background-color-focus: rgb(255 255 255 / 12%);
+  --swc-button-border-color-default: rgb(255 255 255 / 80%);
+  --swc-button-border-color-hover: rgb(255 255 255 / 96%);
+  --swc-button-border-color-down: rgb(255 255 255 / 96%);
+  --swc-button-border-color-focus: rgb(255 255 255 / 96%);
+  --swc-button-content-color-default: rgb(255 255 255 / 80%);
+  --swc-button-content-color-hover: rgb(255 255 255 / 96%);
+  --swc-button-content-color-down: rgb(255 255 255 / 96%);
+  --swc-button-content-color-focus: rgb(255 255 255 / 96%);
   --swc-button-background-color-disabled: token("transparent-white-25");
   --swc-button-border-color-disabled: token("disabled-static-white-border-color");
   --swc-button-content-color-disabled: token("disabled-static-white-content-color");
@@ -232,23 +232,23 @@ slot[name="icon"]::slotted(*) {
 
 :host([static-color="white"][variant="secondary"][fill-style="outline"]) {
   --swc-button-background-color-default: token("transparent-white-25");
-  --swc-button-background-color-hover: token("transparent-white-100");
-  --swc-button-background-color-down: token("transparent-white-100");
-  --swc-button-background-color-focus: token("transparent-white-100");
-  --swc-button-border-color-default: token("transparent-white-300");
-  --swc-button-border-color-hover: token("transparent-white-400");
-  --swc-button-border-color-down: token("transparent-white-400");
-  --swc-button-border-color-focus: token("transparent-white-400");
+  --swc-button-background-color-hover: rgb(255 255 255 / 12%);
+  --swc-button-background-color-down: rgb(255 255 255 / 12%);
+  --swc-button-background-color-focus: rgb(255 255 255 / 12%);
+  --swc-button-border-color-default: rgb(255 255 255 / 16%);
+  --swc-button-border-color-hover: rgb(255 255 255 / 20%);
+  --swc-button-border-color-down: rgb(255 255 255 / 20%);
+  --swc-button-border-color-focus: rgb(255 255 255 / 20%);
 }
 
 /* ── Static black ─────────────────────────────────── */
 
 :host([static-color="black"]) {
   --swc-button-focus-indicator-color: token("static-black-focus-indicator-color");
-  --swc-button-background-color-default: token("transparent-black-800");
-  --swc-button-background-color-hover: token("transparent-black-900");
-  --swc-button-background-color-down: token("transparent-black-900");
-  --swc-button-background-color-focus: token("transparent-black-900");
+  --swc-button-background-color-default: rgb(0 0 0 / 80%);
+  --swc-button-background-color-hover: rgb(0 0 0 / 96%);
+  --swc-button-background-color-down: rgb(0 0 0 / 96%);
+  --swc-button-background-color-focus: rgb(0 0 0 / 96%);
   --swc-button-content-color-default: token("white");
   --swc-button-content-color-hover: token("white");
   --swc-button-content-color-down: token("white");
@@ -259,29 +259,29 @@ slot[name="icon"]::slotted(*) {
 }
 
 :host([static-color="black"][variant="secondary"]) {
-  --swc-button-background-color-default: token("transparent-black-100");
+  --swc-button-background-color-default: rgb(0 0 0 / 8%);
   --swc-button-background-color-hover: token("transparent-black-200");
   --swc-button-background-color-down: token("transparent-black-200");
   --swc-button-background-color-focus: token("transparent-black-200");
-  --swc-button-content-color-default: token("transparent-black-800");
-  --swc-button-content-color-hover: token("transparent-black-900");
-  --swc-button-content-color-down: token("transparent-black-900");
-  --swc-button-content-color-focus: token("transparent-black-900");
+  --swc-button-content-color-default: rgb(0 0 0 / 80%);
+  --swc-button-content-color-hover: rgb(0 0 0 / 96%);
+  --swc-button-content-color-down: rgb(0 0 0 / 96%);
+  --swc-button-content-color-focus: rgb(0 0 0 / 96%);
 }
 
 :host([static-color="black"][fill-style="outline"]) {
   --swc-button-background-color-default: token("transparent-black-25");
-  --swc-button-background-color-hover: token("transparent-black-100");
-  --swc-button-background-color-down: token("transparent-black-100");
-  --swc-button-background-color-focus: token("transparent-black-100");
-  --swc-button-border-color-default: token("transparent-black-800");
-  --swc-button-border-color-hover: token("transparent-black-900");
-  --swc-button-border-color-down: token("transparent-black-900");
-  --swc-button-border-color-focus: token("transparent-black-900");
-  --swc-button-content-color-default: token("transparent-black-800");
-  --swc-button-content-color-hover: token("transparent-black-900");
-  --swc-button-content-color-down: token("transparent-black-900");
-  --swc-button-content-color-focus: token("transparent-black-900");
+  --swc-button-background-color-hover: rgb(0 0 0 / 8%);
+  --swc-button-background-color-down: rgb(0 0 0 / 8%);
+  --swc-button-background-color-focus: rgb(0 0 0 / 8%);
+  --swc-button-border-color-default: rgb(0 0 0 / 80%);
+  --swc-button-border-color-hover: rgb(0 0 0 / 96%);
+  --swc-button-border-color-down: rgb(0 0 0 / 96%);
+  --swc-button-border-color-focus: rgb(0 0 0 / 96%);
+  --swc-button-content-color-default: rgb(0 0 0 / 80%);
+  --swc-button-content-color-hover: rgb(0 0 0 / 96%);
+  --swc-button-content-color-down: rgb(0 0 0 / 96%);
+  --swc-button-content-color-focus: rgb(0 0 0 / 96%);
   --swc-button-background-color-disabled: token("transparent-black-25");
   --swc-button-border-color-disabled: token("disabled-static-black-border-color");
   --swc-button-content-color-disabled: token("disabled-static-black-content-color");
@@ -289,13 +289,13 @@ slot[name="icon"]::slotted(*) {
 
 :host([static-color="black"][variant="secondary"][fill-style="outline"]) {
   --swc-button-background-color-default: token("transparent-black-25");
-  --swc-button-background-color-hover: token("transparent-black-100");
-  --swc-button-background-color-down: token("transparent-black-100");
-  --swc-button-background-color-focus: token("transparent-black-100");
-  --swc-button-border-color-default: token("transparent-black-300");
-  --swc-button-border-color-hover: token("transparent-black-400");
-  --swc-button-border-color-down: token("transparent-black-400");
-  --swc-button-border-color-focus: token("transparent-black-400");
+  --swc-button-background-color-hover: rgb(0 0 0 / 8%);
+  --swc-button-background-color-down: rgb(0 0 0 / 8%);
+  --swc-button-background-color-focus: rgb(0 0 0 / 8%);
+  --swc-button-border-color-default: rgb(0 0 0 / 16%);
+  --swc-button-border-color-hover: rgb(0 0 0 / 24%);
+  --swc-button-border-color-down: rgb(0 0 0 / 24%);
+  --swc-button-border-color-focus: rgb(0 0 0 / 24%);
 }
 
 /* ── Icon only ────────────────────────────────────── */

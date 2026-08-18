@@ -82,7 +82,7 @@
    outline and border-radius stay on the button so the focus ring matches
    the hover footprint (toggle area only, independent of the actions slot). */
 .swc-AccordionItem:has(.swc-AccordionItem-header:focus-visible) {
-  --_swc-accordion-item-header-background: token("transparent-black-100");
+  --_swc-accordion-item-header-background: rgb(0 0 0 / 8%);
   --_swc-accordion-item-header-text-color: token("neutral-content-color-key-focus");
 }
 
@@ -93,12 +93,12 @@
 }
 
 .swc-AccordionItem:has(.swc-AccordionItem-header:hover) {
-  --_swc-accordion-item-header-background: token("transparent-black-100");
+  --_swc-accordion-item-header-background: rgb(0 0 0 / 8%);
   --_swc-accordion-item-header-text-color: token("neutral-content-color-hover");
 }
 
 .swc-AccordionItem:has(.swc-AccordionItem-header:active) {
-  --_swc-accordion-item-header-background: token("transparent-black-300");
+  --_swc-accordion-item-header-background: rgb(0 0 0 / 16%);
   --_swc-accordion-item-header-text-color: token("neutral-content-color-down");
 }
 

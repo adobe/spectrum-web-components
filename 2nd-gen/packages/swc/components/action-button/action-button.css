@@ -180,15 +180,15 @@ slot[name="icon"]::slotted(swc-avatar) {
 
 :host([static-color="white"]) {
   --swc-action-button-focus-indicator-color: token("static-white-focus-indicator-color");
-  --swc-action-button-background-color-default: token("transparent-white-100");
-  --swc-action-button-background-color-hover: token("transparent-white-200");
-  --swc-action-button-background-color-down: token("transparent-white-200");
-  --swc-action-button-background-color-focus: token("transparent-white-200");
+  --swc-action-button-background-color-default: rgb(255 255 255 / 12%);
+  --swc-action-button-background-color-hover: rgb(255 255 255 / 16%);
+  --swc-action-button-background-color-down: rgb(255 255 255 / 16%);
+  --swc-action-button-background-color-focus: rgb(255 255 255 / 16%);
   --swc-action-button-background-color-disabled: token("disabled-static-white-background-color");
-  --swc-action-button-content-color-default: token("transparent-white-800");
-  --swc-action-button-content-color-hover: token("transparent-white-900");
-  --swc-action-button-content-color-down: token("transparent-white-900");
-  --swc-action-button-content-color-focus: token("transparent-white-900");
+  --swc-action-button-content-color-default: rgb(255 255 255 / 80%);
+  --swc-action-button-content-color-hover: rgb(255 255 255 / 96%);
+  --swc-action-button-content-color-down: rgb(255 255 255 / 96%);
+  --swc-action-button-content-color-focus: rgb(255 255 255 / 96%);
   --swc-action-button-content-color-disabled: token("disabled-static-white-content-color");
 }
 
@@ -201,15 +201,15 @@ slot[name="icon"]::slotted(swc-avatar) {
 
 :host([static-color="black"]) {
   --swc-action-button-focus-indicator-color: token("static-black-focus-indicator-color");
-  --swc-action-button-background-color-default: token("transparent-black-100");
+  --swc-action-button-background-color-default: rgb(0 0 0 / 8%);
   --swc-action-button-background-color-hover: token("transparent-black-200");
   --swc-action-button-background-color-down: token("transparent-black-200");
   --swc-action-button-background-color-focus: token("transparent-black-200");
   --swc-action-button-background-color-disabled: token("disabled-static-black-background-color");
-  --swc-action-button-content-color-default: token("transparent-black-800");
-  --swc-action-button-content-color-hover: token("transparent-black-900");
-  --swc-action-button-content-color-down: token("transparent-black-900");
-  --swc-action-button-content-color-focus: token("transparent-black-900");
+  --swc-action-button-content-color-default: rgb(0 0 0 / 80%);
+  --swc-action-button-content-color-hover: rgb(0 0 0 / 96%);
+  --swc-action-button-content-color-down: rgb(0 0 0 / 96%);
+  --swc-action-button-content-color-focus: rgb(0 0 0 / 96%);
   --swc-action-button-content-color-disabled: token("disabled-static-black-content-color");
 }
 

@@ -103,26 +103,26 @@
 
 :host([static-color="white"]) {
   --swc-close-button-background-color-default: transparent;
-  --swc-close-button-background-color-down: token("transparent-white-100");
-  --swc-close-button-background-color-focus: token("transparent-white-100");
-  --swc-close-button-background-color-hover: token("transparent-white-100");
+  --swc-close-button-background-color-down: rgb(255 255 255 / 12%);
+  --swc-close-button-background-color-focus: rgb(255 255 255 / 12%);
+  --swc-close-button-background-color-hover: rgb(255 255 255 / 12%);
   --swc-close-button-focus-indicator-color: token("static-white-focus-indicator-color");
-  --swc-close-button-icon-color-default: token("transparent-white-800");
+  --swc-close-button-icon-color-default: rgb(255 255 255 / 80%);
   --swc-close-button-icon-color-disabled: token("disabled-static-white-background-color");
-  --swc-close-button-icon-color-down: token("transparent-white-900");
-  --swc-close-button-icon-color-focus: token("transparent-white-900");
-  --swc-close-button-icon-color-hover: token("transparent-white-900");
+  --swc-close-button-icon-color-down: rgb(255 255 255 / 96%);
+  --swc-close-button-icon-color-focus: rgb(255 255 255 / 96%);
+  --swc-close-button-icon-color-hover: rgb(255 255 255 / 96%);
 }
 
 :host([static-color="black"]) {
   --swc-close-button-background-color-default: transparent;
-  --swc-close-button-background-color-down: token("transparent-black-100");
-  --swc-close-button-background-color-focus: token("transparent-black-100");
-  --swc-close-button-background-color-hover: token("transparent-black-100");
+  --swc-close-button-background-color-down: rgb(0 0 0 / 8%);
+  --swc-close-button-background-color-focus: rgb(0 0 0 / 8%);
+  --swc-close-button-background-color-hover: rgb(0 0 0 / 8%);
   --swc-close-button-focus-indicator-color: token("static-black-focus-indicator-color");
-  --swc-close-button-icon-color-default: token("transparent-black-800");
+  --swc-close-button-icon-color-default: rgb(0 0 0 / 80%);
   --swc-close-button-icon-color-disabled: token("disabled-static-black-background-color");
-  --swc-close-button-icon-color-down: token("transparent-black-900");
-  --swc-close-button-icon-color-focus: token("transparent-black-900");
-  --swc-close-button-icon-color-hover: token("transparent-black-900");
+  --swc-close-button-icon-color-down: rgb(0 0 0 / 96%);
+  --swc-close-button-icon-color-focus: rgb(0 0 0 / 96%);
+  --swc-close-button-icon-color-hover: rgb(0 0 0 / 96%);
 }
