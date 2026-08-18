@@ -226,8 +226,12 @@ const permutationContent = () => html`
   ${row(
     [
       renderTabs({
+        // Baseline "Selected" tab isolates the underline from the forced
+        // pseudo-states below, so it doesn't read as part of Hover/Active.
+        selected: '0',
         accessibleLabel: 'Forced pseudo-states',
         tabs: html`
+          ${tab({ id: '0', label: 'Selected' })}
           ${tab({ id: '1', label: 'Hover', forceState: 'hover' })}
           ${tab({
             id: '2',
@@ -237,8 +241,8 @@ const permutationContent = () => html`
           ${tab({ id: '3', label: 'Active', forceState: 'active' })}
         `,
         panels: html`
-          ${panel('1', 'Hover content.')} ${panel('2', 'Focus content.')}
-          ${panel('3', 'Active content.')}
+          ${panel('0', 'Selected content.')} ${panel('1', 'Hover content.')}
+          ${panel('2', 'Focus content.')} ${panel('3', 'Active content.')}
         `,
       }),
     ],
