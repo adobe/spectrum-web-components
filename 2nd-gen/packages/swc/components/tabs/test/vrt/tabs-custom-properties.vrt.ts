@@ -45,8 +45,8 @@ export default meta;
 // into two groups (Tabs, Tab) since the three-element architecture documents
 // custom properties on separate classes (Tabs.ts, Tab.ts), each verified
 // against its own manifest entry below. TabPanel.ts has no documented
-// `@cssprop` (the `--swc-tab-panel-padding-top` its CSS uses isn't part of
-// its public API contract), so there's nothing to verify coverage for there.
+// `@cssprop` (its CSS only uses the private `--_swc-tab-panel-padding-top`),
+// so there's nothing to verify coverage for there.
 
 const TABS_CUSTOM_PROPERTY_CASES: readonly CustomPropertyCase<`--swc-tabs-${string}`>[] =
   [{ property: '--swc-tabs-indicator-color', value: 'magenta' }];
