@@ -681,26 +681,17 @@
   aspect-ratio: 1 / 1;
 }
 
+/* Positioning + a full corner radius (round circle); other appearance comes
+ * from swc-action-button. */
 .swc-PromptField-artifacts-scroll-prev,
 .swc-PromptField-artifacts-scroll-next {
-  --_swc-prompt-field-artifact-scroll-button-background: token("gray-100");
   --_swc-prompt-field-artifact-scroll-icon-transform: none;
+  --swc-action-button-border-radius: token("corner-radius-full");
 
-  display: inline-flex;
   position: absolute;
   inset-block-start: calc((var(--_swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px)) / 2);
   z-index: 4;
   flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px);
-  block-size: var(--swc-prompt-field-artifact-scroll-button-block-size, 32px);
-  padding: 0;
-  color: token("gray-800");
-  background: var(--_swc-prompt-field-artifact-scroll-button-background);
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-800");
-  cursor: pointer;
   transform: translateY(-50%);
 }
 
@@ -715,17 +706,6 @@
   opacity: 0;
 }
 
-.swc-PromptField-artifacts-scroll-prev::after,
-.swc-PromptField-artifacts-scroll-next::after {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: var(--_swc-prompt-field-artifact-scroll-button-background);
-  border-radius: inherit;
-  pointer-events: none;
-  content: "";
-}
-
 .swc-PromptField-artifacts-scroll-prev {
   --_swc-prompt-field-artifact-scroll-icon-transform: scaleX(-1);
 
@@ -736,11 +716,6 @@
   inset-inline-end: 0;
 }
 
-.swc-PromptField-artifacts-scroll-prev:hover,
-.swc-PromptField-artifacts-scroll-next:hover {
-  --_swc-prompt-field-artifact-scroll-button-background: token("gray-200");
-}
-
 .swc-PromptField-artifacts-scroll-prev swc-icon,
 .swc-PromptField-artifacts-scroll-next swc-icon {
   display: inline-flex;
@@ -749,12 +724,6 @@
   align-items: center;
   justify-content: center;
   transform: var(--_swc-prompt-field-artifact-scroll-icon-transform);
-}
-
-.swc-PromptField-artifacts-scroll-prev:focus-visible,
-.swc-PromptField-artifacts-scroll-next:focus-visible {
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-ring-gap");
 }
 
 :host(:dir(rtl)) .swc-PromptField-artifacts-scroll-prev {
@@ -837,116 +806,49 @@
   overflow: visible;
 }
 
-/* Upload button (quiet, left side) */
-
+/* Upload stays quiet; interactive states use the auto-contrast tint. */
 .swc-PromptField-upload {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--swc-prompt-field-upload-inline-size, 32px);
-  block-size: var(--swc-prompt-field-upload-block-size, 32px);
-  padding: 0;
-  color: token("gray-800");
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-500");
+  /* calc((0.5 - l) * infinity) snaps lightness to 0 or 1: black on light cards, white on dark. */
+  --swc-action-button-background-color-hover: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 14%);
+  --swc-action-button-background-color-focus: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 14%);
+  --swc-action-button-background-color-down: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 14%);
+  --swc-action-button-content-color-default: token("gray-800");
+  --swc-action-button-content-color-hover: token("gray-800");
 }
 
-.swc-PromptField-upload:hover {
-  color: token("gray-800");
-  background: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 14%);
-}
-
-/* Explicit ring so the size is bounded; the native ring is larger and gets clipped by the scroll container in Safari. */
-.swc-PromptField-upload:focus-visible {
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-ring-gap");
-}
-
-.swc-PromptField-upload:disabled {
-  color: token("gray-400");
-  background: transparent;
-}
-
-.swc-PromptField-upload swc-icon {
-  --swc-icon-inline-size: token("workflow-icon-medium");
-  --swc-icon-block-size: token("workflow-icon-medium");
-}
-
-/* Send button (filled circle, right side) */
-
-.swc-PromptField-send {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--swc-prompt-field-send-inline-size, 32px);
-  block-size: var(--swc-prompt-field-send-block-size, 32px);
-  padding: 0;
-  color: token("gray-25");
-  background: token("neutral-background-color-default");
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-full");
-}
-
-.swc-PromptField-stop {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--swc-prompt-field-stop-inline-size, 32px);
-  block-size: var(--swc-prompt-field-stop-block-size, 32px);
-  padding: 0;
-  color: token("gray-25");
-  background: token("gray-900");
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-full");
-}
-
-/* Anchored to .controls's own bottom-right, so it re-aligns on its own as .controls grows or shrinks with either row's content. */
+/* Send/stop anchored to .controls's own bottom-right, so they re-align as
+ * .controls grows or shrinks with either row's content. Appearance comes
+ * from swc-action-button; the full corner radius makes the square icon
+ * button a circle. */
 .swc-PromptField-send,
 .swc-PromptField-stop {
+  --swc-action-button-border-radius: token("corner-radius-full");
+  --swc-action-button-content-color-default: token("gray-25");
+  --swc-action-button-content-color-hover: token("gray-25");
+  --swc-action-button-content-color-focus: token("gray-25");
+  --swc-action-button-content-color-down: token("gray-25");
+
   position: absolute;
   inset-block-end: 0;
   inset-inline-end: 0;
-  transition: background token("animation-duration-100") ease;
 }
 
-.swc-PromptField-send:disabled {
-  color: token("gray-400");
-  background: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 11%);
+.swc-PromptField-send {
+  --swc-action-button-background-color-default: token("neutral-background-color-default");
+  --swc-action-button-background-color-hover: token("neutral-background-color-hover");
+  --swc-action-button-background-color-focus: token("neutral-background-color-default");
+  --swc-action-button-background-color-down: token("neutral-background-color-default");
+
+  /* Disabled falls back to the auto-contrast tint rather than the flat fill. */
+  --swc-action-button-background-color-disabled: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 11%);
+  --swc-action-button-content-color-disabled: token("gray-400");
 }
 
-.swc-PromptField-send:focus-visible,
-.swc-PromptField-stop:focus-visible {
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-ring-gap");
-}
-
-.swc-PromptField-send:active,
-.swc-PromptField-stop:active {
-  transform: perspective(64px) translate3d(0, 0, -1px);
-  transition: transform token("animation-duration-200") ease;
-  transition-timing-function: token("animation-ease-in-out");
-  will-change: transform;
-}
-
-.swc-PromptField-send:hover:not(:disabled) {
-  background: token("neutral-background-color-hover");
-}
-
-.swc-PromptField-send swc-icon {
-  --swc-icon-inline-size: token("workflow-icon-medium");
-  --swc-icon-block-size: token("workflow-icon-medium");
-}
-
-/* Stop button (filled black circle, right side) */
-
-.swc-PromptField-stop:hover {
-  background: token("gray-800");
-}
-
-.swc-PromptField-stop swc-icon {
-  --swc-icon-inline-size: token("workflow-icon-medium");
-  --swc-icon-block-size: token("workflow-icon-medium");
+.swc-PromptField-stop {
+  --swc-action-button-background-color-default: token("gray-900");
+  --swc-action-button-background-color-hover: token("gray-800");
+  --swc-action-button-background-color-focus: token("gray-900");
+  --swc-action-button-background-color-down: token("gray-900");
 }
 
 /* ─────────────────────────────────────

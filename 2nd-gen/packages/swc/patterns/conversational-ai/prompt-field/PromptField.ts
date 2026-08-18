@@ -42,6 +42,7 @@ import {
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
+import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '../../../components/ui-icons/swc-ui-icon.js';
 
 import { uniqueId } from '../../../utils/id.js';
@@ -561,10 +562,10 @@ export class PromptField extends SpectrumElement {
     }
 
     const artifacts = this._assignedArtifactElements ?? [];
-    const nextButton = this.shadowRoot?.querySelector<HTMLButtonElement>(
+    const nextButton = this.shadowRoot?.querySelector<HTMLElement>(
       '.swc-PromptField-artifacts-scroll-next'
     );
-    const prevButton = this.shadowRoot?.querySelector<HTMLButtonElement>(
+    const prevButton = this.shadowRoot?.querySelector<HTMLElement>(
       '.swc-PromptField-artifacts-scroll-prev'
     );
 
@@ -935,18 +936,17 @@ export class PromptField extends SpectrumElement {
         >
           ${this._artifactScrollOverflow
             ? html`
-                <button
-                  type="button"
+                <swc-action-button
                   class="swc-PromptField-artifacts-scroll-prev"
-                  aria-label=${this.artifactScrollPrevLabel}
+                  accessible-label=${this.artifactScrollPrevLabel}
                   aria-disabled=${!this._artifactCanScrollPrev}
                   tabindex=${this._artifactCanScrollPrev ? nothing : -1}
                   @click=${this._handleArtifactScrollPrev}
                 >
-                  <swc-icon size="s" aria-hidden="true">
+                  <swc-icon slot="icon" size="s" aria-hidden="true">
                     ${Chevron75Icon()}
                   </swc-icon>
-                </button>
+                </swc-action-button>
               `
             : nothing}
           <div
@@ -974,18 +974,17 @@ export class PromptField extends SpectrumElement {
           </div>
           ${this._artifactScrollOverflow
             ? html`
-                <button
-                  type="button"
+                <swc-action-button
                   class="swc-PromptField-artifacts-scroll-next"
-                  aria-label=${this.artifactScrollNextLabel}
+                  accessible-label=${this.artifactScrollNextLabel}
                   aria-disabled=${!this._artifactCanScrollNext}
                   tabindex=${this._artifactCanScrollNext ? nothing : -1}
                   @click=${this._handleArtifactScrollNext}
                 >
-                  <swc-icon size="s" aria-hidden="true">
+                  <swc-icon slot="icon" size="s" aria-hidden="true">
                     ${Chevron75Icon()}
                   </swc-icon>
-                </button>
+                </swc-action-button>
               `
             : nothing}
         </div>
@@ -995,26 +994,26 @@ export class PromptField extends SpectrumElement {
 
   private _renderSendButton(): TemplateResult {
     return html`
-      <button
+      <swc-action-button
         class="swc-PromptField-send"
         ?disabled=${!this._isPopulated || this.disabled}
-        aria-label=${this.sendLabel}
+        accessible-label=${this.sendLabel}
         @click=${this._handleSendClick}
       >
-        <swc-icon aria-hidden="true">${ChevronUpIcon()}</swc-icon>
-      </button>
+        <swc-icon slot="icon" aria-hidden="true">${ChevronUpIcon()}</swc-icon>
+      </swc-action-button>
     `;
   }
 
   private _renderStopButton(): TemplateResult {
     return html`
-      <button
+      <swc-action-button
         class="swc-PromptField-stop"
-        aria-label=${this.stopLabel}
+        accessible-label=${this.stopLabel}
         @click=${this._handleStopClick}
       >
-        <swc-icon aria-hidden="true">${StopIcon()}</swc-icon>
-      </button>
+        <swc-icon slot="icon" aria-hidden="true">${StopIcon()}</swc-icon>
+      </swc-action-button>
     `;
   }
 
@@ -1086,14 +1085,17 @@ export class PromptField extends SpectrumElement {
                   .inert=${this.collapsed}
                 >
                   <div class="swc-PromptField-leading-actions-row">
-                    <button
+                    <swc-action-button
+                      quiet
                       class="swc-PromptField-upload"
-                      aria-label=${this.uploadLabel}
+                      accessible-label=${this.uploadLabel}
                       ?disabled=${this.disabled}
                       @click=${this._handleUploadClick}
                     >
-                      <swc-icon aria-hidden="true">${PlusIcon()}</swc-icon>
-                    </button>
+                      <swc-icon slot="icon" aria-hidden="true">
+                        ${PlusIcon()}
+                      </swc-icon>
+                    </swc-action-button>
                   </div>
                 </div>
                 ${showStop
