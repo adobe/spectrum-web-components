@@ -1,10 +1,20 @@
 ---
 description: Text formatting and capitalization rules for documentation and tickets
-globs: **/*.md, **/*.txt,**/*.mdx
+globs: '**/*.md, **/*.txt, **/*.mdx'
+paths:
+  - '**/*.md'
+  - '**/*.txt'
+  - '**/*.mdx'
 alwaysApply: false
 ---
 
 # Text formatting conventions
+
+## When to apply
+
+- Writing or editing any `.md`, `.txt`, or `.mdx` content — applies automatically when Claude reads a matching file (Cursor: via `globs`; Claude Code: via `paths`)
+- Drafting prose for PR descriptions, Jira tickets, component docs, or per-unit MDX pages
+- Reviewing existing prose for heading case, em dashes, `<kbd>` formatting, or Jira ticket references
 
 ## Capitalization rules
 
