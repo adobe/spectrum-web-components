@@ -24,6 +24,28 @@ import '../swc-prompt-field.js';
 // ────────────────
 
 const { args, argTypes } = getStorybookHelpers('swc-prompt-field');
+
+// Hide the accessibility label controls so the designer-facing Controls panel
+// shows only the visually meaningful options (variant, generating, collapsed,
+// disabled, placeholder, brand color).
+for (const name of [
+  'label',
+  'accessible-label',
+  'send-label',
+  'stop-label',
+  'upload-label',
+  'artifact-scroll-prev-label',
+  'artifact-scroll-next-label',
+  'artifact-strip-label',
+]) {
+  if (argTypes[name]) {
+    argTypes[name] = {
+      ...argTypes[name],
+      table: { ...argTypes[name].table, disable: true },
+    };
+  }
+}
+
 const defaultPlaceholder =
   'Ready to get started? Ask a question, share an idea, or add a task.';
 const defaultLegalDisclaimer = html`
