@@ -315,10 +315,9 @@ export const ArtifactScrollPaginationTest: Story = {
     );
 
     await step('edge fades render when paging is available', async () => {
-      const endFade = el.shadowRoot?.querySelector(
-        '.swc-PromptField-artifacts-fade--end'
-      );
-      expect(endFade).toBeTruthy();
+      // The edge fade is a mask on the scroll container, toggled by the
+      // has-scroll-next class, not a separate fade element.
+      expect(scrollEl?.classList.contains('has-scroll-next')).toBe(true);
     });
 
     await step(
