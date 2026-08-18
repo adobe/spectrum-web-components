@@ -50,6 +50,7 @@
 /* ── Icon slot ─────────────────────────────────────────── */
 
 ::slotted([slot="icon"]) {
+  box-sizing: border-box;
   display: grid;
   flex-shrink: 0;
   place-content: center;

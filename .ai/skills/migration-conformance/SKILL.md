@@ -7,7 +7,7 @@ description: Sub-task after Phase 6 of 1st-gen to 2nd-gen component migration. U
 
 A code-style conformance pass that runs after Phase 6 (testing) and before Phase 7 (documentation). The goal is to verify that all migrated files conform to the project style guides, that all linters pass, and that any guideline gaps are documented for the team.
 
-The per-domain review criteria live in the **`code-conformance` rule** (`.ai/rules/code-conformance.md`). Read and apply that rule as the authoritative checklist for each file type. This skill provides the migration-specific sequencing, scoping, and quality gate.
+The per-domain review criteria live in the **`code-conformance` skill** (`.ai/skills/code-conformance/SKILL.md`). Read and apply that skill as the authoritative checklist for each file type. This skill provides the migration-specific sequencing, scoping, and quality gate.
 
 ## Mindset
 
@@ -39,7 +39,7 @@ When the code is correct and appropriate but the guideline does not cover it, su
 
 ### Step 1: Run all automated linters
 
-Scope the Prettier check to the component under review. Use the standard lint commands from the `code-conformance` rule.
+Scope the Prettier check to the component under review. Use the standard lint commands from the `code-conformance` skill.
 
 ```bash
 # ESLint
@@ -55,11 +55,11 @@ yarn prettier --write "2nd-gen/packages/**/components/[component]/**"
 
 Resolve every error before moving to the manual review.
 
-### Step 2: Apply the code-conformance rule
+### Step 2: Apply the code-conformance skill
 
-**Read `.ai/rules/code-conformance.md` now and apply it to the files below.**
+**Read `.ai/skills/code-conformance/SKILL.md` now and apply it to the files below.**
 
-That rule is the authoritative source for what to check in each domain and which style guide documents to read. Do not skip directly to the checklist — read the referenced guide sections for each domain before reviewing the files.
+That skill is the authoritative source for what to check in each domain and which style guide documents to read. Do not skip directly to the checklist — read the referenced guide sections for each domain before reviewing the files.
 
 **Files in scope for this component:**
 
@@ -77,7 +77,7 @@ That rule is the authoritative source for what to check in each domain and which
 
 ### Step 3: Surface any guideline gaps
 
-Follow the guideline-gap pattern in the `code-conformance` rule. Report findings to the user as a proposed PR comment; do not block the conformance pass on them.
+Follow the guideline-gap pattern in the `code-conformance` skill. Report findings to the user as a proposed PR comment; do not block the conformance pass on them.
 
 ### Quality gate
 

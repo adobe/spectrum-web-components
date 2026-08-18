@@ -1,6 +1,6 @@
 ---
+name: consistency-pass
 description: Defines when and how to run a consistency and validity self-audit on changed files and the migration plan. Apply before declaring any migration phase or significant implementation task complete.
-alwaysApply: false
 ---
 
 # Consistency and validity pass
@@ -10,21 +10,26 @@ A consistency and validity pass has two parts:
 1. **Code conformance** — are the changed files aligned with project style guides?
 2. **Plan validity** — does the migration plan still accurately reflect what was built?
 
-Run both proactively, not only when asked. The per-domain code checklist lives in `.ai/rules/code-conformance.md`. The plan validity check is defined here.
+Run both proactively, not only when asked. The per-domain code checklist lives in `.ai/skills/code-conformance/SKILL.md`. The plan validity check is defined here.
 
-## When to run
+## When to use this skill
 
 Run a consistency and validity pass:
 
-1. **When explicitly asked** — "check my work", "consistency pass", "validity pass", "check this against the style guide"
+1. **When explicitly asked** — see How to invoke below
 2. **Before declaring a migration phase complete** — especially Phases 3 (API), 5 (styling), 6 (testing), and 7 (documentation), where both code drift and plan staleness are most likely
 3. **After making implementation changes** to TypeScript, CSS, test, or stories files during a migration session, even if not completing a formal phase
 
 If you are in a migration session and a pass is due but the user has not asked for one, run it — do not wait to be asked.
 
+## How to invoke
+
+- Say "check my work", "consistency pass", "validity pass", or "check this against the style guide"
+- Or run it proactively per the triggers above, without being asked
+
 ## Part 1: Code conformance
 
-Apply the full checklist from `.ai/rules/code-conformance.md` to the files changed in the current task or phase. Read that rule before starting. Scope the check to changed files only unless a broader audit was requested.
+Apply the full checklist from `.ai/skills/code-conformance/SKILL.md` to the files changed in the current task or phase. Read that rule before starting. Scope the check to changed files only unless a broader audit was requested.
 
 Run automated linters first, then the manual review:
 
@@ -99,4 +104,4 @@ Fix or flag all ⚠️ and ❌ items before reporting the phase or task complete
 
 ## Guideline gaps
 
-If the code is correct and appropriate but no style guide rule covers the pattern, follow the guideline-gap reporting format in `.ai/rules/code-conformance.md` and surface it to the user.
+If the code is correct and appropriate but no style guide rule covers the pattern, follow the guideline-gap reporting format in `.ai/skills/code-conformance/SKILL.md` and surface it to the user.

@@ -13,8 +13,8 @@ description:
 See also:
 
 - [`documentation`](../documentation/SKILL.md) — Adobe content writing standards
-- [`.ai/rules/stories-format.md`](../../rules/stories-format.md) — stories file structure
-- [`.ai/rules/stories-documentation.md`](../../rules/stories-documentation.md) — per-unit MDX authoring patterns
+- [`stories-format`](../../rules/stories-format.md) — stories file structure
+- [`stories-documentation`](../../rules/stories-documentation.md) — per-unit MDX authoring patterns
 
 ## Mindset
 
