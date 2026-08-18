@@ -346,6 +346,8 @@ jobs:
             done
           done
           cd ../..
+          git config user.name "github-actions-bot"
+          git config user.email "support+actions@github.com"
           node ./1st-gen/scripts/create-git-tag.js
           echo "published=true" >> $GITHUB_OUTPUT
 
