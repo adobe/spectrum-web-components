@@ -877,6 +877,47 @@ describe('sp-overlay', () => {
 
       expect(el.open).to.be.true;
     });
+    it('closes when a pointerdown inside the overlay redirects focus to an unrelated element', async () => {
+      const test = await fixture(html`
+        <div>
+          <sp-button id="trigger-5731-redirect" variant="primary">
+            Button popover
+          </sp-button>
+          <input id="outside-input-5731" />
+          <sp-overlay trigger="trigger-5731-redirect@click" placement="bottom">
+            <sp-popover tip>
+              <button id="redirect-button-5731">Redirect focus</button>
+            </sp-popover>
+          </sp-overlay>
+        </div>
+      `);
+      const button = test.querySelector('sp-button') as Button;
+      const el = test.querySelector('sp-overlay') as Overlay;
+      const redirectButton = test.querySelector(
+        '#redirect-button-5731'
+      ) as HTMLButtonElement;
+      const outsideInput = test.querySelector(
+        '#outside-input-5731'
+      ) as HTMLInputElement;
+
+      redirectButton.addEventListener('pointerdown', () => {
+        outsideInput.focus();
+      });
+
+      expect(el.open).to.be.false;
+
+      const opened = oneEvent(el, 'sp-opened');
+      await mouseClickOn(button);
+      await opened;
+
+      expect(el.open).to.be.true;
+
+      const closed = oneEvent(el, 'sp-closed');
+      await mouseClickOn(redirectButton);
+      await closed;
+
+      expect(el.open).to.be.false;
+    });
   });
   describe('[type="manual"]', () => {
     opensDeclaratively('manual');
