@@ -104,11 +104,12 @@ export const Permutations: Story = {
   parameters: vrtParameters,
 };
 
-// Status light conveys most of its meaning through the dot's color, and
-// status-light.css sets `forced-color-adjust: none` on the whole component
-// (not just the dot), so every variant's authored color survives forced-colors
-// mode rather than being flattened to a system color. That makes the full
-// permutation set meaningful here too, rather than a narrowed subset.
+// Relying on color alone to distinguish variants fails WCAG 1.4.1, and
+// out of context we can't know what a given color is meant to signal, so
+// status-light.css flattens every dot to CanvasText in forced-colors mode
+// rather than preserving the semantic variant color. Every variant renders
+// identically here; the permutation set is kept to confirm that flattening
+// holds across sizes and doesn't regress per-variant.
 export const ForcedColors: Story = {
   render: () => theme(permutationContent(), 'light', 'ltr'),
   parameters: forcedColorsVrtParameters,

@@ -159,6 +159,7 @@
     forced-color-adjust: none;
 
     &::before {
+      background-color: CanvasText;
       border: token("border-width-100") solid;
     }
   }
