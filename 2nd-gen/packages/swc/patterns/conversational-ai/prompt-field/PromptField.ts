@@ -972,22 +972,6 @@ export class PromptField extends SpectrumElement {
                 ></slot>
               </div>
             </div>
-            ${this._artifactCanScrollPrev
-              ? html`
-                  <div
-                    class="swc-PromptField-artifacts-fade swc-PromptField-artifacts-fade--start"
-                    aria-hidden="true"
-                  ></div>
-                `
-              : nothing}
-            ${this._artifactCanScrollNext
-              ? html`
-                  <div
-                    class="swc-PromptField-artifacts-fade swc-PromptField-artifacts-fade--end"
-                    aria-hidden="true"
-                  ></div>
-                `
-              : nothing}
           </div>
           ${this._artifactScrollOverflow
             ? html`
