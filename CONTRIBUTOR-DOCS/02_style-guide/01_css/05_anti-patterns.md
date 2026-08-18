@@ -77,6 +77,11 @@
     - [Why This Happens](#why-this-happens)
     - [Why This Is a Problem](#why-this-is-a-problem)
     - [✅ Correct Approach](#-correct-approach)
+- [13. Missing `box-sizing` on Sized `::slotted()` Rules](#13-missing-box-sizing-on-sized-slotted-rules)
+    - [❌ Anti-Pattern](#-anti-pattern)
+    - [Why This Happens](#why-this-happens)
+    - [Why This Is a Problem](#why-this-is-a-problem)
+    - [✅ Correct Approach](#-correct-approach)
 - [Final Reminder](#final-reminder)
 
 </details>
@@ -626,6 +631,45 @@ During migration, this removal may affect alignment of accessories (ex. status l
 
 🔎 **Status light reference:**
 [status-light.css](../../../2nd-gen/packages/swc/components/status-light/status-light.css) sets only `font-size` and `line-height` per size; `min-block-size` and `padding-block` are absent.
+
+## 13. Missing `box-sizing` on Sized `::slotted()` Rules
+
+### ❌ Anti-Pattern
+
+```css
+* {
+  box-sizing: border-box;
+}
+
+::slotted([slot="preview"]) {
+  inline-size: 100%;
+  aspect-ratio: 3 / 2;
+}
+```
+
+### Why This Happens
+
+The component's own `* { box-sizing: border-box; }` reset (see [Rule Order, item 3](01_component-css.md#rule-order)) looks like it covers every element rendered by the component, including slotted content. It's easy to assume `::slotted()` rules inherit that reset for free.
+
+### Why This Is a Problem
+
+A universal selector written inside a shadow-scoped stylesheet only matches elements inside that shadow tree. Slotted content is authored in the consumer's light DOM; the `*` reset never reaches it. Any `::slotted()` rule that assigns a real dimensional constraint (`inline-size`, `block-size`, `width`, `height`, `aspect-ratio`, or a `max-inline-size`/`max-block-size`/`max-width`/`max-height` cap) is sized against whatever `box-sizing` the consumer's element happens to have, which defaults to `content-box`. If that element also has its own `padding` or `border` (from consumer styles, a UA stylesheet, or another library), the rendered box grows past the constraint the component intended, breaking layout, aspect ratio, or grid placement.
+
+This does not apply to `min-inline-size`/`min-block-size`-only rules (a floor, not a rendered box) or to keyword sizes like `inline-size: fit-content` (self-sizing regardless of box model).
+
+### ✅ Correct Approach
+
+Add `box-sizing: border-box` directly to every `::slotted()` rule that sets one of the dimensional properties above, even though the component already has a `*` reset elsewhere.
+
+```css
+::slotted([slot="preview"]) {
+  box-sizing: border-box;
+  inline-size: 100%;
+  aspect-ratio: 3 / 2;
+}
+```
+
+🔎 **Reference implementations:** [card.css](../../../2nd-gen/packages/swc/components/card/card.css) and [card-template.css](../../../2nd-gen/packages/swc/stylesheets/_lit-styles/card-template.css) both declare `box-sizing: border-box` on their sized `::slotted()` rules.
 
 ## Final Reminder
 

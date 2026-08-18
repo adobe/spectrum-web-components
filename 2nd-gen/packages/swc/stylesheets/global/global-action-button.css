@@ -95,6 +95,7 @@
   --_swc-action-button-icon-block-size: var(--swc-action-button-icon-block-size, var(--_swc-action-button-icon-size));
   --_swc-pending-spinner-size: var(--_swc-action-button-icon-size);
 
+  box-sizing: border-box;
   flex-shrink: 0;
   align-self: center;
   inline-size: var(--swc-action-button-icon-inline-size, var(--_swc-action-button-icon-size));
