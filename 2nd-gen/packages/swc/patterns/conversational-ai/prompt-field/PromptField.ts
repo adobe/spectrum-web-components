@@ -176,13 +176,6 @@ export class PromptField extends SpectrumElement {
   @state()
   private _artifactCanScrollNext = false;
 
-  // Static-color for the action buttons: the card is light in light theme and
-  // dark in dark theme, so the buttons flip black/white with the color-scheme.
-  @state()
-  private _staticColor: 'black' | 'white' = 'black';
-
-  private _colorSchemeObserver?: MutationObserver;
-
   // `scrollend` support isn't a reliable gate on its own: browsers that
   // report support (feature-detected via `'onscrollend' in window`) can
   // still skip firing it for particular scroll triggers (observed on both
@@ -237,15 +230,6 @@ export class PromptField extends SpectrumElement {
       focusgroupNavigationActiveChange,
       this._handleArtifactActiveChange as EventListener
     );
-    this._resolveStaticColor();
-    this._colorSchemeObserver = new MutationObserver(() =>
-      this._resolveStaticColor()
-    );
-    this._colorSchemeObserver.observe(this.ownerDocument.documentElement, {
-      attributes: true,
-      attributeFilter: ['class', 'style'],
-      subtree: true,
-    });
   }
 
   public override disconnectedCallback(): void {
@@ -253,15 +237,8 @@ export class PromptField extends SpectrumElement {
       focusgroupNavigationActiveChange,
       this._handleArtifactActiveChange as EventListener
     );
-    this._colorSchemeObserver?.disconnect();
     this._artifactScrollFallbackGeneration++;
     super.disconnectedCallback();
-  }
-
-  private _resolveStaticColor(): void {
-    this._staticColor = getComputedStyle(this).colorScheme.includes('dark')
-      ? 'white'
-      : 'black';
   }
 
   protected override updated(changedProperties: PropertyValues<this>): void {
@@ -1111,7 +1088,6 @@ export class PromptField extends SpectrumElement {
                   <div class="swc-PromptField-leading-actions-row">
                     <swc-action-button
                       quiet
-                      static-color=${this._staticColor}
                       class="swc-PromptField-upload"
                       accessible-label=${this.uploadLabel}
                       ?disabled=${this.disabled}
