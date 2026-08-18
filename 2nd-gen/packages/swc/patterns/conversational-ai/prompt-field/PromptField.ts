@@ -44,6 +44,7 @@ import {
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '../../../components/ui-icons/swc-ui-icon.js';
+import '../pixel-loader/swc-pixel-loader.js';
 
 import { uniqueId } from '../../../utils/id.js';
 import { ChevronUpIcon, PlusIcon, StopIcon } from '../utils/icons/index.js';
@@ -1017,11 +1018,11 @@ export class PromptField extends SpectrumElement {
     `;
   }
 
-  /** Placeholder for the future pixel-loader idle/generating indicator. */
+  /** Idle/generating indicator: the pixel loader animates while generating and freezes otherwise. */
   private _renderStatusIcon(): TemplateResult {
     return html`
       <span class="swc-PromptField-status-icon" aria-hidden="true">
-        <swc-ui-icon icon="asterisk" size="xl"></swc-ui-icon>
+        <swc-pixel-loader ?paused=${!this.generating}></swc-pixel-loader>
       </span>
     `;
   }
