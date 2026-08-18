@@ -11,7 +11,7 @@
  */
 
 import { html, LitElement, nothing } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
@@ -127,12 +127,170 @@ export default meta;
 //    PLAYGROUND STORY
 // ────────────────────
 
+// Wraps the prompt field with a working upload flow so the Playground's `+`
+// button opens a real file picker and slots the chosen files in as artifacts
+// (and dismiss removes them), while still driving every visual arg from the
+// Controls panel.
+@customElement('swc-prompt-field-playground-demo')
+class PromptFieldPlaygroundDemo extends LitElement {
+  @property({ type: String }) public variant:
+    | 'subtle'
+    | 'balanced'
+    | 'prominent' = 'balanced';
+
+  @property({ type: Boolean }) public generating = false;
+
+  @property({ type: Boolean }) public collapsed = false;
+
+  @property({ type: Boolean }) public disabled = false;
+
+  @property({ type: String }) public placeholder = defaultPlaceholder;
+
+  @property({ type: String }) public promptValue = '';
+
+  @property({ type: String }) public brandColor = '';
+
+  @state()
+  private artifacts: PromptFieldBehaviorArtifact[] = [];
+
+  protected override createRenderRoot(): this {
+    return this;
+  }
+
+  public override disconnectedCallback(): void {
+    for (const artifact of this.artifacts) {
+      if (artifact.thumbnailUrl) {
+        URL.revokeObjectURL(artifact.thumbnailUrl);
+      }
+    }
+    super.disconnectedCallback?.();
+  }
+
+  private _handleUploadClick(event: Event): void {
+    event.preventDefault();
+    this.querySelector<HTMLInputElement>('[data-file-input]')?.click();
+  }
+
+  private _handleFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const files = Array.from(input.files ?? []);
+    if (!files.length) {
+      return;
+    }
+    this.artifacts = [
+      ...this.artifacts,
+      ...files.map((file, index) => {
+        const isImage =
+          file.type.startsWith('image/') ||
+          /\.(png|jpe?g|gif|webp|bmp|svg|avif)$/i.test(file.name);
+        return {
+          id: `${crypto.randomUUID()}-${index}`,
+          fileName: file.name || 'Attachment',
+          sizeLabel: `${Math.max(1, Math.round(file.size / 1024))} KB`,
+          thumbnailUrl: isImage ? URL.createObjectURL(file) : undefined,
+          badgeLabel: isImage ? undefined : fileBadgeLabel(file.name),
+        } satisfies PromptFieldBehaviorArtifact;
+      }),
+    ];
+    input.value = '';
+  }
+
+  private _handleArtifactDismiss(event: Event): void {
+    const id = (event.target as HTMLElement | null)?.getAttribute(
+      'data-artifact-id'
+    );
+    if (!id) {
+      return;
+    }
+    const removed = this.artifacts.find((item) => item.id === id);
+    if (removed?.thumbnailUrl) {
+      URL.revokeObjectURL(removed.thumbnailUrl);
+    }
+    this.artifacts = this.artifacts.filter((item) => item.id !== id);
+  }
+
+  protected override render() {
+    return html`
+      <swc-prompt-field
+        label="Prompt"
+        variant=${this.variant}
+        ?generating=${this.generating}
+        ?collapsed=${this.collapsed}
+        ?disabled=${this.disabled}
+        placeholder=${this.placeholder}
+        .value=${this.promptValue}
+        style=${ifDefined(
+          this.brandColor
+            ? `--swc-prompt-field-brand-color: ${this.brandColor}`
+            : undefined
+        )}
+        @swc-prompt-field-upload-click=${this._handleUploadClick}
+        @swc-upload-artifact-dismiss=${this._handleArtifactDismiss}
+      >
+        ${this.artifacts.map(
+          (artifact) => html`
+            <swc-upload-artifact
+              slot="artifact"
+              type="media"
+              dismissible
+              data-artifact-id=${artifact.id}
+            >
+              ${artifact.thumbnailUrl
+                ? html`
+                    <img
+                      slot="thumbnail"
+                      src=${artifact.thumbnailUrl}
+                      alt=${artifact.fileName}
+                      style="inline-size:100%;block-size:100%;object-fit:cover;"
+                    />
+                  `
+                : html`
+                    <div
+                      slot="thumbnail"
+                      role="img"
+                      aria-label=${artifact.fileName}
+                      style="inline-size:100%;block-size:100%;background:#f3f3f3;"
+                    ></div>
+                  `}
+              ${artifact.badgeLabel
+                ? html`
+                    <span slot="badge">${artifact.badgeLabel}</span>
+                  `
+                : nothing}
+            </swc-upload-artifact>
+          `
+        )}
+        ${legalDisclaimerSlot}
+      </swc-prompt-field>
+      <input
+        data-file-input
+        type="file"
+        multiple
+        hidden
+        @change=${this._handleFileChange}
+      />
+    `;
+  }
+}
+void PromptFieldPlaygroundDemo;
+
 export const Playground: Story = {
   args: {
     label: 'Prompt',
     placeholder: defaultPlaceholder,
     value: '',
   },
+  render: (storyArgs) => html`
+    <swc-prompt-field-playground-demo
+      variant=${storyArgs.variant ?? 'balanced'}
+      ?generating=${storyArgs.generating ?? false}
+      ?collapsed=${storyArgs.collapsed ?? false}
+      ?disabled=${storyArgs.disabled ?? false}
+      placeholder=${storyArgs.placeholder ?? defaultPlaceholder}
+      .promptValue=${storyArgs.value ?? ''}
+      brandColor=${ifDefined(storyArgs['--swc-prompt-field-brand-color'])}
+    ></swc-prompt-field-playground-demo>
+  `,
   parameters: {
     styles: {
       'inline-size': '800px',
