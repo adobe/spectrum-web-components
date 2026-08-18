@@ -114,6 +114,10 @@ export class FocusGroupController<T extends HTMLElement>
 
     _listenerScope = (): HTMLElement => this.host;
 
+    isRtl(): boolean {
+        return this.host.dir === 'rtl';
+    }
+
     // When elements are virtualized, the delta between the first element
     // and the first rendered element.
     offset = 0;
@@ -366,15 +370,16 @@ export class FocusGroupController<T extends HTMLElement>
         }
         let diff = 0;
         this.prevIndex = this.currentIndex;
+        const isRtl = this.isRtl();
         switch (event.key) {
             case 'ArrowRight':
-                diff += 1;
+                diff += isRtl ? -1 : 1;
                 break;
             case 'ArrowDown':
                 diff += this.direction === 'grid' ? this.directionLength : 1;
                 break;
             case 'ArrowLeft':
-                diff -= 1;
+                diff += isRtl ? 1 : -1;
                 break;
             case 'ArrowUp':
                 diff -= this.direction === 'grid' ? this.directionLength : 1;
