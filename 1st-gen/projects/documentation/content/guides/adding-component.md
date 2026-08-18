@@ -113,7 +113,7 @@ Each component's `packages/_componentname_/README.md`. These files must meet our
 
 ##### AI Rules
 
-If you're using a coding agent, like [Cursor](https://cursor.com/) or [Claude Code](https://code.claude.com/docs/en/overview), the repository includes a skill that helps enforce these documentation standards. When editing component README files, ask your AI assistant to follow the guidelines in `.ai/rules/component-readme.md` to ensure consistent structure, accessible code examples, and proper heading hierarchy.
+If you're using a coding agent, like [Cursor](https://cursor.com/) or [Claude Code](https://code.claude.com/docs/en/overview), the repository includes rules that help enforce these documentation standards automatically. When editing component README files, your AI assistant will follow the guidelines in `.ai/rules/component-readme.md` to ensure consistent structure, accessible code examples, and proper heading hierarchy.
 
 #### Documentation structure
 

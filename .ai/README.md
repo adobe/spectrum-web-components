@@ -16,7 +16,7 @@ All rules and skills now live in **`.ai/`** — a tool-agnostic, plain-markdown 
 
 Rule files use Cursor-style `globs` / `alwaysApply` frontmatter, which Cursor honors live via its per-file `.mdc` symlinks. Claude Code does **not** read `globs` — it has its own path-scoping mechanism, a `paths:` frontmatter field (YAML list of glob patterns) on files under `.claude/rules/`. A rule file without `paths:` loads unconditionally into every session; a rule file with `paths:` loads only when Claude reads a file matching one of those patterns — this works through the `.claude/rules → ../.ai/rules` directory symlink too, since Claude Code resolves symlinked paths when matching.
 
-Every rule file in `.ai/rules/` that has a Cursor `globs:` value also carries an equivalent `paths:` list, so both tools apply the same conditional loading. Rules genuinely meant to always be in context (`branch-naming`, `styles.md`'s `alwaysApply: true`) have no `paths:` and load unconditionally in both tools, as intended.
+Every rule file in `.ai/rules/` that has a Cursor `globs:` value also carries an equivalent `paths:` list, so both tools apply the same conditional loading — this includes `styles.md`, whose `alwaysApply: true` makes it always-active in Cursor regardless of file type, but which still gets `paths: ['*.css']` so Claude Code (which doesn't read `alwaysApply`) only loads it for CSS files instead of every session. `branch-naming` is the one rule with no natural file-path scope at all — no `globs:`/`paths:`, unconditional in both tools, as intended.
 
 ### Rules vs. skills: how to choose
 
@@ -124,7 +124,7 @@ These two rules share the same glob/path set (`2nd-gen/**/stories/**` and `2nd-g
 
 ### When rules and skills are activated
 
-**Always-active rules:** `branch-naming` and `styles` use `alwaysApply: true` and no `paths:` — always in context, in both Cursor and Claude Code.
+**Always-active rules:** `branch-naming` has no `globs:`/`paths:` at all — always in context in both tools. `styles` uses `alwaysApply: true` and is always-active in Cursor regardless of file type, but also carries `paths: ['*.css']` so Claude Code (which ignores `alwaysApply`) only loads it for CSS files.
 **Path-scoped rules:** `text-formatting`, `stories-documentation`, `stories-format`, `component-readme`, `contributor-doc-update`, `storybook-mdx-conversion` carry both `globs:` (Cursor) and `paths:` (Claude) — loaded only when a matching file is in context, deterministically, in both tools.
 **Skills:** Guidance with no natural file-path scope — `jira-ticket`, `github-description`, `code-conformance`, `consistency-pass`, `deep-understanding`, `migration-phase-awareness`, `contributor-docs-nav`, and the rest of the [Available skills](#available-skills) catalog — invoked on demand by the agent matching task intent, or by explicit request.
 **Config-based rules:** The `config.json` also defines structured validation for editors and other tooling to verify branch names, Jira ticket drafts, text-formatting, etc.:
