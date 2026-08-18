@@ -19,7 +19,7 @@ import { getComponent, withWarningSpy } from '../../../../utils/test-utils.js';
 import { exitStartOf } from '../animation.js';
 import { ICONS, PRESETS } from '../data.js';
 import { PixelLoader } from '../PixelLoader.js';
-import { meta, Overview } from '../stories/pixel-loader.stories.js';
+import { meta, Overview } from '../stories/pixel-loader.internal.stories.js';
 
 export default {
   ...meta,
