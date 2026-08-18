@@ -820,14 +820,17 @@
 }
 
 .swc-PromptField-leading-actions-row {
-  overflow-clip-margin: calc(token("focus-ring-gap") + token("focus-indicator-thickness"));
   display: flex;
   gap: token("spacing-75");
   align-items: center;
   min-block-size: 0;
 
-  /* clip the collapse animation but leave room for the upload button's focus ring (Firefox clips it under overflow: hidden). */
+  /* Clips the row to nothing while collapsed and during the collapse animation. Expanded reverts to visible below so the upload button's focus ring isn't clipped (Safari has no overflow-clip-margin escape hatch). */
   overflow: clip;
+}
+
+:host(:not([collapsed])) .swc-PromptField-leading-actions-row {
+  overflow: visible;
 }
 
 /* Upload button (quiet, left side) */
@@ -848,6 +851,12 @@
 .swc-PromptField-upload:hover {
   color: token("gray-800");
   background: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 14%);
+}
+
+/* Explicit ring so the size is bounded; the native ring is larger and gets clipped by the scroll container in Safari. */
+.swc-PromptField-upload:focus-visible {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
 }
 
 .swc-PromptField-upload:disabled {
