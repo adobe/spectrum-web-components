@@ -516,7 +516,9 @@
   /* 24px so the indicator's center lines up with the upload button's icon center below (row's 4px lead + 12px half-width = the 16px card inset + half the 32px button). */
   inline-size: token("spacing-400");
   block-size: token("spacing-400");
-  color: token("gray-700");
+
+  /* Match the upload button's static content color: black on light cards, white on dark. */
+  color: light-dark(token("transparent-black-800"), token("transparent-white-800"));
 }
 
 .swc-PromptField-status-icon swc-pixel-loader {
@@ -805,16 +807,6 @@
 
 :host(:not([collapsed])) .swc-PromptField-leading-actions-row {
   overflow: visible;
-}
-
-/* Upload stays quiet; interactive states use the auto-contrast tint. */
-.swc-PromptField-upload {
-  /* calc((0.5 - l) * infinity) snaps lightness to 0 or 1: black on light cards, white on dark. */
-  --swc-action-button-background-color-hover: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 14%);
-  --swc-action-button-background-color-focus: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 14%);
-  --swc-action-button-background-color-down: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 14%);
-  --swc-action-button-content-color-default: token("gray-800");
-  --swc-action-button-content-color-hover: token("gray-800");
 }
 
 /* Send/stop anchored to .controls's own bottom-right, so they re-align as
