@@ -20,6 +20,18 @@ A prompt field consists of:
 
 ## Options
 
+### Variant
+
+`variant` sets the intensity of the AI brand treatment (the gradient ring, background wash, and glow):
+
+- **`subtle`**: understated treatment; the gradient ring is revealed on hover
+- **`balanced`** (default): visible gradient ring and background wash
+- **`prominent`**: strongest treatment, adding an outer glow
+
+Every layer derives from a single hue, so overriding `--swc-prompt-field-brand-color` rethemes all three variants at once.
+
+<Canvas of={PromptFieldStories.Variant} />
+
 ### Layout
 
 The `collapsed` attribute controls the field's expanded/collapsed layout:

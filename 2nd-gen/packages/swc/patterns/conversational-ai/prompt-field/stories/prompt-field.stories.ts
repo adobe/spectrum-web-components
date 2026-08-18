@@ -156,6 +156,50 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
+export const Variant: Story = {
+  render: () => html`
+    <div style="display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          variant="subtle"
+          label="Prompt"
+          value="Summarize the API changes in this branch."
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          subtle: understated treatment; the gradient ring is revealed on hover
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          variant="balanced"
+          label="Prompt"
+          value="Summarize the API changes in this branch."
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          balanced (default): visible gradient ring and background wash
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          variant="prominent"
+          label="Prompt"
+          value="Summarize the API changes in this branch."
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          prominent: strongest treatment, adding an outer glow
+        </span>
+      </div>
+    </div>
+  `,
+  tags: ['options'],
+};
+
 export const Layout: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
