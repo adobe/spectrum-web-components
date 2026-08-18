@@ -852,11 +852,12 @@
   --swc-action-button-background-color-down: token("gray-900");
 }
 
-/* Collapsed has no action bar, so the button is inline; the row is content-height (one line), so center the taller button on it instead of anchoring to the bottom. */
+/* Collapsed has no action bar, so the button is inline. The row is content-height (one line) and shorter than the 32px button, so center the button on it (50% minus half its height) rather than stretching it flat with inset-block: 0. */
 :host([collapsed]) .swc-PromptField-send,
 :host([collapsed]) .swc-PromptField-stop {
-  inset-block: 0;
-  margin-block: auto;
+  inset-block-start: 50%;
+  inset-block-end: auto;
+  margin-block-start: calc(var(--swc-prompt-field-send-block-size, 32px) / -2);
 }
 
 /* ─────────────────────────────────────
