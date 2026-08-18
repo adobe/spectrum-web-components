@@ -500,11 +500,15 @@
 .swc-PromptField-text-group {
   display: flex;
   gap: token("spacing-200");
-  align-items: center;
+  align-items: baseline;
   min-inline-size: 0;
-  min-block-size: var(--swc-prompt-field-send-block-size, 32px);
   padding-inline-start: token("spacing-75");
   padding-inline-end: calc(var(--swc-prompt-field-send-inline-size, 32px) + token("spacing-300"));
+}
+
+/* Collapsed puts the send button inline at the row's end, so the row must be tall enough to hold it. Expanded anchors send to the action bar instead, so no min height (which would add slack below the text). */
+:host([collapsed]) .swc-PromptField-text-group {
+  min-block-size: var(--swc-prompt-field-send-block-size, 32px);
 }
 
 .swc-PromptField-status-icon {
