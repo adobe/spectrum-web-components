@@ -404,16 +404,17 @@ export class PixelLoader extends SpectrumElement {
     );
   }
 
-  /**
-   * Eases the current icon from its in-progress frame to the settled state,
-   * then swaps to the requested `icon` and builds it. This softens a mid-build
-   * icon change into "finish assembling, then transition" instead of a snap.
-   */
+  /** Cached lookup of the `.swc-PixelLoader` container in the shadow root. */
   private _container(): HTMLElement | null {
     return (this._containerCache ??=
       this.shadowRoot?.querySelector<HTMLElement>('.swc-PixelLoader') ?? null);
   }
 
+  /**
+   * Eases the current icon from its in-progress frame to the settled state,
+   * then swaps to the requested `icon` and builds it. This softens a mid-build
+   * icon change into "finish assembling, then transition" instead of a snap.
+   */
   private _finishThenSwap(): void {
     const cellEls = this._cellEls();
     const container = this._container();
