@@ -22,9 +22,10 @@ export interface CornerRadii {
 const cornerRadiiCache = new WeakMap<readonly Cell[], CornerRadii[]>();
 
 /**
- * A cell's corner is rounded only when both orthogonal neighbors adjacent to
- * that corner are empty. Adjacent filled cells join into flat edges; only
- * outward-facing corners round.
+ * A cell's corner is rounded only when the two orthogonal neighbors adjacent to
+ * that corner **and** the diagonal neighbor at that corner are all empty. Any
+ * filled neighbor (including a diagonal one) keeps the corner square so
+ * diagonally touching cells read as connected; only fully exposed corners round.
  *
  * Cached by `cells` identity: every icon's cell list is a stable, unchanging
  * array (see `data.ts`), so this only does real work once per icon rather
@@ -45,12 +46,16 @@ export function computeCornerRadii(cells: readonly Cell[]): CornerRadii[] {
     const right = isFilled(col + 1, row);
     const top = isFilled(col, row - 1);
     const bottom = isFilled(col, row + 1);
+    const topLeft = isFilled(col - 1, row - 1);
+    const topRight = isFilled(col + 1, row - 1);
+    const bottomRight = isFilled(col + 1, row + 1);
+    const bottomLeft = isFilled(col - 1, row + 1);
 
     return {
-      topLeft: !left && !top,
-      topRight: !right && !top,
-      bottomRight: !right && !bottom,
-      bottomLeft: !left && !bottom,
+      topLeft: !left && !top && !topLeft,
+      topRight: !right && !top && !topRight,
+      bottomRight: !right && !bottom && !bottomRight,
+      bottomLeft: !left && !bottom && !bottomLeft,
     };
   });
 
