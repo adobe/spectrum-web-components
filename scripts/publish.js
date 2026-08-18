@@ -88,7 +88,7 @@ async function publish() {
   } else {
     // Update changelog before versioning and only for regular releases
     run(
-      'yarn workspace @spectrum-web-components/1st-gen changelog:global',
+      'yarn workspace @spectrum-web-components/1st-gen changelog:1st-gen',
       'Updating global changelog'
     );
     run('yarn changeset version', 'Versioning packages');
