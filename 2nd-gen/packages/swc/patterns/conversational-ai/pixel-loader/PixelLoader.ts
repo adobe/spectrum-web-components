@@ -157,6 +157,16 @@ export class PixelLoader extends SpectrumElement {
     );
 
     this._syncTicker();
+
+    // On reconnect, `disconnectedCallback` cancelled the cell animations, but no
+    // property changes, so Lit does not re-render and `updated()` never re-runs
+    // `_playCells()`; a single-icon loader would come back frozen. Restart the
+    // build here to mirror the cancel on disconnect. Guarded to reconnect
+    // (`hasUpdated`): the first connect has no rendered cells yet, and the
+    // initial `updated()` handles the first play.
+    if (this.hasUpdated) {
+      this._playCells();
+    }
   }
 
   public override disconnectedCallback(): void {

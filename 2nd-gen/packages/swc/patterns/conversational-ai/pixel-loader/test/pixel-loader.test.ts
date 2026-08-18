@@ -378,6 +378,42 @@ export const ReducedMotionTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Reconnect restarts the animation
+// ──────────────────────────────────────────────────────────────
+
+export const ReconnectTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<PixelLoader>(
+      canvasElement,
+      'swc-pixel-loader'
+    );
+    const parent = el.parentNode;
+    if (!parent) {
+      throw new Error('swc-pixel-loader: expected a parent node');
+    }
+
+    await step('cells animate on the initial mount', async () => {
+      expect(cells(el)[0]?.getAnimations().length).toBeGreaterThan(0);
+    });
+
+    await step('disconnecting cancels the cell animations', async () => {
+      el.remove();
+      expect(cells(el)[0]?.getAnimations().length).toBe(0);
+    });
+
+    // A single-icon loader has no property change on reconnect, so Lit does not
+    // re-render; the animation must be restarted from connectedCallback.
+    await step('reconnecting restarts the cell animations', async () => {
+      parent.appendChild(el);
+      await el.updateComplete;
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+      expect(cells(el)[0]?.getAnimations().length).toBeGreaterThan(0);
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Dev mode warnings
 // ──────────────────────────────────────────────────────────────
 
