@@ -1,6 +1,8 @@
 ---
 description: Useful for updating auto-generated navigation and validating links in the contributor docs
 globs: CONTRIBUTOR-DOCS/**
+paths:
+  - 'CONTRIBUTOR-DOCS/**'
 alwaysApply: false
 ---
 

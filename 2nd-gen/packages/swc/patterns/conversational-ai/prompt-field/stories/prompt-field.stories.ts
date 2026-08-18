@@ -12,6 +12,7 @@
 
 import { html, LitElement, nothing } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -51,7 +52,9 @@ function renderPromptField(
       label=${storyArgs.label ?? 'Prompt'}
       placeholder=${storyArgs.placeholder ?? defaultPlaceholder}
       .value=${storyArgs.value ?? ''}
-      mode=${storyArgs.mode ?? 'default'}
+      ?disabled=${storyArgs.disabled ?? false}
+      ?generating=${storyArgs.generating ?? false}
+      ?collapsed=${storyArgs.collapsed ?? false}
       accessible-label=${storyArgs['accessible-label'] ?? ''}
       send-label=${storyArgs['send-label'] ?? 'Send'}
       stop-label=${storyArgs['stop-label'] ?? 'Stop generating'}
@@ -60,23 +63,13 @@ function renderPromptField(
       'Show previous attachments'}
       artifact-scroll-next-label=${storyArgs['artifact-scroll-next-label'] ??
       'Show more attachments'}
-      min-rows=${storyArgs['min-rows'] ?? 1}
-      max-rows=${storyArgs['max-rows'] ?? 4}
+      min-rows=${ifDefined(storyArgs['min-rows'] || undefined)}
+      max-rows=${ifDefined(storyArgs['max-rows'] || undefined)}
     >
       ${slots}
     </swc-prompt-field>
   `;
 }
-
-argTypes.mode = {
-  ...argTypes.mode,
-  control: { type: 'select' },
-  options: ['default', 'loading', 'disabled'],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'default' },
-  },
-};
 
 /**
  * The prompt entry surface for conversational AI flows.
@@ -113,7 +106,6 @@ export const Playground: Story = {
     label: 'Prompt',
     placeholder: defaultPlaceholder,
     value: '',
-    mode: 'default',
   },
   tags: ['dev'],
 };
@@ -127,7 +119,6 @@ export const Overview: Story = {
     label: 'Prompt',
     placeholder: defaultPlaceholder,
     value: '',
-    mode: 'default',
   },
   tags: ['overview'],
 };
@@ -154,7 +145,7 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-export const Modes: Story = {
+export const Layout: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
@@ -162,42 +153,19 @@ export const Modes: Story = {
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
-          mode="default" with empty value
+          Expanded (default) — action bar with upload button on its own row
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
+          collapsed
           label="Prompt"
-          value="Summarize the API changes in this branch."
+          placeholder=${defaultPlaceholder}
         >
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
-          mode="default" with entered value
-        </span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          mode="loading"
-          label="Prompt"
-          value="Summarize the API changes in this branch."
-        >
-          ${legalDisclaimerSlot}
-        </swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">
-          mode="loading" (input remains editable)
-        </span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          mode="disabled"
-          label="Prompt"
-          value="This input is disabled."
-        >
-          ${legalDisclaimerSlot}
-        </swc-prompt-field>
-        <span class="swc-Detail swc-Detail--sizeS">
-          mode="disabled" (input and controls disabled)
+          collapsed — single-line row with the send button inline
         </span>
       </div>
     </div>
@@ -363,6 +331,57 @@ export const MultiArtifactScroll: Story = {
     </div>
   `,
   tags: ['options'],
+};
+
+// ──────────────────────────
+//    STATES STORIES
+// ──────────────────────────
+
+export const States: Story = {
+  render: () => html`
+    <div style="display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">Default, empty value</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          label="Prompt"
+          value="Summarize the API changes in this branch."
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">Default, entered value</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          generating
+          label="Prompt"
+          value="Summarize the API changes in this branch."
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          generating (input remains editable, send is replaced by stop)
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          disabled
+          label="Prompt"
+          value="This input is disabled."
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          disabled (input and controls disabled)
+        </span>
+      </div>
+    </div>
+  `,
+  tags: ['states'],
 };
 
 // ──────────────────────────
@@ -592,7 +611,6 @@ export const Accessibility: Story = {
     label: 'Prompt',
     placeholder: defaultPlaceholder,
     value: '',
-    mode: 'default',
   },
   tags: ['a11y'],
 };
