@@ -85,8 +85,8 @@ export class ResponseStatus extends SpectrumElement {
 
   /**
    * User-driven per-step disclosure overrides, keyed by step index. Present only
-   * for steps the user has toggled; absent entries fall back to the auto rule
-   * (open while `status="active"` or when the step declares `open`).
+   * for steps the user has toggled; absent entries fall back to the step's
+   * declared `open` (steps are collapsed by default).
    */
   @state()
   private _stepOpenOverrides = new Map<number, boolean>();
@@ -500,14 +500,14 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   // Resolved disclosure state for a step: a user override wins; otherwise the
-  // step auto-expands while it declares `open` or is the active step.
+  // step is open only when it declares `open`. Steps start collapsed.
   private _isStepOpen(step: ResponseStatusStepData, index: number): boolean {
     const override = this._stepOpenOverrides.get(index);
     if (override !== undefined) {
       return override;
     }
 
-    return step.open || step.status === 'active';
+    return step.open;
   }
 
   private _setsEqual(left: Set<number>, right: Set<number>): boolean {

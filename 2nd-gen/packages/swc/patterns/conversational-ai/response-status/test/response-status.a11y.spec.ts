@@ -74,7 +74,7 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
     );
   });
 
-  test('should expose per-step disclosures with the active step expanded', async ({
+  test('should expose per-step disclosures collapsed by default', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -83,13 +83,13 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
       'swc-response-status'
     );
     await waitForCustomElement(page, 'swc-response-status-step');
-    // Steps story order: complete, active, complete, stopped. Only the active
-    // step auto-expands; the header disclosure is excluded via [aria-label].
+    // Steps story order: complete, active, complete, stopped. Steps start
+    // collapsed by default; the header disclosure is excluded via [aria-label].
     const stepToggles = root.locator('button[aria-expanded]:not([aria-label])');
     await expect(stepToggles).toHaveCount(4, { timeout: 10000 });
     await expect(
       root.locator('button[aria-expanded="true"]:not([aria-label])')
-    ).toHaveCount(1);
+    ).toHaveCount(0);
   });
 
   test('should expose collapsed disclosure with slotted label', async ({

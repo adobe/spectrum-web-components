@@ -41,7 +41,7 @@ Each step uses:
 - **`status`**: `active`, `complete`, or `stopped`
 - **`slot="label"`**: step title
 - **`slot="description"`**: detail text shown in the expanded timeline; steps with a description get their own disclosure control
-- **`open`**: sets the step's initial disclosure state. An untouched step also auto-expands while its `status` is `active`, then collapses as it completes.
+- **`open`**: expands the step's description initially. Steps are collapsed by default; set `open` to expand a specific step.
 
 All provided steps render in their authored order.
 
@@ -64,7 +64,7 @@ status.addEventListener('swc-response-status-toggle', (event) => {
 
 ### Step disclosure
 
-Each step with a `slot="description"` renders its own disclosure control, so users can expand or collapse individual steps independently. The active step auto-expands and collapses again once it completes; users can override any step by toggling it directly.
+Each step with a `slot="description"` renders its own disclosure control, so users can expand or collapse individual steps independently. Steps are collapsed by default; set `open` on a step to expand it initially.
 
 `<swc-response-status>` emits **`swc-response-status-step-toggle`** when a user expands or collapses a step. The event **bubbles** and is **composed**. `event.detail` contains the next `open` state and the step `index`.
 

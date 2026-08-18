@@ -339,7 +339,7 @@ export const LongDescription: Story = {
           context.
         </span>
       </swc-response-status-step>
-      <swc-response-status-step status="active">
+      <swc-response-status-step status="active" open>
         <span slot="label">Reviewing internal documentation</span>
         <span slot="description">
           Prioritizing data from your documents like the ‘2023 Annual Report’

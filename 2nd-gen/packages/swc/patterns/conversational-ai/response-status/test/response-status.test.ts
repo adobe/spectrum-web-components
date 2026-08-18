@@ -341,21 +341,18 @@ export const StepDisclosureTest: Story = {
         ) ?? []
       );
 
-    await step(
-      'auto-expands the active step and collapses the rest',
-      async () => {
-        await waitFor(
-          () => {
-            const expanded = stepToggles().map((toggle) =>
-              toggle.getAttribute('aria-expanded')
-            );
-            // agenticMarkup order: complete, active, complete.
-            expect(expanded).toEqual(['false', 'true', 'false']);
-          },
-          { timeout: 2000 }
-        );
-      }
-    );
+    await step('keeps every step collapsed by default', async () => {
+      await waitFor(
+        () => {
+          const expanded = stepToggles().map((toggle) =>
+            toggle.getAttribute('aria-expanded')
+          );
+          // No step declares `open`, so all start collapsed.
+          expect(expanded).toEqual(['false', 'false', 'false']);
+        },
+        { timeout: 2000 }
+      );
+    });
 
     await step('each step toggle controls its own description', async () => {
       for (const toggle of stepToggles()) {
@@ -383,7 +380,7 @@ export const StepDisclosureTest: Story = {
       }
     );
 
-    await step('collapses the active step independently', async () => {
+    await step('toggles steps independently', async () => {
       let captured: CustomEvent<{ open: boolean; index: number }> | undefined;
       el.addEventListener('swc-response-status-step-toggle', (event) => {
         captured = event as CustomEvent<{ open: boolean; index: number }>;
@@ -392,12 +389,13 @@ export const StepDisclosureTest: Story = {
       stepToggles()[1]?.click();
       await el.updateComplete;
 
-      expect(captured?.detail).toEqual({ open: false, index: 1 });
-      // Other steps keep their own state; index 0 stays expanded from before.
+      expect(captured?.detail).toEqual({ open: true, index: 1 });
+      // Index 0 stays expanded from the previous step; toggling index 1 is
+      // independent.
       const expanded = stepToggles().map((toggle) =>
         toggle.getAttribute('aria-expanded')
       );
-      expect(expanded).toEqual(['true', 'false', 'false']);
+      expect(expanded).toEqual(['true', 'true', 'false']);
     });
   },
 };
