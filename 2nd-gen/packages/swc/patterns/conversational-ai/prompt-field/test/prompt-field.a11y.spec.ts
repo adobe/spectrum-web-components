@@ -24,7 +24,7 @@ import { gotoStory } from '../../../../utils/a11y-helpers.js';
  */
 
 test.describe('PromptField - ARIA Snapshots', () => {
-  test('should have correct accessibility tree for default prompt field', async ({
+  test('should have correct accessibility tree for default (expanded) prompt field', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -33,8 +33,25 @@ test.describe('PromptField - ARIA Snapshots', () => {
       'swc-prompt-field'
     );
     await expect(root).toMatchAriaSnapshot(`
+      - text: Prompt
       - textbox "Prompt"
       - button "Add attachment"
+      - button "Send" [disabled]
+    `);
+  });
+
+  test('should have correct accessibility tree for collapsed prompt field', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'patterns-conversational-ai-prompt-field--layout',
+      'swc-prompt-field'
+    );
+    const collapsedField = root.locator('swc-prompt-field').nth(1);
+    await expect(collapsedField).toMatchAriaSnapshot(`
+      - text: Prompt
+      - textbox "Prompt"
       - button "Send" [disabled]
     `);
   });

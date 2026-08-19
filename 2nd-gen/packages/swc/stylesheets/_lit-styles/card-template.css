@@ -136,6 +136,7 @@
 }
 
 ::slotted([slot="preview"]) {
+  box-sizing: border-box;
   display: block;
   grid-area: preview;
   inline-size: 100%;

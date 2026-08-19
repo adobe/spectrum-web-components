@@ -1,19 +1,24 @@
 ---
+name: migration-phase-awareness
 description: Keeps multi-phase migration obligations in context during a session. Emits Migration Checkpoint blocks at phase completion for cross-session continuity. Apply whenever any migration-* skill is active or migration files are being edited.
-alwaysApply: false
 ---
 
 # Migration phase awareness
 
 When working on any part of a 1st-gen to 2nd-gen component migration, maintain explicit awareness of which phase is active, which phases are complete, and what obligations remain — even when the conversation drifts to other topics.
 
-## When this rule applies
+## When to use this skill
 
 Apply any time:
 
 - A migration-\* skill has been invoked in the current session
 - You are editing files that are part of a 2nd-gen component migration
 - The user references a migration phase or a component being migrated
+
+## How to invoke
+
+- Active automatically for the duration of a session once any `migration-*` skill runs — no separate invocation needed
+- Say "check migration phase status" or "what's left for this migration" to surface it explicitly mid-session
 
 ## Before declaring a phase complete
 
@@ -22,7 +27,7 @@ Before ending a response that declares a migration phase complete, verify agains
 1. **Phase skill quality gate** — every checklist item in the active skill's quality gate section
 2. **Migration plan** — read `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` and verify that the work done in this phase matches what the plan specifies for it. If the plan is missing, note that as a risk. If the implementation drifted from the plan, call it out explicitly — do not silently accept drift.
 3. **Migration plan checklist** — update the plan's checklist for the current phase: mark every completed item `[x]`, fill in any "to be determined" values that were resolved, and leave incomplete items unchecked with a note. The checklist is the per-component record that this phase was done and what was produced — keep it current.
-4. **Consistency pass** — the checks described in `.ai/rules/consistency-pass.md` have been run on files changed in this phase, or are explicitly deferred and noted in the checkpoint
+4. **Consistency pass** — the checks described in `.ai/skills/consistency-pass/SKILL.md` have been run on files changed in this phase, or are explicitly deferred and noted in the checkpoint
 5. **Status table** — update `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/01_status.md` to reflect the completed phase for this component
 
 Do not silently skip incomplete items. If something cannot be completed, say so and record it in the checkpoint.
