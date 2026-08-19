@@ -40,12 +40,14 @@
 }
 
 .swc-UploadArtifact-dismiss {
-  /* 20px round gray circle rendered by swc-action-button. Width is content
-   * driven (icon + 2 * edge-to-text), squared against the min-block-size. */
+  /* 20px round gray circle rendered by swc-action-button. Icon-only, so the
+   * width comes from edge-to-visual-only; set it equal to the vertical inset so
+   * width matches min-block-size and the button stays square. */
   --swc-action-button-min-block-size: var(--swc-upload-artifact-dismiss-visual-size, 20px);
   --swc-action-button-icon-size: var(--swc-upload-artifact-dismiss-icon-inline-size, 8px);
   --swc-action-button-edge-to-text: calc((var(--swc-upload-artifact-dismiss-visual-size, 20px) - var(--swc-upload-artifact-dismiss-icon-inline-size, 8px)) / 2);
   --swc-action-button-edge-to-visual: var(--swc-action-button-edge-to-text);
+  --swc-action-button-edge-to-visual-only: var(--swc-action-button-edge-to-text);
   --swc-action-button-border-radius: token("corner-radius-full");
   --swc-action-button-background-color-default: token("gray-200");
   --swc-action-button-background-color-hover: token("gray-300");

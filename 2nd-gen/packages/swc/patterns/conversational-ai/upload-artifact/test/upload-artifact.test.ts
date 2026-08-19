@@ -53,10 +53,12 @@ export const OverviewTest: Story = {
         const dismissIcon = dismissButton?.querySelector(
           '.swc-UploadArtifact-dismiss-icon'
         );
-        expect(dismissButton?.getAttribute('aria-label')).toBe(
+        expect(dismissButton?.getAttribute('accessible-label')).toBe(
           'Remove Hilton commercial assets'
         );
-        expect(dismissButton?.tabIndex).toBe(0);
+        // swc-action-button delegates focus to its internal button, so the host
+        // itself is tabindex -1 while remaining keyboard-reachable.
+        expect(dismissButton?.shadowRoot?.delegatesFocus).toBe(true);
         expect(dismissIcon?.getAttribute('aria-hidden')).toBe('true');
       }
     );
@@ -90,7 +92,9 @@ export const DismissEventTest: Story = {
         const dismissButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
           '.swc-UploadArtifact-dismiss'
         );
-        expect(dismissButton?.getAttribute('aria-label')).toBe('Delete file');
+        expect(dismissButton?.getAttribute('accessible-label')).toBe(
+          'Delete file'
+        );
         dismissButton?.click();
 
         expect(detail?.artifact).toBe(el);
@@ -137,7 +141,7 @@ export const DismissSizeOverrideTest: Story = {
   render: () => html`
     <swc-upload-artifact
       dismissible
-      style="--swc-upload-artifact-dismiss-inline-size: 40px; --swc-upload-artifact-dismiss-block-size: 36px;"
+      style="--swc-upload-artifact-dismiss-visual-size: 40px;"
     >
       Hilton commercial assets
     </swc-upload-artifact>
@@ -148,16 +152,21 @@ export const DismissSizeOverrideTest: Story = {
       'swc-upload-artifact'
     );
 
-    await step('consumer dismiss-size overrides are preserved', async () => {
-      const dismissButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
-        '.swc-UploadArtifact-dismiss'
-      );
-      const dismissButtonStyle =
-        dismissButton && getComputedStyle(dismissButton);
+    await step(
+      'dismiss-visual-size scales the button as a square',
+      async () => {
+        const dismissButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
+          '.swc-UploadArtifact-dismiss'
+        );
+        const dismissButtonStyle =
+          dismissButton && getComputedStyle(dismissButton);
 
-      expect(dismissButtonStyle?.inlineSize).toBe('40px');
-      expect(dismissButtonStyle?.blockSize).toBe('36px');
-    });
+        // The dismiss button is a round icon button, so the single visual-size
+        // custom property drives both dimensions.
+        expect(dismissButtonStyle?.inlineSize).toBe('40px');
+        expect(dismissButtonStyle?.blockSize).toBe('40px');
+      }
+    );
   },
 };
 
