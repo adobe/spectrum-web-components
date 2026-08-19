@@ -515,7 +515,9 @@
   justify-content: center;
   inline-size: token("workflow-icon-medium");
   block-size: token("workflow-icon-medium");
-  color: token("gray-700");
+
+  /* Match the upload button's static content color: black on light cards, white on dark. */
+  color: light-dark(token("transparent-black-800"), token("transparent-white-800"));
 }
 
 /* ─────────────────────────────────────
@@ -799,14 +801,13 @@
   overflow: clip;
 }
 
-/* Upload stays quiet; interactive states use the auto-contrast tint. */
+/* Upload stays quiet; static content/hover colors flip with the themed card. */
 .swc-PromptField-upload {
-  /* calc((0.5 - l) * infinity) snaps lightness to 0 or 1: black on light cards, white on dark. */
-  --swc-action-button-background-color-hover: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 14%);
-  --swc-action-button-background-color-focus: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 14%);
-  --swc-action-button-background-color-down: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 14%);
-  --swc-action-button-content-color-default: token("gray-800");
-  --swc-action-button-content-color-hover: token("gray-800");
+  --swc-action-button-content-color-default: light-dark(token("transparent-black-800"), token("transparent-white-800"));
+  --swc-action-button-content-color-hover: light-dark(token("transparent-black-900"), token("transparent-white-900"));
+  --swc-action-button-background-color-hover: light-dark(token("transparent-black-200"), token("transparent-white-200"));
+  --swc-action-button-background-color-focus: light-dark(token("transparent-black-200"), token("transparent-white-200"));
+  --swc-action-button-background-color-down: light-dark(token("transparent-black-200"), token("transparent-white-200"));
 }
 
 /* Send/stop anchored to .controls's own bottom-right, so they re-align as
