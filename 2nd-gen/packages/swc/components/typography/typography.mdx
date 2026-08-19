@@ -96,69 +96,83 @@ Link lists in footers, sidebars, and navigation regions use `.swc-Typography--li
 
 Each type variant exposes the same set of `--swc-*` custom properties for font and margin overrides. Code's properties use the `--swc-monospace-*` prefix.
 
+Heading, Title, and Body also expose `--swc-*-cjk-font-size`, `--swc-*-cjk-line-height`, and `--swc-*-cjk-letter-spacing`, which override the corresponding base property under `:lang(zh)`, `:lang(ja)`, and `:lang(ko)`. Detail exposes only the CJK line-height/letter-spacing overrides, and Code exposes only the CJK line-height override.
+
 #### Heading
 
-| Property                       | Description        |
-| ------------------------------ | ------------------ |
-| `--swc-heading-font-family`    | Font family        |
-| `--swc-heading-font-size`      | Font size          |
-| `--swc-heading-font-weight`    | Font weight        |
-| `--swc-heading-line-height`    | Line height        |
-| `--swc-heading-font-color`     | Text color         |
-| `--swc-heading-letter-spacing` | Letter spacing     |
-| `--swc-heading-margin-top`     | Block-start margin |
-| `--swc-heading-margin-bottom`  | Block-end margin   |
+| Property                           | Description                        |
+| ---------------------------------- | ---------------------------------- |
+| `--swc-heading-font-family`        | Font family                        |
+| `--swc-heading-font-size`          | Font size                          |
+| `--swc-heading-font-weight`        | Font weight                        |
+| `--swc-heading-line-height`        | Line height                        |
+| `--swc-heading-font-color`         | Text color                         |
+| `--swc-heading-letter-spacing`     | Letter spacing                     |
+| `--swc-heading-margin-top`         | Block-start margin                 |
+| `--swc-heading-margin-bottom`      | Block-end margin                   |
+| `--swc-heading-cjk-font-size`      | Font size under CJK `:lang()`      |
+| `--swc-heading-cjk-line-height`    | Line height under CJK `:lang()`    |
+| `--swc-heading-cjk-letter-spacing` | Letter spacing under CJK `:lang()` |
 
 #### Title
 
-| Property                     | Description        |
-| ---------------------------- | ------------------ |
-| `--swc-title-font-family`    | Font family        |
-| `--swc-title-font-size`      | Font size          |
-| `--swc-title-font-weight`    | Font weight        |
-| `--swc-title-line-height`    | Line height        |
-| `--swc-title-font-color`     | Text color         |
-| `--swc-title-letter-spacing` | Letter spacing     |
-| `--swc-title-margin-top`     | Block-start margin |
-| `--swc-title-margin-bottom`  | Block-end margin   |
+| Property                         | Description                        |
+| -------------------------------- | ---------------------------------- |
+| `--swc-title-font-family`        | Font family                        |
+| `--swc-title-font-size`          | Font size                          |
+| `--swc-title-font-weight`        | Font weight                        |
+| `--swc-title-line-height`        | Line height                        |
+| `--swc-title-font-color`         | Text color                         |
+| `--swc-title-letter-spacing`     | Letter spacing                     |
+| `--swc-title-margin-top`         | Block-start margin                 |
+| `--swc-title-margin-bottom`      | Block-end margin                   |
+| `--swc-title-cjk-font-size`      | Font size under CJK `:lang()`      |
+| `--swc-title-cjk-line-height`    | Line height under CJK `:lang()`    |
+| `--swc-title-cjk-letter-spacing` | Letter spacing under CJK `:lang()` |
 
 #### Body
 
-| Property                    | Description        |
-| --------------------------- | ------------------ |
-| `--swc-body-font-family`    | Font family        |
-| `--swc-body-font-size`      | Font size          |
-| `--swc-body-font-weight`    | Font weight        |
-| `--swc-body-line-height`    | Line height        |
-| `--swc-body-font-color`     | Text color         |
-| `--swc-body-letter-spacing` | Letter spacing     |
-| `--swc-body-margin-top`     | Block-start margin |
-| `--swc-body-margin-bottom`  | Block-end margin   |
+| Property                        | Description                        |
+| ------------------------------- | ---------------------------------- |
+| `--swc-body-font-family`        | Font family                        |
+| `--swc-body-font-size`          | Font size                          |
+| `--swc-body-font-weight`        | Font weight                        |
+| `--swc-body-line-height`        | Line height                        |
+| `--swc-body-font-color`         | Text color                         |
+| `--swc-body-letter-spacing`     | Letter spacing                     |
+| `--swc-body-margin-top`         | Block-start margin                 |
+| `--swc-body-margin-bottom`      | Block-end margin                   |
+| `--swc-body-cjk-font-size`      | Font size under CJK `:lang()`      |
+| `--swc-body-cjk-line-height`    | Line height under CJK `:lang()`    |
+| `--swc-body-cjk-letter-spacing` | Letter spacing under CJK `:lang()` |
 
 #### Detail
 
-| Property                      | Description        |
-| ----------------------------- | ------------------ |
-| `--swc-detail-font-family`    | Font family        |
-| `--swc-detail-font-size`      | Font size          |
-| `--swc-detail-font-weight`    | Font weight        |
-| `--swc-detail-line-height`    | Line height        |
-| `--swc-detail-font-color`     | Text color         |
-| `--swc-detail-letter-spacing` | Letter spacing     |
-| `--swc-detail-margin-top`     | Block-start margin |
-| `--swc-detail-margin-bottom`  | Block-end margin   |
+| Property                          | Description                        |
+| --------------------------------- | ---------------------------------- |
+| `--swc-detail-font-family`        | Font family                        |
+| `--swc-detail-font-size`          | Font size                          |
+| `--swc-detail-font-weight`        | Font weight                        |
+| `--swc-detail-line-height`        | Line height                        |
+| `--swc-detail-font-color`         | Text color                         |
+| `--swc-detail-letter-spacing`     | Letter spacing                     |
+| `--swc-detail-margin-top`         | Block-start margin                 |
+| `--swc-detail-margin-bottom`      | Block-end margin                   |
+| `--swc-detail-cjk-line-height`    | Line height under CJK `:lang()`    |
+| `--swc-detail-cjk-letter-spacing` | Letter spacing under CJK `:lang()` |
 
 #### Code
 
-| Property                         | Description        |
-| -------------------------------- | ------------------ |
-| `--swc-monospace-font-family`    | Font family        |
-| `--swc-monospace-font-size`      | Font size          |
-| `--swc-monospace-font-weight`    | Font weight        |
-| `--swc-monospace-line-height`    | Line height        |
-| `--swc-monospace-font-color`     | Text color         |
-| `--swc-monospace-letter-spacing` | Letter spacing     |
-| `--swc-monospace-margin-top`     | Block-start margin |
-| `--swc-monospace-margin-bottom`  | Block-end margin   |
+| Property                          | Description                     |
+| --------------------------------- | ------------------------------- |
+| `--swc-monospace-font-family`     | Font family                     |
+| `--swc-monospace-font-size`       | Font size                       |
+| `--swc-monospace-font-weight`     | Font weight                     |
+| `--swc-monospace-line-height`     | Line height                     |
+| `--swc-monospace-font-color`      | Text color                      |
+| `--swc-monospace-letter-spacing`  | Letter spacing                  |
+| `--swc-monospace-margin-top`      | Block-start margin              |
+| `--swc-monospace-margin-bottom`   | Block-end margin                |
+| `--swc-monospace-cjk-line-height` | Line height under CJK `:lang()` |
 
 <DocsFooter />

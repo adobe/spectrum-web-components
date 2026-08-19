@@ -38,17 +38,20 @@ export default meta;
 // has nothing to check cases against. DOCUMENTED_TYPOGRAPHY_PROPERTIES is
 // the manual equivalent: it must stay in sync with the "CSS custom
 // properties" table in typography.mdx, and
-// verifyTypographyCustomPropertyCoverage() below fails if a case is missing,
-// duplicated, or covers a property that isn't in this list - the same
-// safety net link-custom-properties.vrt.ts gets from DOCUMENTED_LINK_PROPERTIES,
+// verifyTypographyCustomPropertyCoverage() below fails if a case is
+// missing, duplicated, or undocumented - the same safety net
+// link-custom-properties.vrt.ts gets from DOCUMENTED_LINK_PROPERTIES,
 // minus the manifest.
 //
-// Scope: Heading/Title/Body/Detail also expose margin-top/bottom multiplier
-// variables (Code has no `--margins` modifier) and CJK-specific font-size/
-// line-height/letter-spacing overrides, but those are internal plumbing
-// feeding the "real" property (e.g. `--swc-heading-margin-top` is the actual
-// override point; the multiplier just computes its default) - intentionally
-// excluded from the tested surface.
+// Scope: Heading/Title/Body/Detail also expose margin-top/bottom
+// multiplier variables (Code has no `--margins` modifier), which compute
+// the *default* for `--swc-*-margin-top`/`-bottom` (e.g.
+// `--swc-heading-margin-top-multiplier` times font-size). They're internal
+// plumbing, not a property a consumer sets directly, so they're excluded
+// from the tested surface. CJK font-size/line-height/letter-spacing
+// overrides (`--swc-*-cjk-*`) are different: real, independently settable
+// override points, just scoped to `:lang(zh|ja|ko)` rather than always
+// active, so they're covered below alongside their base properties.
 
 // Every variant shares the same eight-property shape (font-family, font-size,
 // font-weight, line-height, font-color, letter-spacing, margin-top,
@@ -80,6 +83,9 @@ const casesFor = (prefix: string): readonly CustomPropertyCase[] =>
 // to match coveredCustomProperties()'s own sort), so an addition or removal
 // on either side trips verifyTypographyCustomPropertyCoverage() below.
 const DOCUMENTED_TYPOGRAPHY_PROPERTIES = [
+  '--swc-body-cjk-font-size',
+  '--swc-body-cjk-letter-spacing',
+  '--swc-body-cjk-line-height',
   '--swc-body-font-color',
   '--swc-body-font-family',
   '--swc-body-font-size',
@@ -88,6 +94,8 @@ const DOCUMENTED_TYPOGRAPHY_PROPERTIES = [
   '--swc-body-line-height',
   '--swc-body-margin-bottom',
   '--swc-body-margin-top',
+  '--swc-detail-cjk-letter-spacing',
+  '--swc-detail-cjk-line-height',
   '--swc-detail-font-color',
   '--swc-detail-font-family',
   '--swc-detail-font-size',
@@ -96,6 +104,9 @@ const DOCUMENTED_TYPOGRAPHY_PROPERTIES = [
   '--swc-detail-line-height',
   '--swc-detail-margin-bottom',
   '--swc-detail-margin-top',
+  '--swc-heading-cjk-font-size',
+  '--swc-heading-cjk-letter-spacing',
+  '--swc-heading-cjk-line-height',
   '--swc-heading-font-color',
   '--swc-heading-font-family',
   '--swc-heading-font-size',
@@ -104,6 +115,7 @@ const DOCUMENTED_TYPOGRAPHY_PROPERTIES = [
   '--swc-heading-line-height',
   '--swc-heading-margin-bottom',
   '--swc-heading-margin-top',
+  '--swc-monospace-cjk-line-height',
   '--swc-monospace-font-color',
   '--swc-monospace-font-family',
   '--swc-monospace-font-size',
@@ -112,6 +124,9 @@ const DOCUMENTED_TYPOGRAPHY_PROPERTIES = [
   '--swc-monospace-line-height',
   '--swc-monospace-margin-bottom',
   '--swc-monospace-margin-top',
+  '--swc-title-cjk-font-size',
+  '--swc-title-cjk-letter-spacing',
+  '--swc-title-cjk-line-height',
   '--swc-title-font-color',
   '--swc-title-font-family',
   '--swc-title-font-size',
@@ -127,6 +142,47 @@ const TITLE_PROPERTY_CASES = casesFor('title');
 const BODY_PROPERTY_CASES = casesFor('body');
 const DETAIL_PROPERTY_CASES = casesFor('detail');
 const CODE_PROPERTY_CASES = casesFor('monospace');
+
+// Mirrors CORE_PROPERTY_SUFFIXES for the `--swc-*-cjk-*` override points
+// (see the top-of-file note on why they're tested separately). Values
+// differ from CORE_PROPERTY_SUFFIXES so a case rendered without its `lang`
+// attribute would still look wrong, rather than accidentally matching the
+// core override.
+const CJK_PROPERTY_SUFFIXES = [
+  { suffix: 'cjk-font-size', value: '48px' },
+  { suffix: 'cjk-line-height', value: '4' },
+  { suffix: 'cjk-letter-spacing', value: '0.5em' },
+] as const;
+
+type CjkSuffix = (typeof CJK_PROPERTY_SUFFIXES)[number]['suffix'];
+
+const cjkCasesFor = (
+  prefix: string,
+  suffixes: readonly CjkSuffix[]
+): readonly CustomPropertyCase[] =>
+  CJK_PROPERTY_SUFFIXES.filter(({ suffix }) => suffixes.includes(suffix)).map(
+    ({ suffix, value }) => ({
+      property: `--swc-${prefix}-${suffix}`,
+      value,
+    })
+  );
+
+const ALL_CJK_SUFFIXES: readonly CjkSuffix[] = [
+  'cjk-font-size',
+  'cjk-line-height',
+  'cjk-letter-spacing',
+];
+
+// Detail overrides only line-height/letter-spacing under :lang(); Code
+// (monospace) overrides only line-height. See typography.css.
+const HEADING_CJK_PROPERTY_CASES = cjkCasesFor('heading', ALL_CJK_SUFFIXES);
+const TITLE_CJK_PROPERTY_CASES = cjkCasesFor('title', ALL_CJK_SUFFIXES);
+const BODY_CJK_PROPERTY_CASES = cjkCasesFor('body', ALL_CJK_SUFFIXES);
+const DETAIL_CJK_PROPERTY_CASES = cjkCasesFor('detail', [
+  'cjk-line-height',
+  'cjk-letter-spacing',
+]);
+const CODE_CJK_PROPERTY_CASES = cjkCasesFor('monospace', ['cjk-line-height']);
 
 // A fixed narrow width on every sample (reference and override alike) so
 // `line-height`'s effect is visible: at the default single-line sample
@@ -163,6 +219,44 @@ const renderCodeCase = (_case: CustomPropertyCase, style?: string) => html`
   </code>
 `;
 
+// `lang="ja"` activates the `:lang(zh|ja|ko)` scope so the cjk-* override
+// actually resolves; without it, e.g. `--swc-heading-cjk-line-height`
+// would have no visible effect. Heading/Title/Body text reuses
+// typography.vrt.ts's CJK content; Detail/Code have no counterpart there,
+// so this adds representative copy for those two.
+const renderHeadingCjkCase = (
+  _case: CustomPropertyCase,
+  style?: string
+) => html`
+  <h2 class="swc-Heading" lang="ja" style="${SAMPLE_WIDTH} ${style ?? ''}">
+    承認ワークフローを開始
+  </h2>
+`;
+
+const renderTitleCjkCase = (_case: CustomPropertyCase, style?: string) => html`
+  <h3 class="swc-Title" lang="ja" style="${SAMPLE_WIDTH} ${style ?? ''}">
+    仕様
+  </h3>
+`;
+
+const renderBodyCjkCase = (_case: CustomPropertyCase, style?: string) => html`
+  <p class="swc-Body" lang="ja" style="${SAMPLE_WIDTH} ${style ?? ''}">
+    アップロードまたはインポートしてください。
+  </p>
+`;
+
+const renderDetailCjkCase = (_case: CustomPropertyCase, style?: string) => html`
+  <p class="swc-Detail" lang="ja" style="${SAMPLE_WIDTH} ${style ?? ''}">
+    補足情報
+  </p>
+`;
+
+const renderCodeCjkCase = (_case: CustomPropertyCase, style?: string) => html`
+  <code class="swc-Code" lang="ja" style="${SAMPLE_WIDTH} ${style ?? ''}">
+    console.log('Hello world');
+  </code>
+`;
+
 // A plain heading, not `row()`: `customPropertyRows()` already returns one
 // fully-built `row()` per property, so wrapping that array in another
 // `row()` would flex-wrap those pre-built blocks together instead of
@@ -176,22 +270,37 @@ const sectionHeading = (label: string) => html`
 const customPropertiesContent = () => html`
   ${sectionHeading('Heading')}
   ${customPropertyRows(HEADING_PROPERTY_CASES, renderHeadingCase)}
+  ${sectionHeading('Heading · CJK')}
+  ${customPropertyRows(HEADING_CJK_PROPERTY_CASES, renderHeadingCjkCase)}
   ${sectionHeading('Title')}
   ${customPropertyRows(TITLE_PROPERTY_CASES, renderTitleCase)}
+  ${sectionHeading('Title · CJK')}
+  ${customPropertyRows(TITLE_CJK_PROPERTY_CASES, renderTitleCjkCase)}
   ${sectionHeading('Body')}
   ${customPropertyRows(BODY_PROPERTY_CASES, renderBodyCase)}
+  ${sectionHeading('Body · CJK')}
+  ${customPropertyRows(BODY_CJK_PROPERTY_CASES, renderBodyCjkCase)}
   ${sectionHeading('Detail')}
   ${customPropertyRows(DETAIL_PROPERTY_CASES, renderDetailCase)}
+  ${sectionHeading('Detail · CJK')}
+  ${customPropertyRows(DETAIL_CJK_PROPERTY_CASES, renderDetailCjkCase)}
   ${sectionHeading('Code')}
   ${customPropertyRows(CODE_PROPERTY_CASES, renderCodeCase)}
+  ${sectionHeading('Code · CJK')}
+  ${customPropertyRows(CODE_CJK_PROPERTY_CASES, renderCodeCjkCase)}
 `;
 
 const coveredTypographyProperties = coveredCustomProperties([
   ...HEADING_PROPERTY_CASES,
+  ...HEADING_CJK_PROPERTY_CASES,
   ...TITLE_PROPERTY_CASES,
+  ...TITLE_CJK_PROPERTY_CASES,
   ...BODY_PROPERTY_CASES,
+  ...BODY_CJK_PROPERTY_CASES,
   ...DETAIL_PROPERTY_CASES,
+  ...DETAIL_CJK_PROPERTY_CASES,
   ...CODE_PROPERTY_CASES,
+  ...CODE_CJK_PROPERTY_CASES,
 ]);
 
 // Manual stand-in for verifyCustomPropertyCoverage(): no duplicate cases
