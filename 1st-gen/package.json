@@ -28,7 +28,7 @@
     "build:ts:watch": "wireit",
     "build:types": "wireit",
     "build:watch": "wireit",
-    "changelog:global": "node ./scripts/update-global-changelog.js",
+    "changelog:1st-gen": "node ./scripts/update-changelog.js",
     "chromatic": "chromatic --build-script-name storybook:build # note that --project-token must be set in your env variables",
     "create-git-tag": "node --no-warnings ./scripts/create-git-tag.js",
     "custom-element-json": "node ./scripts/custom-element-json.js",

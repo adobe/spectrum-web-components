@@ -69,7 +69,7 @@ commands:
             # Paths that never affect either gen's tests: contributor docs, AI
             # rules/skills, changeset files, linter config, scripts, root-level
             # markdown files, and the license file.
-            DOCS_PATTERN="^(CONTRIBUTOR-DOCS/|\.ai/|\.changeset/|linters/|scripts/|[^/]+\.md$|LICENSE$)"
+            DOCS_PATTERN="^(CONTRIBUTOR-DOCS/|\.ai/|(1st-gen|2nd-gen)/\.changeset/|linters/|scripts/|[^/]+\.md$|LICENSE$)"
 
             # Strip other-gen files and docs-only files; what remains is relevant.
             RELEVANT=$(echo "$CHANGED" | grep -v "^${EXCLUDE}" | grep -vE "${DOCS_PATTERN}" || true)
