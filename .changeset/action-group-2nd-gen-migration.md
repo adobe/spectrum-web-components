@@ -1,6 +1,6 @@
 ---
 '@adobe/spectrum-wc': minor
-'@spectrum-web-components/core': minor
+'@adobe/spectrum-wc-core': minor
 '@spectrum-web-components/action-group': patch
 ---
 
