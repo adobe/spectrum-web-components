@@ -51,6 +51,8 @@ function renderPromptField(
       placeholder=${storyArgs.placeholder ?? defaultPlaceholder}
       .value=${storyArgs.value ?? ''}
       variant=${storyArgs.variant ?? 'balanced'}
+      icon=${storyArgs.icon ?? 'aiLogo'}
+      preset=${ifDefined(storyArgs.preset || undefined)}
       ?disabled=${storyArgs.disabled ?? false}
       ?generating=${storyArgs.generating ?? false}
       ?collapsed=${storyArgs.collapsed ?? false}
