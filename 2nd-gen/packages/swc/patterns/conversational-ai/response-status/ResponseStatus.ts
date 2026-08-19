@@ -743,14 +743,16 @@ export class ResponseStatus extends SpectrumElement {
             ? 'swc-ResponseStatus-step-detailPanel--open'
             : ''}"
         >
-          <div
-            class="swc-ResponseStatus-step-detailScroll"
-            data-step-index=${index}
-            tabindex=${ifDefined(
-              this._overflowingSteps.has(index) ? '0' : undefined
-            )}
-          >
-            ${this._renderStepDetail(step.description)}
+          <div class="swc-ResponseStatus-step-detailClip">
+            <div
+              class="swc-ResponseStatus-step-detailScroll"
+              data-step-index=${index}
+              tabindex=${ifDefined(
+                this._overflowingSteps.has(index) ? '0' : undefined
+              )}
+            >
+              ${this._renderStepDetail(step.description)}
+            </div>
           </div>
         </div>
       </div>

@@ -209,29 +209,41 @@
   flex-shrink: 0;
 }
 
-/* Shared collapse mechanics for the header panel and per-step detail panels */
+/* Shared collapse mechanics for the header panel and per-step detail panels.
+   Animates `grid-template-rows` between 0fr and 1fr rather than `block-size`
+   to/from `auto`: the block-size + `interpolate-size` approach only works in
+   Chromium, so Safari and Firefox leave (and ratchet) residual height.
+
+   Overflow and min-block-size live on the grid item, not this container:
+   0fr only collapses to 0 on the item. Safari also ratchets leftover height
+   when the container clips, or when the item itself is a scroll region. */
 .swc-ResponseStatus-panel,
 .swc-ResponseStatus-step-detailPanel {
-  interpolate-size: allow-keywords;
-  display: block;
+  display: grid;
   visibility: hidden;
-  block-size: 0;
-  overflow: hidden;
+  grid-template-rows: 0fr;
   transition:
-    block-size token("animation-duration-200") token("animation-ease-in-out"),
+    grid-template-rows token("animation-duration-200") token("animation-ease-in-out"),
     visibility token("animation-duration-200") linear;
 }
 
 .swc-ResponseStatus-panel--open,
 .swc-ResponseStatus-step-detailPanel--open {
   visibility: visible;
-  block-size: auto;
+  grid-template-rows: 1fr;
+}
+
+/* Clip wrapper / panel child: overflow:hidden here is what lets 0fr become a
+   true zero. The description scroller stays nested so it is not the grid item. */
+.swc-ResponseStatus-panel > *,
+.swc-ResponseStatus-step-detailClip {
+  min-block-size: 0;
+  overflow: hidden;
 }
 
 .swc-ResponseStatus-steps {
   padding-inline: token("spacing-100");
   margin: 0;
-  overflow: visible;
   list-style: none;
 }
 
@@ -260,15 +272,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  block-size: 100%;
-  min-block-size: 100%;
+
+  /* Stretch with the step row (align-items). Percentage block-size is cyclic
+     in Safari: min-block-size: 100% holds the previous row height after a
+     step collapses, so the body appears to grow on each open/close. */
   overflow: visible;
 }
 
 /* Extend rail (and line) through the gap before the next step icon */
 .swc-ResponseStatus-step:not(:last-child) .swc-ResponseStatus-step-rail {
   box-sizing: content-box;
-  padding-block-end: token("spacing-200");
 }
 
 .swc-ResponseStatus-step-icon {
@@ -302,6 +315,9 @@
 }
 
 .swc-ResponseStatus-step-body {
+  /* Size to content, not the stretched rail. Safari otherwise copies leftover
+     rail height back into the body after a disclosure closes. */
+  align-self: start;
   min-inline-size: 0;
 }
 
