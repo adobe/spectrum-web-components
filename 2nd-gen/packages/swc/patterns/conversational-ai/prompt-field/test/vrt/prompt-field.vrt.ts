@@ -260,8 +260,7 @@ const forceButtonStates = async ({
         '.swc-PromptField-artifacts-scroll-next'
       );
       // Each button is an swc-action-button that styles its own hover/focus on
-      // the internal .swc-ActionButton, so force the state there rather than on
-      // the prompt-field host (whose CSS no longer has button state rules).
+      // its internal .swc-ActionButton, so force the state on that element.
       for (const selector of BUTTON_SELECTORS) {
         const button = field.shadowRoot?.querySelector<HTMLElement>(selector);
         if (button) {

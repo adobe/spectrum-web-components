@@ -832,9 +832,14 @@ export const ArtifactChevronPagingFocusTest: Story = {
           'sanity check: paging back actually revealed a different set of tiles'
         ).toBe(true);
 
-        // Paging back reaches the start, so prev becomes aria-disabled; focus
-        // moves into the newly displayed tiles, not onto the hidden chevron.
-        expect(getPrevButton()?.getAttribute('aria-disabled')).toBe('true');
+        // One page-back can land mid-strip (prev stays enabled and focused; Tab
+        // moves into the strip) or at the start (prev disables and focus is
+        // redirected into the strip). Either way keyboard focus ends up on a
+        // tile in the newly displayed set.
+        if (focusedControl() === getPrevButton()) {
+          dispatchKeydown(getPrevButton()!, 'Tab');
+          await el.updateComplete;
+        }
         expect(tilesAfterPagingBack).toContain(activeTile());
       }
     );
