@@ -517,8 +517,10 @@
   align-items: center;
   align-self: start;
   justify-content: center;
-  inline-size: token("workflow-icon-medium");
-  block-size: token("workflow-icon-medium");
+
+  /* 24px so the loader's center lines up with the upload button's icon below. */
+  inline-size: token("spacing-400");
+  block-size: token("spacing-400");
 
   /* Match the upload button's static content color: black on light cards, white on dark. */
   color: light-dark(token("transparent-black-800"), token("transparent-white-800"));
@@ -526,7 +528,12 @@
 
 .swc-PromptField-status-icon swc-pixel-loader {
   /* Fill the status slot; the loader's default is 56px. Color inherits via its currentcolor default. */
-  --swc-pixel-loader-size: token("workflow-icon-medium");
+  --swc-pixel-loader-size: token("spacing-400");
+}
+
+/* Collapsed is a fixed-height single-line row, so center the loader in it; expanded top-aligns it with the first line. */
+:host([collapsed]) .swc-PromptField-status-icon {
+  align-self: center;
 }
 
 /* ─────────────────────────────────────
