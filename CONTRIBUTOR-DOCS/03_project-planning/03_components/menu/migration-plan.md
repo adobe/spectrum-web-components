@@ -377,7 +377,7 @@ This pass ships a simple menu: trigger, `role="menu"` list, plain items (label +
 
 | # | What changes | 1st-gen → 2nd-gen |
 | --- | --- | --- |
-| **B2** | Link items | Proxy `change` on `href` items removed; real `<a>` is the only activation path ([SWC-923](https://jira.corp.adobe.com/browse/SWC-923)) |
+| **B2** | Link items | Proxy `change` on `href` items removed; real `<a>` is the only activation path ([SWC-923](https://jira.corp.adobe.com/browse/SWC-923)). Styling a consumer-slotted `<a>` to match `swc-menu-item`'s row treatment (hover, full-row hit target, focus ring, icon alignment) is a real risk this plan doesn't own the fix for — see [Q17](#blockers-and-open-questions). |
 | **B4** | Keyboard controller | `RovingTabindexController` → `FocusgroupNavigationController` (already shipped, used by `Tabs`) |
 | **B5** | CSS custom properties | `--mod-*` removed; `--swc-*` only where needed |
 | **B6** | `role="menu"` | Moves from the host element into shadow DOM |
@@ -392,6 +392,7 @@ This pass ships a simple menu: trigger, `role="menu"` list, plain items (label +
 | --- | --- | --- |
 | **A1** | `xl` size | Figma adds `xl` to 1st-gen's `s`/`m`/`l` |
 | **A4** | Image as an alternative to icon | One or the other, not both; no 1st-gen equivalent |
+| **A9** | Dedicated `icon` slot / `label-only` trigger variant | Deferred pending a concrete need — the `label` slot ([Q16](#blockers-and-open-questions)) can already hold an icon and text together for Phase A, matching 1st-gen `sp-action-menu`'s richer `icon`/`label`/`label-only` split only if that need actually materializes |
 
 ### Deferred to later phases
 
@@ -440,7 +441,7 @@ These are derived from the 1st-gen implementation, the accessibility migration a
 
 | Property | Type | Default | Attribute | Notes |
 | --- | --- | --- | --- | --- |
-| `label` | `string` | `''` | `label` | **Inferred** carry-forward from 1st-gen; accessible name for the trigger. |
+| `label` | `string` | `''` | `label` | **Decided** ([Q16](#blockers-and-open-questions)) — carried forward from 1st-gen, but its role changes now that `swc-menu` owns a trigger: it's the fallback text rendered inside the new `label` slot (see Slots (2nd-gen), below) when no light-DOM content is slotted, and it contributes to the trigger's accessible name whenever no `aria-label`/`aria-labelledby` is present. Same dual role 1st-gen `sp-action-menu`'s `label` property already plays alongside its own `label` slot ([`ActionMenu.ts`](../../../../1st-gen/packages/action-menu/src/ActionMenu.ts)). |
 | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | `size` | **Open question** on default (1st-gen has no default); `xl` addition is **Inferred** from Figma ([A1](#additive)). |
 | `open` | `boolean` | `false` | `open` | **Inferred**, matching the menu-button pattern's open/close state, parallel to `swc-action-menu`. |
 | `disabled` | `boolean` | `false` | `disabled` | **Inferred** carry-forward for the trigger. |
@@ -467,6 +468,7 @@ Additional Figma-confirmed presentation modes for `swc-menu-item` (documented he
 
 | Slot | Content | Notes |
 | --- | --- | --- |
+| `label` | Visible trigger content: text, an icon, or both, at the consumer's discretion. Defaults to rendering the `label` property as text when no light-DOM content is slotted. | **Decided** ([Q16](#blockers-and-open-questions)) — new slot; 1st-gen `sp-menu` had no built-in trigger to put content on, so there's no direct 1st-gen equivalent. Matches [1st-gen `sp-action-menu`'s `label` slot](../../../../1st-gen/packages/action-menu/src/ActionMenu.ts) precedent for a trigger-owning menu-family component. A separate `icon`/`label-only` split ([A9](#additive)) is deferred — no proven Phase A need; a single `label` slot can already hold an icon and text together. |
 | default | End state: `swc-menu-item`, `swc-menu-group`, and `swc-divider` (as a separator, [Q14](#blockers-and-open-questions)). **This pass (Phase A): `swc-menu-item` only** — no group, no divider, see [Implementation phasing](#implementation-phasing). | **Confirmed** per a11y analysis for item/group; verify enforcement in 2nd-gen source once implemented. |
 
 #### Events (2nd-gen)
@@ -531,7 +533,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 Planned rendering shape:
 
 - Core owns API normalization, open/close state, `PlacementController` integration, and warnings (e.g. warning if a disallowed child type is slotted).
-- SWC renders: the trigger, the `PlacementController`-positioned surface, and the shadow-internal `role="menu"` list container — the surface is menu-owned markup carrying `role="menu"` directly, not a wrapped `<swc-popover>`. SWC composes `swc-menu-item`/`swc-menu-group`/`swc-divider` but does not implement `swc-menu-item`/`swc-menu-group`'s internals.
+- SWC renders: the trigger (its visible content coming from the `label` slot, [Q16](#blockers-and-open-questions)), the `PlacementController`-positioned surface, and the shadow-internal `role="menu"` list container — the surface is menu-owned markup carrying `role="menu"` directly, not a wrapped `<swc-popover>`. SWC composes `swc-menu-item`/`swc-menu-group`/`swc-divider` but does not implement `swc-menu-item`/`swc-menu-group`'s internals.
 
 `swc-menu` structurally parallels `swc-action-menu` (trigger + `PlacementController`-positioned surface + shadow `role="menu"`, differing mainly in default trigger chrome), but decided ([Q12](#blockers-and-open-questions)) not to force a shared base class now — `swc-action-menu` doesn't exist yet, and extracting a shared abstraction against one real implementation and one hypothetical one risks extracting the wrong thing. Ship `swc-menu`'s own base class independently; once `swc-action-menu` is built, diff the two and extract only what's proven identical (most likely candidates: open/close event contract, `PlacementController` setup).
 
@@ -672,6 +674,7 @@ Grouped by whether the question is about `swc-menu` itself or about a sibling co
 | Q14 | Whether `swc-menu-separator` should exist as its own custom element or `swc-menu` should compose `swc-divider` directly. | **Decided: reuse `swc-divider`, no `swc-menu-separator` element.** 1st-gen's `MenuDivider` already does nothing but wrap `divider.css` and set `role="separator"` — 2nd-gen's `Divider.base.ts` already sets that same role. A whole second custom element with zero behavioral delta is pure duplication (two Storybook entries, two test suites, two docs pages, for the same output). Any menu-specific spacing goes in `swc-menu`'s own stylesheet targeting a slotted `swc-divider`, not a new element. **This changes scope for the epic** — it removes `swc-menu-separator` as a deliverable and conflicts with the existing [menu-separator accessibility migration analysis](../menu-separator/accessibility-migration-analysis.md), which documents `swc-menu-separator` as a real, intended component. Surface this to whoever owns that epic-level scoping decision before treating it as final. |
 | Q2 | Whether the Figma-vs-a11y-doc conflict on selection scope (Design's "Changes in S2 Menu"/"Examples" frames show real intent; the a11y doc still defers all selection) needs resolving before this plan is complete. | **Decided: not blocking.** Selection ships as Additive (Phase C) regardless of how that conflict resolves — the classification doesn't change whether it's "real" or "hypothetical." Correcting the a11y doc's "Migration scope" section is still worth doing, and the should-authors-mix-sections UX question (raised by Ruben) is still real, but neither gates this plan; pick both up whenever Phase C is actually scheduled. |
 | Q8 | Whether 1st-gen's mobile drilldown/tray implementation is dropped with a committed future-epic replacement, or dropped with no replacement plan. | **Decided: out of scope.** No replacement is being committed to as part of this epic. [A8](#deferred-to-later-phases) stands as the record of what's dropped and why; revisit only if a future product need brings mobile tray back into scope somewhere. |
+| Q16 | (Raised by Ruben) Carrying the `label` property forward unchanged as "accessible name for the trigger" leaves no way to put visible content — text, an icon, or both — on the trigger, since 1st-gen `sp-menu` never had a built-in trigger to put content on in the first place. | **Decided: add a `label` slot.** Matches [1st-gen `sp-action-menu`'s `label` slot](../../../../1st-gen/packages/action-menu/src/ActionMenu.ts) precedent — the closest existing menu-family component that, like `swc-menu`, owns its own trigger. The `label` property stays, now serving two roles: fallback text rendered inside the `label` slot when nothing is light-DOM-slotted, and a contributor to the trigger's accessible name when no `aria-label`/`aria-labelledby` is present — the same dual role it plays on `sp-action-menu` today. A separate `icon`/`label-only` split ([A9](#additive)) is deferred pending a concrete need, consistent with how [Q6](#blockers-and-open-questions) treats other speculative API. |
 
 ### Blocking for swc-menu
 
@@ -688,6 +691,7 @@ These surfaced while drafting this plan but are about a sibling component's own 
 | Q10 | React Spectrum's Menu docs state "Interactive elements... within menu items are not allowed" ([B8](#must-ship)) and "Sections without a header must have an `aria-label`." Neither constraint is currently written into the [Menu a11y analysis](./accessibility-migration-analysis.md) or the menu-item/menu-group equivalents — fold in there. Separately, the Figma "Examples" frame shows toggle-switch visuals inside menu item rows (a "Notifications" menu with switch-styled "Push notifications"/"Badge" items) — confirm this is a switch-*styled* `menuitemcheckbox` row (matching the "Multi-select (switch)" property noted under [Q2](#blockers-and-open-questions)) and not a separately-focusable nested control, so it doesn't contradict B8. | Open | Design + accessibility reviewer |
 | Q13 | The `swc-menu`, `swc-action-menu`, and `swc-menu-item` accessibility analyses all still describe anchoring as "`swc-popover` (or similar)" or via `swc-popover` outright, predating the popover a11y doc's `PlacementController` amendment. Correct all three docs to reference `PlacementController` directly, matching the decided model ([Q3](#blockers-and-open-questions)). | Open — doesn't block this plan, but should not wait long | Accessibility reviewer + menu-item/action-menu doc owners |
 | Q15 | Migration order among `swc-menu`, `swc-menu-item`, and `swc-menu-group` is not yet decided (`swc-divider` already exists, and `swc-menu-separator` isn't being built — [Q14](#blockers-and-open-questions)). `swc-popover` is **not a sequencing variable** — it shipped in [PR #6356](https://github.com/adobe/spectrum-web-components/pull/6356) (merged 2026-07-14, before this plan was drafted) and `swc-menu` doesn't depend on it anyway. Each menu-family component either has or will have its own plan; sequencing among them is what remains open. | Open | Ticket owner |
+| Q17 | (Raised by Ruben, on [B2](#must-ship)) If link-style `swc-menu-item` rows work by having the consumer slot a real `<a href>` into the item's light DOM (per the [menu-item a11y doc](../menu-item/accessibility-migration-analysis.md)), styling that anchor to match the row's own hover state, full-row hit target, focus ring, and icon alignment is materially harder than 1st-gen's shadow-internal `<a class="anchor">` render. This is `swc-menu-item`'s implementation to solve, not `swc-menu`'s, but it isn't written down anywhere yet. | Open | `swc-menu-item` plan owner |
 
 <!-- Where possible, include the next action in the Item text or Status so reviewers know how to resolve the question. -->
 
