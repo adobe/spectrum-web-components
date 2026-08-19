@@ -11,38 +11,75 @@ import * as PromptFieldStories from './stories/prompt-field.stories';
 
 A prompt field consists of:
 
-1. **Box**: white card container with shadow and 16px border radius.
-2. **Input area**: visible label + textarea.
-3. **Action bar**: upload trigger (left) and send/stop action (right).
-4. **Footer**: optional legal content rendered below the prompt surface.
+1. **Box**: white card container with shadow, starting as a taller multiline card by default or a single-line row via the `collapsed` attribute.
+2. **Input area**: visually hidden label + textarea.
+3. **Action bar**: upload trigger (left) and send/stop action (right); shown on its own row by default, otherwise (when `collapsed`) the send/stop action sits inline with the textarea instead.
+4. **Footer**: legal disclaimer rendered below the prompt surface. Required in product implementations.
 
 <Canvas of={PromptFieldStories.Anatomy} />
 
 ## Options
 
-### Modes
+### Variant
 
-The `mode` attribute controls interaction and action state:
+`variant` sets the intensity of the AI brand treatment (the gradient ring, background wash, and glow):
 
-- **`default`**: send button shown, normal interactivity
-- **`loading`**: stop button shown while generation is in progress
-- **`disabled`**: input/upload/send are disabled
+- **`subtle`**: understated treatment; the gradient ring is revealed on hover
+- **`balanced`** (default): visible gradient ring and background wash
+- **`prominent`**: strongest treatment, adding an outer glow
 
-The send button enablement is derived internally from prompt content (value or artifact).
+Every layer derives from a single hue, so overriding `--swc-prompt-field-brand-color` rethemes all three variants at once.
 
-<Canvas of={PromptFieldStories.Modes} />
+<Canvas of={PromptFieldStories.Variant} />
+
+### Layout
+
+The `collapsed` attribute controls the field's expanded/collapsed layout:
+
+- **Expanded (default)**: taller card with a separate action bar below the textarea, showing the upload button alongside send/stop.
+- **`collapsed`**: starts as a single-line row with the send/stop button inline with the textarea and no upload button shown; the textarea still wraps and grows with content like the expanded layout, it just starts more compact.
+
+Toggling `collapsed` animates between the two layouts.
+
+The textarea grows with content up to `--swc-prompt-field-max-block-size` (default `40vh`). Override the custom property to raise or lower this ceiling, e.g. `40%` of a sized parent:
+
+```html
+<div style="display: flex; block-size: 400px;">
+  <swc-prompt-field
+    style="--swc-prompt-field-max-block-size: 40%;"
+  ></swc-prompt-field>
+</div>
+```
+
+`min-rows`/`max-rows` add an optional row-count cap on top of this. Unset, only `--swc-prompt-field-max-block-size` applies.
+
+<Canvas of={PromptFieldStories.Layout} />
+
+### Legal disclaimer
+
+Every prompt field in production must include Legal-approved disclaimer copy below the composer. Slot your product's approved text into **`legal`**: wording, links, and locale are consumer-owned, not baked into the component.
+
+Slotted `legal` content inherits the footer typography automatically. When it contains links, add the `swc-Typography--links` class to the wrapping element so the links inherit that typography and render in the subdued neutral color instead of the default accent blue. `swc-prompt-field` logs a development warning when the `legal` slot is empty.
 
 ### Artifact
 
-Artifact layout is inferred from the **`artifact`** slot content and supports multiple mixed items:
+Artifact layout is inferred from the **`artifact`** slot content:
 
 - No slot content: no artifact region
-- **`swc-upload-artifact type="card"`**: file-style card artifact
-- **`swc-upload-artifact type="media"`**: media tile artifact
+- **`swc-upload-artifact type="card"`**: file-style card artifacts (one or more)
+- **`swc-upload-artifact type="media"`**: media tile artifacts (one or more, with or without badge)
 
-**Populate the attachment strip** by slotting **one `<swc-upload-artifact>` per file**, each with **`slot="artifact"`** (same slot name repeated). Mixed card + media entries wrap inside the composer like this story's first example.
+**Use one layout type per composer session** (`card` or `media`). Slot multiple artifacts of that same type: for example, several cards or several media tiles. Do not mix `card` and `media` in the same strip; `swc-prompt-field` logs a development warning when both are detected.
 
-For additional combinations, like narrow widths, ellipsis, or more tiles, see **[Multi-artifact](/docs/patterns-conversational-ai-upload-artifact--docs#multi-artifact)**.
+This rule is about **component layout**, not file MIME type. You can attach many files in one session as long as they share the same layout:
+
+- **Document-only uploads** where title and subtitle carry meaning → all **`type="card"`**
+- **Visual previews** (photos, storyboard frames) → all **`type="media"`**
+- **Mixed images and documents in one batch** → normalize to all **`type="media"`**: image previews in `thumbnail`, and document tiles with a preview or icon in `thumbnail` plus an optional **`badge`** (for example, "PDF"). See **[Media with badge](/docs/patterns-conversational-ai-upload-artifact--docs#media-with-badge)**.
+
+**Populate the attachment strip** by slotting **one `<swc-upload-artifact>` per file**, each with **`slot="artifact"`** (same slot name repeated).
+
+For additional card and media gallery examples, see **[Multi-card](/docs/patterns-conversational-ai-upload-artifact--docs#multi-card)** and **[Multi-media](/docs/patterns-conversational-ai-upload-artifact--docs#multi-media)**.
 
 Upload button behavior:
 
@@ -52,6 +89,31 @@ Upload button behavior:
 Artifacts own dismiss behavior via **`dismissible`** and emit **`swc-upload-artifact-dismiss`**.
 
 <Canvas of={PromptFieldStories.Artifact} />
+
+### Multi-artifact scroll
+
+When several attachments exceed the composer width, the strip scrolls horizontally at full width. Chevron buttons flank the strip (32px gray circles) and render only when scrolling is possible in that direction. Each click advances by one viewport width and settles on a tile boundary; the browser's native scroll clamping keeps the final page from overshooting the end. Edge fades on both sides signal overflow and hide at the ends of the list.
+
+Trackpad, wheel, touch scrolling, and the platform's native scrollbar all work on the artifact strip. Chevron paging does not reveal the scrollbar.
+
+<Canvas of={PromptFieldStories.MultiArtifactScroll} />
+
+### Upload action menu
+
+`swc-prompt-field` fires `swc-prompt-field-upload-click` from the **`+`** button and leaves the resulting UI entirely to the consuming product; the component has no opinion on what opens. Design recommends the **`+`** button open a menu with, at minimum:
+
+- **Add from Adobe cloud storage**
+- **Attach files**
+
+Product teams control the exact menu contents and may add more sources, but these two are the recommended baseline. Attachments added through either path should surface as staged artifacts using the same **`swc-upload-artifact`** error/invalid state as a directly-dropped file, since the artifact strip does not distinguish attachments by origin.
+
+## States
+
+- **Default**: send button shown, normal interactivity; enabled once there's prompt content (value or artifact)
+- **`generating`**: stop button shown in place of send while a response is in progress; the input remains editable
+- **`disabled`**: input, upload, and send/stop are all disabled
+
+<Canvas of={PromptFieldStories.States} />
 
 ## Behaviors
 
@@ -75,10 +137,21 @@ The `<swc-prompt-field>` element implements the following accessibility features
 
 #### Label association
 
-- The `<textarea>` uses `aria-labelledby` when label text is visible
+- The `<textarea>` uses `aria-labelledby`, pointing to a visually hidden label
 - `accessible-label` can override the accessible name when needed
 - All icon buttons carry descriptive `aria-label` attributes
+- `artifact-scroll-prev-label` and `artifact-scroll-next-label` let consumers localize the artifact-strip chevrons
 - The send button uses `disabled` natively when the prompt has no content
+
+#### Artifact strip keyboard navigation
+
+The artifact strip is a `role="region"` landmark (labeled `artifact-strip-label`, default "Uploaded assets strip") wrapping roving-tabindex thumbnails; the landmark itself is not a tab stop:
+
+- **Tab**: moves through the previous chevron when present, then directly to the active thumbnail (the first one, until Arrow keys move that roving stop elsewhere), then that thumbnail's Close button, then the next chevron when present, then out of the strip
+- **Arrow Left/Right**: move the active thumbnail one tile at a time and scroll it into view (distinct from the `<`/`>` chevrons, which page by a full set)
+- **Shift+Tab** from Close: returns to the thumbnail; **Shift+Tab** from a thumbnail exits the strip entirely
+- Activating the `>` chevron (click, Enter, or Space) keeps focus on the chevron and scrolls the next set of tiles into view; **Shift+Tab** from it then moves into that newly displayed set (its active thumbnail's Close button when shown, otherwise the thumbnail). The `<` chevron is the mirror: activating it keeps focus there, and **Tab** moves into the newly displayed set
+- At either end of the strip, the `<`/`>` chevron becomes `aria-disabled` rather than being removed, so a chevron that has focus when scrolling reaches that end keeps it instead of losing it to the browser's default focus handling
 
 ### Best practices
 

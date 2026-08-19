@@ -161,6 +161,10 @@
     - [Tag migration roadmap](tag/rendering-and-styling-migration-analysis.md)
 - Tags
     - [Tags migration roadmap](tags/rendering-and-styling-migration-analysis.md)
+- Text Area
+    - [Text area accessibility migration analysis](text-area/accessibility-migration-analysis.md)
+- Text Field
+    - [Text field accessibility migration analysis](text-field/accessibility-migration-analysis.md)
 - Textfield
     - [Textfield and Textarea migration roadmap](textfield/rendering-and-styling-migration-analysis.md)
 - Thumbnail

@@ -1,9 +1,19 @@
 ---
+name: jira-ticket
 description: Guidelines for drafting and formatting Jira tickets
-alwaysApply: false
 ---
 
 # Jira ticket guidelines
+
+## When to use this skill
+
+- Drafting a Jira ticket for a bug report, RFC, or feature/research request
+- Formatting or reviewing an existing ticket draft for title, labels, severity, or required sections
+
+## How to invoke
+
+- Say "create a Jira ticket for this", "draft a bug ticket", "write an RFC ticket", or "format this as a Jira ticket"
+- If no linked GitHub PR/issue or RFC is provided, prompt the user to supply one before generating the ticket
 
 When prompted to create a Jira ticket, output the following:
 
@@ -432,7 +442,7 @@ h2. Resources
 
 ## Labels
 
-Use the following labels to categorize tickets appropriately. Jira labels are separate from GitHub labels; for PR/issue descriptions use the github-description rule. Use the labels defined in `config.json` (jira_tickets.labels) or the list below.
+Use the following labels to categorize tickets appropriately. Jira labels are separate from GitHub labels; for PR/issue descriptions use the github-description skill. Use the labels defined in `config.json` (jira_tickets.labels) or the list below.
 
 - `a11y`: Accessibility-related issues and improvements
 - `API`: Changes to component APIs or interfaces
