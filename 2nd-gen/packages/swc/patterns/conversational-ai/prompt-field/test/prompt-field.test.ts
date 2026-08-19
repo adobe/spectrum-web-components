@@ -246,6 +246,18 @@ export const MixedArtifactWarningTest: Story = {
 const artifactScrollGradient =
   'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
 
+// swc-action-button delegates focus to its internal <button>, so the deep
+// active element is that button; resolve it back to the host action-button the
+// strip manages (dismiss/chevron). Non-delegating targets are returned as-is.
+const focusedControl = (): Element | null => {
+  const active = getActiveElement();
+  const root = active?.getRootNode();
+  return root instanceof ShadowRoot &&
+    root.host.localName === 'swc-action-button'
+    ? root.host
+    : (active ?? null);
+};
+
 function renderMultiArtifactPromptField(
   canvasElement: HTMLElement,
   direction?: 'rtl'
@@ -310,7 +322,9 @@ export const ArtifactScrollPaginationTest: Story = {
         el.artifactScrollPrevLabel = 'Show earlier attachments';
         el.artifactScrollNextLabel = 'Show later attachments';
         await el.updateComplete;
-        expect(nextButton?.ariaLabel).toBe('Show later attachments');
+        expect(nextButton?.getAttribute('accessible-label')).toBe(
+          'Show later attachments'
+        );
       }
     );
 
@@ -339,9 +353,11 @@ export const ArtifactScrollPaginationTest: Story = {
           clientWidth / 2
         );
         expect(
-          el.shadowRoot?.querySelector<HTMLButtonElement>(
-            '.swc-PromptField-artifacts-scroll-prev'
-          )?.ariaLabel
+          el.shadowRoot
+            ?.querySelector<HTMLButtonElement>(
+              '.swc-PromptField-artifacts-scroll-prev'
+            )
+            ?.getAttribute('accessible-label')
         ).toBe('Show earlier attachments');
 
         const tiles = scrollEl
@@ -565,7 +581,7 @@ export const ArtifactFocusOrderTest: Story = {
       await el.updateComplete;
 
       expect(event.defaultPrevented).toBe(true);
-      expect(getActiveElement()).toBe(getDismissButton(artifacts[0]!));
+      expect(focusedControl()).toBe(getDismissButton(artifacts[0]!));
     });
 
     await step(
@@ -597,7 +613,7 @@ export const ArtifactFocusOrderTest: Story = {
         await el.updateComplete;
 
         expect(event.defaultPrevented).toBe(true);
-        expect(getActiveElement()).toBe(getDismissButton(artifacts[1]!));
+        expect(focusedControl()).toBe(getDismissButton(artifacts[1]!));
       }
     );
 
@@ -612,7 +628,7 @@ export const ArtifactFocusOrderTest: Story = {
         const nextButton = getNextButton();
         expect(nextButton).toBeTruthy();
         expect(event.defaultPrevented).toBe(true);
-        expect(getActiveElement()).toBe(nextButton);
+        expect(focusedControl()).toBe(nextButton);
       }
     );
 
@@ -653,7 +669,7 @@ export const ArtifactFocusOrderTest: Story = {
         const prevButton = getPrevButton();
         expect(prevButton?.getAttribute('aria-disabled')).toBe('false');
         prevButton?.focus();
-        expect(getActiveElement()).toBe(prevButton);
+        expect(focusedControl()).toBe(prevButton);
 
         const secondScrollEnd = waitForScrollEnd(scrollEl);
         scrollEl?.scrollTo({ left: 0, behavior: 'instant' });
@@ -661,7 +677,7 @@ export const ArtifactFocusOrderTest: Story = {
         await el.updateComplete;
 
         expect(getPrevButton()?.getAttribute('aria-disabled')).toBe('true');
-        expect(getActiveElement()).toBe(prevButton);
+        expect(focusedControl()).toBe(prevButton);
       }
     );
 
@@ -730,7 +746,9 @@ export const ArtifactChevronPagingFocusTest: Story = {
     /** The tile owning the active element: the tile itself, or (if focus
      * landed on its Close button) the shadow host of that button. */
     const activeTile = (): HTMLElement | null => {
-      const active = getActiveElement();
+      // focusedControl resolves the delegated focus to the dismiss button host,
+      // whose own shadow host is the owning tile.
+      const active = focusedControl();
       if (!active) {
         return null;
       }
@@ -757,7 +775,7 @@ export const ArtifactChevronPagingFocusTest: Story = {
         await scrollEnd;
         await el.updateComplete;
 
-        expect(getActiveElement()).toBe(nextButton);
+        expect(focusedControl()).toBe(nextButton);
       }
     );
 
@@ -805,7 +823,7 @@ export const ArtifactChevronPagingFocusTest: Story = {
         await backPage;
         await el.updateComplete;
 
-        expect(getActiveElement()).toBe(prevButton);
+        expect(focusedControl()).toBe(prevButton);
 
         const tilesAfterPagingBack = visibleTiles();
         expect(
@@ -863,7 +881,7 @@ export const SingleArtifactFocusTest: Story = {
       await el.updateComplete;
 
       expect(event.defaultPrevented).toBe(true);
-      expect(getActiveElement()).toBe(getDismissButton());
+      expect(focusedControl()).toBe(getDismissButton());
     });
 
     await step(

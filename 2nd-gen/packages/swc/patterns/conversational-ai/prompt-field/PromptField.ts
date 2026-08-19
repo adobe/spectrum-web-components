@@ -555,11 +555,23 @@ export class PromptField extends SpectrumElement {
     this._handleArtifactTabKey(event);
   }
 
+  // swc-action-button delegates focus to its internal button, so the deep
+  // active element is that button; map it back to the action-button host the
+  // strip's Tab logic compares against (dismiss/chevron).
+  private _delegatedFocusHost(active: Element): Element {
+    const root = active.getRootNode();
+    return root instanceof ShadowRoot &&
+      root.host.localName === 'swc-action-button'
+      ? root.host
+      : active;
+  }
+
   private _handleArtifactTabKey(event: KeyboardEvent): void {
-    const active = getActiveElement();
-    if (!active) {
+    const activeElement = getActiveElement();
+    if (!activeElement) {
       return;
     }
+    const active = this._delegatedFocusHost(activeElement);
 
     const artifacts = this._assignedArtifactElements ?? [];
     const nextButton = this.shadowRoot?.querySelector<HTMLElement>(
@@ -655,7 +667,11 @@ export class PromptField extends SpectrumElement {
       return;
     }
 
-    const active = getActiveElement();
+    const activeElement = getActiveElement();
+    if (!activeElement) {
+      return;
+    }
+    const active = this._delegatedFocusHost(activeElement);
     if (active === tile) {
       if (event.shiftKey) {
         return;
@@ -670,7 +686,7 @@ export class PromptField extends SpectrumElement {
       return;
     }
 
-    if (!event.shiftKey || !active) {
+    if (!event.shiftKey) {
       return;
     }
     const root = active.getRootNode();
