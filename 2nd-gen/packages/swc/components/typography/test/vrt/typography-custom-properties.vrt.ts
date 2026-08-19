@@ -35,13 +35,13 @@ export default meta;
 
 // Typography has no custom-elements-manifest, so the manifest-driven
 // verifyCustomPropertyCoverage() (used by component custom-property VRTs)
-// has nothing to check cases against, and typography.mdx has no "CSS custom
-// properties" table to mirror either (unlike link.mdx, which
-// link-custom-properties.vrt.ts checks against). Without a real external
-// reference, a hand-maintained "documented properties" list here would just
-// be a second copy of the case list below - not a meaningful cross-check.
-// So this file skips that pattern and keeps only what's still useful: the
-// reference/override visual rows, plus a same-file duplicate-case guard.
+// has nothing to check cases against. DOCUMENTED_TYPOGRAPHY_PROPERTIES is
+// the manual equivalent: it must stay in sync with the "CSS custom
+// properties" table in typography.mdx, and
+// verifyTypographyCustomPropertyCoverage() below fails if a case is missing,
+// duplicated, or covers a property that isn't in this list - the same
+// safety net link-custom-properties.vrt.ts gets from DOCUMENTED_LINK_PROPERTIES,
+// minus the manifest.
 //
 // Scope: Heading/Title/Body/Detail also expose margin-top/bottom multiplier
 // variables (Code has no `--margins` modifier) and CJK-specific font-size/
@@ -75,6 +75,52 @@ const casesFor = (prefix: string): readonly CustomPropertyCase[] =>
     property: `--swc-${prefix}-${suffix}`,
     value,
   }));
+
+// Mirrors typography.mdx's "CSS custom properties" table exactly (sorted,
+// to match coveredCustomProperties()'s own sort), so an addition or removal
+// on either side trips verifyTypographyCustomPropertyCoverage() below.
+const DOCUMENTED_TYPOGRAPHY_PROPERTIES = [
+  '--swc-body-font-color',
+  '--swc-body-font-family',
+  '--swc-body-font-size',
+  '--swc-body-font-weight',
+  '--swc-body-letter-spacing',
+  '--swc-body-line-height',
+  '--swc-body-margin-bottom',
+  '--swc-body-margin-top',
+  '--swc-detail-font-color',
+  '--swc-detail-font-family',
+  '--swc-detail-font-size',
+  '--swc-detail-font-weight',
+  '--swc-detail-letter-spacing',
+  '--swc-detail-line-height',
+  '--swc-detail-margin-bottom',
+  '--swc-detail-margin-top',
+  '--swc-heading-font-color',
+  '--swc-heading-font-family',
+  '--swc-heading-font-size',
+  '--swc-heading-font-weight',
+  '--swc-heading-letter-spacing',
+  '--swc-heading-line-height',
+  '--swc-heading-margin-bottom',
+  '--swc-heading-margin-top',
+  '--swc-monospace-font-color',
+  '--swc-monospace-font-family',
+  '--swc-monospace-font-size',
+  '--swc-monospace-font-weight',
+  '--swc-monospace-letter-spacing',
+  '--swc-monospace-line-height',
+  '--swc-monospace-margin-bottom',
+  '--swc-monospace-margin-top',
+  '--swc-title-font-color',
+  '--swc-title-font-family',
+  '--swc-title-font-size',
+  '--swc-title-font-weight',
+  '--swc-title-letter-spacing',
+  '--swc-title-line-height',
+  '--swc-title-margin-bottom',
+  '--swc-title-margin-top',
+] as const;
 
 const HEADING_PROPERTY_CASES = casesFor('heading');
 const TITLE_PROPERTY_CASES = casesFor('title');
@@ -148,13 +194,17 @@ const coveredTypographyProperties = coveredCustomProperties([
   ...CODE_PROPERTY_CASES,
 ]);
 
-// Guards against a copy-paste mistake (e.g. calling casesFor() twice for the
-// same prefix) producing two rows for the same property. No documented-list
-// cross-check here - see the top-of-file note on why.
+// Manual stand-in for verifyCustomPropertyCoverage(): no duplicate cases
+// (e.g. from calling casesFor() twice for the same prefix), and the covered
+// set matches typography.mdx's documented list exactly (both are sorted, so
+// an extra or missing property trips the equality check).
 const verifyTypographyCustomPropertyCoverage = async () => {
   await expect(coveredTypographyProperties).toHaveLength(
     new Set(coveredTypographyProperties).size
   );
+  await expect(coveredTypographyProperties).toEqual([
+    ...DOCUMENTED_TYPOGRAPHY_PROPERTIES,
+  ]);
 };
 
 // VRT stories
