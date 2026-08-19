@@ -109,13 +109,43 @@ export class PromptField extends SpectrumElement {
   @property({ type: String, reflect: true })
   public variant: 'subtle' | 'balanced' | 'prominent' = 'balanced';
 
-  /** Icon shown by the status pixel-loader. Ignored while `preset` is set. */
+  /** Icon shown by the status pixel-loader. Ignored while `preset` is set. Unions inlined so the API table lists the values; guarded against the loader's types in `_renderStatusIcon`. */
   @property({ type: String, reflect: true })
-  public icon: PixelLoaderIconName = 'aiLogo';
+  public icon:
+    | 'aiLogo'
+    | 'brush'
+    | 'eye'
+    | 'hourglass'
+    | 'mag'
+    | 'crop'
+    | 'flower'
+    | 'image'
+    | 'lasso'
+    | 'page'
+    | 'wand'
+    | 'bargraph'
+    | 'trefoil'
+    | 'dial'
+    | 'folder'
+    | 'arrow'
+    | 'cloud'
+    | 'comment'
+    | 'filter'
+    | 'microphone'
+    | 'pencil'
+    | 'potion'
+    | 'slider'
+    | 'timeline'
+    | 'eyedrop'
+    | 'adobeA'
+    | 'adobeD'
+    | 'adobeO'
+    | 'adobeB'
+    | 'adobeE' = 'aiLogo';
 
   /** Themed icon sequence for the status pixel-loader, cycled one per loop; overrides `icon`. */
   @property({ type: String, reflect: true })
-  public preset?: PixelLoaderPresetName;
+  public preset?: 'cc' | 'dc' | 'exp' | 'analyze' | 'mega';
 
   /** Accessible name for the textarea; visually hidden. */
   @property({ type: String })
@@ -1086,11 +1116,14 @@ export class PromptField extends SpectrumElement {
 
   /** Status pixel-loader: paused on a settled frame while idle, animating while generating. */
   private _renderStatusIcon(): TemplateResult {
+    // Typed against the loader so the inlined icon/preset unions can never pass an invalid value.
+    const icon: PixelLoaderIconName = this.icon;
+    const preset: PixelLoaderPresetName | undefined = this.preset;
     return html`
       <span class="swc-PromptField-status-icon" aria-hidden="true">
         <swc-pixel-loader
-          icon=${this.icon}
-          preset=${ifDefined(this.preset)}
+          icon=${icon}
+          preset=${ifDefined(preset)}
           ?paused=${!this.generating}
         ></swc-pixel-loader>
       </span>
