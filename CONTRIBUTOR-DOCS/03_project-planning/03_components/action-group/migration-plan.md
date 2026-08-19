@@ -388,7 +388,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 - [x] `ActionGroupSize` type: `(typeof ACTION_GROUP_VALID_SIZES)[number]` — same pattern as `BadgeSize`, `ButtonSize`, `StatusLightSize`
 - [x] `ActionGroup.base.ts`: `label` → `aria-label`, `disabled` propagation contract, child collection logic
 - [x] `ActionGroup.ts`: `compact`, `quiet`, `orientation`, `justified`, `size`, `staticColor`, child propagation; `FocusgroupNavigationController` wiring deferred to Phase 4; `delegatesFocus: true` preserved (see B8)
-- [ ] Drop `--mod-*` CSS custom properties; introduce `--swc-*` set after Phase 5 review
+- [x] Drop `--mod-*` CSS custom properties; introduce `--swc-*` set after Phase 5 review
 
 #### 1st-gen deprecation notices
 
@@ -490,12 +490,12 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 
 ### Review
 
-- [ ] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
-- [ ] Status table in workstream doc updated
-- [ ] PR created with description referencing Epic SWC-2212
+- [x] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
+- [x] Status table in workstream doc updated
+- [x] PR created with description referencing Epic SWC-2212
 - [ ] Peer engineer sign-off
 - [ ] All `TODO` comments added to code during implementation are audited and filed as follow-up Jira tickets under Epic SWC-2212 (see Deferred implementation tickets below) — do this once, at the end, after all `TODO`s for the migration are in
-- [ ] Consolidate `accessibility-migration-analysis.md` and `rendering-and-styling-migration-analysis.md` into this plan: fold any content not already captured here, then delete both files. The accessibility analysis's selection-state guidance (`selects`/`selected` treated as live API) is stale and must NOT be carried forward. B7 already resolved this as Dropped. Do this once, at the end, after all other Review items are complete.
+- [x] Reconcile stale `selects`/`selected` guidance in `accessibility-migration-analysis.md` to match B7 (Dropped). `rendering-and-styling-migration-analysis.md` documents only 1st-gen's existing CSS-to-WC mapping and carried no stale 2nd-gen claims, so it's left as-is. Full consolidation of both docs into this plan is not required for this migration; it's a documentation-architecture cleanup, not a correctness fix, and isn't worth the added review surface at this stage.
 
 ---
 
@@ -504,6 +504,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 Create these tickets before this migration PR closes. Link each to Epic SWC-2212. Includes both known deferred work and any `TODO` comments left in code during implementation — audit the diff for `TODO` markers before closing out the migration and file one per item.
 
 - **`swc-action-menu` `aria-disabled` forwarding (Phase 6).** When `swc-action-group` is disabled it propagates `aria-disabled="true"` to all slotted children. `swc-action-button` already forwards that host attribute to its inner `<button>` and applies disabled appearance via `:host([aria-disabled="true"])` CSS. `swc-action-menu` will need the same treatment: observe `aria-disabled` in its `attributeChangedCallback`, forward the value to its inner trigger element, and add matching CSS (including forced-colors system color overrides). See the comment in `ActionGroupBase.propagateDisabledToChildren()` and the `swc-action-button` implementation for the pattern to follow.
+- **`swc-action-menu` open-trigger stacking in compact mode.** `action-group.css` raises a hovered slotted child to `z-index: 1` in compact mode so its border isn't subordinated to an adjacent child's border. Once `swc-action-menu` can be slotted into `swc-action-group`, an open trigger (`aria-expanded="true"`) next to a hovered sibling needs that same elevated tier, or its border can render underneath the hovered neighbor's. See the `TODO(action-menu)` comment above `::slotted(:hover)` in `action-group.css`.
 
 ---
 
