@@ -1,0 +1,246 @@
+name: Publish Packages (2nd-gen)
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'NPM dist-tag for a throwaway snapshot'
+        required: false
+        default: 'next'
+        type: choice
+        options:
+          - next
+          - snapshot-test
+  pull_request:
+    types: [labeled, synchronize]
+  push:
+    branches:
+      - main
+
+# 2nd-gen-scoped group: see the identical comment in publish.yml for why this is no
+# longer shared with that workflow's group string.
+concurrency:
+  group: publish-2nd-gen-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check-changesets:
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'push' ||
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'pull_request' &&
+      contains(github.event.pull_request.labels.*.name, 'snapshot-release'))
+    outputs:
+      has_changesets: ${{ steps.check.outputs.has_changesets }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for 2nd-gen changesets
+        id: check
+        run: |
+          # Independent of 1st-gen in every trigger - this workflow never reads
+          # 1st-gen/.changeset/, including for its own snapshot-release PR path.
+          COUNT=$(ls -1 2nd-gen/.changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
+          if [ "$COUNT" -eq 0 ]; then
+            echo "has_changesets=false" >> $GITHUB_OUTPUT
+            echo "No 2nd-gen changesets found - skipping snapshot publish"
+          else
+            echo "has_changesets=true" >> $GITHUB_OUTPUT
+            echo "Found $COUNT 2nd-gen changeset(s)"
+          fi
+
+  # Throwaway snapshot publish: gated on has_changesets, same as check-changesets - so
+  # this only runs on a push to main that happens to have 2nd-gen changesets pending at
+  # that moment, not on every push. `next` is therefore not a true continuous build of
+  # every main commit; it only refreshes when a push coincides with a pending changeset.
+  # Also runs for manual workflow_dispatch and snapshot-release-labeled PRs. Never
+  # touches main, never commits, never opens a PR, never enters persistent pre-release
+  # mode. Runs alongside (not instead of) the `release` job below - both are triggered by
+  # the same push event but never conflict (separate jobs/runners, and the run-level
+  # concurrency group only dedupes overlapping *workflow runs*, not jobs within one run).
+  snapshot:
+    needs: check-changesets
+    if: needs.check-changesets.outputs.has_changesets == 'true'
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || 'main' }}
+          fetch-depth: 0
+
+      - name: Setup job and install dependencies
+        uses: ./.github/actions/setup-job
+
+      - name: Determine snapshot tag
+        id: extract-tag
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+        run: |
+          if [ "$EVENT_NAME" == "pull_request" ]; then
+            WORKFLOW_TAG="snapshot-test"
+          else
+            WORKFLOW_TAG="${INPUT_TAG:-next}"
+          fi
+          echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
+
+      - name: Verify NPM authentication
+        id: npm-auth
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+        run: npm whoami --registry=https://registry.npmjs.org
+
+      - name: Version packages (snapshot)
+        working-directory: 2nd-gen
+        run: yarn changeset version --snapshot ${{ steps.extract-tag.outputs.tag }}
+
+      - name: Capture released versions
+        id: versions
+        run: |
+          CORE_VERSION=$(node -p "require('./2nd-gen/packages/core/package.json').version")
+          SWC_VERSION=$(node -p "require('./2nd-gen/packages/swc/package.json').version")
+          echo "core=$CORE_VERSION" >> $GITHUB_OUTPUT
+          echo "swc=$SWC_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Refresh lockfile and rebuild
+        run: |
+          yarn install --refresh-lockfile
+          yarn build
+
+      - name: Publish all packages
+        if: steps.npm-auth.outcome == 'success'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+        working-directory: 2nd-gen
+        run: yarn changeset publish --no-git-tag --tag ${{ steps.extract-tag.outputs.tag }}
+
+      - name: Publish summary
+        if: always()
+        env:
+          TAG: ${{ steps.extract-tag.outputs.tag }}
+          EVENT_NAME: ${{ github.event_name }}
+          CORE_VERSION: ${{ steps.versions.outputs.core }}
+          SWC_VERSION: ${{ steps.versions.outputs.swc }}
+          AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
+        run: |
+          echo "## Publish summary (2nd-gen snapshot)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Trigger** | \`${EVENT_NAME}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
+          [ -n "$CORE_VERSION" ] && echo "| **@adobe/spectrum-wc-core** | \`${CORE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+          [ -n "$SWC_VERSION" ] && echo "| **@adobe/spectrum-wc** | \`${SWC_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+
+          if [ "$AUTH_OUTCOME" == "success" ]; then
+            echo "✅ Publish completed with tag \`${TAG}\`" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  # Real release: version-then-PR for the persistent `beta` pre-release channel, then
+  # publish once that PR merges. Every push to main either versions and opens/updates a
+  # dedicated Version PR (changesets pending) or publishes (no changesets pending,
+  # because that PR was just merged). 2nd-gen has no `latest` channel yet - `beta` is the
+  # only real release.
+  #
+  # This does NOT use changesets/action's own built-in PR management - see the identical
+  # comment above the `release:` job in publish.yml for why: changesets/action's PR
+  # branch name is derived only from the base branch, and both this workflow and
+  # publish.yml target `main`, so two changesets/action calls would collide on the same
+  # branch name and overwrite each other's Version PR content. peter-evans/create-pull-request@v6's
+  # explicit `branch:` input avoids that.
+  release:
+    needs: check-changesets
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    permissions:
+      contents: write # commits the Version PR branch
+      pull-requests: write # opens/updates the Version PR
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup job and install dependencies
+        uses: ./.github/actions/setup-job
+
+      - name: Verify NPM authentication
+        id: npm-auth
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+        run: npm whoami --registry=https://registry.npmjs.org
+
+      - name: Version 2nd-gen packages
+        if: needs.check-changesets.outputs.has_changesets == 'true'
+        run: |
+          if [ ! -f 2nd-gen/.changeset/pre.json ]; then
+            (cd 2nd-gen && yarn changeset pre enter beta)
+          fi
+          (cd 2nd-gen && yarn changeset version)
+          yarn install --refresh-lockfile
+
+      - name: Open or update the 2nd-gen Version PR
+        if: needs.check-changesets.outputs.has_changesets == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: 'chore: release 2nd-gen packages'
+          title: 'chore: release 2nd-gen packages (beta)'
+          branch: changeset-release/2nd-gen
+          base: main
+          delete-branch: true
+          add-paths: |
+            2nd-gen
+            yarn.lock
+
+      - name: Version PR summary
+        if: needs.check-changesets.outputs.has_changesets == 'true'
+        run: |
+          echo "## Publish summary (2nd-gen)" >> $GITHUB_STEP_SUMMARY
+          echo "📝 Version PR opened/updated at \`changeset-release/2nd-gen\` - nothing published yet" >> $GITHUB_STEP_SUMMARY
+
+      # No pending changesets: either nothing to do, or the Version PR above was just
+      # merged - publish whatever is now on main. `yarn changeset publish` is itself
+      # idempotent (skips already-registry-published versions), so no extra guard is
+      # needed here the way gen1 needs one for its raw `npm publish` React-wrapper calls.
+      - name: Publish 2nd-gen packages
+        if: needs.check-changesets.outputs.has_changesets == 'false' && steps.npm-auth.outcome == 'success'
+        id: publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+        run: |
+          RELEASED_VERSION=$(node -p "require('./2nd-gen/packages/swc/package.json').version")
+          if npm view "@adobe/spectrum-wc@$RELEASED_VERSION" version --registry=https://registry.npmjs.org >/dev/null 2>&1; then
+            echo "@adobe/spectrum-wc@$RELEASED_VERSION already published - nothing to do."
+            echo "published=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          yarn install --refresh-lockfile
+          yarn build
+          (cd 2nd-gen && yarn changeset publish --no-git-tag --tag beta)
+          echo "published=true" >> $GITHUB_OUTPUT
+
+      - name: Publish summary
+        if: needs.check-changesets.outputs.has_changesets == 'false' && always()
+        env:
+          AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
+          PUBLISHED: ${{ steps.publish.outputs.published }}
+        run: |
+          echo "## Publish summary (2nd-gen)" >> $GITHUB_STEP_SUMMARY
+          if [ "$PUBLISHED" == "false" ]; then
+            echo "ℹ️ Current version already published - nothing new to ship" >> $GITHUB_STEP_SUMMARY
+          elif [ "$AUTH_OUTCOME" == "success" ]; then
+            echo "✅ Publish step ran - check the changeset publish output above for what shipped" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
+          fi
