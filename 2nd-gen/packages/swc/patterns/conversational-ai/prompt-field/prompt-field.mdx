@@ -11,32 +11,55 @@ import * as PromptFieldStories from './stories/prompt-field.stories';
 
 A prompt field consists of:
 
-1. **Box**: white card container with shadow and 16px border radius.
-2. **Input area**: visible label + textarea.
-3. **Action bar**: upload trigger (left) and send/stop action (right).
+1. **Box**: white card container with shadow, starting as a taller multiline card by default or a single-line row via the `collapsed` attribute.
+2. **Input area**: visually hidden label + textarea.
+3. **Action bar**: upload trigger (left) and send/stop action (right); shown on its own row by default, otherwise (when `collapsed`) the send/stop action sits inline with the textarea instead.
 4. **Footer**: legal disclaimer rendered below the prompt surface. Required in product implementations.
 
 <Canvas of={PromptFieldStories.Anatomy} />
 
 ## Options
 
-### Modes
+### Variant
 
-The `mode` attribute controls interaction and action state:
+`variant` sets the intensity of the AI brand treatment (the gradient ring, background wash, and glow):
 
-- **`default`**: send button shown, normal interactivity
-- **`loading`**: stop button shown while generation is in progress
-- **`disabled`**: input/upload/send are disabled
+- **`subtle`**: understated treatment; the gradient ring is revealed on hover
+- **`balanced`** (default): visible gradient ring and background wash
+- **`prominent`**: strongest treatment, adding an outer glow
 
-The send button enablement is derived internally from prompt content (value or artifact).
+Every layer derives from a single hue, so overriding `--swc-prompt-field-brand-color` rethemes all three variants at once.
 
-<Canvas of={PromptFieldStories.Modes} />
+<Canvas of={PromptFieldStories.Variant} />
+
+### Layout
+
+The `collapsed` attribute controls the field's expanded/collapsed layout:
+
+- **Expanded (default)**: taller card with a separate action bar below the textarea, showing the upload button alongside send/stop.
+- **`collapsed`**: starts as a single-line row with the send/stop button inline with the textarea and no upload button shown; the textarea still wraps and grows with content like the expanded layout, it just starts more compact.
+
+Toggling `collapsed` animates between the two layouts.
+
+The textarea grows with content up to `--swc-prompt-field-max-block-size` (default `40vh`). Override the custom property to raise or lower this ceiling, e.g. `40%` of a sized parent:
+
+```html
+<div style="display: flex; block-size: 400px;">
+  <swc-prompt-field
+    style="--swc-prompt-field-max-block-size: 40%;"
+  ></swc-prompt-field>
+</div>
+```
+
+`min-rows`/`max-rows` add an optional row-count cap on top of this. Unset, only `--swc-prompt-field-max-block-size` applies.
+
+<Canvas of={PromptFieldStories.Layout} />
 
 ### Legal disclaimer
 
 Every prompt field in production must include Legal-approved disclaimer copy below the composer. Slot your product's approved text into **`legal`**: wording, links, and locale are consumer-owned, not baked into the component.
 
-Apply the `.swc-PromptField-legal-disclaimer` class for default footer typography. `swc-prompt-field` logs a development warning when the `legal` slot is empty.
+Slotted `legal` content inherits the footer typography automatically. When it contains links, add the `swc-Typography--links` class to the wrapping element so the links inherit that typography and render in the subdued neutral color instead of the default accent blue. `swc-prompt-field` logs a development warning when the `legal` slot is empty.
 
 ### Artifact
 
@@ -84,6 +107,14 @@ Trackpad, wheel, touch scrolling, and the platform's native scrollbar all work o
 
 Product teams control the exact menu contents and may add more sources, but these two are the recommended baseline. Attachments added through either path should surface as staged artifacts using the same **`swc-upload-artifact`** error/invalid state as a directly-dropped file, since the artifact strip does not distinguish attachments by origin.
 
+## States
+
+- **Default**: send button shown, normal interactivity; enabled once there's prompt content (value or artifact)
+- **`generating`**: stop button shown in place of send while a response is in progress; the input remains editable
+- **`disabled`**: input, upload, and send/stop are all disabled
+
+<Canvas of={PromptFieldStories.States} />
+
 ## Behaviors
 
 ### Handling events
@@ -106,7 +137,7 @@ The `<swc-prompt-field>` element implements the following accessibility features
 
 #### Label association
 
-- The `<textarea>` uses `aria-labelledby` when label text is visible
+- The `<textarea>` uses `aria-labelledby`, pointing to a visually hidden label
 - `accessible-label` can override the accessible name when needed
 - All icon buttons carry descriptive `aria-label` attributes
 - `artifact-scroll-prev-label` and `artifact-scroll-next-label` let consumers localize the artifact-strip chevrons

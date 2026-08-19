@@ -41,18 +41,24 @@ export const OverviewTest: Story = {
       'swc-prompt-field'
     );
 
-    await step('renders with default mode state', async () => {
-      expect(el.mode).toBe('default');
+    await step('renders with default state', async () => {
+      expect(el.disabled).toBe(false);
+      expect(el.generating).toBe(false);
+      expect(el.collapsed).toBe(false);
       expect(el.label).toBe('Prompt');
       expect(el.sendLabel).toBe('Send');
       expect(el.stopLabel).toBe('Stop generating');
       expect(el.uploadLabel).toBe('Add attachment');
       expect(el.accessibleLabel).toBe('');
-      expect(el.minRows).toBe(1);
-      expect(el.maxRows).toBe(4);
+
+      const textarea =
+        el.shadowRoot?.querySelector<HTMLTextAreaElement>('textarea');
+      expect(textarea?.rows).toBe(1);
+      expect(el.minRows).toBeUndefined();
+      expect(el.maxRows).toBeUndefined();
     });
 
-    await step('applies min-rows and max-rows to textarea sizing', async () => {
+    await step('min-rows and max-rows apply when set', async () => {
       el.minRows = 3;
       el.maxRows = 6;
       await el.updateComplete;
@@ -66,6 +72,10 @@ export const OverviewTest: Story = {
       expect(
         textarea?.style.getPropertyValue('--swc-prompt-field-textarea-max-rows')
       ).toBe('6');
+
+      el.minRows = undefined;
+      el.maxRows = undefined;
+      await el.updateComplete;
     });
 
     await step('legal slot renders custom legal content', async () => {
@@ -85,7 +95,6 @@ export const InteractionTest: Story = {
   args: {
     ...Overview.args,
     value: 'Summarize the API changes in this branch.',
-    mode: 'default',
   },
   play: async ({ canvasElement, step }) => {
     const el = await getComponent<PromptField>(
@@ -124,7 +133,7 @@ export const InteractionTest: Story = {
     });
 
     await step('stop button supports keyboard activation', async () => {
-      el.mode = 'loading';
+      el.generating = true;
       await el.updateComplete;
 
       let stopCount = 0;
@@ -306,10 +315,9 @@ export const ArtifactScrollPaginationTest: Story = {
     );
 
     await step('edge fades render when paging is available', async () => {
-      const endFade = el.shadowRoot?.querySelector(
-        '.swc-PromptField-artifacts-fade--end'
-      );
-      expect(endFade).toBeTruthy();
+      // The edge fade is a mask on the scroll container, toggled by the
+      // has-scroll-next class, not a separate fade element.
+      expect(scrollEl?.classList.contains('has-scroll-next')).toBe(true);
     });
 
     await step(
