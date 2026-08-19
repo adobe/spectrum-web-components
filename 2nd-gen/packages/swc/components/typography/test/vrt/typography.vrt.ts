@@ -151,6 +151,39 @@ const permutationContent = () => html`
     'Emphasized modifier'
   )}
   ${row(
+    // typography.mdx documents that emphasized "may also be applied to the
+    // serif sub-variants", so this checks the italic style still applies on
+    // top of the serif font-family/weight override rather than being reset
+    // by it.
+    [
+      modifiedSample(
+        'h2',
+        'swc-Heading',
+        'swc-Heading--serif swc-Typography--emphasized',
+        'Heading serif emphasized'
+      ),
+      modifiedSample(
+        'h3',
+        'swc-Title',
+        'swc-Title--serif swc-Typography--emphasized',
+        'Title serif emphasized'
+      ),
+      modifiedSample(
+        'p',
+        'swc-Body',
+        'swc-Body--serif swc-Typography--emphasized',
+        'Body serif emphasized'
+      ),
+      modifiedSample(
+        'p',
+        'swc-Detail',
+        'swc-Detail--serif swc-Typography--emphasized',
+        'Detail serif emphasized'
+      ),
+    ],
+    'Serif + emphasized modifier'
+  )}
+  ${row(
     [
       modifiedSample(
         'h2',
