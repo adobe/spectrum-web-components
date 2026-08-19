@@ -195,7 +195,7 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           commit-message: 'chore: release 2nd-gen packages'
-          title: 'chore: release 2nd-gen packages (beta)'
+          title: 'chore: release 2nd-gen packages (beta) #gen2-publish'
           branch: changeset-release/2nd-gen
           base: main
           delete-branch: true
