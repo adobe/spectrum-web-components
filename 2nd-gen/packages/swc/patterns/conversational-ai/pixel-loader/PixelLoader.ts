@@ -221,6 +221,13 @@ export class PixelLoader extends SpectrumElement {
   protected override willUpdate(changed: PropertyValues): void {
     this._validateProps(changed);
 
+    // Reset the cycle before render. Doing this in `updated()` is too late:
+    // `render()` would already have drawn `newPreset[oldIndex]`, then
+    // `_playCells()` would animate that DOM against `newPreset[0]`'s cells.
+    if (changed.has('preset')) {
+      this._presetIndex = 0;
+    }
+
     // Removing the preset returns to single-icon mode: show the requested icon
     // right away rather than trying to finish a preset build that isn't there.
     if (changed.has('preset') && !this._resolvedPreset) {
@@ -248,10 +255,6 @@ export class PixelLoader extends SpectrumElement {
     ) {
       this._containerCache = null;
       this._cellElsCache = null;
-    }
-
-    if (changed.has('preset')) {
-      this._presetIndex = 0;
     }
 
     // Resync the ticker on `paused` (freeze stops cycling) and on each

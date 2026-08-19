@@ -129,6 +129,22 @@ export const IconTest: Story = {
         expect(cells(el)).toHaveLength(ICONS[firstPresetIcon].length);
       }
     );
+
+    await step(
+      'swapping presets after a cycle starts at the first icon of the new preset',
+      async () => {
+        // Simulate a mid-cycle preset: `analyze[3]` is `eye` (18 cells).
+        // `cc[0]` is `aiLogo` (12); `cc[3]` is `crop` (18). If the index reset
+        // ran after render, this swap would paint `crop` for a frame.
+        (el as unknown as { _presetIndex: number })._presetIndex = 3;
+        await el.updateComplete;
+        expect(cells(el)).toHaveLength(ICONS.eye.length);
+
+        el.preset = 'cc';
+        await el.updateComplete;
+        expect(cells(el)).toHaveLength(ICONS.aiLogo.length);
+      }
+    );
   },
 };
 
