@@ -162,6 +162,20 @@ const permutationContent = () => html`
     'Heading heavy modifier'
   )}
   ${row(
+    // --heavy exists only on Heading, so this pairing is a single sample
+    // rather than one per variant. Both classes touch font-weight, so this
+    // checks --heavy still wins.
+    [
+      modifiedSample(
+        'h2',
+        'swc-Heading',
+        'swc-Heading--serif swc-Heading--heavy',
+        'Heading serif heavy'
+      ),
+    ],
+    'Serif + heavy modifier'
+  )}
+  ${row(
     [
       html`
         <div>
