@@ -221,6 +221,7 @@
 }
 
 :host([type="media"]) .swc-UploadArtifact-thumbnail ::slotted(img) {
+  box-sizing: border-box;
   display: block;
   position: absolute;
   inset: 0;
@@ -230,6 +231,7 @@
 }
 
 :host([type="media"]) .swc-UploadArtifact-thumbnail ::slotted(*) {
+  box-sizing: border-box;
   display: block;
   position: absolute;
   inset: 0;

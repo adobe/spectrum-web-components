@@ -1,6 +1,10 @@
 ---
 description: Enforces consistent file structure, section separators, meta configuration, story tags, and layout parameters for 2nd-gen Storybook stories files. Story prose lives in per-unit MDX; the stories file is definitions-only.
 globs: 2nd-gen/packages/swc/components/*/stories/**, 2nd-gen/packages/swc/patterns/*/*/stories/**, 2nd-gen/packages/core/controllers/*/stories/**
+paths:
+  - '2nd-gen/packages/swc/components/*/stories/**'
+  - '2nd-gen/packages/swc/patterns/*/*/stories/**'
+  - '2nd-gen/packages/core/controllers/*/stories/**'
 alwaysApply: false
 ---
 
@@ -9,6 +13,12 @@ alwaysApply: false
 Enforce consistent formatting and technical structure for Storybook stories files in 2nd-gen components, patterns, and controllers.
 
 **See also**: `.ai/rules/stories-documentation.md` for guidance on WHAT to author in the per-unit MDX (content, patterns, examples).
+
+## When to apply
+
+- Authoring or reviewing a `.stories.ts` file for a 2nd-gen component, pattern, or controller
+- Applies automatically when Claude reads a file matching the globs below (Cursor: via `globs`; Claude Code: via `paths`)
+- Adding a new story (Playground, Options, States, Behaviors, Accessibility, etc.) and needing the right tags, layout parameters, or naming convention
 
 ## Scope
 

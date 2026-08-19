@@ -1,6 +1,10 @@
 ---
 description: Authoring guide for the per-unit MDX docs page for 2nd-gen components, internal components, patterns, and controllers. Covers section content, accessible examples, and 1st-gen comparison notes. Story prose lives in MDX, not in JSDoc above story exports.
 globs: 2nd-gen/packages/swc/components/*/*.mdx, 2nd-gen/packages/swc/patterns/*/*/*.mdx, 2nd-gen/packages/core/controllers/*/*.mdx
+paths:
+  - '2nd-gen/packages/swc/components/*/*.mdx'
+  - '2nd-gen/packages/swc/patterns/*/*/*.mdx'
+  - '2nd-gen/packages/core/controllers/*/*.mdx'
 alwaysApply: false
 ---
 
@@ -9,6 +13,12 @@ alwaysApply: false
 Authoring guide for the per-unit MDX file that powers each Storybook Docs page. Applies to all four 2nd-gen genres: components, internal components, patterns, and controllers.
 
 **See also**: `.ai/rules/stories-format.md` for the stories file (`.stories.ts`) structure and conventions.
+
+## When to apply
+
+- Authoring or reviewing a per-unit `<unit>.mdx` docs page for a 2nd-gen component, internal component, pattern, or controller
+- Applies automatically when Claude reads a file matching the globs below (Cursor: via `globs`; Claude Code: via `paths`)
+- Verifying documentation prose against the component's actual implementation to avoid hallucinated attributes, slots, or ARIA claims
 
 ## Scope
 

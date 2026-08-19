@@ -37,6 +37,7 @@ import {
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   deepContains,
+  focusableSelector,
   getActiveElement,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
@@ -303,9 +304,7 @@ export class PromptField extends SpectrumElement {
   }
 
   private _isFocusableOrSlotted(element: Element): boolean {
-    return element.matches(
-      'button, a[href], input, textarea, select, [tabindex], slot'
-    );
+    return element.matches(`${focusableSelector}, slot`);
   }
 
   private _handleSendClick(): void {

@@ -1,12 +1,19 @@
 ---
+name: github-description
 description: Generates GitHub pull request and issue descriptions — title, labels, and body — following Spectrum Web Components conventions. Prompts for a linked ticket if none is provided.
-globs:
-alwaysApply: false
 ---
 
 # GitHub description guidelines
 
-If a ticket (GitHub issue or Jira ticket) is not provided by the prompt, prompt the user to supply one before generating the description or pull request content.
+## When to use this skill
+
+- Drafting a GitHub PR description or issue description
+- Filling in the accessibility testing checklist, author/reviewer checklists, or manual test cases for a PR body
+
+## How to invoke
+
+- Say "write a PR description", "draft a GitHub issue for this", or "create the PR body"
+- If no linked ticket (GitHub issue or Jira ticket) is provided, prompt the user to supply one before generating the description or pull request content
 
 When prompted to create a GitHub description, output the following:
 
@@ -88,7 +95,7 @@ Examples:
 
 ## Labels
 
-Use the following labels to categorize pull requests. Only use labels that exist in the repository. GitHub labels are separate from Jira labels; for Jira tickets use the jira-ticket rule and `config.json`.
+Use the following labels to categorize pull requests. Only use labels that exist in the repository. GitHub labels are separate from Jira labels; for Jira tickets use the jira-ticket skill and `config.json`.
 
 ### Priority and release labels
 
