@@ -551,6 +551,7 @@
 }
 
 .swc-PromptField-artifacts--single > slot::slotted([type="media"]) {
+  box-sizing: border-box;
   inline-size: var(--swc-prompt-field-artifact-media-inline-size, 68px);
   min-inline-size: var(--swc-prompt-field-artifact-media-min-inline-size, 68px);
   block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
@@ -667,12 +668,14 @@
 }
 
 .swc-PromptField-artifacts-tiles > slot::slotted([type="card"]) {
+  box-sizing: border-box;
   inline-size: var(--swc-prompt-field-artifact-card-inline-size, 240px);
   min-inline-size: var(--swc-prompt-field-artifact-card-inline-size, 240px);
   max-inline-size: var(--swc-prompt-field-artifact-card-inline-size, 240px);
 }
 
 .swc-PromptField-artifacts-tiles > slot::slotted([type="media"]) {
+  box-sizing: border-box;
   inline-size: var(--swc-prompt-field-artifact-media-inline-size, 68px);
   min-inline-size: var(--swc-prompt-field-artifact-media-min-inline-size, 68px);
   max-inline-size: var(--swc-prompt-field-artifact-media-inline-size, 68px);

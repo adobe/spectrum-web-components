@@ -21,8 +21,8 @@ Coding agents working in this repository should treat **`.ai/`** as the canonica
 
 ## Rules vs skills
 
-- **Rules** enforce consistency (documentation shape, CSS conventions, branch naming guidance, and similar). Prefer the always-applied and glob-triggered rules from [`.ai/README.md`](./.ai/README.md) when editing matching paths.
-- **Skills** are **on-demand** playbooks (for example explain-code, test-driven development, session handoff). When the user’s request fits a skill’s description, **read that skill’s `SKILL.md`** before doing the work.
+- **Rules** are file-path-scoped or always-on. Two are always in context (`branch-naming`, `styles`, both `alwaysApply: true`). The rest are **path-scoped**: they carry both `globs:` (Cursor) and `paths:` (Claude Code) frontmatter, so each tool loads them only when a matching file is in context — deterministically, not by guessing intent. See [`.ai/README.md`](./.ai/README.md) for the full catalog.
+- **Skills** are **on-demand** playbooks for guidance with no natural file-path scope — task or intent-driven work (for example jira-ticket, code-conformance, explain-code, test-driven development, session handoff). A skill has no glob/paths auto-trigger; it must be matched to the task by description, or invoked explicitly. When the user's request fits a skill's description, **read that skill's `SKILL.md`** before doing the work.
 
 ## IDE-specific folders
 
