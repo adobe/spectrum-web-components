@@ -524,6 +524,11 @@
   color: light-dark(token("transparent-black-800"), token("transparent-white-800"));
 }
 
+.swc-PromptField-status-icon swc-pixel-loader {
+  /* Fill the status slot; the loader's default is 56px. Color inherits via its currentcolor default. */
+  --swc-pixel-loader-size: token("workflow-icon-medium");
+}
+
 /* ─────────────────────────────────────
    Uploaded artifacts
    ───────────────────────────────────── */

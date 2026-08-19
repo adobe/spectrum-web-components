@@ -900,3 +900,52 @@ export const SingleArtifactFocusTest: Story = {
     );
   },
 };
+
+export const StatusLoaderTest: Story = {
+  render: () => nothing,
+  play: async ({ canvasElement, step }) => {
+    render(
+      html`
+        <swc-prompt-field
+          label="Prompt"
+          preset="analyze"
+          generating
+        ></swc-prompt-field>
+      `,
+      canvasElement
+    );
+
+    const el = await getComponent<PromptField>(
+      canvasElement,
+      'swc-prompt-field'
+    );
+    await el.updateComplete;
+
+    const loader = () =>
+      el.shadowRoot?.querySelector(
+        '.swc-PromptField-status-icon swc-pixel-loader'
+      );
+
+    await step(
+      'preset passes through and generating animates the loader',
+      async () => {
+        expect(loader()?.getAttribute('preset')).toBe('analyze');
+        expect(loader()?.hasAttribute('paused')).toBe(false);
+      }
+    );
+
+    await step(
+      'idle pauses the loader and icon drives it once the preset is cleared',
+      async () => {
+        el.generating = false;
+        el.preset = undefined;
+        el.icon = 'wand';
+        await el.updateComplete;
+
+        expect(loader()?.hasAttribute('paused')).toBe(true);
+        expect(loader()?.hasAttribute('preset')).toBe(false);
+        expect(loader()?.getAttribute('icon')).toBe('wand');
+      }
+    );
+  },
+};

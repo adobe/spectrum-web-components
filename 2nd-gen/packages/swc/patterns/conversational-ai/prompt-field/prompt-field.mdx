@@ -32,6 +32,15 @@ Every layer derives from a single hue, so overriding `--swc-prompt-field-brand-c
 
 <Canvas of={PromptFieldStories.Variant} />
 
+### Status indicator
+
+A pixel loader sits at the start of the input row. It rests on a settled frame while idle and animates while **`generating`**. Two attributes configure its artwork, both passed straight through to `swc-pixel-loader`:
+
+- **`icon`** (default `aiLogo`): the single icon the loader builds.
+- **`preset`**: a themed icon sequence cycled one per loop (`cc`, `dc`, `exp`, `analyze`, `mega`); overrides `icon` while set.
+
+The indicator is decorative (`aria-hidden`); the generating state is conveyed to assistive technology by the stop button that replaces send.
+
 ### Layout
 
 The `collapsed` attribute controls the field's expanded/collapsed layout:
