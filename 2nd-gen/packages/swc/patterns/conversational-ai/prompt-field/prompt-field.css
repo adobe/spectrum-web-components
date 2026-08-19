@@ -503,12 +503,12 @@
   align-items: baseline;
   min-inline-size: 0;
   padding-inline-start: token("spacing-75");
-  padding-inline-end: calc(var(--swc-prompt-field-send-inline-size, 32px) + token("spacing-300"));
+  padding-inline-end: calc(token("component-height-100") + token("spacing-300"));
 }
 
 /* Collapsed puts the send button inline at the row's end, so the row must be tall enough to hold it. Expanded anchors send to the action bar instead, so no min height (which would add slack below the text). */
 :host([collapsed]) .swc-PromptField-text-group {
-  min-block-size: var(--swc-prompt-field-send-block-size, 32px);
+  min-block-size: token("component-height-100");
 }
 
 .swc-PromptField-status-icon {
@@ -593,7 +593,7 @@
    * wash shows through instead of a solid overlay. The fade is fully
    * transparent across the chevron zone (a plateau, so no tile peeks under the
    * button), then softens to opaque over the remaining -soft distance. */
-  --_swc-prompt-field-artifact-fade-plateau: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + token("spacing-75"));
+  --_swc-prompt-field-artifact-fade-plateau: calc(token("component-height-100") + token("spacing-75"));
   --_swc-prompt-field-artifact-fade-soft: token("spacing-400");
   --_swc-prompt-field-artifact-fade: calc(var(--_swc-prompt-field-artifact-fade-plateau) + var(--_swc-prompt-field-artifact-fade-soft));
   --_swc-prompt-field-artifact-fade-start: 0px;
@@ -624,13 +624,13 @@
 .swc-PromptField-artifacts-scroll.has-scroll-prev {
   --_swc-prompt-field-artifact-fade-start: var(--_swc-prompt-field-artifact-fade);
 
-  scroll-padding-inline-start: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + token("spacing-400") + token("spacing-75"));
+  scroll-padding-inline-start: calc(token("component-height-100") + token("spacing-400") + token("spacing-75"));
 }
 
 .swc-PromptField-artifacts-scroll.has-scroll-next {
   --_swc-prompt-field-artifact-fade-end: var(--_swc-prompt-field-artifact-fade);
 
-  scroll-padding-inline-end: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + token("spacing-400") + token("spacing-75"));
+  scroll-padding-inline-end: calc(token("component-height-100") + token("spacing-400") + token("spacing-75"));
 }
 
 /* Flip the physical mask direction in RTL so fade-start/end (driven by the
