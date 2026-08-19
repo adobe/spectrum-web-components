@@ -659,7 +659,7 @@ export const ArtifactFocusOrderTest: Story = {
     );
 
     await step(
-      'the "<" button becoming disabled while focused keeps focus on it, rather than moving it anywhere',
+      'the "<" button becoming disabled while focused moves focus into the strip, not onto the hidden chevron',
       async () => {
         const firstScrollEnd = waitForScrollEnd(scrollEl);
         scrollEl?.scrollTo({ left: 200, behavior: 'instant' });
@@ -678,7 +678,7 @@ export const ArtifactFocusOrderTest: Story = {
         await el.updateComplete;
 
         expect(getPrevButton()?.getAttribute('aria-disabled')).toBe('true');
-        expect(focusedControl()).toBe(prevButton);
+        expect(artifacts).toContain(focusedControl());
       }
     );
 
@@ -799,7 +799,7 @@ export const ArtifactChevronPagingFocusTest: Story = {
     );
 
     await step(
-      'Tab from Prev (after paging backward) lands in the newly displayed set of tiles',
+      'paging backward to the start moves focus into the newly displayed tiles',
       async () => {
         scrollEl?.scrollTo({ left: 0, behavior: 'instant' });
         await new Promise((resolve) => requestAnimationFrame(resolve));
@@ -824,8 +824,6 @@ export const ArtifactChevronPagingFocusTest: Story = {
         await backPage;
         await el.updateComplete;
 
-        expect(focusedControl()).toBe(prevButton);
-
         const tilesAfterPagingBack = visibleTiles();
         expect(
           tilesAfterPagingBack.some(
@@ -834,11 +832,10 @@ export const ArtifactChevronPagingFocusTest: Story = {
           'sanity check: paging back actually revealed a different set of tiles'
         ).toBe(true);
 
-        const event = dispatchKeydown(prevButton, 'Tab');
-        await el.updateComplete;
-
-        expect(event.defaultPrevented).toBe(true);
-        expect(tilesAfterPagingBack.includes(activeTile()!)).toBe(true);
+        // Paging back reaches the start, so prev becomes aria-disabled; focus
+        // moves into the newly displayed tiles, not onto the hidden chevron.
+        expect(getPrevButton()?.getAttribute('aria-disabled')).toBe('true');
+        expect(tilesAfterPagingBack).toContain(activeTile());
       }
     );
   },

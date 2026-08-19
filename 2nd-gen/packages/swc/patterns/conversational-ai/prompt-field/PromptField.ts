@@ -775,11 +775,13 @@ export class PromptField extends SpectrumElement {
   }
 
   private _updateArtifactScrollState(): void {
+    const focusedChevron = this._focusedChevronDirection();
     const scrollEl = this._artifactScrollEl;
     if (!scrollEl) {
       this._artifactScrollOverflow = false;
       this._artifactCanScrollPrev = false;
       this._artifactCanScrollNext = false;
+      this._redirectFocusFromDisabledChevron(focusedChevron);
       return;
     }
 
@@ -794,6 +796,7 @@ export class PromptField extends SpectrumElement {
     if (!overflow || !firstArtifact || !lastArtifact) {
       this._artifactCanScrollPrev = false;
       this._artifactCanScrollNext = false;
+      this._redirectFocusFromDisabledChevron(focusedChevron);
       return;
     }
 
@@ -808,6 +811,45 @@ export class PromptField extends SpectrumElement {
     this._artifactCanScrollNext = rtl
       ? lastRect.left < scrollRect.left - tolerance
       : lastRect.right > scrollRect.right + tolerance;
+    this._redirectFocusFromDisabledChevron(focusedChevron);
+  }
+
+  /** 'prev'/'next' when a scroll chevron currently holds focus, else null. */
+  private _focusedChevronDirection(): 'prev' | 'next' | null {
+    const active = getActiveElement();
+    if (!active) {
+      return null;
+    }
+    const host = this._delegatedFocusHost(active);
+    if (host.classList.contains('swc-PromptField-artifacts-scroll-prev')) {
+      return 'prev';
+    }
+    if (host.classList.contains('swc-PromptField-artifacts-scroll-next')) {
+      return 'next';
+    }
+    return null;
+  }
+
+  // A chevron the user is on can lose its scroll direction (or unrender) as the
+  // strip settles; move focus to the active tile so it isn't stranded on the
+  // now-hidden control.
+  private _redirectFocusFromDisabledChevron(
+    direction: 'prev' | 'next' | null
+  ): void {
+    if (!direction) {
+      return;
+    }
+    const canStillScroll =
+      direction === 'prev'
+        ? this._artifactCanScrollPrev
+        : this._artifactCanScrollNext;
+    if (canStillScroll) {
+      return;
+    }
+    const tile =
+      this._artifactNavigation.getActiveItem() ??
+      this._assignedArtifactElements?.[0];
+    tile?.focus();
   }
 
   private _warnedMixedArtifactTypes = false;

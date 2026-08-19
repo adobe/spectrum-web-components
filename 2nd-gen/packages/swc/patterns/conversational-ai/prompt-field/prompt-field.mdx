@@ -151,7 +151,7 @@ The artifact strip is a `role="region"` landmark (labeled `artifact-strip-label`
 - **Arrow Left/Right**: move the active thumbnail one tile at a time and scroll it into view (distinct from the `<`/`>` chevrons, which page by a full set)
 - **Shift+Tab** from Close: returns to the thumbnail; **Shift+Tab** from a thumbnail exits the strip entirely
 - Activating the `>` chevron (click, Enter, or Space) keeps focus on the chevron and scrolls the next set of tiles into view; **Shift+Tab** from it then moves into that newly displayed set (its active thumbnail's Close button when shown, otherwise the thumbnail). The `<` chevron is the mirror: activating it keeps focus there, and **Tab** moves into the newly displayed set
-- At either end of the strip, the `<`/`>` chevron becomes `aria-disabled` rather than being removed, so a chevron that has focus when scrolling reaches that end keeps it instead of losing it to the browser's default focus handling
+- At either end of the strip, the `<`/`>` chevron becomes `aria-disabled` rather than being removed; if it had focus when scrolling reached that end, focus moves to the active thumbnail so it is never stranded on the now-hidden chevron
 
 ### Best practices
 
