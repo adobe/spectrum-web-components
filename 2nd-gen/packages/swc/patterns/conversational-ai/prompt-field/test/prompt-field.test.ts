@@ -363,9 +363,10 @@ export const ArtifactScrollPaginationTest: Story = {
         const tiles = scrollEl
           ?.querySelector('slot')
           ?.assignedElements({ flatten: true }) as HTMLElement[] | undefined;
-        expect(getComputedStyle(scrollEl!).scrollSnapType).toContain(
-          'mandatory'
-        );
+        // Computed scroll-snap-type omits proximity (the default); only mandatory serializes.
+        const snapType = getComputedStyle(scrollEl!).scrollSnapType;
+        expect(snapType).toContain('inline');
+        expect(snapType).not.toContain('mandatory');
         expect(getComputedStyle(tiles![0]!).scrollSnapAlign).toContain('start');
       }
     );

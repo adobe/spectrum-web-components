@@ -607,7 +607,9 @@
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
-  scroll-snap-type: inline mandatory;
+
+  /* proximity avoids a forced re-snap when the chevrons change scroll-padding */
+  scroll-snap-type: inline proximity;
   scroll-padding-inline: token("spacing-75");
   scrollbar-color: token("gray-400") transparent;
   mask-image: linear-gradient(to right, transparent 0, transparent calc(var(--_swc-prompt-field-artifact-fade-start) - var(--_swc-prompt-field-artifact-fade-soft)), black var(--_swc-prompt-field-artifact-fade-start), black calc(100% - var(--_swc-prompt-field-artifact-fade-end)), transparent calc(100% - var(--_swc-prompt-field-artifact-fade-end) + var(--_swc-prompt-field-artifact-fade-soft)), transparent 100%);
