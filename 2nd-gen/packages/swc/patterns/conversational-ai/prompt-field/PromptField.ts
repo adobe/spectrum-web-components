@@ -37,6 +37,7 @@ import {
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   deepContains,
+  focusableSelector,
   getActiveElement,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
@@ -81,6 +82,8 @@ const SUPPORTS_FIELD_SIZING =
  * @fires swc-prompt-field-stop - Dispatched when stop generation is requested while generating.
  * @fires swc-prompt-field-upload-click - Dispatched when upload affordance is activated.
  * Consumers should handle file picker flow externally.
+ *
+ * @cssprop --swc-prompt-field-brand-color - Brand hue driving the AI treatment's ring, wash, and glow colors. Defaults to a fuchsia OKLCH value; only the hue is meaningfully used, lightness/chroma come from each layer's own derived values.
  */
 export class PromptField extends SpectrumElement {
   private readonly labelId = uniqueId('swc-prompt-field-label');
@@ -96,6 +99,10 @@ export class PromptField extends SpectrumElement {
   /** Starts as a single-line layout with send/stop inline instead of the default layout with a separate action bar; the textarea still wraps and grows with content either way. */
   @property({ type: Boolean, reflect: true })
   public collapsed = false;
+
+  /** Visual intensity of the AI brand treatment. */
+  @property({ type: String, reflect: true })
+  public variant: 'subtle' | 'balanced' | 'prominent' = 'balanced';
 
   /** Accessible name for the textarea; visually hidden. */
   @property({ type: String })
@@ -277,6 +284,26 @@ export class PromptField extends SpectrumElement {
       return;
     }
     this._handleSendClick();
+  }
+
+  /** Focuses the textarea when a pointerdown doesn't land on a focusable descendant. */
+  private _handlePromptSurfacePointerDown(event: PointerEvent): void {
+    if (this.disabled) {
+      return;
+    }
+    const box = event.currentTarget as HTMLElement;
+    let target = event.target as Element | null;
+    while (target && target !== box && !this._isFocusableOrSlotted(target)) {
+      target = target.parentElement;
+    }
+    if (target === box) {
+      event.preventDefault();
+      this._textarea?.focus();
+    }
+  }
+
+  private _isFocusableOrSlotted(element: Element): boolean {
+    return element.matches(`${focusableSelector}, slot`);
   }
 
   private _handleSendClick(): void {
@@ -944,22 +971,6 @@ export class PromptField extends SpectrumElement {
                 ></slot>
               </div>
             </div>
-            ${this._artifactCanScrollPrev
-              ? html`
-                  <div
-                    class="swc-PromptField-artifacts-fade swc-PromptField-artifacts-fade--start"
-                    aria-hidden="true"
-                  ></div>
-                `
-              : nothing}
-            ${this._artifactCanScrollNext
-              ? html`
-                  <div
-                    class="swc-PromptField-artifacts-fade swc-PromptField-artifacts-fade--end"
-                    aria-hidden="true"
-                  ></div>
-                `
-              : nothing}
           </div>
           ${this._artifactScrollOverflow
             ? html`
@@ -1022,65 +1033,73 @@ export class PromptField extends SpectrumElement {
 
     return html`
       <div class="swc-PromptField">
-        <div class="swc-PromptField-box">
+        <div class="swc-PromptField-outer-border">
           <div
-            class="swc-PromptField-input-area${hasArtifacts
-              ? ' has-artifact'
-              : ''}"
+            class="swc-PromptField-box"
+            @pointerdown=${this._handlePromptSurfacePointerDown}
           >
-            ${this._renderArtifact()}
-            <span
-              id=${this.labelId}
-              class="swc-PromptField-label swc-VisuallyHidden"
+            <span class="swc-PromptField-gloss"></span>
+            <div
+              class="swc-PromptField-input-area${hasArtifacts
+                ? ' has-artifact'
+                : ''}"
             >
-              ${this.label}
-            </span>
-            <div class="swc-PromptField-controls">
-              <div class="swc-PromptField-text-group">
-                ${this._renderStatusIcon()}
-                <textarea
-                  class="swc-PromptField-textarea"
-                  .value=${this.value}
-                  placeholder=${this.placeholder}
-                  aria-labelledby=${this.labelId}
-                  aria-label=${ifDefined(
-                    this.accessibleLabel.trim().length > 0
-                      ? this.accessibleLabel.trim()
-                      : undefined
-                  )}
-                  aria-placeholder=${ifDefined(this.placeholder || undefined)}
-                  ?disabled=${this.disabled}
-                  rows=${this._normalizedMinRows}
-                  style=${styleMap({
-                    '--swc-prompt-field-textarea-min-rows': String(
-                      this._normalizedMinRows
-                    ),
-                    '--swc-prompt-field-textarea-max-rows':
-                      this._normalizedMaxRows !== undefined
-                        ? String(this._normalizedMaxRows)
-                        : undefined,
-                  })}
-                  @input=${this._handleInput}
-                  @keydown=${this._handleTextareaKeydown}
-                ></textarea>
-              </div>
-              <div
-                class="swc-PromptField-leading-actions"
-                aria-hidden=${ifDefined(this.collapsed ? 'true' : undefined)}
-                .inert=${this.collapsed}
+              ${this._renderArtifact()}
+              <span
+                id=${this.labelId}
+                class="swc-PromptField-label swc-VisuallyHidden"
               >
-                <div class="swc-PromptField-leading-actions-row">
-                  <button
-                    class="swc-PromptField-upload"
-                    aria-label=${this.uploadLabel}
+                ${this.label}
+              </span>
+              <div class="swc-PromptField-controls">
+                <div class="swc-PromptField-text-group">
+                  ${this._renderStatusIcon()}
+                  <textarea
+                    class="swc-PromptField-textarea"
+                    .value=${this.value}
+                    placeholder=${this.placeholder}
+                    aria-labelledby=${this.labelId}
+                    aria-label=${ifDefined(
+                      this.accessibleLabel.trim().length > 0
+                        ? this.accessibleLabel.trim()
+                        : undefined
+                    )}
+                    aria-placeholder=${ifDefined(this.placeholder || undefined)}
                     ?disabled=${this.disabled}
-                    @click=${this._handleUploadClick}
-                  >
-                    <swc-icon aria-hidden="true">${PlusIcon()}</swc-icon>
-                  </button>
+                    rows=${this._normalizedMinRows}
+                    style=${styleMap({
+                      '--swc-prompt-field-textarea-min-rows': String(
+                        this._normalizedMinRows
+                      ),
+                      '--swc-prompt-field-textarea-max-rows':
+                        this._normalizedMaxRows !== undefined
+                          ? String(this._normalizedMaxRows)
+                          : undefined,
+                    })}
+                    @input=${this._handleInput}
+                    @keydown=${this._handleTextareaKeydown}
+                  ></textarea>
                 </div>
+                <div
+                  class="swc-PromptField-leading-actions"
+                  aria-hidden=${ifDefined(this.collapsed ? 'true' : undefined)}
+                  .inert=${this.collapsed}
+                >
+                  <div class="swc-PromptField-leading-actions-row">
+                    <button
+                      class="swc-PromptField-upload"
+                      aria-label=${this.uploadLabel}
+                      ?disabled=${this.disabled}
+                      @click=${this._handleUploadClick}
+                    >
+                      <swc-icon aria-hidden="true">${PlusIcon()}</swc-icon>
+                    </button>
+                  </div>
+                </div>
+                ${showStop
+                  ? this._renderStopButton()
+                  : this._renderSendButton()}
               </div>
-              ${showStop ? this._renderStopButton() : this._renderSendButton()}
             </div>
           </div>
         </div>
