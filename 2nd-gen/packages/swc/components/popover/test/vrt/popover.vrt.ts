@@ -102,10 +102,10 @@ const placementGroup = (base: PlacementBase, prefix: string) => {
   return stack(rendered, base, layout);
 };
 
-// All 12 placements. Direction (LTR/RTL) only changes where `start`/`end`
-// land, so only those two need re-verification under RTL — see
-// `PermutationsRtl` below, which covers that without paying for a second full
-// copy of `top`/`bottom` (which don't care about direction at all).
+// All 12 placements. Also run in full under RTL by `PermutationsRtl` below —
+// direction only changes where `start`/`end` land, but it's cheap to confirm
+// `top`/`bottom` render the same rather than assuming it from the mirroring
+// theory alone.
 const PLACEMENT_BASES = ['start', 'end', 'top', 'bottom'] as const;
 
 const placementRows = (prefix: string) =>
@@ -222,7 +222,11 @@ export const Permutations: Story = {
   play: openManyPopoversForVrt,
 };
 
-// RTL start/end and dark hide-arrow smoke; must lead the page.
+// All 12 placements under RTL (not just start/end): top/bottom don't mirror,
+// but running them here too catches anything direction-specific in their
+// rendering rather than assuming the mirror-only theory holds, and keeps
+// this story a full RTL counterpart to `Permutations` rather than a partial
+// one. Dark hide-arrow smoke also lives here rather than on `Permutations`.
 export const PermutationsRtl: Story = {
   render: () =>
     theme(
@@ -231,7 +235,7 @@ export const PermutationsRtl: Story = {
           style="display: flex; flex-direction: column; align-items: center;"
         >
           ${vrtPage(html`
-            ${(['start', 'end'] as const).map((base) =>
+            ${PLACEMENT_BASES.map((base) =>
               placementGroup(base, 'permutations-rtl')
             )}
             ${hideArrowRow('permutations-rtl')}
