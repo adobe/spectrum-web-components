@@ -53,6 +53,9 @@
   --swc-action-button-background-color-hover: token("gray-300");
   --swc-action-button-content-color-default: token("gray-700");
 
+  /* Ring tracks the same hook as the tile so both stay consistent and a consumer can retheme both at once. */
+  --swc-action-button-focus-indicator-color: var(--swc-upload-artifact-focus-indicator-color);
+
   position: absolute;
   z-index: 2;
 }

@@ -528,6 +528,11 @@
    Uploaded artifacts
    ───────────────────────────────────── */
 
+/* Match the composer buttons: tile and dismiss focus rings track the themed card (black on light, white on dark) instead of the artifact's default accent. */
+::slotted(swc-upload-artifact) {
+  --swc-upload-artifact-focus-indicator-color: light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color"));
+}
+
 .swc-PromptField-artifacts--single {
   /* Reserves clearance for the dismiss badge floating above the tile's top-right corner, same as --multiple below. */
   --_swc-prompt-field-artifact-badge-clearance: 16px;
