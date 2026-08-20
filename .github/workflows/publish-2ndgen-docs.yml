@@ -73,11 +73,28 @@ jobs:
       - name: Setup AzCopy
         uses: ./.github/actions/setup-azcopy
 
-      - name: Deploy to Azure Blob Storage
+      # Every merge to main deploys to the staging path (docs-staging/). The
+      # production path (docs/) maps to spectrum-web-components.adobe.com and is
+      # published only on a manual run or a commit whose message contains
+      # `#gen2-publish`, so the public site stays in sync with releases. The
+      # keyword deliberately avoids the substring `#publish`, which the Gen1
+      # publish-docs-site workflow matches on.
+      - name: Deploy to staging
+        run: |
+          echo "Deploying 2nd-gen docs to docs-staging/"
+          azcopy sync "2nd-gen/packages/swc/storybook-static/" \
+            "https://swcpreviews.blob.core.windows.net/\$web/docs-staging/" \
+            --recursive \
+            --delete-destination=true \
+            --from-to LocalBlob
+          echo "Deployed to https://swcpreviews.z13.web.core.windows.net/docs-staging/"
+
+      - name: Deploy to production
         # spectrum-web-components.adobe.com maps to the /docs path in the storage
         # container, so deploying to $web/docs/ IS the domain root. The generated
         # .well-known/agent-skills/ directory inside storybook-static/ is therefore
         # served at the expected discovery URL without a separate upload step.
+        if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '#gen2-publish')
         run: |
           echo "Deploying 2nd-gen docs to docs/"
           azcopy sync "2nd-gen/packages/swc/storybook-static/" \

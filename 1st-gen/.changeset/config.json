@@ -12,6 +12,7 @@
   "commit": false,
   "fixed": [["@spectrum-web-components/*"]],
   "ignore": [],
+  "privatePackages": false,
   "snapshot": {
     "prereleaseTemplate": "{tag}.{datetime}",
     "useCalculatedVersion": true
