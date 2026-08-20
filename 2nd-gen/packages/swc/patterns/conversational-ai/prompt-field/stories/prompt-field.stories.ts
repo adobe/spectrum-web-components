@@ -456,6 +456,21 @@ function fileBadgeLabel(fileName: string): string | undefined {
   return extension ? extension.toUpperCase() : undefined;
 }
 
+function filesToArtifacts(files: File[]): PromptFieldBehaviorArtifact[] {
+  return files.map((file, index) => {
+    const isImage =
+      file.type.startsWith('image/') ||
+      /\.(png|jpe?g|gif|webp|bmp|svg|avif)$/i.test(file.name);
+    return {
+      id: `${crypto.randomUUID()}-${index}`,
+      fileName: file.name || 'Attachment',
+      sizeLabel: `${Math.max(1, Math.round(file.size / 1024))} KB`,
+      thumbnailUrl: isImage ? URL.createObjectURL(file) : undefined,
+      badgeLabel: isImage ? undefined : fileBadgeLabel(file.name),
+    } satisfies PromptFieldBehaviorArtifact;
+  });
+}
+
 @customElement('swc-prompt-field-behavior-demo')
 class PromptFieldBehaviorDemo extends LitElement {
   @state()
@@ -514,22 +529,15 @@ class PromptFieldBehaviorDemo extends LitElement {
       return;
     }
 
-    const nextArtifacts = files.map((file, index) => {
-      const isImage =
-        file.type.startsWith('image/') ||
-        /\.(png|jpe?g|gif|webp|bmp|svg|avif)$/i.test(file.name);
-      return {
-        id: `${crypto.randomUUID()}-${index}`,
-        fileName: file.name || 'Attachment',
-        sizeLabel: `${Math.max(1, Math.round(file.size / 1024))} KB`,
-        thumbnailUrl: isImage ? URL.createObjectURL(file) : undefined,
-        badgeLabel: isImage ? undefined : fileBadgeLabel(file.name),
-      } satisfies PromptFieldBehaviorArtifact;
-    });
-
-    this.artifacts = [...this.artifacts, ...nextArtifacts];
+    this.artifacts = [...this.artifacts, ...filesToArtifacts(files)];
     this.readout = `External picker selected ${files.length} file${files.length === 1 ? '' : 's'} and the consumer slotted media upload artifacts into the prompt.`;
     input.value = '';
+  }
+
+  private _handleDrop(event: Event): void {
+    const { files } = (event as CustomEvent<{ files: File[] }>).detail;
+    this.artifacts = [...this.artifacts, ...filesToArtifacts(files)];
+    this.readout = `swc-prompt-field-drop delivered ${files.length} file${files.length === 1 ? '' : 's'} and the consumer slotted media upload artifacts into the prompt.`;
   }
 
   private _handleArtifactDismiss(event: Event): void {
@@ -561,6 +569,7 @@ class PromptFieldBehaviorDemo extends LitElement {
             @swc-prompt-field-input=${this._handleInput}
             @swc-prompt-field-submit=${this._handleSubmit}
             @swc-prompt-field-upload-click=${this._handleUploadClick}
+            @swc-prompt-field-drop=${this._handleDrop}
             @swc-upload-artifact-dismiss=${this._handleArtifactDismiss}
           >
             ${this.artifacts.map(
@@ -632,6 +641,21 @@ export const HandlingEvents: Story = {
   tags: ['behaviors'],
 };
 HandlingEvents.storyName = 'Handling events';
+
+export const DragAndDrop: Story = {
+  render: () => html`
+    <swc-prompt-field-behavior-demo></swc-prompt-field-behavior-demo>
+  `,
+  parameters: {
+    docs: {
+      source: {
+        code: false,
+      },
+    },
+  },
+  tags: ['behaviors'],
+};
+DragAndDrop.storyName = 'Drag and drop';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORY

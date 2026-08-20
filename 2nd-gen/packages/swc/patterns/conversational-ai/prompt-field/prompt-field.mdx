@@ -129,6 +129,12 @@ Consumers are responsible for handling upload flows and can mirror `value` from 
 
 <Canvas of={PromptFieldStories.HandlingEvents} />
 
+### Drag and drop
+
+Dragging a file anywhere over `swc-prompt-field` pushes the AI brand treatment to its strongest ("prominent" + hover) intensity, regardless of the field's own `variant`: a drop target should be unmistakable even on a `subtle` field. Dropping fires **`swc-prompt-field-drop`** with `detail: { files: File[] }`; consumers build and slot `<swc-upload-artifact>` elements from those files the same way they do for the **`+`** button's external picker flow. A field in `disabled` mode rejects the drag outright (the OS cursor shows "not allowed") instead of accepting files it can't act on.
+
+<Canvas of={PromptFieldStories.DragAndDrop} />
+
 ## Accessibility
 
 ### Features
@@ -159,6 +165,7 @@ The artifact strip is a `role="region"` landmark (labeled `artifact-strip-label`
 - Use `accessible-label` only when a distinct non-visual name is required
 - Use `placeholder` as a hint, not a replacement for the label
 - Ensure artifact content slotted into `artifact` slot includes descriptive text
+- Drag and drop is a progressive enhancement, not the only way to attach a file: native browser drag-and-drop has no keyboard equivalent, so the **`+`** button must stay available and fully functional for keyboard and screen reader users
 
 <Canvas of={PromptFieldStories.Accessibility} />
 

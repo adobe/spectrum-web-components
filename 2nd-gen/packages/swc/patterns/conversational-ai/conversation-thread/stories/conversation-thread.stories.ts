@@ -416,6 +416,11 @@ class ConversationFullPatternDemo extends LitElement {
     input.value = '';
   };
 
+  private handleDrop = (event: Event): void => {
+    const { files } = (event as CustomEvent<{ files: File[] }>).detail;
+    this.appendFiles(files);
+  };
+
   private handleFeedback = (event: Event): void => {
     const feedbackEvent = event as CustomEvent<{
       status?: 'positive' | 'negative' | undefined;
@@ -639,6 +644,7 @@ class ConversationFullPatternDemo extends LitElement {
             @swc-prompt-field-submit=${this.handlePromptSubmit}
             @swc-prompt-field-stop=${this.stopGeneration}
             @swc-prompt-field-upload-click=${this.handleUploadClick}
+            @swc-prompt-field-drop=${this.handleDrop}
           >
             ${this.renderArtifacts()}
             <p slot="legal" class="swc-PromptField-legal-disclaimer">
