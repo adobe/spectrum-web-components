@@ -69,6 +69,8 @@
     - [Color loupe accessibility migration analysis](color-loupe/accessibility-migration-analysis.md)
     - [Color loupe migration checklist](color-loupe/migration-checklist.md)
     - [Color loupe migration analysis](color-loupe/rendering-and-styling-migration-analysis.md)
+- Combobox
+    - [Combobox accessibility migration analysis](combobox/accessibility-migration-analysis.md)
 - Divider
     - [Divider accessibility migration analysis](divider/accessibility-migration-analysis.md)
     - [Divider migration roadmap](divider/rendering-and-styling-migration-analysis.md)
@@ -101,6 +103,8 @@
     - [Link accessibility migration analysis](link/accessibility-migration-analysis.md)
     - [Link migration plan](link/migration-plan.md)
     - [Link migration roadmap](link/rendering-and-styling-migration-analysis.md)
+- Listbox
+    - [Listbox accessibility migration analysis](listbox/accessibility-migration-analysis.md)
 - Menu
     - [Menu accessibility migration analysis](menu/accessibility-migration-analysis.md)
     - [Menu migration roadmap](menu/rendering-and-styling-migration-analysis.md)
@@ -120,6 +124,10 @@
     - [Opacity checkerboard accessibility migration analysis](opacity-checkerboard/accessibility-migration-analysis.md)
     - [Opacity Checkerboard migration plan](opacity-checkerboard/migration-plan.md)
     - [Opacity Checkerboard migration roadmap](opacity-checkerboard/rendering-and-styling-migration-analysis.md)
+- Option
+    - [Option accessibility migration analysis](option/accessibility-migration-analysis.md)
+- Option Group
+    - [Option group accessibility migration analysis](option-group/accessibility-migration-analysis.md)
 - Picker Button
     - [Picker button migration roadmap](picker-button/rendering-and-styling-migration-analysis.md)
 - Popover

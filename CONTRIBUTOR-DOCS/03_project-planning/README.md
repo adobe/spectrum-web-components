@@ -42,6 +42,7 @@
     - Color Field
     - Color Handle
     - Color Loupe
+    - Combobox
     - Divider
     - Dropzone
     - Field Group
@@ -53,6 +54,7 @@
     - Infield Button
     - Infield Progress Circle
     - Link
+    - Listbox
     - Menu
     - Menu Group
     - Menu Item
@@ -60,6 +62,8 @@
     - Meter
     - Number Field
     - Opacity Checkerboard
+    - Option
+    - Option Group
     - Picker Button
     - Popover
     - Progress Bar
