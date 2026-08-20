@@ -34,10 +34,12 @@ Every layer derives from a single hue, so overriding `--swc-prompt-field-brand-c
 
 ### Status indicator
 
-A pixel loader sits at the start of the input row. It rests on a settled frame while idle and animates while **`generating`**. Two attributes configure its artwork, both passed straight through to `swc-pixel-loader`:
+A pixel loader sits at the start of the input row. It rests on a settled frame while idle and animates while **`generating`**. A single **`loader`** attribute sets its artwork, passed straight through to `swc-pixel-loader`:
 
-- **`icon`** (default `aiLogo`): the single icon the loader builds.
-- **`preset`**: a themed icon sequence cycled one per loop (`cc`, `dc`, `exp`, `analyze`, `mega`); overrides `icon` while set.
+- An **icon name** (default `aiLogo`): the single icon the loader builds and holds.
+- A **preset name** (`cc`, `dc`, `exp`, `analyze`, `mega`): a themed icon sequence cycled one per loop.
+
+The two name sets don't overlap, so one attribute covers both.
 
 The indicator is decorative (`aria-hidden`); the generating state is conveyed to assistive technology by the stop button that replaces send.
 

@@ -908,7 +908,7 @@ export const StatusLoaderTest: Story = {
       html`
         <swc-prompt-field
           label="Prompt"
-          preset="analyze"
+          loader="analyze"
           generating
         ></swc-prompt-field>
       `,
@@ -927,7 +927,7 @@ export const StatusLoaderTest: Story = {
       );
 
     await step(
-      'preset passes through and generating animates the loader',
+      'a preset name routes to the loader preset and generating animates it',
       async () => {
         expect(loader()?.getAttribute('preset')).toBe('analyze');
         expect(loader()?.hasAttribute('paused')).toBe(false);
@@ -935,11 +935,10 @@ export const StatusLoaderTest: Story = {
     );
 
     await step(
-      'idle pauses the loader and icon drives it once the preset is cleared',
+      'an icon name routes to the loader icon and idle pauses it',
       async () => {
         el.generating = false;
-        el.preset = undefined;
-        el.icon = 'wand';
+        el.loader = 'wand';
         await el.updateComplete;
 
         expect(loader()?.hasAttribute('paused')).toBe(true);

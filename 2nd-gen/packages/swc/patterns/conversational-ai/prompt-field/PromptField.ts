@@ -50,6 +50,7 @@ import type {
   PixelLoaderIconName,
   PixelLoaderPresetName,
 } from '../pixel-loader/index.js';
+import { PIXEL_LOADER_PRESET_NAMES } from '../pixel-loader/index.js';
 import { ChevronUpIcon, PlusIcon, StopIcon } from '../utils/icons/index.js';
 
 import visuallyHiddenStyles from '../../../stylesheets/_lit-styles/visually-hidden.css';
@@ -109,9 +110,9 @@ export class PromptField extends SpectrumElement {
   @property({ type: String, reflect: true })
   public variant: 'subtle' | 'balanced' | 'prominent' = 'balanced';
 
-  /** Icon shown by the status pixel-loader. Ignored while `preset` is set. Unions inlined so the API table lists the values; guarded against the loader's types in `_renderStatusIcon`. */
+  /** Status loader artwork: a single icon name (static), or a preset name (`cc`, `dc`, `exp`, `analyze`, `mega`) that cycles a themed sequence. Unions inlined so the API table lists the values; routed to the loader's icon/preset in `_renderStatusIcon`. */
   @property({ type: String, reflect: true })
-  public icon:
+  public loader:
     | 'aiLogo'
     | 'brush'
     | 'eye'
@@ -141,11 +142,12 @@ export class PromptField extends SpectrumElement {
     | 'adobeD'
     | 'adobeO'
     | 'adobeB'
-    | 'adobeE' = 'aiLogo';
-
-  /** Themed icon sequence for the status pixel-loader, cycled one per loop; overrides `icon`. */
-  @property({ type: String, reflect: true })
-  public preset?: 'cc' | 'dc' | 'exp' | 'analyze' | 'mega';
+    | 'adobeE'
+    | 'cc'
+    | 'dc'
+    | 'exp'
+    | 'analyze'
+    | 'mega' = 'aiLogo';
 
   /** Accessible name for the textarea; visually hidden. */
   @property({ type: String })
@@ -1116,13 +1118,20 @@ export class PromptField extends SpectrumElement {
 
   /** Status pixel-loader: paused on a settled frame while idle, animating while generating. */
   private _renderStatusIcon(): TemplateResult {
-    // Typed against the loader so the inlined icon/preset unions can never pass an invalid value.
-    const icon: PixelLoaderIconName = this.icon;
-    const preset: PixelLoaderPresetName | undefined = this.preset;
+    // One `loader` value routes to the pixel-loader's icon or preset; the name
+    // sets are disjoint, so preset membership disambiguates. Typed against the
+    // loader so the inlined union can never pass an invalid value.
+    const isPreset = (
+      PIXEL_LOADER_PRESET_NAMES as readonly string[]
+    ).includes(this.loader);
+    const preset = isPreset
+      ? (this.loader as PixelLoaderPresetName)
+      : undefined;
+    const icon = isPreset ? undefined : (this.loader as PixelLoaderIconName);
     return html`
       <span class="swc-PromptField-status-icon" aria-hidden="true">
         <swc-pixel-loader
-          icon=${icon}
+          icon=${ifDefined(icon)}
           preset=${ifDefined(preset)}
           ?paused=${!this.generating}
         ></swc-pixel-loader>
