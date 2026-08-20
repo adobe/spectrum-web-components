@@ -138,11 +138,10 @@ export class ActionGroup extends ActionGroupBase {
   /**
    * @internal
    *
-   * Watches for `disabled` and `aria-disabled` attribute changes on individual
-   * managed children. `slotchange` does not fire when an existing child's
-   * disabled state changes, so without this observer the navigation controller
-   * would hold a stale tab-stop assignment (e.g., btn1 retaining tabindex=0
-   * after becoming disabled) and Tab could no longer enter the group.
+   * Watches for `disabled` and `aria-disabled` on managed children so
+   * `navigation.refresh()` runs when eligibility changes. Needed because
+   * `slotchange` does not fire for attribute-only updates or reconnect with
+   * unchanged slotted content.
    */
   private childObserver?: MutationObserver;
 
@@ -155,6 +154,9 @@ export class ActionGroup extends ActionGroupBase {
     this.childObserver = new MutationObserver(() => {
       this.navigation.refresh();
     });
+    // Re-arm when slotted children are unchanged (no `slotchange`). Also runs
+    // on first connect; `handleSlotchange` repeats the same work (harmless).
+    void this.updateComplete.then(() => this.observeManagedChildren());
   }
 
   public override disconnectedCallback(): void {
@@ -174,7 +176,17 @@ export class ActionGroup extends ActionGroupBase {
   protected override handleSlotchange(): void {
     super.handleSlotchange();
     this.propagateVisualStateToChildren();
+    this.observeManagedChildren();
+  }
 
+  /**
+   * @internal
+   *
+   * Attaches `childObserver` to every managed child. Both native `disabled`
+   * and `aria-disabled` are watched so one callback covers group-level and
+   * per-child disable paths.
+   */
+  private observeManagedChildren(): void {
     this.childObserver?.disconnect();
     for (const child of this.managedChildren ?? []) {
       this.childObserver?.observe(child, {
@@ -182,7 +194,6 @@ export class ActionGroup extends ActionGroupBase {
         attributeFilter: ['disabled', 'aria-disabled'],
       });
     }
-
     this.navigation.refresh();
   }
 
