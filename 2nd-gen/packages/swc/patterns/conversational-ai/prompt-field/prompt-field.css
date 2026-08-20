@@ -487,7 +487,7 @@
 }
 
 :host(:not([collapsed])) .swc-PromptField-controls {
-  gap: token("spacing-300");
+  gap: token("spacing-500");
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -506,22 +506,24 @@
   padding-inline-end: calc(token("component-height-100") + token("spacing-300"));
 }
 
-/* Collapsed puts the send button inline at the row's end, so the row must be tall enough to hold it. Expanded anchors send to the action bar instead, so no min height (which would add slack below the text). */
-:host([collapsed]) .swc-PromptField-text-group {
-  min-block-size: token("component-height-100");
-}
-
 .swc-PromptField-status-icon {
   display: flex;
   flex: 0 0 auto;
   align-items: center;
   align-self: start;
   justify-content: center;
-  inline-size: token("workflow-icon-medium");
-  block-size: token("workflow-icon-medium");
+
+  /* 24px so the loader's center lines up with the upload button's icon below. */
+  inline-size: token("spacing-400");
+  block-size: token("spacing-400");
 
   /* Match the upload button's static content color: black on light cards, white on dark. */
   color: light-dark(token("transparent-black-800"), token("transparent-white-800"));
+}
+
+.swc-PromptField-status-icon swc-pixel-loader {
+  /* 21px to match the reference loader, centered in the 24px status slot. Color inherits via its currentcolor default. */
+  --swc-pixel-loader-size: 21px;
 }
 
 /* ─────────────────────────────────────
@@ -868,6 +870,14 @@
   --swc-action-button-background-color-hover: token("gray-800");
   --swc-action-button-background-color-focus: token("gray-900");
   --swc-action-button-background-color-down: token("gray-900");
+}
+
+/* Collapsed has no action bar, so the button is inline. The row is content-height (one line) and shorter than the button, so center the button on it rather than stretching it with inset-block: 0. */
+:host([collapsed]) .swc-PromptField-send,
+:host([collapsed]) .swc-PromptField-stop {
+  inset-block-start: 50%;
+  inset-block-end: auto;
+  margin-block-start: calc(token("component-height-100") / -2);
 }
 
 /* ─────────────────────────────────────
