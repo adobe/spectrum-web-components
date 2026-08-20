@@ -105,15 +105,14 @@ Pseudo-state rules with nested rules — such as an `::after` focus ring or a ne
 
 ### Positioned overlay components
 
-Components built on `PlacementController` (popover, tooltip, and future components such as picker and combobox) position their surface with floating-ui's `shift` middleware. `shift` has no configurable boundary; it defaults to the current viewport, and `autoUpdate` recomputes the position on every scroll. This is correct production behavior (a popover pinned near a screen edge should slide rather than clip off-screen), but it means a trigger positioned outside the viewport at the moment its popover opens gets clamped to wherever the viewport currently is, not to its actual (off-screen) trigger.
+Components that position a surface with `PlacementController` use Floating UI's `shift` middleware. The controller does not expose a custom overflow boundary, so `shift` uses clipping ancestors capped by the visual viewport, and `autoUpdate` recomputes on scroll. That is correct production behavior (a popover pinned near a screen edge should slide rather than clip off-screen), but a trigger outside the viewport at open time gets clamped to the current viewport, not to its off-screen position.
 
-A dense VRT matrix that opens many instances at once on a page taller than one viewport can hit this: instances whose triggers land outside the initial viewport collapse onto the same clamped position instead of resolving distinct ones. Only the axis perpendicular to the requested placement (the cross-axis) is affected — a `top`/`bottom` placement's cross-axis is horizontal, so it is unaffected on a page that only scrolls vertically; a `start`/`end` placement's cross-axis is vertical, so it is affected.
+A dense VRT matrix that opens many instances at once on a page taller than one viewport can collapse those off-screen triggers onto the same spot. Only the cross-axis is affected: `top`/`bottom` is horizontal, so it is safe on a vertically scrolling page; `start`/`end` is vertical, so it is not. Disable `shouldFlip` in the play function so leftover viewport space cannot flip a surface to the other side.
 
-To avoid it:
+To keep snapshots deterministic:
 
-- Render the affected placements first on the page (or as the only content in their own story), so their triggers stay within the viewport's initial bounds when they open.
-- Stack them in a column rather than packing them side by side, so siblings extending along the same axis don't overlap each other either.
-- If an axis needs its own RTL or theme variant and doesn't fit on the same page as everything else for this reason, give it its own story rather than making the page taller.
+- Render the affected placements first (or in their own story) so their triggers stay in the initial viewport when they open. Split the story if growing the page would push those triggers below the fold.
+- Do not use the shared `row()` helper. Open surfaces paint in the top layer and overlap if packed horizontally; stack them in a column with local helpers instead.
 
 See popover's `test/vrt/popover.vrt.ts` and `test/vrt/vrt-helpers.ts` (`stack`, `vrtPage`, `openManyPopoversForVrt`) for a worked example.
 
