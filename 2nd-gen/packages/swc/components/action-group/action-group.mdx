@@ -62,7 +62,11 @@ Setting `static-color` on the group propagates that value to every slotted `swc-
 
 The `disabled` attribute sets `aria-disabled="true"` on the host and propagates `aria-disabled="true"` to every slotted child. Children remain in the <kbd>Tab</kbd> and arrow-key sequence so screen reader users can still discover the group. Activation is suppressed rather than removing the group from the keyboard sequence entirely.
 
-Disabling an individual `swc-action-button` child directly, using its own `disabled` attribute rather than the group's, behaves differently: that child can no longer receive focus, and arrow-key navigation skips over it, while the rest of the group is unaffected.
+How you disable a child depends on scope:
+
+- **Whole strip unavailable:** use the group's `disabled` attribute (above).
+- **One action unavailable but keyboard-discoverable:** set `aria-disabled="true"` on that `swc-action-button`. The child stays in the roving <kbd>Tab</kbd> and arrow-key sequence; activation is suppressed.
+- **One action removed from focus:** set `disabled` on that `swc-action-button`. Native `disabled` applies; the child cannot receive focus and is never the roving tab stop. Arrow keys cannot move focus onto it; pressing an arrow toward that child leaves focus on the current item.
 
 <Canvas of={ActionGroupStories.Disabled} />
 
@@ -108,7 +112,7 @@ The first example below is a standalone group with no wrapper at all. `role="too
 
 - Name the group when the strip has a distinct purpose (for example, "Text formatting" or "Zoom controls"). A visual cluster alone does not give screen reader users a group name.
 - Give every icon-only child its own `accessible-label`. The group's name describes the cluster, but it does not substitute for each child's accessible name.
-- Prefer the group's `disabled` attribute when the whole strip is unavailable, so users can still <kbd>Tab</kbd> into the group and discover that those actions exist. Disable an individual child only when that one control should leave the <kbd>Tab</kbd> and arrow-key sequence.
+- When the whole strip is unavailable, use the group's `disabled` attribute so users can still <kbd>Tab</kbd> into the group and discover those actions. When one action is unavailable but should stay keyboard-discoverable, set `aria-disabled="true"` on that child. Use an individual child's `disabled` attribute only when that control should be removed from focus entirely.
 - Keep related actions in one group so they share a single <kbd>Tab</kbd> stop. Split unrelated clusters into separate groups, each with its own optional name.
 
 ## Upcoming features
