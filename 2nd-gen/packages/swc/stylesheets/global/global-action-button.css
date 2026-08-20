@@ -18,6 +18,7 @@
   vertical-align: top;
   --_swc-action-button-border-width: token("border-width-100");
   --_swc-action-button-min-block-size: var(--swc-action-button-min-block-size, token("component-height-100"));
+  --_swc-action-button-border-radius: var(--swc-action-button-border-radius, token("corner-radius-medium-size-medium"));
 
   -webkit-tap-highlight-color: transparent;
   display: inline-flex;
@@ -37,10 +38,10 @@
   text-decoration: none;
   background-color: var(--swc-action-button-background-color-default, token("gray-100"));
   border: var(--_swc-action-button-border-width) solid var(--swc-action-button-border-color-default, transparent);
-  border-start-start-radius: var(--swc-action-button-border-start-start-radius, var(--swc-action-button-border-radius, token("corner-radius-medium-size-medium")));
-  border-start-end-radius: var(--swc-action-button-border-start-end-radius, var(--swc-action-button-border-radius, token("corner-radius-medium-size-medium")));
-  border-end-start-radius: var(--swc-action-button-border-end-start-radius, var(--swc-action-button-border-radius, token("corner-radius-medium-size-medium")));
-  border-end-end-radius: var(--swc-action-button-border-end-end-radius, var(--swc-action-button-border-radius, token("corner-radius-medium-size-medium")));
+  border-start-start-radius: var(--swc-action-button-border-start-start-radius, var(--_swc-action-button-border-radius));
+  border-start-end-radius: var(--swc-action-button-border-start-end-radius, var(--_swc-action-button-border-radius));
+  border-end-start-radius: var(--swc-action-button-border-end-start-radius, var(--_swc-action-button-border-radius));
+  border-end-end-radius: var(--swc-action-button-border-end-end-radius, var(--_swc-action-button-border-radius));
   overflow: visible;
   cursor: default;
   user-select: none;
@@ -75,14 +76,7 @@
   will-change: transform;
 }
 
-.swc-ActionButton:disabled:is(*, :hover) {
-  color: var(--swc-action-button-content-color-disabled, token("disabled-content-color"));
-  background-color: var(--swc-action-button-background-color-disabled, token("disabled-background-color"));
-  border-color: var(--swc-action-button-border-color-disabled, transparent);
-  cursor: default;
-  transform: none;
-}
-
+.swc-ActionButton:disabled:is(*, :hover),
 .swc-ActionButton--true .swc-ActionButton:is(*, :hover) {
   color: var(--swc-action-button-content-color-disabled, token("disabled-content-color"));
   background-color: var(--swc-action-button-background-color-disabled, token("disabled-background-color"));

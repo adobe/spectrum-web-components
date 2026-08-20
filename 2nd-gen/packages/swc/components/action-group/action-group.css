@@ -105,10 +105,7 @@
 }
 
 :host([compact]:not([quiet], [orientation="vertical"])) ::slotted(:not(:first-child, :last-child)) {
-  --swc-action-button-border-start-start-radius: 0;
-  --swc-action-button-border-start-end-radius: 0;
-  --swc-action-button-border-end-start-radius: 0;
-  --swc-action-button-border-end-end-radius: 0;
+  --swc-action-button-border-radius: 0;
 }
 
 /* Vertical: square off the corners where buttons meet. */
@@ -124,8 +121,5 @@
 }
 
 :host([compact]:not([quiet])[orientation="vertical"]) ::slotted(:not(:first-child, :last-child)) {
-  --swc-action-button-border-start-start-radius: 0;
-  --swc-action-button-border-start-end-radius: 0;
-  --swc-action-button-border-end-start-radius: 0;
-  --swc-action-button-border-end-end-radius: 0;
+  --swc-action-button-border-radius: 0;
 }
