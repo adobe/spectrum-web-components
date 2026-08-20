@@ -155,11 +155,6 @@
 @media (forced-colors: active) {
   .swc-StatusLight {
     --swc-status-light-content-color: CanvasText;
-
-    forced-color-adjust: none;
-
-    &::before {
-      border: token("border-width-100") solid;
-    }
+    --swc-status-light-dot-color: CanvasText;
   }
 }
