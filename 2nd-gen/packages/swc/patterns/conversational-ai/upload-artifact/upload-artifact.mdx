@@ -54,7 +54,7 @@ Use `type="media"` with an optional `badge` slot when the preview needs a file-t
 
 ### Text overflow
 
-Title and subtitle truncate with an ellipsis when the artifact is narrower than the text.
+Subtitle truncates with a trailing ellipsis when the artifact is narrower than the text. On `type="card"`, the title truncates in the middle instead: the start shortens with an ellipsis while the last few characters and file extension stay pinned, so the file type stays visible even when the name is clipped.
 
 <Canvas of={UploadArtifactStories.TextOverflow} />
 
