@@ -548,6 +548,67 @@ export const IndividuallyDisabledChildTest: Story = {
   },
 };
 
+// Detach/re-attach with unchanged slotted children does not fire `slotchange`, so
+// the child observer must be re-armed from `connectedCallback` as well.
+export const ReconnectionObserverTest: Story = {
+  render: () => html`
+    <swc-action-group accessible-label="Edit actions">
+      <swc-action-button>Cut</swc-action-button>
+      <swc-action-button>Copy</swc-action-button>
+      <swc-action-button>Paste</swc-action-button>
+    </swc-action-group>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<ActionGroup>(
+      canvasElement,
+      'swc-action-group'
+    );
+    const buttons = Array.from(
+      canvasElement.querySelectorAll('swc-action-button')
+    ) as (HTMLElement & {
+      disabled: boolean;
+      updateComplete: Promise<boolean>;
+    })[];
+
+    await step('first child is the initial tab stop', async () => {
+      expect(buttons[0].tabIndex).toBe(0);
+    });
+
+    await step('detach and re-attach the group', async () => {
+      const parent = group.parentElement as HTMLElement;
+      parent.removeChild(group);
+      parent.appendChild(group);
+      await group.updateComplete;
+      await new Promise((r) => requestAnimationFrame(r));
+    });
+
+    await step(
+      'disabling the active child after reconnect still moves the tab stop',
+      async () => {
+        buttons[0].disabled = true;
+        await buttons[0].updateComplete;
+        await new Promise((r) => requestAnimationFrame(r));
+
+        expect(
+          buttons[0].tabIndex,
+          'disabled child is no longer the tab stop'
+        ).not.toBe(0);
+        expect(
+          buttons.filter((b) => b.tabIndex === 0).length,
+          'one tab stop remains'
+        ).toBe(1);
+        expect(buttons[1].tabIndex, 'next child becomes the tab stop').toBe(0);
+      }
+    );
+
+    await step('strip stays keyboard-operable', async () => {
+      buttons[1].focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(document.activeElement).toBe(buttons[2]);
+    });
+  },
+};
+
 export const KeyboardNavigationTest: Story = {
   render: () => html`
     <swc-action-group accessible-label="Edit actions">
