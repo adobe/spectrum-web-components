@@ -47,6 +47,10 @@ A single dense row of every permutation is hard to scan in a Chromatic diff. Use
 
 Full rationale (attribute-vs-class, nested-rule mirroring, the custom-function pattern) lives in the VRT testing guide: `CONTRIBUTOR-DOCS/02_style-guide/04_testing/04_visual-regresssion-testing.md`.
 
+## Positioned overlay components
+
+Components built on `PlacementController` (popover, tooltip, picker, combobox, …) position via floating-ui's `shift` middleware, which clamps to the current viewport and recomputes on scroll. Opening many instances at once on a page taller than one viewport can clamp several onto the same spot instead of their real positions — only the axis perpendicular to the placement is affected (e.g. `start`/`end`, not `top`/`bottom`, on a vertically scrolling page). Render the affected placements first on the page and stack them in a column. Full rationale and a worked example (popover's `test/vrt/`) are in the VRT testing guide's "Positioned overlay components" section.
+
 ## Custom properties
 
 - Use `customPropertyRows()` to render reference vs override rows.

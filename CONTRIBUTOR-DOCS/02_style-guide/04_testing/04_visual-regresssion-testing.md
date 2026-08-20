@@ -15,6 +15,7 @@
 - [How to author VRT stories](#how-to-author-vrt-stories)
     - [Grouping permutations into rows](#grouping-permutations-into-rows)
     - [Forced pseudo-states](#forced-pseudo-states)
+    - [Positioned overlay components](#positioned-overlay-components)
 - [Tips for reliable VRT](#tips-for-reliable-vrt)
 
 </details>
@@ -101,6 +102,20 @@ const forceCardStates = async ({ canvasElement }) => {
 Because this uses the same `data-forced-<state>` attribute the shared helper applies, the child still satisfies any `:not([class])` guard on its default styles. This stays component-specific for now — which slotted element carries the pseudo-state rule differs per component — rather than being generalized into the shared helper on a single case.
 
 Pseudo-state rules with nested rules — such as an `::after` focus ring or a nested `&:hover` — are mirrored in full, so their nested appearance renders correctly in the forced snapshot with no extra authoring.
+
+### Positioned overlay components
+
+Components built on `PlacementController` (popover, tooltip, and future components such as picker and combobox) position their surface with floating-ui's `shift` middleware. `shift` has no configurable boundary; it defaults to the current viewport, and `autoUpdate` recomputes the position on every scroll. This is correct production behavior (a popover pinned near a screen edge should slide rather than clip off-screen), but it means a trigger positioned outside the viewport at the moment its popover opens gets clamped to wherever the viewport currently is, not to its actual (off-screen) trigger.
+
+A dense VRT matrix that opens many instances at once on a page taller than one viewport can hit this: instances whose triggers land outside the initial viewport collapse onto the same clamped position instead of resolving distinct ones. Only the axis perpendicular to the requested placement (the cross-axis) is affected — a `top`/`bottom` placement's cross-axis is horizontal, so it is unaffected on a page that only scrolls vertically; a `start`/`end` placement's cross-axis is vertical, so it is affected.
+
+To avoid it:
+
+- Render the affected placements first on the page (or as the only content in their own story), so their triggers stay within the viewport's initial bounds when they open.
+- Stack them in a column rather than packing them side by side, so siblings extending along the same axis don't overlap each other either.
+- If an axis needs its own RTL or theme variant and doesn't fit on the same page as everything else for this reason, give it its own story rather than making the page taller.
+
+See popover's `test/vrt/popover.vrt.ts` and `test/vrt/vrt-helpers.ts` (`stack`, `vrtPage`, `openManyPopoversForVrt`) for a worked example.
 
 ## Tips for reliable VRT
 

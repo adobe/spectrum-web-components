@@ -74,7 +74,8 @@ const renderPopoverPermutation = (
 // variants, since the alignment is what visibly shifts the tip along the
 // trigger's edge. Flipping is disabled by `openManyPopoversForVrt` so each
 // renders on its requested side deterministically. Side placements are
-// viewport-sensitive; see the note at `// VRT stories`.
+// viewport-sensitive; see the note at `// VRT stories` and the VRT testing
+// guide's "Positioned overlay components" section.
 type PlacementBase = 'top' | 'bottom' | 'start' | 'end';
 
 // Alignment variants only shift the tip when the surface is taller than
@@ -214,7 +215,10 @@ const permutationContent = (prefix: string) =>
 //
 // `start`/`end` side placements are viewport-sensitive: floating-ui's `shift`
 // middleware clamps cross-axis position on scroll, and for side placements
-// that axis is vertical. Keep them first in a story — see `PermutationsRtl`.
+// that axis is vertical. Keep them first in a story — see `PermutationsRtl`,
+// and the VRT testing guide's "Positioned overlay components" section for
+// the full explanation (this applies to any `PlacementController` component,
+// not just popover).
 
 export const Permutations: Story = {
   render: () => theme(permutationContent('permutations'), 'light', 'ltr'),
