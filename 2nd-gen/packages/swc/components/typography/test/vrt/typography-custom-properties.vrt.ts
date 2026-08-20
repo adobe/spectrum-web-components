@@ -33,35 +33,22 @@ export default meta;
 
 // Helpers
 
-// Typography has no custom-elements-manifest, so the manifest-driven
-// verifyCustomPropertyCoverage() (used by component custom-property VRTs)
-// has nothing to check cases against. DOCUMENTED_TYPOGRAPHY_PROPERTIES is
-// the manual equivalent: it must stay in sync with the "CSS custom
+// Typography has no custom-elements-manifest, so DOCUMENTED_TYPOGRAPHY_PROPERTIES
+// is the manual equivalent: it must stay in sync with the "CSS custom
 // properties" table in typography.mdx, and
 // verifyTypographyCustomPropertyCoverage() below fails if a case is
-// missing, duplicated, or undocumented - the same safety net
-// link-custom-properties.vrt.ts gets from DOCUMENTED_LINK_PROPERTIES,
-// minus the manifest.
+// missing, duplicated, or undocumented.
 //
-// Scope: Heading/Title/Body/Detail also expose margin-top/bottom
-// multiplier variables (Code has no `--margins` modifier), which compute
-// the *default* for `--swc-*-margin-top`/`-bottom` (e.g.
-// `--swc-heading-margin-top-multiplier` times font-size). They're internal
-// plumbing, not a property a consumer sets directly, so they're excluded
-// from the tested surface. CJK font-size/line-height/letter-spacing
-// overrides (`--swc-*-cjk-*`) are different: real, independently settable
-// override points, just scoped to `:lang(zh|ja|ko)` rather than always
-// active, so they're covered below alongside their base properties.
+// Scope: margin-top/bottom multiplier variables are internal plumbing
+// (not consumer-set) and excluded. CJK font-size/line-height/letter-spacing
+// overrides are real override points, just scoped to `:lang(zh|ja|ko)`,
+// so they're covered below alongside their base properties.
 
 // Every variant shares the same eight-property shape (font-family, font-size,
 // font-weight, line-height, font-color, letter-spacing, margin-top,
 // margin-bottom), so cases are generated from one suffix/value table rather
 // than hand-typed per variant. Override values are chosen to be obviously
-// different regardless of each variant's own default: `cursive` for
-// font-family (visibly distinct from both the sans and serif token stacks),
-// `64px` for font-size (larger than any variant's default), `900` for
-// font-weight, `3` for line-height, `magenta` for font-color, `0.3em` for
-// letter-spacing, and `40px` for the block margins.
+// different from any variant's default.
 const CORE_PROPERTY_SUFFIXES = [
   { suffix: 'font-family', value: 'cursive' },
   { suffix: 'font-size', value: '64px' },
