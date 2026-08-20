@@ -111,8 +111,8 @@ A dense VRT matrix that opens many instances at once on a page taller than one v
 
 To keep snapshots deterministic:
 
-- Render the affected placements first (or in their own story) so their triggers stay in the initial viewport when they open. Split the story if growing the page would push those triggers below the fold.
-- Do not use the shared `row()` helper. Open surfaces paint in the top layer and overlap if packed horizontally; stack them in a column with local helpers instead.
+- Keep every trigger in the viewport at open time. Put `start`/`end` first, pin the Chromatic viewport so the story fits, or split the story. Growing the page without growing the viewport is what clamps bubbles off their triggers.
+- Do not use the shared `row()` helper. Open surfaces paint in the top layer and overlap at its default gaps. Stack in a column, or use a grid whose cells reserve enough room that adjacent bubbles cannot collide.
 
 See popover's `test/vrt/popover.vrt.ts` and `test/vrt/vrt-helpers.ts` (`stack`, `vrtPage`, `openManyPopoversForVrt`) for a worked example.
 

@@ -49,7 +49,7 @@ Full rationale (attribute-vs-class, nested-rule mirroring, the custom-function p
 
 ## Positioned overlay components
 
-Components that position a surface with `PlacementController` use Floating UI `shift` (clipping ancestors capped by the visual viewport; `autoUpdate` recomputes on scroll). Opening many instances on a taller-than-viewport page can clamp `start`/`end` (not `top`/`bottom`) onto the same spot. Keep those placements in the initial viewport, disable `shouldFlip`, and stack in a column rather than using `row()`. Full rationale and a worked example (popover's `test/vrt/`) are in the VRT testing guide's "Positioned overlay components" section.
+Components that position a surface with `PlacementController` use Floating UI `shift` (clipping ancestors capped by the visual viewport; `autoUpdate` recomputes on scroll). Opening many instances on a taller-than-viewport page can clamp `start`/`end` (not `top`/`bottom`) onto the same spot. Keep every trigger in the initial viewport (place `start`/`end` first, pin the capture viewport, or split the story), disable `shouldFlip`, and do not use `row()`. Full rationale and a worked example (popover's `test/vrt/`) are in the VRT testing guide's "Positioned overlay components" section.
 
 ## Custom properties
 
