@@ -115,9 +115,9 @@ export const StatusApiTest: Story = {
         expect(
           el.shadowRoot?.querySelector('.swc-ResponseStatus-row--processing')
         ).toBeTruthy();
-        expect(
-          el.shadowRoot?.querySelector('.swc-ResponseStatus-dots')
-        ).toBeTruthy();
+        const loader = el.shadowRoot?.querySelector('swc-pixel-loader');
+        expect(loader).toBeTruthy();
+        expect(loader?.getAttribute('preset')).toBe('mega');
       }
     );
   },

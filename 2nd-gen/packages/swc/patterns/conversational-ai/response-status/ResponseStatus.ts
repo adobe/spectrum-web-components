@@ -24,6 +24,7 @@ import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
+import '../pixel-loader/swc-pixel-loader.js';
 
 import { uniqueId } from '../../../utils/id.js';
 import {
@@ -569,13 +570,13 @@ export class ResponseStatus extends SpectrumElement {
     this._emitToggle('swc-response-status-step-toggle', { open: next, index });
   }
 
-  private _renderThreeDots(): TemplateResult {
+  private _renderLoader(): TemplateResult {
     return html`
-      <span class="swc-ResponseStatus-dots" aria-hidden="true">
-        <span class="swc-ResponseStatus-dot"></span>
-        <span class="swc-ResponseStatus-dot"></span>
-        <span class="swc-ResponseStatus-dot"></span>
-      </span>
+      <swc-pixel-loader
+        class="swc-ResponseStatus-loader"
+        preset="mega"
+        aria-hidden="true"
+      ></swc-pixel-loader>
     `;
   }
 
@@ -617,7 +618,7 @@ export class ResponseStatus extends SpectrumElement {
       return '';
     }
 
-    return this._renderThreeDots();
+    return this._renderLoader();
   }
 
   private _renderHeader(showDisclosure: boolean): TemplateResult {

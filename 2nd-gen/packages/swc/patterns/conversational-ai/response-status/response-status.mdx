@@ -11,7 +11,7 @@ import * as ResponseStatusStories from './stories/response-status.stories';
 
 A response status indicator consists of:
 
-1. **Status row**: an indicator, status label, and optional disclosure control
+1. **Status row**: a pixel-loader indicator (using the `mega` preset) while active, a checkmark when complete, status label, and optional disclosure control
 2. **Step timeline**: optional execution steps that can be expanded for more detail
 
 <Canvas of={ResponseStatusStories.Anatomy} />
@@ -98,6 +98,7 @@ The `LabelCadence` story demonstrates one consumer-side queue pattern.
 The `<swc-response-status>` element implements the following accessibility features:
 
 - When no steps exist, `active` status labels are exposed with `role="status"` so updates are announced politely without moving focus
+- The pixel loader in the active status row is decorative (`aria-hidden`) so it does not add a nested progressbar; the status label already conveys that work is in progress
 - When steps exist, the disclosure button uses `aria-expanded` and `aria-controls` to communicate panel state
 - The step timeline uses `role="group"` with an accessible name from the `accessible-label` attribute (defaults to “Execution steps”)
 - The ordered step list uses `role="list"` and each rendered step uses `role="listitem"`
