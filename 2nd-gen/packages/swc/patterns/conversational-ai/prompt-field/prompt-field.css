@@ -522,8 +522,8 @@
 }
 
 .swc-PromptField-status-icon swc-pixel-loader {
-  /* Fill the status slot; the loader's default is 56px. Color inherits via its currentcolor default. */
-  --swc-pixel-loader-size: token("spacing-400");
+  /* 21px to match the reference loader, centered in the 24px status slot. Color inherits via its currentcolor default. */
+  --swc-pixel-loader-size: 21px;
 }
 
 /* ─────────────────────────────────────
