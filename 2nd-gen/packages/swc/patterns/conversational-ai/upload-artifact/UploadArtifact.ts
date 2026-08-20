@@ -19,6 +19,7 @@ import { getLabelFromSlot } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import { CrossIcon } from '../utils/icons/index.js';
 
+import visuallyHiddenStyles from '../../../stylesheets/_lit-styles/visually-hidden.css';
 import styles from './upload-artifact.css';
 
 /**
@@ -76,7 +77,7 @@ export class UploadArtifact extends SpectrumElement {
   private _titleSlot?: HTMLSlotElement;
 
   public static override get styles(): CSSResultArray {
-    return [styles];
+    return [styles, visuallyHiddenStyles];
   }
 
   protected override firstUpdated(_changed: PropertyValues<this>): void {
@@ -228,7 +229,7 @@ export class UploadArtifact extends SpectrumElement {
             </span>
             <slot
               name="title"
-              hidden
+              class="swc-VisuallyHidden"
               @slotchange=${this._handleTitleSlotChange}
             ></slot>
           </div>
