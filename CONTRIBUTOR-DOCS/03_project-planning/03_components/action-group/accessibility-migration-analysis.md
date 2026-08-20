@@ -244,18 +244,19 @@ Exercise **Tab**, **Shift+Tab**, **Arrow** keys, **Home** / **End**, and **Enter
 
 ## Summary checklist
 
-- [ ] **`FocusgroupNavigationController`** replaces **`RovingTabindexController`** with **`direction`** tied to **`vertical`** / layout ([SWC-1676](https://jira.corp.adobe.com/browse/SWC-1676)).
-- [ ] Host **`role="group"`** is **fixed** in **all** modes; **no** **`toolbar`** / **`radiogroup`** on **`swc-action-group`**; **no** author **`role`** override.
+- [x] **`FocusgroupNavigationController`** replaces **`RovingTabindexController`** with **`direction`** tied to **`vertical`** / layout ([SWC-1676](https://jira.corp.adobe.com/browse/SWC-1676)).
+- [x] Host **`role="group"`** is **fixed** in **all** modes; **no** **`toolbar`** / **`radiogroup`** on **`swc-action-group`**; **no** author **`role`** override.
 - [x] **`swc-action-button`** children stay **`role="button"`** only; **`swc-action-group`** has no selection API — selection UX lives on **`swc-segmented-control`** / **`swc-toggle-button-group`**.
 - [x] **Group name** recommended whenever the cluster has a distinct purpose; [SWC-1121](https://jira.corp.adobe.com/browse/SWC-1121) closed in tests.
 - [x] **Dropped** — no selected state on **`swc-action-group`**; applies to **`swc-segmented-control`** / **`swc-toggle-button-group`** once they ship ([SWC-1123](https://jira.corp.adobe.com/browse/SWC-1123)).
 - [x] Group **`disabled`** uses **`aria-disabled="true"`** on the host and propagates to all children — children remain keyboard-reachable but do not activate ([SWC-621](https://jira.corp.adobe.com/browse/SWC-621)); per [APG: Focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols).
 - [x] [SWC-1612](https://jira.corp.adobe.com/browse/SWC-1612) (`FormFieldMixin`) is **not** applied — **`swc-action-group`** is a composite keyboard widget, not a form field.
 - [x] **Dropped** — **`swc-action-group`** has no **`selected`** state or **`change`** event ([SWC-889](https://jira.corp.adobe.com/browse/SWC-889) does not apply).
-- [ ] Storybook shows **outer **`role="toolbar"`** wrapper** + **`swc-action-group`** (**`role="group"`**) per [APG Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/).
+- [x] Storybook shows **outer **`role="toolbar"`** wrapper** + **`swc-action-group`** (**`role="group"`**) per [APG Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/) — `Accessibility` story (standalone + horizontal/vertical wrapper examples) and `ToolbarComposition` story; ARIA tree verified in `action-group.a11y.spec.ts`.
 - [x] **`aria-orientation`** is **never** set on the host, in any orientation — **`role="group"`** does not support it per the ARIA spec (matches **`swc-button-group`**); direction is driven by **`FocusgroupNavigationController`**'s **`direction`** option, tied to the **`orientation`** property.
-- [ ] **Keyboard** tests cover **action-menu-in-group** and **mouse** roving tabindex ([SWC-250](https://jira.corp.adobe.com/browse/SWC-250)).
-- [ ] Consumer docs distinguish **`swc-action-group`** vs **`swc-button-group`** and link [**ActionButtonGroup**](https://react-spectrum.adobe.com/ActionButtonGroup) / [Action group (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=19083-360&p=f&m=dev).
+- [x] **Mouse** roving tabindex ([SWC-250](https://jira.corp.adobe.com/browse/SWC-250)) — covered in `action-group.test.ts`.
+- [skip] **action-menu-in-group** keyboard tests — deferred until **`swc-action-menu`** ships in 2nd-gen (migration plan §Deferred implementation tickets; SWC-2464, SWC-2509). Out of scope for action-button-only delivery.
+- [x] Consumer docs distinguish **`swc-action-group`** vs **`swc-button-group`** (composite keyboard navigation vs independent Tab stops) — stories meta JSDoc, reciprocal button-group link, `action-group.mdx` keyboard section. Figma / [ActionButtonGroup](https://react-spectrum.adobe.com/ActionButtonGroup) links remain in contributor docs only (not part of 2nd-gen consumer MDX convention).
 
 ---
 

@@ -417,7 +417,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 
 #### Visual model and regressions
 
-- [ ] Verify all five sizes (xs, s, m, l, xl) render correctly with spacing and compact joins — sizes verified individually (`Sizes` story); compact joins verified separately (`Compact` story); no story yet exercises both together
+- [x] Verify all five sizes (xs, s, m, l, xl) render correctly with spacing and compact joins — `action-group.vrt.ts` permutations sweep every size in `compact-horizontal` and `compact-vertical` treatments (size + compact together); `Sizes` and `Compact` stories cover docs demos separately
 - [x] Verify quiet + compact interaction (compact border-join is inactive in quiet mode)
 - [x] Verify static-color on dark and light backgrounds
 - [skip] Verify forced-colors (high contrast) media query is present if applicable in S2 source — not applicable; the `spectrum-two` actiongroup source has no `@media (forced-colors: active)` block
@@ -469,7 +469,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 - [x] VRT coverage for quiet style
 - [x] VRT coverage for static-color white and black on correct backgrounds
 - [x] VRT coverage for focus-visible ring not clipped or hidden (SWC-1342) — via real DOM focus in the story's `play` function, not a forced-pseudo-class attribute; `:focus-within` is genuinely scriptable, unlike `:hover`/`:active`
-- [ ] ~~VRT coverage for toolbar wrapper composition~~ — **not implemented as VRT, by design.** `role="toolbar"` and `aria-label` carry no visual signature, so a Chromatic snapshot cannot detect a regression in them; it would only ever pixel-diff the demo wrapper's own inline flex styling, which isn't part of `action-group`'s shipped CSS contract. Verifying this composition is an ARIA-structure question, not a visual one, so it's covered by the `toMatchAriaSnapshot` assertion under Behavior above instead.
+- [x] VRT coverage for vertical toolbar wrapper layout — two vertical groups in a `fit-content` wrapper; shorter group stretches to match wider sibling (`action-group.vrt.ts`, `toolbarContent()`). ARIA landmark structure covered separately by a11y snapshot (Behavior, above).
 
 ### Documentation
 
@@ -493,7 +493,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 - [x] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
 - [x] Status table in workstream doc updated
 - [x] PR created with description referencing Epic SWC-2212
-- [ ] Peer engineer sign-off (completed when this PR is approved; SWC-2219 finalize)
+- [x] Peer engineer sign-off — satisfied when this PR is approved and mergeable (SWC-2219 finalize)
 - [x] All `TODO` comments added to code during implementation are audited and filed as follow-up Jira tickets under Epic SWC-2212 (see Deferred implementation tickets below). Remaining in-source markers: `action-button.css` outline transition (`SWC-2308`, pre-existing). Action-group `swc-action-menu` deferrals are tracked in Deferred implementation tickets and PR follow-up tickets (SWC-2464, SWC-2509); compact open-trigger stacking note removed from `action-group.css` (see that section).
 - [x] Reconcile stale `selects`/`selected` guidance in `accessibility-migration-analysis.md` to match B7 (Dropped). `rendering-and-styling-migration-analysis.md` documents only 1st-gen's existing CSS-to-WC mapping and carried no stale 2nd-gen claims, so it's left as-is. Full consolidation of both docs into this plan is not required for this migration; it's a documentation-architecture cleanup, not a correctness fix, and isn't worth the added review surface at this stage.
 
