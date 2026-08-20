@@ -92,6 +92,25 @@ export class UploadArtifact extends SpectrumElement {
     return this._titleSlot ? (getLabelFromSlot('', this._titleSlot) ?? '') : '';
   }
 
+  /**
+   * Splits a filename for middle truncation: the end keeps the extension plus
+   * a few leading characters (so the file type stays visible even when the
+   * name is clipped), everything before that is left for the start span to
+   * ellipsize.
+   */
+  private _splitTitleForMiddleTruncation(name: string): {
+    start: string;
+    end: string;
+  } {
+    const dot = name.lastIndexOf('.');
+    const tailLength = dot > -1 ? name.length - dot + 3 : 6;
+    const keep = Math.min(tailLength, Math.max(0, name.length - 1));
+    return {
+      start: name.slice(0, name.length - keep),
+      end: name.slice(name.length - keep),
+    };
+  }
+
   private _syncHostAccessibleLabel(): void {
     const label = this.accessibleLabel.trim() || this._titleText();
     if (label) {
@@ -191,6 +210,9 @@ export class UploadArtifact extends SpectrumElement {
   }
 
   private _renderCardSurface(): TemplateResult {
+    const { start, end } = this._splitTitleForMiddleTruncation(
+      this._titleText()
+    );
     return html`
       <div class="swc-UploadArtifact-surface">
         <div class="swc-UploadArtifact-thumbnail">
@@ -198,8 +220,15 @@ export class UploadArtifact extends SpectrumElement {
         </div>
         <div class="swc-UploadArtifact-meta">
           <div class="swc-UploadArtifact-title">
+            <span class="swc-UploadArtifact-title-start" aria-hidden="true">
+              ${start}
+            </span>
+            <span class="swc-UploadArtifact-title-end" aria-hidden="true">
+              ${end}
+            </span>
             <slot
               name="title"
+              hidden
               @slotchange=${this._handleTitleSlotChange}
             ></slot>
           </div>
