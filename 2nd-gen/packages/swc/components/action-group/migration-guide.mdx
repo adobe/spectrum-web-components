@@ -151,7 +151,7 @@ import '@adobe/spectrum-wc/components/action-group/swc-action-group.js';
 
 ## Accessibility
 
-- **Host role** no longer switches between `toolbar`, `radiogroup`, and `group`. It is always `role="group"`. Update any code or tests that asserted a specific host role. If you relied on the toolbar role for a landmark, wrap the group in your own `role="toolbar"` element instead.
+- **Host role** no longer switches between `toolbar`, `radiogroup`, and `group`. It is always `role="group"`. Update any code or tests that asserted a specific host role. If you relied on the toolbar role for a landmark, wrap the group in your own `role="toolbar"` element instead. See the [toolbar composition example](?path=/docs/components-action-group--docs#toolbar-composition) for `aria-orientation` guidance.
 - **Child roles** are always `role="button"`, never `role="radio"` or `role="checkbox"`. Update any tests asserting those roles. See [step 4](#4-remove-selects-and-selected).
 - **Selection semantics** moved out of `swc-action-group` entirely. See [step 4](#4-remove-selects-and-selected).
 - **Group `disabled`** uses `aria-disabled="true"`, not the native `disabled` attribute, so children remain keyboard-discoverable. See [step 6](#6-optional-adopt-group-level-disabled).

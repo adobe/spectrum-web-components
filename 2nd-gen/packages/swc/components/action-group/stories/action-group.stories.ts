@@ -270,49 +270,22 @@ export const Orientations: Story = {
 
 export const Quiet: Story = {
   render: (args) => html`
-    <div style="display: flex; flex-wrap: wrap; gap: var(--swc-spacing-600);">
-      ${captioned(
-        'Quiet',
-        html`
-          <swc-action-group
-            accessible-label="Image adjustments"
-            orientation=${args.orientation ?? 'horizontal'}
-            ?disabled=${args.disabled}
-            ?justified=${args.justified}
-            size=${ifDefined(args.size || undefined)}
-            static-color=${ifDefined(args['static-color'] || undefined)}
-            quiet
-          >
-            <swc-action-button>Crop</swc-action-button>
-            <swc-action-button>Rotate</swc-action-button>
-            <swc-action-button>Flip</swc-action-button>
-          </swc-action-group>
-        `
-      )}
-      ${captioned(
-        'Quiet + compact: looks identical to Quiet, since compact has no effect while quiet is set',
-        html`
-          <swc-action-group
-            accessible-label="Image adjustments"
-            orientation=${args.orientation ?? 'horizontal'}
-            ?disabled=${args.disabled}
-            ?justified=${args.justified}
-            size=${ifDefined(args.size || undefined)}
-            static-color=${ifDefined(args['static-color'] || undefined)}
-            quiet
-            compact
-          >
-            <swc-action-button>Crop</swc-action-button>
-            <swc-action-button>Rotate</swc-action-button>
-            <swc-action-button>Flip</swc-action-button>
-          </swc-action-group>
-        `
-      )}
-    </div>
+    <swc-action-group
+      accessible-label="Image adjustments"
+      orientation=${args.orientation ?? 'horizontal'}
+      ?disabled=${args.disabled}
+      ?justified=${args.justified}
+      size=${ifDefined(args.size || undefined)}
+      static-color=${ifDefined(args['static-color'] || undefined)}
+      quiet
+    >
+      <swc-action-button>Crop</swc-action-button>
+      <swc-action-button>Rotate</swc-action-button>
+      <swc-action-button>Flip</swc-action-button>
+    </swc-action-group>
   `,
   tags: ['options'],
 };
-Quiet.storyName = 'Quiet (compact join disabled)';
 
 export const Compact: Story = {
   render: (args) => html`
