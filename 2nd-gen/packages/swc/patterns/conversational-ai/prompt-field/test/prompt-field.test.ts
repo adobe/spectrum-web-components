@@ -323,10 +323,9 @@ export const ArtifactScrollPaginationTest: Story = {
     );
 
     await step('edge fades render when paging is available', async () => {
-      const endFade = el.shadowRoot?.querySelector(
-        '.swc-PromptField-artifacts-fade--end'
-      );
-      expect(endFade).toBeTruthy();
+      // The edge fade is a mask on the scroll container, toggled by the
+      // has-scroll-next class, not a separate fade element.
+      expect(scrollEl?.classList.contains('has-scroll-next')).toBe(true);
     });
 
     await step(
@@ -896,14 +895,16 @@ export const DragAndDropTest: Story = {
       canvasElement,
       'swc-prompt-field'
     );
-    const box = el.shadowRoot?.querySelector('.swc-PromptField-box');
+    const outerBorder = el.shadowRoot?.querySelector(
+      '.swc-PromptField-outer-border'
+    );
 
     await step(
       'dragging a file over the field marks the box dragged',
       async () => {
         el.dispatchEvent(makeDragEvent('dragover', new DataTransfer()));
         await el.updateComplete;
-        expect(box?.classList.contains('dragged')).toBe(true);
+        expect(outerBorder?.classList.contains('dragged')).toBe(true);
       }
     );
 
@@ -914,7 +915,7 @@ export const DragAndDropTest: Story = {
         // The debounce is 100ms; wait past it with a buffer.
         await new Promise((resolve) => setTimeout(resolve, 150));
         await el.updateComplete;
-        expect(box?.classList.contains('dragged')).toBe(false);
+        expect(outerBorder?.classList.contains('dragged')).toBe(false);
       }
     );
 
@@ -941,7 +942,7 @@ export const DragAndDropTest: Story = {
 
         expect(detail?.files.length).toBe(1);
         expect(detail?.files[0].name).toBe('hello.txt');
-        expect(box?.classList.contains('dragged')).toBe(false);
+        expect(outerBorder?.classList.contains('dragged')).toBe(false);
       }
     );
 
@@ -976,7 +977,7 @@ export const DragAndDropTest: Story = {
       await el.updateComplete;
 
       expect(event.dataTransfer?.dropEffect).toBe('none');
-      expect(box?.classList.contains('dragged')).toBe(false);
+      expect(outerBorder?.classList.contains('dragged')).toBe(false);
 
       el.disabled = false;
       await el.updateComplete;

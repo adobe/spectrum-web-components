@@ -20,6 +20,18 @@ A prompt field consists of:
 
 ## Options
 
+### Variant
+
+`variant` sets the intensity of the AI brand treatment (the gradient ring, background wash, and glow):
+
+- **`subtle`**: understated treatment; the gradient ring is revealed on hover
+- **`balanced`** (default): visible gradient ring and background wash
+- **`prominent`**: strongest treatment, adding an outer glow
+
+Every layer derives from a single hue, so overriding `--swc-prompt-field-brand-color` rethemes all three variants at once.
+
+<Canvas of={PromptFieldStories.Variant} />
+
 ### Layout
 
 The `collapsed` attribute controls the field's expanded/collapsed layout:
@@ -47,7 +59,7 @@ The textarea grows with content up to `--swc-prompt-field-max-block-size` (defau
 
 Every prompt field in production must include Legal-approved disclaimer copy below the composer. Slot your product's approved text into **`legal`**: wording, links, and locale are consumer-owned, not baked into the component.
 
-Apply the `.swc-PromptField-legal-disclaimer` class for default footer typography. `swc-prompt-field` logs a development warning when the `legal` slot is empty.
+Slotted `legal` content inherits the footer typography automatically. When it contains links, add the `swc-Typography--links` class to the wrapping element so the links inherit that typography and render in the subdued neutral color instead of the default accent blue. `swc-prompt-field` logs a development warning when the `legal` slot is empty.
 
 ### Artifact
 
