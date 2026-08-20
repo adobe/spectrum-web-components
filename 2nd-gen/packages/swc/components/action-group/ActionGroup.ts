@@ -209,8 +209,8 @@ export class ActionGroup extends ActionGroupBase {
       changed.has('size') ||
       changed.has('staticColor') ||
       // `compact` is pre-wired here so children re-render when the attribute
-      // changes, but the attribute is not propagated via JS — it affects layout
-      // via CSS cascade on ::slotted() selectors (wired in Phase 5).
+      // changes, but the attribute is not propagated via JS — layout is driven
+      // by CSS cascade on ::slotted() selectors in action-group.css.
       changed.has('compact')
     ) {
       this.propagateVisualStateToChildren();
@@ -238,9 +238,8 @@ export class ActionGroup extends ActionGroupBase {
    * Propagates visual attributes (`quiet`, `size`, `staticColor`) to slotted
    * children. Called on slot change and when any of these properties update.
    *
-   * Note: `compact` affects children via CSS custom property cascade
-   * (`::slotted(:first-child)` / `::slotted(:last-child)` in Phase 5) rather
-   * than JS attribute propagation.
+   * Note: `compact` affects children via CSS custom property cascade on
+   * `::slotted()` selectors in `action-group.css` rather than JS propagation.
    */
   private propagateVisualStateToChildren(): void {
     for (const child of this.managedChildren ?? []) {
