@@ -87,8 +87,8 @@ export class ActionButton extends PendingMixin(ButtonBase) {
   static override readonly VALID_SIZES: readonly ActionButtonSize[] =
     ACTION_BUTTON_VALID_SIZES;
 
-  // aria-haspopup and aria-expanded are observed without @property to avoid
-  // conflicting with ARIAMixin types on HTMLElement and appearing in the CEM.
+  // aria-haspopup, aria-expanded, and aria-disabled are observed without
+  // @property to avoid conflicting with ARIAMixin types and appearing in the CEM.
   /** @internal */
   static override get observedAttributes(): string[] {
     return [
@@ -100,12 +100,17 @@ export class ActionButton extends PendingMixin(ButtonBase) {
   }
 
   /**
-   * Intercepts `aria-haspopup` and `aria-expanded` before Lit processes them.
-   * These attributes are stripped from the host and stored as internal state so
-   * they can be forwarded to the inner `<button>`, preventing duplicate ARIA
-   * state from appearing on both the host and the native element. The
-   * `_ariaForwardingInProgress` guard stops the re-entrant callback triggered
-   * by `removeAttribute` from re-entering this branch.
+   * Intercepts ARIA attributes before Lit processes them.
+   *
+   * `aria-haspopup` and `aria-expanded` are stripped from the host and stored as
+   * internal state so they can be forwarded to the inner `<button>`, preventing
+   * duplicate ARIA state on both elements.
+   *
+   * `aria-disabled` is kept on the host (CSS hook for group-level disable) and
+   * stored as reactive state so the inner `<button>` stays in sync.
+   *
+   * The `_ariaForwardingInProgress` guard stops the re-entrant callback triggered
+   * by `removeAttribute` from re-entering the passthrough branch.
    *
    * @internal
    */
@@ -135,9 +140,6 @@ export class ActionButton extends PendingMixin(ButtonBase) {
       return;
     }
     if (name === 'aria-disabled') {
-      // Kept on the host (not stripped) — the host attribute is the CSS hook
-      // for disabled appearance via :host([aria-disabled="true"]). The value
-      // is also stored as reactive state so the inner <button> stays in sync.
       this._ariaDisabled = value ?? undefined;
     }
     super.attributeChangedCallback(name, old, value);
