@@ -97,7 +97,15 @@
    - :disabled — native disable on the button (removed from tab order)
    - :host([aria-disabled="true"]) — group-level disable (e.g. swc-action-group);
      button stays focusable for keyboard discovery */
-.swc-ActionButton:disabled:is(*, :hover),
+.swc-ActionButton:disabled:is(*, :hover) {
+  color: var(--swc-action-button-content-color-disabled, token("disabled-content-color"));
+  background-color: var(--swc-action-button-background-color-disabled, token("disabled-background-color"));
+  border-color: var(--swc-action-button-border-color-disabled, transparent);
+  cursor: default;
+  transform: none;
+}
+
+/* @global-exclude: :host([aria-disabled]) converts to invalid .swc-ActionButton--true until SWC-2511 */
 :host([aria-disabled="true"]) .swc-ActionButton:is(*, :hover) {
   color: var(--swc-action-button-content-color-disabled, token("disabled-content-color"));
   background-color: var(--swc-action-button-background-color-disabled, token("disabled-background-color"));
@@ -105,6 +113,8 @@
   cursor: default;
   transform: none;
 }
+
+/* @global-exclude-end */
 
 /* ── Sub-elements ─────────────────────────────────── */
 
@@ -307,11 +317,15 @@ slot[name="icon"]::slotted(swc-avatar) {
      elements — aria-disabled gets ButtonText/ButtonBorder instead. Override the
      disabled custom properties with system colors so the button reads as
      unavailable in high-contrast mode. */
+
+  /* @global-exclude: :host([aria-disabled]) converts to invalid .swc-ActionButton--true until SWC-2511 */
   :host([aria-disabled="true"]) {
     --swc-action-button-background-color-disabled: ButtonFace;
     --swc-action-button-content-color-disabled: GrayText;
     --swc-action-button-border-color-disabled: GrayText;
   }
+
+  /* @global-exclude-end */
 }
 
 /* @global-exclude: pending state requires JS runtime (PendingMixin.pendingActive) */
