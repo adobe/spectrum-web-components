@@ -15,9 +15,11 @@ import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import type { Button } from '@adobe/spectrum-wc/button';
+import type { Popover } from '@adobe/spectrum-wc/popover';
 import { Tooltip } from '@adobe/spectrum-wc/tooltip';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
+import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
 
 import {
@@ -138,10 +140,11 @@ export const OverviewTest: Story = {
       );
     });
 
-    await step('sets popover="auto" on the host element', async () => {
-      expect(tooltip.getAttribute('popover'), 'host has popover="auto"').toBe(
-        'auto'
-      );
+    await step('sets popover="manual" on the host element', async () => {
+      expect(
+        tooltip.getAttribute('popover'),
+        'host has popover="manual" so it coexists with open auto popovers'
+      ).toBe('manual');
     });
 
     await step('renders text content in default slot', async () => {
@@ -773,8 +776,9 @@ export const VariantsTest: Story = {
       }
     });
 
-    // Open each variant in turn via focus. popover="auto" auto-dismisses the previous
-    // tooltip when the next one opens, so only one is ever open at a time.
+    // Open each variant in turn via focus. Each assertion only checks the
+    // tooltip it just opened; with popover="manual" tooltips no longer
+    // auto-dismiss one another, so earlier ones may remain open.
     const variants = [...TOOLTIP_VARIANTS];
     const buttons = [
       ...canvasElement.querySelectorAll('swc-button'),
@@ -808,8 +812,8 @@ export const PlacementsTest: Story = {
     });
 
     // Open each placement in turn via focus. DOM render order: top → right → end → bottom → left → start.
-    // popover="auto" auto-dismisses the previous tooltip when the next one opens,
-    // so only one is ever open at a time.
+    // Each assertion only checks the tooltip it just opened; with
+    // popover="manual" tooltips no longer auto-dismiss one another.
     const placementOrder = ['top', 'right', 'end', 'bottom', 'left', 'start'];
     const buttons = [
       ...canvasElement.querySelectorAll('swc-button'),
@@ -1434,5 +1438,253 @@ export const ActualPlacementBeforeShowTest: Story = {
         await tooltip.updateComplete;
       }
     );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Coexistence with an open popover (popover="manual")
+// ──────────────────────────────────────────────────────────────
+
+// A `<swc-popover>` surface is a `<div popover="auto">`, which light-dismisses
+// every other open auto popover the moment another auto popover opens. Tooltip
+// uses `popover="manual"` precisely so a hover tooltip does not join that group:
+// opening a tooltip must not tear down a popover the user is working in, and
+// opening a popover must not dismiss a visible tooltip. These two stories guard
+// both directions; a regression to `popover="auto"` on Tooltip fails them.
+
+export const CoexistsTooltipOpenedOverPopoverTest: Story = {
+  render: () => html`
+    <button id="tt-coexist-popover-trigger">Open popover</button>
+    <swc-popover for="tt-coexist-popover-trigger">Popover content</swc-popover>
+    <swc-button id="tt-coexist-tooltip-trigger">Hover me</swc-button>
+    <swc-tooltip for="tt-coexist-tooltip-trigger" delay="0" placement="top">
+      Tooltip text
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+    const popoverTrigger = canvasElement.querySelector(
+      '#tt-coexist-popover-trigger'
+    ) as HTMLButtonElement;
+    const tooltipTrigger = canvasElement.querySelector(
+      '#tt-coexist-tooltip-trigger'
+    ) as Button;
+    await popover.updateComplete;
+
+    await step('opens the popover via its trigger', async () => {
+      await userEvent.click(popoverTrigger);
+      await waitFor(() => expect(popover.open).toBe(true), { timeout: 1000 });
+    });
+
+    await step(
+      'hovering a tooltip trigger opens the tooltip without dismissing the popover',
+      async () => {
+        // pointerenter (not pointerdown/click), so this is not an outside-press
+        // that would light-dismiss the popover; the only thing that could close
+        // it is the tooltip joining the auto popover group, which manual avoids.
+        await hoverOpen(tooltipTrigger, tooltip);
+        expect(tooltip.open, 'tooltip is open after hover').toBe(true);
+        expect(
+          tooltip.matches(':popover-open'),
+          'tooltip is in the top layer'
+        ).toBe(true);
+        // `popover.open` is Popover's reconciled source of truth: if the inner
+        // `<div popover="auto">` surface were light-dismissed, its `toggle`
+        // event would sync `open` back to false. It staying true means the
+        // surface is genuinely still shown. (`:popover-open` matches the inner
+        // surface, not the `swc-popover` host, so it is not asserted here.)
+        expect(
+          popover.open,
+          'popover stays open while the tooltip is shown'
+        ).toBe(true);
+      }
+    );
+  },
+};
+
+export const CoexistsPopoverOpenedOverTooltipTest: Story = {
+  render: () => html`
+    <button id="tt-coexist2-popover-trigger">Open popover</button>
+    <swc-popover for="tt-coexist2-popover-trigger">Popover content</swc-popover>
+    <swc-button id="tt-coexist2-tooltip-trigger">Trigger</swc-button>
+    <swc-tooltip for="tt-coexist2-tooltip-trigger" placement="top">
+      Tooltip text
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+    const popoverTrigger = canvasElement.querySelector(
+      '#tt-coexist2-popover-trigger'
+    ) as HTMLButtonElement;
+    await popover.updateComplete;
+
+    await step('shows the tooltip first', async () => {
+      // Open programmatically so the assertion isolates the popover-open path
+      // from hover/focus timing.
+      await openTooltip(tooltip);
+      expect(tooltip.open, 'tooltip is open').toBe(true);
+    });
+
+    await step(
+      'opening a popover does not dismiss the visible tooltip',
+      async () => {
+        await userEvent.click(popoverTrigger);
+        await waitFor(() => expect(popover.open).toBe(true), { timeout: 1000 });
+        expect(
+          tooltip.open,
+          'manual tooltip is untouched by the auto popover opening'
+        ).toBe(true);
+        expect(
+          tooltip.matches(':popover-open'),
+          'tooltip stays in the top layer'
+        ).toBe(true);
+      }
+    );
+  },
+};
+
+// The realistic case: a tooltip on a control that lives *inside* the popover's
+// slotted content. The tooltip trigger is a DOM descendant of the open popover,
+// so hovering it must show the tooltip without collapsing the popover it sits
+// in. With popover="manual" the tooltip never joins the popover's auto group.
+export const CoexistsTooltipInsidePopoverTest: Story = {
+  render: () => html`
+    <button id="tt-inside-popover-trigger">Open popover</button>
+    <swc-popover for="tt-inside-popover-trigger">
+      <swc-button id="tt-inside-tooltip-trigger">Hover me</swc-button>
+      <swc-tooltip for="tt-inside-tooltip-trigger" delay="0" placement="top">
+        Tooltip text
+      </swc-tooltip>
+    </swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+    const popoverTrigger = canvasElement.querySelector(
+      '#tt-inside-popover-trigger'
+    ) as HTMLButtonElement;
+    await popover.updateComplete;
+
+    await step('opens the popover via its trigger', async () => {
+      await userEvent.click(popoverTrigger);
+      await waitFor(() => expect(popover.open).toBe(true), { timeout: 1000 });
+    });
+
+    await step(
+      'hovering a control inside the popover shows the tooltip and keeps the popover open',
+      async () => {
+        const innerTrigger = canvasElement.querySelector(
+          '#tt-inside-tooltip-trigger'
+        ) as Button;
+        await hoverOpen(innerTrigger, tooltip);
+        expect(tooltip.open, 'tooltip is open after hover').toBe(true);
+        expect(
+          tooltip.matches(':popover-open'),
+          'tooltip is in the top layer'
+        ).toBe(true);
+        expect(
+          popover.open,
+          'the popover the tooltip lives in stays open'
+        ).toBe(true);
+      }
+    );
+  },
+};
+
+// A tooltip on top of a popover is the topmost dismissible, so Escape must close
+// the tooltip only. Guards the JS side (stack registration, `isTopDismissible`
+// gate, `stopPropagation()`). Synthetic Escape can't drive the popover's native
+// dismiss, so the second-Escape leg lives in tooltip.a11y.spec.ts.
+export const EscapeClosesTopmostTooltipTest: Story = {
+  render: () => html`
+    <button id="tt-esc-order-popover-trigger">Open popover</button>
+    <swc-popover for="tt-esc-order-popover-trigger">
+      Popover content
+    </swc-popover>
+    <swc-button id="tt-esc-order-tooltip-trigger">Trigger</swc-button>
+    <swc-tooltip for="tt-esc-order-tooltip-trigger" placement="top">
+      Tooltip text
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+    const popoverTrigger = canvasElement.querySelector(
+      '#tt-esc-order-popover-trigger'
+    ) as HTMLButtonElement;
+    await popover.updateComplete;
+
+    await step('opens the popover, then the tooltip on top of it', async () => {
+      await userEvent.click(popoverTrigger);
+      await waitFor(() => expect(popover.open).toBe(true), { timeout: 1000 });
+      // Opened last, so the tooltip is the topmost dismissible.
+      await openTooltip(tooltip);
+      expect(tooltip.open, 'tooltip is open').toBe(true);
+    });
+
+    await step(
+      'Escape closes only the topmost tooltip and leaves the popover open',
+      async () => {
+        await userEvent.keyboard('{Escape}');
+        await waitFor(
+          () => expect(tooltip.matches(':popover-open')).toBe(false),
+          { timeout: 1000 }
+        );
+        expect(tooltip.open, 'tooltip closed on Escape').toBe(false);
+        expect(
+          popover.open,
+          'popover is not dismissed by the Escape that closed the tooltip'
+        ).toBe(true);
+      }
+    );
+  },
+};
+
+// Two sibling tooltips: opening the second must close the first, since
+// `popover="manual"` dropped the native auto singleton that used to do this.
+export const SingletonClosesPreviousTooltipTest: Story = {
+  render: () => html`
+    <swc-button id="tt-singleton-trigger-a">First</swc-button>
+    <swc-tooltip for="tt-singleton-trigger-a" delay="0" placement="top">
+      First tooltip
+    </swc-tooltip>
+    <swc-button id="tt-singleton-trigger-b">Second</swc-button>
+    <swc-tooltip for="tt-singleton-trigger-b" delay="0" placement="top">
+      Second tooltip
+    </swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tooltips = canvasElement.querySelectorAll<Tooltip>('swc-tooltip');
+    const [tooltipA, tooltipB] = tooltips;
+    const triggerA = canvasElement.querySelector(
+      '#tt-singleton-trigger-a'
+    ) as Button;
+    const triggerB = canvasElement.querySelector(
+      '#tt-singleton-trigger-b'
+    ) as Button;
+    await tooltipA.updateComplete;
+    await tooltipB.updateComplete;
+
+    await step(
+      'hovering the first trigger opens the first tooltip',
+      async () => {
+        await hoverOpen(triggerA, tooltipA);
+        expect(tooltipA.open, 'first tooltip is open').toBe(true);
+      }
+    );
+
+    await step('opening the second tooltip closes the first one', async () => {
+      await hoverOpen(triggerB, tooltipB);
+      expect(tooltipB.open, 'second tooltip is open').toBe(true);
+      await waitFor(() => expect(tooltipA.open).toBe(false), {
+        timeout: 1000,
+      });
+      expect(
+        tooltipA.matches(':popover-open'),
+        'first tooltip left the top layer'
+      ).toBe(false);
+    });
   },
 };
