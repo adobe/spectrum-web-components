@@ -20,10 +20,10 @@ import {
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
-import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
+import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 
 import { uniqueId } from '../../../utils/id.js';
 import {
@@ -463,15 +463,13 @@ export class ResponseStatus extends SpectrumElement {
 
   private _renderChevron(open: boolean): TemplateResult {
     return html`
-      <swc-icon
+      <swc-ui-icon
         class=${open
           ? 'swc-ResponseStatus-chevron swc-ResponseStatus-chevron--down'
           : 'swc-ResponseStatus-chevron'}
-        style="--swc-icon-inline-size:10px;--swc-icon-block-size:10px;"
-        aria-hidden="true"
-      >
-        ${Chevron75Icon()}
-      </swc-icon>
+        icon="chevron"
+        size="s"
+      ></swc-ui-icon>
     `;
   }
 

@@ -20,13 +20,12 @@ import type { CustomPropertyCase } from '../../../../.storybook/helpers/index.js
 import {
   coveredCustomProperties,
   customPropertyRows,
-  iconForSize,
   theme,
   verifyCustomPropertyCoverage,
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
 import customElementsManifest from '../../../../dist/custom-elements.json';
-import * as Icons from '../../../icon/elements/index.js';
+import { Checkmark100Icon } from '../../../icon/elements/index.js';
 
 // Metadata
 
@@ -128,7 +127,7 @@ const renderPropertyCase = (
         aria-label=${label}
         style=${combinedStyle || nothing}
       >
-        <swc-icon slot="icon">${iconForSize(Icons, 'Checkmark', 'm')}</swc-icon>
+        <swc-icon slot="icon">${Checkmark100Icon()}</swc-icon>
       </swc-badge>
     `;
   }
@@ -142,7 +141,7 @@ const renderPropertyCase = (
       ${withIcon
         ? html`
             <swc-icon slot="icon" aria-hidden="true">
-              ${iconForSize(Icons, 'Checkmark', 'm')}
+              ${Checkmark100Icon()}
             </swc-icon>
           `
         : nothing}
