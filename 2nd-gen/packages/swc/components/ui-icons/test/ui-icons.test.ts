@@ -18,7 +18,10 @@ import { UiIcon } from '@adobe/spectrum-wc/ui-icons';
 import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 
 import { getComponent } from '../../../utils/test-utils.js';
+import type { UiIconName } from '../icon-set/index.js';
+import { UI_ICONS } from '../icon-set/index.js';
 import meta, { Overview } from '../stories/ui-icons.internal.stories.js';
+import { DIRECTIONAL_UI_ICONS } from '../ui-icon-direction.js';
 import type { UiIconArt } from '../ui-icons.types.js';
 import { resolveUiIconArt } from '../ui-icons.types.js';
 
@@ -182,6 +185,112 @@ export const LabelTogglingTest: Story = {
         'host has no aria-label after clearing'
       ).toBe(false);
     });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: RTL mirroring
+// ──────────────────────────────────────────────────────────────
+
+// Iterates every entry in UI_ICONS against DIRECTIONAL_UI_ICONS rather than
+// hand-picking one directional and one non-directional icon: adding an icon to
+// UI_ICONS without deciding whether it belongs in DIRECTIONAL_UI_ICONS now fails
+// this test immediately instead of silently shipping an icon nobody made a
+// mirroring decision for.
+export const DirectionalMirroringTest: Story = {
+  render: () => html`
+    <div id="rtl-wrapper" dir="rtl">
+      ${Object.keys(UI_ICONS).map(
+        (name) => html`
+          <swc-ui-icon
+            icon=${name}
+            data-icon=${name}
+            accessible-label=${name}
+          ></swc-ui-icon>
+        `
+      )}
+    </div>
+    <div id="ltr-wrapper" dir="ltr">
+      ${Object.keys(UI_ICONS).map(
+        (name) => html`
+          <swc-ui-icon
+            icon=${name}
+            data-icon=${name}
+            accessible-label=${name}
+          ></swc-ui-icon>
+        `
+      )}
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const rtlWrapper = canvasElement.querySelector(
+      '#rtl-wrapper'
+    ) as HTMLElement;
+    const ltrWrapper = canvasElement.querySelector(
+      '#ltr-wrapper'
+    ) as HTMLElement;
+
+    await step(
+      'every icon mirrors under RTL iff it is in the directional set',
+      async () => {
+        for (const name of Object.keys(UI_ICONS) as UiIconName[]) {
+          const icon = rtlWrapper.querySelector(`[data-icon="${name}"]`)!;
+          const expected = DIRECTIONAL_UI_ICONS.has(name) ? '-1 1' : 'none';
+          expect(getComputedStyle(icon).scale, `${name} under RTL`).toBe(
+            expected
+          );
+        }
+      }
+    );
+
+    await step('no icon mirrors under LTR, directional or not', async () => {
+      for (const name of Object.keys(UI_ICONS) as UiIconName[]) {
+        const icon = ltrWrapper.querySelector(`[data-icon="${name}"]`)!;
+        expect(getComputedStyle(icon).scale, `${name} under LTR`).toBe('none');
+      }
+    });
+  },
+};
+
+// Mirrors tabs.test.ts's SelectionIndicatorDirectionChangeTest pattern: real
+// consumers (AccordionItem, MessageSources, ResponseStatus) never set `dir`
+// directly on their <swc-ui-icon>; they rely on it inheriting from an
+// ancestor. Verified separately from the direct-attribute tests above since
+// :host(:dir(rtl)[icon="..."])'s selector-matching quirk (see
+// ui-icon-direction.css) makes it worth confirming inherited directionality
+// resolves the same way, not assuming it from spec compliance alone.
+export const DirectionalIconMirrorsWithInheritedRtlTest: Story = {
+  render: () => html`
+    <div id="direction-wrapper" dir="ltr">
+      <swc-ui-icon icon="chevron" accessible-label="Expand"></swc-ui-icon>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const icon = await getComponent<UiIcon>(canvasElement, 'swc-ui-icon');
+    const wrapper = canvasElement.querySelector(
+      '#direction-wrapper'
+    ) as HTMLElement;
+
+    await step('does not mirror while the ancestor is LTR', async () => {
+      expect(
+        getComputedStyle(icon).scale,
+        'chevron is unmirrored while the ancestor is LTR'
+      ).toBe('none');
+    });
+
+    await step(
+      'mirrors once an ancestor dir attribute flips to RTL at runtime',
+      async () => {
+        wrapper.setAttribute('dir', 'rtl');
+        await icon.updateComplete;
+        expect(
+          getComputedStyle(icon).scale,
+          'chevron mirrors once the ancestor is RTL, with no dir attribute of its own'
+        ).toBe('-1 1');
+      }
+    );
+
+    wrapper.setAttribute('dir', 'ltr');
   },
 };
 

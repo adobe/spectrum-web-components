@@ -1,0 +1,37 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/*
+ * A4U exposes no per-icon mirror flag, so directional icons are mirrored in RTL via
+ * this curated, hand-maintained list rather than per-icon metadata (icon-rfc.md,
+ * section 11). First pass: chevrons and arrows. Icons not listed here (checkmarks,
+ * crosses, the corner-triangle hold-affordance marker, kept physically anchored to
+ * its corner in both directions to match 1st-gen, and similar non-directional or
+ * physically-anchored art) never flip. Consuming components no longer need their
+ * own RTL mirror rule for these icons; this is the single place that owns the
+ * decision.
+ *
+ * The selector list below must stay in sync with `DIRECTIONAL_UI_ICONS` in
+ * ui-icon-direction.ts, the source of truth `ui-icons.test.ts` checks every
+ * `UI_ICONS` entry against.
+ *
+ * Both conditions must live inside :host()'s own argument as one compound selector
+ * (:host(:dir(rtl)[icon="..."])). Chaining an attribute selector after a closing
+ * :host(:dir(...)) instead (:host(:dir(rtl))[icon="..."]) parses without error but
+ * never matches, verified against Chromium 138.0.7204.23 (this repo's pinned
+ * Playwright 1.53.1); keep new entries in this same form rather than "simplifying"
+ * back to the chained one.
+ */
+:host(:dir(rtl)[icon="chevron"]),
+:host(:dir(rtl)[icon="arrow"]) {
+  scale: -1 1;
+}

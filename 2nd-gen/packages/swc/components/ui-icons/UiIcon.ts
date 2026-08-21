@@ -18,14 +18,17 @@ import { UI_ICONS, UiIconName } from './icon-set/index.js';
 import { resolveUiIconArt } from './ui-icons.types.js';
 
 import iconBaseStyles from '../../stylesheets/_lit-styles/icon-base.css';
+import uiIconDirectionStyles from './ui-icon-direction.css';
 import uiIconSizeStyles from './ui-icon-sizes.css';
 
 /**
  * An internal icon renderer for Spectrum UI icons (chevrons, checkmarks, arrows, and
  * other control internals). The `icon` attribute selects the icon-set, and the
  * element renders the optically-tuned step that matches its `size`. Extends
- * `IconBase` for size and host-owned accessibility. Not published for consumers;
- * used by other swc components.
+ * `IconBase` for size and host-owned accessibility. A curated set of directional
+ * icons (chevrons, arrows) mirror automatically in RTL; consuming components do not
+ * need their own mirror rule for these icons. Not published for consumers; used by
+ * other swc components.
  *
  * @element swc-ui-icon
  * @status internal
@@ -41,13 +44,15 @@ import uiIconSizeStyles from './ui-icon-sizes.css';
 export class UiIcon extends IconBase {
   /**
    * The logical UI icon to render, matching a key in the icon-set registry (for
-   * example `chevron` or `corner-triangle`).
+   * example `chevron` or `corner-triangle`). Reflected so RTL mirroring can key off
+   * the host attribute regardless of whether a consumer sets `icon` via markup or a
+   * property binding.
    */
-  @property({ type: String })
+  @property({ type: String, reflect: true })
   public icon!: UiIconName;
 
   public static override get styles(): CSSResultArray {
-    return [iconBaseStyles, uiIconSizeStyles];
+    return [iconBaseStyles, uiIconSizeStyles, uiIconDirectionStyles];
   }
 
   protected override willUpdate(changed: PropertyValues<this>): void {
