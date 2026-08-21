@@ -313,9 +313,11 @@ class ConversationFullPatternDemo extends LitElement {
     }
     this.artifacts = [];
 
+    // Keep the generating state visible long enough to read the response
+    // status steps before the reply resolves.
     this.responseTimer = window.setTimeout(() => {
       this.completeGeneration();
-    }, 1200);
+    }, 3600);
   }
 
   private completeGeneration(): void {

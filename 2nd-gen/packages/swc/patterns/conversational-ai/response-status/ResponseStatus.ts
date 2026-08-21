@@ -24,6 +24,7 @@ import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
+import '../pixel-loader/swc-pixel-loader.js';
 
 import { uniqueId } from '../../../utils/id.js';
 import {
@@ -48,6 +49,7 @@ export type ResponseStatusStepData = {
   label: string;
   description: string;
   status: ResponseStatusStepStatus;
+  open: boolean;
 };
 
 /**
@@ -58,6 +60,8 @@ export type ResponseStatusStepData = {
  * @slot - `<swc-response-status-step>` elements.
  * @fires swc-response-status-toggle - Dispatched when the user opens or closes the panel.
  * Detail: `{ open: boolean }`
+ * @fires swc-response-status-step-toggle - Dispatched when the user expands or collapses
+ * a step's description. Detail: `{ open: boolean, index: number }`
  */
 export class ResponseStatus extends SpectrumElement {
   private static readonly STATUS_LABEL_CLASS =
@@ -79,6 +83,24 @@ export class ResponseStatus extends SpectrumElement {
 
   @state()
   private _steps: ResponseStatusStepData[] = [];
+
+  /**
+   * User-driven per-step disclosure overrides, keyed by step index. Present only
+   * for steps the user has toggled; absent entries fall back to the step's
+   * declared `open` (steps are collapsed by default).
+   */
+  @state()
+  private _stepOpenOverrides = new Map<number, boolean>();
+
+  /**
+   * Indices of open steps whose description overflows its capped height. Only
+   * these get a keyboard-focusable scroll region, so non-overflowing details
+   * never enter the tab order.
+   */
+  @state()
+  private _overflowingSteps = new Set<number>();
+
+  private _detailResizeObserver: ResizeObserver | null = null;
 
   @state()
   private _labelSlotText = '';
@@ -135,7 +157,7 @@ export class ResponseStatus extends SpectrumElement {
     new MutationController(this, {
       config: {
         attributes: true,
-        attributeFilter: ['slot', 'status'],
+        attributeFilter: ['slot', 'status', 'open'],
         characterData: true,
         childList: true,
         subtree: true,
@@ -149,6 +171,15 @@ export class ResponseStatus extends SpectrumElement {
   public override connectedCallback(): void {
     super.connectedCallback();
 
+    // Width changes reflow the description text, which can start or stop
+    // overflow without any reactive state changing; re-measure on resize.
+    if (typeof ResizeObserver === 'function' && !this._detailResizeObserver) {
+      this._detailResizeObserver = new ResizeObserver(() => {
+        this._syncDetailOverflow();
+      });
+      this._detailResizeObserver.observe(this);
+    }
+
     this._syncSlotContent();
   }
 
@@ -156,8 +187,24 @@ export class ResponseStatus extends SpectrumElement {
     this._applyLabelRoll();
   }
 
+  protected override updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
+
+    // Re-measure when what is shown (or its open state) changes. Label-roll
+    // updates do not affect overflow, so they are intentionally excluded.
+    if (
+      changed.has('_steps') ||
+      changed.has('_stepOpenOverrides') ||
+      changed.has('open')
+    ) {
+      this._syncDetailOverflow();
+    }
+  }
+
   public override disconnectedCallback(): void {
     this._clearLabelRollTimers();
+    this._detailResizeObserver?.disconnect();
+    this._detailResizeObserver = null;
     super.disconnectedCallback();
   }
 
@@ -190,7 +237,8 @@ export class ResponseStatus extends SpectrumElement {
       (step, index) =>
         step.label === right[index]?.label &&
         step.description === right[index]?.description &&
-        step.status === right[index]?.status
+        step.status === right[index]?.status &&
+        step.open === right[index]?.open
     );
   }
 
@@ -247,6 +295,7 @@ export class ResponseStatus extends SpectrumElement {
       label,
       description: this._readStepDescription(element),
       status,
+      open: element.hasAttribute('open'),
     };
   }
 
@@ -436,37 +485,108 @@ export class ResponseStatus extends SpectrumElement {
     return this._steps.length > 0;
   }
 
+  private _emitToggle<T>(type: string, detail: T): void {
+    this.dispatchEvent(
+      new CustomEvent<T>(type, { bubbles: true, composed: true, detail })
+    );
+  }
+
   private _handleToggle(): void {
     if (!this._showPanel) {
       return;
     }
 
     this.open = !this.open;
-    this.dispatchEvent(
-      new CustomEvent('swc-response-status-toggle', {
-        bubbles: true,
-        composed: true,
-        detail: { open: this.open },
-      })
-    );
+    this._emitToggle('swc-response-status-toggle', { open: this.open });
   }
 
-  private _renderThreeDots(): TemplateResult {
+  // Resolved disclosure state for a step: a user override wins; otherwise the
+  // step is open only when it declares `open`. Steps start collapsed.
+  private _isStepOpen(step: ResponseStatusStepData, index: number): boolean {
+    const override = this._stepOpenOverrides.get(index);
+    if (override !== undefined) {
+      return override;
+    }
+
+    return step.open;
+  }
+
+  private _setsEqual(left: Set<number>, right: Set<number>): boolean {
+    if (left.size !== right.size) {
+      return false;
+    }
+    for (const value of left) {
+      if (!right.has(value)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // Measures which open step descriptions overflow their capped height so only
+  // those expose a focusable scroll region (see `_overflowingSteps`).
+  private _syncDetailOverflow(): void {
+    if (!this.open) {
+      if (this._overflowingSteps.size > 0) {
+        this._overflowingSteps = new Set();
+      }
+      return;
+    }
+
+    const scrollRegions = this.shadowRoot?.querySelectorAll<HTMLElement>(
+      '.swc-ResponseStatus-step-detailScroll'
+    );
+
+    const next = new Set<number>();
+    scrollRegions?.forEach((region) => {
+      const index = Number(region.dataset.stepIndex);
+      const step = this._steps[index];
+      if (Number.isNaN(index) || !step || !this._isStepOpen(step, index)) {
+        return;
+      }
+      if (region.scrollHeight - region.clientHeight > 1) {
+        next.add(index);
+      }
+    });
+
+    if (!this._setsEqual(next, this._overflowingSteps)) {
+      this._overflowingSteps = next;
+    }
+  }
+
+  private _handleStepToggle(event: Event): void {
+    const button = event.currentTarget as HTMLElement;
+    const index = Number(button.dataset.index);
+    const step = this._steps[index];
+    if (Number.isNaN(index) || !step) {
+      return;
+    }
+
+    const next = !this._isStepOpen(step, index);
+    const overrides = new Map(this._stepOpenOverrides);
+    overrides.set(index, next);
+    this._stepOpenOverrides = overrides;
+
+    this._emitToggle('swc-response-status-step-toggle', { open: next, index });
+  }
+
+  private _renderLoader(): TemplateResult {
     return html`
-      <span class="swc-ResponseStatus-dots" aria-hidden="true">
-        <span class="swc-ResponseStatus-dot"></span>
-        <span class="swc-ResponseStatus-dot"></span>
-        <span class="swc-ResponseStatus-dot"></span>
-      </span>
+      <swc-pixel-loader
+        class="swc-ResponseStatus-loader"
+        preset="mega"
+        aria-hidden="true"
+      ></swc-pixel-loader>
     `;
   }
 
-  private _renderChevron(open: boolean): TemplateResult {
+  private _renderChevron(
+    open: boolean,
+    baseClass = 'swc-ResponseStatus-chevron'
+  ): TemplateResult {
     return html`
       <swc-icon
-        class=${open
-          ? 'swc-ResponseStatus-chevron swc-ResponseStatus-chevron--down'
-          : 'swc-ResponseStatus-chevron'}
+        class=${open ? `${baseClass} ${baseClass}--down` : baseClass}
         style="--swc-icon-inline-size:10px;--swc-icon-block-size:10px;"
         aria-hidden="true"
       >
@@ -498,7 +618,7 @@ export class ResponseStatus extends SpectrumElement {
       return '';
     }
 
-    return this._renderThreeDots();
+    return this._renderLoader();
   }
 
   private _renderHeader(showDisclosure: boolean): TemplateResult {
@@ -584,6 +704,62 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
+  private _renderStepBody(
+    step: ResponseStatusStepData,
+    index: number
+  ): TemplateResult {
+    // Steps without a description have nothing to disclose; render a plain title.
+    if (!step.description) {
+      return html`
+        <div class="swc-ResponseStatus-step-body">
+          <p class="swc-ResponseStatus-step-title swc-Detail swc-Detail--sizeS">
+            ${step.label}
+          </p>
+        </div>
+      `;
+    }
+
+    const open = this._isStepOpen(step, index);
+    const detailId = `${this.panelId}-detail-${index}`;
+
+    return html`
+      <div class="swc-ResponseStatus-step-body">
+        <button
+          class="swc-ResponseStatus-step-toggle"
+          data-index=${index}
+          aria-expanded=${open}
+          aria-controls=${detailId}
+          @click=${this._handleStepToggle}
+        >
+          <span
+            class="swc-ResponseStatus-step-title swc-Detail swc-Detail--sizeS"
+          >
+            ${step.label}
+          </span>
+          ${this._renderChevron(open, 'swc-ResponseStatus-step-chevron')}
+        </button>
+        <div
+          id=${detailId}
+          class="swc-ResponseStatus-step-detailPanel ${open
+            ? 'swc-ResponseStatus-step-detailPanel--open'
+            : ''}"
+        >
+          <div class="swc-ResponseStatus-step-detailClip">
+            <div
+              class="swc-ResponseStatus-step-detailScroll"
+              data-step-index=${index}
+              tabindex=${ifDefined(
+                this._overflowingSteps.has(index) ? '0' : undefined
+              )}
+            >
+              ${this._renderStepDetail(step.description)}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
   private _renderStepTimeline(): TemplateResult {
     const steps = this._steps;
     const lastIndex = steps.length - 1;
@@ -608,14 +784,7 @@ export class ResponseStatus extends SpectrumElement {
                     `
                   : ''}
               </div>
-              <div class="swc-ResponseStatus-step-body">
-                <p
-                  class="swc-ResponseStatus-step-title swc-Detail swc-Detail--sizeS"
-                >
-                  ${step.label}
-                </p>
-                ${this._renderStepDetail(step.description)}
-              </div>
+              ${this._renderStepBody(step, index)}
             </li>
           `
         )}

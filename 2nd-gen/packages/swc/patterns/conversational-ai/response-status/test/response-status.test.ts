@@ -115,9 +115,9 @@ export const StatusApiTest: Story = {
         expect(
           el.shadowRoot?.querySelector('.swc-ResponseStatus-row--processing')
         ).toBeTruthy();
-        expect(
-          el.shadowRoot?.querySelector('.swc-ResponseStatus-dots')
-        ).toBeTruthy();
+        const loader = el.shadowRoot?.querySelector('swc-pixel-loader');
+        expect(loader).toBeTruthy();
+        expect(loader?.getAttribute('preset')).toBe('mega');
       }
     );
   },
@@ -322,6 +322,80 @@ export const AgenticApiTest: Story = {
       expect(captured?.detail.open).toBe(false);
       expect(captured?.bubbles).toBe(true);
       expect(captured?.composed).toBe(true);
+    });
+  },
+};
+
+export const StepDisclosureTest: Story = {
+  render: () => agenticMarkup,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+
+    const stepToggles = (): HTMLButtonElement[] =>
+      Array.from(
+        el.shadowRoot?.querySelectorAll<HTMLButtonElement>(
+          '.swc-ResponseStatus-step-toggle'
+        ) ?? []
+      );
+
+    await step('keeps every step collapsed by default', async () => {
+      await waitFor(
+        () => {
+          const expanded = stepToggles().map((toggle) =>
+            toggle.getAttribute('aria-expanded')
+          );
+          // No step declares `open`, so all start collapsed.
+          expect(expanded).toEqual(['false', 'false', 'false']);
+        },
+        { timeout: 2000 }
+      );
+    });
+
+    await step('each step toggle controls its own description', async () => {
+      for (const toggle of stepToggles()) {
+        const controls = toggle.getAttribute('aria-controls');
+        expect(controls).toBeTruthy();
+        expect(el.shadowRoot?.getElementById(controls as string)).toBeTruthy();
+      }
+    });
+
+    await step(
+      'expands a collapsed step and emits a step-toggle event',
+      async () => {
+        let captured: CustomEvent<{ open: boolean; index: number }> | undefined;
+        el.addEventListener('swc-response-status-step-toggle', (event) => {
+          captured = event as CustomEvent<{ open: boolean; index: number }>;
+        });
+
+        stepToggles()[0]?.click();
+        await el.updateComplete;
+
+        expect(captured?.detail).toEqual({ open: true, index: 0 });
+        expect(captured?.bubbles).toBe(true);
+        expect(captured?.composed).toBe(true);
+        expect(stepToggles()[0]?.getAttribute('aria-expanded')).toBe('true');
+      }
+    );
+
+    await step('toggles steps independently', async () => {
+      let captured: CustomEvent<{ open: boolean; index: number }> | undefined;
+      el.addEventListener('swc-response-status-step-toggle', (event) => {
+        captured = event as CustomEvent<{ open: boolean; index: number }>;
+      });
+
+      stepToggles()[1]?.click();
+      await el.updateComplete;
+
+      expect(captured?.detail).toEqual({ open: true, index: 1 });
+      // Index 0 stays expanded from the previous step; toggling index 1 is
+      // independent.
+      const expanded = stepToggles().map((toggle) =>
+        toggle.getAttribute('aria-expanded')
+      );
+      expect(expanded).toEqual(['true', 'true', 'false']);
     });
   },
 };

@@ -11,7 +11,7 @@ import * as ResponseStatusStories from './stories/response-status.stories';
 
 A response status indicator consists of:
 
-1. **Status row**: an indicator, status label, and optional disclosure control
+1. **Status row**: a pixel-loader indicator (using the `mega` preset) while active, a checkmark when complete, status label, and optional disclosure control
 2. **Step timeline**: optional execution steps that can be expanded for more detail
 
 <Canvas of={ResponseStatusStories.Anatomy} />
@@ -34,13 +34,14 @@ Steps are optional in every response state. When `swc-response-status-step` chil
 
 ### Steps
 
-Add `swc-response-status-step` children to render an expandable timeline. Set `open` to show the timeline by default.
+Add `swc-response-status-step` children to render an expandable timeline. Set `open` on `swc-response-status` to show the timeline by default.
 
 Each step uses:
 
 - **`status`**: `active`, `complete`, or `stopped`
 - **`slot="label"`**: step title
-- **`slot="description"`**: detail text shown in the expanded timeline
+- **`slot="description"`**: detail text shown in the expanded timeline; steps with a description get their own disclosure control
+- **`open`**: expands the step's description initially. Steps are collapsed by default; set `open` to expand a specific step.
 
 All provided steps render in their authored order.
 
@@ -61,6 +62,27 @@ status.addEventListener('swc-response-status-toggle', (event) => {
 });
 ```
 
+### Step disclosure
+
+Each step with a `slot="description"` renders its own disclosure control, so users can expand or collapse individual steps independently. Steps are collapsed by default; set `open` on a step to expand it initially.
+
+`<swc-response-status>` emits **`swc-response-status-step-toggle`** when a user expands or collapses a step. The event **bubbles** and is **composed**. `event.detail` contains the next `open` state and the step `index`.
+
+```js
+status.addEventListener('swc-response-status-step-toggle', (event) => {
+  const { open, index } = event.detail;
+  console.log(index, open);
+});
+```
+
+<Canvas of={ResponseStatusStories.StepDisclosure} />
+
+### Long description
+
+A step description shorter than the cap keeps its natural height. When it exceeds the cap, the description scrolls within the step and shows a fade at the bottom edge while there is more content below. Override the cap with the `--swc-response-status-step-detail-max-block-size` custom property (defaults to `120px`).
+
+<Canvas of={ResponseStatusStories.LongDescription} />
+
 ### Label update cadence
 
 Header-label cadence is consumer-managed. The component rolls the header label whenever its text changes; your app decides when to update that text. If you stream rapid status updates, keep each visible label readable for about 1 second before replacing it.
@@ -76,9 +98,11 @@ The `LabelCadence` story demonstrates one consumer-side queue pattern.
 The `<swc-response-status>` element implements the following accessibility features:
 
 - When no steps exist, `active` status labels are exposed with `role="status"` so updates are announced politely without moving focus
+- The pixel loader in the active status row is decorative (`aria-hidden`) so it does not add a nested progressbar; the status label already conveys that work is in progress
 - When steps exist, the disclosure button uses `aria-expanded` and `aria-controls` to communicate panel state
 - The step timeline uses `role="group"` with an accessible name from the `accessible-label` attribute (defaults to “Execution steps”)
 - The ordered step list uses `role="list"` and each rendered step uses `role="listitem"`
+- Each step with a description exposes its own disclosure button, using `aria-expanded` and `aria-controls` and taking its accessible name from the step title
 
 ### Best practices
 

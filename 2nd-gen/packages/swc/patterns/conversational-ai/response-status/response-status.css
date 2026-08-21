@@ -73,11 +73,7 @@
   overflow: hidden;
 }
 
-.swc-ResponseStatus-row--button .swc-ResponseStatus-headerTrail {
-  flex: 1;
-  min-inline-size: 0;
-}
-
+.swc-ResponseStatus-row--button .swc-ResponseStatus-headerTrail,
 .swc-ResponseStatus-row--button .swc-ResponseStatus-headerTrailViewport {
   flex: 1;
   min-inline-size: 0;
@@ -120,51 +116,11 @@
   visibility: hidden;
 }
 
-/* Three-dot loading indicator */
+.swc-ResponseStatus-loader {
+  --swc-pixel-loader-size: 20px;
+  --swc-pixel-loader-color: token("gray-600");
 
-.swc-ResponseStatus-dots {
-  display: inline-flex;
   flex-shrink: 0;
-  gap: token("spacing-75");
-  align-items: center;
-  block-size: 6px;
-  color: token("gray-800");
-}
-
-.swc-ResponseStatus-dot {
-  inline-size: 6px;
-  block-size: 6px;
-  background: currentcolor;
-  border-radius: 50%;
-  opacity: 0.45;
-  animation: swc-response-status-dot-pulse 1.1s token("animation-ease-in-out") infinite;
-}
-
-.swc-ResponseStatus-dot:nth-child(1) {
-  color: token("gray-500");
-  animation-delay: 0s;
-}
-
-.swc-ResponseStatus-dot:nth-child(2) {
-  color: token("gray-600");
-  animation-delay: 0.15s;
-}
-
-.swc-ResponseStatus-dot:nth-child(3) {
-  color: token("gray-800");
-  animation-delay: 0.3s;
-}
-
-@keyframes swc-response-status-dot-pulse {
-  0%,
-  70%,
-  100% {
-    opacity: 0.35;
-  }
-
-  35% {
-    opacity: 1;
-  }
 }
 
 .swc-ResponseStatus-row--button:hover {
@@ -175,12 +131,14 @@
    Chevron direction
    ───────────────────────────────────── */
 
-.swc-ResponseStatus-chevron {
+.swc-ResponseStatus-chevron,
+.swc-ResponseStatus-step-chevron {
   flex-shrink: 0;
   transition: transform token("animation-duration-100") ease;
 }
 
-.swc-ResponseStatus-chevron--down {
+.swc-ResponseStatus-chevron--down,
+.swc-ResponseStatus-step-chevron--down {
   transform: rotate(90deg);
 }
 
@@ -199,38 +157,45 @@
   border-radius: token("corner-radius-medium-default");
 }
 
-.swc-ResponseStatus-row--stopped .swc-ResponseStatus-dots {
-  display: none;
-}
-
-.swc-ResponseStatus--agentic .swc-ResponseStatus-dots {
-  margin-inline-end: 1px;
-}
-
 .swc-ResponseStatus-check {
   flex-shrink: 0;
 }
 
-.swc-ResponseStatus-panel {
-  interpolate-size: allow-keywords;
-  display: block;
+/* Shared collapse mechanics for the header panel and per-step detail panels.
+   Animates `grid-template-rows` between 0fr and 1fr rather than `block-size`
+   to/from `auto`: the block-size + `interpolate-size` approach only works in
+   Chromium, so Safari and Firefox leave (and ratchet) residual height.
+
+   Overflow and min-block-size live on the grid item, not this container:
+   0fr only collapses to 0 on the item. Safari also ratchets leftover height
+   when the container clips, or when the item itself is a scroll region. */
+.swc-ResponseStatus-panel,
+.swc-ResponseStatus-step-detailPanel {
+  display: grid;
   visibility: hidden;
-  block-size: 0;
-  overflow: hidden;
+  grid-template-rows: 0fr;
   transition:
-    block-size token("animation-duration-200") token("animation-ease-in-out"),
+    grid-template-rows token("animation-duration-200") token("animation-ease-in-out"),
     visibility token("animation-duration-200") linear;
 }
 
-.swc-ResponseStatus-panel--open {
+.swc-ResponseStatus-panel--open,
+.swc-ResponseStatus-step-detailPanel--open {
   visibility: visible;
-  block-size: auto;
+  grid-template-rows: 1fr;
+}
+
+/* Clip wrapper / panel child: overflow:hidden here is what lets 0fr become a
+   true zero. The description scroller stays nested so it is not the grid item. */
+.swc-ResponseStatus-panel > *,
+.swc-ResponseStatus-step-detailClip {
+  min-block-size: 0;
+  overflow: hidden;
 }
 
 .swc-ResponseStatus-steps {
   padding-inline: token("spacing-100");
   margin: 0;
-  overflow: visible;
   list-style: none;
 }
 
@@ -259,15 +224,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  block-size: 100%;
-  min-block-size: 100%;
+
+  /* Stretch with the step row (align-items). Percentage block-size is cyclic
+     in Safari: min-block-size: 100% holds the previous row height after a
+     step collapses, so the body appears to grow on each open/close. */
   overflow: visible;
 }
 
 /* Extend rail (and line) through the gap before the next step icon */
 .swc-ResponseStatus-step:not(:last-child) .swc-ResponseStatus-step-rail {
   box-sizing: content-box;
-  padding-block-end: token("spacing-200");
 }
 
 .swc-ResponseStatus-step-icon {
@@ -301,6 +267,9 @@
 }
 
 .swc-ResponseStatus-step-body {
+  /* Size to content, not the stretched rail. Safari otherwise copies leftover
+     rail height back into the body after a disclosure closes. */
+  align-self: start;
   min-inline-size: 0;
 }
 
@@ -383,15 +352,57 @@
   margin-block: token("spacing-75") 0;
 }
 
+/* Per-step disclosure (mirrors the header row + panel mechanics) */
+
+.swc-ResponseStatus-step-toggle {
+  display: flex;
+  gap: token("spacing-100");
+  align-items: center;
+  inline-size: 100%;
+  padding: 0;
+  color: inherit;
+  text-align: start;
+  background: transparent;
+  border: none;
+}
+
+/* Description caps at a max height; shorter content stays auto. Override the
+   custom property to tune the cap. */
+.swc-ResponseStatus-step-detailScroll {
+  max-block-size: var(--swc-response-status-step-detail-max-block-size, 120px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Bottom fade cue while the description overflows and is not scrolled to the
+   end. Scroll-driven: with no overflow the scroll timeline is inactive, so the
+   base (unmasked) style applies and short descriptions never fade. */
+@supports (animation-timeline: scroll()) {
+  /* Longhands, not the `animation` shorthand: the shorthand resets
+     `animation-timeline` to auto, which would disable the scroll timeline. */
+  .swc-ResponseStatus-step-detailScroll {
+    animation-timeline: scroll(self block);
+    animation-name: swc-response-status-detail-fade;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+  }
+
+  @keyframes swc-response-status-detail-fade {
+    0%,
+    85% {
+      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 100%) calc(100% - 24px), rgb(0 0 0 / 0%) 100%);
+    }
+
+    100% {
+      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 100%), rgb(0 0 0 / 100%));
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .swc-ResponseStatus-headerTrailStrip,
   .swc-ResponseStatus-headerTrailLine {
     transition: none;
-  }
-
-  .swc-ResponseStatus-dot {
-    opacity: 0.7;
-    animation: none;
   }
 
   .swc-ResponseStatus-step:last-child {
@@ -400,13 +411,18 @@
 }
 
 @media (forced-colors: active) {
-  .swc-ResponseStatus-dots,
+  .swc-ResponseStatus-loader,
   .swc-ResponseStatus-step-icon {
     color: CanvasText;
   }
 
-  .swc-ResponseStatus-dot,
   .swc-ResponseStatus-step-line {
     background: CanvasText;
+  }
+
+  /* Keep every line fully legible in forced colors; rely on the scrollbar. */
+  .swc-ResponseStatus-step-detailScroll {
+    mask-image: none;
+    animation: none;
   }
 }
