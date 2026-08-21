@@ -76,8 +76,7 @@
   will-change: transform;
 }
 
-.swc-ActionButton:disabled:is(*, :hover),
-.swc-ActionButton--true .swc-ActionButton:is(*, :hover) {
+.swc-ActionButton:disabled:is(*, :hover) {
   color: var(--swc-action-button-content-color-disabled, token("disabled-content-color"));
   background-color: var(--swc-action-button-background-color-disabled, token("disabled-background-color"));
   border-color: var(--swc-action-button-border-color-disabled, transparent);
@@ -220,11 +219,6 @@
 @media (forced-colors: active) {
   .swc-ActionButton {
     border-color: ButtonBorder;
-  }
-  .swc-ActionButton--true {
-    --swc-action-button-background-color-disabled: ButtonFace;
-    --swc-action-button-content-color-disabled: GrayText;
-    --swc-action-button-border-color-disabled: GrayText;
   }
 }
 }
