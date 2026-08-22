@@ -327,8 +327,18 @@ export class Card extends LikeAnchor(
                     class="action-button"
                     @pointerdown=${this.stopPropagationOnHref}
                   >
-                    <slot name="actions"></slot>
+                    <slot name="actions" focusable></slot>
                   </div>
+              `
+              : nothing}
+            ${this.variant === 'quiet' && this.size === 's'
+              ? html`
+                <div
+                  class="spectrum-QuickActions actions"
+                  @pointerdown=${this.stopPropagationOnHref}
+                >
+                  <slot name="actions"></slot>
+                </div>
                 `
               : nothing}
           </div>
