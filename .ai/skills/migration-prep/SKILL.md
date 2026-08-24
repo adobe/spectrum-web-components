@@ -241,6 +241,7 @@ Pause and actively discuss with the user when you find any of the following:
 - Multiple plausible component boundaries, such as one component vs several
 - A component dependency or extension relationship changes the recommended migration order
 - This component shares structural CSS patterns with another component, suggesting a `_lit-styles/` fragment should be created or consumed — flag the opportunity, name the abstraction, and note whether extraction affects migration order or requires coordination
+- This component needs behavior (trigger resolution, positioning, slot observation, busy state, locale formatting, dev-mode validation, etc.) that a shared core controller, mixin, or utility may already provide — check [2nd-gen shared resources](../../../CONTRIBUTOR-DOCS/01_contributor-guides/16_2nd-gen-shared-resources.md) before proposing new logic, and flag whether an existing resource should be reused, extended, or whether new logic here is itself a candidate for promotion to core
 - Breaking changes that may be justified now to avoid a worse migration later
 - Inconsistencies between source materials that change the recommended API or behavior
 - Missing information that prevents a confident recommendation
@@ -378,6 +379,7 @@ Before finalizing the plan, assess whether:
 - The migration path for consumers is understandable and realistic
 - Open questions are the right questions, not placeholders for analysis the agent should have done
 - The plan gives reviewers a clear recommendation, not just a list of unresolved facts
+- Proposed new behavior was checked against [2nd-gen shared resources](../../../CONTRIBUTOR-DOCS/01_contributor-guides/16_2nd-gen-shared-resources.md) rather than assumed to be novel
 
 ## Final review prompt
 

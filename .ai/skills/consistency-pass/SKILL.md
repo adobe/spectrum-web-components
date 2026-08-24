@@ -5,12 +5,13 @@ description: Defines when and how to run a consistency and validity self-audit o
 
 # Consistency and validity pass
 
-A consistency and validity pass has two parts:
+A consistency and validity pass has three parts:
 
 1. **Code conformance** — are the changed files aligned with project style guides?
 2. **Plan validity** — does the migration plan still accurately reflect what was built?
+3. **Shared resources** — if this phase added or consumed a shared core resource, does the shared-resources doc reflect it?
 
-Run both proactively, not only when asked. The per-domain code checklist lives in `.ai/skills/code-conformance/SKILL.md`. The plan validity check is defined here.
+Run all three proactively, not only when asked. The per-domain code checklist lives in `.ai/skills/code-conformance/SKILL.md`. The plan validity and shared-resources checks are defined here.
 
 ## When to use this skill
 
@@ -78,9 +79,22 @@ Common cascading patterns to check:
 
 This check also applies during plan authoring. If you are writing or editing the plan in Phase 1 and make a change, run the same cascading scan before completing the phase.
 
+## Part 3: Shared resources
+
+`CONTRIBUTOR-DOCS/01_contributor-guides/16_2nd-gen-shared-resources.md` is the index of shared controllers, mixins, utilities, and directives in `@adobe/spectrum-wc-core` (and a couple of sibling-package helpers) and who uses each one. It goes stale silently: nothing fails to build or lint if it isn't updated.
+
+Skip this part entirely, with no report line, if the phase touched no code that composes or defines a `core` resource (e.g. a pure styling or test-only phase) — do not pad the report with a no-op check.
+
+Otherwise, check the files changed in this phase for:
+
+- A new `extends XMixin(...)`, a new `private x = new XController(this)` field, or a new import of a utility/directive from `@adobe/spectrum-wc-core` — an existing resource gained a consumer. Add the component or pattern to its "Used by" entry.
+- A new controller, mixin, utility, or directive defined under `2nd-gen/packages/core` (something promoted out of this component's own logic because it turned out to be general) — a new resource exists. Add a row for it.
+
+Update the doc in the same commit as the code change; don't defer it to a follow-up.
+
 ## Reporting format
 
-Report both parts together before ending your response:
+Report all three parts together before ending your response:
 
 ```
 **Consistency and validity pass — [component], Phase [N]**
@@ -98,6 +112,8 @@ Plan validity:
 - ⚠️ [plan section] — [cascading effect of confirmed change X; updated]
 - ⚠️ Phase checklist — [items that could not be marked complete; reason]
 - ❌ [plan section] — [implementation diverges in a way that may require re-alignment]
+
+Shared resources: [not applicable — no core resource touched this phase | updated for [resource] | ⚠️ [resource] newly consumed/introduced, doc not yet updated]
 ```
 
 Fix or flag all ⚠️ and ❌ items before reporting the phase or task complete. Items that cannot be resolved immediately must be noted in the Migration Checkpoint.
