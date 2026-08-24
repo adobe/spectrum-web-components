@@ -776,9 +776,10 @@ export const VariantsTest: Story = {
       }
     });
 
-    // Open each variant in turn via focus. Each assertion only checks the
-    // tooltip it just opened; with popover="manual" tooltips no longer
-    // auto-dismiss one another, so earlier ones may remain open.
+    // Open each variant in turn via focus. `popover="manual"` drops the native
+    // auto-dismiss, but the single-open singleton closes the previous tooltip
+    // when the next opens, so only one is open at a time; each assertion checks
+    // the tooltip it just opened.
     const variants = [...TOOLTIP_VARIANTS];
     const buttons = [
       ...canvasElement.querySelectorAll('swc-button'),

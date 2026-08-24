@@ -576,11 +576,12 @@ export const Accessibility: Story = {
   tags: ['a11y'],
 };
 
-// Hidden fixture (not in docs) for the trusted-input Escape-ordering a11y spec,
-// which needs a popover and a tooltip registered in one iframe. The ci-a11y
-// Storybook builds `*.stories.ts` but not the `.test.ts` fixtures, so this lives
-// here rather than in tooltip.test.ts. `!test` keeps it out of the automatic axe
-// run; the spec drives it explicitly by story id.
+// Hidden fixture for the trusted-input Escape-ordering a11y spec, which needs a
+// popover and a tooltip registered in one iframe. The ci-a11y Storybook builds
+// `*.stories.ts` but not the `.test.ts` fixtures, so this lives here rather than
+// in tooltip.test.ts. `!dev` keeps it out of the sidebar and `!test` out of the
+// automatic axe run; it stays built and addressable, so the spec drives it
+// explicitly by story id.
 export const CoexistenceWithPopover: Story = {
   render: () => html`
     <swc-button id="coexist-tooltip-trigger">Trigger</swc-button>
@@ -595,5 +596,5 @@ export const CoexistenceWithPopover: Story = {
       Popover content
     </swc-popover>
   `,
-  tags: ['!test'],
+  tags: ['!dev', '!test'],
 };

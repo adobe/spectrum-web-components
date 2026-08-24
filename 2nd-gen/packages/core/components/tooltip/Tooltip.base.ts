@@ -474,7 +474,6 @@ export abstract class TooltipBase
     // the native default (capture phase, before it runs) to keep an `auto`
     // popover underneath open; a later Escape, once we are gone, closes it.
     event.preventDefault();
-    event.stopPropagation();
     this.open = false;
   };
 
