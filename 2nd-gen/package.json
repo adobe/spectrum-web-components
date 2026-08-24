@@ -21,7 +21,7 @@
     "dev:analyze": "yarn workspace @adobe/spectrum-wc analyze:watch",
     "dev:core": "yarn workspace @adobe/spectrum-wc-core dev",
     "lint": "cd .. && eslint 2nd-gen --ext .ts,.js,.json",
-    "start": "run-p dev:core dev:analyze storybook",
+    "start": "run-p dev:core storybook",
     "storybook": "yarn workspace @adobe/spectrum-wc storybook",
     "storybook:build": "yarn workspace @adobe/spectrum-wc storybook:build",
     "test": "yarn workspace @adobe/spectrum-wc test",
