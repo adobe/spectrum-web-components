@@ -558,8 +558,9 @@ export abstract class TooltipBase
       if (this.open) {
         // The single-open singleton restores popover="auto"'s "one open at a
         // time" for automatic (hover/focus) tooltips. A `manual` tooltip is
-        // consumer-managed and opts out, so several can coexist (e.g. a VRT
-        // grid); it neither closes others nor claims the singleton slot.
+        // consumer-managed and opts out, so several can coexist (e.g. a coach-mark
+        // tour that points at multiple controls at once); it neither closes others
+        // nor claims the singleton slot.
         if (!this.manual) {
           // Close any other open tooltip first. Assign after requestClose() so
           // the other's updated() (else branch) does not clear the reference we take.
