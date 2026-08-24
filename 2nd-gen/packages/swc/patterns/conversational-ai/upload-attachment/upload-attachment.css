@@ -11,7 +11,7 @@
  */
 
 :host {
-  --swc-upload-artifact-focus-indicator-color: #4b4efc;
+  --swc-upload-attachment-focus-indicator-color: #4b4efc;
 
   display: block;
   position: relative;
@@ -24,12 +24,12 @@
  * strip (chevrons, textarea, Add/Send). No matching design token exists yet.
  * Drawn inward (negative offset) rather than the spec's outward 2px so it
  * never extends past the host's own box: an outward ring gets clipped by the
- * artifact strip's scroll/card overflow boundaries at the first/last tile.
- * The 2px margin/inset on .swc-UploadArtifact-surface (below) leaves this
+ * attachment strip's scroll/card overflow boundaries at the first/last tile.
+ * The 2px margin/inset on .swc-UploadAttachment-surface (below) leaves this
  * ring a real empty gap to sit in, instead of being painted over by that
  * (opaque) surface. */
 :host(:focus-visible) {
-  outline: token("focus-indicator-thickness") solid var(--swc-upload-artifact-focus-indicator-color);
+  outline: token("focus-indicator-thickness") solid var(--swc-upload-attachment-focus-indicator-color);
   outline-offset: calc(token("focus-indicator-thickness") * -1);
 }
 
@@ -39,13 +39,13 @@
   box-sizing: border-box;
 }
 
-.swc-UploadArtifact-dismiss {
+.swc-UploadAttachment-dismiss {
   /* 20px round gray circle rendered by swc-action-button. Icon-only, so the
    * width comes from edge-to-visual-only; set it equal to the vertical inset so
    * width matches min-block-size and the button stays square. */
-  --swc-action-button-min-block-size: var(--swc-upload-artifact-dismiss-visual-size, 20px);
-  --swc-action-button-icon-size: var(--swc-upload-artifact-dismiss-icon-inline-size, 8px);
-  --swc-action-button-edge-to-text: calc((var(--swc-upload-artifact-dismiss-visual-size, 20px) - var(--swc-upload-artifact-dismiss-icon-inline-size, 8px)) / 2);
+  --swc-action-button-min-block-size: var(--swc-upload-attachment-dismiss-visual-size, 20px);
+  --swc-action-button-icon-size: var(--swc-upload-attachment-dismiss-icon-inline-size, 8px);
+  --swc-action-button-edge-to-text: calc((var(--swc-upload-attachment-dismiss-visual-size, 20px) - var(--swc-upload-attachment-dismiss-icon-inline-size, 8px)) / 2);
   --swc-action-button-edge-to-visual: var(--swc-action-button-edge-to-text);
   --swc-action-button-edge-to-visual-only: var(--swc-action-button-edge-to-text);
   --swc-action-button-border-radius: token("corner-radius-full");
@@ -54,58 +54,58 @@
   --swc-action-button-content-color-default: token("gray-700");
 
   /* Ring tracks the same hook as the tile so both stay consistent and a consumer can retheme both at once. */
-  --swc-action-button-focus-indicator-color: var(--swc-upload-artifact-focus-indicator-color);
+  --swc-action-button-focus-indicator-color: var(--swc-upload-attachment-focus-indicator-color);
 
   position: absolute;
   z-index: 2;
 }
 
-.swc-UploadArtifact-dismiss-icon {
+.swc-UploadAttachment-dismiss-icon {
   pointer-events: none;
 }
 
-.swc-UploadArtifact-dismiss-icon svg {
+.swc-UploadAttachment-dismiss-icon svg {
   display: block;
   flex: 0 0 auto;
-  inline-size: var(--swc-upload-artifact-dismiss-icon-inline-size, 8px);
-  block-size: var(--swc-upload-artifact-dismiss-icon-block-size, 8px);
+  inline-size: var(--swc-upload-attachment-dismiss-icon-inline-size, 8px);
+  block-size: var(--swc-upload-attachment-dismiss-icon-block-size, 8px);
 }
 
-.swc-UploadArtifact-dismiss[hidden] {
+.swc-UploadAttachment-dismiss[hidden] {
   display: none;
 }
 
 /* Center the 20px circle on the tile's rounded top-right corner tip: half the
  * circle in from the corner, plus radius * (1 - cos(45deg)) along the curve. */
-:host([type="card"]) .swc-UploadArtifact-dismiss,
-:host([type="media"]) .swc-UploadArtifact-dismiss {
-  inset-block-start: calc(token("spacing-50") - var(--swc-upload-artifact-dismiss-visual-size, 20px) * 0.5 + token("corner-radius-medium-default") * 0.293);
-  inset-inline-end: calc(token("spacing-50") - var(--swc-upload-artifact-dismiss-visual-size, 20px) * 0.5 + token("corner-radius-medium-default") * 0.293);
+:host([type="card"]) .swc-UploadAttachment-dismiss,
+:host([type="media"]) .swc-UploadAttachment-dismiss {
+  inset-block-start: calc(token("spacing-50") - var(--swc-upload-attachment-dismiss-visual-size, 20px) * 0.5 + token("corner-radius-medium-default") * 0.293);
+  inset-inline-end: calc(token("spacing-50") - var(--swc-upload-attachment-dismiss-visual-size, 20px) * 0.5 + token("corner-radius-medium-default") * 0.293);
 }
 
-.swc-UploadArtifact {
+.swc-UploadAttachment {
   position: relative;
   inline-size: 100%;
   block-size: 100%;
 }
 
-.swc-UploadArtifact-surface {
+.swc-UploadAttachment-surface {
   display: flex;
   background: token("gray-50");
 }
 
-.swc-UploadArtifact-meta {
+.swc-UploadAttachment-meta {
   display: flex;
   flex-direction: column;
   gap: token("spacing-50");
   min-inline-size: 0;
 }
 
-.swc-UploadArtifact-meta[hidden] {
+.swc-UploadAttachment-meta[hidden] {
   display: none;
 }
 
-.swc-UploadArtifact-title {
+.swc-UploadAttachment-title {
   font-family: token("sans-serif-font");
   font-size: token("font-size-100");
   font-weight: token("bold-font-weight");
@@ -113,7 +113,7 @@
   color: token("gray-900");
 }
 
-.swc-UploadArtifact-subtitle {
+.swc-UploadAttachment-subtitle {
   font-family: token("sans-serif-font");
   font-size: token("font-size-75");
   font-weight: token("regular-font-weight");
@@ -121,20 +121,20 @@
   color: token("gray-800");
 }
 
-.swc-UploadArtifact-actions {
+.swc-UploadAttachment-actions {
   display: flex;
   align-items: center;
 }
 
-.swc-UploadArtifact-actions ::slotted(*) {
+.swc-UploadAttachment-actions ::slotted(*) {
   display: inline-flex;
   align-items: center;
 }
 
-:host([type="card"]) .swc-UploadArtifact-surface {
+:host([type="card"]) .swc-UploadAttachment-surface {
   gap: token("spacing-300");
   align-items: center;
-  min-block-size: var(--swc-upload-artifact-card-min-block-size, 72px);
+  min-block-size: var(--swc-upload-attachment-card-min-block-size, 72px);
   padding: token("spacing-200");
 
   /* 2px margin leaves a real gap between the host edge and this surface so
@@ -145,30 +145,30 @@
   border-radius: token("corner-radius-medium-default");
 }
 
-:host([type="card"]) .swc-UploadArtifact-thumbnail {
+:host([type="card"]) .swc-UploadAttachment-thumbnail {
   display: flex;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
 }
 
-:host([type="card"]) .swc-UploadArtifact-thumbnail ::slotted(*) {
+:host([type="card"]) .swc-UploadAttachment-thumbnail ::slotted(*) {
   box-sizing: border-box;
   flex-shrink: 0;
-  inline-size: var(--swc-upload-artifact-card-thumbnail-inline-size, 48px);
-  block-size: var(--swc-upload-artifact-card-thumbnail-block-size, 48px);
+  inline-size: var(--swc-upload-attachment-card-thumbnail-inline-size, 48px);
+  block-size: var(--swc-upload-attachment-card-thumbnail-block-size, 48px);
   background: token("gray-100");
   border: 1px solid transparent;
   border-radius: token("corner-radius-large-default");
 }
 
-:host([type="card"]) .swc-UploadArtifact-meta {
+:host([type="card"]) .swc-UploadAttachment-meta {
   flex: 1;
   align-items: flex-start;
 }
 
-:host([type="card"]) .swc-UploadArtifact-title,
-:host([type="card"]) .swc-UploadArtifact-subtitle {
+:host([type="card"]) .swc-UploadAttachment-title,
+:host([type="card"]) .swc-UploadAttachment-subtitle {
   inline-size: 100%;
   min-inline-size: 0;
   text-align: start;
@@ -178,13 +178,13 @@
  * span (last few characters plus the extension, computed in
  * _splitTitleForMiddleTruncation) stays pinned, so a long filename's type
  * stays visible instead of being clipped off the end. */
-:host([type="card"]) .swc-UploadArtifact-title {
+:host([type="card"]) .swc-UploadAttachment-title {
   display: flex;
   flex-wrap: nowrap;
   overflow: hidden;
 }
 
-.swc-UploadArtifact-title-start {
+.swc-UploadAttachment-title-start {
   flex: 0 1 auto;
   min-inline-size: 0;
   white-space: nowrap;
@@ -192,12 +192,12 @@
   text-overflow: ellipsis;
 }
 
-.swc-UploadArtifact-title-end {
+.swc-UploadAttachment-title-end {
   flex: 0 0 auto;
   white-space: nowrap;
 }
 
-:host([type="card"]) .swc-UploadArtifact-subtitle ::slotted(*) {
+:host([type="card"]) .swc-UploadAttachment-subtitle ::slotted(*) {
   display: block;
   min-inline-size: 0;
   white-space: nowrap;
@@ -206,13 +206,13 @@
 }
 
 :host([type="media"]) {
-  inline-size: var(--swc-upload-artifact-preview-size, 72px);
-  block-size: var(--swc-upload-artifact-preview-size, 72px);
+  inline-size: var(--swc-upload-attachment-preview-size, 72px);
+  block-size: var(--swc-upload-attachment-preview-size, 72px);
   border-radius: token("corner-radius-large-default");
   overflow: visible;
 }
 
-:host([type="media"]) .swc-UploadArtifact-surface {
+:host([type="media"]) .swc-UploadAttachment-surface {
   display: block;
   position: absolute;
 
@@ -225,7 +225,7 @@
   overflow: hidden;
 }
 
-:host([type="media"]) .swc-UploadArtifact-thumbnail {
+:host([type="media"]) .swc-UploadAttachment-thumbnail {
   display: block;
   position: relative;
   inline-size: 100%;
@@ -236,11 +236,11 @@
   overflow: hidden;
 }
 
-:host([type="media"]) .swc-UploadArtifact-actions {
+:host([type="media"]) .swc-UploadAttachment-actions {
   display: none;
 }
 
-:host([type="media"]) .swc-UploadArtifact-thumbnail ::slotted(img) {
+:host([type="media"]) .swc-UploadAttachment-thumbnail ::slotted(img) {
   box-sizing: border-box;
   display: block;
   position: absolute;
@@ -250,7 +250,7 @@
   object-fit: cover;
 }
 
-:host([type="media"]) .swc-UploadArtifact-thumbnail ::slotted(*) {
+:host([type="media"]) .swc-UploadAttachment-thumbnail ::slotted(*) {
   box-sizing: border-box;
   display: block;
   position: absolute;
@@ -259,7 +259,7 @@
   block-size: 100%;
 }
 
-:host([type="media"]) .swc-UploadArtifact-badge {
+:host([type="media"]) .swc-UploadAttachment-badge {
   display: inline-flex;
   position: absolute;
   inset-block-end: token("spacing-75");
@@ -279,7 +279,7 @@
   border-radius: token("corner-radius-400");
 }
 
-:host([type="media"]) .swc-UploadArtifact-badge ::slotted(*) {
+:host([type="media"]) .swc-UploadAttachment-badge ::slotted(*) {
   display: block;
   min-inline-size: 0;
   max-inline-size: 152px;
@@ -288,29 +288,29 @@
   text-overflow: ellipsis;
 }
 
-:host([type="media"]) .swc-UploadArtifact-meta {
+:host([type="media"]) .swc-UploadAttachment-meta {
   inline-size: 100%;
 }
 
-:host([type="media"]) .swc-UploadArtifact-header {
+:host([type="media"]) .swc-UploadAttachment-header {
   display: flex;
   gap: token("spacing-100");
   align-items: flex-start;
   justify-content: space-between;
 }
 
-:host([type="media"]) .swc-UploadArtifact-header > div {
+:host([type="media"]) .swc-UploadAttachment-header > div {
   min-inline-size: 0;
 }
 
-:host([type="media"]) .swc-UploadArtifact-title {
+:host([type="media"]) .swc-UploadAttachment-title {
   flex: 1 1 0;
   min-inline-size: 0;
   line-height: token("line-height-font-size-100");
   overflow: hidden;
 }
 
-:host([type="media"]) .swc-UploadArtifact-title ::slotted(*) {
+:host([type="media"]) .swc-UploadAttachment-title ::slotted(*) {
   display: block;
   min-inline-size: 0;
   white-space: nowrap;
@@ -318,6 +318,6 @@
   text-overflow: ellipsis;
 }
 
-:host([type="media"]) .swc-UploadArtifact-subtitle {
+:host([type="media"]) .swc-UploadAttachment-subtitle {
   line-height: token("line-height-font-size-75");
 }
