@@ -110,44 +110,9 @@ export class PromptField extends SpectrumElement {
   @property({ type: String, reflect: true })
   public variant: 'subtle' | 'balanced' | 'prominent' = 'balanced';
 
-  /** Status loader artwork: a single icon name (static), or a preset name (`cc`, `dc`, `exp`, `analyze`, `mega`) that cycles a themed sequence. Unions inlined so the API table lists the values; routed to the loader's icon/preset in `_renderStatusIcon`. */
+  /** Status loader artwork: a single icon name (static), or a preset name (`cc`, `dc`, `exp`, `analyze`, `mega`) that cycles a themed sequence. Routed to the loader's icon/preset in `_renderStatusIcon`. */
   @property({ type: String, reflect: true })
-  public loader:
-    | 'aiLogo'
-    | 'brush'
-    | 'eye'
-    | 'hourglass'
-    | 'mag'
-    | 'crop'
-    | 'flower'
-    | 'image'
-    | 'lasso'
-    | 'page'
-    | 'wand'
-    | 'bargraph'
-    | 'trefoil'
-    | 'dial'
-    | 'folder'
-    | 'arrow'
-    | 'cloud'
-    | 'comment'
-    | 'filter'
-    | 'microphone'
-    | 'pencil'
-    | 'potion'
-    | 'slider'
-    | 'timeline'
-    | 'eyedrop'
-    | 'adobeA'
-    | 'adobeD'
-    | 'adobeO'
-    | 'adobeB'
-    | 'adobeE'
-    | 'cc'
-    | 'dc'
-    | 'exp'
-    | 'analyze'
-    | 'mega' = 'aiLogo';
+  public loader: PixelLoaderIconName | PixelLoaderPresetName = 'aiLogo';
 
   /** Accessible name for the textarea; visually hidden. */
   @property({ type: String })
@@ -1121,9 +1086,9 @@ export class PromptField extends SpectrumElement {
     // One `loader` value routes to the pixel-loader's icon or preset; the name
     // sets are disjoint, so preset membership disambiguates. Typed against the
     // loader so the inlined union can never pass an invalid value.
-    const isPreset = (
-      PIXEL_LOADER_PRESET_NAMES as readonly string[]
-    ).includes(this.loader);
+    const isPreset = (PIXEL_LOADER_PRESET_NAMES as readonly string[]).includes(
+      this.loader
+    );
     const preset = isPreset
       ? (this.loader as PixelLoaderPresetName)
       : undefined;
