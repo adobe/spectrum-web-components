@@ -60,6 +60,9 @@ export interface PromptFieldSubmitDetail {
   value: string;
 }
 
+// Matches the pixel-loader's own `icon` default.
+const DEFAULT_LOADER_ICON: PixelLoaderIconName = 'aiLogo';
+
 // Native CSS textarea auto-sizing; when true, the JS fallback is skipped.
 const SUPPORTS_FIELD_SIZING =
   typeof CSS !== 'undefined' &&
@@ -1092,11 +1095,14 @@ export class PromptField extends SpectrumElement {
     const preset = isPreset
       ? (this.loader as PixelLoaderPresetName)
       : undefined;
-    const icon = isPreset ? undefined : (this.loader as PixelLoaderIconName);
+    // Keep a valid icon even in preset mode; removing the attribute lands as `null` and trips the loader's dev validation.
+    const icon = isPreset
+      ? DEFAULT_LOADER_ICON
+      : (this.loader as PixelLoaderIconName);
     return html`
       <span class="swc-PromptField-status-icon" aria-hidden="true">
         <swc-pixel-loader
-          icon=${ifDefined(icon)}
+          icon=${icon}
           preset=${ifDefined(preset)}
           ?paused=${!this.generating}
         ></swc-pixel-loader>
