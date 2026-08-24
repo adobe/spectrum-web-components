@@ -231,7 +231,7 @@ __metadata:
     "@vitest/coverage-v8": "npm:4.1.7"
     "@vitest/ui": "npm:4.1.7"
     "@wc-toolkit/storybook-helpers": "patch:@wc-toolkit/storybook-helpers@npm%3A10.3.0#~/.yarn/patches/@wc-toolkit-storybook-helpers-npm-10.3.0-03023714ff.patch"
-    "@wc-toolkit/type-parser": "npm:^1.3.1"
+    "@wc-toolkit/type-parser": "npm:1.3.1"
     aria-query: "npm:5.3.2"
     autoprefixer: "npm:10.4.21"
     chromatic: "npm:13.3.5"
@@ -10806,7 +10806,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wc-toolkit/type-parser@npm:^1.3.1":
+"@wc-toolkit/type-parser@npm:1.3.1":
   version: 1.3.1
   resolution: "@wc-toolkit/type-parser@npm:1.3.1"
   checksum: 10c0/a3e3e66d651863e45a2111f3d916d9c8f10f30ac7f243e7f5d632d6a3265ed871886d531db1e84ee1b4e1f4edefdadf39bbef64f535db09fa9d46d45b7bf4941
