@@ -340,11 +340,11 @@
 :host([type="media"]) .swc-UploadArtifact-badge {
   display: inline-flex;
   position: absolute;
-  inset-block-end: token("spacing-50");
-  inset-inline-start: token("spacing-50");
+  inset-block-end: token("spacing-75");
+  inset-inline-start: token("spacing-75");
   z-index: 1;
   align-items: center;
-  max-inline-size: calc(100% - (2 * token("spacing-50")));
+  max-inline-size: calc(100% - (2 * token("spacing-75")));
   min-block-size: 24px;
   padding-block: token("spacing-75");
   padding-inline: calc(token("spacing-75") + token("spacing-50") + token("corner-radius-75"));
