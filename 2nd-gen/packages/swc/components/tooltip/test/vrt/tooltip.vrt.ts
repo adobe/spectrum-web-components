@@ -204,8 +204,11 @@ const textContent = (key: string) => html`
   </div>
 `;
 
-// Open all tooltips and let the entrance transition settle. Tooltips are
-// `popover="auto"` (one open per document), so switch each to `popover="manual"`.
+// Open all tooltips and let the entrance transition settle. Automatic tooltips
+// are a single-open singleton, so mark each `manual` (they opt out) to let the
+// grid show them all at once. `manual` must settle before `open`: HoverController
+// hides the popover the moment `manual` turns on, which would undo a same-tick
+// `open`.
 const openAllTooltips = async ({
   canvasElement,
 }: {
@@ -213,9 +216,16 @@ const openAllTooltips = async ({
 }) => {
   const tooltips = Array.from(
     canvasElement.querySelectorAll('swc-tooltip')
-  ) as (HTMLElement & { open: boolean })[];
+  ) as (HTMLElement & {
+    open: boolean;
+    manual: boolean;
+    updateComplete: Promise<unknown>;
+  })[];
   tooltips.forEach((tooltip) => {
-    tooltip.setAttribute('popover', 'manual');
+    tooltip.manual = true;
+  });
+  await Promise.all(tooltips.map((tooltip) => tooltip.updateComplete));
+  tooltips.forEach((tooltip) => {
     tooltip.open = true;
   });
   await waitFor(() => {
