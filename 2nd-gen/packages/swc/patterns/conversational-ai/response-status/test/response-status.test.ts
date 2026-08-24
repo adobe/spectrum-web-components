@@ -18,7 +18,7 @@ import '../swc-response-status.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
 import type { ResponseStatus } from '../ResponseStatus.js';
-import { meta } from '../stories/response-status.stories.js';
+import { LongDescription, meta } from '../stories/response-status.stories.js';
 
 export default {
   ...meta,
@@ -418,5 +418,81 @@ export const StepDisclosureTest: Story = {
       );
       expect(expanded).toEqual(['true', 'true', 'false']);
     });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Off-screen instances skip overflow re-measurement
+// ──────────────────────────────────────────────────────────────
+
+// Reaches the private visibility flag and measurement method so an off-screen
+// instance can be simulated deterministically (the harness cannot force the
+// real IntersectionObserver to report non-intersecting without an actual
+// viewport scroll).
+type OverflowVisibilityInternals = {
+  _isVisible: boolean;
+  _syncDetailOverflow: () => void;
+};
+
+export const DetailOverflowVisibilityTest: Story = {
+  ...LongDescription,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+    const internals = el as unknown as OverflowVisibilityInternals;
+
+    // `LongDescription` step index 1 is the only open step long enough to
+    // overflow the capped height.
+    const overflowingRegion = (): HTMLElement | null | undefined =>
+      el.shadowRoot?.querySelector<HTMLElement>(
+        '.swc-ResponseStatus-step-detailScroll[data-step-index="1"]'
+      );
+    const stepToggles = (): HTMLButtonElement[] =>
+      Array.from(
+        el.shadowRoot?.querySelectorAll<HTMLButtonElement>(
+          '.swc-ResponseStatus-step-toggle'
+        ) ?? []
+      );
+
+    await step(
+      'the overflowing open step is focusable while visible',
+      async () => {
+        await waitFor(
+          () => {
+            expect(overflowingRegion()?.hasAttribute('tabindex')).toBe(true);
+          },
+          { timeout: 2000 }
+        );
+      }
+    );
+
+    await step(
+      'collapsing a step while off-screen does not re-measure',
+      async () => {
+        internals._isVisible = false;
+
+        stepToggles()[1]?.click();
+        await el.updateComplete;
+
+        // The step is now collapsed, but gated measurement leaves the stale
+        // tabindex from the last real measurement in place instead of forcing
+        // a scrollHeight/clientHeight read.
+        expect(overflowingRegion()?.hasAttribute('tabindex')).toBe(true);
+      }
+    );
+
+    await step(
+      'becoming visible again re-syncs to the current state',
+      async () => {
+        internals._isVisible = true;
+        internals._syncDetailOverflow();
+        await el.updateComplete;
+
+        // The step is collapsed, so it no longer needs a focusable region.
+        expect(overflowingRegion()?.hasAttribute('tabindex')).toBe(false);
+      }
+    );
   },
 };

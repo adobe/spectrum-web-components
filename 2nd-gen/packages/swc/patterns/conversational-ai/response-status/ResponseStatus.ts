@@ -108,6 +108,17 @@ export class ResponseStatus extends SpectrumElement {
 
   private _detailResizeObserver: ResizeObserver | null = null;
 
+  private _detailVisibilityObserver: IntersectionObserver | null = null;
+
+  /**
+   * Whether the host currently intersects the viewport. Gates
+   * `_syncDetailOverflow`'s `scrollHeight`/`clientHeight` reads (each forces a
+   * layout) so an off-screen instance, such as an earlier turn scrolled out of
+   * a long conversation thread, does not re-measure on every resize. Defaults
+   * to `true` so behavior is unchanged until the observer's first callback.
+   */
+  private _isVisible = true;
+
   @state()
   private _labelSlotText = '';
 
@@ -193,6 +204,22 @@ export class ResponseStatus extends SpectrumElement {
       this._detailResizeObserver.observe(this);
     }
 
+    // Track viewport intersection so `_syncDetailOverflow` can skip measuring
+    // while off-screen; re-sync immediately on becoming visible again to catch
+    // up on anything that changed while hidden.
+    if (
+      typeof IntersectionObserver === 'function' &&
+      !this._detailVisibilityObserver
+    ) {
+      this._detailVisibilityObserver = new IntersectionObserver((entries) => {
+        this._isVisible = entries[entries.length - 1]?.isIntersecting ?? true;
+        if (this._isVisible) {
+          this._syncDetailOverflow();
+        }
+      });
+      this._detailVisibilityObserver.observe(this);
+    }
+
     this._syncSlotContent();
   }
 
@@ -218,6 +245,8 @@ export class ResponseStatus extends SpectrumElement {
     this._clearLabelRollTimers();
     this._detailResizeObserver?.disconnect();
     this._detailResizeObserver = null;
+    this._detailVisibilityObserver?.disconnect();
+    this._detailVisibilityObserver = null;
     super.disconnectedCallback();
   }
 
@@ -552,6 +581,15 @@ export class ResponseStatus extends SpectrumElement {
       if (this._overflowingSteps.size > 0) {
         this._overflowingSteps = new Set();
       }
+      return;
+    }
+
+    // Off-screen: skip the scrollHeight/clientHeight reads below (each forces
+    // a layout). Leave `_overflowingSteps` as last measured rather than
+    // clearing it, so a step already exposing a focusable scroll region stays
+    // reachable by keyboard even while scrolled out of the viewport; the
+    // visibility observer re-syncs as soon as it is back in view.
+    if (!this._isVisible) {
       return;
     }
 
