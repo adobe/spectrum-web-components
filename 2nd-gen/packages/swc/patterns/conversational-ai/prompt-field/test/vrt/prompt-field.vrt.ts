@@ -259,8 +259,13 @@ const forceButtonStates = async ({
         field,
         '.swc-PromptField-artifacts-scroll-next'
       );
+      // Each button is an swc-action-button that styles its own hover/focus on
+      // its internal .swc-ActionButton, so force the state on that element.
       for (const selector of BUTTON_SELECTORS) {
-        forcePseudoState(field, state, selector);
+        const button = field.shadowRoot?.querySelector<HTMLElement>(selector);
+        if (button) {
+          forcePseudoState(button, state, '.swc-ActionButton');
+        }
       }
     })
   );

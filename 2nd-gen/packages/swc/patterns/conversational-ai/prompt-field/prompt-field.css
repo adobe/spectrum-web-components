@@ -503,12 +503,12 @@
   align-items: baseline;
   min-inline-size: 0;
   padding-inline-start: token("spacing-75");
-  padding-inline-end: calc(var(--swc-prompt-field-send-inline-size, 32px) + token("spacing-300"));
+  padding-inline-end: calc(token("component-height-100") + token("spacing-300"));
 }
 
 /* Collapsed puts the send button inline at the row's end, so the row must be tall enough to hold it. Expanded anchors send to the action bar instead, so no min height (which would add slack below the text). */
 :host([collapsed]) .swc-PromptField-text-group {
-  min-block-size: var(--swc-prompt-field-send-block-size, 32px);
+  min-block-size: token("component-height-100");
 }
 
 .swc-PromptField-status-icon {
@@ -519,12 +519,19 @@
   justify-content: center;
   inline-size: token("workflow-icon-medium");
   block-size: token("workflow-icon-medium");
-  color: token("gray-700");
+
+  /* Match the upload button's static content color: black on light cards, white on dark. */
+  color: light-dark(token("transparent-black-800"), token("transparent-white-800"));
 }
 
 /* ─────────────────────────────────────
    Uploaded artifacts
    ───────────────────────────────────── */
+
+/* Match the composer buttons: tile and dismiss focus rings track the themed card (black on light, white on dark) instead of the artifact's default accent. */
+::slotted(swc-upload-artifact) {
+  --swc-upload-artifact-focus-indicator-color: light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color"));
+}
 
 .swc-PromptField-artifacts--single {
   /* Reserves clearance for the dismiss badge floating above the tile's top-right corner, same as --multiple below. */
@@ -591,7 +598,7 @@
    * wash shows through instead of a solid overlay. The fade is fully
    * transparent across the chevron zone (a plateau, so no tile peeks under the
    * button), then softens to opaque over the remaining -soft distance. */
-  --_swc-prompt-field-artifact-fade-plateau: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + token("spacing-75"));
+  --_swc-prompt-field-artifact-fade-plateau: calc(token("component-height-100") + token("spacing-75"));
   --_swc-prompt-field-artifact-fade-soft: token("spacing-400");
   --_swc-prompt-field-artifact-fade: calc(var(--_swc-prompt-field-artifact-fade-plateau) + var(--_swc-prompt-field-artifact-fade-soft));
   --_swc-prompt-field-artifact-fade-start: 0px;
@@ -605,7 +612,9 @@
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
-  scroll-snap-type: inline mandatory;
+
+  /* proximity avoids a forced re-snap when the chevrons change scroll-padding */
+  scroll-snap-type: inline proximity;
   scroll-padding-inline: token("spacing-75");
   scrollbar-color: token("gray-400") transparent;
   mask-image: linear-gradient(to right, transparent 0, transparent calc(var(--_swc-prompt-field-artifact-fade-start) - var(--_swc-prompt-field-artifact-fade-soft)), black var(--_swc-prompt-field-artifact-fade-start), black calc(100% - var(--_swc-prompt-field-artifact-fade-end)), transparent calc(100% - var(--_swc-prompt-field-artifact-fade-end) + var(--_swc-prompt-field-artifact-fade-soft)), transparent 100%);
@@ -622,13 +631,13 @@
 .swc-PromptField-artifacts-scroll.has-scroll-prev {
   --_swc-prompt-field-artifact-fade-start: var(--_swc-prompt-field-artifact-fade);
 
-  scroll-padding-inline-start: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + token("spacing-400") + token("spacing-75"));
+  scroll-padding-inline-start: calc(token("component-height-100") + token("spacing-400") + token("spacing-75"));
 }
 
 .swc-PromptField-artifacts-scroll.has-scroll-next {
   --_swc-prompt-field-artifact-fade-end: var(--_swc-prompt-field-artifact-fade);
 
-  scroll-padding-inline-end: calc(var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px) + token("spacing-400") + token("spacing-75"));
+  scroll-padding-inline-end: calc(token("component-height-100") + token("spacing-400") + token("spacing-75"));
 }
 
 /* Flip the physical mask direction in RTL so fade-start/end (driven by the
@@ -684,49 +693,32 @@
   aspect-ratio: 1 / 1;
 }
 
+/* Positioning + a full corner radius (round circle); other appearance comes
+ * from swc-action-button. */
 .swc-PromptField-artifacts-scroll-prev,
 .swc-PromptField-artifacts-scroll-next {
-  --_swc-prompt-field-artifact-scroll-button-background: token("gray-100");
   --_swc-prompt-field-artifact-scroll-icon-transform: none;
 
-  display: inline-flex;
+  /* Focus ring tracks the themed card (black on light, white on dark), not the default blue accent. */
+  --swc-action-button-focus-indicator-color: light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color"));
+  --swc-action-button-border-radius: token("corner-radius-full");
+
   position: absolute;
   inset-block-start: calc((var(--_swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px)) / 2);
   z-index: 4;
   flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--swc-prompt-field-artifact-scroll-button-inline-size, 32px);
-  block-size: var(--swc-prompt-field-artifact-scroll-button-block-size, 32px);
-  padding: 0;
-  color: token("gray-800");
-  background: var(--_swc-prompt-field-artifact-scroll-button-background);
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-800");
-  cursor: pointer;
   transform: translateY(-50%);
 }
 
 /* aria-disabled, not the disabled attribute, and hidden with opacity, not
- * display/visibility: a chevron at the end of the strip stays mounted and
- * keeps any focus it already has (native disabled and display/visibility
- * removal both blur it), so the button never needs a manual focus-redirect
- * when scrolling makes it unusable. */
+ * display/visibility: a chevron at the end of the strip stays mounted so the
+ * layout and edge fades don't shift. If it had focus, the component moves focus
+ * to the active tile (see _redirectFocusFromDisabledChevron) rather than
+ * stranding it on this now-hidden control. */
 .swc-PromptField-artifacts-scroll-prev[aria-disabled="true"],
 .swc-PromptField-artifacts-scroll-next[aria-disabled="true"] {
   pointer-events: none;
   opacity: 0;
-}
-
-.swc-PromptField-artifacts-scroll-prev::after,
-.swc-PromptField-artifacts-scroll-next::after {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: var(--_swc-prompt-field-artifact-scroll-button-background);
-  border-radius: inherit;
-  pointer-events: none;
-  content: "";
 }
 
 .swc-PromptField-artifacts-scroll-prev {
@@ -739,11 +731,6 @@
   inset-inline-end: 0;
 }
 
-.swc-PromptField-artifacts-scroll-prev:hover,
-.swc-PromptField-artifacts-scroll-next:hover {
-  --_swc-prompt-field-artifact-scroll-button-background: token("gray-200");
-}
-
 .swc-PromptField-artifacts-scroll-prev swc-icon,
 .swc-PromptField-artifacts-scroll-next swc-icon {
   display: inline-flex;
@@ -752,12 +739,6 @@
   align-items: center;
   justify-content: center;
   transform: var(--_swc-prompt-field-artifact-scroll-icon-transform);
-}
-
-.swc-PromptField-artifacts-scroll-prev:focus-visible,
-.swc-PromptField-artifacts-scroll-next:focus-visible {
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-ring-gap");
 }
 
 :host(:dir(rtl)) .swc-PromptField-artifacts-scroll-prev {
@@ -827,6 +808,7 @@
 }
 
 .swc-PromptField-leading-actions-row {
+  overflow-clip-margin: calc(token("focus-ring-gap") + token("focus-indicator-thickness"));
   display: flex;
   gap: token("spacing-75");
   align-items: center;
@@ -840,116 +822,52 @@
   overflow: visible;
 }
 
-/* Upload button (quiet, left side) */
-
+/* Upload stays quiet; static content/hover colors flip with the themed card. */
 .swc-PromptField-upload {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--swc-prompt-field-upload-inline-size, 32px);
-  block-size: var(--swc-prompt-field-upload-block-size, 32px);
-  padding: 0;
-  color: token("gray-800");
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-500");
+  /* Focus ring tracks the themed card (black on light, white on dark), not the default blue accent. */
+  --swc-action-button-focus-indicator-color: light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color"));
+  --swc-action-button-content-color-default: light-dark(token("transparent-black-800"), token("transparent-white-800"));
+  --swc-action-button-content-color-hover: light-dark(token("transparent-black-900"), token("transparent-white-900"));
+  --swc-action-button-background-color-hover: light-dark(token("transparent-black-200"), token("transparent-white-200"));
+  --swc-action-button-background-color-focus: light-dark(token("transparent-black-200"), token("transparent-white-200"));
+  --swc-action-button-background-color-down: light-dark(token("transparent-black-200"), token("transparent-white-200"));
 }
 
-.swc-PromptField-upload:hover {
-  color: token("gray-800");
-  background: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 14%);
-}
-
-/* Explicit ring so the size is bounded; the native ring is larger and gets clipped by the scroll container in Safari. */
-.swc-PromptField-upload:focus-visible {
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-ring-gap");
-}
-
-.swc-PromptField-upload:disabled {
-  color: token("gray-400");
-  background: transparent;
-}
-
-.swc-PromptField-upload swc-icon {
-  --swc-icon-inline-size: token("workflow-icon-medium");
-  --swc-icon-block-size: token("workflow-icon-medium");
-}
-
-/* Send button (filled circle, right side) */
-
-.swc-PromptField-send {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--swc-prompt-field-send-inline-size, 32px);
-  block-size: var(--swc-prompt-field-send-block-size, 32px);
-  padding: 0;
-  color: token("gray-25");
-  background: token("neutral-background-color-default");
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-full");
-}
-
-.swc-PromptField-stop {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  inline-size: var(--swc-prompt-field-stop-inline-size, 32px);
-  block-size: var(--swc-prompt-field-stop-block-size, 32px);
-  padding: 0;
-  color: token("gray-25");
-  background: token("gray-900");
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-full");
-}
-
-/* Anchored to .controls's own bottom-right, so it re-aligns on its own as .controls grows or shrinks with either row's content. */
+/* Send/stop anchored to .controls's own bottom-right, so they re-align as
+ * .controls grows or shrinks with either row's content. Appearance comes
+ * from swc-action-button; the full corner radius makes the square icon
+ * button a circle. */
 .swc-PromptField-send,
 .swc-PromptField-stop {
+  /* Focus ring tracks the themed card (black on light, white on dark), not the default blue accent. */
+  --swc-action-button-focus-indicator-color: light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color"));
+  --swc-action-button-border-radius: token("corner-radius-full");
+  --swc-action-button-content-color-default: token("gray-25");
+  --swc-action-button-content-color-hover: token("gray-25");
+  --swc-action-button-content-color-focus: token("gray-25");
+  --swc-action-button-content-color-down: token("gray-25");
+
   position: absolute;
   inset-block-end: 0;
   inset-inline-end: 0;
-  transition: background token("animation-duration-100") ease;
 }
 
-.swc-PromptField-send:disabled {
-  color: token("gray-400");
-  background: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 11%);
+.swc-PromptField-send {
+  --swc-action-button-background-color-default: token("neutral-background-color-default");
+  --swc-action-button-background-color-hover: token("neutral-background-color-hover");
+  --swc-action-button-background-color-focus: token("neutral-background-color-default");
+  --swc-action-button-background-color-down: token("neutral-background-color-default");
+
+  /* Disabled falls back to the auto-contrast tint rather than the flat fill. */
+  --swc-action-button-background-color-disabled: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 11%);
+  --swc-action-button-content-color-disabled: token("gray-400");
 }
 
-.swc-PromptField-send:focus-visible,
-.swc-PromptField-stop:focus-visible {
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-ring-gap");
-}
-
-.swc-PromptField-send:active,
-.swc-PromptField-stop:active {
-  transform: perspective(64px) translate3d(0, 0, -1px);
-  transition: transform token("animation-duration-200") ease;
-  transition-timing-function: token("animation-ease-in-out");
-  will-change: transform;
-}
-
-.swc-PromptField-send:hover:not(:disabled) {
-  background: token("neutral-background-color-hover");
-}
-
-.swc-PromptField-send swc-icon {
-  --swc-icon-inline-size: token("workflow-icon-medium");
-  --swc-icon-block-size: token("workflow-icon-medium");
-}
-
-/* Stop button (filled black circle, right side) */
-
-.swc-PromptField-stop:hover {
-  background: token("gray-800");
-}
-
-.swc-PromptField-stop swc-icon {
-  --swc-icon-inline-size: token("workflow-icon-medium");
-  --swc-icon-block-size: token("workflow-icon-medium");
+.swc-PromptField-stop {
+  --swc-action-button-background-color-default: token("gray-900");
+  --swc-action-button-background-color-hover: token("gray-800");
+  --swc-action-button-background-color-focus: token("gray-900");
+  --swc-action-button-background-color-down: token("gray-900");
 }
 
 /* ─────────────────────────────────────
