@@ -10,6 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
+import { getTsProgram, typeParserPlugin } from '@wc-toolkit/type-parser';
+
 /**
  * CEM plugin that extracts `@status` and `@since` JSDoc tags from class
  * declarations and attaches them to the corresponding CEM declaration.
@@ -77,6 +79,14 @@ export default {
     '../core/mixins/**/*.ts',
     '../core/utils/**/*.ts',
   ],
+  // Give type-parser the TypeScript type checker so it can expand referenced
+  // type aliases (e.g. `(typeof ARRAY)[number]` unions) into literal values.
+  overrideModuleCreation({ ts, globs }) {
+    const program = getTsProgram(ts, globs, 'tsconfig.json');
+    return program
+      .getSourceFiles()
+      .filter((sf) => globs.find((glob) => sf.fileName.includes(glob)));
+  },
   exclude: [
     '**/*.stories.ts',
     '**/*.test.ts',
@@ -89,5 +99,5 @@ export default {
   outdir: 'dist',
   litelement: true,
   dev: false,
-  plugins: [statusPlugin()],
+  plugins: [statusPlugin(), typeParserPlugin()],
 };
