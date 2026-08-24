@@ -35,18 +35,6 @@ import '../../avatar/swc-avatar';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-card');
 
-argTypes.variant = {
-  ...argTypes.variant,
-  control: { type: 'select' },
-  options: CARD_VARIANTS,
-};
-
-argTypes.density = {
-  ...argTypes.density,
-  control: { type: 'select' },
-  options: CARD_DENSITIES,
-};
-
 argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
