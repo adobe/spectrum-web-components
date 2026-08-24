@@ -12,6 +12,20 @@
 
 import { getTsProgram, typeParserPlugin } from '@wc-toolkit/type-parser';
 
+// type-parser logs an ungated `console.warn` for every deep or recursive lib
+// type it declines to expand (DOM element types, `CSSStyleSheet`, etc.). Those
+// bails are expected and only add noise, so drop just the `[type-parser]`
+// lines; all other analyzer warnings pass through.
+const originalWarn = console.warn;
+console.warn = (...args) => {
+  if (
+    args.some((arg) => typeof arg === 'string' && arg.includes('[type-parser]'))
+  ) {
+    return;
+  }
+  originalWarn(...args);
+};
+
 /**
  * CEM plugin that extracts `@status` and `@since` JSDoc tags from class
  * declarations and attaches them to the corresponding CEM declaration.
