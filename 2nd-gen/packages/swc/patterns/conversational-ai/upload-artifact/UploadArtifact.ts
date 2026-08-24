@@ -17,6 +17,8 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { getLabelFromSlot } from '@adobe/spectrum-wc-core/utils/index.js';
 
+import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
+
 import { CrossIcon } from '../utils/icons/index.js';
 
 import visuallyHiddenStyles from '../../../stylesheets/_lit-styles/visually-hidden.css';
@@ -155,21 +157,21 @@ export class UploadArtifact extends SpectrumElement {
 
   private _renderDismissButton(): TemplateResult {
     return html`
-      <button
+      <swc-action-button
         class="swc-UploadArtifact-dismiss"
         tabindex=${ifDefined(this.closest('swc-prompt-field') ? -1 : undefined)}
-        aria-label=${this._resolvedDismissLabel()}
+        accessible-label=${this._resolvedDismissLabel()}
         ?hidden=${!this.dismissible}
         @click=${this._handleDismissClick}
       >
         <span
-          class="swc-UploadArtifact-dismiss-visual"
+          slot="icon"
+          class="swc-UploadArtifact-dismiss-icon"
           aria-hidden="true"
-        ></span>
-        <span class="swc-UploadArtifact-dismiss-icon" aria-hidden="true">
+        >
           ${CrossIcon()}
         </span>
-      </button>
+      </swc-action-button>
     `;
   }
 
