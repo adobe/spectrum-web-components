@@ -122,6 +122,8 @@ jobs:
         run: yarn workspace @spectrum-web-components/1st-gen build:confirm
 
       - name: Version 1st-gen packages (snapshot)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: (cd 1st-gen && yarn changeset version --snapshot ${{ steps.extract-tag.outputs.tag }})
 
       - name: Capture released versions
@@ -284,6 +286,8 @@ jobs:
 
       - name: Version 1st-gen packages
         if: needs.check-changesets.outputs.has_changesets == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           yarn workspace @spectrum-web-components/1st-gen changelog:1st-gen
           (cd 1st-gen && yarn changeset version)

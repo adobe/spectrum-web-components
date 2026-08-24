@@ -98,6 +98,8 @@ jobs:
 
       - name: Version packages (snapshot)
         working-directory: 2nd-gen
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn changeset version --snapshot ${{ steps.extract-tag.outputs.tag }}
 
       - name: Capture released versions
@@ -183,6 +185,8 @@ jobs:
 
       - name: Version 2nd-gen packages
         if: needs.check-changesets.outputs.has_changesets == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ ! -f 2nd-gen/.changeset/pre.json ]; then
             (cd 2nd-gen && yarn changeset pre enter beta)
