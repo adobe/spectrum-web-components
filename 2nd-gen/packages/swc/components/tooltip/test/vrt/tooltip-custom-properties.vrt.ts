@@ -87,8 +87,11 @@ const coveredTooltipCustomProperties = coveredCustomProperties(
   TOOLTIP_PROPERTY_CASES
 );
 
-// Open each tooltip (as `popover="manual"` so they coexist), let the entrance
-// transition settle, then assert every CEM-documented custom property is covered.
+// Open each tooltip (marked `manual` so they opt out of the single-open
+// singleton and coexist), let the entrance transition settle, then assert every
+// CEM-documented custom property is covered. `manual` must settle before `open`:
+// HoverController hides the popover the moment `manual` turns on, which would
+// undo a same-tick `open`.
 const openAndVerifyCoverage = async ({
   canvasElement,
 }: {
@@ -96,9 +99,16 @@ const openAndVerifyCoverage = async ({
 }) => {
   const tooltips = Array.from(
     canvasElement.querySelectorAll('swc-tooltip')
-  ) as (HTMLElement & { open: boolean })[];
+  ) as (HTMLElement & {
+    open: boolean;
+    manual: boolean;
+    updateComplete: Promise<unknown>;
+  })[];
   tooltips.forEach((tooltip) => {
-    tooltip.setAttribute('popover', 'manual');
+    tooltip.manual = true;
+  });
+  await Promise.all(tooltips.map((tooltip) => tooltip.updateComplete));
+  tooltips.forEach((tooltip) => {
     tooltip.open = true;
   });
   await waitFor(() => {
