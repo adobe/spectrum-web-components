@@ -47,6 +47,10 @@ A single dense row of every permutation is hard to scan in a Chromatic diff. Use
 
 Full rationale (attribute-vs-class, nested-rule mirroring, the custom-function pattern) lives in the VRT testing guide: `CONTRIBUTOR-DOCS/02_style-guide/04_testing/04_visual-regresssion-testing.md`.
 
+## Positioned overlay components
+
+Components that position a surface with `PlacementController` use Floating UI `shift` (clipping ancestors capped by the visual viewport; `autoUpdate` recomputes on scroll). Opening many instances on a taller-than-viewport page can clamp `start`/`end` (not `top`/`bottom`) onto the same spot. Keep every trigger in the initial viewport (place `start`/`end` first, pin the capture viewport, or split the story), disable `shouldFlip`, and do not use `row()`. Full rationale and a worked example (popover's `test/vrt/`) are in the VRT testing guide's "Positioned overlay components" section.
+
 ## Custom properties
 
 - Use `customPropertyRows()` to render reference vs override rows.
