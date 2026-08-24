@@ -556,13 +556,19 @@ export abstract class TooltipBase
     const openChanged = changedProperties.has('open');
     if (openChanged) {
       if (this.open) {
-        // Close any other open tooltip first. Assign after requestClose() so the
-        // other's updated() (else branch) does not clear the reference we take.
-        if (openTooltip && openTooltip !== this) {
-          openTooltip.requestClose();
+        // The single-open singleton restores popover="auto"'s "one open at a
+        // time" for automatic (hover/focus) tooltips. A `manual` tooltip is
+        // consumer-managed and opts out, so several can coexist (e.g. a VRT
+        // grid); it neither closes others nor claims the singleton slot.
+        if (!this.manual) {
+          // Close any other open tooltip first. Assign after requestClose() so
+          // the other's updated() (else branch) does not clear the reference we take.
+          if (openTooltip && openTooltip !== this) {
+            openTooltip.requestClose();
+          }
+          // eslint-disable-next-line @typescript-eslint/no-this-alias -- singleton registration, not a closure capture
+          openTooltip = this;
         }
-        // eslint-disable-next-line @typescript-eslint/no-this-alias -- singleton registration, not a closure capture
-        openTooltip = this;
         // Join the dismissible stack and Escape handling while open (both torn
         // down on close below). Capture phase so preventDefault() beats the
         // native popover light-dismiss (see handleKeyDown).
