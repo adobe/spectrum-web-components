@@ -15,7 +15,6 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import {
-  ACTION_BUTTON_STATIC_COLORS,
   ACTION_BUTTON_VALID_SIZES,
   type ActionButtonSize,
 } from '@adobe/spectrum-wc-core/components/action-button';
@@ -32,12 +31,6 @@ argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
   options: ACTION_BUTTON_VALID_SIZES,
-};
-
-argTypes['static-color'] = {
-  ...argTypes['static-color'],
-  control: { type: 'select' },
-  options: ACTION_BUTTON_STATIC_COLORS,
 };
 
 /**
