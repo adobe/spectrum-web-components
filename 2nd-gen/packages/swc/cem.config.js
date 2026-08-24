@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+import path from 'node:path';
 import { getTsProgram, typeParserPlugin } from '@wc-toolkit/type-parser';
 
 // type-parser logs an ungated `console.warn` for every deep or recursive lib
@@ -97,9 +98,15 @@ export default {
   // type aliases (e.g. `(typeof ARRAY)[number]` unions) into literal values.
   overrideModuleCreation({ ts, globs }) {
     const program = getTsProgram(ts, globs, 'tsconfig.json');
+    // `globs` here are resolved file paths, some relative with a `../` prefix
+    // (core-package files referenced from this swc-package config). Comparing
+    // raw strings with `includes()` never matches those against the program's
+    // absolute `fileName`s, silently dropping every core-package module (and
+    // with it, most components' base-class attributes) — resolve both sides.
+    const resolvedGlobs = new Set(globs.map((glob) => path.resolve(glob)));
     return program
       .getSourceFiles()
-      .filter((sf) => globs.find((glob) => sf.fileName.includes(glob)));
+      .filter((sf) => resolvedGlobs.has(path.resolve(sf.fileName)));
   },
   exclude: [
     '**/*.stories.ts',
