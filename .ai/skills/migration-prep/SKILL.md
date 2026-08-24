@@ -315,6 +315,7 @@ Before the plan is considered complete:
 - `Blockers and open questions` no longer contains unresolved items that would materially change the core migration recommendation
 - once core migration questions are resolved and deferred-item tickets exist, replace the drafting-time open-question rows in `Blockers and open questions` with a concise deferred-ticket table
 - the deferred-ticket table should include ticket ID, deferred item summary, why it is deferred, and the migration-plan section it came from
+- settled decisions (from planning or PR review) are folded into the `Decision log` section, keyed by their original `Q`/`B`/`C` id, rather than left as scattered inline "Resolved"/"Confirmed" markers in the open-question tables
 
 ## Template preservation rules
 

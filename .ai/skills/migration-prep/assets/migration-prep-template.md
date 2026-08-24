@@ -55,6 +55,7 @@ AGENT / CONTRIBUTOR QUICK START:
   - [Design](#design)
   - [Architecture and behavior](#architecture-and-behavior)
   - [Scope and prerequisites](#scope-and-prerequisites)
+- [Decision log](#decision-log)
 - [References](#references)
 
 </details>
@@ -412,7 +413,7 @@ Retain this section for any components with visual rendering, modifying as neede
 
 ## Blockers and open questions
 
-During drafting, this section tracks active blockers and open questions. In the final review-ready plan, once core migration questions are resolved and deferred tickets exist, replace those drafting-time rows with a concise deferred-ticket table.
+During drafting, this section tracks active blockers and open questions. As each item resolves, move it out of these tables: settled **decisions** go to the [Decision log](#decision-log) (with their rationale), and **deferred** items with tickets go to the deferred-ticket table. In the final review-ready plan, these tables should contain only genuinely open items plus the deferred-ticket table.
 
 <!--
 Include the sections for clarity according to area of concern for the question.
@@ -448,6 +449,24 @@ Owner examples:
 
 <!-- Where possible, include the next action in the Item text or Status so reviewers know how to resolve the question. -->
 <!-- Final-state deferred-ticket table columns: `Ticket`, `Deferred item`, `Why deferred`, `Related plan section`. -->
+
+---
+
+## Decision log
+
+<!--
+Historical record of decisions settled during planning and PR review. Keep it so the `Blockers and open questions` tables stay focused on what still needs attention, and so reviewers can trace why a question was closed.
+
+Rules:
+- Add a row when an open question or proposed change is settled. Move it here from `Blockers and open questions` (or record a decision made directly in review).
+- Retain the item's original `Q`/`B`/`C` identifier in the `Ref` column so inline references elsewhere in the plan still resolve here.
+- Only log entries that are genuinely useful as a historical record (course-setting decisions, reversals, and non-obvious rationale). Do not log trivia.
+- This is distinct from the deferred-ticket table in `Blockers and open questions`: that table is for deferred/future work with tickets; this log is for decisions that are done.
+- Do not scatter inline "Resolved"/"Confirmed" markers through the open-question tables; fold them here instead.
+-->
+
+| Ref | Decision | Rationale / context |
+| --- | -------- | ------------------- |
 
 ---
 
