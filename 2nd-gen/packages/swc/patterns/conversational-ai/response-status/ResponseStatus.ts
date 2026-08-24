@@ -28,6 +28,10 @@ import '../pixel-loader/swc-pixel-loader.js';
 
 import { uniqueId } from '../../../utils/id.js';
 import {
+  PIXEL_LOADER_PRESET_NAMES,
+  type PixelLoaderPresetName,
+} from '../pixel-loader/data.js';
+import {
   CheckCircleIcon,
   CircleOutlineIcon,
   StepStoppedCircleIcon,
@@ -38,6 +42,8 @@ import {
 } from './response-status-step/ResponseStatusStep.js';
 
 import styles from './response-status.css';
+
+export { PIXEL_LOADER_PRESET_NAMES };
 
 export const RESPONSE_STATUSES = ['active', 'complete', 'stopped'] as const;
 
@@ -132,6 +138,13 @@ export class ResponseStatus extends SpectrumElement {
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
 
+  /**
+   * Pixel-loader icon cycle while `status="active"`. Invalid values fall back
+   * to `mega`.
+   */
+  @property({ type: String, reflect: true })
+  public preset: PixelLoaderPresetName = 'mega';
+
   @queryAssignedNodes({ slot: 'label', flatten: true })
   private _labelNodes!: Node[];
 
@@ -215,6 +228,15 @@ export class ResponseStatus extends SpectrumElement {
   /** Validated host status; invalid runtime values fall back to `active`. */
   private get _resolvedStatus(): ResponseStatusStatus {
     return this._isValidStatus(this.status) ? this.status : 'active';
+  }
+
+  private _isValidPreset(preset: string): preset is PixelLoaderPresetName {
+    return (PIXEL_LOADER_PRESET_NAMES as readonly string[]).includes(preset);
+  }
+
+  /** Validated generating preset; invalid runtime values fall back to `mega`. */
+  private get _resolvedPreset(): PixelLoaderPresetName {
+    return this._isValidPreset(this.preset) ? this.preset : 'mega';
   }
 
   private _isValidStepStatus(
@@ -574,7 +596,7 @@ export class ResponseStatus extends SpectrumElement {
     return html`
       <swc-pixel-loader
         class="swc-ResponseStatus-loader"
-        preset="mega"
+        preset=${this._resolvedPreset}
         aria-hidden="true"
       ></swc-pixel-loader>
     `;
@@ -720,7 +742,7 @@ export class ResponseStatus extends SpectrumElement {
     }
 
     const open = this._isStepOpen(step, index);
-    const detailId = `${this.panelId}-detail-${index}`;
+    const detailId = `swc-response-status-detail-${index}`;
 
     return html`
       <div class="swc-ResponseStatus-step-body">

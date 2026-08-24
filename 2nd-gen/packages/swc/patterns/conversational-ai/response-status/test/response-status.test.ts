@@ -120,6 +120,27 @@ export const StatusApiTest: Story = {
         expect(loader?.getAttribute('preset')).toBe('mega');
       }
     );
+
+    await step('forwards a generating preset to the pixel loader', async () => {
+      el.status = 'active';
+      el.preset = 'cc';
+      await el.updateComplete;
+
+      expect(el.getAttribute('preset')).toBe('cc');
+      expect(
+        el.shadowRoot?.querySelector('swc-pixel-loader')?.getAttribute('preset')
+      ).toBe('cc');
+    });
+
+    await step('coerces an unsupported preset to mega', async () => {
+      el.setAttribute('preset', 'not-a-preset');
+      await el.updateComplete;
+
+      expect(el.getAttribute('preset')).toBe('not-a-preset');
+      expect(
+        el.shadowRoot?.querySelector('swc-pixel-loader')?.getAttribute('preset')
+      ).toBe('mega');
+    });
   },
 };
 

@@ -367,16 +367,21 @@
 }
 
 /* Description caps at a max height; shorter content stays auto. Override the
-   custom property to tune the cap. */
+   custom property to tune the cap. `content-box` so the 20px scrollbar offset
+   is added to the fit-content width instead of eating into the text. */
 .swc-ResponseStatus-step-detailScroll {
+  box-sizing: content-box;
+  inline-size: fit-content;
   max-block-size: var(--swc-response-status-step-detail-max-block-size, 120px);
+  padding-inline-end: token("spacing-200");
   overflow-y: auto;
   overscroll-behavior: contain;
 }
 
-/* Bottom fade cue while the description overflows and is not scrolled to the
-   end. Scroll-driven: with no overflow the scroll timeline is inactive, so the
-   base (unmasked) style applies and short descriptions never fade. */
+/* Fade cues while the description overflows. Scroll-driven: with no overflow
+   the scroll timeline is inactive, so the base (unmasked) style applies and
+   short descriptions never fade. At the start only the bottom fades; while
+   scrolled both edges fade; at the end only the top fades. */
 @supports (animation-timeline: scroll()) {
   /* Longhands, not the `animation` shorthand: the shorthand resets
      `animation-timeline` to auto, which would disable the scroll timeline. */
@@ -388,13 +393,17 @@
   }
 
   @keyframes swc-response-status-detail-fade {
-    0%,
-    85% {
+    0% {
       mask-image: linear-gradient(to bottom, rgb(0 0 0 / 100%) calc(100% - 24px), rgb(0 0 0 / 0%) 100%);
     }
 
+    15%,
+    85% {
+      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0%) 0, rgb(0 0 0 / 100%) 24px, rgb(0 0 0 / 100%) calc(100% - 24px), rgb(0 0 0 / 0%) 100%);
+    }
+
     100% {
-      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 100%), rgb(0 0 0 / 100%));
+      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0%) 0, rgb(0 0 0 / 100%) 24px, rgb(0 0 0 / 100%) 100%);
     }
   }
 }

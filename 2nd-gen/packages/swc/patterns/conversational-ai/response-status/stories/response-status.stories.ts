@@ -17,7 +17,10 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '../swc-response-status.js';
 
-import { RESPONSE_STATUSES } from '../ResponseStatus.js';
+import {
+  PIXEL_LOADER_PRESET_NAMES,
+  RESPONSE_STATUSES,
+} from '../ResponseStatus.js';
 
 // ────────────────
 //    METADATA
@@ -48,6 +51,17 @@ argTypes.open = {
     ...argTypes.open?.table,
     category: 'attributes',
     defaultValue: { summary: 'false' },
+  },
+};
+
+argTypes.preset = {
+  ...argTypes.preset,
+  control: { type: 'select' },
+  options: PIXEL_LOADER_PRESET_NAMES,
+  table: {
+    ...argTypes.preset?.table,
+    category: 'attributes',
+    defaultValue: { summary: 'mega' },
   },
 };
 
@@ -88,6 +102,7 @@ const meta: Meta = {
     ...args,
     status: 'active',
     open: true,
+    preset: 'mega',
     'accessible-label': 'Execution steps',
     'label-slot': 'Searching repositories for Europe trips',
     'default-slot': activeStepsSlot,
@@ -258,6 +273,23 @@ export const Statuses: Story = {
   `,
   tags: ['options'],
 };
+
+export const GeneratingPresets: Story = {
+  render: () => html`
+    <div style="display:flex;flex-direction:column;gap:24px;">
+      ${PIXEL_LOADER_PRESET_NAMES.map(
+        (preset) => html`
+          <swc-response-status status="active" preset=${preset}>
+            <span slot="label">${preset}: Generating response</span>
+          </swc-response-status>
+        `
+      )}
+    </div>
+  `,
+  tags: ['options'],
+};
+
+GeneratingPresets.storyName = 'Generating presets';
 
 export const StatusOnly: Story = {
   render: () => html`

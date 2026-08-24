@@ -11,7 +11,7 @@ import * as ResponseStatusStories from './stories/response-status.stories';
 
 A response status indicator consists of:
 
-1. **Status row**: a pixel-loader indicator (using the `mega` preset) while active, a checkmark when complete, status label, and optional disclosure control
+1. **Status row**: a pixel-loader indicator while active (checkmark when complete), status label, and optional disclosure control
 2. **Step timeline**: optional execution steps that can be expanded for more detail
 
 <Canvas of={ResponseStatusStories.Anatomy} />
@@ -31,6 +31,12 @@ Use `slot="label"` for the visible header text.
 Steps are optional in every response state. When `swc-response-status-step` children are present, the component shows the disclosure timeline; when no steps are present, it renders only the status row.
 
 <Canvas of={ResponseStatusStories.Statuses} />
+
+### Generating presets
+
+While `status="active"`, `preset` selects the pixel-loader icon cycle. Defaults to `mega`. Supported values: `cc`, `dc`, `exp`, `analyze`, `mega`. Invalid values fall back to `mega`.
+
+<Canvas of={ResponseStatusStories.GeneratingPresets} />
 
 ### Steps
 
@@ -79,7 +85,7 @@ status.addEventListener('swc-response-status-step-toggle', (event) => {
 
 ### Long description
 
-A step description shorter than the cap keeps its natural height. When it exceeds the cap, the description scrolls within the step and shows a fade at the bottom edge while there is more content below. Override the cap with the `--swc-response-status-step-detail-max-block-size` custom property (defaults to `120px`).
+A step description shorter than the cap keeps its natural height. When it exceeds the cap, the description scrolls within the step and shows a fade at the top and bottom edges while there is more content in that direction. Override the cap with the `--swc-response-status-step-detail-max-block-size` custom property (defaults to `120px`).
 
 <Canvas of={ResponseStatusStories.LongDescription} />
 
