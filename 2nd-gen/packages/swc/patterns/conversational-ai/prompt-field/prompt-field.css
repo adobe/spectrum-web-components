@@ -506,6 +506,11 @@
   padding-inline-end: calc(token("component-height-100") + token("spacing-300"));
 }
 
+/* Collapsed puts the send button inline at the row's end, so the row must be tall enough to hold it. Expanded anchors send to the action bar instead, so no min height (which would add slack below the text). */
+:host([collapsed]) .swc-PromptField-text-group {
+  min-block-size: token("component-height-100");
+}
+
 .swc-PromptField-status-icon {
   display: flex;
   flex: 0 0 auto;
@@ -870,14 +875,6 @@
   --swc-action-button-background-color-hover: token("gray-800");
   --swc-action-button-background-color-focus: token("gray-900");
   --swc-action-button-background-color-down: token("gray-900");
-}
-
-/* Collapsed has no action bar, so the button is inline. The row is content-height (one line) and shorter than the button, so center the button on it rather than stretching it with inset-block: 0. */
-:host([collapsed]) .swc-PromptField-send,
-:host([collapsed]) .swc-PromptField-stop {
-  inset-block-start: 50%;
-  inset-block-end: auto;
-  margin-block-start: calc(token("component-height-100") / -2);
 }
 
 /* ─────────────────────────────────────
