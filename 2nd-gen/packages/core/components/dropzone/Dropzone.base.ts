@@ -132,6 +132,57 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────────
 
+  protected constructor() {
+    super();
+    new DragAndDropController(this, {
+      isDragged: () => this.dragged,
+      shouldAccept: (event) =>
+        this.dispatchEvent(
+          new CustomEvent<DragEvent>(SWC_DROPZONE_SHOULD_ACCEPT_EVENT, {
+            bubbles: true,
+            cancelable: true,
+            composed: true,
+            detail: event,
+          })
+        ),
+      dropEffect: () => this._dropEffect,
+      onDragEnter: (event) => {
+        this.dragged = true;
+        this.dispatchEvent(
+          new CustomEvent<DragEvent>(SWC_DROPZONE_DRAGOVER_EVENT, {
+            bubbles: true,
+            composed: true,
+            detail: event,
+          })
+        );
+      },
+      onDragLeave: (snapshot) => {
+        this.dragged = false;
+        this.dispatchEvent(
+          new CustomEvent<DropzoneDragLeaveDetail>(
+            SWC_DROPZONE_DRAGLEAVE_EVENT,
+            {
+              bubbles: true,
+              composed: true,
+              detail: snapshot,
+            }
+          )
+        );
+      },
+      onDrop: (event) => {
+        // Dispatch before clearing `dragged`; `updated()` handles the status region after `filled` settles.
+        this.dispatchEvent(
+          new CustomEvent<DragEvent>(SWC_DROPZONE_DROP_EVENT, {
+            bubbles: true,
+            composed: true,
+            detail: event,
+          })
+        );
+        this.dragged = false;
+      },
+    });
+  }
+
   /** @internal */
   private readonly _sizePropagation = new SlotAttributePropagationController(
     this,
@@ -146,57 +197,4 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
   protected handleDefaultSlotChange(): void {
     this._sizePropagation.propagate();
   }
-
-  /**
-   * @internal
-   *
-   * Drives the `dragged` lifecycle below and dispatches the events this class
-   * has always shipped; the choreography itself (debounced dragleave, entry
-   * de-duplication) lives in `DragAndDropController` so other components can
-   * reuse it without inheriting this class's size/filled/dropEffect API.
-   */
-  private readonly _dragAndDrop = new DragAndDropController(this, {
-    isDragged: () => this.dragged,
-    shouldAccept: (event) =>
-      this.dispatchEvent(
-        new CustomEvent<DragEvent>(SWC_DROPZONE_SHOULD_ACCEPT_EVENT, {
-          bubbles: true,
-          cancelable: true,
-          composed: true,
-          detail: event,
-        })
-      ),
-    dropEffect: () => this._dropEffect,
-    onDragEnter: (event) => {
-      this.dragged = true;
-      this.dispatchEvent(
-        new CustomEvent<DragEvent>(SWC_DROPZONE_DRAGOVER_EVENT, {
-          bubbles: true,
-          composed: true,
-          detail: event,
-        })
-      );
-    },
-    onDragLeave: (snapshot) => {
-      this.dragged = false;
-      this.dispatchEvent(
-        new CustomEvent<DropzoneDragLeaveDetail>(SWC_DROPZONE_DRAGLEAVE_EVENT, {
-          bubbles: true,
-          composed: true,
-          detail: snapshot,
-        })
-      );
-    },
-    onDrop: (event) => {
-      // Dispatch before clearing `dragged`; `updated()` handles the status region after `filled` settles.
-      this.dispatchEvent(
-        new CustomEvent<DragEvent>(SWC_DROPZONE_DROP_EVENT, {
-          bubbles: true,
-          composed: true,
-          detail: event,
-        })
-      );
-      this.dragged = false;
-    },
-  });
 }

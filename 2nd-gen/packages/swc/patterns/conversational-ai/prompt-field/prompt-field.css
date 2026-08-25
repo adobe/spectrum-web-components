@@ -464,9 +464,9 @@
 }
 
 /* The dragged state tints only the container surface and exposes the drop
- * target with a focus ring. Placed last and scoped through the class (not an
- * attribute), so its higher specificity wins over every variant rule above. */
-:host(:not([generating])) .swc-PromptField-outer-border.dragged {
+ * target with a focus ring. Placed last so it wins across every variant and
+ * generating state. */
+:host .swc-PromptField-outer-border.dragged {
   --_swc-prompt-field-drag-fill: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 91.32% 0.0721 calc(h + 0.1)) 30%), color-mix(in srgb, token("background-layer-2-color") 85%, var(--swc-prompt-field-brand-color) 15%));
   --_swc-prompt-field-outer-stop-1: var(--_swc-prompt-field-outer-recede-stop);
   --_swc-prompt-field-outer-stop-2: var(--_swc-prompt-field-outer-recede-stop);
@@ -476,7 +476,7 @@
   transition: none;
 }
 
-:host(:not([generating])) .swc-PromptField-outer-border.dragged .swc-PromptField-box {
+:host .swc-PromptField-outer-border.dragged .swc-PromptField-box {
   background: var(--_swc-prompt-field-drag-fill);
   box-shadow: none;
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
@@ -484,12 +484,12 @@
   transition: none;
 }
 
-:host(:not([generating])) .swc-PromptField-outer-border.dragged .swc-PromptField-box::before,
-:host(:not([generating])) .swc-PromptField-outer-border.dragged .swc-PromptField-gloss {
+:host .swc-PromptField-outer-border.dragged .swc-PromptField-box::before,
+:host .swc-PromptField-outer-border.dragged .swc-PromptField-gloss {
   background: none;
 }
 
-:host(:not([generating])) .swc-PromptField-outer-border.dragged .swc-PromptField-box::after {
+:host .swc-PromptField-outer-border.dragged .swc-PromptField-box::after {
   box-shadow: inset 0 0 0 1px var(--_swc-prompt-field-border-color);
   transition: none;
 }

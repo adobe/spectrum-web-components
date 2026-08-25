@@ -11,7 +11,7 @@
  */
 
 import { html, nothing, render } from 'lit';
-import { expect, userEvent } from '@storybook/test';
+import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { getActiveElement } from '@adobe/spectrum-wc-core/utils/index.js';
@@ -30,6 +30,14 @@ const makeDragEvent = (type: string, dt?: DataTransfer): DragEvent =>
     composed: true,
     dataTransfer: dt,
   });
+
+const makeFileDataTransfer = (): DataTransfer => {
+  const dataTransfer = new DataTransfer();
+  dataTransfer.items.add(
+    new File(['hello'], 'hello.txt', { type: 'text/plain' })
+  );
+  return dataTransfer;
+};
 
 export default {
   ...meta,
@@ -923,7 +931,7 @@ export const DragAndDropTest: Story = {
     await step(
       'dragging a file over the field marks the box dragged',
       async () => {
-        el.dispatchEvent(makeDragEvent('dragover', new DataTransfer()));
+        el.dispatchEvent(makeDragEvent('dragover', makeFileDataTransfer()));
         await el.updateComplete;
         expect(outerBorder?.classList.contains('dragged')).toBe(true);
 
@@ -935,6 +943,11 @@ export const DragAndDropTest: Story = {
         expect(getComputedStyle(outerBorder!).boxShadow).toBe('none');
         expect(getComputedStyle(box!).boxShadow).toBe('none');
         expect(getComputedStyle(gloss!).backgroundImage).toBe('none');
+
+        el.generating = true;
+        await el.updateComplete;
+        expect(outerBorder?.classList.contains('dragged')).toBe(true);
+        expect(getComputedStyle(box!).outlineStyle).toBe('solid');
       }
     );
 
@@ -942,8 +955,9 @@ export const DragAndDropTest: Story = {
       'dragleave clears the dragged state after the debounce',
       async () => {
         el.dispatchEvent(makeDragEvent('dragleave'));
-        // The debounce is 100ms; wait past it with a buffer.
-        await new Promise((resolve) => setTimeout(resolve, 150));
+        await waitFor(() =>
+          expect(outerBorder?.classList.contains('dragged')).toBe(false)
+        );
         await el.updateComplete;
         expect(outerBorder?.classList.contains('dragged')).toBe(false);
       }
@@ -952,7 +966,7 @@ export const DragAndDropTest: Story = {
     await step(
       'dropping files fires swc-prompt-field-drop with the dropped files and clears dragged',
       async () => {
-        el.dispatchEvent(makeDragEvent('dragover', new DataTransfer()));
+        el.dispatchEvent(makeDragEvent('dragover', makeFileDataTransfer()));
         await el.updateComplete;
 
         const dt = new DataTransfer();
@@ -979,7 +993,7 @@ export const DragAndDropTest: Story = {
     await step(
       'dropping with no files does not fire swc-prompt-field-drop',
       async () => {
-        el.dispatchEvent(makeDragEvent('dragover', new DataTransfer()));
+        el.dispatchEvent(makeDragEvent('dragover', makeFileDataTransfer()));
         await el.updateComplete;
 
         let fired = false;
@@ -998,11 +1012,25 @@ export const DragAndDropTest: Story = {
       }
     );
 
+    await step('non-file drags are rejected', async () => {
+      const dataTransfer = new DataTransfer();
+      dataTransfer.setData('text/plain', 'not a file');
+      const event = makeDragEvent('dragover', dataTransfer);
+
+      el.generating = false;
+      await el.updateComplete;
+      el.dispatchEvent(event);
+      await el.updateComplete;
+
+      expect(event.dataTransfer?.dropEffect).toBe('none');
+      expect(outerBorder?.classList.contains('dragged')).toBe(false);
+    });
+
     await step('disabled field rejects the drag entirely', async () => {
       el.disabled = true;
       await el.updateComplete;
 
-      const event = makeDragEvent('dragover', new DataTransfer());
+      const event = makeDragEvent('dragover', makeFileDataTransfer());
       el.dispatchEvent(event);
       await el.updateComplete;
 
@@ -1011,6 +1039,22 @@ export const DragAndDropTest: Story = {
 
       el.disabled = false;
       await el.updateComplete;
+
+      el.dispatchEvent(makeDragEvent('dragover', makeFileDataTransfer()));
+      await el.updateComplete;
+      expect(outerBorder?.classList.contains('dragged')).toBe(true);
+
+      let fired = false;
+      el.addEventListener('swc-prompt-field-drop', () => (fired = true), {
+        once: true,
+      });
+      el.disabled = true;
+      await el.updateComplete;
+      el.dispatchEvent(makeDragEvent('drop', makeFileDataTransfer()));
+      await el.updateComplete;
+
+      expect(fired).toBe(false);
+      expect(outerBorder?.classList.contains('dragged')).toBe(false);
     });
   },
 };

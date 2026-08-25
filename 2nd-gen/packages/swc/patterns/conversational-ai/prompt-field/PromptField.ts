@@ -64,6 +64,13 @@ export interface PromptFieldSubmitDetail {
 // Matches the pixel-loader's own `icon` default.
 const DEFAULT_LOADER_ICON: PixelLoaderIconName = 'aiLogo';
 
+const isFileDrag = (event: DragEvent): boolean => {
+  const dataTransfer = event.dataTransfer;
+  return Boolean(
+    dataTransfer?.types.includes('Files') || dataTransfer?.files.length
+  );
+};
+
 // Native CSS textarea auto-sizing; when true, the JS fallback is skipped.
 const SUPPORTS_FIELD_SIZING =
   typeof CSS !== 'undefined' &&
@@ -239,10 +246,10 @@ export class PromptField extends SpectrumElement {
   @state()
   private _dragged = false;
 
-  /** Accepts a drag anywhere on the host and hands dropped files off via `swc-prompt-field-drop`; the disabled field rejects the drag entirely. */
+  /** Accepts file drags anywhere on the host and hands dropped files off via `swc-prompt-field-drop`. */
   private readonly _dragAndDrop = new DragAndDropController(this, {
     isDragged: () => this._dragged,
-    shouldAccept: () => !this.disabled,
+    shouldAccept: (event) => !this.disabled && isFileDrag(event),
     onDragEnter: () => {
       this._dragged = true;
     },
@@ -251,6 +258,9 @@ export class PromptField extends SpectrumElement {
     },
     onDrop: (event) => {
       this._dragged = false;
+      if (this.disabled) {
+        return;
+      }
       const files = Array.from(event.dataTransfer?.files ?? []);
       if (files.length === 0) {
         return;

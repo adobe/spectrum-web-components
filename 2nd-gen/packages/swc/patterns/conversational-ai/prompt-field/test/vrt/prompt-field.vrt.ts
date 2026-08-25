@@ -26,6 +26,7 @@ import {
   vrtParameters,
 } from '../../../../../.storybook/helpers/index.js';
 import type { PixelLoader } from '../../../pixel-loader/index.js';
+import type { PromptField } from '../../PromptField.js';
 
 // Metadata
 
@@ -286,6 +287,14 @@ const pauseLoaders = async ({
   });
 };
 
+const makeFileDataTransfer = (): DataTransfer => {
+  const dataTransfer = new DataTransfer();
+  dataTransfer.items.add(
+    new File(['hello'], 'hello.txt', { type: 'text/plain' })
+  );
+  return dataTransfer;
+};
+
 // Stack a group's fields vertically instead of packing them side by side.
 const stack = (cases: FieldCase[]) => html`
   <div
@@ -313,6 +322,37 @@ export const Permutations: Story = {
   play: async (context) => {
     await forceButtonStates(context);
     await pauseLoaders(context);
+  },
+};
+
+export const Dragged: Story = {
+  render: () =>
+    bothThemes(
+      stack([
+        { variant: 'subtle', value: SHORT_PROMPT },
+        { variant: 'prominent', generating: true, value: SHORT_PROMPT },
+      ])
+    ),
+  parameters: vrtParameters,
+  play: async ({ canvasElement }) => {
+    const dataTransfer = makeFileDataTransfer();
+    const fields =
+      canvasElement.querySelectorAll<PromptField>('swc-prompt-field');
+
+    await Promise.all(
+      [...fields].map(async (field) => {
+        field.dispatchEvent(
+          new DragEvent('dragover', {
+            bubbles: true,
+            cancelable: true,
+            composed: true,
+            dataTransfer,
+          })
+        );
+        await field.updateComplete;
+      })
+    );
+    await pauseLoaders({ canvasElement });
   },
 };
 
