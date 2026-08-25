@@ -18,6 +18,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import '../swc-response-status.js';
 
 import {
+  PIXEL_LOADER_ICON_NAMES,
   PIXEL_LOADER_PRESET_NAMES,
   RESPONSE_STATUSES,
 } from '../ResponseStatus.js';
@@ -54,12 +55,12 @@ argTypes.open = {
   },
 };
 
-argTypes.preset = {
-  ...argTypes.preset,
+argTypes.loader = {
+  ...argTypes.loader,
   control: { type: 'select' },
-  options: PIXEL_LOADER_PRESET_NAMES,
+  options: [...PIXEL_LOADER_PRESET_NAMES, ...PIXEL_LOADER_ICON_NAMES],
   table: {
-    ...argTypes.preset?.table,
+    ...argTypes.loader?.table,
     category: 'attributes',
     defaultValue: { summary: 'mega' },
   },
@@ -102,7 +103,7 @@ const meta: Meta = {
     ...args,
     status: 'active',
     open: false,
-    preset: 'mega',
+    loader: 'mega',
     'accessible-label': 'Execution steps',
     'label-slot': 'Searching repositories for Europe trips',
     'default-slot': activeStepsSlot,
@@ -260,6 +261,9 @@ export const Statuses: Story = {
     <div style="display:flex;flex-direction:column;gap:24px;">
       <swc-response-status status="active">
         <span slot="label">Searching repositories for Europe trips</span>
+      </swc-response-status>
+      <swc-response-status status="active">
+        <span slot="label">Searching repositories for Europe trips</span>
         ${activeSteps}
       </swc-response-status>
       <swc-response-status status="complete">
@@ -279,7 +283,7 @@ export const GeneratingPresets: Story = {
     <div style="display:flex;flex-direction:column;gap:24px;">
       ${PIXEL_LOADER_PRESET_NAMES.map(
         (preset) => html`
-          <swc-response-status status="active" preset=${preset}>
+          <swc-response-status status="active" loader=${preset}>
             <span slot="label">${preset}: Generating response</span>
           </swc-response-status>
         `
@@ -290,15 +294,6 @@ export const GeneratingPresets: Story = {
 };
 
 GeneratingPresets.storyName = 'Generating presets';
-
-export const StatusOnly: Story = {
-  render: () => html`
-    <swc-response-status status="active">
-      <span slot="label">Searching repositories for Europe trips</span>
-    </swc-response-status>
-  `,
-  tags: ['dev'],
-};
 
 export const Steps: Story = {
   render: () => html`

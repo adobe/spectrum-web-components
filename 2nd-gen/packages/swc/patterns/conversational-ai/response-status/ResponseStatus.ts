@@ -35,7 +35,9 @@ import '../pixel-loader/swc-pixel-loader.js';
 
 import { uniqueId } from '../../../utils/id.js';
 import {
+  PIXEL_LOADER_ICON_NAMES,
   PIXEL_LOADER_PRESET_NAMES,
+  type PixelLoaderIconName,
   type PixelLoaderPresetName,
 } from '../pixel-loader/data.js';
 import {
@@ -51,7 +53,7 @@ import {
 
 import styles from './response-status.css';
 
-export { PIXEL_LOADER_PRESET_NAMES };
+export { PIXEL_LOADER_ICON_NAMES, PIXEL_LOADER_PRESET_NAMES };
 
 export const RESPONSE_STATUSES = ['active', 'complete', 'stopped'] as const;
 
@@ -166,11 +168,14 @@ export class ResponseStatus extends SpectrumElement {
   public accessibleLabel = '';
 
   /**
-   * Pixel-loader icon cycle while `status="active"`. Invalid values fall back
-   * to `mega`.
+   * Status loader artwork shown while `status="active"`, matching
+   * `swc-prompt-field`'s `loader` attribute for the same underlying control:
+   * a preset name (`cc`, `dc`, `exp`, `analyze`, `mega`) cycles a themed icon
+   * sequence; an icon name shows a single static icon. Invalid values fall
+   * back to the `mega` preset.
    */
   @property({ type: String, reflect: true })
-  public preset: PixelLoaderPresetName = 'mega';
+  public loader: PixelLoaderIconName | PixelLoaderPresetName = 'mega';
 
   @queryAssignedNodes({ slot: 'label', flatten: true })
   private _labelNodes!: Node[];
@@ -275,13 +280,30 @@ export class ResponseStatus extends SpectrumElement {
     return this._isValidStatus(this.status) ? this.status : 'active';
   }
 
-  private _isValidPreset(preset: string): preset is PixelLoaderPresetName {
-    return (PIXEL_LOADER_PRESET_NAMES as readonly string[]).includes(preset);
+  private _isValidPreset(value: string): value is PixelLoaderPresetName {
+    return (PIXEL_LOADER_PRESET_NAMES as readonly string[]).includes(value);
   }
 
-  /** Validated generating preset; invalid runtime values fall back to `mega`. */
-  private get _resolvedPreset(): PixelLoaderPresetName {
-    return this._isValidPreset(this.preset) ? this.preset : 'mega';
+  private _isValidIcon(value: string): value is PixelLoaderIconName {
+    return (PIXEL_LOADER_ICON_NAMES as readonly string[]).includes(value);
+  }
+
+  /**
+   * Routes `loader` to the pixel-loader's `preset` (a themed icon-cycle) or
+   * `icon` (a single static icon); invalid runtime values fall back to the
+   * `mega` preset.
+   */
+  private get _resolvedLoader(): {
+    preset: PixelLoaderPresetName | undefined;
+    icon: PixelLoaderIconName | undefined;
+  } {
+    if (this._isValidPreset(this.loader)) {
+      return { preset: this.loader, icon: undefined };
+    }
+    if (this._isValidIcon(this.loader)) {
+      return { preset: undefined, icon: this.loader };
+    }
+    return { preset: 'mega', icon: undefined };
   }
 
   private _isValidStepStatus(
@@ -687,10 +709,12 @@ export class ResponseStatus extends SpectrumElement {
     const loaderClass = this._showsProcessingEmphasis
       ? 'swc-ResponseStatus-loader swc-ResponseStatus-loader--emphasized'
       : 'swc-ResponseStatus-loader';
+    const { preset, icon } = this._resolvedLoader;
     return html`
       <swc-pixel-loader
         class=${loaderClass}
-        preset=${this._resolvedPreset}
+        preset=${ifDefined(preset)}
+        icon=${ifDefined(icon)}
         aria-hidden="true"
       ></swc-pixel-loader>
     `;

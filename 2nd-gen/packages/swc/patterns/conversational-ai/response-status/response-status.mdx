@@ -34,7 +34,7 @@ Steps are optional in every response state. When `swc-response-status-step` chil
 
 ### Generating presets
 
-While `status="active"`, `preset` selects the pixel-loader icon cycle. Defaults to `mega`. Supported values: `cc`, `dc`, `exp`, `analyze`, `mega`. Invalid values fall back to `mega`.
+While `status="active"`, `loader` selects the status pixel-loader's artwork; the same attribute name and control as `swc-prompt-field` uses for its own loader. A preset name (`cc`, `dc`, `exp`, `analyze`, `mega`) cycles a themed icon sequence; an icon name shows a single static icon instead. Defaults to `mega`. Invalid values fall back to `mega`.
 
 <Canvas of={ResponseStatusStories.GeneratingPresets} />
 

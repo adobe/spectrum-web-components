@@ -123,20 +123,29 @@ export const StatusApiTest: Story = {
 
     await step('forwards a generating preset to the pixel loader', async () => {
       el.status = 'active';
-      el.preset = 'cc';
+      el.loader = 'cc';
       await el.updateComplete;
 
-      expect(el.getAttribute('preset')).toBe('cc');
+      expect(el.getAttribute('loader')).toBe('cc');
       expect(
         el.shadowRoot?.querySelector('swc-pixel-loader')?.getAttribute('preset')
       ).toBe('cc');
     });
 
-    await step('coerces an unsupported preset to mega', async () => {
-      el.setAttribute('preset', 'not-a-preset');
+    await step('forwards a static icon name to the pixel loader', async () => {
+      el.loader = 'wand';
       await el.updateComplete;
 
-      expect(el.getAttribute('preset')).toBe('not-a-preset');
+      const pixelLoader = el.shadowRoot?.querySelector('swc-pixel-loader');
+      expect(pixelLoader?.getAttribute('icon')).toBe('wand');
+      expect(pixelLoader?.hasAttribute('preset')).toBe(false);
+    });
+
+    await step('coerces an unsupported loader value to the mega preset', async () => {
+      el.setAttribute('loader', 'not-a-preset-or-icon');
+      await el.updateComplete;
+
+      expect(el.getAttribute('loader')).toBe('not-a-preset-or-icon');
       expect(
         el.shadowRoot?.querySelector('swc-pixel-loader')?.getAttribute('preset')
       ).toBe('mega');
