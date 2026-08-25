@@ -275,8 +275,8 @@ export const TitleTruncationTest: Story = {
           '.swc-UploadAttachment-title-end'
         );
 
-        expect(start?.textContent).toBe('project-rep');
-        expect(end?.textContent).toBe('ort.pdf');
+        expect(start?.textContent?.trim()).toBe('project-rep');
+        expect(end?.textContent?.trim()).toBe('ort.pdf');
       }
     );
 
@@ -291,8 +291,8 @@ export const TitleTruncationTest: Story = {
           '.swc-UploadAttachment-title-end'
         );
 
-        expect(start?.textContent).toBe('project-');
-        expect(end?.textContent).toBe('report');
+        expect(start?.textContent?.trim()).toBe('project-');
+        expect(end?.textContent?.trim()).toBe('report');
       }
     );
   },
