@@ -10,13 +10,26 @@ on:
     # config / scripts / 2nd-gen edits keep deploying the 2nd-gen docs.
     paths-ignore:
       - '1st-gen/**'
+  # Production deploy is driven by this, not by the push above - the push that
+  # merges the 2nd-gen Version PR only starts Publish Packages (2nd-gen), whose
+  # real npm-publish step can sit behind a required manual approval for a long
+  # time. Waiting for that workflow to conclude means production docs can't go
+  # live before the release they're documenting actually ships (or ships stale
+  # docs for a release that never got approved).
+  workflow_run:
+    workflows: ['Publish Packages (2nd-gen)']
+    types: [completed]
 
 permissions:
   contents: read
 
 concurrency:
   group: publish-2ndgen-docs
-  cancel-in-progress: true
+  # Docs deploys are cheap to queue and expensive to interrupt: azcopy sync
+  # --delete-destination deletes stale files and uploads new ones in the same
+  # run, so cancelling one mid-flight can leave the public site (staging or
+  # prod) with files deleted but not yet replaced.
+  cancel-in-progress: false
 
 env:
   AZCOPY_AUTO_LOGIN_TYPE: SPN
@@ -32,6 +45,11 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+        with:
+          # For workflow_run triggers, pin to the commit that the upstream
+          # release run actually built/published, not whatever is on main by
+          # the time this workflow starts.
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Use Node version from .nvmrc
         uses: actions/setup-node@v4
@@ -73,12 +91,9 @@ jobs:
       - name: Setup AzCopy
         uses: ./.github/actions/setup-azcopy
 
-      # Every merge to main deploys to the staging path (docs-staging/). The
-      # production path (docs/) maps to spectrum-web-components.adobe.com and is
-      # published only on a manual run or a commit whose message contains
-      # `#gen2-publish`, so the public site stays in sync with releases. The
-      # keyword deliberately avoids the substring `#publish`, which the Gen1
-      # publish-docs-site workflow matches on.
+      # Every trigger of this workflow refreshes the staging path (docs-staging/) -
+      # push, workflow_dispatch, and the workflow_run that follows a real 2nd-gen
+      # release. It's cheap to re-sync and always safe to keep it tracking main.
       - name: Deploy to staging
         run: |
           echo "Deploying 2nd-gen docs to docs-staging/"
@@ -94,7 +109,17 @@ jobs:
         # container, so deploying to $web/docs/ IS the domain root. The generated
         # .well-known/agent-skills/ directory inside storybook-static/ is therefore
         # served at the expected discovery URL without a separate upload step.
-        if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '#gen2-publish')
+        #
+        # Gated on workflow_run (not push) so this only fires once Publish
+        # Packages (2nd-gen) has actually concluded - including any required
+        # manual approval on its npm-publish step - and on #gen2-publish in that
+        # run's commit message so an ordinary run that only opened/updated the
+        # Version PR (no real publish) doesn't trigger a production deploy.
+        if: >-
+          github.event_name == 'workflow_dispatch' ||
+          (github.event_name == 'workflow_run' &&
+          github.event.workflow_run.conclusion == 'success' &&
+          contains(github.event.workflow_run.head_commit.message, '#gen2-publish'))
         run: |
           echo "Deploying 2nd-gen docs to docs/"
           azcopy sync "2nd-gen/packages/swc/storybook-static/" \

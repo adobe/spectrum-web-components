@@ -205,10 +205,10 @@ The Gen2 docs site (the Storybook served at `spectrum-web-components.adobe.com`)
 
 | Target | URL | When it deploys |
 | --- | --- | --- |
-| Staging | `https://swcpreviews.z13.web.core.windows.net/docs-staging/` | Every push to `main` that touches non-Gen1 files |
-| Production | `spectrum-web-components.adobe.com` (`docs/` path) | Manual run, or a push to `main` whose commit message contains `#gen2-publish` |
+| Staging | `https://swcpreviews.z13.web.core.windows.net/docs-staging/` | Every push to `main` that touches non-Gen1 files, every manual run, and every conclusion of **Publish Packages (2nd-gen)** |
+| Production | `spectrum-web-components.adobe.com` (`docs/` path) | Manual run, or once **Publish Packages (2nd-gen)** concludes successfully on a run whose commit message contains `#gen2-publish` |
 
-> **Note:** the production keyword is `#gen2-publish`, not `#publish`. It deliberately avoids the `#publish` substring so publishing the Gen2 site does not also trigger the Gen1 documentation site above.
+> **Note:** production deploy is triggered by `Publish Packages (2nd-gen)` *concluding* (a `workflow_run` trigger), not by the push that starts it. That workflow's real npm-publish step can sit behind a required manual approval, so waiting for it to actually finish keeps the docs site from going live before the release it documents has shipped (or shipping stale docs if that approval is rejected). The `#gen2-publish` keyword still gates which concluded run counts as a real release, rather than one that merely opened/updated the Version PR - it deliberately avoids the `#publish` substring so it doesn't also trigger the Gen1 documentation site above.
 
 To publish the Gen2 production site manually:
 
