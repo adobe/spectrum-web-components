@@ -51,7 +51,7 @@ jobs:
           # This workflow is 1st-gen only, always - independent of 2nd-gen in every
           # trigger. 2nd-gen has its own changesets setup in 2nd-gen/.changeset/ and
           # its own workflow, publish-2nd-gen.yml.
-          GEN1_COUNT=$(ls -1 1st-gen/.changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
+          GEN1_COUNT=$(find 1st-gen/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
 
           if [ "$GEN1_COUNT" -eq 0 ]; then
             echo "has_changesets=false" >> $GITHUB_OUTPUT

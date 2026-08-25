@@ -42,7 +42,7 @@ jobs:
         run: |
           # Independent of 1st-gen in every trigger - this workflow never reads
           # 1st-gen/.changeset/, including for its own snapshot-release PR path.
-          COUNT=$(ls -1 2nd-gen/.changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
+          COUNT=$(find 2nd-gen/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
           if [ "$COUNT" -eq 0 ]; then
             echo "has_changesets=false" >> $GITHUB_OUTPUT
             echo "No 2nd-gen changesets found - skipping snapshot publish"
@@ -194,8 +194,8 @@ jobs:
         if: needs.check-changesets.outputs.has_changesets == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
-          commit-message: 'chore: release 2nd-gen packages'
-          title: 'chore: release 2nd-gen packages (beta)'
+          commit-message: 'chore: release 2nd-gen packages #gen2-publish'
+          title: 'chore: release 2nd-gen packages (beta) #gen2-publish'
           branch: changeset-release/2nd-gen
           base: main
           delete-branch: true

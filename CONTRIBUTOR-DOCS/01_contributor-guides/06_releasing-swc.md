@@ -23,6 +23,8 @@
 - [Approving the publish job](#approving-the-publish-job)
 - [Verifying the release](#verifying-the-release)
 - [Publishing the documentation site](#publishing-the-documentation-site)
+    - [Gen1 documentation site](#gen1-documentation-site)
+    - [Gen2 documentation site](#gen2-documentation-site)
 - [Troubleshooting](#troubleshooting)
 
 </details>
@@ -181,7 +183,9 @@ After the workflow completes, verify the following:
 
 ## Publishing the documentation site
 
-The documentation site publishes automatically on any push to `main` whose commit message contains `#publish`, `docs:`, or `docs(`. This happens automatically as part of every production release (the version commit uses `#publish`).
+### Gen1 documentation site
+
+The Gen1 documentation site publishes automatically on any push to `main` whose commit message contains `#publish`, `docs:`, or `docs(`. This happens automatically as part of every production release (the version commit uses `#publish`).
 
 To publish the docs site manually:
 
@@ -193,6 +197,29 @@ To publish the docs site manually:
 
 ```bash
 gh workflow run publish-docs-site.yml --ref main
+```
+
+### Gen2 documentation site
+
+The Gen2 docs site (the Storybook served at `spectrum-web-components.adobe.com`) uses a two-target flow so the public site stays in sync with releases while a staging copy always tracks `main`:
+
+| Target | URL | When it deploys |
+| --- | --- | --- |
+| Staging | `https://swcpreviews.z13.web.core.windows.net/docs-staging/` | Every push to `main` that touches non-Gen1 files, every manual run, and every conclusion of **Publish Packages (2nd-gen)** |
+| Production | `spectrum-web-components.adobe.com` (`docs/` path) | Manual run, or once **Publish Packages (2nd-gen)** concludes successfully on a run whose commit message contains `#gen2-publish` |
+
+> **Note:** production deploy is triggered by `Publish Packages (2nd-gen)` *concluding* (a `workflow_run` trigger), not by the push that starts it. That workflow's real npm-publish step can sit behind a required manual approval, so waiting for it to actually finish keeps the docs site from going live before the release it documents has shipped (or shipping stale docs if that approval is rejected). The `#gen2-publish` keyword still gates which concluded run counts as a real release, rather than one that merely opened/updated the Version PR - it deliberately avoids the `#publish` substring so it doesn't also trigger the Gen1 documentation site above.
+
+To publish the Gen2 production site manually:
+
+**From GitHub:**
+1. Navigate to **Actions → Publish 2nd-Gen Documentation**.
+2. Click **Run workflow**, select `main`, and click **Run workflow**.
+
+**From the terminal** (requires [GitHub CLI](https://cli.github.com)):
+
+```bash
+gh workflow run publish-2ndgen-docs.yml --ref main
 ```
 
 ---
