@@ -25,6 +25,7 @@ import {
   theme,
   vrtParameters,
 } from '../../../../../.storybook/helpers/index.js';
+import type { PixelLoader } from '../../../pixel-loader/index.js';
 
 // Metadata
 
@@ -271,6 +272,20 @@ const forceButtonStates = async ({
   );
 };
 
+// Freeze the animating status loader so Chromatic doesn't snapshot a random mid-animation frame.
+const pauseLoaders = async ({
+  canvasElement,
+}: {
+  canvasElement: HTMLElement;
+}) => {
+  canvasElement.querySelectorAll('swc-prompt-field').forEach((field) => {
+    const loader = field.shadowRoot?.querySelector('swc-pixel-loader');
+    if (loader) {
+      (loader as PixelLoader).paused = true;
+    }
+  });
+};
+
 // Stack a group's fields vertically instead of packing them side by side.
 const stack = (cases: FieldCase[]) => html`
   <div
@@ -295,7 +310,10 @@ const anatomyRows = () =>
 export const Permutations: Story = {
   render: () => bothThemes([...variantRows(), ...anatomyRows()]),
   parameters: vrtParameters,
-  play: forceButtonStates,
+  play: async (context) => {
+    await forceButtonStates(context);
+    await pauseLoaders(context);
+  },
 };
 
 // Forced-colors replaces the whole palette, so it gets its own story:
@@ -304,4 +322,5 @@ export const Permutations: Story = {
 export const ForcedColors: Story = {
   render: () => theme(variantRows(), 'light', 'ltr'),
   parameters: forcedColorsVrtParameters,
+  play: pauseLoaders,
 };
