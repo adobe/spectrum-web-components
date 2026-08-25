@@ -40,7 +40,7 @@ Index of shared, reusable resources in 2nd-gen: controllers, mixins, utilities, 
 |---|---|---|
 | `PlacementController` | Floating UI-based positioning (flip, shift, arrow, size) for anchored surfaces | `tooltip`, `popover` |
 | `HoverController` | Hover and keyboard-focus wiring for native-Popover-API triggers | `tooltip` |
-| `FocusgroupNavigationController` | Roving-tabindex arrow key navigation for composite widgets ([Open UI `focusgroup`](https://open-ui.org/components/focusgroup.explainer/)-aligned). See [Focus management](14_focus-management.md) | `tabs`, `message-feedback`, `conversation-thread`, `prompt-field` |
+| `FocusgroupNavigationController` | Roving-tabindex arrow key navigation for composite widgets ([Open UI `focusgroup`](https://open-ui.org/components/focusgroup.explainer/)-aligned). See [Focus management](14_focus-management.md) | `tabs`, `action-group`, `message-feedback`, `conversation-thread`, `prompt-field` |
 | `SlotAttributePropagationController` | Propagates a host attribute (e.g. `size`) to slotted children | `card`, `dropzone`, `illustrated-message`, `button-group` |
 | `SlotPresenceController` | Observes whether slotted content matching a selector is present | `button`, `action-button`, `badge`, `accordion`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
 | `SlotTextController` | Observes whether a slot has meaningful text/element content | `card`, `button`, `action-button`, `illustrated-message`, `badge` |
@@ -54,7 +54,7 @@ Index of shared, reusable resources in 2nd-gen: controllers, mixins, utilities, 
 
 | Mixin | What it does | Used by |
 |---|---|---|
-| `SizedMixin` | Reactive `size` property with per-component valid-size enforcement | `button`, `button-group`, `badge`, `card`, `accordion`, `status-light`, `divider`, `dropzone`, `icon`, `infield-button`, `meter`, `progress-bar`, `progress-circle` |
+| `SizedMixin` | Reactive `size` property with per-component valid-size enforcement | `button`, `button-group`, `badge`, `card`, `accordion`, `status-light`, `divider`, `dropzone`, `icon`, `infield-button`, `meter`, `progress-bar`, `progress-circle`, `action-group` |
 | `LinearProgressMixin` | Shared value/label/percent-format logic for linear-progress components | `progress-bar`, `meter` |
 | `PendingMixin` | `pending`/`pending-label` properties, click suppression, built on `PendingController` | `button`, `action-button` |
 | `DisabledMixin` | Reactive `disabled` with `aria-disabled` (not native `disabled`), tabindex/blur handling. See [Focus management](14_focus-management.md#disabledmixin) | none (`button` still hand-rolls `disabled`) |
@@ -66,7 +66,7 @@ Index of shared, reusable resources in 2nd-gen: controllers, mixins, utilities, 
 | `resolveTrigger()` | Resolves `for` ID / `triggerElement` to a trigger, and its AT-facing inner `<button>` across shadow boundaries | `tooltip`, `popover` |
 | `getActiveElement()` | Deepest focused element, across shadow boundaries | `popover`, `conversation-thread`, `prompt-field` |
 | `deepContains()` | Shadow-piercing containment check | `popover`, `prompt-field` |
-| `registerDismissible()` / `unregisterDismissible()` / `isTopDismissible()` (`dismissibleStack`) | LIFO stack coordinating Escape handling across top-layer mechanisms | `popover` |
+| `registerDismissible()` / `unregisterDismissible()` / `isTopDismissible()` (`dismissibleStack`) | LIFO stack coordinating Escape handling across top-layer mechanisms | `popover`, `tooltip` |
 | `warnIf()`, `validateEnum()` | Batched, deduped dev-mode warning framework (see below and [Debug and validation](../02_style-guide/02_typescript/17_debug-validation.md)) | 10+ components, `prompt-field`, `pixel-loader` |
 | `focusableSelector` | Spec-based focusable-element selector. See [Focus management](14_focus-management.md#focusableselector-and-tabbableselector) | `prompt-field` |
 | `tabbableSelector` | Spec-based tabbable-element selector | none |
@@ -106,7 +106,7 @@ Patterns build directly on core resources and on components, not on their own `*
 
 | Pattern | Core/utils used | Components embedded |
 |---|---|---|
-| `prompt-field` | `FocusgroupNavigationController`, `getActiveElement()`, `deepContains()`, `focusableSelector`, `warnIf()`, `uniqueId()` | `action-button`, `icon` |
+| `prompt-field` | `FocusgroupNavigationController`, `getActiveElement()`, `deepContains()`, `focusableSelector`, `warnIf()`, `uniqueId()` | `action-button`, `icon`, `pixel-loader` |
 | `upload-artifact` | `getLabelFromSlot()` | `action-button`, `icon` |
 | `message-feedback` | `FocusgroupNavigationController` | `icon` |
 | `response-status` | `uniqueId()` | `icon` |
