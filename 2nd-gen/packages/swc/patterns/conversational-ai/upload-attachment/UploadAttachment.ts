@@ -78,6 +78,8 @@ export class UploadAttachment extends SpectrumElement {
   @query('slot[name="title"]')
   private _titleSlot?: HTMLSlotElement;
 
+  private _titleObserver = new MutationObserver(() => this.requestUpdate());
+
   public static override get styles(): CSSResultArray {
     return [styles, visuallyHiddenStyles];
   }
@@ -85,6 +87,18 @@ export class UploadAttachment extends SpectrumElement {
   protected override firstUpdated(_changed: PropertyValues<this>): void {
     super.firstUpdated(_changed);
     this.setAttribute('role', 'group');
+  }
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    if (this._titleSlot) {
+      this._observeTitleSlot(this._titleSlot);
+    }
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this._titleObserver.disconnect();
   }
 
   protected override willUpdate(_changed: PropertyValues<this>): void {
@@ -133,7 +147,19 @@ export class UploadAttachment extends SpectrumElement {
     return title ? `Remove ${title}` : 'Remove attachment';
   }
 
-  private _handleTitleSlotChange(): void {
+  private _observeTitleSlot(slot: HTMLSlotElement): void {
+    this._titleObserver.disconnect();
+    for (const node of slot.assignedNodes({ flatten: true })) {
+      this._titleObserver.observe(node, {
+        characterData: true,
+        childList: true,
+        subtree: true,
+      });
+    }
+  }
+
+  private _handleTitleSlotChange(event: Event): void {
+    this._observeTitleSlot(event.target as HTMLSlotElement);
     this._syncHostAccessibleLabel();
     this.requestUpdate();
   }
@@ -233,6 +259,7 @@ export class UploadAttachment extends SpectrumElement {
             <slot
               name="title"
               class="swc-VisuallyHidden"
+              hidden
               @slotchange=${this._handleTitleSlotChange}
             ></slot>
           </div>

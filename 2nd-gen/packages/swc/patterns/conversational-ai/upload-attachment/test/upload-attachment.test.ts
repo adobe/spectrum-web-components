@@ -11,7 +11,7 @@
  */
 
 import { html } from 'lit';
-import { expect, userEvent } from '@storybook/test';
+import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../swc-upload-attachment.js';
@@ -251,7 +251,7 @@ export const MediaBadgeTest: Story = {
 export const TitleTruncationTest: Story = {
   render: () => html`
     <div style="display:flex;gap:16px;max-inline-size:360px;">
-      <swc-upload-attachment type="card">
+      <swc-upload-attachment type="card" dismissible>
         <span slot="title">project-report.pdf</span>
       </swc-upload-attachment>
       <swc-upload-attachment type="card">
@@ -293,6 +293,38 @@ export const TitleTruncationTest: Story = {
 
         expect(start?.textContent?.trim()).toBe('project-');
         expect(end?.textContent?.trim()).toBe('report');
+      }
+    );
+
+    await step(
+      'updates the title and accessible labels when slotted text changes',
+      async () => {
+        const attachment = attachments[0];
+        const title = attachment?.querySelector<HTMLElement>('[slot="title"]');
+        if (!attachment || !title) {
+          throw new Error('Expected a titled upload attachment');
+        }
+
+        title.textContent = 'Renamed.pdf';
+
+        await waitFor(() => {
+          const start = attachment.shadowRoot?.querySelector(
+            '.swc-UploadAttachment-title-start'
+          );
+          const end = attachment.shadowRoot?.querySelector(
+            '.swc-UploadAttachment-title-end'
+          );
+
+          expect(
+            `${start?.textContent?.trim()}${end?.textContent?.trim()}`
+          ).toBe('Renamed.pdf');
+          expect(attachment.getAttribute('aria-label')).toBe('Renamed.pdf');
+          expect(
+            attachment.shadowRoot
+              ?.querySelector('.swc-UploadAttachment-dismiss')
+              ?.getAttribute('accessible-label')
+          ).toBe('Remove Renamed.pdf');
+        });
       }
     );
   },
