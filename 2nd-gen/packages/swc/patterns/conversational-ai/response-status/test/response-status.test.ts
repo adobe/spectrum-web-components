@@ -496,3 +496,72 @@ export const DetailOverflowVisibilityTest: Story = {
     );
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Settled header label wraps instead of overflowing
+// ──────────────────────────────────────────────────────────────
+
+export const HeaderLabelWrapTest: Story = {
+  render: () => html`
+    <div style="inline-size: 160px;">
+      <swc-response-status status="complete">
+        <span slot="label">
+          A deliberately long status label written to exceed two full lines of
+          wrapped text at this width so the multi-line clamp has something real
+          to bound instead of just happening to fit
+        </span>
+      </swc-response-status>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+
+    await step(
+      'wraps and clamps the settled label without leaking past the row',
+      async () => {
+        await waitFor(
+          () => {
+            const row = el.shadowRoot?.querySelector<HTMLElement>(
+              '.swc-ResponseStatus-row'
+            );
+            const label = el.shadowRoot?.querySelector<HTMLElement>(
+              '.swc-ResponseStatus-headerTrailLine .swc-ResponseStatus-label'
+            );
+            expect(row).toBeTruthy();
+            expect(label).toBeTruthy();
+
+            // No horizontal overflow: the label never exceeds its container.
+            expect(label?.scrollWidth).toBeLessThanOrEqual(
+              (label?.clientWidth ?? 0) + 1
+            );
+
+            const lineHeight = parseFloat(
+              getComputedStyle(label as HTMLElement).lineHeight || '0'
+            );
+            const labelHeight = label?.getBoundingClientRect().height ?? 0;
+
+            // Wrapped to more than one line...
+            expect(labelHeight).toBeGreaterThan(lineHeight * 1.5);
+            // ...but clamped rather than unbounded: stays within the default
+            // 2-line cap (`--swc-response-status-label-max-lines`) even
+            // though the text alone would wrap to more lines at this width.
+            expect(labelHeight).toBeLessThanOrEqual(lineHeight * 2 + 1);
+
+            // The row grows to fit the wrapped label instead of staying a
+            // fixed single-line height and letting the extra lines spill past
+            // its own box into whatever follows.
+            const rowRect = row?.getBoundingClientRect();
+            const labelRect = label?.getBoundingClientRect();
+            expect(labelRect?.bottom).toBeLessThanOrEqual(
+              (rowRect?.bottom ?? 0) + 1
+            );
+          },
+          { timeout: 2000 }
+        );
+      }
+    );
+  },
+};

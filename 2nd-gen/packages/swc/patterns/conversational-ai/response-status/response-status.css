@@ -34,7 +34,7 @@
   display: flex;
   gap: token("spacing-100");
   align-items: center;
-  block-size: var(--_swc-response-status-row-block-size, 32px);
+  min-block-size: var(--_swc-response-status-row-block-size, 32px);
   padding-inline: token("spacing-100");
 }
 
@@ -71,6 +71,13 @@
   min-inline-size: 0;
   block-size: var(--_swc-response-status-label-line-size, 1.33em);
   overflow: hidden;
+}
+
+/* Settled (no roll transition in flight): the fixed single-line height above
+   only matters mid-roll, so let the viewport grow to fit a wrapped label. */
+.swc-ResponseStatus-headerTrailViewport--settled {
+  block-size: auto;
+  overflow: visible;
 }
 
 .swc-ResponseStatus-row--button .swc-ResponseStatus-headerTrail,
@@ -110,6 +117,27 @@
   min-inline-size: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* Settled: allow the label to wrap across multiple lines instead of
+   truncating to one, since a narrow container or a longer translation can
+   easily exceed one line's width. Mid-roll (no `--settled` class) keeps the
+   single line + ellipsis the translateY(-50%) geometry above depends on. */
+.swc-ResponseStatus-headerTrailLine--settled {
+  block-size: auto;
+  white-space: normal;
+}
+
+/* Capped rather than unbounded: the row sizes to this content (see
+   `.swc-ResponseStatus-row`'s `min-block-size`), so an unbounded label could
+   grow the row arbitrarily tall. Past the cap, the last visible line ellipses. */
+.swc-ResponseStatus-headerTrailLine--settled .swc-ResponseStatus-label {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  white-space: normal;
+  overflow: hidden;
+  -webkit-line-clamp: var(--swc-response-status-label-max-lines, 2);
+  line-clamp: var(--swc-response-status-label-max-lines, 2);
 }
 
 .swc-ResponseStatus-headerTrailStrip--rolling .swc-ResponseStatus-headerTrailLine:first-child {

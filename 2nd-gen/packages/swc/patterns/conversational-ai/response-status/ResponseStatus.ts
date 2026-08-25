@@ -500,10 +500,19 @@ export class ResponseStatus extends SpectrumElement {
     const chevron = showDisclosure ? this._renderChevron(open) : '';
 
     if (!this._rollActive) {
+      // Settled (no transition in flight): the roll geometry below assumes a
+      // fixed single-line height, so only constrain to one line while actually
+      // rolling. At rest, let the label wrap across multiple lines instead of
+      // truncating, since a narrow container (or a longer translation) can
+      // easily exceed one line's width.
       return html`
-        <span class="swc-ResponseStatus-headerTrailViewport">
+        <span
+          class="swc-ResponseStatus-headerTrailViewport swc-ResponseStatus-headerTrailViewport--settled"
+        >
           <span class="swc-ResponseStatus-headerTrailStrip">
-            <span class="swc-ResponseStatus-headerTrailLine">
+            <span
+              class="swc-ResponseStatus-headerTrailLine swc-ResponseStatus-headerTrailLine--settled"
+            >
               <span class=${labelClass}>${this._currentVisibleLabel()}</span>
               ${chevron}
             </span>
