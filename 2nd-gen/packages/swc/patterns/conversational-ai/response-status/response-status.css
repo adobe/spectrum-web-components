@@ -49,18 +49,16 @@
   transition: background token("animation-duration-100") token("animation-ease-in-out");
 }
 
-.swc-ResponseStatus-label {
-  --swc-body-font-color: token("neutral-subdued-content-color-default");
-}
-
-.swc-ResponseStatus-label--emphasized {
-  --swc-body-font-color: token("neutral-content-color-default");
-}
 
 .swc-ResponseStatus-row--button .swc-ResponseStatus-label {
   flex: 1;
   min-inline-size: 0;
+  color: token("neutral-subdued-content-color-default");
   text-align: start;
+}
+
+.swc-ResponseStatus-label--emphasized {
+  --swc-body-font-color: token("neutral-content-color-default");
 }
 
 /* Label + chevron trail (header label roll) */
@@ -155,6 +153,10 @@
   flex-shrink: 0;
 }
 
+.swc-ResponseStatus-loader--emphasized {
+  --swc-pixel-loader-color: token("neutral-content-color-default");
+}
+
 .swc-ResponseStatus-row--button:hover {
   background: token("gray-100");
 }
@@ -216,9 +218,9 @@
 }
 
 .swc-ResponseStatus-step-detailPanel--open {
+  inline-size: fit-content;
   padding-block: token("spacing-100");
   padding-inline-start: token("spacing-200");
-  padding-inline-end: token("spacing-700");
   background-color: var(--swc-background-layer-1-color);
   border-radius: token("corner-radius-large-default");
 }
@@ -299,11 +301,6 @@
 
 .swc-ResponseStatus-step-icon--active {
   color: token("gray-600");
-}
-
-.swc-ResponseStatus-step-icon--stopped,
-.swc-ResponseStatus-step[data-status="stopped"] .swc-ResponseStatus-step-icon {
-  color: token("gray-700");
 }
 
 .swc-ResponseStatus-step-body {
@@ -420,6 +417,7 @@
   align-items: center;
   inline-size: 100%;
   padding: 0;
+  padding-block-end: token("spacing-75");
   color: inherit;
   text-align: start;
   background: transparent;
@@ -433,7 +431,7 @@
   box-sizing: content-box;
   inline-size: fit-content;
   max-block-size: var(--swc-response-status-step-detail-max-block-size, 120px);
-  padding-inline-end: token("spacing-200");
+  padding-inline-end: token("spacing-700");
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-color: token("gray-500") transparent;

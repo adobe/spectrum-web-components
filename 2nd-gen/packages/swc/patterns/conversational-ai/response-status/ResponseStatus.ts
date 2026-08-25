@@ -35,7 +35,7 @@ import {
   CheckCircleIcon,
   StepDotIcon,
   StepDotOutlineIcon,
-  StepStoppedCircleIcon,
+  StepStoppedIcon,
 } from '../utils/icons/index.js';
 import {
   RESPONSE_STATUS_STEP_STATUSES,
@@ -64,7 +64,8 @@ export type ResponseStatusStepData = {
  *
  * @element swc-response-status
  * @slot label - Header row label. Falls back to the active step label while
- * the step timeline is closed, or a generic "Processing" label while it's open.
+ * the step timeline is closed, or a generic "Processing…" label while it's
+ * open with at least one incomplete step.
  * @slot - `<swc-response-status-step>` elements.
  * @fires swc-response-status-toggle - Dispatched when the user opens or closes the panel.
  * Detail: `{ open: boolean }`
@@ -86,7 +87,7 @@ export class ResponseStatus extends SpectrumElement {
    * Header label shown in place of the active step label while the step
    * timeline is open, since the specific step is already visible below.
    */
-  private static readonly ACTIVE_STEP_OPEN_LABEL = 'Processing';
+  private static readonly ACTIVE_STEP_OPEN_LABEL = 'Processing…';
 
   private static readonly DEFAULT_ACCESSIBLE_LABEL = 'Execution steps';
 
@@ -406,6 +407,17 @@ export class ResponseStatus extends SpectrumElement {
     return this._steps.find((step) => step.status === 'active');
   }
 
+  // Whether the header should read as still generating: the timeline is open
+  // and at least one step hasn't finished. Drives both the generic
+  // "Processing…" label and the full-emphasis loader/label color.
+  private get _showsProcessingEmphasis(): boolean {
+    return (
+      this._resolvedStatus === 'active' &&
+      this.open &&
+      this._steps.some((step) => step.status !== 'complete')
+    );
+  }
+
   private _getHeaderLabel(): string {
     if (this._labelSlotText) {
       return this._labelSlotText;
@@ -414,7 +426,7 @@ export class ResponseStatus extends SpectrumElement {
     const status = this._resolvedStatus;
 
     if (status === 'active') {
-      if (this.open) {
+      if (this._showsProcessingEmphasis) {
         return ResponseStatus.ACTIVE_STEP_OPEN_LABEL;
       }
 
@@ -507,7 +519,7 @@ export class ResponseStatus extends SpectrumElement {
     return this._displayedLabel || this._getHeaderLabel();
   }
 
-  // The generic "Processing" fallback reads as full-emphasis text; the
+  // The generic "Processing…" fallback reads as full-emphasis text; the
   // active-step label it replaces (and any consumer-provided label) stays
   // subdued, matching the Figma spec's contrast between the two states.
   private _labelClassFor(label: string): string {
@@ -665,9 +677,12 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _renderLoader(): TemplateResult {
+    const loaderClass = this._showsProcessingEmphasis
+      ? 'swc-ResponseStatus-loader swc-ResponseStatus-loader--emphasized'
+      : 'swc-ResponseStatus-loader';
     return html`
       <swc-pixel-loader
-        class="swc-ResponseStatus-loader"
+        class=${loaderClass}
         preset=${this._resolvedPreset}
         aria-hidden="true"
       ></swc-pixel-loader>
@@ -769,7 +784,7 @@ export class ResponseStatus extends SpectrumElement {
           class="swc-ResponseStatus-step-icon swc-ResponseStatus-step-icon--stopped"
           aria-hidden="true"
         >
-          ${StepStoppedCircleIcon()}
+          ${StepStoppedIcon()}
         </swc-icon>
       `;
     }
