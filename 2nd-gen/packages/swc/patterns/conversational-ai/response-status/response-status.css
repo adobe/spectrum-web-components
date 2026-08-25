@@ -49,7 +49,6 @@
   transition: background token("animation-duration-100") token("animation-ease-in-out");
 }
 
-
 .swc-ResponseStatus-row--button .swc-ResponseStatus-label {
   flex: 1;
   min-inline-size: 0;
@@ -217,12 +216,27 @@
   grid-template-rows: 1fr;
 }
 
-.swc-ResponseStatus-step-detailPanel--open {
+/* Padding and background live here (not only on `--open`) so they fade in
+   step with the height collapse above instead of snapping away the instant
+   `--open` is removed, which flashed unpadded content mid-close. */
+.swc-ResponseStatus-step-detailPanel {
   inline-size: fit-content;
+  padding-block: 0;
+  padding-inline-start: 0;
+  background-color: transparent;
+  border-radius: token("corner-radius-large-default");
+  transition:
+    grid-template-rows token("animation-duration-200") token("animation-ease-in-out"),
+    visibility token("animation-duration-200") linear,
+    padding-block token("animation-duration-200") token("animation-ease-in-out"),
+    padding-inline-start token("animation-duration-200") token("animation-ease-in-out"),
+    background-color token("animation-duration-200") token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-step-detailPanel--open {
   padding-block: token("spacing-100");
   padding-inline-start: token("spacing-200");
   background-color: var(--swc-background-layer-1-color);
-  border-radius: token("corner-radius-large-default");
 }
 
 /* Clip wrapper / panel child: overflow:hidden here is what lets 0fr become a
@@ -378,8 +392,11 @@
 }
 
 .swc-ResponseStatus-step-title {
+  padding: token("spacing-50") token("spacing-100");
   margin: 0;
   color: token("gray-600");
+  border-radius: token("corner-radius-300");
+  transition: background token("animation-duration-100") token("animation-ease-in-out");
 }
 
 /* Active step: sweep a bright highlight across the label to read as "in
@@ -392,6 +409,13 @@
   background-clip: text;
   background-size: 200% 100%;
   animation: swc-response-status-step-shimmer 2s linear infinite;
+}
+
+/* Excludes the active step above: its shimmer sets `background-clip: text`
+   on this same element, which would clip this hover fill down to just the
+   text glyphs instead of a normal rounded chip. */
+.swc-ResponseStatus-step:not([data-status="active"]) .swc-ResponseStatus-step-toggle:hover .swc-ResponseStatus-step-title {
+  background: token("gray-75");
 }
 
 @keyframes swc-response-status-step-shimmer {
