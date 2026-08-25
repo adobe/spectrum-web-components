@@ -12,7 +12,7 @@
 
 :host {
   display: block;
-  padding-block-start: var(--swc-tab-panel-padding-top, 12px);
+  padding-block-start: var(--_swc-tab-panel-padding-top, token("spacing-200"));
 }
 
 :host([aria-hidden="true"]) {
