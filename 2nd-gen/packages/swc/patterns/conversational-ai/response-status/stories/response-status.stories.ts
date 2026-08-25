@@ -101,7 +101,7 @@ const meta: Meta = {
   args: {
     ...args,
     status: 'active',
-    open: true,
+    open: false,
     preset: 'mega',
     'accessible-label': 'Execution steps',
     'label-slot': 'Searching repositories for Europe trips',

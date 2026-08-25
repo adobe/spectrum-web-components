@@ -202,8 +202,27 @@ export const StepApiTest: Story = {
     );
 
     await step(
-      'uses the active step label when no header label is provided',
+      'shows a generic processing label while the timeline is open',
       async () => {
+        await waitFor(
+          () => {
+            expect(
+              el.shadowRoot
+                ?.querySelector('.swc-ResponseStatus-label')
+                ?.textContent?.trim()
+            ).toBe('Processing');
+          },
+          { timeout: 2000 }
+        );
+      }
+    );
+
+    await step(
+      'falls back to the active step label once the timeline closes',
+      async () => {
+        el.open = false;
+        await el.updateComplete;
+
         await waitFor(
           () => {
             expect(

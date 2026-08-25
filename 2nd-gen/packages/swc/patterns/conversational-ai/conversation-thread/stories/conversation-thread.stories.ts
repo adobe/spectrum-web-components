@@ -505,11 +505,8 @@ class ConversationFullPatternDemo extends LitElement {
                   </swc-response-status>
                 `
               : html`
-                  <swc-response-status slot="status" status="complete" open>
-                    <span slot="label">
-                      Draft complete. I used your latest prompt to generate this
-                      response.
-                    </span>
+                  <swc-response-status slot="status" status="complete">
+                    <span slot="label">Response complete</span>
                     ${renderDemoResponseStatusSteps(true)}
                   </swc-response-status>
                 `}

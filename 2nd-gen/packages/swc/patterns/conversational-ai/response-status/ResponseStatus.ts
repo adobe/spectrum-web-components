@@ -33,7 +33,8 @@ import {
 } from '../pixel-loader/data.js';
 import {
   CheckCircleIcon,
-  CircleOutlineIcon,
+  StepDotIcon,
+  StepDotOutlineIcon,
   StepStoppedCircleIcon,
 } from '../utils/icons/index.js';
 import {
@@ -62,7 +63,8 @@ export type ResponseStatusStepData = {
  * Displays the current status of an AI response generation.
  *
  * @element swc-response-status
- * @slot label - Header row label. Falls back to the active step label.
+ * @slot label - Header row label. Falls back to the active step label while
+ * the step timeline is closed, or a generic "Processing" label while it's open.
  * @slot - `<swc-response-status-step>` elements.
  * @fires swc-response-status-toggle - Dispatched when the user opens or closes the panel.
  * Detail: `{ open: boolean }`
@@ -79,6 +81,12 @@ export class ResponseStatus extends SpectrumElement {
       complete: 'Response generated',
       stopped: 'You stopped the response',
     };
+
+  /**
+   * Header label shown in place of the active step label while the step
+   * timeline is open, since the specific step is already visible below.
+   */
+  private static readonly ACTIVE_STEP_OPEN_LABEL = 'Processing';
 
   private static readonly DEFAULT_ACCESSIBLE_LABEL = 'Execution steps';
 
@@ -406,6 +414,10 @@ export class ResponseStatus extends SpectrumElement {
     const status = this._resolvedStatus;
 
     if (status === 'active') {
+      if (this.open) {
+        return ResponseStatus.ACTIVE_STEP_OPEN_LABEL;
+      }
+
       const activeStepLabel = this._getActiveStep()?.label;
       if (activeStepLabel) {
         return activeStepLabel;
@@ -495,8 +507,16 @@ export class ResponseStatus extends SpectrumElement {
     return this._displayedLabel || this._getHeaderLabel();
   }
 
+  // The generic "Processing" fallback reads as full-emphasis text; the
+  // active-step label it replaces (and any consumer-provided label) stays
+  // subdued, matching the Figma spec's contrast between the two states.
+  private _labelClassFor(label: string): string {
+    return label === ResponseStatus.ACTIVE_STEP_OPEN_LABEL
+      ? `${ResponseStatus.STATUS_LABEL_CLASS} swc-ResponseStatus-label--emphasized`
+      : ResponseStatus.STATUS_LABEL_CLASS;
+  }
+
   private _renderLabel(showDisclosure: boolean, open: boolean): TemplateResult {
-    const labelClass = ResponseStatus.STATUS_LABEL_CLASS;
     const chevron = showDisclosure ? this._renderChevron(open) : '';
 
     if (!this._rollActive) {
@@ -505,6 +525,7 @@ export class ResponseStatus extends SpectrumElement {
       // rolling. At rest, let the label wrap across multiple lines instead of
       // truncating, since a narrow container (or a longer translation) can
       // easily exceed one line's width.
+      const label = this._currentVisibleLabel();
       return html`
         <span
           class="swc-ResponseStatus-headerTrailViewport swc-ResponseStatus-headerTrailViewport--settled"
@@ -513,7 +534,7 @@ export class ResponseStatus extends SpectrumElement {
             <span
               class="swc-ResponseStatus-headerTrailLine swc-ResponseStatus-headerTrailLine--settled"
             >
-              <span class=${labelClass}>${this._currentVisibleLabel()}</span>
+              <span class=${this._labelClassFor(label)}>${label}</span>
               ${chevron}
             </span>
           </span>
@@ -529,11 +550,15 @@ export class ResponseStatus extends SpectrumElement {
       <span class="swc-ResponseStatus-headerTrailViewport">
         <span class=${stripClass}>
           <span class="swc-ResponseStatus-headerTrailLine" aria-hidden="true">
-            <span class=${labelClass}>${this._rollFromLabel}</span>
+            <span class=${this._labelClassFor(this._rollFromLabel)}>
+              ${this._rollFromLabel}
+            </span>
             ${chevron}
           </span>
           <span class="swc-ResponseStatus-headerTrailLine">
-            <span class=${labelClass}>${this._rollToLabel}</span>
+            <span class=${this._labelClassFor(this._rollToLabel)}>
+              ${this._rollToLabel}
+            </span>
             ${chevron}
           </span>
         </span>
@@ -649,10 +674,8 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
-  private _renderChevron(
-    open: boolean,
-    baseClass = 'swc-ResponseStatus-chevron'
-  ): TemplateResult {
+  private _renderChevron(open: boolean): TemplateResult {
+    const baseClass = 'swc-ResponseStatus-chevron';
     return html`
       <swc-icon
         class=${open ? `${baseClass} ${baseClass}--down` : baseClass}
@@ -735,7 +758,7 @@ export class ResponseStatus extends SpectrumElement {
     if (status === 'complete') {
       return html`
         <swc-icon class="swc-ResponseStatus-step-icon" aria-hidden="true">
-          ${CheckCircleIcon()}
+          ${StepDotIcon()}
         </swc-icon>
       `;
     }
@@ -756,7 +779,7 @@ export class ResponseStatus extends SpectrumElement {
         class="swc-ResponseStatus-step-icon swc-ResponseStatus-step-icon--${status}"
         aria-hidden="true"
       >
-        ${CircleOutlineIcon()}
+        ${StepDotOutlineIcon()}
       </swc-icon>
     `;
   }
@@ -805,7 +828,6 @@ export class ResponseStatus extends SpectrumElement {
           >
             ${step.label}
           </span>
-          ${this._renderChevron(open, 'swc-ResponseStatus-step-chevron')}
         </button>
         <div
           id=${detailId}

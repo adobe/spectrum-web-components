@@ -53,6 +53,10 @@
   --swc-body-font-color: token("neutral-subdued-content-color-default");
 }
 
+.swc-ResponseStatus-label--emphasized {
+  --swc-body-font-color: token("neutral-content-color-default");
+}
+
 .swc-ResponseStatus-row--button .swc-ResponseStatus-label {
   flex: 1;
   min-inline-size: 0;
@@ -159,14 +163,12 @@
    Chevron direction
    ───────────────────────────────────── */
 
-.swc-ResponseStatus-chevron,
-.swc-ResponseStatus-step-chevron {
+.swc-ResponseStatus-chevron {
   flex-shrink: 0;
   transition: transform token("animation-duration-100") ease;
 }
 
-.swc-ResponseStatus-chevron--down,
-.swc-ResponseStatus-step-chevron--down {
+.swc-ResponseStatus-chevron--down {
   transform: rotate(90deg);
 }
 
@@ -213,6 +215,14 @@
   grid-template-rows: 1fr;
 }
 
+.swc-ResponseStatus-step-detailPanel--open {
+  padding-block: token("spacing-100");
+  padding-inline-start: token("spacing-200");
+  padding-inline-end: token("spacing-700");
+  background-color: var(--swc-background-layer-1-color);
+  border-radius: token("corner-radius-large-default");
+}
+
 /* Clip wrapper / panel child: overflow:hidden here is what lets 0fr become a
    true zero. The description scroller stays nested so it is not the grid item. */
 .swc-ResponseStatus-panel > *,
@@ -222,7 +232,7 @@
 }
 
 .swc-ResponseStatus-steps {
-  padding-inline: token("spacing-100");
+  padding-inline-start: token("spacing-500");
   margin: 0;
   list-style: none;
 }
@@ -266,8 +276,10 @@
 
 .swc-ResponseStatus-step-icon {
   flex-shrink: 0;
-  inline-size: token("workflow-icon-small");
-  block-size: token("workflow-icon-small");
+  inline-size: 8px;
+  block-size: 8px;
+  margin: token("spacing-75");
+  color: token("gray-500");
   transition: color token("animation-duration-200") token("animation-ease-in-out");
 }
 
@@ -286,7 +298,7 @@
 }
 
 .swc-ResponseStatus-step-icon--active {
-  color: token("gray-800");
+  color: token("gray-600");
 }
 
 .swc-ResponseStatus-step-icon--stopped,
@@ -370,14 +382,34 @@
 
 .swc-ResponseStatus-step-title {
   margin: 0;
+  color: token("gray-600");
+}
 
-  /* Detail default (gray-600) fails WCAG AA at detail-size-s (12px). */
-  color: token("gray-800");
+/* Active step: sweep a bright highlight across the label to read as "in
+   progress" rather than flat text. `color` above stays the reduced-motion /
+   forced-colors fallback (see the media queries below), since the gradient
+   fill only shows once `color` is overridden to transparent here. */
+.swc-ResponseStatus-step[data-status="active"] .swc-ResponseStatus-step-title {
+  color: transparent;
+  background-image: linear-gradient(90deg, token("gray-600") 0%, token("gray-900") 50%, token("gray-600") 100%);
+  background-clip: text;
+  background-size: 200% 100%;
+  animation: swc-response-status-step-shimmer 2s linear infinite;
+}
+
+@keyframes swc-response-status-step-shimmer {
+  from {
+    background-position: 100% 0;
+  }
+
+  to {
+    background-position: -100% 0;
+  }
 }
 
 .swc-ResponseStatus-step-detail {
   max-inline-size: 340px;
-  margin-block: token("spacing-75") 0;
+  color: token("gray-600");
 }
 
 /* Per-step disclosure (mirrors the header row + panel mechanics) */
@@ -404,6 +436,23 @@
   padding-inline-end: token("spacing-200");
   overflow-y: auto;
   overscroll-behavior: contain;
+  scrollbar-color: token("gray-500") transparent;
+  scrollbar-width: thin;
+}
+
+/* Chromium/Safari: `scrollbar-color`/`-width` above cover Firefox; these
+   pseudo-elements style the same thin, rounded, track-less thumb there. */
+.swc-ResponseStatus-step-detailScroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.swc-ResponseStatus-step-detailScroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.swc-ResponseStatus-step-detailScroll::-webkit-scrollbar-thumb {
+  background: token("gray-500");
+  border-radius: 9999px;
 }
 
 /* Fade cues while the description overflows. Scroll-driven: with no overflow
@@ -445,6 +494,13 @@
   .swc-ResponseStatus-step:last-child {
     animation: none;
   }
+
+  /* Fall back to the flat, opaque title color set above; no sweeping gradient. */
+  .swc-ResponseStatus-step[data-status="active"] .swc-ResponseStatus-step-title {
+    color: token("gray-800");
+    background-image: none;
+    animation: none;
+  }
 }
 
 @media (forced-colors: active) {
@@ -460,6 +516,14 @@
   /* Keep every line fully legible in forced colors; rely on the scrollbar. */
   .swc-ResponseStatus-step-detailScroll {
     mask-image: none;
+    animation: none;
+  }
+
+  /* The gradient/transparent-text technique above is unreliable under forced
+     colors; fall back to plain, guaranteed-visible text. */
+  .swc-ResponseStatus-step[data-status="active"] .swc-ResponseStatus-step-title {
+    color: CanvasText;
+    background-image: none;
     animation: none;
   }
 }
