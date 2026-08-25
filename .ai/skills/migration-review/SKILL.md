@@ -42,3 +42,4 @@ In addition to the workflow doc and [`migration-plan-contract`](../migration-pre
 - Breaking changes in code are documented in the plan and reflected in docs
 - Any drift from the plan is either corrected or clearly called out for review
 - Unresolved open questions were not silently decided in code without alignment
+- Any new or newly-consumed shared core resource (controller, mixin, utility, directive) is reflected in [`16_2nd-gen-shared-resources.md`](../../../CONTRIBUTOR-DOCS/01_contributor-guides/16_2nd-gen-shared-resources.md) — this is the last gate before merge, so treat it as blocking, not advisory

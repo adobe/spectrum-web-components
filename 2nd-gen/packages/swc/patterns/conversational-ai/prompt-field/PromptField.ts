@@ -43,9 +43,14 @@ import {
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
-import '../../../components/ui-icons/swc-ui-icon.js';
+import '../pixel-loader/swc-pixel-loader.js';
 
 import { uniqueId } from '../../../utils/id.js';
+import type {
+  PixelLoaderIconName,
+  PixelLoaderPresetName,
+} from '../pixel-loader/index.js';
+import { PIXEL_LOADER_PRESET_NAMES } from '../pixel-loader/index.js';
 import { ChevronUpIcon, PlusIcon, StopIcon } from '../utils/icons/index.js';
 
 import visuallyHiddenStyles from '../../../stylesheets/_lit-styles/visually-hidden.css';
@@ -54,6 +59,9 @@ import styles from './prompt-field.css';
 export interface PromptFieldSubmitDetail {
   value: string;
 }
+
+// Matches the pixel-loader's own `icon` default.
+const DEFAULT_LOADER_ICON: PixelLoaderIconName = 'aiLogo';
 
 // Native CSS textarea auto-sizing; when true, the JS fallback is skipped.
 const SUPPORTS_FIELD_SIZING =
@@ -104,6 +112,10 @@ export class PromptField extends SpectrumElement {
   /** Visual intensity of the AI brand treatment. */
   @property({ type: String, reflect: true })
   public variant: 'subtle' | 'balanced' | 'prominent' = 'balanced';
+
+  /** Status loader artwork: a single icon name (static), or a preset name (`cc`, `dc`, `exp`, `analyze`, `mega`) that cycles a themed sequence. Routed to the loader's icon/preset in `_renderStatusIcon`. */
+  @property({ type: String, reflect: true })
+  public loader: PixelLoaderIconName | PixelLoaderPresetName = 'aiLogo';
 
   /** Accessible name for the textarea; visually hidden. */
   @property({ type: String })
@@ -1072,11 +1084,28 @@ export class PromptField extends SpectrumElement {
     `;
   }
 
-  /** Placeholder for the future pixel-loader idle/generating indicator. */
+  /** Status pixel-loader: paused on a settled frame while idle, animating while generating. */
   private _renderStatusIcon(): TemplateResult {
+    // One `loader` value routes to the pixel-loader's icon or preset; the name
+    // sets are disjoint, so preset membership disambiguates. Typed against the
+    // loader so the inlined union can never pass an invalid value.
+    const isPreset = (PIXEL_LOADER_PRESET_NAMES as readonly string[]).includes(
+      this.loader
+    );
+    const preset = isPreset
+      ? (this.loader as PixelLoaderPresetName)
+      : undefined;
+    // Keep a valid icon even in preset mode; removing the attribute lands as `null` and trips the loader's dev validation.
+    const icon = isPreset
+      ? DEFAULT_LOADER_ICON
+      : (this.loader as PixelLoaderIconName);
     return html`
       <span class="swc-PromptField-status-icon" aria-hidden="true">
-        <swc-ui-icon icon="asterisk" size="xl"></swc-ui-icon>
+        <swc-pixel-loader
+          icon=${icon}
+          preset=${ifDefined(preset)}
+          ?paused=${!this.generating}
+        ></swc-pixel-loader>
       </span>
     `;
   }
