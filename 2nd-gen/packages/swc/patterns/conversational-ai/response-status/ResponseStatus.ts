@@ -10,13 +10,20 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
+import {
+  CSSResultArray,
+  html,
+  nothing,
+  PropertyValues,
+  TemplateResult,
+} from 'lit';
 import {
   property,
   queryAssignedElements,
   queryAssignedNodes,
   state,
 } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
@@ -529,7 +536,7 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _renderLabel(showDisclosure: boolean, open: boolean): TemplateResult {
-    const chevron = showDisclosure ? this._renderChevron(open) : '';
+    const chevron = showDisclosure ? this._renderChevron(open) : nothing;
 
     if (!this._rollActive) {
       // Settled (no transition in flight): the roll geometry below assumes a
@@ -714,7 +721,7 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
-  private _renderLeadingIcon(): TemplateResult | string {
+  private _renderLeadingIcon(): TemplateResult | typeof nothing {
     const status = this._resolvedStatus;
 
     if (status === 'complete') {
@@ -722,7 +729,7 @@ export class ResponseStatus extends SpectrumElement {
     }
 
     if (status === 'stopped') {
-      return '';
+      return nothing;
     }
 
     return this._renderLoader();
@@ -799,9 +806,11 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
-  private _renderStepDetail(description: string): TemplateResult | '' {
+  private _renderStepDetail(
+    description: string
+  ): TemplateResult | typeof nothing {
     if (!description) {
-      return '';
+      return nothing;
     }
 
     return html`
@@ -848,9 +857,10 @@ export class ResponseStatus extends SpectrumElement {
         </button>
         <div
           id=${detailId}
-          class="swc-ResponseStatus-step-detailPanel ${open
-            ? 'swc-ResponseStatus-step-detailPanel--open'
-            : ''}"
+          class=${classMap({
+            'swc-ResponseStatus-step-detailPanel': true,
+            'swc-ResponseStatus-step-detailPanel--open': open,
+          })}
         >
           <div class="swc-ResponseStatus-step-detailClip">
             <div
