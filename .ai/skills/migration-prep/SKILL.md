@@ -84,6 +84,7 @@ During discovery, explicitly check whether the component should:
 - be migrated before another component that depends on it
 - wait on a prerequisite component or shared base to avoid duplicated work or conflicting APIs
 - share structural CSS patterns with existing or in-flight components — check `2nd-gen/packages/swc/stylesheets/_lit-styles/` for existing shared fragments and note any that this component should consume; if no fragment exists yet but the pattern is real, flag whether it should be extracted as part of this migration or a coordinated one. See [Non-component stylesheets](../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md#shared-lit-css-fragments-_lit-styles) for what qualifies
+- share structural render anatomy (wrapper elements, slot layout, conditional regions) with existing or in-flight components — check for an existing shared render template (e.g. `card/card-template.ts`) and note any that this component should consume; if none exists yet but the pattern is real, flag whether it should be extracted as part of this migration, and where the file should live if no single component owns the shared structure. See [Shared render templates](../../../CONTRIBUTOR-DOCS/02_style-guide/02_typescript/09_rendering-patterns.md#shared-render-templates) for what qualifies
 - need a global element stylesheet counterpart — check whether `stylesheets/global/global-[component].css` should be created as part of this migration. If yes, note whether the component CSS will need `@global-exclude` fences and whether the global stylesheet is in scope for this migration cycle. See [Non-component stylesheets](../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md#global-element-styles-global) for the authoring options
 
 Use the status table, existing component analyses, and source relationships to make these dependency and ordering calls explicit in the plan.
@@ -241,6 +242,7 @@ Pause and actively discuss with the user when you find any of the following:
 - Multiple plausible component boundaries, such as one component vs several
 - A component dependency or extension relationship changes the recommended migration order
 - This component shares structural CSS patterns with another component, suggesting a `_lit-styles/` fragment should be created or consumed — flag the opportunity, name the abstraction, and note whether extraction affects migration order or requires coordination
+- This component needs behavior (trigger resolution, positioning, slot observation, busy state, locale formatting, dev-mode validation, etc.) that a shared core controller, mixin, or utility may already provide — check [2nd-gen shared resources](../../../CONTRIBUTOR-DOCS/01_contributor-guides/16_2nd-gen-shared-resources.md) before proposing new logic, and flag whether an existing resource should be reused, extended, or whether new logic here is itself a candidate for promotion to core
 - Breaking changes that may be justified now to avoid a worse migration later
 - Inconsistencies between source materials that change the recommended API or behavior
 - Missing information that prevents a confident recommendation
@@ -256,6 +258,7 @@ Do not treat the following as implicitly approved, even if you can make a strong
 - whether migration order should change because of a dependency relationship
 - whether shared logic should be extracted before this migration proceeds
 - whether a shared `_lit-styles/` CSS fragment should be created or consumed, which fragment name to use, and whether that work needs to happen before or alongside this migration
+- whether a shared render template should be created or consumed, what its options-object shape should be, and where the file should live when no single component owns the shared structure
 - whether a major dependency concern should remain separate rather than being unified
 
 For these cases:
@@ -378,6 +381,7 @@ Before finalizing the plan, assess whether:
 - The migration path for consumers is understandable and realistic
 - Open questions are the right questions, not placeholders for analysis the agent should have done
 - The plan gives reviewers a clear recommendation, not just a list of unresolved facts
+- Proposed new behavior was checked against [2nd-gen shared resources](../../../CONTRIBUTOR-DOCS/01_contributor-guides/16_2nd-gen-shared-resources.md) rather than assumed to be novel
 
 ## Final review prompt
 
