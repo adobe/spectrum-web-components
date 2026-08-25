@@ -40,9 +40,9 @@ Index of shared, reusable resources in 2nd-gen: controllers, mixins, utilities, 
 |---|---|---|
 | `PlacementController` | Floating UI-based positioning (flip, shift, arrow, size) for anchored surfaces | `tooltip`, `popover` |
 | `HoverController` | Hover and keyboard-focus wiring for native-Popover-API triggers | `tooltip` |
-| `FocusgroupNavigationController` | Roving-tabindex arrow key navigation for composite widgets ([Open UI `focusgroup`](https://open-ui.org/components/focusgroup.explainer/)-aligned). See [Focus management](14_focus-management.md) | `tabs`, `message-feedback`, `conversation-thread` |
+| `FocusgroupNavigationController` | Roving-tabindex arrow key navigation for composite widgets ([Open UI `focusgroup`](https://open-ui.org/components/focusgroup.explainer/)-aligned). See [Focus management](14_focus-management.md) | `tabs`, `message-feedback`, `conversation-thread`, `prompt-field` |
 | `SlotAttributePropagationController` | Propagates a host attribute (e.g. `size`) to slotted children | `card`, `dropzone`, `illustrated-message`, `button-group` |
-| `SlotPresenceController` | Observes whether slotted content matching a selector is present | `button`, `action-button`, `badge`, `accordion` |
+| `SlotPresenceController` | Observes whether slotted content matching a selector is present | `button`, `action-button`, `badge`, `accordion`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
 | `SlotTextController` | Observes whether a slot has meaningful text/element content | `card`, `button`, `action-button`, `illustrated-message`, `badge` |
 | `LiveSelectionController` | Coordinates single/multiple selection across event-dispatching children | `accordion` |
 | `PageScrollLockController` | Reference-counted page scroll lock for stacked blocking surfaces | `popover` |
@@ -64,7 +64,7 @@ Index of shared, reusable resources in 2nd-gen: controllers, mixins, utilities, 
 | Utility | What it does | Used by |
 |---|---|---|
 | `resolveTrigger()` | Resolves `for` ID / `triggerElement` to a trigger, and its AT-facing inner `<button>` across shadow boundaries | `tooltip`, `popover` |
-| `getActiveElement()` | Deepest focused element, across shadow boundaries | `popover`, `conversation-thread` |
+| `getActiveElement()` | Deepest focused element, across shadow boundaries | `popover`, `conversation-thread`, `prompt-field` |
 | `deepContains()` | Shadow-piercing containment check | `popover`, `prompt-field` |
 | `registerDismissible()` / `unregisterDismissible()` / `isTopDismissible()` (`dismissibleStack`) | LIFO stack coordinating Escape handling across top-layer mechanisms | `popover` |
 | `warnIf()`, `validateEnum()` | Batched, deduped dev-mode warning framework (see below and [Debug and validation](../02_style-guide/02_typescript/17_debug-validation.md)) | 10+ components, `prompt-field`, `pixel-loader` |
@@ -72,7 +72,7 @@ Index of shared, reusable resources in 2nd-gen: controllers, mixins, utilities, 
 | `tabbableSelector` | Spec-based tabbable-element selector | none |
 | `isFocusVisibleInTree()` | `:focus-visible` check across shadow roots | none |
 | `getLabelFromSlot()` | Derives a text label from slotted content | `upload-artifact` |
-| `validateRequiredSlot()`, `validateAllowedChildren()` | Dev-mode structural validation | `validateAllowedChildren`: 1 component |
+| `validateRequiredSlot()`, `validateAllowedChildren()` | Dev-mode structural validation | `validateAllowedChildren`: `illustrated-message` |
 | `isDebug()` | Whether dev mode is active (the gate `warnIf`/`validateEnum` build on) | `progress-circle`, `card`, `dropzone`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
 | `capitalize()` | Capitalizes first character of a string | `progress-circle`, `divider` |
 | `physicalSide()` | Drops alignment suffix from a placement (`bottom-start` to `bottom`) | `popover` |
@@ -106,7 +106,7 @@ Patterns build directly on core resources and on components, not on their own `*
 
 | Pattern | Core/utils used | Components embedded |
 |---|---|---|
-| `prompt-field` | `deepContains()`, `focusableSelector`, `warnIf()`, `uniqueId()` | `action-button`, `icon` |
+| `prompt-field` | `FocusgroupNavigationController`, `getActiveElement()`, `deepContains()`, `focusableSelector`, `warnIf()`, `uniqueId()` | `action-button`, `icon` |
 | `upload-artifact` | `getLabelFromSlot()` | `action-button`, `icon` |
 | `message-feedback` | `FocusgroupNavigationController` | `icon` |
 | `response-status` | `uniqueId()` | `icon` |
@@ -116,7 +116,7 @@ Patterns build directly on core resources and on components, not on their own `*
 | `conversation-thread` | `FocusgroupNavigationController`, `getActiveElement()` | — |
 | `pixel-loader` | `validateEnum()` | — |
 
-`prompt-field` has the widest dependency surface. Check its stories when changing `action-button`, `icon`, `FocusgroupNavigationController`, `deepContains()`, or the dev-validation utilities.
+`prompt-field` has the widest dependency surface (see its row above). Check its stories when changing anything in that row, whether a core/utils resource or an embedded component.
 
 ## Attribute and slot vocabulary
 
