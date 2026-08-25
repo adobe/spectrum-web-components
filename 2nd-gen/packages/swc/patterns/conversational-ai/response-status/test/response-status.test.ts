@@ -141,15 +141,20 @@ export const StatusApiTest: Story = {
       expect(pixelLoader?.hasAttribute('preset')).toBe(false);
     });
 
-    await step('coerces an unsupported loader value to the mega preset', async () => {
-      el.setAttribute('loader', 'not-a-preset-or-icon');
-      await el.updateComplete;
+    await step(
+      'coerces an unsupported loader value to the mega preset',
+      async () => {
+        el.setAttribute('loader', 'not-a-preset-or-icon');
+        await el.updateComplete;
 
-      expect(el.getAttribute('loader')).toBe('not-a-preset-or-icon');
-      expect(
-        el.shadowRoot?.querySelector('swc-pixel-loader')?.getAttribute('preset')
-      ).toBe('mega');
-    });
+        expect(el.getAttribute('loader')).toBe('not-a-preset-or-icon');
+        expect(
+          el.shadowRoot
+            ?.querySelector('swc-pixel-loader')
+            ?.getAttribute('preset')
+        ).toBe('mega');
+      }
+    );
   },
 };
 
@@ -265,6 +270,39 @@ export const StepApiTest: Story = {
       }
     );
 
+    await step(
+      'treats a stopped step as settled, not still-processing',
+      async () => {
+        el.open = true;
+        const activeStep = el.querySelector(
+          'swc-response-status-step[status="active"]'
+        );
+        activeStep?.setAttribute('status', 'stopped');
+        await el.updateComplete;
+
+        await waitFor(
+          () => {
+            expect(
+              el.shadowRoot
+                ?.querySelector('.swc-ResponseStatus-label')
+                ?.textContent?.trim()
+            ).not.toBe('Processing…');
+            expect(
+              el.shadowRoot?.querySelector(
+                '.swc-ResponseStatus-label--emphasized'
+              )
+            ).toBeNull();
+            expect(
+              el.shadowRoot?.querySelector(
+                '.swc-ResponseStatus-loader--emphasized'
+              )
+            ).toBeNull();
+          },
+          { timeout: 2000 }
+        );
+      }
+    );
+
     await step('coerces unsupported step statuses to active', async () => {
       const invalidStep = document.createElement('swc-response-status-step');
       invalidStep.setAttribute('status', 'pending');
@@ -352,7 +390,9 @@ export const AgenticApiTest: Story = {
         // Scoped to the timeline panel: each step's description scroll region
         // is also `role="group"`, so an unscoped selector would be ambiguous.
         expect(
-          el.shadowRoot?.querySelector('.swc-ResponseStatus-panel[role="group"]')
+          el.shadowRoot?.querySelector(
+            '.swc-ResponseStatus-panel[role="group"]'
+          )
         ).toHaveAttribute('aria-label', 'Execution steps');
       }
     );

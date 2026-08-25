@@ -384,7 +384,7 @@ export class ResponseStatus extends SpectrumElement {
       label,
       description: this._readStepDescription(element),
       status,
-      open: element.hasAttribute('open'),
+      open: step.open ?? false,
     };
   }
 
@@ -437,13 +437,15 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   // Whether the header should read as still generating: the timeline is open
-  // and at least one step hasn't finished. Drives both the generic
-  // "Processing…" label and the full-emphasis loader/label color.
+  // and at least one step is still active. `stopped` is a terminal state
+  // (like `complete`), not still-processing, so it's excluded too. Drives
+  // both the generic "Processing…" label and the full-emphasis loader/label
+  // color.
   private get _showsProcessingEmphasis(): boolean {
     return (
       this._resolvedStatus === 'active' &&
       this.open &&
-      this._steps.some((step) => step.status !== 'complete')
+      this._steps.some((step) => step.status === 'active')
     );
   }
 

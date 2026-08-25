@@ -39,8 +39,8 @@ export class ResponseStatusStep extends SpectrumElement {
 
   /**
    * Whether this step's description is expanded in the timeline. Sets the
-   * initial disclosure state; an untouched step still auto-expands while
-   * `status="active"`. The parent renders the visible disclosure.
+   * initial disclosure state; steps are collapsed by default regardless of
+   * `status`. The parent renders the visible disclosure.
    */
   @property({ type: Boolean, reflect: true })
   public open = false;
