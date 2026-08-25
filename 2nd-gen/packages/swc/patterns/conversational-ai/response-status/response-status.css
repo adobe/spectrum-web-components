@@ -216,20 +216,17 @@
   grid-template-rows: 1fr;
 }
 
-/* Padding and background live here (not only on `--open`) so they fade in
-   step with the height collapse above instead of snapping away the instant
-   `--open` is removed, which flashed unpadded content mid-close. */
+/* Background fades in step with the height collapse above instead of
+   snapping away the instant `--open` is removed. Padding is intentionally
+   left off this transition list: it snaps with `--open` below so it isn't
+   part of the slide, just the height and background are. */
 .swc-ResponseStatus-step-detailPanel {
   inline-size: fit-content;
-  padding-block: 0;
-  padding-inline-start: 0;
   background-color: transparent;
   border-radius: token("corner-radius-large-default");
   transition:
     grid-template-rows token("animation-duration-200") token("animation-ease-in-out"),
     visibility token("animation-duration-200") linear,
-    padding-block token("animation-duration-200") token("animation-ease-in-out"),
-    padding-inline-start token("animation-duration-200") token("animation-ease-in-out"),
     background-color token("animation-duration-200") token("animation-ease-in-out");
 }
 
@@ -245,6 +242,30 @@
 .swc-ResponseStatus-step-detailClip {
   min-block-size: 0;
   overflow: hidden;
+}
+
+/* Fades the description out while its row collapses, instead of leaving the
+   text fully visible as it gets visually squashed on the way up. */
+.swc-ResponseStatus-step-detailClip {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity token("animation-duration-200") token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-step-detailPanel--open .swc-ResponseStatus-step-detailClip {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Same fade, for the step timeline itself: it stays fully visible while the
+   header disclosure collapses around it unless this is added too. */
+.swc-ResponseStatus-panel > * {
+  opacity: 0;
+  transition: opacity token("animation-duration-200") token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-panel--open > * {
+  opacity: 1;
 }
 
 .swc-ResponseStatus-steps {
