@@ -254,6 +254,18 @@ export const MixedArtifactWarningTest: Story = {
 const artifactScrollGradient =
   'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
 
+// swc-action-button delegates focus to its internal <button>, so the deep
+// active element is that button; resolve it back to the host action-button the
+// strip manages (dismiss/chevron). Non-delegating targets are returned as-is.
+const focusedControl = (): Element | null => {
+  const active = getActiveElement();
+  const root = active?.getRootNode();
+  return root instanceof ShadowRoot &&
+    root.host.localName === 'swc-action-button'
+    ? root.host
+    : (active ?? null);
+};
+
 function renderMultiArtifactPromptField(
   canvasElement: HTMLElement,
   direction?: 'rtl'
@@ -318,7 +330,9 @@ export const ArtifactScrollPaginationTest: Story = {
         el.artifactScrollPrevLabel = 'Show earlier attachments';
         el.artifactScrollNextLabel = 'Show later attachments';
         await el.updateComplete;
-        expect(nextButton?.ariaLabel).toBe('Show later attachments');
+        expect(nextButton?.getAttribute('accessible-label')).toBe(
+          'Show later attachments'
+        );
       }
     );
 
@@ -347,17 +361,20 @@ export const ArtifactScrollPaginationTest: Story = {
           clientWidth / 2
         );
         expect(
-          el.shadowRoot?.querySelector<HTMLButtonElement>(
-            '.swc-PromptField-artifacts-scroll-prev'
-          )?.ariaLabel
+          el.shadowRoot
+            ?.querySelector<HTMLButtonElement>(
+              '.swc-PromptField-artifacts-scroll-prev'
+            )
+            ?.getAttribute('accessible-label')
         ).toBe('Show earlier attachments');
 
         const tiles = scrollEl
           ?.querySelector('slot')
           ?.assignedElements({ flatten: true }) as HTMLElement[] | undefined;
-        expect(getComputedStyle(scrollEl!).scrollSnapType).toContain(
-          'mandatory'
-        );
+        // Computed scroll-snap-type omits proximity (the default); only mandatory serializes.
+        const snapType = getComputedStyle(scrollEl!).scrollSnapType;
+        expect(snapType).toContain('inline');
+        expect(snapType).not.toContain('mandatory');
         expect(getComputedStyle(tiles![0]!).scrollSnapAlign).toContain('start');
       }
     );
@@ -573,7 +590,7 @@ export const ArtifactFocusOrderTest: Story = {
       await el.updateComplete;
 
       expect(event.defaultPrevented).toBe(true);
-      expect(getActiveElement()).toBe(getDismissButton(artifacts[0]!));
+      expect(focusedControl()).toBe(getDismissButton(artifacts[0]!));
     });
 
     await step(
@@ -605,7 +622,7 @@ export const ArtifactFocusOrderTest: Story = {
         await el.updateComplete;
 
         expect(event.defaultPrevented).toBe(true);
-        expect(getActiveElement()).toBe(getDismissButton(artifacts[1]!));
+        expect(focusedControl()).toBe(getDismissButton(artifacts[1]!));
       }
     );
 
@@ -620,7 +637,7 @@ export const ArtifactFocusOrderTest: Story = {
         const nextButton = getNextButton();
         expect(nextButton).toBeTruthy();
         expect(event.defaultPrevented).toBe(true);
-        expect(getActiveElement()).toBe(nextButton);
+        expect(focusedControl()).toBe(nextButton);
       }
     );
 
@@ -650,7 +667,7 @@ export const ArtifactFocusOrderTest: Story = {
     );
 
     await step(
-      'the "<" button becoming disabled while focused keeps focus on it, rather than moving it anywhere',
+      'the "<" button becoming disabled while focused moves focus into the strip, not onto the hidden chevron',
       async () => {
         const firstScrollEnd = waitForScrollEnd(scrollEl);
         scrollEl?.scrollTo({ left: 200, behavior: 'instant' });
@@ -661,7 +678,7 @@ export const ArtifactFocusOrderTest: Story = {
         const prevButton = getPrevButton();
         expect(prevButton?.getAttribute('aria-disabled')).toBe('false');
         prevButton?.focus();
-        expect(getActiveElement()).toBe(prevButton);
+        expect(focusedControl()).toBe(prevButton);
 
         const secondScrollEnd = waitForScrollEnd(scrollEl);
         scrollEl?.scrollTo({ left: 0, behavior: 'instant' });
@@ -669,7 +686,7 @@ export const ArtifactFocusOrderTest: Story = {
         await el.updateComplete;
 
         expect(getPrevButton()?.getAttribute('aria-disabled')).toBe('true');
-        expect(getActiveElement()).toBe(prevButton);
+        expect(artifacts).toContain(focusedControl());
       }
     );
 
@@ -738,7 +755,9 @@ export const ArtifactChevronPagingFocusTest: Story = {
     /** The tile owning the active element: the tile itself, or (if focus
      * landed on its Close button) the shadow host of that button. */
     const activeTile = (): HTMLElement | null => {
-      const active = getActiveElement();
+      // focusedControl resolves the delegated focus to the dismiss button host,
+      // whose own shadow host is the owning tile.
+      const active = focusedControl();
       if (!active) {
         return null;
       }
@@ -765,7 +784,7 @@ export const ArtifactChevronPagingFocusTest: Story = {
         await scrollEnd;
         await el.updateComplete;
 
-        expect(getActiveElement()).toBe(nextButton);
+        expect(focusedControl()).toBe(nextButton);
       }
     );
 
@@ -788,7 +807,7 @@ export const ArtifactChevronPagingFocusTest: Story = {
     );
 
     await step(
-      'Tab from Prev (after paging backward) lands in the newly displayed set of tiles',
+      'paging backward to the start moves focus into the newly displayed tiles',
       async () => {
         scrollEl?.scrollTo({ left: 0, behavior: 'instant' });
         await new Promise((resolve) => requestAnimationFrame(resolve));
@@ -813,8 +832,6 @@ export const ArtifactChevronPagingFocusTest: Story = {
         await backPage;
         await el.updateComplete;
 
-        expect(getActiveElement()).toBe(prevButton);
-
         const tilesAfterPagingBack = visibleTiles();
         expect(
           tilesAfterPagingBack.some(
@@ -823,11 +840,15 @@ export const ArtifactChevronPagingFocusTest: Story = {
           'sanity check: paging back actually revealed a different set of tiles'
         ).toBe(true);
 
-        const event = dispatchKeydown(prevButton, 'Tab');
-        await el.updateComplete;
-
-        expect(event.defaultPrevented).toBe(true);
-        expect(tilesAfterPagingBack.includes(activeTile()!)).toBe(true);
+        // One page-back can land mid-strip (prev stays enabled and focused; Tab
+        // moves into the strip) or at the start (prev disables and focus is
+        // redirected into the strip). Either way keyboard focus ends up on a
+        // tile in the newly displayed set.
+        if (focusedControl() === getPrevButton()) {
+          dispatchKeydown(getPrevButton()!, 'Tab');
+          await el.updateComplete;
+        }
+        expect(tilesAfterPagingBack).toContain(activeTile());
       }
     );
   },
@@ -871,7 +892,7 @@ export const SingleArtifactFocusTest: Story = {
       await el.updateComplete;
 
       expect(event.defaultPrevented).toBe(true);
-      expect(getActiveElement()).toBe(getDismissButton());
+      expect(focusedControl()).toBe(getDismissButton());
     });
 
     await step(

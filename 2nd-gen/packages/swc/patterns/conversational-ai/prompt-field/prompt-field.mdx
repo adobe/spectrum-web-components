@@ -92,7 +92,7 @@ Artifacts own dismiss behavior via **`dismissible`** and emit **`swc-upload-arti
 
 ### Multi-artifact scroll
 
-When several attachments exceed the composer width, the strip scrolls horizontally at full width. Chevron buttons flank the strip (32px gray circles) and render only when scrolling is possible in that direction. Each click advances by one viewport width and settles on a tile boundary; the browser's native scroll clamping keeps the final page from overshooting the end. Edge fades on both sides signal overflow and hide at the ends of the list.
+When several attachments exceed the composer width, the strip scrolls horizontally at full width. Round chevron buttons flank the strip and render only when scrolling is possible in that direction. Each click advances by one viewport width and settles on a tile boundary; the browser's native scroll clamping keeps the final page from overshooting the end. Edge fades on both sides signal overflow and hide at the ends of the list.
 
 Trackpad, wheel, touch scrolling, and the platform's native scrollbar all work on the artifact strip. Chevron paging does not reveal the scrollbar.
 
@@ -145,7 +145,7 @@ The `<swc-prompt-field>` element implements the following accessibility features
 
 - The `<textarea>` uses `aria-labelledby`, pointing to a visually hidden label
 - `accessible-label` can override the accessible name when needed
-- All icon buttons carry descriptive `aria-label` attributes
+- All icon buttons carry descriptive accessible names via `accessible-label`
 - `artifact-scroll-prev-label` and `artifact-scroll-next-label` let consumers localize the artifact-strip chevrons
 - The send button uses `disabled` natively when the prompt has no content
 
@@ -157,7 +157,7 @@ The artifact strip is a `role="region"` landmark (labeled `artifact-strip-label`
 - **Arrow Left/Right**: move the active thumbnail one tile at a time and scroll it into view (distinct from the `<`/`>` chevrons, which page by a full set)
 - **Shift+Tab** from Close: returns to the thumbnail; **Shift+Tab** from a thumbnail exits the strip entirely
 - Activating the `>` chevron (click, Enter, or Space) keeps focus on the chevron and scrolls the next set of tiles into view; **Shift+Tab** from it then moves into that newly displayed set (its active thumbnail's Close button when shown, otherwise the thumbnail). The `<` chevron is the mirror: activating it keeps focus there, and **Tab** moves into the newly displayed set
-- At either end of the strip, the `<`/`>` chevron becomes `aria-disabled` rather than being removed, so a chevron that has focus when scrolling reaches that end keeps it instead of losing it to the browser's default focus handling
+- At either end of the strip, the `<`/`>` chevron becomes `aria-disabled` rather than being removed; if it had focus when scrolling reached that end, focus moves to the active thumbnail so it is never stranded on the now-hidden chevron
 
 ### Best practices
 

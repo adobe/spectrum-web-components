@@ -212,7 +212,7 @@ With `manual`, ARIA relationship wiring via `for` still fires on every `open` ch
 - **No interactive content in tooltips:** `role="tooltip"` prohibits interactive elements (links, buttons, inputs) inside the tooltip. Refactor those patterns to `<swc-popover>` or a dialog component.
 - **Non-interactive triggers:** Tooltips must be attached to focusable elements. Static text, decorative icons, and non-interactive elements are not valid tooltip triggers; use contextual help instead.
 - **Touch and mobile:** `<swc-tooltip>` is hover/focus only. For touch-accessible disclosure, use `<swc-popover>` or contextual help.
-- **`popover="auto"` auto-stack change:** Opening a `<swc-tooltip>` closes other open `auto` popovers (menus, pickers). This differs from the Spectrum 1 `type="hint"` isolation behavior, which left menus and pickers open. This is expected behavior, not a bug.
+- **Popover coexistence:** `<swc-tooltip>` uses `popover="manual"`, so it stays outside the browser's auto light-dismiss group: opening a tooltip does not dismiss an open `<swc-popover>`, menu, or picker, and opening one of those does not force the tooltip closed (it still closes on its own triggers: pointer leave, focus out, or Escape). The tooltip joins the shared dismissible stack, so when it is open on top of a popover, Escape closes the tooltip first and leaves the popover open; a second Escape closes the popover.
 
 ## Styling
 
