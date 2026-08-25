@@ -27,9 +27,10 @@ test.describe('UploadAttachment - ARIA Snapshots', () => {
     const attachment = root.locator('swc-upload-attachment').first();
 
     await expect(attachment).toMatchAriaSnapshot(`
-      - button "Remove Hilton commercial assets"
-      - img "File thumbnail"
-      - text: Hilton commercial assets 2026
+      - group "Hilton commercial assets":
+        - button "Remove Hilton commercial assets"
+        - img "File thumbnail"
+        - text: "2026"
     `);
   });
 });
