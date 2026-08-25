@@ -247,3 +247,53 @@ export const MediaBadgeTest: Story = {
     });
   },
 };
+
+export const TitleTruncationTest: Story = {
+  render: () => html`
+    <div style="display:flex;gap:16px;max-inline-size:360px;">
+      <swc-upload-attachment type="card">
+        <span slot="title">project-report.pdf</span>
+      </swc-upload-attachment>
+      <swc-upload-attachment type="card">
+        <span slot="title">project-report</span>
+      </swc-upload-attachment>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const attachments = canvasElement.querySelectorAll<UploadAttachment>(
+      'swc-upload-attachment'
+    );
+
+    await step(
+      'keeps the extension and three preceding characters visible',
+      async () => {
+        await attachments[0]?.updateComplete;
+        const start = attachments[0]?.shadowRoot?.querySelector(
+          '.swc-UploadAttachment-title-start'
+        );
+        const end = attachments[0]?.shadowRoot?.querySelector(
+          '.swc-UploadAttachment-title-end'
+        );
+
+        expect(start?.textContent).toBe('project-rep');
+        expect(end?.textContent).toBe('ort.pdf');
+      }
+    );
+
+    await step(
+      'keeps a six-character tail for extensionless names',
+      async () => {
+        await attachments[1]?.updateComplete;
+        const start = attachments[1]?.shadowRoot?.querySelector(
+          '.swc-UploadAttachment-title-start'
+        );
+        const end = attachments[1]?.shadowRoot?.querySelector(
+          '.swc-UploadAttachment-title-end'
+        );
+
+        expect(start?.textContent).toBe('project-');
+        expect(end?.textContent).toBe('report');
+      }
+    );
+  },
+};
