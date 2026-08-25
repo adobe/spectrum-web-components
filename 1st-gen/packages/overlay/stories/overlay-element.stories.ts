@@ -929,3 +929,113 @@ modalClickBlocking.parameters = {
   tags: ['!dev'],
   chromatic: { disableSnapshot: true },
 };
+
+/**
+ * Regression coverage for GH-5731: an `[type="auto"]` Overlay should stay open when
+ * clicking non-focusable content inside it, even when the trigger and the Overlay share
+ * a focusable ancestor (e.g. a `tabindex="0"` wrapper) — but should still close if
+ * something inside the Overlay explicitly redirects focus to an unrelated element.
+ *
+ * - "Button #1" and "Button #2": trigger and Overlay share a `tabindex="0"` ancestor.
+ *   Click the button, then click the popover's text; it should stay open.
+ * - "Button #3": no focusable ancestor, included as a working control for comparison.
+ * - "Button #4": its popover contains a button that redirects focus to the unrelated
+ *   text field on `pointerdown`; clicking it should still close the popover, since that
+ *   redirect is unrelated to the click that caused it.
+ *
+ * Each Overlay starts closed: the browser's native `popover="auto"` behavior only
+ * allows a single auto popover open at a time, so more than one of these can't be shown
+ * open simultaneously in a single static snapshot.
+ */
+export const focusableAncestorWrapper = (): TemplateResult => html`
+  <div
+    style="display: flex; flex-direction: column; align-items: flex-start; gap: 24px; margin: 40px;"
+  >
+    <div
+      tabindex="0"
+      style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;"
+    >
+      <p>Wrapped in a focusable ancestor (tabindex="0")</p>
+      <sp-action-button id="focusable-ancestor-trigger-1" variant="primary">
+        Button #1
+      </sp-action-button>
+      <sp-overlay
+        type="auto"
+        placement="right"
+        trigger="focusable-ancestor-trigger-1@click"
+      >
+        <sp-popover style="padding: 10px">
+          Click me: I should not close the popover.
+        </sp-popover>
+      </sp-overlay>
+    </div>
+
+    <div
+      tabindex="0"
+      style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;"
+    >
+      <p>Wrapped in a focusable ancestor (tabindex="0")</p>
+      <sp-button id="focusable-ancestor-trigger-2" variant="primary">
+        Button #2
+      </sp-button>
+      <sp-overlay
+        type="auto"
+        placement="right"
+        trigger="focusable-ancestor-trigger-2@click"
+      >
+        <sp-popover style="padding: 10px">
+          Click me: I should not close the popover.
+        </sp-popover>
+      </sp-overlay>
+    </div>
+
+    <div
+      style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;"
+    >
+      <p>No focusable ancestor (control)</p>
+      <sp-action-button id="focusable-ancestor-trigger-3" variant="primary">
+        Button #3
+      </sp-action-button>
+      <sp-overlay
+        type="auto"
+        placement="right"
+        trigger="focusable-ancestor-trigger-3@click"
+      >
+        <sp-popover style="padding: 10px">
+          Click me: I should not close the popover.
+        </sp-popover>
+      </sp-overlay>
+    </div>
+
+    <div
+      style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;"
+    >
+      <p>Redirects focus to an unrelated field on click (should still close)</p>
+      <sp-action-button id="focusable-ancestor-trigger-4" variant="primary">
+        Button #4
+      </sp-action-button>
+      <input
+        id="focusable-ancestor-outside-input-4"
+        aria-label="Unrelated field"
+      />
+      <sp-overlay
+        type="auto"
+        placement="right"
+        trigger="focusable-ancestor-trigger-4@click"
+      >
+        <sp-popover style="padding: 10px">
+          <button
+            @pointerdown=${(): void =>
+              (
+                document.getElementById(
+                  'focusable-ancestor-outside-input-4'
+                ) as HTMLInputElement | null
+              )?.focus()}
+          >
+            Click me: I redirect focus and should close the popover.
+          </button>
+        </sp-popover>
+      </sp-overlay>
+    </div>
+  </div>
+`;
