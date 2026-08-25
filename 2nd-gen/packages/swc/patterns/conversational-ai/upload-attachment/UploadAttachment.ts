@@ -106,6 +106,7 @@ export class UploadAttachment extends SpectrumElement {
     end: string;
   } {
     const dot = name.lastIndexOf('.');
+    // Keep the extension and three preceding characters visible; extensionless names use the same six-character tail budget.
     const tailLength = dot > -1 ? name.length - dot + 3 : 6;
     const keep = Math.min(tailLength, Math.max(0, name.length - 1));
     return {
