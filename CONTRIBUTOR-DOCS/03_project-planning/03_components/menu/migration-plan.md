@@ -319,10 +319,12 @@ Two prose constraints from the React Spectrum docs, not yet in the [Menu accessi
 
 ## Open gen1 issues
 
-<!-- No Jira query access was available while drafting this plan, and this is not tracked as a blocker for the plan (decided). If useful later, the query is `project = SWC AND component = "Menu" AND labels NOT IN (a11y, gen2) AND issuetype NOT IN (Epic, Initiative) AND status != Done` (adjust field names to match the actual Jira schema) — do not reuse the "Related 1st-gen accessibility (Jira)" table from accessibility-migration-analysis.md, since those rows carry the `a11y` label and are excluded from this table by definition. -->
+<!-- If useful later, the query is `project = SWC AND component = "Menu" AND labels NOT IN (a11y, gen2) AND issuetype NOT IN (Epic, Initiative) AND status != Done` (adjust field names to match the actual Jira schema) — do not reuse the "Related 1st-gen accessibility (Jira)" table from accessibility-migration-analysis.md, since those rows carry the `a11y` label and are excluded from this table by definition. -->
 
 | Jira | Type | Status (snapshot) | Summary |
 | --- | --- | --- | --- |
+
+**Empty because no Jira query access was available while drafting this plan** (rise-erpelding review), not because there are confirmed to be no open gen1 issues for this component. Not tracked as a blocker for the plan (decided); whoever can run the query above should paste the results here before this section is treated as complete.
 
 ## Migration sequencing and prerequisites
 
