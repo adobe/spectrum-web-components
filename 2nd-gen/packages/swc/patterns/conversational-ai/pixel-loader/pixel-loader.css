@@ -1,0 +1,51 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: inline-block;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.swc-PixelLoader {
+  /* Size is not a public attribute; consumers override the rendered size by
+     setting the --swc-pixel-loader-size custom property in their own CSS. */
+  --_swc-pixel-loader-size: var(--swc-pixel-loader-size, 56px);
+
+  display: grid;
+  position: relative;
+  grid-template-rows: repeat(7, 1fr);
+  grid-template-columns: repeat(7, 1fr);
+  inline-size: var(--_swc-pixel-loader-size);
+  block-size: var(--_swc-pixel-loader-size);
+  color: var(--swc-pixel-loader-color, currentcolor);
+}
+
+.swc-PixelLoader-cell {
+  background: currentcolor;
+
+  /* The settled cell is fully visible; the animation gates entry/exit
+     visibility through `scale` (per cell) and the container's opacity envelope.
+     Grid placement, translate/scale and border-radius are per-cell and set
+     inline; see PixelLoader.ts. */
+  transform-origin: center;
+}
+
+@media (forced-colors: active) {
+  .swc-PixelLoader-cell {
+    background: CanvasText;
+  }
+}

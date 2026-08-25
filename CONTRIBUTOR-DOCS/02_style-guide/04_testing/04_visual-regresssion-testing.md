@@ -15,6 +15,7 @@
 - [How to author VRT stories](#how-to-author-vrt-stories)
     - [Grouping permutations into rows](#grouping-permutations-into-rows)
     - [Forced pseudo-states](#forced-pseudo-states)
+    - [Positioned overlay components](#positioned-overlay-components)
 - [Tips for reliable VRT](#tips-for-reliable-vrt)
 
 </details>
@@ -38,6 +39,8 @@ VRT covers things that are hard to test programmatically:
 Author dense visual coverage in `test/vrt/*.vrt.ts` for components and patterns. Keep documentation stories readable; use VRT stories for large matrices.
 
 Aim for maximum meaningful coverage: include every size, variant, state, anatomy, theme, static-color, global-style, custom-property, and component-specific visual axis that can produce a useful visual difference. Cover CJK language rendering explicitly when text metrics can change, e.g. `lang="ja"` / `lang="ko"` / `lang="zh"` line-height, wrapping, or truncation. Skip only impossible, unsupported, or truly redundant combinations.
+
+One common source of "truly redundant" coverage: a visual axis that a component only passes through to a slotted or composed child, with no CSS of its own for that axis (e.g. a layout component that forwards `static-color` to its children but has no color rules itself). That axis is already covered by the child component's own VRT file; re-testing it here only re-renders the child's existing coverage under a layout that does not affect it. Cover the axis in this component's own VRT file only when this component's own CSS does something with that state, such as a layout or stacking change that applies only in that state.
 
 Use this shape:
 
@@ -101,6 +104,19 @@ const forceCardStates = async ({ canvasElement }) => {
 Because this uses the same `data-forced-<state>` attribute the shared helper applies, the child still satisfies any `:not([class])` guard on its default styles. This stays component-specific for now — which slotted element carries the pseudo-state rule differs per component — rather than being generalized into the shared helper on a single case.
 
 Pseudo-state rules with nested rules — such as an `::after` focus ring or a nested `&:hover` — are mirrored in full, so their nested appearance renders correctly in the forced snapshot with no extra authoring.
+
+### Positioned overlay components
+
+Components that position a surface with `PlacementController` use Floating UI's `shift` middleware. The controller does not expose a custom overflow boundary, so `shift` uses clipping ancestors capped by the visual viewport, and `autoUpdate` recomputes on scroll. That is correct production behavior (a popover pinned near a screen edge should slide rather than clip off-screen), but a trigger outside the viewport at open time gets clamped to the current viewport, not to its off-screen position.
+
+A dense VRT matrix that opens many instances at once on a page taller than one viewport can collapse those off-screen triggers onto the same spot. Only the cross-axis is affected: `top`/`bottom` is horizontal, so it is safe on a vertically scrolling page; `start`/`end` is vertical, so it is not. Disable `shouldFlip` in the play function so leftover viewport space cannot flip a surface to the other side.
+
+To keep snapshots deterministic:
+
+- Keep every trigger in the viewport at open time. Put `start`/`end` first, pin the Chromatic viewport so the story fits, or split the story. Growing the page without growing the viewport is what clamps bubbles off their triggers.
+- Do not use the shared `row()` helper. Open surfaces paint in the top layer and overlap at its default gaps. Stack in a column, or use a grid whose cells reserve enough room that adjacent bubbles cannot collide.
+
+See popover's `test/vrt/popover.vrt.ts` and `test/vrt/vrt-helpers.ts` (`stack`, `vrtPage`, `openManyPopoversForVrt`) for a worked example.
 
 ## Tips for reliable VRT
 

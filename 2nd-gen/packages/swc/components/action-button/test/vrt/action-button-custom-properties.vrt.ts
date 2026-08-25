@@ -78,6 +78,22 @@ type ModPropertyCase = CustomPropertyCase<`--swc-action-button-${string}`> & {
 const MOD_PROPERTY_CASES: readonly ModPropertyCase[] = [
   { property: '--swc-action-button-min-block-size', value: '80px' },
   { property: '--swc-action-button-border-radius', value: '0px' },
+  {
+    property: '--swc-action-button-border-start-start-radius',
+    value: '20px',
+  },
+  {
+    property: '--swc-action-button-border-start-end-radius',
+    value: '20px',
+  },
+  {
+    property: '--swc-action-button-border-end-start-radius',
+    value: '20px',
+  },
+  {
+    property: '--swc-action-button-border-end-end-radius',
+    value: '20px',
+  },
   { property: '--swc-action-button-font-size', value: '24px' },
   { property: '--swc-action-button-gap', value: '40px', withIcon: true },
   { property: '--swc-action-button-edge-to-text', value: '40px' },
