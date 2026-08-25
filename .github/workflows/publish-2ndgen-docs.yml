@@ -31,17 +31,24 @@ concurrency:
   # prod) with files deleted but not yet replaced.
   cancel-in-progress: false
 
-env:
-  AZCOPY_AUTO_LOGIN_TYPE: SPN
-  AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-  AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     name: Build and Deploy 2nd-Gen Docs
     timeout-minutes: 30
+    # Publish Packages (2nd-gen) also runs on pull_request (labeled/synchronize,
+    # for its snapshot-release path), which means a fork PR can produce a
+    # workflow_run completion too. workflow_run-triggered jobs get this repo's
+    # full secrets regardless of the fork - so if this job ever checked out and
+    # built a fork's head_sha with those secrets in scope, that fork PR would
+    # get arbitrary code execution against our Azure storage credentials.
+    # Restricting to workflow_run events whose *upstream* trigger was `push`
+    # means the upstream run only ever ran against a commit already merged to
+    # main, never an unreviewed fork commit.
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.conclusion == 'success')
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -94,7 +101,16 @@ jobs:
       # Every trigger of this workflow refreshes the staging path (docs-staging/) -
       # push, workflow_dispatch, and the workflow_run that follows a real 2nd-gen
       # release. It's cheap to re-sync and always safe to keep it tracking main.
+      #
+      # AZCOPY_* creds are scoped to just this step and "Deploy to production"
+      # below, not the whole job, so earlier steps (install, build) never have
+      # them in their process environment.
       - name: Deploy to staging
+        env:
+          AZCOPY_AUTO_LOGIN_TYPE: SPN
+          AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         run: |
           echo "Deploying 2nd-gen docs to docs-staging/"
           azcopy sync "2nd-gen/packages/swc/storybook-static/" \
@@ -110,16 +126,19 @@ jobs:
         # .well-known/agent-skills/ directory inside storybook-static/ is therefore
         # served at the expected discovery URL without a separate upload step.
         #
-        # Gated on workflow_run (not push) so this only fires once Publish
-        # Packages (2nd-gen) has actually concluded - including any required
-        # manual approval on its npm-publish step - and on #gen2-publish in that
-        # run's commit message so an ordinary run that only opened/updated the
-        # Version PR (no real publish) doesn't trigger a production deploy.
+        # The job-level `if` already restricts workflow_run to push-sourced,
+        # successfully-concluded upstream runs, so by the time we're here a
+        # workflow_run event is already known-safe - this only needs to check
+        # for the #gen2-publish keyword, to skip a run that merely opened/
+        # updated the Version PR with no real publish.
         if: >-
           github.event_name == 'workflow_dispatch' ||
-          (github.event_name == 'workflow_run' &&
-          github.event.workflow_run.conclusion == 'success' &&
-          contains(github.event.workflow_run.head_commit.message, '#gen2-publish'))
+          contains(github.event.workflow_run.head_commit.message, '#gen2-publish')
+        env:
+          AZCOPY_AUTO_LOGIN_TYPE: SPN
+          AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         run: |
           echo "Deploying 2nd-gen docs to docs/"
           azcopy sync "2nd-gen/packages/swc/storybook-static/" \
