@@ -63,7 +63,7 @@ Review these sources before filling out the plan:
 - Relevant gen1 bug tickets and prior migration decisions
 - Relevant Figma and React Spectrum references for naming, variants, and expected behavior
 
-For the Figma reference specifically, ask for images from the internal Figma file **`S2 / Web (Desktop scale)`**. The preferred artifact is a PNG copied from the **primary frame** that includes the component's **overview**, **properties**, and **variants**. Ask the user to use Figma's **Copy as PNG** on that frame.
+For the Figma reference specifically, ask for images from the internal Figma file **`S2 / Web`**. The preferred artifact is a PNG copied from the **_Component_ frame** that includes the component's **variants**. Ask the user to use Figma's **Copy as PNG** on that frame.
 
 When evaluating `rendering-and-styling-migration-analysis.md`, **do not use the CSS => SWC mapping table**. Use only these sections:
 
@@ -115,7 +115,7 @@ Do not present the plan as review-ready until all of the following are available
 
 - 1st-gen source
 - Rendering and styling migration analysis
-- Figma reference image(s) from **`S2 / Web (Desktop scale)`**, copied as PNG from the primary frame that includes overview, properties, and variants
+- Figma reference image(s) from **`S2 / Web`**, copied as PNG from the _Component_ frame that includes the variants
 - A table of existing gen1 issues for the component, which are pulled from Jira
 - Epic or ticket context if renames, deprecations, or breaking changes are proposed
 
@@ -127,7 +127,7 @@ Before drafting more than scaffold-level content, explicitly ask the user for an
 
 Critical inputs:
 
-- Figma PNG reference from **`S2 / Web (Desktop scale)`**, copied from the primary frame that includes overview, properties, and variants
+- Figma PNG reference from **`S2 / Web`**, copied from the _Component_ frame that includes the variants
 - Epic number
 - Ticket numbers and summaries for any known breaking changes, or copied ticket descriptions the agent can evaluate
 - Accessibility migration analysis, if not already available
@@ -151,7 +151,7 @@ When a critical input is missing, decide first whether it is materially blocking
 
 Materially blocking inputs:
 
-- Figma PNG visual references from **`S2 / Web (Desktop scale)`**, copied from the primary frame that includes overview, properties, and variants
+- Figma PNG visual references from **`S2 / Web`**, copied from the _Component_ frame that includes the variants
 - accessibility analysis
 - dependency-order or shared-base decisions
 - breaking-change ticket context
@@ -198,7 +198,7 @@ Example:
 Please provide these to continue:
 
 1. Approved visual reference
-   Send a PNG copied from the internal Figma file `S2 / Web (Desktop scale)`, using `Copy as PNG` on the primary frame that includes overview, properties, and variants, so I can validate visual API and supported presentation modes.
+   Send a PNG copied from the internal Figma file `S2 / Web`, using `Copy as PNG` on the _Component_ frame that includes the variants, so I can validate visual API and supported presentation modes.
 2. Accessibility migration analysis
    Send the analysis if available, or confirm that I should proceed provisionally and leave accessibility-dependent recommendations unresolved.
 3. Breaking-change ticket context
@@ -343,7 +343,7 @@ If the plan is provisional because critical inputs are missing, end with explici
 
 Example resume hooks:
 
-- "When you have the Figma PNG from `S2 / Web (Desktop scale)` copied from the primary frame with overview, properties, and variants, send it and I’ll update the visual API and supported presentation modes."
+- "When you have the Figma PNG from `S2 / Web` copied from the _Component_ frame with the variants, send it and I’ll update the visual API and supported presentation modes."
 - "When you have the accessibility migration analysis, send it and I’ll tighten the semantics, state, and testing recommendations."
 - "When you have the Epic number, send it and I’ll finalize the header and references."
 - "If you can paste the breaking-change ticket descriptions, I can evaluate likely impact and update the plan’s migration-risk guidance."
