@@ -828,10 +828,12 @@ export class ResponseStatus extends SpectrumElement {
 
     const open = this._isStepOpen(step, index);
     const detailId = `swc-response-status-detail-${index}`;
+    const toggleId = `swc-response-status-toggle-${index}`;
 
     return html`
       <div class="swc-ResponseStatus-step-body">
         <button
+          id=${toggleId}
           class="swc-ResponseStatus-step-toggle"
           data-index=${index}
           aria-expanded=${open}
@@ -854,6 +856,8 @@ export class ResponseStatus extends SpectrumElement {
             <div
               class="swc-ResponseStatus-step-detailScroll"
               data-step-index=${index}
+              role="group"
+              aria-labelledby=${toggleId}
               tabindex=${ifDefined(
                 this._overflowingSteps.has(index) ? '0' : undefined
               )}

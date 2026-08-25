@@ -113,6 +113,7 @@ The `<swc-response-status>` element implements the following accessibility featu
 - The step timeline uses `role="group"` with an accessible name from the `accessible-label` attribute (defaults to “Execution steps”)
 - The ordered step list uses `role="list"` and each rendered step uses `role="listitem"`
 - Each step with a description exposes its own disclosure button, using `aria-expanded` and `aria-controls` and taking its accessible name from the step title
+- A step's description scroll region uses `role="group"` with `aria-labelledby` pointing back to that step's disclosure button, so tabbing into a long, scrollable description (when it becomes keyboard-focusable) still announces which step it belongs to
 
 ### Best practices
 

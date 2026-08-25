@@ -68,10 +68,11 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
       'aria-label',
       'Searching repositories for Europe trips'
     );
-    await expect(root.locator('[role="group"]')).toHaveAttribute(
-      'aria-label',
-      'Execution steps'
-    );
+    // Scoped to the timeline panel: each step's description scroll region is
+    // also `role="group"`, so an unscoped selector would match more than one.
+    await expect(
+      root.locator('.swc-ResponseStatus-panel[role="group"]')
+    ).toHaveAttribute('aria-label', 'Execution steps');
   });
 
   test('should expose per-step disclosures collapsed by default', async ({

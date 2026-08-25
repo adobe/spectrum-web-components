@@ -340,10 +340,11 @@ export const AgenticApiTest: Story = {
     await step(
       'uses accessible-label as the timeline accessible name',
       async () => {
-        expect(el.shadowRoot?.querySelector('[role="group"]')).toHaveAttribute(
-          'aria-label',
-          'Execution steps'
-        );
+        // Scoped to the timeline panel: each step's description scroll region
+        // is also `role="group"`, so an unscoped selector would be ambiguous.
+        expect(
+          el.shadowRoot?.querySelector('.swc-ResponseStatus-panel[role="group"]')
+        ).toHaveAttribute('aria-label', 'Execution steps');
       }
     );
 
