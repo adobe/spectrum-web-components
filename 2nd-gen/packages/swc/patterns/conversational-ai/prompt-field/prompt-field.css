@@ -523,7 +523,7 @@
 }
 
 :host(:not([collapsed])) .swc-PromptField-controls {
-  gap: token("spacing-300");
+  gap: token("spacing-500");
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -536,28 +536,37 @@
 .swc-PromptField-text-group {
   display: flex;
   gap: token("spacing-200");
-  align-items: baseline;
+
+  /* Top-aligned so the loader stays beside the first line as the textarea grows, not centered on the whole block. */
+  align-items: flex-start;
   min-inline-size: 0;
+
+  /* One button height in both states, so the collapse only removes the action bar below — the row never changes height, and the bottom-anchored send button reads centered on it when collapsed. */
+  min-block-size: token("component-height-100");
+
+  /* Fixed offset so a single line still reads vertically centered in the row. */
+  padding-block-start: calc((token("component-height-100") - (token("font-size-200") * token("line-height-200"))) / 2);
   padding-inline-start: token("spacing-75");
   padding-inline-end: calc(token("component-height-100") + token("spacing-300"));
-}
-
-/* Collapsed puts the send button inline at the row's end, so the row must be tall enough to hold it. Expanded anchors send to the action bar instead, so no min height (which would add slack below the text). */
-:host([collapsed]) .swc-PromptField-text-group {
-  min-block-size: token("component-height-100");
 }
 
 .swc-PromptField-status-icon {
   display: flex;
   flex: 0 0 auto;
   align-items: center;
-  align-self: start;
   justify-content: center;
-  inline-size: token("workflow-icon-medium");
-  block-size: token("workflow-icon-medium");
+
+  /* 24px so the loader's center lines up with the upload button's icon below. */
+  inline-size: token("spacing-400");
+  block-size: token("spacing-400");
 
   /* Match the upload button's static content color: black on light cards, white on dark. */
   color: light-dark(token("transparent-black-800"), token("transparent-white-800"));
+}
+
+.swc-PromptField-status-icon swc-pixel-loader {
+  /* 21px to match the reference loader, centered in the 24px status slot. Color inherits via its currentcolor default. */
+  --swc-pixel-loader-size: 21px;
 }
 
 /* ─────────────────────────────────────
