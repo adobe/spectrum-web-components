@@ -131,7 +131,7 @@ Consumers are responsible for handling upload flows and can mirror `value` from 
 
 ### Drag and drop
 
-Dragging a file anywhere over `swc-prompt-field` applies a high-intensity solid fill across the drop target, regardless of the field's own `variant`: a drop target should be unmistakable even on a `subtle` field. Dropping fires **`swc-prompt-field-drop`** with `detail: { files: File[] }`; consumers build and slot `<swc-upload-artifact>` elements from those files the same way they do for the **`+`** button's external picker flow. A field in `disabled` mode rejects the drag outright (the OS cursor shows "not allowed") instead of accepting files it can't act on.
+Dragging a file anywhere over `swc-prompt-field` applies a high-intensity solid fill to the container surface and a blue focus ring around the drop target, regardless of the field's own `variant`: a drop target should be unmistakable even on a `subtle` field. Dropping fires **`swc-prompt-field-drop`** with `detail: { files: File[] }`; consumers build and slot `<swc-upload-artifact>` elements from those files the same way they do for the **`+`** button's external picker flow. A field in `disabled` mode rejects the drag outright (the OS cursor shows "not allowed") instead of accepting files it can't act on.
 
 <Canvas of={PromptFieldStories.DragAndDrop} />
 

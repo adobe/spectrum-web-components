@@ -463,24 +463,24 @@
     0 6px 83px rgb(from light-dark(oklch(from var(--swc-prompt-field-brand-color) 85.68% 0.0856 calc(h + 35.2)), oklch(from var(--swc-prompt-field-brand-color) 26.22% 0.105 calc(h - 314.8))) r g b / var(--_swc-prompt-field-spread-shadow-opacity, 50%));
 }
 
-/* Dragged: use one high-intensity solid fill across the ring and prompt
- * surface. Placed last and scoped through the class (not an attribute), so
- * its higher specificity wins over every variant rule above. */
+/* The dragged state tints only the container surface and exposes the drop
+ * target with a focus ring. Placed last and scoped through the class (not an
+ * attribute), so its higher specificity wins over every variant rule above. */
 :host(:not([generating])) .swc-PromptField-outer-border.dragged {
-  --_swc-prompt-field-drag-fill: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 91.32% 0.0721 calc(h + 0.1)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 23.87% 0.1407 calc(h - 38.8)) 40%));
+  --_swc-prompt-field-drag-fill: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 91.32% 0.0721 calc(h + 0.1)) 30%), color-mix(in srgb, token("background-layer-2-color") 85%, var(--swc-prompt-field-brand-color) 15%));
+  --_swc-prompt-field-outer-stop-1: var(--_swc-prompt-field-outer-recede-stop);
+  --_swc-prompt-field-outer-stop-2: var(--_swc-prompt-field-outer-recede-stop);
+  --_swc-prompt-field-outer-stop-3: var(--_swc-prompt-field-outer-recede-stop);
 
-  background: var(--_swc-prompt-field-drag-fill);
   box-shadow: none;
   transition: none;
 }
 
 :host(:not([generating])) .swc-PromptField-outer-border.dragged .swc-PromptField-box {
-  --_swc-prompt-field-con-hue-opacity: 0%;
-  --_swc-prompt-field-prominent-outer-glow-color: transparent;
-  --_swc-prompt-field-prominent-inset-glow-color: transparent;
-
   background: var(--_swc-prompt-field-drag-fill);
   box-shadow: none;
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
   transition: none;
 }
 

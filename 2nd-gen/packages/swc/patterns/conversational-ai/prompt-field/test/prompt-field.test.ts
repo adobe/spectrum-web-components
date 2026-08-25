@@ -908,8 +908,9 @@ export const DragAndDropTest: Story = {
 
         const box = el.shadowRoot?.querySelector('.swc-PromptField-box');
         const gloss = el.shadowRoot?.querySelector('.swc-PromptField-gloss');
-        expect(getComputedStyle(outerBorder!).backgroundImage).toBe('none');
+        expect(getComputedStyle(outerBorder!).backgroundImage).not.toBe('none');
         expect(getComputedStyle(box!).backgroundImage).toBe('none');
+        expect(getComputedStyle(box!).outlineStyle).toBe('solid');
         expect(getComputedStyle(outerBorder!).boxShadow).toBe('none');
         expect(getComputedStyle(box!).boxShadow).toBe('none');
         expect(getComputedStyle(gloss!).backgroundImage).toBe('none');
