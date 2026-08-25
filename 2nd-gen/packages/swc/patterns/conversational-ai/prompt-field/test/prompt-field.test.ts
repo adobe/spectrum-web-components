@@ -442,14 +442,24 @@ export const ArtifactScrollRTLTest: Story = {
 };
 
 /**
- * Resolves on the native `scrollend` event, or (as a cross-browser
- * fallback) once `scrollLeft` stops changing across a few animation
- * frames — WebKit's test runner doesn't reliably fire `scrollend` for
- * `scrollIntoView`/`scrollTo` with `behavior: 'smooth'`, which would
- * otherwise hang this indefinitely.
+ * Resolves when the scroll container settles after a programmatic scroll.
+ *
+ * Prefers the native `scrollend` event, but WebKit's and Firefox's test
+ * runners don't reliably fire it for `behavior: 'smooth'`, so a polling
+ * fallback runs alongside it. The fallback must not resolve *before* the
+ * smooth scroll has begun: on a busy CI container several animation frames
+ * can elapse between the triggering click and the first `scrollLeft`
+ * change, and the old "stable for N frames" check would observe that
+ * not-yet-started window as already-settled and resolve early. That made
+ * the RTL paging assertion flaky, since it checks that the scroll actually
+ * happened. So the poll now waits until it has seen the position move, then
+ * for it to hold steady across a few frames. A hard `maxWaitMs` timeout
+ * guarantees it never hangs when a scroll produces no movement at all
+ * (e.g. already at the target) or when `scrollend` never fires.
  */
 function waitForScrollEnd(
-  scrollEl: HTMLDivElement | null | undefined
+  scrollEl: HTMLDivElement | null | undefined,
+  { maxWaitMs = 2000 }: { maxWaitMs?: number } = {}
 ): Promise<void> {
   if (!scrollEl) {
     return Promise.resolve();
@@ -457,35 +467,47 @@ function waitForScrollEnd(
 
   return new Promise<void>((resolve) => {
     let settled = false;
+    let rafId = 0;
     const finish = (): void => {
       if (settled) {
         return;
       }
       settled = true;
+      clearTimeout(timeoutId);
+      cancelAnimationFrame(rafId);
+      scrollEl.removeEventListener('scrollend', finish);
       resolve();
     };
+
+    // Safety net: resolve no matter what, so a scroll that never moves (or
+    // a missing `scrollend`) can't hang the test.
+    const timeoutId = setTimeout(finish, maxWaitMs);
 
     scrollEl.addEventListener('scrollend', finish, { once: true });
 
     let lastScrollLeft = scrollEl.scrollLeft;
+    let hasMoved = false;
     let stableFrames = 0;
     const poll = (): void => {
       if (settled) {
         return;
       }
-      if (scrollEl.scrollLeft === lastScrollLeft) {
+      const current = scrollEl.scrollLeft;
+      if (current !== lastScrollLeft) {
+        hasMoved = true;
+        stableFrames = 0;
+        lastScrollLeft = current;
+      } else if (hasMoved) {
+        // Only count toward "settled" once the scroll has actually started.
         stableFrames += 1;
         if (stableFrames >= 3) {
           finish();
           return;
         }
-      } else {
-        stableFrames = 0;
-        lastScrollLeft = scrollEl.scrollLeft;
       }
-      requestAnimationFrame(poll);
+      rafId = requestAnimationFrame(poll);
     };
-    requestAnimationFrame(poll);
+    rafId = requestAnimationFrame(poll);
   });
 }
 
