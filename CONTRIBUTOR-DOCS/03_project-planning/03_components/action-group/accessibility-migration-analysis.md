@@ -42,7 +42,7 @@
 
 ## Overview
 
-This doc describes how **`swc-action-group`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. It pairs with [Action group migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, tokens, and DOM. Until **`swc-action-group`** ships, use **`1st-gen/packages/action-group/src/ActionGroup.ts`** (`<sp-action-group>`) as the behavioral reference for **roving tabindex** and **`selects`**, then **verify** every recommendation against real 2nd-gen source before declaring implementation complete.
+This doc describes how **`swc-action-group`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. It pairs with [Action group migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, tokens, and DOM. **`1st-gen/packages/action-group/src/ActionGroup.ts`** (`<sp-action-group>`) is historical reference for **roving tabindex** only — **`selects`** / **`selected`** were dropped entirely in 2nd-gen (see [Recommendations](#recommendations-swc-action-group)).
 
 React Spectrum names the pattern [**ActionButtonGroup**](https://react-spectrum.adobe.com/ActionButtonGroup); Spectrum 2 documents [**Action group**](https://s2.spectrum.corp.adobe.com/page/action-group/). **`swc-action-group`** groups related **`swc-action-button`** and **`swc-action-menu`** controls with Spectrum spacing in **horizontal** or **vertical** layout. The host **always** maps to **`role="group"`** (prescribed and fixed). The main accessibility difference from **`swc-button-group`** is **composite keyboard navigation**: **`swc-action-group`** owns **roving **`tabindex`**** (**one Tab stop** into the strip, **arrow keys** among items), while **`swc-button-group`** also uses **`role="group"`** but **Tab** visits **each** **`swc-button`** ([Button group accessibility migration analysis](../button-group/accessibility-migration-analysis.md)).
 
@@ -57,7 +57,7 @@ React Spectrum names the pattern [**ActionButtonGroup**](https://react-spectrum.
 - **Host focus:** 1st-gen sets **`delegatesFocus: true`** on the shadow root so **`focus()`** on the host targets the current roving item.
 - **Naming:** **`label`** reflects to **`aria-label`** on the host when authors supply a non-empty string; **`aria-labelledby`** remains valid for visible legend association (1st-gen README pattern).
 - **Host role:** **`role="group"`** on the **host** in all modes. **Must not** switch to **`role="toolbar"`** or **`role="radiogroup"`** (breaking change from 1st-gen). A page-level **`role="toolbar"`** landmark, when needed, belongs on an **outer wrapper**, not on **`swc-action-group`**.
-- **Selection (1st-gen API):** Optional **`selects="single"`** / **`selects="multiple"`** with **`selected`** array and **`change`** events. 1st-gen re-types the host and children; 2nd-gen keeps **`role="group"`** on the host and **`role="button"`** on **`swc-action-button`** children, exposing selection via **`aria-pressed`** / **`aria-checked`** on the **focus target** **or** migrating UX to **`swc-segmented-control`** / **`swc-toggle-button-group`** (see **Recommendations**).
+- **Selection (1st-gen only):** 1st-gen offers optional **`selects="single"`** / **`selects="multiple"`** with a **`selected`** array and **`change`** events, re-typing the host and children. **Dropped in 2nd-gen:** **`swc-action-group`** has no selection API; **`swc-action-button`** children stay **`role="button"`** only. Selection UX belongs on **`swc-segmented-control`** (exclusive choice) or **`swc-toggle-button-group`** (toggle / multi-select) once those ship.
 
 ### When to use something else
 
@@ -114,7 +114,7 @@ Gen2 program work is tracked separately from the **1st-gen** table below (omit *
 | [Focus visible (WCAG 2.4.7)](https://www.w3.org/TR/WCAG22/#focus-visible) | Focus ring appears on the **focused child** (delegated from host), not a fake focusable **group** shell. |
 | [Target size (WCAG 2.5.8)](https://www.w3.org/TR/WCAG22/#target-size-minimum) | **Compact** and **icon-first** actions are common; document **minimum** targets for **`swc-action-button`** / **`swc-action-menu`** sizes. |
 
-**Bottom line:** **`swc-action-group`** = **fixed **`role="group"`**** + **roving tabindex** among **`swc-action-button`** / **`swc-action-menu`** children. Fix **1st-gen audit** gaps (**group label**, **selection state not color-only**), migrate focus logic to **`FocusgroupNavigationController`**, and **drop** 1st-gen **`toolbar`** / **`radiogroup`** host roles. Put **`role="toolbar"`** on a **parent** when a **toolbar** landmark is required.
+**Bottom line:** **`swc-action-group`** = **fixed **`role="group"`**** + **roving tabindex** among **`swc-action-button`** / **`swc-action-menu`** children, with no selection API of its own. Fix the **1st-gen audit** group-label gap, migrate focus logic to **`FocusgroupNavigationController`**, and **drop** 1st-gen **`toolbar`** / **`radiogroup`** host roles and the **`selects`** / **`selected`** API entirely. Put **`role="toolbar"`** on a **parent** when a **toolbar** landmark is required; non-color selection-state requirements move to **`swc-segmented-control`** / **`swc-toggle-button-group`**.
 
 ---
 
@@ -170,12 +170,12 @@ Verified in **`ActionGroup.ts`**:
 | Topic | What to do |
 | --- | --- |
 | **Prescribed host role** | **`role="group"`** is **prescribed** and **fixed** on the **`swc-action-group`** host. It **must not** be author-overridable in implementation or docs. **Do not** set **`role="toolbar"`**, **`role="radiogroup"`**, **`role="presentation"`**, or any other role on this element. If a **toolbar** landmark is needed, authors wrap one or more **`swc-action-group`** instances in a **parent** with **`role="toolbar"`**. **`swc-action-group`** maps to **one** semantic role only: **group**. |
-| **Child roles** | **`swc-action-button`** → **`role="button"`** only on the focus target. **`swc-action-menu`** → menu-button semantics per [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md). **Do not** set **`role="radio"`** / **`role="checkbox"`** on **`swc-action-button`**. For **exclusive** or **toggle** selection UX, prefer **`swc-segmented-control`** / **`swc-toggle-button-group`**, or expose **`aria-pressed`** / **`aria-checked`** on the **button** focus target while the host stays **`role="group"`**. |
-| **Group name** | When the cluster is **meaningfully distinct** (**`selects`**, named tool strip, formatting cluster), **`label`** (or **`aria-labelledby`**) is **required** in docs; use **dev warnings** in debug builds when **`selects`** is set without a name. Fix [SWC-1121](https://jira.corp.adobe.com/browse/SWC-1121) with a **discernible **`group`** name**, not **radiogroup** retargeting. |
-| **`aria-orientation`** | When **`vertical`** is **true**, set **`aria-orientation="vertical"`** on the host; when horizontal, **`horizontal`** or omit per AT defaults. Wire **`FocusgroupNavigationController`** **`direction`** to match. |
-| **Selection state (non-color)** | For any retained **`selects`** / **`selected`** API, expose **`aria-checked`** or **`aria-pressed`** on the **correct** element (prefer **native** button state on inner **`<button>`** via delegation) and ensure **visible** **selected** styling includes a **non-color** cue ([SWC-1123](https://jira.corp.adobe.com/browse/SWC-1123)). |
+| **Child roles** | **`swc-action-button`** → **`role="button"`** only on the focus target. **`swc-action-menu`** → menu-button semantics per [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md). **Do not** set **`role="radio"`** / **`role="checkbox"`** on **`swc-action-button`**. **`swc-action-group`** has no selection API; for **exclusive** or **toggle** selection UX, use **`swc-segmented-control`** / **`swc-toggle-button-group`** instead. |
+| **Group name** | When the cluster is **meaningfully distinct** (named tool strip, formatting cluster), **`label`** (or **`aria-labelledby`**) is **recommended** in docs. Fix [SWC-1121](https://jira.corp.adobe.com/browse/SWC-1121) with a **discernible **`group`** name**, not **radiogroup** retargeting. |
+| **`aria-orientation`** | **Do not** set on the host in any mode. **`role="group"`** does not support **`aria-orientation`** per the ARIA spec, regardless of the roving-tabindex keyboard model implemented via **`FocusgroupNavigationController`** — setting it fails axe's **`aria-allowed-attr`** rule. Matches the decision already made for **`swc-button-group`**. Wire **`FocusgroupNavigationController`** **`direction`** to the **`orientation`** property directly, independent of any ARIA attribute. |
+| **Selection state (non-color)** | **Dropped.** **`swc-action-group`** carries no **`selects`** / **`selected`** API and no selection state. When **`swc-segmented-control`** / **`swc-toggle-button-group`** ship, their selected styling must include a **non-color** cue ([SWC-1123](https://jira.corp.adobe.com/browse/SWC-1123)). |
 | **Group `disabled`** | Use **`aria-disabled="true"`** on the **`swc-action-group`** host — **do not** use the HTML **`disabled`** attribute on the host. Per [APG: Focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols), keeping the host and its children **keyboard-reachable** when disabled lets users **discover** that a strip of actions exists and understand why it is unavailable. Propagate **`aria-disabled="true"`** to each slotted **`swc-action-button`** / **`swc-action-menu`** child; children remain in the **Tab** / **Arrow** sequence but **must not activate** ([SWC-621](https://jira.corp.adobe.com/browse/SWC-621)). Do not rely on gray styling alone. |
-| **`change` event** | Fire **`change`** **after** **`selected`** state commits ([SWC-889](https://jira.corp.adobe.com/browse/SWC-889)); keep **`preventDefault()`** rollback behavior documented. |
+| **`change` event** | **Dropped.** **`swc-action-group`** has no **`selected`** state and fires no **`change`** event; [SWC-889](https://jira.corp.adobe.com/browse/SWC-889) does not carry forward to this component. |
 | **Toolbar composition** | Storybook and migration guides **must** show an **outer **`role="toolbar"`** wrapper** plus inner **`swc-action-group`** (**`role="group"`**) clusters (adapt 1st-gen README rich-text example: **`role="toolbar"`** moves to the **wrapper** only). **Never** nest **`role="toolbar"`** landmarks. |
 | **Docs vs RSP** | Consumer docs should name [**ActionButtonGroup**](https://react-spectrum.adobe.com/ActionButtonGroup) for React Spectrum parity and **`swc-action-group`** for SWC; explain **`swc-button-group`** vs **`swc-action-group`** (overflow vs **focusgroup** navigation). |
 
@@ -191,7 +191,7 @@ Slotted **`swc-action-button`** / **`swc-action-menu`** live in **light DOM**; *
 
 ### Accessibility tree expectations
 
-#### Default (no `selects`)
+#### Default
 
 - **Role:** **group** on host (always).
 - **Name:** from **`label`** / **`aria-label`** / **`aria-labelledby`** when the cluster needs distinction from surrounding content.
@@ -227,10 +227,10 @@ Slotted **`swc-action-button`** / **`swc-action-menu`** live in **light DOM**; *
 
 | Kind of test | What to check |
 | --- | --- |
-| **Unit** | Host **`role="group"`** in **all** modes (no author override); **`label`** ↔ **`aria-label`**; **`vertical`** ↔ **`aria-orientation`**; **roving **`tabindex`**** (one **`0`**, rest **`-1`**); **`selected`** / **`aria-checked`** / **`aria-pressed`** sync on **buttons** only; **`change`** order ([SWC-889](https://jira.corp.adobe.com/browse/SWC-889)); group **`disabled`** propagation ([SWC-621](https://jira.corp.adobe.com/browse/SWC-621)); **`FocusgroupNavigationController`** wired with correct **`direction`**. |
-| **aXe + Storybook** | Default group, **vertical**, **compact**, **`selects`**, **outer toolbar wrapper** composition, **`static-color`**, **icon-only** children with **names**; assert host is **never** **toolbar** or **radiogroup**; assert **no** **radio** / **checkbox** roles on **`swc-action-button`**. |
-| **Playwright ARIA snapshots** | Add **`action-group.a11y.spec.ts`** for **group** role on host, **named group**, **`selects`**, **action-menu-in-group**, and **toolbar-wrapper** composition. |
-| **Contrast / selection** | **Selected** / **emphasized** states include **non-color** differentiation where [SWC-1123](https://jira.corp.adobe.com/browse/SWC-1123) applies. |
+| **Unit** | Host **`role="group"`** in **all** modes (no author override); **`label`** ↔ **`aria-label`**; **`aria-orientation`** **never** present regardless of **`vertical`**/**`orientation`** (matches **`swc-button-group`**); **roving **`tabindex`**** (one **`0`**, rest **`-1`**); no **`selected`** / **`change`** API ([SWC-889](https://jira.corp.adobe.com/browse/SWC-889) does not apply); group **`disabled`** propagation ([SWC-621](https://jira.corp.adobe.com/browse/SWC-621)); **`FocusgroupNavigationController`** wired with correct **`direction`**. |
+| **aXe + Storybook** | Default group, **vertical**, **compact**, **`quiet`**, **`justified`**, **outer toolbar wrapper** composition, **`static-color`**, **icon-only** children with **names**; assert host is **never** **toolbar** or **radiogroup**; assert **no** **radio** / **checkbox** roles on **`swc-action-button`**. |
+| **Playwright ARIA snapshots** | Add **`action-group.a11y.spec.ts`** for **group** role on host, **named group**, **disabled state**, **action-menu-in-group** (deferred until **`swc-action-menu`** ships), and **toolbar-wrapper** composition. |
+| **Contrast / selection** | **Dropped for **`swc-action-group`**** — it has no selected state. Applies to **`swc-segmented-control`** / **`swc-toggle-button-group`** once they ship ([SWC-1123](https://jira.corp.adobe.com/browse/SWC-1123)). |
 
 ### Keyboard testing
 
@@ -238,25 +238,25 @@ Exercise **Tab**, **Shift+Tab**, **Arrow** keys, **Home** / **End**, and **Enter
 
 - **Action button only** strip.
 - **Action button + action menu** strip (open menu, arrow inside menu, **Escape** back to trigger).
-- **`selects="single"`** and **`selects="multiple"`** if those APIs remain.
 - **Outer toolbar wrapper** + **named **`swc-action-group`** clusters** story (adapted from 1st-gen README composition).
 
 ---
 
 ## Summary checklist
 
-- [ ] **`FocusgroupNavigationController`** replaces **`RovingTabindexController`** with **`direction`** tied to **`vertical`** / layout ([SWC-1676](https://jira.corp.adobe.com/browse/SWC-1676)).
-- [ ] Host **`role="group"`** is **fixed** in **all** modes; **no** **`toolbar`** / **`radiogroup`** on **`swc-action-group`**; **no** author **`role`** override.
-- [ ] **`swc-action-button`** children stay **`role="button"`** only; selection uses **`aria-pressed`** / **`aria-checked`** on the **button** or migrates to **segmented** / **toggle** components.
-- [ ] **Group name** required when **`selects`** or context demands it; [SWC-1121](https://jira.corp.adobe.com/browse/SWC-1121) closed in tests.
-- [ ] **Selected** state meets **non-color** requirement ([SWC-1123](https://jira.corp.adobe.com/browse/SWC-1123)).
-- [ ] Group **`disabled`** uses **`aria-disabled="true"`** on the host and propagates to all children — children remain keyboard-reachable but do not activate ([SWC-621](https://jira.corp.adobe.com/browse/SWC-621)); per [APG: Focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols).
-- [ ] [SWC-1612](https://jira.corp.adobe.com/browse/SWC-1612) (`FormFieldMixin`) is **not** applied — **`swc-action-group`** is a composite keyboard widget, not a form field.
-- [ ] **`change`** fires after **`selected`** updates ([SWC-889](https://jira.corp.adobe.com/browse/SWC-889)).
-- [ ] Storybook shows **outer **`role="toolbar"`** wrapper** + **`swc-action-group`** (**`role="group"`**) per [APG Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/).
-- [ ] **`aria-orientation`** matches **`vertical`**.
-- [ ] **Keyboard** tests cover **action-menu-in-group** and **mouse** roving tabindex ([SWC-250](https://jira.corp.adobe.com/browse/SWC-250)).
-- [ ] Consumer docs distinguish **`swc-action-group`** vs **`swc-button-group`** and link [**ActionButtonGroup**](https://react-spectrum.adobe.com/ActionButtonGroup) / [Action group (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=19083-360&p=f&m=dev).
+- [x] **`FocusgroupNavigationController`** replaces **`RovingTabindexController`** with **`direction`** tied to **`vertical`** / layout ([SWC-1676](https://jira.corp.adobe.com/browse/SWC-1676)).
+- [x] Host **`role="group"`** is **fixed** in **all** modes; **no** **`toolbar`** / **`radiogroup`** on **`swc-action-group`**; **no** author **`role`** override.
+- [x] **`swc-action-button`** children stay **`role="button"`** only; **`swc-action-group`** has no selection API — selection UX lives on **`swc-segmented-control`** / **`swc-toggle-button-group`**.
+- [x] **Group name** recommended whenever the cluster has a distinct purpose; [SWC-1121](https://jira.corp.adobe.com/browse/SWC-1121) closed in tests.
+- [x] **Dropped** — no selected state on **`swc-action-group`**; applies to **`swc-segmented-control`** / **`swc-toggle-button-group`** once they ship ([SWC-1123](https://jira.corp.adobe.com/browse/SWC-1123)).
+- [x] Group **`disabled`** uses **`aria-disabled="true"`** on the host and propagates to all children — children remain keyboard-reachable but do not activate ([SWC-621](https://jira.corp.adobe.com/browse/SWC-621)); per [APG: Focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols).
+- [x] [SWC-1612](https://jira.corp.adobe.com/browse/SWC-1612) (`FormFieldMixin`) is **not** applied — **`swc-action-group`** is a composite keyboard widget, not a form field.
+- [x] **Dropped** — **`swc-action-group`** has no **`selected`** state or **`change`** event ([SWC-889](https://jira.corp.adobe.com/browse/SWC-889) does not apply).
+- [x] Storybook shows **outer **`role="toolbar"`** wrapper** + **`swc-action-group`** (**`role="group"`**) per [APG Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/) — `Accessibility` story (standalone + horizontal/vertical wrapper examples) and `ToolbarComposition` story; ARIA tree verified in `action-group.a11y.spec.ts`.
+- [x] **`aria-orientation`** is **never** set on the host, in any orientation — **`role="group"`** does not support it per the ARIA spec (matches **`swc-button-group`**); direction is driven by **`FocusgroupNavigationController`**'s **`direction`** option, tied to the **`orientation`** property.
+- [x] **Mouse** roving tabindex ([SWC-250](https://jira.corp.adobe.com/browse/SWC-250)) — covered in `action-group.test.ts`.
+- [skip] **action-menu-in-group** keyboard tests — deferred until **`swc-action-menu`** ships in 2nd-gen (migration plan §Deferred implementation tickets; SWC-2464, SWC-2509). Out of scope for action-button-only delivery.
+- [x] Consumer docs distinguish **`swc-action-group`** vs **`swc-button-group`** (composite keyboard navigation vs independent Tab stops) — stories meta JSDoc, reciprocal button-group link, `action-group.mdx` keyboard section. Figma / [ActionButtonGroup](https://react-spectrum.adobe.com/ActionButtonGroup) links remain in contributor docs only (not part of 2nd-gen consumer MDX convention).
 
 ---
 
