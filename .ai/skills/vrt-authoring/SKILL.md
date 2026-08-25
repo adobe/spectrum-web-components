@@ -12,6 +12,7 @@ This skill is the quick reference. The authoritative guide is `CONTRIBUTOR-DOCS/
 - Put VRT stories in `2nd-gen/packages/swc/components/<component>/test/vrt/*.vrt.ts` or `2nd-gen/packages/swc/patterns/<pattern>/test/vrt/*.vrt.ts`.
 - Keep docs stories for examples; keep `.vrt.ts` stories for dense visual coverage.
 - Aim for maximum meaningful coverage: include every size, variant, state, anatomy, theme, static-color, global-style, custom-property, and component-specific visual axis that can produce a useful visual difference. Cover CJK language rendering explicitly when text metrics can change, e.g. `lang="ja"` / `lang="ko"` / `lang="zh"` line-height, wrapping, or truncation. Skip only impossible, unsupported, or truly redundant combinations.
+- Don't cover a visual axis your component only forwards to a slotted or composed child with no CSS of its own for it (e.g. a layout component passing `static-color` through to its children); that's already covered by the child's own VRT file. Only cover it here if this component's own CSS does something with that state.
 - Use shared helpers from `.storybook/helpers`: `createPermutations`, `groupPermutationsBy`, `row`, `theme`, `staticColorBackground`, `forcePseudoStates` (and `forcePseudoState` for forcing state on individual slotted elements), `vrtParameters`, and `forcedColorsVrtParameters`.
 - Keep unit files data-driven: local case lists and renderers only. Move reusable mechanics to `.storybook/helpers`.
 
@@ -46,6 +47,10 @@ A single dense row of every permutation is hard to scan in a Chromatic diff. Use
 - Forced-colors mode gets its own story (`forcedColorsVrtParameters`), since it replaces the whole page palette.
 
 Full rationale (attribute-vs-class, nested-rule mirroring, the custom-function pattern) lives in the VRT testing guide: `CONTRIBUTOR-DOCS/02_style-guide/04_testing/04_visual-regresssion-testing.md`.
+
+## Positioned overlay components
+
+Components that position a surface with `PlacementController` use Floating UI `shift` (clipping ancestors capped by the visual viewport; `autoUpdate` recomputes on scroll). Opening many instances on a taller-than-viewport page can clamp `start`/`end` (not `top`/`bottom`) onto the same spot. Keep every trigger in the initial viewport (place `start`/`end` first, pin the capture viewport, or split the story), disable `shouldFlip`, and do not use `row()`. Full rationale and a worked example (popover's `test/vrt/`) are in the VRT testing guide's "Positioned overlay components" section.
 
 ## Custom properties
 

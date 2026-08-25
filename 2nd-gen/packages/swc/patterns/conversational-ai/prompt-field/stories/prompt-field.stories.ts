@@ -36,9 +36,7 @@ const defaultLegalDisclaimer = html`
 `;
 
 const legalDisclaimerSlot = html`
-  <p slot="legal" class="swc-PromptField-legal-disclaimer">
-    ${defaultLegalDisclaimer}
-  </p>
+  <p slot="legal" class="swc-Typography--links">${defaultLegalDisclaimer}</p>
 `;
 
 type PromptFieldStoryArgs = typeof args;
@@ -52,6 +50,8 @@ function renderPromptField(
       label=${storyArgs.label ?? 'Prompt'}
       placeholder=${storyArgs.placeholder ?? defaultPlaceholder}
       .value=${storyArgs.value ?? ''}
+      variant=${storyArgs.variant ?? 'balanced'}
+      loader=${storyArgs.loader ?? 'aiLogo'}
       ?disabled=${storyArgs.disabled ?? false}
       ?generating=${storyArgs.generating ?? false}
       ?collapsed=${storyArgs.collapsed ?? false}
@@ -65,6 +65,11 @@ function renderPromptField(
       'Show more attachments'}
       min-rows=${ifDefined(storyArgs['min-rows'] || undefined)}
       max-rows=${ifDefined(storyArgs['max-rows'] || undefined)}
+      style=${ifDefined(
+        storyArgs['--swc-prompt-field-brand-color']
+          ? `--swc-prompt-field-brand-color: ${storyArgs['--swc-prompt-field-brand-color']}`
+          : undefined
+      )}
     >
       ${slots}
     </swc-prompt-field>
@@ -107,6 +112,13 @@ export const Playground: Story = {
     placeholder: defaultPlaceholder,
     value: '',
   },
+  parameters: {
+    styles: {
+      'inline-size': '800px',
+      'max-inline-size': '90vw',
+      'margin-inline': 'auto',
+    },
+  },
   tags: ['dev'],
 };
 
@@ -144,6 +156,50 @@ export const Anatomy: Story = {
 // ──────────────────────────
 //    OPTIONS STORIES
 // ──────────────────────────
+
+export const Variant: Story = {
+  render: () => html`
+    <div style="display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          variant="subtle"
+          label="Prompt"
+          value="Summarize the API changes in this branch."
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          subtle: understated treatment; the gradient ring is revealed on hover
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          variant="balanced"
+          label="Prompt"
+          value="Summarize the API changes in this branch."
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          balanced (default): visible gradient ring and background wash
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          variant="prominent"
+          label="Prompt"
+          value="Summarize the API changes in this branch."
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          prominent: strongest treatment, adding an outer glow
+        </span>
+      </div>
+    </div>
+  `,
+  tags: ['options'],
+};
 
 export const Layout: Story = {
   render: () => html`
