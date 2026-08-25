@@ -245,6 +245,22 @@ const permutationContent = () => html`
           ${panel('2', 'Focus content.')} ${panel('3', 'Active content.')}
         `,
       }),
+      renderTabs({
+        selected: '0',
+        accessibleLabel: 'Selected and focus-visible',
+        tabs: html`
+          ${tab({
+            id: '0',
+            label: 'Selected + focus-visible',
+            forceState: 'focus-visible',
+          })}
+          ${tab({ id: '1', label: 'Default' })}
+        `,
+        panels: html`
+          ${panel('0', 'Selected and focused content.')}
+          ${panel('1', 'Default content.')}
+        `,
+      }),
     ],
     'Forced states'
   )}
