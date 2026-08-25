@@ -84,6 +84,7 @@ During discovery, explicitly check whether the component should:
 - be migrated before another component that depends on it
 - wait on a prerequisite component or shared base to avoid duplicated work or conflicting APIs
 - share structural CSS patterns with existing or in-flight components — check `2nd-gen/packages/swc/stylesheets/_lit-styles/` for existing shared fragments and note any that this component should consume; if no fragment exists yet but the pattern is real, flag whether it should be extracted as part of this migration or a coordinated one. See [Non-component stylesheets](../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md#shared-lit-css-fragments-_lit-styles) for what qualifies
+- share structural render anatomy (wrapper elements, slot layout, conditional regions) with existing or in-flight components — check for an existing shared render template (e.g. `card/card-template.ts`) and note any that this component should consume; if none exists yet but the pattern is real, flag whether it should be extracted as part of this migration, and where the file should live if no single component owns the shared structure. See [Shared render templates](../../../CONTRIBUTOR-DOCS/02_style-guide/02_typescript/09_rendering-patterns.md#shared-render-templates) for what qualifies
 - need a global element stylesheet counterpart — check whether `stylesheets/global/global-[component].css` should be created as part of this migration. If yes, note whether the component CSS will need `@global-exclude` fences and whether the global stylesheet is in scope for this migration cycle. See [Non-component stylesheets](../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/07_stylesheets.md#global-element-styles-global) for the authoring options
 
 Use the status table, existing component analyses, and source relationships to make these dependency and ordering calls explicit in the plan.
@@ -257,6 +258,7 @@ Do not treat the following as implicitly approved, even if you can make a strong
 - whether migration order should change because of a dependency relationship
 - whether shared logic should be extracted before this migration proceeds
 - whether a shared `_lit-styles/` CSS fragment should be created or consumed, which fragment name to use, and whether that work needs to happen before or alongside this migration
+- whether a shared render template should be created or consumed, what its options-object shape should be, and where the file should live when no single component owns the shared structure
 - whether a major dependency concern should remain separate rather than being unified
 
 For these cases:
