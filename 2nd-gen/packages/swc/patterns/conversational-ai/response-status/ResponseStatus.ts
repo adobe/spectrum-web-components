@@ -109,12 +109,20 @@ export class ResponseStatus extends SpectrumElement {
   private _steps: ResponseStatusStepData[] = [];
 
   /**
-   * User-driven per-step disclosure overrides, keyed by step index. Present only
+   * The light DOM element each `_steps` entry was read from, same index
+   * correspondence. Keys `_stepOpenOverrides` by element identity rather than
+   * array index, so a toggle survives steps being reordered or removed.
+   */
+  private _stepElements: ResponseStatusStep[] = [];
+
+  /**
+   * User-driven per-step disclosure overrides, keyed by the step's own
+   * element (stable across reordering, unlike array index). Present only
    * for steps the user has toggled; absent entries fall back to the step's
    * declared `open` (steps are collapsed by default).
    */
   @state()
-  private _stepOpenOverrides = new Map<number, boolean>();
+  private _stepOpenOverrides = new Map<ResponseStatusStep, boolean>();
 
   /**
    * Indices of open steps whose description overflows its capped height. Only
@@ -395,16 +403,13 @@ export class ResponseStatus extends SpectrumElement {
       .join(' ');
   }
 
-  private _readSteps(): ResponseStatusStepData[] {
-    const stepEls =
-      this._stepEls?.length > 0
-        ? this._stepEls
-        : Array.from(this.children).filter(
-            (element): element is ResponseStatusStep =>
-              this._isStepElement(element)
-          );
-
-    return stepEls.map((element) => this._readStepElement(element));
+  private _readStepElements(): ResponseStatusStep[] {
+    return this._stepEls?.length > 0
+      ? this._stepEls
+      : Array.from(this.children).filter(
+          (element): element is ResponseStatusStep =>
+            this._isStepElement(element)
+        );
   }
 
   private _syncNamedSlots(): void {
@@ -418,7 +423,24 @@ export class ResponseStatus extends SpectrumElement {
   private _syncSlotContent(): void {
     this._syncNamedSlots();
 
-    const steps = this._readSteps();
+    const stepEls = this._readStepElements();
+    this._stepElements = stepEls;
+
+    // Drop overrides for steps that are no longer rendered, so a removed
+    // step's toggle doesn't linger forever keyed off a detached element.
+    if (this._stepOpenOverrides.size > 0) {
+      const current = new Set(stepEls);
+      const pruned = new Map(
+        Array.from(this._stepOpenOverrides).filter(([element]) =>
+          current.has(element)
+        )
+      );
+      if (pruned.size !== this._stepOpenOverrides.size) {
+        this._stepOpenOverrides = pruned;
+      }
+    }
+
+    const steps = stepEls.map((element) => this._readStepElement(element));
     if (!this._stepsEqual(steps, this._steps)) {
       this._steps = steps;
     }
@@ -630,8 +652,11 @@ export class ResponseStatus extends SpectrumElement {
 
   // Resolved disclosure state for a step: a user override wins; otherwise the
   // step is open only when it declares `open`. Steps start collapsed.
-  private _isStepOpen(step: ResponseStatusStepData, index: number): boolean {
-    const override = this._stepOpenOverrides.get(index);
+  private _isStepOpen(
+    step: ResponseStatusStepData,
+    element: ResponseStatusStep | undefined
+  ): boolean {
+    const override = element && this._stepOpenOverrides.get(element);
     if (override !== undefined) {
       return override;
     }
@@ -678,7 +703,8 @@ export class ResponseStatus extends SpectrumElement {
     scrollRegions?.forEach((region) => {
       const index = Number(region.dataset.stepIndex);
       const step = this._steps[index];
-      if (Number.isNaN(index) || !step || !this._isStepOpen(step, index)) {
+      const element = this._stepElements[index];
+      if (Number.isNaN(index) || !step || !this._isStepOpen(step, element)) {
         return;
       }
       if (region.scrollHeight - region.clientHeight > 1) {
@@ -695,13 +721,14 @@ export class ResponseStatus extends SpectrumElement {
     const button = event.currentTarget as HTMLElement;
     const index = Number(button.dataset.index);
     const step = this._steps[index];
-    if (Number.isNaN(index) || !step) {
+    const element = this._stepElements[index];
+    if (Number.isNaN(index) || !step || !element) {
       return;
     }
 
-    const next = !this._isStepOpen(step, index);
+    const next = !this._isStepOpen(step, element);
     const overrides = new Map(this._stepOpenOverrides);
-    overrides.set(index, next);
+    overrides.set(element, next);
     this._stepOpenOverrides = overrides;
 
     this._emitToggle('swc-response-status-step-toggle', { open: next, index });
@@ -861,7 +888,7 @@ export class ResponseStatus extends SpectrumElement {
       `;
     }
 
-    const open = this._isStepOpen(step, index);
+    const open = this._isStepOpen(step, this._stepElements[index]);
     const detailId = `swc-response-status-detail-${index}`;
     const toggleId = `swc-response-status-toggle-${index}`;
 

@@ -507,6 +507,36 @@ export const StepDisclosureTest: Story = {
       );
       expect(expanded).toEqual(['true', 'true', 'false']);
     });
+
+    await step(
+      "a toggle follows its step's element, not its array index, after a step is removed",
+      async () => {
+        // Removes the first step ("Looked through documentation", expanded).
+        // The second step ("Searching repositories for Europe trips", also
+        // expanded) shifts from index 1 to index 0, and the third step
+        // ("Compose response", collapsed) shifts from index 2 to index 1.
+        el.querySelector('swc-response-status-step')?.remove();
+        await el.updateComplete;
+
+        await waitFor(
+          () => {
+            const toggles = stepToggles();
+            expect(toggles).toHaveLength(2);
+            expect(
+              toggles[0]?.textContent?.includes(
+                'Searching repositories for Europe trips'
+              )
+            ).toBe(true);
+            expect(toggles[0]?.getAttribute('aria-expanded')).toBe('true');
+            expect(toggles[1]?.textContent?.includes('Compose response')).toBe(
+              true
+            );
+            expect(toggles[1]?.getAttribute('aria-expanded')).toBe('false');
+          },
+          { timeout: 2000 }
+        );
+      }
+    );
   },
 };
 
