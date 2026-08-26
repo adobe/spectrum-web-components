@@ -52,6 +52,7 @@
 }
 
 ::slotted([slot="collection"]) {
+  box-sizing: border-box;
   inline-size: 100%;
   aspect-ratio: var(--_swc-card-collection-item-aspect-ratio);
   pointer-events: none;

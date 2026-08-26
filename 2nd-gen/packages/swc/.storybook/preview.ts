@@ -295,6 +295,7 @@ const preview = {
               'Writing migration guides',
               'Focus management',
               'Changelog strategy',
+              '2nd gen shared resources',
             ],
             'Style guide',
             [

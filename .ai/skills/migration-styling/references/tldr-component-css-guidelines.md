@@ -182,3 +182,17 @@ CSS nesting inside a `:host([...])` rule — e.g. `&:dir(rtl)` — expands to `:
 
 **Migration note**: `:dir()` is a common place this surfaces. Whenever you add `:dir()` to a `:host`-level rule, write a separate `:host(:dir(rtl)[...])` rule instead of nesting.
 → See [05_anti-patterns#9](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md#9-nesting-compound-pseudo-classes-on-host-via-css-nesting)
+
+### 11. `box-sizing` on sized `::slotted()` rules
+
+The component's `* { box-sizing: border-box; }` reset only matches elements inside the shadow tree; it never reaches `::slotted()` content, which lives in the consumer's light DOM. Any `::slotted()` rule that sets `inline-size`, `block-size`, `width`, `height`, `aspect-ratio`, or a `max-*` size cap needs its own explicit `box-sizing: border-box` declaration, or the consumer's element can overflow the intended box if it carries its own `padding`/`border`. Does not apply to `min-*`-only constraints or keyword sizes like `fit-content`.
+
+```css
+::slotted([slot='preview']) {
+  box-sizing: border-box;
+  inline-size: 100%;
+  aspect-ratio: 3 / 2;
+}
+```
+
+→ See [05_anti-patterns#13](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md#13-missing-box-sizing-on-sized-slotted-rules)

@@ -75,7 +75,9 @@ argTypes.disabled = {
  *
  * Use button group when you have two or more related button actions that belong
  * together visually and semantically (for example dialog or form footers, toolbars,
- * or contextual action sets).
+ * or contextual action sets). For composite keyboard navigation where the strip is
+ * a single tab stop and arrow keys move between children, see
+ * [Action group](../?path=/docs/components-action-group--docs).
  */
 const meta: Meta = {
   title: 'Button group',

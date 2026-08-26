@@ -726,6 +726,66 @@ export class Overlay extends ComputedOverlayBase {
   }
 
   /**
+   * Tracks the specific element targeted by the most recent `pointerdown` that
+   * originated from within this overlay's own composed subtree. A click on
+   * non-focusable overlay content (e.g. plain text) can resolve focus onto a
+   * focusable ancestor shared by the trigger and the overlay (e.g. an ancestor with
+   * `tabindex`), which otherwise looks identical to focus leaving the overlay
+   * entirely once it reaches `closeOnFocusOut`.
+   *
+   * This is only meaningful for a `focusout` caused by that same `pointerdown`, and
+   * only when the resulting `relatedTarget` is an ancestor of the recorded target
+   * (i.e. exactly the relationship the browser creates by resolving focus to the
+   * nearest focusable ancestor of a non-focusable click target) — an interaction
+   * that explicitly redirects focus elsewhere is not masked. Browsers apply the
+   * default focus-change behavior of `pointerdown`/`mousedown` (and so any resulting
+   * `focusout`) before dispatching the matching `pointerup`/`pointercancel` of the
+   * same gesture, so clearing the record on either of those events prevents a
+   * `pointerdown` that causes no focus change at all (e.g. clicking already-focused
+   * content) from being read later by an unrelated focus change, such as a
+   * subsequent keyboard `Tab`.
+   */
+  private lastPointerdownTarget: EventTarget | null = null;
+
+  private trackPointerdownOrigin = (event: PointerEvent): void => {
+    const path = event.composedPath();
+    this.lastPointerdownTarget = path.includes(this) ? path[0] : null;
+  };
+
+  private clearPointerdownOrigin = (): void => {
+    this.lastPointerdownTarget = null;
+  };
+
+  /**
+   * Determines whether `ancestorCandidate` is `descendant` itself or a
+   * shadow-including ancestor of it. `composedPath()` is only available on an
+   * actual event, so this dispatches a throwaway event directly on `descendant` and
+   * reads its composed path, the same technique the overlay's containment check
+   * already relies on to stay correct across shadow DOM boundaries.
+   *
+   * @private
+   */
+  private isShadowIncludingAncestor(
+    descendant: EventTarget,
+    ancestorCandidate: EventTarget
+  ): boolean {
+    const relationEvent = new Event('overlay-relation-query', {
+      bubbles: true,
+      composed: true,
+    });
+    let isAncestor = false;
+    descendant.addEventListener(
+      relationEvent.type,
+      (event: Event) => {
+        isAncestor = event.composedPath().includes(ancestorCandidate);
+      },
+      { once: true }
+    );
+    descendant.dispatchEvent(relationEvent);
+    return isAncestor;
+  }
+
+  /**
    * Handles the focus out event to close the overlay if the focus moves outside of it.
    *
    * This method ensures that the overlay is closed when the focus moves to an element
@@ -735,31 +795,31 @@ export class Overlay extends ComputedOverlayBase {
    * @param {FocusEvent} event - The focus out event.
    */
   private closeOnFocusOut = (event: FocusEvent): void => {
+    // Consume the record immediately so a stale value from an earlier click cannot
+    // affect a later, unrelated focus change (e.g. a keyboard Tab away).
+    const pointerdownTarget = this.lastPointerdownTarget;
+    this.lastPointerdownTarget = null;
+
     // If the related target (newly focused element) is not known, do nothing.
     if (!event.relatedTarget) {
       return;
     }
 
-    // Create a custom event to query the relationship of the newly focused element.
-    const relationEvent = new Event('overlay-relation-query', {
-      bubbles: true,
-      composed: true,
-    });
+    // The pointerdown that caused this focus change targeted an element within the
+    // overlay, and focus resolved onto an ancestor of that same element. Treat focus
+    // as remaining within the overlay's interaction, even though `relatedTarget`
+    // itself sits outside the overlay in the DOM.
+    if (
+      pointerdownTarget &&
+      this.isShadowIncludingAncestor(pointerdownTarget, event.relatedTarget)
+    ) {
+      return;
+    }
 
-    // Add an event listener to the related target to handle the custom event.
-    event.relatedTarget.addEventListener(relationEvent.type, (event: Event) => {
-      // Check if the newly focused element is within the overlay or its children
-      const path = event.composedPath();
-      const isWithinOverlay = path.some((el) => el === this);
-
-      // Only close if focus moves outside the overlay and its children
-      if (!isWithinOverlay) {
-        this.open = false;
-      }
-    });
-
-    // Dispatch the custom event to the related target.
-    event.relatedTarget.dispatchEvent(relationEvent);
+    // Only close if focus moves outside the overlay and its children.
+    if (!this.isShadowIncludingAncestor(event.relatedTarget, this)) {
+      this.open = false;
+    }
   };
 
   private closeOnCancelEvent = (): void => {
@@ -829,13 +889,47 @@ export class Overlay extends ComputedOverlayBase {
     // Handle focus events for auto type overlays.
     if (this.type === 'auto') {
       if (this.open) {
+        listenerRoot.addEventListener(
+          'pointerdown',
+          this.trackPointerdownOrigin,
+          { capture: true }
+        );
+        listenerRoot.addEventListener(
+          'pointerup',
+          this.clearPointerdownOrigin,
+          { capture: true }
+        );
+        listenerRoot.addEventListener(
+          'pointercancel',
+          this.clearPointerdownOrigin,
+          { capture: true }
+        );
         listenerRoot.addEventListener('focusout', this.closeOnFocusOut, {
           capture: true,
         });
       } else {
+        listenerRoot.removeEventListener(
+          'pointerdown',
+          this.trackPointerdownOrigin,
+          { capture: true }
+        );
+        listenerRoot.removeEventListener(
+          'pointerup',
+          this.clearPointerdownOrigin,
+          { capture: true }
+        );
+        listenerRoot.removeEventListener(
+          'pointercancel',
+          this.clearPointerdownOrigin,
+          { capture: true }
+        );
         listenerRoot.removeEventListener('focusout', this.closeOnFocusOut, {
           capture: true,
         });
+        // Defensively clear any pending record in case the overlay tore down
+        // between a `pointerdown` and its matching `pointerup`/`pointercancel`,
+        // so a stale value can't leak into the next time this instance opens.
+        this.lastPointerdownTarget = null;
       }
     }
 
