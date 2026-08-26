@@ -843,6 +843,81 @@ describe('sp-overlay', () => {
       expect(slider.value).to.equal(19.5);
       expect(el.open).to.be.true;
     });
+    it('does not close when clicking non-focusable content and the trigger sits inside a focusable ancestor (GH-5731)', async () => {
+      const test = await fixture(html`
+        <div>
+          <div tabindex="0">
+            <sp-button id="trigger-5731" variant="primary">
+              Button popover
+            </sp-button>
+            <sp-overlay trigger="trigger-5731@click" placement="bottom">
+              <sp-popover tip>
+                <p id="content-5731">Not focusable content</p>
+              </sp-popover>
+            </sp-overlay>
+          </div>
+        </div>
+      `);
+      const button = test.querySelector('sp-button') as Button;
+      const el = test.querySelector('sp-overlay') as Overlay;
+      const content = test.querySelector(
+        '#content-5731'
+      ) as HTMLParagraphElement;
+
+      expect(el.open).to.be.false;
+
+      const opened = oneEvent(el, 'sp-opened');
+      await mouseClickOn(button);
+      await opened;
+
+      expect(el.open).to.be.true;
+
+      await mouseClickOn(content);
+      await elementUpdated(el);
+
+      expect(el.open).to.be.true;
+    });
+    it('closes when a pointerdown inside the overlay redirects focus to an unrelated element', async () => {
+      const test = await fixture(html`
+        <div>
+          <sp-button id="trigger-5731-redirect" variant="primary">
+            Button popover
+          </sp-button>
+          <input id="outside-input-5731" />
+          <sp-overlay trigger="trigger-5731-redirect@click" placement="bottom">
+            <sp-popover tip>
+              <button id="redirect-button-5731">Redirect focus</button>
+            </sp-popover>
+          </sp-overlay>
+        </div>
+      `);
+      const button = test.querySelector('sp-button') as Button;
+      const el = test.querySelector('sp-overlay') as Overlay;
+      const redirectButton = test.querySelector(
+        '#redirect-button-5731'
+      ) as HTMLButtonElement;
+      const outsideInput = test.querySelector(
+        '#outside-input-5731'
+      ) as HTMLInputElement;
+
+      redirectButton.addEventListener('pointerdown', () => {
+        outsideInput.focus();
+      });
+
+      expect(el.open).to.be.false;
+
+      const opened = oneEvent(el, 'sp-opened');
+      await mouseClickOn(button);
+      await opened;
+
+      expect(el.open).to.be.true;
+
+      const closed = oneEvent(el, 'sp-closed');
+      await mouseClickOn(redirectButton);
+      await closed;
+
+      expect(el.open).to.be.false;
+    });
   });
   describe('[type="manual"]', () => {
     opensDeclaratively('manual');

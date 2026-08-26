@@ -157,6 +157,7 @@ slot[name="heading"] {
  * and use the component illustration color via currentcolor.
  */
 ::slotted(svg) {
+  box-sizing: border-box;
   display: block;
   inline-size: 100%;
   block-size: 100%;

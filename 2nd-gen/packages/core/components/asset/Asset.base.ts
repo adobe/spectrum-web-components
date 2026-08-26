@@ -14,6 +14,7 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import { ASSET_VARIANTS, type AssetVariant } from './Asset.types.js';
 
@@ -51,23 +52,16 @@ export abstract class AssetBase extends SpectrumElement {
   //     IMPLEMENTATION
   // ──────────────────────
 
-  protected override updated(changes: PropertyValues): void {
-    super.updated(changes);
-    if (window.__swc?.DEBUG) {
+  protected override update(changes: PropertyValues): void {
+    if (typeof this.variant !== 'undefined') {
       const constructor = this.constructor as typeof AssetBase;
-      if (
-        typeof this.variant !== 'undefined' &&
-        !constructor.VARIANTS.includes(this.variant)
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
-          'https://opensource.adobe.com/spectrum-web-components/components/asset/',
-          {
-            issues: [...constructor.VARIANTS],
-          }
-        );
-      }
+      validateEnum(this, {
+        prop: 'variant',
+        value: this.variant,
+        valid: constructor.VARIANTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-asset--docs',
+      });
     }
+    super.update(changes);
   }
 }

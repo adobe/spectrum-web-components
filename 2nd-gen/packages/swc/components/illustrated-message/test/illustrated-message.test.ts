@@ -767,3 +767,51 @@ export const HeadingSlotEmptyNoWarningTest: Story = {
     );
   },
 };
+
+export const HeadingSlotMultipleWarningTest: Story = {
+  render: () => html`
+    <swc-illustrated-message>
+      <h2 slot="heading">First heading</h2>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+
+    await step('warns when the heading slot has more than one element', () =>
+      withWarningSpy(async (warnCalls) => {
+        const headingSlot =
+          illustratedMessage.shadowRoot?.querySelector<HTMLSlotElement>(
+            'slot[name="heading"]'
+          );
+        if (!headingSlot) {
+          return;
+        }
+
+        const slotChanged = new Promise<void>((resolve) =>
+          headingSlot.addEventListener('slotchange', () => resolve(), {
+            once: true,
+          })
+        );
+
+        const second = document.createElement('h2');
+        second.setAttribute('slot', 'heading');
+        second.textContent = 'Second heading';
+        illustratedMessage.appendChild(second);
+
+        await slotChanged;
+
+        expect(
+          warnCalls.length,
+          'warns for more than one heading element'
+        ).toBeGreaterThan(0);
+        const message = String(warnCalls[0]?.[1] ?? '');
+        expect(message, 'message references a single heading').toContain(
+          'single heading'
+        );
+      })
+    );
+  },
+};

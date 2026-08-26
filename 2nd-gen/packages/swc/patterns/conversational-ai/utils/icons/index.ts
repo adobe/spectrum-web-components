@@ -21,7 +21,7 @@ export const PlusIcon = (): TemplateResult => html`
   </svg>
 `;
 
-/** Cross icon — used for dismissing an uploaded artifact. */
+/** Cross icon — used for dismissing an uploaded attachment. */
 export const CrossIcon = (): TemplateResult => html`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
     <path
@@ -47,24 +47,6 @@ export const ChevronUpIcon = (): TemplateResult => html`
     <path
       fill="currentColor"
       d="M14.5273 7.4668L10.5244 3.46973C10.2305 3.17578 9.75587 3.17774 9.46387 3.46973L5.4668 7.4668C5.17383 7.75977 5.17383 8.23438 5.4668 8.52735C5.61328 8.67383 5.80469 8.74708 5.99707 8.74708C6.18945 8.74708 6.38086 8.67384 6.52734 8.52735L9.25097 5.80372V15.75C9.25097 16.1641 9.58691 16.5 10.001 16.5C10.415 16.5 10.751 16.1641 10.751 15.75V5.81616L13.4668 8.52734C13.7607 8.82129 14.2353 8.81933 14.5273 8.52734C14.8203 8.23437 14.8203 7.7588 14.5273 7.4668Z"
-    />
-  </svg>
-`;
-
-/** Three-dots icon — used for the loading / AI-thinking state. */
-export const ThreeDotsIcon = (): TemplateResult => html`
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    <path
-      fill="currentColor"
-      d="M12 13.2174C12.6628 13.2174 13.2 12.6801 13.2 12.0174C13.2 11.3546 12.6628 10.8174 12 10.8174C11.3373 10.8174 10.8 11.3546 10.8 12.0174C10.8 12.6801 11.3373 13.2174 12 13.2174Z"
-    />
-    <path
-      fill="currentColor"
-      d="M7.2 13.2174C7.86274 13.2174 8.4 12.6801 8.4 12.0174C8.4 11.3546 7.86274 10.8174 7.2 10.8174C6.53726 10.8174 6 11.3546 6 12.0174C6 12.6801 6.53726 13.2174 7.2 13.2174Z"
-    />
-    <path
-      fill="currentColor"
-      d="M16.8 13.2174C17.4627 13.2174 18 12.6801 18 12.0174C18 11.3546 17.4627 10.8174 16.8 10.8174C16.1372 10.8174 15.6 11.3546 15.6 12.0174C15.6 12.6801 16.1372 13.2174 16.8 13.2174Z"
     />
   </svg>
 `;
