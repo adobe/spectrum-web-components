@@ -54,7 +54,6 @@ function renderPromptField(
       loader=${storyArgs.loader ?? 'aiLogo'}
       ?disabled=${storyArgs.disabled ?? false}
       ?generating=${storyArgs.generating ?? false}
-      ?collapsed=${storyArgs.collapsed ?? false}
       accessible-label=${storyArgs['accessible-label'] ?? ''}
       send-label=${storyArgs['send-label'] ?? 'Send'}
       stop-label=${storyArgs['stop-label'] ?? 'Stop generating'}
@@ -228,7 +227,6 @@ export const Layout: Story = {
       </div>
     </div>
   `,
-  tags: ['!dev'],
 };
 
 export const Attachment: Story = {
