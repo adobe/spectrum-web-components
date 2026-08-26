@@ -82,7 +82,7 @@ const SUPPORTS_FIELD_SIZING =
  *   <div slot="legal">Responses are generated using AI and may be inaccurate.</div>
  * </swc-prompt-field>
  *
- * @slot artifact - Optional attachment preview(s). Use one `swc-upload-artifact` type per session (cards only, or media only).
+ * @slot attachment - Optional attachment preview(s). Use one `swc-upload-attachment` type per session (cards only, or media only).
  * @slot legal - Legal disclaimer content. Required in product implementations; provide Legal-approved copy.
  * @fires swc-prompt-field-input - Dispatched after the textarea value is internally updated.
  * Detail: `{ value: string }`
@@ -105,7 +105,13 @@ export class PromptField extends SpectrumElement {
   @property({ type: Boolean, reflect: true })
   public generating = false;
 
-  /** Starts as a single-line layout with send/stop inline instead of the default layout with a separate action bar; the textarea still wraps and grows with content either way. */
+  /**
+   * Starts as a single-line layout with send/stop inline instead of the default
+   * layout with a separate action bar; the textarea still wraps and grows with
+   * content either way.
+   *
+   * @internal
+   */
   @property({ type: Boolean, reflect: true })
   public collapsed = false;
 
@@ -137,17 +143,17 @@ export class PromptField extends SpectrumElement {
   @property({ type: String, attribute: 'upload-label' })
   public uploadLabel = 'Add attachment';
 
-  /** Accessible label for the previous-artifact scroll button. */
-  @property({ type: String, attribute: 'artifact-scroll-prev-label' })
-  public artifactScrollPrevLabel = 'Show previous attachments';
+  /** Accessible label for the previous-attachment scroll button. */
+  @property({ type: String, attribute: 'attachment-scroll-prev-label' })
+  public attachmentScrollPrevLabel = 'Show previous attachments';
 
-  /** Accessible label for the next-artifact scroll button. */
-  @property({ type: String, attribute: 'artifact-scroll-next-label' })
-  public artifactScrollNextLabel = 'Show more attachments';
+  /** Accessible label for the next-attachment scroll button. */
+  @property({ type: String, attribute: 'attachment-scroll-next-label' })
+  public attachmentScrollNextLabel = 'Show more attachments';
 
-  /** Accessible name for the uploaded-artifacts strip landmark. */
-  @property({ type: String, attribute: 'artifact-strip-label' })
-  public artifactStripLabel = 'Uploaded assets strip';
+  /** Accessible name for the uploaded-attachments strip landmark. */
+  @property({ type: String, attribute: 'attachment-strip-label' })
+  public attachmentStripLabel = 'Uploaded assets strip';
 
   /** Placeholder text shown inside the textarea. */
   @property({ type: String })
@@ -166,11 +172,11 @@ export class PromptField extends SpectrumElement {
   @property({ type: Number, attribute: 'max-rows' })
   public maxRows?: number;
 
-  @queryAssignedElements({ slot: 'artifact', flatten: true })
-  private _assignedArtifactElements!: HTMLElement[];
+  @queryAssignedElements({ slot: 'attachment', flatten: true })
+  private _assignedAttachmentElements!: HTMLElement[];
 
-  @query('.swc-PromptField-artifacts-scroll')
-  private _artifactScrollEl?: HTMLDivElement;
+  @query('.swc-PromptField-attachments-scroll')
+  private _attachmentScrollEl?: HTMLDivElement;
 
   @query('.swc-PromptField-textarea')
   private _textarea?: HTMLTextAreaElement;
@@ -179,13 +185,13 @@ export class PromptField extends SpectrumElement {
   private _assignedLegalElements!: HTMLElement[];
 
   @state()
-  private _artifactScrollOverflow = false;
+  private _attachmentScrollOverflow = false;
 
   @state()
-  private _artifactCanScrollPrev = false;
+  private _attachmentCanScrollPrev = false;
 
   @state()
-  private _artifactCanScrollNext = false;
+  private _attachmentCanScrollNext = false;
 
   // `scrollend` support isn't a reliable gate on its own: browsers that
   // report support (feature-detected via `'onscrollend' in window`) can
@@ -196,7 +202,7 @@ export class PromptField extends SpectrumElement {
   // disconnect, so a stale poll (superseded by a newer scroll, a real
   // `scrollend` winning first, or the host going away) is a no-op instead
   // of firing late.
-  private _artifactScrollFallbackGeneration = 0;
+  private _attachmentScrollFallbackGeneration = 0;
 
   // Observed targets accumulate across slot changes (dismissed tiles are
   // never explicitly unobserved); the browser drops a target's callbacks
@@ -204,32 +210,35 @@ export class PromptField extends SpectrumElement {
   // stale references for a chat composer's tile count, not an unbounded
   // leak. Revisit with explicit unobserve() bookkeeping if this is ever
   // reused somewhere with much larger, longer-lived tile counts.
-  private readonly _artifactScrollObserver = new ResizeController(this, {
+  private readonly _attachmentScrollObserver = new ResizeController(this, {
     target: null,
     callback: () => {
-      this._updateArtifactScrollState();
+      this._updateAttachmentScrollState();
     },
   });
 
   /**
-   * Roving tabindex + arrow-key focus movement across artifact tiles. The
+   * Roving tabindex + arrow-key focus movement across attachment tiles. The
    * first (or last-active, via `memory`) tile always carries `tabindex="0"`,
    * so it is Tab's first stop into the strip with no separate entry step;
    * Arrow Left/Right move that roving stop one tile at a time. Chevron
    * buttons separately page by the scroll viewport, unrelated to this
    * controller.
    */
-  private readonly _artifactNavigation = new FocusgroupNavigationController(
+  private readonly _attachmentNavigation = new FocusgroupNavigationController(
     this,
     {
       direction: 'horizontal',
       wrap: false,
       memory: true,
-      getItems: () => this._assignedArtifactElements ?? [],
+      getItems: () => this._assignedAttachmentElements ?? [],
     }
   );
 
-  private _pendingArtifactDismiss?: { artifact: HTMLElement; index: number };
+  private _pendingAttachmentDismiss?: {
+    attachment: HTMLElement;
+    index: number;
+  };
 
   public static override get styles(): CSSResultArray {
     return [styles, visuallyHiddenStyles];
@@ -239,16 +248,16 @@ export class PromptField extends SpectrumElement {
     super.connectedCallback();
     this.addEventListener(
       focusgroupNavigationActiveChange,
-      this._handleArtifactActiveChange as EventListener
+      this._handleAttachmentActiveChange as EventListener
     );
   }
 
   public override disconnectedCallback(): void {
     this.removeEventListener(
       focusgroupNavigationActiveChange,
-      this._handleArtifactActiveChange as EventListener
+      this._handleAttachmentActiveChange as EventListener
     );
-    this._artifactScrollFallbackGeneration++;
+    this._attachmentScrollFallbackGeneration++;
     super.disconnectedCallback();
   }
 
@@ -353,94 +362,94 @@ export class PromptField extends SpectrumElement {
     );
   }
 
-  private _handleArtifactSlotChange(): void {
-    this._warnIfMixedArtifactTypes();
-    this._artifactNavigation.refresh();
-    // A single artifact has no row wrapper or roving-tabindex controller
+  private _handleAttachmentSlotChange(): void {
+    this._warnIfMixedAttachmentTypes();
+    this._attachmentNavigation.refresh();
+    // A single attachment has no row wrapper or roving-tabindex controller
     // (that only manages 2+ tiles), so it must carry its own tabindex
     // directly; ponytail: reachable via Tab, not yet wired into arrow-key
     // navigation. For 2+ tiles, `refresh()` above already owns every tile's
     // tabindex.
-    const artifacts = this._assignedArtifactElements ?? [];
-    if (artifacts.length === 1) {
-      artifacts[0].tabIndex = 0;
+    const attachments = this._assignedAttachmentElements ?? [];
+    if (attachments.length === 1) {
+      attachments[0].tabIndex = 0;
     }
-    const dismissedArtifact = this._pendingArtifactDismiss;
-    const dismissedArtifactWasRemoved =
-      dismissedArtifact !== undefined &&
-      !(this._assignedArtifactElements ?? []).includes(
-        dismissedArtifact.artifact
+    const dismissedAttachment = this._pendingAttachmentDismiss;
+    const dismissedAttachmentWasRemoved =
+      dismissedAttachment !== undefined &&
+      !(this._assignedAttachmentElements ?? []).includes(
+        dismissedAttachment.attachment
       );
-    if (dismissedArtifactWasRemoved) {
-      this._pendingArtifactDismiss = undefined;
-      this._restoreArtifactFocusAfterDismiss(dismissedArtifact.index);
+    if (dismissedAttachmentWasRemoved) {
+      this._pendingAttachmentDismiss = undefined;
+      this._restoreAttachmentFocusAfterDismiss(dismissedAttachment.index);
     }
     this.requestUpdate();
     void this.updateComplete.then(() => {
       requestAnimationFrame(() => {
-        this._observeArtifactScrollViewport();
-        this._updateArtifactScrollState();
+        this._observeAttachmentScrollViewport();
+        this._updateAttachmentScrollState();
       });
     });
   }
 
-  private _handleArtifactDismiss(event: Event): void {
+  private _handleAttachmentDismiss(event: Event): void {
     const active = getActiveElement();
-    const artifact = event
+    const attachment = event
       .composedPath()
       .find(
         (node): node is HTMLElement =>
           node instanceof HTMLElement &&
-          (this._assignedArtifactElements ?? []).includes(node)
+          (this._assignedAttachmentElements ?? []).includes(node)
       );
-    if (!artifact || !active || !deepContains(artifact, active)) {
+    if (!attachment || !active || !deepContains(attachment, active)) {
       return;
     }
 
-    this._pendingArtifactDismiss = {
-      artifact,
-      index: (this._assignedArtifactElements ?? []).indexOf(artifact),
+    this._pendingAttachmentDismiss = {
+      attachment,
+      index: (this._assignedAttachmentElements ?? []).indexOf(attachment),
     };
   }
 
-  private _restoreArtifactFocusAfterDismiss(index: number): void {
-    const artifacts = this._assignedArtifactElements ?? [];
-    if (artifacts.length === 0) {
+  private _restoreAttachmentFocusAfterDismiss(index: number): void {
+    const attachments = this._assignedAttachmentElements ?? [];
+    if (attachments.length === 0) {
       this.shadowRoot
         ?.querySelector<HTMLTextAreaElement>('.swc-PromptField-textarea')
         ?.focus();
       return;
     }
 
-    const target = artifacts[Math.min(index, artifacts.length - 1)];
-    if (artifacts.length === 1) {
+    const target = attachments[Math.min(index, attachments.length - 1)];
+    if (attachments.length === 1) {
       target.tabIndex = 0;
       target.focus();
       return;
     }
 
-    this._artifactNavigation.refresh();
-    this._focusArtifact(target);
+    this._attachmentNavigation.refresh();
+    this._focusAttachment(target);
   }
 
   // Restarts a poll on every `scroll` tick that settles once `scrollLeft`
   // holds steady for a few frames — racing the real `scrollend` listener
   // below, not gated behind feature detection (see
-  // `_artifactScrollFallbackGeneration`'s doc for why). A fixed setTimeout
+  // `_attachmentScrollFallbackGeneration`'s doc for why). A fixed setTimeout
   // delay would race against a real scroll's own frame cadence instead
   // (fire early mid-gesture, or late enough to feel unresponsive); polling
   // for actual stability can't.
-  private _handleArtifactScroll(): void {
-    const scrollEl = this._artifactScrollEl;
+  private _handleAttachmentScroll(): void {
+    const scrollEl = this._attachmentScrollEl;
     if (!scrollEl) {
       return;
     }
 
-    const generation = ++this._artifactScrollFallbackGeneration;
+    const generation = ++this._attachmentScrollFallbackGeneration;
     let lastScrollLeft = scrollEl.scrollLeft;
     let stableFrames = 0;
     const poll = (): void => {
-      if (generation !== this._artifactScrollFallbackGeneration) {
+      if (generation !== this._attachmentScrollFallbackGeneration) {
         return;
       }
       if (scrollEl.scrollLeft !== lastScrollLeft) {
@@ -449,7 +458,7 @@ export class PromptField extends SpectrumElement {
       } else if (++stableFrames < 3) {
         // not yet settled
       } else {
-        this._handleArtifactScrollEnd();
+        this._handleAttachmentScrollEnd();
         return;
       }
       requestAnimationFrame(poll);
@@ -464,16 +473,16 @@ export class PromptField extends SpectrumElement {
    * visible region as active, or flip the chevrons' aria-disabled state
    * back and forth for no reason a user would ever see settled.
    *
-   * Also reachable from `_handleArtifactScroll`'s poll, which is why this
+   * Also reachable from `_handleAttachmentScroll`'s poll, which is why this
    * bumps the generation counter itself: whichever of the two (a real
    * `scrollend`, or the poll settling) happens first wins, and that
    * invalidates the other so it can't also fire.
    */
-  private _handleArtifactScrollEnd(): void {
-    this._artifactScrollFallbackGeneration++;
-    this._updateArtifactScrollState();
+  private _handleAttachmentScrollEnd(): void {
+    this._attachmentScrollFallbackGeneration++;
+    this._updateAttachmentScrollState();
     void this.updateComplete.then(() =>
-      this._syncArtifactActiveItemToVisible()
+      this._syncAttachmentActiveItemToVisible()
     );
   }
 
@@ -485,21 +494,21 @@ export class PromptField extends SpectrumElement {
    * at a currently visible tile whenever the strip scrolls, so Tab always
    * lands somewhere the user can see.
    */
-  private _syncArtifactActiveItemToVisible(): void {
-    const scrollEl = this._artifactScrollEl;
-    const artifacts = this._assignedArtifactElements ?? [];
-    if (!scrollEl || artifacts.length < 2) {
+  private _syncAttachmentActiveItemToVisible(): void {
+    const scrollEl = this._attachmentScrollEl;
+    const attachments = this._assignedAttachmentElements ?? [];
+    if (!scrollEl || attachments.length < 2) {
       return;
     }
 
-    const { left, right } = this._artifactVisibleBounds(scrollEl);
-    const active = this._artifactNavigation.getActiveItem();
-    if (active && this._isArtifactVisible(active, left, right)) {
+    const { left, right } = this._attachmentVisibleBounds(scrollEl);
+    const active = this._attachmentNavigation.getActiveItem();
+    if (active && this._isAttachmentVisible(active, left, right)) {
       return;
     }
 
-    this._artifactNavigation.setActiveItem(
-      this._findArtifactAtOrPastBoundary(this._isRtl() ? right : left)
+    this._attachmentNavigation.setActiveItem(
+      this._findAttachmentAtOrPastBoundary(this._isRtl() ? right : left)
     );
   }
 
@@ -510,7 +519,7 @@ export class PromptField extends SpectrumElement {
    * as the single source of truth for how much clearance a visible
    * chevron needs, instead of duplicating that math here.
    */
-  private _artifactVisibleBounds(scrollEl: HTMLElement): {
+  private _attachmentVisibleBounds(scrollEl: HTMLElement): {
     left: number;
     right: number;
   } {
@@ -523,12 +532,12 @@ export class PromptField extends SpectrumElement {
     };
   }
 
-  private _isArtifactVisible(
-    artifact: HTMLElement,
+  private _isAttachmentVisible(
+    attachment: HTMLElement,
     visibleLeft: number,
     visibleRight: number
   ): boolean {
-    const rect = artifact.getBoundingClientRect();
+    const rect = attachment.getBoundingClientRect();
     const tolerance = 1;
     return (
       rect.left >= visibleLeft - tolerance &&
@@ -536,8 +545,8 @@ export class PromptField extends SpectrumElement {
     );
   }
 
-  private _focusArtifact(el: HTMLElement): void {
-    this._artifactNavigation.setActiveItem(el);
+  private _focusAttachment(el: HTMLElement): void {
+    this._attachmentNavigation.setActiveItem(el);
     el.scrollIntoView({
       block: 'nearest',
       inline: 'nearest',
@@ -545,8 +554,8 @@ export class PromptField extends SpectrumElement {
     el.focus();
   }
 
-  /** Reacts to `swc-focusgroup-navigation-active-change` from `_artifactNavigation`. */
-  private _handleArtifactActiveChange = (
+  /** Reacts to `swc-focusgroup-navigation-active-change` from `_attachmentNavigation`. */
+  private _handleAttachmentActiveChange = (
     event: CustomEvent<FocusgroupNavigationActiveChangeDetail>
   ): void => {
     const { activeElement, source } = event.detail;
@@ -559,12 +568,12 @@ export class PromptField extends SpectrumElement {
     });
   };
 
-  private _handleArtifactRowKeydown(event: KeyboardEvent): void {
+  private _handleAttachmentRowKeydown(event: KeyboardEvent): void {
     if (event.key !== 'Tab') {
       return;
     }
 
-    this._handleArtifactTabKey(event);
+    this._handleAttachmentTabKey(event);
   }
 
   // swc-action-button delegates focus to its internal button, so the deep
@@ -578,29 +587,29 @@ export class PromptField extends SpectrumElement {
       : active;
   }
 
-  private _handleArtifactTabKey(event: KeyboardEvent): void {
+  private _handleAttachmentTabKey(event: KeyboardEvent): void {
     const activeElement = getActiveElement();
     if (!activeElement) {
       return;
     }
     const active = this._delegatedFocusHost(activeElement);
 
-    const artifacts = this._assignedArtifactElements ?? [];
+    const attachments = this._assignedAttachmentElements ?? [];
     const nextButton = this.shadowRoot?.querySelector<HTMLElement>(
-      '.swc-PromptField-artifacts-scroll-next'
+      '.swc-PromptField-attachments-scroll-next'
     );
     const prevButton = this.shadowRoot?.querySelector<HTMLElement>(
-      '.swc-PromptField-artifacts-scroll-prev'
+      '.swc-PromptField-attachments-scroll-prev'
     );
 
     // From the active tile: Tab reveals its Close button. Shift+Tab is left
     // to native default, which (roving tabindex leaves every other tile at
     // -1) exits the group entirely regardless of which tile is active.
-    if (artifacts.includes(active as HTMLElement)) {
+    if (attachments.includes(active as HTMLElement)) {
       if (event.shiftKey) {
         return;
       }
-      const dismiss = this._artifactDismissButton(active as HTMLElement);
+      const dismiss = this._attachmentDismissButton(active as HTMLElement);
       if (dismiss) {
         event.preventDefault();
         dismiss.focus();
@@ -613,8 +622,8 @@ export class PromptField extends SpectrumElement {
     const root = active.getRootNode();
     if (
       root instanceof ShadowRoot &&
-      artifacts.includes(root.host as HTMLElement) &&
-      active.classList.contains('swc-UploadArtifact-dismiss')
+      attachments.includes(root.host as HTMLElement) &&
+      active.classList.contains('swc-UploadAttachment-dismiss')
     ) {
       const tile = root.host as HTMLElement;
       if (event.shiftKey) {
@@ -622,7 +631,7 @@ export class PromptField extends SpectrumElement {
         tile.focus();
         return;
       }
-      if (nextButton && this._artifactCanScrollNext) {
+      if (nextButton && this._attachmentCanScrollNext) {
         event.preventDefault();
         nextButton.focus();
       }
@@ -630,16 +639,16 @@ export class PromptField extends SpectrumElement {
     }
 
     // From the Next chevron: Shift+Tab moves backward into the roving
-    // controller's current active tile (updated by `_scrollArtifactsByPage`
+    // controller's current active tile (updated by `_scrollAttachmentsByPage`
     // after paging, so this lands in the newly displayed set rather than
     // wherever focus was before the page turned) — its Close button when
     // visible, mirroring the forward tile -> Close -> Next chain in reverse,
     // otherwise the tile itself.
     if (active === nextButton && event.shiftKey) {
-      const activeTile = this._artifactNavigation.getActiveItem();
+      const activeTile = this._attachmentNavigation.getActiveItem();
       if (activeTile) {
         event.preventDefault();
-        (this._artifactDismissButton(activeTile) ?? activeTile).focus();
+        (this._attachmentDismissButton(activeTile) ?? activeTile).focus();
       }
       return;
     }
@@ -647,7 +656,7 @@ export class PromptField extends SpectrumElement {
     // From the Prev chevron: plain Tab moves forward into the roving
     // controller's current active tile, for the same reason as above.
     if (active === prevButton && !event.shiftKey) {
-      const activeTile = this._artifactNavigation.getActiveItem();
+      const activeTile = this._attachmentNavigation.getActiveItem();
       if (activeTile) {
         event.preventDefault();
         activeTile.focus();
@@ -656,25 +665,27 @@ export class PromptField extends SpectrumElement {
   }
 
   /** `tile`'s Close button, or `null` when absent or not currently shown. */
-  private _artifactDismissButton(tile: HTMLElement): HTMLButtonElement | null {
+  private _attachmentDismissButton(
+    tile: HTMLElement
+  ): HTMLButtonElement | null {
     const dismiss = tile.shadowRoot?.querySelector<HTMLButtonElement>(
-      '.swc-UploadArtifact-dismiss'
+      '.swc-UploadAttachment-dismiss'
     );
     return dismiss && !dismiss.hidden ? dismiss : null;
   }
 
   /**
-   * A single artifact has no row wrapper or roving-tabindex controller (see
-   * `_handleArtifactRowKeydown`/`_handleArtifactTabKey`), so Tab from the
+   * A single attachment has no row wrapper or roving-tabindex controller (see
+   * `_handleAttachmentRowKeydown`/`_handleAttachmentTabKey`), so Tab from the
    * tile would otherwise fall through to the next default tab stop (the
    * textarea) and skip its Close button entirely.
    */
-  private _handleSingleArtifactKeydown(event: KeyboardEvent): void {
+  private _handleSingleAttachmentKeydown(event: KeyboardEvent): void {
     if (event.key !== 'Tab') {
       return;
     }
 
-    const tile = (this._assignedArtifactElements ?? [])[0];
+    const tile = (this._assignedAttachmentElements ?? [])[0];
     if (!tile) {
       return;
     }
@@ -689,7 +700,7 @@ export class PromptField extends SpectrumElement {
         return;
       }
       const dismiss = tile.shadowRoot?.querySelector<HTMLButtonElement>(
-        '.swc-UploadArtifact-dismiss'
+        '.swc-UploadAttachment-dismiss'
       );
       if (dismiss && !dismiss.hidden) {
         event.preventDefault();
@@ -705,24 +716,24 @@ export class PromptField extends SpectrumElement {
     if (
       root instanceof ShadowRoot &&
       root.host === tile &&
-      active.classList.contains('swc-UploadArtifact-dismiss')
+      active.classList.contains('swc-UploadAttachment-dismiss')
     ) {
       event.preventDefault();
       tile.focus();
     }
   }
 
-  private _observeArtifactScrollViewport(): void {
-    const scrollEl = this._artifactScrollEl;
+  private _observeAttachmentScrollViewport(): void {
+    const scrollEl = this._attachmentScrollEl;
     if (!scrollEl) {
       return;
     }
 
-    this._artifactScrollObserver.observe(scrollEl);
-    for (const element of this._assignedArtifactElements ?? []) {
-      this._artifactScrollObserver.observe(element);
+    this._attachmentScrollObserver.observe(scrollEl);
+    for (const element of this._assignedAttachmentElements ?? []) {
+      this._attachmentScrollObserver.observe(element);
     }
-    this._updateArtifactScrollState();
+    this._updateAttachmentScrollState();
   }
 
   private _isRtl(): boolean {
@@ -730,16 +741,16 @@ export class PromptField extends SpectrumElement {
   }
 
   /**
-   * First artifact whose leading (reading-direction-start) edge is at or
+   * First attachment whose leading (reading-direction-start) edge is at or
    * past the physical viewport x-coordinate `boundary`. Falls back to the
-   * last artifact if none qualify. Shared by `_scrollArtifactsByPage`
+   * last attachment if none qualify. Shared by `_scrollAttachmentsByPage`
    * (`boundary` is where the next/previous page will start) and
-   * `_syncArtifactActiveItemToVisible` (`boundary` is the visible
-   * window's own start edge) so both "find the first artifact at a given
+   * `_syncAttachmentActiveItemToVisible` (`boundary` is the visible
+   * window's own start edge) so both "find the first attachment at a given
    * point" needs go through one RTL-aware comparison instead of two.
    */
-  private _findArtifactAtOrPastBoundary(boundary: number): HTMLElement {
-    const children = this._assignedArtifactElements ?? [];
+  private _findAttachmentAtOrPastBoundary(boundary: number): HTMLElement {
+    const children = this._assignedAttachmentElements ?? [];
     const rtl = this._isRtl();
     const tolerance = 1;
     return (
@@ -751,9 +762,9 @@ export class PromptField extends SpectrumElement {
     );
   }
 
-  private _scrollArtifactsByPage(direction: -1 | 1): void {
-    const scrollEl = this._artifactScrollEl;
-    const children = this._assignedArtifactElements ?? [];
+  private _scrollAttachmentsByPage(direction: -1 | 1): void {
+    const scrollEl = this._attachmentScrollEl;
+    const children = this._assignedAttachmentElements ?? [];
     if (!scrollEl || children.length < 2) {
       return;
     }
@@ -763,8 +774,8 @@ export class PromptField extends SpectrumElement {
     const pageStart = this._isRtl()
       ? scrollRect.right - direction * scrollEl.clientWidth
       : scrollRect.left + direction * scrollEl.clientWidth;
-    const target = this._findArtifactAtOrPastBoundary(pageStart);
-    this._artifactNavigation.setActiveItem(target);
+    const target = this._findAttachmentAtOrPastBoundary(pageStart);
+    this._attachmentNavigation.setActiveItem(target);
     target.scrollIntoView({ block: 'nearest', inline: 'start' });
   }
 
@@ -772,27 +783,27 @@ export class PromptField extends SpectrumElement {
   // focused instead of being blurred by the browser's own disabled-element
   // handling. That leaves it keyboard-activatable in the brief window
   // before its aria-disabled state actually updates, hence these guards.
-  private _handleArtifactScrollPrev(): void {
-    if (!this._artifactCanScrollPrev) {
+  private _handleAttachmentScrollPrev(): void {
+    if (!this._attachmentCanScrollPrev) {
       return;
     }
-    this._scrollArtifactsByPage(-1);
+    this._scrollAttachmentsByPage(-1);
   }
 
-  private _handleArtifactScrollNext(): void {
-    if (!this._artifactCanScrollNext) {
+  private _handleAttachmentScrollNext(): void {
+    if (!this._attachmentCanScrollNext) {
       return;
     }
-    this._scrollArtifactsByPage(1);
+    this._scrollAttachmentsByPage(1);
   }
 
-  private _updateArtifactScrollState(): void {
+  private _updateAttachmentScrollState(): void {
     const focusedChevron = this._focusedChevronDirection();
-    const scrollEl = this._artifactScrollEl;
+    const scrollEl = this._attachmentScrollEl;
     if (!scrollEl) {
-      this._artifactScrollOverflow = false;
-      this._artifactCanScrollPrev = false;
-      this._artifactCanScrollNext = false;
+      this._attachmentScrollOverflow = false;
+      this._attachmentCanScrollPrev = false;
+      this._attachmentCanScrollNext = false;
       this._redirectFocusFromDisabledChevron(focusedChevron);
       return;
     }
@@ -800,27 +811,27 @@ export class PromptField extends SpectrumElement {
     const { scrollWidth, clientWidth } = scrollEl;
     const tolerance = 1;
     const overflow = scrollWidth > clientWidth + tolerance;
-    const children = this._assignedArtifactElements ?? [];
-    const firstArtifact = children[0];
-    const lastArtifact = children[children.length - 1];
+    const children = this._assignedAttachmentElements ?? [];
+    const firstAttachment = children[0];
+    const lastAttachment = children[children.length - 1];
 
-    this._artifactScrollOverflow = overflow;
-    if (!overflow || !firstArtifact || !lastArtifact) {
-      this._artifactCanScrollPrev = false;
-      this._artifactCanScrollNext = false;
+    this._attachmentScrollOverflow = overflow;
+    if (!overflow || !firstAttachment || !lastAttachment) {
+      this._attachmentCanScrollPrev = false;
+      this._attachmentCanScrollNext = false;
       this._redirectFocusFromDisabledChevron(focusedChevron);
       return;
     }
 
     const scrollRect = scrollEl.getBoundingClientRect();
-    const firstRect = firstArtifact.getBoundingClientRect();
-    const lastRect = lastArtifact.getBoundingClientRect();
+    const firstRect = firstAttachment.getBoundingClientRect();
+    const lastRect = lastAttachment.getBoundingClientRect();
     const rtl = this._isRtl();
 
-    this._artifactCanScrollPrev = rtl
+    this._attachmentCanScrollPrev = rtl
       ? firstRect.right > scrollRect.right + tolerance
       : firstRect.left < scrollRect.left - tolerance;
-    this._artifactCanScrollNext = rtl
+    this._attachmentCanScrollNext = rtl
       ? lastRect.left < scrollRect.left - tolerance
       : lastRect.right > scrollRect.right + tolerance;
     this._redirectFocusFromDisabledChevron(focusedChevron);
@@ -833,10 +844,10 @@ export class PromptField extends SpectrumElement {
       return null;
     }
     const host = this._delegatedFocusHost(active);
-    if (host.classList.contains('swc-PromptField-artifacts-scroll-prev')) {
+    if (host.classList.contains('swc-PromptField-attachments-scroll-prev')) {
       return 'prev';
     }
-    if (host.classList.contains('swc-PromptField-artifacts-scroll-next')) {
+    if (host.classList.contains('swc-PromptField-attachments-scroll-next')) {
       return 'next';
     }
     return null;
@@ -853,27 +864,27 @@ export class PromptField extends SpectrumElement {
     }
     const canStillScroll =
       direction === 'prev'
-        ? this._artifactCanScrollPrev
-        : this._artifactCanScrollNext;
+        ? this._attachmentCanScrollPrev
+        : this._attachmentCanScrollNext;
     if (canStillScroll) {
       return;
     }
     const tile =
-      this._artifactNavigation.getActiveItem() ??
-      this._assignedArtifactElements?.[0];
+      this._attachmentNavigation.getActiveItem() ??
+      this._assignedAttachmentElements?.[0];
     tile?.focus();
   }
 
-  private _warnedMixedArtifactTypes = false;
+  private _warnedMixedAttachmentTypes = false;
 
   private _warnedMissingLegalContent = false;
 
-  private _warnIfMixedArtifactTypes(): void {
+  private _warnIfMixedAttachmentTypes(): void {
     if (!window.__swc?.DEBUG) {
       return;
     }
 
-    const elements = this._assignedArtifactElements ?? [];
+    const elements = this._assignedAttachmentElements ?? [];
     const types = new Set(
       elements
         .map((element) => element.getAttribute('type'))
@@ -884,18 +895,18 @@ export class PromptField extends SpectrumElement {
     );
 
     if (types.size <= 1) {
-      this._warnedMixedArtifactTypes = false;
+      this._warnedMixedAttachmentTypes = false;
       return;
     }
 
-    if (this._warnedMixedArtifactTypes) {
+    if (this._warnedMixedAttachmentTypes) {
       return;
     }
 
-    this._warnedMixedArtifactTypes = true;
+    this._warnedMixedAttachmentTypes = true;
     window.__swc.warn(
       this,
-      'The artifact slot contains both card and media upload artifacts. Use one layout type per composer session (all card or all media). When uploads mix images and documents, normalize to media tiles with thumbnails and optional badges.',
+      'The attachment slot contains both card and media upload attachments. Use one layout type per composer session (all card or all media). When uploads mix images and documents, normalize to media tiles with thumbnails and optional badges.',
       'https://opensource.adobe.com/spectrum-web-components/patterns/conversational-ai/prompt-field/'
     );
   }
@@ -927,7 +938,7 @@ export class PromptField extends SpectrumElement {
   private get _isPopulated(): boolean {
     return (
       this.value.trim().length > 0 ||
-      (this._assignedArtifactElements?.length ?? 0) > 0
+      (this._assignedAttachmentElements?.length ?? 0) > 0
     );
   }
 
@@ -963,30 +974,30 @@ export class PromptField extends SpectrumElement {
     `;
   }
 
-  private _renderArtifact(): TemplateResult {
-    const artifactCount = this._assignedArtifactElements?.length ?? 0;
+  private _renderAttachment(): TemplateResult {
+    const attachmentCount = this._assignedAttachmentElements?.length ?? 0;
 
-    if (artifactCount === 0) {
+    if (attachmentCount === 0) {
       return html`
-        <div class="swc-PromptField-artifacts" hidden>
+        <div class="swc-PromptField-attachments" hidden>
           <slot
-            name="artifact"
-            @slotchange=${this._handleArtifactSlotChange}
+            name="attachment"
+            @slotchange=${this._handleAttachmentSlotChange}
           ></slot>
         </div>
       `;
     }
 
-    if (artifactCount === 1) {
+    if (attachmentCount === 1) {
       return html`
         <div
-          class="swc-PromptField-artifacts swc-PromptField-artifacts--single"
-          @swc-upload-artifact-dismiss=${this._handleArtifactDismiss}
-          @keydown=${this._handleSingleArtifactKeydown}
+          class="swc-PromptField-attachments swc-PromptField-attachments--single"
+          @swc-upload-attachment-dismiss=${this._handleAttachmentDismiss}
+          @keydown=${this._handleSingleAttachmentKeydown}
         >
           <slot
-            name="artifact"
-            @slotchange=${this._handleArtifactSlotChange}
+            name="attachment"
+            @slotchange=${this._handleAttachmentSlotChange}
           ></slot>
         </div>
       `;
@@ -994,21 +1005,21 @@ export class PromptField extends SpectrumElement {
 
     return html`
       <div
-        class="swc-PromptField-artifacts swc-PromptField-artifacts--multiple"
-        @swc-upload-artifact-dismiss=${this._handleArtifactDismiss}
+        class="swc-PromptField-attachments swc-PromptField-attachments--multiple"
+        @swc-upload-attachment-dismiss=${this._handleAttachmentDismiss}
       >
         <div
-          class="swc-PromptField-artifacts-row"
-          @keydown=${this._handleArtifactRowKeydown}
+          class="swc-PromptField-attachments-row"
+          @keydown=${this._handleAttachmentRowKeydown}
         >
-          ${this._artifactScrollOverflow
+          ${this._attachmentScrollOverflow
             ? html`
                 <swc-action-button
-                  class="swc-PromptField-artifacts-scroll-prev"
-                  accessible-label=${this.artifactScrollPrevLabel}
-                  aria-disabled=${!this._artifactCanScrollPrev}
-                  tabindex=${this._artifactCanScrollPrev ? nothing : -1}
-                  @click=${this._handleArtifactScrollPrev}
+                  class="swc-PromptField-attachments-scroll-prev"
+                  accessible-label=${this.attachmentScrollPrevLabel}
+                  aria-disabled=${!this._attachmentCanScrollPrev}
+                  tabindex=${this._attachmentCanScrollPrev ? nothing : -1}
+                  @click=${this._handleAttachmentScrollPrev}
                 >
                   <swc-icon slot="icon" size="s" aria-hidden="true">
                     ${Chevron75Icon()}
@@ -1017,36 +1028,36 @@ export class PromptField extends SpectrumElement {
               `
             : nothing}
           <div
-            class="swc-PromptField-artifacts-viewport"
+            class="swc-PromptField-attachments-viewport"
             role="region"
-            aria-label=${this.artifactStripLabel}
+            aria-label=${this.attachmentStripLabel}
           >
             <div
               class=${classMap({
-                'swc-PromptField-artifacts-scroll': true,
-                'has-scroll-prev': this._artifactCanScrollPrev,
-                'has-scroll-next': this._artifactCanScrollNext,
+                'swc-PromptField-attachments-scroll': true,
+                'has-scroll-prev': this._attachmentCanScrollPrev,
+                'has-scroll-next': this._attachmentCanScrollNext,
               })}
               tabindex="-1"
-              @scroll=${this._handleArtifactScroll}
-              @scrollend=${this._handleArtifactScrollEnd}
+              @scroll=${this._handleAttachmentScroll}
+              @scrollend=${this._handleAttachmentScrollEnd}
             >
-              <div class="swc-PromptField-artifacts-tiles">
+              <div class="swc-PromptField-attachments-tiles">
                 <slot
-                  name="artifact"
-                  @slotchange=${this._handleArtifactSlotChange}
+                  name="attachment"
+                  @slotchange=${this._handleAttachmentSlotChange}
                 ></slot>
               </div>
             </div>
           </div>
-          ${this._artifactScrollOverflow
+          ${this._attachmentScrollOverflow
             ? html`
                 <swc-action-button
-                  class="swc-PromptField-artifacts-scroll-next"
-                  accessible-label=${this.artifactScrollNextLabel}
-                  aria-disabled=${!this._artifactCanScrollNext}
-                  tabindex=${this._artifactCanScrollNext ? nothing : -1}
-                  @click=${this._handleArtifactScrollNext}
+                  class="swc-PromptField-attachments-scroll-next"
+                  accessible-label=${this.attachmentScrollNextLabel}
+                  aria-disabled=${!this._attachmentCanScrollNext}
+                  tabindex=${this._attachmentCanScrollNext ? nothing : -1}
+                  @click=${this._handleAttachmentScrollNext}
                 >
                   <swc-icon slot="icon" size="s" aria-hidden="true">
                     ${Chevron75Icon()}
@@ -1112,7 +1123,7 @@ export class PromptField extends SpectrumElement {
 
   protected override render(): TemplateResult {
     const showStop = this.generating;
-    const hasArtifacts = (this._assignedArtifactElements?.length ?? 0) > 0;
+    const hasAttachments = (this._assignedAttachmentElements?.length ?? 0) > 0;
 
     return html`
       <div class="swc-PromptField">
@@ -1123,11 +1134,11 @@ export class PromptField extends SpectrumElement {
           >
             <span class="swc-PromptField-gloss"></span>
             <div
-              class="swc-PromptField-input-area${hasArtifacts
-                ? ' has-artifact'
+              class="swc-PromptField-input-area${hasAttachments
+                ? ' has-attachment'
                 : ''}"
             >
-              ${this._renderArtifact()}
+              ${this._renderAttachment()}
               <span
                 id=${this.labelId}
                 class="swc-PromptField-label swc-VisuallyHidden"
