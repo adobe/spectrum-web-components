@@ -260,7 +260,7 @@ export const Statuses: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:24px;">
       <swc-response-status status="active">
-        <span slot="label">Searching repositories for Europe trips</span>
+        <span slot="label">Processing...</span>
       </swc-response-status>
       <swc-response-status status="active">
         <span slot="label">Searching repositories for Europe trips</span>

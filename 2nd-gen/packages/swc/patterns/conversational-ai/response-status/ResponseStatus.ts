@@ -778,18 +778,29 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
-  private _renderLeadingIcon(): TemplateResult | typeof nothing {
+  private _renderLeadingIcon(): TemplateResult {
     const status = this._resolvedStatus;
+    const icon =
+      status === 'complete'
+        ? this._renderCheckmark()
+        : status === 'stopped'
+          ? nothing
+          : this._renderLoader();
 
-    if (status === 'complete') {
-      return this._renderCheckmark();
-    }
-
-    if (status === 'stopped') {
-      return nothing;
-    }
-
-    return this._renderLoader();
+    // Always rendered (even with nothing inside for `stopped`) so the
+    // collapse below can animate: removing the icon outright would snap the
+    // label/chevron into place instead of letting them slide over as it
+    // fades and its space closes up.
+    return html`
+      <span
+        class=${classMap({
+          'swc-ResponseStatus-leadingIcon': true,
+          'swc-ResponseStatus-leadingIcon--collapsed': status === 'stopped',
+        })}
+      >
+        ${icon}
+      </span>
+    `;
   }
 
   private _renderHeader(showDisclosure: boolean): TemplateResult {

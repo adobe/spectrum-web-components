@@ -184,6 +184,29 @@
   flex-shrink: 0;
 }
 
+/* Always rendered (see `_renderLeadingIcon`) so removing the icon (currently
+   only for `stopped`, which has none) animates: the icon fades while its
+   space, including the row's gap next to it, closes up in the same motion
+   instead of the label/chevron snapping over instantly. */
+.swc-ResponseStatus-leadingIcon {
+  display: flex;
+  flex-shrink: 0;
+  inline-size: 20px;
+  block-size: 20px;
+  overflow: hidden;
+  opacity: 1;
+  transition:
+    inline-size token("animation-duration-200") cubic-bezier(0.22, 1, 0.36, 1),
+    margin-inline-end token("animation-duration-200") cubic-bezier(0.22, 1, 0.36, 1),
+    opacity token("animation-duration-200") cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.swc-ResponseStatus-leadingIcon--collapsed {
+  inline-size: 0;
+  margin-inline-end: calc(-1 * token("spacing-100"));
+  opacity: 0;
+}
+
 /* Shared collapse mechanics for the header panel and per-step detail panels.
    Animates `grid-template-rows` between 0fr and 1fr rather than `block-size`
    to/from `auto`: the block-size + `interpolate-size` approach only works in
