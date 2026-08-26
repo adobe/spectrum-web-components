@@ -210,7 +210,7 @@ export class Combobox extends Textfield {
     this.optionEls.map((item) => {
       this.itemObserver.observe(item, {
         attributes: true,
-        attributeFilter: ['id'],
+        attributeFilter: ['id', 'lang', 'dir'],
         childList: true,
       });
     });
