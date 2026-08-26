@@ -60,6 +60,7 @@
 
 .swc-ResponseStatus-headerTrail {
   display: inline-flex;
+  gap: token("spacing-100");
   align-items: center;
   min-inline-size: 0;
 }
@@ -83,30 +84,22 @@
   min-inline-size: 0;
 }
 
-.swc-ResponseStatus-headerTrailStrip {
-  display: flex;
-  flex-direction: column;
+/* Both lines occupy the same grid cell so the cross-fade below is pure
+   opacity, with no vertical movement: the chevron (a fixed sibling of the
+   viewport, not rendered inside this) never shifts as the fade runs. */
+.swc-ResponseStatus-headerTrailCrossfade {
+  display: grid;
   inline-size: fit-content;
   max-inline-size: 100%;
-  transform: translateY(0);
-  transition:
-    transform 650ms token("animation-ease-in-out"),
-    opacity 650ms token("animation-ease-in-out");
-}
-
-.swc-ResponseStatus-headerTrailStrip--rolling {
-  transform: translateY(-50%);
 }
 
 .swc-ResponseStatus-headerTrailLine {
   display: inline-flex;
-  gap: token("spacing-100");
+  grid-area: 1 / 1;
   align-items: center;
   max-inline-size: 100%;
   block-size: var(--_swc-response-status-label-line-size, 1.33em);
   white-space: nowrap;
-  opacity: 1;
-  transition: opacity 325ms token("animation-ease-in-out");
 }
 
 .swc-ResponseStatus-headerTrailLine .swc-ResponseStatus-label {
@@ -119,7 +112,7 @@
 /* Settled: allow the label to wrap across multiple lines instead of
    truncating to one, since a narrow container or a longer translation can
    easily exceed one line's width. Mid-roll (no `--settled` class) keeps the
-   single line + ellipsis the translateY(-50%) geometry above depends on. */
+   single line + ellipsis the cross-fade geometry above depends on. */
 .swc-ResponseStatus-headerTrailLine--settled {
   block-size: auto;
   white-space: normal;
@@ -137,8 +130,28 @@
   line-clamp: var(--swc-response-status-label-max-lines, 2);
 }
 
-.swc-ResponseStatus-headerTrailStrip--rolling .swc-ResponseStatus-headerTrailLine:first-child {
-  visibility: hidden;
+/* Outgoing/incoming labels start at their pre-transition opacity; the
+   `--engaged` class (added a frame later, mirroring the panel-open pattern
+   elsewhere in this file) flips both to their end value so the change is
+   what actually animates instead of a snap to the final state. Enter and
+   exit get different durations/easing per the motion spec: the incoming
+   label fades in slower than the outgoing one fades out. */
+.swc-ResponseStatus-headerTrailLine--exit {
+  opacity: 1;
+  transition: opacity 150ms cubic-bezier(0.15, 0.47, 0.67, 0.77);
+}
+
+.swc-ResponseStatus-headerTrailLine--enter {
+  opacity: 0;
+  transition: opacity 350ms cubic-bezier(0.14, 0.45, 0.45, 0.99);
+}
+
+.swc-ResponseStatus-headerTrailCrossfade--engaged .swc-ResponseStatus-headerTrailLine--exit {
+  opacity: 0;
+}
+
+.swc-ResponseStatus-headerTrailCrossfade--engaged .swc-ResponseStatus-headerTrailLine--enter {
+  opacity: 1;
 }
 
 .swc-ResponseStatus-loader {
@@ -576,7 +589,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .swc-ResponseStatus-headerTrailStrip,
   .swc-ResponseStatus-headerTrailLine {
     transition: none;
   }

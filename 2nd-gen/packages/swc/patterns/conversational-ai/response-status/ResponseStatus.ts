@@ -102,8 +102,12 @@ export class ResponseStatus extends SpectrumElement {
 
   private static readonly DEFAULT_ACCESSIBLE_LABEL = 'Execution steps';
 
-  /** Header label roll animation duration; keep in sync with the CSS. */
-  private static readonly LABEL_ROLL_DURATION_MS = 650;
+  /**
+   * Header label cross-fade duration; matches the enter transition (the
+   * longer of the enter/exit pair) since JS waits for the full visual
+   * transition to finish before settling. Keep in sync with the CSS.
+   */
+  private static readonly LABEL_ROLL_DURATION_MS = 350;
 
   private readonly panelId = uniqueId('swc-response-status-panel');
 
@@ -577,8 +581,11 @@ export class ResponseStatus extends SpectrumElement {
     return this._displayedLabel || this._getHeaderLabel();
   }
 
-  private _renderLabel(showDisclosure: boolean, open: boolean): TemplateResult {
-    const chevron = showDisclosure ? this._renderChevron(open) : nothing;
+  // Cross-fades between the previous and next header label with no
+  // vertical movement, so the chevron (rendered by the caller as a fixed
+  // sibling, not inside this markup) never shifts position independently
+  // of the fade.
+  private _renderLabel(): TemplateResult {
     const labelClass = ResponseStatus.STATUS_LABEL_CLASS;
 
     if (!this._rollActive) {
@@ -591,32 +598,32 @@ export class ResponseStatus extends SpectrumElement {
         <span
           class="swc-ResponseStatus-headerTrailViewport swc-ResponseStatus-headerTrailViewport--settled"
         >
-          <span class="swc-ResponseStatus-headerTrailStrip">
-            <span
-              class="swc-ResponseStatus-headerTrailLine swc-ResponseStatus-headerTrailLine--settled"
-            >
-              <span class=${labelClass}>${this._currentVisibleLabel()}</span>
-              ${chevron}
-            </span>
+          <span
+            class="swc-ResponseStatus-headerTrailLine swc-ResponseStatus-headerTrailLine--settled"
+          >
+            <span class=${labelClass}>${this._currentVisibleLabel()}</span>
           </span>
         </span>
       `;
     }
 
-    const stripClass = this._rollEngaged
-      ? 'swc-ResponseStatus-headerTrailStrip swc-ResponseStatus-headerTrailStrip--rolling'
-      : 'swc-ResponseStatus-headerTrailStrip';
+    const crossfadeClass = this._rollEngaged
+      ? 'swc-ResponseStatus-headerTrailCrossfade swc-ResponseStatus-headerTrailCrossfade--engaged'
+      : 'swc-ResponseStatus-headerTrailCrossfade';
 
     return html`
       <span class="swc-ResponseStatus-headerTrailViewport">
-        <span class=${stripClass}>
-          <span class="swc-ResponseStatus-headerTrailLine" aria-hidden="true">
+        <span class=${crossfadeClass}>
+          <span
+            class="swc-ResponseStatus-headerTrailLine swc-ResponseStatus-headerTrailLine--exit"
+            aria-hidden="true"
+          >
             <span class=${labelClass}>${this._rollFromLabel}</span>
-            ${chevron}
           </span>
-          <span class="swc-ResponseStatus-headerTrailLine">
+          <span
+            class="swc-ResponseStatus-headerTrailLine swc-ResponseStatus-headerTrailLine--enter"
+          >
             <span class=${labelClass}>${this._rollToLabel}</span>
-            ${chevron}
           </span>
         </span>
       </span>
@@ -821,7 +828,8 @@ export class ResponseStatus extends SpectrumElement {
     const rowContent = html`
       ${this._renderLeadingIcon()}
       <span class="swc-ResponseStatus-headerTrail">
-        ${this._renderLabel(showDisclosure, this.open)}
+        ${this._renderLabel()}
+        ${showDisclosure ? this._renderChevron(this.open) : nothing}
       </span>
     `;
 
