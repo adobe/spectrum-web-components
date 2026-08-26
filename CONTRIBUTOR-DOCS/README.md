@@ -32,6 +32,7 @@
     - [Writing migration guides](01_contributor-guides/13_writing-migration-guides.md)
     - [Focus management](01_contributor-guides/14_focus-management.md)
     - [Changelog strategy](01_contributor-guides/15_changelog-strategy.md)
+    - [2nd-gen shared resources quick reference](01_contributor-guides/16_2nd-gen-shared-resources.md)
 - [Style guide](02_style-guide/README.md)
     - [2nd-Gen CSS](02_style-guide/01_css/README.md)
     - [2nd-gen TypeScript](02_style-guide/02_typescript/README.md)

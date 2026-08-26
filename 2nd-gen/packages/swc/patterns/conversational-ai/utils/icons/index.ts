@@ -21,7 +21,7 @@ export const PlusIcon = (): TemplateResult => html`
   </svg>
 `;
 
-/** Cross icon — used for dismissing an uploaded artifact. */
+/** Cross icon — used for dismissing an uploaded attachment. */
 export const CrossIcon = (): TemplateResult => html`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
     <path
