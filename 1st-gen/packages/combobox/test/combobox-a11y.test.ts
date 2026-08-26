@@ -409,6 +409,67 @@ describe('Combobox accessibility', () => {
         'input falls back once the value no longer matches an option'
       ).to.equal('');
     });
+    it('propagates lang and dir from a plain ComboboxOption object to its rendered counterpart in the popover', async () => {
+      const el = await fixture<TestableCombobox>(html`
+        <sp-combobox label="Language"></sp-combobox>
+      `);
+      el.options = [
+        { value: 'he', itemText: 'עברית', lang: 'he', dir: 'rtl' },
+        { value: 'en', itemText: 'English', lang: 'en', dir: 'ltr' },
+      ];
+      await elementUpdated(el);
+
+      const opened = oneEvent(el, 'sp-opened');
+      el.open = true;
+      await opened;
+      await elementUpdated(el);
+
+      const heItem = el.shadowRoot.querySelector('#he') as MenuItem;
+      expect(heItem, 'rendered item for he').to.exist;
+      expect(heItem.lang, 'lang for he').to.equal('he');
+      expect(heItem.getAttribute('dir'), 'dir attribute for he').to.equal('rtl');
+
+      const enItem = el.shadowRoot.querySelector('#en') as MenuItem;
+      expect(enItem, 'rendered item for en').to.exist;
+      expect(enItem.lang, 'lang for en').to.equal('en');
+      expect(enItem.getAttribute('dir'), 'dir attribute for en').to.equal('ltr');
+    });
+    it("syncs the input's lang to a selected plain ComboboxOption's language", async () => {
+      const el = await fixture<TestableCombobox>(html`
+        <sp-combobox label="Language"></sp-combobox>
+      `);
+      el.options = [
+        { value: 'he', itemText: 'עברית', lang: 'he', dir: 'rtl' },
+        { value: 'en', itemText: 'English', lang: 'en', dir: 'ltr' },
+      ];
+      await elementUpdated(el);
+
+      const input = el.shadowRoot.querySelector('#input') as HTMLInputElement;
+      expect(input.lang, 'no lang before a value is selected').to.equal('');
+
+      el.value = 'עברית';
+      await elementUpdated(el);
+
+      expect(input.lang, "input adopts the selected option's lang").to.equal(
+        'he'
+      );
+
+      el.value = 'English';
+      await elementUpdated(el);
+
+      expect(
+        input.lang,
+        'input switches lang with the newly selected option'
+      ).to.equal('en');
+
+      el.value = 'not one of the options';
+      await elementUpdated(el);
+
+      expect(
+        input.lang,
+        'input falls back once the value no longer matches an option'
+      ).to.equal('');
+    });
     it("renders RTL values via unicode-bidi: plaintext without changing the input's own direction", async () => {
       const el = await fixture<TestableCombobox>(html`
         <sp-combobox label="Language">
