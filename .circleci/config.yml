@@ -27,11 +27,14 @@ jobs:
           command: |
             set -e
 
+            IS_BASE_MAIN=false
+
             # On main, run everything.
             if [ "$CIRCLE_BRANCH" = "main" ]; then
               echo "Running on main; both gens will run."
-              RUN_1ST=true
-              RUN_2ND=true
+              RUN_GEN1=true
+              RUN_GEN2=true
+              IS_BASE_MAIN=true
             else
               # Make sure origin/main is fetched so we can diff against it.
               # No --depth: a stale PR can have a deep merge-base, and the
@@ -42,8 +45,8 @@ jobs:
               CHANGED=$(git diff --name-only origin/main...HEAD 2>/dev/null || echo "")
               if [ -z "$CHANGED" ]; then
                 echo "Could not compute diff vs origin/main; running both gens to be safe."
-                RUN_1ST=true
-                RUN_2ND=true
+                RUN_GEN1=true
+                RUN_GEN2=true
               else
                 # Paths that never affect either gen's tests: contributor
                 # docs, AI rules/skills, changeset files, linter config,
@@ -54,17 +57,48 @@ jobs:
                 # gen's directory and is not a docs-only path. Root-level
                 # files (e.g. package.json, yarn.lock) match neither
                 # exclusion, so they mark BOTH gens affected.
-                REL_1ST=$(echo "$CHANGED" | grep -v '^2nd-gen/' | grep -vE "$DOCS_PATTERN" || true)
-                REL_2ND=$(echo "$CHANGED" | grep -v '^1st-gen/' | grep -vE "$DOCS_PATTERN" || true)
+                REL_GEN1=$(echo "$CHANGED" | grep -v '^2nd-gen/' | grep -vE "$DOCS_PATTERN" || true)
+                REL_GEN2=$(echo "$CHANGED" | grep -v '^1st-gen/' | grep -vE "$DOCS_PATTERN" || true)
 
-                [ -n "$REL_1ST" ] && RUN_1ST=true || RUN_1ST=false
-                [ -n "$REL_2ND" ] && RUN_2ND=true || RUN_2ND=false
+                [ -n "$REL_GEN1" ] && RUN_GEN1=true || RUN_GEN1=false
+                [ -n "$REL_GEN2" ] && RUN_GEN2=true || RUN_GEN2=false
               fi
+
+              # Resolve the PR base branch here (not per-job): gen2 coverage
+              # only runs for PRs targeting main. The old per-job resolver
+              # relied on CIRCLE_PULL_REQUEST, which CircleCI leaves empty on
+              # most PR builds, so coverage was always skipped. Derive the PR
+              # number from any available signal, then read its base via the
+              # GitHub API. Undetermined (fork/no token) stays false.
+              PR_NUMBER=""
+              if [ -n "$CIRCLE_PULL_REQUEST" ]; then
+                PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///')
+              elif [ -n "$CIRCLE_PR_NUMBER" ]; then
+                PR_NUMBER="$CIRCLE_PR_NUMBER"
+              elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
+                PR_NUMBER=$(echo "$CIRCLE_BRANCH" | sed 's/pull\///')
+              fi
+              if [ -z "$PR_NUMBER" ] && [ -n "$GITHUB_TOKEN" ]; then
+                PR_NUMBER=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                  -H "Accept: application/vnd.github+json" \
+                  "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+                  | python3 -c "import json,sys; d=json.load(sys.stdin); print(d[0]['number'] if d else '')" 2>/dev/null || echo "")
+              fi
+              BASE=""
+              if [ -n "$PR_NUMBER" ] && [ -n "$GITHUB_TOKEN" ]; then
+                BASE=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                  -H "Accept: application/vnd.github+json" \
+                  "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls/$PR_NUMBER" \
+                  | python3 -c "import json,sys; print(json.load(sys.stdin).get('base',{}).get('ref',''))" 2>/dev/null || echo "")
+              fi
+              echo "Resolved PR base branch: '${BASE:-<unknown>}'"
+              [ "$BASE" = "main" ] && IS_BASE_MAIN=true || IS_BASE_MAIN=false
             fi
 
-            echo "run_1st_gen=$RUN_1ST"
-            echo "run_2nd_gen=$RUN_2ND"
-            export RUN_1ST RUN_2ND
+            echo "run_gen1=$RUN_GEN1"
+            echo "run_gen2=$RUN_GEN2"
+            echo "is_base_main=$IS_BASE_MAIN"
+            export RUN_GEN1 RUN_GEN2 IS_BASE_MAIN
 
             # Build the continuation request: the continue config content plus
             # the resolved pipeline parameters, POSTed to the continuation API.
@@ -72,8 +106,9 @@ jobs:
             python3 - \<<'PY'
             import json, os
             params = {
-                "run_1st_gen": os.environ["RUN_1ST"] == "true",
-                "run_2nd_gen": os.environ["RUN_2ND"] == "true",
+                "run_gen1": os.environ["RUN_GEN1"] == "true",
+                "run_gen2": os.environ["RUN_GEN2"] == "true",
+                "is_base_main": os.environ["IS_BASE_MAIN"] == "true",
             }
             with open(".circleci/continue_config.yml") as f:
                 configuration = f.read()
