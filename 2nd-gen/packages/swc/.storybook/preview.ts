@@ -236,7 +236,7 @@ const preview = {
           ],
           'Patterns',
           [
-            'Conversational AI',
+            'AI',
             [
               'Pattern overview',
               'Prompt field',

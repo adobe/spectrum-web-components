@@ -173,7 +173,7 @@ export default defineConfig({
         find: '@adobe/spectrum-wc/components',
         replacement: resolve(__dirname, 'components'),
       },
-      // Pattern imports (e.g. `@adobe/spectrum-wc/patterns/conversational-ai/response-status`)
+      // Pattern imports (e.g. `@adobe/spectrum-wc/patterns/ai/response-status`)
       // resolve to `./patterns`, mirroring the published `./patterns/*` export.
       {
         find: '@adobe/spectrum-wc/patterns',

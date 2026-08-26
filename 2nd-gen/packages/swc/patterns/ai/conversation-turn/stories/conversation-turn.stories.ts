@@ -1,0 +1,141 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+import { html } from 'lit';
+import type { Meta, StoryObj as Story } from '@storybook/web-components';
+
+import '../swc-conversation-turn.js';
+import '../../system-message/swc-system-message.js';
+import '../../user-message/swc-user-message.js';
+import '../../response-status/swc-response-status.js';
+import '../../message-feedback/swc-message-feedback.js';
+
+// ────────────────
+//    METADATA
+// ────────────────
+
+/**
+ * Column alignment for one chat turn: `type="user"` (end) vs `type="system"` (start, full width).
+ * Slot **`swc-user-message`** or **`swc-system-message`**.
+ * Stack consecutive messages in one turn to create grouped spacing.
+ */
+const meta: Meta = {
+  title: 'AI/Conversation turn',
+  component: 'swc-conversation-turn',
+  parameters: {
+    docs: {
+      packagePath: 'patterns/ai/conversation-turn',
+      subtitle:
+        'Aligns user vs system content in a thread column and supports grouped message stacking.',
+    },
+    layout: 'padded',
+  },
+  excludeStories: ['meta'],
+  tags: ['migrated'],
+};
+
+export { meta };
+export default meta;
+
+// ────────────────────
+//    PLAYGROUND STORY
+// ────────────────────
+
+export const Playground: Story = {
+  render: () => html`
+    <div
+      style="display:flex;flex-direction:column;gap:16px;max-inline-size:600px;"
+    >
+      <swc-conversation-turn type="user">
+        <swc-user-message>Short user question for the demo.</swc-user-message>
+      </swc-conversation-turn>
+      <swc-conversation-turn type="system">
+        <swc-system-message>
+          <swc-response-status slot="status" status="complete">
+            <span slot="label">
+              I mapped your request to a concise executive narrative and grouped
+              the response by audience and channel themes.
+            </span>
+          </swc-response-status>
+          <div class="swc-Typography--prose">
+            <p>System reply body goes here.</p>
+          </div>
+          <swc-message-feedback slot="feedback"></swc-message-feedback>
+        </swc-system-message>
+      </swc-conversation-turn>
+    </div>
+  `,
+  tags: ['dev'],
+};
+
+// ──────────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────────
+
+export const Overview: Story = {
+  render: () => html`
+    <div
+      style="display:flex;flex-direction:column;gap:16px;max-inline-size:600px;"
+    >
+      <swc-conversation-turn type="user">
+        <swc-user-message>
+          Can you summarize the attached campaign assets?
+        </swc-user-message>
+      </swc-conversation-turn>
+      <swc-conversation-turn type="system">
+        <swc-system-message>
+          <swc-response-status slot="status" status="complete">
+            <span slot="label">
+              I prioritized campaign outcomes, segmented messaging pillars, and
+              next-step actions to keep the summary presentation-ready.
+            </span>
+          </swc-response-status>
+          <div class="swc-Typography--prose">
+            <p>
+              Here is a concise summary based on the files you shared. I grouped
+              themes by audience and channel.
+            </p>
+          </div>
+          <swc-message-feedback slot="feedback"></swc-message-feedback>
+        </swc-system-message>
+      </swc-conversation-turn>
+    </div>
+  `,
+  tags: ['overview'],
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORY
+// ────────────────────────────────
+
+export const Accessibility: Story = {
+  render: () => html`
+    <div
+      style="display:flex;flex-direction:column;gap:16px;max-inline-size:600px;"
+    >
+      <swc-conversation-turn type="user">
+        <swc-user-message>Example user text.</swc-user-message>
+      </swc-conversation-turn>
+      <swc-conversation-turn
+        type="system"
+        accessible-label="Mensaje del sistema"
+      >
+        <swc-system-message>
+          <div class="swc-Typography--prose">
+            <p>Example system reply.</p>
+          </div>
+        </swc-system-message>
+      </swc-conversation-turn>
+    </div>
+  `,
+  tags: ['a11y'],
+};

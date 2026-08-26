@@ -50,7 +50,7 @@ export const secondGenA11yProject: PlaywrightTestProject = {
   testDir: './2nd-gen/',
   testMatch: [
     '**/packages/swc/components/*/test/**/*.a11y.spec.ts',
-    '**/packages/swc/patterns/conversational-ai/*/test/**/*.a11y.spec.ts',
+    '**/packages/swc/patterns/ai/*/test/**/*.a11y.spec.ts',
   ],
   use: {
     ...devices['Desktop Chrome'],
