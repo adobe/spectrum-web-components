@@ -214,7 +214,8 @@ const toVersion = argv.to.trim();
 
 // Resolve "from" from the currently installed package.
 const require = createRequire(import.meta.url);
-const installedPkgPath = require.resolve('@adobe/spectrum-tokens/package.json');
+const installedEntryPath = require.resolve('@adobe/spectrum-tokens');
+const installedPkgPath = join(dirname(installedEntryPath), 'package.json');
 const installedPkg = JSON.parse(readFileSync(installedPkgPath, 'utf8'));
 const fromVersion = installedPkg.version;
 const fromSrcDir = join(dirname(installedPkgPath), 'src');
@@ -344,12 +345,12 @@ try {
       }
     }
 
-    const output = {};
+    // Start from every existing entry (curated across past version diffs) so
+    // none are dropped, then append only the newly-found deleted tokens.
+    const output = { ...existing };
 
-    for (const name of [...deleted].sort()) {
-      if (name in existing) {
-        // Preserve previously curated replacement.
-        output[name] = existing[name];
+    for (const name of deleted) {
+      if (name in output) {
         continue;
       }
 
@@ -364,7 +365,17 @@ try {
       output[name] = findBestMatch(name, added);
     }
 
-    writeFileSync(DELETED_PATH, JSON.stringify(output, null, 2) + '\n', 'utf8');
+    const sortedOutput = Object.fromEntries(
+      Object.keys(output)
+        .sort()
+        .map((key) => [key, output[key]])
+    );
+
+    writeFileSync(
+      DELETED_PATH,
+      JSON.stringify(sortedOutput, null, 2) + '\n',
+      'utf8'
+    );
 
     const preserved = Object.keys(output).filter(
       (k) => k in existing && existing[k] !== null
