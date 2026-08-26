@@ -196,6 +196,14 @@ export class ResponseStatus extends SpectrumElement {
 
   private _labelRollRaf: number | null = null;
 
+  /**
+   * Coalesces `_scheduleDetailOverflowSync` calls into at most one
+   * `_syncDetailOverflow` measurement per animation frame. Streaming text
+   * updates and resize events can both fire many times in quick succession;
+   * each measurement forces a layout, so collapsing repeats matters.
+   */
+  private _detailOverflowRaf: number | null = null;
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }
@@ -223,7 +231,7 @@ export class ResponseStatus extends SpectrumElement {
     // Defaults to observing the host and self-manages connect/disconnect.
     new ResizeController(this, {
       callback: () => {
-        this._syncDetailOverflow();
+        this._scheduleDetailOverflowSync();
       },
     });
 
@@ -235,7 +243,7 @@ export class ResponseStatus extends SpectrumElement {
       callback: (entries) => {
         this._isVisible = entries[entries.length - 1]?.isIntersecting ?? true;
         if (this._isVisible) {
-          this._syncDetailOverflow();
+          this._scheduleDetailOverflowSync();
         }
       },
     });
@@ -260,12 +268,16 @@ export class ResponseStatus extends SpectrumElement {
       changed.has('_stepOpenOverrides') ||
       changed.has('open')
     ) {
-      this._syncDetailOverflow();
+      this._scheduleDetailOverflowSync();
     }
   }
 
   public override disconnectedCallback(): void {
     this._clearLabelRollTimers();
+    if (this._detailOverflowRaf !== null) {
+      cancelAnimationFrame(this._detailOverflowRaf);
+      this._detailOverflowRaf = null;
+    }
     // Reset to the safe default: while disconnected there's no observer
     // update to say otherwise, and a stale `false` would wrongly skip
     // `_syncDetailOverflow`'s measurement if this instance is reconnected.
@@ -668,6 +680,21 @@ export class ResponseStatus extends SpectrumElement {
       }
     }
     return true;
+  }
+
+  // Entry point for frequent triggers (streaming text updates, resize):
+  // coalesces into at most one `_syncDetailOverflow` measurement per
+  // animation frame rather than one per trigger. Call `_syncDetailOverflow`
+  // directly instead when an immediate, synchronous measurement is required.
+  private _scheduleDetailOverflowSync(): void {
+    if (this._detailOverflowRaf !== null) {
+      return;
+    }
+
+    this._detailOverflowRaf = requestAnimationFrame(() => {
+      this._detailOverflowRaf = null;
+      this._syncDetailOverflow();
+    });
   }
 
   // Measures which open step descriptions overflow their capped height so only

@@ -551,6 +551,8 @@ export const StepDisclosureTest: Story = {
 type OverflowVisibilityInternals = {
   _isVisible: boolean;
   _syncDetailOverflow: () => void;
+  _scheduleDetailOverflowSync: () => void;
+  _detailOverflowRaf: number | null;
 };
 
 export const DetailOverflowVisibilityTest: Story = {
@@ -611,6 +613,36 @@ export const DetailOverflowVisibilityTest: Story = {
 
         // The step is collapsed, so it no longer needs a focusable region.
         expect(overflowingRegion()?.hasAttribute('tabindex')).toBe(false);
+      }
+    );
+
+    await step(
+      'coalesces frequent re-measurement triggers into one animation frame',
+      async () => {
+        // Earlier steps may still have a schedule in flight; drain it first
+        // so this step starts from a clean, known state.
+        await waitFor(
+          () => {
+            expect(internals._detailOverflowRaf).toBeNull();
+          },
+          { timeout: 2000 }
+        );
+
+        internals._scheduleDetailOverflowSync();
+        const firstFrame = internals._detailOverflowRaf;
+        expect(firstFrame).not.toBeNull();
+
+        // A second trigger before the frame fires (e.g. streaming text plus a
+        // resize in the same tick) must not schedule a second measurement.
+        internals._scheduleDetailOverflowSync();
+        expect(internals._detailOverflowRaf).toBe(firstFrame);
+
+        await waitFor(
+          () => {
+            expect(internals._detailOverflowRaf).toBeNull();
+          },
+          { timeout: 2000 }
+        );
       }
     );
   },
