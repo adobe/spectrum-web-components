@@ -620,6 +620,11 @@
   padding-inline: token("spacing-75");
   overflow-x: auto;
   overflow-y: hidden;
+
+  /* Reserve room for the horizontal scrollbar so a classic (space-consuming)
+   * scrollbar draws below the tiles instead of over their bottom edge.
+   * No effect where scrollbars are overlay, so it adds no dead space there. */
+  scrollbar-gutter: stable;
   scroll-behavior: smooth;
 
   /* proximity avoids a forced re-snap when the chevrons change scroll-padding */
