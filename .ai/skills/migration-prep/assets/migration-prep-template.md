@@ -218,7 +218,7 @@ Summarize additive aspects across the following categories.
 
 ## 2nd-gen API decisions
 
-These are derived from the 1st-gen implementation, current deprecations, the Figma Desktop [component] spec, the React S2 implementation, and the rendering roadmap. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
+These are derived from the 1st-gen implementation, current deprecations, the Figma `S2 / Web` [component] spec, the React S2 implementation, and the rendering roadmap. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
 
 Use lightweight confidence labels where helpful:
 

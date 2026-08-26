@@ -55,7 +55,7 @@ Before writing anything, read the `### Documentation` section of the migration p
 Before writing any "when to use" or "why to use" descriptions for sizes, variants, states, or behaviors — **stop and ask the user** for the authoritative source. Acceptable sources include:
 
 - The [Spectrum 2 Design site](https://s2.spectrum.corp.adobe.com/)
-- The component's Figma spec
+- The component's Figma spec from `S2 / Web`
 - The 1st-gen component README (`1st-gen/packages/[component]/README.md`)
 - An explicit statement in the migration plan
 

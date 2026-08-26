@@ -21,38 +21,39 @@ import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 
 import { CrossIcon } from '../utils/icons/index.js';
 
-import styles from './upload-artifact.css';
+import visuallyHiddenStyles from '../../../stylesheets/_lit-styles/visually-hidden.css';
+import styles from './upload-attachment.css';
 
 /**
- * Shared upload artifact primitive with card and media types.
+ * Shared upload attachment primitive with card and media types.
  * Do not mix `type="card"` and `type="media"` in the same attachment strip.
  * When uploads mix images and documents, normalize to one layout (typically all `type="media"` with thumbnails and optional badges).
  *
  * This tile has no default `tabindex` of its own. Its dismiss button is natively
  * tabbable when used standalone; `swc-prompt-field` manages its Tab-key sequence
- * for tiles slotted into its `artifact` slot.
+ * for tiles slotted into its `attachment` slot.
  *
- * @element swc-upload-artifact
+ * @element swc-upload-attachment
  *
  * @example
- * <swc-upload-artifact type="card" dismissible>
+ * <swc-upload-attachment type="card" dismissible>
  *   <span slot="title">Brief.pdf</span>
- * </swc-upload-artifact>
+ * </swc-upload-attachment>
  *
  * @slot thumbnail - Shared visual slot for icon/thumbnail/preview image.
  * @slot badge - Optional file-type badge rendered over `type="media"` previews (for example, "PDF").
  * @slot title - Primary text label.
  * @slot subtitle - Secondary text label.
  * @slot actions - Optional trailing actions.
- * @fires swc-upload-artifact-dismiss - Dispatched when the dismiss button is pressed.
- * Detail: `{ artifact: this }`
+ * @fires swc-upload-attachment-dismiss - Dispatched when the dismiss button is pressed.
+ * Detail: `{ attachment: this }`
  */
-export class UploadArtifact extends SpectrumElement {
-  /** Visual treatment type for this artifact. */
+export class UploadAttachment extends SpectrumElement {
+  /** Visual treatment type for this attachment. */
   @property({ type: String, reflect: true })
   public type: 'card' | 'media' = 'card';
 
-  /** When `true`, show a dismiss affordance and emit `swc-upload-artifact-dismiss` on click. */
+  /** When `true`, show a dismiss affordance and emit `swc-upload-attachment-dismiss` on click. */
   @property({ type: Boolean, reflect: true })
   public dismissible = false;
 
@@ -77,13 +78,27 @@ export class UploadArtifact extends SpectrumElement {
   @query('slot[name="title"]')
   private _titleSlot?: HTMLSlotElement;
 
+  private _titleObserver = new MutationObserver(() => this.requestUpdate());
+
   public static override get styles(): CSSResultArray {
-    return [styles];
+    return [styles, visuallyHiddenStyles];
   }
 
   protected override firstUpdated(_changed: PropertyValues<this>): void {
     super.firstUpdated(_changed);
     this.setAttribute('role', 'group');
+  }
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    if (this._titleSlot) {
+      this._observeTitleSlot(this._titleSlot);
+    }
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this._titleObserver.disconnect();
   }
 
   protected override willUpdate(_changed: PropertyValues<this>): void {
@@ -92,6 +107,26 @@ export class UploadArtifact extends SpectrumElement {
 
   private _titleText(): string {
     return this._titleSlot ? (getLabelFromSlot('', this._titleSlot) ?? '') : '';
+  }
+
+  /**
+   * Splits a filename for middle truncation: the end keeps the extension plus
+   * a few leading characters (so the file type stays visible even when the
+   * name is clipped), everything before that is left for the start span to
+   * ellipsize.
+   */
+  private _splitTitleForMiddleTruncation(name: string): {
+    start: string;
+    end: string;
+  } {
+    const dot = name.lastIndexOf('.');
+    // Keep the extension and three preceding characters visible; extensionless names use the same six-character tail budget.
+    const tailLength = dot > -1 ? name.length - dot + 3 : 6;
+    const keep = Math.min(tailLength, Math.max(0, name.length - 1));
+    return {
+      start: name.slice(0, name.length - keep),
+      end: name.slice(name.length - keep),
+    };
   }
 
   private _syncHostAccessibleLabel(): void {
@@ -112,7 +147,19 @@ export class UploadArtifact extends SpectrumElement {
     return title ? `Remove ${title}` : 'Remove attachment';
   }
 
-  private _handleTitleSlotChange(): void {
+  private _observeTitleSlot(slot: HTMLSlotElement): void {
+    this._titleObserver.disconnect();
+    for (const node of slot.assignedNodes({ flatten: true })) {
+      this._titleObserver.observe(node, {
+        characterData: true,
+        childList: true,
+        subtree: true,
+      });
+    }
+  }
+
+  private _handleTitleSlotChange(event: Event): void {
+    this._observeTitleSlot(event.target as HTMLSlotElement);
     this._syncHostAccessibleLabel();
     this.requestUpdate();
   }
@@ -127,10 +174,10 @@ export class UploadArtifact extends SpectrumElement {
 
   private _handleDismissClick(): void {
     this.dispatchEvent(
-      new CustomEvent('swc-upload-artifact-dismiss', {
+      new CustomEvent('swc-upload-attachment-dismiss', {
         bubbles: true,
         composed: true,
-        detail: { artifact: this },
+        detail: { attachment: this },
       })
     );
   }
@@ -138,7 +185,7 @@ export class UploadArtifact extends SpectrumElement {
   private _renderDismissButton(): TemplateResult {
     return html`
       <swc-action-button
-        class="swc-UploadArtifact-dismiss"
+        class="swc-UploadAttachment-dismiss"
         tabindex=${ifDefined(this.closest('swc-prompt-field') ? -1 : undefined)}
         accessible-label=${this._resolvedDismissLabel()}
         ?hidden=${!this.dismissible}
@@ -146,7 +193,7 @@ export class UploadArtifact extends SpectrumElement {
       >
         <span
           slot="icon"
-          class="swc-UploadArtifact-dismiss-icon"
+          class="swc-UploadAttachment-dismiss-icon"
           aria-hidden="true"
         >
           ${CrossIcon()}
@@ -167,7 +214,7 @@ export class UploadArtifact extends SpectrumElement {
     }
 
     return html`
-      <div class="swc-UploadArtifact-badge">
+      <div class="swc-UploadAttachment-badge">
         <slot name="badge" @slotchange=${this._handleBadgeSlotChange}></slot>
       </div>
     `;
@@ -175,12 +222,12 @@ export class UploadArtifact extends SpectrumElement {
 
   private _renderMediaSurface(): TemplateResult {
     return html`
-      <div class="swc-UploadArtifact-surface">
-        <div class="swc-UploadArtifact-thumbnail">
+      <div class="swc-UploadAttachment-surface">
+        <div class="swc-UploadAttachment-thumbnail">
           <slot name="thumbnail"></slot>
         </div>
         ${this._renderBadge()}
-        <div class="swc-UploadArtifact-actions">
+        <div class="swc-UploadAttachment-actions">
           <slot name="actions"></slot>
         </div>
         <slot
@@ -193,23 +240,34 @@ export class UploadArtifact extends SpectrumElement {
   }
 
   private _renderCardSurface(): TemplateResult {
+    const { start, end } = this._splitTitleForMiddleTruncation(
+      this._titleText()
+    );
     return html`
-      <div class="swc-UploadArtifact-surface">
-        <div class="swc-UploadArtifact-thumbnail">
+      <div class="swc-UploadAttachment-surface">
+        <div class="swc-UploadAttachment-thumbnail">
           <slot name="thumbnail"></slot>
         </div>
-        <div class="swc-UploadArtifact-meta">
-          <div class="swc-UploadArtifact-title">
+        <div class="swc-UploadAttachment-meta">
+          <div class="swc-UploadAttachment-title">
+            <span class="swc-UploadAttachment-title-start" aria-hidden="true">
+              ${start}
+            </span>
+            <span class="swc-UploadAttachment-title-end" aria-hidden="true">
+              ${end}
+            </span>
             <slot
               name="title"
+              class="swc-VisuallyHidden"
+              hidden
               @slotchange=${this._handleTitleSlotChange}
             ></slot>
           </div>
-          <div class="swc-UploadArtifact-subtitle">
+          <div class="swc-UploadAttachment-subtitle">
             <slot name="subtitle"></slot>
           </div>
         </div>
-        <div class="swc-UploadArtifact-actions">
+        <div class="swc-UploadAttachment-actions">
           <slot name="actions"></slot>
         </div>
       </div>
@@ -219,7 +277,7 @@ export class UploadArtifact extends SpectrumElement {
   protected override render(): TemplateResult {
     return html`
       ${this._renderDismissButton()}
-      <div class="swc-UploadArtifact">
+      <div class="swc-UploadAttachment">
         ${this.type === 'media'
           ? this._renderMediaSurface()
           : this._renderCardSurface()}
