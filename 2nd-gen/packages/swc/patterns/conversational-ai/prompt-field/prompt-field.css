@@ -477,9 +477,10 @@
   padding-inline: 0;
 }
 
-/* When the strip overflows, its scroll container adds padding-block-end for the
- * scrollbar; trim the attachments-to-text gap by that same amount so the total
- * distance matches the non-scrolling case (the default spacing-300 gap). */
+/* When the strip overflows, the scroll container reserves padding-block-end
+ * (--_swc-prompt-field-attachment-scrollbar-size) for the scrollbar. Subtract
+ * that from the gap so the total tiles-to-text distance stays spacing-300 (16px),
+ * the same as the non-overflowing case above. */
 .swc-PromptField-input-area:has(.swc-PromptField-attachments-scroll:is(.has-scroll-prev, .has-scroll-next)) {
   gap: calc(token("spacing-300") - var(--_swc-prompt-field-attachment-scrollbar-size));
 }
