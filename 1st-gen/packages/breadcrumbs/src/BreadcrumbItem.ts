@@ -91,6 +91,9 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
   ): void {
     super.attributeChangedCallback(name, old, value);
     if (name === 'dir' || name === 'lang') {
+      if (name === 'dir') {
+        this.dirNeedsResolve = true;
+      }
       this.requestUpdate();
     }
   }
@@ -109,8 +112,27 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
 
     for (const ancestor of ancestorElements(this)) {
       this.ancestorDirUnsubscribes.push(
-        observeAttribute(ancestor, 'dir', () => this.requestUpdate())
+        observeAttribute(ancestor, 'dir', () => {
+          this.dirNeedsResolve = true;
+          this.requestUpdate();
+        })
       );
+    }
+  }
+
+  // Cached result of `getComputedStyle(this).direction`, used by
+  // `renderSeparator()`. `dirNeedsResolve` starts `true` so the first render
+  // resolves it; after that it's only re-resolved in `willUpdate()` when
+  // `dir` actually changed on this host or a watched ancestor, not on every
+  // render an unrelated property change (e.g. a `ResizeObserver`-driven
+  // layout pass) triggers.
+  private ambientDir: 'ltr' | 'rtl' = 'ltr';
+  private dirNeedsResolve = true;
+
+  protected override willUpdate(): void {
+    if (this.dirNeedsResolve) {
+      this.dirNeedsResolve = false;
+      this.ambientDir = getComputedStyle(this).direction as 'ltr' | 'rtl';
     }
   }
 
@@ -181,16 +203,16 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
     // chain, independent of the CSS `direction` property — so it still
     // picks up this host's own `dir` (set for `#item-link`'s content, per
     // `renderLink()`) even though `:host([dir]) { direction: inherit; }` keeps the
-    // host's own *computed* direction tied to the ambient context. Read that
-    // computed value and set it explicitly here so `:dir()` on `#separator`
-    // resolves from its own accurate attribute instead of the host's.
-    const ambientDir = getComputedStyle(this).direction as 'ltr' | 'rtl';
+    // host's own *computed* direction tied to the ambient context. `ambientDir`
+    // (resolved in `willUpdate()`) holds that computed value so `:dir()` on
+    // `#separator` resolves from its own accurate attribute instead of the
+    // host's.
     return html`
       <sp-icon-chevron100
         id="separator"
         size="xs"
         class="spectrum-UIIcon-ChevronRight100"
-        dir=${ambientDir}
+        dir=${this.ambientDir}
       ></sp-icon-chevron100>
     `;
   }

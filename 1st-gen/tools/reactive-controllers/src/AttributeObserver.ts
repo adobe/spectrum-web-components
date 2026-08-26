@@ -35,11 +35,32 @@ function processRecords(records: MutationRecord[]): void {
   }
 }
 
-function reconnect(): void {
+// Adds or updates the observation for a single target. Calling `observe()`
+// again on a target the observer already watches replaces that target's
+// filter in place; it has no effect on any other target's observation, so
+// this never needs to touch the rest of the registry.
+function observeTarget(
+  target: Element,
+  attributes: Map<string, Set<AttributeChangeListener>>
+): void {
+  if (!sharedObserver) {
+    sharedObserver = new MutationObserver(processRecords);
+  }
+  sharedObserver.observe(target, {
+    attributes: true,
+    attributeFilter: Array.from(attributes.keys()),
+  });
+}
+
+// `MutationObserver` has no per-target `unobserve()`, so fully dropping a
+// target/attribute requires disconnecting and re-observing everything that's
+// left. Only removal needs this; adding a target/attribute can reuse the
+// existing observer via `observeTarget()` above.
+function reconnectAll(): void {
   if (sharedObserver) {
     // `disconnect()` discards any records already queued but not yet
     // delivered to the callback, so a mutation that lands right before an
-    // unrelated component's mount/unmount triggers `reconnect()` would
+    // unrelated component's unmount triggers `reconnectAll()` would
     // otherwise be silently dropped. Drain and process them first.
     processRecords(sharedObserver.takeRecords());
     sharedObserver.disconnect();
@@ -50,10 +71,7 @@ function reconnect(): void {
     return;
   }
 
-  if (!sharedObserver) {
-    sharedObserver = new MutationObserver(processRecords);
-  }
-
+  sharedObserver = new MutationObserver(processRecords);
   for (const [target, attributes] of registry) {
     sharedObserver.observe(target, {
       attributes: true,
@@ -74,19 +92,25 @@ export function observeAttribute(
   listener: AttributeChangeListener
 ): () => void {
   let attributes = registry.get(target);
+  const isNewTarget = !attributes;
   if (!attributes) {
     attributes = new Map();
     registry.set(target, attributes);
   }
 
   let listeners = attributes.get(attribute);
+  const isNewAttribute = !listeners;
   if (!listeners) {
     listeners = new Set();
     attributes.set(attribute, listeners);
   }
 
   listeners.add(listener);
-  reconnect();
+  // A target/attribute pair already being observed just gets another
+  // listener added to its existing `Set`; no observer change needed.
+  if (isNewTarget || isNewAttribute) {
+    observeTarget(target, attributes);
+  }
 
   return () => {
     listeners.delete(listener);
@@ -95,7 +119,7 @@ export function observeAttribute(
       if (attributes.size === 0) {
         registry.delete(target);
       }
+      reconnectAll();
     }
-    reconnect();
   };
 }
