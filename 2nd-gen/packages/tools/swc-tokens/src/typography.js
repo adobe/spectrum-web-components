@@ -529,7 +529,6 @@ async function loadTokensJson(tokenModulePath) {
 async function loadTypographyJson(variants = DEFAULT_VARIANTS) {
   const tokenSources = [
     '@adobe/spectrum-tokens/src/typography.json',
-    '@adobe/spectrum-tokens/src/layout-component.json',
     // As of spectrum-tokens 15.x, per-variant typography tokens live in their
     // own files (heading.json, body.json, …) instead of typography.json.
     ...variants.map((v) => `@adobe/spectrum-tokens/src/${v}.json`),
