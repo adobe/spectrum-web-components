@@ -485,21 +485,34 @@ function waitForScrollEnd(
 
     scrollEl.addEventListener('scrollend', finish, { once: true });
 
-    let lastScrollLeft = scrollEl.scrollLeft;
+    const startScrollLeft = scrollEl.scrollLeft;
+    let lastScrollLeft = startScrollLeft;
+    let hasMoved = false;
     let stableFrames = 0;
+    // Smooth scrolling does not start on the first frames after the click, so
+    // the position is briefly stable at its start value. Only treat a run of
+    // stable frames as "settled" once movement has actually been observed;
+    // the frame cap keeps this from hanging if the scroll never moves.
+    let framesLeft = 120;
     const poll = (): void => {
       if (settled) {
         return;
       }
-      if (scrollEl.scrollLeft === lastScrollLeft) {
+      if (scrollEl.scrollLeft !== lastScrollLeft) {
+        hasMoved = true;
+        stableFrames = 0;
+        lastScrollLeft = scrollEl.scrollLeft;
+      } else if (hasMoved) {
         stableFrames += 1;
         if (stableFrames >= 3) {
           finish();
           return;
         }
-      } else {
-        stableFrames = 0;
-        lastScrollLeft = scrollEl.scrollLeft;
+      }
+      framesLeft -= 1;
+      if (framesLeft <= 0) {
+        finish();
+        return;
       }
       requestAnimationFrame(poll);
     };
