@@ -94,6 +94,7 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
       if (name === 'dir') {
         this.dirNeedsResolve = true;
       }
+
       this.requestUpdate();
     }
   }

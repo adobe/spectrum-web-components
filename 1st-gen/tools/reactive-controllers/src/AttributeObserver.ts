@@ -93,6 +93,7 @@ export function observeAttribute(
 ): () => void {
   let attributes = registry.get(target);
   const isNewTarget = !attributes;
+
   if (!attributes) {
     attributes = new Map();
     registry.set(target, attributes);
@@ -100,6 +101,7 @@ export function observeAttribute(
 
   let listeners = attributes.get(attribute);
   const isNewAttribute = !listeners;
+
   if (!listeners) {
     listeners = new Set();
     attributes.set(attribute, listeners);
