@@ -679,7 +679,10 @@
   align-items: start;
   inline-size: max-content;
   min-inline-size: 100%;
-  block-size: var(--swc-prompt-field-attachment-media-block-size, 68px);
+
+  /* min, not a fixed size: media rows stay 68px while taller card tiles grow
+   * the row instead of being clipped by the scroll container's overflow-y. */
+  min-block-size: var(--swc-prompt-field-attachment-media-block-size, 68px);
 }
 
 .swc-PromptField-attachments-tiles > slot {
