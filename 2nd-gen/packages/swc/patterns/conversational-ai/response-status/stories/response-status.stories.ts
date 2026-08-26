@@ -187,6 +187,28 @@ const completeSteps = html`
   </swc-response-status-step>
 `;
 
+const stoppedSteps = html`
+  <swc-response-status-step status="complete">
+    <span slot="label">Looked through documentation</span>
+    <span slot="description">
+      Scanned internal knowledge base articles matching the query context.
+    </span>
+  </swc-response-status-step>
+  <swc-response-status-step status="complete">
+    <span slot="label">
+      Searching web for: Carnival cruise trip packages Europe Asia
+    </span>
+    <span slot="description">
+      Found 8 relevant results across travel aggregators and official cruise
+      line sites.
+    </span>
+  </swc-response-status-step>
+  <swc-response-status-step status="stopped">
+    <span slot="label">Searching repositories for Europe trips</span>
+    <span slot="description">Interrupted before this step could finish.</span>
+  </swc-response-status-step>
+`;
+
 const allStateSteps = html`
   <swc-response-status-step status="complete">
     <span slot="label">Looked through documentation</span>
@@ -272,6 +294,7 @@ export const Statuses: Story = {
       </swc-response-status>
       <swc-response-status status="stopped">
         <span slot="label">You stopped the response</span>
+        ${stoppedSteps}
       </swc-response-status>
     </div>
   `,
