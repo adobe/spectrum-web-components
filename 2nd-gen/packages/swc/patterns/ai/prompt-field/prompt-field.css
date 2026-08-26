@@ -465,12 +465,24 @@
    ───────────────────────────────────── */
 
 .swc-PromptField-input-area {
+  /* Room reserved below the tiles for the scrollbar when the strip overflows;
+   * inherits down to the scroll container and is subtracted from the gap. */
+  --_swc-prompt-field-attachment-scrollbar-size: token("spacing-200");
+
   display: flex;
   flex-direction: column;
   gap: token("spacing-300");
   min-inline-size: 0;
   padding-block-start: 0;
   padding-inline: 0;
+}
+
+/* When the strip overflows, the scroll container reserves padding-block-end
+ * (--_swc-prompt-field-attachment-scrollbar-size) for the scrollbar. Subtract
+ * that from the gap so the total tiles-to-text distance stays spacing-300 (16px),
+ * the same as the non-overflowing case above. */
+.swc-PromptField-input-area:has(.swc-PromptField-attachments-scroll:is(.has-scroll-prev, .has-scroll-next)) {
+  gap: calc(token("spacing-300") - var(--_swc-prompt-field-attachment-scrollbar-size));
 }
 
 /* ─────────────────────────────────────
@@ -625,7 +637,6 @@
   /* proximity avoids a forced re-snap when the chevrons change scroll-padding */
   scroll-snap-type: inline proximity;
   scroll-padding-inline: token("spacing-75");
-  scrollbar-color: token("gray-400") transparent;
   mask-image: linear-gradient(to right, transparent 0, transparent calc(var(--_swc-prompt-field-attachment-fade-start) - var(--_swc-prompt-field-attachment-fade-soft)), black var(--_swc-prompt-field-attachment-fade-start), black calc(100% - var(--_swc-prompt-field-attachment-fade-end)), transparent calc(100% - var(--_swc-prompt-field-attachment-fade-end) + var(--_swc-prompt-field-attachment-fade-soft)), transparent 100%);
 }
 
@@ -649,18 +660,17 @@
   scroll-padding-inline-end: calc(token("component-height-100") + token("spacing-400") + token("spacing-75"));
 }
 
+/* When the strip overflows (either chevron active), reserve room below the
+ * tiles for the scrollbar. The input-area trims the attachments-to-text gap by
+ * the same amount, so the total distance stays constant with or without it. */
+.swc-PromptField-attachments-scroll:is(.has-scroll-prev, .has-scroll-next) {
+  padding-block-end: var(--_swc-prompt-field-attachment-scrollbar-size);
+}
+
 /* Flip the physical mask direction in RTL so fade-start/end (driven by the
  * logical prev/next scroll state above) still land on the correct edge. */
 :host(:dir(rtl)) .swc-PromptField-attachments-scroll {
   mask-image: linear-gradient(to left, transparent 0, transparent calc(var(--_swc-prompt-field-attachment-fade-start) - var(--_swc-prompt-field-attachment-fade-soft)), black var(--_swc-prompt-field-attachment-fade-start), black calc(100% - var(--_swc-prompt-field-attachment-fade-end)), transparent calc(100% - var(--_swc-prompt-field-attachment-fade-end) + var(--_swc-prompt-field-attachment-fade-soft)), transparent 100%);
-}
-
-.swc-PromptField-attachments-scroll::-webkit-scrollbar {
-  background: transparent;
-}
-
-.swc-PromptField-attachments-scroll::-webkit-scrollbar-track {
-  background: transparent;
 }
 
 .swc-PromptField-attachments-tiles {
@@ -669,7 +679,10 @@
   align-items: start;
   inline-size: max-content;
   min-inline-size: 100%;
-  block-size: var(--swc-prompt-field-attachment-media-block-size, 68px);
+
+  /* min, not a fixed size: media rows stay 68px while taller card tiles grow
+   * the row instead of being clipped by the scroll container's overflow-y. */
+  min-block-size: var(--swc-prompt-field-attachment-media-block-size, 68px);
 }
 
 .swc-PromptField-attachments-tiles > slot {
@@ -717,6 +730,9 @@
   z-index: 4;
   flex: 0 0 auto;
   transform: translateY(-50%);
+
+  /* Fade the edge chevrons in and out as they enable/disable instead of popping. */
+  transition: opacity token("animation-duration-100") token("animation-ease-in-out");
 }
 
 /* aria-disabled, not the disabled attribute, and hidden with opacity, not
@@ -909,6 +925,11 @@ slot[name="legal"] {
 @media (prefers-reduced-motion: reduce) {
   .swc-PromptField-attachments-scroll {
     scroll-behavior: auto;
+  }
+
+  .swc-PromptField-attachments-scroll-prev,
+  .swc-PromptField-attachments-scroll-next {
+    transition: none;
   }
 }
 

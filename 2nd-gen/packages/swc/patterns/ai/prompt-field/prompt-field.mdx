@@ -11,9 +11,9 @@ import * as PromptFieldStories from './stories/prompt-field.stories';
 
 A prompt field consists of:
 
-1. **Box**: white card container with shadow, starting as a taller multiline card by default or a single-line row via the `collapsed` attribute.
+1. **Box**: white card container with shadow, starting as a taller multiline card by default.
 2. **Input area**: visually hidden label + textarea.
-3. **Action bar**: upload trigger (left) and send/stop action (right); shown on its own row by default, otherwise (when `collapsed`) the send/stop action sits inline with the textarea instead.
+3. **Action bar**: upload trigger (left) and send/stop action (right), shown on its own row.
 4. **Footer**: legal disclaimer rendered below the prompt surface. Required in product implementations.
 
 <Canvas of={PromptFieldStories.Anatomy} />
@@ -43,15 +43,6 @@ The two name sets don't overlap, so one attribute covers both.
 
 The indicator is decorative (`aria-hidden`); the generating state is conveyed to assistive technology by the stop button that replaces send.
 
-### Layout
-
-The `collapsed` attribute controls the field's expanded/collapsed layout:
-
-- **Expanded (default)**: taller card with a separate action bar below the textarea, showing the upload button alongside send/stop.
-- **`collapsed`**: starts as a single-line row with the send/stop button inline with the textarea and no upload button shown; the textarea still wraps and grows with content like the expanded layout, it just starts more compact.
-
-Toggling `collapsed` animates between the two layouts.
-
 The textarea grows with content up to `--swc-prompt-field-max-block-size` (default `40vh`). Override the custom property to raise or lower this ceiling, e.g. `40%` of a sized parent:
 
 ```html
@@ -63,8 +54,6 @@ The textarea grows with content up to `--swc-prompt-field-max-block-size` (defau
 ```
 
 `min-rows`/`max-rows` add an optional row-count cap on top of this. Unset, only `--swc-prompt-field-max-block-size` applies.
-
-<Canvas of={PromptFieldStories.Layout} />
 
 ### Legal disclaimer
 

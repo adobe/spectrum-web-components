@@ -105,7 +105,13 @@ export class PromptField extends SpectrumElement {
   @property({ type: Boolean, reflect: true })
   public generating = false;
 
-  /** Starts as a single-line layout with send/stop inline instead of the default layout with a separate action bar; the textarea still wraps and grows with content either way. */
+  /**
+   * Starts as a single-line layout with send/stop inline instead of the default
+   * layout with a separate action bar; the textarea still wraps and grows with
+   * content either way.
+   *
+   * @internal
+   */
   @property({ type: Boolean, reflect: true })
   public collapsed = false;
 
