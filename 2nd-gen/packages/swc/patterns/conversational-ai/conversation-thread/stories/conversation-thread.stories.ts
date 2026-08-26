@@ -247,7 +247,10 @@ const DEMO_STEP_INTERVAL_MS = 1200;
 const DEMO_GENERATION_DURATION_MS =
   (DEMO_LOADING_STEP_COUNT + 1) * DEMO_STEP_INTERVAL_MS;
 
-const renderDemoResponseStatusSteps = (stepIndex: number, complete: boolean) => {
+const renderDemoResponseStatusSteps = (
+  stepIndex: number,
+  complete: boolean
+) => {
   const steps = complete
     ? DEMO_RESPONSE_STEPS
     : DEMO_RESPONSE_STEPS.slice(0, stepIndex + 1);
