@@ -13,6 +13,7 @@
 import { html } from 'lit';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import isChromatic from 'chromatic/isChromatic';
 
 import {
   ICON_VALID_SIZES,
@@ -109,22 +110,33 @@ export const Permutations: Story = {
 // icon's drawing is caught. One theme is enough to catch geometry regressions; the
 // color axis is covered by Permutations above.
 export const Gallery: Story = {
-  // Register the full set only when the gallery renders, not on module load.
+  // The full 413-icon grid is the Chromatic snapshot's job. The Vitest smoke run (every
+  // browser, WebKit included) only needs to prove the gallery renders, so it draws the
+  // featured sample instead of holding 413 shadow roots + element definitions in memory —
+  // that load was killing the WebKit CI browser process.
   loaders: [
     async () => {
-      await import('../../src/elements.js');
+      if (isChromatic()) {
+        await import('../../src/elements.js');
+      }
       return {};
     },
   ],
-  render: () =>
-    theme(
+  render: () => {
+    const icons = isChromatic()
+      ? WORKFLOW_ICONS
+      : WORKFLOW_ICONS.filter(({ tag }) =>
+          (FEATURED as readonly string[]).includes(tag)
+        );
+    return theme(
       row(
-        WORKFLOW_ICONS.map(({ name, tag }) => renderIcon(tag, 'm', name)),
+        icons.map(({ name, tag }) => renderIcon(tag, 'm', name)),
         'All workflow icons'
       ),
       'light',
       'ltr'
-    ),
+    );
+  },
   parameters: vrtParameters,
 };
 
