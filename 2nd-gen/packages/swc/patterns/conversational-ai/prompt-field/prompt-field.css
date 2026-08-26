@@ -465,6 +465,10 @@
    ───────────────────────────────────── */
 
 .swc-PromptField-input-area {
+  /* Room reserved below the tiles for the scrollbar when the strip overflows;
+   * inherits down to the scroll container and is subtracted from the gap. */
+  --_swc-prompt-field-attachment-scrollbar-size: token("spacing-75");
+
   display: flex;
   flex-direction: column;
   gap: token("spacing-300");
@@ -477,7 +481,7 @@
  * scrollbar; trim the attachments-to-text gap by that same amount so the total
  * distance matches the non-scrolling case (the default spacing-300 gap). */
 .swc-PromptField-input-area:has(.swc-PromptField-attachments-scroll:is(.has-scroll-prev, .has-scroll-next)) {
-  gap: calc(token("spacing-300") - token("spacing-75"));
+  gap: calc(token("spacing-300") - var(--_swc-prompt-field-attachment-scrollbar-size));
 }
 
 /* ─────────────────────────────────────
@@ -659,7 +663,7 @@
  * tiles for the scrollbar. The input-area trims the attachments-to-text gap by
  * the same amount, so the total distance stays constant with or without it. */
 .swc-PromptField-attachments-scroll:is(.has-scroll-prev, .has-scroll-next) {
-  padding-block-end: token("spacing-75");
+  padding-block-end: var(--_swc-prompt-field-attachment-scrollbar-size);
 }
 
 /* Flip the physical mask direction in RTL so fade-start/end (driven by the
