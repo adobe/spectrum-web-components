@@ -731,13 +731,6 @@
   transition: opacity token("animation-duration-100") token("animation-ease-in-out");
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .swc-PromptField-attachments-scroll-prev,
-  .swc-PromptField-attachments-scroll-next {
-    transition: none;
-  }
-}
-
 /* aria-disabled, not the disabled attribute, and hidden with opacity, not
  * display/visibility: a chevron at the end of the strip stays mounted so the
  * layout and edge fades don't shift. If it had focus, the component moves focus
@@ -928,6 +921,11 @@ slot[name="legal"] {
 @media (prefers-reduced-motion: reduce) {
   .swc-PromptField-attachments-scroll {
     scroll-behavior: auto;
+  }
+
+  .swc-PromptField-attachments-scroll-prev,
+  .swc-PromptField-attachments-scroll-next {
+    transition: none;
   }
 }
 
