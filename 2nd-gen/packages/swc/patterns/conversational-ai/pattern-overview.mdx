@@ -4,7 +4,7 @@ import { addons } from '@storybook/preview-api';
 import * as ConversationThreadStories from './conversation-thread/stories/conversation-thread.stories';
 import * as ConversationTurnStories from './conversation-turn/stories/conversation-turn.stories';
 import * as PromptFieldStories from './prompt-field/stories/prompt-field.stories';
-import * as UploadArtifactStories from './upload-artifact/stories/upload-artifact.stories';
+import * as UploadAttachmentStories from './upload-attachment/stories/upload-attachment.stories';
 import * as UserMessageStories from './user-message/stories/user-message.stories';
 import * as SystemMessageStories from './system-message/stories/system-message.stories';
 import * as ResponseStatusStories from './response-status/stories/response-status.stories';
@@ -102,12 +102,12 @@ The **`+`** button should open a menu with, at minimum, **Add from Adobe cloud s
   ]}
 />
 
-#### `swc-upload-artifact`
+#### `swc-upload-attachment`
 
 Renders a staged attachment inside `swc-prompt-field` before the message is sent. Use one layout type per strip (`card` or `media`). For mixed image and document uploads, normalize to media tiles with thumbnails and optional badges.
 
 <Canvas
-  of={UploadArtifactStories.MediaWithBadge}
+  of={UploadAttachmentStories.MediaWithBadge}
   additionalActions={[
     {
       title: 'Component docs',
@@ -116,7 +116,7 @@ Renders a staged attachment inside `swc-prompt-field` before the message is sent
           .getChannel()
           .emit(
             'navigateUrl',
-            '/?path=/docs/patterns-conversational-ai-upload-artifact--docs'
+            '/?path=/docs/patterns-conversational-ai-upload-attachment--docs'
           ),
     },
   ]}
