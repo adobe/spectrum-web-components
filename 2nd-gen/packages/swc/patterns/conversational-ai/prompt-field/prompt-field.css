@@ -473,9 +473,17 @@
   padding-inline: 0;
 }
 
-/* Tighten the attachments-to-text spacing. */
+/* Attachments-to-text spacing. The single layout uses this flex gap; the
+ * multiple layout drops it (gap: 0 below) and gets the same distance from its
+ * scroll container's padding-block-end, so the scrollbar draws in that space
+ * instead of adding to it. This keeps the distance consistent whether or not a
+ * scrollbar is present. */
 .swc-PromptField-input-area.has-attachment {
   gap: token("spacing-200");
+}
+
+.swc-PromptField-input-area:has(.swc-PromptField-attachments--multiple) {
+  gap: 0;
 }
 
 /* ─────────────────────────────────────
