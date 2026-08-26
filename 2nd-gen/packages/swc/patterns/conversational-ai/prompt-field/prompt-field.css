@@ -467,7 +467,7 @@
 .swc-PromptField-input-area {
   /* Room reserved below the tiles for the scrollbar when the strip overflows;
    * inherits down to the scroll container and is subtracted from the gap. */
-  --_swc-prompt-field-attachment-scrollbar-size: token("spacing-75");
+  --_swc-prompt-field-attachment-scrollbar-size: token("spacing-200");
 
   display: flex;
   flex-direction: column;
