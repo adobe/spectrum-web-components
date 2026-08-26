@@ -76,7 +76,10 @@ commands:
 
             if [ -n "$RELEVANT" ]; then
               echo "<< parameters.gen >>-relevant changes detected:"
-              echo "$RELEVANT" | head -20
+              # `|| true`: under bash -eo pipefail (CircleCI default), a large
+              # $RELEVANT makes `head` close the pipe early and `echo` exit 141
+              # (SIGPIPE), which would fail this gate on big diffs.
+              echo "$RELEVANT" | head -20 || true
               echo "Running."
             else
               echo "Only docs/other-gen changes; halting because << parameters.gen >> is not affected."
