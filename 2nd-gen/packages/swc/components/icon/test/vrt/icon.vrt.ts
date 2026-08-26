@@ -50,15 +50,14 @@ const sizeLabels = {
   xl: 'Extra-large',
 } as const satisfies Record<IconSize, string>;
 
-const icon = (
-  { size, accessibleLabel }: { size: IconSize; accessibleLabel?: string },
-  style?: string
-) => html`
-  <swc-icon
-    size=${size}
-    accessible-label=${accessibleLabel ?? nothing}
-    style=${style ?? nothing}
-  >
+const icon = ({
+  size,
+  accessibleLabel,
+}: {
+  size: IconSize;
+  accessibleLabel?: string;
+}) => html`
+  <swc-icon size=${size} accessible-label=${accessibleLabel ?? nothing}>
     ${iconSvg}
   </swc-icon>
 `;
@@ -73,7 +72,13 @@ const permutationContent = () => html`
   ${row([icon({ size: 'm', accessibleLabel: 'Search' })], 'Labeled (role=img)')}
   ${row([icon({ size: 'm' })], 'Decorative (aria-hidden)')}
   ${row(
-    [icon({ size: 'm', accessibleLabel: 'Search' }, 'color: blueviolet;')],
+    [
+      html`
+        <div style="color: blueviolet;">
+          ${icon({ size: 'm', accessibleLabel: 'Search' })}
+        </div>
+      `,
+    ],
     'Inherited color (currentColor)'
   )}
 `;
