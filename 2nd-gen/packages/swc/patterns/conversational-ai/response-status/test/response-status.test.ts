@@ -225,16 +225,6 @@ export const StepApiTest: Story = {
                 ?.querySelector('.swc-ResponseStatus-label')
                 ?.textContent?.trim()
             ).toBe('Processing…');
-            expect(
-              el.shadowRoot?.querySelector(
-                '.swc-ResponseStatus-label--emphasized'
-              )
-            ).toBeTruthy();
-            expect(
-              el.shadowRoot?.querySelector(
-                '.swc-ResponseStatus-loader--emphasized'
-              )
-            ).toBeTruthy();
           },
           { timeout: 2000 }
         );
@@ -254,16 +244,6 @@ export const StepApiTest: Story = {
                 ?.querySelector('.swc-ResponseStatus-label')
                 ?.textContent?.trim()
             ).toBe('Gathering information from the web');
-            expect(
-              el.shadowRoot?.querySelector(
-                '.swc-ResponseStatus-label--emphasized'
-              )
-            ).toBeNull();
-            expect(
-              el.shadowRoot?.querySelector(
-                '.swc-ResponseStatus-loader--emphasized'
-              )
-            ).toBeNull();
           },
           { timeout: 2000 }
         );
@@ -287,16 +267,6 @@ export const StepApiTest: Story = {
                 ?.querySelector('.swc-ResponseStatus-label')
                 ?.textContent?.trim()
             ).not.toBe('Processing…');
-            expect(
-              el.shadowRoot?.querySelector(
-                '.swc-ResponseStatus-label--emphasized'
-              )
-            ).toBeNull();
-            expect(
-              el.shadowRoot?.querySelector(
-                '.swc-ResponseStatus-loader--emphasized'
-              )
-            ).toBeNull();
           },
           { timeout: 2000 }
         );

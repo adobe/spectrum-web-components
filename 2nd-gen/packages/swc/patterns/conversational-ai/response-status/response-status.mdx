@@ -93,7 +93,7 @@ A step description shorter than the cap keeps its natural height. When it exceed
 
 Header-label cadence is consumer-managed. The component rolls the header label whenever its text changes; your app decides when to update that text. If you stream rapid status updates, keep each visible label readable for about 1 second before replacing it.
 
-When `slot="label"` is empty and the response is `active`, the header falls back to the active step's label while the step timeline is closed. While it's open and at least one step hasn't finished, the header shows a generic "Processing…" label instead, in a higher-emphasis color, since the specific step is already visible in the timeline below. The pixel loader icon picks up the same higher-emphasis color while that label is showing.
+When `slot="label"` is empty and the response is `active`, the header falls back to the active step's label while the step timeline is closed. While it's open and at least one step hasn't finished, the header shows a generic "Processing…" label instead, since the specific step is already visible in the timeline below.
 
 Once settled (no roll transition in flight), the label wraps across up to 2 lines instead of truncating to one, so it stays more readable in a narrow container or with a longer translation. Text beyond that ellipses on the last visible line. Override the cap with the `--swc-response-status-label-max-lines` custom property. A label stays constrained to a single line only for the brief moment it is actively rolling to a new value.
 

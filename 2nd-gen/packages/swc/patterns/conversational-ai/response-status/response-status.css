@@ -56,10 +56,6 @@
   text-align: start;
 }
 
-.swc-ResponseStatus-label--emphasized {
-  --swc-body-font-color: token("neutral-content-color-default");
-}
-
 /* Label + chevron trail (header label roll) */
 
 .swc-ResponseStatus-headerTrail {
@@ -150,10 +146,6 @@
   --swc-pixel-loader-color: token("gray-600");
 
   flex-shrink: 0;
-}
-
-.swc-ResponseStatus-loader--emphasized {
-  --swc-pixel-loader-color: token("neutral-content-color-default");
 }
 
 .swc-ResponseStatus-row--button:hover {

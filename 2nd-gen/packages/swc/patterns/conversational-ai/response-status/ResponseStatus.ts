@@ -467,9 +467,8 @@ export class ResponseStatus extends SpectrumElement {
   // Whether the header should read as still generating: the timeline is open
   // and at least one step is still active. `stopped` is a terminal state
   // (like `complete`), not still-processing, so it's excluded too. Drives
-  // both the generic "Processing…" label and the full-emphasis loader/label
-  // color.
-  private get _showsProcessingEmphasis(): boolean {
+  // the generic "Processing…" label fallback below.
+  private get _showsGenericProcessingLabel(): boolean {
     return (
       this._resolvedStatus === 'active' &&
       this.open &&
@@ -485,7 +484,7 @@ export class ResponseStatus extends SpectrumElement {
     const status = this._resolvedStatus;
 
     if (status === 'active') {
-      if (this._showsProcessingEmphasis) {
+      if (this._showsGenericProcessingLabel) {
         return ResponseStatus.ACTIVE_STEP_OPEN_LABEL;
       }
 
@@ -578,17 +577,9 @@ export class ResponseStatus extends SpectrumElement {
     return this._displayedLabel || this._getHeaderLabel();
   }
 
-  // The generic "Processing…" fallback reads as full-emphasis text; the
-  // active-step label it replaces (and any consumer-provided label) stays
-  // subdued, matching the Figma spec's contrast between the two states.
-  private _labelClassFor(label: string): string {
-    return label === ResponseStatus.ACTIVE_STEP_OPEN_LABEL
-      ? `${ResponseStatus.STATUS_LABEL_CLASS} swc-ResponseStatus-label--emphasized`
-      : ResponseStatus.STATUS_LABEL_CLASS;
-  }
-
   private _renderLabel(showDisclosure: boolean, open: boolean): TemplateResult {
     const chevron = showDisclosure ? this._renderChevron(open) : nothing;
+    const labelClass = ResponseStatus.STATUS_LABEL_CLASS;
 
     if (!this._rollActive) {
       // Settled (no transition in flight): the roll geometry below assumes a
@@ -596,7 +587,6 @@ export class ResponseStatus extends SpectrumElement {
       // rolling. At rest, let the label wrap across multiple lines instead of
       // truncating, since a narrow container (or a longer translation) can
       // easily exceed one line's width.
-      const label = this._currentVisibleLabel();
       return html`
         <span
           class="swc-ResponseStatus-headerTrailViewport swc-ResponseStatus-headerTrailViewport--settled"
@@ -605,7 +595,7 @@ export class ResponseStatus extends SpectrumElement {
             <span
               class="swc-ResponseStatus-headerTrailLine swc-ResponseStatus-headerTrailLine--settled"
             >
-              <span class=${this._labelClassFor(label)}>${label}</span>
+              <span class=${labelClass}>${this._currentVisibleLabel()}</span>
               ${chevron}
             </span>
           </span>
@@ -621,15 +611,11 @@ export class ResponseStatus extends SpectrumElement {
       <span class="swc-ResponseStatus-headerTrailViewport">
         <span class=${stripClass}>
           <span class="swc-ResponseStatus-headerTrailLine" aria-hidden="true">
-            <span class=${this._labelClassFor(this._rollFromLabel)}>
-              ${this._rollFromLabel}
-            </span>
+            <span class=${labelClass}>${this._rollFromLabel}</span>
             ${chevron}
           </span>
           <span class="swc-ResponseStatus-headerTrailLine">
-            <span class=${this._labelClassFor(this._rollToLabel)}>
-              ${this._rollToLabel}
-            </span>
+            <span class=${labelClass}>${this._rollToLabel}</span>
             ${chevron}
           </span>
         </span>
@@ -756,13 +742,10 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _renderLoader(): TemplateResult {
-    const loaderClass = this._showsProcessingEmphasis
-      ? 'swc-ResponseStatus-loader swc-ResponseStatus-loader--emphasized'
-      : 'swc-ResponseStatus-loader';
     const { preset, icon } = this._resolvedLoader;
     return html`
       <swc-pixel-loader
-        class=${loaderClass}
+        class="swc-ResponseStatus-loader"
         preset=${ifDefined(preset)}
         icon=${ifDefined(icon)}
         aria-hidden="true"
