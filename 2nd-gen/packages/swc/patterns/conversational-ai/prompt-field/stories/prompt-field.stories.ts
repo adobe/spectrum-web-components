@@ -16,7 +16,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '../../upload-artifact/swc-upload-artifact.js';
+import '../../upload-attachment/swc-upload-attachment.js';
 import '../swc-prompt-field.js';
 
 // ────────────────
@@ -59,10 +59,12 @@ function renderPromptField(
       send-label=${storyArgs['send-label'] ?? 'Send'}
       stop-label=${storyArgs['stop-label'] ?? 'Stop generating'}
       upload-label=${storyArgs['upload-label'] ?? 'Add attachment'}
-      artifact-scroll-prev-label=${storyArgs['artifact-scroll-prev-label'] ??
-      'Show previous attachments'}
-      artifact-scroll-next-label=${storyArgs['artifact-scroll-next-label'] ??
-      'Show more attachments'}
+      attachment-scroll-prev-label=${storyArgs[
+        'attachment-scroll-prev-label'
+      ] ?? 'Show previous attachments'}
+      attachment-scroll-next-label=${storyArgs[
+        'attachment-scroll-next-label'
+      ] ?? 'Show more attachments'}
       min-rows=${ifDefined(storyArgs['min-rows'] || undefined)}
       max-rows=${ifDefined(storyArgs['max-rows'] || undefined)}
       style=${ifDefined(
@@ -91,7 +93,7 @@ const meta: Meta = {
     docs: {
       packagePath: 'patterns/conversational-ai/prompt-field',
       subtitle:
-        'Prompt entry surface for conversational AI flows. Populate attachments by slotting one or more swc-upload-artifact nodes into artifact',
+        'Prompt entry surface for conversational AI flows. Populate attachments by slotting one or more swc-upload-attachment nodes into attachment',
     },
     layout: 'padded',
   },
@@ -229,39 +231,39 @@ export const Layout: Story = {
   tags: ['options'],
 };
 
-export const Artifact: Story = {
+export const Attachment: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <p
         class="swc-Detail swc-Detail--sizeS"
         style="margin:0;max-inline-size:720px;"
       >
-        <strong>artifact</strong>
+        <strong>attachment</strong>
         : Slot one or more
-        <code>&lt;swc-upload-artifact slot="artifact"&gt;</code>
+        <code>&lt;swc-upload-attachment slot="attachment"&gt;</code>
         nodes above the textarea. Use one layout type per session (card or
         media). When uploads mix images and documents, normalize to media tiles
         with badges. See
         <strong>Multi-card</strong>
         and
         <strong>Multi-media</strong>
-        on the upload-artifact page.
+        on the upload-attachment page.
       </p>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
           label="Prompt"
           value="Use attached assets for a launch plan."
         >
-          <swc-upload-artifact slot="artifact" type="card" dismissible>
+          <swc-upload-attachment slot="attachment" type="card" dismissible>
             <div slot="thumbnail" role="img" aria-label="PDF"></div>
             <span slot="title">Brand guidelines</span>
             <span slot="subtitle">PDF</span>
-          </swc-upload-artifact>
-          <swc-upload-artifact slot="artifact" type="card" dismissible>
+          </swc-upload-attachment>
+          <swc-upload-attachment slot="attachment" type="card" dismissible>
             <div slot="thumbnail" role="img" aria-label="Spreadsheet"></div>
             <span slot="title">Q2 metrics draft</span>
             <span slot="subtitle">XLSX</span>
-          </swc-upload-artifact>
+          </swc-upload-attachment>
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
@@ -273,15 +275,15 @@ export const Artifact: Story = {
           label="Prompt"
           value="Review these storyboard frames."
         >
-          <swc-upload-artifact slot="artifact" type="media" dismissible>
+          <swc-upload-attachment slot="attachment" type="media" dismissible>
             <img
               slot="thumbnail"
               src="https://picsum.photos/id/64/68/68"
               alt="Campaign still"
               style="inline-size:100%;block-size:100%;object-fit:cover;"
             />
-          </swc-upload-artifact>
-          <swc-upload-artifact slot="artifact" type="media" dismissible>
+          </swc-upload-attachment>
+          <swc-upload-attachment slot="attachment" type="media" dismissible>
             <img
               slot="thumbnail"
               src="https://picsum.photos/id/56/68/68"
@@ -289,7 +291,7 @@ export const Artifact: Story = {
               style="inline-size:100%;block-size:100%;object-fit:cover;"
             />
             <span slot="badge">PDF</span>
-          </swc-upload-artifact>
+          </swc-upload-attachment>
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
@@ -304,25 +306,25 @@ export const Artifact: Story = {
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
-          <swc-upload-artifact slot="artifact" type="card" dismissible>
+          <swc-upload-attachment slot="attachment" type="card" dismissible>
             <div slot="thumbnail" role="img" aria-label="PDF"></div>
             <span slot="title">Hilton commercial assets</span>
             <span slot="subtitle">2026</span>
-          </swc-upload-artifact>
+          </swc-upload-attachment>
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">Single card</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
-          <swc-upload-artifact slot="artifact" type="media" dismissible>
+          <swc-upload-attachment slot="attachment" type="media" dismissible>
             <img
               slot="thumbnail"
               src="https://picsum.photos/id/823/68/68"
               alt="Attachment preview"
               style="inline-size:100%;block-size:100%;object-fit:cover;"
             />
-          </swc-upload-artifact>
+          </swc-upload-attachment>
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">Single media</span>
@@ -332,7 +334,7 @@ export const Artifact: Story = {
   tags: ['options'],
 };
 
-const multiArtifactScrollGradients = [
+const multiAttachmentScrollGradients = [
   'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
   'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
   'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
@@ -347,13 +349,13 @@ const multiArtifactScrollGradients = [
   'linear-gradient(135deg, #f77062 0%, #fe5196 100%)',
 ] as const;
 
-const multiArtifactScrollBadges: Record<number, string> = {
+const multiAttachmentScrollBadges: Record<number, string> = {
   9: 'MP4',
   10: 'MP4',
   11: 'PDF',
 };
 
-export const MultiArtifactScroll: Story = {
+export const MultiAttachmentScroll: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:16px;inline-size:100%;">
       <p class="swc-Detail swc-Detail--sizeS" style="margin:0;">
@@ -363,23 +365,23 @@ export const MultiArtifactScroll: Story = {
         overflowing strip uses the platform's native scrollbar.
       </p>
       <swc-prompt-field label="Prompt" value="Review these storyboard frames.">
-        ${multiArtifactScrollGradients.map(
+        ${multiAttachmentScrollGradients.map(
           (gradient, index) => html`
-            <swc-upload-artifact slot="artifact" type="media" dismissible>
+            <swc-upload-attachment slot="attachment" type="media" dismissible>
               <div
                 slot="thumbnail"
                 role="img"
                 aria-label="Storyboard frame ${index + 1}"
                 style="inline-size:100%;block-size:100%;background:${gradient};"
               ></div>
-              ${multiArtifactScrollBadges[index]
+              ${multiAttachmentScrollBadges[index]
                 ? html`
                     <span slot="badge">
-                      ${multiArtifactScrollBadges[index]}
+                      ${multiAttachmentScrollBadges[index]}
                     </span>
                   `
                 : nothing}
-            </swc-upload-artifact>
+            </swc-upload-attachment>
           `
         )}
         ${legalDisclaimerSlot}
@@ -444,7 +446,7 @@ export const States: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────
 
-interface PromptFieldBehaviorArtifact {
+interface PromptFieldBehaviorAttachment {
   id: string;
   fileName: string;
   sizeLabel: string;
@@ -457,7 +459,7 @@ function fileBadgeLabel(fileName: string): string | undefined {
   return extension ? extension.toUpperCase() : undefined;
 }
 
-function filesToArtifacts(files: File[]): PromptFieldBehaviorArtifact[] {
+function filesToAttachments(files: File[]): PromptFieldBehaviorAttachment[] {
   return files.map((file, index) => {
     const isImage =
       file.type.startsWith('image/') ||
@@ -468,7 +470,7 @@ function filesToArtifacts(files: File[]): PromptFieldBehaviorArtifact[] {
       sizeLabel: `${Math.max(1, Math.round(file.size / 1024))} KB`,
       thumbnailUrl: isImage ? URL.createObjectURL(file) : undefined,
       badgeLabel: isImage ? undefined : fileBadgeLabel(file.name),
-    } satisfies PromptFieldBehaviorArtifact;
+    } satisfies PromptFieldBehaviorAttachment;
   });
 }
 
@@ -478,20 +480,20 @@ class PromptFieldBehaviorDemo extends LitElement {
   private value = 'Summarize the API changes in this branch.';
 
   @state()
-  private artifacts: PromptFieldBehaviorArtifact[] = [];
+  private attachments: PromptFieldBehaviorAttachment[] = [];
 
   @state()
   private readout =
-    'Type, submit, add an attachment, or dismiss an artifact to inspect prompt-field integration.';
+    'Type, submit, add an attachment, or dismiss an attachment to inspect prompt-field integration.';
 
   protected override createRenderRoot(): this {
     return this;
   }
 
   public override disconnectedCallback(): void {
-    for (const artifact of this.artifacts) {
-      if (artifact.thumbnailUrl) {
-        URL.revokeObjectURL(artifact.thumbnailUrl);
+    for (const attachment of this.attachments) {
+      if (attachment.thumbnailUrl) {
+        URL.revokeObjectURL(attachment.thumbnailUrl);
       }
     }
     super.disconnectedCallback?.();
@@ -505,13 +507,13 @@ class PromptFieldBehaviorDemo extends LitElement {
 
   private _handleSubmit(event: Event): void {
     const { value } = (event as CustomEvent<{ value: string }>).detail;
-    for (const artifact of this.artifacts) {
-      if (artifact.thumbnailUrl) {
-        URL.revokeObjectURL(artifact.thumbnailUrl);
+    for (const attachment of this.attachments) {
+      if (attachment.thumbnailUrl) {
+        URL.revokeObjectURL(attachment.thumbnailUrl);
       }
     }
     this.value = '';
-    this.artifacts = [];
+    this.attachments = [];
     this.readout = `Last swc-prompt-field-submit: detail.value = "${value}" and the consumer cleared the composer.`;
   }
 
@@ -530,32 +532,35 @@ class PromptFieldBehaviorDemo extends LitElement {
       return;
     }
 
-    this.artifacts = [...this.artifacts, ...filesToArtifacts(files)];
-    this.readout = `External picker selected ${files.length} file${files.length === 1 ? '' : 's'} and the consumer slotted media upload artifacts into the prompt.`;
+    const nextAttachments = filesToAttachments(files);
+    this.attachments = [...this.attachments, ...nextAttachments];
+    this.readout = `External picker selected ${files.length} file${files.length === 1 ? '' : 's'} and the consumer slotted media upload attachments into the prompt.`;
     input.value = '';
   }
 
   private _handleDrop(event: Event): void {
     const { files } = (event as CustomEvent<{ files: File[] }>).detail;
-    this.artifacts = [...this.artifacts, ...filesToArtifacts(files)];
-    this.readout = `swc-prompt-field-drop delivered ${files.length} file${files.length === 1 ? '' : 's'} and the consumer slotted media upload artifacts into the prompt.`;
+    this.attachments = [...this.attachments, ...filesToAttachments(files)];
+    this.readout = `swc-prompt-field-drop delivered ${files.length} file${files.length === 1 ? '' : 's'} and the consumer slotted media upload attachments into the prompt.`;
   }
 
-  private _handleArtifactDismiss(event: Event): void {
-    const artifact = event.target as HTMLElement | null;
-    const artifactId = artifact?.getAttribute('data-artifact-id');
-    if (!artifactId) {
+  private _handleAttachmentDismiss(event: Event): void {
+    const attachment = event.target as HTMLElement | null;
+    const attachmentId = attachment?.getAttribute('data-attachment-id');
+    if (!attachmentId) {
       return;
     }
 
-    const removed = this.artifacts.find((item) => item.id === artifactId);
+    const removed = this.attachments.find((item) => item.id === attachmentId);
     if (removed?.thumbnailUrl) {
       URL.revokeObjectURL(removed.thumbnailUrl);
     }
 
-    this.artifacts = this.artifacts.filter((item) => item.id !== artifactId);
+    this.attachments = this.attachments.filter(
+      (item) => item.id !== attachmentId
+    );
     this.readout =
-      'Last swc-upload-artifact-dismiss: the consumer removed the slotted artifact.';
+      'Last swc-upload-attachment-dismiss: the consumer removed the slotted attachment.';
   }
 
   protected override render() {
@@ -571,22 +576,22 @@ class PromptFieldBehaviorDemo extends LitElement {
             @swc-prompt-field-submit=${this._handleSubmit}
             @swc-prompt-field-upload-click=${this._handleUploadClick}
             @swc-prompt-field-drop=${this._handleDrop}
-            @swc-upload-artifact-dismiss=${this._handleArtifactDismiss}
+            @swc-upload-attachment-dismiss=${this._handleAttachmentDismiss}
           >
-            ${this.artifacts.map(
-              (artifact) => html`
-                <swc-upload-artifact
-                  slot="artifact"
+            ${this.attachments.map(
+              (attachment) => html`
+                <swc-upload-attachment
+                  slot="attachment"
                   type="media"
                   dismissible
-                  data-artifact-id=${artifact.id}
+                  data-attachment-id=${attachment.id}
                 >
-                  ${artifact.thumbnailUrl
+                  ${attachment.thumbnailUrl
                     ? html`
                         <img
                           slot="thumbnail"
-                          src=${artifact.thumbnailUrl}
-                          alt=${artifact.fileName}
+                          src=${attachment.thumbnailUrl}
+                          alt=${attachment.fileName}
                           style="inline-size:100%;block-size:100%;object-fit:cover;"
                         />
                       `
@@ -594,16 +599,16 @@ class PromptFieldBehaviorDemo extends LitElement {
                         <div
                           slot="thumbnail"
                           role="img"
-                          aria-label=${artifact.fileName}
+                          aria-label=${attachment.fileName}
                           style="inline-size:100%;block-size:100%;background:#f3f3f3;"
                         ></div>
                       `}
-                  ${artifact.badgeLabel
+                  ${attachment.badgeLabel
                     ? html`
-                        <span slot="badge">${artifact.badgeLabel}</span>
+                        <span slot="badge">${attachment.badgeLabel}</span>
                       `
                     : nothing}
-                </swc-upload-artifact>
+                </swc-upload-attachment>
               `
             )}
             ${legalDisclaimerSlot}
@@ -616,7 +621,7 @@ class PromptFieldBehaviorDemo extends LitElement {
             @change=${this._handleFileChange}
           />
           <span class="swc-Detail swc-Detail--sizeS">
-            Input, submit, upload trigger, and external artifact handling
+            Input, submit, upload trigger, and external attachment handling
           </span>
         </div>
         <p class="swc-Detail swc-Detail--sizeS" style="margin:0;">

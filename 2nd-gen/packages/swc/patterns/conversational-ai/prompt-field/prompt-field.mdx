@@ -72,42 +72,42 @@ Every prompt field in production must include Legal-approved disclaimer copy bel
 
 Slotted `legal` content inherits the footer typography automatically. When it contains links, add the `swc-Typography--links` class to the wrapping element so the links inherit that typography and render in the subdued neutral color instead of the default accent blue. `swc-prompt-field` logs a development warning when the `legal` slot is empty.
 
-### Artifact
+### Attachment
 
-Artifact layout is inferred from the **`artifact`** slot content:
+Attachment layout is inferred from the **`attachment`** slot content:
 
-- No slot content: no artifact region
-- **`swc-upload-artifact type="card"`**: file-style card artifacts (one or more)
-- **`swc-upload-artifact type="media"`**: media tile artifacts (one or more, with or without badge)
+- No slot content: no attachment region
+- **`swc-upload-attachment type="card"`**: file-style card attachments (one or more)
+- **`swc-upload-attachment type="media"`**: media tile attachments (one or more, with or without badge)
 
-**Use one layout type per composer session** (`card` or `media`). Slot multiple artifacts of that same type: for example, several cards or several media tiles. Do not mix `card` and `media` in the same strip; `swc-prompt-field` logs a development warning when both are detected.
+**Use one layout type per composer session** (`card` or `media`). Slot multiple attachments of that same type: for example, several cards or several media tiles. Do not mix `card` and `media` in the same strip; `swc-prompt-field` logs a development warning when both are detected.
 
 This rule is about **component layout**, not file MIME type. You can attach many files in one session as long as they share the same layout:
 
 - **Document-only uploads** where title and subtitle carry meaning → all **`type="card"`**
 - **Visual previews** (photos, storyboard frames) → all **`type="media"`**
-- **Mixed images and documents in one batch** → normalize to all **`type="media"`**: image previews in `thumbnail`, and document tiles with a preview or icon in `thumbnail` plus an optional **`badge`** (for example, "PDF"). See **[Media with badge](/docs/patterns-conversational-ai-upload-artifact--docs#media-with-badge)**.
+- **Mixed images and documents in one batch** → normalize to all **`type="media"`**: image previews in `thumbnail`, and document tiles with a preview or icon in `thumbnail` plus an optional **`badge`** (for example, "PDF"). See **[Media with badge](/docs/patterns-conversational-ai-upload-attachment--docs#media-with-badge)**.
 
-**Populate the attachment strip** by slotting **one `<swc-upload-artifact>` per file**, each with **`slot="artifact"`** (same slot name repeated).
+**Populate the attachment strip** by slotting **one `<swc-upload-attachment>` per file**, each with **`slot="attachment"`** (same slot name repeated).
 
-For additional card and media gallery examples, see **[Multi-card](/docs/patterns-conversational-ai-upload-artifact--docs#multi-card)** and **[Multi-media](/docs/patterns-conversational-ai-upload-artifact--docs#multi-media)**.
+For additional card and media gallery examples, see **[Multi-card](/docs/patterns-conversational-ai-upload-attachment--docs#multi-card)** and **[Multi-media](/docs/patterns-conversational-ai-upload-attachment--docs#multi-media)**.
 
 Upload button behavior:
 
 - Emits cancelable **`swc-prompt-field-upload-click`**; consumers own picker behavior
-- Consumers provide artifacts by slotting; file selection stays in app code
+- Consumers provide attachments by slotting; file selection stays in app code
 
-Artifacts own dismiss behavior via **`dismissible`** and emit **`swc-upload-artifact-dismiss`**.
+Attachments own dismiss behavior via **`dismissible`** and emit **`swc-upload-attachment-dismiss`**.
 
-<Canvas of={PromptFieldStories.Artifact} />
+<Canvas of={PromptFieldStories.Attachment} />
 
-### Multi-artifact scroll
+### Multi-attachment scroll
 
 When several attachments exceed the composer width, the strip scrolls horizontally at full width. Round chevron buttons flank the strip and render only when scrolling is possible in that direction. Each click advances by one viewport width and settles on a tile boundary; the browser's native scroll clamping keeps the final page from overshooting the end. Edge fades on both sides signal overflow and hide at the ends of the list.
 
-Trackpad, wheel, touch scrolling, and the platform's native scrollbar all work on the artifact strip. Chevron paging does not reveal the scrollbar.
+Trackpad, wheel, touch scrolling, and the platform's native scrollbar all work on the attachment strip. Chevron paging does not reveal the scrollbar.
 
-<Canvas of={PromptFieldStories.MultiArtifactScroll} />
+<Canvas of={PromptFieldStories.MultiAttachmentScroll} />
 
 ### Upload action menu
 
@@ -116,11 +116,11 @@ Trackpad, wheel, touch scrolling, and the platform's native scrollbar all work o
 - **Add from Adobe cloud storage**
 - **Attach files**
 
-Product teams control the exact menu contents and may add more sources, but these two are the recommended baseline. Attachments added through either path should surface as staged artifacts using the same **`swc-upload-artifact`** error/invalid state as a directly-dropped file, since the artifact strip does not distinguish attachments by origin.
+Product teams control the exact menu contents and may add more sources, but these two are the recommended baseline. Attachments added through either path should surface as staged attachments using the same **`swc-upload-attachment`** error/invalid state as a directly-dropped file, since the attachment strip does not distinguish attachments by origin.
 
 ## States
 
-- **Default**: send button shown, normal interactivity; enabled once there's prompt content (value or artifact)
+- **Default**: send button shown, normal interactivity; enabled once there's prompt content (value or attachment)
 - **`generating`**: stop button shown in place of send while a response is in progress; the input remains editable
 - **`disabled`**: input, upload, and send/stop are all disabled
 
@@ -157,12 +157,12 @@ The `<swc-prompt-field>` element implements the following accessibility features
 - The `<textarea>` uses `aria-labelledby`, pointing to a visually hidden label
 - `accessible-label` can override the accessible name when needed
 - All icon buttons carry descriptive accessible names via `accessible-label`
-- `artifact-scroll-prev-label` and `artifact-scroll-next-label` let consumers localize the artifact-strip chevrons
+- `attachment-scroll-prev-label` and `attachment-scroll-next-label` let consumers localize the attachment-strip chevrons
 - The send button uses `disabled` natively when the prompt has no content
 
-#### Artifact strip keyboard navigation
+#### Attachment strip keyboard navigation
 
-The artifact strip is a `role="region"` landmark (labeled `artifact-strip-label`, default "Uploaded assets strip") wrapping roving-tabindex thumbnails; the landmark itself is not a tab stop:
+The attachment strip is a `role="region"` landmark (labeled `attachment-strip-label`, default "Uploaded assets strip") wrapping roving-tabindex thumbnails; the landmark itself is not a tab stop:
 
 - **Tab**: moves through the previous chevron when present, then directly to the active thumbnail (the first one, until Arrow keys move that roving stop elsewhere), then that thumbnail's Close button, then the next chevron when present, then out of the strip
 - **Arrow Left/Right**: move the active thumbnail one tile at a time and scroll it into view (distinct from the `<`/`>` chevrons, which page by a full set)
@@ -175,7 +175,7 @@ The artifact strip is a `role="region"` landmark (labeled `artifact-strip-label`
 - Always provide a meaningful `label` value
 - Use `accessible-label` only when a distinct non-visual name is required
 - Use `placeholder` as a hint, not a replacement for the label
-- Ensure artifact content slotted into `artifact` slot includes descriptive text
+- Ensure attachment content slotted into `attachment` slot includes descriptive text
 - Drag and drop is a progressive enhancement, not the only way to attach a file: native browser drag-and-drop has no keyboard equivalent, so the **`+`** button must stay available and fully functional for keyboard and screen reader users
 
 <Canvas of={PromptFieldStories.Accessibility} />

@@ -11,12 +11,12 @@
  */
 import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
 
-import { UploadArtifact } from './UploadArtifact.js';
+import { UploadAttachment } from './UploadAttachment.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'swc-upload-artifact': UploadArtifact;
+    'swc-upload-attachment': UploadAttachment;
   }
 }
 
-defineElement('swc-upload-artifact', UploadArtifact);
+defineElement('swc-upload-attachment', UploadAttachment);

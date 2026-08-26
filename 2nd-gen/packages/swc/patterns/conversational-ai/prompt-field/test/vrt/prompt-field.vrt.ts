@@ -14,7 +14,7 @@ import { html, nothing } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../../swc-prompt-field.js';
-import '../../../upload-artifact/swc-upload-artifact.js';
+import '../../../upload-attachment/swc-upload-attachment.js';
 
 import {
   createPermutations,
@@ -48,7 +48,7 @@ const SHORT_PROMPT = 'Summarize the API changes in this branch.';
 const LONG_PROMPT =
   'Draft a detailed launch plan covering positioning, target segments, channel strategy, budget allocation, and a week-by-week rollout timeline for the next two quarters, then list the key risks and open questions to review.';
 
-type ArtifactKind =
+type AttachmentKind =
   | 'none'
   | 'card'
   | 'cards'
@@ -56,14 +56,14 @@ type ArtifactKind =
   | 'mediaBadge'
   | 'manyMedia';
 
-// Every action button (upload, send, and both artifact-scroll chevrons),
+// Every action button (upload, send, and both attachment-scroll chevrons),
 // forced together so one snapshot captures all their hover/focus colors ahead
 // of the swc-button swap.
 const BUTTON_SELECTORS = [
   '.swc-PromptField-upload',
   '.swc-PromptField-send',
-  '.swc-PromptField-artifacts-scroll-prev',
-  '.swc-PromptField-artifacts-scroll-next',
+  '.swc-PromptField-attachments-scroll-prev',
+  '.swc-PromptField-attachments-scroll-next',
 ];
 
 type ButtonState = 'hover' | 'focus-visible';
@@ -79,16 +79,16 @@ const legalDisclaimerSlot = html`
   </p>
 `;
 
-const cardArtifact = (title: string, subtitle: string) => html`
-  <swc-upload-artifact slot="artifact" type="card" dismissible>
+const cardAttachment = (title: string, subtitle: string) => html`
+  <swc-upload-attachment slot="attachment" type="card" dismissible>
     <div slot="thumbnail" role="img" aria-label=${subtitle}></div>
     <span slot="title">${title}</span>
     <span slot="subtitle">${subtitle}</span>
-  </swc-upload-artifact>
+  </swc-upload-attachment>
 `;
 
-const mediaArtifact = (id: number, alt: string, badge?: string) => html`
-  <swc-upload-artifact slot="artifact" type="media" dismissible>
+const mediaAttachment = (id: number, alt: string, badge?: string) => html`
+  <swc-upload-attachment slot="attachment" type="media" dismissible>
     <img
       slot="thumbnail"
       src="https://picsum.photos/id/${id}/68/68"
@@ -100,32 +100,32 @@ const mediaArtifact = (id: number, alt: string, badge?: string) => html`
           <span slot="badge">${badge}</span>
         `
       : nothing}
-  </swc-upload-artifact>
+  </swc-upload-attachment>
 `;
 
-const artifactSlot = (kind: ArtifactKind) => {
+const attachmentSlot = (kind: AttachmentKind) => {
   switch (kind) {
     case 'card':
-      return cardArtifact('Brand guidelines', 'PDF');
+      return cardAttachment('Brand guidelines', 'PDF');
     case 'cards':
       return html`
-        ${cardArtifact('Brand guidelines', 'PDF')}
-        ${cardArtifact('Q2 metrics draft', 'XLSX')}
-        ${cardArtifact('Launch brief', 'DOCX')}
+        ${cardAttachment('Brand guidelines', 'PDF')}
+        ${cardAttachment('Q2 metrics draft', 'XLSX')}
+        ${cardAttachment('Launch brief', 'DOCX')}
       `;
     case 'media':
-      return mediaArtifact(64, 'Campaign still');
+      return mediaAttachment(64, 'Campaign still');
     case 'mediaBadge':
       return html`
-        ${mediaArtifact(64, 'Campaign still')}
-        ${mediaArtifact(56, 'Storyboard frame', 'PDF')}
+        ${mediaAttachment(64, 'Campaign still')}
+        ${mediaAttachment(56, 'Storyboard frame', 'PDF')}
       `;
     // Enough tiles to overflow the composer width and expose the scroll
     // chevrons and edge fades.
     case 'manyMedia':
       return html`
         ${Array.from({ length: 9 }, (_, i) =>
-          mediaArtifact([64, 56, 823][i % 3], `Frame ${i + 1}`)
+          mediaAttachment([64, 56, 823][i % 3], `Frame ${i + 1}`)
         )}
       `;
     default:
@@ -140,12 +140,12 @@ type FieldCase = {
   collapsed?: boolean;
   disabled?: boolean;
   value?: string;
-  artifact?: ArtifactKind;
+  attachment?: AttachmentKind;
   buttonState?: ButtonState;
 };
 
 // Fields render at a roomy composer width by default. Long prompts and the
-// overflowing artifact strip get a narrow width instead, so wrapping and the
+// overflowing attachment strip get a narrow width instead, so wrapping and the
 // scroll state actually trigger.
 const renderField = ({
   variant = 'balanced',
@@ -153,10 +153,10 @@ const renderField = ({
   collapsed = false,
   disabled = false,
   value = '',
-  artifact = 'none',
+  attachment = 'none',
   buttonState,
 }: FieldCase) => {
-  const constrained = value === LONG_PROMPT || artifact === 'manyMedia';
+  const constrained = value === LONG_PROMPT || attachment === 'manyMedia';
   const width = constrained
     ? 'inline-size: 380px;'
     : 'inline-size: 800px; max-inline-size: 90vw;';
@@ -172,7 +172,7 @@ const renderField = ({
         value=${value}
         data-button-state=${buttonState ?? nothing}
       >
-        ${artifactSlot(artifact)} ${legalDisclaimerSlot}
+        ${attachmentSlot(attachment)} ${legalDisclaimerSlot}
       </swc-prompt-field>
     </div>
   `;
@@ -191,7 +191,7 @@ const VARIANT_PERMUTATIONS = createPermutations([
 ]);
 
 // Anatomy, layout, and state axes on the balanced variant: text length x
-// expanded/collapsed layout, disabled, and the card/media artifact strips
+// expanded/collapsed layout, disabled, and the card/media attachment strips
 // (single, multi, and an overflowing set that triggers the scroll chevrons).
 const ANATOMY_PERMUTATIONS = createPermutations([
   {
@@ -203,25 +203,25 @@ const ANATOMY_PERMUTATIONS = createPermutations([
     group: ['Disabled'],
     disabled: [true],
     value: ['', LONG_PROMPT],
-    artifact: ['none', 'card'],
+    attachment: ['none', 'card'],
   },
   {
-    group: ['Artifacts'],
+    group: ['Attachments'],
     value: [SHORT_PROMPT],
-    artifact: ['card', 'cards', 'media', 'mediaBadge', 'manyMedia'],
+    attachment: ['card', 'cards', 'media', 'mediaBadge', 'manyMedia'],
   },
   // manyMedia overflows the strip so the scroll chevrons render and can be
   // forced alongside the upload/send buttons.
   {
     group: ['Buttons hover'],
     value: [SHORT_PROMPT],
-    artifact: ['manyMedia'],
+    attachment: ['manyMedia'],
     buttonState: ['hover'],
   },
   {
     group: ['Buttons focus'],
     value: [SHORT_PROMPT],
-    artifact: ['manyMedia'],
+    attachment: ['manyMedia'],
     buttonState: ['focus-visible'],
   },
 ]);
@@ -259,7 +259,7 @@ const forceButtonStates = async ({
       const state = field.dataset.buttonState as ButtonState;
       await waitForShadowSelector(
         field,
-        '.swc-PromptField-artifacts-scroll-next'
+        '.swc-PromptField-attachments-scroll-next'
       );
       // Each button is an swc-action-button that styles its own hover/focus on
       // its internal .swc-ActionButton, so force the state on that element.
