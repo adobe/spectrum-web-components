@@ -25,7 +25,9 @@ import {
 } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { IntersectionController } from '@lit-labs/observers/intersection-controller.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
+import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 
 import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
@@ -132,10 +134,6 @@ export class ResponseStatus extends SpectrumElement {
   @state()
   private _overflowingSteps = new Set<number>();
 
-  private _detailResizeObserver: ResizeObserver | null = null;
-
-  private _detailVisibilityObserver: IntersectionObserver | null = null;
-
   /**
    * Whether the host currently intersects the viewport. Gates
    * `_syncDetailOverflow`'s `scrollHeight`/`clientHeight` reads (each forces a
@@ -219,36 +217,32 @@ export class ResponseStatus extends SpectrumElement {
         this._syncSlotContent();
       },
     });
-  }
-
-  public override connectedCallback(): void {
-    super.connectedCallback();
 
     // Width changes reflow the description text, which can start or stop
     // overflow without any reactive state changing; re-measure on resize.
-    if (typeof ResizeObserver === 'function' && !this._detailResizeObserver) {
-      this._detailResizeObserver = new ResizeObserver(() => {
+    // Defaults to observing the host and self-manages connect/disconnect.
+    new ResizeController(this, {
+      callback: () => {
         this._syncDetailOverflow();
-      });
-      this._detailResizeObserver.observe(this);
-    }
+      },
+    });
 
     // Track viewport intersection so `_syncDetailOverflow` can skip measuring
     // while off-screen; re-sync immediately on becoming visible again to catch
-    // up on anything that changed while hidden.
-    if (
-      typeof IntersectionObserver === 'function' &&
-      !this._detailVisibilityObserver
-    ) {
-      this._detailVisibilityObserver = new IntersectionObserver((entries) => {
+    // up on anything that changed while hidden. Defaults to observing the
+    // host and self-manages connect/disconnect.
+    new IntersectionController(this, {
+      callback: (entries) => {
         this._isVisible = entries[entries.length - 1]?.isIntersecting ?? true;
         if (this._isVisible) {
           this._syncDetailOverflow();
         }
-      });
-      this._detailVisibilityObserver.observe(this);
-    }
+      },
+    });
+  }
 
+  public override connectedCallback(): void {
+    super.connectedCallback();
     this._syncSlotContent();
   }
 
@@ -272,10 +266,10 @@ export class ResponseStatus extends SpectrumElement {
 
   public override disconnectedCallback(): void {
     this._clearLabelRollTimers();
-    this._detailResizeObserver?.disconnect();
-    this._detailResizeObserver = null;
-    this._detailVisibilityObserver?.disconnect();
-    this._detailVisibilityObserver = null;
+    // Reset to the safe default: while disconnected there's no observer
+    // update to say otherwise, and a stale `false` would wrongly skip
+    // `_syncDetailOverflow`'s measurement if this instance is reconnected.
+    this._isVisible = true;
     super.disconnectedCallback();
   }
 
