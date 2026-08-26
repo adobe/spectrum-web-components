@@ -87,18 +87,18 @@ describe('observeAttribute', () => {
     let aCount = 0;
 
     const unsubscribeA = observeAttribute(elA, 'dir', () => aCount++);
+    const unsubscribeB = observeAttribute(elB, 'lang', () => undefined);
 
     // Queues a mutation record for elA synchronously; the MutationObserver
     // callback hasn't fired yet (it's scheduled as a microtask), so the
     // record is still sitting in the observer's internal queue.
     elA.setAttribute('dir', 'rtl');
 
-    // Registering a second target/attribute, as an unrelated component
-    // mounting would, triggers reconnect(), which disconnects and
-    // re-observes the shared MutationObserver. Without draining
+    // Unsubscribing the second target triggers reconnect(), which disconnects
+    // and re-observes the shared MutationObserver. Without draining
     // takeRecords() first, this would silently discard elA's still-pending
     // record before it's ever delivered.
-    const unsubscribeB = observeAttribute(elB, 'lang', () => undefined);
+    unsubscribeB();
 
     await flushObserver();
 
@@ -108,6 +108,5 @@ describe('observeAttribute', () => {
     ).to.equal(1);
 
     unsubscribeA();
-    unsubscribeB();
   });
 });

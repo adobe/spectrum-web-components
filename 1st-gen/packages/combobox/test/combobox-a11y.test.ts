@@ -374,6 +374,66 @@ describe('Combobox accessibility', () => {
         'rtl'
       );
     });
+    it('propagates lang and dir from object options and updates the input language', async () => {
+      const el = await fixture<TestableCombobox>(html`
+        <sp-combobox
+          label="Language"
+          .options=${[
+            { value: 'he', itemText: 'עברית', lang: 'he', dir: 'rtl' },
+            { value: 'en', itemText: 'English', lang: 'en', dir: 'ltr' },
+          ]}
+        ></sp-combobox>
+      `);
+      await elementUpdated(el);
+
+      const opened = oneEvent(el, 'sp-opened');
+      el.open = true;
+      await opened;
+      await elementUpdated(el);
+
+      const renderedItem = el.shadowRoot.querySelector('#he') as MenuItem;
+      expect(renderedItem.lang, 'rendered item lang').to.equal('he');
+      expect(renderedItem.getAttribute('dir'), 'rendered item dir').to.equal(
+        'rtl'
+      );
+
+      el.value = 'עברית';
+      await elementUpdated(el);
+
+      const input = el.shadowRoot.querySelector('#input') as HTMLInputElement;
+      expect(input.lang, 'input adopts the object option lang').to.equal('he');
+    });
+    it('updates rendered items and the input language when a slotted item changes', async () => {
+      const el = await fixture<TestableCombobox>(html`
+        <sp-combobox label="Language">
+          <sp-menu-item value="he" lang="he" dir="rtl">עברית</sp-menu-item>
+        </sp-combobox>
+      `);
+      await elementUpdated(el);
+
+      const source = el.querySelector('sp-menu-item') as MenuItem;
+      const opened = oneEvent(el, 'sp-opened');
+      el.open = true;
+      await opened;
+      await elementUpdated(el);
+
+      source.setAttribute('lang', 'ar');
+      source.setAttribute('dir', 'rtl');
+      await elementUpdated(el);
+
+      const renderedItem = el.shadowRoot.querySelector('#he') as MenuItem;
+      expect(renderedItem.lang, 'updated rendered item lang').to.equal('ar');
+      expect(
+        renderedItem.getAttribute('dir'),
+        'updated rendered item dir'
+      ).to.equal('rtl');
+
+      el.value = 'עברית';
+      await elementUpdated(el);
+
+      const input = el.shadowRoot.querySelector('#input') as HTMLInputElement;
+      expect(input.lang, 'input adopts the updated item lang').to.equal('ar');
+    });
     it("syncs the input's lang to the selected option's language", async () => {
       const el = await fixture<TestableCombobox>(html`
         <sp-combobox label="Language">
@@ -427,12 +487,16 @@ describe('Combobox accessibility', () => {
       const heItem = el.shadowRoot.querySelector('#he') as MenuItem;
       expect(heItem, 'rendered item for he').to.exist;
       expect(heItem.lang, 'lang for he').to.equal('he');
-      expect(heItem.getAttribute('dir'), 'dir attribute for he').to.equal('rtl');
+      expect(heItem.getAttribute('dir'), 'dir attribute for he').to.equal(
+        'rtl'
+      );
 
       const enItem = el.shadowRoot.querySelector('#en') as MenuItem;
       expect(enItem, 'rendered item for en').to.exist;
       expect(enItem.lang, 'lang for en').to.equal('en');
-      expect(enItem.getAttribute('dir'), 'dir attribute for en').to.equal('ltr');
+      expect(enItem.getAttribute('dir'), 'dir attribute for en').to.equal(
+        'ltr'
+      );
     });
     it("syncs the input's lang to a selected plain ComboboxOption's language", async () => {
       const el = await fixture<TestableCombobox>(html`
