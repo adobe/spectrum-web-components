@@ -473,10 +473,9 @@
   padding-inline: 0;
 }
 
-/* Tighten the attachments-to-text spacing to 14px (no single spacing token
- * lands on 14, so sum 12 + 2). */
+/* Tighten the attachments-to-text spacing. */
 .swc-PromptField-input-area.has-attachment {
-  gap: calc(token("spacing-200") + token("spacing-50"));
+  gap: token("spacing-200");
 }
 
 /* ─────────────────────────────────────
