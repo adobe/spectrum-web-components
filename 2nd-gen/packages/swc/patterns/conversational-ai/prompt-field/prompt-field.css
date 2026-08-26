@@ -473,17 +473,11 @@
   padding-inline: 0;
 }
 
-/* Attachments-to-text spacing. The single layout uses this flex gap; the
- * multiple layout drops it (gap: 0 below) and gets the same distance from its
- * scroll container's padding-block-end, so the scrollbar draws in that space
- * instead of adding to it. This keeps the distance consistent whether or not a
- * scrollbar is present. */
-.swc-PromptField-input-area.has-attachment {
-  gap: token("spacing-200");
-}
-
-.swc-PromptField-input-area:has(.swc-PromptField-attachments--multiple) {
-  gap: 0;
+/* When the strip overflows, its scroll container adds padding-block-end for the
+ * scrollbar; trim the attachments-to-text gap by that same amount so the total
+ * distance matches the non-scrolling case (the default spacing-300 gap). */
+.swc-PromptField-input-area:has(.swc-PromptField-attachments-scroll:is(.has-scroll-prev, .has-scroll-next)) {
+  gap: calc(token("spacing-300") - token("spacing-75"));
 }
 
 /* ─────────────────────────────────────
@@ -630,12 +624,6 @@
   inline-size: 100%;
   max-inline-size: 100%;
   padding-block-start: var(--_swc-prompt-field-attachment-badge-clearance, 0);
-
-  /* padding-block-end reserves room for the horizontal scrollbar below the
-   * tiles so it draws in this strip instead of over their bottom edge.
-   * scrollbar-gutter only reserves the inline-axis gutter, so it can't cover
-   * a horizontal scrollbar. */
-  padding-block-end: token("spacing-200");
   padding-inline: token("spacing-75");
   overflow-x: auto;
   overflow-y: hidden;
@@ -665,6 +653,13 @@
   --_swc-prompt-field-attachment-fade-end: var(--_swc-prompt-field-attachment-fade);
 
   scroll-padding-inline-end: calc(token("component-height-100") + token("spacing-400") + token("spacing-75"));
+}
+
+/* When the strip overflows (either chevron active), reserve room below the
+ * tiles for the scrollbar. The input-area trims the attachments-to-text gap by
+ * the same amount, so the total distance stays constant with or without it. */
+.swc-PromptField-attachments-scroll:is(.has-scroll-prev, .has-scroll-next) {
+  padding-block-end: token("spacing-75");
 }
 
 /* Flip the physical mask direction in RTL so fade-start/end (driven by the
