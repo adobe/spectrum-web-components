@@ -19,6 +19,8 @@
     - [Rules](#rules)
 - [CHANGELOG output](#changelog-output)
 - [How it works](#how-it-works)
+- [Gen1's changelog rollup](#gen1s-changelog-rollup)
+- [Gen2's beta pre-release channel](#gen2s-beta-pre-release-channel)
 
 </details>
 
@@ -172,3 +174,19 @@ Each entry is automatically prefixed with the PR link and commit reference by `@
 `2nd-gen/.changeset/config.json` uses `@changesets/changelog-github` with `disableThanks: true`. This is the standard changesets GitHub changelog generator — it auto-prepends the PR link and commit reference to each entry, groups entries by bump type (`### Minor Changes`, `### Patch Changes`), and handles version headings. The `disableThanks` option suppresses the `Thanks @author!` attribution so entries stay focused on the change itself.
 
 No custom scripts are involved. The changeset body you write is preserved as-is; changesets handles all formatting and collation.
+
+## Gen1's changelog rollup
+
+1st-gen (`1st-gen/.changeset/config.json`) also uses `@changesets/changelog-github`, so per-package `CHANGELOG.md` files (e.g. `1st-gen/packages/button/CHANGELOG.md`) are generated the same way as gen2's.
+
+On top of that, gen1 runs one additional step: `yarn workspace @spectrum-web-components/1st-gen changelog:1st-gen` (`1st-gen/scripts/update-changelog.js`), which rolls up the currently pending `1st-gen/.changeset/*.md` files into a single dated entry at the top of the root `1st-gen/CHANGELOG.md`. It builds this entry independently, straight from the changeset frontmatter and body text, rather than from `@changesets/changelog-github`'s output.
+
+This script must run before `yarn changeset version`, since `changeset version` deletes each `.changeset/*.md` file once it folds it into the per-package changelogs. In the release workflow (`.github/workflows/publish.yml`), both steps run in the same job, so the resulting `1st-gen/CHANGELOG.md` rollup entry and the per-package `CHANGELOG.md` updates land in the same Version PR commit for review.
+
+Gen2 has no equivalent rollup script; it relies solely on `@changesets/changelog-github`.
+
+## Gen2's beta pre-release channel
+
+Gen2 publishes exclusively on a persistent `beta` pre-release channel; there is no `latest` channel yet. The first time the release workflow runs with pending 2nd-gen changesets, it enters changesets' pre-release mode (`yarn changeset pre enter beta`), which creates `2nd-gen/.changeset/pre.json`. Every subsequent run checks for that file and skips re-entering pre-release mode, so it only happens once. There is currently no `changeset pre exit` step configured anywhere, so gen2 stays on the `beta` channel by design.
+
+Each release bumps the pre-release number (`beta.1`, `beta.2`, and so on). This is standard `@changesets/cli` pre-release behavior, not custom logic in this repo: each `.changeset/*.md` file is consumed and deleted the first time it is folded into a version, so a given change should not reappear in a later `beta.N` entry.
