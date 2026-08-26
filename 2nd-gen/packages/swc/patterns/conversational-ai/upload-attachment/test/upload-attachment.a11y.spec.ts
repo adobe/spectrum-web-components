@@ -14,22 +14,23 @@ import { expect, test } from '@playwright/test';
 
 import { gotoStory } from '../../../../utils/a11y-helpers.js';
 
-test.describe('UploadArtifact - ARIA Snapshots', () => {
+test.describe('UploadAttachment - ARIA Snapshots', () => {
   test('should match ARIA snapshot for dismissible card content', async ({
     page,
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-conversational-ai-upload-artifact--overview',
-      'swc-upload-artifact'
+      'patterns-conversational-ai-upload-attachment--overview',
+      'swc-upload-attachment'
     );
 
-    const artifact = root.locator('swc-upload-artifact').first();
+    const attachment = root.locator('swc-upload-attachment').first();
 
-    await expect(artifact).toMatchAriaSnapshot(`
-      - button "Remove Hilton commercial assets"
-      - img "File thumbnail"
-      - text: Hilton commercial assets 2026
+    await expect(attachment).toMatchAriaSnapshot(`
+      - group "Hilton commercial assets":
+        - button "Remove Hilton commercial assets"
+        - img "File thumbnail"
+        - text: "2026"
     `);
   });
 });

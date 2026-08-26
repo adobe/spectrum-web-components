@@ -90,7 +90,7 @@
   }
 }
 
-.swc-PromptField-box:has(.swc-PromptField-input-area.has-artifact) {
+.swc-PromptField-box:has(.swc-PromptField-input-area.has-attachment) {
   padding-block-start: token("spacing-100");
 }
 
@@ -461,7 +461,7 @@
 /* stylelint-enable no-descending-specificity */
 
 /* ─────────────────────────────────────
-   Input area (artifact + text area)
+   Input area (attachment + text area)
    ───────────────────────────────────── */
 
 .swc-PromptField-input-area {
@@ -534,63 +534,63 @@
 }
 
 /* ─────────────────────────────────────
-   Uploaded artifacts
+   Uploaded attachments
    ───────────────────────────────────── */
 
-/* Match the composer buttons: tile and dismiss focus rings track the themed card (black on light, white on dark) instead of the artifact's default accent. */
-::slotted(swc-upload-artifact) {
-  --swc-upload-artifact-focus-indicator-color: light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color"));
+/* Match the composer buttons: tile and dismiss focus rings track the themed card (black on light, white on dark) instead of the attachment's default accent. */
+::slotted(swc-upload-attachment) {
+  --swc-upload-attachment-focus-indicator-color: light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color"));
 }
 
-.swc-PromptField-artifacts--single {
+.swc-PromptField-attachments--single {
   /* Reserves clearance for the dismiss badge floating above the tile's top-right corner, same as --multiple below. */
-  --_swc-prompt-field-artifact-badge-clearance: 16px;
+  --_swc-prompt-field-attachment-badge-clearance: 16px;
 
   display: flex;
   flex-wrap: wrap;
   gap: token("spacing-300");
   align-items: start;
-  padding-block-start: var(--_swc-prompt-field-artifact-badge-clearance);
+  padding-block-start: var(--_swc-prompt-field-attachment-badge-clearance);
 }
 
-.swc-PromptField-artifacts--single > slot {
+.swc-PromptField-attachments--single > slot {
   display: contents;
 }
 
-.swc-PromptField-artifacts--single > slot::slotted(*) {
+.swc-PromptField-attachments--single > slot::slotted(*) {
   flex: 0 0 auto;
 }
 
-.swc-PromptField-artifacts--single > slot::slotted([type="card"]) {
+.swc-PromptField-attachments--single > slot::slotted([type="card"]) {
   flex-shrink: 1;
   flex-basis: auto;
 }
 
-.swc-PromptField-artifacts--single > slot::slotted([type="media"]) {
+.swc-PromptField-attachments--single > slot::slotted([type="media"]) {
   box-sizing: border-box;
-  inline-size: var(--swc-prompt-field-artifact-media-inline-size, 68px);
-  min-inline-size: var(--swc-prompt-field-artifact-media-min-inline-size, 68px);
-  block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
-  min-block-size: var(--swc-prompt-field-artifact-media-min-block-size, 68px);
+  inline-size: var(--swc-prompt-field-attachment-media-inline-size, 68px);
+  min-inline-size: var(--swc-prompt-field-attachment-media-min-inline-size, 68px);
+  block-size: var(--swc-prompt-field-attachment-media-block-size, 68px);
+  min-block-size: var(--swc-prompt-field-attachment-media-min-block-size, 68px);
   aspect-ratio: 1 / 1;
 }
 
-.swc-PromptField-artifacts--multiple {
+.swc-PromptField-attachments--multiple {
   /* Dismiss badges are centered on each tile's top-right corner (see
-   * upload-artifact.css), so half of the larger (32px media) badge floats
+   * upload-attachment.css), so half of the larger (32px media) badge floats
    * above the tile. Reserve that much clearance above the row so the
    * scroll container's overflow-y: hidden doesn't clip it flat. */
-  --_swc-prompt-field-artifact-badge-clearance: 16px;
+  --_swc-prompt-field-attachment-badge-clearance: 16px;
 
   min-inline-size: 0;
 }
 
-.swc-PromptField-artifacts-row {
+.swc-PromptField-attachments-row {
   position: relative;
   inline-size: 100%;
 }
 
-.swc-PromptField-artifacts-viewport {
+.swc-PromptField-attachments-viewport {
   position: relative;
   flex: 1 1 auto;
   min-inline-size: 0;
@@ -599,24 +599,24 @@
 }
 
 /* padding-block-start reserves room for the dismiss badge, which is
- * centered on each tile's top-right corner (upload-artifact.css) and so
+ * centered on each tile's top-right corner (upload-attachment.css) and so
  * floats half outside the tile; overflow-y: hidden below would otherwise
  * clip it flat. */
-.swc-PromptField-artifacts-scroll {
+.swc-PromptField-attachments-scroll {
   /* Fade tiles to transparent at each scrollable edge so the branded card
    * wash shows through instead of a solid overlay. The fade is fully
    * transparent across the chevron zone (a plateau, so no tile peeks under the
    * button), then softens to opaque over the remaining -soft distance. */
-  --_swc-prompt-field-artifact-fade-plateau: calc(token("component-height-100") + token("spacing-75"));
-  --_swc-prompt-field-artifact-fade-soft: token("spacing-400");
-  --_swc-prompt-field-artifact-fade: calc(var(--_swc-prompt-field-artifact-fade-plateau) + var(--_swc-prompt-field-artifact-fade-soft));
-  --_swc-prompt-field-artifact-fade-start: 0px;
-  --_swc-prompt-field-artifact-fade-end: 0px;
+  --_swc-prompt-field-attachment-fade-plateau: calc(token("component-height-100") + token("spacing-75"));
+  --_swc-prompt-field-attachment-fade-soft: token("spacing-400");
+  --_swc-prompt-field-attachment-fade: calc(var(--_swc-prompt-field-attachment-fade-plateau) + var(--_swc-prompt-field-attachment-fade-soft));
+  --_swc-prompt-field-attachment-fade-start: 0px;
+  --_swc-prompt-field-attachment-fade-end: 0px;
 
   box-sizing: border-box;
   inline-size: 100%;
   max-inline-size: 100%;
-  padding-block-start: var(--_swc-prompt-field-artifact-badge-clearance, 0);
+  padding-block-start: var(--_swc-prompt-field-attachment-badge-clearance, 0);
   padding-inline: token("spacing-75");
   overflow-x: auto;
   overflow-y: hidden;
@@ -626,53 +626,53 @@
   scroll-snap-type: inline proximity;
   scroll-padding-inline: token("spacing-75");
   scrollbar-color: token("gray-400") transparent;
-  mask-image: linear-gradient(to right, transparent 0, transparent calc(var(--_swc-prompt-field-artifact-fade-start) - var(--_swc-prompt-field-artifact-fade-soft)), black var(--_swc-prompt-field-artifact-fade-start), black calc(100% - var(--_swc-prompt-field-artifact-fade-end)), transparent calc(100% - var(--_swc-prompt-field-artifact-fade-end) + var(--_swc-prompt-field-artifact-fade-soft)), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, transparent calc(var(--_swc-prompt-field-attachment-fade-start) - var(--_swc-prompt-field-attachment-fade-soft)), black var(--_swc-prompt-field-attachment-fade-start), black calc(100% - var(--_swc-prompt-field-attachment-fade-end)), transparent calc(100% - var(--_swc-prompt-field-attachment-fade-end) + var(--_swc-prompt-field-attachment-fade-soft)), transparent 100%);
 }
 
 /* Chevrons and their opaque mask are overlay siblings positioned outside
  * this scroll container, not part of its own clipping bounds, so the
- * native scrollIntoView() call in _focusArtifact() (PromptField.ts) has no
+ * native scrollIntoView() call in _focusAttachment() (PromptField.ts) has no
  * awareness of them: it can treat a tile as "already in view" while a
  * chevron is still visually covering it, leaving keyboard focus (and its
  * ring) hidden behind an opaque circle. Reserving that much scroll-padding
  * on the side a chevron is showing makes the browser bring a tile fully
  * clear of it before considering it in view. */
-.swc-PromptField-artifacts-scroll.has-scroll-prev {
-  --_swc-prompt-field-artifact-fade-start: var(--_swc-prompt-field-artifact-fade);
+.swc-PromptField-attachments-scroll.has-scroll-prev {
+  --_swc-prompt-field-attachment-fade-start: var(--_swc-prompt-field-attachment-fade);
 
   scroll-padding-inline-start: calc(token("component-height-100") + token("spacing-400") + token("spacing-75"));
 }
 
-.swc-PromptField-artifacts-scroll.has-scroll-next {
-  --_swc-prompt-field-artifact-fade-end: var(--_swc-prompt-field-artifact-fade);
+.swc-PromptField-attachments-scroll.has-scroll-next {
+  --_swc-prompt-field-attachment-fade-end: var(--_swc-prompt-field-attachment-fade);
 
   scroll-padding-inline-end: calc(token("component-height-100") + token("spacing-400") + token("spacing-75"));
 }
 
 /* Flip the physical mask direction in RTL so fade-start/end (driven by the
  * logical prev/next scroll state above) still land on the correct edge. */
-:host(:dir(rtl)) .swc-PromptField-artifacts-scroll {
-  mask-image: linear-gradient(to left, transparent 0, transparent calc(var(--_swc-prompt-field-artifact-fade-start) - var(--_swc-prompt-field-artifact-fade-soft)), black var(--_swc-prompt-field-artifact-fade-start), black calc(100% - var(--_swc-prompt-field-artifact-fade-end)), transparent calc(100% - var(--_swc-prompt-field-artifact-fade-end) + var(--_swc-prompt-field-artifact-fade-soft)), transparent 100%);
+:host(:dir(rtl)) .swc-PromptField-attachments-scroll {
+  mask-image: linear-gradient(to left, transparent 0, transparent calc(var(--_swc-prompt-field-attachment-fade-start) - var(--_swc-prompt-field-attachment-fade-soft)), black var(--_swc-prompt-field-attachment-fade-start), black calc(100% - var(--_swc-prompt-field-attachment-fade-end)), transparent calc(100% - var(--_swc-prompt-field-attachment-fade-end) + var(--_swc-prompt-field-attachment-fade-soft)), transparent 100%);
 }
 
-.swc-PromptField-artifacts-scroll::-webkit-scrollbar {
+.swc-PromptField-attachments-scroll::-webkit-scrollbar {
   background: transparent;
 }
 
-.swc-PromptField-artifacts-scroll::-webkit-scrollbar-track {
+.swc-PromptField-attachments-scroll::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.swc-PromptField-artifacts-tiles {
+.swc-PromptField-attachments-tiles {
   display: flex;
   flex-wrap: nowrap;
   align-items: start;
   inline-size: max-content;
   min-inline-size: 100%;
-  block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
+  block-size: var(--swc-prompt-field-attachment-media-block-size, 68px);
 }
 
-.swc-PromptField-artifacts-tiles > slot {
+.swc-PromptField-attachments-tiles > slot {
   display: flex;
   flex: 0 0 auto;
   flex-wrap: nowrap;
@@ -680,40 +680,40 @@
   align-items: start;
 }
 
-.swc-PromptField-artifacts-tiles > slot::slotted(*) {
+.swc-PromptField-attachments-tiles > slot::slotted(*) {
   flex: 0 0 auto;
   scroll-snap-align: start;
 }
 
-.swc-PromptField-artifacts-tiles > slot::slotted([type="card"]) {
+.swc-PromptField-attachments-tiles > slot::slotted([type="card"]) {
   box-sizing: border-box;
-  inline-size: var(--swc-prompt-field-artifact-card-inline-size, 240px);
-  min-inline-size: var(--swc-prompt-field-artifact-card-inline-size, 240px);
-  max-inline-size: var(--swc-prompt-field-artifact-card-inline-size, 240px);
+  inline-size: var(--swc-prompt-field-attachment-card-inline-size, 240px);
+  min-inline-size: var(--swc-prompt-field-attachment-card-inline-size, 240px);
+  max-inline-size: var(--swc-prompt-field-attachment-card-inline-size, 240px);
 }
 
-.swc-PromptField-artifacts-tiles > slot::slotted([type="media"]) {
+.swc-PromptField-attachments-tiles > slot::slotted([type="media"]) {
   box-sizing: border-box;
-  inline-size: var(--swc-prompt-field-artifact-media-inline-size, 68px);
-  min-inline-size: var(--swc-prompt-field-artifact-media-min-inline-size, 68px);
-  max-inline-size: var(--swc-prompt-field-artifact-media-inline-size, 68px);
-  block-size: var(--swc-prompt-field-artifact-media-block-size, 68px);
-  min-block-size: var(--swc-prompt-field-artifact-media-min-block-size, 68px);
+  inline-size: var(--swc-prompt-field-attachment-media-inline-size, 68px);
+  min-inline-size: var(--swc-prompt-field-attachment-media-min-inline-size, 68px);
+  max-inline-size: var(--swc-prompt-field-attachment-media-inline-size, 68px);
+  block-size: var(--swc-prompt-field-attachment-media-block-size, 68px);
+  min-block-size: var(--swc-prompt-field-attachment-media-min-block-size, 68px);
   aspect-ratio: 1 / 1;
 }
 
 /* Positioning + a full corner radius (round circle); other appearance comes
  * from swc-action-button. */
-.swc-PromptField-artifacts-scroll-prev,
-.swc-PromptField-artifacts-scroll-next {
-  --_swc-prompt-field-artifact-scroll-icon-transform: none;
+.swc-PromptField-attachments-scroll-prev,
+.swc-PromptField-attachments-scroll-next {
+  --_swc-prompt-field-attachment-scroll-icon-transform: none;
 
   /* Focus ring tracks the themed card (black on light, white on dark), not the default blue accent. */
   --swc-action-button-focus-indicator-color: light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color"));
   --swc-action-button-border-radius: token("corner-radius-full");
 
   position: absolute;
-  inset-block-start: calc((var(--_swc-prompt-field-artifact-badge-clearance, 0) + var(--swc-prompt-field-artifact-media-block-size, 68px)) / 2);
+  inset-block-start: calc((var(--_swc-prompt-field-attachment-badge-clearance, 0) + var(--swc-prompt-field-attachment-media-block-size, 68px)) / 2);
   z-index: 4;
   flex: 0 0 auto;
   transform: translateY(-50%);
@@ -724,38 +724,38 @@
  * layout and edge fades don't shift. If it had focus, the component moves focus
  * to the active tile (see _redirectFocusFromDisabledChevron) rather than
  * stranding it on this now-hidden control. */
-.swc-PromptField-artifacts-scroll-prev[aria-disabled="true"],
-.swc-PromptField-artifacts-scroll-next[aria-disabled="true"] {
+.swc-PromptField-attachments-scroll-prev[aria-disabled="true"],
+.swc-PromptField-attachments-scroll-next[aria-disabled="true"] {
   pointer-events: none;
   opacity: 0;
 }
 
-.swc-PromptField-artifacts-scroll-prev {
-  --_swc-prompt-field-artifact-scroll-icon-transform: scaleX(-1);
+.swc-PromptField-attachments-scroll-prev {
+  --_swc-prompt-field-attachment-scroll-icon-transform: scaleX(-1);
 
   inset-inline-start: 0;
 }
 
-.swc-PromptField-artifacts-scroll-next {
+.swc-PromptField-attachments-scroll-next {
   inset-inline-end: 0;
 }
 
-.swc-PromptField-artifacts-scroll-prev swc-icon,
-.swc-PromptField-artifacts-scroll-next swc-icon {
+.swc-PromptField-attachments-scroll-prev swc-icon,
+.swc-PromptField-attachments-scroll-next swc-icon {
   display: inline-flex;
   position: relative;
   z-index: 2;
   align-items: center;
   justify-content: center;
-  transform: var(--_swc-prompt-field-artifact-scroll-icon-transform);
+  transform: var(--_swc-prompt-field-attachment-scroll-icon-transform);
 }
 
-:host(:dir(rtl)) .swc-PromptField-artifacts-scroll-prev {
-  --_swc-prompt-field-artifact-scroll-icon-transform: none;
+:host(:dir(rtl)) .swc-PromptField-attachments-scroll-prev {
+  --_swc-prompt-field-attachment-scroll-icon-transform: none;
 }
 
-:host(:dir(rtl)) .swc-PromptField-artifacts-scroll-next {
-  --_swc-prompt-field-artifact-scroll-icon-transform: scaleX(-1);
+:host(:dir(rtl)) .swc-PromptField-attachments-scroll-next {
+  --_swc-prompt-field-attachment-scroll-icon-transform: scaleX(-1);
 }
 
 /* ─────────────────────────────────────
@@ -907,7 +907,7 @@ slot[name="legal"] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .swc-PromptField-artifacts-scroll {
+  .swc-PromptField-attachments-scroll {
     scroll-behavior: auto;
   }
 }
