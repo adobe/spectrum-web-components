@@ -15,8 +15,10 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import type { IconBase } from '@adobe/spectrum-wc-core/components/icon';
 
-// Register every workflow element so the manifest coverage test can resolve each tag.
-import '../src/elements.js';
+// Register only the elements these stories render. The manifest coverage test loads the
+// full set lazily via its loader, so this page doesn't define all ~413 elements.
+import '../src/swc-icon-alert-triangle.js';
+import '../src/swc-icon-star.js';
 
 import { WORKFLOW_ICONS } from '../src/manifest.js';
 import { Icon_Star } from '../src/Star.js';
@@ -170,6 +172,10 @@ export const ManifestCoverageTest: Story = {
     <span></span>
   `,
   play: async ({ step }) => {
+    // Register the full set here, not at module load, so only this test defines all
+    // ~413 elements.
+    await import('../src/elements.js');
+
     await step('every manifest tag is a registered custom element', () => {
       expect(WORKFLOW_ICONS.length, 'ships the full set').toBeGreaterThan(400);
       const missing = WORKFLOW_ICONS.filter(

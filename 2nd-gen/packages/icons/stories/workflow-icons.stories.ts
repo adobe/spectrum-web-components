@@ -19,8 +19,16 @@ import {
   type IconSize,
 } from '@adobe/spectrum-wc-core/components/icon';
 
-// Registers every `<swc-icon-*>` workflow element.
-import '../src/elements.js';
+// Register only the icons the compact stories render. The full set is loaded lazily by
+// Gallery's loader, so the light story/test pages don't define all ~413 elements — which
+// is memory-heavy per shadow root, WebKit especially.
+import '../src/swc-icon-alert-triangle.js';
+import '../src/swc-icon-delete.js';
+import '../src/swc-icon-folder.js';
+import '../src/swc-icon-heart.js';
+import '../src/swc-icon-search.js';
+import '../src/swc-icon-settings.js';
+import '../src/swc-icon-star.js';
 
 import { WORKFLOW_ICONS } from '../src/manifest.js';
 
@@ -188,6 +196,14 @@ export const Color: Story = {
 // run is disproportionately slow with no behavioral coverage beyond the lighter
 // stories; the dedicated VRT story snapshots the grid instead.
 export const Gallery: Story = {
+  // Register the full set only when the gallery actually renders (docs/Chromatic),
+  // rather than on module load.
+  loaders: [
+    async () => {
+      await import('../src/elements.js');
+      return {};
+    },
+  ],
   render: (args) => html`
     ${WORKFLOW_ICONS.map(
       ({ name, tag }) => html`

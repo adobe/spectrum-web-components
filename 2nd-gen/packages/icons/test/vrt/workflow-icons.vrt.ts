@@ -19,8 +19,14 @@ import {
   type IconSize,
 } from '@adobe/spectrum-wc-core/components/icon';
 
-// Registers every `<swc-icon-*>` workflow element.
-import '../../src/elements.js';
+// Register only the icons the size/color/forced-colors rows use. Gallery loads the full
+// set lazily via its loader, so this page doesn't define all ~413 elements.
+import '../../src/swc-icon-delete.js';
+import '../../src/swc-icon-folder.js';
+import '../../src/swc-icon-heart.js';
+import '../../src/swc-icon-search.js';
+import '../../src/swc-icon-settings.js';
+import '../../src/swc-icon-star.js';
 
 import {
   forcedColorsVrtParameters,
@@ -103,6 +109,13 @@ export const Permutations: Story = {
 // icon's drawing is caught. One theme is enough to catch geometry regressions; the
 // color axis is covered by Permutations above.
 export const Gallery: Story = {
+  // Register the full set only when the gallery renders, not on module load.
+  loaders: [
+    async () => {
+      await import('../../src/elements.js');
+      return {};
+    },
+  ],
   render: () =>
     theme(
       row(
