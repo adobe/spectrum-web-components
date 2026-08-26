@@ -75,8 +75,8 @@
 .swc-CloseButton-icon {
   display: block;
   flex-shrink: 0;
-  inline-size: var(--swc-close-button-icon-size, token("ui-icon-large"));
-  block-size: var(--swc-close-button-icon-size, token("ui-icon-large"));
+  inline-size: var(--swc-close-button-icon-size, token("ui-icon-medium"));
+  block-size: var(--swc-close-button-icon-size, token("ui-icon-medium"));
 }
 
 .swc-CloseButton-icon swc-ui-icon {
@@ -91,7 +91,7 @@
 }
 
 :host([size="m"]) {
-  --swc-close-button-icon-size: token("ui-icon-large");
+  --swc-close-button-icon-size: token("ui-icon-medium");
   --swc-close-button-size: token("component-height-100");
 }
 
