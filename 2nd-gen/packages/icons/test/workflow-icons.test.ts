@@ -15,10 +15,11 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import type { IconBase } from '@adobe/spectrum-wc-core/components/icon';
 
-// Register every workflow element so the manifest coverage test can resolve each tag.
-import '../src/elements.js';
+// Register only the elements these stories render. Full-set coverage lives in
+// workflow-icons.manifest.test.ts, which imports the whole barrel on its own page.
+import '../src/swc-icon-star.js';
+import '../src/swc-icon-alert-triangle.js';
 
-import { WORKFLOW_ICONS } from '../src/manifest.js';
 import { Icon_Star } from '../src/Star.js';
 import meta from '../stories/workflow-icons.stories.js';
 
@@ -157,30 +158,6 @@ export const DecorativeHostAccessibilityTest: Story = {
       expect(icon.hasAttribute('aria-label'), 'host has no aria-label').toBe(
         false
       );
-    });
-  },
-};
-
-// ──────────────────────────────────────────────────────────────
-// TEST: the manifest matches the registered elements
-// ──────────────────────────────────────────────────────────────
-
-export const ManifestCoverageTest: Story = {
-  render: () => html`
-    <span></span>
-  `,
-  play: async ({ step }) => {
-    await step('every manifest tag is a registered custom element', () => {
-      expect(WORKFLOW_ICONS.length, 'ships the full set').toBeGreaterThan(400);
-      const missing = WORKFLOW_ICONS.filter(
-        ({ tag }) => customElements.get(tag) === undefined
-      );
-      expect(missing, 'no manifest tag is unregistered').toStrictEqual([]);
-    });
-
-    await step('tags are unique', () => {
-      const tags = WORKFLOW_ICONS.map((i) => i.tag);
-      expect(new Set(tags).size, 'all tags are distinct').toBe(tags.length);
     });
   },
 };

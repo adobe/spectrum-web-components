@@ -19,8 +19,16 @@ import {
   type IconSize,
 } from '@adobe/spectrum-wc-core/components/icon';
 
-// Registers every `<swc-icon-*>` workflow element.
-import '../src/elements.js';
+// Register only the icons the light stories render. The full set (413 elements) is
+// registered lazily by the Gallery story's loader, so opening a compact story does
+// not pull the whole barrel into the page.
+import '../src/swc-icon-star.js';
+import '../src/swc-icon-folder.js';
+import '../src/swc-icon-heart.js';
+import '../src/swc-icon-settings.js';
+import '../src/swc-icon-search.js';
+import '../src/swc-icon-delete.js';
+import '../src/swc-icon-alert-triangle.js';
 
 import { WORKFLOW_ICONS } from '../src/manifest.js';
 
@@ -188,6 +196,14 @@ export const Color: Story = {
 // run is disproportionately slow with no behavioral coverage beyond the lighter
 // stories; the dedicated VRT story snapshots the grid instead.
 export const Gallery: Story = {
+  // Register the full workflow set only when this story renders, keeping the 413
+  // element modules out of the lighter stories' page.
+  loaders: [
+    async () => {
+      await import('../src/elements.js');
+      return {};
+    },
+  ],
   render: (args) => html`
     ${WORKFLOW_ICONS.map(
       ({ name, tag }) => html`
