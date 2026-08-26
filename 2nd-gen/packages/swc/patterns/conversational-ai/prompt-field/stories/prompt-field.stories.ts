@@ -228,7 +228,7 @@ export const Layout: Story = {
       </div>
     </div>
   `,
-  tags: ['dev'],
+  tags: ['!dev'],
 };
 
 export const Attachment: Story = {
