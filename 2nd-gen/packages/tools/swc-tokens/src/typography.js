@@ -526,10 +526,13 @@ async function loadTokensJson(tokenModulePath) {
  * Load typography source design data tokens.
  * Supports multiple sources; later sources win on key collisions.
  */
-async function loadTypographyJson() {
+async function loadTypographyJson(variants = DEFAULT_VARIANTS) {
   const tokenSources = [
     '@adobe/spectrum-tokens/src/typography.json',
     '@adobe/spectrum-tokens/src/layout-component.json',
+    // As of spectrum-tokens 15.x, per-variant typography tokens live in their
+    // own files (heading.json, body.json, …) instead of typography.json.
+    ...variants.map((v) => `@adobe/spectrum-tokens/src/${v}.json`),
   ];
 
   const sources = Array.isArray(tokenSources) ? tokenSources : [tokenSources];
@@ -552,7 +555,7 @@ export async function generateTypographyCssString(options = {}) {
     selectorAliases = SELECTOR_ALIASES,
     debug,
   } = options;
-  const tokens = await loadTypographyJson();
+  const tokens = await loadTypographyJson(variants);
 
   let out = `/**
  * Copyright ${new Date().getFullYear()} Adobe. All rights reserved.
