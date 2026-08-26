@@ -529,6 +529,7 @@ export class MenuItem extends LikeAnchor(
     if (
       event.pointerType === 'touch' &&
       this.hasSubmenu &&
+      !this.isMobileView &&
       !targetIsInOverlay &&
       this._activePointerId === undefined
     ) {
