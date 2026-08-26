@@ -10,13 +10,13 @@ import '@spectrum-web-components/action-group/sp-action-group.js';
 | Name           | Type                                  | Default | Description |
 | -------------- | ------------------------------------- | ------- | ----------- |
 | `compact`      | `boolean`                             | `false` |             |
-| `emphasized`   | `boolean`                             | `false` |             |
+| `emphasized`   | `boolean`                             | -       |             |
 | `justified`    | `boolean`                             | `false` |             |
 | `label`        | `string`                              | `''`    |             |
 | `quiet`        | `boolean`                             | `false` |             |
 | `selects`      | `undefined \| 'single' \| 'multiple'` | -       |             |
 | `static-color` | `'white' \| 'black' \| undefined`     | -       |             |
-| `vertical`     | `boolean`                             | `false` |             |
+| `vertical`     | `boolean`                             | -       |             |
 | `selected`     | `string[]`                            | -       |             |
 
 ## Slots
