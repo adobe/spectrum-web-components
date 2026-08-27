@@ -65,7 +65,7 @@ jobs:
   # concurrency group only dedupes overlapping *workflow runs*, not jobs within one run).
   snapshot:
     needs: check-changesets
-    if: needs.check-changesets.outputs.has_changesets == 'true'
+    if: needs.check-changesets.outputs.has_changesets == 'true' && github.event_name != 'push'
     runs-on: ubuntu-latest
     environment: npm-publish
     env:
