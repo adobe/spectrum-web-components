@@ -123,11 +123,11 @@ const sizeLabels = {
 } as const satisfies Record<(typeof BUTTON_GROUP_SIZES)[number], string>;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
   args: {
     size: 'm',
     orientation: 'horizontal',
@@ -154,15 +154,6 @@ export const Overview: Story = {
 //    ANATOMY STORIES
 // ──────────────────────────
 
-/**
- * A button group consists of:
- *
- * - **Default slot**: one or more `<swc-button>` elements that form the action set
- *
- * The group propagates its `size` and `disabled` state to all slotted button children
- * automatically, ensuring visual and behavioral consistency without requiring per-button
- * configuration.
- */
 export const Anatomy: Story = {
   render: () => html`
     <swc-button-group>
@@ -178,14 +169,6 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
-/**
- * Button groups come in four sizes that propagate to all child buttons:
- *
- * - **Small (`s`)**: for compact interfaces with limited space
- * - **Medium (`m`)**: default size for most contexts
- * - **Large (`l`)**: for prominent actions needing more visual weight
- * - **Extra-large (`xl`)**: for hero sections or primary call-to-action areas
- */
 export const Sizes: Story = {
   render: () => html`
     ${BUTTON_GROUP_SIZES.map(
@@ -200,14 +183,6 @@ export const Sizes: Story = {
   tags: ['options'],
 };
 
-/**
- * Button groups support two orientations:
- *
- * - **Horizontal** (default): buttons that flow left-to-right (or inline-start to inline-end)
- * - **Vertical**: buttons stacked top-to-bottom; useful when horizontal space is limited
- *
- * The `orientation` attribute reflects on the host for CSS styling hooks.
- */
 export const Orientations: Story = {
   render: () => html`
     ${BUTTON_GROUP_ORIENTATIONS.map(
@@ -222,14 +197,6 @@ export const Orientations: Story = {
   tags: ['options'],
 };
 
-/**
- * The `align` property controls the alignment of buttons within the group along
- * the main axis:
- *
- * - **`start`** (default): buttons aligned to the inline start
- * - **`center`**: buttons centered within the available space
- * - **`end`**: buttons aligned to the inline end (useful for dialog footers)
- */
 export const Alignment: Story = {
   render: () => html`
     ${BUTTON_GROUP_ALIGNMENTS.map(
@@ -248,11 +215,6 @@ export const Alignment: Story = {
 //    STATES STORIES
 // ──────────────────────────
 
-/**
- * Setting `disabled` on the group propagates the disabled state to all child
- * buttons, preventing interaction. This is a convenience API — individual buttons
- * can also be disabled independently when the group is not disabled.
- */
 export const Disabled: Story = {
   render: () => html`
     <swc-button-group disabled>
@@ -268,52 +230,6 @@ export const Disabled: Story = {
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-/**
- * ### Features
- *
- * The `<swc-button-group>` element implements several accessibility features:
- *
- * #### ARIA implementation
- *
- * 1. **ARIA role**: automatically sets `role="group"` on the host element
- * 2. **Group naming**: supports `aria-label` or `aria-labelledby` for screen readers;
- *    provide a name when the group's purpose is not obvious from context
- *
- * #### Keyboard navigation
- *
- * - <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd>: moves focus between buttons in DOM order
- * - <kbd>Enter</kbd> / <kbd>Space</kbd>: activates the focused button
- * - Each button is a **separate tab stop**. The group does NOT use roving `tabindex`
- * - The group host is **NOT focusable**
- *
- * #### Why `aria-orientation` is not set
- *
- * The `orientation` property controls only the visual layout direction. Because
- * button-group does not use roving tabindex or arrow-key navigation,
- * `aria-orientation` is not applicable (it is only valid for roles that manage
- * directional key navigation, such as `toolbar` or `listbox`).
- *
- * If your use case has many buttons and would benefit from arrow-key navigation,
- * consider using `FocusgroupNavigationController` (an internal core controller)
- * on a parent composite with `role="toolbar"` instead.
- *
- * #### What button-group is NOT
- *
- * - **Not a radio group**: Do not use for exclusive selection.
- *   Use Segmented Control instead.
- * - **Not a toggle group**: Do not use for pressed/toggle states.
- *   Use Toggle Group instead.
- * - **Not a toolbar**: Does not implement arrow-key navigation.
- *   For toolbar semantics, use `role="toolbar"` on a parent composite with
- *   `FocusgroupNavigationController`.
- *
- * ### Best practices
- *
- * - Provide an `aria-label` when the group's purpose is not clear from surrounding
- *   content (for example, when used inside a dialog footer)
- * - Keep slotted children as `<swc-button>` elements for proper semantic delegation
- * - Do not apply `role="radiogroup"` or `role="toolbar"` to this component
- */
 export const Accessibility: Story = {
   render: () => html`
     <swc-button-group aria-label="Document actions">
@@ -324,53 +240,3 @@ export const Accessibility: Story = {
   `,
   tags: ['a11y'],
 };
-
-// ────────────────────────────────
-//    LOCAL-ONLY STORIES
-// ────────────────────────────────
-
-/**
- * Combination of all orientations at all sizes — useful for visual regression testing
- * during local development. Not included in production documentation.
- */
-export const AllCombinations: Story = {
-  render: () => html`
-    ${BUTTON_GROUP_ORIENTATIONS.map(
-      (orientation) => html`
-        ${BUTTON_GROUP_SIZES.map(
-          (size) => html`
-            <swc-button-group orientation=${orientation} size=${size}>
-              <swc-button>${orientation} ${size.toUpperCase()}</swc-button>
-              <swc-button>Action</swc-button>
-            </swc-button-group>
-          `
-        )}
-      `
-    )}
-  `,
-  tags: ['!dev'],
-};
-AllCombinations.storyName = 'All combinations';
-
-/**
- * Tests vertical orientation with alignment variations. Used for local visual
- * verification that vertical layout respects alignment in all directions.
- */
-export const VerticalAlignment: Story = {
-  render: () => html`
-    ${BUTTON_GROUP_ALIGNMENTS.map(
-      (align) => html`
-        <swc-button-group
-          orientation="vertical"
-          align=${align}
-          style="inline-size: 300px;"
-        >
-          <swc-button>Vertical ${align}</swc-button>
-          <swc-button>Action</swc-button>
-        </swc-button-group>
-      `
-    )}
-  `,
-  tags: ['!dev'],
-};
-VerticalAlignment.storyName = 'Vertical alignment';
