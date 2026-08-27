@@ -1,0 +1,87 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as ButtonGroupStories from './stories/button-group.stories';
+
+<Meta of={ButtonGroupStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A button group consists of:
+
+- **Default slot**: one or more `<swc-button>` elements that form the action set
+
+The group propagates its `size` and `disabled` state to all slotted button children automatically, ensuring visual and behavioral consistency without requiring per-button configuration.
+
+<Canvas of={ButtonGroupStories.Anatomy} />
+
+## Options
+
+### Sizes
+
+Button groups come in four sizes that propagate to all child buttons: small (`s`), medium (`m`), large (`l`), and extra-large (`xl`). Medium is the default size.
+
+<Canvas of={ButtonGroupStories.Sizes} />
+
+### Orientations
+
+Button groups support two orientations: `horizontal` (default) and `vertical`. The `orientation` attribute reflects on the host for CSS styling hooks.
+
+<Canvas of={ButtonGroupStories.Orientations} />
+
+### Alignment
+
+The `align` property controls alignment along the main axis: `start` (default), `center`, and `end`.
+
+<Canvas of={ButtonGroupStories.Alignment} />
+
+## States
+
+### Disabled
+
+Setting `disabled` on the group propagates the disabled state to all child buttons, preventing interaction. This is a convenience API; individual buttons can also be disabled independently when the group is not disabled.
+
+<Canvas of={ButtonGroupStories.Disabled} />
+
+## Accessibility
+
+### Features
+
+The `<swc-button-group>` element implements several accessibility features:
+
+#### ARIA implementation
+
+1. **ARIA role**: automatically sets `role="group"` on the host element
+2. **Group naming**: supports `aria-label` or `aria-labelledby` for screen readers; provide a name when the group's purpose is not obvious from context
+
+#### Keyboard navigation
+
+- <kbd>Tab</kbd> / <kbd>Shift</kbd> + <kbd>Tab</kbd>: moves focus between
+  buttons in DOM order
+- <kbd>Enter</kbd> / <kbd>Space</kbd>: activates the focused button
+- Each button is a **separate tab stop**. The group does not use roving `tabindex`
+- The group host is **not focusable**
+
+#### Why `aria-orientation` is not set
+
+The `orientation` property controls only the visual layout direction. Because button group does not use roving tabindex or arrow-key navigation, `aria-orientation` is not applicable (it is only valid for roles that manage directional key navigation, such as `toolbar` or `listbox`).
+
+If your use case has many buttons and would benefit from arrow-key navigation, consider using `FocusgroupNavigationController` (an internal core controller) on a parent composite with `role="toolbar"` instead.
+
+#### What button group is not
+
+- **Not a radio group**: Do not use for exclusive selection. That pattern is planned for `swc-segmented-control` in a future release.
+- **Not a toggle group**: Do not use for pressed/toggle states. That pattern is planned for `swc-toggle-button-group` in a future release.
+- **Not a toolbar**: Does not implement arrow-key navigation. For toolbar semantics, use `role="toolbar"` on a parent composite with `FocusgroupNavigationController`.
+
+### Best practices
+
+- Provide an `aria-label` when the group's purpose is not clear from surrounding content (for example, when used inside a dialog footer)
+- Keep slotted children as `<swc-button>` elements for proper semantic delegation
+- Do not apply `role="radiogroup"` or `role="toolbar"` to this component
+
+<Canvas of={ButtonGroupStories.Accessibility} />
+
+<DocsFooter />
