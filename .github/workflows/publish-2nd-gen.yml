@@ -1,4 +1,4 @@
-name: Publish Packages (2nd-gen)
+name: Publish Packages (gen2)
 
 on:
   workflow_dispatch:
@@ -40,7 +40,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check for 2nd-gen changesets
+      - name: Check for gen2 changesets
         id: check
         run: |
           # Independent of 1st-gen in every trigger - this workflow never reads
@@ -134,7 +134,7 @@ jobs:
           SWC_VERSION: ${{ steps.versions.outputs.swc }}
           AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
         run: |
-          echo "## Publish summary (2nd-gen snapshot)" >> $GITHUB_STEP_SUMMARY
+          echo "## Publish summary (gen2 snapshot)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
           echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
@@ -186,7 +186,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
         run: npm whoami --registry=https://registry.npmjs.org
 
-      - name: Version 2nd-gen packages
+      - name: Version gen2 packages
         if: needs.check-changesets.outputs.has_changesets == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -197,12 +197,12 @@ jobs:
           (cd 2nd-gen && yarn changeset version)
           yarn install --refresh-lockfile
 
-      - name: Open or update the 2nd-gen Version PR
+      - name: Open or update the gen2 Version PR
         if: needs.check-changesets.outputs.has_changesets == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
-          commit-message: 'chore: release 2nd-gen packages #gen2-publish'
-          title: 'chore: release 2nd-gen packages (beta) #gen2-publish'
+          commit-message: 'chore: release gen2 packages #gen2-publish'
+          title: 'chore: release gen2 packages (beta) #gen2-publish'
           branch: changeset-release/2nd-gen
           base: ${{ github.ref_name }}
           delete-branch: true
@@ -213,14 +213,14 @@ jobs:
       - name: Version PR summary
         if: needs.check-changesets.outputs.has_changesets == 'true'
         run: |
-          echo "## Publish summary (2nd-gen)" >> $GITHUB_STEP_SUMMARY
+          echo "## Publish summary (gen2)" >> $GITHUB_STEP_SUMMARY
           echo "📝 Version PR opened/updated at \`changeset-release/2nd-gen\` - nothing published yet" >> $GITHUB_STEP_SUMMARY
 
       # No pending changesets: either nothing to do, or the Version PR above was just
       # merged - publish whatever is now on main. `yarn changeset publish` is itself
       # idempotent (skips already-registry-published versions), so no extra guard is
       # needed here the way gen1 needs one for its raw `npm publish` React-wrapper calls.
-      - name: Publish 2nd-gen packages
+      - name: Publish gen2 packages
         if: needs.check-changesets.outputs.has_changesets == 'false' && steps.npm-auth.outcome == 'success'
         id: publish
         env:
@@ -243,7 +243,7 @@ jobs:
           AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
           PUBLISHED: ${{ steps.publish.outputs.published }}
         run: |
-          echo "## Publish summary (2nd-gen)" >> $GITHUB_STEP_SUMMARY
+          echo "## Publish summary (gen2)" >> $GITHUB_STEP_SUMMARY
           if [ "$PUBLISHED" == "false" ]; then
             echo "ℹ️ Current version already published - nothing new to ship" >> $GITHUB_STEP_SUMMARY
           elif [ "$AUTH_OUTCOME" == "success" ]; then

@@ -1,4 +1,4 @@
-name: Publish Packages (1st-gen)
+name: Publish Packages (gen1)
 
 on:
   workflow_dispatch:
@@ -124,7 +124,7 @@ jobs:
       - name: Confirm build artifacts
         run: yarn workspace @spectrum-web-components/1st-gen build:confirm
 
-      - name: Version 1st-gen packages (snapshot)
+      - name: Version gen1 packages (snapshot)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: (cd 1st-gen && yarn changeset version --snapshot ${{ steps.extract-tag.outputs.tag }})
@@ -140,7 +140,7 @@ jobs:
           yarn install --refresh-lockfile
           yarn build
 
-      - name: Publish 1st-gen packages
+      - name: Publish gen1 packages
         if: steps.npm-auth.outcome == 'success'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
@@ -226,7 +226,7 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "| Generation | Package | Version |" >> $GITHUB_STEP_SUMMARY
             echo "|------------|---------|---------|" >> $GITHUB_STEP_SUMMARY
-            echo "| 1st gen | \`@spectrum-web-components/bundle\` | \`${BUNDLE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+            echo "| gen1 | \`@spectrum-web-components/bundle\` | \`${BUNDLE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
           fi
 
           if [ "$AUTH_OUTCOME" == "success" ]; then
@@ -287,7 +287,7 @@ jobs:
       - name: Confirm build artifacts
         run: yarn workspace @spectrum-web-components/1st-gen build:confirm
 
-      - name: Version 1st-gen packages
+      - name: Version gen1 packages
         if: needs.check-changesets.outputs.has_changesets == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -296,12 +296,12 @@ jobs:
           (cd 1st-gen && yarn changeset version)
           yarn install --refresh-lockfile
 
-      - name: Open or update the 1st-gen Version PR
+      - name: Open or update the gen1 Version PR
         if: needs.check-changesets.outputs.has_changesets == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
-          commit-message: 'chore: release 1st-gen packages'
-          title: 'chore: release 1st-gen packages'
+          commit-message: 'chore: release gen1 packages'
+          title: 'chore: release gen1 packages'
           branch: changeset-release/1st-gen
           base: ${{ github.ref_name }}
           delete-branch: true
@@ -312,7 +312,7 @@ jobs:
       - name: Version PR summary
         if: needs.check-changesets.outputs.has_changesets == 'true'
         run: |
-          echo "## Publish summary (1st-gen)" >> $GITHUB_STEP_SUMMARY
+          echo "## Publish summary (gen1)" >> $GITHUB_STEP_SUMMARY
           echo "📝 Version PR opened/updated at \`changeset-release/1st-gen\` - nothing published yet" >> $GITHUB_STEP_SUMMARY
 
       # No pending changesets: either nothing to do, or the Version PR above was just
@@ -321,7 +321,7 @@ jobs:
       # ordinary push once a release has gone out (changeset publish is separately
       # idempotent for the changeset-tracked packages, but the raw `npm publish` calls
       # for React wrappers are not, so the tag check guards the whole script).
-      - name: Publish 1st-gen packages
+      - name: Publish gen1 packages
         if: needs.check-changesets.outputs.has_changesets == 'false'
         id: publish
         env:
@@ -363,7 +363,7 @@ jobs:
         env:
           PUBLISHED: ${{ steps.publish.outputs.published }}
         run: |
-          echo "## Publish summary (1st-gen)" >> $GITHUB_STEP_SUMMARY
+          echo "## Publish summary (gen1)" >> $GITHUB_STEP_SUMMARY
           if [ "$PUBLISHED" == "true" ]; then
             echo "✅ Published a new release" >> $GITHUB_STEP_SUMMARY
           else
