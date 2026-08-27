@@ -11,8 +11,6 @@ on:
         options:
           - next
           - snapshot-test
-  pull_request:
-    types: [labeled, synchronize]
   push:
     branches:
       - main
@@ -29,11 +27,7 @@ concurrency:
 jobs:
   check-changesets:
     runs-on: ubuntu-latest
-    if: >-
-      github.event_name == 'push' ||
-      github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'pull_request' &&
-      contains(github.event.pull_request.labels.*.name, 'snapshot-release-gen2'))
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     outputs:
       has_changesets: ${{ steps.check.outputs.has_changesets }}
     steps:
@@ -44,7 +38,7 @@ jobs:
         id: check
         run: |
           # Independent of 1st-gen in every trigger - this workflow never reads
-          # 1st-gen/.changeset/, including for its own snapshot-release-gen2 PR path.
+          # 1st-gen/.changeset/.
           COUNT=$(find 2nd-gen/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
           if [ "$COUNT" -eq 0 ]; then
             echo "has_changesets=false" >> $GITHUB_OUTPUT
@@ -58,9 +52,9 @@ jobs:
   # this only runs on a push to main that happens to have 2nd-gen changesets pending at
   # that moment, not on every push. `next` is therefore not a true continuous build of
   # every main commit; it only refreshes when a push coincides with a pending changeset.
-  # Also runs for manual workflow_dispatch and snapshot-release-gen2-labeled PRs. Never
-  # touches main, never commits, never opens a PR, never enters persistent pre-release
-  # mode. Runs alongside (not instead of) the `release` job below - both are triggered by
+  # Also runs for manual workflow_dispatch. Never touches main, never commits, never
+  # opens a PR, never enters persistent pre-release mode. Runs alongside (not instead
+  # of) the `release` job below - both are triggered by
   # the same push event but never conflict (separate jobs/runners, and the run-level
   # concurrency group only dedupes overlapping *workflow runs*, not jobs within one run).
   snapshot:
@@ -74,7 +68,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || 'main' }}
           fetch-depth: 0
 
       - name: Setup job and install dependencies
@@ -83,14 +76,9 @@ jobs:
       - name: Determine snapshot tag
         id: extract-tag
         env:
-          EVENT_NAME: ${{ github.event_name }}
           INPUT_TAG: ${{ github.event.inputs.tag }}
         run: |
-          if [ "$EVENT_NAME" == "pull_request" ]; then
-            WORKFLOW_TAG="snapshot-test"
-          else
-            WORKFLOW_TAG="${INPUT_TAG:-next}"
-          fi
+          WORKFLOW_TAG="${INPUT_TAG:-next}"
           echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
 
       - name: Verify NPM authentication

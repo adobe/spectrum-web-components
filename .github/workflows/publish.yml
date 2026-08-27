@@ -11,8 +11,6 @@ on:
         options:
           - next
           - snapshot-test
-  pull_request:
-    types: [labeled, synchronize]
   push:
     branches:
       - main
@@ -37,11 +35,7 @@ concurrency:
 jobs:
   check-changesets:
     runs-on: ubuntu-latest
-    if: >-
-      github.event_name == 'push' ||
-      github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'pull_request' &&
-      contains(github.event.pull_request.labels.*.name, 'snapshot-release-gen1'))
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     outputs:
       has_changesets: ${{ steps.check.outputs.has_changesets }}
     steps:
@@ -68,8 +62,8 @@ jobs:
   # this only runs on a push to main that happens to have 1st-gen changesets pending at
   # that moment, not on every push. `next` is therefore not a true continuous build of
   # every main commit; it only refreshes when a push coincides with a pending changeset.
-  # Also runs for manual workflow_dispatch and snapshot-release-gen1-labeled PRs. Never
-  # touches main, never commits, never opens a PR. Runs alongside (not instead of) the
+  # Also runs for manual workflow_dispatch. Never touches main, never commits, never
+  # opens a PR. Runs alongside (not instead of) the
   # `release` job below - both are triggered by the same push event but never conflict
   # (separate jobs/runners, and the run-level concurrency group only dedupes overlapping
   # *workflow runs*, not jobs within one run).
@@ -94,14 +88,9 @@ jobs:
       - name: Determine snapshot tag
         id: extract-tag
         env:
-          EVENT_NAME: ${{ github.event_name }}
           INPUT_TAG: ${{ github.event.inputs.tag }}
         run: |
-          if [ "$EVENT_NAME" == "pull_request" ]; then
-            WORKFLOW_TAG="snapshot-test"
-          else
-            WORKFLOW_TAG="${INPUT_TAG:-next}"
-          fi
+          WORKFLOW_TAG="${INPUT_TAG:-next}"
           echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
           echo "Using npm tag: $WORKFLOW_TAG"
 
@@ -193,33 +182,17 @@ jobs:
         env:
           TAG: ${{ steps.extract-tag.outputs.tag }}
           EVENT_NAME: ${{ github.event_name }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          PR_TITLE: ${{ github.event.pull_request.title }}
-          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
-          HEAD_REF: ${{ github.head_ref }}
-          BASE_REF: ${{ github.base_ref }}
           ACTOR: ${{ github.actor }}
           AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
           BUNDLE_VERSION: ${{ steps.versions.outputs.bundle }}
         run: |
           echo "## Publish summary (snapshot)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-
-          if [ "$EVENT_NAME" == "pull_request" ]; then
-            echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
-            echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
-            echo "| **Trigger** | Pull request |" >> $GITHUB_STEP_SUMMARY
-            echo "| **PR** | #${PR_NUMBER} — ${PR_TITLE} |" >> $GITHUB_STEP_SUMMARY
-            echo "| **Branch** | \`${HEAD_REF}\` → \`${BASE_REF}\` |" >> $GITHUB_STEP_SUMMARY
-            echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
-            echo "| **Author** | @${PR_AUTHOR} |" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
-            echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
-            echo "| **Trigger** | Manual dispatch |" >> $GITHUB_STEP_SUMMARY
-            echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
-            echo "| **Actor** | @${ACTOR} |" >> $GITHUB_STEP_SUMMARY
-          fi
+          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Trigger** | \`${EVENT_NAME}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Actor** | @${ACTOR} |" >> $GITHUB_STEP_SUMMARY
 
           if [ -n "$BUNDLE_VERSION" ]; then
             echo "## Versions released" >> $GITHUB_STEP_SUMMARY
