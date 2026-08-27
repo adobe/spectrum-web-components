@@ -17,6 +17,8 @@ on:
     branches:
       - main
       - release-strategy # TODO: remove before merging - testing only
+    paths:
+      - '2nd-gen/**'
 
 # 2nd-gen-scoped group: see the identical comment in publish.yml for why this is no
 # longer shared with that workflow's group string.

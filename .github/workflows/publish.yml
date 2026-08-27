@@ -17,6 +17,8 @@ on:
     branches:
       - main
       - release-strategy # TODO: remove before merging - testing only
+    paths:
+      - '1st-gen/**'
 
 # 1st-gen-scoped group: this and publish-2nd-gen.yml used to share the literal string
 # `publish-${{ github.ref }}`, which is a repo-wide concurrency key, not scoped to the
