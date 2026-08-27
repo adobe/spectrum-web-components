@@ -217,6 +217,10 @@ export class ResponseStatus extends SpectrumElement {
 
     // Slotchange only fires when assigned nodes are added or removed, not when
     // their text mutates. Observe the light DOM so slotted text updates render.
+    // `subtree: true` on the host also matches the host's own `status`/`open`
+    // attribute changes (e.g. every header disclosure click); those are
+    // already handled by normal Lit reactivity, so records targeting the
+    // host itself are filtered out to avoid a redundant full re-scan.
     new MutationController(this, {
       config: {
         attributes: true,
@@ -225,8 +229,13 @@ export class ResponseStatus extends SpectrumElement {
         childList: true,
         subtree: true,
       },
-      callback: () => {
-        this._syncSlotContent();
+      callback: (records) => {
+        const isStepMutation = records.some(
+          (record) => record.target !== this
+        );
+        if (isStepMutation) {
+          this._syncSlotContent();
+        }
       },
     });
 

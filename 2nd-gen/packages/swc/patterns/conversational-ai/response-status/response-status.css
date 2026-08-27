@@ -49,11 +49,14 @@
   transition: background token("animation-duration-100") token("animation-ease-in-out");
 }
 
+.swc-ResponseStatus-label {
+  color: token("neutral-subdued-content-color-default");
+  text-align: start;
+}
+
 .swc-ResponseStatus-row--button .swc-ResponseStatus-label {
   flex: 1;
   min-inline-size: 0;
-  color: token("neutral-subdued-content-color-default");
-  text-align: start;
 }
 
 /* Label + chevron trail (header label roll) */
@@ -381,6 +384,12 @@
 
 .swc-ResponseStatus-step-icon--active {
   color: token("gray-600");
+}
+
+/* Distinct from the default gray-500 dot: the interrupted step is the
+   standout marker in the timeline, not just another completed step. */
+.swc-ResponseStatus-step-icon--stopped {
+  color: token("gray-700");
 }
 
 .swc-ResponseStatus-step-body {

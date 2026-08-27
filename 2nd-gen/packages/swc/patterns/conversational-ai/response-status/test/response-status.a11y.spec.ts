@@ -45,7 +45,7 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
       'swc-response-status'
     );
     const status = root.locator('[role="status"]').first();
-    await expect(status).toHaveText('Searching repositories for Europe trips');
+    await expect(status).toHaveText('Processing...');
     const activeStatus = root.locator('swc-response-status').first();
     await expect(activeStatus.locator('[aria-expanded]')).toHaveCount(0);
     await expect(activeStatus.locator('[aria-controls]')).toHaveCount(0);
