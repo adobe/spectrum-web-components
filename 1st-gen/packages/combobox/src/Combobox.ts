@@ -551,7 +551,7 @@ export class Combobox extends Textfield {
                     `;
                   }
                 )
-              : html``}
+              : nothing}
             <slot hidden @slotchange=${this.handleSlotchange}></slot>
           </sp-menu>
         </sp-popover>
