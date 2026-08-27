@@ -16,6 +16,7 @@ on:
   push:
     branches:
       - main
+      - release-strategy # TODO: remove before merging - testing only
 
 # 1st-gen-scoped group: this and publish-2nd-gen.yml used to share the literal string
 # `publish-${{ github.ref }}`, which is a repo-wide concurrency key, not scoped to the
@@ -300,7 +301,7 @@ jobs:
           commit-message: 'chore: release 1st-gen packages'
           title: 'chore: release 1st-gen packages'
           branch: changeset-release/1st-gen
-          base: main
+          base: ${{ github.ref_name }}
           delete-branch: true
           add-paths: |
             1st-gen
@@ -332,13 +333,13 @@ jobs:
           fi
           yarn install --refresh-lockfile
           yarn build
-          (cd 1st-gen && yarn changeset publish --no-git-tag)
+          (cd 1st-gen && yarn changeset publish --no-git-tag --tag test)
           yarn workspace @spectrum-web-components/1st-gen build:react
           cd 1st-gen/react
           for dir in */; do
             attempt=1
             max_attempts=3
-            until (cd "$dir" && npm publish --access public); do
+            until (cd "$dir" && npm publish --access public --tag test); do
               if [ $attempt -ge $max_attempts ]; then
                 echo "✗ Failed to publish $dir after $max_attempts attempts"
                 exit 1
