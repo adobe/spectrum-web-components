@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.3](https://github.com/adobe/spectrum-web-components/compare/v1.12.2...v1.12.3) (2026-08-27)
+
+## Patch Changes
+
+**sp-button**: testing
+
+**sp-progress-bar**: **docs(progress-bar):** Added deprecation notices to `<sp-progress-bar>` ahead of the Spectrum 2 migration.
+
+The `label`, `side-label`, and `progress` properties are now marked `@deprecated` and emit `window.__swc.DEBUG` warnings pointing to their `<swc-progress-bar>` replacements (`label` slot, `label-position="side"`, and `value`). Runtime behavior is unchanged when debug validation is disabled.
+
 # [1.12.2](https://github.com/adobe/spectrum-web-components/compare/v1.12.1...v1.12.2) (2026-07-06)
 
 ## Patch Changes

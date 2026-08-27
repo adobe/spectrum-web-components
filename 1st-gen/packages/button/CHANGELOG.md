@@ -1,5 +1,21 @@
 # Change Log
 
+## 1.12.3-test.20260827122947
+
+### Patch Changes
+
+- [#6638](https://github.com/adobe/spectrum-web-components/pull/6638) [`e43cb15`](https://github.com/adobe/spectrum-web-components/commit/e43cb1546cd5584f3cc8f0534182bc4f143c767a) Thanks [@blunteshwar](https://github.com/blunteshwar)! - testing
+
+- Updated dependencies []:
+  - @spectrum-web-components/clear-button@1.12.3-test.20260827122947
+  - @spectrum-web-components/close-button@1.12.3-test.20260827122947
+  - @spectrum-web-components/icon@1.12.3-test.20260827122947
+  - @spectrum-web-components/icons-ui@1.12.3-test.20260827122947
+  - @spectrum-web-components/progress-circle@1.12.3-test.20260827122947
+  - @spectrum-web-components/base@1.12.3-test.20260827122947
+  - @spectrum-web-components/reactive-controllers@1.12.3-test.20260827122947
+  - @spectrum-web-components/shared@1.12.3-test.20260827122947
+
 ## 1.12.2
 
 ### Patch Changes
