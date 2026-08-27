@@ -24,6 +24,7 @@ import {
   type ButtonVariant,
 } from '@adobe/spectrum-wc-core/components/button';
 import { PendingMixin } from '@adobe/spectrum-wc-core/mixins';
+import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils';
 
 import pendingSpinnerStyles from '../../stylesheets/_lit-styles/pending-spinner.css';
 import styles from './button.css';
@@ -157,45 +158,33 @@ export class Button extends PendingMixin(ButtonBase) {
 
   protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);
-    if (window.__swc?.DEBUG) {
-      if (!BUTTON_VARIANTS.includes(this.variant)) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
-          'https://opensource.adobe.com/spectrum-web-components/components/button/#variants',
-          { issues: [...BUTTON_VARIANTS] }
-        );
-      }
-      if (!BUTTON_FILL_STYLES.includes(this.fillStyle)) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> element expects the "fill-style" attribute to be one of the following:`,
-          'https://opensource.adobe.com/spectrum-web-components/components/button/#fill-style',
-          { issues: [...BUTTON_FILL_STYLES] }
-        );
-      }
-      if (
-        this.fillStyle === 'outline' &&
-        (this.variant === 'accent' || this.variant === 'negative')
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> element only supports "fill-style=outline" with the "primary" and "secondary" variants.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/button/#fill-style',
-          { issues: ['primary', 'secondary'] }
-        );
-      }
-      if (
-        this.staticColor &&
-        (this.variant === 'accent' || this.variant === 'negative')
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> element only supports "static-color" with the "primary" and "secondary" variants.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/button/#static-color',
-          { issues: ['primary', 'secondary'] }
-        );
-      }
-    }
+    validateEnum(this, {
+      prop: 'variant',
+      value: this.variant,
+      valid: BUTTON_VARIANTS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
+    });
+    validateEnum(this, {
+      prop: 'fill-style',
+      value: this.fillStyle,
+      valid: BUTTON_FILL_STYLES,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
+    });
+    warnIf(
+      this,
+      this.fillStyle === 'outline' &&
+        (this.variant === 'accent' || this.variant === 'negative'),
+      `<${this.localName}> element only supports "fill-style=outline" with the "primary" and "secondary" variants.`,
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
+      { issues: ['primary', 'secondary'] }
+    );
+    warnIf(
+      this,
+      Boolean(this.staticColor) &&
+        (this.variant === 'accent' || this.variant === 'negative'),
+      `<${this.localName}> element only supports "static-color" with the "primary" and "secondary" variants.`,
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
+      { issues: ['primary', 'secondary'] }
+    );
   }
 }

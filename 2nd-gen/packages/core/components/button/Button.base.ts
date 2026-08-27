@@ -17,6 +17,7 @@ import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot
 import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import { warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import { BUTTON_VALID_SIZES, type ButtonSize } from './Button.types.js';
 
@@ -125,14 +126,17 @@ export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
   }
 
   /**
-   * Suppresses click activation while the button is `disabled`.
+   * Suppresses click activation while the button is `disabled`, or externally
+   * marked `aria-disabled` (e.g. by a disabled parent `swc-action-group`,
+   * which uses `aria-disabled` instead of native `disabled` so children
+   * remain keyboard-reachable).
    *
    * Slotted icon content lives in the light DOM, so pointer clicks on icons
    * bypass the disabled inner `<button>` and bubble on the host. The host
    * listener (capture) and inner `@click` binding both call this handler.
    */
   protected readonly handleClick = (event: Event): void => {
-    if (this.disabled) {
+    if (this.disabled || this.getAttribute('aria-disabled') === 'true') {
       event.preventDefault();
       event.stopImmediatePropagation();
     }
@@ -140,15 +144,12 @@ export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
 
   protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);
-    if (window.__swc?.DEBUG) {
-      if (this.hasIcon && !this.hasLabel && !this.accessibleLabel) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> with an icon and no label must have an "accessible-label" attribute to be accessible.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/button/#icon-only',
-          { issues: ['accessible-label'] }
-        );
-      }
-    }
+    warnIf(
+      this,
+      this.hasIcon && !this.hasLabel && !this.accessibleLabel,
+      `<${this.localName}> with an icon and no label must have an "accessible-label" attribute to be accessible.`,
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
+      { type: 'accessibility', issues: ['accessible-label'] }
+    );
   }
 }

@@ -181,9 +181,13 @@ protected get hasIcon(): boolean {
 }
 
 protected override update(changedProperties: PropertyValues): void {
-  if (window.__swc?.DEBUG) {
-    // ...variant validation (before super.update so it runs before render)...
-  }
+  // variant validation via validateEnum, before super.update so it runs before render
+  validateEnum(this, {
+    prop: 'variant',
+    value: this.variant,
+    valid: BadgeBase.VARIANTS,
+    url: '…',
+  });
   super.update(changedProperties);
 }
 ```

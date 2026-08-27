@@ -7,7 +7,9 @@ description: Require a thorough deep-read of the relevant codebase before planni
 
 Every meaningful task that touches non-trivial code should start with a **deep-read directive**: thoroughly understand the relevant part of the codebase before doing anything else. Findings must be written into a **persistent markdown file**, never only a verbal summary in chat. That file is the user’s review surface — they can verify understanding and correct misunderstandings before any planning or implementation.
 
-**Rule:** The deep-understanding rule (`.ai/rules/deep-understanding.md`) is **applied intelligently**. Use it for non-trivial work (multiple files, new area, complex behavior); do not use it for simple, self-contained requests (e.g. creating a regex, one-line fix, single known file) to avoid wasting tokens and overloading context. This skill documents the full workflow and rationale.
+**Apply intelligently.** Use this skill for non-trivial work (multiple files, new area, complex behavior); do not use it for simple, self-contained requests (e.g. creating a regex, one-line fix, single known file) to avoid wasting tokens and overloading context.
+
+**Trivial tasks:** for very small, single-file edits (e.g. typo, one-line fix), a short in-chat confirmation of understanding in the form of a question is acceptable instead of a full research report. Confirm in chat before editing code.
 
 ## Mindset
 

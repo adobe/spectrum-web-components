@@ -24,6 +24,7 @@ import {
 } from '@adobe/spectrum-wc-core/components/tooltip';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
+import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
 
 // ────────────────
@@ -573,4 +574,27 @@ export const Accessibility: Story = {
     });
   },
   tags: ['a11y'],
+};
+
+// Hidden fixture for the trusted-input Escape-ordering a11y spec, which needs a
+// popover and a tooltip registered in one iframe. The ci-a11y Storybook builds
+// `*.stories.ts` but not the `.test.ts` fixtures, so this lives here rather than
+// in tooltip.test.ts. `!dev` keeps it out of the sidebar and `!test` out of the
+// automatic axe run; it stays built and addressable, so the spec drives it
+// explicitly by story id.
+export const CoexistenceWithPopover: Story = {
+  render: () => html`
+    <swc-button id="coexist-tooltip-trigger">Trigger</swc-button>
+    <swc-tooltip for="coexist-tooltip-trigger" placement="top">
+      Tooltip text
+    </swc-tooltip>
+    <swc-button id="coexist-popover-trigger">Open popover</swc-button>
+    <swc-popover
+      for="coexist-popover-trigger"
+      accessible-label="Coexistence popover"
+    >
+      Popover content
+    </swc-popover>
+  `,
+  tags: ['!dev', '!test'],
 };

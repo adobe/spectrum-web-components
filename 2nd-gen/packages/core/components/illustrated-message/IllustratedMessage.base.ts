@@ -15,6 +15,11 @@ import { property } from 'lit/decorators.js';
 
 import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import {
+  validateAllowedChildren,
+  validateEnum,
+  warnIf,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller/index.js';
 import {
@@ -29,9 +34,9 @@ import {
  * used in empty states or error pages.
  *
  * @slot - Decorative or informative SVG illustration
- * @slot heading - The heading element, h2–h6
- *   @todo SWC-1943 Add slot constraints once the CEM slot constraints work is complete:
- *   `{required} {allowedChildren: h2, h3, h4, h5, h6} {maxChildren: 1}`
+ * @slot heading - Optional heading; when present, must be a single h2–h6 element.
+ *   Both constraints (allowed h2–h6 children and a single heading) are validated
+ *   in dev mode.
  * @slot description - Supporting description text
  * @slot actions - Optional action controls displayed below the description, typically a button or button group. Receives `size` automatically from the illustrated message.
  */
@@ -103,34 +108,26 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
     return this.slotText.hasContent;
   }
 
-  protected override updated(changedProperties: PropertyValues): void {
-    super.updated(changedProperties);
-
-    if (window.__swc?.DEBUG) {
-      if (
-        changedProperties.has('size') &&
-        !ILLUSTRATED_MESSAGE_VALID_SIZES.includes(this.size)
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> received an invalid "size" value of "${this.size}". Valid values are ${ILLUSTRATED_MESSAGE_VALID_SIZES.join(', ')}.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/',
-          { issues: [`size="${this.size}"`] }
-        );
-      }
-
-      if (
-        changedProperties.has('orientation') &&
-        !ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS.includes(this.orientation)
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> received an invalid "orientation" value of "${this.orientation}". Valid values are ${ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS.join(', ')}.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/',
-          { issues: [`orientation="${this.orientation}"`] }
-        );
-      }
+  protected override update(changedProperties: PropertyValues): void {
+    if (changedProperties.has('size')) {
+      validateEnum(this, {
+        prop: 'size',
+        value: this.size,
+        valid: ILLUSTRATED_MESSAGE_VALID_SIZES,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-illustrated-message--docs',
+      });
     }
+
+    if (changedProperties.has('orientation')) {
+      validateEnum(this, {
+        prop: 'orientation',
+        value: this.orientation,
+        valid: ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-illustrated-message--docs',
+      });
+    }
+
+    super.update(changedProperties);
   }
 
   protected handleActionsSlotChange(): void {
@@ -140,24 +137,30 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
   /**
    * @internal
    *
-   * Validates that the heading slot only contains `<h2>`–`<h6>` elements.
-   * Rendering subclasses must wire this to the heading slot's `slotchange`
-   * event (e.g. `<slot name="heading" @slotchange=${this.handleHeadingSlotChange}>`)
-   * for the validation warning to fire.
+   * Validates the heading slot: children must be `<h2>`–`<h6>`, and at most a
+   * single heading is allowed. Rendering subclasses must wire this to the
+   * heading slot's `slotchange` event (e.g.
+   * `<slot name="heading" @slotchange=${this.handleHeadingSlotChange}>`) for the
+   * validation warnings to fire.
    */
   protected handleHeadingSlotChange(event: Event): void {
-    if (window.__swc?.DEBUG) {
-      const headingSlot = event.target as HTMLSlotElement;
-      for (const el of headingSlot.assignedElements()) {
-        if (!['H2', 'H3', 'H4', 'H5', 'H6'].includes(el.tagName)) {
-          window.__swc.warn(
-            this,
-            `<${this.localName}> heading slot received a <${el.tagName.toLowerCase()}> element. Only <h2>–<h6> elements are allowed in the heading slot.`,
-            'https://opensource.adobe.com/spectrum-web-components/components/illustrated-message/',
-            { issues: [`heading slot: <${el.tagName.toLowerCase()}>`] }
-          );
-        }
-      }
-    }
+    const slot = event.target as HTMLSlotElement;
+    const url =
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-illustrated-message--docs';
+    validateAllowedChildren(
+      this,
+      slot,
+      ['h2', 'h3', 'h4', 'h5', 'h6'],
+      'heading',
+      url
+    );
+    const headingCount = slot.assignedElements().length;
+    warnIf(
+      this,
+      headingCount > 1,
+      `<${this.localName}> "heading" slot accepts a single heading element but received ${headingCount}.`,
+      url,
+      { issues: [`heading slot: ${headingCount} elements`] }
+    );
   }
 }

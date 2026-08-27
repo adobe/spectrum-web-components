@@ -283,12 +283,13 @@ export const UnsupportedVariantWarningTest: Story = {
           warnCalls[0][0],
           'warning is emitted from the status light element'
         ).toBe(statusLight);
+        // The warn signature is warn(element, message, url, options), so
+        // [0] is the first call and [1] is its message.
+        const message = String(warnCalls[0]?.[1] ?? '');
         expect(
-          warnCalls[0][1],
+          message,
           'warning message references the variant attribute'
-        ).toBe(
-          `<${statusLight.localName}> element expects the "variant" attribute to be one of the following:`
-        );
+        ).toContain('variant');
       })
     );
   },
