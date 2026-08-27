@@ -135,7 +135,10 @@
     - [Progress circle accessibility migration analysis](progress-circle/accessibility-migration-analysis.md)
     - [Progress Circle migration roadmap](progress-circle/rendering-and-styling-migration-analysis.md)
 - Radio
+    - [Radio accessibility migration analysis](radio/accessibility-migration-analysis.md)
     - [Radio migration roadmap](radio/rendering-and-styling-migration-analysis.md)
+- Radio Group
+    - [Radio group accessibility migration analysis](radio-group/accessibility-migration-analysis.md)
 - Search
     - [Search migration roadmap](search/rendering-and-styling-migration-analysis.md)
 - Sidenav
