@@ -17,9 +17,10 @@ import { MenuBase } from '@adobe/spectrum-wc-core/components/menu';
 import styles from './menu.css';
 
 /**
- * A menu is a full menu-button host: a trigger opens a `swc-popover`-anchored
- * surface containing a list of `swc-menu-item`, `swc-menu-group`, and
- * `swc-menu-separator` rows.
+ * A menu is a full menu-button host: an externally-referenced trigger opens a
+ * `PlacementController`-anchored surface containing a `role="menu"` list of
+ * `swc-menu-item` rows (`swc-menu-group` and `swc-divider` as a separator
+ * join in a later migration phase).
  *
  * @element swc-menu
  *

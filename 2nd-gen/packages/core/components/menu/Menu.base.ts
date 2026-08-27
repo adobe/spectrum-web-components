@@ -15,10 +15,12 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 /**
  * Base class for the menu host. Implements the
  * {@link https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/ | menu button}
- * pattern: a trigger that opens a `swc-popover`-anchored surface containing a
- * `role="menu"` list. Trigger wiring, popover anchoring, and keyboard/focus
- * management are added in a later migration phase.
+ * pattern: an externally-referenced trigger (`for`/`triggerElement`) opens a
+ * `PlacementController`-anchored surface containing a `role="menu"` list.
+ * Trigger resolution, ARIA wiring, and keyboard/focus management are added in
+ * a later migration phase.
  *
- * @slot - `swc-menu-item`, `swc-menu-group`, and `swc-menu-separator` elements.
+ * @slot - `swc-menu-item` elements. `swc-menu-group` and `swc-divider` (as a
+ *   separator) join in a later migration phase.
  */
 export abstract class MenuBase extends SpectrumElement {}

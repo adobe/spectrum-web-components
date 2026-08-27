@@ -11,6 +11,3 @@
  */
 
 export * from './Menu.base.js';
-export * from './MenuItem.base.js';
-export * from './MenuGroup.base.js';
-export * from './MenuSeparator.base.js';
