@@ -117,6 +117,19 @@ const meta: Meta = {
     },
     layout: 'padded',
     additionalApiTables: ['swc-response-status-step'],
+    a11y: {
+      // The active-step shimmer clips an animated gradient through
+      // `background-clip: text` with `color: transparent`; axe samples
+      // whatever `background-position` the animation happens to be at when
+      // the scan runs, so its reported foreground color (and therefore the
+      // contrast ratio) is nondeterministic frame-to-frame rather than a
+      // real accessibility signal. The reduced-motion and forced-colors
+      // fallbacks already render this text with a flat, compliant color;
+      // see the media queries in response-status.css.
+      exclude: {
+        'color-contrast': ['.swc-ResponseStatus-step-title'],
+      },
+    },
   },
   excludeStories: ['meta'],
   tags: ['migrated'],
