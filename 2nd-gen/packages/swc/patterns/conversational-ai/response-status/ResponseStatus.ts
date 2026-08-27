@@ -68,6 +68,13 @@ export type ResponseStatusStepData = {
   description: string;
   status: ResponseStatusStepStatus;
   open: boolean;
+
+  /**
+   * The light DOM element this entry was read from. Carried alongside the
+   * data (rather than tracked in a second, index-parallel array) so the two
+   * can never drift out of correspondence.
+   */
+  element: ResponseStatusStep;
 };
 
 /**
@@ -113,12 +120,6 @@ export class ResponseStatus extends SpectrumElement {
 
   @state()
   private _steps: ResponseStatusStepData[] = [];
-
-  /**
-   * The light DOM element each `_steps` entry was read from, same index
-   * correspondence.
-   */
-  private _stepElements: ResponseStatusStep[] = [];
 
   /**
    * Indices of open steps whose description overflows its capped height. Only
@@ -385,17 +386,19 @@ export class ResponseStatus extends SpectrumElement {
     );
   }
 
-  private _readStepElement(element: Element): ResponseStatusStepData {
-    const step = element as ResponseStatusStep;
+  private _readStepElement(
+    element: ResponseStatusStep
+  ): ResponseStatusStepData {
     const label = this._readLightDomNamedSlotText(element, 'label');
-    const rawStatus = step.status || 'active';
+    const rawStatus = element.status || 'active';
     const status = this._isValidStepStatus(rawStatus) ? rawStatus : 'active';
 
     return {
       label,
       description: this._readStepDescription(element),
       status,
-      open: step.open ?? false,
+      open: element.open ?? false,
+      element,
     };
   }
 
@@ -427,8 +430,6 @@ export class ResponseStatus extends SpectrumElement {
     this._syncNamedSlots();
 
     const stepEls = this._readStepElements();
-    this._stepElements = stepEls;
-
     const steps = stepEls.map((element) => this._readStepElement(element));
     if (!this._stepsEqual(steps, this._steps)) {
       this._steps = steps;
@@ -709,13 +710,12 @@ export class ResponseStatus extends SpectrumElement {
     const button = event.currentTarget as HTMLElement;
     const index = Number(button.dataset.index);
     const step = this._steps[index];
-    const element = this._stepElements[index];
-    if (Number.isNaN(index) || !step || !element) {
+    if (Number.isNaN(index) || !step) {
       return;
     }
 
     const next = !step.open;
-    element.open = next;
+    step.element.open = next;
     this._syncSlotContent();
 
     this._emitToggle('swc-response-status-step-toggle', { open: next, index });
