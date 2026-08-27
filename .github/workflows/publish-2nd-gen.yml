@@ -194,7 +194,7 @@ jobs:
           if [ ! -f 2nd-gen/.changeset/pre.json ]; then
             (cd 2nd-gen && yarn changeset pre enter beta)
           fi
-          (cd 2nd-gen && yarn changeset version)
+          (cd 2nd-gen && yarn changeset version --snapshot test)
           yarn install --refresh-lockfile
 
       - name: Open or update the gen2 Version PR
@@ -234,7 +234,7 @@ jobs:
           fi
           yarn install --refresh-lockfile
           yarn build
-          (cd 2nd-gen && yarn changeset publish --no-git-tag --tag beta)
+          (cd 2nd-gen && yarn changeset publish --no-git-tag --tag test)
           echo "published=true" >> $GITHUB_OUTPUT
 
       - name: Publish summary
