@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.12.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @spectrum-web-components/icon@1.12.3
+  - @spectrum-web-components/icons-ui@1.12.3
+  - @spectrum-web-components/base@1.12.3
+  - @spectrum-web-components/shared@1.12.3
+
 ## 1.12.2
 
 ### Patch Changes
