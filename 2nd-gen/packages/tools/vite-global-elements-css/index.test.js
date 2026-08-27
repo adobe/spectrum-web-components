@@ -172,6 +172,70 @@ describe('transformSelector — SWC API attribute prefixing', () => {
   });
 });
 
+// ── transformSelector — reflected ARIA attributes ────────────────────────────
+
+describe('transformSelector — reflected ARIA attributes', () => {
+  it(':host([aria-x="value"]) → .block[aria-x="value"] (native attribute selector, not a modifier)', () => {
+    expect(
+      transformSelector(':host([aria-disabled="true"])', 'swc-ActionButton')
+    ).toBe('.swc-ActionButton[aria-disabled="true"]');
+  });
+
+  it('distinguishes aria-hidden="true" from aria-disabled="true" (no shared modifier collision)', () => {
+    expect(
+      transformSelector(':host([aria-hidden="true"])', 'swc-TabPanel')
+    ).toBe('.swc-TabPanel[aria-hidden="true"]');
+  });
+
+  it('real-world case: tab-panel.css :host([aria-hidden="true"])', () => {
+    expect(
+      transformSelector(':host([aria-hidden="true"])', 'swc-TabPanel')
+    ).toBe('.swc-TabPanel[aria-hidden="true"]');
+  });
+
+  it(':host([aria-x="y"]) .block:is(*, :hover) → single compound selector, not a descendant selector', () => {
+    expect(
+      transformSelector(
+        ':host([aria-disabled="true"]) .swc-ActionButton:is(*, :hover)',
+        'swc-ActionButton'
+      )
+    ).toBe('.swc-ActionButton[aria-disabled="true"]:is(*, :hover)');
+  });
+
+  it(':host([aria-x]) → .block[aria-x] (boolean reflected attribute)', () => {
+    expect(transformSelector(':host([aria-expanded])', 'swc-Button')).toBe(
+      '.swc-Button[aria-expanded]'
+    );
+  });
+
+  it('combines a BEM component-API attribute with a reflected ARIA attribute on the same element', () => {
+    expect(
+      transformSelector(
+        ':host([variant="primary"][aria-disabled="true"])',
+        'swc-Button'
+      )
+    ).toBe('.swc-Button--primary[aria-disabled="true"]');
+  });
+
+  it(':host([aria-x="y"]) .block → .block[aria-x="y"] (exact-match collapse still applies)', () => {
+    expect(
+      transformSelector(
+        ':host([aria-disabled="true"]) .swc-Button',
+        'swc-Button'
+      )
+    ).toBe('.swc-Button[aria-disabled="true"]');
+  });
+
+  it(':host([attr]) .block[open] → .block--attr[open] (attribute-selector suffix folds onto the same element, not just pseudo-classes)', () => {
+    expect(
+      transformSelector(
+        ':host([actual-placement]) .swc-Popover[open]',
+        'swc-Popover'
+      )
+    ).toBe('.swc-Popover--actual-placement[open]');
+  });
+});
+
 // ── deriveCSS — fence removal ────────────────────────────────────────────────
 
 describe('deriveCSS — fence removal', () => {

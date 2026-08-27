@@ -24,6 +24,21 @@ const FENCE_CLOSE = '@global-exclude-end';
 //   static-color="white" → staticWhite  ("static" is the semantic distinguisher)
 const SWC_PREFIXED_ATTRS = ['size', 'static-color'];
 
+/**
+ * Reflected ARIA attributes carry boolean-like string values ("true"/"false")
+ * shared across many unrelated attributes, so a value-only BEM modifier (the
+ * default in buildModifier) would collide — aria-disabled="true" and
+ * aria-hidden="true" would both produce the same meaningless modifier. The
+ * generated global custom element genuinely carries these attributes at
+ * runtime, so they're kept as native attribute selectors instead.
+ *
+ * @param {string} attrName
+ * @returns {boolean}
+ */
+function isReflectedAttr(attrName) {
+  return attrName.startsWith('aria-');
+}
+
 // ── File header ─────────────────────────────────────────────────────────────
 
 /**
@@ -176,6 +191,7 @@ function transformSlotted(fragment, block) {
  *   :host([boolAttr])            → .block--boolAttr (attr name becomes modifier)
  *   :host([a="x"][b="y"])        → .block--x.block--y (compound, same element)
  *   :host([a="x"]) .block__el   → .block--x .block-el
+ *   :host([aria-x="y"])         → .block[aria-x="y"] (reflected ARIA attrs stay native)
  *   slot[name="X"]::slotted(*)  → .block__X
  *
  * @param {string} selector
@@ -204,19 +220,42 @@ function transformSingle(selector, block) {
     return r ? `.${block} ${r}` : `.${block}`;
   }
 
-  // :host([attr="value"][boolAttr]) → modifier classes joined (no space = same element)
+  // :host([attr="value"][boolAttr]) → BEM modifier classes for component-API
+  // attributes, joined onto the same element. Reflected ARIA attributes bypass
+  // modifier conversion and stay as native [attr="value"] attribute selectors,
+  // since the generated global element genuinely carries them at runtime.
   const attrs = parseHostAttrs(rawArgs);
-  const hostClass = attrs
+  const ariaAttrs = attrs.filter(({ name }) => isReflectedAttr(name));
+  const bemAttrs = attrs.filter(({ name }) => !isReflectedAttr(name));
+
+  const bemClass = bemAttrs
     .map(({ name, value }) => `.${block}--${buildModifier(name, value)}`)
     .join('');
+  const ariaSelector = ariaAttrs
+    .map(({ name, value }) =>
+      value === undefined ? `[${name}]` : `[${name}="${value}"]`
+    )
+    .join('');
+  const hostClass =
+    (bemClass || (ariaAttrs.length > 0 ? `.${block}` : '')) + ariaSelector;
 
   const r = transformSlotted(rest, block);
+  const blockClass = `.${block}`;
 
   // When the rest is exactly the block class, the shadow-DOM inner element is
   // the root element in global context — collapse into the modifier so styles
   // apply directly rather than producing an unreachable descendant combinator.
-  if (r === `.${block}`) {
+  if (r === blockClass) {
     return hostClass;
+  }
+
+  // When the rest starts with the block class followed by pseudo-classes,
+  // pseudo-elements, or attribute selectors (e.g. `.block:is(*, :hover)`,
+  // `.block[open]`), it's still the same single element in global context —
+  // fold the suffix onto the host selector rather than joining as a
+  // descendant of a second, non-existent element.
+  if (r.startsWith(blockClass) && /^[:[]/.test(r[blockClass.length])) {
+    return hostClass + r.slice(blockClass.length);
   }
 
   return r ? `${hostClass} ${r}` : hostClass;

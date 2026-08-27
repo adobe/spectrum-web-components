@@ -84,6 +84,14 @@
   transform: none;
 }
 
+.swc-ActionButton[aria-disabled="true"]:is(*, :hover) {
+  color: var(--swc-action-button-content-color-disabled, token("disabled-content-color"));
+  background-color: var(--swc-action-button-background-color-disabled, token("disabled-background-color"));
+  border-color: var(--swc-action-button-border-color-disabled, transparent);
+  cursor: default;
+  transform: none;
+}
+
 .swc-ActionButton-label {
   text-align: center;
   pointer-events: none;

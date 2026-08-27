@@ -105,7 +105,6 @@
   transform: none;
 }
 
-/* @global-exclude: :host([aria-disabled]) converts to invalid .swc-ActionButton--true until SWC-2511 */
 :host([aria-disabled="true"]) .swc-ActionButton:is(*, :hover) {
   color: var(--swc-action-button-content-color-disabled, token("disabled-content-color"));
   background-color: var(--swc-action-button-background-color-disabled, token("disabled-background-color"));
@@ -113,8 +112,6 @@
   cursor: default;
   transform: none;
 }
-
-/* @global-exclude-end */
 
 /* ── Sub-elements ─────────────────────────────────── */
 
