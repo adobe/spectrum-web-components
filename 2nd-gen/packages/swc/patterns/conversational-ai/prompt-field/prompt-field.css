@@ -878,13 +878,20 @@
 }
 
 .swc-PromptField-send {
-  --swc-action-button-background-color-default: token("neutral-background-color-default");
-  --swc-action-button-background-color-hover: token("neutral-background-color-hover");
-  --swc-action-button-background-color-focus: token("neutral-background-color-default");
-  --swc-action-button-background-color-down: token("neutral-background-color-default");
+  /* Auto static treatment from stop-1 (under this button): translucent fill snaps dark-on-light / light-on-dark, icon takes the opposite, so the gradient shows through. */
+  --_swc-prompt-field-send-fill: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg);
+  --_swc-prompt-field-send-icon: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((l - 0.5) * infinity) 0 0deg);
+  --swc-action-button-background-color-default: oklch(from var(--_swc-prompt-field-send-fill) l c h / 85%);
+  --swc-action-button-background-color-hover: oklch(from var(--_swc-prompt-field-send-fill) l c h / 95%);
+  --swc-action-button-background-color-focus: oklch(from var(--_swc-prompt-field-send-fill) l c h / 85%);
+  --swc-action-button-background-color-down: oklch(from var(--_swc-prompt-field-send-fill) l c h / 95%);
+  --swc-action-button-content-color-default: var(--_swc-prompt-field-send-icon);
+  --swc-action-button-content-color-hover: var(--_swc-prompt-field-send-icon);
+  --swc-action-button-content-color-focus: var(--_swc-prompt-field-send-icon);
+  --swc-action-button-content-color-down: var(--_swc-prompt-field-send-icon);
 
-  /* Disabled falls back to the auto-contrast tint rather than the flat fill. */
-  --swc-action-button-background-color-disabled: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 11%);
+  /* Disabled uses the same auto-contrast tint at a low alpha. */
+  --swc-action-button-background-color-disabled: oklch(from var(--_swc-prompt-field-send-fill) l c h / 11%);
   --swc-action-button-content-color-disabled: token("gray-400");
 }
 
