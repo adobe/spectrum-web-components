@@ -20,6 +20,7 @@ import {
   TEXT_FIELD_LABEL_POSITIONS,
   TEXT_FIELD_TYPES,
   TEXT_FIELD_VALID_SIZES,
+  type TextFieldAutocomplete,
   type TextFieldLabelPosition,
   type TextFieldSize,
   type TextFieldType,
@@ -32,6 +33,10 @@ const DOCS_URL =
  * A single-line text field for entering and editing text.
  *
  * @attribute {ElementSize} size - The size of the text field.
+ *
+ * @slot label - Visible label content, rendered in-shadow as a real `<label for>`.
+ * @slot description - Guidance / non-error help text, associated via `aria-describedby`.
+ * @slot error-text - Error message shown when `invalid`, targeted by `aria-errormessage`.
  */
 export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
   validSizes: TEXT_FIELD_VALID_SIZES,
@@ -59,6 +64,27 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
    */
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
+
+  /**
+   * Element IDs, from the light DOM, that provide the field's accessible name.
+   * Takes precedence over `accessibleLabel` and a slotted label.
+   *
+   * @todo (SWC-2466): the `LabellingController` resolves these IDREFs to the
+   * cross-root `ariaLabelledByElements` property; raw `aria-labelledby` is not
+   * exposed on the host.
+   */
+  @property({ attribute: 'accessible-labelledby' })
+  public accessibleLabelledby?: string;
+
+  /**
+   * Element IDs, from the light DOM, that describe the field.
+   *
+   * @todo (SWC-2466): the `LabellingController` resolves these IDREFs to the
+   * cross-root `ariaDescribedByElements` property; raw `aria-describedby` is not
+   * exposed on the host.
+   */
+  @property({ attribute: 'accessible-describedby' })
+  public accessibleDescribedby?: string;
 
   /**
    * The value of the input.
@@ -100,7 +126,7 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
    * Hint for the browser's autofill feature.
    */
   @property({ type: String, reflect: true })
-  public autocomplete?: HTMLInputElement['autocomplete'];
+  public autocomplete?: TextFieldAutocomplete;
 
   /**
    * The maximum number of characters the value may contain.
@@ -157,9 +183,9 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────
 
-  // @todo (SWC-2466): accessible-labelledby / accessible-describedby element-ref
-  // properties and the "unlabeled field" dev-warning are LabellingController inputs;
-  // add them with the controller.
+  // @todo (SWC-2466): resolve the accessible-labelledby / accessible-describedby
+  // IDREF stubs to cross-root element references, and add the "unlabeled field"
+  // dev-warning, via the LabellingController.
 
   // @todo (SWC-2467): wire the FieldAssociationController (formAssociated,
   // attachInternals, setFormValue, formResetCallback, formDisabledCallback) plus

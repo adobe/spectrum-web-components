@@ -41,3 +41,11 @@ export type TextFieldSize = (typeof TEXT_FIELD_VALID_SIZES)[number];
 export type TextFieldType = (typeof TEXT_FIELD_TYPES)[number];
 export type TextFieldLabelPosition =
   (typeof TEXT_FIELD_LABEL_POSITIONS)[number];
+
+/**
+ * Valid `autocomplete` tokens for the text field. Aliases the platform
+ * `AutoFill` union, which is the standard HTML autofill grammar and excludes
+ * the combobox-only `list`/`none` tokens 1st-gen widened it with (B5); those
+ * belong to the combobox component.
+ */
+export type TextFieldAutocomplete = AutoFill;
