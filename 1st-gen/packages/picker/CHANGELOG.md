@@ -1,5 +1,25 @@
 # Change Log
 
+## 1.12.3-test.20260827122947
+
+### Patch Changes
+
+- Updated dependencies [[`e43cb15`](https://github.com/adobe/spectrum-web-components/commit/e43cb1546cd5584f3cc8f0534182bc4f143c767a)]:
+  - @spectrum-web-components/button@1.12.3-test.20260827122947
+  - @spectrum-web-components/menu@1.12.3-test.20260827122947
+  - @spectrum-web-components/overlay@1.12.3-test.20260827122947
+  - @spectrum-web-components/popover@1.12.3-test.20260827122947
+  - @spectrum-web-components/tooltip@1.12.3-test.20260827122947
+  - @spectrum-web-components/field-label@1.12.3-test.20260827122947
+  - @spectrum-web-components/icon@1.12.3-test.20260827122947
+  - @spectrum-web-components/icons-ui@1.12.3-test.20260827122947
+  - @spectrum-web-components/icons-workflow@1.12.3-test.20260827122947
+  - @spectrum-web-components/progress-circle@1.12.3-test.20260827122947
+  - @spectrum-web-components/tray@1.12.3-test.20260827122947
+  - @spectrum-web-components/base@1.12.3-test.20260827122947
+  - @spectrum-web-components/reactive-controllers@1.12.3-test.20260827122947
+  - @spectrum-web-components/shared@1.12.3-test.20260827122947
+
 ## 1.12.2
 
 ### Patch Changes
