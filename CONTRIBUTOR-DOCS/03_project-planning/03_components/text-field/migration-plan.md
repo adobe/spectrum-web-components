@@ -326,7 +326,7 @@ These are derived from the 1st-gen implementation, the [accessibility migration 
 | `accessibleDescribedby` | element refs | — | `accessible-describedby` | **Confirmed.** External description via `ariaDescribedByElements`. |
 | `value` | `string` | `''` | (property) | **Inferred.** Single-line value is a string; drop the `string \| number` base union (that was for `number-field`). |
 | `name` | `string \| undefined` | `undefined` | `name` (reflect) | **Confirmed.** Form control name. |
-| `type` | `'text' \| 'url' \| 'tel' \| 'email' \| 'password'` | `'text'` | `type` (reflect) | **Confirmed.** Validate via `validateEnum`; drop the `_type` reflection quirk (Q13). |
+| `type` | `'text' \| 'url' \| 'tel' \| 'email' \| 'password'` | `'text'` | `type` (reflect) | **Confirmed.** Closed 1st-gen set; `search` and `number` are intentionally excluded (own components), diverging from React Spectrum's open union (Q27). Validate via `validateEnum`; drop the `_type` reflection quirk (Q13). |
 | `placeholder` | `string` | `''` | `placeholder` | **Confirmed.** Never the accessible name; no `aria-placeholder`. |
 | `pattern` | `string \| undefined` | `undefined` | `pattern` | **Confirmed.** |
 | `inputmode` | `string \| undefined` | `undefined` | `inputmode` | **Confirmed.** New; virtual-keyboard hint. |
@@ -410,11 +410,13 @@ Planned rendering shape:
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/components/text-field/`
-- [ ] Create `2nd-gen/packages/swc/components/text-field/`
-- [ ] Wire exports in both `package.json` files
-- [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
-- [ ] Scaffold `LabellingController` (SWC-2466) and `FieldAssociationController` (SWC-2467) alongside `text-field`, or confirm they are available to depend on
+- [x] Create `2nd-gen/packages/core/components/text-field/` (`TextField.base.ts`, `TextField.types.ts`, `index.ts`)
+- [x] Create `2nd-gen/packages/swc/components/text-field/` (`TextField.ts`, `text-field.css`, `index.ts`, `swc-text-field.ts`)
+- [x] Wire exports in both `package.json` files — core `package.json` gained explicit `./components/text-field` entries (`exports` + `typesVersions`); the SWC `package.json` uses wildcard exports (`./components/*`, `./components/*.js`), so no change was needed there
+- [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory — deferred to Phase 5 (styling); not needed to build the scaffold
+- [ ] Scaffold `LabellingController` (SWC-2466) and `FieldAssociationController` (SWC-2467) alongside `text-field`, or confirm they are available to depend on — neither controller exists yet; wiring deferred to Phase 3 (API) per session decision. `TextField.base.ts` carries a `@todo (SWC-2466 / SWC-2467)` marker so the scaffold builds without them
+
+> **Phase 2 note.** Stories and tests were intentionally not scaffolded in Phase 2; they are authored in their dedicated phases (Testing / Documentation). The scaffold render in `TextField.ts` is a minimal `.swc-TextField` wrapper with a bare `<input>` and no API wiring, sufficient to confirm the build passes.
 
 ### API
 
@@ -559,6 +561,7 @@ Settled decisions from planning and PR review, kept here as a historical record 
 | Q5 / B7 / A8 | Validation icons: `AlertTriangle` (invalid) ships; valid checkmark deferred | Per Design and RS response, the valid checkmark is deferred (not shown in React or the newer Figma); tracked as additive A8. The `valid` property stays for consumers. Invalid-icon sizing is extracted from Figma with the rest of the tokens (Q20). |
 | Q16 / A1 | Character count deferred | React Spectrum does not support it yet; deferral confirmed. If added later it needs a dedicated a11y plan (`aria-describedby` alone is insufficient for announcing a live count). |
 | Q22 (naming) | Shared field styles live in a shared `form-fields` stylesheet from the start; classes are `.swc-FormField*` | Text field is the first consumer, but the styles live shared, not authored in text-field. `form-fields`/`FormField` (not `forms`/`Form`) reserves `form`/`Form` for a possible future form-wrapper component or utility. Render-template location/ownership remains open (Q22). |
+| Q27 | `TextFieldType` stays the closed 1st-gen set (`text/url/tel/email/password`); `search` and `number` are excluded | Spectrum models search and number as their own components (`Search` / React Spectrum `SearchField`; `number-field`), so they are not `type` values here. Matches 1st-gen `sp-textfield` and is enforced with `validateEnum`. This intentionally diverges from React Spectrum's TextField, whose `type` is an open `… \| (string & {})` union that also lists `search`; the open escape hatch is incompatible with the closed-enum dev-warning, and search UI belongs to the dedicated component. |
 
 ---
 

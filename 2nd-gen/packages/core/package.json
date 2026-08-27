@@ -135,6 +135,14 @@
       "types": "./dist/components/tabs/index.d.ts",
       "import": "./dist/components/tabs/index.js"
     },
+    "./components/text-field": {
+      "types": "./dist/components/text-field/index.d.ts",
+      "import": "./dist/components/text-field/index.js"
+    },
+    "./components/text-field/index.js": {
+      "types": "./dist/components/text-field/index.d.ts",
+      "import": "./dist/components/text-field/index.js"
+    },
     "./components/tooltip": {
       "types": "./dist/components/tooltip/index.d.ts",
       "import": "./dist/components/tooltip/index.js"
@@ -373,6 +381,12 @@
       ],
       "components/tabs/index.js": [
         "dist/components/tabs/index.d.ts"
+      ],
+      "components/text-field": [
+        "dist/components/text-field/index.d.ts"
+      ],
+      "components/text-field/index.js": [
+        "dist/components/text-field/index.d.ts"
       ],
       "components/tooltip": [
         "dist/components/tooltip/index.d.ts"
