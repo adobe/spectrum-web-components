@@ -87,15 +87,17 @@ export class ProgressBar extends SizedMixin(
   private _overBackground: boolean = false;
 
   /**
-   * @deprecated The `side-label` attribute will be replaced by
-   * `label-position="side"` in a future release.
+   * @deprecated The `side-label` attribute is deprecated and will be removed
+   * in Spectrum 2. There is no replacement on `sp-progress-bar`; use
+   * `label-position="side"` on `swc-progress-bar` instead.
    */
   @property({ type: Boolean, reflect: true, attribute: 'side-label' })
   public sideLabel = false;
 
   /**
-   * @deprecated The `progress` property will be replaced by `value` in a
-   * future release.
+   * @deprecated The `progress` property is deprecated and will be removed
+   * in Spectrum 2. There is no replacement on `sp-progress-bar`; use
+   * `value` on `swc-progress-bar` instead.
    */
   @property({ type: Number })
   public progress = 0;
@@ -199,7 +201,7 @@ export class ProgressBar extends SizedMixin(
       if (changes.has('sideLabel') && this.sideLabel) {
         window.__swc.warn(
           this,
-          `The "side-label" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use label-position="side" instead.`,
+          `The "side-label" attribute on <${this.localName}> has been deprecated and will be removed in a future release. There is no replacement on <${this.localName}>; use label-position="side" on <swc-progress-bar> instead.`,
           'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/',
           { level: 'deprecation' }
         );
@@ -207,7 +209,7 @@ export class ProgressBar extends SizedMixin(
       if (changes.has('progress') && this.progress !== 0) {
         window.__swc.warn(
           this,
-          `The "progress" property on <${this.localName}> has been deprecated and will be removed in a future release. Use the "value" attribute instead.`,
+          `The "progress" property on <${this.localName}> has been deprecated and will be removed in a future release. There is no replacement on <${this.localName}>; use "value" on <swc-progress-bar> instead.`,
           'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/',
           { level: 'deprecation' }
         );
