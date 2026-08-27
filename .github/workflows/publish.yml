@@ -328,8 +328,8 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
         run: |
           RELEASED_VERSION=$(node -p "require('./1st-gen/packages/button/package.json').version")
-          if git rev-parse "v$RELEASED_VERSION" >/dev/null 2>&1; then
-            echo "v$RELEASED_VERSION already released - nothing to do."
+          if git rev-parse "gen1-$RELEASED_VERSION" >/dev/null 2>&1; then
+            echo "gen1-$RELEASED_VERSION already released - nothing to do."
             echo "published=false" >> $GITHUB_OUTPUT
             exit 0
           fi

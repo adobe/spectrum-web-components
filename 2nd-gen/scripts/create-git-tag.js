@@ -21,10 +21,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Read package.json directly to avoid caching issues
-const pkgPath = join(__dirname, '../packages/button/package.json');
+const pkgPath = join(__dirname, '../packages/swc/package.json');
 const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'));
 const version = pkg.version;
-const tag = `gen1-${version}`;
+const tag = `gen2-${version}`;
 
 try {
   // Check if the tag already exists

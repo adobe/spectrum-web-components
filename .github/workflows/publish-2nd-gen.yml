@@ -235,6 +235,9 @@ jobs:
           yarn install --refresh-lockfile
           yarn build
           (cd 2nd-gen && yarn changeset publish --no-git-tag --tag test)
+          git config user.name "github-actions-bot"
+          git config user.email "support+actions@github.com"
+          node ./2nd-gen/scripts/create-git-tag.js
           echo "published=true" >> $GITHUB_OUTPUT
 
       - name: Publish summary
