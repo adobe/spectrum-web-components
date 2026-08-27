@@ -122,6 +122,16 @@ export class ResponseStatus extends SpectrumElement {
   private _steps: ResponseStatusStepData[] = [];
 
   /**
+   * Step elements whose `open` attribute `_handleStepToggle` just reflected
+   * itself. The `MutationController` below still observes that same
+   * attribute (to catch external writes, per the completion-contract note
+   * on step disclosure), so without this it would re-scan every step a
+   * second time for a change already patched into `_steps` synchronously.
+   * Consumed (deleted) the first time its own mutation record is seen.
+   */
+  private _pendingOwnOpenToggles = new Set<ResponseStatusStep>();
+
+  /**
    * Indices of open steps whose description overflows its capped height. Only
    * these get a keyboard-focusable scroll region, so non-overflowing details
    * never enter the tab order.
@@ -221,7 +231,19 @@ export class ResponseStatus extends SpectrumElement {
         subtree: true,
       },
       callback: (records) => {
-        const isStepMutation = records.some((record) => record.target !== this);
+        const isStepMutation = records.some((record) => {
+          if (record.target === this) {
+            return false;
+          }
+          if (
+            record.attributeName === 'open' &&
+            record.target instanceof ResponseStatusStep &&
+            this._pendingOwnOpenToggles.delete(record.target)
+          ) {
+            return false;
+          }
+          return true;
+        });
         if (isStepMutation) {
           this._syncSlotContent();
         }
@@ -715,8 +737,18 @@ export class ResponseStatus extends SpectrumElement {
     }
 
     const next = !step.open;
+    // Patch just the toggled entry instead of a full `_syncSlotContent()`
+    // re-scan: only this step's `open` changed, so re-reading every step's
+    // label/description/status off the light DOM would be wasted work.
+    // `_pendingOwnOpenToggles` tells the `MutationController` to skip its own
+    // later pass over this exact attribute change, since `_steps` already
+    // reflects it by then; without that, the observer would redundantly
+    // re-read every step a second time right after this synchronous patch.
+    this._pendingOwnOpenToggles.add(step.element);
     step.element.open = next;
-    this._syncSlotContent();
+    this._steps = this._steps.map((entry, entryIndex) =>
+      entryIndex === index ? { ...entry, open: next } : entry
+    );
 
     this._emitToggle('swc-response-status-step-toggle', { open: next, index });
   }
