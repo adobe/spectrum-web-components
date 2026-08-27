@@ -162,10 +162,11 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
   // add them with the controller.
 
   // @todo (SWC-2467): wire the FieldAssociationController (formAssociated,
-  // attachInternals, setFormValue, formResetCallback, formDisabledCallback).
+  // attachInternals, setFormValue, formResetCallback, formDisabledCallback) plus
+  // its checkValidity()/reportValidity()/validity pass-throughs.
 
-  // @todo (Phase 5): checkValidity() / setSelectionRange() / select() delegate to
-  // the rendered native <input>, so they land with the render implementation.
+  // @todo (Phase 5): setSelectionRange() / select() delegate to the rendered
+  // native <input>, so they land with the render implementation.
 
   protected override update(changedProperties: PropertyValues): void {
     validateEnum(this, {
