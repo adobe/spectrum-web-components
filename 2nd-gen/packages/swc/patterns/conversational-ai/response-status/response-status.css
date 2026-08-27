@@ -87,18 +87,29 @@
   min-inline-size: 0;
 }
 
-/* Both lines occupy the same grid cell so the cross-fade below is pure
-   opacity, with no vertical movement: the chevron (a fixed sibling of the
-   viewport, not rendered inside this) never shifts as the fade runs. */
+/* The incoming line stays in normal flow, so the container's fit-content
+   width tracks the new label like any ordinary text; the outgoing line is
+   absolutely positioned on top of it at the same origin. Both approaches
+   read as a pure opacity cross-fade with no vertical movement (the chevron,
+   a fixed sibling of the viewport, never shifts as the fade runs), but
+   plain absolute stacking sidesteps a Safari rendering glitch seen with two
+   `grid-area: 1 / 1` items cross-fading in the same cell (garbled, doubled
+   text mid-transition instead of a clean blend). An absolutely positioned
+   element with only its start inset set still shrink-to-fits within its
+   containing block, so if the outgoing label is wider than the incoming
+   one, its own ellipsis (see the `.swc-ResponseStatus-label` rule below)
+   truncates it to match rather than overflowing past the container — a
+   reasonable trade-off since that text is already fading to transparent. */
 .swc-ResponseStatus-headerTrailCrossfade {
-  display: grid;
+  display: inline-flex;
+  position: relative;
+  align-items: center;
   inline-size: fit-content;
   max-inline-size: 100%;
 }
 
 .swc-ResponseStatus-headerTrailLine {
   display: inline-flex;
-  grid-area: 1 / 1;
   align-items: center;
   max-inline-size: 100%;
   block-size: var(--_swc-response-status-label-line-size, 1.33em);
@@ -140,6 +151,9 @@
    exit get different durations/easing per the motion spec: the incoming
    label fades in slower than the outgoing one fades out. */
 .swc-ResponseStatus-headerTrailLine--exit {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
   opacity: 1;
   transition: opacity 150ms cubic-bezier(0.15, 0.47, 0.67, 0.77);
 }
