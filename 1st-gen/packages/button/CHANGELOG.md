@@ -1,19 +1,5 @@
 # Change Log
 
-## 1.12.3
-
-### Patch Changes
-
-- Updated dependencies []:
-  - @spectrum-web-components/clear-button@1.12.3
-  - @spectrum-web-components/close-button@1.12.3
-  - @spectrum-web-components/icon@1.12.3
-  - @spectrum-web-components/icons-ui@1.12.3
-  - @spectrum-web-components/progress-circle@1.12.3
-  - @spectrum-web-components/base@1.12.3
-  - @spectrum-web-components/reactive-controllers@1.12.3
-  - @spectrum-web-components/shared@1.12.3
-
 ## 1.12.2
 
 ### Patch Changes
