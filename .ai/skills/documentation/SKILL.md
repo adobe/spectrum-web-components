@@ -42,7 +42,7 @@ Most often, documentation is written in Markdown (including MDX for Storybook do
 
 For 2nd-gen Storybook documentation specifically:
 
-- **Per-unit docs page**: authored as a Markdown / MDX file (`<unit>.mdx`) at the unit's root. This is the docs surface for components, internal components, patterns, and controllers. See [`.ai/rules/stories-documentation.md`](../../rules/stories-documentation.md) for the per-unit MDX authoring template and conventions.
+- **Per-unit docs page**: authored as a Markdown / MDX file (`<unit>.mdx`) at the unit's root. This is the docs surface for components, internal components, patterns, and controllers. See [`stories-documentation`](../../rules/stories-documentation.md) for the per-unit MDX authoring template and conventions.
 - **Public-API JSDoc**: authored on `@property`, `@slot`, public methods, dispatched events, etc. in `Component.ts`. This is read by the Custom Elements Manifest and rendered into Storybook's API table.
 - **Meta-level JSDoc**: a single JSDoc above `const meta: Meta = { ... }` in the stories file. Rendered by `<Description />` at the top of the docs page.
 - Story-level JSDoc (above individual `export const Foo: Story = ...`) is **not** used in 2nd-gen. Prose for each story lives in the per-unit MDX next to the corresponding `<Canvas of={Stories.Foo} />` reference.

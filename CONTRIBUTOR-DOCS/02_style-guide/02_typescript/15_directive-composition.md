@@ -246,9 +246,9 @@ style=${styleMap({
 
 ## Custom directives
 
-2nd-gen does not currently use custom directives. All directive usage relies on Lit's built-in directives.
+2nd-gen has one custom directive so far: `renderPendingSpinner` (`core/directives/pending-spinner/`), which renders the busy-state spinner and is called via `PendingController.renderPendingState()` (used by `PendingMixin`, and in turn by `button`/`action-button`). See [2nd-gen shared resources](../../01_contributor-guides/16_2nd-gen-shared-resources.md#directives).
 
-If a custom directive is needed in the future, it should follow Lit's custom directive pattern:
+For anything else, prefer Lit's built-in directives. A new custom directive should follow Lit's custom directive pattern:
 
 1. Extend the `Directive` class from `lit/directive.js`
 2. Implement the `render()` method

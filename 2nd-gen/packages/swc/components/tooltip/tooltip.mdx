@@ -33,7 +33,7 @@ The `start` and `end` values are RTL-aware: `start` maps to the left side in LTR
 
 `PlacementController` handles pixel positioning automatically. When there is insufficient space on the requested side, the tooltip flips to the opposite side. The `placement` attribute always holds your requested value; the flip never rewrites it. If space reopens, the tooltip returns to the requested side. The resolved side is reflected on `actual-placement` (read-only, not public API).
 
-Because `<swc-tooltip>` uses `popover="auto"`, the tooltip renders in the browser's top layer, outside the normal document flow. The flip boundary is therefore the **viewport**, not the tooltip's scroll container ancestor. Flip is triggered by proximity to the viewport edge, not to any overflow container boundary.
+Because `<swc-tooltip>` uses the Popover API (`popover="manual"`), the tooltip renders in the browser's top layer, outside the normal document flow. The flip boundary is therefore the **viewport**, not the tooltip's scroll container ancestor. Flip is triggered by proximity to the viewport edge, not to any overflow container boundary.
 
 Additional attributes control positioning behavior: `offset` sets the pixel gap between the trigger and the bubble; `cross-offset` slides the bubble along the trigger edge; `container-padding` sets the minimum inset from the viewport edge before flipping (default `12px`); `should-flip` (default `true`) enables or disables the flip behavior.
 
@@ -45,7 +45,7 @@ Additional attributes control positioning behavior: `offset` sets the pixel gap 
 
 The tooltip is closed by default. Setting `open` to `true` calls `showPopover()`, placing the bubble in the browser's top layer via the Popover API. The `open` attribute reflects the current visibility state.
 
-Because the component uses `popover="auto"`, opening a tooltip dismisses any other open auto popover in the document, including other tooltips, menus, pickers, and selects. Set `manual` to opt out of automatic hover and focus wiring and manage `open` directly while retaining ARIA relationship wiring.
+Because the component uses `popover="manual"`, a tooltip stays outside the browser's auto light-dismiss group: opening a tooltip does not dismiss an open `<swc-popover>`, menu, picker, or select, and opening one of those does not force the tooltip closed. This lets a hover tooltip appear over a control while a popover the user is working in stays open. The tooltip still closes on its own triggers (pointer leaving the trigger, focus moving away, or Escape); coexistence only means the popover auto-stack no longer tears it down. Set the `manual` property to additionally opt out of automatic hover and focus wiring and manage `open` directly while retaining ARIA relationship wiring.
 
 <Canvas of={TooltipStories.Open} />
 
@@ -129,7 +129,11 @@ Prefer adding an accessible name directly to the trigger when possible: `aria-la
 #### Keyboard behavior
 
 - <kbd>Escape</kbd>: closes the tooltip; focus remains on the trigger. Handled
-  by native `popover="auto"`.
+by the component's own Escape listener (registered while open), since
+`popover="manual"` provides no native light-dismiss. When a tooltip is open on
+top of an `<swc-popover>`, the tooltip joins the shared dismissible stack:
+<kbd>Escape</kbd> closes the topmost surface first, so it dismisses the tooltip
+and leaves the popover open; a second <kbd>Escape</kbd> closes the popover.
 - Tooltip text is never in the tab order; focus always stays on the trigger.
 
 #### High contrast mode

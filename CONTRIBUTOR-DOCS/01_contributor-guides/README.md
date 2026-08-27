@@ -26,6 +26,7 @@
 - [Writing migration guides](13_writing-migration-guides.md)
 - [Focus management](14_focus-management.md)
 - [Changelog strategy](15_changelog-strategy.md)
+- [2nd-gen shared resources quick reference](16_2nd-gen-shared-resources.md)
 
 </details>
 

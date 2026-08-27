@@ -14,6 +14,8 @@
 - [When to use](#when-to-use)
 - [How to author VRT stories](#how-to-author-vrt-stories)
     - [Grouping permutations into rows](#grouping-permutations-into-rows)
+    - [Forced pseudo-states](#forced-pseudo-states)
+    - [Positioned overlay components](#positioned-overlay-components)
 - [Tips for reliable VRT](#tips-for-reliable-vrt)
 
 </details>
@@ -38,13 +40,15 @@ Author dense visual coverage in `test/vrt/*.vrt.ts` for components and patterns.
 
 Aim for maximum meaningful coverage: include every size, variant, state, anatomy, theme, static-color, global-style, custom-property, and component-specific visual axis that can produce a useful visual difference. Cover CJK language rendering explicitly when text metrics can change, e.g. `lang="ja"` / `lang="ko"` / `lang="zh"` line-height, wrapping, or truncation. Skip only impossible, unsupported, or truly redundant combinations.
 
+One common source of "truly redundant" coverage: a visual axis that a component only passes through to a slotted or composed child, with no CSS of its own for that axis (e.g. a layout component that forwards `static-color` to its children but has no color rules itself). That axis is already covered by the child component's own VRT file; re-testing it here only re-renders the child's existing coverage under a layout that does not affect it. Cover the axis in this component's own VRT file only when this component's own CSS does something with that state, such as a layout or stacking change that applies only in that state.
+
 Use this shape:
 
 - `test/vrt/<component>.vrt.ts` for permutations, states, static colors, forced colors, wrapping, and anatomy.
 - `test/vrt/<component>-global-styles.vrt.ts` when the component ships global class styles.
 - `test/vrt/<component>-custom-properties.vrt.ts` when public custom properties need visual coverage.
 
-Use shared helpers from `.storybook/helpers`: `createPermutations`, `groupPermutationsBy`, `row`, `theme`, `staticColorBackground`, `forcePseudoStates`, `vrtParameters`, `forcedColorsVrtParameters`, `customPropertyRows`, and `verifyCustomPropertyCoverage`.
+Use shared helpers from `.storybook/helpers`: `createPermutations`, `groupPermutationsBy`, `row`, `theme`, `staticColorBackground`, `forcePseudoStates` (and `forcePseudoState` for individual slotted elements), `vrtParameters`, `forcedColorsVrtParameters`, `customPropertyRows`, and `verifyCustomPropertyCoverage`.
 
 Keep component files small: local case lists and component-specific renderers only. Move reusable mechanics to `.storybook/helpers`.
 
@@ -66,6 +70,54 @@ For composed patterns, use deterministic realistic content instead of behavior d
 
 Stories tagged with `'!test'` are excluded from VRT runs. See [Excluding stories from tests](01_testing-overview.md#excluding-stories-from-tests) for when and why to use this tag.
 
+### Forced pseudo-states
+
+`:hover`, `:focus-visible`, and `:active` cannot be triggered by synthetic events in a static Chromatic capture. The `forcePseudoStates` helper mirrors a component's own pseudo-state rules into equivalent selectors and applies a `data-forced-<state>` attribute to the target element from the story's `play` function.
+
+The forced state is applied as a `data-*` attribute, never a class, on purpose. Components commonly scope default styles behind a `:not([class])` guard, so that a consumer-supplied class opts out of them. Forcing a state with a class would trip that guard and silently drop the default styling from the snapshot, making the VRT inaccurate. An attribute never sets `class`, so every such guard stays satisfied and no test-only class names need to leak into shipped component CSS.
+
+Force only the states a component actually styles. A forced state with no matching rule just adds a snapshot that can never differ from its unforced counterpart. For example, Card styles hover and focus-visible but has no `:active` rule, so its VRT forces only `hover` and `focus-visible`.
+
+`forcePseudoStates(selector, internalSelector?)` handles the common case: it forces the state on each host matching `selector` (typically `<tag>[data-force-state]`), or on an internal shadow element when `internalSelector` is provided.
+
+#### Forcing state on a child element
+
+`forcePseudoStates` reaches the host and its shadow internals, but not consumer content slotted into the light DOM. When the pseudo-state rule targets slotted content — for example `::slotted(a:hover)` on a linked card title — write a small custom `play` function, named `force<Component>States` by convention, that forces the host and then applies the same forced attribute to the child element itself:
+
+```ts
+const forceCardStates = async ({ canvasElement }) => {
+  canvasElement
+    .querySelectorAll('swc-card[data-force-state]')
+    .forEach((host) => {
+      const state = host.dataset.forceState;
+      if (!state) return;
+      forcePseudoState(host, state); // host rules + installs the mirror sheet
+      // Slotted `::slotted(a:hover/:focus-visible)` rules match on the anchor's
+      // own attribute, not the host's — so force it there too.
+      host
+        .querySelector('a[slot="title"]')
+        ?.setAttribute(`data-forced-${state}`, '');
+    });
+};
+```
+
+Because this uses the same `data-forced-<state>` attribute the shared helper applies, the child still satisfies any `:not([class])` guard on its default styles. This stays component-specific for now — which slotted element carries the pseudo-state rule differs per component — rather than being generalized into the shared helper on a single case.
+
+Pseudo-state rules with nested rules — such as an `::after` focus ring or a nested `&:hover` — are mirrored in full, so their nested appearance renders correctly in the forced snapshot with no extra authoring.
+
+### Positioned overlay components
+
+Components that position a surface with `PlacementController` use Floating UI's `shift` middleware. The controller does not expose a custom overflow boundary, so `shift` uses clipping ancestors capped by the visual viewport, and `autoUpdate` recomputes on scroll. That is correct production behavior (a popover pinned near a screen edge should slide rather than clip off-screen), but a trigger outside the viewport at open time gets clamped to the current viewport, not to its off-screen position.
+
+A dense VRT matrix that opens many instances at once on a page taller than one viewport can collapse those off-screen triggers onto the same spot. Only the cross-axis is affected: `top`/`bottom` is horizontal, so it is safe on a vertically scrolling page; `start`/`end` is vertical, so it is not. Disable `shouldFlip` in the play function so leftover viewport space cannot flip a surface to the other side.
+
+To keep snapshots deterministic:
+
+- Keep every trigger in the viewport at open time. Put `start`/`end` first, pin the Chromatic viewport so the story fits, or split the story. Growing the page without growing the viewport is what clamps bubbles off their triggers.
+- Do not use the shared `row()` helper. Open surfaces paint in the top layer and overlap at its default gaps. Stack in a column, or use a grid whose cells reserve enough room that adjacent bubbles cannot collide.
+
+See popover's `test/vrt/popover.vrt.ts` and `test/vrt/vrt-helpers.ts` (`stack`, `vrtPage`, `openManyPopoversForVrt`) for a worked example.
+
 ## Tips for reliable VRT
 
 - Use deterministic content (no random data, no timestamps)
@@ -73,3 +125,5 @@ Stories tagged with `'!test'` are excluded from VRT runs. See [Excluding stories
 - Disable animations in test mode (Playwright config sets `reducedMotion: 'reduce'`)
 - Keep stories focused by concern; split large files into permutations, global styles, and custom properties
 - For custom properties, compare covered cases against `.storybook/custom-elements.json` so API-table docs and VRT coverage do not drift
+- For custom properties, choose an override value that renders obviously different from the default (e.g. `magenta`, `0px`, an exaggerated size). The reference and override cells must look clearly different, so that a property silently ceasing to apply — which would make the override cell match the reference — is caught in visual review
+- Render each override in the context that makes its effect visible — some custom properties only apply in a specific state (e.g. a padding token that is live only at a given density, or a property that needs its slot populated to show)

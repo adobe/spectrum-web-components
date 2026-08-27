@@ -13,10 +13,8 @@ import { PropertyValues, ReactiveElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { LanguageResolutionController } from '../controllers/language-resolution.js';
-import {
-  ObserveSlotPresence,
-  type SlotPresenceObservingInterface,
-} from './observe-slot-presence.js';
+import { SlotPresenceController } from '../controllers/slot-presence-controller/index.js';
+import { isDebug, validateEnum, warnIf } from '../utils/index.js';
 import type { ElementSize } from './sized-mixin.js';
 
 type Constructor<T = Record<string, unknown>> = {
@@ -46,7 +44,7 @@ const DEFAULT_FORMAT_OPTIONS: Intl.NumberFormatOptions = { style: 'percent' };
 const LABEL_SLOT_SELECTOR = '[slot="label"]';
 const DESCRIPTION_SLOT_SELECTOR = '[slot="description"]';
 
-export interface LinearProgressInterface extends SlotPresenceObservingInterface {
+export interface LinearProgressInterface {
   value: number;
   minValue: number;
   maxValue: number;
@@ -81,12 +79,18 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
   constructor: T
 ): T & Constructor<LinearProgressInterface> {
   class LinearProgressElement
-    extends ObserveSlotPresence(constructor, [
-      LABEL_SLOT_SELECTOR,
-      DESCRIPTION_SLOT_SELECTOR,
-    ])
+    extends constructor
     implements LinearProgressInterface
   {
+    /**
+     * Observes the light-DOM `label` and `description` slots so the shadow-DOM
+     * containers and slots can be fully conditional.
+     */
+    private readonly slotPresence = new SlotPresenceController(this, [
+      LABEL_SLOT_SELECTOR,
+      DESCRIPTION_SLOT_SELECTOR,
+    ]);
+
     /**
      * Current value. Sanitized via `clampedValue` for rendering and
      * `aria-valuenow`.
@@ -177,14 +181,14 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
      * @internal
      */
     public get hasLabelSlotContent(): boolean {
-      return this.getSlotContentPresence(LABEL_SLOT_SELECTOR);
+      return this.slotPresence.getPresence(LABEL_SLOT_SELECTOR);
     }
 
     /**
      * @internal
      */
     public get hasDescriptionSlotContent(): boolean {
-      return this.getSlotContentPresence(DESCRIPTION_SLOT_SELECTOR);
+      return this.slotPresence.getPresence(DESCRIPTION_SLOT_SELECTOR);
     }
 
     /**
@@ -277,13 +281,11 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       // reflected in this render cycle. No second `requestUpdate()`
       // needed here.
 
-      // Only re-evaluate the accessible-name fallback when the inputs
-      // that determine it actually change, so the warning does not fire
-      // on every property update during development.
-      if (
-        window.__swc?.DEBUG &&
-        (changes.has('accessibleLabel') || !this._hasWarnedNoAccessibleName)
-      ) {
+      // The accessible name can come from the `accessibleLabel` property or the
+      // label slot (tracked by a slot controller that requests an update without
+      // surfacing a changed property), so re-check on every dev render and let
+      // the warning dedup handle repeats rather than gating on one property.
+      if (isDebug()) {
         this.warnMissingAccessibleName();
       }
 
@@ -291,33 +293,45 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       // range. The value is still clamped for rendering and ARIA, but the
       // clamp is otherwise silent, so flag it as a likely authoring error.
       if (
-        window.__swc?.DEBUG &&
+        isDebug() &&
         (changes.has('value') ||
           changes.has('minValue') ||
           changes.has('maxValue'))
       ) {
         this.warnValueOutOfRange();
       }
+
+      if (changes.has('labelPosition')) {
+        validateEnum(this, {
+          prop: 'label-position',
+          value: this.labelPosition,
+          valid: LINEAR_PROGRESS_LABEL_POSITIONS,
+          url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
+        });
+      }
+
+      if (changes.has('staticColor') && this.staticColor !== undefined) {
+        validateEnum(this, {
+          prop: 'static-color',
+          value: this.staticColor,
+          valid: LINEAR_PROGRESS_STATIC_COLORS,
+          url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
+        });
+      }
     }
-
-    private _hasWarnedNoAccessibleName = false;
-
-    private _hasWarnedValueOutOfRange = false;
 
     private warnValueOutOfRange(): void {
       const value = this.value;
       const min = this.sanitizedMin;
       const max = this.sanitizedMax;
+      // Early return when the value is valid so the message is not built on
+      // every in-range render.
       if (!Number.isFinite(value) || (value >= min && value <= max)) {
-        this._hasWarnedValueOutOfRange = false;
         return;
       }
-      if (this._hasWarnedValueOutOfRange) {
-        return;
-      }
-      this._hasWarnedValueOutOfRange = true;
-      window.__swc?.warn(
+      warnIf(
         this,
+        true,
         `<${this.localName}> "value" (${value}) is outside the [${min}, ${max}] range and was clamped to ${this.clampedValue}.`,
         this.docsHref,
         {
@@ -330,13 +344,14 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
     }
 
     private warnMissingAccessibleName(): void {
+      // Early return when a name is present so the message is not built on
+      // every render (this runs unconditionally in dev).
       if (this.hasLabelSlotContent || this.accessibleLabel) {
-        this._hasWarnedNoAccessibleName = false;
         return;
       }
-      this._hasWarnedNoAccessibleName = true;
-      window.__swc?.warn(
+      warnIf(
         this,
+        true,
         `<${this.localName}> requires an accessible name.`,
         this.docsHref,
         {

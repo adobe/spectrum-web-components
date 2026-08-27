@@ -1,0 +1,122 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as ActionGroupStories from './stories/action-group.stories';
+
+<Meta of={ActionGroupStories} />
+
+<DocsHeader />
+
+Migrating from `<sp-action-group>`? See the [Action group migration guide](?path=/docs/components-action-group-migration-guide--docs).
+
+## Anatomy
+
+An action group consists of one or more `swc-action-button` elements placed in the default slot. An icon-only child needs `accessible-label`, since there's no visible text to derive an accessible name from.
+
+<Canvas of={ActionGroupStories.Anatomy} />
+
+## Options
+
+### Sizes
+
+Action groups come in five sizes: extra-small (`xs`), small (`s`), medium (`m`), large (`l`), and extra-large (`xl`). The `size` attribute controls both the size of slotted children and the gap between them.
+
+<Canvas of={ActionGroupStories.Sizes} />
+
+### Orientation
+
+The `orientation` attribute controls both the layout direction and the arrow-key direction of the composite keyboard navigation. `horizontal` is the default. `vertical` stacks children and moves the arrow-key direction to match. `swc-action-group` never sets `aria-orientation` on itself. See [Toolbar composition](#toolbar-composition) for details on applying it to a wrapper instead.
+
+<Canvas of={ActionGroupStories.Orientations} />
+
+### Quiet
+
+The `quiet` attribute applies a low-emphasis visual treatment and is propagated to all slotted children. Setting `quiet` also disables the `compact` border-join styling.
+
+<Canvas of={ActionGroupStories.Quiet} />
+
+### Compact
+
+The `compact` attribute visually joins children by collapsing shared borders and resetting the interior border-radius values where buttons meet. It has no visual effect when `quiet` is also set.
+
+<Canvas of={ActionGroupStories.Compact} />
+
+### Justified
+
+The `justified` attribute makes slotted children expand equally to fill the group's available inline width. It has no visible effect unless the host has more available width than its content needs, for example an explicit `inline-size` on the host or a container that stretches it.
+
+<Canvas of={ActionGroupStories.Justified} />
+
+### Static colors
+
+Setting `static-color` on the group propagates that value to every slotted `swc-action-button` child, pinning their color to the chosen value regardless of the active color theme. Action-group has no static-color-specific styling of its own; use it when the group needs to sit on top of a photo or colored background:
+
+- **`white`**: use on dark color or image backgrounds
+- **`black`**: use on light color or image backgrounds
+
+<Canvas of={ActionGroupStories.StaticColors} />
+
+## States
+
+### Disabled
+
+The `disabled` attribute sets `aria-disabled="true"` on the host and propagates `aria-disabled="true"` to every slotted child. Children remain in the <kbd>Tab</kbd> and arrow-key sequence so screen reader users can still discover the group. Activation is suppressed rather than removing the group from the keyboard sequence entirely.
+
+How you disable a child depends on scope:
+
+- **Whole strip unavailable:** use the group's `disabled` attribute (above).
+- **One action unavailable but keyboard-discoverable:** set `aria-disabled="true"` on that `swc-action-button`. The child stays in the roving <kbd>Tab</kbd> and arrow-key sequence; activation is suppressed.
+- **One action removed from focus:** set `disabled` on that `swc-action-button`. Native `disabled` applies; the child cannot receive focus and is never the roving tab stop. Arrow keys cannot move focus onto it; pressing an arrow toward that child leaves focus on the current item.
+
+<Canvas of={ActionGroupStories.Disabled} />
+
+## Accessibility
+
+### Features
+
+The `<swc-action-group>` element implements several accessibility features:
+
+#### Keyboard navigation
+
+- <kbd>Tab</kbd>: moves focus into the group, to the last-focused child or the
+  first enabled child
+- <kbd>Arrow Left</kbd> / <kbd>Arrow Right</kbd>: moves focus between children
+  when `orientation="horizontal"`
+- <kbd>Arrow Up</kbd> / <kbd>Arrow Down</kbd>: moves focus between children when
+  `orientation="vertical"`
+
+Only one child is in the <kbd>Tab</kbd> sequence at a time. Arrow keys move that single <kbd>Tab</kbd> stop among the group's children, wrapping from the last child to the first and back.
+
+#### Toolbar composition
+
+`swc-action-group` never sets `role="toolbar"` or `aria-orientation` on itself, in any mode or orientation. Those two attributes only become available once you wrap one or more `swc-action-group` elements in your own element to build an actual toolbar landmark.
+
+Additional considerations for toolbars:
+
+- Put `role="toolbar"` and a label on that wrapper element, not on `swc-action-group`. Nesting multiple named groups inside one outer toolbar is the supported pattern for grouping related clusters of actions.
+- If the wrapper stacks its groups vertically, also set `aria-orientation="vertical"` on the wrapper itself. `role="toolbar"` defaults to horizontal per the [ARIA `aria-orientation` reference](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-orientation), and assistive technology assumes that until told otherwise.
+- Each inner `swc-action-group`'s own `orientation` attribute is unrelated to the wrapper's `aria-orientation`: it only controls that group's own arrow-key direction, not the wrapper's ARIA state.
+- To control the width of vertical groups, use `inline-size: fit-content` on the wrapper. This will cap the total width to the longest label among the groups. For a fixed toolbar width, give the wrapper an explicit `max-inline-size` value.
+
+The first example below is a standalone group with no wrapper at all. `role="toolbar"` and `aria-orientation` are optional, wrapper-only additions, not requirements for using `swc-action-group`.
+
+<Canvas of={ActionGroupStories.Accessibility} />
+
+#### ARIA roles and behaviors
+
+1. **Fixed role**: the host always exposes `role="group"`. It never switches to `role="toolbar"` or `role="radiogroup"`, and this role is not author-overridable.
+2. **Naming**: `accessible-label` reflects to `aria-label` on the host. `aria-labelledby` remains valid as an alternative. Providing one is recommended whenever the strip has a distinct purpose.
+3. **Group `disabled`**: `aria-disabled="true"` is set on the host and propagated to every child. Children stay focusable and keyboard-discoverable rather than being removed from the tab order.
+
+### Best practices
+
+- Name the group when the strip has a distinct purpose (for example, "Text formatting" or "Zoom controls"). A visual cluster alone does not give screen reader users a group name.
+- Give every icon-only child its own `accessible-label`. The group's name describes the cluster, but it does not substitute for each child's accessible name.
+- When the whole strip is unavailable, use the group's `disabled` attribute so users can still <kbd>Tab</kbd> into the group and discover those actions. When one action is unavailable but should stay keyboard-discoverable, set `aria-disabled="true"` on that child. Use an individual child's `disabled` attribute only when that control should be removed from focus entirely.
+- Keep related actions in one group so they share a single <kbd>Tab</kbd> stop. Split unrelated clusters into separate groups, each with its own optional name.
+
+## Upcoming features
+
+- **Truncated labels in justified groups**: when `swc-action-button` adds a `truncate` property, `justified` action groups will apply it automatically to slotted children, so equal-width buttons clip an overflowing label with an ellipsis instead of wrapping or overflowing their fixed width.
+
+<DocsFooter />

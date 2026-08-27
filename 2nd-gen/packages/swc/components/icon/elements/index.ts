@@ -9,6 +9,13 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
+/**
+ * @deprecated These per-icon factory functions predate the icon strategy in the RFC.
+ * UI icons are superseded by the internal `<swc-ui-icon>` element; workflow icons move
+ * to the workflow icon package when that family lands. Do not import from here in new
+ * code; existing call sites are being converted.
+ */
 export * from './AlertIcon.js';
 export * from './Arrow100Icon.js';
 export * from './Asterisk100Icon.js';

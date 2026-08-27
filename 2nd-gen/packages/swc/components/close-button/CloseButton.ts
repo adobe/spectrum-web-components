@@ -20,6 +20,7 @@ import {
   type ButtonSize,
   type ButtonStaticColor,
 } from '@adobe/spectrum-wc-core/components/button';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils';
 
 import {
   Cross200Icon,
@@ -45,7 +46,7 @@ const crossIconBySize: Record<ButtonSize, () => TemplateResult> = {
  * decorative (`aria-hidden="true"`).
  *
  * @element swc-close-button
- * @since 2.0.0
+ * @since 2.0.0-beta.2
  *
  * @example
  * ```html
@@ -117,17 +118,13 @@ export class CloseButton extends ButtonBase {
 
   protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);
-    if (
-      window.__swc?.DEBUG &&
-      typeof this.staticColor !== 'undefined' &&
-      !BUTTON_STATIC_COLORS.includes(this.staticColor)
-    ) {
-      window.__swc.warn(
-        this,
-        `<${this.localName}> element expects the "static-color" attribute to be one of the following:`,
-        'https://opensource.adobe.com/spectrum-web-components/components/close-button/#static-colors',
-        { issues: [...BUTTON_STATIC_COLORS] }
-      );
+    if (typeof this.staticColor !== 'undefined') {
+      validateEnum(this, {
+        prop: 'static-color',
+        value: this.staticColor,
+        valid: BUTTON_STATIC_COLORS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-close-button--docs',
+      });
     }
   }
 }

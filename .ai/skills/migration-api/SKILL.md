@@ -11,6 +11,8 @@ description: Phase 3 of 1st-gen to 2nd-gen component migration. Use to move prop
 
 You are defining a contract, not writing logic. Every property and type you place here is a public commitment. Put shared things in core, generation-specific things in SWC, and mark anything temporary with a `@todo`. If you are unsure where something belongs, ask the user, and/or use the `ask-questions` skill.
 
+Before implementing new behavior, check [2nd-gen shared resources](../../../CONTRIBUTOR-DOCS/01_contributor-guides/16_2nd-gen-shared-resources.md) — a controller, mixin, or utility may already exist for it (trigger resolution, positioning, slot observation, busy state, locale formatting, dev-mode validation, etc.).
+
 Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` when available and use it as the planning baseline for names, deprecations, breaking changes, and consumer migration paths. If it is missing, stale, or intentionally incomplete, derive the needed context from source material and call out the missing plan as a risk. See also [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
 
 The plan's architectural sections also govern **where each property and type lands**. If Phase 2 established that certain properties belong on the SWC class rather than the base (e.g. for shared-reuse reasons), that decision holds in Phase 3 — do not move those properties to the base class during API migration even if a checklist item implies otherwise. If a checklist item and an architectural section conflict, the architectural section governs; update the checklist and note the reason.

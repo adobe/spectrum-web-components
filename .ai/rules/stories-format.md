@@ -1,6 +1,10 @@
 ---
 description: Enforces consistent file structure, section separators, meta configuration, story tags, and layout parameters for 2nd-gen Storybook stories files. Story prose lives in per-unit MDX; the stories file is definitions-only.
 globs: 2nd-gen/packages/swc/components/*/stories/**, 2nd-gen/packages/swc/patterns/*/*/stories/**, 2nd-gen/packages/core/controllers/*/stories/**
+paths:
+  - '2nd-gen/packages/swc/components/*/stories/**'
+  - '2nd-gen/packages/swc/patterns/*/*/stories/**'
+  - '2nd-gen/packages/core/controllers/*/stories/**'
 alwaysApply: false
 ---
 
@@ -9,6 +13,12 @@ alwaysApply: false
 Enforce consistent formatting and technical structure for Storybook stories files in 2nd-gen components, patterns, and controllers.
 
 **See also**: `.ai/rules/stories-documentation.md` for guidance on WHAT to author in the per-unit MDX (content, patterns, examples).
+
+## When to apply
+
+- Authoring or reviewing a `.stories.ts` file for a 2nd-gen component, pattern, or controller
+- Applies automatically when Claude reads a file matching the globs below (Cursor: via `globs`; Claude Code: via `paths`)
+- Adding a new story (Playground, Options, States, Behaviors, Accessibility, etc.) and needing the right tags, layout parameters, or naming convention
 
 ## Scope
 
@@ -173,7 +183,7 @@ See `.ai/rules/stories-documentation.md` for full per-section authoring patterns
  * This description is displayed in the Overview story. It should provide context about
  * what the component does and when to use it. If referencing other components, link to
  * their Storybook paths using relative URLs (e.g., `<swc-badge>` becomes
- * `[Badge](../?path=/docs/badge--overview)`).
+ * `[Badge](../?path=/docs/components-badge--docs)`).
  */
 const meta: Meta = {
   title: 'Component name',
@@ -198,7 +208,7 @@ const meta: Meta = {
 - **JSDoc description above meta**: Displayed in the Overview story. Can include markdown links to other components.
 - **`parameters.docs.subtitle`**: Displayed as the subtitle in the Overview story. Cannot include links (plain text only).
 - **Avoid repetition**: The subtitle and JSDoc description should complement each other, not duplicate content. The subtitle is a brief summary; the JSDoc provides fuller context.
-- **Component links**: When referencing other components in the JSDoc description, use relative Storybook paths: `[ComponentName](../?path=/docs/component-name--overview)`
+- **Component links**: When referencing other components in the JSDoc description, use relative Storybook paths: `[ComponentName](../?path=/docs/components-component-name--docs)`
 
 ### Internal attributes: exclude from the Storybook helper round-trip
 
@@ -222,14 +232,13 @@ argTypes['internal-attribute'] = {
 
 These rules apply to every `title` field in meta objects and every `<Meta title="..." />` in MDX files.
 
-- **Component names are proper nouns — keep their title case.** `'Action Button'`, `'Illustrated Message'`, `'Color Loupe'`. Each word in the component name is capitalised.
-- **Everything else uses sentence case.** Page labels, section names, and group names that are not component names: `'Pattern overview'`, `'Migration guide'`.
+- **Use sentence case — including component names**, matching Spectrum's own docs (e.g. [Action bar](https://spectrum.adobe.com/page/action-bar/), [Color loupe](https://spectrum.adobe.com/page/color-loupe/)). Capitalize only the first word plus any proper nouns/acronyms: `'Action button'`, `'Illustrated message'`, `'Color loupe'`. Page labels, section names, and group names follow the same rule: `'Pattern overview'`, `'Migration guide'`.
 - **No filename as label.** Never use a bare filename (`README`, `CHANGELOG`) as a Storybook title or page name. Use a descriptive label: `'Pattern overview'`, `'Migration guide'`.
-- **Flatten single-component groups.** If a Storybook group contains only one component, do not nest it. Use a flat title (`'Color Loupe'`) rather than a group path (`'Color Components/Color Loupe'`).
+- **Flatten single-component groups.** If a Storybook group contains only one component, do not nest it. Use a flat title (`'Color loupe'`) rather than a group path (`'Color components/Color loupe'`).
 
 | ❌ Don't                         | ✅ Do                                  |
 | -------------------------------- | -------------------------------------- |
-| `'Color Components/Color Loupe'` | `'Color Loupe'` (flattened)            |
+| `'Color components/Color loupe'` | `'Color loupe'` (flattened)            |
 | `'Conversational AI/README'`     | `'Conversational AI/Pattern overview'` |
 | `'Badge/Migration Guide'`        | `'Badge/Migration guide'`              |
 | `'Pattern Overview'`             | `'Pattern overview'`                   |
@@ -279,21 +288,7 @@ export const GridLayout: Story = {
 
 ### Static color decorator
 
-For static color stories, use `staticColorsDemo: true` with `flexLayout: 'row-wrap'`:
-
-```typescript
-export const StaticColors: Story = {
-    render: (args) => html`
-        ${['white', 'black'].map((color) => template({ 'static-color': color }),
-    parameters: {
-        flexLayout: 'row-wrap',
-        staticColorsDemo: true
-    },
-    tags: ['options', '!test'],
-};
-```
-
-The decorator displays two background zones—dark gradient for `static-color="white"` content, light gradient for `static-color="black"` content.
+For static color stories, use `staticColorsDemo: true`. The decorator displays two background zones: dark gradient for `static-color="white"` content, light gradient for `static-color="black"` content. See [Static color pattern](#static-color-pattern) below for the flat vs. div-wrapped story shapes and when to use `flexLayout` vs. structural `<div>` wrappers.
 
 ## Story naming
 
@@ -385,18 +380,11 @@ export const Overview: Story = {
 
 ### Anatomy
 
-Document all slots and content-rendering properties (e.g., `label`, `icon`, `src`). Combine variations into one story.
+Document the component's parts as a flat, unordered list. Call out a slot name inline in the list only where a reader needs to know content is passed as a slot rather than a property to compose it correctly. Don't enumerate every content-rendering property separately; that's the API table's job. Combine variations into one story.
 
 **Important**: When using `render: (args) =>`, **always** spread `...args` into template calls to ensure Storybook controls work correctly.
 
 ```typescript
-/**
- * A component-name consists of:
- *
- * - **Default slot**: Primary content
- * - **icon slot**: Optional icon element
- * - **label**: Text label rendered by the component
- */
 export const Anatomy: Story = {
   render: (args) => html`
     ${template({ ...args /* text only */ })}
@@ -408,6 +396,19 @@ export const Anatomy: Story = {
 };
 ```
 
+The corresponding MDX prose (in the per-unit MDX, not above this export) would read:
+
+```mdx
+## Anatomy
+
+A component-name consists of:
+
+- **Default slot**: primary content
+- **Secondary element**, provided via the `icon` slot
+
+<Canvas of={Stories.Anatomy} />
+```
+
 ### Options
 
 Document every attribute/property not covered in Anatomy, States, or Behaviors. Consolidate related options into single stories. The recommended canonical order, mirrored in the per-component MDX, is:
@@ -417,9 +418,9 @@ Document every attribute/property not covered in Anatomy, States, or Behaviors. 
 | `Sizes`                   | All size variants                                 |
 | `SemanticVariants`        | Positive, informative, negative, notice, neutral  |
 | `NonSemanticVariants`     | Color-coded categories (seafoam, indigo, etc.)    |
-| `StaticColors`            | Static color pattern (see below)                  |
 | `Quiet/Subtle/Emphasized` | Quiet, subtle, emphasized variants                |
 | `Outline`                 | Outline variants                                  |
+| `StaticColors`            | Static color pattern (see below)                  |
 | `Positioning`             | Positioning modifiers (fixed, absolute, relative) |
 
 ```typescript
@@ -457,27 +458,11 @@ Prose for each story (e.g. the description of size choices, semantic variant mea
 
 #### Static color pattern
 
-For components with a `static-color` attribute, use whichever of these two patterns best fits the component's visual surface:
+Every component with a `static-color` option uses a single `StaticColors` story (not separate `StaticBlack`/`StaticWhite`/`StaticColors` stories). Pick whichever of these two shapes fits the component's visual surface:
 
-**Three-story pattern** — use when each color can be shown independently (simple components with a single fill style):
-
-1. **`StaticBlack`** - `static-color="black"` on light background
-2. **`StaticWhite`** - `static-color="white"` on dark background
-3. **`StaticColors`** - Both variants side-by-side
+**Flat shape**: use when the component has no other dimension to cross with color (the common case).
 
 ```typescript
-export const StaticBlack: Story = {
-  args: { 'static-color': 'black' },
-  parameters: { styles: { color: 'black' } },
-  tags: ['options'],
-};
-
-export const StaticWhite: Story = {
-  args: { 'static-color': 'white' },
-  parameters: { styles: { color: 'white' } },
-  tags: ['options'],
-};
-
 export const StaticColors: Story = {
   render: (args) => html`
     ${['white', 'black'].map(
@@ -486,12 +471,12 @@ export const StaticColors: Story = {
       `
     )}
   `,
-  parameters: { flexLayout: 'row-wrap', staticColorsDemo: true },
+  parameters: { flexLayout: false, staticColorsDemo: true },
   tags: ['options', '!test'],
 };
 ```
 
-**Combined-story pattern** — use when the component has additional dimensions (e.g., fill styles) that are most clearly shown together in a single story. Use structural `<div>` wrappers instead of `flexLayout` here: the `staticColorsDemo` decorator targets `:first-child` and `:last-child` to apply the dark/light background zones, so the two color groups must be direct children of the render output.
+**Div-wrapped shape**: use when the component has additional dimensions (e.g., fill styles) that are most clearly shown together in a single story. Use structural `<div>` wrappers instead of `flexLayout` here: the `staticColorsDemo` decorator targets `:first-child` and `:last-child` to apply the dark/light background zones, so the two color groups must be direct children of the render output.
 
 ```typescript
 export const StaticColors: Story = {
@@ -516,7 +501,16 @@ export const StaticColors: Story = {
 };
 ```
 
-In the three-story pattern, `staticColorsDemo: true` enables the background zone decorator and `flexLayout: 'row-wrap'` handles item spacing. In the combined-story pattern, use structural `<div>` children instead of `flexLayout` so the decorator's `:first-child`/`:last-child` zone targeting is preserved.
+In the flat shape, `staticColorsDemo: true` enables the background zone decorator and the first/last array items automatically land in the dark/light zones; no `flexLayout` is needed (`false`, not `'row-wrap'`). In the div-wrapped shape, use structural `<div>` children instead of `flexLayout` so the decorator's `:first-child`/`:last-child` zone targeting is preserved.
+
+### States vs. Behaviors: which tag to use
+
+Both tags cover things that aren't the component's core Options (size, variant, style), but they answer different questions:
+
+- **`states`**: a condition the component can be _in_ at a point in time, usually driven by a boolean or enum attribute/property (`disabled`, `selected`, `invalid`, `pending`, `indeterminate`). If you can ask "is it currently X?" and get a yes/no or single-value answer, it's a state.
+- **`behaviors`**: something the component _does_ over time or in response to interaction: automatic wrapping/truncation, focus management, methods, events, and multi-step interaction patterns. If describing it requires a verb phrase ("wraps text", "delegates focus", "emits an event"), it's a behavior.
+
+A single attribute can look like either at first glance; use the test above rather than guessing per component. For example, `pending` is a `states` tag: it's a boolean condition the button is in, even though _entering_ pending has a time-delayed visual transition. The transition itself isn't documented as a separate behavior story; the condition is documented once, under States.
 
 ### States
 
@@ -579,7 +573,7 @@ Do **not** add JSDoc comments above any individual `export const Foo: Story = ..
 /**
  * A `<swc-badge>` is a non-interactive visual label that displays a status,
  * category, or attribute. For interactive labels, see
- * [Button](../?path=/docs/button--docs).
+ * [Button](../?path=/docs/components-button--docs).
  */
 const meta: Meta = {
   title: 'Badge',
@@ -709,12 +703,12 @@ See `asset.stories.ts` for complete examples.
 - [ ] Subtitle is concise and non-repetitive (plain text only, no links)
 - [ ] Playground: `['dev']` tag when an MDX exists (or `['autodocs', 'dev']` for template-only fallback), no JSDoc, common use case args
 - [ ] Overview: `['overview']` tag, common use case args, no JSDoc on story itself
-- [ ] Anatomy: all slots + content properties, `['anatomy']` tag, `flexLayout: 'row-wrap'`
+- [ ] Anatomy: flat unordered list of parts (no subsections), slot names inline where needed, `['anatomy']` tag, `flexLayout: 'row-wrap'`
 - [ ] Options: all uncovered attributes, `['options']` tag, `flexLayout: 'row-wrap'`
 - [ ] States: consolidated states, `['states']` tag, `flexLayout: 'row-wrap'` (if applicable)
 - [ ] Behaviors: `['behaviors']` tag (if applicable)
 - [ ] Accessibility: `['a11y']` tag (prose lives in MDX)
-- [ ] Static colors: three-story or combined-story pattern with `staticColorsDemo` (if applicable)
+- [ ] Static colors: single `StaticColors` story (flat or div-wrapped shape) with `staticColorsDemo` (if applicable)
 - [ ] No story-level JSDoc comments above any `export const`
 - [ ] No `section-order` parameter on any story
 - [ ] No `description-only` tag on any story

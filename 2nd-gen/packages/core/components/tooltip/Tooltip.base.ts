@@ -13,6 +13,13 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import {
+  isTopDismissible,
+  registerDismissible,
+  unregisterDismissible,
+  validateEnum,
+  warnIf,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   HoverController,
@@ -30,6 +37,10 @@ import {
   type TooltipPlacement,
   type TooltipVariant,
 } from './Tooltip.types.js';
+
+// Currently shown tooltip. `popover="manual"` drops the native auto singleton, so
+// restore it explicitly: one tooltip open at a time across all instances.
+let openTooltip: TooltipBase | null = null;
 
 /**
  * Abstract base class for the Tooltip component.
@@ -220,10 +231,13 @@ export abstract class TooltipBase
   }
 
   // Reflects the browser's actual popover state. Used in updated() to reconcile
-  // `open` against native light-dismiss: when the browser closes the popover
-  // (e.g. Escape or outside click), `open` is synced by the toggle listener
-  // without re-invoking the Popover API, and the guard prevents a redundant
-  // hidePopover() (which would throw on an already-closed popover).
+  // `open` against the native popover state: when a `toggle` event syncs `open`
+  // (the toggle listener sets it without re-invoking the Popover API), this
+  // guard prevents a redundant showPopover()/hidePopover() call in the following
+  // update (hidePopover() would throw on an already-closed popover). Under
+  // `popover="manual"` the browser never closes the tooltip on its own, so the
+  // only driver is the component itself, but the guard is still needed to keep
+  // the `open`-driven and toggle-driven paths from double-invoking the API.
   private get isPopoverOpen(): boolean {
     return this.matches(':popover-open');
   }
@@ -284,14 +298,13 @@ export abstract class TooltipBase
     if (this.for) {
       const root = this.getRootNode() as Document | ShadowRoot;
       const trigger = root.getElementById(this.for);
-      if (!trigger && window.__swc?.DEBUG) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> for="${this.for}" did not resolve to an element in the current tree root. Check that the referenced id exists in the same document tree root.`,
-          'https://opensource.adobe.com/spectrum-web-components/components/tooltip/',
-          { level: 'high' }
-        );
-      }
+      warnIf(
+        this,
+        !trigger,
+        `<${this.localName}> for="${this.for}" did not resolve to an element in the current tree root. Check that the referenced id exists in the same document tree root.`,
+        'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
+        { level: 'high' }
+      );
       return trigger;
     }
     return null;
@@ -446,18 +459,22 @@ export abstract class TooltipBase
     this.dispatchAfterEvent(this.open);
   };
 
-  // Escape-to-close. Registered on `document` only while open (see updated()),
-  // not for the whole connected lifetime: the tooltip is non-interactive and
-  // never receives focus, so a host-level keydown would not fire, and scoping to
-  // the open state keeps at most one listener active at a time (popover="auto"
-  // permits one open tooltip). Under `popover="auto"` this duplicates the
-  // browser's native Escape light-dismiss; it is kept as a mode-independent
-  // handler so a `manual` tooltip (which gets no native light-dismiss, e.g. one
-  // that coexists with an open popover) still closes on Escape.
+  // Escape-to-close. Registered on `document` (capture) only while open (see
+  // updated()); `popover="manual"` gets no native light-dismiss, so this is the
+  // sole Escape mechanism.
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
-    if (event.key === 'Escape' && this.open) {
-      this.open = false;
+    if (event.key !== 'Escape' || !this.open) {
+      return;
     }
+    // Only the topmost dismissible handles Escape; a surface above us gets it first.
+    if (!isTopDismissible(this)) {
+      return;
+    }
+    // A `manual` tooltip is outside the browser's auto-popover stack, so cancel
+    // the native default (capture phase, before it runs) to keep an `auto`
+    // popover underneath open; a later Escape, once we are gone, closes it.
+    event.preventDefault();
+    this.open = false;
   };
 
   protected override willUpdate(changedProperties: PropertyValues): void {
@@ -471,10 +488,47 @@ export abstract class TooltipBase
     if (this.disabled && this.open) {
       this.open = false;
     }
+
+    if (changedProperties.has('variant')) {
+      const constructor = this.constructor as typeof TooltipBase;
+      validateEnum(this, {
+        prop: 'variant',
+        value: this.variant,
+        valid: constructor.VARIANTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
+      });
+    }
+    if (changedProperties.has('placement')) {
+      const constructor = this.constructor as typeof TooltipBase;
+      validateEnum(this, {
+        prop: 'placement',
+        value: this.placement,
+        valid: constructor.PLACEMENTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
+      });
+    }
   }
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
+    if (changedProperties.has('variant')) {
+      const constructor = this.constructor as typeof TooltipBase;
+      validateEnum(this, {
+        prop: 'variant',
+        value: this.variant,
+        valid: constructor.VARIANTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
+      });
+    }
+    if (changedProperties.has('placement')) {
+      const constructor = this.constructor as typeof TooltipBase;
+      validateEnum(this, {
+        prop: 'placement',
+        value: this.placement,
+        valid: constructor.PLACEMENTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
+      });
+    }
     if (changedProperties.has('offset')) {
       this.style.setProperty(
         '--_swc-tooltip-animation-distance',
@@ -501,8 +555,27 @@ export abstract class TooltipBase
     const openChanged = changedProperties.has('open');
     if (openChanged) {
       if (this.open) {
-        // Register Escape handling only while open; removed on close below.
-        document.addEventListener('keydown', this.handleKeyDown);
+        // The single-open singleton restores popover="auto"'s "one open at a
+        // time" for automatic (hover/focus) tooltips. A `manual` tooltip is
+        // consumer-managed and opts out, so several can coexist (e.g. a coach-mark
+        // tour that points at multiple controls at once); it neither closes others
+        // nor claims the singleton slot.
+        if (!this.manual) {
+          // Close any other open tooltip first. Assign after requestClose() so
+          // the other's updated() (else branch) does not clear the reference we take.
+          if (openTooltip && openTooltip !== this) {
+            openTooltip.requestClose();
+          }
+          // eslint-disable-next-line @typescript-eslint/no-this-alias -- singleton registration, not a closure capture
+          openTooltip = this;
+        }
+        // Join the dismissible stack and Escape handling while open (both torn
+        // down on close below). Capture phase so preventDefault() beats the
+        // native popover light-dismiss (see handleKeyDown).
+        registerDismissible(this);
+        document.addEventListener('keydown', this.handleKeyDown, {
+          capture: true,
+        });
         // Set actual-placement to the declared side synchronously, before
         // showPopover(). @starting-style is evaluated by the browser the moment
         // the popover enters the top layer, so the direction-bearing attribute
@@ -519,7 +592,13 @@ export abstract class TooltipBase
           this.showPopover();
         }
       } else {
-        document.removeEventListener('keydown', this.handleKeyDown);
+        if (openTooltip === this) {
+          openTooltip = null;
+        }
+        unregisterDismissible(this);
+        document.removeEventListener('keydown', this.handleKeyDown, {
+          capture: true,
+        });
         if (this.open !== this.isPopoverOpen) {
           this.hidePopover();
         }
@@ -546,7 +625,15 @@ export abstract class TooltipBase
   public override connectedCallback(): void {
     super.connectedCallback();
     this.setAttribute('role', 'tooltip');
-    this.setAttribute('popover', 'auto');
+    // `manual`, not `auto`: a tooltip must coexist with an open `swc-popover`
+    // (or menu/picker/select). Under `popover="auto"` the native light-dismiss
+    // group closes every other open auto popover the moment a tooltip opens on
+    // hover, tearing down an open popover the user is still working in. `manual`
+    // takes the tooltip out of that group. The behaviors `manual` drops are
+    // already handled internally: Escape via handleKeyDown (registered while
+    // open) and close-on-leave via HoverController; show/hide is driven
+    // explicitly through showPopover()/hidePopover() in updated().
+    this.setAttribute('popover', 'manual');
     this.addEventListener('beforetoggle', this.handleBeforeToggle);
     this.addEventListener('toggle', this.handleToggle);
     this.addEventListener('transitionend', this.handleTransitionEnd);
@@ -554,12 +641,19 @@ export abstract class TooltipBase
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
+    // Release the singleton so a detached node is not retained.
+    if (openTooltip === this) {
+      openTooltip = null;
+    }
     this.removeEventListener('beforetoggle', this.handleBeforeToggle);
     this.removeEventListener('toggle', this.handleToggle);
     this.removeEventListener('transitionend', this.handleTransitionEnd);
-    // Defensive: the keydown listener is normally removed on close, but a
-    // tooltip disconnected while open would still have it registered.
-    document.removeEventListener('keydown', this.handleKeyDown);
+    // Defensive: clear the stack entry and keydown listener in case the tooltip
+    // is disconnected while still open (normally cleared on close).
+    unregisterDismissible(this);
+    document.removeEventListener('keydown', this.handleKeyDown, {
+      capture: true,
+    });
     if (this.afterEventFallbackTimer !== null) {
       clearTimeout(this.afterEventFallbackTimer);
       this.afterEventFallbackTimer = null;

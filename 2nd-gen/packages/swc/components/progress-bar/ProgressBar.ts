@@ -26,7 +26,7 @@ import styles from './progress-bar.css';
  * wrapper; the host carries no ARIA role.
  *
  * @element swc-progress-bar
- * @since 2.0.0
+ * @since 2.0.0-beta.2
  *
  * @example
  * <swc-progress-bar value="60">

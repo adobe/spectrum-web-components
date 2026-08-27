@@ -24,7 +24,7 @@ import '../../message-sources/swc-message-sources.js';
 import '../../suggestion/swc-suggestion-group.js';
 import '../../suggestion-item/swc-suggestion-item.js';
 import '../../prompt-field/swc-prompt-field.js';
-import '../../upload-artifact/swc-upload-artifact.js';
+import '../../upload-attachment/swc-upload-attachment.js';
 
 import { uniqueId } from '../../../../utils/id.js';
 
@@ -128,20 +128,61 @@ const renderThread = () => html`
   </div>
 `;
 
-type DemoArtifact = {
+type DemoAttachment = {
   id: string;
   title: string;
   subtitle: string;
-  /** Present only for image uploads; used to render `type="media"` in the thread. */
+  /** Image preview URL when the attachment is a visual file. */
   thumbnailUrl?: string;
   objectUrl?: string;
+  /** File-type label for non-image media tiles (for example, "PDF"). */
+  badge?: string;
 };
+
+const getFileBadge = (fileName: string): string | undefined => {
+  const match = fileName.toLowerCase().match(/\.([a-z0-9]+)$/);
+  if (!match) {
+    return 'FILE';
+  }
+
+  const extension = match[1];
+  if (/^(png|jpe?g|gif|webp|bmp|svg|avif)$/.test(extension)) {
+    return undefined;
+  }
+
+  if (extension === 'pdf') {
+    return 'PDF';
+  }
+
+  return extension.toUpperCase();
+};
+
+const renderDemoAttachmentThumbnail = (
+  attachment: DemoAttachment
+): ReturnType<typeof html> =>
+  attachment.thumbnailUrl
+    ? html`
+        <img
+          slot="thumbnail"
+          src=${attachment.thumbnailUrl}
+          alt=${attachment.title}
+          style="inline-size:100%;block-size:100%;object-fit:cover;"
+        />
+      `
+    : html`
+        <div
+          slot="thumbnail"
+          role="img"
+          aria-label=${attachment.title}
+          style="inline-size:100%;block-size:100%;background:#f3f3f3;"
+        ></div>
+      `;
 
 type DemoTurn = {
   id: string;
   role: 'user' | 'system';
   text: string;
-  artifacts?: DemoArtifact[];
+  attachments?: DemoAttachment[];
   loading?: boolean;
   sourcesOpen?: boolean;
   feedbackStatus?: 'positive' | 'negative' | undefined;
@@ -201,7 +242,7 @@ class ConversationFullPatternDemo extends LitElement {
   ];
 
   @state()
-  private artifacts: DemoArtifact[] = [];
+  private attachments: DemoAttachment[] = [];
 
   @state()
   private promptValue = '';
@@ -239,8 +280,8 @@ class ConversationFullPatternDemo extends LitElement {
 
   private submitPrompt(rawValue: string): void {
     const value = rawValue.trim();
-    const hasArtifacts = this.artifacts.length > 0;
-    if ((!value && !hasArtifacts) || this.isGenerating) {
+    const hasAttachments = this.attachments.length > 0;
+    if ((!value && !hasAttachments) || this.isGenerating) {
       return;
     }
 
@@ -248,7 +289,7 @@ class ConversationFullPatternDemo extends LitElement {
       id: `user-${Date.now()}`,
       role: 'user',
       text: value,
-      artifacts: hasArtifacts ? [...this.artifacts] : undefined,
+      attachments: hasAttachments ? [...this.attachments] : undefined,
     };
     const systemTurn: DemoTurn = {
       id: `system-${Date.now() + 1}`,
@@ -262,15 +303,15 @@ class ConversationFullPatternDemo extends LitElement {
     this.isGenerating = true;
     this.lastPrompt =
       value ||
-      (hasArtifacts ? this.artifacts.map((a) => a.title).join(', ') : '');
+      (hasAttachments ? this.attachments.map((a) => a.title).join(', ') : '');
     this.responseTargetId = systemTurn.id;
     this.promptValue = '';
-    for (const artifact of this.artifacts) {
-      if (artifact.objectUrl) {
-        URL.revokeObjectURL(artifact.objectUrl);
+    for (const attachment of this.attachments) {
+      if (attachment.objectUrl) {
+        URL.revokeObjectURL(attachment.objectUrl);
       }
     }
-    this.artifacts = [];
+    this.attachments = [];
 
     this.responseTimer = window.setTimeout(() => {
       this.completeGeneration();
@@ -330,7 +371,7 @@ class ConversationFullPatternDemo extends LitElement {
   };
 
   private appendFiles(files: File[]): void {
-    const nextArtifacts = files.map((file, index) => {
+    const nextAttachments = files.map((file, index) => {
       const mimeType = file.type || '';
       const lowerName = file.name.toLowerCase();
       const isImage =
@@ -341,19 +382,22 @@ class ConversationFullPatternDemo extends LitElement {
         typeof file.size === 'number'
           ? `${Math.max(1, Math.round(file.size / 1024))} KB`
           : 'Attachment';
+      const fileName = file.name || 'Attachment';
+
       return {
-        id: uniqueId(`artifact-${index}`),
-        title: file.name || 'Attachment',
+        id: uniqueId(`attachment-${index}`),
+        title: fileName,
         subtitle: sizeLabel,
         thumbnailUrl: objectUrl,
         objectUrl,
-      } satisfies DemoArtifact;
+        badge: isImage ? undefined : getFileBadge(fileName),
+      } satisfies DemoAttachment;
     });
 
-    if (!nextArtifacts.length) {
+    if (!nextAttachments.length) {
       return;
     }
-    this.artifacts = [...this.artifacts, ...nextArtifacts];
+    this.attachments = [...this.attachments, ...nextAttachments];
   }
 
   private handleUploadClick = (event: Event): void => {
@@ -398,16 +442,18 @@ class ConversationFullPatternDemo extends LitElement {
   };
 
   private handleDismiss = (event: Event): void => {
-    const artifact = event.target as HTMLElement | null;
-    const artifactId = artifact?.getAttribute('data-artifact-id');
-    if (!artifactId) {
+    const attachment = event.target as HTMLElement | null;
+    const attachmentId = attachment?.getAttribute('data-attachment-id');
+    if (!attachmentId) {
       return;
     }
-    const removed = this.artifacts.find((item) => item.id === artifactId);
+    const removed = this.attachments.find((item) => item.id === attachmentId);
     if (removed?.objectUrl) {
       URL.revokeObjectURL(removed.objectUrl);
     }
-    this.artifacts = this.artifacts.filter((item) => item.id !== artifactId);
+    this.attachments = this.attachments.filter(
+      (item) => item.id !== attachmentId
+    );
   };
 
   private handleSourcesToggle = (event: Event): void => {
@@ -427,31 +473,16 @@ class ConversationFullPatternDemo extends LitElement {
     return this.turns.map((turn) => {
       if (turn.role === 'user') {
         return html`
-          ${(turn.artifacts ?? []).map((artifact) =>
-            artifact.thumbnailUrl
-              ? html`
-                  <swc-conversation-turn type="user">
-                    <swc-user-message type="media">
-                      <img
-                        slot="thumbnail"
-                        src=${artifact.thumbnailUrl}
-                        alt=${artifact.title}
-                        style="inline-size:100%;block-size:100%;object-fit:cover;"
-                      />
-                      <span slot="title">${artifact.title}</span>
-                      <span slot="subtitle">${artifact.subtitle}</span>
-                    </swc-user-message>
-                  </swc-conversation-turn>
-                `
-              : html`
-                  <swc-conversation-turn type="user">
-                    <swc-user-message type="card">
-                      <div slot="thumbnail" role="img" aria-label="File"></div>
-                      <span slot="title">${artifact.title}</span>
-                      <span slot="subtitle">${artifact.subtitle}</span>
-                    </swc-user-message>
-                  </swc-conversation-turn>
-                `
+          ${(turn.attachments ?? []).map(
+            (attachment) => html`
+              <swc-conversation-turn type="user">
+                <swc-user-message type="media">
+                  ${renderDemoAttachmentThumbnail(attachment)}
+                  <span slot="title">${attachment.title}</span>
+                  <span slot="subtitle">${attachment.subtitle}</span>
+                </swc-user-message>
+              </swc-conversation-turn>
+            `
           )}
           ${turn.text
             ? html`
@@ -530,38 +561,22 @@ class ConversationFullPatternDemo extends LitElement {
     });
   }
 
-  private renderArtifacts() {
-    return this.artifacts.map(
-      (artifact) => html`
-        <swc-upload-artifact
-          slot="artifact"
-          type=${artifact.thumbnailUrl ? 'media' : 'card'}
+  private renderAttachments() {
+    return this.attachments.map(
+      (attachment) => html`
+        <swc-upload-attachment
+          slot="attachment"
+          type="media"
           dismissible
-          data-artifact-id=${artifact.id}
+          data-attachment-id=${attachment.id}
         >
-          ${artifact.thumbnailUrl
+          ${renderDemoAttachmentThumbnail(attachment)}
+          ${attachment.badge
             ? html`
-                <img
-                  slot="thumbnail"
-                  src=${artifact.thumbnailUrl}
-                  alt=${artifact.title}
-                  style="inline-size:100%;block-size:100%;object-fit:cover;"
-                />
+                <span slot="badge">${attachment.badge}</span>
               `
-            : html`
-                <div
-                  slot="thumbnail"
-                  role="img"
-                  aria-label="File thumbnail"
-                ></div>
-              `}
-          ${artifact.thumbnailUrl
-            ? ''
-            : html`
-                <span slot="title">${artifact.title}</span>
-                <span slot="subtitle">${artifact.subtitle}</span>
-              `}
-        </swc-upload-artifact>
+            : ''}
+        </swc-upload-attachment>
       `
     );
   }
@@ -610,7 +625,7 @@ class ConversationFullPatternDemo extends LitElement {
         class="swc-ConversationFullPatternDemo-shell"
         @swc-message-feedback-change=${this.handleFeedback}
         @swc-suggestion=${this.handleSuggestion}
-        @swc-upload-artifact-dismiss=${this.handleDismiss}
+        @swc-upload-attachment-dismiss=${this.handleDismiss}
         @swc-message-sources-toggle=${this.handleSourcesToggle}
       >
         <div class="swc-ConversationFullPatternDemo-scroll">
@@ -627,7 +642,16 @@ class ConversationFullPatternDemo extends LitElement {
             @swc-prompt-field-stop=${this.stopGeneration}
             @swc-prompt-field-upload-click=${this.handleUploadClick}
           >
-            ${this.renderArtifacts()}
+            ${this.renderAttachments()}
+            <p slot="legal" class="swc-PromptField-legal-disclaimer">
+              Responses are generated using AI, and may be inaccurate. Check
+              before using.
+              <a
+                href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+              >
+                AI User Guidelines
+              </a>
+            </p>
           </swc-prompt-field>
           <input
             id=${this.fileInputId}
@@ -679,15 +703,24 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
   </swc-conversation-thread>
 
   <swc-prompt-field>
-    <swc-upload-artifact slot="artifact" type="card" dismissible>
+    <swc-upload-attachment slot="attachment" type="media" dismissible>
       <div
         slot="thumbnail"
         role="img"
-        aria-label="File thumbnail"
+        aria-label="Hilton commercial assets"
+        style="inline-size:100%;block-size:100%;background:#f3f3f3;"
       ></div>
-      <span slot="title">Hilton commercial assets</span>
-      <span slot="subtitle">2026</span>
-    </swc-upload-artifact>
+      <span slot="badge">PDF</span>
+    </swc-upload-attachment>
+    <p slot="legal" class="swc-PromptField-legal-disclaimer">
+      Responses are generated using AI, and may be inaccurate. Check before
+      using.
+      <a
+        href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+      >
+        AI User Guidelines
+      </a>
+    </p>
   </swc-prompt-field>
 </div>`;
 

@@ -41,7 +41,7 @@ export {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,
 } from './language-resolution.js';
-export { PageScrollLockController } from './page-scroll-lock.js';
+export { PageScrollLockController } from './page-scroll-lock-controller/index.js';
 export {
   PendingController,
   type PendingControllerHost,
@@ -60,3 +60,8 @@ export {
   SlotAttributePropagationController,
   type SlotAttributePropagationControllerOptions,
 } from './slot-attribute-propagation-controller/index.js';
+export { SlotPresenceController } from './slot-presence-controller/index.js';
+export {
+  SlotTextController,
+  type SlotTextConfig,
+} from './slot-text-controller/index.js';

@@ -66,6 +66,11 @@
     "basic-ftp": "5.2.0",
     "playwright": "1.53.1"
   },
+  "dependenciesMeta": {
+    "keytar@7.9.0": {
+      "built": false
+    }
+  },
   "devDependencies": {
     "@axe-core/playwright": "4.11.2",
     "@changesets/cli": "2.29.7",
