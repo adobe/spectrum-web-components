@@ -662,6 +662,99 @@ jobs:
           regression_scale: << parameters.scale >>
           regression_dir: << parameters.dir >>
 
+  # Always-present merge gate — the single required status check in branch
+  # protection. It verifies that every gen `decide` marked relevant actually
+  # ran AND succeeded. Because it runs in its own ungated workflow, its check
+  # is present on every PR, unlike the per-gen workflows (absent when their gen
+  # is untouched, so they can't themselves be required).
+  #
+  # A missing expected workflow is treated as FAILURE, never success — the same
+  # fail-loud principle as base-branch resolution: never merge a silently
+  # dropped workflow green. A missing/rejected CIRCLECI_TOKEN also hard-fails.
+  #
+  # Needs a CIRCLECI_TOKEN env var (a project API token) to read pipeline status.
+  require-checks:
+    docker:
+      - image: cimg/node:lts
+    resource_class: small
+    environment:
+      PIPELINE_ID: << pipeline.id >>
+      RUN_GEN1: << pipeline.parameters.run_gen1 >>
+      RUN_GEN2: << pipeline.parameters.run_gen2 >>
+    steps:
+      - run:
+          name: Gate merge on the expected gen workflows
+          command: |
+            node \<<'NODE'
+            const https = require('https');
+            const TOKEN = process.env.CIRCLECI_TOKEN;
+            const PIPELINE_ID = process.env.PIPELINE_ID;
+            const SELF = process.env.CIRCLE_WORKFLOW_ID;
+            const expected = [];
+            if (process.env.RUN_GEN1 === 'true') expected.push('gen1');
+            if (process.env.RUN_GEN2 === 'true') expected.push('gen2');
+
+            if (!TOKEN) { console.error('CIRCLECI_TOKEN is not set'); process.exit(1); }
+            if (expected.length === 0) {
+              console.log('No gen workflows expected (docs-only). Passing.');
+              process.exit(0);
+            }
+            console.log('Expected workflows: ' + expected.join(', '));
+
+            const api = (path) => new Promise((resolve, reject) => {
+              https.get('https://circleci.com/api/v2' + path,
+                { headers: { 'Circle-Token': TOKEN } }, (res) => {
+                  let body = '';
+                  res.on('data', (d) => (body += d));
+                  res.on('end', () => {
+                    if (res.statusCode < 200 || res.statusCode >= 300) {
+                      return reject(new Error('HTTP ' + res.statusCode + ': ' + body));
+                    }
+                    resolve(JSON.parse(body));
+                  });
+                }).on('error', reject);
+            });
+
+            const BAD = new Set(['failed', 'error', 'failing', 'canceled', 'unauthorized', 'not_run']);
+            const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+            const MISSING_GRACE_MS = 120000;
+            const DEADLINE_MS = 60 * 60 * 1000;
+
+            (async () => {
+              const start = Date.now();
+              for (;;) {
+                const { items } = await api('/pipeline/' + PIPELINE_ID + '/workflow');
+                const latest = {};
+                for (const w of items) {
+                  if (w.id === SELF) continue;
+                  if (!latest[w.name] || w.created_at > latest[w.name].created_at) latest[w.name] = w;
+                }
+                const line = expected.map((n) => n + '=' + (latest[n] ? latest[n].status : 'absent'));
+                console.log('Statuses: ' + line.join(' '));
+
+                if (expected.some((n) => latest[n] && BAD.has(latest[n].status))) {
+                  console.error('A required gen workflow failed.');
+                  process.exit(1);
+                }
+                if (expected.every((n) => latest[n] && latest[n].status === 'success')) {
+                  console.log('All expected gen workflows succeeded.');
+                  process.exit(0);
+                }
+                const missing = expected.filter((n) => !latest[n]);
+                const elapsed = Date.now() - start;
+                if (missing.length && elapsed > MISSING_GRACE_MS) {
+                  console.error('Expected workflow(s) never created: ' + missing.join(', '));
+                  process.exit(1);
+                }
+                if (elapsed > DEADLINE_MS) {
+                  console.error('Timed out waiting for: ' + line.join(' '));
+                  process.exit(1);
+                }
+                await sleep(15000);
+              }
+            })().catch((e) => { console.error(e.message); process.exit(1); });
+            NODE
+
 workflows:
   # ---------------------------------------------------------------------------
   # Gating now happens at the workflow level via pipeline parameters set by the
@@ -749,3 +842,9 @@ workflows:
           requires: [build-gen2-storybook]
       - test-gen2-axe:
           requires: [build-gen2-storybook]
+
+  # Always runs (no `when`), so its check is present on every PR and can be the
+  # single required status check in branch protection. See `require-checks`.
+  gate:
+    jobs:
+      - require-checks
