@@ -116,19 +116,9 @@ export class ResponseStatus extends SpectrumElement {
 
   /**
    * The light DOM element each `_steps` entry was read from, same index
-   * correspondence. Keys `_stepOpenOverrides` by element identity rather than
-   * array index, so a toggle survives steps being reordered or removed.
+   * correspondence.
    */
   private _stepElements: ResponseStatusStep[] = [];
-
-  /**
-   * User-driven per-step disclosure overrides, keyed by the step's own
-   * element (stable across reordering, unlike array index). Present only
-   * for steps the user has toggled; absent entries fall back to the step's
-   * declared `open` (steps are collapsed by default).
-   */
-  @state()
-  private _stepOpenOverrides = new Map<ResponseStatusStep, boolean>();
 
   /**
    * Indices of open steps whose description overflows its capped height. Only
@@ -230,9 +220,7 @@ export class ResponseStatus extends SpectrumElement {
         subtree: true,
       },
       callback: (records) => {
-        const isStepMutation = records.some(
-          (record) => record.target !== this
-        );
+        const isStepMutation = records.some((record) => record.target !== this);
         if (isStepMutation) {
           this._syncSlotContent();
         }
@@ -276,11 +264,7 @@ export class ResponseStatus extends SpectrumElement {
 
     // Re-measure when what is shown (or its open state) changes. Label-roll
     // updates do not affect overflow, so they are intentionally excluded.
-    if (
-      changed.has('_steps') ||
-      changed.has('_stepOpenOverrides') ||
-      changed.has('open')
-    ) {
+    if (changed.has('_steps') || changed.has('open')) {
       this._scheduleDetailOverflowSync();
     }
   }
@@ -444,20 +428,6 @@ export class ResponseStatus extends SpectrumElement {
 
     const stepEls = this._readStepElements();
     this._stepElements = stepEls;
-
-    // Drop overrides for steps that are no longer rendered, so a removed
-    // step's toggle doesn't linger forever keyed off a detached element.
-    if (this._stepOpenOverrides.size > 0) {
-      const current = new Set(stepEls);
-      const pruned = new Map(
-        Array.from(this._stepOpenOverrides).filter(([element]) =>
-          current.has(element)
-        )
-      );
-      if (pruned.size !== this._stepOpenOverrides.size) {
-        this._stepOpenOverrides = pruned;
-      }
-    }
 
     const steps = stepEls.map((element) => this._readStepElement(element));
     if (!this._stepsEqual(steps, this._steps)) {
@@ -660,18 +630,6 @@ export class ResponseStatus extends SpectrumElement {
 
   // Resolved disclosure state for a step: a user override wins; otherwise the
   // step is open only when it declares `open`. Steps start collapsed.
-  private _isStepOpen(
-    step: ResponseStatusStepData,
-    element: ResponseStatusStep | undefined
-  ): boolean {
-    const override = element && this._stepOpenOverrides.get(element);
-    if (override !== undefined) {
-      return override;
-    }
-
-    return step.open;
-  }
-
   private _setsEqual(left: Set<number>, right: Set<number>): boolean {
     if (left.size !== right.size) {
       return false;
@@ -726,8 +684,7 @@ export class ResponseStatus extends SpectrumElement {
     scrollRegions?.forEach((region) => {
       const index = Number(region.dataset.stepIndex);
       const step = this._steps[index];
-      const element = this._stepElements[index];
-      if (Number.isNaN(index) || !step || !this._isStepOpen(step, element)) {
+      if (Number.isNaN(index) || !step || !step.open) {
         return;
       }
       if (region.scrollHeight - region.clientHeight > 1) {
@@ -740,6 +697,14 @@ export class ResponseStatus extends SpectrumElement {
     }
   }
 
+  // Writes through to the step element's own `open` property (rather than
+  // tracking a separate override) so the element stays the single source of
+  // truth: external reads of `stepEl.open` stay accurate, and a later
+  // programmatic write to it is not silently shadowed by a stale override.
+  // Re-syncing here (rather than waiting on the `MutationController` to catch
+  // the property's reflected attribute) keeps the toggle's own re-render
+  // synchronous with this update; the controller's later pass over the same
+  // change is a harmless no-op since `_steps` already matches by then.
   private _handleStepToggle(event: Event): void {
     const button = event.currentTarget as HTMLElement;
     const index = Number(button.dataset.index);
@@ -749,10 +714,9 @@ export class ResponseStatus extends SpectrumElement {
       return;
     }
 
-    const next = !this._isStepOpen(step, element);
-    const overrides = new Map(this._stepOpenOverrides);
-    overrides.set(element, next);
-    this._stepOpenOverrides = overrides;
+    const next = !step.open;
+    element.open = next;
+    this._syncSlotContent();
 
     this._emitToggle('swc-response-status-step-toggle', { open: next, index });
   }
@@ -920,7 +884,7 @@ export class ResponseStatus extends SpectrumElement {
       `;
     }
 
-    const open = this._isStepOpen(step, this._stepElements[index]);
+    const open = step.open;
     const detailId = `swc-response-status-detail-${index}`;
     const toggleId = `swc-response-status-toggle-${index}`;
 

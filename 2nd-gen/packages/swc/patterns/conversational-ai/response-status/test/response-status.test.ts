@@ -507,6 +507,30 @@ export const StepDisclosureTest: Story = {
         );
       }
     );
+
+    await step(
+      "a later programmatic write to a step's `open` property is respected after a user toggle",
+      async () => {
+        // The remaining first step starts expanded (toggled open earlier).
+        // A user toggle writes through to the element's own `open` property,
+        // so a subsequent external write is not shadowed by a stale override.
+        const stepEl = el.querySelector('swc-response-status-step');
+        expect(stepEl?.open).toBe(true);
+
+        stepEl!.open = false;
+        await el.updateComplete;
+
+        await waitFor(
+          () => {
+            expect(stepToggles()[0]?.getAttribute('aria-expanded')).toBe(
+              'false'
+            );
+          },
+          { timeout: 2000 }
+        );
+        expect(stepEl?.open).toBe(false);
+      }
+    );
   },
 };
 
