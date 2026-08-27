@@ -46,11 +46,11 @@
   background: transparent;
   border: none;
   border-radius: token("corner-radius-medium-default");
-  transition: background token("animation-duration-100") token("animation-ease-in-out");
 }
 
 .swc-ResponseStatus-label {
-  color: token("neutral-subdued-content-color-default");
+  --swc-body-font-color: token("gray-700");
+
   text-align: start;
 }
 
@@ -176,10 +176,7 @@
   --swc-pixel-loader-color: token("gray-600");
 
   flex-shrink: 0;
-}
-
-.swc-ResponseStatus-row--button:hover {
-  background: token("gray-100");
+  transition: all token("animation-duration-100") token("animation-ease-in-out");
 }
 
 /* ─────────────────────────────────────
@@ -188,11 +185,27 @@
 
 .swc-ResponseStatus-chevron {
   flex-shrink: 0;
+  color: token("gray-700");
   transition: transform token("animation-duration-100") cubic-bezier(0.21, 0, 0.15, 0.99);
 }
 
 .swc-ResponseStatus-chevron--down {
   transform: rotate(90deg);
+}
+
+.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-label {
+  --swc-body-font-color: token("gray-800");
+
+  transition: all token("animation-duration-100") token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-chevron {
+  color: token("gray-800");
+  transition: color token("animation-duration-100") token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-loader {
+  --swc-pixel-loader-color: token("gray-800");
 }
 
 /* ─────────────────────────────────────
