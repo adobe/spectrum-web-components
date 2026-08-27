@@ -59,10 +59,21 @@ To attach a controller, call `host.addController(this)` in the constructor. This
 
 ## Available controllers
 
+For the full inventory (what each one does and which components/patterns use it), see [2nd-gen shared resources](../../01_contributor-guides/16_2nd-gen-shared-resources.md#controllers).
+
 | Controller | Location | Purpose |
 |-----------|----------|---------|
-| `FocusgroupNavigationController` | `core/controllers/focus-group-navigation-controller.ts` | Roving tabindex and directional keyboard navigation for composites |
+| `FocusgroupNavigationController` | `core/controllers/focusgroup-navigation-controller/` | Roving tabindex and directional keyboard navigation for composites |
 | `LanguageResolutionController` | `core/controllers/language-resolution.ts` | Resolve locale for formatting |
+| `PlacementController` | `core/controllers/placement-controller/` | Floating UI-based anchored positioning |
+| `HoverController` | `core/controllers/hover-controller/` | Hover/keyboard-focus wiring for native-Popover-API triggers |
+| `PendingController` | `core/controllers/pending-controller/` | Delayed busy-state activation, size freeze, pending accessible name |
+| `SlotAttributePropagationController` | `core/controllers/slot-attribute-propagation-controller/` | Propagates a host attribute to slotted children |
+| `SlotPresenceController` | `core/controllers/slot-presence-controller/` | Observes whether slotted content matching a selector is present |
+| `SlotTextController` | `core/controllers/slot-text-controller/` | Observes whether a slot has meaningful text/element content |
+| `LiveSelectionController` | `core/controllers/live-selection-controller/` | Coordinates single/multiple selection across event-dispatching children |
+| `PageScrollLockController` | `core/controllers/page-scroll-lock-controller/` | Reference-counted page scroll lock for stacked blocking surfaces |
+| `ColorController` | `core/controllers/color-controller/` | `colorjs.io` conversion wrapper (not yet adopted by a component) |
 
 ## Planned controllers
 
@@ -70,20 +81,16 @@ The following controllers exist in 1st-gen and may be recreated in 2nd-gen core 
 
 | Controller | 1st-gen location | Purpose |
 |-----------|-----------------|---------|
-| `RovingTabindexController` | `1st-gen/packages/shared/` | Keyboard navigation (see `FocusgroupNavigationController` in 2nd-gen for a related pattern) |
-| `PlacementController` | `1st-gen/packages/overlay/` | Overlay positioning |
+| `RovingTabindexController` | `1st-gen/packages/shared/` | Keyboard navigation (superseded by `FocusgroupNavigationController` in 2nd-gen) |
 | `MatchMediaController` | `1st-gen/packages/picker/` | Device-adaptive behavior |
-| `PendingStateController` | `1st-gen/packages/button/` | Loading states |
 | `InteractionController` (base) | `1st-gen/packages/overlay/` | Base for trigger behavior |
 | `ClickController` | `1st-gen/packages/overlay/` | Click-to-open overlay |
-| `HoverController` | `1st-gen/packages/overlay/` | Hover-to-open overlay |
 | `LongpressController` | `1st-gen/packages/overlay/` | Longpress-to-open overlay |
-| `ColorController` | `1st-gen/tools/reactive-controllers/` | Color validation/conversion |
 | `GridController` | `1st-gen/tools/grid/` | Grid layout with virtual scrolling |
 
 ## FocusgroupNavigationController
 
-**File:** `core/controllers/focus-group-navigation-controller.ts`
+**File:** `core/controllers/focusgroup-navigation-controller/src/focusgroup-navigation-controller.ts`
 
 **What it does:**
 
