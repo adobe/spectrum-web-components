@@ -297,8 +297,6 @@ jobs:
           paths:
             - 2nd-gen/packages/core/dist
             - 2nd-gen/packages/swc/dist
-            - 2nd-gen/packages/core/custom-elements.json
-            - 2nd-gen/packages/swc/custom-elements.json
 
   # Build the gen2 (ci-a11y) Storybook ONCE and persist the static output.
   # The a11y and axe jobs both consumed this identical build before, each
@@ -415,25 +413,29 @@ jobs:
   # gen2 coverage: Chromium only, and only when the base is main. Guarded on
   # the `is_base_main` pipeline parameter (resolved reliably in `decide`, not
   # the old CIRCLE_PULL_REQUEST-dependent path that left this permanently
-  # skipped). The guard is inline rather than a separate workflow so it can
-  # attach the shared `build-gen2` workspace instead of duplicating that build
-  # on every PR to main. Runs unsharded in a single container because v8
+  # skipped). The guard stays inside the gen2 workflow — rather than a separate
+  # workflow gated on is_base_main — so it can attach the shared `build-gen2`
+  # workspace instead of duplicating that build on every PR to main (workspaces
+  # can't cross workflows). When the base isn't main, the first step halts
+  # immediately, so a non-main base boots the container but skips the node
+  # setup and workspace attach. Runs unsharded in a single container because v8
   # coverage needs the whole run in one process. xlarge for headroom.
   test-gen2-coverage:
     executor: node
     steps:
+      - run:
+          name: Skip coverage unless base is main
+          command: |
+            if [ "<< pipeline.parameters.is_base_main >>" != "true" ]; then
+              echo "Base is not main; skipping gen2 coverage."
+              circleci-agent step halt
+            fi
       - setup-node-dependencies
       - attach_workspace:
           at: .
       - run:
-          name: Run gen2 Chromium coverage (base=main only)
-          command: |
-            if [ "<< pipeline.parameters.is_base_main >>" = "true" ]; then
-              echo "Running chromium tests with coverage (base is main)."
-              VITEST_BROWSER_INSTANCES=chromium yarn workspace @spectrum-web-components/2nd-gen test:coverage
-            else
-              echo "Skipping coverage (base is not main)."
-            fi
+          name: Run gen2 Chromium coverage
+          command: VITEST_BROWSER_INSTANCES=chromium yarn workspace @spectrum-web-components/2nd-gen test:coverage
       - store_test_results:
           path: /root/project/2nd-gen/packages/swc/test-results
       - store_artifacts:
