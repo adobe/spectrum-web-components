@@ -41,7 +41,7 @@ jobs:
       github.event_name == 'push' ||
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'pull_request' &&
-      contains(github.event.pull_request.labels.*.name, 'snapshot-release'))
+      contains(github.event.pull_request.labels.*.name, 'snapshot-release-gen1'))
     outputs:
       has_changesets: ${{ steps.check.outputs.has_changesets }}
     steps:
@@ -68,7 +68,7 @@ jobs:
   # this only runs on a push to main that happens to have 1st-gen changesets pending at
   # that moment, not on every push. `next` is therefore not a true continuous build of
   # every main commit; it only refreshes when a push coincides with a pending changeset.
-  # Also runs for manual workflow_dispatch and snapshot-release-labeled PRs. Never
+  # Also runs for manual workflow_dispatch and snapshot-release-gen1-labeled PRs. Never
   # touches main, never commits, never opens a PR. Runs alongside (not instead of) the
   # `release` job below - both are triggered by the same push event but never conflict
   # (separate jobs/runners, and the run-level concurrency group only dedupes overlapping

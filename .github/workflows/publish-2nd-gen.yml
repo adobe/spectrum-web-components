@@ -33,7 +33,7 @@ jobs:
       github.event_name == 'push' ||
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'pull_request' &&
-      contains(github.event.pull_request.labels.*.name, 'snapshot-release'))
+      contains(github.event.pull_request.labels.*.name, 'snapshot-release-gen2'))
     outputs:
       has_changesets: ${{ steps.check.outputs.has_changesets }}
     steps:
@@ -44,7 +44,7 @@ jobs:
         id: check
         run: |
           # Independent of 1st-gen in every trigger - this workflow never reads
-          # 1st-gen/.changeset/, including for its own snapshot-release PR path.
+          # 1st-gen/.changeset/, including for its own snapshot-release-gen2 PR path.
           COUNT=$(find 2nd-gen/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
           if [ "$COUNT" -eq 0 ]; then
             echo "has_changesets=false" >> $GITHUB_OUTPUT
@@ -58,7 +58,7 @@ jobs:
   # this only runs on a push to main that happens to have 2nd-gen changesets pending at
   # that moment, not on every push. `next` is therefore not a true continuous build of
   # every main commit; it only refreshes when a push coincides with a pending changeset.
-  # Also runs for manual workflow_dispatch and snapshot-release-labeled PRs. Never
+  # Also runs for manual workflow_dispatch and snapshot-release-gen2-labeled PRs. Never
   # touches main, never commits, never opens a PR, never enters persistent pre-release
   # mode. Runs alongside (not instead of) the `release` job below - both are triggered by
   # the same push event but never conflict (separate jobs/runners, and the run-level
