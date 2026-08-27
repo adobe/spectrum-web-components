@@ -91,15 +91,6 @@ jobs:
                   "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls/$PR_NUMBER" \
                   | python3 -c "import json,sys; print(json.load(sys.stdin).get('base',{}).get('ref',''))" 2>/dev/null || echo "")
               fi
-              # TEMP DEBUG: diagnose why BASE resolves to <unknown>. Remove once fixed.
-              echo "DEBUG PR_NUMBER='$PR_NUMBER'"
-              echo "DEBUG PROJECT='$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME'"
-              echo "DEBUG token auth check:"
-              curl -s -o /dev/null -w "  pulls-list HTTP %{http_code}\n" \
-                -H "Authorization: Bearer $GITHUB_TOKEN" \
-                -H "Accept: application/vnd.github+json" \
-                "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open"
-
               echo "Resolved PR base branch: '${BASE:-<unknown>}'"
               [ "$BASE" = "main" ] && IS_BASE_MAIN=true || IS_BASE_MAIN=false
             fi
