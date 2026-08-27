@@ -16,4 +16,4 @@ export declare const version = "1.12.2";
 /**
  * The version of the core base package.
  */
-export declare const coreVersion = "1.12.2";
+export declare const coreVersion = "0.3.0";
