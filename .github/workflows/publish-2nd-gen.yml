@@ -217,9 +217,9 @@ jobs:
           echo "📝 Version PR opened/updated at \`changeset-release/2nd-gen\` - nothing published yet" >> $GITHUB_STEP_SUMMARY
 
       # No pending changesets: either nothing to do, or the Version PR above was just
-      # merged - publish whatever is now on main. `yarn changeset publish` is itself
-      # idempotent (skips already-registry-published versions), so no extra guard is
-      # needed here the way gen1 needs one for its raw `npm publish` React-wrapper calls.
+      # merged - publish whatever is now on main. The git-tag-existence guard is what
+      # makes this safe to re-run on every subsequent ordinary push once a release has
+      # gone out - mirrors gen1's guard, now that gen2 releases carry their own tag too.
       - name: Publish gen2 packages
         if: needs.check-changesets.outputs.has_changesets == 'false' && steps.npm-auth.outcome == 'success'
         id: publish
@@ -227,8 +227,8 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
         run: |
           RELEASED_VERSION=$(node -p "require('./2nd-gen/packages/swc/package.json').version")
-          if npm view "@adobe/spectrum-wc@$RELEASED_VERSION" version --registry=https://registry.npmjs.org >/dev/null 2>&1; then
-            echo "@adobe/spectrum-wc@$RELEASED_VERSION already published - nothing to do."
+          if git rev-parse "gen2-$RELEASED_VERSION" >/dev/null 2>&1; then
+            echo "gen2-$RELEASED_VERSION already released - nothing to do."
             echo "published=false" >> $GITHUB_OUTPUT
             exit 0
           fi
