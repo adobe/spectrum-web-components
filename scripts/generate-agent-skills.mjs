@@ -586,16 +586,12 @@ function mdTable(headers, rows) {
 const code = (text) => (text ? `\`${text}\`` : '');
 
 /**
- * Build a Markdown `## API` section for a custom element, mirroring the
- * categories rendered by the live `<ApiTable />` Storybook block
- * (Properties, Slots, Events, CSS Custom Properties, CSS Parts).
- * Returns null when the CEM is unavailable or the tag isn't a declared
- * custom element (e.g. controllers, which hand-author their own API section).
+ * Build the Properties/Slots/Events/CSS Custom Properties/CSS Parts tables
+ * for a single custom element tag, mirroring the categories rendered by the
+ * live `<ApiTable />` Storybook block. Returns null if the tag isn't a
+ * declared custom element in the manifest, or has no documentable members.
  */
-function buildApiSection(tagName, cem) {
-  if (!cem) {
-    return null;
-  }
+function buildApiTables(tagName, cem, headingLevel) {
   const component = findCemDeclaration(cem, tagName);
   if (!component) {
     return null;
@@ -679,10 +675,66 @@ function buildApiSection(tagName, cem) {
     return null;
   }
 
-  return (
-    '## API\n\n' +
-    sections.map(([title, table]) => `### ${title}\n\n${table}`).join('\n\n')
+  return sections
+    .map(([title, table]) => `${headingLevel} ${title}\n\n${table}`)
+    .join('\n\n');
+}
+
+/**
+ * Multi-element units (e.g. accordion, tabs) declare sibling element tags via
+ * `parameters.additionalApiTables` in their stories.ts meta, so DocsFooter
+ * renders one API table per tag instead of just the unit's own tag. Extract
+ * that array with a regex rather than a full TS parse — the value is always
+ * a static string-literal array.
+ */
+function readAdditionalApiTags(unit) {
+  const storiesPath = join(
+    dirname(unit.mdxPath),
+    'stories',
+    `${unit.dir}.stories.ts`
   );
+  if (!existsSync(storiesPath)) {
+    return [];
+  }
+  const match = readFileSync(storiesPath, 'utf8').match(
+    /additionalApiTables:\s*\[([^\]]*)\]/
+  );
+  if (!match) {
+    return [];
+  }
+  return [...match[1].matchAll(/['"`]([^'"`]+)['"`]/g)].map((m) => m[1]);
+}
+
+/**
+ * Build a Markdown `## API` section for a unit, covering its own tag plus any
+ * `additionalApiTables` siblings declared in its stories.ts (see
+ * `readAdditionalApiTags`). Returns null when the CEM is unavailable or the
+ * tag isn't a declared custom element (e.g. controllers, which hand-author
+ * their own API section).
+ */
+function buildApiSection(unit, cem) {
+  if (!cem) {
+    return null;
+  }
+  const additionalTags = readAdditionalApiTags(unit);
+  const isMultiElement = additionalTags.length > 0;
+  const headingLevel = isMultiElement ? '####' : '###';
+
+  const blocks = [unit.tagName, ...additionalTags]
+    .map((tag) => {
+      const tables = buildApiTables(tag, cem, headingLevel);
+      if (!tables) {
+        return null;
+      }
+      return isMultiElement ? `### ${tag}\n\n${tables}` : tables;
+    })
+    .filter(Boolean);
+
+  if (blocks.length === 0) {
+    return null;
+  }
+
+  return '## API\n\n' + blocks.join('\n\n');
 }
 
 // ---------------------------------------------------------------------------
@@ -886,7 +938,7 @@ function buildGen2DocsSkill(skillDir) {
   function writeUnitDocs(units, subdir) {
     for (const unit of units) {
       let content = stripMdx(readFileSync(unit.mdxPath, 'utf8'));
-      const api = unit.tagName ? buildApiSection(unit.tagName, cem) : null;
+      const api = unit.tagName ? buildApiSection(unit, cem) : null;
       if (api) {
         content = content.trimEnd() + '\n\n' + api + '\n';
       }
