@@ -75,7 +75,7 @@ jobs:
   # *workflow runs*, not jobs within one run).
   snapshot:
     needs: check-changesets
-    if: needs.check-changesets.outputs.has_changesets == 'true' && github.event_name != 'push'
+    if: needs.check-changesets.outputs.has_changesets == 'true'
     runs-on: ubuntu-latest
     environment: npm-publish
     permissions:
