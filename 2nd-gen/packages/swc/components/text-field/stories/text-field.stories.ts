@@ -51,7 +51,9 @@ export default meta;
 
 export const Playground: Story = {
   tags: ['dev'],
-  args: {},
+  args: {
+    'accessible-label': 'Example text field',
+  },
   render: (args) => html`
     ${template({ ...args })}
   `,
