@@ -446,13 +446,7 @@ customRootSubmenu.swc_vrt = {
 
 export const mobileView = (): TemplateResult => {
   return html`
-    <sp-tray
-      open
-      @close=${(event: Event) => {
-        event.preventDefault();
-        (event.target as HTMLElement).toggleAttribute('open', true);
-      }}
-    >
+    <sp-tray open>
       <sp-menu mobile-view>
         <sp-menu-item>Home</sp-menu-item>
         <sp-menu-item>
