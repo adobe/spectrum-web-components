@@ -14,11 +14,16 @@ A stylesheet with typography classes can also be generated.
 - **Resolved value** – A final primitive value
 - **Custom property** – A CSS variable (`var(--swc-gray-500)`)
 
-## Upon Token Data Update
+## Updating tokens
 
-> If you update either the `@adobe/spectrum-tokens` package version or modify custom tokens, you must do the following.
+There are two distinct paths, depending on what changed:
 
-Ensure tokens are updated in the dependent packages by running the following command at the _root level_ of the repo:
+- **Custom tokens only** (adding/editing files in `./custom`, no `@adobe/spectrum-tokens` version change): follow [Upon Custom Token Data Update](#upon-custom-token-data-update). A single `yarn tokens:update` is sufficient.
+- **Bumping the `@adobe/spectrum-tokens` package version**: follow [Upgrading @adobe/spectrum-tokens](#upgrading-adobespectrum-tokens). This is a seven-step process; `yarn tokens:update` is only one of those steps.
+
+## Upon Custom Token Data Update
+
+> If you modify **custom tokens only**, with no `@adobe/spectrum-tokens` version change, run the following at the _root level_ of the repo:
 
 ```bash
 yarn tokens:update
@@ -27,6 +32,97 @@ yarn tokens:update
 This will first run all token related tests, then update the extension-relative `tokens.json` for `swc-vscode-token` and the library-relative `tokens.css` and `typography.css` for `@adobe/spectrum-wc`.
 
 If any test fails, the artifacts will not be generated, allowing you to investigate and fix any issues.
+
+> ⚠️ **Important:** `yarn tokens:update` alone is **not** sufficient when bumping the `@adobe/spectrum-tokens` package version. That is a multi-step process with `yarn tokens:update` as only one step; see [Upgrading @adobe/spectrum-tokens](#upgrading-adobespectrum-tokens) below for the full required workflow.
+
+## Upgrading @adobe/spectrum-tokens
+
+When bumping the `@adobe/spectrum-tokens` version, some tokens may have been removed entirely (no rename mapping). The `diff:versions` script identifies these before you bump so you can curate `custom/deleted.json` before the new token data is generated.
+
+> ⚠️ **Important:** Follow all six steps below in order. Running only `yarn tokens:update` will silently skip deleted-token curation and leave broken `token()` references in migrated CSS.
+
+### Step 1: run the diff
+
+From the `swc-tokens` package directory, run:
+
+```bash
+node scripts/diff-versions.js --to <target-version>
+```
+
+For example:
+
+```bash
+node scripts/diff-versions.js --to 14.13.0
+```
+
+The script:
+
+- Compares the currently installed version against the target version
+- Identifies tokens that are **deleted** (active in the old version, absent from the new one and not captured by any rename mapping)
+- Seeds `custom/deleted.json` with its best guesses:
+  - Tokens with zero-value removal comments in the source data are seeded as `"0"` automatically
+  - Other deleted tokens get a fuzzy-matched candidate from the added token set, or `null` if no match is close enough
+  - Previously curated entries are preserved exactly as-is
+- Warns about any new source JSON files in the package that are not yet listed in `SPECTRUM_TOKENS` in `src/tokens.js`
+- Lists newly deprecated+renamed tokens (these are handled automatically after the bump via `extractRenamedTokenValues` — no curation needed)
+
+### Step 2: curate `custom/deleted.json`
+
+Review the seeded file and fill in replacement values where possible:
+
+- **`"0"` entries**: already correct for zero-pixel spacing tokens; no action needed
+- **Fuzzy-matched entries**: verify the suggestion is semantically correct; update or set to `null` if not
+- **`null` entries**: investigate whether a reasonable replacement exists in the new token set; if not, leave as `null` and the VS Code extension will prompt engineers to check Design specs or React
+
+Commit the curated `custom/deleted.json` before proceeding.
+
+### Step 3: bump the version
+
+Update `@adobe/spectrum-tokens` in `package.json`, then install:
+
+```bash
+yarn install
+```
+
+### Step 4: regenerate token data
+
+From the root of the repo:
+
+```bash
+yarn tokens:update
+```
+
+This runs tests, regenerates `tokens.json` for the VS Code extension (now including `renamed`, `deleted`, and `deprecatedComments`), and regenerates `tokens.css` and `typography.css` for `@adobe/spectrum-wc`.
+
+### Step 5: re-deploy the VSCode extension
+
+The previous step updated the tokens _data_ for the extension, but it will not reflect in the extension without running the extensions deploy script which will re-package it with the updated tokens.
+
+Run the following in the `2nd-gen/packages/tools/swc-vscode-token` directory:
+
+```bash
+yarn deploy
+```
+
+Post-build, will require uninstalling and re-installing the extension to see changes take effect.
+
+### Step 6: fix broken token references in CSS
+
+Run the fix script to automatically replace all known broken `token()` references across migrated component CSS:
+
+```bash
+# From 2nd-gen/packages/tools/swc-tokens/:
+node scripts/fix-token-refs.js --dry-run   # preview first
+node scripts/fix-token-refs.js             # apply
+```
+
+This handles renamed tokens, zero-value tokens, and deleted tokens with curated replacements. Deleted tokens with no known replacement are flagged with an inline `/* TODO */` comment — review those manually.
+
+### Step 7: verify
+
+- Review the git diff on `tokens.json` to confirm `deleted` and `deprecatedComments` are populated as expected
+- Review the CSS diffs from the fix script and address any `/* TODO */` comments
+- Trigger the updated VS Code extension and verify that remaining deleted tokens surface the correct diagnostic messages and any new tokens are recognized
 
 ## Data Sources
 
@@ -187,81 +283,6 @@ The `deleted` values are curated in `custom/deleted.json` (see [Custom Tokens an
 
 The `swc-vscode-token` package uses all four maps for autocomplete, diagnostics, and hover guidance.
 
-## Upgrading @adobe/spectrum-tokens
-
-When bumping the `@adobe/spectrum-tokens` version, some tokens may have been removed entirely (no rename mapping). The `diff:versions` script identifies these before you bump so you can curate `custom/deleted.json` before the new token data is generated.
-
-### Step 1: run the diff
-
-From the `swc-tokens` package directory, run:
-
-```bash
-node scripts/diff-versions.js --to <target-version>
-```
-
-For example:
-
-```bash
-node scripts/diff-versions.js --to 14.13.0
-```
-
-The script:
-
-- Compares the currently installed version against the target version
-- Identifies tokens that are **deleted** (active in the old version, absent from the new one and not captured by any rename mapping)
-- Seeds `custom/deleted.json` with its best guesses:
-  - Tokens with zero-value removal comments in the source data are seeded as `"0"` automatically
-  - Other deleted tokens get a fuzzy-matched candidate from the added token set, or `null` if no match is close enough
-  - Previously curated entries are preserved exactly as-is
-- Warns about any new source JSON files in the package that are not yet listed in `SPECTRUM_TOKENS` in `src/tokens.js`
-- Lists newly deprecated+renamed tokens (these are handled automatically after the bump via `extractRenamedTokenValues` — no curation needed)
-
-### Step 2: curate `custom/deleted.json`
-
-Review the seeded file and fill in replacement values where possible:
-
-- **`"0"` entries**: already correct for zero-pixel spacing tokens; no action needed
-- **Fuzzy-matched entries**: verify the suggestion is semantically correct; update or set to `null` if not
-- **`null` entries**: investigate whether a reasonable replacement exists in the new token set; if not, leave as `null` and the VS Code extension will prompt engineers to check Design specs or React
-
-Commit the curated `custom/deleted.json` before proceeding.
-
-### Step 3: bump the version
-
-Update `@adobe/spectrum-tokens` in `package.json`, then install:
-
-```bash
-yarn install
-```
-
-### Step 4: regenerate token data
-
-From the root of the repo:
-
-```bash
-yarn tokens:update
-```
-
-This runs tests, regenerates `tokens.json` for the VS Code extension (now including `renamed`, `deleted`, and `deprecatedComments`), and regenerates `tokens.css` and `typography.css` for `@adobe/spectrum-wc`.
-
-### Step 5: fix broken token references in CSS
-
-Run the fix script to automatically replace all known broken `token()` references across migrated component CSS:
-
-```bash
-# From 2nd-gen/packages/tools/swc-tokens/:
-node scripts/fix-token-refs.js --dry-run   # preview first
-node scripts/fix-token-refs.js             # apply
-```
-
-This handles renamed tokens, zero-value tokens, and deleted tokens with curated replacements. Deleted tokens with no known replacement are flagged with an inline `/* TODO */` comment — review those manually.
-
-### Step 6: verify
-
-- Review the git diff on `tokens.json` to confirm `deleted` and `deprecatedComments` are populated as expected
-- Review the CSS diffs from the fix script and address any `/* TODO */` comments
-- Open the VS Code extension and verify that remaining deleted tokens surface the correct diagnostic messages
-
 ## Token Stylesheet Generation
 
 The unified token stylesheet splits tokens into two groups:
@@ -303,7 +324,7 @@ box-shadow: var(--swc-drop-shadow-dragged);
 
 ### Updating the Tokens Stylesheet
 
-If changes are made to the token data or processing, see ["Upon Token Data Update"](#upon-token-data-update) for how to update dependent packages, which includes regenerating the tokens stylesheet.
+If changes are made to the token data or processing, see [Updating tokens](#updating-tokens) for which workflow to follow, both of which include regenerating the tokens stylesheet.
 
 > Review stylesheet changes via git to ensure there are no regressions and that changes are expected.
 
@@ -412,21 +433,7 @@ yarn generate:tokens
 yarn generate:typography
 ```
 
-**Before upgrading** `@adobe/spectrum-tokens`, run the diff script to identify deleted tokens and seed `custom/deleted.json`:
-
-```bash
-node scripts/diff-versions.js --to <target-version>
-```
-
-**After upgrading** `@adobe/spectrum-tokens`, fix broken `token()` references across all CSS files in `2nd-gen/`:
-
-```bash
-yarn fix:tokens             # apply all mechanical replacements
-yarn fix:tokens --dry-run   # preview without writing
-yarn fix:tokens --files path/to/component.css   # specific files only
-```
-
-See [Upgrading @adobe/spectrum-tokens](#upgrading-adobespectrum-tokens) for the full workflow.
+For the `diff-versions.js` and `fix:tokens` commands used when bumping the `@adobe/spectrum-tokens` package version, see [Upgrading @adobe/spectrum-tokens](#upgrading-adobespectrum-tokens); do not run them in isolation from that workflow.
 
 ## Testing Changes
 
