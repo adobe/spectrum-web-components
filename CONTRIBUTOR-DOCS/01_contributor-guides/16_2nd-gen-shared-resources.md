@@ -18,7 +18,7 @@
 - [Directives](#directives)
 - [Base class and dev-mode warnings](#base-class-and-dev-mode-warnings)
 - [Not yet adopted](#not-yet-adopted)
-- [Patterns (`swc/patterns/ai`)](#patterns-swcpatternsai)
+- [Patterns (`swc/patterns/ai-toolkit`)](#patterns-swcpatternsai-toolkit)
 - [Attribute and slot vocabulary](#attribute-and-slot-vocabulary)
 - [Where to go deeper](#where-to-go-deeper)
 
@@ -30,7 +30,7 @@
 
 Index of shared, reusable resources in 2nd-gen: controllers, mixins, utilities, and directives in `@adobe/spectrum-wc-core`, plus a few sibling-package helpers. For each one: what it does and who currently uses it. Check here before writing new logic that a controller, mixin, or utility may already cover.
 
-> **Scope:** `2nd-gen/packages/core` (controllers, mixins, utils, directives, element) and its consumers: components in `2nd-gen/packages/swc/components`, and patterns in `2nd-gen/packages/swc/patterns/ai`. Test-only tooling is out of scope; see [2nd gen testing](11_2ndgen_testing.md). Update "used by" as adoption changes.
+> **Scope:** `2nd-gen/packages/core` (controllers, mixins, utils, directives, element) and its consumers: components in `2nd-gen/packages/swc/components`, and patterns in `2nd-gen/packages/swc/patterns/ai-toolkit`. Test-only tooling is out of scope; see [2nd gen testing](11_2ndgen_testing.md). Update "used by" as adoption changes.
 >
 > ⚠️ **Important:** Composition happens at two layers. Most controllers/mixins are applied on the shared abstract `*Base` class in `core/components/*` and inherited by every concrete element. A few (`PendingMixin`) are applied one layer up, directly on the concrete element in `swc/components/*` (e.g. `Button extends PendingMixin(ButtonBase)`). Check both layers before concluding something isn't in use.
 
@@ -100,7 +100,7 @@ Exist in `core` (or a sibling utils location) with no current consumer:
 - `isFocusVisibleInTree()`
 - `tabbableSelector`
 
-## Patterns (`swc/patterns/ai`)
+## Patterns (`swc/patterns/ai-toolkit`)
 
 Patterns build directly on core resources and on components, not on their own `*Base` class.
 

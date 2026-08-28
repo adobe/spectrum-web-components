@@ -149,7 +149,7 @@ No component-specific custom events documented on `Link`. Activation follows the
 
 ### Dependency-aware recommendation
 
-- **Ship link styling with typography / prose consumption paths** in 2nd-gen so AI and document UIs that already use `swc-Typography--prose` ([examples](../../../../2nd-gen/packages/swc/patterns/ai/system-message/stories/system-message.stories.ts)) get correct `<a href>` appearance without requiring `sp-link` per link.
+- **Ship link styling with typography / prose consumption paths** in 2nd-gen so AI Toolkit and document UIs that already use `swc-Typography--prose` ([examples](../../../../2nd-gen/packages/swc/patterns/ai-toolkit/system-message/stories/system-message.stories.ts)) get correct `<a href>` appearance without requiring `sp-link` per link.
 - **Do not** hard-block on unrelated component migrations unless a shared token pipeline change is required; coordinate with **Typography** owners for where link selectors live and how Storybook documents native anchors inside prose.
 
 ### Related components and ordering notes
