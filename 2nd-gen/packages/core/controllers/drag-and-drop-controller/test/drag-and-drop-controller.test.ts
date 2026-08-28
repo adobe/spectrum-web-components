@@ -19,6 +19,7 @@ import { DragAndDropController } from '../index.js';
 
 class DragAndDropTestHost extends LitElement {
   public dragged = false;
+  public accepts = true;
   public enters = 0;
   public leaves = 0;
   public drops = 0;
@@ -40,6 +41,7 @@ class DragAndDropTestHost extends LitElement {
         this.drops += 1;
       },
       shouldAccept: (event) =>
+        this.accepts &&
         Boolean(
           event.dataTransfer?.types.includes('Files') ||
           event.dataTransfer?.files.length
@@ -127,6 +129,33 @@ export const RejectsUnacceptedDrags: Story = {
       expect(event.dataTransfer?.dropEffect).toBe('none');
       expect(host.dragged).toBe(false);
       expect(host.enters).toBe(0);
+    });
+  },
+};
+
+export const RejectsPreviouslyAcceptedDrags: Story = {
+  render: fixture,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DragAndDropTestHost>(
+      canvasElement,
+      'test-drag-and-drop-host'
+    );
+    host.dispatchEvent(makeDragEvent('dragover', makeFileDataTransfer()));
+    host.accepts = false;
+
+    await step('clears an accepted drag when acceptance changes', () => {
+      const event = makeDragEvent('dragover', makeFileDataTransfer());
+      host.dispatchEvent(event);
+
+      expect(event.dataTransfer?.dropEffect).toBe('none');
+      expect(host.dragged).toBe(false);
+      expect(host.leaves).toBe(1);
+    });
+
+    await step('does not handle the rejected drop', () => {
+      host.dispatchEvent(makeDragEvent('drop', makeFileDataTransfer()));
+
+      expect(host.drops).toBe(0);
     });
   },
 };

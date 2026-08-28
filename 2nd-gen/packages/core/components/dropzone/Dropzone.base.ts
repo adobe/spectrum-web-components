@@ -48,9 +48,9 @@ import {
  *   payload and set the cursor to `none`.
  * @fires swc-dropzone-dragover - Fired once when dragged files enter the zone and are
  *   accepted; does not repeat on subsequent `dragover` ticks while still hovering.
- * @fires swc-dropzone-dragleave - Fired when dragged files leave the zone after a 100 ms
- *   debounce. Detail is a plain snapshot `{ clientX, clientY, relatedTarget }` captured
- *   synchronously from the native event before the timer fires.
+ * @fires swc-dropzone-dragleave - Fired when an accepted drag leaves the zone after a
+ *   100 ms debounce, or immediately when it becomes rejected. Detail is a plain snapshot
+ *   `{ clientX, clientY, relatedTarget }` captured synchronously from the native event.
  * @fires swc-dropzone-drop - Fired when files are dropped on the zone. `element.dragged`
  *   is still `true` when this event fires; it transitions to `false` after dispatch.
  */

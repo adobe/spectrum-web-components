@@ -46,7 +46,7 @@ export interface DragAndDropControllerOptions {
   /** Called once when an accepted drag enters — not on every `dragover` tick. Set `isDragged`'s backing flag to `true` here. */
   onDragEnter?: (event: DragEvent) => void;
 
-  /** Called once the drag actually leaves, after a short debounce so passing over a child element doesn't flicker. Set `isDragged`'s backing flag to `false` here. */
+  /** Called once the accepted drag leaves or becomes rejected. Set `isDragged`'s backing flag to `false` here. */
   onDragLeave?: (snapshot: DragLeaveSnapshot) => void;
 
   /** Called on drop, only when `isDragged()` is currently `true`. */
@@ -126,12 +126,19 @@ export class DragAndDropController implements ReactiveController {
       return;
     }
 
+    this._clearDragLeaveTimer();
     if (this._options.shouldAccept?.(event) === false) {
       event.dataTransfer.dropEffect = 'none';
+      if (this._options.isDragged()) {
+        this._options.onDragLeave?.({
+          clientX: event.clientX,
+          clientY: event.clientY,
+          relatedTarget: event.relatedTarget,
+        });
+      }
       return;
     }
 
-    this._clearDragLeaveTimer();
     event.dataTransfer.dropEffect = this._options.dropEffect?.() ?? 'copy';
 
     if (!this._options.isDragged()) {

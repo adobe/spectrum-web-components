@@ -20,7 +20,7 @@ import * as Stories from './stories/drag-and-drop-controller.stories';
 
 ```typescript
 import { LitElement } from 'lit';
-import { DragAndDropController } from '@adobe/spectrum-wc-core/controllers/index.js';
+import { DragAndDropController } from '@adobe/spectrum-wc-core/controllers/drag-and-drop-controller.js';
 
 class MyDropTarget extends LitElement {
   private dragged = false;
@@ -46,7 +46,7 @@ The controller registers its listeners when the host connects and removes them w
 
 ### Accepted and rejected payloads
 
-`shouldAccept` is called on every native `dragover` tick. Return `false` to reject the current payload; the controller sets `dataTransfer.dropEffect` to `none` and does not enter the dragged state. Accepted payloads use the configured `dropEffect`, which defaults to `copy`.
+`shouldAccept` is called on every native `dragover` tick. Return `false` to reject the current payload; the controller sets `dataTransfer.dropEffect` to `none` and does not enter the dragged state. If an accepted drag becomes rejected, `onDragLeave` clears the host's dragged state. Accepted payloads use the configured `dropEffect`, which defaults to `copy`.
 
 <Canvas of={Stories.AcceptedFileDrops} />
 
@@ -60,7 +60,7 @@ Drag the text below the demo to see a rejected non-file payload. A real file can
 
 ### Debounced leave
 
-`dragleave` is ignored when the pointer moves between descendants of the host. For a real leave, `onDragLeave` runs after a 100 ms debounce so child-boundary transitions do not flicker the host's state. The controller captures `clientX`, `clientY`, and `relatedTarget` synchronously and passes them as a `DragLeaveSnapshot`.
+`dragleave` is ignored when the pointer moves between descendants of the host. For a real leave, `onDragLeave` runs after a 100 ms debounce so child-boundary transitions do not flicker the host's state. If an accepted drag becomes rejected, it runs immediately. The controller captures `clientX`, `clientY`, and `relatedTarget` synchronously and passes them as a `DragLeaveSnapshot`.
 
 ### Drop handling
 
@@ -91,7 +91,7 @@ The controller has no direct accessibility surface. The host owns the drop targe
 | `isDragged`    | `() => boolean`                         | (required)    | Returns the host's current dragged state. The controller reads it on every native event and never stores its own copy. |
 | `shouldAccept` | `(event: DragEvent) => boolean`         | always accept | Called on every `dragover`. Return `false` to set `dropEffect` to `none` and reject the payload.                       |
 | `onDragEnter`  | `(event: DragEvent) => void`            | —             | Called once when an accepted drag enters.                                                                              |
-| `onDragLeave`  | `(snapshot: DragLeaveSnapshot) => void` | —             | Called after the 100 ms leave debounce, unless the drag returns or the host disconnects.                               |
+| `onDragLeave`  | `(snapshot: DragLeaveSnapshot) => void` | —             | Called after the 100 ms leave debounce, or immediately when an accepted drag becomes rejected.                         |
 | `onDrop`       | `(event: DragEvent) => void`            | —             | Called when a drop occurs while `isDragged()` is `true`.                                                               |
 | `dropEffect`   | `() => DataTransfer['dropEffect']`      | `'copy'`      | Returns the OS cursor feedback for an accepted drag.                                                                   |
 
