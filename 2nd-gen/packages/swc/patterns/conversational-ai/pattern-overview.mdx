@@ -323,3 +323,50 @@ Interactive chip used inside the group. Emits a bubbled `swc-suggestion` event w
     },
   ]}
 />
+
+---
+
+## Usage guidelines
+
+#### Display the legal disclaimer on all prompt-enabled surfaces
+
+Other than the home screen, the prompt field must always be displayed together with the legal disclaimer. This ensures users have continuous access to legal and attribution information.
+
+#### In a panel modality, all artifacts show up as an image preview
+
+Due to limited space in a panel modality, all uploaded artifacts display in an image preview, regardless of type.
+
+#### Default the prompt field's input height to one line
+
+As the user types, the input height expands up to a maximum of four visible lines.
+
+#### Limit the input to four visible lines
+
+Once the four-line limit is reached, additional content is accessed via an internal scroll bar.
+
+#### Keep uploaded artifacts and prompt input visible while scrolling
+
+When the prompt input scrolls, keep the uploaded artifacts and the prompt label fixed at the top.
+
+---
+
+## Accessibility guidelines
+
+#### Focus order
+
+<kbd>Tab</kbd> moves focus through the prompt bar in this order: the prompt
+input, the upload button, the send button, any uploaded image, its close button,
+the legal footer, and the information button.
+
+#### Accessible name
+
+Every interactive part of the prompt bar needs an accessible name. Values in `[square brackets]` are dynamic and populated at runtime; values in `(parentheses)` are fixed names sourced from Spectrum and should not be redefined.
+
+| Part                | Accessible name                   | Note                                          |
+| ------------------- | --------------------------------- | --------------------------------------------- |
+| Prompt input        | `Prompt {text area/edit text}`    |                                               |
+| Upload button       | `Add images and files (button)`   |                                               |
+| Send button         | `Send prompt (button)`            |                                               |
+| Prompt bar artifact | `Open [file name] to preview`     | Only when a preview is available for the file |
+| Close button        | `Delete [artifact name] (button)` |                                               |
+| Information button  | `Information [context] (button)`  |                                               |
