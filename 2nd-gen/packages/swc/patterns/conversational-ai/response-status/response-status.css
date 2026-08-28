@@ -250,78 +250,36 @@
   opacity: 0;
 }
 
-/* Shared collapse mechanics for the header panel and per-step detail panels.
-   Animates `grid-template-rows` between 0fr and 1fr rather than `block-size`
-   to/from `auto`: the block-size + `interpolate-size` approach only works in
+/* Shared collapse mechanics, also used (with its own timing) by each step's
+   own detail panel in `response-status-step.css`. Animates
+   `grid-template-rows` between 0fr and 1fr rather than `block-size` to/from
+   `auto`: the block-size + `interpolate-size` approach only works in
    Chromium, so Safari and Firefox leave (and ratchet) residual height.
 
    Overflow and min-block-size live on the grid item, not this container:
    0fr only collapses to 0 on the item. Safari also ratchets leftover height
    when the container clips, or when the item itself is a scroll region. */
-.swc-ResponseStatus-panel,
-.swc-ResponseStatus-step-detailPanel {
+.swc-ResponseStatus-panel {
   display: grid;
   visibility: hidden;
   grid-template-rows: 0fr;
-}
-
-/* Top-level disclosure (the whole execution trace opening/closing via the
-   header chevron). Per-step detail panels get their own timing below. */
-.swc-ResponseStatus-panel {
   transition:
     grid-template-rows 250ms cubic-bezier(0.21, 0, 0.15, 0.99),
     visibility 250ms linear;
 }
 
-.swc-ResponseStatus-panel--open,
-.swc-ResponseStatus-step-detailPanel--open {
+.swc-ResponseStatus-panel--open {
   visibility: visible;
   grid-template-rows: 1fr;
 }
 
-/* Background fades in step with the height collapse above instead of
-   snapping away the instant `--open` is removed. Padding is intentionally
-   left off this transition list: it snaps with `--open` below so it isn't
-   part of the slide, just the height and background are. */
-.swc-ResponseStatus-step-detailPanel {
-  inline-size: fit-content;
-  background-color: transparent;
-  border-radius: token("corner-radius-large-default");
-  transition:
-    grid-template-rows 80ms token("animation-ease-in-out"),
-    visibility 180ms linear,
-    background-color 80ms token("animation-ease-in-out");
-}
-
-.swc-ResponseStatus-step-detailPanel--open {
-  padding: token("spacing-100");
-  background-color: var(--swc-background-layer-1-color);
-}
-
 /* Clip wrapper / panel child: overflow:hidden here is what lets 0fr become a
-   true zero. The description scroller stays nested so it is not the grid item. */
-.swc-ResponseStatus-panel > *,
-.swc-ResponseStatus-step-detailClip {
+   true zero. The step timeline stays nested so it is not the grid item.
+   Also fades the step timeline out while its row collapses, instead of
+   leaving it fully visible while it gets visually squashed on the way up. */
+.swc-ResponseStatus-panel > * {
   min-block-size: 0;
   overflow: hidden;
-}
-
-/* Fades the description out while its row collapses, instead of leaving the
-   text fully visible as it gets visually squashed on the way up. */
-.swc-ResponseStatus-step-detailClip {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 180ms token("animation-ease-in-out");
-}
-
-.swc-ResponseStatus-step-detailPanel--open .swc-ResponseStatus-step-detailClip {
-  visibility: visible;
-  opacity: 1;
-}
-
-/* Same fade, for the step timeline itself: it stays fully visible while the
-   header disclosure collapses around it unless this is added too. */
-.swc-ResponseStatus-panel > * {
   opacity: 0;
   transition: opacity token("animation-duration-200") token("animation-ease-in-out");
 }
@@ -334,100 +292,6 @@
   padding-inline-start: token("spacing-500");
   margin: 0;
   list-style: none;
-}
-
-.swc-ResponseStatus-step {
-  display: grid;
-  grid-template-columns: 20px 1fr;
-  align-items: stretch;
-  column-gap: token("spacing-100");
-}
-
-.swc-ResponseStatus-step:last-child {
-  animation:
-    swc-response-status-step-enter-opacity 650ms cubic-bezier(0.45, 0, 0.4, 1),
-    swc-response-status-step-enter-position 310ms cubic-bezier(0.18, 0.41, 0.4, 1);
-}
-
-@keyframes swc-response-status-step-enter-opacity {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes swc-response-status-step-enter-position {
-  from {
-    transform: translateY(6px);
-  }
-
-  to {
-    transform: translateY(0);
-  }
-}
-
-.swc-ResponseStatus-step-rail {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  /* Stretch with the step row (align-items). Percentage block-size is cyclic
-     in Safari: min-block-size: 100% holds the previous row height after a
-     step collapses, so the body appears to grow on each open/close. */
-  overflow: visible;
-}
-
-/* Extend rail (and line) through the gap before the next step icon */
-.swc-ResponseStatus-step:not(:last-child) .swc-ResponseStatus-step-rail {
-  box-sizing: content-box;
-}
-
-.swc-ResponseStatus-step-icon {
-  flex-shrink: 0;
-  inline-size: 8px;
-  block-size: 8px;
-  margin: token("spacing-75");
-  margin-block: 6px;
-  color: token("gray-500");
-  transition: color token("animation-duration-200") token("animation-ease-in-out");
-}
-
-.swc-ResponseStatus-step[data-status="complete"] .swc-ResponseStatus-step-icon {
-  transition:
-    color token("animation-duration-200") token("animation-ease-in-out"),
-    opacity token("animation-duration-200") token("animation-ease-in-out");
-}
-
-.swc-ResponseStatus-step-line {
-  flex: 1 1 auto;
-  inline-size: 1px;
-  min-block-size: token("spacing-100");
-  margin-block-start: token("spacing-50");
-  background: token("gray-300");
-}
-
-.swc-ResponseStatus-step-icon--active {
-  color: token("gray-600");
-}
-
-/* Distinct from the default gray-500 dot: the interrupted step is the
-   standout marker in the timeline, not just another completed step. */
-.swc-ResponseStatus-step-icon--stopped {
-  color: token("gray-700");
-}
-
-.swc-ResponseStatus-step-body {
-  /* Size to content, not the stretched rail. Safari otherwise copies leftover
-     rail height back into the body after a disclosure closes. */
-  align-self: start;
-  min-inline-size: 0;
-}
-
-.swc-ResponseStatus-step:not(:last-child) .swc-ResponseStatus-step-body {
-  padding-block-end: token("spacing-200");
 }
 
 /* Typography utilities (shadow-local; mirrors typography.css) */
@@ -454,214 +318,14 @@
   --swc-body-line-height: token("line-height-font-size-100");
 }
 
-.swc-Body--sizeXXS {
-  --swc-body-font-size: token("body-size-xxs");
-  --swc-body-line-height: token("line-height-font-size-50");
-
-  &:lang(zh),
-  &:lang(ja),
-  &:lang(ko) {
-    --swc-body-cjk-font-size: token("font-size-25");
-  }
-}
-
-.swc-Detail {
-  margin-block: var(--swc-detail-margin-top, 0) var(--swc-detail-margin-bottom, 0);
-  font-family: var(--swc-detail-font-family, token("sans-serif-font"));
-  font-size: var(--swc-detail-font-size, token("detail-size-m"));
-  font-weight: var(--swc-detail-font-weight, token("detail-sans-serif-font-weight"));
-  line-height: var(--swc-detail-line-height, token("line-height-font-size-100"));
-  color: var(--swc-detail-font-color, token("detail-color"));
-  letter-spacing: var(--swc-detail-letter-spacing, normal);
-
-  &:lang(zh),
-  &:lang(ja),
-  &:lang(ko) {
-    --swc-detail-line-height: var(--swc-detail-cjk-line-height, token("cjk-line-height-100"));
-    --swc-detail-letter-spacing: var(--swc-detail-cjk-letter-spacing, token("cjk-letter-spacing"));
-  }
-}
-
-.swc-Detail--sizeS {
-  --swc-detail-font-size: token("detail-size-s");
-  --swc-detail-line-height: token("line-height-font-size-75");
-
-  &:lang(zh),
-  &:lang(ja),
-  &:lang(ko) {
-    --swc-detail-cjk-font-size: token("font-size-50");
-  }
-}
-
-.swc-ResponseStatus-step-title {
-  padding: token("spacing-50") token("spacing-100");
-  margin: 0;
-  color: token("gray-600");
-  border-radius: token("corner-radius-300");
-  transition:
-    background token("animation-duration-100") token("animation-ease-in-out"),
-    color 100ms token("animation-ease-in-out");
-}
-
-/* Active step: sweep a bright band across the label to read as "in progress"
-   rather than flat text. `color` above stays the reduced-motion /
-   forced-colors fallback (see the media queries below), since the gradient
-   fill only shows once `color` is overridden to transparent here.
-
-   The gradient is 160% of the label's width with a bright band spanning
-   31.25%-68.75% of that image (37.5% of the image = 60% of the label once
-   scaled by the 160% background-size). `background-position` sweeps the
-   image from fully off the label's leading edge to fully off its trailing
-   edge, then holds there for the remainder of the 1800ms cycle (1500ms
-   sweep + 300ms pause) so the band spends the pause fully out of view
-   instead of idling on-screen. */
-.swc-ResponseStatus-step[data-status="active"] .swc-ResponseStatus-step-title {
-  color: transparent;
-  background-image: linear-gradient(90deg, token("gray-600") 0%, token("gray-600") 31.25%, token("gray-900") 50%, token("gray-600") 68.75%, token("gray-600") 100%);
-  background-clip: text;
-  background-size: 160% 100%;
-  animation: swc-response-status-step-shimmer 1800ms infinite;
-}
-
-/* Excludes the active step above: its shimmer sets `background-clip: text`
-   on this same element, which would clip this hover fill down to just the
-   text glyphs instead of a normal rounded chip. */
-.swc-ResponseStatus-step:not([data-status="active"]) .swc-ResponseStatus-step-toggle:hover .swc-ResponseStatus-step-title {
-  background: token("gray-75");
-}
-
-@keyframes swc-response-status-step-shimmer {
-  0% {
-    background-position: 183.333% 0;
-    animation-timing-function: cubic-bezier(0.41, 0.01, 0.43, 0.99);
-  }
-
-  83.333% {
-    background-position: -83.333% 0;
-  }
-
-  100% {
-    background-position: -83.333% 0;
-  }
-}
-
-.swc-ResponseStatus-step-detail {
-  max-inline-size: 340px;
-  color: token("gray-600");
-}
-
-/* Per-step disclosure (mirrors the header row + panel mechanics) */
-
-.swc-ResponseStatus-step-toggle {
-  display: flex;
-  gap: token("spacing-100");
-  align-items: center;
-  inline-size: 100%;
-  padding: 0;
-  padding-block-end: token("spacing-75");
-  color: inherit;
-  text-align: start;
-  background: transparent;
-  border: none;
-}
-
-/* Description caps at a max height; shorter content stays auto. Override the
-   custom property to tune the cap. `content-box` so the 20px scrollbar offset
-   is added to the fit-content width instead of eating into the text. */
-.swc-ResponseStatus-step-detailScroll {
-  box-sizing: content-box;
-  inline-size: fit-content;
-  max-block-size: var(--swc-response-status-step-detail-max-block-size, 120px);
-  padding-inline-end: token("spacing-700");
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-color: token("gray-500") transparent;
-  scrollbar-width: thin;
-}
-
-/* Chromium/Safari: `scrollbar-color`/`-width` above cover Firefox; these
-   pseudo-elements style the same thin, rounded, track-less thumb there. */
-.swc-ResponseStatus-step-detailScroll::-webkit-scrollbar {
-  width: 4px;
-}
-
-.swc-ResponseStatus-step-detailScroll::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.swc-ResponseStatus-step-detailScroll::-webkit-scrollbar-thumb {
-  background: token("gray-500");
-  border-radius: 9999px;
-}
-
-/* Fade cues while the description overflows. Scroll-driven: with no overflow
-   the scroll timeline is inactive, so the base (unmasked) style applies and
-   short descriptions never fade. At the start only the bottom fades; while
-   scrolled both edges fade; at the end only the top fades. */
-@supports (animation-timeline: scroll()) {
-  /* Longhands, not the `animation` shorthand: the shorthand resets
-     `animation-timeline` to auto, which would disable the scroll timeline. */
-  .swc-ResponseStatus-step-detailScroll {
-    animation-timeline: scroll(self block);
-    animation-name: swc-response-status-detail-fade;
-    animation-timing-function: linear;
-    animation-fill-mode: both;
-  }
-
-  @keyframes swc-response-status-detail-fade {
-    0% {
-      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 100%) calc(100% - 24px), rgb(0 0 0 / 0%) 100%);
-    }
-
-    15%,
-    85% {
-      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0%) 0, rgb(0 0 0 / 100%) 24px, rgb(0 0 0 / 100%) calc(100% - 24px), rgb(0 0 0 / 0%) 100%);
-    }
-
-    100% {
-      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0%) 0, rgb(0 0 0 / 100%) 24px, rgb(0 0 0 / 100%) 100%);
-    }
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .swc-ResponseStatus-headerTrailLine {
     transition: none;
   }
-
-  .swc-ResponseStatus-step:last-child {
-    animation: none;
-  }
-
-  /* Fall back to the flat, opaque title color set above; no sweeping gradient. */
-  .swc-ResponseStatus-step[data-status="active"] .swc-ResponseStatus-step-title {
-    color: token("gray-800");
-    background-image: none;
-    animation: none;
-  }
 }
 
 @media (forced-colors: active) {
-  .swc-ResponseStatus-loader,
-  .swc-ResponseStatus-step-icon {
+  .swc-ResponseStatus-loader {
     color: CanvasText;
-  }
-
-  .swc-ResponseStatus-step-line {
-    background: CanvasText;
-  }
-
-  /* Keep every line fully legible in forced colors; rely on the scrollbar. */
-  .swc-ResponseStatus-step-detailScroll {
-    mask-image: none;
-    animation: none;
-  }
-
-  /* The gradient/transparent-text technique above is unreliable under forced
-     colors; fall back to plain, guaranteed-visible text. */
-  .swc-ResponseStatus-step[data-status="active"] .swc-ResponseStatus-step-title {
-    color: CanvasText;
-    background-image: none;
-    animation: none;
   }
 }

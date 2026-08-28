@@ -127,7 +127,7 @@ const meta: Meta = {
       // fallbacks already render this text with a flat, compliant color;
       // see the media queries in response-status.css.
       exclude: {
-        'color-contrast': ['.swc-ResponseStatus-step-title'],
+        'color-contrast': ['.swc-ResponseStatusStep-title'],
       },
     },
   },

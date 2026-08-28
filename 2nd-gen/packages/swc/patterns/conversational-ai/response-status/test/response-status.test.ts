@@ -17,6 +17,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import '../swc-response-status.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
+import type { ResponseStatusStep } from '../response-status-step/ResponseStatusStep.js';
 import type { ResponseStatus } from '../ResponseStatus.js';
 import { LongDescription, meta } from '../stories/response-status.stories.js';
 
@@ -31,6 +32,39 @@ export default {
 } as Meta;
 
 type TestResponseStatus = ResponseStatus;
+
+// A step's label/description are projected through a `<slot>`, so
+// `.textContent` (raw-tree only) reads empty, and `.innerText` is gated by
+// CSS visibility (empty while the step's own detail panel is collapsed).
+// Reading the slot's assigned nodes directly works regardless of either.
+function assignedText(slot: HTMLSlotElement | null | undefined): string {
+  return (slot?.assignedNodes({ flatten: true }) ?? [])
+    .map((node) => node.textContent?.trim() ?? '')
+    .filter(Boolean)
+    .join(' ');
+}
+
+function stepLabelText(stepEl: Element): string {
+  return assignedText(
+    stepEl.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="label"]')
+  );
+}
+
+function stepDescriptionText(stepEl: Element): string {
+  const named = assignedText(
+    stepEl.shadowRoot?.querySelector<HTMLSlotElement>(
+      'slot[name="description"]'
+    )
+  );
+  if (named) {
+    return named;
+  }
+  return assignedText(
+    stepEl.shadowRoot?.querySelector<HTMLSlotElement>(
+      '.swc-ResponseStatusStep-detail slot:not([name])'
+    )
+  );
+}
 
 const agenticMarkup = html`
   <swc-response-status status="active" open accessible-label="Execution steps">
@@ -284,14 +318,16 @@ export const StepApiTest: Story = {
       el.append(invalidStep);
       await el.updateComplete;
 
+      // The raw attribute is reflected verbatim (unvalidated); the step's own
+      // rendering is what falls back to `active` for an unsupported value.
       await waitFor(
         () => {
-          const renderedStatuses = Array.from(
-            el.shadowRoot?.querySelectorAll('.swc-ResponseStatus-step') ?? []
-          ).map((renderedStep) => renderedStep.getAttribute('data-status'));
-
-          expect(renderedStatuses).toContain('active');
-          expect(renderedStatuses).not.toContain('pending');
+          expect(invalidStep.getAttribute('status')).toBe('pending');
+          expect(
+            invalidStep.shadowRoot?.querySelector(
+              '.swc-ResponseStatusStep-icon--active'
+            )
+          ).toBeTruthy();
         },
         { timeout: 2000 }
       );
@@ -320,20 +356,17 @@ export const AgenticApiTest: Story = {
           '.swc-ResponseStatus-label'
         );
         const renderedSteps = Array.from(
-          el.shadowRoot?.querySelectorAll('.swc-ResponseStatus-step') ?? []
+          el.querySelectorAll('swc-response-status-step')
         );
         const labels = renderedSteps.map((renderedStep) =>
-          renderedStep
-            .querySelector('.swc-ResponseStatus-step-title')
-            ?.textContent?.trim()
+          stepLabelText(renderedStep)
         );
         const statuses = renderedSteps.map((renderedStep) =>
-          renderedStep.getAttribute('data-status')
+          renderedStep.getAttribute('status')
         );
-        const details = Array.from(
-          el.shadowRoot?.querySelectorAll('.swc-ResponseStatus-step-detail') ??
-            []
-        ).map((detail) => detail.textContent?.trim());
+        const details = renderedSteps
+          .map((renderedStep) => stepDescriptionText(renderedStep))
+          .filter(Boolean);
 
         expect(headerLabel?.textContent?.trim()).toBe(
           'Searching repositories for Europe trips'
@@ -376,11 +409,11 @@ export const AgenticApiTest: Story = {
 
       await waitFor(
         () => {
-          const renderedStatuses = Array.from(
-            el.shadowRoot?.querySelectorAll('.swc-ResponseStatus-step') ?? []
-          ).map((renderedStep) => renderedStep.getAttribute('data-status'));
+          const statuses = Array.from(
+            el.querySelectorAll('swc-response-status-step')
+          ).map((renderedStep) => renderedStep.getAttribute('status'));
 
-          expect(renderedStatuses).toEqual(['stopped', 'active', 'complete']);
+          expect(statuses).toEqual(['stopped', 'active', 'complete']);
         },
         { timeout: 2000 }
       );
@@ -414,12 +447,17 @@ export const StepDisclosureTest: Story = {
       'swc-response-status'
     );
 
+    const stepEls = (): ResponseStatusStep[] =>
+      Array.from(el.querySelectorAll('swc-response-status-step'));
+
     const stepToggles = (): HTMLButtonElement[] =>
-      Array.from(
-        el.shadowRoot?.querySelectorAll<HTMLButtonElement>(
-          '.swc-ResponseStatus-step-toggle'
-        ) ?? []
-      );
+      stepEls()
+        .map((stepEl) =>
+          stepEl.shadowRoot?.querySelector<HTMLButtonElement>(
+            '.swc-ResponseStatusStep-toggle'
+          )
+        )
+        .filter((toggle): toggle is HTMLButtonElement => Boolean(toggle));
 
     await step('keeps every step collapsed by default', async () => {
       await waitFor(
@@ -438,7 +476,10 @@ export const StepDisclosureTest: Story = {
       for (const toggle of stepToggles()) {
         const controls = toggle.getAttribute('aria-controls');
         expect(controls).toBeTruthy();
-        expect(el.shadowRoot?.getElementById(controls as string)).toBeTruthy();
+        // Each toggle's `aria-controls` id lives in its own step's shadow
+        // root, not the parent's.
+        const root = toggle.getRootNode() as ShadowRoot;
+        expect(root.getElementById(controls as string)).toBeTruthy();
       }
     });
 
@@ -490,17 +531,14 @@ export const StepDisclosureTest: Story = {
 
         await waitFor(
           () => {
+            const steps = stepEls();
             const toggles = stepToggles();
             expect(toggles).toHaveLength(2);
-            expect(
-              toggles[0]?.textContent?.includes(
-                'Searching repositories for Europe trips'
-              )
-            ).toBe(true);
-            expect(toggles[0]?.getAttribute('aria-expanded')).toBe('true');
-            expect(toggles[1]?.textContent?.includes('Compose response')).toBe(
-              true
+            expect(stepLabelText(steps[0])).toBe(
+              'Searching repositories for Europe trips'
             );
+            expect(toggles[0]?.getAttribute('aria-expanded')).toBe('true');
+            expect(stepLabelText(steps[1])).toBe('Compose response');
             expect(toggles[1]?.getAttribute('aria-expanded')).toBe('false');
           },
           { timeout: 2000 }
@@ -535,19 +573,8 @@ export const StepDisclosureTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Off-screen instances skip overflow re-measurement
+// TEST: Overflowing step details get a focusable scroll region
 // ──────────────────────────────────────────────────────────────
-
-// Reaches the private visibility flag and measurement method so an off-screen
-// instance can be simulated deterministically (the harness cannot force the
-// real IntersectionObserver to report non-intersecting without an actual
-// viewport scroll).
-type OverflowVisibilityInternals = {
-  _isVisible: boolean;
-  _syncDetailOverflow: () => void;
-  _scheduleDetailOverflowSync: () => void;
-  _detailOverflowRaf: number | null;
-};
 
 export const DetailOverflowVisibilityTest: Story = {
   ...LongDescription,
@@ -556,19 +583,18 @@ export const DetailOverflowVisibilityTest: Story = {
       canvasElement,
       'swc-response-status'
     );
-    const internals = el as unknown as OverflowVisibilityInternals;
 
     // `LongDescription` step index 1 is the only open step long enough to
     // overflow the capped height.
+    const overflowingStep = (): ResponseStatusStep | undefined =>
+      Array.from(el.querySelectorAll('swc-response-status-step'))[1];
     const overflowingRegion = (): HTMLElement | null | undefined =>
-      el.shadowRoot?.querySelector<HTMLElement>(
-        '.swc-ResponseStatus-step-detailScroll[data-step-index="1"]'
+      overflowingStep()?.shadowRoot?.querySelector<HTMLElement>(
+        '.swc-ResponseStatusStep-detailScroll'
       );
-    const stepToggles = (): HTMLButtonElement[] =>
-      Array.from(
-        el.shadowRoot?.querySelectorAll<HTMLButtonElement>(
-          '.swc-ResponseStatus-step-toggle'
-        ) ?? []
+    const overflowingToggle = (): HTMLButtonElement | null | undefined =>
+      overflowingStep()?.shadowRoot?.querySelector<HTMLButtonElement>(
+        '.swc-ResponseStatusStep-toggle'
       );
 
     await step(
@@ -584,56 +610,20 @@ export const DetailOverflowVisibilityTest: Story = {
     );
 
     await step(
-      'collapsing a step while off-screen does not re-measure',
+      'collapsing then reopening the step re-measures overflow',
       async () => {
-        internals._isVisible = false;
+        // Overflow is measured once per toggle-open, not continuously: a
+        // collapse/reopen cycle is the trigger for a fresh measurement.
+        overflowingToggle()?.click();
+        await overflowingStep()?.updateComplete;
+        expect(overflowingStep()?.open).toBe(false);
 
-        stepToggles()[1]?.click();
-        await el.updateComplete;
-
-        // The step is now collapsed, but gated measurement leaves the stale
-        // tabindex from the last real measurement in place instead of forcing
-        // a scrollHeight/clientHeight read.
-        expect(overflowingRegion()?.hasAttribute('tabindex')).toBe(true);
-      }
-    );
-
-    await step(
-      'becoming visible again re-syncs to the current state',
-      async () => {
-        internals._isVisible = true;
-        internals._syncDetailOverflow();
-        await el.updateComplete;
-
-        // The step is collapsed, so it no longer needs a focusable region.
-        expect(overflowingRegion()?.hasAttribute('tabindex')).toBe(false);
-      }
-    );
-
-    await step(
-      'coalesces frequent re-measurement triggers into one animation frame',
-      async () => {
-        // Earlier steps may still have a schedule in flight; drain it first
-        // so this step starts from a clean, known state.
-        await waitFor(
-          () => {
-            expect(internals._detailOverflowRaf).toBeNull();
-          },
-          { timeout: 2000 }
-        );
-
-        internals._scheduleDetailOverflowSync();
-        const firstFrame = internals._detailOverflowRaf;
-        expect(firstFrame).not.toBeNull();
-
-        // A second trigger before the frame fires (e.g. streaming text plus a
-        // resize in the same tick) must not schedule a second measurement.
-        internals._scheduleDetailOverflowSync();
-        expect(internals._detailOverflowRaf).toBe(firstFrame);
+        overflowingToggle()?.click();
+        await overflowingStep()?.updateComplete;
 
         await waitFor(
           () => {
-            expect(internals._detailOverflowRaf).toBeNull();
+            expect(overflowingRegion()?.hasAttribute('tabindex')).toBe(true);
           },
           { timeout: 2000 }
         );

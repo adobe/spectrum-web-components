@@ -25,9 +25,7 @@ import {
 } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { IntersectionController } from '@lit-labs/observers/intersection-controller.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
-import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 
 import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
@@ -42,15 +40,11 @@ import {
   type PixelLoaderIconName,
   type PixelLoaderPresetName,
 } from '../pixel-loader/data.js';
-import {
-  CheckCircleIcon,
-  StepDotIcon,
-  StepDotOutlineIcon,
-  StepStoppedIcon,
-} from '../utils/icons/index.js';
+import { CheckCircleIcon } from '../utils/icons/index.js';
 import {
   RESPONSE_STATUS_STEP_STATUSES,
   ResponseStatusStep,
+  type ResponseStatusStepStatus,
 } from './response-status-step/ResponseStatusStep.js';
 
 import styles from './response-status.css';
@@ -60,22 +54,6 @@ export { PIXEL_LOADER_ICON_NAMES, PIXEL_LOADER_PRESET_NAMES };
 export const RESPONSE_STATUSES = ['active', 'complete', 'stopped'] as const;
 
 export type ResponseStatusStatus = (typeof RESPONSE_STATUSES)[number];
-
-type ResponseStatusStepStatus = (typeof RESPONSE_STATUS_STEP_STATUSES)[number];
-
-export type ResponseStatusStepData = {
-  label: string;
-  description: string;
-  status: ResponseStatusStepStatus;
-  open: boolean;
-
-  /**
-   * The light DOM element this entry was read from. Carried alongside the
-   * data (rather than tracked in a second, index-parallel array) so the two
-   * can never drift out of correspondence.
-   */
-  element: ResponseStatusStep;
-};
 
 /**
  * Displays the current status of an AI response generation.
@@ -118,35 +96,25 @@ export class ResponseStatus extends SpectrumElement {
 
   private readonly panelId = uniqueId('swc-response-status-panel');
 
+  /** Whether at least one `<swc-response-status-step>` is currently slotted. */
   @state()
-  private _steps: ResponseStatusStepData[] = [];
+  private _hasSteps = false;
+
+  /** Whether any slotted step currently has `status="active"`. */
+  @state()
+  private _hasActiveStep = false;
 
   /**
-   * Step elements whose `open` attribute `_handleStepToggle` just reflected
-   * itself. The `MutationController` below still observes that same
-   * attribute (to catch external writes, per the completion-contract note
-   * on step disclosure), so without this it would re-scan every step a
-   * second time for a change already patched into `_steps` synchronously.
-   * Consumed (deleted) the first time its own mutation record is seen.
-   */
-  private _pendingOwnOpenToggles = new Set<ResponseStatusStep>();
-
-  /**
-   * Indices of open steps whose description overflows its capped height. Only
-   * these get a keyboard-focusable scroll region, so non-overflowing details
-   * never enter the tab order.
+   * The active step's own label text, kept in sync via the step's
+   * `swc-response-status-step-active-label-change` event (for streamed text)
+   * and re-read on demand whenever the active step itself changes. This
+   * element never reads a step's slotted content directly.
    */
   @state()
-  private _overflowingSteps = new Set<number>();
+  private _activeStepLabel = '';
 
-  /**
-   * Whether the host currently intersects the viewport. Gates
-   * `_syncDetailOverflow`'s `scrollHeight`/`clientHeight` reads (each forces a
-   * layout) so an off-screen instance, such as an earlier turn scrolled out of
-   * a long conversation thread, does not re-measure on every resize. Defaults
-   * to `true` so behavior is unchanged until the observer's first callback.
-   */
-  private _isVisible = true;
+  /** The step currently identified as active, if any. */
+  private _activeStepEl: ResponseStatusStep | null = null;
 
   @state()
   private _labelSlotText = '';
@@ -201,14 +169,6 @@ export class ResponseStatus extends SpectrumElement {
 
   private _labelRollRaf: number | null = null;
 
-  /**
-   * Coalesces `_scheduleDetailOverflowSync` calls into at most one
-   * `_syncDetailOverflow` measurement per animation frame. Streaming text
-   * updates and resize events can both fire many times in quick succession;
-   * each measurement forces a layout, so collapsing repeats matters.
-   */
-  private _detailOverflowRaf: number | null = null;
-
   public static override get styles(): CSSResultArray {
     return [styles];
   }
@@ -216,58 +176,24 @@ export class ResponseStatus extends SpectrumElement {
   public constructor() {
     super();
 
-    // Slotchange only fires when assigned nodes are added or removed, not when
-    // their text mutates. Observe the light DOM so slotted text updates render.
-    // `subtree: true` on the host also matches the host's own `status`/`open`
-    // attribute changes (e.g. every header disclosure click); those are
-    // already handled by normal Lit reactivity, so records targeting the
-    // host itself are filtered out to avoid a redundant full re-scan.
+    // Watches only for step add/remove and each step's own `status`
+    // attribute — never step text content, which each step now tracks and
+    // reports on its own via events. `subtree: true` is required for the
+    // attribute filter to reach into children at all, which also means the
+    // host's own `status` attribute (reflected from the `status` property)
+    // matches; records targeting the host itself are filtered out below to
+    // avoid a redundant re-scan of something Lit's reactivity already handles.
     new MutationController(this, {
       config: {
         attributes: true,
-        attributeFilter: ['slot', 'status', 'open'],
-        characterData: true,
+        attributeFilter: ['status'],
         childList: true,
         subtree: true,
       },
       callback: (records) => {
-        const isStepMutation = records.some((record) => {
-          if (record.target === this) {
-            return false;
-          }
-          if (
-            record.attributeName === 'open' &&
-            record.target instanceof ResponseStatusStep &&
-            this._pendingOwnOpenToggles.delete(record.target)
-          ) {
-            return false;
-          }
-          return true;
-        });
+        const isStepMutation = records.some((record) => record.target !== this);
         if (isStepMutation) {
-          this._syncSlotContent();
-        }
-      },
-    });
-
-    // Width changes reflow the description text, which can start or stop
-    // overflow without any reactive state changing; re-measure on resize.
-    // Defaults to observing the host and self-manages connect/disconnect.
-    new ResizeController(this, {
-      callback: () => {
-        this._scheduleDetailOverflowSync();
-      },
-    });
-
-    // Track viewport intersection so `_syncDetailOverflow` can skip measuring
-    // while off-screen; re-sync immediately on becoming visible again to catch
-    // up on anything that changed while hidden. Defaults to observing the
-    // host and self-manages connect/disconnect.
-    new IntersectionController(this, {
-      callback: (entries) => {
-        this._isVisible = entries[entries.length - 1]?.isIntersecting ?? true;
-        if (this._isVisible) {
-          this._scheduleDetailOverflowSync();
+          this._syncStepsMeta();
         }
       },
     });
@@ -275,33 +201,15 @@ export class ResponseStatus extends SpectrumElement {
 
   public override connectedCallback(): void {
     super.connectedCallback();
-    this._syncSlotContent();
+    this._syncStepsMeta();
   }
 
   protected override willUpdate(_changed: PropertyValues<this>): void {
     this._applyLabelRoll();
   }
 
-  protected override updated(changed: PropertyValues<this>): void {
-    super.updated(changed);
-
-    // Re-measure when what is shown (or its open state) changes. Label-roll
-    // updates do not affect overflow, so they are intentionally excluded.
-    if (changed.has('_steps') || changed.has('open')) {
-      this._scheduleDetailOverflowSync();
-    }
-  }
-
   public override disconnectedCallback(): void {
     this._clearLabelRollTimers();
-    if (this._detailOverflowRaf !== null) {
-      cancelAnimationFrame(this._detailOverflowRaf);
-      this._detailOverflowRaf = null;
-    }
-    // Reset to the safe default: while disconnected there's no observer
-    // update to say otherwise, and a stale `false` would wrongly skip
-    // `_syncDetailOverflow`'s measurement if this instance is reconnected.
-    this._isVisible = true;
     super.disconnectedCallback();
   }
 
@@ -348,23 +256,6 @@ export class ResponseStatus extends SpectrumElement {
     );
   }
 
-  private _stepsEqual(
-    left: ResponseStatusStepData[],
-    right: ResponseStatusStepData[]
-  ): boolean {
-    if (left.length !== right.length) {
-      return false;
-    }
-
-    return left.every(
-      (step, index) =>
-        step.label === right[index]?.label &&
-        step.description === right[index]?.description &&
-        step.status === right[index]?.status &&
-        step.open === right[index]?.open
-    );
-  }
-
   private _readLightDomNamedSlotText(host: Element, slotName: string): string {
     return Array.from(host.children)
       .filter(
@@ -373,23 +264,6 @@ export class ResponseStatus extends SpectrumElement {
           child.getAttribute('slot') === slotName
       )
       .map((element) => element.textContent?.trim() ?? '')
-      .filter(Boolean)
-      .join(' ');
-  }
-
-  private _readStepDescription(element: Element): string {
-    const description = this._readLightDomNamedSlotText(element, 'description');
-    if (description) {
-      return description;
-    }
-
-    return Array.from(element.childNodes)
-      .filter(
-        (node) =>
-          node.nodeType === Node.TEXT_NODE ||
-          (node instanceof Element && !node.getAttribute('slot'))
-      )
-      .map((node) => node.textContent?.trim() ?? '')
       .filter(Boolean)
       .join(' ');
   }
@@ -406,22 +280,6 @@ export class ResponseStatus extends SpectrumElement {
       element instanceof ResponseStatusStep ||
       element.localName === 'swc-response-status-step'
     );
-  }
-
-  private _readStepElement(
-    element: ResponseStatusStep
-  ): ResponseStatusStepData {
-    const label = this._readLightDomNamedSlotText(element, 'label');
-    const rawStatus = element.status || 'active';
-    const status = this._isValidStepStatus(rawStatus) ? rawStatus : 'active';
-
-    return {
-      label,
-      description: this._readStepDescription(element),
-      status,
-      open: element.open ?? false,
-      element,
-    };
   }
 
   private _readNodeText(nodes: Iterable<Node>): string {
@@ -448,26 +306,71 @@ export class ResponseStatus extends SpectrumElement {
     }
   }
 
-  private _syncSlotContent(): void {
+  // Recomputes step-count/active-step metadata only — never step text
+  // content, which each step reports on its own via
+  // `swc-response-status-step-active-label-change`.
+  private _syncStepsMeta(): void {
     this._syncNamedSlots();
 
     const stepEls = this._readStepElements();
-    const steps = stepEls.map((element) => this._readStepElement(element));
-    if (!this._stepsEqual(steps, this._steps)) {
-      this._steps = steps;
+
+    const hasSteps = stepEls.length > 0;
+    if (hasSteps !== this._hasSteps) {
+      this._hasSteps = hasSteps;
+    }
+
+    const activeStep =
+      stepEls.find((el) => {
+        const rawStatus = el.status || 'active';
+        const status = this._isValidStepStatus(rawStatus)
+          ? rawStatus
+          : 'active';
+        return status === 'active';
+      }) ?? null;
+
+    const hasActiveStep = activeStep !== null;
+    if (hasActiveStep !== this._hasActiveStep) {
+      this._hasActiveStep = hasActiveStep;
+    }
+
+    if (activeStep !== this._activeStepEl) {
+      this._activeStepEl = activeStep;
+      this._activeStepLabel = activeStep?.labelText ?? '';
     }
   }
 
   private _handleSlotChange(): void {
-    this._syncSlotContent();
+    this._syncStepsMeta();
   }
 
   private _handleNamedSlotChange(): void {
     this._syncNamedSlots();
   }
 
-  private _getActiveStep(): ResponseStatusStepData | undefined {
-    return this._steps.find((step) => step.status === 'active');
+  private _handleStepActiveLabelChange(event: Event): void {
+    // Only the currently-identified active step's own notification is
+    // trusted; a step that just transitioned away from `status="active"`
+    // could still have an in-flight event from before that change.
+    if (event.target !== this._activeStepEl) {
+      return;
+    }
+    const { label } = (event as CustomEvent<{ label: string }>).detail;
+    this._activeStepLabel = label;
+  }
+
+  private _handleStepOpenChange(event: Event): void {
+    const target = event.target;
+    if (!(target instanceof ResponseStatusStep)) {
+      return;
+    }
+
+    const index = this._readStepElements().indexOf(target);
+    if (index === -1) {
+      return;
+    }
+
+    const { open } = (event as CustomEvent<{ open: boolean }>).detail;
+    this._emitToggle('swc-response-status-step-toggle', { open, index });
   }
 
   // Whether the header should read as still generating: the timeline is open
@@ -476,9 +379,7 @@ export class ResponseStatus extends SpectrumElement {
   // the generic "Processing…" label fallback below.
   private get _showsGenericProcessingLabel(): boolean {
     return (
-      this._resolvedStatus === 'active' &&
-      this.open &&
-      this._steps.some((step) => step.status === 'active')
+      this._resolvedStatus === 'active' && this.open && this._hasActiveStep
     );
   }
 
@@ -494,9 +395,8 @@ export class ResponseStatus extends SpectrumElement {
         return ResponseStatus.ACTIVE_STEP_OPEN_LABEL;
       }
 
-      const activeStepLabel = this._getActiveStep()?.label;
-      if (activeStepLabel) {
-        return activeStepLabel;
+      if (this._activeStepLabel) {
+        return this._activeStepLabel;
       }
     }
 
@@ -633,7 +533,7 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private get _showPanel(): boolean {
-    return this._steps.length > 0;
+    return this._hasSteps;
   }
 
   private _emitToggle<T>(type: string, detail: T): void {
@@ -649,108 +549,6 @@ export class ResponseStatus extends SpectrumElement {
 
     this.open = !this.open;
     this._emitToggle('swc-response-status-toggle', { open: this.open });
-  }
-
-  // Resolved disclosure state for a step: a user override wins; otherwise the
-  // step is open only when it declares `open`. Steps start collapsed.
-  private _setsEqual(left: Set<number>, right: Set<number>): boolean {
-    if (left.size !== right.size) {
-      return false;
-    }
-    for (const value of left) {
-      if (!right.has(value)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  // Entry point for frequent triggers (streaming text updates, resize):
-  // coalesces into at most one `_syncDetailOverflow` measurement per
-  // animation frame rather than one per trigger. Call `_syncDetailOverflow`
-  // directly instead when an immediate, synchronous measurement is required.
-  private _scheduleDetailOverflowSync(): void {
-    if (this._detailOverflowRaf !== null) {
-      return;
-    }
-
-    this._detailOverflowRaf = requestAnimationFrame(() => {
-      this._detailOverflowRaf = null;
-      this._syncDetailOverflow();
-    });
-  }
-
-  // Measures which open step descriptions overflow their capped height so only
-  // those expose a focusable scroll region (see `_overflowingSteps`).
-  private _syncDetailOverflow(): void {
-    if (!this.open) {
-      if (this._overflowingSteps.size > 0) {
-        this._overflowingSteps = new Set();
-      }
-      return;
-    }
-
-    // Off-screen: skip the scrollHeight/clientHeight reads below (each forces
-    // a layout). Leave `_overflowingSteps` as last measured rather than
-    // clearing it, so a step already exposing a focusable scroll region stays
-    // reachable by keyboard even while scrolled out of the viewport; the
-    // visibility observer re-syncs as soon as it is back in view.
-    if (!this._isVisible) {
-      return;
-    }
-
-    const scrollRegions = this.shadowRoot?.querySelectorAll<HTMLElement>(
-      '.swc-ResponseStatus-step-detailScroll'
-    );
-
-    const next = new Set<number>();
-    scrollRegions?.forEach((region) => {
-      const index = Number(region.dataset.stepIndex);
-      const step = this._steps[index];
-      if (Number.isNaN(index) || !step || !step.open) {
-        return;
-      }
-      if (region.scrollHeight - region.clientHeight > 1) {
-        next.add(index);
-      }
-    });
-
-    if (!this._setsEqual(next, this._overflowingSteps)) {
-      this._overflowingSteps = next;
-    }
-  }
-
-  // Writes through to the step element's own `open` property (rather than
-  // tracking a separate override) so the element stays the single source of
-  // truth: external reads of `stepEl.open` stay accurate, and a later
-  // programmatic write to it is not silently shadowed by a stale override.
-  // Re-syncing here (rather than waiting on the `MutationController` to catch
-  // the property's reflected attribute) keeps the toggle's own re-render
-  // synchronous with this update; the controller's later pass over the same
-  // change is a harmless no-op since `_steps` already matches by then.
-  private _handleStepToggle(event: Event): void {
-    const button = event.currentTarget as HTMLElement;
-    const index = Number(button.dataset.index);
-    const step = this._steps[index];
-    if (Number.isNaN(index) || !step) {
-      return;
-    }
-
-    const next = !step.open;
-    // Patch just the toggled entry instead of a full `_syncSlotContent()`
-    // re-scan: only this step's `open` changed, so re-reading every step's
-    // label/description/status off the light DOM would be wasted work.
-    // `_pendingOwnOpenToggles` tells the `MutationController` to skip its own
-    // later pass over this exact attribute change, since `_steps` already
-    // reflects it by then; without that, the observer would redundantly
-    // re-read every step a second time right after this synchronous patch.
-    this._pendingOwnOpenToggles.add(step.element);
-    step.element.open = next;
-    this._steps = this._steps.map((entry, entryIndex) =>
-      entryIndex === index ? { ...entry, open: next } : entry
-    );
-
-    this._emitToggle('swc-response-status-step-toggle', { open: next, index });
   }
 
   private _renderLoader(): TemplateResult {
@@ -857,142 +655,6 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
-  private _renderStepIcon(status: ResponseStatusStepStatus): TemplateResult {
-    if (status === 'complete') {
-      return html`
-        <swc-icon class="swc-ResponseStatus-step-icon" aria-hidden="true">
-          ${StepDotIcon()}
-        </swc-icon>
-      `;
-    }
-
-    if (status === 'stopped') {
-      return html`
-        <swc-icon
-          class="swc-ResponseStatus-step-icon swc-ResponseStatus-step-icon--stopped"
-          aria-hidden="true"
-        >
-          ${StepStoppedIcon()}
-        </swc-icon>
-      `;
-    }
-
-    return html`
-      <swc-icon
-        class="swc-ResponseStatus-step-icon swc-ResponseStatus-step-icon--${status}"
-        aria-hidden="true"
-      >
-        ${StepDotOutlineIcon()}
-      </swc-icon>
-    `;
-  }
-
-  private _renderStepDetail(
-    description: string
-  ): TemplateResult | typeof nothing {
-    if (!description) {
-      return nothing;
-    }
-
-    return html`
-      <p class="swc-ResponseStatus-step-detail swc-Body swc-Body--sizeXXS">
-        ${description}
-      </p>
-    `;
-  }
-
-  private _renderStepBody(
-    step: ResponseStatusStepData,
-    index: number
-  ): TemplateResult {
-    // Steps without a description have nothing to disclose; render a plain title.
-    if (!step.description) {
-      return html`
-        <div class="swc-ResponseStatus-step-body">
-          <p class="swc-ResponseStatus-step-title swc-Detail swc-Detail--sizeS">
-            ${step.label}
-          </p>
-        </div>
-      `;
-    }
-
-    const open = step.open;
-    const detailId = `swc-response-status-detail-${index}`;
-    const toggleId = `swc-response-status-toggle-${index}`;
-
-    return html`
-      <div class="swc-ResponseStatus-step-body">
-        <button
-          id=${toggleId}
-          class="swc-ResponseStatus-step-toggle"
-          data-index=${index}
-          aria-expanded=${open}
-          aria-controls=${detailId}
-          @click=${this._handleStepToggle}
-        >
-          <span
-            class="swc-ResponseStatus-step-title swc-Detail swc-Detail--sizeS"
-          >
-            ${step.label}
-          </span>
-        </button>
-        <div
-          id=${detailId}
-          class=${classMap({
-            'swc-ResponseStatus-step-detailPanel': true,
-            'swc-ResponseStatus-step-detailPanel--open': open,
-          })}
-        >
-          <div class="swc-ResponseStatus-step-detailClip">
-            <div
-              class="swc-ResponseStatus-step-detailScroll"
-              data-step-index=${index}
-              role="group"
-              aria-labelledby=${toggleId}
-              tabindex=${ifDefined(
-                this._overflowingSteps.has(index) ? '0' : undefined
-              )}
-            >
-              ${this._renderStepDetail(step.description)}
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  private _renderStepTimeline(): TemplateResult {
-    const steps = this._steps;
-    const lastIndex = steps.length - 1;
-
-    return html`
-      <ol class="swc-ResponseStatus-steps" role="list">
-        ${steps.map(
-          (step, index) => html`
-            <li
-              class="swc-ResponseStatus-step"
-              data-status=${step.status}
-              role="listitem"
-            >
-              <div class="swc-ResponseStatus-step-rail">
-                ${this._renderStepIcon(step.status)}
-                ${index < lastIndex
-                  ? html`
-                      <span
-                        class="swc-ResponseStatus-step-line"
-                        aria-hidden="true"
-                      ></span>
-                    `
-                  : ''}
-              </div>
-              ${this._renderStepBody(step, index)}
-            </li>
-          `
-        )}
-      </ol>
-    `;
-  }
-
   private _renderPanel(showPanel: boolean): TemplateResult {
     const panelOpen = showPanel && this.open;
     const panelLabel =
@@ -1007,7 +669,14 @@ export class ResponseStatus extends SpectrumElement {
         role=${ifDefined(showPanel ? 'group' : undefined)}
         aria-label=${ifDefined(showPanel ? panelLabel : undefined)}
       >
-        ${this._renderStepTimeline()}
+        <ol class="swc-ResponseStatus-steps" role="list">
+          <slot
+            @slotchange=${this._handleSlotChange}
+            @swc-response-status-step-open-change=${this._handleStepOpenChange}
+            @swc-response-status-step-active-label-change=${this
+              ._handleStepActiveLabelChange}
+          ></slot>
+        </ol>
       </div>
     `;
   }
@@ -1022,11 +691,6 @@ export class ResponseStatus extends SpectrumElement {
           name="label"
           hidden
           @slotchange=${this._handleNamedSlotChange}
-        ></slot>
-        <slot
-          class="swc-ResponseStatus-content-slot"
-          hidden
-          @slotchange=${this._handleSlotChange}
         ></slot>
       </div>
     `;
