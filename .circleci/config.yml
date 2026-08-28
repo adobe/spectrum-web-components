@@ -96,6 +96,23 @@ jobs:
             echo "is_base_main=$IS_BASE_MAIN"
             export RUN_GEN1 RUN_GEN2 IS_BASE_MAIN
 
+            # Register the merge-gate statuses on this commit. An affected gen
+            # starts pending and is flipped to success by that workflow's
+            # report-gen-status job; a skipped gen is marked success now so the
+            # required check isn't left hanging. Needs a token, so forks (which
+            # get none) skip this — see note below.
+            if [ -n "$GITHUB_TOKEN" ]; then
+              post_status() {
+                curl -sf -X POST \
+                  -H "Authorization: Bearer $GITHUB_TOKEN" \
+                  -H "Accept: application/vnd.github+json" \
+                  "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/statuses/$CIRCLE_SHA1" \
+                  -d "{\"state\":\"$2\",\"context\":\"$1-tests\",\"description\":\"$3\"}" >/dev/null || true
+              }
+              [ "$RUN_GEN1" = "true" ] && post_status gen1 pending "gen1 tests running" || post_status gen1 success "gen1 not affected"
+              [ "$RUN_GEN2" = "true" ] && post_status gen2 pending "gen2 tests running" || post_status gen2 success "gen2 not affected"
+            fi
+
             # POST the continue config + resolved params to the continuation API.
             # (the heredoc operator is escaped so CircleCI emits it literally.)
             python3 - \<<'PY'

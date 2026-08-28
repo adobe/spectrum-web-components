@@ -2,9 +2,10 @@
 # run_gen1 / run_gen2 / is_base_main parameters that `decide` sets, so jobs for
 # an unaffected gen are never created.
 #
-# Branch protection: unaffected jobs are absent (not green), so their checks
-# can't be required. The `gate` workflow's `require-checks` job is the single
-# always-present required check — see the bottom of the file.
+# Branch protection: per-gen job checks are absent when their gen is untouched,
+# so they can't be required. Instead, `decide` and each workflow's
+# `report-gen-status` fan-in post `gen1-tests` / `gen2-tests` commit statuses —
+# those are the required checks.
 version: 2.1
 
 executors:
@@ -640,101 +641,39 @@ jobs:
           regression_scale: << parameters.scale >>
           regression_dir: << parameters.dir >>
 
-  # The merge gate. Runs on every PR (its own ungated workflow), so it's the one
-  # check branch protection can require — the per-gen workflows are absent when
-  # their gen is untouched. It checks that every gen `decide` marked relevant
-  # actually ran and passed; a missing expected workflow fails, so a silently
-  # dropped one can't merge green. Needs a CIRCLECI_TOKEN to read pipeline
-  # status, and hard-fails without it.
-  require-checks:
+  # Merge-gate reporter. Runs only after every required job in its workflow
+  # succeeds (native `requires`), then POSTs `<gen>-tests=success` as a GitHub
+  # commit status — the context branch protection requires. If any required job
+  # fails, this is skipped and the status never posts, so the required check
+  # stays pending and blocks the merge. `decide` posts the same context up front
+  # (pending for an affected gen, success for a skipped one), so it's never left
+  # missing.
+  report-gen-status:
     docker:
-      - image: cimg/node:lts
+      - image: cimg/base:current
     resource_class: small
-    environment:
-      PIPELINE_ID: << pipeline.id >>
-      RUN_GEN1: << pipeline.parameters.run_gen1 >>
-      RUN_GEN2: << pipeline.parameters.run_gen2 >>
+    parameters:
+      gen:
+        type: string
     steps:
       - run:
-          name: Gate merge on the expected gen workflows
+          name: Mark << parameters.gen >>-tests passed
           command: |
-            node \<<'NODE'
-            const https = require('https');
-            const TOKEN = process.env.CIRCLECI_TOKEN;
-            const PIPELINE_ID = process.env.PIPELINE_ID;
-            const SELF = process.env.CIRCLE_WORKFLOW_ID;
-            const expected = [];
-            if (process.env.RUN_GEN1 === 'true') expected.push('gen1');
-            if (process.env.RUN_GEN2 === 'true') expected.push('gen2');
-
-            if (!TOKEN) { console.error('CIRCLECI_TOKEN is not set'); process.exit(1); }
-            if (expected.length === 0) {
-              console.log('No gen workflows expected (docs-only). Passing.');
-              process.exit(0);
-            }
-            console.log('Expected workflows: ' + expected.join(', '));
-
-            const api = (path) => new Promise((resolve, reject) => {
-              https.get('https://circleci.com/api/v2' + path,
-                { headers: { 'Circle-Token': TOKEN } }, (res) => {
-                  let body = '';
-                  res.on('data', (d) => (body += d));
-                  res.on('end', () => {
-                    if (res.statusCode < 200 || res.statusCode >= 300) {
-                      return reject(new Error('HTTP ' + res.statusCode + ': ' + body));
-                    }
-                    resolve(JSON.parse(body));
-                  });
-                }).on('error', reject);
-            });
-
-            const BAD = new Set(['failed', 'error', 'failing', 'canceled', 'unauthorized', 'not_run']);
-            const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-            const MISSING_GRACE_MS = 120000;
-            const DEADLINE_MS = 60 * 60 * 1000;
-
-            (async () => {
-              const start = Date.now();
-              for (;;) {
-                const { items } = await api('/pipeline/' + PIPELINE_ID + '/workflow');
-                const latest = {};
-                for (const w of items) {
-                  if (w.id === SELF) continue;
-                  if (!latest[w.name] || w.created_at > latest[w.name].created_at) latest[w.name] = w;
-                }
-                const line = expected.map((n) => n + '=' + (latest[n] ? latest[n].status : 'absent'));
-                console.log('Statuses: ' + line.join(' '));
-
-                if (expected.some((n) => latest[n] && BAD.has(latest[n].status))) {
-                  console.error('A required gen workflow failed.');
-                  process.exit(1);
-                }
-                if (expected.every((n) => latest[n] && latest[n].status === 'success')) {
-                  console.log('All expected gen workflows succeeded.');
-                  process.exit(0);
-                }
-                const missing = expected.filter((n) => !latest[n]);
-                const elapsed = Date.now() - start;
-                if (missing.length && elapsed > MISSING_GRACE_MS) {
-                  console.error('Expected workflow(s) never created: ' + missing.join(', '));
-                  process.exit(1);
-                }
-                if (elapsed > DEADLINE_MS) {
-                  console.error('Timed out waiting for: ' + line.join(' '));
-                  process.exit(1);
-                }
-                await sleep(15000);
-              }
-            })().catch((e) => { console.error(e.message); process.exit(1); });
-            NODE
+            curl -sSf -X POST \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/statuses/$CIRCLE_SHA1" \
+              -d '{"state":"success","context":"<< parameters.gen >>-tests","description":"All << parameters.gen >> checks passed"}'
 
 workflows:
   # ---------------------------------------------------------------------------
   # Workflows are gated on the `decide` parameters — a workflow and its jobs are
   # created only when its gen is affected.
   #
-  # Branch protection: require `require-checks` (and `decide`), not the per-gen
-  # checks below — they're absent on PRs that don't touch that gen.
+  # Branch protection: require `gen1-tests` and `gen2-tests` (and `decide`).
+  # `decide` posts those commit statuses up front (pending if the gen runs,
+  # success if it's skipped); each workflow's `report-gen-status` fan-in flips
+  # its own to success once the gen's jobs pass.
   # ---------------------------------------------------------------------------
   gen1:
     when: << pipeline.parameters.run_gen1 >>
@@ -788,6 +727,19 @@ workflows:
             branches:
               # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
               ignore: /pull\/[0-9]+/
+      # Posts the required gen1-tests status once the unit tests pass. VRT
+      # (visual, hcm-visual) and beta-docs are left out — they're branch-filtered
+      # (forks skip VRT, beta-docs is main-only) so can't gate uniformly.
+      - report-gen-status:
+          name: gen1-tests
+          gen: gen1
+          requires:
+            - build
+            - test-chromium
+            - test-chromium-memory
+            - test-firefox
+            - test-webkit
+            - test-chromium-coverage
 
   gen2:
     when: << pipeline.parameters.run_gen2 >>
@@ -812,8 +764,17 @@ workflows:
           requires: [build-gen2-storybook]
       - test-gen2-axe:
           requires: [build-gen2-storybook]
-
-  # Always runs, so its check is present on every PR. See `require-checks`.
-  gate:
-    jobs:
-      - require-checks
+      # Posts the required gen2-tests status once every gen2 job passes.
+      - report-gen-status:
+          name: gen2-tests
+          gen: gen2
+          requires:
+            - build-gen2
+            - build-gen1-for-storybook-docs
+            - build-gen2-storybook
+            - test-gen2-browser-chromium
+            - test-gen2-browser-firefox
+            - test-gen2-browser-webkit
+            - test-gen2-coverage
+            - test-gen2-a11y
+            - test-gen2-axe
