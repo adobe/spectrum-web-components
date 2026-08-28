@@ -45,11 +45,18 @@
   font-size: token("font-size-100");
   font-weight: token("regular-font-weight");
   line-height: token("line-height-100");
+
+  &:lang(ja),
+  &:lang(zh),
+  &:lang(ko) {
+    line-height: token("cjk-line-height-100");
+  }
 }
 
 /* ── Icon slot ─────────────────────────────────────────── */
 
 ::slotted([slot="icon"]) {
+  box-sizing: border-box;
   display: grid;
   flex-shrink: 0;
   place-content: center;

@@ -38,6 +38,7 @@ Use this checklist when opening or reviewing a PR.
 - [ ]  Non-tokenized values are limited to allowed properties (layout, alignment)
 - [ ]  Layout primitives (`gap`, alignment, min/max sizes) are preferred over margins/padding hacks
 - [ ]  Padding values are defensive, not layout-driven, where possible
+- [ ]  `::slotted()` rules that set `inline-size`, `block-size`, `width`, `height`, `aspect-ratio`, or a `max-*` size cap also declare `box-sizing: border-box` explicitly (the component's `* { box-sizing: border-box; }` reset does not reach light DOM slotted content)
 
 ## Specificity
 

@@ -71,6 +71,7 @@ Follow this outline for ordering rulesets within component stylesheets. This wil
 3. `* { box-sizing: border-box; }`
     - Unless there is a strong reason not to, this rule should be included in all components. Expand to pseudo-elements if in use.
     - Required if the component or its descendants set  `padding` and/or `border` to avoid the compounding effect against the element's size.
+    - This `*` reset does **not** reach `::slotted()` rules: slotted content lives in the consumer's light DOM, outside the shadow tree the universal selector matches. Any `::slotted()` rule that sets `inline-size`, `block-size`, `width`, `height`, `aspect-ratio`, or a `max-*` size cap needs its own explicit `box-sizing: border-box` declaration. See [anti-pattern 13](05_anti-patterns.md#13-missing-box-sizing-on-sized-slotted-rules).
 4. component styles
     - base class: `.swc-ComponentName`
     - subcomponents: `.swc-ComponentName-sub-component`

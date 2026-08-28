@@ -68,6 +68,7 @@ slot[name="icon"]::slotted(*),
   --_swc-button-icon-block-size: var(--swc-button-icon-block-size, var(--_swc-button-icon-size));
   --_swc-pending-spinner-size: var(--_swc-button-icon-size);
 
+  box-sizing: border-box;
   flex-shrink: 0;
   align-self: flex-start;
   inline-size: var(--swc-button-icon-inline-size, var(--_swc-button-icon-size));

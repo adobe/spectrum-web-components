@@ -69,6 +69,7 @@
     - Progress Bar
     - Progress Circle
     - Radio
+    - Radio Group
     - Search
     - Sidenav
     - Slider
