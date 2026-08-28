@@ -19,7 +19,7 @@ A stylesheet with typography classes can also be generated.
 There are two distinct paths, depending on what changed:
 
 - **Custom tokens only** (adding/editing files in `./custom`, no `@adobe/spectrum-tokens` version change): follow [Upon Custom Token Data Update](#upon-custom-token-data-update). A single `yarn tokens:update` is sufficient.
-- **Bumping the `@adobe/spectrum-tokens` package version**: follow [Upgrading @adobe/spectrum-tokens](#upgrading-adobespectrum-tokens). This is a six-step process; `yarn tokens:update` is only one of those steps.
+- **Bumping the `@adobe/spectrum-tokens` package version**: follow [Upgrading @adobe/spectrum-tokens](#upgrading-adobespectrum-tokens). This is a seven-step process; `yarn tokens:update` is only one of those steps.
 
 ## Upon Custom Token Data Update
 
@@ -94,7 +94,19 @@ yarn tokens:update
 
 This runs tests, regenerates `tokens.json` for the VS Code extension (now including `renamed`, `deleted`, and `deprecatedComments`), and regenerates `tokens.css` and `typography.css` for `@adobe/spectrum-wc`.
 
-### Step 5: fix broken token references in CSS
+### Step 5: re-deploy the VSCode extension
+
+The previous step updated the tokens _data_ for the extension, but it will not reflect in the extension without running the extensions deploy script which will re-package it with the updated tokens.
+
+Run the following in the `2nd-gen/packages/tools/swc-vscode-token` directory:
+
+```bash
+yarn deploy
+```
+
+Post-build, will require uninstalling and re-installing the extension to see changes take effect.
+
+### Step 6: fix broken token references in CSS
 
 Run the fix script to automatically replace all known broken `token()` references across migrated component CSS:
 
@@ -106,11 +118,11 @@ node scripts/fix-token-refs.js             # apply
 
 This handles renamed tokens, zero-value tokens, and deleted tokens with curated replacements. Deleted tokens with no known replacement are flagged with an inline `/* TODO */` comment — review those manually.
 
-### Step 6: verify
+### Step 7: verify
 
 - Review the git diff on `tokens.json` to confirm `deleted` and `deprecatedComments` are populated as expected
 - Review the CSS diffs from the fix script and address any `/* TODO */` comments
-- Open the VS Code extension and verify that remaining deleted tokens surface the correct diagnostic messages
+- Trigger the updated VS Code extension and verify that remaining deleted tokens surface the correct diagnostic messages and any new tokens are recognized
 
 ## Data Sources
 
