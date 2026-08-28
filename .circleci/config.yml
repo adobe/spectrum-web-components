@@ -1,17 +1,10 @@
-# SETUP config (dynamic configuration).
+# Setup config. One small job diffs the PR, works out which gens are affected,
+# and continues the pipeline with continue_config.yml, passing the result as
+# parameters. Unaffected gens are never created, so they cost nothing.
 #
-# This file does almost nothing on its own: a single small container diffs
-# the PR against origin/main once, decides which gens are affected, and then
-# "continues" the pipeline with `.circleci/continue_config.yml`, passing the
-# decision as pipeline parameters. Jobs for an unaffected gen are never
-# created, so they cost zero credits — replacing the old pattern where every
-# gated job booted an xlarge container just to run a git diff and halt.
-#
-# Why a hand-rolled decision job instead of the path-filtering orb: the
-# relevance rule is "a changed file exists that is NOT in the other gen's
-# directory AND is not docs-only" — a negation the orb's positive-only,
-# lookahead-free (RE2) path matching can't express. Reusing the original
-# diff logic verbatim is both faithful and lower-risk.
+# We diff by hand rather than use the path-filtering orb: the rule ("a changed
+# file outside the other gen and not docs-only") is a negation the orb's RE2
+# path matching can't express.
 version: 2.1
 setup: true
 
@@ -36,10 +29,8 @@ jobs:
               RUN_GEN2=true
               IS_BASE_MAIN=true
             else
-              # Make sure origin/main is fetched so we can diff against it.
-              # No --depth: a stale PR can have a deep merge-base, and the
-              # fetch is fast since CircleCI's checkout already has shared
-              # history.
+              # Fetch origin/main to diff against. No --depth — a stale PR can
+              # have a deep merge-base, and checkout already shares history.
               git fetch --quiet origin main 2>/dev/null || true
 
               CHANGED=$(git diff --name-only origin/main...HEAD 2>/dev/null || echo "")
@@ -48,15 +39,13 @@ jobs:
                 RUN_GEN1=true
                 RUN_GEN2=true
               else
-                # Paths that never affect either gen's tests: contributor
-                # docs, AI rules/skills, changeset files, linter config,
-                # scripts, root-level markdown files, and the license file.
+                # Paths that don't affect either gen: docs, AI rules, changesets,
+                # linter config, scripts, root-level markdown, and LICENSE.
                 DOCS_PATTERN='^(CONTRIBUTOR-DOCS/|\.ai/|\.changeset/|linters/|scripts/|[^/]+\.md$|LICENSE$)'
 
-                # A gen is affected when a changed file is outside the OTHER
-                # gen's directory and is not a docs-only path. Root-level
-                # files (e.g. package.json, yarn.lock) match neither
-                # exclusion, so they mark BOTH gens affected.
+                # A gen is affected if a changed file is outside the other gen
+                # and isn't docs. Root files (package.json, yarn.lock) match
+                # neither exclusion, so they flag both gens.
                 REL_GEN1=$(echo "$CHANGED" | grep -v '^2nd-gen/' | grep -vE "$DOCS_PATTERN" || true)
                 REL_GEN2=$(echo "$CHANGED" | grep -v '^1st-gen/' | grep -vE "$DOCS_PATTERN" || true)
 
@@ -64,12 +53,9 @@ jobs:
                 [ -n "$REL_GEN2" ] && RUN_GEN2=true || RUN_GEN2=false
               fi
 
-              # Resolve the PR base branch here (not per-job): gen2 coverage
-              # only runs for PRs targeting main. The old per-job resolver
-              # relied on CIRCLE_PULL_REQUEST, which CircleCI leaves empty on
-              # most PR builds, so coverage was always skipped. Derive the PR
-              # number from any available signal, then read its base via the
-              # GitHub API. Undetermined (fork/no token) stays false.
+              # Resolve the PR's base branch — gen2 coverage only runs when it's
+              # main. Find the PR number from whatever signal is available, then
+              # read its base via the GitHub API. Unknown (fork/no token) = false.
               PR_NUMBER=""
               if [ -n "$CIRCLE_PULL_REQUEST" ]; then
                 PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///')
@@ -86,15 +72,11 @@ jobs:
               fi
               BASE=""
               if [ -n "$PR_NUMBER" ] && [ -n "$GITHUB_TOKEN" ]; then
-                # Capture the HTTP status separately from the body. A 401/403
-                # here means the token is present but rejected — almost always
-                # an expired or SSO-unauthorized GITHUB_TOKEN. Left unchecked,
-                # the base lookup would silently return empty, is_base_main
-                # would default to false, and gen2 coverage would silently
-                # stop running on main-targeted PRs with a green build — the
-                # exact silent-skip failure this job exists to prevent. So we
-                # hard-fail on auth errors to surface token expiry loudly.
-                # Fork PRs never reach here (no token), so they are unaffected.
+                # 401/403 means the token is present but rejected (expired or
+                # SSO-unauthorized). Hard-fail here — otherwise BASE comes back
+                # empty, is_base_main defaults to false, and gen2 coverage
+                # silently stops on main PRs with a green build. Forks have no
+                # token, so they never reach this.
                 HTTP=$(curl -s -o /tmp/pr.json -w "%{http_code}" \
                   -H "Authorization: Bearer $GITHUB_TOKEN" \
                   -H "Accept: application/vnd.github+json" \
@@ -114,8 +96,7 @@ jobs:
             echo "is_base_main=$IS_BASE_MAIN"
             export RUN_GEN1 RUN_GEN2 IS_BASE_MAIN
 
-            # Build the continuation request: the continue config content plus
-            # the resolved pipeline parameters, POSTed to the continuation API.
+            # POST the continue config + resolved params to the continuation API.
             # (the heredoc operator is escaped so CircleCI emits it literally.)
             python3 - \<<'PY'
             import json, os

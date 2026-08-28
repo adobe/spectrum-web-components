@@ -1,14 +1,10 @@
-# This is the CONTINUATION config, launched by `.circleci/config.yml` (a
-# setup config). The `decide` job in the setup config diffs the PR against
-# origin/main once, on a small container, and passes `run_gen1` / `run_gen2`
-# (and `is_base_main`) here as pipeline parameters. Workflows below are gated
-# on those parameters, so jobs for an unaffected gen are never created (they
-# cost zero credits instead of booting a container to no-op).
+# Continuation config, launched by config.yml. Workflows here are gated on the
+# run_gen1 / run_gen2 / is_base_main parameters that `decide` sets, so jobs for
+# an unaffected gen are never created.
 #
-# NOTE on branch protection: because unaffected jobs are omitted (not run
-# as green no-ops), their status-check names go absent. Require the always
-# present `decide` check in GitHub branch protection rather than per-gen
-# job names. See the workflows section at the bottom for the full list.
+# Branch protection: unaffected jobs are absent (not green), so their checks
+# can't be required. The `gate` workflow's `require-checks` job is the single
+# always-present required check — see the bottom of the file.
 version: 2.1
 
 executors:
@@ -16,8 +12,7 @@ executors:
     docker:
       - image: cimg/base:current
     resource_class: medium
-  # xlarge — heavy builds (Vite, Storybook), VRT, and coverage runs that
-  # process the whole suite in a single container.
+  # xlarge — heavy builds (Vite, Storybook), VRT, and single-container coverage.
   node:
     docker:
       - image: mcr.microsoft.com/playwright:v1.53.1-noble
@@ -28,10 +23,8 @@ executors:
       AZCOPY_SPA_APPLICATION_ID: $AZURE_CLIENT_ID
       AZCOPY_SPA_CLIENT_SECRET: $AZURE_CLIENT_SECRET
       AZCOPY_TENANT_ID: $AZURE_TENANT_ID
-  # large — sharded test jobs. Each container handles only a fraction of the
-  # suite (via `parallelism` + test splitting / vitest `--shard`), so the
-  # per-container memory ceiling is lower and half the RAM of xlarge is
-  # ample. This is the credit-saving tier for the test matrix.
+  # large — sharded test jobs. Each container runs a fraction of the suite
+  # (parallelism + test splitting / vitest --shard), so half the RAM is plenty.
   node-large:
     docker:
       - image: mcr.microsoft.com/playwright:v1.53.1-noble
@@ -44,20 +37,17 @@ executors:
       AZCOPY_TENANT_ID: $AZURE_TENANT_ID
 
 parameters:
-  # Set by the `decide` job in the setup config. Default true so that if the
-  # continuation ever runs without explicit parameters, we fail safe by
-  # running everything rather than silently skipping tests.
+  # Set by `decide`. Default true so a continuation without params fails safe by
+  # running everything rather than skipping tests.
   run_gen1:
     type: boolean
     default: true
   run_gen2:
     type: boolean
     default: true
-  # True when this pipeline's base is `main` (a push to main, or a PR that
-  # targets main). Resolved reliably in the `decide` job — which has full git
-  # + GitHub API context — instead of the old per-job `resolve-pr-base`, which
-  # depended on `CIRCLE_PULL_REQUEST` (empty on most PR builds) and so left
-  # gen2 coverage permanently skipped. Gates the coverage run below.
+  # True when the base is main (a push to main, or a PR targeting main).
+  # Resolved in `decide`, which has git + GitHub API context. Gates gen2
+  # coverage below.
   is_base_main:
     type: boolean
     default: false
@@ -278,9 +268,8 @@ jobs:
             - 1st-gen/storybook
             - 1st-gen/projects
 
-  # Build the gen2 packages + Custom Elements Manifest ONCE. The browser test
-  # matrix and the coverage job attach this workspace instead of each
-  # re-running `yarn build:2nd-gen` (previously 3x, or 15x once sharded).
+  # Build gen2 packages + CEM once; the browser and coverage jobs attach this
+  # workspace instead of each rebuilding.
   build-gen2:
     executor: node
     steps:
@@ -298,10 +287,8 @@ jobs:
             - 2nd-gen/packages/core/dist
             - 2nd-gen/packages/swc/dist
 
-  # Build the gen2 (ci-a11y) Storybook ONCE and persist the static output.
-  # The a11y and axe jobs both consumed this identical build before, each
-  # rebuilding it on its own xlarge container. Uses `downstream` because the
-  # Storybook build (generate:contributor-docs) still pulls in gen1 refs.
+  # Build the ci-a11y Storybook once; the a11y and axe jobs attach it. Uses
+  # `downstream` because the Storybook build still pulls in gen1 refs.
   build-gen2-storybook:
     executor: node
     steps:
@@ -387,10 +374,8 @@ jobs:
   # ---------------------------------------------------------------------------
   # gen2 integration tests (Vitest browser mode)
   # ---------------------------------------------------------------------------
-  # Sharded across 5 containers per browser via vitest `--shard`. This is what
-  # fixes the webkit OOM: each container loads ~1/5 of the suite, so peak
-  # memory stays well under the (now `large`) container ceiling. No coverage
-  # here — coverage is its own single-container job below.
+  # Sharded across 5 containers per browser via vitest --shard, which keeps
+  # webkit from OOMing. Coverage is a separate single-container job below.
   test-gen2-browser:
     executor: node-large
     parallelism: 5
@@ -410,16 +395,11 @@ jobs:
       - store_test_results:
           path: /root/project/2nd-gen/packages/swc/test-results
 
-  # gen2 coverage: Chromium only, and only when the base is main. Guarded on
-  # the `is_base_main` pipeline parameter (resolved reliably in `decide`, not
-  # the old CIRCLE_PULL_REQUEST-dependent path that left this permanently
-  # skipped). The guard stays inside the gen2 workflow — rather than a separate
-  # workflow gated on is_base_main — so it can attach the shared `build-gen2`
-  # workspace instead of duplicating that build on every PR to main (workspaces
-  # can't cross workflows). When the base isn't main, the first step halts
-  # immediately, so a non-main base boots the container but skips the node
-  # setup and workspace attach. Runs unsharded in a single container because v8
-  # coverage needs the whole run in one process. xlarge for headroom.
+  # gen2 coverage — Chromium only, base=main only. It stays in the gen2 workflow
+  # (not a separate is_base_main-gated one) so it can attach the shared
+  # build-gen2 workspace; workspaces can't cross workflows. On a non-main base
+  # the first step halts before setup. Unsharded because v8 coverage needs one
+  # process.
   test-gen2-coverage:
     executor: node
     steps:
@@ -441,8 +421,7 @@ jobs:
       - store_artifacts:
           path: 2nd-gen/packages/swc/coverage
 
-  # gen2 ARIA snapshot tests (Playwright), run against the pre-built static
-  # Storybook attached from `build-gen2-storybook`.
+  # gen2 ARIA snapshot tests (Playwright), against the prebuilt Storybook.
   test-gen2-a11y:
     executor: node
     steps:
@@ -457,8 +436,7 @@ jobs:
       - store_artifacts:
           path: 2nd-gen/test/playwright-a11y/report
 
-  # gen2 axe-core WCAG tests (Storybook test-runner), served from the pre-built
-  # static Storybook attached from `build-gen2-storybook`.
+  # gen2 axe-core WCAG tests (Storybook test-runner), against the prebuilt Storybook.
   test-gen2-axe:
     executor: node
     steps:
@@ -662,17 +640,12 @@ jobs:
           regression_scale: << parameters.scale >>
           regression_dir: << parameters.dir >>
 
-  # Always-present merge gate — the single required status check in branch
-  # protection. It verifies that every gen `decide` marked relevant actually
-  # ran AND succeeded. Because it runs in its own ungated workflow, its check
-  # is present on every PR, unlike the per-gen workflows (absent when their gen
-  # is untouched, so they can't themselves be required).
-  #
-  # A missing expected workflow is treated as FAILURE, never success — the same
-  # fail-loud principle as base-branch resolution: never merge a silently
-  # dropped workflow green. A missing/rejected CIRCLECI_TOKEN also hard-fails.
-  #
-  # Needs a CIRCLECI_TOKEN env var (a project API token) to read pipeline status.
+  # The merge gate. Runs on every PR (its own ungated workflow), so it's the one
+  # check branch protection can require — the per-gen workflows are absent when
+  # their gen is untouched. It checks that every gen `decide` marked relevant
+  # actually ran and passed; a missing expected workflow fails, so a silently
+  # dropped one can't merge green. Needs a CIRCLECI_TOKEN to read pipeline
+  # status, and hard-fails without it.
   require-checks:
     docker:
       - image: cimg/node:lts
@@ -757,13 +730,11 @@ jobs:
 
 workflows:
   # ---------------------------------------------------------------------------
-  # Gating now happens at the workflow level via pipeline parameters set by the
-  # `decide` job in the setup config. A workflow (and all its jobs) is created
-  # only when its gen is affected, so unaffected jobs cost zero credits.
+  # Workflows are gated on the `decide` parameters — a workflow and its jobs are
+  # created only when its gen is affected.
   #
-  # BRANCH PROTECTION: require the `decide` status check (always runs). The
-  # per-gen job checks below are ABSENT — not green — on PRs that don't touch
-  # that gen, so they must NOT be listed as required checks.
+  # Branch protection: require `require-checks` (and `decide`), not the per-gen
+  # checks below — they're absent on PRs that don't touch that gen.
   # ---------------------------------------------------------------------------
   gen1:
     when: << pipeline.parameters.run_gen1 >>
@@ -821,11 +792,10 @@ workflows:
   gen2:
     when: << pipeline.parameters.run_gen2 >>
     jobs:
-      # gen2 package build — consumed by the browser + coverage jobs.
+      # gen2 package build — used by the browser + coverage jobs.
       - build-gen2
-      # gen1 build — needed only by the Storybook build (contributor-docs
-      # generation pulls in gen1 refs). Named distinctly so it doesn't collide
-      # with the `gen1` workflow's `build` status check.
+      # gen1 build, needed only by the Storybook build. Renamed so its check
+      # doesn't collide with the gen1 workflow's `build`.
       - build:
           name: build-gen1-for-storybook-docs
       - build-gen2-storybook:
@@ -843,8 +813,7 @@ workflows:
       - test-gen2-axe:
           requires: [build-gen2-storybook]
 
-  # Always runs (no `when`), so its check is present on every PR and can be the
-  # single required status check in branch protection. See `require-checks`.
+  # Always runs, so its check is present on every PR. See `require-checks`.
   gate:
     jobs:
       - require-checks
