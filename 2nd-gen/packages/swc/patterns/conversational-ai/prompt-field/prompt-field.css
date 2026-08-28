@@ -22,9 +22,9 @@
   │ └───────────────────────────────────────────────┘   │
   └─────────────────────────────────────────────────────┘
 
-  Every color above derives from --swc-prompt-field-brand-color (one OKLCH
-  hue) via oklch(from var(--swc-prompt-field-brand-color) ...); retheming
-  means overriding that single property.
+  Default treatment colors derive from --swc-prompt-field-brand-color (one
+  OKLCH hue) via oklch(from var(--swc-prompt-field-brand-color) ...). Dragged
+  state uses the dropzone and indigo design tokens.
 */
 
 :host {
@@ -467,7 +467,8 @@
  * target with a focus ring. Placed last so it wins across every variant and
  * generating state. */
 :host .swc-PromptField-outer-border.dragged {
-  --_swc-prompt-field-drag-fill: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 91.32% 0.0721 calc(h + 0.1)) 30%), color-mix(in srgb, token("background-layer-2-color") 85%, var(--swc-prompt-field-brand-color) 15%));
+  --_swc-prompt-field-drag-fill: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 91.32% 0.0721 calc(h + 0.1)) 30%), color-mix(in srgb, token("background-layer-2-color") 85%, token("static-fuchsia-600") 15%));
+  --_swc-prompt-field-drag-focus-indicator-color: token("indigo-800");
   --_swc-prompt-field-outer-stop-1: var(--_swc-prompt-field-outer-recede-stop);
   --_swc-prompt-field-outer-stop-2: var(--_swc-prompt-field-outer-recede-stop);
   --_swc-prompt-field-outer-stop-3: var(--_swc-prompt-field-outer-recede-stop);
@@ -479,8 +480,8 @@
 :host .swc-PromptField-outer-border.dragged .swc-PromptField-box {
   background: var(--_swc-prompt-field-drag-fill);
   box-shadow: none;
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-ring-gap");
+  outline: token("focus-indicator-thickness") solid var(--_swc-prompt-field-drag-focus-indicator-color);
+  outline-offset: calc(token("focus-indicator-thickness") * -1);
   transition: none;
 }
 
