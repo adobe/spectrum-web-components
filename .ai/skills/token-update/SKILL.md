@@ -22,7 +22,7 @@ Any request shaped like "update the tokens," "bump `@adobe/spectrum-tokens`," "u
 2. Read [2nd-gen/packages/tools/swc-tokens/README.md](../../../2nd-gen/packages/tools/swc-tokens/README.md), starting at the `## Updating tokens` heading, and follow whichever of the two linked sections matches:
    - `## Upon Custom Token Data Update`
    - `## Upgrading @adobe/spectrum-tokens`
-3. Execute that section's steps in the order given. For the package version bump path, this is six steps — running `yarn tokens:update` by itself is never sufficient and will silently skip deleted-token curation (`custom/deleted.json`) and broken `token()` reference fixes in migrated CSS.
+3. Execute that section's steps in the order given. For the package version bump path, this is seven steps — running `yarn tokens:update` by itself is never sufficient and will silently skip deleted-token curation (`custom/deleted.json`) and broken `token()` reference fixes in migrated CSS.
 
 ## Anti-patterns
 
