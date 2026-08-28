@@ -11,6 +11,7 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { TextFieldBase } from '@adobe/spectrum-wc-core/components/text-field';
 
@@ -35,11 +36,15 @@ export class TextField extends TextFieldBase {
   }
 
   protected override render(): TemplateResult {
-    // @todo (Phase 3–5): render the label, required indicator, input, validation
-    // icon, and description/error container per the migration plan.
+    // @todo (SWC-2466 / Phase 4–5): render the visible label, required indicator,
+    // validation icon, and description/error container via the LabellingController.
+    // Until then the input takes its accessible name from `accessible-label`.
     return html`
       <div class="swc-TextField">
-        <input class="input" />
+        <input
+          class="input"
+          aria-label=${ifDefined(this.accessibleLabel || undefined)}
+        />
       </div>
     `;
   }

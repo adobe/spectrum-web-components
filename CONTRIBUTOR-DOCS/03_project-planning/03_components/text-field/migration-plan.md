@@ -422,9 +422,9 @@ Planned rendering shape:
 
 #### Naming and public surface
 
-- [ ] `TextField.types.ts`: define `TextFieldType`, the `size` union, and the `label-position` (`top`/`side`) union; export public types
-- [ ] `TextField.base.ts`: implement `accessible-label`/`accessible-labelledby`/`accessible-describedby`, `value` (string), `type`, `placeholder`, `pattern`, `inputmode`, `autocomplete`, `maxlength`/`minlength`, `readonly`, `required`, `invalid`/`valid`, `label-position` (core; default `top`), `size`, `disabled`
-- [ ] Remove `quiet`, `multiline`, `grows`, `rows`, `focused`, `tooltip-placement`
+- [x] `TextField.types.ts`: define `TextFieldType`, the `size` union, and the `label-position` (`top`/`side`) union; export public types
+- [x] `TextField.base.ts`: implement `accessible-label`, `value` (string), `type`, `placeholder`, `pattern`, `inputmode`, `autocomplete`, `maxlength`/`minlength`, `readonly`, `required`, `invalid`/`valid`, `label-position` (core; default `top`), `size`, `disabled`. `accessible-labelledby`/`accessible-describedby` element-refs deferred to `LabellingController` (SWC-2466); `checkValidity()`/selection methods deferred to Phase 5 (need the rendered input)
+- [x] Remove `quiet`, `multiline`, `grows`, `rows`, `focused`, `tooltip-placement` — not carried into 2nd-gen; deprecated on 1st-gen `Textfield` with `@deprecated` + `__swc.warn`
 - [ ] Resolve `allowedKeys` (Q11) before finalizing the surface
 
 #### Alignment checks

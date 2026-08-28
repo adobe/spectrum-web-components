@@ -41,3 +41,8 @@ export type TextFieldSize = (typeof TEXT_FIELD_VALID_SIZES)[number];
 export type TextFieldType = (typeof TEXT_FIELD_TYPES)[number];
 export type TextFieldLabelPosition =
   (typeof TEXT_FIELD_LABEL_POSITIONS)[number];
+
+/**
+ * Valid `autocomplete` tokens for the text field. Aliases the platform `AutoFill` union
+ */
+export type TextFieldAutocomplete = AutoFill;
