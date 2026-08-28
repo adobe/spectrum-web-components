@@ -99,6 +99,10 @@
       "types": "./dist/components/illustrated-message/index.d.ts",
       "import": "./dist/components/illustrated-message/index.js"
     },
+    "./components/menu": {
+      "types": "./dist/components/menu/index.d.ts",
+      "import": "./dist/components/menu/index.js"
+    },
     "./components/meter": {
       "types": "./dist/components/meter/index.d.ts",
       "import": "./dist/components/meter/index.js"
@@ -352,6 +356,9 @@
       ],
       "components/illustrated-message": [
         "dist/components/illustrated-message/index.d.ts"
+      ],
+      "components/menu": [
+        "dist/components/menu/index.d.ts"
       ],
       "components/meter": [
         "dist/components/meter/index.d.ts"
