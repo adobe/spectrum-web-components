@@ -26,6 +26,7 @@ import { spy } from 'sinon';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
 import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
+import { Tray } from '@spectrum-web-components/tray/src/Tray.js';
 
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
@@ -33,6 +34,7 @@ import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/tray/sp-tray.js';
 
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
@@ -1216,6 +1218,35 @@ describe('Submenu', () => {
       await elementUpdated(menu);
 
       expect(menu.currentMobileSubmenu).to.be.undefined;
+    });
+    it('resets mobile submenu stack when the containing tray closes', async function () {
+      const tray = await fixture<Tray>(html`
+        <sp-tray open>
+          <sp-menu mobile-view>
+            <sp-menu-item>No submenu</sp-menu-item>
+            <sp-menu-item class="root">
+              Has submenu
+              <sp-menu slot="submenu">
+                <sp-menu-item class="submenu-item-1">One</sp-menu-item>
+              </sp-menu>
+            </sp-menu-item>
+          </sp-menu>
+        </sp-tray>
+      `);
+      const menu = tray.querySelector('sp-menu') as Menu;
+      const rootItem = tray.querySelector('.root') as MenuItem;
+      await elementUpdated(menu);
+
+      menu.openMobileSubmenu(rootItem);
+      await elementUpdated(menu);
+      expect(menu.currentMobileSubmenu).to.equal(rootItem);
+
+      const closed = oneEvent(tray, 'close');
+      tray.close();
+      await closed;
+      await elementUpdated(menu);
+
+      expect(menu.currentMobileSubmenu, 'reset by tray close').to.be.undefined;
     });
     it('does not open overlay on hover in mobile mode', async function () {
       expect(this.rootItem.open).to.be.false;

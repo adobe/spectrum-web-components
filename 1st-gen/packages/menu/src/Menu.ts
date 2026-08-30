@@ -408,6 +408,44 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
   }
 
   /**
+   * The nearest ancestor `<sp-tray>`, if any, that this mobile-view menu
+   * is being displayed within. Trays hide themselves visually rather than
+   * disconnecting their slotted content, so `disconnectedCallback` never
+   * runs on close; this reference lets us listen for the tray's `close`
+   * event directly instead.
+   */
+  private _mobileTrayAncestor: HTMLElement | null = null;
+
+  private handleMobileTrayClosed = (): void => {
+    this.resetMobileSubmenus();
+  };
+
+  /**
+   * Listens for the containing `<sp-tray>`'s `close` event so the
+   * drill-down stack resets whenever the tray is dismissed (e.g. via
+   * click-outside), rather than persisting until the menu is removed
+   * from the DOM.
+   */
+  private _attachMobileTrayCloseListener(): void {
+    if (!this.mobileView) {
+      return;
+    }
+    this._mobileTrayAncestor = this.closest('sp-tray');
+    this._mobileTrayAncestor?.addEventListener(
+      'close',
+      this.handleMobileTrayClosed
+    );
+  }
+
+  private _detachMobileTrayCloseListener(): void {
+    this._mobileTrayAncestor?.removeEventListener(
+      'close',
+      this.handleMobileTrayClosed
+    );
+    this._mobileTrayAncestor = null;
+  }
+
+  /**
    * Moves the submenu element from its MenuItem parent into this Menu's
    * light DOM with a `mobile-submenu` slot, so it projects through the
    * named slot in the shadow DOM. Any previously visible projected submenu
@@ -1611,11 +1649,16 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       this._refreshMobileBackElements();
     }
     if (changes.has('mobileView') && this.hasUpdated) {
-      // When mobile view is turned off at runtime, restore any
-      // projected submenus to their original parents so the menu
-      // returns to a normal flyout layout cleanly.
-      if (!this.mobileView && this._mobileSubmenuStack.length > 0) {
-        this.resetMobileSubmenus();
+      if (this.mobileView) {
+        this._attachMobileTrayCloseListener();
+      } else {
+        // When mobile view is turned off at runtime, restore any
+        // projected submenus to their original parents so the menu
+        // returns to a normal flyout layout cleanly.
+        this._detachMobileTrayCloseListener();
+        if (this._mobileSubmenuStack.length > 0) {
+          this.resetMobileSubmenus();
+        }
       }
     }
   }
@@ -1635,6 +1678,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     if (!this.hasAttribute('role') && !this.ignore) {
       this.setAttribute('role', this.ownRole);
     }
+    this._attachMobileTrayCloseListener();
     this.updateComplete.then(() => this.updateItemFocus());
   }
 
@@ -1648,6 +1692,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     this.selectedItemsMap.clear();
     this.childItemSet.clear();
     this.descendentOverlays = new Map<Overlay, Overlay>();
+    this._detachMobileTrayCloseListener();
     this.resetMobileSubmenus();
     this._mobileSubmenuOriginalParents.clear();
     super.disconnectedCallback();
