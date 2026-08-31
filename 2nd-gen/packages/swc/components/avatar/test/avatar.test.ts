@@ -30,7 +30,7 @@ import meta, {
   Sizes,
 } from '../stories/avatar.stories.js';
 
-const PLACEHOLDER_SRC = 'https://picsum.photos/id/64/500/500';
+const PLACEHOLDER_SRC = './images/card-preview.jpg';
 
 export default {
   ...meta,
