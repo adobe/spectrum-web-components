@@ -65,6 +65,19 @@ const getOptionDir = (
     option instanceof MenuItem ? option.getAttribute('dir') : option.dir
   );
 
+// `MenuItem.lang` (an `HTMLElement` IDL reflection of the `lang` attribute)
+// returns `''` both when `lang` is unset and when it's explicitly
+// `lang=""`, which per spec mean different things (inherit the ambient
+// language vs. declare the language unknown) — read the attribute directly
+// to preserve that distinction. Plain `ComboboxOption` data has no such
+// reflection quirk.
+const getOptionLang = (
+  option: ComboboxOption | MenuItem
+): string | undefined =>
+  option instanceof MenuItem
+    ? (option.getAttribute('lang') ?? undefined)
+    : option.lang;
+
 /**
  * @element sp-combobox
  * @slot - Supply Menu Item elements to the default slot in order to populate the available options
@@ -354,10 +367,10 @@ export class Combobox extends Textfield {
     if (!this.itemValue) {
       return undefined;
     }
-    return (
-      this.availableOptions.find((option) => option.value === this.itemValue)
-        ?.lang || undefined
+    const selectedOption = this.availableOptions.find(
+      (option) => option.value === this.itemValue
     );
+    return selectedOption ? getOptionLang(selectedOption) : undefined;
   }
 
   protected override shouldUpdate(
@@ -534,7 +547,7 @@ export class Combobox extends Textfield {
                     return html`
                       <sp-menu-item
                         id=${option.value}
-                        lang=${ifDefined(option.lang || undefined)}
+                        lang=${ifDefined(getOptionLang(option))}
                         dir=${ifDefined(getOptionDir(option))}
                         ?focused=${this.activeDescendant?.value ===
                         option.value}

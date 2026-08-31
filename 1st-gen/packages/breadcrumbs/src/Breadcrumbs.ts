@@ -204,7 +204,13 @@ export class Breadcrumbs extends SpectrumElement {
         value: el.value || index.toString(),
         offsetWidth: width,
         isVisible: true,
-        lang: el.lang || undefined,
+        // `el.lang` (an `HTMLElement` IDL reflection of the `lang`
+        // attribute) returns `''` both when `lang` is unset and when it's
+        // explicitly `lang=""`, which per spec mean different things
+        // (inherit the ambient language vs. declare the language unknown) —
+        // read the attribute directly to preserve that distinction, mirroring
+        // `dir` below.
+        lang: el.getAttribute('lang') ?? undefined,
         // `SpectrumElement` overrides `dir` to return the *computed* CSS
         // direction rather than the attribute, so read the attribute
         // directly to capture the item's own authored direction override.
@@ -228,7 +234,7 @@ export class Breadcrumbs extends SpectrumElement {
               i === index
                 ? {
                     ...item,
-                    lang: el.lang || undefined,
+                    lang: el.getAttribute('lang') ?? undefined,
                     dir: normalizeDir(el.getAttribute('dir')),
                   }
                 : item
