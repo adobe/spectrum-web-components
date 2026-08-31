@@ -1086,7 +1086,7 @@ export const PlaygroundDropTest: Story = {
     };
 
     await step(
-      'Playground renders a dropped attachment and focuses it when the input was not focused',
+      'Playground renders a dropped attachment without stealing focus',
       async () => {
         textarea?.blur();
         dropFile('first.txt');
@@ -1096,7 +1096,7 @@ export const PlaygroundDropTest: Story = {
             '[data-attachment-id]'
           );
           expect(attachment).toBeTruthy();
-          expect(getActiveElement()).toBe(attachment);
+          expect(getActiveElement()).not.toBe(attachment);
         });
       }
     );
