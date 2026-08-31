@@ -434,6 +434,46 @@ describe('Combobox accessibility', () => {
       const input = el.shadowRoot.querySelector('#input') as HTMLInputElement;
       expect(input.lang, 'input adopts the updated item lang').to.equal('ar');
     });
+    it('keeps watching a slotted item after the combobox reconnects', async () => {
+      const el = await fixture<TestableCombobox>(html`
+        <sp-combobox label="Language">
+          <sp-menu-item value="he" lang="he" dir="rtl">עברית</sp-menu-item>
+        </sp-combobox>
+      `);
+      await elementUpdated(el);
+
+      const parent = el.parentElement as HTMLElement;
+      parent.removeChild(el);
+      parent.appendChild(el);
+      await elementUpdated(el);
+
+      const opened = oneEvent(el, 'sp-opened');
+      el.open = true;
+      await opened;
+      await elementUpdated(el);
+
+      const source = el.querySelector('sp-menu-item') as MenuItem;
+      source.setAttribute('lang', 'ar');
+      source.setAttribute('dir', 'rtl');
+      await elementUpdated(el);
+
+      const renderedItem = el.shadowRoot.querySelector('#he') as MenuItem;
+      expect(renderedItem.lang, 'rendered item lang after reconnect').to.equal(
+        'ar'
+      );
+      expect(
+        renderedItem.getAttribute('dir'),
+        'rendered item dir after reconnect'
+      ).to.equal('rtl');
+
+      el.value = 'עברית';
+      await elementUpdated(el);
+
+      const input = el.shadowRoot.querySelector('#input') as HTMLInputElement;
+      expect(input.lang, 'input adopts the item lang after reconnect').to.equal(
+        'ar'
+      );
+    });
     it("syncs the input's lang to the selected option's language", async () => {
       const el = await fixture<TestableCombobox>(html`
         <sp-combobox label="Language">

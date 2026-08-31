@@ -224,7 +224,11 @@ export class Combobox extends Textfield {
   public handleSlotchange(): void {
     this.setOptionsFromSlottedItems();
     this.itemObserver.disconnect();
-    this.optionEls.map((item) => {
+    this.observeOptionEls();
+  }
+
+  private observeOptionEls(): void {
+    this.optionEls.forEach((item) => {
       this.itemObserver.observe(item, {
         attributes: true,
         attributeFilter: ['id', 'lang', 'dir'],
@@ -685,6 +689,12 @@ export class Combobox extends Textfield {
       this.itemObserver = new MutationObserver(
         this.setOptionsFromSlottedItems.bind(this)
       );
+    } else {
+      // Reattaching this combobox doesn't change its slot assignments, so no
+      // `slotchange` fires to re-register `itemObserver` via
+      // `handleSlotchange()` after `disconnectedCallback()` disconnected it —
+      // re-observe the already-known `optionEls` explicitly instead.
+      this.observeOptionEls();
     }
   }
 
