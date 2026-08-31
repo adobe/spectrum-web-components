@@ -99,19 +99,19 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
     }
   }
 
-  // Cached result of `getComputedStyle(this).direction`, used by
-  // `renderSeparator()`. `dirNeedsResolve` starts `true` so the first render
-  // resolves it; after that it's only re-resolved in `willUpdate()` when
-  // `dir` actually changed on this host or a watched ancestor, not on every
-  // render an unrelated property change (e.g. a `ResizeObserver`-driven
-  // layout pass) triggers.
+  // Cached result of `this.dir` (`SpectrumElement`'s computed-direction
+  // getter), used by `renderSeparator()`. `dirNeedsResolve` starts `true` so
+  // the first render resolves it; after that it's only re-resolved in
+  // `willUpdate()` when `dir` actually changed on this host or a watched
+  // ancestor, not on every render an unrelated property change (e.g. a
+  // `ResizeObserver`-driven layout pass) triggers.
   private ambientDir: 'ltr' | 'rtl' = 'ltr';
   private dirNeedsResolve = true;
 
   protected override willUpdate(): void {
     if (this.dirNeedsResolve) {
       this.dirNeedsResolve = false;
-      this.ambientDir = getComputedStyle(this).direction as 'ltr' | 'rtl';
+      this.ambientDir = this.dir as 'ltr' | 'rtl';
     }
   }
 
