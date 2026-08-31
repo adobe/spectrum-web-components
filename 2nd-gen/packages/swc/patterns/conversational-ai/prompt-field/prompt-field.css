@@ -914,14 +914,14 @@
 
 /* Typography lives on the slot so it inherits into slotted legal content without ::slotted() per property (see illustrated-message). The neutral link-color vars inherit down to inline links in a .swc-Typography--links paragraph, giving them the subdued secondary color instead of accent blue. */
 slot[name="legal"] {
-  --swc-link-text-color-default: token("neutral-content-color-default");
+  --swc-link-text-color-default: token("gray-600");
   --swc-link-text-color-hover: token("neutral-content-color-hover");
   --swc-link-text-color-down: token("neutral-content-color-down");
   --swc-link-text-color-focus: token("neutral-content-color-key-focus");
 
   font-size: token("font-size-75");
   line-height: token("line-height-font-size-75");
-  color: token("neutral-content-color-default");
+  color: token("gray-600");
   text-align: center;
 }
 
