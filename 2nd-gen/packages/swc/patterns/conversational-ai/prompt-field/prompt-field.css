@@ -59,7 +59,7 @@
   --_swc-prompt-field-recede-surface: token("background-layer-2-color");
   --_swc-prompt-field-border-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), rgb(255 255 255 / 5%));
   --_swc-prompt-field-drop-shadow-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 58.26% 0.2265 calc(h - 0.4) / 5%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 5%));
-  --_swc-prompt-field-inset-shadow-color: rgb(255 255 255 / 4%);
+  --_swc-prompt-field-inset-shadow-color: rgb(255 255 255 / token("opacity-100"));
 
   display: flex;
   position: relative;
@@ -68,7 +68,7 @@
   flex-direction: column;
   min-inline-size: 0;
   padding: token("spacing-300");
-  background: radial-gradient(circle at var(--_swc-prompt-field-wash-x, right) bottom in oklch, var(--_swc-prompt-field-bg-stop-1) 0%, var(--_swc-prompt-field-bg-stop-2) 35%, var(--_swc-prompt-field-bg-stop-3) 82%, var(--_swc-prompt-field-bg-stop-4) 100%);
+  background: radial-gradient(circle at var(--_swc-prompt-field-wash-x, right) bottom in oklab, var(--_swc-prompt-field-bg-stop-1) 0%, var(--_swc-prompt-field-bg-stop-2) 35%, var(--_swc-prompt-field-bg-stop-3) 82%, var(--_swc-prompt-field-bg-stop-4) 100%);
   border-radius: 24px;
   box-shadow:
     0 20px 20px -24px var(--_swc-prompt-field-prominent-outer-glow-color, transparent),
@@ -119,7 +119,7 @@
   --_swc-prompt-field-outer-shadow: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 0%));
 
   /* Flat ring stops for subtle (idle) and the receded focus state; shared across both rules. */
-  --_swc-prompt-field-outer-recede-stop: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
+  --_swc-prompt-field-outer-recede-stop: light-dark(rgb(255 255 255), rgb(255 255 255 / token("opacity-50")));
 
   display: flex;
   padding: 6px;
@@ -878,13 +878,20 @@
 }
 
 .swc-PromptField-send {
-  --swc-action-button-background-color-default: token("neutral-background-color-default");
-  --swc-action-button-background-color-hover: token("neutral-background-color-hover");
-  --swc-action-button-background-color-focus: token("neutral-background-color-default");
-  --swc-action-button-background-color-down: token("neutral-background-color-default");
+  /* Static black-on-light / white-on-dark fill, icon takes the opposite, so the gradient shows through. */
+  --_swc-prompt-field-send-fill: light-dark(token("black"), token("white"));
+  --_swc-prompt-field-send-icon: light-dark(token("white"), token("black"));
+  --swc-action-button-background-color-default: color-mix(in oklch, var(--_swc-prompt-field-send-fill), transparent 15%);
+  --swc-action-button-background-color-hover: color-mix(in oklch, var(--_swc-prompt-field-send-fill), transparent 5%);
+  --swc-action-button-background-color-focus: color-mix(in oklch, var(--_swc-prompt-field-send-fill), transparent 15%);
+  --swc-action-button-background-color-down: color-mix(in oklch, var(--_swc-prompt-field-send-fill), transparent 5%);
+  --swc-action-button-content-color-default: var(--_swc-prompt-field-send-icon);
+  --swc-action-button-content-color-hover: var(--_swc-prompt-field-send-icon);
+  --swc-action-button-content-color-focus: var(--_swc-prompt-field-send-icon);
+  --swc-action-button-content-color-down: var(--_swc-prompt-field-send-icon);
 
-  /* Disabled falls back to the auto-contrast tint rather than the flat fill. */
-  --swc-action-button-background-color-disabled: oklch(from var(--_swc-prompt-field-bg-stop-1) calc((0.5 - l) * infinity) 0 0deg / 11%);
+  /* Disabled uses the same static tint at a low alpha. */
+  --swc-action-button-background-color-disabled: color-mix(in oklch, var(--_swc-prompt-field-send-fill), transparent 89%);
   --swc-action-button-content-color-disabled: token("gray-400");
 }
 
@@ -907,14 +914,14 @@
 
 /* Typography lives on the slot so it inherits into slotted legal content without ::slotted() per property (see illustrated-message). The neutral link-color vars inherit down to inline links in a .swc-Typography--links paragraph, giving them the subdued secondary color instead of accent blue. */
 slot[name="legal"] {
-  --swc-link-text-color-default: token("neutral-content-color-default");
+  --swc-link-text-color-default: token("gray-600");
   --swc-link-text-color-hover: token("neutral-content-color-hover");
   --swc-link-text-color-down: token("neutral-content-color-down");
   --swc-link-text-color-focus: token("neutral-content-color-key-focus");
 
   font-size: token("font-size-75");
   line-height: token("line-height-font-size-75");
-  color: token("neutral-content-color-default");
+  color: token("gray-600");
   text-align: center;
 }
 

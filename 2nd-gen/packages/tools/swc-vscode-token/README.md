@@ -81,6 +81,8 @@ When upgrading the underlying `@adobe/spectrum-tokens` package version, run the 
 
 Deploy to build and package updated VSIX file required for VSCode to load the extension.
 
+Run the following in the `2nd-gen/packages/tools/swc-vscode-token` directory:
+
 ```bash
 yarn deploy
 ```

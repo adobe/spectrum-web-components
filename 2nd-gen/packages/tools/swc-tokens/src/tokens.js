@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { readFile } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
+import { dirname } from 'node:path';
 
 const require = createRequire(import.meta.url);
 
@@ -25,14 +26,12 @@ const ALLOWED_SETS = new Set(['desktop', 'mobile', 'light', 'dark']);
 // Exported so diff-versions.js can reuse the same pattern when seeding custom/deleted.json.
 export const ZERO_VALUE_COMMENT_PATTERN = /zero.{0,30}pixel|should be zero/i;
 
-// Tokens from @adobe/spectrum-tokens/src
-const SPECTRUM_TOKENS = [
+// Global (non per-component) token files from @adobe/spectrum-tokens/src.
+// As of spectrum-tokens 15.x, per-component tokens live in their own files
+// (card.json, avatar.json, …) and are auto-discovered by getComponentTokenFiles().
+const SPECTRUM_GLOBAL_TOKENS = [
   {
     file: 'color-aliases',
-    resolveAliases: false,
-  },
-  {
-    file: 'color-component',
     resolveAliases: false,
   },
   {
@@ -60,6 +59,8 @@ const SPECTRUM_TOKENS = [
     resolveAliases: false,
   },
 ];
+
+const GLOBAL_TOKEN_FILES = new Set(SPECTRUM_GLOBAL_TOKENS.map((t) => t.file));
 
 // Custom token additions and overrides in /custom
 const CUSTOM_TOKENS = [
@@ -655,9 +656,33 @@ async function loadTokenJson(file, src) {
   }
 }
 
+// Discover per-component token files (everything in src/ that is not a global).
+// These reference global tokens via aliases, so aliases are kept as var()
+// references (resolveAliases: false), matching how component color/typography
+// tokens were emitted before the 15.x per-component file split.
+async function getComponentTokenFiles() {
+  // package.json is not exported, so resolve a known src file to locate src/.
+  const srcDir = dirname(
+    require.resolve('@adobe/spectrum-tokens/src/color-palette.json')
+  );
+  const entries = await readdir(srcDir);
+
+  return entries
+    .filter((f) => f.endsWith('.json'))
+    .map((f) => f.slice(0, -5))
+    .filter((f) => !GLOBAL_TOKEN_FILES.has(f))
+    .sort();
+}
+
 async function loadTokenSources() {
+  const componentFiles = await getComponentTokenFiles();
   const sources = [
-    ...SPECTRUM_TOKENS.map((t) => ({ ...t, src: 'spectrum' })),
+    ...SPECTRUM_GLOBAL_TOKENS.map((t) => ({ ...t, src: 'spectrum' })),
+    ...componentFiles.map((file) => ({
+      file,
+      resolveAliases: false,
+      src: 'spectrum',
+    })),
     ...CUSTOM_TOKENS.map((t) => ({ ...t, src: 'custom' })),
   ];
 
