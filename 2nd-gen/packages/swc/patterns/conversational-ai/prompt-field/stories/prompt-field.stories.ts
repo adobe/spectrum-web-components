@@ -20,8 +20,6 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import '../../upload-attachment/swc-upload-attachment.js';
 import '../swc-prompt-field.js';
 
-import type { PromptField } from '../PromptField.js';
-
 // ────────────────
 //    METADATA
 // ────────────────
@@ -550,23 +548,9 @@ class PromptFieldBehaviorDemo extends LitElement {
     input.value = '';
   }
 
-  private async _handleDrop(event: Event): Promise<void> {
+  private _handleDrop(event: Event): void {
     const { files } = (event as CustomEvent<{ files: File[] }>).detail;
-    const promptField = event.target as PromptField;
-    const inputHadFocus =
-      promptField.shadowRoot?.activeElement instanceof HTMLTextAreaElement;
-    const nextAttachments = filesToAttachments(files);
-    this.attachments = [...this.attachments, ...nextAttachments];
-
-    if (inputHadFocus || nextAttachments.length === 0) {
-      return;
-    }
-
-    await this.updateComplete;
-    await promptField.updateComplete;
-    this.querySelector<HTMLElement>(
-      `[data-attachment-id="${nextAttachments[0].id}"]`
-    )?.focus();
+    this.attachments = [...this.attachments, ...filesToAttachments(files)];
   }
 
   private _handleAttachmentDismiss(event: Event): void {

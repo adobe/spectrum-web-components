@@ -165,7 +165,7 @@ The attachment strip is a `role="region"` landmark (labeled `attachment-strip-la
 - Use `accessible-label` only when a distinct non-visual name is required
 - Use `placeholder` as a hint, not a replacement for the label
 - Ensure attachment content slotted into `attachment` slot includes descriptive text
-- After handling `swc-prompt-field-drop`, preserve focus in the prompt input when it was already there. Otherwise, move focus to the first newly rendered attachment so keyboard and screen reader users can review the result of the drop
+- After handling `swc-prompt-field-drop`, preserve the user's current focus. Newly rendered attachments remain available in the normal tab order
 - Drag and drop is a progressive enhancement, not the only way to attach a file: native browser drag-and-drop has no keyboard equivalent, so the **`+`** button must stay available and fully functional for keyboard and screen reader users
 
 <Canvas of={PromptFieldStories.Accessibility} />
