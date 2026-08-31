@@ -129,9 +129,18 @@ export function observeAttribute(
     if (listeners.size === 0) {
       attributes.delete(attribute);
       if (attributes.size === 0) {
+        // The target itself is fully dropped — `MutationObserver` has no
+        // per-target `unobserve()`, so this requires the full
+        // disconnect-and-reconnect-everyone-else dance.
         registry.delete(target);
+        reconnectAll();
+      } else {
+        // The target is still watched for its other attributes; shrink its
+        // filter in place via `observeTarget()` instead of `reconnectAll()`,
+        // so an unrelated attribute unsubscribing on one element doesn't
+        // force a full disconnect/re-observe of every other watched element.
+        observeTarget(target, attributes);
       }
-      reconnectAll();
     }
   };
 }

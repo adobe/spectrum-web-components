@@ -77,6 +77,36 @@ describe('observeAttribute', () => {
     unsubscribeB();
   });
 
+  it('keeps watching a target for its other attributes after one attribute unsubscribes', async () => {
+    const el = await fixture<HTMLDivElement>(html`
+      <div></div>
+    `);
+    let dirCount = 0;
+    let langCount = 0;
+
+    const unsubscribeDir = observeAttribute(el, 'dir', () => dirCount++);
+    const unsubscribeLang = observeAttribute(el, 'lang', () => langCount++);
+
+    // Only `lang` is dropped here; `dir` is still watched on the same
+    // target, so this should shrink the target's filter in place rather
+    // than fully disconnecting and re-observing.
+    unsubscribeLang();
+
+    el.setAttribute('dir', 'rtl');
+    el.setAttribute('lang', 'he');
+    await flushObserver();
+
+    expect(
+      dirCount,
+      'dir listener still fires after lang unsubscribes'
+    ).to.equal(1);
+    expect(langCount, 'lang listener does not fire once unsubscribed').to.equal(
+      0
+    );
+
+    unsubscribeDir();
+  });
+
   it("does not drop a pending mutation record when reconnect() runs before it's delivered", async () => {
     const elA = await fixture<HTMLDivElement>(html`
       <div></div>
