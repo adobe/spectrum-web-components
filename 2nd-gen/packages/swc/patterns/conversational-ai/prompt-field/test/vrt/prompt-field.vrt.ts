@@ -139,6 +139,7 @@ type FieldCase = {
   generating?: boolean;
   collapsed?: boolean;
   disabled?: boolean;
+  dragged?: boolean;
   value?: string;
   attachment?: AttachmentKind;
   buttonState?: ButtonState;
@@ -152,6 +153,7 @@ const renderField = ({
   generating = false,
   collapsed = false,
   disabled = false,
+  dragged = false,
   value = '',
   attachment = 'none',
   buttonState,
@@ -169,6 +171,7 @@ const renderField = ({
         ?generating=${generating}
         ?collapsed=${collapsed}
         ?disabled=${disabled}
+        ?data-dragged-state=${dragged}
         value=${value}
         data-button-state=${buttonState ?? nothing}
       >
@@ -223,6 +226,11 @@ const ANATOMY_PERMUTATIONS = createPermutations([
     value: [SHORT_PROMPT],
     attachment: ['manyMedia'],
     buttonState: ['focus-visible'],
+  },
+  {
+    group: ['Dragged'],
+    dragged: [true],
+    value: [SHORT_PROMPT],
   },
 ]);
 
@@ -295,6 +303,31 @@ const makeFileDataTransfer = (): DataTransfer => {
   return dataTransfer;
 };
 
+const forceDraggedStates = async ({
+  canvasElement,
+}: {
+  canvasElement: HTMLElement;
+}) => {
+  const dataTransfer = makeFileDataTransfer();
+  const fields = canvasElement.querySelectorAll<PromptField>(
+    'swc-prompt-field[data-dragged-state]'
+  );
+
+  await Promise.all(
+    [...fields].map(async (field) => {
+      field.dispatchEvent(
+        new DragEvent('dragover', {
+          bubbles: true,
+          cancelable: true,
+          composed: true,
+          dataTransfer,
+        })
+      );
+      await field.updateComplete;
+    })
+  );
+};
+
 // Stack a group's fields vertically instead of packing them side by side.
 const stack = (cases: FieldCase[]) => html`
   <div
@@ -321,38 +354,8 @@ export const Permutations: Story = {
   parameters: vrtParameters,
   play: async (context) => {
     await forceButtonStates(context);
+    await forceDraggedStates(context);
     await pauseLoaders(context);
-  },
-};
-
-export const Dragged: Story = {
-  render: () =>
-    bothThemes(
-      stack([
-        { variant: 'subtle', value: SHORT_PROMPT },
-        { variant: 'prominent', generating: true, value: SHORT_PROMPT },
-      ])
-    ),
-  parameters: vrtParameters,
-  play: async ({ canvasElement }) => {
-    const dataTransfer = makeFileDataTransfer();
-    const fields =
-      canvasElement.querySelectorAll<PromptField>('swc-prompt-field');
-
-    await Promise.all(
-      [...fields].map(async (field) => {
-        field.dispatchEvent(
-          new DragEvent('dragover', {
-            bubbles: true,
-            cancelable: true,
-            composed: true,
-            dataTransfer,
-          })
-        );
-        await field.updateComplete;
-      })
-    );
-    await pauseLoaders({ canvasElement });
   },
 };
 
