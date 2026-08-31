@@ -238,7 +238,7 @@ const preview = {
           [
             'AI Toolkit',
             [
-              'Pattern overview',
+              'Conversational pattern overview',
               'Prompt field',
               'User message',
               '*',
