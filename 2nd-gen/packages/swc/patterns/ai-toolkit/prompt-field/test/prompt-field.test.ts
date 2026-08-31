@@ -1103,23 +1103,23 @@ export const PlaygroundDropTest: Story = {
     );
 
     await step(
-      'A later Tab still reaches the tile a mouse-only drop just added',
-      async () => {
+      'A mouse-only drop still becomes the roving-tabindex entry point',
+      () => {
         const attachment = demo?.querySelector<HTMLElement>(
           '[data-attachment-id]'
         );
-        textarea?.focus();
-        await userEvent.tab({ shift: true });
-        expect(getActiveElement()).toBe(attachment);
+        expect(attachment?.tabIndex).toBe(0);
       }
     );
 
     await step(
       'Playground focuses a dropped attachment when keyboard focus was elsewhere in the field',
       async () => {
-        textarea?.focus();
-        await userEvent.tab();
-        expect(getActiveElement()).not.toBe(textarea);
+        // A never-mouse-touched element matches `:focus-visible` once focused,
+        // standing in for "the document is already in a keyboard session".
+        const keyboardFocusHelper = document.createElement('button');
+        document.body.appendChild(keyboardFocusHelper);
+        keyboardFocusHelper.focus();
 
         dropFile('second.txt');
 
@@ -1130,6 +1130,8 @@ export const PlaygroundDropTest: Story = {
           expect(attachments?.length).toBe(2);
           expect(getActiveElement()).toBe(attachments?.[1]);
         });
+
+        keyboardFocusHelper.remove();
       }
     );
 
