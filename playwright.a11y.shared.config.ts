@@ -51,6 +51,7 @@ export const secondGenA11yProject: PlaywrightTestProject = {
   testMatch: [
     '**/packages/swc/components/*/test/**/*.a11y.spec.ts',
     '**/packages/swc/patterns/ai-toolkit/*/test/**/*.a11y.spec.ts',
+    '**/packages/icons/test/**/*.a11y.spec.ts',
   ],
   use: {
     ...devices['Desktop Chrome'],

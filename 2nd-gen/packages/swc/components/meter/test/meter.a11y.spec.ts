@@ -58,7 +58,7 @@ test.describe('Meter - ARIA Snapshots', () => {
       - meter "Small"
       - meter "Medium"
       - meter "Large"
-      - meter "Extra-large"
+      - meter "Extra large"
     `);
   });
 

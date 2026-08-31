@@ -23,6 +23,7 @@ import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 import {
   forcedColorsVrtParameters,
   row,
+  SIZE_LABELS,
   theme,
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
@@ -42,14 +43,6 @@ export default meta;
 
 const iconSvg = Chevron100Icon();
 
-const sizeLabels = {
-  xs: 'Extra-small',
-  s: 'Small',
-  m: 'Medium',
-  l: 'Large',
-  xl: 'Extra-large',
-} as const satisfies Record<IconSize, string>;
-
 const icon = ({
   size,
   accessibleLabel,
@@ -65,7 +58,7 @@ const icon = ({
 const permutationContent = () => html`
   ${row(
     ICON_VALID_SIZES.map((size) =>
-      icon({ size, accessibleLabel: sizeLabels[size] })
+      icon({ size, accessibleLabel: SIZE_LABELS[size] })
     ),
     'Sizes'
   )}
