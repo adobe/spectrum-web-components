@@ -663,7 +663,7 @@ jobs:
               -H "Authorization: Bearer $GITHUB_TOKEN" \
               -H "Accept: application/vnd.github+json" \
               "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/statuses/$CIRCLE_SHA1" \
-              -d '{"state":"success","context":"<< parameters.gen >>-tests","description":"All << parameters.gen >> checks passed"}'
+              -d '{"state":"success","context":"<< parameters.gen >>-tests-status","description":"All << parameters.gen >> checks passed"}'
 
 workflows:
   # ---------------------------------------------------------------------------
@@ -731,7 +731,7 @@ workflows:
       # (visual, hcm-visual) and beta-docs are left out — they're branch-filtered
       # (forks skip VRT, beta-docs is main-only) so can't gate uniformly.
       - report-gen-status:
-          name: gen1-tests
+          name: gen1-tests-status
           gen: gen1
           requires:
             - build
@@ -740,6 +740,13 @@ workflows:
             - test-firefox
             - test-webkit
             - test-chromium-coverage
+            - hcm-visual
+            - express-dark-large-rtl
+            - express-light-medium-ltr
+            - spectrum-dark-large-rtl
+            - spectrum-light-medium-ltr
+            - spectrum-two-dark-large-rtl
+            - spectrum-two-light-medium-ltr
 
   gen2:
     when: << pipeline.parameters.run_gen2 >>
@@ -766,7 +773,7 @@ workflows:
           requires: [build-gen2-storybook]
       # Posts the required gen2-tests status once every gen2 job passes.
       - report-gen-status:
-          name: gen2-tests
+          name: gen2-tests-status
           gen: gen2
           requires:
             - build-gen2
