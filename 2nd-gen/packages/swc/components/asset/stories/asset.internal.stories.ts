@@ -57,7 +57,7 @@ export default meta;
 export const Playground: Story = {
   args: {
     label: 'Background',
-    'default-slot': `<img src="./images/card-preview.jpg" alt="preview of background" />`,
+    'default-slot': `<img src="./images/avatar-preview.png" alt="preview of background" />`,
   },
   tags: ['dev'],
 };
@@ -69,7 +69,7 @@ export const Playground: Story = {
 export const Overview: Story = {
   args: {
     label: 'Background',
-    'default-slot': `<img src="./images/card-preview.jpg" alt="preview of background" />`,
+    'default-slot': `<img src="./images/avatar-preview.png" alt="preview of background" />`,
   },
   tags: ['overview'],
 };
@@ -85,7 +85,7 @@ export const Anatomy: Story = {
     ${template({
       ...args,
       label: 'images/profile_sm.png',
-      'default-slot': `<img src="./images/card-preview.jpg" alt="Headshot of Jenn" />`,
+      'default-slot': `<img src="./images/avatar-preview.png" alt="Headshot of Jenn" />`,
     })}
   `,
   tags: ['anatomy'],
@@ -110,7 +110,7 @@ export const Variants: Story = {
     ${template({
       ...args,
       label: 'banners/sunset.jpg',
-      'default-slot': `<img src="./images/card-preview.jpg" alt="sunset over a sandy beach" />`,
+      'default-slot': `<img src="./images/avatar-preview.png" alt="sunset over a sandy beach" />`,
     })}
   `,
   tags: ['options'],
@@ -135,7 +135,7 @@ export const Accessibility: Story = {
     ${template({
       ...args,
       label: 'User profile photo',
-      'default-slot': `<img src="./images/card-preview.jpg" alt="Profile photo of Maria Rodriguez, Senior Designer" />`,
+      'default-slot': `<img src="./images/avatar-preview.png" alt="Profile photo of Maria Rodriguez, Senior Designer" />`,
     })}
   `,
   tags: ['a11y'],
