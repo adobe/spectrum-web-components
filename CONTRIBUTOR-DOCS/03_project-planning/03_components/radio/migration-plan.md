@@ -56,9 +56,7 @@
 
 > **Epic SWC-2348** · Planning output. Must be reviewed before implementation begins.
 >
-> This plan covers **`swc-radio`, the individual radio item, only.** `swc-radio-group` (sibling discovery, mutual exclusion, roving tabindex, group-level `invalid`/`readonly`, and form participation for the set) is a separate migration and plan; see [`radio-group/accessibility-migration-analysis.md`](../radio-group/accessibility-migration-analysis.md).
->
-> This plan is **provisional** on one remaining point: whether `swc-radio` needs `FieldAssociationController` at all, or whether form-value participation belongs to `swc-radio-group` alone (**Q12**, blocking — see [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites) for the full reasoning). Two related questions are already settled and recorded in the [Decision log](#decision-log): `swc-radio` does not depend on `LabellingController`, and the gen1 Jira issue list has been pulled live with no qualifying open issues. Everything else draws on the [accessibility migration analysis](./accessibility-migration-analysis.md), which is authoritative for the 2nd-gen semantic design and was authored against the approved [forms strategy RFC](../../05_strategies/forms-strategy-rfc.md) (SWC-1888).
+> This plan covers **`swc-radio`, the individual radio item, only.** `swc-radio-group` (sibling discovery, mutual exclusion, roving tabindex, group-level `invalid`/`readonly`, and form participation for the set) has its own separate migration plan. `swc-radio` cannot ship independently: it has no supported standalone usage (B3) and is documented only as part of `swc-radio-group`'s Storybook page (see [Related components and ordering notes](#related-components-and-ordering-notes) for the resulting delivery model). No open blockers remain in this plan; all resolved decisions are recorded in the [Decision log](#decision-log). Everything else draws on the [accessibility migration analysis](./accessibility-migration-analysis.md), which is authoritative for the 2nd-gen semantic design and was authored against the approved [forms strategy RFC](../../05_strategies/forms-strategy-rfc.md) (SWC-1888).
 
 ---
 
@@ -69,13 +67,14 @@
 - **No standalone Tab stop.** 1st-gen `sp-radio` defaults its own `tabIndex` to `0` and answers `Space` itself so it can be used outside a group. 2nd-gen drops that: tabindex management is delegated entirely to the enclosing `swc-radio-group`, matching the APG radio pattern. `swc-radio` is not supported as a standalone control.
 - **Per-item `description` ships as a new capability: a named `description` slot.** [React Spectrum's `Radio`](https://react-spectrum.adobe.com/RadioGroup) supports an optional description per item (the reference screenshot supplied for this plan shows "Standard Shipping (Free)" / "Delivers in 5–7 business days"). Design has confirmed this is in scope. Wired via same-root `aria-describedby`, the same pattern `swc-text-field` uses.
 - **No dependency on `LabellingController`; label/description wiring is implemented directly** via a real, same-root `<label for="…">` and the already-built `SlotPresenceController`. See the [Decision log](#decision-log) for why.
-- **Form-value participation is provisionally a `swc-radio-group`-only concern, not per-item — blocking, pending a11y SME sign-off (Q12).** See [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites) for the full reasoning; this reverses what both a11y docs currently specify, so it isn't treated as settled yet.
-- **Group-level coordination (`RadioGroupController`, SWC-2470) is explicitly out of scope for this plan.** It affects how `swc-radio-group` discovers and drives its items, not this item's own API; tracked in the [radio group doc](../radio-group/accessibility-migration-analysis.md#recommendations-swc-radio-group).
+- **Form-value participation lives entirely on `swc-radio-group`, not per-item (Q12, resolved with a11y SME review).** `swc-radio` does not depend on `FieldAssociationController`. See [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites) and [Decision log](#decision-log) for the reasoning.
+- **Group-level coordination (`RadioGroupController`, SWC-2470) is explicitly out of scope for this plan.** It affects how `swc-radio-group` discovers and drives its items, not this item's own API; tracked as a subticket of `swc-radio-group`'s own migration-plan ticket, SWC-2546.
 - **Visual API is close to a straight carryover.** Sizes (`s`/`m`/`l`/`xl`), `emphasized`, checked/unchecked, hover, and disabled all match between 1st-gen, the rendering analysis, and the Figma size/state/emphasis matrix supplied for this plan. The ~27 `--mod-radio-*` custom properties are not carried forward.
+- **Delivery is combined with `swc-radio-group` on a shared feature branch.** `swc-radio` cannot ship or be documented independently, so implementation (Phase 2 onward) is tracked jointly with `swc-radio-group` rather than as two parallel component migrations. See [Related components and ordering notes](#related-components-and-ordering-notes).
 
 ### Most blocking open questions
 
-- **Q12** in [Architecture and behavior](#architecture-and-behavior): whether `FieldAssociationController`/form-value participation belongs solely on `swc-radio-group` or must also live per-item on `swc-radio`. **Blocking** — see [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites) for the full reasoning behind the provisional group-only recommendation.
+None currently — all resolved; see [Decision log](#decision-log).
 
 ---
 
@@ -162,9 +161,8 @@ This full modifier surface will not be carried forward to 2nd-gen.
 | `@spectrum-web-components/base` | workspace | `SizedMixin`, `SpectrumElement`, decorators. |
 | `@spectrum-web-components/shared` | workspace | `FocusVisiblePolyfillMixin`. **Dropped in 2nd-gen** — native `:focus-visible` on the real input replaces the polyfill and its synthetic-keydown autofocus trick. |
 | `SlotPresenceController` | already built | Gates the optional `description` slot/`aria-describedby` on whether the slot actually has content. See [`2nd-gen/packages/core/controllers/slot-presence-controller/`](../../../../2nd-gen/packages/core/controllers/slot-presence-controller/slot-presence-controller.mdx). Not a sequenced dependency — available now. |
-| `FieldAssociationController` (SWC-2467) | **not yet built**; **provisional, blocking (Q12)** | `ElementInternals` form participation — whether this is a `swc-radio` dependency at all, see [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites). |
 
-`swc-radio` does **not** depend on `LabellingController`; see the [Decision log](#decision-log).
+`swc-radio` does **not** depend on `LabellingController` or `FieldAssociationController`; see the [Decision log](#decision-log). Form-value participation (`FieldAssociationController`, SWC-2467) is `swc-radio-group`'s dependency, not this item's.
 
 `@spectrum-web-components/field-group`, `@spectrum-web-components/help-text`, and `@spectrum-web-components/reactive-controllers` are listed in the package's `package.json` but are consumed by `RadioGroup`, not `Radio` — `Radio.ts` itself does not import them. They are out of scope for this item-only plan; see the [radio group doc](../radio-group/accessibility-migration-analysis.md) for the group's dependencies, including `RovingTabindexController` (1st-gen) and its 2nd-gen successor, `FocusgroupNavigationController`.
 
@@ -180,35 +178,33 @@ This full modifier surface will not be carried forward to 2nd-gen.
 
 ### Dependency-aware recommendation
 
-`swc-radio` does not extend another 2nd-gen component and is not itself a shared base. It depends on one already-built shared controller (`SlotPresenceController`) and does not depend on `LabellingController` at all (see the [Decision log](#decision-log)). Whether it depends on `FieldAssociationController` is **provisional and blocking (Q12)**:
+`swc-radio` does not extend another 2nd-gen component and is not itself a shared base. It depends on one already-built shared controller (`SlotPresenceController`) and does not depend on `LabellingController` or `FieldAssociationController` (see the [Decision log](#decision-log) for both).
 
-**Provisional recommendation: form-value participation belongs to `swc-radio-group` alone, not `swc-radio`.** The inner `<input type="radio">` in each item's shadow root is invisible to an ancestor light-DOM `<form>` regardless of where `ElementInternals` attaches, so the mechanism is needed somewhere — but not necessarily per item. Per the HTML spec, a "radio button group" is scoped to a single tree, and each item's shadow root is its own separate tree, so giving every item's inner input a shared `name` never produces native cross-item mutual exclusion anyway; `swc-radio-group` already has to hand-roll that in JS. Centralizing form participation there too (one `ElementInternals`, one `setFormValue(this.selected)` call site driven by the group's already-authoritative `selected` state) avoids keeping N per-item `ElementInternals` instances in lockstep with that same state, and matches how `invalid`, `readonly`, coordinated reset, and constraint validation already concentrate at the group level in both a11y docs.
+**Resolved: form-value participation belongs to `swc-radio-group` alone, not `swc-radio`.** The inner `<input type="radio">` in each item's shadow root is invisible to an ancestor light-DOM `<form>` regardless of where `ElementInternals` attaches, so the mechanism is needed somewhere, but not per item. Per the HTML spec, a "radio button group" is scoped to a single tree, and each item's shadow root is its own separate tree, so giving every item's inner input a shared `name` never produces native cross-item mutual exclusion anyway; `swc-radio-group` already has to hand-roll that in JS. Centralizing form participation there too (one `ElementInternals`, one `setFormValue(this.selected)` call site driven by the group's already-authoritative `selected` state) avoids keeping N per-item `ElementInternals` instances in lockstep with that same state, and matches how `invalid`, `readonly`, coordinated reset, and constraint validation already concentrate at the group level in both a11y docs. Confirmed with a11y SME review; this reverses what `accessibility-migration-analysis.md` (this item's own doc) and `radio-group/accessibility-migration-analysis.md` originally specified, both of which said value submission happens per-item — both docs should be updated to reflect the group-only direction.
 
-**Why this stays blocking rather than resolved:** it reverses what `accessibility-migration-analysis.md` (this item's own a11y doc) and `radio-group/accessibility-migration-analysis.md` currently specify, both of which say value submission happens per-item. An a11y SME should confirm nothing per-item-specific is being missed (for example, a FACE spec nuance, or a reason `ElementInternals.states` / custom states might still be wanted per item independent of form value) before this is treated as settled in either document.
+1. `swc-radio` has no dependency on `FieldAssociationController`; no sequencing wait on `swc-text-field`'s controller work applies to this item.
+2. `swc-radio-group`'s plan picks up `FieldAssociationController` as its own dependency, sequenced behind `swc-text-field` proving it out.
 
-If the provisional direction is confirmed:
-
-1. `swc-radio` drops `FieldAssociationController` as a dependency entirely; no sequencing wait on `swc-text-field`'s controller work is needed for this item.
-2. `swc-radio-group`'s plan picks up `FieldAssociationController` as its own dependency, sequenced behind `swc-text-field` proving it out, same as before — just relocated to the group's plan instead of this one.
-
-If the SME review finds a real per-item need instead, revert to the original plan: `swc-radio` depends on `FieldAssociationController`, sequenced as an early consumer once `swc-text-field` proves it out, without duplicating its logic in the meantime.
-
-Label association (`<label for>`) and description gating (`SlotPresenceController`) are unaffected by this question either way, since neither depends on `FieldAssociationController`.
+Label association (`<label for>`) and description gating (`SlotPresenceController`) were never affected by this question, since neither depends on `FieldAssociationController`.
 
 ### Related components and ordering notes
 
-- **`swc-radio-group`**: the coordinating parent; a separate migration and plan. It owns sibling discovery, mutual exclusion, roving tabindex, and the relocated `invalid`/`readonly` state. Whether the group's own item coordination (`select()`/`deselect()` hooks) is driven by a dedicated `RadioGroupController` (SWC-2470, research spike) or composed inline is tracked in the [radio group doc](../radio-group/accessibility-migration-analysis.md#recommendations-swc-radio-group) and does not change this item's recommendations. Three implementation notes for that plan, surfaced here because they came up while planning the item:
+- **`swc-radio-group`**: the coordinating parent. `swc-radio` cannot ship or be documented independently, so delivery is structured accordingly:
+  - **Separate migration-plan ticket, combined implementation.** `swc-radio-group` gets its own Phase 1 migration-plan ticket, SWC-2546. SWC-2470 (the ticket previously scoped as "decide whether a `RadioGroupController` is needed") is now a subticket of SWC-2546 rather than being repurposed into it — its narrower research question still needs answering, just as an input to the group's plan rather than the plan itself. The remaining implementation phases (setup/API, styling, testing, docs, review) are **combined** with this item's existing tickets (SWC-2351–2355) rather than tracked as a second parallel set, the same pattern used for a container-and-children pair like Tabs or Accordion. Those tickets keep their current titles (the "Radio" component name, per docs naming, already covers both); only their descriptions extend to cover `swc-radio-group`.
+  - **Shared feature branch.** Both components' implementation lands on one feature branch, with each combined ticket still producing its own PR into that branch (standard practice for this kind of joint migration), and a single final PR merging the feature branch to `main` once both are complete.
+  - **Dependency-aware recommendation on SWC-2470:** whichever way that research resolves (a dedicated `RadioGroupController` vs. composing coordination inline), it does not block or complicate this item's own API — `swc-radio` only ever exposes a minimal `select()`/`deselect()`-style hook for the group to call, and that surface is stable regardless of which shape the group's internal coordination takes. So `swc-radio-group`'s plan does not need to resolve SWC-2470 before this item's implementation tickets can proceed.
   - **`size`/`emphasized` propagation:** rather than requiring the consumer to repeat `size`/`emphasized` on every single `<swc-radio>`, `swc-radio-group` should set them once and propagate them onto each item automatically. The existing `SlotAttributePropagationController` (`2nd-gen/packages/core/controllers/slot-attribute-propagation-controller/`) is the established pattern for exactly this: `ButtonGroup` already propagates `size` to its default slot's assigned elements, and `IllustratedMessage` propagates `size` to a named `actions` slot. `swc-radio-group` can use the same controller for both `size` and `emphasized` on its default slot. The item's own `size`/`emphasized` properties are unchanged by this; only the ergonomic burden of setting them per-item moves.
   - **Roving tabindex with `delegatesFocus`:** confirmed that `FocusgroupNavigationController` (which the group is expected to use, `skipDisabled: true`) already handles items whose real focusable target is nested inside their own shadow root. Its `resolveManagedFocusTarget`/`resolveManagedKeydownTarget` walk `event.composedPath()` with a `shadowRoot.activeElement` fallback specifically to solve "listeners on the shadow host see `event.target` retargeted... when focus lands on a descendant inside the shadow tree" — exactly the `swc-radio` situation. It sets `tabIndex` on the `<swc-radio>` host (from `getItems()`) and calls `.focus()` on that host; `delegatesFocus: true` then routes actual focus into the inner input. No controller changes needed.
-  - **`name` propagation likely unnecessary:** see B12. Under the provisional group-only `FieldAssociationController` direction (Q12), the inner input's `name` never reaches the outer `<form>` regardless, so propagating it is cosmetic at best.
-- **Checkbox**: the multi-select sibling pattern; not yet migrated to 2nd-gen. No ordering dependency in either direction. Checkbox's form semantics are genuinely per-item (multiple checkboxes can each independently contribute to `FormData`), unlike radio's single-value-for-the-set semantics, so checkbox is likely to need its own `FieldAssociationController` regardless of how **Q12** resolves for radio — this item's `swc-radio-group`-only recommendation does not necessarily generalize to checkbox. Checkbox may still want the same `<label for>` + `SlotPresenceController` pattern this plan lands on for labelling/description, and the same `SlotAttributePropagationController` pattern for `size`, as reusable implementation patterns.
+  - **`name` propagation not needed:** see B12. With form-value participation resolved as group-only, the inner input's `name` never reaches the outer `<form>` regardless, so propagating it would be cosmetic only. Dropped.
+  - **Storybook docs:** `swc-radio` gets no standalone docs page; its usage is documented entirely within `swc-radio-group`'s page (see the Documentation section of the [Migration checklist](#migration-checklist)).
+- **Checkbox**: the multi-select sibling pattern; not yet migrated to 2nd-gen. No ordering dependency in either direction. Checkbox's form semantics are genuinely per-item (multiple checkboxes can each independently contribute to `FormData`), unlike radio's single-value-for-the-set semantics, so checkbox is likely to need its own `FieldAssociationController`, unlike `swc-radio`. Checkbox may still want the same `<label for>` + `SlotPresenceController` pattern this plan lands on for labelling/description, and the same `SlotAttributePropagationController` pattern for `size`, as reusable implementation patterns.
 - **Shared `_lit-styles/` fragment and render template — resolved, not needed for `swc-radio`.** `swc-text-field`'s plan proposes a shared `form-fields` stylesheet and a `.swc-FormFieldTemplate` grid (label-position `top`/`side`) for its own `LabellingController`-rendered output. `swc-radio`'s anatomy (button, inline label, optional description; no label-position modes, no error state at the item level) is a genuinely different shape, so `swc-radio` does not consume either the shared stylesheet or a shared render template — its render output is simple enough to author directly. `swc-radio-group`, which is more field-like (it owns label/description/error placement for the whole set), may still be a reasonable consumer of the shared `form-fields` stylesheet; that's its plan's decision, not this one's.
 - **Global element stylesheet**: no `stylesheets/global/global-radio.css` is anticipated; radio is always used within a group's styling context, not as a bare global element like link/button. Mark **N/A** unless Design requests a global baseline.
 
 ### User confirmation needed
 
-- **Blocking:** get a11y SME review and sign-off on moving `FieldAssociationController`/form-value participation to `swc-radio-group` only (**Q12**) before finalizing this item's dependencies or `radio-group`'s.
-- Confirm the decision to skip `LabellingController` entirely for `swc-radio` (see [Decision log](#decision-log)).
+- Confirm the decision to skip `LabellingController` and `FieldAssociationController` entirely for `swc-radio` (see [Decision log](#decision-log)) is reflected once `radio-group/accessibility-migration-analysis.md` is updated to match.
+- Confirmed: the combined-delivery model above (separate migration-plan ticket SWC-2546 for `swc-radio-group`, SWC-2470 linked as its subticket, combined implementation tickets SWC-2351–2355, shared feature branch) is set up in Jira.
 
 ---
 
@@ -252,8 +248,8 @@ Label association (`<label for>`) and description gating (`SlotPresenceControlle
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | B9 | `checked`/`aria-checked` come from the browser | Hand-written `aria-checked` in `updated()` | Native input's `checked` IDL property drives its own implicit `aria-checked`; `swc-radio`'s own `checked` stays in sync (source: [a11y analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties)) | None. |
 | B10 | `disabled` reflects onto the native input | Hand-written `aria-disabled` in `updated()`; `pointer-events: none` via CSS | Native `disabled` on the inner input removes it from the tab order and exposes disabled state to AT for free | None. |
-| B11 | Native form association | No `ElementInternals`; no native input to associate with a form at all | **Provisional, blocking — see Q12 in [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites).** | None for basic forms either way; gains real `FormData` participation. |
-| B12 | `name` propagation onto the inner input — likely unnecessary | N/A (no native input) | **Tied to Q12.** The a11y analysis recommends `swc-radio-group` forwarding `name` onto each item's inner input, but under the provisional group-only `FieldAssociationController` direction that input never reaches the outer `<form>` regardless of its `name`; propagating it would be cosmetic only. Recommend dropping this propagation unless Q12 resolves per-item after all. | None either way; `name` for form-submission purposes lives at the group level. |
+| B11 | Native form association | No `ElementInternals`; no native input to associate with a form at all | `swc-radio` has no `ElementInternals`/form-value participation of its own; `FieldAssociationController` (SWC-2467) is `swc-radio-group`'s dependency (see [Decision log](#decision-log)). | None for basic forms; gains real `FormData` participation via the group. |
+| B12 | `name` propagation onto the inner input — dropped | N/A (no native input) | The a11y analysis originally recommended `swc-radio-group` forwarding `name` onto each item's inner input, but that input never reaches the outer `<form>` regardless of its `name` (form participation is entirely `swc-radio-group`'s, via its own `ElementInternals`), so propagating it would be cosmetic only. Not implemented. | None; `name` for form-submission purposes lives at the group level. |
 | B13 | Same-root `aria-describedby` for `description` | N/A | Set on the inner input only when a description is actually present (source: [a11y analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties)) | None (additive AT improvement, tied to B4). |
 | B15 | Dev-mode warning for standalone usage | N/A | If `swc-radio` renders with no enclosing `swc-radio-group`, warn rather than silently rendering an inert control. | None (dev-time only). |
 
@@ -331,8 +327,8 @@ Initial expectation for Radio is a small reviewed set (likely control size and f
   - **Imperative sync (group → item, every selection change):** after the first render, `swc-radio-group` is the single source of truth. Whenever its `selected` changes (user interaction or a script setting `selected` directly), the group sets `checked` on each item to `item.value === this.selected`, so exactly one is ever checked and each item's own `checked` is always a reflection of the group's decision, never a competing source of truth (1st-gen's `validateRadios()` does this today).
   - `swc-radio` itself does not decide whether it's checked in steady state; it only proposes a change (via user activation, dispatching `change`) for the group to accept or reject.
 - **Disabled:** reflect onto the inner native input's `disabled` attribute; the browser removes it from the tab order and exposes disabled state to assistive technology without any hand-written `aria-disabled`.
-- **Form participation:** provisional and blocking — see **Q12** in [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites).
-- **Value/name:** `value` is a plain attribute the group reads and the form submits. Whether `name` is also forwarded onto the inner input is likely unnecessary under the group-only form-participation direction — see B12.
+- **Form participation:** none on `swc-radio` itself. `swc-radio-group` alone is the `FieldAssociationController` consumer, driven by its own `selected` state (resolved — see [Decision log](#decision-log)).
+- **Value/name:** `value` is a plain attribute the group reads and the form submits. `name` is not forwarded onto the inner input; see B12.
 - **Accessible name:** a real, same-root `<label for="…">` wraps/targets the named `label` slot's content and the inner input's generated `id`, matching Spectrum CSS's own reference anatomy for `.spectrum-Radio-label` (see [Decision log](#decision-log)).
 - **Description:** `SlotPresenceController` watches the `description` slot; when populated, `aria-describedby` on the inner input targets the description container's `id`. Implemented directly in `Radio.base.ts`.
 
@@ -350,7 +346,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 | Layer    | Path                                            | Contains                                                                                                                                                                                                                                          |
 | -------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Core** | `2nd-gen/packages/core/components/radio/` | `Radio.base.ts`, `Radio.types.ts`, value/checked normalization, wiring of the shared `SlotPresenceController`, and the standalone-usage dev-warning (B15). `FieldAssociationController`: see **Q12**. No rendering. |
+| **Core** | `2nd-gen/packages/core/components/radio/` | `Radio.base.ts`, `Radio.types.ts`, value/checked normalization, wiring of the shared `SlotPresenceController`, and the standalone-usage dev-warning (B15). No `FieldAssociationController` (that's `swc-radio-group`'s). No rendering. |
 | **SWC**  | `2nd-gen/packages/swc/components/radio/`  | `Radio.ts`, `radio.css`, `swc-radio` registration, stories, tests, and the specific S2 rendering/styling. |
 
 Planned rendering shape:
@@ -380,8 +376,7 @@ Planned rendering shape:
 - [ ] Create `2nd-gen/packages/swc/components/radio/`
 - [ ] Wire exports in both `package.json` files
 - [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
-- [ ] Resolve **Q12** (whether `FieldAssociationController` belongs on `swc-radio-group` only, or also on this item) with a11y SME review before proceeding with either implementation
-- [ ] If Q12 confirms a per-item need after all: confirm `FieldAssociationController` (SWC-2467) is available to depend on, or coordinate scheduling with the `swc-text-field` work building it
+- [ ] Confirm the shared feature branch for combined `swc-radio`/`swc-radio-group` delivery exists before opening implementation PRs against it
 
 ### API
 
@@ -395,7 +390,7 @@ Planned rendering shape:
 - [ ] Implement label association via a real `<label for="…">` targeting the inner input's generated `id`, wrapping the `label` slot's content (no `LabellingController` dependency)
 - [ ] Gate the optional `description` slot/`aria-describedby` with `SlotPresenceController`
 - [ ] Implement the standalone-usage dev-mode warning (B15)
-- [ ] Skip `name` propagation onto the inner input unless Q12 resolves per-item after all (B12)
+- [ ] Do not propagate `name` onto the inner input (B12)
 
 #### Alignment checks
 
@@ -432,8 +427,8 @@ Planned rendering shape:
 - [ ] `checked`/`aria-checked` come from the native inner input; never emits `"mixed"`
 - [ ] `disabled` reflects onto the inner input's native `disabled` rather than a hand-written `aria-disabled`
 - [ ] No per-item `readonly` or `invalid`/`aria-invalid` remains on `swc-radio`
-- [ ] If Q12 confirms a per-item `FieldAssociationController`: its `ElementInternals` never sets `internals.role`, and it excludes an unchecked radio's value from `FormData` (`setFormValue(null)`). If Q12 confirms the group-only recommendation: verify `swc-radio` correctly has no `ElementInternals`/form-value participation of its own.
-- [ ] `name` is not propagated onto the item's inner input unless Q12 resolves per-item after all (B12)
+- [ ] `swc-radio` has no `ElementInternals`/form-value participation of its own; `FieldAssociationController` lives entirely on `swc-radio-group`
+- [ ] `name` is not propagated onto the item's inner input (B12)
 - [ ] Receiving focus via Tab or `.focus()` never auto-selects; receiving focus via the group's arrow-key roving always does
 
 ### Testing
@@ -448,7 +443,7 @@ Planned rendering shape:
 - [ ] `swc-radio`'s shadow DOM contains a real `<input type="radio">`
 - [ ] `checked` stays in sync with the inner input's `checked`
 - [ ] `change` event dispatches on activation
-- [ ] Form-value participation matches however **Q12** resolves: either `swc-radio`'s own `FieldAssociationController` calls `setFormValue(value)`/`setFormValue(null)` per item, or `swc-radio-group` alone does via its `selected` state
+- [ ] Form-value participation happens on `swc-radio-group` alone (its `FieldAssociationController` calls `setFormValue`/`setFormValue(null)` off its own `selected` state), not on `swc-radio`
 
 #### Visual regression
 
@@ -468,7 +463,7 @@ Retain this section for any components with visual rendering, modifying as neede
 #### General
 
 - [ ] JSDoc on all public props, slots, and CSS custom properties
-- [ ] Storybook stories for sizes, emphasis, checked/unchecked, disabled, description, and standalone-usage dev-warning behavior (B15)
+- [ ] No standalone `swc-radio` Storybook docs page; document its sizes, emphasis, checked/unchecked, disabled, description, and standalone-usage dev-warning behavior (B15) as part of `swc-radio-group`'s docs page instead
 
 #### Breaking changes
 
@@ -478,7 +473,7 @@ Retain this section for any components with visual rendering, modifying as neede
 
 - [ ] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
 - [ ] Status table in workstream doc updated
-- [ ] PR created with description referencing Epic SWC-2348
+- [ ] PR created against the shared `swc-radio`/`swc-radio-group` feature branch (not directly against `main`), with a description referencing Epic SWC-2348
 - [ ] Peer engineer sign-off
 
 ---
@@ -498,9 +493,8 @@ _None currently — all resolved; see [Decision log](#decision-log)._
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q4 | `FieldAssociationController` does not exist yet (verified absent from `2nd-gen/packages/core/controllers/`), regardless of whether it ends up a dependency of `swc-radio` or only `swc-radio-group` (see **Q12**). Sequenced delivery tracked under `swc-text-field`'s epic (SWC-2323), not a blocker to this plan. | No | Open: track `swc-text-field`'s controller delivery | Architecture |
-| Q6 | `RadioGroupController` (SWC-2470) coordination shape is tracked in the radio group doc; this item's `select()`/`deselect()`-style hook shape depends on that decision but does not change this plan's recommendations. | No | Tracked in radio group workstream, not blocking here | Architecture |
-| Q12 | Whether `FieldAssociationController`/form-value participation belongs solely on `swc-radio-group` or must also live per-item on `swc-radio`. Full reasoning in [Dependency-aware recommendation](#dependency-aware-recommendation); reversing this touches both this doc and `radio-group/accessibility-migration-analysis.md`. | **Yes** | Provisionally resolved toward group-only; blocked on a11y SME review | Accessibility reviewer (a11y SME) + Architecture |
+| Q4 | `FieldAssociationController` does not exist yet (verified absent from `2nd-gen/packages/core/controllers/`). It is `swc-radio-group`'s dependency, not this item's (see [Decision log](#decision-log)). Sequenced delivery tracked under `swc-text-field`'s epic (SWC-2323), not a blocker to this plan. | No | Open: track `swc-text-field`'s controller delivery | Architecture |
+| Q6 | Whether `swc-radio-group` needs a dedicated `RadioGroupController` or composes coordination inline (SWC-2470). Genuinely unresolved architecture question; see [Related components and ordering notes](#related-components-and-ordering-notes) for why it doesn't block this plan regardless of outcome. | No | Tracked as a subticket of SWC-2546, not blocking here | Architecture |
 
 ### Scope and prerequisites
 
@@ -522,6 +516,8 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 | — / B14 | Label content moves to a named `label` slot; the default (unnamed) slot goes unused. | Matches the established `LinearProgressMixin` precedent (meter, progress-bar use `[slot="label"]`/`[slot="description"]`, not a default slot) and `swc-text-field`'s plan. Naming consistency across the label-bearing 2nd-gen components was judged more valuable than preserving 1st-gen's default-slot usage. |
 | Q2 | No truncation/clamp mode for the label at any size. | Figma matrix shows wrap only at every size; no 1st-gen or Figma evidence supports a truncation mode. |
 | Q3 | The reference description screenshot's visual treatment (font size, color, spacing under the label) maps onto Spectrum 2 tokens, not a React-Spectrum-specific style. | Confirmed. |
+| Q12 | Form-value participation belongs to `swc-radio-group` alone; `swc-radio` has no `FieldAssociationController` dependency (B11, B12). | Confirmed with a11y SME review; both `accessibility-migration-analysis.md` docs should be updated to match. Full reasoning in [Dependency-aware recommendation](#dependency-aware-recommendation), the sole detailed home for this decision. |
+| — | `swc-radio` cannot ship or be documented independently of `swc-radio-group`. | Combined-delivery model (separate migration-plan ticket SWC-2546, SWC-2470 as its subticket, combined implementation tickets SWC-2351–2355, shared feature branch, no standalone docs page). Full detail in [Related components and ordering notes](#related-components-and-ordering-notes), the sole detailed home for this decision. |
 | Q7 / B15 | `swc-radio` dev-warns when rendered standalone (no enclosing `swc-radio-group`). Promoted from additive to must-ship. | An accessibility safety-net for a misuse pattern is non-negotiable scope under this repo's "accessibility is non-negotiable" framing, not something to defer. |
 | Q8 | `size` gets an explicit default of `m`, dropping `noDefaultSize`. | Follows `swc-text-field`'s precedent; removes a 1st-gen quirk where the effective default depended on consumer CSS rather than the component itself. |
 | Q10 | `swc-radio` does not consume the shared `form-fields` `_lit-styles/` fragment or a shared render template. `swc-radio-group` may still be a consumer of the shared stylesheet. | `swc-radio`'s anatomy (button, inline label, optional description; no label-position modes, no item-level error state) is a genuinely different grid shape from the field-family template `swc-text-field` is building, so radio items don't fit it. The group, which owns label/description/error placement for the whole set, is more field-like and may still benefit from the shared stylesheet — that's its plan's decision. |
@@ -536,7 +532,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [Radio group accessibility migration analysis](../radio-group/accessibility-migration-analysis.md) — the coordinating parent; separate plan
 - [Forms strategy RFC (SWC-1888)](../../05_strategies/forms-strategy-rfc.md)
-- [Text field migration plan](../text-field/migration-plan.md) — the first form-field-related 2nd-gen implementation; source of the `FieldAssociationController` sequencing that either this plan or `swc-radio-group`'s depends on (pending **Q12**), and of the `LabellingController`/shared `form-fields` stylesheet this plan deliberately does not depend on (see [Decision log](#decision-log)) (not yet merged at time of drafting)
+- [Text field migration plan](../text-field/migration-plan.md) — the first form-field-related 2nd-gen implementation; source of the `FieldAssociationController` sequencing `swc-radio-group`'s plan depends on, and of the `LabellingController`/shared `form-fields` stylesheet this plan deliberately does not depend on (see [Decision log](#decision-log)) (not yet merged at time of drafting)
 - [`SlotPresenceController`](../../../../2nd-gen/packages/core/controllers/slot-presence-controller/slot-presence-controller.mdx) — already-built controller this plan uses to gate the `description` slot/`aria-describedby`
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [1st-gen source](../../../../1st-gen/packages/radio/src/Radio.ts)
@@ -548,12 +544,13 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 - Epic: SWC-2348, Radio migration epic
 - SWC-2349, radio a11y research ticket (source of the accessibility migration analysis)
 - SWC-2350, "[Radio] Analyze component and create migration plan" — **this document is its deliverable**
-- SWC-2351, "Update [Radio] file structure, API, TypeScript, and accessibility" — Setup/API phase, including the Q1 `description` API decision
-- SWC-2352, "[Radio] Full S2 visual fidelity" — Styling phase
-- SWC-2353, "[Radio] Review and complete test suites" — Testing phase
-- SWC-2354, "[Radio] Storybook docs and consumer migration guide" — Documentation phase
-- SWC-2355, "[Radio] Review and finalize migration" — Review phase
+- SWC-2351, "Update [Radio] file structure, API, TypeScript, and accessibility" — Setup/API phase, including the Q1 `description` API decision; description extended to combine `swc-radio-group` implementation (see [Decision log](#decision-log))
+- SWC-2352, "[Radio] Full S2 visual fidelity" — Styling phase; description extended to combine `swc-radio-group`
+- SWC-2353, "[Radio] Review and complete test suites" — Testing phase; description extended to combine `swc-radio-group`
+- SWC-2354, "[Radio] Storybook docs and consumer migration guide" — Documentation phase; description extended to combine `swc-radio-group` (`swc-radio` has no standalone docs page)
+- SWC-2355, "[Radio] Review and finalize migration" — Review phase; description extended to combine `swc-radio-group`
 - SWC-2466, `LabellingController` — not a `swc-radio` dependency; listed for context only (see [Decision log](#decision-log))
-- SWC-2467, `FieldAssociationController` — whether this is a `swc-radio` dependency at all, vs. `swc-radio-group`-only, is provisional and blocking (**Q12**)
-- SWC-2470, `RadioGroupController` research spike (group scope, not this item)
+- SWC-2467, `FieldAssociationController` — not a `swc-radio` dependency; it's `swc-radio-group`'s (resolved, see [Decision log](#decision-log))
+- SWC-2470, `RadioGroupController` research spike — now a subticket of SWC-2546 (`swc-radio-group`'s own migration-plan ticket), rather than being repurposed into it
+- SWC-2546, "[Radio Group] Analyze component and create migration plan" — `swc-radio-group`'s own Phase 1 ticket, created separately from this doc
 - SWC-1178, open a11y bug: visible group label missing — filed under the `Radio` component in Jira but concerns `swc-radio-group`'s label, not this item; already tracked in the [radio group accessibility migration analysis](../radio-group/accessibility-migration-analysis.md#related-1st-gen-accessibility-jira)
