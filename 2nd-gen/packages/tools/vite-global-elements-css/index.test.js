@@ -181,16 +181,18 @@ describe('transformSelector — reflected ARIA attributes', () => {
     ).toBe('.swc-ActionButton[aria-disabled="true"]');
   });
 
-  it('distinguishes aria-hidden="true" from aria-disabled="true" (no shared modifier collision)', () => {
-    expect(
-      transformSelector(':host([aria-hidden="true"])', 'swc-TabPanel')
-    ).toBe('.swc-TabPanel[aria-hidden="true"]');
-  });
-
-  it('real-world case: tab-panel.css :host([aria-hidden="true"])', () => {
-    expect(
-      transformSelector(':host([aria-hidden="true"])', 'swc-TabPanel')
-    ).toBe('.swc-TabPanel[aria-hidden="true"]');
+  it('distinguishes aria-hidden="true" from aria-disabled="true" (no shared modifier collision), real-world case: tab-panel.css', () => {
+    const hidden = transformSelector(
+      ':host([aria-hidden="true"])',
+      'swc-TabPanel'
+    );
+    const disabled = transformSelector(
+      ':host([aria-disabled="true"])',
+      'swc-TabPanel'
+    );
+    expect(hidden).toBe('.swc-TabPanel[aria-hidden="true"]');
+    expect(disabled).toBe('.swc-TabPanel[aria-disabled="true"]');
+    expect(hidden).not.toBe(disabled);
   });
 
   it(':host([aria-x="y"]) .block:is(*, :hover) → single compound selector, not a descendant selector', () => {

@@ -35,7 +35,7 @@ const SWC_PREFIXED_ATTRS = ['size', 'static-color'];
  * @param {string} attrName
  * @returns {boolean}
  */
-function isReflectedAttr(attrName) {
+function isAriaAttr(attrName) {
   return attrName.startsWith('aria-');
 }
 
@@ -225,8 +225,8 @@ function transformSingle(selector, block) {
   // modifier conversion and stay as native [attr="value"] attribute selectors,
   // since the generated global element genuinely carries them at runtime.
   const attrs = parseHostAttrs(rawArgs);
-  const ariaAttrs = attrs.filter(({ name }) => isReflectedAttr(name));
-  const bemAttrs = attrs.filter(({ name }) => !isReflectedAttr(name));
+  const ariaAttrs = attrs.filter(({ name }) => isAriaAttr(name));
+  const bemAttrs = attrs.filter(({ name }) => !isAriaAttr(name));
 
   const bemClass = bemAttrs
     .map(({ name, value }) => `.${block}--${buildModifier(name, value)}`)
@@ -254,7 +254,11 @@ function transformSingle(selector, block) {
   // `.block[open]`), it's still the same single element in global context —
   // fold the suffix onto the host selector rather than joining as a
   // descendant of a second, non-existent element.
-  if hostClass && (r.startsWith(blockClass) && /^[:[]/.test(r[blockClass.length])) {
+  if (
+    hostClass &&
+    r.startsWith(blockClass) &&
+    /^[:[]/.test(r[blockClass.length])
+  ) {
     return hostClass + r.slice(blockClass.length);
   }
 
