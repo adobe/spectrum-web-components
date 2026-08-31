@@ -76,13 +76,7 @@ export class ResponseStatusStep extends SpectrumElement {
   @state()
   private _hasDescription = false;
 
-  /**
-   * Perf prototype: mirrors the current label text so an inert clone can be
-   * rendered on top of the real label and masked to its glyph shapes for the
-   * shimmer overlay (see response-status-step.css). Kept separate from
-   * `_lastActiveLabel` below, which only tracks text while `status="active"`
-   * for the parent-notification event.
-   */
+  /** Mirrors the label text for the shimmer overlay clone (see .css). */
   @state()
   private _labelText = '';
 

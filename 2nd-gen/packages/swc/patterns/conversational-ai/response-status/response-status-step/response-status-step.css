@@ -188,13 +188,8 @@
   background: token("gray-75");
 }
 
-/* Perf prototype: sweep a bright band across the label using a masked,
-   `transform`-animated overlay instead of animating `background-position`
-   on the text itself. `translate` runs on the compositor, so this avoids a
-   repaint every frame. The overlay is an inert clone of the label kept in
-   sync with the real text via `_labelText`; it sits on top of the real
-   label, masked to that clone's own glyph shapes so the moving gradient
-   only shows through the letters. */
+/* Masked, `translate`-animated overlay clone of the label: cheaper to
+   animate on the compositor than sweeping `background-position` on the text. */
 .swc-ResponseStatusStep-titleShimmer {
   --swc-response-status-step-shimmer-spread: 4ch;
 
@@ -207,10 +202,12 @@
   pointer-events: none;
 }
 
+/* stylelint-disable property-no-vendor-prefix, declaration-property-value-no-unknown -- Chrome/Safari-only `text` clip value, no unprefixed equivalent yet */
 :host([status="active"]) .swc-ResponseStatusStep-titleShimmer {
-  mask-image: linear-gradient(white, white);
-  mask-clip: text;
+  -webkit-mask-image: linear-gradient(white, white);
+  -webkit-mask-clip: text;
 }
+/* stylelint-enable property-no-vendor-prefix, declaration-property-value-no-unknown */
 
 :host([status="active"]) .swc-ResponseStatusStep-titleShimmer::after {
   position: absolute;
