@@ -155,6 +155,10 @@
       "types": "./dist/controllers/color-controller/index.d.ts",
       "import": "./dist/controllers/color-controller/index.js"
     },
+    "./controllers/field-association-controller.js": {
+      "types": "./dist/controllers/field-association-controller/index.d.ts",
+      "import": "./dist/controllers/field-association-controller/index.js"
+    },
     "./controllers/focus-group-navigation-controller.js": {
       "types": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts",
       "import": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.js"
