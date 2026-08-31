@@ -12,6 +12,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import type { TestRunnerConfig } from '@storybook/test-runner';
 import { getStoryContext } from '@storybook/test-runner';
+import type { Page } from 'playwright';
 
 type StorybookA11yConfig = {
   disabledRules?: string[];
@@ -25,7 +26,28 @@ type StorybookTestContext = {
   };
 };
 
+// Wait for web fonts to settle so axe measures color-contrast against the final
+// glyphs, not the fallback face. `document.fonts.ready` resolves even when the
+// font CDN fails (unlike the custom `typekit-loaded` event), and the timeout
+// race guarantees the scan never hangs on a slow or blocked CDN.
+const FONT_SETTLE_TIMEOUT_MS = 3000;
+const waitForFonts = (page: Page) =>
+  page.evaluate(
+    (timeout: number) =>
+      new Promise<void>((resolve) => {
+        Promise.resolve(document.fonts.ready).then(() => resolve());
+        setTimeout(resolve, timeout);
+      }),
+    FONT_SETTLE_TIMEOUT_MS
+  );
+
 const config: TestRunnerConfig = {
+  // Render every story with reduced motion so axe never scans a mid-animation
+  // frame (e.g. pixel-loader, response-status agentic steps), which produces
+  // flaky color-contrast violations and shifting target elements.
+  async preVisit(page) {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+  },
   async postVisit(page, context) {
     const storyContext = (await getStoryContext(
       page,
@@ -41,6 +63,8 @@ const config: TestRunnerConfig = {
       targetPage: typeof page,
       viewLabel: 'story' | 'docs'
     ): Promise<string | null> => {
+      await waitForFonts(targetPage);
+
       const axeBuilder = new AxeBuilder({ page: targetPage })
         .include('#storybook-root')
         .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
@@ -120,10 +144,22 @@ const config: TestRunnerConfig = {
     // Check docs on a separate page so Storybook test-runner state remains intact.
     const docsPage = await page.context().newPage();
     try {
+      await docsPage.emulateMedia({ reducedMotion: 'reduce' });
       const docsUrl = new URL(page.url());
       docsUrl.searchParams.set('id', context.id);
       docsUrl.searchParams.set('viewMode', 'docs');
-      await docsPage.goto(docsUrl.toString(), { waitUntil: 'networkidle' });
+      // Wait for the element axe scans, not network quiet. `networkidle` is
+      // timing-based and unreliable against the external font CDN; the selector
+      // wait is deterministic, and the catch keeps a missing root from throwing.
+      await docsPage.goto(docsUrl.toString(), {
+        waitUntil: 'domcontentloaded',
+      });
+      await docsPage
+        .waitForSelector('#storybook-root', {
+          state: 'attached',
+          timeout: 15000,
+        })
+        .catch(() => {});
       const docsFailure = await analyzeView(docsPage, 'docs');
       if (docsFailure) {
         failures.push(docsFailure);

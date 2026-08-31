@@ -9,11 +9,19 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+// Cap how long a story waits for Adobe Fonts before rendering anyway. Typekit
+// loads from an external CDN (use.typekit.net); when it is slow, blocked, or
+// reports `inactive`, the `typekit-loaded` event never fires. Without this
+// ceiling the loader promise never resolves, the story never finishes
+// rendering, and the CI axe smoke test times out on a random story.
+const FONT_LOAD_TIMEOUT_MS = 3000;
+
 export const FontLoader = async () => ({
-  fonts: new Promise((resolve) => {
+  fonts: new Promise<void>((resolve) => {
     // First check if the fonts are already loaded
     if (typeof window.Typekit !== 'undefined') {
       resolve();
+      return;
     }
 
     // Listen for a custom event indicating the Adobe Fonts have loaded
@@ -22,5 +30,8 @@ export const FontLoader = async () => ({
         resolve();
       }
     });
+
+    // Fallback: never block the render on the external font CDN.
+    setTimeout(resolve, FONT_LOAD_TIMEOUT_MS);
   }),
 });
