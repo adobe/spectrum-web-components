@@ -17,7 +17,11 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '../swc-response-status.js';
 
-import { RESPONSE_STATUSES } from '../ResponseStatus.js';
+import {
+  PIXEL_LOADER_ICON_NAMES,
+  PIXEL_LOADER_PRESET_NAMES,
+  RESPONSE_STATUSES,
+} from '../ResponseStatus.js';
 
 // ────────────────
 //    METADATA
@@ -48,6 +52,17 @@ argTypes.open = {
     ...argTypes.open?.table,
     category: 'attributes',
     defaultValue: { summary: 'false' },
+  },
+};
+
+argTypes.loader = {
+  ...argTypes.loader,
+  control: { type: 'select' },
+  options: [...PIXEL_LOADER_PRESET_NAMES, ...PIXEL_LOADER_ICON_NAMES],
+  table: {
+    ...argTypes.loader?.table,
+    category: 'attributes',
+    defaultValue: { summary: 'mega' },
   },
 };
 
@@ -87,7 +102,8 @@ const meta: Meta = {
   args: {
     ...args,
     status: 'active',
-    open: true,
+    open: false,
+    loader: 'mega',
     'accessible-label': 'Execution steps',
     'label-slot': 'Searching repositories for Europe trips',
     'default-slot': activeStepsSlot,
@@ -101,6 +117,19 @@ const meta: Meta = {
     },
     layout: 'padded',
     additionalApiTables: ['swc-response-status-step'],
+    a11y: {
+      // The active-step shimmer clips an animated gradient through
+      // `background-clip: text` with `color: transparent`; axe samples
+      // whatever `background-position` the animation happens to be at when
+      // the scan runs, so its reported foreground color (and therefore the
+      // contrast ratio) is nondeterministic frame-to-frame rather than a
+      // real accessibility signal. The reduced-motion and forced-colors
+      // fallbacks already render this text with a flat, compliant color;
+      // see the media queries in response-status.css.
+      exclude: {
+        'color-contrast': ['.swc-ResponseStatusStep-title'],
+      },
+    },
   },
   excludeStories: ['meta'],
   tags: ['migrated'],
@@ -168,6 +197,28 @@ const completeSteps = html`
       Synthesizing findings into a structured comparison of available packages
       with pricing and availability.
     </span>
+  </swc-response-status-step>
+`;
+
+const stoppedSteps = html`
+  <swc-response-status-step status="complete">
+    <span slot="label">Looked through documentation</span>
+    <span slot="description">
+      Scanned internal knowledge base articles matching the query context.
+    </span>
+  </swc-response-status-step>
+  <swc-response-status-step status="complete">
+    <span slot="label">
+      Searching web for: Carnival cruise trip packages Europe Asia
+    </span>
+    <span slot="description">
+      Found 8 relevant results across travel aggregators and official cruise
+      line sites.
+    </span>
+  </swc-response-status-step>
+  <swc-response-status-step status="stopped">
+    <span slot="label">Searching repositories for Europe trips</span>
+    <span slot="description">Interrupted before this step could finish.</span>
   </swc-response-status-step>
 `;
 
@@ -253,6 +304,7 @@ export const Statuses: Story = {
       </swc-response-status>
       <swc-response-status status="stopped">
         <span slot="label">You stopped the response</span>
+        ${stoppedSteps}
       </swc-response-status>
     </div>
   `,
@@ -268,6 +320,23 @@ export const StatusOnly: Story = {
   tags: ['dev'],
 };
 
+export const GeneratingPresets: Story = {
+  render: () => html`
+    <div style="display:flex;flex-direction:column;gap:24px;">
+      ${PIXEL_LOADER_PRESET_NAMES.map(
+        (preset) => html`
+          <swc-response-status status="active" loader=${preset}>
+            <span slot="label">${preset}: Generating response</span>
+          </swc-response-status>
+        `
+      )}
+    </div>
+  `,
+  tags: ['options'],
+};
+
+GeneratingPresets.storyName = 'Generating presets';
+
 export const Steps: Story = {
   render: () => html`
     <swc-response-status
@@ -281,6 +350,98 @@ export const Steps: Story = {
   `,
   tags: ['options'],
 };
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+export const StepDisclosure: Story = {
+  render: () => html`
+    <swc-response-status
+      status="complete"
+      open
+      accessible-label="Execution steps"
+    >
+      <span slot="label">Thought for 9 seconds</span>
+      <swc-response-status-step status="complete" open>
+        <span slot="label">Looked through documentation</span>
+        <span slot="description">
+          Scanned 12 internal knowledge base articles matching the query context
+          and extracted key sections.
+        </span>
+      </swc-response-status-step>
+      <swc-response-status-step status="complete">
+        <span slot="label">
+          Searching web for: Carnival cruise trip packages Europe Asia
+        </span>
+        <span slot="description">
+          Found 8 relevant results across travel aggregators and official cruise
+          line sites.
+        </span>
+      </swc-response-status-step>
+      <swc-response-status-step status="complete">
+        <span slot="label">Compose response</span>
+        <span slot="description">
+          Synthesizing findings into a structured comparison of available
+          packages with pricing and availability.
+        </span>
+      </swc-response-status-step>
+    </swc-response-status>
+  `,
+  tags: ['behaviors'],
+};
+
+StepDisclosure.storyName = 'Step disclosure';
+
+export const LongDescription: Story = {
+  render: () => html`
+    <swc-response-status
+      status="active"
+      open
+      accessible-label="Execution steps"
+    >
+      <span slot="label">Reviewing internal documentation</span>
+      <swc-response-status-step status="complete">
+        <span slot="label">Looked through documentation</span>
+        <span slot="description">
+          Scanned 12 internal knowledge base articles matching the query
+          context.
+        </span>
+      </swc-response-status-step>
+      <swc-response-status-step status="active" open>
+        <span slot="label">Reviewing internal documentation</span>
+        <span slot="description">
+          Prioritizing data from your documents like the ‘2023 Annual Report’
+          and press releases related to Hilton. Cross-referencing each source
+          against the quarterly figures, reconciling discrepancies between the
+          filed numbers and the summary tables, and flagging any line items that
+          need a second pass. Compiling the supporting excerpts so the final
+          response can cite them directly, then ranking them by relevance to the
+          original question before moving on to the next repository. Checking
+          the footnotes and appendices for revised figures that supersede the
+          values printed in the main tables, and noting where management
+          commentary reframes a metric compared with the prior fiscal year.
+          Building a short provenance trail for each number so a reviewer can
+          trace it back to the exact page and paragraph it came from.
+          Normalizing currencies and reporting periods so figures from different
+          sources can be compared on equal footing, then setting aside anything
+          that cannot be reconciled for a follow-up query. Finally, drafting a
+          concise summary of the most material findings and the open questions
+          that still need confirmation before the response is composed.
+        </span>
+      </swc-response-status-step>
+      <swc-response-status-step status="active">
+        <span slot="label">Compose response</span>
+        <span slot="description">
+          Synthesizing findings into a structured comparison.
+        </span>
+      </swc-response-status-step>
+    </swc-response-status>
+  `,
+  tags: ['behaviors'],
+};
+
+LongDescription.storyName = 'Long description';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORY

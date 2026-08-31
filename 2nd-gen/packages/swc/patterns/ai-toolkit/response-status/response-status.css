@@ -34,7 +34,7 @@
   display: flex;
   gap: token("spacing-100");
   align-items: center;
-  block-size: var(--_swc-response-status-row-block-size, 32px);
+  min-block-size: var(--_swc-response-status-row-block-size, 32px);
   padding-inline: token("spacing-100");
 }
 
@@ -46,23 +46,24 @@
   background: transparent;
   border: none;
   border-radius: token("corner-radius-medium-default");
-  transition: background token("animation-duration-100") token("animation-ease-in-out");
 }
 
 .swc-ResponseStatus-label {
-  --swc-body-font-color: token("neutral-subdued-content-color-default");
+  --swc-body-font-color: token("gray-700");
+
+  text-align: start;
 }
 
 .swc-ResponseStatus-row--button .swc-ResponseStatus-label {
   flex: 1;
   min-inline-size: 0;
-  text-align: start;
 }
 
 /* Label + chevron trail (header label roll) */
 
 .swc-ResponseStatus-headerTrail {
   display: inline-flex;
+  gap: token("spacing-100");
   align-items: center;
   min-inline-size: 0;
 }
@@ -73,40 +74,46 @@
   overflow: hidden;
 }
 
-.swc-ResponseStatus-row--button .swc-ResponseStatus-headerTrail {
-  flex: 1;
-  min-inline-size: 0;
+/* Settled (no roll transition in flight): the fixed single-line height above
+   only matters mid-roll, so let the viewport grow to fit a wrapped label. */
+.swc-ResponseStatus-headerTrailViewport--settled {
+  block-size: auto;
+  overflow: visible;
 }
 
+.swc-ResponseStatus-row--button .swc-ResponseStatus-headerTrail,
 .swc-ResponseStatus-row--button .swc-ResponseStatus-headerTrailViewport {
   flex: 1;
   min-inline-size: 0;
 }
 
-.swc-ResponseStatus-headerTrailStrip {
-  display: flex;
-  flex-direction: column;
+/* The incoming line stays in normal flow, so the container's fit-content
+   width tracks the new label like any ordinary text; the outgoing line is
+   absolutely positioned on top of it at the same origin. Both approaches
+   read as a pure opacity cross-fade with no vertical movement (the chevron,
+   a fixed sibling of the viewport, never shifts as the fade runs), but
+   plain absolute stacking sidesteps a Safari rendering glitch seen with two
+   `grid-area: 1 / 1` items cross-fading in the same cell (garbled, doubled
+   text mid-transition instead of a clean blend). An absolutely positioned
+   element with only its start inset set still shrink-to-fits within its
+   containing block, so if the outgoing label is wider than the incoming
+   one, its own ellipsis (see the `.swc-ResponseStatus-label` rule below)
+   truncates it to match rather than overflowing past the container — a
+   reasonable trade-off since that text is already fading to transparent. */
+.swc-ResponseStatus-headerTrailCrossfade {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
   inline-size: fit-content;
   max-inline-size: 100%;
-  transform: translateY(0);
-  transition:
-    transform 650ms token("animation-ease-in-out"),
-    opacity 650ms token("animation-ease-in-out");
-}
-
-.swc-ResponseStatus-headerTrailStrip--rolling {
-  transform: translateY(-50%);
 }
 
 .swc-ResponseStatus-headerTrailLine {
   display: inline-flex;
-  gap: token("spacing-100");
   align-items: center;
   max-inline-size: 100%;
   block-size: var(--_swc-response-status-label-line-size, 1.33em);
   white-space: nowrap;
-  opacity: 1;
-  transition: opacity 325ms token("animation-ease-in-out");
 }
 
 .swc-ResponseStatus-headerTrailLine .swc-ResponseStatus-label {
@@ -116,59 +123,60 @@
   text-overflow: ellipsis;
 }
 
-.swc-ResponseStatus-headerTrailStrip--rolling .swc-ResponseStatus-headerTrailLine:first-child {
-  visibility: hidden;
+/* Settled: allow the label to wrap across multiple lines instead of
+   truncating to one, since a narrow container or a longer translation can
+   easily exceed one line's width. Mid-roll (no `--settled` class) keeps the
+   single line + ellipsis the cross-fade geometry above depends on. */
+.swc-ResponseStatus-headerTrailLine--settled {
+  block-size: auto;
+  white-space: normal;
 }
 
-/* Three-dot loading indicator */
+/* Capped rather than unbounded: the row sizes to this content (see
+   `.swc-ResponseStatus-row`'s `min-block-size`), so an unbounded label could
+   grow the row arbitrarily tall. Past the cap, the last visible line ellipses. */
+.swc-ResponseStatus-headerTrailLine--settled .swc-ResponseStatus-label {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  white-space: normal;
+  overflow: hidden;
+  -webkit-line-clamp: var(--swc-response-status-label-max-lines, 2);
+  line-clamp: var(--swc-response-status-label-max-lines, 2);
+}
 
-.swc-ResponseStatus-dots {
-  display: inline-flex;
+/* Outgoing/incoming labels start at their pre-transition opacity; the
+   `--engaged` class (added a frame later, mirroring the panel-open pattern
+   elsewhere in this file) flips both to their end value so the change is
+   what actually animates instead of a snap to the final state. Enter and
+   exit get different durations/easing per the motion spec: the incoming
+   label fades in slower than the outgoing one fades out. */
+.swc-ResponseStatus-headerTrailLine--exit {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  opacity: 1;
+  transition: opacity 150ms cubic-bezier(0.15, 0.47, 0.67, 0.77);
+}
+
+.swc-ResponseStatus-headerTrailLine--enter {
+  opacity: 0;
+  transition: opacity 350ms cubic-bezier(0.14, 0.45, 0.45, 0.99);
+}
+
+.swc-ResponseStatus-headerTrailCrossfade--engaged .swc-ResponseStatus-headerTrailLine--exit {
+  opacity: 0;
+}
+
+.swc-ResponseStatus-headerTrailCrossfade--engaged .swc-ResponseStatus-headerTrailLine--enter {
+  opacity: 1;
+}
+
+.swc-ResponseStatus-loader {
+  --swc-pixel-loader-size: 20px;
+  --swc-pixel-loader-color: token("gray-600");
+
   flex-shrink: 0;
-  gap: token("spacing-75");
-  align-items: center;
-  block-size: 6px;
-  color: token("gray-800");
-}
-
-.swc-ResponseStatus-dot {
-  inline-size: 6px;
-  block-size: 6px;
-  background: currentcolor;
-  border-radius: 50%;
-  opacity: 0.45;
-  animation: swc-response-status-dot-pulse 1.1s token("animation-ease-in-out") infinite;
-}
-
-.swc-ResponseStatus-dot:nth-child(1) {
-  color: token("gray-500");
-  animation-delay: 0s;
-}
-
-.swc-ResponseStatus-dot:nth-child(2) {
-  color: token("gray-600");
-  animation-delay: 0.15s;
-}
-
-.swc-ResponseStatus-dot:nth-child(3) {
-  color: token("gray-800");
-  animation-delay: 0.3s;
-}
-
-@keyframes swc-response-status-dot-pulse {
-  0%,
-  70%,
-  100% {
-    opacity: 0.35;
-  }
-
-  35% {
-    opacity: 1;
-  }
-}
-
-.swc-ResponseStatus-row--button:hover {
-  background: token("gray-100");
+  transition: all token("animation-duration-100") token("animation-ease-in-out");
 }
 
 /* ─────────────────────────────────────
@@ -177,11 +185,27 @@
 
 .swc-ResponseStatus-chevron {
   flex-shrink: 0;
-  transition: transform token("animation-duration-100") ease;
+  color: token("gray-700");
+  transition: transform token("animation-duration-100") cubic-bezier(0.21, 0, 0.15, 0.99);
 }
 
 .swc-ResponseStatus-chevron--down {
   transform: rotate(90deg);
+}
+
+.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-label {
+  --swc-body-font-color: token("gray-800");
+
+  transition: all token("animation-duration-100") token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-chevron {
+  color: token("gray-800");
+  transition: color token("animation-duration-100") token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-loader {
+  --swc-pixel-loader-color: token("gray-800");
 }
 
 /* ─────────────────────────────────────
@@ -199,113 +223,75 @@
   border-radius: token("corner-radius-medium-default");
 }
 
-.swc-ResponseStatus-row--stopped .swc-ResponseStatus-dots {
-  display: none;
-}
-
-.swc-ResponseStatus--agentic .swc-ResponseStatus-dots {
-  margin-inline-end: 1px;
-}
-
 .swc-ResponseStatus-check {
   flex-shrink: 0;
 }
 
-.swc-ResponseStatus-panel {
-  interpolate-size: allow-keywords;
-  display: block;
-  visibility: hidden;
-  block-size: 0;
+/* Always rendered (see `_renderLeadingIcon`) so removing the icon (currently
+   only for `stopped`, which has none) animates: the icon fades while its
+   space, including the row's gap next to it, closes up in the same motion
+   instead of the label/chevron snapping over instantly. */
+.swc-ResponseStatus-leadingIcon {
+  display: flex;
+  flex-shrink: 0;
+  inline-size: 20px;
+  block-size: 20px;
   overflow: hidden;
+  opacity: 1;
   transition:
-    block-size token("animation-duration-200") token("animation-ease-in-out"),
-    visibility token("animation-duration-200") linear;
+    inline-size token("animation-duration-200") cubic-bezier(0.22, 1, 0.36, 1),
+    margin-inline-end token("animation-duration-200") cubic-bezier(0.22, 1, 0.36, 1),
+    opacity token("animation-duration-200") cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.swc-ResponseStatus-leadingIcon--collapsed {
+  inline-size: 0;
+  margin-inline-end: calc(-1 * token("spacing-100"));
+  opacity: 0;
+}
+
+/* Shared collapse mechanics, also used (with its own timing) by each step's
+   own detail panel in `response-status-step.css`. Animates
+   `grid-template-rows` between 0fr and 1fr rather than `block-size` to/from
+   `auto`: the block-size + `interpolate-size` approach only works in
+   Chromium, so Safari and Firefox leave (and ratchet) residual height.
+
+   Overflow and min-block-size live on the grid item, not this container:
+   0fr only collapses to 0 on the item. Safari also ratchets leftover height
+   when the container clips, or when the item itself is a scroll region. */
+.swc-ResponseStatus-panel {
+  display: grid;
+  visibility: hidden;
+  grid-template-rows: 0fr;
+  transition:
+    grid-template-rows 250ms cubic-bezier(0.21, 0, 0.15, 0.99),
+    visibility 250ms linear;
 }
 
 .swc-ResponseStatus-panel--open {
   visibility: visible;
-  block-size: auto;
+  grid-template-rows: 1fr;
+}
+
+/* Clip wrapper / panel child: overflow:hidden here is what lets 0fr become a
+   true zero. The step timeline stays nested so it is not the grid item.
+   Also fades the step timeline out while its row collapses, instead of
+   leaving it fully visible while it gets visually squashed on the way up. */
+.swc-ResponseStatus-panel > * {
+  min-block-size: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity token("animation-duration-200") token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-panel--open > * {
+  opacity: 1;
 }
 
 .swc-ResponseStatus-steps {
-  padding-inline: token("spacing-100");
+  padding-inline-start: token("spacing-500");
   margin: 0;
-  overflow: visible;
   list-style: none;
-}
-
-.swc-ResponseStatus-step {
-  display: grid;
-  grid-template-columns: 20px 1fr;
-  align-items: stretch;
-  column-gap: token("spacing-100");
-}
-
-.swc-ResponseStatus-step:last-child {
-  animation: swc-response-status-step-enter token("animation-duration-1000") token("animation-ease-in-out");
-}
-
-@keyframes swc-response-status-step-enter {
-  from {
-    transform: translateY(6px);
-  }
-
-  to {
-    transform: translateY(0);
-  }
-}
-
-.swc-ResponseStatus-step-rail {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  block-size: 100%;
-  min-block-size: 100%;
-  overflow: visible;
-}
-
-/* Extend rail (and line) through the gap before the next step icon */
-.swc-ResponseStatus-step:not(:last-child) .swc-ResponseStatus-step-rail {
-  box-sizing: content-box;
-  padding-block-end: token("spacing-200");
-}
-
-.swc-ResponseStatus-step-icon {
-  flex-shrink: 0;
-  inline-size: token("workflow-icon-small");
-  block-size: token("workflow-icon-small");
-  transition: color token("animation-duration-200") token("animation-ease-in-out");
-}
-
-.swc-ResponseStatus-step[data-status="complete"] .swc-ResponseStatus-step-icon {
-  transition:
-    color token("animation-duration-200") token("animation-ease-in-out"),
-    opacity token("animation-duration-200") token("animation-ease-in-out");
-}
-
-.swc-ResponseStatus-step-line {
-  flex: 1 1 auto;
-  inline-size: 1px;
-  min-block-size: token("spacing-100");
-  margin-block-start: token("spacing-50");
-  background: token("gray-300");
-}
-
-.swc-ResponseStatus-step-icon--active {
-  color: token("gray-800");
-}
-
-.swc-ResponseStatus-step-icon--stopped,
-.swc-ResponseStatus-step[data-status="stopped"] .swc-ResponseStatus-step-icon {
-  color: token("gray-700");
-}
-
-.swc-ResponseStatus-step-body {
-  min-inline-size: 0;
-}
-
-.swc-ResponseStatus-step:not(:last-child) .swc-ResponseStatus-step-body {
-  padding-block-end: token("spacing-200");
 }
 
 /* Typography utilities (shadow-local; mirrors typography.css) */
@@ -332,81 +318,14 @@
   --swc-body-line-height: token("line-height-font-size-100");
 }
 
-.swc-Body--sizeXXS {
-  --swc-body-font-size: token("body-size-xxs");
-  --swc-body-line-height: token("line-height-font-size-50");
-
-  &:lang(zh),
-  &:lang(ja),
-  &:lang(ko) {
-    --swc-body-cjk-font-size: token("font-size-25");
-  }
-}
-
-.swc-Detail {
-  margin-block: var(--swc-detail-margin-top, 0) var(--swc-detail-margin-bottom, 0);
-  font-family: var(--swc-detail-font-family, token("sans-serif-font"));
-  font-size: var(--swc-detail-font-size, token("detail-size-m"));
-  font-weight: var(--swc-detail-font-weight, token("detail-sans-serif-font-weight"));
-  line-height: var(--swc-detail-line-height, token("line-height-font-size-100"));
-  color: var(--swc-detail-font-color, token("detail-color"));
-  letter-spacing: var(--swc-detail-letter-spacing, normal);
-
-  &:lang(zh),
-  &:lang(ja),
-  &:lang(ko) {
-    --swc-detail-line-height: var(--swc-detail-cjk-line-height, token("cjk-line-height-100"));
-    --swc-detail-letter-spacing: var(--swc-detail-cjk-letter-spacing, token("cjk-letter-spacing"));
-  }
-}
-
-.swc-Detail--sizeS {
-  --swc-detail-font-size: token("detail-size-s");
-  --swc-detail-line-height: token("line-height-font-size-75");
-
-  &:lang(zh),
-  &:lang(ja),
-  &:lang(ko) {
-    --swc-detail-cjk-font-size: token("font-size-50");
-  }
-}
-
-.swc-ResponseStatus-step-title {
-  margin: 0;
-
-  /* Detail default (gray-600) fails WCAG AA at detail-size-s (12px). */
-  color: token("gray-800");
-}
-
-.swc-ResponseStatus-step-detail {
-  max-inline-size: 340px;
-  margin-block: token("spacing-75") 0;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .swc-ResponseStatus-headerTrailStrip,
   .swc-ResponseStatus-headerTrailLine {
     transition: none;
-  }
-
-  .swc-ResponseStatus-dot {
-    opacity: 0.7;
-    animation: none;
-  }
-
-  .swc-ResponseStatus-step:last-child {
-    animation: none;
   }
 }
 
 @media (forced-colors: active) {
-  .swc-ResponseStatus-dots,
-  .swc-ResponseStatus-step-icon {
+  .swc-ResponseStatus-loader {
     color: CanvasText;
-  }
-
-  .swc-ResponseStatus-dot,
-  .swc-ResponseStatus-step-line {
-    background: CanvasText;
   }
 }

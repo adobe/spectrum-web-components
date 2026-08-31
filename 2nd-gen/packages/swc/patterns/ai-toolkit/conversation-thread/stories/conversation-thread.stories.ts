@@ -184,6 +184,11 @@ type DemoTurn = {
   text: string;
   attachments?: DemoAttachment[];
   loading?: boolean;
+
+  /** Index of the step currently active while `loading`. Advances on a timer
+   * so the timeline fills in one step at a time instead of jumping straight
+   * from "generating" to "complete". */
+  stepIndex?: number;
   sourcesOpen?: boolean;
   feedbackStatus?: 'positive' | 'negative' | undefined;
 };
@@ -194,31 +199,75 @@ const DEMO_SUGGESTIONS = [
   'Summarize development pipeline',
 ] as const;
 
-const renderDemoResponseStatusSteps = (complete: boolean) => html`
-  <swc-response-status-step status="complete">
-    <span slot="label">Read source context</span>
-    <span slot="description">
-      Reviewed the prompt, uploaded assets, and prior conversation context.
-    </span>
-  </swc-response-status-step>
-  <swc-response-status-step status=${complete ? 'complete' : 'active'}>
-    <span slot="label">Draft response structure</span>
-    <span slot="description">
-      Organizing the answer into a concise narrative with supporting proof
-      points.
-    </span>
-  </swc-response-status-step>
-  ${complete
-    ? html`
-        <swc-response-status-step status="complete">
-          <span slot="label">Prepare next-step suggestions</span>
-          <span slot="description">
-            Created follow-up prompts that match the generated response.
-          </span>
+// The last step only appears once the response is complete; the others
+// appear one at a time while generating (see `stepIndex` above).
+const DEMO_RESPONSE_STEPS = [
+  {
+    label: 'Read source context',
+    description:
+      'Reviewed the prompt, uploaded assets, and prior conversation context.',
+  },
+  {
+    label: 'Gather supporting data',
+    description:
+      'Pulled relevant metrics and prior campaign results to support the narrative.',
+  },
+  {
+    label: 'Identify supporting proof points',
+    description:
+      'Selected the strongest data points and prior results to back up the narrative.',
+  },
+  {
+    label: 'Draft response structure',
+    description:
+      'Organizing the answer into a concise narrative with supporting proof points.',
+  },
+  {
+    label: 'Check brand style guidelines',
+    description:
+      'Confirmed terminology, tone, and formatting match brand guidelines.',
+  },
+  {
+    label: 'Review for tone and clarity',
+    description:
+      'Read through the draft once more for a confident, concise executive tone.',
+  },
+  {
+    label: 'Prepare next-step suggestions',
+    description: 'Created follow-up prompts that match the generated response.',
+  },
+] as const;
+
+const DEMO_LOADING_STEP_COUNT = DEMO_RESPONSE_STEPS.length - 1;
+
+// How long each step stays active before the next one takes over. The total
+// generation time scales with the step count so pacing stays even as more
+// steps are added.
+const DEMO_STEP_INTERVAL_MS = 1200;
+const DEMO_GENERATION_DURATION_MS =
+  (DEMO_LOADING_STEP_COUNT + 1) * DEMO_STEP_INTERVAL_MS;
+
+const renderDemoResponseStatusSteps = (
+  stepIndex: number,
+  complete: boolean
+) => {
+  const steps = complete
+    ? DEMO_RESPONSE_STEPS
+    : DEMO_RESPONSE_STEPS.slice(0, stepIndex + 1);
+
+  return html`
+    ${steps.map(
+      (step, index) => html`
+        <swc-response-status-step
+          status=${!complete && index === stepIndex ? 'active' : 'complete'}
+        >
+          <span slot="label">${step.label}</span>
+          <span slot="description">${step.description}</span>
         </swc-response-status-step>
       `
-    : ''}
-`;
+    )}
+  `;
+};
 
 const buildAssistantReply = (prompt: string): string => {
   const normalized = prompt.trim() || 'your request';
@@ -252,6 +301,7 @@ class ConversationFullPatternDemo extends LitElement {
 
   private readonly fileInputId = `conv-demo-upload-${crypto.randomUUID()}`;
   private responseTimer: number | null = null;
+  private stepTimer: number | null = null;
   private responseTargetId: string | null = null;
   private lastPrompt = '';
 
@@ -260,7 +310,15 @@ class ConversationFullPatternDemo extends LitElement {
       window.clearTimeout(this.responseTimer);
       this.responseTimer = null;
     }
+    this.clearStepTimer();
     super.disconnectedCallback();
+  }
+
+  private clearStepTimer(): void {
+    if (this.stepTimer !== null) {
+      window.clearInterval(this.stepTimer);
+      this.stepTimer = null;
+    }
   }
 
   protected override createRenderRoot(): HTMLElement {
@@ -296,6 +354,7 @@ class ConversationFullPatternDemo extends LitElement {
       role: 'system',
       text: '',
       loading: true,
+      stepIndex: 0,
       sourcesOpen: false,
     };
 
@@ -313,9 +372,32 @@ class ConversationFullPatternDemo extends LitElement {
     }
     this.attachments = [];
 
+    // Advance the active step on its own cadence so the timeline fills in
+    // one step at a time instead of sitting static until the reply resolves.
+    const targetId = systemTurn.id;
+    this.stepTimer = window.setInterval(() => {
+      let reachedLastStep = false;
+      this.turns = this.turns.map((turn) => {
+        if (turn.id !== targetId) {
+          return turn;
+        }
+        const nextIndex = Math.min(
+          (turn.stepIndex ?? 0) + 1,
+          DEMO_LOADING_STEP_COUNT - 1
+        );
+        reachedLastStep = nextIndex >= DEMO_LOADING_STEP_COUNT - 1;
+        return { ...turn, stepIndex: nextIndex };
+      });
+      if (reachedLastStep) {
+        this.clearStepTimer();
+      }
+    }, DEMO_STEP_INTERVAL_MS);
+
+    // Keep the generating state visible long enough to read the response
+    // status steps before the reply resolves.
     this.responseTimer = window.setTimeout(() => {
       this.completeGeneration();
-    }, 1200);
+    }, DEMO_GENERATION_DURATION_MS);
   }
 
   private completeGeneration(): void {
@@ -330,6 +412,7 @@ class ConversationFullPatternDemo extends LitElement {
     );
     this.responseTargetId = null;
     this.responseTimer = null;
+    this.clearStepTimer();
     this.isGenerating = false;
   }
 
@@ -342,6 +425,7 @@ class ConversationFullPatternDemo extends LitElement {
       window.clearTimeout(this.responseTimer);
       this.responseTimer = null;
     }
+    this.clearStepTimer();
 
     if (this.responseTargetId) {
       const targetId = this.responseTargetId;
@@ -499,18 +583,14 @@ class ConversationFullPatternDemo extends LitElement {
           <swc-system-message>
             ${turn.loading
               ? html`
-                  <swc-response-status slot="status" status="active" open>
-                    <span slot="label">Draft response structure</span>
-                    ${renderDemoResponseStatusSteps(false)}
+                  <swc-response-status slot="status" status="active">
+                    ${renderDemoResponseStatusSteps(turn.stepIndex ?? 0, false)}
                   </swc-response-status>
                 `
               : html`
-                  <swc-response-status slot="status" status="complete" open>
-                    <span slot="label">
-                      Draft complete. I used your latest prompt to generate this
-                      response.
-                    </span>
-                    ${renderDemoResponseStatusSteps(true)}
+                  <swc-response-status slot="status" status="complete">
+                    <span slot="label">Response complete</span>
+                    ${renderDemoResponseStatusSteps(0, true)}
                   </swc-response-status>
                 `}
             ${turn.loading
