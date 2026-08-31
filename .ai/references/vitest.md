@@ -16,7 +16,7 @@ Test files it executes:
 | ---------------------------------------------------------- | ------------------------------------------------------------------- |
 | `2nd-gen/packages/swc/components/*/test/*.test.ts`         | 2nd-gen component unit/integration tests (Lit elements, DOM events) |
 | `2nd-gen/packages/swc/components/*/stories/*.stories.ts`   | Storybook stories with a `play` function tagged for testing         |
-| `2nd-gen/packages/swc/patterns/*/*/test/*.test.ts`         | Pattern tests (e.g. ai)                                             |
+| `2nd-gen/packages/swc/patterns/*/*/test/*.test.ts`         | Pattern tests (e.g. ai-toolkit)                                     |
 | `2nd-gen/packages/swc/patterns/*/*/stories/*.stories.ts`   | Pattern stories tagged for testing                                  |
 | `2nd-gen/packages/core/controllers/*/test/*.test.ts`       | Controller tests (rendered via demo hosts in the browser)           |
 | `2nd-gen/packages/core/controllers/*/stories/*.stories.ts` | Controller stories tagged for testing                               |
