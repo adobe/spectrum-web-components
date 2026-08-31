@@ -59,7 +59,7 @@
   --_swc-prompt-field-recede-surface: token("background-layer-2-color");
   --_swc-prompt-field-border-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), rgb(255 255 255 / 5%));
   --_swc-prompt-field-drop-shadow-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 58.26% 0.2265 calc(h - 0.4) / 5%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 5%));
-  --_swc-prompt-field-inset-shadow-color: rgb(255 255 255 / 4%);
+  --_swc-prompt-field-inset-shadow-color: rgb(255 255 255 / token("opacity-100"));
 
   display: flex;
   position: relative;
@@ -124,7 +124,7 @@
   --_swc-prompt-field-outer-shadow: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 0%));
 
   /* Flat ring stops for subtle (idle) and the receded focus state; shared across both rules. */
-  --_swc-prompt-field-outer-recede-stop: light-dark(rgb(255 255 255), rgb(255 255 255 / 2%));
+  --_swc-prompt-field-outer-recede-stop: light-dark(rgb(255 255 255), rgb(255 255 255 / token("opacity-50")));
 
   display: flex;
   padding: 6px;
