@@ -16,12 +16,12 @@
  * an unsupported size fails to type-check at the call site, not here.
  */
 export const SIZE_LABELS = {
-  xs: 'Extra-small',
+  xs: 'Extra small',
   s: 'Small',
   m: 'Medium',
   l: 'Large',
-  xl: 'Extra-large',
-  xxl: 'Extra-extra-large',
+  xl: 'Extra large',
+  xxl: 'Extra extra large',
 } as const;
 
 export type SizeLabelKey = keyof typeof SIZE_LABELS;

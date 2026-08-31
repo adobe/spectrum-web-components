@@ -77,7 +77,7 @@ test.describe('Button - ARIA Snapshots', () => {
       - button "Small"
       - button "Medium"
       - button "Large"
-      - button "Extra-large"
+      - button "Extra large"
     `);
   });
 
