@@ -77,6 +77,16 @@ export class ResponseStatusStep extends SpectrumElement {
   private _hasDescription = false;
 
   /**
+   * Perf prototype: mirrors the current label text so an inert clone can be
+   * rendered on top of the real label and masked to its glyph shapes for the
+   * shimmer overlay (see response-status-step.css). Kept separate from
+   * `_lastActiveLabel` below, which only tracks text while `status="active"`
+   * for the parent-notification event.
+   */
+  @state()
+  private _labelText = '';
+
+  /**
    * Whether the open detail region overflows its capped height. Only steps
    * that overflow get a keyboard-focusable scroll region. Measured once per
    * toggle-open rather than continuously: a resize or additional streamed
@@ -207,8 +217,12 @@ export class ResponseStatusStep extends SpectrumElement {
       this._hasDescription = hasDescription;
     }
 
+    const label = this._readLabel();
+    if (label !== this._labelText) {
+      this._labelText = label;
+    }
+
     if (this._resolvedStatus === 'active') {
-      const label = this._readLabel();
       if (label !== this._lastActiveLabel) {
         this._lastActiveLabel = label;
         this._emit('swc-response-status-step-active-label-change', {
@@ -278,6 +292,9 @@ export class ResponseStatusStep extends SpectrumElement {
       return html`
         <p class="swc-ResponseStatusStep-title swc-Detail swc-Detail--sizeS">
           <slot name="label"></slot>
+          <span inert class="swc-ResponseStatusStep-titleShimmer">
+            ${this._labelText}
+          </span>
         </p>
       `;
     }
@@ -292,6 +309,9 @@ export class ResponseStatusStep extends SpectrumElement {
       >
         <span class="swc-ResponseStatusStep-title swc-Detail swc-Detail--sizeS">
           <slot name="label"></slot>
+          <span inert class="swc-ResponseStatusStep-titleShimmer">
+            ${this._labelText}
+          </span>
         </span>
       </button>
       <div

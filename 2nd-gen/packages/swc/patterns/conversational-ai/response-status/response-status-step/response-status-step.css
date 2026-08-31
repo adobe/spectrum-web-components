@@ -173,6 +173,8 @@
 }
 
 .swc-ResponseStatusStep-title {
+  display: inline-block;
+  position: relative;
   padding: token("spacing-50") token("spacing-100");
   margin: 0;
   color: token("gray-600");
@@ -182,45 +184,50 @@
     color 100ms token("animation-ease-in-out");
 }
 
-/* Active step: sweep a bright band across the label to read as "in progress"
-   rather than flat text. `color` above stays the reduced-motion /
-   forced-colors fallback (see the media queries below), since the gradient
-   fill only shows once `color` is overridden to transparent here.
-
-   The gradient is 160% of the label's width with a bright band spanning
-   31.25%-68.75% of that image (37.5% of the image = 60% of the label once
-   scaled by the 160% background-size). `background-position` sweeps the
-   image from fully off the label's leading edge to fully off its trailing
-   edge, then holds there for the remainder of the 1800ms cycle (1500ms
-   sweep + 300ms pause) so the band spends the pause fully out of view
-   instead of idling on-screen. */
-:host([status="active"]) .swc-ResponseStatusStep-title {
-  color: transparent;
-  background-image: linear-gradient(90deg, token("gray-600") 0%, token("gray-600") 31.25%, token("gray-900") 50%, token("gray-600") 68.75%, token("gray-600") 100%);
-  background-clip: text;
-  background-size: 160% 100%;
-  animation: swc-response-status-step-shimmer 1800ms infinite;
-}
-
-/* Excludes the active step above: its shimmer sets `background-clip: text`
-   on this same element, which would clip this hover fill down to just the
-   text glyphs instead of a normal rounded chip. */
-:host(:not([status="active"])) .swc-ResponseStatusStep-toggle:hover .swc-ResponseStatusStep-title {
+.swc-ResponseStatusStep-toggle:hover .swc-ResponseStatusStep-title {
   background: token("gray-75");
 }
 
+/* Perf prototype: sweep a bright band across the label using a masked,
+   `transform`-animated overlay instead of animating `background-position`
+   on the text itself. `translate` runs on the compositor, so this avoids a
+   repaint every frame. The overlay is an inert clone of the label kept in
+   sync with the real text via `_labelText`; it sits on top of the real
+   label, masked to that clone's own glyph shapes so the moving gradient
+   only shows through the letters. */
+.swc-ResponseStatusStep-titleShimmer {
+  --swc-response-status-step-shimmer-spread: 4ch;
+
+  position: absolute;
+  inset: 0;
+  padding: token("spacing-50") token("spacing-100");
+  contain: strict;
+  color: transparent;
+  overflow: clip;
+  pointer-events: none;
+}
+
+:host([status="active"]) .swc-ResponseStatusStep-titleShimmer {
+  mask-image: linear-gradient(white, white);
+  mask-clip: text;
+}
+
+:host([status="active"]) .swc-ResponseStatusStep-titleShimmer::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent calc(50% - var(--swc-response-status-step-shimmer-spread)), token("gray-900") 50%, transparent calc(50% + var(--swc-response-status-step-shimmer-spread)));
+  content: "";
+  animation: swc-response-status-step-shimmer 1800ms infinite;
+  will-change: transform;
+}
+
 @keyframes swc-response-status-step-shimmer {
-  0% {
-    background-position: 183.333% 0;
-    animation-timing-function: cubic-bezier(0.41, 0.01, 0.43, 0.99);
+  from {
+    translate: -100% 0;
   }
 
-  83.333% {
-    background-position: -83.333% 0;
-  }
-
-  100% {
-    background-position: -83.333% 0;
+  to {
+    translate: 100% 0;
   }
 }
 
@@ -348,11 +355,13 @@
     animation: none;
   }
 
-  /* Fall back to the flat, opaque title color set above; no sweeping gradient. */
+  /* Fall back to the flat, opaque title color set above; no sweeping overlay. */
   :host([status="active"]) .swc-ResponseStatusStep-title {
     color: token("gray-800");
-    background-image: none;
-    animation: none;
+  }
+
+  .swc-ResponseStatusStep-titleShimmer {
+    display: none;
   }
 }
 
@@ -371,11 +380,13 @@
     animation: none;
   }
 
-  /* The gradient/transparent-text technique above is unreliable under forced
-     colors; fall back to plain, guaranteed-visible text. */
+  /* The masked shimmer overlay is unreliable under forced colors; fall back
+     to plain, guaranteed-visible text. */
   :host([status="active"]) .swc-ResponseStatusStep-title {
     color: CanvasText;
-    background-image: none;
-    animation: none;
+  }
+
+  .swc-ResponseStatusStep-titleShimmer {
+    display: none;
   }
 }
