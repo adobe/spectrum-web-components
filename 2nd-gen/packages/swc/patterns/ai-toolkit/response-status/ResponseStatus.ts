@@ -10,13 +10,20 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
+import {
+  CSSResultArray,
+  html,
+  nothing,
+  PropertyValues,
+  TemplateResult,
+} from 'lit';
 import {
   property,
   queryAssignedElements,
   queryAssignedNodes,
   state,
 } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
@@ -24,40 +31,42 @@ import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
+import '../pixel-loader/swc-pixel-loader.js';
 
 import { uniqueId } from '../../../utils/id.js';
 import {
-  CheckCircleIcon,
-  CircleOutlineIcon,
-  StepStoppedCircleIcon,
-} from '../utils/icons/index.js';
+  PIXEL_LOADER_ICON_NAMES,
+  PIXEL_LOADER_PRESET_NAMES,
+  type PixelLoaderIconName,
+  type PixelLoaderPresetName,
+} from '../pixel-loader/data.js';
+import { CheckCircleIcon } from '../utils/icons/index.js';
 import {
   RESPONSE_STATUS_STEP_STATUSES,
   ResponseStatusStep,
+  type ResponseStatusStepStatus,
 } from './response-status-step/ResponseStatusStep.js';
 
 import styles from './response-status.css';
+
+export { PIXEL_LOADER_ICON_NAMES, PIXEL_LOADER_PRESET_NAMES };
 
 export const RESPONSE_STATUSES = ['active', 'complete', 'stopped'] as const;
 
 export type ResponseStatusStatus = (typeof RESPONSE_STATUSES)[number];
 
-type ResponseStatusStepStatus = (typeof RESPONSE_STATUS_STEP_STATUSES)[number];
-
-export type ResponseStatusStepData = {
-  label: string;
-  description: string;
-  status: ResponseStatusStepStatus;
-};
-
 /**
  * Displays the current status of an AI response generation.
  *
  * @element swc-response-status
- * @slot label - Header row label. Falls back to the active step label.
+ * @slot label - Header row label. Falls back to the active step label while
+ * the step timeline is closed, or a generic "Processing…" label while it's
+ * open with at least one incomplete step.
  * @slot - `<swc-response-status-step>` elements.
  * @fires swc-response-status-toggle - Dispatched when the user opens or closes the panel.
  * Detail: `{ open: boolean }`
+ * @fires swc-response-status-step-toggle - Dispatched when the user expands or collapses
+ * a step's description. Detail: `{ open: boolean, index: number }`
  */
 export class ResponseStatus extends SpectrumElement {
   private static readonly STATUS_LABEL_CLASS =
@@ -70,15 +79,42 @@ export class ResponseStatus extends SpectrumElement {
       stopped: 'You stopped the response',
     };
 
+  /**
+   * Header label shown in place of the active step label while the step
+   * timeline is open, since the specific step is already visible below.
+   */
+  private static readonly ACTIVE_STEP_OPEN_LABEL = 'Processing…';
+
   private static readonly DEFAULT_ACCESSIBLE_LABEL = 'Execution steps';
 
-  /** Header label roll animation duration; keep in sync with the CSS. */
-  private static readonly LABEL_ROLL_DURATION_MS = 650;
+  /**
+   * Header label cross-fade duration; matches the enter transition (the
+   * longer of the enter/exit pair) since JS waits for the full visual
+   * transition to finish before settling. Keep in sync with the CSS.
+   */
+  private static readonly LABEL_ROLL_DURATION_MS = 350;
 
   private readonly panelId = uniqueId('swc-response-status-panel');
 
+  /** Whether at least one `<swc-response-status-step>` is currently slotted. */
   @state()
-  private _steps: ResponseStatusStepData[] = [];
+  private _hasSteps = false;
+
+  /** Whether any slotted step currently has `status="active"`. */
+  @state()
+  private _hasActiveStep = false;
+
+  /**
+   * The active step's own label text, kept in sync via the step's
+   * `swc-response-status-step-active-label-change` event (for streamed text)
+   * and re-read on demand whenever the active step itself changes. This
+   * element never reads a step's slotted content directly.
+   */
+  @state()
+  private _activeStepLabel = '';
+
+  /** The step currently identified as active, if any. */
+  private _activeStepEl: ResponseStatusStep | null = null;
 
   @state()
   private _labelSlotText = '';
@@ -110,6 +146,16 @@ export class ResponseStatus extends SpectrumElement {
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
 
+  /**
+   * Status loader artwork shown while `status="active"`, matching
+   * `swc-prompt-field`'s `loader` attribute for the same underlying control:
+   * a preset name (`cc`, `dc`, `exp`, `analyze`, `mega`) cycles a themed icon
+   * sequence; an icon name shows a single static icon. Invalid values fall
+   * back to the `mega` preset.
+   */
+  @property({ type: String, reflect: true })
+  public loader: PixelLoaderIconName | PixelLoaderPresetName = 'mega';
+
   @queryAssignedNodes({ slot: 'label', flatten: true })
   private _labelNodes!: Node[];
 
@@ -130,26 +176,32 @@ export class ResponseStatus extends SpectrumElement {
   public constructor() {
     super();
 
-    // Slotchange only fires when assigned nodes are added or removed, not when
-    // their text mutates. Observe the light DOM so slotted text updates render.
+    // Watches only for step add/remove and each step's own `status`
+    // attribute — never step text content, which each step now tracks and
+    // reports on its own via events. `subtree: true` is required for the
+    // attribute filter to reach into children at all, which also means the
+    // host's own `status` attribute (reflected from the `status` property)
+    // matches; records targeting the host itself are filtered out below to
+    // avoid a redundant re-scan of something Lit's reactivity already handles.
     new MutationController(this, {
       config: {
         attributes: true,
-        attributeFilter: ['slot', 'status'],
-        characterData: true,
+        attributeFilter: ['status'],
         childList: true,
         subtree: true,
       },
-      callback: () => {
-        this._syncSlotContent();
+      callback: (records) => {
+        const isStepMutation = records.some((record) => record.target !== this);
+        if (isStepMutation) {
+          this._syncStepsMeta();
+        }
       },
     });
   }
 
   public override connectedCallback(): void {
     super.connectedCallback();
-
-    this._syncSlotContent();
+    this._syncStepsMeta();
   }
 
   protected override willUpdate(_changed: PropertyValues<this>): void {
@@ -170,27 +222,37 @@ export class ResponseStatus extends SpectrumElement {
     return this._isValidStatus(this.status) ? this.status : 'active';
   }
 
+  private _isValidPreset(value: string): value is PixelLoaderPresetName {
+    return (PIXEL_LOADER_PRESET_NAMES as readonly string[]).includes(value);
+  }
+
+  private _isValidIcon(value: string): value is PixelLoaderIconName {
+    return (PIXEL_LOADER_ICON_NAMES as readonly string[]).includes(value);
+  }
+
+  /**
+   * Routes `loader` to the pixel-loader's `preset` (a themed icon-cycle) or
+   * `icon` (a single static icon); invalid runtime values fall back to the
+   * `mega` preset.
+   */
+  private get _resolvedLoader(): {
+    preset: PixelLoaderPresetName | undefined;
+    icon: PixelLoaderIconName | undefined;
+  } {
+    if (this._isValidPreset(this.loader)) {
+      return { preset: this.loader, icon: undefined };
+    }
+    if (this._isValidIcon(this.loader)) {
+      return { preset: undefined, icon: this.loader };
+    }
+    return { preset: 'mega', icon: undefined };
+  }
+
   private _isValidStepStatus(
     status: string
   ): status is ResponseStatusStepStatus {
     return (RESPONSE_STATUS_STEP_STATUSES as readonly string[]).includes(
       status
-    );
-  }
-
-  private _stepsEqual(
-    left: ResponseStatusStepData[],
-    right: ResponseStatusStepData[]
-  ): boolean {
-    if (left.length !== right.length) {
-      return false;
-    }
-
-    return left.every(
-      (step, index) =>
-        step.label === right[index]?.label &&
-        step.description === right[index]?.description &&
-        step.status === right[index]?.status
     );
   }
 
@@ -202,23 +264,6 @@ export class ResponseStatus extends SpectrumElement {
           child.getAttribute('slot') === slotName
       )
       .map((element) => element.textContent?.trim() ?? '')
-      .filter(Boolean)
-      .join(' ');
-  }
-
-  private _readStepDescription(element: Element): string {
-    const description = this._readLightDomNamedSlotText(element, 'description');
-    if (description) {
-      return description;
-    }
-
-    return Array.from(element.childNodes)
-      .filter(
-        (node) =>
-          node.nodeType === Node.TEXT_NODE ||
-          (node instanceof Element && !node.getAttribute('slot'))
-      )
-      .map((node) => node.textContent?.trim() ?? '')
       .filter(Boolean)
       .join(' ');
   }
@@ -237,19 +282,6 @@ export class ResponseStatus extends SpectrumElement {
     );
   }
 
-  private _readStepElement(element: Element): ResponseStatusStepData {
-    const step = element as ResponseStatusStep;
-    const label = this._readLightDomNamedSlotText(element, 'label');
-    const rawStatus = step.status || 'active';
-    const status = this._isValidStepStatus(rawStatus) ? rawStatus : 'active';
-
-    return {
-      label,
-      description: this._readStepDescription(element),
-      status,
-    };
-  }
-
   private _readNodeText(nodes: Iterable<Node>): string {
     return Array.from(nodes)
       .map((node) => node.textContent?.trim() ?? '')
@@ -257,16 +289,13 @@ export class ResponseStatus extends SpectrumElement {
       .join(' ');
   }
 
-  private _readSteps(): ResponseStatusStepData[] {
-    const stepEls =
-      this._stepEls?.length > 0
-        ? this._stepEls
-        : Array.from(this.children).filter(
-            (element): element is ResponseStatusStep =>
-              this._isStepElement(element)
-          );
-
-    return stepEls.map((element) => this._readStepElement(element));
+  private _readStepElements(): ResponseStatusStep[] {
+    return this._stepEls?.length > 0
+      ? this._stepEls
+      : Array.from(this.children).filter(
+          (element): element is ResponseStatusStep =>
+            this._isStepElement(element)
+        );
   }
 
   private _syncNamedSlots(): void {
@@ -277,25 +306,81 @@ export class ResponseStatus extends SpectrumElement {
     }
   }
 
-  private _syncSlotContent(): void {
+  // Recomputes step-count/active-step metadata only — never step text
+  // content, which each step reports on its own via
+  // `swc-response-status-step-active-label-change`.
+  private _syncStepsMeta(): void {
     this._syncNamedSlots();
 
-    const steps = this._readSteps();
-    if (!this._stepsEqual(steps, this._steps)) {
-      this._steps = steps;
+    const stepEls = this._readStepElements();
+
+    const hasSteps = stepEls.length > 0;
+    if (hasSteps !== this._hasSteps) {
+      this._hasSteps = hasSteps;
+    }
+
+    const activeStep =
+      stepEls.find((el) => {
+        const rawStatus = el.status || 'active';
+        const status = this._isValidStepStatus(rawStatus)
+          ? rawStatus
+          : 'active';
+        return status === 'active';
+      }) ?? null;
+
+    const hasActiveStep = activeStep !== null;
+    if (hasActiveStep !== this._hasActiveStep) {
+      this._hasActiveStep = hasActiveStep;
+    }
+
+    if (activeStep !== this._activeStepEl) {
+      this._activeStepEl = activeStep;
+      this._activeStepLabel = activeStep?.labelText ?? '';
     }
   }
 
   private _handleSlotChange(): void {
-    this._syncSlotContent();
+    this._syncStepsMeta();
   }
 
   private _handleNamedSlotChange(): void {
     this._syncNamedSlots();
   }
 
-  private _getActiveStep(): ResponseStatusStepData | undefined {
-    return this._steps.find((step) => step.status === 'active');
+  private _handleStepActiveLabelChange(event: Event): void {
+    // Only the currently-identified active step's own notification is
+    // trusted; a step that just transitioned away from `status="active"`
+    // could still have an in-flight event from before that change.
+    if (event.target !== this._activeStepEl) {
+      return;
+    }
+    const { label } = (event as CustomEvent<{ label: string }>).detail;
+    this._activeStepLabel = label;
+  }
+
+  private _handleStepOpenChange(event: Event): void {
+    const target = event.target;
+    if (!(target instanceof ResponseStatusStep)) {
+      return;
+    }
+
+    const index = this._readStepElements().indexOf(target);
+    if (index === -1) {
+      return;
+    }
+
+    const { open } = (event as CustomEvent<{ open: boolean }>).detail;
+    this._emitToggle('swc-response-status-step-toggle', { open, index });
+  }
+
+  // Whether the header should read as still generating: the timeline is open
+  // and at least one step is still active. `stopped` is a terminal state
+  // (like `complete`), not still-processing, so it's excluded too. Drives
+  // the generic "Processing…" label fallback below.
+  private get _showsGenericProcessingLabel(): boolean {
+    return (
+      this._resolvedStatus === 'active' && this.open && this._hasActiveStep
+    );
   }
 
   private _getHeaderLabel(): string {
@@ -306,9 +391,12 @@ export class ResponseStatus extends SpectrumElement {
     const status = this._resolvedStatus;
 
     if (status === 'active') {
-      const activeStepLabel = this._getActiveStep()?.label;
-      if (activeStepLabel) {
-        return activeStepLabel;
+      if (this._showsGenericProcessingLabel) {
+        return ResponseStatus.ACTIVE_STEP_OPEN_LABEL;
+      }
+
+      if (this._activeStepLabel) {
+        return this._activeStepLabel;
       }
     }
 
@@ -395,37 +483,49 @@ export class ResponseStatus extends SpectrumElement {
     return this._displayedLabel || this._getHeaderLabel();
   }
 
-  private _renderLabel(showDisclosure: boolean, open: boolean): TemplateResult {
+  // Cross-fades between the previous and next header label with no
+  // vertical movement, so the chevron (rendered by the caller as a fixed
+  // sibling, not inside this markup) never shifts position independently
+  // of the fade.
+  private _renderLabel(): TemplateResult {
     const labelClass = ResponseStatus.STATUS_LABEL_CLASS;
-    const chevron = showDisclosure ? this._renderChevron(open) : '';
 
     if (!this._rollActive) {
+      // Settled (no transition in flight): the roll geometry below assumes a
+      // fixed single-line height, so only constrain to one line while actually
+      // rolling. At rest, let the label wrap across multiple lines instead of
+      // truncating, since a narrow container (or a longer translation) can
+      // easily exceed one line's width.
       return html`
-        <span class="swc-ResponseStatus-headerTrailViewport">
-          <span class="swc-ResponseStatus-headerTrailStrip">
-            <span class="swc-ResponseStatus-headerTrailLine">
-              <span class=${labelClass}>${this._currentVisibleLabel()}</span>
-              ${chevron}
-            </span>
+        <span
+          class="swc-ResponseStatus-headerTrailViewport swc-ResponseStatus-headerTrailViewport--settled"
+        >
+          <span
+            class="swc-ResponseStatus-headerTrailLine swc-ResponseStatus-headerTrailLine--settled"
+          >
+            <span class=${labelClass}>${this._currentVisibleLabel()}</span>
           </span>
         </span>
       `;
     }
 
-    const stripClass = this._rollEngaged
-      ? 'swc-ResponseStatus-headerTrailStrip swc-ResponseStatus-headerTrailStrip--rolling'
-      : 'swc-ResponseStatus-headerTrailStrip';
+    const crossfadeClass = this._rollEngaged
+      ? 'swc-ResponseStatus-headerTrailCrossfade swc-ResponseStatus-headerTrailCrossfade--engaged'
+      : 'swc-ResponseStatus-headerTrailCrossfade';
 
     return html`
       <span class="swc-ResponseStatus-headerTrailViewport">
-        <span class=${stripClass}>
-          <span class="swc-ResponseStatus-headerTrailLine" aria-hidden="true">
+        <span class=${crossfadeClass}>
+          <span
+            class="swc-ResponseStatus-headerTrailLine swc-ResponseStatus-headerTrailLine--exit"
+            aria-hidden="true"
+          >
             <span class=${labelClass}>${this._rollFromLabel}</span>
-            ${chevron}
           </span>
-          <span class="swc-ResponseStatus-headerTrailLine">
+          <span
+            class="swc-ResponseStatus-headerTrailLine swc-ResponseStatus-headerTrailLine--enter"
+          >
             <span class=${labelClass}>${this._rollToLabel}</span>
-            ${chevron}
           </span>
         </span>
       </span>
@@ -433,7 +533,13 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private get _showPanel(): boolean {
-    return this._steps.length > 0;
+    return this._hasSteps;
+  }
+
+  private _emitToggle<T>(type: string, detail: T): void {
+    this.dispatchEvent(
+      new CustomEvent<T>(type, { bubbles: true, composed: true, detail })
+    );
   }
 
   private _handleToggle(): void {
@@ -442,31 +548,26 @@ export class ResponseStatus extends SpectrumElement {
     }
 
     this.open = !this.open;
-    this.dispatchEvent(
-      new CustomEvent('swc-response-status-toggle', {
-        bubbles: true,
-        composed: true,
-        detail: { open: this.open },
-      })
-    );
+    this._emitToggle('swc-response-status-toggle', { open: this.open });
   }
 
-  private _renderThreeDots(): TemplateResult {
+  private _renderLoader(): TemplateResult {
+    const { preset, icon } = this._resolvedLoader;
     return html`
-      <span class="swc-ResponseStatus-dots" aria-hidden="true">
-        <span class="swc-ResponseStatus-dot"></span>
-        <span class="swc-ResponseStatus-dot"></span>
-        <span class="swc-ResponseStatus-dot"></span>
-      </span>
+      <swc-pixel-loader
+        class="swc-ResponseStatus-loader"
+        preset=${ifDefined(preset)}
+        icon=${ifDefined(icon)}
+        aria-hidden="true"
+      ></swc-pixel-loader>
     `;
   }
 
   private _renderChevron(open: boolean): TemplateResult {
+    const baseClass = 'swc-ResponseStatus-chevron';
     return html`
       <swc-icon
-        class=${open
-          ? 'swc-ResponseStatus-chevron swc-ResponseStatus-chevron--down'
-          : 'swc-ResponseStatus-chevron'}
+        class=${open ? `${baseClass} ${baseClass}--down` : baseClass}
         style="--swc-icon-inline-size:10px;--swc-icon-block-size:10px;"
         aria-hidden="true"
       >
@@ -487,18 +588,29 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
-  private _renderLeadingIcon(): TemplateResult | string {
+  private _renderLeadingIcon(): TemplateResult {
     const status = this._resolvedStatus;
+    const icon =
+      status === 'complete'
+        ? this._renderCheckmark()
+        : status === 'stopped'
+          ? nothing
+          : this._renderLoader();
 
-    if (status === 'complete') {
-      return this._renderCheckmark();
-    }
-
-    if (status === 'stopped') {
-      return '';
-    }
-
-    return this._renderThreeDots();
+    // Always rendered (even with nothing inside for `stopped`) so the
+    // collapse below can animate: removing the icon outright would snap the
+    // label/chevron into place instead of letting them slide over as it
+    // fades and its space closes up.
+    return html`
+      <span
+        class=${classMap({
+          'swc-ResponseStatus-leadingIcon': true,
+          'swc-ResponseStatus-leadingIcon--collapsed': status === 'stopped',
+        })}
+      >
+        ${icon}
+      </span>
+    `;
   }
 
   private _renderHeader(showDisclosure: boolean): TemplateResult {
@@ -519,7 +631,8 @@ export class ResponseStatus extends SpectrumElement {
     const rowContent = html`
       ${this._renderLeadingIcon()}
       <span class="swc-ResponseStatus-headerTrail">
-        ${this._renderLabel(showDisclosure, this.open)}
+        ${this._renderLabel()}
+        ${showDisclosure ? this._renderChevron(this.open) : nothing}
       </span>
     `;
 
@@ -542,87 +655,6 @@ export class ResponseStatus extends SpectrumElement {
     `;
   }
 
-  private _renderStepIcon(status: ResponseStatusStepStatus): TemplateResult {
-    if (status === 'complete') {
-      return html`
-        <swc-icon class="swc-ResponseStatus-step-icon" aria-hidden="true">
-          ${CheckCircleIcon()}
-        </swc-icon>
-      `;
-    }
-
-    if (status === 'stopped') {
-      return html`
-        <swc-icon
-          class="swc-ResponseStatus-step-icon swc-ResponseStatus-step-icon--stopped"
-          aria-hidden="true"
-        >
-          ${StepStoppedCircleIcon()}
-        </swc-icon>
-      `;
-    }
-
-    return html`
-      <swc-icon
-        class="swc-ResponseStatus-step-icon swc-ResponseStatus-step-icon--${status}"
-        aria-hidden="true"
-      >
-        ${CircleOutlineIcon()}
-      </swc-icon>
-    `;
-  }
-
-  private _renderStepDetail(description: string): TemplateResult | '' {
-    if (!description) {
-      return '';
-    }
-
-    return html`
-      <p class="swc-ResponseStatus-step-detail swc-Body swc-Body--sizeXXS">
-        ${description}
-      </p>
-    `;
-  }
-
-  private _renderStepTimeline(): TemplateResult {
-    const steps = this._steps;
-    const lastIndex = steps.length - 1;
-
-    return html`
-      <ol class="swc-ResponseStatus-steps" role="list">
-        ${steps.map(
-          (step, index) => html`
-            <li
-              class="swc-ResponseStatus-step"
-              data-status=${step.status}
-              role="listitem"
-            >
-              <div class="swc-ResponseStatus-step-rail">
-                ${this._renderStepIcon(step.status)}
-                ${index < lastIndex
-                  ? html`
-                      <span
-                        class="swc-ResponseStatus-step-line"
-                        aria-hidden="true"
-                      ></span>
-                    `
-                  : ''}
-              </div>
-              <div class="swc-ResponseStatus-step-body">
-                <p
-                  class="swc-ResponseStatus-step-title swc-Detail swc-Detail--sizeS"
-                >
-                  ${step.label}
-                </p>
-                ${this._renderStepDetail(step.description)}
-              </div>
-            </li>
-          `
-        )}
-      </ol>
-    `;
-  }
-
   private _renderPanel(showPanel: boolean): TemplateResult {
     const panelOpen = showPanel && this.open;
     const panelLabel =
@@ -637,7 +669,14 @@ export class ResponseStatus extends SpectrumElement {
         role=${ifDefined(showPanel ? 'group' : undefined)}
         aria-label=${ifDefined(showPanel ? panelLabel : undefined)}
       >
-        ${this._renderStepTimeline()}
+        <ol class="swc-ResponseStatus-steps" role="list">
+          <slot
+            @slotchange=${this._handleSlotChange}
+            @swc-response-status-step-open-change=${this._handleStepOpenChange}
+            @swc-response-status-step-active-label-change=${this
+              ._handleStepActiveLabelChange}
+          ></slot>
+        </ol>
       </div>
     `;
   }
@@ -652,11 +691,6 @@ export class ResponseStatus extends SpectrumElement {
           name="label"
           hidden
           @slotchange=${this._handleNamedSlotChange}
-        ></slot>
-        <slot
-          class="swc-ResponseStatus-content-slot"
-          hidden
-          @slotchange=${this._handleSlotChange}
         ></slot>
       </div>
     `;
