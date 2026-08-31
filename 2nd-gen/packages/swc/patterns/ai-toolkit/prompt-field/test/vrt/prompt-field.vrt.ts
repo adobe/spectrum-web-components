@@ -86,14 +86,24 @@ const cardAttachment = (title: string, subtitle: string) => html`
   </swc-upload-attachment>
 `;
 
+// Static gradients stand in for real thumbnails so VRT snapshots don't depend
+// on a network image request.
+const THUMBNAIL_GRADIENTS: Record<number, string> = {
+  64: 'linear-gradient(135deg, #a78bfa, #f472b6)',
+  56: 'linear-gradient(135deg, #f472b6, #facc15)',
+  823: 'linear-gradient(135deg, #38bdf8, #a78bfa)',
+};
+
 const mediaAttachment = (id: number, alt: string, badge?: string) => html`
   <swc-upload-attachment slot="attachment" type="media" dismissible>
-    <img
+    <div
       slot="thumbnail"
-      src="https://picsum.photos/id/${id}/68/68"
-      alt=${alt}
-      style="inline-size: 100%; block-size: 100%; object-fit: cover;"
-    />
+      role="img"
+      aria-label=${alt}
+      style="inline-size: 100%; block-size: 100%; background: ${THUMBNAIL_GRADIENTS[
+        id
+      ]};"
+    ></div>
     ${badge
       ? html`
           <span slot="badge">${badge}</span>
