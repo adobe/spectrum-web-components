@@ -91,8 +91,10 @@ jobs:
               [ "$BASE" = "main" ] && IS_BASE_MAIN=true || IS_BASE_MAIN=false
             fi
 
+            echo "Decide which gen tests to run:"
             echo "run_gen1=$RUN_GEN1"
             echo "run_gen2=$RUN_GEN2"
+            echo "Decide if gen2 chromium coverage should run:"
             echo "is_base_main=$IS_BASE_MAIN"
             export RUN_GEN1 RUN_GEN2 IS_BASE_MAIN
 
@@ -107,7 +109,7 @@ jobs:
                   -H "Authorization: Bearer $GITHUB_TOKEN" \
                   -H "Accept: application/vnd.github+json" \
                   "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/statuses/$CIRCLE_SHA1" \
-                  -d "{\"state\":\"$2\",\"context\":\"$1-tests\",\"description\":\"$3\"}" >/dev/null || true
+                  -d "{\"state\":\"$2\",\"context\":\"$1-tests-status\",\"description\":\"$3\"}" >/dev/null || true
               }
               [ "$RUN_GEN1" = "true" ] && post_status gen1 pending "gen1 tests running" || post_status gen1 success "gen1 not affected"
               [ "$RUN_GEN2" = "true" ] && post_status gen2 pending "gen2 tests running" || post_status gen2 success "gen2 not affected"
