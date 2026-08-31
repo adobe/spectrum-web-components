@@ -62,6 +62,16 @@ function reconnectAll(): void {
     // delivered to the callback, so a mutation that lands right before an
     // unrelated component's unmount triggers `reconnectAll()` would
     // otherwise be silently dropped. Drain and process them first.
+    //
+    // This assumes no listener synchronously mutates another
+    // still-observed attribute: `processRecords()` runs listeners
+    // synchronously, so any such mutation would be queued into
+    // `sharedObserver` and then silently discarded by `disconnect()` on
+    // the next line, same as an unrelated mutation timed the same way.
+    // Every listener registered through this module today just flags
+    // state and calls `requestUpdate()`, so this doesn't come up in
+    // practice, but a future caller that mutates attributes from a
+    // listener should be aware of it.
     processRecords(sharedObserver.takeRecords());
     sharedObserver.disconnect();
   }
