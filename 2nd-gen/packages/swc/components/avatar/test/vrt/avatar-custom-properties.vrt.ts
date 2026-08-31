@@ -37,7 +37,7 @@ export default meta;
 
 // Helpers
 
-const PLACEHOLDER_SRC = 'https://picsum.photos/id/64/500/500';
+const PLACEHOLDER_SRC = './images/avatar-preview.png';
 
 // --swc-avatar-outline-color/-width only resolve when `outline` is set, and
 // --swc-avatar-opacity-disabled only resolves when `disabled` is set, so each
