@@ -1086,9 +1086,10 @@ export const PlaygroundDropTest: Story = {
     };
 
     await step(
-      'Playground renders a dropped attachment without stealing focus',
+      'Playground leaves focus alone for a drop with no keyboard focus anywhere',
       async () => {
         textarea?.blur();
+        (document.activeElement as HTMLElement | null)?.blur();
         dropFile('first.txt');
 
         await waitFor(() => {
@@ -1102,13 +1103,44 @@ export const PlaygroundDropTest: Story = {
     );
 
     await step(
-      'Playground preserves prompt input focus when another attachment is dropped',
+      'A later Tab still reaches the tile a mouse-only drop just added',
+      async () => {
+        const attachment = demo?.querySelector<HTMLElement>(
+          '[data-attachment-id]'
+        );
+        textarea?.focus();
+        await userEvent.tab({ shift: true });
+        expect(getActiveElement()).toBe(attachment);
+      }
+    );
+
+    await step(
+      'Playground focuses a dropped attachment when keyboard focus was elsewhere in the field',
       async () => {
         textarea?.focus();
+        await userEvent.tab();
+        expect(getActiveElement()).not.toBe(textarea);
+
         dropFile('second.txt');
 
         await waitFor(() => {
-          expect(demo?.querySelectorAll('[data-attachment-id]').length).toBe(2);
+          const attachments = demo?.querySelectorAll<HTMLElement>(
+            '[data-attachment-id]'
+          );
+          expect(attachments?.length).toBe(2);
+          expect(getActiveElement()).toBe(attachments?.[1]);
+        });
+      }
+    );
+
+    await step(
+      'Playground preserves prompt input focus when another attachment is dropped',
+      async () => {
+        textarea?.focus();
+        dropFile('third.txt');
+
+        await waitFor(() => {
+          expect(demo?.querySelectorAll('[data-attachment-id]').length).toBe(3);
           expect(getActiveElement()).toBe(textarea);
         });
       }

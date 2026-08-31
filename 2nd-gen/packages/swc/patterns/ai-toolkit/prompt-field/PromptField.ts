@@ -40,6 +40,7 @@ import {
   deepContains,
   focusableSelector,
   getActiveElement,
+  isFocusVisibleInTree,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
@@ -251,6 +252,9 @@ export class PromptField extends SpectrumElement {
     index: number;
   };
 
+  // Attachment tiles present at drop time; diffed on the next slotchange to find the new one(s) to focus.
+  private _pendingAttachmentDropFocus?: HTMLElement[];
+
   /** Whether a file is currently being dragged over the field. Drives the same visual as the textarea's own focus ring. */
   @state()
   private _dragged = false;
@@ -273,6 +277,11 @@ export class PromptField extends SpectrumElement {
       const files = Array.from(event.dataTransfer?.files ?? []);
       if (files.length === 0) {
         return;
+      }
+      if (this.shadowRoot?.activeElement !== this._textarea) {
+        this._pendingAttachmentDropFocus = [
+          ...(this._assignedAttachmentElements ?? []),
+        ];
       }
       this.dispatchEvent(
         new CustomEvent('swc-prompt-field-drop', {
@@ -427,6 +436,16 @@ export class PromptField extends SpectrumElement {
     if (dismissedAttachmentWasRemoved) {
       this._pendingAttachmentDismiss = undefined;
       this._restoreAttachmentFocusAfterDismiss(dismissedAttachment.index);
+    }
+    const attachmentsBeforeDrop = this._pendingAttachmentDropFocus;
+    if (attachmentsBeforeDrop) {
+      this._pendingAttachmentDropFocus = undefined;
+      const droppedAttachment = attachments.find(
+        (attachment) => !attachmentsBeforeDrop.includes(attachment)
+      );
+      if (droppedAttachment) {
+        this._prepareAttachmentDropTarget(droppedAttachment);
+      }
     }
     this.requestUpdate();
     void this.updateComplete.then(() => {
@@ -596,6 +615,18 @@ export class PromptField extends SpectrumElement {
       inline: 'nearest',
     });
     el.focus();
+  }
+
+  // Always makes the dropped tile the roving-tabindex entry point (so a later Tab into the strip lands there); only steals focus now if already in a keyboard session.
+  private _prepareAttachmentDropTarget(el: HTMLElement): void {
+    this._attachmentNavigation.setActiveItem(el);
+    if (isFocusVisibleInTree()) {
+      el.scrollIntoView({
+        block: 'nearest',
+        inline: 'nearest',
+      });
+      el.focus();
+    }
   }
 
   /** Reacts to `swc-focusgroup-navigation-active-change` from `_attachmentNavigation`. */
