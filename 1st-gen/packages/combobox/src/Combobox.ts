@@ -57,12 +57,16 @@ export type ComboboxOption = {
 // return the *computed* CSS direction rather than the attribute, so a
 // slotted `MenuItem`'s authored `dir` must be read via `getAttribute`
 // instead of the `dir` property. Plain `ComboboxOption` data has no such
-// override.
+// override. Check `instanceof HTMLElement` rather than `instanceof MenuItem`
+// so this still narrows correctly if a consumer ends up with two
+// separately-bundled copies of `@spectrum-web-components/menu` (e.g. a
+// yarn/webpack dedup issue) — `HTMLElement` is a single browser global
+// shared across bundles, unlike the bundled `MenuItem` class.
 const getOptionDir = (
   option: ComboboxOption | MenuItem
 ): Directionality | undefined =>
   normalizeDir(
-    option instanceof MenuItem ? option.getAttribute('dir') : option.dir
+    option instanceof HTMLElement ? option.getAttribute('dir') : option.dir
   );
 
 // `MenuItem.lang` (an `HTMLElement` IDL reflection of the `lang` attribute)
@@ -74,7 +78,7 @@ const getOptionDir = (
 const getOptionLang = (
   option: ComboboxOption | MenuItem
 ): string | undefined =>
-  option instanceof MenuItem
+  option instanceof HTMLElement
     ? (option.getAttribute('lang') ?? undefined)
     : option.lang;
 
