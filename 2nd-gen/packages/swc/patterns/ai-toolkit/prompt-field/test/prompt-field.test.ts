@@ -909,6 +909,7 @@ export const StatusLoaderTest: Story = {
           label="Prompt"
           loader="analyze"
           generating
+          animate-loader
         ></swc-prompt-field>
       `,
       canvasElement
@@ -926,7 +927,7 @@ export const StatusLoaderTest: Story = {
       );
 
     await step(
-      'a preset name routes to the loader preset and generating animates it',
+      'a preset name routes to the loader preset and generating with animate-loader animates it',
       async () => {
         expect(loader()?.getAttribute('preset')).toBe('analyze');
         expect(loader()?.hasAttribute('paused')).toBe(false);
@@ -943,6 +944,17 @@ export const StatusLoaderTest: Story = {
         expect(loader()?.hasAttribute('paused')).toBe(true);
         expect(loader()?.hasAttribute('preset')).toBe(false);
         expect(loader()?.getAttribute('icon')).toBe('wand');
+      }
+    );
+
+    await step(
+      'generating without animate-loader keeps the loader paused',
+      async () => {
+        el.generating = true;
+        el.animateLoader = false;
+        await el.updateComplete;
+
+        expect(loader()?.hasAttribute('paused')).toBe(true);
       }
     );
   },

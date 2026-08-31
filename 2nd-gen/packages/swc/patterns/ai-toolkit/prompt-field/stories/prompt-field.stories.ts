@@ -54,6 +54,7 @@ function renderPromptField(
       loader=${storyArgs.loader ?? 'aiLogo'}
       ?disabled=${storyArgs.disabled ?? false}
       ?generating=${storyArgs.generating ?? false}
+      ?animate-loader=${storyArgs['animate-loader'] ?? false}
       accessible-label=${storyArgs['accessible-label'] ?? ''}
       send-label=${storyArgs['send-label'] ?? 'Send'}
       stop-label=${storyArgs['stop-label'] ?? 'Stop generating'}
@@ -635,6 +636,40 @@ export const HandlingEvents: Story = {
   tags: ['behaviors'],
 };
 HandlingEvents.storyName = 'Handling events';
+
+export const AnimateLoader: Story = {
+  render: () => html`
+    <div style="display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          generating
+          label="Prompt"
+          value="Summarize the API changes in this branch."
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          generating, without animate-loader: status loader stays static
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          generating
+          animate-loader
+          label="Prompt"
+          value="Summarize the API changes in this branch."
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          generating, with animate-loader: status loader animates
+        </span>
+      </div>
+    </div>
+  `,
+  tags: ['behaviors'],
+};
+AnimateLoader.storyName = 'Animate loader';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORY

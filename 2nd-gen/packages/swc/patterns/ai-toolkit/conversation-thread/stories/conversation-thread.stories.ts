@@ -635,7 +635,6 @@ class ConversationFullPatternDemo extends LitElement {
         </div>
         <div class="swc-ConversationFullPatternDemo-composer">
           <swc-prompt-field
-            mode=${this.isGenerating ? 'loading' : 'default'}
             .value=${this.promptValue}
             @swc-prompt-field-input=${this.handlePromptInput}
             @swc-prompt-field-submit=${this.handlePromptSubmit}

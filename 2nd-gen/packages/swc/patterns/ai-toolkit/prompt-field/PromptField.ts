@@ -123,6 +123,10 @@ export class PromptField extends SpectrumElement {
   @property({ type: String, reflect: true })
   public loader: PixelLoaderIconName | PixelLoaderPresetName = 'aiLogo';
 
+  /** Animates the status loader while generating; otherwise it stays static. */
+  @property({ type: Boolean, reflect: true, attribute: 'animate-loader' })
+  public animateLoader = false;
+
   /** Accessible name for the textarea; visually hidden. */
   @property({ type: String })
   public label = 'Prompt';
@@ -1095,7 +1099,7 @@ export class PromptField extends SpectrumElement {
     `;
   }
 
-  /** Status pixel-loader: paused on a settled frame while idle, animating while generating. */
+  /** Status pixel-loader: static unless both generating and animateLoader are set. */
   private _renderStatusIcon(): TemplateResult {
     // One `loader` value routes to the pixel-loader's icon or preset; the name
     // sets are disjoint, so preset membership disambiguates. Typed against the
@@ -1115,7 +1119,7 @@ export class PromptField extends SpectrumElement {
         <swc-pixel-loader
           icon=${icon}
           preset=${ifDefined(preset)}
-          ?paused=${!this.generating}
+          ?paused=${!(this.generating && this.animateLoader)}
         ></swc-pixel-loader>
       </span>
     `;
