@@ -145,12 +145,12 @@ export const MultiMedia: Story = {
       </p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">
         <swc-upload-attachment type="media" dismissible>
-          <div
+          <img
             slot="thumbnail"
-            role="img"
-            aria-label="Campaign still"
-            style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#a78bfa,#f472b6);"
-          ></div>
+            src="https://picsum.photos/id/64/68/68"
+            alt="Campaign still"
+            style="inline-size:100%;block-size:100%;object-fit:cover;"
+          />
         </swc-upload-attachment>
         <swc-upload-attachment type="media" dismissible>
           <div
@@ -162,12 +162,12 @@ export const MultiMedia: Story = {
           <span slot="badge">PDF</span>
         </swc-upload-attachment>
         <swc-upload-attachment type="media" dismissible>
-          <div
+          <img
             slot="thumbnail"
-            role="img"
-            aria-label="Storyboard frame"
-            style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#f472b6,#facc15);"
-          ></div>
+            src="https://picsum.photos/id/56/68/68"
+            alt="Storyboard frame"
+            style="inline-size:100%;block-size:100%;object-fit:cover;"
+          />
         </swc-upload-attachment>
       </div>
     </div>
@@ -193,12 +193,12 @@ export const Media: Story = {
   render: () => html`
     <div style="inline-size:240px;">
       <swc-upload-attachment type="media" dismissible>
-        <div
+        <img
           slot="thumbnail"
-          role="img"
-          aria-label="Campaign preview"
-          style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#a78bfa,#f472b6);"
-        ></div>
+          src="https://picsum.photos/id/823/68/68"
+          alt="Campaign preview"
+          style="inline-size:100%;block-size:100%;object-fit:cover;"
+        />
       </swc-upload-attachment>
     </div>
   `,
@@ -209,12 +209,12 @@ export const MediaWithBadge: Story = {
   render: () => html`
     <div style="inline-size:240px;">
       <swc-upload-attachment type="media" dismissible>
-        <div
+        <img
           slot="thumbnail"
-          role="img"
-          aria-label="Mixed attachment preview"
-          style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#a78bfa,#f472b6);"
-        ></div>
+          src="https://picsum.photos/id/823/68/68"
+          alt="Mixed attachment preview"
+          style="inline-size:100%;block-size:100%;object-fit:cover;"
+        />
         <span slot="badge">PDF</span>
       </swc-upload-attachment>
     </div>
