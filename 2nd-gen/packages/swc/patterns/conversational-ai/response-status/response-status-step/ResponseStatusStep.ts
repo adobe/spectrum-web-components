@@ -76,6 +76,10 @@ export class ResponseStatusStep extends SpectrumElement {
   @state()
   private _hasDescription = false;
 
+  /** Mirrors the label text for the shimmer overlay clone (see .css). */
+  @state()
+  private _labelText = '';
+
   /**
    * Whether the open detail region overflows its capped height. Only steps
    * that overflow get a keyboard-focusable scroll region. Measured once per
@@ -207,8 +211,12 @@ export class ResponseStatusStep extends SpectrumElement {
       this._hasDescription = hasDescription;
     }
 
+    const label = this._readLabel();
+    if (label !== this._labelText) {
+      this._labelText = label;
+    }
+
     if (this._resolvedStatus === 'active') {
-      const label = this._readLabel();
       if (label !== this._lastActiveLabel) {
         this._lastActiveLabel = label;
         this._emit('swc-response-status-step-active-label-change', {
@@ -278,6 +286,9 @@ export class ResponseStatusStep extends SpectrumElement {
       return html`
         <p class="swc-ResponseStatusStep-title swc-Detail swc-Detail--sizeS">
           <slot name="label"></slot>
+          <span inert class="swc-ResponseStatusStep-titleShimmer">
+            ${this._labelText}
+          </span>
         </p>
       `;
     }
@@ -292,6 +303,9 @@ export class ResponseStatusStep extends SpectrumElement {
       >
         <span class="swc-ResponseStatusStep-title swc-Detail swc-Detail--sizeS">
           <slot name="label"></slot>
+          <span inert class="swc-ResponseStatusStep-titleShimmer">
+            ${this._labelText}
+          </span>
         </span>
       </button>
       <div
