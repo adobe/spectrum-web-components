@@ -44,6 +44,7 @@ export class TextField extends TextFieldBase {
         <input
           class="input"
           aria-label=${ifDefined(this.accessibleLabel || undefined)}
+          ?disabled=${this.effectiveDisabled}
         />
       </div>
     `;

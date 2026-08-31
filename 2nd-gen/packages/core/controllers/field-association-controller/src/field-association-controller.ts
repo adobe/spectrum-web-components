@@ -56,36 +56,8 @@ export interface FieldAssociationControllerOptions {
  *
  * The host element retains `static formAssociated = true` and its own
  * `attachInternals()` call; those cannot be delegated to the controller. The
- * result of `attachInternals()` is passed in here.
- *
- * @example
- * ```ts
- * class SwcTextField extends LitElement {
- *   static formAssociated = true;
- *   private internals = this.attachInternals();
- *   private fieldAssoc = new FieldAssociationController(this.internals, {
- *     onDisabledChange: () => this.requestUpdate(),
- *   });
- *
- *   protected override firstUpdated(): void {
- *     this.fieldAssoc.defaultValue = this.value;
- *   }
- *
- *   protected override update(changed: PropertyValues): void {
- *     super.update(changed);
- *     const disabled = this.hasAttribute('disabled') || this.fieldAssoc.formDisabled;
- *     this.fieldAssoc.setValue(disabled ? null : this.value);
- *   }
- *
- *   formResetCallback(): void {
- *     this.value = this.fieldAssoc.defaultValue;
- *   }
- *
- *   formDisabledCallback(disabled: boolean): void {
- *     this.fieldAssoc.formDisabledCallback(disabled);
- *   }
- * }
- * ```
+ * result of `attachInternals()` is passed in here. See the controller's docs
+ * page for a full host example.
  */
 export class FieldAssociationController {
   private readonly _internals: ElementInternals;
@@ -107,11 +79,7 @@ export class FieldAssociationController {
   //     FORM VALUE
   // ─────────────────────────
 
-  /**
-   * Sets the current form value. Pass `null` to exclude the field from the
-   * submitted `FormData` (unchecked checkbox, disabled field, unselected
-   * combobox).
-   */
+  /** Sets the form value. Pass `null` to exclude the field from `FormData`. */
   public setValue(value: FieldFormValue): void {
     this._internals.setFormValue(value);
   }
@@ -134,19 +102,16 @@ export class FieldAssociationController {
   // ─────────────────────────
 
   /**
-   * `true` when the owning form or an ancestor `<fieldset disabled>` has disabled
-   * this field. Combine with the host's own `disabled` attribute to compute the
-   * effective disabled state: `host.hasAttribute('disabled') || formDisabled`.
+   * `true` when an ancestor form or `<fieldset disabled>` has disabled this
+   * field. Combine with the host's own `disabled`: `disabled || formDisabled`.
    */
   public get formDisabled(): boolean {
     return this._formDisabled;
   }
 
   /**
-   * Delegate target for the host's `formDisabledCallback(disabled)` browser hook.
-   * The platform invokes it whenever an ancestor `<fieldset disabled>` (or the
-   * owning form) disables or re-enables the field. Records the cascaded state and
-   * notifies the host via `onDisabledChange` only on an actual change.
+   * Delegate target for the host's `formDisabledCallback` browser hook. Records
+   * the cascaded state and fires `onDisabledChange` only on a real change.
    */
   public formDisabledCallback(disabled: boolean): void {
     if (this._formDisabled === disabled) {
@@ -160,17 +125,14 @@ export class FieldAssociationController {
   //     VALIDITY PASS-THROUGHS
   // ─────────────────────────
 
-  /** The form the field is associated with, if any. */
   public get form(): HTMLFormElement | null {
     return this._internals.form;
   }
 
-  /** The field's current validity state. */
   public get validity(): ValidityState {
     return this._internals.validity;
   }
 
-  /** The localized validation message for the field's current validity. */
   public get validationMessage(): string {
     return this._internals.validationMessage;
   }
@@ -180,14 +142,11 @@ export class FieldAssociationController {
     return this._internals.willValidate;
   }
 
-  /** Runs constraint validation, returning whether the field is valid. */
   public checkValidity(): boolean {
     return this._internals.checkValidity();
   }
 
-  /**
-   * Runs constraint validation and, if invalid, reports the problem to the user.
-   */
+  /** Runs constraint validation and, if invalid, shows the native error UI. */
   public reportValidity(): boolean {
     return this._internals.reportValidity();
   }

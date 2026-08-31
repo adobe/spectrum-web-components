@@ -81,10 +81,10 @@ This proposal records the team's recommended direction for **2nd-gen form fields
 
 ### 3.1 Form participation: ElementInternals / FACE
 
-2nd-gen form fields are **form-associated custom elements**: set `static formAssociated = true`, attach internals with `this.attachInternals()`, and mirror value through `setFormValue()`. Do not nest a hidden light-DOM `<input>` to participate in forms. A `setValidity()` pass-through on `FieldAssociationController` is proposed but not yet implemented (*pending research*); see [§6](#6-open-questions) before hand-rolling validity per component.
+2nd-gen form fields are **form-associated custom elements**: set `static formAssociated = true`, attach internals with `this.attachInternals()`, and mirror value through `setFormValue()`. Do not nest a hidden light-DOM `<input>` to participate in forms. This wiring now ships as [`FieldAssociationController`](../../../2nd-gen/packages/core/controllers/field-association-controller/src/field-association-controller.ts); adopt it rather than hand-rolling `ElementInternals` per component. The controller exposes the **read** side of validity (`validity`, `validationMessage`, `willValidate`, `checkValidity()`, `reportValidity()`) as pass-throughs; **writing** validity with `setValidity()` stays on the host, since what makes a field invalid is per-component. Populating validity from constraints is deferred to the labelling and render work (see [§6](#6-open-questions)).
 
 - **Decision:** yes, adopt ElementInternals/FACE for form fields. The value is submitted via `internals.setFormValue(value)` on change, and the `formDisabledCallback(disabled)` lifecycle hook receives cascades from an ancestor `<fieldset disabled>` or an owning form.
-- **Shared controller:** a **`FieldAssociationController`** wraps `ElementInternals` to handle value submission, the disabled cascade, and form reset once, so text field, checkbox, and combobox do not each reimplement it.
+- **Shared controller:** `FieldAssociationController` wraps `ElementInternals` to handle value submission (with `null` exclusion), the disabled cascade, and form reset once, so text field, checkbox, radio, and combobox do not each reimplement it. It ships today and is adopted by `swc-text-field`; later field migrations reuse it by supplying only what differs (their inner control and how its state maps to a submitted value).
 - **Browser / AT notes:** Chromium and Safari expose `ElementInternals` ARIA more consistently than Firefox; verify exposure manually in Firefox (see [§3.4](#34-axe-core-policy)).
 
 ### 3.2 Where ARIA roles live
@@ -178,6 +178,7 @@ These are active research spikes; their outcomes finalize the *pending research*
 - **Grouped selection:** whether a dedicated `RadioGroupController` is needed for radio group (composing `SelectionController`, `FocusgroupNavigationController`, and `SlotAttributePropagationController`), or whether those primitives are composed inline.
 - **Label slot rule:** confirming the primary-vs-supplementary rule for default slot vs named `slot="label"` holds across all migrated components, and how it relates to the `accessible-label` attribute used for no-visible-label cases.
 - **`accessible-labelledby` / `accessible-describedby` and `LabellingController`:** the cross-root name and description mappings are part of the in-flight text field epic and not yet in the codebase; the exact API and whether the controller wiring lands separately from the attributes is still under discussion.
+- **Validity population and the native bubble:** `FieldAssociationController` exposes the read side of validity, but writing it (`setValidity()`) and reflecting `required` / `pattern` onto the inner control are deferred to the labelling and render work. Reflecting those constraints engages the browser's constraint validation, which surfaces a native error bubble that competes with the inline Spectrum error; suppressing it (via `novalidate` on the enclosing form, or `formnovalidate` per submit) depends on whether the migration provides a form wrapper. Resolve this before wiring validity population.
 
 ---
 

@@ -12,6 +12,7 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
+import { FieldAssociationController } from '@adobe/spectrum-wc-core/controllers/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
@@ -50,6 +51,9 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
     ...SpectrumElement.shadowRootOptions,
     delegatesFocus: true,
   };
+
+  /** Opts the element into native form participation. */
+  static formAssociated = true;
 
   /**
    * The size of the text field.
@@ -187,12 +191,73 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
   // IDREF stubs to cross-root element references, and add the "unlabeled field"
   // dev-warning, via the LabellingController.
 
-  // @todo (SWC-2467): wire the FieldAssociationController (formAssociated,
-  // attachInternals, setFormValue, formResetCallback, formDisabledCallback) plus
-  // its checkValidity()/reportValidity()/validity pass-throughs.
+  // Form association. `formAssociated` (static, above) and `attachInternals`
+  // stay on the element; the controller wraps the ElementInternals surface.
+  // Populating validity from constraints (required/pattern/…) lands with the
+  // labelling and render work.
+  private internals = this.attachInternals();
+
+  private fieldAssoc = new FieldAssociationController(this.internals, {
+    onDisabledChange: () => this.requestUpdate(),
+  });
+
+  /**
+   * Effective disabled state: the host's own `disabled` attribute OR the
+   * cascaded form / `<fieldset disabled>` state. Never the attribute alone.
+   * Internal; the subclass render reads it to disable the inner control.
+   */
+  protected get effectiveDisabled(): boolean {
+    return this.disabled || this.fieldAssoc.formDisabled;
+  }
+
+  /** The form the field participates in, or `null`. */
+  public get form(): HTMLFormElement | null {
+    return this.fieldAssoc.form;
+  }
+
+  /** The field's constraint-validation state. */
+  public get validity(): ValidityState {
+    return this.fieldAssoc.validity;
+  }
+
+  /** The localized validation message. */
+  public get validationMessage(): string {
+    return this.fieldAssoc.validationMessage;
+  }
+
+  /** Whether the field is a candidate for constraint validation. */
+  public get willValidate(): boolean {
+    return this.fieldAssoc.willValidate;
+  }
+
+  /** Runs constraint validation; returns whether the field is valid. */
+  public checkValidity(): boolean {
+    return this.fieldAssoc.checkValidity();
+  }
+
+  /** Runs constraint validation and reports any problem to the user. */
+  public reportValidity(): boolean {
+    return this.fieldAssoc.reportValidity();
+  }
+
+  /** Restores the value to the initial `value` attribute on a native form reset. */
+  public formResetCallback(): void {
+    this.value = this.fieldAssoc.defaultValue;
+  }
+
+  /** Delegates the ancestor form / fieldset disabled cascade to the controller. */
+  public formDisabledCallback(disabled: boolean): void {
+    this.fieldAssoc.formDisabledCallback(disabled);
+  }
 
   // @todo (Phase 5): setSelectionRange() / select() delegate to the rendered
   // native <input>, so they land with the render implementation.
+
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+    // The reset target is the initial `value` attribute.
+    this.fieldAssoc.defaultValue = this.value;
+  }
 
   protected override update(changedProperties: PropertyValues): void {
     validateEnum(this, {
@@ -208,5 +273,7 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
       url: DOCS_URL,
     });
     super.update(changedProperties);
+    // Push the current value into the form; exclude it entirely when disabled.
+    this.fieldAssoc.setValue(this.effectiveDisabled ? null : this.value);
   }
 }

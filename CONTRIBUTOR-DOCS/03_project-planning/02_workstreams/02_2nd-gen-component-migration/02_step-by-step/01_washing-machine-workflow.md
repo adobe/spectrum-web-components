@@ -383,7 +383,16 @@ Notes on the pattern:
 
 Applies when the component is a **form field** (text field, checkbox, radio, picker, combobox). Skip this for non-form components.
 
-Wire the field per the approved [forms strategy](../../../05_strategies/forms-strategy-rfc.md): form participation through the **ElementInternals / form-associated custom element (FACE)** API (not a nested light-DOM `<input>`) and the form lifecycle callbacks. Name the public API from its [naming table](../../../05_strategies/forms-strategy-rfc.md#4-naming-table) so property, slot, and event names match; do not invent per-component names, and align text-like fields and pickers to the same table.
+Wire the field per the approved [forms strategy](../../../05_strategies/forms-strategy-rfc.md): form participation through the **ElementInternals / form-associated custom element (FACE)** API (not a nested light-DOM `<input>`) and the form lifecycle callbacks.
+
+Adopt the shared [`FieldAssociationController`](../../../../../2nd-gen/packages/core/controllers/field-association-controller/src/field-association-controller.ts) rather than hand-wiring `ElementInternals`. Keep `static formAssociated = true`, `attachInternals()`, and `setValidity()` on the element (the platform requires them there), then hand the internals to the controller and delegate the rest:
+
+- Push the value with `setValue()`; pass `null` to exclude the field from `FormData` (unchecked, unselected, or disabled).
+- Restore `defaultValue` from the element's `formResetCallback`.
+- Forward the element's `formDisabledCallback` to the controller for the ancestor form / `<fieldset disabled>` cascade.
+- Compute effective disabled as the element's own `disabled` OR `fieldAssoc.formDisabled`, never the attribute alone.
+
+`swc-text-field` is the reference adoption. Name the public API from its [naming table](../../../05_strategies/forms-strategy-rfc.md#4-naming-table) so property, slot, and event names match; do not invent per-component names, and align text-like fields and pickers to the same table.
 
 ### What to check
 
@@ -394,7 +403,7 @@ Wire the field per the approved [forms strategy](../../../05_strategies/forms-st
 - [ ] Invalid prop combinations emit `window.__swc.warn()` when debug is on (where the component has combination rules).
 - [ ] Every applicable dev-warning category is covered: enum values, required properties, conditionally required properties, mutually exclusive/no-effect combinations, required slots, allowed children.
 - [ ] Dev-warning checks use the shared helpers (`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`) rather than hand-rolled `includes()` + `warn()` code.
-- [ ] **Form fields:** the field is form-associated (`static formAssociated = true`); value flows through `ElementInternals` (`setFormValue()`), not a hidden `<input>`; and property, slot, and event names match the forms strategy naming table. (Validity reporting via `setValidity()` is pending — do not block on it.)
+- [ ] **Form fields:** the field adopts `FieldAssociationController` for form participation (value with `null` exclusion, `defaultValue` reset, and the disabled cascade) rather than hand-wiring `ElementInternals`; `static formAssociated = true`, `attachInternals()`, and `setValidity()` stay on the element; effective disabled is `disabled || fieldAssoc.formDisabled`; and property, slot, and event names match the forms strategy naming table. (Populating validity via `setValidity()` is deferred to the labelling and render work; do not block on it.)
 
 
 ### Common problems and solutions

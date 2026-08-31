@@ -265,6 +265,7 @@ export const ValidityTest: Story = {
       await host.updateComplete;
       expect(host.checkValidity(), 'checkValidity reflects valid').toBe(true);
       expect(host.validity.valid, 'validity.valid is true').toBe(true);
+      expect(host.reportValidity(), 'reportValidity passes through').toBe(true);
     });
   },
 };
