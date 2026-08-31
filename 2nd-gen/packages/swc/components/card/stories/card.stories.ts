@@ -329,7 +329,7 @@ export const Gallery: Story = {
         </swc-badge>
         <swc-avatar
           slot="media"
-          src="./images/card-preview.jpg"
+          src="./images/avatar-preview.png"
           alt="Credit: Jane Doe"
           size="100"
           outline

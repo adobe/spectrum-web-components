@@ -74,7 +74,7 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-const PLACEHOLDER_SRC = './images/card-preview.jpg';
+const PLACEHOLDER_SRC = './images/avatar-preview.png';
 
 // ────────────────────
 //    PLAYGROUND STORY

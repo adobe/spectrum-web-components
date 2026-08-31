@@ -104,7 +104,7 @@ const accountCard = `
   <div style="display: flex; flex-direction: column; gap: 16px;">
     <div style="display: flex; align-items: center; gap: 12px;">
       <swc-avatar
-        src="./images/card-preview.jpg"
+        src="./images/avatar-preview.png"
         alt=""
         size="300"
       ></swc-avatar>

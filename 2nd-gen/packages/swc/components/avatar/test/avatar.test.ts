@@ -30,7 +30,7 @@ import meta, {
   Sizes,
 } from '../stories/avatar.stories.js';
 
-const PLACEHOLDER_SRC = './images/card-preview.jpg';
+const PLACEHOLDER_SRC = './images/avatar-preview.png';
 
 export default {
   ...meta,
