@@ -42,6 +42,7 @@
     - Color Field
     - Color Handle
     - Color Loupe
+    - Combobox
     - Divider
     - Dropzone
     - Field Group
@@ -60,6 +61,8 @@
     - Meter
     - Number Field
     - Opacity Checkerboard
+    - Option
+    - Option Group
     - Picker Button
     - Popover
     - Progress Bar
