@@ -202,12 +202,14 @@
   pointer-events: none;
 }
 
-/* stylelint-disable property-no-vendor-prefix, declaration-property-value-no-unknown -- Chrome/Safari-only `text` clip value, no unprefixed equivalent yet */
-:host([status="active"]) .swc-ResponseStatusStep-titleShimmer {
-  -webkit-mask-image: linear-gradient(white, white);
-  -webkit-mask-clip: text;
+@supports (-webkit-mask-clip: text) {
+  :host([status="active"]) .swc-ResponseStatusStep-titleShimmer {
+    mask-image: linear-gradient(white, white);
+
+    /* stylelint-disable-next-line property-no-vendor-prefix -- no unprefixed equivalent exists */
+    -webkit-mask-clip: text;
+  }
 }
-/* stylelint-enable property-no-vendor-prefix, declaration-property-value-no-unknown */
 
 :host([status="active"]) .swc-ResponseStatusStep-titleShimmer::after {
   position: absolute;
