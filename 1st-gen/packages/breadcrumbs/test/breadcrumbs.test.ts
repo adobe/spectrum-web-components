@@ -329,4 +329,18 @@ describe('Breadcrumbs', () => {
       'mirrored once sp-breadcrumbs dir changes after mount'
     ).to.not.equal('none');
   });
+  it('does not render an empty #item-link for the overflow menu wrapper', async () => {
+    const el = await fixture<Breadcrumbs>(html`
+      <sp-breadcrumbs max-visible-items="1">
+        ${getBreadcrumbs(4)}
+      </sp-breadcrumbs>
+    `);
+    await elementUpdated(el);
+
+    const menuWrapper = el.shadowRoot.querySelector(
+      'sp-breadcrumb-item.is-menu'
+    ) as BreadcrumbItem;
+
+    expect(menuWrapper.shadowRoot.querySelector('#item-link')).to.be.null;
+  });
 });

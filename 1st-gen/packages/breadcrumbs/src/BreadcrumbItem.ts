@@ -13,6 +13,7 @@
 import {
   CSSResultArray,
   html,
+  nothing,
   PropertyValues,
   TemplateResult,
 } from '@spectrum-web-components/base';
@@ -23,6 +24,7 @@ import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevr
 import { observeAttribute } from '@spectrum-web-components/reactive-controllers/src/AttributeObserver.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
+import { walkAncestors } from '@spectrum-web-components/shared/src/walk-ancestors.js';
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 
@@ -30,30 +32,6 @@ import styles from './breadcrumb-item.css.js';
 
 export interface BreadcrumbSelectDetail {
   value: string;
-}
-
-// Walks up through `parentElement`, crossing shadow-root boundaries via
-// `getRootNode().host` — needed because `Breadcrumbs.renderMenu()` places
-// an "is-menu" `BreadcrumbItem` inside its own shadow root rather than as
-// a light-DOM child, so a plain `parentElement` walk would stop there
-// without ever reaching `<sp-breadcrumbs>` itself.
-function* ancestorElements(start: Element): Generator<Element> {
-  let node: Node = start;
-  for (;;) {
-    const parent = (node as Element).parentElement;
-    if (parent) {
-      yield parent;
-      node = parent;
-      continue;
-    }
-    const root = node.getRootNode();
-    if (root instanceof ShadowRoot) {
-      yield root.host;
-      node = root.host;
-      continue;
-    }
-    break;
-  }
 }
 
 export class BreadcrumbItem extends LikeAnchor(Focusable) {
@@ -111,7 +89,7 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
       this.setAttribute('role', 'listitem');
     }
 
-    for (const ancestor of ancestorElements(this)) {
+    for (const ancestor of walkAncestors(this)) {
       this.ancestorDirUnsubscribes.push(
         observeAttribute(ancestor, 'dir', () => {
           this.dirNeedsResolve = true;
@@ -175,7 +153,15 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
     }
   }
 
-  protected renderLink(): TemplateResult {
+  protected renderLink(): TemplateResult | typeof nothing {
+    // `Breadcrumbs.renderMenu()` builds a menu-only item (its content is all
+    // `slot="menu"`, nothing for this item's own default slot) — rendering
+    // `#item-link` there would only produce an empty, but still focusable,
+    // link with no label.
+    if (this.classList.contains('is-menu')) {
+      return nothing;
+    }
+
     // Forward `lang`/`dir` from the host onto the link so a single item's
     // language only affects its own text rendering, not the host's own
     // `direction` (which the separator mirrors via `:dir(rtl)`); see
