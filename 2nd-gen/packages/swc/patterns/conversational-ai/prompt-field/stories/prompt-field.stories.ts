@@ -274,20 +274,20 @@ export const Attachment: Story = {
           value="Review these storyboard frames."
         >
           <swc-upload-attachment slot="attachment" type="media" dismissible>
-            <img
+            <div
               slot="thumbnail"
-              src="https://picsum.photos/id/64/68/68"
-              alt="Campaign still"
-              style="inline-size:100%;block-size:100%;object-fit:cover;"
-            />
+              role="img"
+              aria-label="Campaign still"
+              style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#a78bfa,#f472b6);"
+            ></div>
           </swc-upload-attachment>
           <swc-upload-attachment slot="attachment" type="media" dismissible>
-            <img
+            <div
               slot="thumbnail"
-              src="https://picsum.photos/id/56/68/68"
-              alt="Storyboard frame"
-              style="inline-size:100%;block-size:100%;object-fit:cover;"
-            />
+              role="img"
+              aria-label="Storyboard frame"
+              style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#f472b6,#facc15);"
+            ></div>
             <span slot="badge">PDF</span>
           </swc-upload-attachment>
           ${legalDisclaimerSlot}
@@ -316,12 +316,12 @@ export const Attachment: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
           <swc-upload-attachment slot="attachment" type="media" dismissible>
-            <img
+            <div
               slot="thumbnail"
-              src="https://picsum.photos/id/823/68/68"
-              alt="Attachment preview"
-              style="inline-size:100%;block-size:100%;object-fit:cover;"
-            />
+              role="img"
+              aria-label="Attachment preview"
+              style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#a78bfa,#f472b6);"
+            ></div>
           </swc-upload-attachment>
           ${legalDisclaimerSlot}
         </swc-prompt-field>
