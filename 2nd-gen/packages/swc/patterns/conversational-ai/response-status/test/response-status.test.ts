@@ -629,6 +629,39 @@ export const DetailOverflowVisibilityTest: Story = {
         );
       }
     );
+
+    await step(
+      'a programmatic write to `open` (not a click) still measures overflow',
+      async () => {
+        // Freshly created and closed: overflow has never been measured, so
+        // this only proves the fix if the tabindex appears from that cold
+        // state, not because a prior click already measured it.
+        const freshStep = document.createElement(
+          'swc-response-status-step'
+        ) as ResponseStatusStep;
+        freshStep.innerHTML = overflowingStep()!.innerHTML;
+        canvasElement.appendChild(freshStep);
+        await freshStep.updateComplete;
+
+        const freshRegion = (): HTMLElement | null | undefined =>
+          freshStep.shadowRoot?.querySelector<HTMLElement>(
+            '.swc-ResponseStatusStep-detailScroll'
+          );
+        expect(freshRegion()?.hasAttribute('tabindex')).toBe(false);
+
+        freshStep.open = true;
+        await freshStep.updateComplete;
+
+        await waitFor(
+          () => {
+            expect(freshRegion()?.hasAttribute('tabindex')).toBe(true);
+          },
+          { timeout: 2000 }
+        );
+
+        freshStep.remove();
+      }
+    );
   },
 };
 

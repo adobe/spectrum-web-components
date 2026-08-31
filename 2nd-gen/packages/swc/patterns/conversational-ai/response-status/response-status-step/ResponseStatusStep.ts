@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -140,11 +140,13 @@ export class ResponseStatusStep extends SpectrumElement {
 
   protected override firstUpdated(): void {
     this.setAttribute('role', 'listitem');
+  }
 
-    if (this.open) {
-      // Deferred rather than measured synchronously here: `firstUpdated` is
-      // still inside the initial update cycle, and setting reactive state
-      // synchronously within it triggers Lit's reentrant-update warning.
+  // Runs on every update (including the first), so it catches `open` turning
+  // `true` from a click, initial markup, or a consumer setting the property
+  // directly — not just the click path.
+  protected override updated(changed: PropertyValues<this>): void {
+    if (changed.has('open') && this.open) {
       void this.updateComplete.then(() => this._measureOverflow());
     }
   }
@@ -243,10 +245,6 @@ export class ResponseStatusStep extends SpectrumElement {
   private _handleToggle(): void {
     this.open = !this.open;
     this._emit('swc-response-status-step-open-change', { open: this.open });
-
-    if (this.open) {
-      void this.updateComplete.then(() => this._measureOverflow());
-    }
   }
 
   private _renderIcon(): TemplateResult {
