@@ -1,0 +1,46 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Accessibility/ElementInternals and axe-core" />
+
+# ElementInternals and axe-core testing
+
+Spectrum Web Components 2nd-gen form fields participate in forms and expose their accessible name, help text, and error text through [`ElementInternals`](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) rather than a nested light-DOM `<input>`. See the [forms strategy](../../contributor-docs/03_project-planning/05_strategies/forms-strategy-rfc.mdx) for the canonical decision and naming table. This guide covers what that means for automated testing with [axe-core](https://github.com/dequelabs/axe-core): what browsers and assistive technology expose versus what a static analyzer can see, where axe-core currently has gaps, and how to scope CI failures for a component that uses this pattern. For general cross-root ARIA background, see [Semantic HTML and ARIA](/docs/guides-accessibility-semantic-html-and-aria--docs).
+
+## What browsers and assistive technology see versus what axe-core sees
+
+Browsers build the accessibility tree from whatever a component actually does at runtime: `ElementInternals` ARIA properties (`internals.role`, `internals.ariaLabel`), reflected element-reference properties (`ariaLabelledByElements`, `ariaDescribedByElements`), and the resulting computed name and description. Assistive technology reads that computed tree, so a correctly wired form field is announced correctly regardless of where its role or label association lives in the DOM.
+
+**axe-core** is a static analyzer. It inspects DOM structure and attributes rather than the fully computed accessibility tree, so it has historically been unable to follow relationships set through `ElementInternals` or through element-reference properties that point across a shadow boundary. A component can be fully accessible to real assistive technology while still failing (or silently passing) an axe-core rule that cannot see how the relationship was established.
+
+## axe-core's ElementInternals support
+
+[axe-core 4.13.0](https://github.com/dequelabs/axe-core/releases/tag/v4.13.0) (released August 2026) shipped ElementInternals ARIA support enabled by default. It reads ARIA _values_ set through `ElementInternals` (`internals.role`, `internals.ariaLabel`, and similar) across most checks (`aria`, `label`, `navigation`, `forms`, `tables`), and adds [`getResolvedRefs`](https://github.com/dequelabs/axe-core/pull/5151), which resolves raw IDREF attributes to virtual nodes. This is the foundation the [community protocol](https://wicg.github.io/aom/aria-reflection-explainer.html) (the WICG Accessibility Object Model's ARIA reflection work, part of the ARIA 1.2 spec) needs for a static analyzer to eventually follow a cross-root element-reference property, but that specific piece, the `label` check reading `ariaLabelledByElements`, is not yet part of it; see the known false positive below.
+
+This repository's Storybook [test-runner](https://github.com/adobe/spectrum-web-components/blob/main/2nd-gen/packages/swc/.storybook/test-runner.ts) (via `@axe-core/playwright`) and the `addon-a11y` panel both run axe-core 4.13.0.
+
+⚠️ **Important:** Treat 4.13.0's coverage as a step forward, not a guarantee that every `ElementInternals` pattern validates correctly. Several related issues remain open upstream at the time of writing, including [`label` should check `ariaLabelledByElements` as well](https://github.com/dequelabs/axe-core/issues/4943), [update `getAccessibleRefs`](https://github.com/dequelabs/axe-core/issues/5210) and [its ElementInternals support](https://github.com/dequelabs/axe-core/issues/5222), and [ElementInternals ARIA role conflict resolution](https://github.com/dequelabs/axe-core/issues/5162). Verify a specific false positive is actually fixed (re-run the story without the exclusion) before removing it; don't assume a version bump alone resolved it. Deque's [`elementInternals`-labeled issues](https://github.com/dequelabs/axe-core/issues?q=is%3Aissue+label%3AelementInternals) are the best source for current status.
+
+Cross-root IDREF resolution specifically (an `aria-describedby` in the light DOM pointing at an element inside a different component's shadow root) depends on this same reflection work and may continue to trail general same-root `ElementInternals` support; check the linked issues rather than this document for the current state.
+
+## Known false positives and blind spots in this repository
+
+The [forms strategy's axe-core policy](../../contributor-docs/03_project-planning/05_strategies/forms-strategy-rfc.mdx#34-axe-core-policy) documents the specific false positives seen on 2nd-gen form fields, for example a roleless host reporting "Form element does not have a label" when the labelling relationship is set through `ElementInternals` on an inner shadow control. That case is exactly [axe-core#4943](https://github.com/dequelabs/axe-core/issues/4943) (open at the time of writing), so treat it as a live false positive, not one 4.13.0 already fixed. Known blind spots, like a misconfigured `accessible-labelledby` silently yielding a missing label, are not flagged by axe-core at all; manual and screen reader testing remain authoritative for those (see [Screen reader testing](/docs/guides-accessibility-screen-reader-testing--docs)).
+
+## Scoping CI failures
+
+When composing a form-associated custom element and axe-core reports a violation you believe is a false positive for the reasons above:
+
+1. Confirm it against the linked upstream issue rather than assuming; re-test after any axe-core upgrade before keeping an old exclusion.
+2. Add a story-level or test-level exclusion with a written rationale, not a silent global disable. The [test-runner](https://github.com/adobe/spectrum-web-components/blob/main/2nd-gen/packages/swc/.storybook/test-runner.ts) reads per-story exclusions from `parameters.a11y.exclude` (`{ 'rule-id': ['selector', ...] }`) and disabled rules from `parameters.a11y.disabledRules`.
+3. Include a `// reason:` comment linking the relevant upstream Deque/axe-core issue next to the exclusion, and revisit it on a quarterly cadence; remove it once the linked issue ships a fix you've verified.
+4. Verify exposure with manual assistive technology testing, particularly in Firefox, which handles `ElementInternals` ARIA less consistently than Chromium and Safari.
+
+## Further reading
+
+- [Forms strategy: axe-core policy](../../contributor-docs/03_project-planning/05_strategies/forms-strategy-rfc.mdx#34-axe-core-policy): the canonical decision this guide supports
+- [Form-associated custom elements](https://bennypowers.dev/posts/form-associated-custom-elements/) (Benny Powers): an introduction to the FACE pattern
+- [MDN: ElementInternals](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals)
+- [ARIA reflection explainer](https://wicg.github.io/aom/aria-reflection-explainer.html) and [element reference properties](https://github.com/WICG/aom/blob/gh-pages/element_reference_properties.md) (WICG Accessibility Object Model)
+- [axe-core 4.13.0 release notes](https://github.com/dequelabs/axe-core/releases/tag/v4.13.0)
+- [axe-core `elementInternals`-labeled issues](https://github.com/dequelabs/axe-core/issues?q=is%3Aissue+label%3AelementInternals): current status of remaining gaps
+- [Semantic HTML and ARIA](/docs/guides-accessibility-semantic-html-and-aria--docs): general cross-root ARIA background
