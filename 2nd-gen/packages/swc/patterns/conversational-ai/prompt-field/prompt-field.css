@@ -474,7 +474,6 @@
   --_swc-prompt-field-outer-stop-3: var(--_swc-prompt-field-outer-recede-stop);
 
   box-shadow: none;
-  transition: none;
 }
 
 :host .swc-PromptField-outer-border.dragged .swc-PromptField-box {
@@ -482,7 +481,6 @@
   box-shadow: none;
   outline: token("focus-indicator-thickness") solid var(--_swc-prompt-field-drag-focus-indicator-color);
   outline-offset: calc(token("focus-indicator-thickness") * -1);
-  transition: none;
 }
 
 :host .swc-PromptField-outer-border.dragged .swc-PromptField-box::before,
@@ -492,7 +490,6 @@
 
 :host .swc-PromptField-outer-border.dragged .swc-PromptField-box::after {
   box-shadow: inset 0 0 0 1px var(--_swc-prompt-field-border-color);
-  transition: none;
 }
 
 /* stylelint-enable no-descending-specificity */

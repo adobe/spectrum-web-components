@@ -100,7 +100,7 @@ const SUPPORTS_FIELD_SIZING =
  * @fires swc-prompt-field-upload-click - Dispatched when upload affordance is activated.
  * Consumers should handle file picker flow externally.
  * @fires swc-prompt-field-drop - Dispatched when files are dropped anywhere on the field.
- * Detail: `{ files: File[] }`. Consumers should build and slot `swc-upload-artifact`
+ * Detail: `{ files: File[] }`. Consumers should build and slot `swc-upload-attachment`
  * elements from `files` externally, same as the upload-click flow.
  *
  * @cssprop --swc-prompt-field-brand-color - Brand hue driving the AI treatment's ring, wash, and glow colors. Defaults to a fuchsia OKLCH value; only the hue is meaningfully used, lightness/chroma come from each layer's own derived values.

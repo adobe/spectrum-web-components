@@ -21,7 +21,7 @@ import '../swc-prompt-field.js';
 
 import { getComponent, withWarningSpy } from '../../../../utils/test-utils.js';
 import { PromptField } from '../PromptField.js';
-import { meta, Overview } from '../stories/prompt-field.stories.js';
+import { meta, Overview, Playground } from '../stories/prompt-field.stories.js';
 
 const makeDragEvent = (type: string, dt?: DataTransfer): DragEvent =>
   new DragEvent(type, {
@@ -931,9 +931,20 @@ export const DragAndDropTest: Story = {
         expect(getComputedStyle(outerBorder!).backgroundImage).not.toBe('none');
         expect(getComputedStyle(box!).backgroundImage).toBe('none');
         expect(getComputedStyle(box!).outlineStyle).toBe('solid');
-        expect(getComputedStyle(outerBorder!).boxShadow).toBe('none');
-        expect(getComputedStyle(box!).boxShadow).toBe('none');
         expect(getComputedStyle(gloss!).backgroundImage).toBe('none');
+        expect(getComputedStyle(outerBorder!).transitionProperty).toContain(
+          'box-shadow'
+        );
+        expect(getComputedStyle(box!).transitionProperty).toContain(
+          'box-shadow'
+        );
+        expect(getComputedStyle(box!, '::after').transitionProperty).toContain(
+          'box-shadow'
+        );
+        await waitFor(() => {
+          expect(getComputedStyle(outerBorder!).boxShadow).toBe('none');
+          expect(getComputedStyle(box!).boxShadow).toBe('none');
+        });
 
         el.generating = true;
         await el.updateComplete;
@@ -1047,6 +1058,53 @@ export const DragAndDropTest: Story = {
       expect(fired).toBe(false);
       expect(outerBorder?.classList.contains('dragged')).toBe(false);
     });
+  },
+};
+
+export const PlaygroundDropTest: Story = {
+  ...Playground,
+  play: async ({ canvasElement, step }) => {
+    const demo = canvasElement.querySelector('swc-prompt-field-behavior-demo');
+    const el = await getComponent<PromptField>(demo!, 'swc-prompt-field');
+    const textarea = el.shadowRoot?.querySelector<HTMLTextAreaElement>(
+      '.swc-PromptField-textarea'
+    );
+
+    const dropFile = (name: string): void => {
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(new File(['hello'], name, { type: 'text/plain' }));
+      el.dispatchEvent(makeDragEvent('dragover', dataTransfer));
+      el.dispatchEvent(makeDragEvent('drop', dataTransfer));
+    };
+
+    await step(
+      'Playground renders a dropped attachment and focuses it when the input was not focused',
+      async () => {
+        textarea?.blur();
+        dropFile('first.txt');
+
+        await waitFor(() => {
+          const attachment = demo?.querySelector<HTMLElement>(
+            '[data-attachment-id]'
+          );
+          expect(attachment).toBeTruthy();
+          expect(getActiveElement()).toBe(attachment);
+        });
+      }
+    );
+
+    await step(
+      'Playground preserves prompt input focus when another attachment is dropped',
+      async () => {
+        textarea?.focus();
+        dropFile('second.txt');
+
+        await waitFor(() => {
+          expect(demo?.querySelectorAll('[data-attachment-id]').length).toBe(2);
+          expect(getActiveElement()).toBe(textarea);
+        });
+      }
+    );
   },
 };
 
