@@ -12,6 +12,7 @@
 
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
+import { choose } from 'lit/directives/choose.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
@@ -248,35 +249,38 @@ export class ResponseStatusStep extends SpectrumElement {
   }
 
   private _renderIcon(): TemplateResult {
-    const status = this._resolvedStatus;
-
-    if (status === 'complete') {
-      return html`
-        <swc-icon class="swc-ResponseStatusStep-icon" aria-hidden="true">
-          ${StepDotIcon()}
-        </swc-icon>
-      `;
-    }
-
-    if (status === 'stopped') {
-      return html`
+    return choose(
+      this._resolvedStatus,
+      [
+        [
+          'complete',
+          () => html`
+            <swc-icon class="swc-ResponseStatusStep-icon" aria-hidden="true">
+              ${StepDotIcon()}
+            </swc-icon>
+          `,
+        ],
+        [
+          'stopped',
+          () => html`
+            <swc-icon
+              class="swc-ResponseStatusStep-icon swc-ResponseStatusStep-icon--stopped"
+              aria-hidden="true"
+            >
+              ${StepStoppedIcon()}
+            </swc-icon>
+          `,
+        ],
+      ],
+      () => html`
         <swc-icon
-          class="swc-ResponseStatusStep-icon swc-ResponseStatusStep-icon--stopped"
+          class="swc-ResponseStatusStep-icon swc-ResponseStatusStep-icon--active"
           aria-hidden="true"
         >
-          ${StepStoppedIcon()}
+          ${StepDotOutlineIcon()}
         </swc-icon>
-      `;
-    }
-
-    return html`
-      <swc-icon
-        class="swc-ResponseStatusStep-icon swc-ResponseStatusStep-icon--active"
-        aria-hidden="true"
-      >
-        ${StepDotOutlineIcon()}
-      </swc-icon>
-    `;
+      `
+    );
   }
 
   private _renderBody(): TemplateResult {
