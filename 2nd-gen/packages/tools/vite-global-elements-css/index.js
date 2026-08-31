@@ -254,7 +254,7 @@ function transformSingle(selector, block) {
   // `.block[open]`), it's still the same single element in global context —
   // fold the suffix onto the host selector rather than joining as a
   // descendant of a second, non-existent element.
-  if (r.startsWith(blockClass) && /^[:[]/.test(r[blockClass.length])) {
+  if hostClass && (r.startsWith(blockClass) && /^[:[]/.test(r[blockClass.length])) {
     return hostClass + r.slice(blockClass.length);
   }
 
