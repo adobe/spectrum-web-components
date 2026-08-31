@@ -23,8 +23,9 @@
  * Usage:
  *   node scripts/diff-versions.js --to 14.13.0
  *
- * Also reports any new source JSON files added to the package that are not yet
- * listed in SPECTRUM_TOKENS in src/tokens.js.
+ * Also reports non-global source JSON files in the package; per-component files
+ * are auto-discovered, so only new globals need adding to SPECTRUM_GLOBAL_TOKENS
+ * in src/tokens.js.
  */
 
 import { execSync } from 'node:child_process';
@@ -49,9 +50,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const PACKAGE_ROOT = join(__dirname, '..');
 const DELETED_PATH = join(PACKAGE_ROOT, 'custom', 'deleted.json');
 
+// Global token files loaded explicitly by src/tokens.js. Per-component files
+// (card.json, avatar.json, …) are auto-discovered, so only new *global* files
+// need to be added to SPECTRUM_GLOBAL_TOKENS.
 const KNOWN_SOURCE_FILES = new Set([
   'color-aliases',
-  'color-component',
   'color-palette',
   'icons',
   'layout-component',
@@ -211,7 +214,8 @@ const toVersion = argv.to.trim();
 
 // Resolve "from" from the currently installed package.
 const require = createRequire(import.meta.url);
-const installedPkgPath = require.resolve('@adobe/spectrum-tokens/package.json');
+const installedEntryPath = require.resolve('@adobe/spectrum-tokens');
+const installedPkgPath = join(dirname(installedEntryPath), 'package.json');
 const installedPkg = JSON.parse(readFileSync(installedPkgPath, 'utf8'));
 const fromVersion = installedPkg.version;
 const fromSrcDir = join(dirname(installedPkgPath), 'src');
@@ -293,10 +297,10 @@ try {
 
   if (newSrcFiles.length) {
     console.log(
-      '\n⚠ New source files in @adobe/spectrum-tokens/src/ not listed in SPECTRUM_TOKENS:'
+      '\nℹ Non-global source files in @adobe/spectrum-tokens/src/ (auto-discovered as per-component files; add to SPECTRUM_GLOBAL_TOKENS in src/tokens.js only if a file is a new global):'
     );
     for (const f of newSrcFiles) {
-      console.log(`  + ${f}.json  →  add to SPECTRUM_TOKENS in src/tokens.js`);
+      console.log(`  + ${f}.json`);
     }
     console.log();
   }
@@ -341,12 +345,12 @@ try {
       }
     }
 
-    const output = {};
+    // Start from every existing entry (curated across past version diffs) so
+    // none are dropped, then append only the newly-found deleted tokens.
+    const output = { ...existing };
 
-    for (const name of [...deleted].sort()) {
-      if (name in existing) {
-        // Preserve previously curated replacement.
-        output[name] = existing[name];
+    for (const name of deleted) {
+      if (name in output) {
         continue;
       }
 
@@ -361,7 +365,17 @@ try {
       output[name] = findBestMatch(name, added);
     }
 
-    writeFileSync(DELETED_PATH, JSON.stringify(output, null, 2) + '\n', 'utf8');
+    const sortedOutput = Object.fromEntries(
+      Object.keys(output)
+        .sort()
+        .map((key) => [key, output[key]])
+    );
+
+    writeFileSync(
+      DELETED_PATH,
+      JSON.stringify(sortedOutput, null, 2) + '\n',
+      'utf8'
+    );
 
     const preserved = Object.keys(output).filter(
       (k) => k in existing && existing[k] !== null
