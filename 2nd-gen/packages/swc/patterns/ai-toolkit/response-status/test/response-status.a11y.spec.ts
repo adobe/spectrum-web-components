@@ -60,16 +60,37 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
       'swc-response-status'
     );
     await waitForCustomElement(page, 'swc-response-status-step');
-    const toggle = root.locator('button[aria-expanded="true"]');
+    // The header disclosure is the only expanded button carrying an aria-label;
+    // per-step disclosures take their accessible name from the step title text.
+    const toggle = root.locator('button[aria-expanded="true"][aria-label]');
     await expect(toggle).toHaveCount(1, { timeout: 10000 });
     await expect(toggle).toHaveAttribute(
       'aria-label',
       'Searching repositories for Europe trips'
     );
-    await expect(root.locator('[role="group"]')).toHaveAttribute(
-      'aria-label',
-      'Execution steps'
+    // Scoped to the timeline panel: each step's description scroll region is
+    // also `role="group"`, so an unscoped selector would match more than one.
+    await expect(
+      root.locator('.swc-ResponseStatus-panel[role="group"]')
+    ).toHaveAttribute('aria-label', 'Execution steps');
+  });
+
+  test('should expose per-step disclosures collapsed by default', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'patterns-ai-toolkit-response-status--steps',
+      'swc-response-status'
     );
+    await waitForCustomElement(page, 'swc-response-status-step');
+    // Steps story order: complete, active, complete, stopped. Steps start
+    // collapsed by default; the header disclosure is excluded via [aria-label].
+    const stepToggles = root.locator('button[aria-expanded]:not([aria-label])');
+    await expect(stepToggles).toHaveCount(4, { timeout: 10000 });
+    await expect(
+      root.locator('button[aria-expanded="true"]:not([aria-label])')
+    ).toHaveCount(0);
   });
 
   test('should expose collapsed disclosure with slotted label', async ({
@@ -81,7 +102,7 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
       'swc-response-status'
     );
     await waitForCustomElement(page, 'swc-response-status-step');
-    const toggle = root.locator('button[aria-expanded="false"]');
+    const toggle = root.locator('button[aria-expanded="false"][aria-label]');
     await expect(toggle).toHaveCount(1);
     await expect(toggle).toHaveAttribute(
       'aria-label',

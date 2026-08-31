@@ -11,5 +11,381 @@
  */
 
 :host {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  align-items: stretch;
+  column-gap: token("spacing-100");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:host(:last-of-type) {
+  animation:
+    swc-response-status-step-enter-opacity 650ms cubic-bezier(0.45, 0, 0.4, 1),
+    swc-response-status-step-enter-position 310ms cubic-bezier(0.18, 0.41, 0.4, 1);
+}
+
+@keyframes swc-response-status-step-enter-opacity {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes swc-response-status-step-enter-position {
+  from {
+    transform: translateY(6px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.swc-ResponseStatusStep-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* Stretch with the step row (align-items). Percentage block-size is cyclic
+     in Safari: min-block-size: 100% holds the previous row height after a
+     step collapses, so the body appears to grow on each open/close. */
+  overflow: visible;
+}
+
+/* Extend rail (and line) through the gap before the next step icon */
+:host(:not(:last-of-type)) .swc-ResponseStatusStep-rail {
+  box-sizing: content-box;
+}
+
+.swc-ResponseStatusStep-icon {
+  flex-shrink: 0;
+  inline-size: 8px;
+  block-size: 8px;
+  margin: token("spacing-75");
+  margin-block: 6px;
+  color: token("gray-500");
+  transition: color token("animation-duration-200") token("animation-ease-in-out");
+}
+
+:host([status="complete"]) .swc-ResponseStatusStep-icon {
+  transition:
+    color token("animation-duration-200") token("animation-ease-in-out"),
+    opacity token("animation-duration-200") token("animation-ease-in-out");
+}
+
+.swc-ResponseStatusStep-line {
+  flex: 1 1 auto;
+  inline-size: 1px;
+  min-block-size: token("spacing-100");
+  margin-block-start: token("spacing-50");
+  background: token("gray-300");
+}
+
+:host(:last-of-type) .swc-ResponseStatusStep-line {
   display: none;
+}
+
+.swc-ResponseStatusStep-icon--active {
+  color: token("gray-600");
+}
+
+/* Distinct from the default gray-500 dot: the interrupted step is the
+   standout marker in the timeline, not just another completed step. */
+.swc-ResponseStatusStep-icon--stopped {
+  color: token("gray-700");
+}
+
+.swc-ResponseStatusStep-body {
+  /* Size to content, not the stretched rail. Safari otherwise copies leftover
+     rail height back into the body after a disclosure closes. */
+  align-self: start;
+  min-inline-size: 0;
+}
+
+:host(:not(:last-of-type)) .swc-ResponseStatusStep-body {
+  padding-block-end: token("spacing-200");
+}
+
+/* Typography utilities (shadow-local; mirrors typography.css) */
+.swc-Body {
+  margin-block: var(--swc-body-margin-top, 0) var(--swc-body-margin-bottom, 0);
+  font-family: var(--swc-body-font-family, token("sans-serif-font"));
+  font-size: var(--swc-body-font-size, token("body-size-m"));
+  font-weight: var(--swc-body-font-weight, token("body-sans-serif-font-weight"));
+  line-height: var(--swc-body-line-height, token("line-height-font-size-200"));
+  color: var(--swc-body-font-color, token("body-color"));
+  letter-spacing: var(--swc-body-letter-spacing, normal);
+
+  &:lang(zh),
+  &:lang(ja),
+  &:lang(ko) {
+    --swc-body-line-height: var(--swc-body-cjk-line-height, token("cjk-line-height-200"));
+    --swc-body-letter-spacing: var(--swc-body-cjk-letter-spacing, token("cjk-letter-spacing"));
+    --swc-body-font-size: var(--swc-body-cjk-font-size, token("font-size-100"));
+  }
+}
+
+.swc-Body--sizeXXS {
+  --swc-body-font-size: token("body-size-xxs");
+  --swc-body-line-height: token("line-height-font-size-50");
+
+  &:lang(zh),
+  &:lang(ja),
+  &:lang(ko) {
+    --swc-body-cjk-font-size: token("font-size-25");
+  }
+}
+
+.swc-Detail {
+  margin-block: var(--swc-detail-margin-top, 0) var(--swc-detail-margin-bottom, 0);
+  font-family: var(--swc-detail-font-family, token("sans-serif-font"));
+  font-size: var(--swc-detail-font-size, token("detail-size-m"));
+  font-weight: var(--swc-detail-font-weight, token("detail-sans-serif-font-weight"));
+  line-height: var(--swc-detail-line-height, token("line-height-font-size-100"));
+  color: var(--swc-detail-font-color, token("detail-color"));
+  letter-spacing: var(--swc-detail-letter-spacing, normal);
+
+  &:lang(zh),
+  &:lang(ja),
+  &:lang(ko) {
+    --swc-detail-line-height: var(--swc-detail-cjk-line-height, token("cjk-line-height-100"));
+    --swc-detail-letter-spacing: var(--swc-detail-cjk-letter-spacing, token("cjk-letter-spacing"));
+  }
+}
+
+.swc-Detail--sizeS {
+  --swc-detail-font-size: token("detail-size-s");
+  --swc-detail-line-height: token("line-height-font-size-75");
+
+  &:lang(zh),
+  &:lang(ja),
+  &:lang(ko) {
+    --swc-detail-cjk-font-size: token("font-size-50");
+  }
+}
+
+.swc-ResponseStatusStep-title {
+  display: inline-block;
+  position: relative;
+  padding: token("spacing-50") token("spacing-100");
+  margin: 0;
+  color: token("gray-600");
+  border-radius: token("corner-radius-300");
+  transition:
+    background token("animation-duration-100") token("animation-ease-in-out"),
+    color 100ms token("animation-ease-in-out");
+}
+
+.swc-ResponseStatusStep-toggle:hover .swc-ResponseStatusStep-title {
+  background: token("gray-75");
+}
+
+/* Masked, `translate`-animated overlay clone of the label: cheaper to
+   animate on the compositor than sweeping `background-position` on the text. */
+.swc-ResponseStatusStep-titleShimmer {
+  --swc-response-status-step-shimmer-spread: 4ch;
+
+  position: absolute;
+  inset: 0;
+  padding: token("spacing-50") token("spacing-100");
+  contain: strict;
+  color: transparent;
+  overflow: clip;
+  pointer-events: none;
+}
+
+@supports (-webkit-mask-clip: text) {
+  :host([status="active"]) .swc-ResponseStatusStep-titleShimmer {
+    mask-image: linear-gradient(white, white);
+
+    /* stylelint-disable-next-line property-no-vendor-prefix -- no unprefixed equivalent exists */
+    -webkit-mask-clip: text;
+  }
+}
+
+:host([status="active"]) .swc-ResponseStatusStep-titleShimmer::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent calc(50% - var(--swc-response-status-step-shimmer-spread)), token("gray-900") 50%, transparent calc(50% + var(--swc-response-status-step-shimmer-spread)));
+  content: "";
+  animation: swc-response-status-step-shimmer 1800ms infinite;
+  will-change: transform;
+}
+
+@keyframes swc-response-status-step-shimmer {
+  from {
+    translate: -100% 0;
+  }
+
+  to {
+    translate: 100% 0;
+  }
+}
+
+.swc-ResponseStatusStep-detail {
+  max-inline-size: 340px;
+  color: token("gray-600");
+}
+
+/* Per-step disclosure (mirrors the header row + panel mechanics in
+   `response-status.css`'s `.swc-ResponseStatus-panel`) */
+
+.swc-ResponseStatusStep-toggle {
+  display: flex;
+  gap: token("spacing-100");
+  align-items: center;
+  inline-size: 100%;
+  padding: 0;
+  padding-block-end: token("spacing-75");
+  color: inherit;
+  text-align: start;
+  background: transparent;
+  border: none;
+}
+
+/* Shared collapse mechanics with `response-status.css`'s
+   `.swc-ResponseStatus-panel`: animates `grid-template-rows` between 0fr and
+   1fr rather than `block-size` to/from `auto`, since the block-size +
+   `interpolate-size` approach only works in Chromium (Safari/Firefox leave
+   residual height). See that file for the full rationale. */
+.swc-ResponseStatusStep-detailPanel {
+  display: grid;
+  visibility: hidden;
+  grid-template-rows: 0fr;
+  inline-size: fit-content;
+  background-color: transparent;
+  border-radius: token("corner-radius-large-default");
+  transition:
+    grid-template-rows 80ms token("animation-ease-in-out"),
+    visibility 180ms linear,
+    background-color 80ms token("animation-ease-in-out");
+}
+
+.swc-ResponseStatusStep-detailPanel--open {
+  visibility: visible;
+  grid-template-rows: 1fr;
+  padding: token("spacing-100");
+  background-color: var(--swc-background-layer-1-color);
+}
+
+/* Clip wrapper: overflow:hidden here is what lets 0fr become a true zero. */
+.swc-ResponseStatusStep-detailClip {
+  visibility: hidden;
+  min-block-size: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 180ms token("animation-ease-in-out");
+}
+
+.swc-ResponseStatusStep-detailPanel--open .swc-ResponseStatusStep-detailClip {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Description caps at a max height; shorter content stays auto. Override the
+   custom property to tune the cap. `content-box` so the 20px scrollbar offset
+   is added to the fit-content width instead of eating into the text. */
+.swc-ResponseStatusStep-detailScroll {
+  box-sizing: content-box;
+  inline-size: fit-content;
+  max-block-size: var(--swc-response-status-step-detail-max-block-size, 120px);
+  padding-inline-end: token("spacing-700");
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: token("gray-500") transparent;
+  scrollbar-width: thin;
+}
+
+/* Chromium/Safari: `scrollbar-color`/`-width` above cover Firefox; these
+   pseudo-elements style the same thin, rounded, track-less thumb there. */
+.swc-ResponseStatusStep-detailScroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.swc-ResponseStatusStep-detailScroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.swc-ResponseStatusStep-detailScroll::-webkit-scrollbar-thumb {
+  background: token("gray-500");
+  border-radius: 9999px;
+}
+
+/* Fade cues while the description overflows. Scroll-driven: with no overflow
+   the scroll timeline is inactive, so the base (unmasked) style applies and
+   short descriptions never fade. At the start only the bottom fades; while
+   scrolled both edges fade; at the end only the top fades. */
+@supports (animation-timeline: scroll()) {
+  /* Longhands, not the `animation` shorthand: the shorthand resets
+     `animation-timeline` to auto, which would disable the scroll timeline. */
+  .swc-ResponseStatusStep-detailScroll {
+    animation-timeline: scroll(self block);
+    animation-name: swc-response-status-detail-fade;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+  }
+
+  @keyframes swc-response-status-detail-fade {
+    0% {
+      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 100%) calc(100% - 24px), rgb(0 0 0 / 0%) 100%);
+    }
+
+    15%,
+    85% {
+      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0%) 0, rgb(0 0 0 / 100%) 24px, rgb(0 0 0 / 100%) calc(100% - 24px), rgb(0 0 0 / 0%) 100%);
+    }
+
+    100% {
+      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0%) 0, rgb(0 0 0 / 100%) 24px, rgb(0 0 0 / 100%) 100%);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host(:last-of-type) {
+    animation: none;
+  }
+
+  /* Fall back to the flat, opaque title color set above; no sweeping overlay. */
+  :host([status="active"]) .swc-ResponseStatusStep-title {
+    color: token("gray-800");
+  }
+
+  .swc-ResponseStatusStep-titleShimmer {
+    display: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .swc-ResponseStatusStep-icon {
+    color: CanvasText;
+  }
+
+  .swc-ResponseStatusStep-line {
+    background: CanvasText;
+  }
+
+  /* Keep every line fully legible in forced colors; rely on the scrollbar. */
+  .swc-ResponseStatusStep-detailScroll {
+    mask-image: none;
+    animation: none;
+  }
+
+  /* The masked shimmer overlay is unreliable under forced colors; fall back
+     to plain, guaranteed-visible text. */
+  :host([status="active"]) .swc-ResponseStatusStep-title {
+    color: CanvasText;
+  }
+
+  .swc-ResponseStatusStep-titleShimmer {
+    display: none;
+  }
 }
