@@ -7,7 +7,8 @@
     "paths": {
       "@adobe/spectrum-wc/*": ["./components/*"],
       "@adobe/vite-global-elements-css": ["../tools/vite-global-elements-css"],
-      "@adobe/spectrum-wc-core/*": ["../core/*"]
+      "@adobe/spectrum-wc-core/*": ["../core/*"],
+      "@adobe/spectrum-wc-icons/*": ["../icons/src/*"]
     },
     "rootDir": "./",
     "types": ["@vitest/browser-playwright"]
@@ -23,6 +24,9 @@
   "references": [
     {
       "path": "../core"
+    },
+    {
+      "path": "../icons"
     }
   ]
 }

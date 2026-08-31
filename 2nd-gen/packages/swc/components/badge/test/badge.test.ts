@@ -165,9 +165,9 @@ export const AnatomyTest: Story = {
       const slottedIcon = badgeWithIcon?.querySelector('[slot="icon"]');
       expect(slottedIcon, 'icon slot element is present').toBeTruthy();
       expect(
-        slottedIcon?.children.length,
-        'icon slot has child elements'
-      ).toBeGreaterThan(0);
+        slottedIcon?.tagName.toLowerCase(),
+        'icon slot holds a workflow icon element'
+      ).toBe('swc-icon-checkmark');
     });
   },
 };

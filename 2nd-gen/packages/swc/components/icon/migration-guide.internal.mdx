@@ -40,13 +40,13 @@ import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 ### Removed in Spectrum 2
 
-| Removed                          | Replacement                                                                                                  |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `name` attribute                 | Slot an SVG directly, or use an icon factory function; see [step 2](#2-replace-name-or-src-with-slotted-svg) |
-| `src` attribute                  | Slot an `<svg>` or `<img>` element directly; see [step 2](#2-replace-name-or-src-with-slotted-svg)           |
-| `error` event                    | Removed along with `src` support (remove any `error` listeners on `sp-icon`)                                 |
-| `xxs` and `xxl` size values      | Use `xs` for `xxs` and `xl` for `xxl`                                                                        |
-| `--mod-icon-*` custom properties | `--swc-icon-*` equivalents (see [Styling](#styling))                                                         |
+| Removed                          | Replacement                                                                                                                    |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `name` attribute                 | Use `<swc-ui-icon>` or a workflow icon element, or slot an SVG directly; see [step 2](#2-replace-name-or-src-with-slotted-svg) |
+| `src` attribute                  | Slot an `<svg>` or `<img>` element directly; see [step 2](#2-replace-name-or-src-with-slotted-svg)                             |
+| `error` event                    | Removed along with `src` support (remove any `error` listeners on `sp-icon`)                                                   |
+| `xxs` and `xxl` size values      | Use `xs` for `xxs` and `xl` for `xxl`                                                                                          |
+| `--mod-icon-*` custom properties | `--swc-icon-*` equivalents (see [Styling](#styling))                                                                           |
 
 ## Update your code
 
@@ -67,17 +67,27 @@ import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 The `name` attribute (iconset registry lookup) and `src` attribute (image URL) have both been removed. All icon content must now be provided as slotted content.
 
-**Migrating `name`-based icons with Lit:**
+**Migrating `name`-based icons:**
 
-Icon factory functions are available from `@adobe/spectrum-wc/components/icon/elements/index.js`. Each factory returns a Lit `TemplateResult` and must be used inside a `html` tagged template literal.
+Spectrum's own icons ship as dedicated elements: UI icons (chevron, cross, arrow, and the like) as `<swc-ui-icon>`, and workflow icons as per-icon custom elements from `@adobe/spectrum-wc-icons`. Reach for `<swc-icon>` with slotted SVG only for custom art that is not part of a Spectrum icon set.
 
 ```ts
-import { Arrow100Icon } from '@adobe/spectrum-wc/components/icon/elements/index.js';
+// UI icon
+import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 import { html } from 'lit';
 
-// Inside a Lit template:
 html`
-  <swc-icon accessible-label="Arrow">${Arrow100Icon()}</swc-icon>
+  <swc-ui-icon icon="arrow" size="m" accessible-label="Arrow"></swc-ui-icon>
+`;
+
+// Workflow icon
+import '@adobe/spectrum-wc-icons/swc-icon-alert-triangle.js';
+
+html`
+  <swc-icon-alert-triangle
+    size="m"
+    accessible-label="Alert"
+  ></swc-icon-alert-triangle>
 `;
 ```
 

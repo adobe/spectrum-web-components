@@ -166,6 +166,15 @@ export default defineConfig({
         find: '@adobe/spectrum-wc-core',
         replacement: resolve(__dirname, '../core'),
       },
+      // Workflow icon imports (e.g. `@adobe/spectrum-wc-icons/swc-icon-checkmark.js`)
+      // resolve to the icons package source, mirroring its published `./*.js`
+      // export (`./dist/*.js`) without requiring a prior build. Kept above the
+      // `@adobe/spectrum-wc` short-form alias; the alias matcher requires a `/`
+      // boundary, so `-icons` never collides with `@adobe/spectrum-wc`.
+      {
+        find: '@adobe/spectrum-wc-icons',
+        replacement: resolve(__dirname, '../icons/src'),
+      },
       // Long-form imports (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`)
       // resolve directly to the source under `./components`. This must come before
       // the short-form alias below so the more specific prefix wins.
