@@ -143,6 +143,7 @@ type FieldCase = {
   value?: string;
   attachment?: AttachmentKind;
   buttonState?: ButtonState;
+  fieldHover?: boolean;
 };
 
 // Fields render at a roomy composer width by default. Long prompts and the
@@ -157,6 +158,7 @@ const renderField = ({
   value = '',
   attachment = 'none',
   buttonState,
+  fieldHover = false,
 }: FieldCase) => {
   const constrained = value === LONG_PROMPT || attachment === 'manyMedia';
   const width = constrained
@@ -174,6 +176,7 @@ const renderField = ({
         ?data-dragged-state=${dragged}
         value=${value}
         data-button-state=${buttonState ?? nothing}
+        data-field-hover=${fieldHover ? '' : nothing}
       >
         ${attachmentSlot(attachment)} ${legalDisclaimerSlot}
       </swc-prompt-field>
@@ -197,6 +200,14 @@ const VARIANT_PERMUTATIONS = createPermutations([
 // expanded/collapsed layout, disabled, and the card/media attachment strips
 // (single, multi, and an overflowing set that triggers the scroll chevrons).
 const ANATOMY_PERMUTATIONS = createPermutations([
+  // Hover reveals the wash treatment across every variant x generating combo.
+  {
+    group: ['Hover'],
+    variant: VARIANTS,
+    generating: [false, true],
+    value: [SHORT_PROMPT],
+    fieldHover: [true],
+  },
   {
     group: ['Content'],
     collapsed: [false, true],
@@ -328,6 +339,16 @@ const forceDraggedStates = async ({
   );
 };
 
+// Forces the field's own :hover treatment. The wash rules key off
+// `.swc-PromptField-outer-border:hover`, so the forced attribute lands there.
+const forceFieldHover = ({ canvasElement }: { canvasElement: HTMLElement }) => {
+  canvasElement
+    .querySelectorAll<HTMLElement>('swc-prompt-field[data-field-hover]')
+    .forEach((field) =>
+      forcePseudoState(field, 'hover', '.swc-PromptField-outer-border')
+    );
+};
+
 // Stack a group's fields vertically instead of packing them side by side.
 const stack = (cases: FieldCase[]) => html`
   <div
@@ -355,6 +376,7 @@ export const Permutations: Story = {
   play: async (context) => {
     await forceButtonStates(context);
     await forceDraggedStates(context);
+    forceFieldHover(context);
     await pauseLoaders(context);
   },
 };
