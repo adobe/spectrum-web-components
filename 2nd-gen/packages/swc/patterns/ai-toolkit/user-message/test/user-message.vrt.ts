@@ -13,7 +13,7 @@
 import { html, nothing } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../../swc-user-message.js';
+import '../swc-user-message.js';
 
 import {
   createPermutations,
@@ -22,13 +22,13 @@ import {
   row,
   theme,
   vrtParameters,
-} from '../../../../../.storybook/helpers/index.js';
+} from '../../../../.storybook/helpers/index.js';
 import type { UserMessageType } from '../../UserMessage.js';
 
 // Metadata
 
 const meta: Meta = {
-  title: 'Conversational AI/User message/User message VRT',
+  title: 'AI Toolkit/User message/User message VRT',
   component: 'swc-user-message',
   tags: ['dev'],
   // Snapshot-only; drop the panel so auto-generated controls don't clutter Chromatic.
