@@ -105,6 +105,7 @@ const SUPPORTS_FIELD_SIZING =
  * elements from `files` externally, same as the upload-click flow.
  *
  * @cssprop --swc-prompt-field-brand-color - Brand hue driving the AI treatment's ring, wash, and glow colors. Defaults to a fuchsia OKLCH value; only the hue is meaningfully used, lightness/chroma come from each layer's own derived values.
+ * @since 2.0.0-beta.3
  */
 export class PromptField extends SpectrumElement {
   private readonly labelId = uniqueId('swc-prompt-field-label');

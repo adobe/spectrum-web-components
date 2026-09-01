@@ -29,6 +29,7 @@ import styles from './suggestion-item.css';
  * @slot - Suggestion label text/content.
  * @fires swc-suggestion - Dispatched when the suggestion chip is activated.
  * Detail: `{ label: string }`
+ * @since 2.0.0-beta.3
  */
 export class SuggestionItem extends SpectrumElement {
   public static override get styles(): CSSResultArray {
