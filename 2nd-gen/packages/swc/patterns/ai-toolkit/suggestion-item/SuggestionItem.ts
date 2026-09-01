@@ -38,6 +38,7 @@ import styles from './suggestion-item.css';
  * @cssprop --swc-suggestion-item-icon-margin-inline-end - Gap between the icon and the label.
  * @cssprop --swc-suggestion-item-label-padding-block - Block padding applied to the label.
  * @cssprop --swc-suggestion-item-label-padding-inline-end - Inline spacing from the label to the trailing edge.
+ * @since 2.0.0-beta.3
  */
 export class SuggestionItem extends SpectrumElement {
   public static override get styles(): CSSResultArray {

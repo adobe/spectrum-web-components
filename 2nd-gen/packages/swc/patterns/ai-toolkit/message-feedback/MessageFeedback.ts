@@ -31,6 +31,7 @@ import styles from './message-feedback.css';
  * @element swc-message-feedback
  * @fires swc-message-feedback-change - Dispatched when the user toggles feedback selection.
  * Detail: `{ status: 'positive' | 'negative' | undefined }`
+ * @since 2.0.0-beta.3
  */
 export class MessageFeedback extends SpectrumElement {
   /**
