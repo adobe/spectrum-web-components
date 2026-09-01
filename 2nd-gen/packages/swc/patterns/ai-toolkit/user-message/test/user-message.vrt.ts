@@ -59,19 +59,11 @@ type MessageCase = {
 };
 
 const cardThumbnail = html`
-  <img
-    slot="thumbnail"
-    src="https://picsum.photos/id/64/32/32"
-    alt="File preview"
-  />
+  <img slot="thumbnail" src="images/card-preview.jpg" alt="File preview" />
 `;
 
 const mediaThumbnail = html`
-  <img
-    slot="thumbnail"
-    src="https://picsum.photos/id/56/180/180"
-    alt="Campaign preview"
-  />
+  <img slot="thumbnail" src="images/card-preview.jpg" alt="Campaign preview" />
 `;
 
 const attachmentSlots = (type: 'card' | 'media', slots: AttachmentSlots) => {
