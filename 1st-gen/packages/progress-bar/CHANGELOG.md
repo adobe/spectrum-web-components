@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.12.3-test.20260901142734
+
+### Patch Changes
+
+- [#6638](https://github.com/adobe/spectrum-web-components/pull/6638) [`c2f1e92`](https://github.com/adobe/spectrum-web-components/commit/c2f1e922c114b9fb6060061002af32376640b539) Thanks [@blunteshwar](https://github.com/blunteshwar)! - **docs(progress-bar):** Added deprecation notices to `<sp-progress-bar>` ahead of the Spectrum 2 migration.
+
+  The `label`, `side-label`, and `progress` properties are now marked `@deprecated` and emit `window.__swc.DEBUG` warnings pointing to their `<swc-progress-bar>` replacements (`label` slot, `label-position="side"`, and `value`). Runtime behavior is unchanged when debug validation is disabled.
+
+- Updated dependencies []:
+  - @spectrum-web-components/field-label@1.12.3-test.20260901142734
+  - @spectrum-web-components/base@1.12.3-test.20260901142734
+  - @spectrum-web-components/reactive-controllers@1.12.3-test.20260901142734
+  - @spectrum-web-components/shared@1.12.3-test.20260901142734
+
 ## 1.12.2
 
 ### Patch Changes

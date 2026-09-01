@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.12.3-test.20260901142734
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @spectrum-web-components/iconset@1.12.3-test.20260901142734
+  - @spectrum-web-components/base@1.12.3-test.20260901142734
+
 ## 1.12.2
 
 ### Patch Changes
