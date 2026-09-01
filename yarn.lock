@@ -29622,6 +29622,7 @@ __metadata:
     stylelint-config-standard: "npm:40.0.0"
     stylelint-declaration-strict-value: "npm:1.10.11"
     stylelint-order: "npm:7.0.1"
+    typescript: "npm:5.9.2"
     typescript-eslint: "npm:8.54.0"
     yargs: "npm:17.7.2"
   dependenciesMeta:

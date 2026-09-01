@@ -1,0 +1,93 @@
+name: Type Check
+#
+# Type-checks the library with the TypeScript compiler and annotates any
+# diagnostics introduced by the pull request. Uses build mode (`tsc -b`) so
+# cross-package types resolve through the composite project references.
+#
+# Reporting is diff-only: pre-existing errors elsewhere in the codebase are
+# left alone, while anything the PR adds is surfaced as an inline review
+# comment and fails the check. To triage the full backlog locally, run:
+#
+#   yarn type-check
+#
+
+on:
+  pull_request:
+    branches:
+      - main
+
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - auto_merge_enabled
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  type-check:
+    name: Type Check (2nd-gen)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node version from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: yarn
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      ## --- YARN CACHE --- ##
+      - name: Check for cached dependencies
+        continue-on-error: true
+        id: cache-dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            .cache/yarn
+            node_modules
+          key: ubuntu-latest-${{ hashFiles('.nvmrc', 'package.json', 'yarn.lock') }}
+
+      ## --- INSTALL --- ##
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Set up reviewdog
+        uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest
+
+      # Run the compiler and pipe its diagnostics to reviewdog. Without
+      # `pipefail` the pipeline's exit status is reviewdog's, so tsc's
+      # non-zero exit on the pre-existing backlog is ignored; reviewdog
+      # decides pass/fail from findings within the PR diff (fail_level).
+      - name: Type check with reviewdog
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          yarn type-check 2>&1 \
+            | reviewdog \
+                -f=tsc \
+                -name="tsc (2nd-gen)" \
+                -reporter=github-pr-review \
+                -filter-mode=diff_context \
+                -level=warning \
+                -fail-level=any
