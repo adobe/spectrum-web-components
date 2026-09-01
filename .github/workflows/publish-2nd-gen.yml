@@ -14,7 +14,6 @@ on:
   push:
     branches:
       - main
-      - release-strategy # TODO: remove before merging - testing only
     paths:
       - '2nd-gen/**'
 
@@ -181,7 +180,7 @@ jobs:
           if [ ! -f 2nd-gen/.changeset/pre.json ]; then
             (cd 2nd-gen && yarn changeset pre enter beta)
           fi
-          (cd 2nd-gen && yarn changeset version --snapshot test)
+          (cd 2nd-gen && yarn changeset version)
           yarn install --refresh-lockfile
 
       - name: Open or update the gen2 Version PR
@@ -191,7 +190,7 @@ jobs:
           commit-message: 'chore: release gen2 packages #gen2-publish'
           title: 'chore: release gen2 packages (beta) #gen2-publish'
           branch: changeset-release/2nd-gen
-          base: ${{ github.ref_name }}
+          base: main
           delete-branch: true
           add-paths: |
             2nd-gen
@@ -221,7 +220,7 @@ jobs:
           fi
           yarn install --refresh-lockfile
           yarn build
-          (cd 2nd-gen && yarn changeset publish --no-git-tag --tag test)
+          (cd 2nd-gen && yarn changeset publish --no-git-tag --tag beta)
           git config user.name "github-actions-bot"
           git config user.email "support+actions@github.com"
           node ./2nd-gen/scripts/create-git-tag.js

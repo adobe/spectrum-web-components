@@ -14,7 +14,6 @@ on:
   push:
     branches:
       - main
-      - release-strategy # TODO: remove before merging - testing only
     paths:
       - '1st-gen/**'
 
@@ -265,7 +264,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           yarn workspace @spectrum-web-components/1st-gen changelog:1st-gen
-          (cd 1st-gen && yarn changeset version --snapshot test)
+          (cd 1st-gen && yarn changeset version)
           yarn install --refresh-lockfile
 
       - name: Open or update the gen1 Version PR
@@ -275,7 +274,7 @@ jobs:
           commit-message: 'chore: release gen1 packages'
           title: 'chore: release gen1 packages'
           branch: changeset-release/1st-gen
-          base: ${{ github.ref_name }}
+          base: main
           delete-branch: true
           add-paths: |
             1st-gen
@@ -307,13 +306,13 @@ jobs:
           fi
           yarn install --refresh-lockfile
           yarn build
-          (cd 1st-gen && yarn changeset publish --no-git-tag --tag test)
+          (cd 1st-gen && yarn changeset publish --no-git-tag)
           yarn workspace @spectrum-web-components/1st-gen build:react
           cd 1st-gen/react
           for dir in */; do
             attempt=1
             max_attempts=3
-            until (cd "$dir" && npm publish --access public --tag test); do
+            until (cd "$dir" && npm publish --access public); do
               if [ $attempt -ge $max_attempts ]; then
                 echo "✗ Failed to publish $dir after $max_attempts attempts"
                 exit 1
