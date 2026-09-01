@@ -1,0 +1,21 @@
+{
+  "problemMatcher": [
+    {
+      "owner": "lit-analyzer",
+      "pattern": [
+        {
+          "regexp": "^\\.\\/(.+\\.ts)$",
+          "file": 1
+        },
+        {
+          "regexp": "^\\s+(\\d+):(\\d+)\\s+(warning|error)\\s+(.+)$",
+          "line": 1,
+          "column": 2,
+          "severity": 3,
+          "message": 4,
+          "loop": true
+        }
+      ]
+    }
+  ]
+}
