@@ -43,7 +43,10 @@ function validateCurrentVersion() {
     process.exit(1);
   }
 
-  const currentTag = `gen1-${currentVersion}`;
+  // Releases tag as `gen1-<version>` going forward (see create-git-tag.js), but
+  // releases published before that switch were tagged as `v<version>` - fall back
+  // to the old prefix so the changelog compare URL still resolves for those.
+  const candidateTags = [`gen1-${currentVersion}`, `v${currentVersion}`];
   try {
     const gitTagOutput = execSync('git tag --sort=-creatordate');
     if (!gitTagOutput) {
@@ -55,11 +58,11 @@ function validateCurrentVersion() {
       throw new Error('No git tags found in repository');
     }
 
-    const gitTag = gitTagList.find((tag) => tag === currentTag);
+    const gitTag = candidateTags.find((tag) => gitTagList.includes(tag));
     if (!gitTag) {
       throw new Error('Could not find a matching tag for the current version');
     }
-    return currentTag;
+    return gitTag;
   } catch (error) {
     console.error(`Failed to get current git tag: ${error.message}`);
     process.exit(1);
