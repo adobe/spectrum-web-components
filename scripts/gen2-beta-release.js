@@ -49,6 +49,7 @@ const CHANGESET_DIR = '.changeset';
 const PRE_JSON = path.join(CHANGESET_DIR, 'pre.json');
 const CORE_PKG = '2nd-gen/packages/core/package.json';
 const SWC_PKG = '2nd-gen/packages/swc/package.json';
+const ICONS_PKG = '2nd-gen/packages/icons/package.json';
 
 const skipInstall = process.argv.includes('--no-install');
 
@@ -69,12 +70,12 @@ function listChangesetIds() {
     .map((file) => file.replace(/\.md$/, ''));
 }
 
-// gen2-beta only publishes core + @adobe/spectrum-wc, but Changesets pre-mode
-// bumps every package a consumed changeset touches — including many 1st-gen
-// packages via mixed 1st-gen/2nd-gen changesets. Reverting that churn keeps the
-// branch a minimal delta over main (otherwise every release re-adds ~160 1st-gen
-// package.json/CHANGELOG files). Only the 2nd-gen packages and .changeset state
-// are kept.
+// gen2-beta only publishes core + @adobe/spectrum-wc + @adobe/spectrum-wc-icons,
+// but Changesets pre-mode bumps every package a consumed changeset touches —
+// including many 1st-gen packages via mixed 1st-gen/2nd-gen changesets.
+// Reverting that churn keeps the branch a minimal delta over main (otherwise
+// every release re-adds ~160 1st-gen package.json/CHANGELOG files). Only the
+// 2nd-gen packages and .changeset state are kept.
 function revertNonSecondGenChurn() {
   const changed = execSync('git diff --name-only', { encoding: 'utf8' })
     .split('\n')
@@ -84,6 +85,7 @@ function revertNonSecondGenChurn() {
       (file) =>
         !file.startsWith('2nd-gen/packages/core/') &&
         !file.startsWith('2nd-gen/packages/swc/') &&
+        !file.startsWith('2nd-gen/packages/icons/') &&
         !file.startsWith('.changeset/')
     );
 
@@ -168,9 +170,11 @@ function main() {
 
   const coreVersion = readJson(CORE_PKG).version;
   const swcVersion = readJson(SWC_PKG).version;
+  const iconsVersion = readJson(ICONS_PKG).version;
   console.log('\n✅ gen2 beta prepared:');
   console.log(`     @adobe/spectrum-wc-core         ${coreVersion}`);
   console.log(`     @adobe/spectrum-wc              ${swcVersion}`);
+  console.log(`     @adobe/spectrum-wc-icons        ${iconsVersion}`);
   console.log(
     '\nNext steps:\n' +
       '  1. Review the working tree (git status / git diff) when running locally.\n' +

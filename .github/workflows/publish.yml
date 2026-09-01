@@ -49,6 +49,13 @@ jobs:
       - name: Check for changesets
         id: check
         run: |
+          # TEMPORARY: forced true for a one-time icons-only republish; no
+          # pending changesets exist since beta.3 already consumed them all.
+          # Restored right after this run.
+          echo "has_changesets=true" >> $GITHUB_OUTPUT
+          echo "has_1st_gen_changesets=false" >> $GITHUB_OUTPUT
+          echo "has_2nd_gen_changesets=true" >> $GITHUB_OUTPUT
+          exit 0
           if [ -z "$(ls -A .changeset/*.md 2>/dev/null | grep -v README)" ]; then
             echo "has_changesets=false" >> $GITHUB_OUTPUT
             echo "has_1st_gen_changesets=false" >> $GITHUB_OUTPUT
@@ -267,17 +274,18 @@ jobs:
           # `yarn pack` resolves the workspace: protocol and honors each package's
           # files field, producing a publishable tarball. `npm publish` then selects
           # the correct auth automatically, matching how `changeset publish` behaves:
-          # - @adobe/spectrum-wc-core -> npm token (from ~/.npmrc)
-          # - @adobe/spectrum-wc      -> npm token (from ~/.npmrc)
+          # - @adobe/spectrum-wc-core  -> npm token (from ~/.npmrc)
+          # - @adobe/spectrum-wc       -> npm token (from ~/.npmrc)
+          # - @adobe/spectrum-wc-icons -> npm token (from ~/.npmrc)
           PUBLISH_FLAGS="--tag $TAG --access public"
           if [ "$DRY_RUN" == "true" ]; then
             PUBLISH_FLAGS="$PUBLISH_FLAGS --dry-run"
             echo "::notice::DRY RUN - pack and npm publish --dry-run only; versions, changelogs, and changesets are not modified"
           fi
-          yarn workspace @adobe/spectrum-wc-core pack --out /tmp/swc-core.tgz
-          yarn workspace @adobe/spectrum-wc pack --out /tmp/swc-wc.tgz
-          npm publish /tmp/swc-core.tgz $PUBLISH_FLAGS
-          npm publish /tmp/swc-wc.tgz $PUBLISH_FLAGS
+          # TEMPORARY: core and swc skipped for a one-time icons-only publish
+          # (already published at this version); restored right after this run.
+          yarn workspace @adobe/spectrum-wc-icons pack --out /tmp/swc-icons.tgz
+          npm publish /tmp/swc-icons.tgz $PUBLISH_FLAGS
 
       - name: Build React wrappers
         if: needs.check-changesets.outputs.has_1st_gen_changesets == 'true' && steps.extract-tag.outputs.scope != '2nd-gen'
