@@ -189,7 +189,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/spectrum-wc-core@npm:2.0.0-beta.2, @adobe/spectrum-wc-core@workspace:2nd-gen/packages/core":
+"@adobe/spectrum-wc-core@npm:2.0.0-beta.2":
+  version: 2.0.0-beta.2
+  resolution: "@adobe/spectrum-wc-core@npm:2.0.0-beta.2"
+  dependencies:
+    "@floating-ui/dom": "npm:1.7.6"
+    "@lit-labs/observers": "npm:2.0.2"
+    colorjs.io: "npm:0.5.2"
+    lit: "npm:^2.5.0 || ^3.1.3"
+  checksum: 10c0/66d26fc3a67c81aeb93c3b62277bef938382ebe01b023583045b7da25be5db86fc8c8830e45acf7877228c8f9ed13d6d94963a889e7dbcee054439de3060abcc
+  languageName: node
+  linkType: hard
+
+"@adobe/spectrum-wc-core@npm:2.0.0-beta.3, @adobe/spectrum-wc-core@workspace:2nd-gen/packages/core":
   version: 0.0.0-use.local
   resolution: "@adobe/spectrum-wc-core@workspace:2nd-gen/packages/core"
   dependencies:
@@ -236,7 +248,7 @@ __metadata:
   resolution: "@adobe/spectrum-wc@workspace:2nd-gen/packages/swc"
   dependencies:
     "@adobe/postcss-token": "workspace:*"
-    "@adobe/spectrum-wc-core": "npm:2.0.0-beta.2"
+    "@adobe/spectrum-wc-core": "npm:2.0.0-beta.3"
     "@adobe/spectrum-wc-icons": "workspace:*"
     "@adobe/swc-tokens": "workspace:*"
     "@adobe/vite-global-elements-css": "workspace:*"

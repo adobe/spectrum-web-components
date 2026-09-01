@@ -27,7 +27,7 @@ import styles from './popover.css';
  * and the shadow-DOM element getters the base reads.
  *
  * @element swc-popover
- * @since 2.0.0-beta.2
+ * @since 2.0.0-beta.1
  *
  * @slot - Popover content.
  *
