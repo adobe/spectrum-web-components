@@ -39,7 +39,7 @@
 }
 
 /* When the row is a button (reasoning toggle). Full inline-size so the
-   entire row is clickable, not just the fit-content label/chevron. */
+   entire row is clickable. */
 .swc-ResponseStatus-row--button {
   inline-size: 100%;
   padding: var(--_swc-response-status-toggle-padding-block, 3px) token("spacing-100");
