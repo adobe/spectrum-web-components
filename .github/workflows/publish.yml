@@ -153,8 +153,14 @@ jobs:
           SCOPE: ${{ steps.extract-tag.outputs.scope }}
           GIT_REF: ${{ github.ref }}
         run: |
-          # TEMPORARY: both the main-branch-only and 2nd-gen-scope guards for
-          # tag=latest are disabled for a one-time release; restored after.
+          if [ "$TAG" == "latest" ] && [ "$GIT_REF" != "refs/heads/main" ]; then
+            echo "ERROR: Cannot publish 'latest' from non-main branch"
+            exit 1
+          fi
+          if [ "$SCOPE" == "2nd-gen" ] && [ "$TAG" == "latest" ]; then
+            echo "ERROR: 2nd-gen-only scope does not support the 'latest' tag; use a pre-release tag such as 'beta'"
+            exit 1
+          fi
           if [ "$SCOPE" == "2nd-gen" ] && [ "$GIT_REF" != "refs/heads/gen2-beta" ]; then
             echo "ERROR: 2nd-gen scope must be published from the gen2-beta branch"
             exit 1
