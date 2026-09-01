@@ -26,6 +26,7 @@ import {
   vrtParameters,
 } from '../../../../../.storybook/helpers/index.js';
 import type { PixelLoader } from '../../../pixel-loader/index.js';
+import type { PromptField } from '../../PromptField.js';
 
 // Metadata
 
@@ -148,6 +149,7 @@ type FieldCase = {
   generating?: boolean;
   collapsed?: boolean;
   disabled?: boolean;
+  dragged?: boolean;
   value?: string;
   attachment?: AttachmentKind;
   buttonState?: ButtonState;
@@ -162,6 +164,7 @@ const renderField = ({
   generating = false,
   collapsed = false,
   disabled = false,
+  dragged = false,
   value = '',
   attachment = 'none',
   buttonState,
@@ -180,6 +183,7 @@ const renderField = ({
         ?generating=${generating}
         ?collapsed=${collapsed}
         ?disabled=${disabled}
+        ?data-dragged-state=${dragged}
         value=${value}
         data-button-state=${buttonState ?? nothing}
         data-field-hover=${fieldHover ? '' : nothing}
@@ -244,6 +248,11 @@ const ANATOMY_PERMUTATIONS = createPermutations([
     attachment: ['manyMedia'],
     buttonState: ['focus-visible'],
   },
+  {
+    group: ['Dragged'],
+    dragged: [true],
+    value: [SHORT_PROMPT],
+  },
 ]);
 
 // Resolves once `selector` exists in the host's shadow root, or after a few
@@ -307,6 +316,39 @@ const pauseLoaders = async ({
   });
 };
 
+const makeFileDataTransfer = (): DataTransfer => {
+  const dataTransfer = new DataTransfer();
+  dataTransfer.items.add(
+    new File(['hello'], 'hello.txt', { type: 'text/plain' })
+  );
+  return dataTransfer;
+};
+
+const forceDraggedStates = async ({
+  canvasElement,
+}: {
+  canvasElement: HTMLElement;
+}) => {
+  const dataTransfer = makeFileDataTransfer();
+  const fields = canvasElement.querySelectorAll<PromptField>(
+    'swc-prompt-field[data-dragged-state]'
+  );
+
+  await Promise.all(
+    [...fields].map(async (field) => {
+      field.dispatchEvent(
+        new DragEvent('dragover', {
+          bubbles: true,
+          cancelable: true,
+          composed: true,
+          dataTransfer,
+        })
+      );
+      await field.updateComplete;
+    })
+  );
+};
+
 // Forces the field's own :hover treatment. The wash rules key off
 // `.swc-PromptField-outer-border:hover`, so the forced attribute lands there.
 const forceFieldHover = ({ canvasElement }: { canvasElement: HTMLElement }) => {
@@ -343,6 +385,7 @@ export const Permutations: Story = {
   parameters: vrtParameters,
   play: async (context) => {
     await forceButtonStates(context);
+    await forceDraggedStates(context);
     forceFieldHover(context);
     await pauseLoaders(context);
   },

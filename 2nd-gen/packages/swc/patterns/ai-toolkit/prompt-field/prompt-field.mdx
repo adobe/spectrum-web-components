@@ -129,6 +129,14 @@ Consumers are responsible for handling upload flows and can mirror `value` from 
 
 <Canvas of={PromptFieldStories.HandlingEvents} />
 
+### Drag and drop
+
+Dragging a file anywhere over `swc-prompt-field` applies a high-intensity solid fill to the container surface and a blue focus ring around the drop target, regardless of the field's own `variant` or `generating` state: a drop target should be unmistakable even on a `subtle` field. Text and URL drags, plus fields in `disabled` mode, are rejected (the OS cursor shows "not allowed"). Dropping fires **`swc-prompt-field-drop`** with `detail: { files: File[] }`; consumers build and slot `<swc-upload-attachment>` elements from those files the same way they do for the **`+`** button's external picker flow.
+
+Once those tiles land in the `attachment` slot, `swc-prompt-field` manages focus for the drop automatically. If the textarea had focus at drop time, focus stays there. Otherwise, the new tile becomes the attachment strip's roving-tabindex entry point either way, but focus only jumps there immediately when the document is already in a keyboard-driven focus state (checked via `:focus-visible`); a plain mouse drag from the file system leaves focus untouched at drop time, and a later Tab into the strip lands on that same new tile instead of the previous entry point.
+
+<Canvas of={PromptFieldStories.DragAndDrop} />
+
 ## Accessibility
 
 ### Features
@@ -159,6 +167,7 @@ The attachment strip is a `role="region"` landmark (labeled `attachment-strip-la
 - Use `accessible-label` only when a distinct non-visual name is required
 - Use `placeholder` as a hint, not a replacement for the label
 - Ensure attachment content slotted into `attachment` slot includes descriptive text
+- Drag and drop is a progressive enhancement, not the only way to attach a file: native browser drag-and-drop has no keyboard equivalent, so the **`+`** button must stay available and fully functional for keyboard and screen reader users
 
 <Canvas of={PromptFieldStories.Accessibility} />
 

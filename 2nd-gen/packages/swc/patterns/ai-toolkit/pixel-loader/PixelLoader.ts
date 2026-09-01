@@ -76,6 +76,7 @@ const DOCS_URL =
  *
  * @cssprop --swc-pixel-loader-size - Rendered inline and block size of the loader. Defaults to 56px. There is no `size` attribute; set this custom property to resize the loader.
  * @cssprop --swc-pixel-loader-color - Color of the pixel cells. Defaults to `currentcolor`, so the loader inherits the surrounding text color unless overridden.
+ * @since 2.0.0-beta.3
  */
 export class PixelLoader extends SpectrumElement {
   // Relative so the rounding scales with `--swc-pixel-loader-size` and reads as
