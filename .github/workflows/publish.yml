@@ -49,13 +49,6 @@ jobs:
       - name: Check for changesets
         id: check
         run: |
-          # TEMPORARY: forced true for a one-time icons-only republish; no
-          # pending changesets exist since beta.3 already consumed them all.
-          # Restored right after this run.
-          echo "has_changesets=true" >> $GITHUB_OUTPUT
-          echo "has_1st_gen_changesets=false" >> $GITHUB_OUTPUT
-          echo "has_2nd_gen_changesets=true" >> $GITHUB_OUTPUT
-          exit 0
           if [ -z "$(ls -A .changeset/*.md 2>/dev/null | grep -v README)" ]; then
             echo "has_changesets=false" >> $GITHUB_OUTPUT
             echo "has_1st_gen_changesets=false" >> $GITHUB_OUTPUT
@@ -160,9 +153,14 @@ jobs:
           SCOPE: ${{ steps.extract-tag.outputs.scope }}
           GIT_REF: ${{ github.ref }}
         run: |
-          # TEMPORARY: both the main-branch-only and 2nd-gen-scope guards for
-          # tag=latest are disabled for a one-time icons-only publish to
-          # 'latest'; restored right after this run.
+          if [ "$TAG" == "latest" ] && [ "$GIT_REF" != "refs/heads/main" ]; then
+            echo "ERROR: Cannot publish 'latest' from non-main branch"
+            exit 1
+          fi
+          if [ "$SCOPE" == "2nd-gen" ] && [ "$TAG" == "latest" ]; then
+            echo "ERROR: 2nd-gen-only scope does not support the 'latest' tag; use a pre-release tag such as 'beta'"
+            exit 1
+          fi
           if [ "$SCOPE" == "2nd-gen" ] && [ "$GIT_REF" != "refs/heads/gen2-beta" ]; then
             echo "ERROR: 2nd-gen scope must be published from the gen2-beta branch"
             exit 1
@@ -277,9 +275,11 @@ jobs:
             PUBLISH_FLAGS="$PUBLISH_FLAGS --dry-run"
             echo "::notice::DRY RUN - pack and npm publish --dry-run only; versions, changelogs, and changesets are not modified"
           fi
-          # TEMPORARY: core and swc skipped for a one-time icons-only publish
-          # (already published at this version); restored right after this run.
+          yarn workspace @adobe/spectrum-wc-core pack --out /tmp/swc-core.tgz
+          yarn workspace @adobe/spectrum-wc pack --out /tmp/swc-wc.tgz
           yarn workspace @adobe/spectrum-wc-icons pack --out /tmp/swc-icons.tgz
+          npm publish /tmp/swc-core.tgz $PUBLISH_FLAGS
+          npm publish /tmp/swc-wc.tgz $PUBLISH_FLAGS
           npm publish /tmp/swc-icons.tgz $PUBLISH_FLAGS
 
       - name: Build React wrappers
