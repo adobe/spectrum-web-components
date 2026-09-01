@@ -16,7 +16,7 @@
   },
   "type": "module",
   "scripts": {
-    "build": "yarn workspaces foreach --from '{@adobe/spectrum-wc-core,@adobe/spectrum-wc-icons,@adobe/spectrum-wc}' --recursive run build",
+    "build": "yarn typecheck && yarn workspaces foreach --from '{@adobe/spectrum-wc-core,@adobe/spectrum-wc-icons,@adobe/spectrum-wc}' --recursive run build",
     "clean": "yarn workspaces foreach --from '{@adobe/spectrum-wc-core,@adobe/spectrum-wc-icons,@adobe/spectrum-wc}' --recursive run clean",
     "dev:analyze": "yarn workspace @adobe/spectrum-wc analyze:watch",
     "dev:core": "yarn workspace @adobe/spectrum-wc-core dev",
@@ -33,7 +33,8 @@
     "test:browser": "yarn workspace @adobe/spectrum-wc test:browser",
     "test:coverage": "yarn workspace @adobe/spectrum-wc test:coverage",
     "test:ui": "yarn workspace @adobe/spectrum-wc test:ui",
-    "test:watch": "yarn workspace @adobe/spectrum-wc test:watch"
+    "test:watch": "yarn workspace @adobe/spectrum-wc test:watch",
+    "typecheck": "yarn workspace @adobe/spectrum-wc-core tsc --build ../.."
   },
   "workspaces": [
     "packages/*"

@@ -20,6 +20,7 @@ import {
   BUTTON_VARIANTS,
   ButtonBase,
   type ButtonFillStyle,
+  type ButtonSize,
   type ButtonStaticColor,
   type ButtonVariant,
 } from '@adobe/spectrum-wc-core/components/button';
@@ -77,6 +78,13 @@ import baseStyles from './button-base.css';
  * <swc-button variant="secondary" fill-style="outline">Cancel</swc-button>
  */
 export class Button extends PendingMixin(ButtonBase) {
+  /**
+   * The size of the button.
+   *
+   * @default m
+   */
+  declare public size: ButtonSize;
+
   // ───────────────────
   //     API ADDITIONS
   // ───────────────────

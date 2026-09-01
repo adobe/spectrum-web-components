@@ -91,10 +91,11 @@ export const TouchOpenCloseTest: Story = {
     handle.setPointerCapture = (): void => undefined;
     handle.releasePointerCapture = (): void => undefined;
 
-    const dispatch = (type: string, pointerType: string): void =>
+    const dispatch = (type: string, pointerType: string): void => {
       handle.dispatchEvent(
         new PointerEvent(type, { pointerId: 1, pointerType })
       );
+    };
 
     await step('defaults to closed', async () => {
       expect(handle.open).toBe(false);

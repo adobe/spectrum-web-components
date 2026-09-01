@@ -19,7 +19,7 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 import { warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
 
-import { BUTTON_VALID_SIZES, type ButtonSize } from './Button.types.js';
+import { BUTTON_VALID_SIZES } from './Button.types.js';
 
 /**
  * Abstract base class for all button-like components. Owns shared semantic
@@ -44,13 +44,6 @@ export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
   // ──────────────────
   //     SHARED API
   // ──────────────────
-
-  /**
-   * The size of the button.
-   *
-   * @default m
-   */
-  declare public size: ButtonSize;
 
   /**
    * Whether the button is disabled. Removes focusability and prevents

@@ -87,6 +87,13 @@ export class ActionButton extends PendingMixin(ButtonBase) {
   static override readonly VALID_SIZES: readonly ActionButtonSize[] =
     ACTION_BUTTON_VALID_SIZES;
 
+  /**
+   * The size of the action button.
+   *
+   * @attribute size
+   */
+  declare public size: ActionButtonSize;
+
   // aria-haspopup, aria-expanded, and aria-disabled are observed without
   // @property to avoid conflicting with ARIAMixin types and appearing in the CEM.
   /** @internal */

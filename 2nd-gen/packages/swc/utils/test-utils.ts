@@ -12,21 +12,26 @@
 
 import { render } from 'lit';
 
-type SwcTestGlobals = {
-  warn: (...args: unknown[]) => void;
-  DEBUG?: boolean;
-  issuedWarnings?: Set<string>;
-};
-
 // Returns the shared SWC test globals, creating defaults when needed.
-export const getSwcTestGlobals = (): SwcTestGlobals => {
-  const swcWindow = window as Window & { __swc?: SwcTestGlobals };
-
-  if (!swcWindow.__swc) {
-    swcWindow.__swc = { warn: () => {} };
+export const getSwcTestGlobals = (): Window['__swc'] => {
+  if (!window.__swc) {
+    window.__swc = {
+      warn: () => {},
+      DEBUG: false,
+      issuedWarnings: new Set(),
+      ignoreWarningTypes: { default: false, accessibility: false, api: false },
+      ignoreWarningLevels: {
+        default: false,
+        low: false,
+        medium: false,
+        high: false,
+        deprecation: false,
+      },
+      ignoreWarningLocalNames: {},
+    };
   }
 
-  return swcWindow.__swc;
+  return window.__swc;
 };
 
 // Enables debug warnings and captures warn calls for assertions.

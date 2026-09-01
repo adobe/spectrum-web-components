@@ -112,7 +112,6 @@ export const EventTest: Story = {
         await userEvent.keyboard('{Enter}');
         expect(detail?.label).toBe('Create a slide deck from this');
 
-        detail = undefined;
         el.addEventListener(
           'swc-suggestion',
           (event) => {

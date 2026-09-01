@@ -249,7 +249,7 @@ export class ResponseStatusStep extends SpectrumElement {
     this._emit('swc-response-status-step-open-change', { open: this.open });
   }
 
-  private _renderIcon(): TemplateResult {
+  private _renderIcon(): TemplateResult | undefined {
     return choose(
       this._resolvedStatus,
       [

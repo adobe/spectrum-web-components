@@ -59,6 +59,13 @@ import styles from './dropzone.css';
  * @cssprop --swc-illustrated-message-illustration-color - Illustration color cascaded into a slotted `swc-illustrated-message`. Unset by default; overridden to the accent-content-color-default token in the dragged state.
  */
 export class Dropzone extends DropzoneBase {
+  // `DropzoneBase` is abstract with a `protected constructor` to block direct
+  // instantiation; this public override makes the concrete class constructible
+  // (required by `customElements.define`).
+  public constructor() {
+    super();
+  }
+
   // ───────────────────
   //     API ADDITIONS
   // ───────────────────
