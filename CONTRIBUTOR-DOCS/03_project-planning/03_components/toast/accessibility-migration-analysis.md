@@ -280,7 +280,7 @@ See the 2nd-gen Storybook [Screen reader testing](../../../../2nd-gen/packages/s
 - [ ] Auto-dismiss timer enforces a minimum of 6000ms.
 - [ ] Countdown pauses on both `focusin` and `pointerenter`, preserves remaining time, and resumes on `focusout` and `pointerleave`.
 - [ ] Close button has an accessible name ("Close" by default) via `accessible-label`.
-- [ ] Variant icons render with `role="img"` and `aria-label`; defaults are "Information", "Error", "Success", "Warning"; author can override via `icon-label`.
+- [ ] Variant icons render with `role="img"` and `aria-label`; defaults are "Information", "Error", "Success"; author can override via `icon-label`.
 - [ ] Action button slot is limited to one action; docs state this limit explicitly.
 - [ ] Docs warn against using `timeout` when the `action` slot is populated.
 - [ ] Docs include the `role="region"` container pattern (with `aria-label` and notification count) for applications showing multiple toasts.
