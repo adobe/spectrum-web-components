@@ -47,6 +47,7 @@ import styles from './upload-attachment.css';
  * @slot actions - Optional trailing actions.
  * @fires swc-upload-attachment-dismiss - Dispatched when the dismiss button is pressed.
  * Detail: `{ attachment: this }`
+ * @since 2.0.0-beta.3
  */
 export class UploadAttachment extends SpectrumElement {
   /** Visual treatment type for this attachment. */
