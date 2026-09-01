@@ -124,3 +124,34 @@ export async function gotoStory(
 
   return waitForStoryReady(page, elementSelector);
 }
+
+/**
+ * Navigate to a Storybook story for a CSS-only utility (no custom element,
+ * e.g. Typography or Link) and wait for it to be ready.
+ *
+ * @param page - Playwright page object
+ * @param storyId - Storybook story ID (e.g., 'components-link--standalone')
+ * @param readySelector - CSS selector to wait for as a readiness signal
+ * @returns The `#storybook-root` locator containing all rendered elements
+ */
+export async function gotoCssStory(
+  page: Page,
+  storyId: string,
+  readySelector: string
+): Promise<Locator> {
+  await page.goto(`/iframe.html?id=${storyId}&viewMode=story`, {
+    waitUntil: 'domcontentloaded',
+  });
+
+  return waitForStoryReadyWithRetries(page, async () => {
+    await page.waitForFunction(() => {
+      const root = document.querySelector('#storybook-root');
+      return root && root.children.length > 0;
+    });
+
+    const root = page.locator('#storybook-root');
+    await root.locator(readySelector).first().waitFor({ state: 'visible' });
+
+    return root;
+  });
+}
