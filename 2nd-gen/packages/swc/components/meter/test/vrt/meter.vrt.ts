@@ -31,6 +31,7 @@ import '@adobe/spectrum-wc/components/meter/swc-meter.js';
 import {
   forcedColorsVrtParameters,
   row,
+  SIZE_LABELS,
   staticColorBackground,
   theme,
   vrtParameters,
@@ -47,13 +48,6 @@ const meta: Meta = {
 export default meta;
 
 // Helpers
-
-const sizeLabels = {
-  s: 'Small',
-  m: 'Medium',
-  l: 'Large',
-  xl: 'Extra-large',
-} as const satisfies Record<LinearProgressSize, string>;
 
 const variantLabels = {
   informative: 'Informative',
@@ -148,7 +142,7 @@ const renderMeter = ({
 const permutationContent = () => html`
   ${row(
     LINEAR_PROGRESS_VALID_SIZES.map((size) =>
-      renderMeter({ size, label: sizeLabels[size] })
+      renderMeter({ size, label: SIZE_LABELS[size] })
     ),
     'Sizes'
   )}

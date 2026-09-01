@@ -12,6 +12,11 @@
 <summary><strong>In this doc</strong></summary>
 
 - [Helper functions](#helper-functions)
+- [Shared render templates](#shared-render-templates)
+    - [Anatomy of the options object](#anatomy-of-the-options-object)
+    - [When to use a shared render template](#when-to-use-a-shared-render-template)
+    - [Where the template file lives](#where-the-template-file-lives)
+    - [When not to use a shared render template](#when-not-to-use-a-shared-render-template)
 - [Size modifier pattern](#size-modifier-pattern)
 - [Inline SVG](#inline-svg)
 - [classMap patterns](#classmap-patterns)
@@ -72,6 +77,114 @@ const icon = (name: string): TemplateResult => html`
 
 // ❌ Bad — simple fragment that could be inline
 const divider = (): TemplateResult => html`<hr />`;
+```
+
+## Shared render templates
+
+When the same anatomy is rendered by **multiple concrete components** (not just multiple call sites within one file), promote the shared markup out of `render()` entirely into its own file: a standalone function that takes an options object and returns a `TemplateResult`. This is the render-logic counterpart to a `_lit-styles/` CSS fragment (see [Shared Lit CSS fragments](../01_css/07_stylesheets.md#shared-lit-css-fragments-lit-styles)) — same motivation, one structural definition with several consumers, applied to markup instead of CSS.
+
+**Example from `card/card-template.ts`:**
+
+```ts
+import { html, nothing, TemplateResult } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
+
+export interface CardTemplateOptions {
+  /** Per-component class root (e.g. `UserCard`), prefixed with `swc-`. */
+  cardClass: string;
+
+  /** Renders the collection slot in addition to the preview. Default: none. */
+  renderCollection?: () => TemplateResult | typeof nothing;
+
+  /** Renders the avatar/thumbnail glyph. Default: none. */
+  renderGlyph?: () => TemplateResult | typeof nothing;
+
+  /** Whether the default slot has assigned content. Default: false. */
+  hasDefaultSlotContent?: boolean;
+
+  /** Bound to the default slot's `slotchange` event. Default: none. */
+  onDefaultSlotChange?: (event: Event) => void;
+}
+
+export function renderCardTemplate({
+  cardClass,
+  renderCollection = () => nothing,
+  renderGlyph = () => nothing,
+  hasDefaultSlotContent = false,
+  onDefaultSlotChange,
+}: CardTemplateOptions): TemplateResult {
+  return html`
+    <div
+      class=${classMap({
+        'swc-CardBase': true,
+        [`swc-${cardClass}`]: true,
+        [`swc-${cardClass}--hasDefault`]: hasDefaultSlotContent,
+      })}
+    >
+      <!-- shared preview / media / content / footer anatomy -->
+      ${renderGlyph()} ${renderCollection()}
+      <slot @slotchange=${onDefaultSlotChange}></slot>
+    </div>
+  `;
+}
+```
+
+**Called from the concrete component's `render()`:**
+
+```ts
+protected override render(): TemplateResult {
+  return renderCardTemplate({
+    cardClass: 'Card',
+    hasDefaultSlotContent: this.slotText.hasContent,
+    onDefaultSlotChange: this.slotText.handleSlotChange,
+  });
+}
+```
+
+### Anatomy of the options object
+
+Three kinds of option. Each consumer supplies only the ones it needs:
+
+| Kind | Example | Purpose |
+|---|---|---|
+| Static value | `cardClass: string` | Data the template needs to compute a class name or attribute; supplied by every consumer |
+| Optional render callback | `renderGlyph?: () => TemplateResult \| typeof nothing` | A region only some consumers use; defaults to `() => nothing` so the template doesn't have to branch on whether it was passed |
+| Event handler pass-through | `onDefaultSlotChange?: (event: Event) => void` | Wires up an event listener in the shared markup while the handler logic and state (a controller, a property) stay owned by the calling component |
+
+The template function itself has no state, no lifecycle, and is not a class: it is a pure function of its options, called fresh on every `render()`.
+
+### When to use a shared render template
+
+- Two or more **concrete components** render the same structural anatomy: the same wrapper elements, the same slot layout, the same conditional regions.
+- The differences between consumers can be expressed as options: a handful of static values, optional render callbacks for regions not every consumer needs, and pass-through event handlers.
+- Flag the opportunity as early as migration prep, the same way a `_lit-styles/` CSS-fragment candidate gets flagged, so the shared file gets created (or extended) as part of the plan rather than discovered as duplication after the fact.
+
+### Where the template file lives
+
+- **One component owns the family:** `card-template.ts` lives inside `card/`, the directory of the component that owns the shared anatomy; other variants import it by relative path. Use this when there is a clear primary component and the others are its variants.
+- **No single component owns the shared structure:** for example, a form-field template shared across `text-field`, `text-area`, `number-field`, `picker`, and `combobox`, none of which is a variant of another. There is not yet a settled convention for this case. Decide during that migration's planning phase whether to host the template in whichever field component migrates first (mirroring the `card` precedent) or introduce a dedicated shared location (mirroring `_lit-styles/` at `swc/stylesheets/_lit-styles/`, for example a `swc/components/_lit-templates/` directory). Record the decision in the migration plan rather than let it be decided implicitly by whichever component happens to migrate first.
+
+### When not to use a shared render template
+
+- Only one component will ever render the markup: inline it in `render()`, or use a same-file [helper function](#helper-functions) if it is reused within that one file.
+- The shared part is CSS only, not markup structure: use a [`_lit-styles/` fragment](../01_css/07_stylesheets.md#shared-lit-css-fragments-lit-styles) instead.
+- The variation between consumers cannot be cleanly expressed as a small options object (for example, fundamentally different slot sets). Forcing it into one shared template produces an options object full of flags that fight each other. Leave the markup duplicated until a clearer shared shape emerges, or split into two smaller shared templates.
+
+```ts
+// ✅ Good — options are independent and each has a sensible default
+renderCardTemplate({
+  cardClass: 'ProductCard',
+  renderGlyph: () => this.renderPriceBadge(),
+});
+
+// ❌ Bad — options that only make sense in combination, or that contradict
+// each other, are a sign the shared template is modeling two different
+// things. Split it instead of adding a mode flag to switch anatomy.
+renderCardTemplate({
+  cardClass: 'ProductCard',
+  isCompact: true,
+  isExpanded: true, // contradicts isCompact — the template has to guess
+});
 ```
 
 ## Size modifier pattern

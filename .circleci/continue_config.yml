@@ -1,0 +1,787 @@
+# Continuation config, launched by config.yml. Workflows here are gated on the
+# run_gen1 / run_gen2 / is_base_main parameters that `decide` sets, so jobs for
+# an unaffected gen are never created.
+#
+# Branch protection: per-gen job checks are absent when their gen is untouched,
+# so they can't be required. Instead, `decide` and each workflow's
+# `report-gen-status` fan-in post `gen1-tests` / `gen2-tests` commit statuses —
+# those are the required checks.
+version: 2.1
+
+executors:
+  default:
+    docker:
+      - image: cimg/base:current
+    resource_class: medium
+  # xlarge — heavy builds (Vite, Storybook), VRT, and single-container coverage.
+  node:
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.53.1-noble
+    resource_class: xlarge
+    environment:
+      NODE_ENV: development
+      AZCOPY_AUTO_LOGIN_TYPE: SPN
+      AZCOPY_SPA_APPLICATION_ID: $AZURE_CLIENT_ID
+      AZCOPY_SPA_CLIENT_SECRET: $AZURE_CLIENT_SECRET
+      AZCOPY_TENANT_ID: $AZURE_TENANT_ID
+  # large — sharded test jobs. Each container runs a fraction of the suite
+  # (parallelism + test splitting / vitest --shard), so half the RAM is plenty.
+  node-large:
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.53.1-noble
+    resource_class: large
+    environment:
+      NODE_ENV: development
+      AZCOPY_AUTO_LOGIN_TYPE: SPN
+      AZCOPY_SPA_APPLICATION_ID: $AZURE_CLIENT_ID
+      AZCOPY_SPA_CLIENT_SECRET: $AZURE_CLIENT_SECRET
+      AZCOPY_TENANT_ID: $AZURE_TENANT_ID
+
+parameters:
+  # Set by `decide`. Default true so a continuation without params fails safe by
+  # running everything rather than skipping tests.
+  run_gen1:
+    type: boolean
+    default: true
+  run_gen2:
+    type: boolean
+    default: true
+  # True when the base is main (a push to main, or a PR targeting main).
+  # Resolved in `decide`, which has git + GitHub API context. Gates gen2
+  # coverage below.
+  is_base_main:
+    type: boolean
+    default: false
+  # In order to update the VRT baseline images:
+  # 1. Copy the hash of the latest golden images hash from the left sidebar in the VRT preview link (not to be confused with the arbitrary hash in the URL).
+  # 2. Paste the hash in the current_golden_images_hash default parameter below.
+  # 3. Commit this change to the PR branch where the changes exist.
+  current_golden_images_hash:
+    type: string
+    default: ed6c0abd2a91f0b94fb3214dfced5ad135f1a409
+
+commands:
+  install-azcopy:
+    description: 'Install AzCopy and set up authentication'
+    steps:
+      - restore_cache:
+          keys:
+            - azcopy-v10.29.1-{{ arch }}
+      - run:
+          when: always
+          name: Install AzCopy
+          command: |
+            mkdir -p ~/bin
+            if [ ! -f ~/bin/azcopy ]; then
+              cd ~/bin
+              wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.29.1/azcopy_linux_amd64_10.29.1.tar.gz
+              tar -xf azcopy.tar.gz --strip-components=1
+              chmod +x azcopy
+            fi
+            echo 'export PATH=~/bin:$PATH' >> $BASH_ENV
+            echo 'export AZCOPY_AUTO_LOGIN_TYPE="SPN"' >> $BASH_ENV
+            echo 'export AZCOPY_SPA_APPLICATION_ID="$AZURE_CLIENT_ID"' >> $BASH_ENV
+            echo 'export AZCOPY_SPA_CLIENT_SECRET="$AZURE_CLIENT_SECRET"' >> $BASH_ENV
+            echo 'export AZCOPY_TENANT_ID="$AZURE_TENANT_ID"' >> $BASH_ENV
+            source $BASH_ENV
+            azcopy --version
+      - save_cache:
+          paths:
+            - ~/bin/azcopy
+          key: azcopy-v10.29.1-{{ arch }}
+  setup-node-dependencies:
+    description: 'Checkout code and install node dependencies'
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - cache-deps-yarn-{{ arch }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: Installing Dependencies
+          command: |
+            corepack enable
+            yarn --immutable
+  save-node-dependencies-cache:
+    description: 'Save node dependency cache'
+    steps:
+      - save_cache:
+          paths:
+            - ~/.cache/yarn
+          key: cache-deps-yarn-{{ arch }}-{{ checksum "yarn.lock" }}
+  downstream:
+    steps:
+      - setup-node-dependencies
+      - attach_workspace:
+          at: .
+  run-regressions:
+    parameters:
+      regression_system:
+        type: string
+      regression_color:
+        type: string
+      regression_scale:
+        type: string
+      regression_dir:
+        type: string
+    steps:
+      - restore_cache:
+          name: Restore Golden Images Cache
+          keys:
+            - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+            - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+            - v2-golden-images-main-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+            - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+      - run:
+          name: Count baseline images
+          command: |
+            mkdir -p 1st-gen/test/visual/screenshots-baseline
+            baseline_count=$(find 1st-gen/test/visual/screenshots-baseline -type f | wc -l)
+            echo "Found $baseline_count baseline images"
+            echo $baseline_count > count_start.txt
+          #   if [ $baseline_count -eq 0 ]; then
+          #       echo "ERROR: No baseline images found!"
+          #       exit 1
+          #   fi
+      - run:
+          when: always
+          name: VRT Run
+          command: |
+            yarn workspace @spectrum-web-components/1st-gen test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+      # store results and artifacts before rearranging things for the new cache.
+      - store_test_results:
+          path: /root/project/1st-gen/results/
+      - run:
+          when: on_success
+          name: Count current images
+          command: find 1st-gen/test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
+      # prevent removing regression tests without requiring a new golden cache
+      - run:
+          when: on_success
+          name: Fail if there are a different number of images...
+          command: |
+            echo $(cat count_start.txt)
+            echo $(cat count_end.txt)
+            if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
+      # build diff review site
+      - run:
+          when: always
+          name: Create review site
+          command: |
+            branch=$(git symbolic-ref --short HEAD)
+            cd 1st-gen && node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>" && yarn rollup -c test/visual/rollup.config.js
+      - install-azcopy
+      - run:
+          when: always
+          name: Deploy VRT Results to Azure Blob Storage
+          command: |
+            # Set deployment path based on branch
+            if [ "$CIRCLE_BRANCH" = "main" ]; then
+                PR_HASH="main"
+                echo "Deploying VRT for main branch to main path"
+            else
+                # Get PR number from CircleCI environment
+                PR_NUMBER=""
+                if [ -n "$CIRCLE_PULL_REQUEST" ]; then
+                    PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///')
+                    echo "Deploying VRT for PR #$PR_NUMBER"
+                elif [ -n "$CIRCLE_PR_NUMBER" ]; then
+                    PR_NUMBER="$CIRCLE_PR_NUMBER"
+                    echo "Deploying VRT for PR #$PR_NUMBER"
+                elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
+                    PR_NUMBER=$(echo "$CIRCLE_BRANCH" | sed 's/pull\///')
+                    echo "Deploying VRT for forked PR #$PR_NUMBER"
+                elif [ -n "$GITHUB_TOKEN" ]; then
+                    # GitHub API fallback
+                    PR_NUMBER=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                        -H "Accept: application/vnd.github+json" \
+                        "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+                        | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
+
+                    if [ -n "$PR_NUMBER" ]; then
+                        echo "Deploying VRT for PR #$PR_NUMBER (via GitHub API)"
+                    else
+                        echo "⏭️  No PR found - skipping VRT deployment"
+                        exit 0
+                    fi
+                else
+                    echo "⏭️  No PR detected - skipping VRT deployment"
+                    exit 0
+                fi
+
+                PR_HASH="pr-${PR_NUMBER}"
+            fi
+
+            # VRT combination for subdirectory
+            combination="<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>"
+
+            # Prepare files for deployment
+            cp 1st-gen/projects/documentation/content/favicon.ico 1st-gen/test/visual/ || echo "Failed to copy favicon"
+
+            # Upload VRT results to Azure Blob Storage
+            echo "Uploading VRT results to ${PR_HASH}/${combination}/"
+            azcopy copy "1st-gen/test/visual/*" \
+              "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/${combination}/" \
+              --recursive \
+              --from-to LocalBlob
+
+            # Generate the deployment URL
+            VRT_URL="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/${combination}/"
+            echo "$VRT_URL" > vrt_url.txt
+            echo "VRT URL for ${combination}: $VRT_URL"
+
+      # move "updated" screenshot into the baseline directory before making the new cache
+      - run:
+          when: always
+          command: |
+            rm -rf 1st-gen/test/visual/screenshots-baseline
+            cp -R 1st-gen/test/visual/screenshots-actual/updates 1st-gen/test/visual/screenshots-baseline
+      - save_cache:
+          when: always
+          name: Build Golden Images Revision Cache
+          paths:
+            - 1st-gen/test/visual/screenshots-baseline
+          key: v2-golden-images-{{ .Revision }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ .Branch }}
+      - save_cache:
+          name: Build Golden Images Branch Cache
+          paths:
+            - 1st-gen/test/visual/screenshots-baseline
+          key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ .Revision }}
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Builds (run once; consumers attach the workspace instead of rebuilding)
+  # ---------------------------------------------------------------------------
+  build:
+    executor: node
+    steps:
+      - setup-node-dependencies
+      - run:
+          name: Build the project
+          command: yarn build
+      - save-node-dependencies-cache
+      - persist_to_workspace:
+          root: .
+          paths:
+            - 1st-gen/packages
+            - 1st-gen/tools
+            - 1st-gen/test
+            - 1st-gen/scripts
+            - 1st-gen/storybook
+            - 1st-gen/projects
+
+  # Build gen2 packages + CEM once; the browser and coverage jobs attach this
+  # workspace instead of each rebuilding.
+  build-gen2:
+    executor: node
+    steps:
+      - setup-node-dependencies
+      - run:
+          name: Build gen2 project
+          command: yarn build:2nd-gen
+      - run:
+          name: Generate Custom Elements Manifest
+          command: yarn workspace @adobe/spectrum-wc analyze
+      - save-node-dependencies-cache
+      - persist_to_workspace:
+          root: .
+          paths:
+            - 2nd-gen/packages/core/dist
+            - 2nd-gen/packages/swc/dist
+
+  # Build the ci-a11y Storybook once; the a11y and axe jobs attach it. Uses
+  # `downstream` because the Storybook build still pulls in gen1 refs.
+  build-gen2-storybook:
+    executor: node
+    steps:
+      - downstream
+      - run:
+          name: Build gen2 Storybook (a11y/axe — ci-a11y mode)
+          command: |
+            NODE_ENV=production SWC_STORYBOOK_MODE=ci-a11y yarn workspace @adobe/spectrum-wc storybook:build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - 2nd-gen/packages/swc/storybook-static
+
+  # ---------------------------------------------------------------------------
+  # gen1 unit tests (sharded across 5 containers, split by timings)
+  # ---------------------------------------------------------------------------
+  test-chromium:
+    executor: node-large
+    parallelism: 5
+    steps:
+      - downstream
+      - run:
+          name: Run chromium tests
+          command: |
+            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
+            yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config ./web-test-runner.config.ci-chromium.js --group unit-ci
+      - store_test_results:
+          path: /root/project/1st-gen/results/
+
+  test-chromium-coverage:
+    executor: node
+    steps:
+      - downstream
+      - run:
+          name: Run chromium tests with coverage
+          command: yarn workspace @spectrum-web-components/1st-gen test:focus unit --config web-test-runner.config.ci-chromium.js --coverage
+      - store_test_results:
+          path: /root/project/1st-gen/results/
+      # Coverage artifact lives on the job that actually runs `--coverage`.
+      - store_artifacts:
+          path: 1st-gen/coverage
+
+  test-chromium-memory:
+    executor: node-large
+    parallelism: 5
+    steps:
+      - downstream
+      - run:
+          name: Run memory tests
+          command: |
+            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*-memory.test.js" | grep -v "packages/color-.*/test/.*-memory\.test\.js" | grep -v "tools/grid/test/.*-memory\.test\.js" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
+            echo $TEST
+            yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-chromium-memory.js --group unit-ci
+      - store_test_results:
+          path: /root/project/1st-gen/results/
+
+  test-firefox:
+    executor: node-large
+    parallelism: 5
+    steps:
+      - downstream
+      - run:
+          name: Run firefox tests
+          command: |
+            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
+            yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
+      - store_test_results:
+          path: /root/project/1st-gen/results/
+
+  test-webkit:
+    executor: node-large
+    parallelism: 5
+    steps:
+      - downstream
+      - run:
+          name: Run webkit tests
+          command: |
+            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
+            yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
+      - store_test_results:
+          path: /root/project/1st-gen/results/
+
+  # ---------------------------------------------------------------------------
+  # gen2 integration tests (Vitest browser mode)
+  # ---------------------------------------------------------------------------
+  # Sharded across 5 containers per browser via vitest --shard, which keeps
+  # webkit from OOMing. Coverage is a separate single-container job below.
+  test-gen2-browser:
+    executor: node-large
+    parallelism: 5
+    parameters:
+      browser:
+        type: string
+    steps:
+      - setup-node-dependencies
+      - attach_workspace:
+          at: .
+      - run:
+          name: Run gen2 << parameters.browser >> tests (shard $CIRCLE_NODE_INDEX/$CIRCLE_NODE_TOTAL)
+          command: |
+            VITEST_BROWSER_INSTANCES=<< parameters.browser >> \
+              yarn workspace @spectrum-web-components/2nd-gen run test \
+              --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL
+      - store_test_results:
+          path: /root/project/2nd-gen/packages/swc/test-results
+
+  # gen2 coverage — Chromium only, base=main only. It stays in the gen2 workflow
+  # (not a separate is_base_main-gated one) so it can attach the shared
+  # build-gen2 workspace; workspaces can't cross workflows. On a non-main base
+  # the first step halts before setup. Unsharded because v8 coverage needs one
+  # process.
+  test-gen2-coverage:
+    executor: node
+    steps:
+      - run:
+          name: Skip coverage unless base is main
+          command: |
+            if [ "<< pipeline.parameters.is_base_main >>" != "true" ]; then
+              echo "Base is not main; skipping gen2 coverage."
+              circleci-agent step halt
+            fi
+      - setup-node-dependencies
+      - attach_workspace:
+          at: .
+      - run:
+          name: Run gen2 Chromium coverage
+          command: VITEST_BROWSER_INSTANCES=chromium yarn workspace @spectrum-web-components/2nd-gen test:coverage
+      - store_test_results:
+          path: /root/project/2nd-gen/packages/swc/test-results
+      - store_artifacts:
+          path: 2nd-gen/packages/swc/coverage
+
+  # gen2 ARIA snapshot tests (Playwright), against the prebuilt Storybook.
+  test-gen2-a11y:
+    executor: node
+    steps:
+      - setup-node-dependencies
+      - attach_workspace:
+          at: .
+      - run:
+          name: Run gen2 ARIA snapshot tests
+          command: yarn test:a11y:2nd
+      - store_test_results:
+          path: /root/project/2nd-gen/test/playwright-a11y/results
+      - store_artifacts:
+          path: 2nd-gen/test/playwright-a11y/report
+
+  # gen2 axe-core WCAG tests (Storybook test-runner), against the prebuilt Storybook.
+  test-gen2-axe:
+    executor: node
+    steps:
+      - setup-node-dependencies
+      - attach_workspace:
+          at: .
+      - run:
+          name: Run axe-core WCAG tests
+          command: |
+            mkdir -p 2nd-gen/packages/swc/test-results
+            yarn start-server-and-test "npx http-server 2nd-gen/packages/swc/storybook-static -p 6006 --silent" http://127.0.0.1:6006 "JEST_JUNIT_OUTPUT_DIR=./test-results JEST_JUNIT_OUTPUT_NAME=junit.xml yarn workspace @adobe/spectrum-wc test:storybook --url http://127.0.0.1:6006 --index-json --ci --junit"
+      - store_test_results:
+          path: /root/project/2nd-gen/packages/swc/test-results
+
+  # ---------------------------------------------------------------------------
+  # Docs + visual regression (gen1)
+  # ---------------------------------------------------------------------------
+  beta-docs:
+    executor: node
+    steps:
+      - downstream
+      - run:
+          name: Generate Custom Elements Manifest
+          command: yarn workspace @spectrum-web-components/1st-gen docs:analyze
+      - run:
+          name: Move CEM to Storybook directory
+          command: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
+      - run:
+          name: Build documentation with path prefix
+          command: |
+            echo "export SWC_DIR=beta/docs" >> $BASH_ENV
+            source $BASH_ENV
+      - run:
+          name: Build documentation
+          command: yarn workspace @spectrum-web-components/1st-gen docs:build
+      - run:
+          name: Build gen1 Storybook (beta docs)
+          command: yarn workspace @spectrum-web-components/1st-gen storybook:build
+      - install-azcopy
+      - run:
+          name: Deploy Beta Documentation to Azure Blob Storage
+          command: |
+            # Upload documentation to beta path
+            echo "Uploading documentation to beta/docs/"
+            azcopy copy "1st-gen/projects/documentation/dist/*" \
+              "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/" \
+              --recursive \
+              --from-to LocalBlob
+
+            # Upload Storybook to beta path
+            echo "Uploading Storybook to beta/docs/storybook/"
+            azcopy copy "1st-gen/storybook-static/*" \
+              "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/storybook/" \
+              --recursive \
+              --from-to LocalBlob
+
+            # Generate the deployment URLs
+            DOCS_URL="https://swcpreviews.z13.web.core.windows.net/beta/docs/"
+            STORYBOOK_URL="https://swcpreviews.z13.web.core.windows.net/beta/docs/storybook/"
+            echo "Beta Documentation URL: $DOCS_URL"
+            echo "Beta Storybook URL: $STORYBOOK_URL"
+
+  hcm-visual:
+    executor: node
+    steps:
+      - downstream
+      - restore_cache:
+          name: Restore Golden Images Cache
+          keys:
+            - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-hcm-
+            - v2-golden-images-main-hcm-
+      - run:
+          name: Count baseline images
+          command: |
+            mkdir -p 1st-gen/test/visual/screenshots-baseline
+            baseline_count=$(find 1st-gen/test/visual/screenshots-baseline -type f | wc -l)
+            echo "Found $baseline_count baseline images"
+            echo $baseline_count > count_start.txt
+          #   if [ $baseline_count -eq 0 ]; then
+          #       echo "ERROR: No baseline images found!"
+          #       exit 1
+          #   fi
+      - run:
+          when: always
+          name: VRT Run
+          command: |
+            yarn workspace @spectrum-web-components/1st-gen test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
+      # store results and artifacts before rearranging things for the new cache.
+      - store_test_results:
+          path: /root/project/1st-gen/results/
+      - run:
+          when: on_success
+          name: Count current images
+          command: find 1st-gen/test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
+      # prevent removing regression tests without requiring a new golden cache
+      - run:
+          when: on_success
+          name: Fail if there are a different number of images...
+          command: |
+            echo $(cat count_start.txt)
+            echo $(cat count_end.txt)
+            if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
+      # build diff review site
+      - run:
+          when: always
+          name: Create review site
+          command: |
+            branch=$(git symbolic-ref --short HEAD)
+            cd 1st-gen && node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm" && yarn rollup -c test/visual/rollup.config.js
+      - install-azcopy
+      - run:
+          when: always
+          name: Deploy Visual Tests to Azure Blob Storage
+          command: |
+            # Set deployment path based on branch
+            if [ "$CIRCLE_BRANCH" = "main" ]; then
+                PR_HASH="main"
+                echo "Deploying HCM VRT for main branch to main path"
+            else
+                # Get PR number from CircleCI environment
+                PR_NUMBER=""
+                if [ -n "$CIRCLE_PULL_REQUEST" ]; then
+                    PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
+                    echo "Deploying HCM VRT for PR #$PR_NUMBER"
+                elif [ -n "$CIRCLE_PR_NUMBER" ]; then
+                    PR_NUMBER="$CIRCLE_PR_NUMBER"
+                    echo "Deploying HCM VRT for PR #$PR_NUMBER"
+                elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
+                    PR_NUMBER=$(echo "$CIRCLE_BRANCH" | sed 's/pull\///')
+                    echo "Deploying HCM VRT for forked PR #$PR_NUMBER"
+                elif [ -n "$GITHUB_TOKEN" ]; then
+                    # GitHub API fallback
+                    PR_NUMBER=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                        -H "Accept: application/vnd.github+json" \
+                        "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+                        | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
+
+                    if [ -n "$PR_NUMBER" ]; then
+                        echo "Deploying HCM VRT for PR #$PR_NUMBER (via GitHub API)"
+                    else
+                        echo "⏭️  No PR found - skipping HCM VRT deployment"
+                        exit 0
+                    fi
+                else
+                    echo "⏭️  No PR detected - skipping HCM VRT deployment"
+                    exit 0
+                fi
+
+                PR_HASH="pr-${PR_NUMBER}"
+            fi
+
+            # Prepare files for deployment
+            cp 1st-gen/projects/documentation/content/favicon.ico 1st-gen/test/visual/
+
+            # Upload HCM VRT results to Azure Blob Storage
+            echo "Uploading HCM VRT to ${PR_HASH}/hcm/"
+            azcopy copy "1st-gen/test/visual/*" \
+              "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/hcm/" \
+              --recursive \
+              --from-to LocalBlob
+
+            # Generate the deployment URL
+            VRT_URL="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/hcm/"
+            echo "$VRT_URL" > vrt_url.txt
+            echo "HCM Visual Test URL: $VRT_URL"
+
+      # move "updated" screenshot into the baseline directory before making the new cache
+      - run:
+          when: always
+          command: |
+            rm -rf 1st-gen/test/visual/screenshots-baseline
+            cp -R 1st-gen/test/visual/screenshots-actual/updates 1st-gen/test/visual/screenshots-baseline
+      - save_cache:
+          when: always
+          name: Build Golden Images Revision Cache
+          paths:
+            - 1st-gen/test/visual/screenshots-baseline
+          key: v2-golden-images-{{ .Revision }}-hcm-{{ .Branch }}
+      - save_cache:
+          name: Build Golden Images Branch Cache
+          paths:
+            - 1st-gen/test/visual/screenshots-baseline
+          key: v2-golden-images-{{ .Branch }}-hcm-{{ .Revision }}
+
+  visual:
+    executor: node
+    parameters:
+      system:
+        type: string
+      color:
+        type: string
+      scale:
+        type: string
+      dir:
+        type: string
+    steps:
+      - downstream
+      - run-regressions:
+          regression_system: << parameters.system >>
+          regression_color: << parameters.color >>
+          regression_scale: << parameters.scale >>
+          regression_dir: << parameters.dir >>
+
+  # Merge-gate reporter. Runs only after every required job in its workflow
+  # succeeds (native `requires`), then POSTs `<gen>-tests=success` as a GitHub
+  # commit status — the context branch protection requires. If any required job
+  # fails, this is skipped and the status never posts, so the required check
+  # stays pending and blocks the merge. `decide` posts the same context up front
+  # (pending for an affected gen, success for a skipped one), so it's never left
+  # missing.
+  report-gen-status:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    parameters:
+      gen:
+        type: string
+    steps:
+      - run:
+          name: Mark << parameters.gen >>-tests passed
+          command: |
+            curl -sSf -X POST \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/statuses/$CIRCLE_SHA1" \
+              -d '{"state":"success","context":"<< parameters.gen >>-tests-status","description":"All << parameters.gen >> checks passed"}'
+
+workflows:
+  # ---------------------------------------------------------------------------
+  # Workflows are gated on the `decide` parameters — a workflow and its jobs are
+  # created only when its gen is affected.
+  #
+  # Branch protection: require `gen1-tests` and `gen2-tests` (and `decide`).
+  # `decide` posts those commit statuses up front (pending if the gen runs,
+  # success if it's skipped); each workflow's `report-gen-status` fan-in flips
+  # its own to success once the gen's jobs pass.
+  # ---------------------------------------------------------------------------
+  gen1:
+    when: << pipeline.parameters.run_gen1 >>
+    jobs:
+      - build
+      - test-chromium:
+          requires: [build]
+      - test-chromium-memory:
+          requires: [build]
+      - test-firefox:
+          requires: [build]
+      - test-webkit:
+          requires: [build]
+      - test-chromium-coverage:
+          requires: [build]
+      - hcm-visual:
+          requires: [build]
+          filters:
+            branches:
+              # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+              ignore: /pull\/[0-9]+/
+      - beta-docs:
+          requires: [build]
+          filters:
+            branches:
+              # Beta docs are only published from main
+              only: main
+      - visual:
+          name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
+          requires: [build]
+          matrix:
+            parameters:
+              system: [spectrum, express, spectrum-two]
+              color: [light]
+              scale: [medium]
+              dir: [ltr]
+          filters:
+            branches:
+              # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+              ignore: /pull\/[0-9]+/
+      - visual:
+          name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
+          requires: [build]
+          matrix:
+            parameters:
+              system: [spectrum, express, spectrum-two]
+              color: [dark]
+              scale: [large]
+              dir: [rtl]
+          filters:
+            branches:
+              # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+              ignore: /pull\/[0-9]+/
+      # Posts the required gen1-tests status once the unit tests pass. VRT
+      # (visual, hcm-visual) and beta-docs are left out — they're branch-filtered
+      # (forks skip VRT, beta-docs is main-only) so can't gate uniformly.
+      - report-gen-status:
+          name: gen1-tests-status
+          gen: gen1
+          requires:
+            - build
+            - test-chromium
+            - test-chromium-memory
+            - test-firefox
+            - test-webkit
+            - test-chromium-coverage
+            - hcm-visual
+            - express-dark-large-rtl
+            - express-light-medium-ltr
+            - spectrum-dark-large-rtl
+            - spectrum-light-medium-ltr
+            - spectrum-two-dark-large-rtl
+            - spectrum-two-light-medium-ltr
+
+  gen2:
+    when: << pipeline.parameters.run_gen2 >>
+    jobs:
+      # gen2 package build — used by the browser + coverage jobs.
+      - build-gen2
+      # gen1 build, needed only by the Storybook build. Renamed so its check
+      # doesn't collide with the gen1 workflow's `build`.
+      - build:
+          name: build-gen1-for-storybook-docs
+      - build-gen2-storybook:
+          requires: [build-gen1-for-storybook-docs]
+      - test-gen2-browser:
+          name: test-gen2-browser-<< matrix.browser >>
+          requires: [build-gen2]
+          matrix:
+            parameters:
+              browser: [chromium, firefox, webkit]
+      - test-gen2-coverage:
+          requires: [build-gen2]
+      - test-gen2-a11y:
+          requires: [build-gen2-storybook]
+      - test-gen2-axe:
+          requires: [build-gen2-storybook]
+      # Posts the required gen2-tests status once every gen2 job passes.
+      - report-gen-status:
+          name: gen2-tests-status
+          gen: gen2
+          requires:
+            - build-gen2
+            - build-gen1-for-storybook-docs
+            - build-gen2-storybook
+            - test-gen2-browser-chromium
+            - test-gen2-browser-firefox
+            - test-gen2-browser-webkit
+            - test-gen2-coverage
+            - test-gen2-a11y
+            - test-gen2-axe

@@ -1,0 +1,328 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.swc-ResponseStatus {
+  display: flex;
+  flex-direction: column;
+  gap: token("spacing-100");
+}
+
+/* ─────────────────────────────────────
+   Status row (icon + label [+ checkmark])
+   ───────────────────────────────────── */
+
+.swc-ResponseStatus-row {
+  display: flex;
+  gap: token("spacing-100");
+  align-items: center;
+  min-block-size: var(--_swc-response-status-row-block-size, 32px);
+  padding-inline: token("spacing-100");
+}
+
+/* When the row is a button (reasoning toggle). Full inline-size so the
+   entire row is clickable. */
+.swc-ResponseStatus-row--button {
+  inline-size: 100%;
+  padding: var(--_swc-response-status-toggle-padding-block, 3px) token("spacing-100");
+  color: inherit;
+  text-align: start;
+  background: transparent;
+  border: none;
+  border-radius: token("corner-radius-medium-default");
+}
+
+.swc-ResponseStatus-label {
+  --swc-body-font-color: token("gray-700");
+
+  text-align: start;
+}
+
+/* Label + chevron trail (header label roll) */
+
+.swc-ResponseStatus-headerTrail {
+  display: inline-flex;
+  gap: token("spacing-100");
+  align-items: center;
+  min-inline-size: 0;
+}
+
+.swc-ResponseStatus-headerTrailViewport {
+  min-inline-size: 0;
+  block-size: var(--_swc-response-status-label-line-size, 1.33em);
+  overflow: hidden;
+}
+
+/* Settled (no roll transition in flight): the fixed single-line height above
+   only matters mid-roll, so let the viewport grow to fit a wrapped label. */
+.swc-ResponseStatus-headerTrailViewport--settled {
+  block-size: auto;
+  overflow: visible;
+}
+
+/* The incoming line stays in normal flow, so the container's fit-content
+   width tracks the new label like any ordinary text; the outgoing line is
+   absolutely positioned on top of it at the same origin. Both approaches
+   read as a pure opacity cross-fade with no vertical movement (the chevron,
+   a fixed sibling of the viewport, never shifts as the fade runs), but
+   plain absolute stacking sidesteps a Safari rendering glitch seen with two
+   `grid-area: 1 / 1` items cross-fading in the same cell (garbled, doubled
+   text mid-transition instead of a clean blend). An absolutely positioned
+   element with only its start inset set still shrink-to-fits within its
+   containing block, so if the outgoing label is wider than the incoming
+   one, its own ellipsis (see the `.swc-ResponseStatus-label` rule below)
+   truncates it to match rather than overflowing past the container — a
+   reasonable trade-off since that text is already fading to transparent. */
+.swc-ResponseStatus-headerTrailCrossfade {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+}
+
+.swc-ResponseStatus-headerTrailLine {
+  display: inline-flex;
+  align-items: center;
+  max-inline-size: 100%;
+  block-size: var(--_swc-response-status-label-line-size, 1.33em);
+  white-space: nowrap;
+}
+
+.swc-ResponseStatus-headerTrailLine .swc-ResponseStatus-label {
+  flex: 0 1 auto;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Settled: allow the label to wrap across multiple lines instead of
+   truncating to one, since a narrow container or a longer translation can
+   easily exceed one line's width. Mid-roll (no `--settled` class) keeps the
+   single line + ellipsis the cross-fade geometry above depends on. */
+.swc-ResponseStatus-headerTrailLine--settled {
+  block-size: auto;
+  white-space: normal;
+}
+
+/* Capped rather than unbounded: the row sizes to this content (see
+   `.swc-ResponseStatus-row`'s `min-block-size`), so an unbounded label could
+   grow the row arbitrarily tall. Past the cap, the last visible line ellipses. */
+.swc-ResponseStatus-headerTrailLine--settled .swc-ResponseStatus-label {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  white-space: normal;
+  overflow: hidden;
+  -webkit-line-clamp: var(--swc-response-status-label-max-lines, 2);
+  line-clamp: var(--swc-response-status-label-max-lines, 2);
+}
+
+/* Outgoing/incoming labels start at their pre-transition opacity; the
+   `--engaged` class (added a frame later, mirroring the panel-open pattern
+   elsewhere in this file) flips both to their end value so the change is
+   what actually animates instead of a snap to the final state. Enter and
+   exit get different durations/easing per the motion spec: the incoming
+   label fades in slower than the outgoing one fades out. */
+.swc-ResponseStatus-headerTrailLine--exit {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  opacity: 1;
+  transition: opacity 150ms cubic-bezier(0.15, 0.47, 0.67, 0.77);
+}
+
+.swc-ResponseStatus-headerTrailLine--enter {
+  opacity: 0;
+  transition: opacity 350ms cubic-bezier(0.14, 0.45, 0.45, 0.99);
+}
+
+.swc-ResponseStatus-headerTrailCrossfade--engaged .swc-ResponseStatus-headerTrailLine--exit {
+  opacity: 0;
+}
+
+.swc-ResponseStatus-headerTrailCrossfade--engaged .swc-ResponseStatus-headerTrailLine--enter {
+  opacity: 1;
+}
+
+.swc-ResponseStatus-loader {
+  --swc-pixel-loader-size: 20px;
+  --swc-pixel-loader-color: token("gray-600");
+
+  flex-shrink: 0;
+  transition: all token("animation-duration-100") token("animation-ease-in-out");
+}
+
+/* ─────────────────────────────────────
+   Chevron direction
+   ───────────────────────────────────── */
+
+.swc-ResponseStatus-chevron {
+  flex-shrink: 0;
+  color: token("gray-700");
+  rotate: 0deg;
+  transition: rotate token("animation-duration-100") token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-chevron--down {
+  rotate: 90deg;
+}
+
+.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-label,
+.swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-label {
+  --swc-body-font-color: token("gray-800");
+
+  transition: all token("animation-duration-100") token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-chevron,
+.swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-chevron {
+  color: token("gray-800");
+  transition:
+    rotate token("animation-duration-100") token("animation-ease-in-out"),
+    color token("animation-duration-100") token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-loader,
+.swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-loader {
+  --swc-pixel-loader-color: token("gray-800");
+}
+
+/* ─────────────────────────────────────
+   Agentic mode
+   ───────────────────────────────────── */
+
+.swc-ResponseStatus--agentic {
+  gap: token("spacing-100");
+  inline-size: 100%;
+  max-inline-size: 540px;
+}
+
+.swc-ResponseStatus-row--processing {
+  padding-inline: token("spacing-100");
+  border-radius: token("corner-radius-medium-default");
+}
+
+.swc-ResponseStatus-check {
+  flex-shrink: 0;
+}
+
+/* Always rendered (see `_renderLeadingIcon`) so removing the icon (currently
+   only for `stopped`, which has none) animates: the icon fades while its
+   space, including the row's gap next to it, closes up in the same motion
+   instead of the label/chevron snapping over instantly. */
+.swc-ResponseStatus-leadingIcon {
+  display: flex;
+  flex-shrink: 0;
+  inline-size: 20px;
+  block-size: 20px;
+  overflow: hidden;
+  opacity: 1;
+  transition:
+    inline-size token("animation-duration-200") cubic-bezier(0.22, 1, 0.36, 1),
+    margin-inline-end token("animation-duration-200") cubic-bezier(0.22, 1, 0.36, 1),
+    opacity token("animation-duration-200") cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.swc-ResponseStatus-leadingIcon--collapsed {
+  inline-size: 0;
+  margin-inline-end: calc(-1 * token("spacing-100"));
+  opacity: 0;
+}
+
+/* Shared collapse mechanics, also used (with its own timing) by each step's
+   own detail panel in `response-status-step.css`. Animates
+   `grid-template-rows` between 0fr and 1fr rather than `block-size` to/from
+   `auto`: the block-size + `interpolate-size` approach only works in
+   Chromium, so Safari and Firefox leave (and ratchet) residual height.
+
+   Overflow and min-block-size live on the grid item, not this container:
+   0fr only collapses to 0 on the item. Safari also ratchets leftover height
+   when the container clips, or when the item itself is a scroll region. */
+.swc-ResponseStatus-panel {
+  display: grid;
+  visibility: hidden;
+  grid-template-rows: 0fr;
+  transition:
+    grid-template-rows 250ms cubic-bezier(0.21, 0, 0.15, 0.99),
+    visibility 250ms linear;
+}
+
+.swc-ResponseStatus-panel--open {
+  visibility: visible;
+  grid-template-rows: 1fr;
+}
+
+/* Clip wrapper / panel child: overflow:hidden here is what lets 0fr become a
+   true zero. The step timeline stays nested so it is not the grid item.
+   Also fades the step timeline out while its row collapses, instead of
+   leaving it fully visible while it gets visually squashed on the way up. */
+.swc-ResponseStatus-panel > * {
+  min-block-size: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity token("animation-duration-200") token("animation-ease-in-out");
+}
+
+.swc-ResponseStatus-panel--open > * {
+  opacity: 1;
+}
+
+.swc-ResponseStatus-steps {
+  padding-inline-start: token("spacing-500");
+  margin: 0;
+  list-style: none;
+}
+
+/* Typography utilities (shadow-local; mirrors typography.css) */
+.swc-Body {
+  margin-block: var(--swc-body-margin-top, 0) var(--swc-body-margin-bottom, 0);
+  font-family: var(--swc-body-font-family, token("sans-serif-font"));
+  font-size: var(--swc-body-font-size, token("body-size-m"));
+  font-weight: var(--swc-body-font-weight, token("body-sans-serif-font-weight"));
+  line-height: var(--swc-body-line-height, token("line-height-font-size-200"));
+  color: var(--swc-body-font-color, token("body-color"));
+  letter-spacing: var(--swc-body-letter-spacing, normal);
+
+  &:lang(zh),
+  &:lang(ja),
+  &:lang(ko) {
+    --swc-body-line-height: var(--swc-body-cjk-line-height, token("cjk-line-height-200"));
+    --swc-body-letter-spacing: var(--swc-body-cjk-letter-spacing, token("cjk-letter-spacing"));
+    --swc-body-font-size: var(--swc-body-cjk-font-size, token("font-size-100"));
+  }
+}
+
+.swc-Body--sizeS {
+  --swc-body-font-size: token("body-size-s");
+  --swc-body-line-height: token("line-height-font-size-100");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-ResponseStatus-headerTrailLine {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .swc-ResponseStatus-loader {
+    color: CanvasText;
+  }
+}
