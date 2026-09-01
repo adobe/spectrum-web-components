@@ -29,6 +29,7 @@ export type UserMessageType = 'copy' | 'card' | 'media';
  * @slot thumbnail - Attachment preview when `type="card"` or `type="media"`.
  * @slot title - Attachment title when `type="card"` or `type="media"`.
  * @slot subtitle - Attachment subtitle when `type="card"` or `type="media"`.
+ * @since 2.0.0-beta.3
  */
 export class UserMessage extends SpectrumElement {
   /**
