@@ -38,11 +38,13 @@
   padding-inline: token("spacing-100");
 }
 
-/* When the row is a button (reasoning toggle) */
+/* When the row is a button (reasoning toggle). Full inline-size so the
+   entire row is clickable. */
 .swc-ResponseStatus-row--button {
-  inline-size: fit-content;
-  max-inline-size: 580px;
+  inline-size: 100%;
   padding: var(--_swc-response-status-toggle-padding-block, 3px) token("spacing-100");
+  color: inherit;
+  text-align: start;
   background: transparent;
   border: none;
   border-radius: token("corner-radius-medium-default");
@@ -52,11 +54,6 @@
   --swc-body-font-color: token("gray-700");
 
   text-align: start;
-}
-
-.swc-ResponseStatus-row--button .swc-ResponseStatus-label {
-  flex: 1;
-  min-inline-size: 0;
 }
 
 /* Label + chevron trail (header label roll) */
@@ -79,12 +76,6 @@
 .swc-ResponseStatus-headerTrailViewport--settled {
   block-size: auto;
   overflow: visible;
-}
-
-.swc-ResponseStatus-row--button .swc-ResponseStatus-headerTrail,
-.swc-ResponseStatus-row--button .swc-ResponseStatus-headerTrailViewport {
-  flex: 1;
-  min-inline-size: 0;
 }
 
 /* The incoming line stays in normal flow, so the container's fit-content
@@ -186,25 +177,31 @@
 .swc-ResponseStatus-chevron {
   flex-shrink: 0;
   color: token("gray-700");
-  transition: transform token("animation-duration-100") cubic-bezier(0.21, 0, 0.15, 0.99);
+  rotate: 0deg;
+  transition: rotate token("animation-duration-100") token("animation-ease-in-out");
 }
 
 .swc-ResponseStatus-chevron--down {
-  transform: rotate(90deg);
+  rotate: 90deg;
 }
 
-.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-label {
+.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-label,
+.swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-label {
   --swc-body-font-color: token("gray-800");
 
   transition: all token("animation-duration-100") token("animation-ease-in-out");
 }
 
-.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-chevron {
+.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-chevron,
+.swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-chevron {
   color: token("gray-800");
-  transition: color token("animation-duration-100") token("animation-ease-in-out");
+  transition:
+    rotate token("animation-duration-100") token("animation-ease-in-out"),
+    color token("animation-duration-100") token("animation-ease-in-out");
 }
 
-.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-loader {
+.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-loader,
+.swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-loader {
   --swc-pixel-loader-color: token("gray-800");
 }
 
