@@ -75,7 +75,7 @@ export class ResponseStatus extends SpectrumElement {
   private static readonly DEFAULT_LABELS: Record<ResponseStatusStatus, string> =
     {
       active: 'Generating response',
-      complete: 'Response generated',
+      complete: 'Response complete',
       stopped: 'You stopped the response',
     };
 

@@ -43,6 +43,7 @@
   inline-size: fit-content;
   max-inline-size: 580px;
   padding: var(--_swc-response-status-toggle-padding-block, 3px) token("spacing-100");
+  color: inherit;
   background: transparent;
   border: none;
   border-radius: token("corner-radius-medium-default");
@@ -193,18 +194,21 @@
   transform: rotate(90deg);
 }
 
-.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-label {
+.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-label,
+.swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-label {
   --swc-body-font-color: token("gray-800");
 
   transition: all token("animation-duration-100") token("animation-ease-in-out");
 }
 
-.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-chevron {
+.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-chevron,
+.swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-chevron {
   color: token("gray-800");
   transition: color token("animation-duration-100") token("animation-ease-in-out");
 }
 
-.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-loader {
+.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-loader,
+.swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-loader {
   --swc-pixel-loader-color: token("gray-800");
 }
 
