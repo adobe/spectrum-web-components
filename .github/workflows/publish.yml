@@ -157,10 +157,8 @@ jobs:
             echo "ERROR: Cannot publish 'latest' from non-main branch"
             exit 1
           fi
-          if [ "$SCOPE" == "2nd-gen" ] && [ "$TAG" == "latest" ]; then
-            echo "ERROR: 2nd-gen-only scope does not support the 'latest' tag; use a pre-release tag such as 'beta'"
-            exit 1
-          fi
+          # TEMPORARY: guard disabled for a one-time 2nd-gen release to the
+          # 'latest' dist-tag; restored immediately after this run completes.
           if [ "$SCOPE" == "2nd-gen" ] && [ "$GIT_REF" != "refs/heads/gen2-beta" ]; then
             echo "ERROR: 2nd-gen scope must be published from the gen2-beta branch"
             exit 1
