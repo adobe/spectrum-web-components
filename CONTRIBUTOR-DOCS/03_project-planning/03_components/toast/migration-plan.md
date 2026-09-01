@@ -48,17 +48,9 @@
 
 </details>
 
-<!-- Document content (editable) -->
-
-> **Epic SWC-2257** · Planning output.
->
-> This plan should provide recommendations, not just observations. Call out inconsistencies, propose better API or naming paths where appropriate, and make unresolved tradeoffs explicit for reviewers.
-
----
-
 ## TL;DR
 
-- Toast is a small, self-contained component: one host, one message slot, one optional action, a close button, an auto-dismiss timer. No dependents yet; nothing blocks starting.
+- Toast is a small, self-contained component: one host, one message slot, one optional action, a close button, an auto-dismiss timer.
 - Toast queue/container is currently out of scope. Toast will ship standalone where consumers compose their own container.
 - 1st-gen defines 5 variant values (`negative`, `positive`, `info`, `error`, `warning`); `error` and `warning` are already deprecated aliases of `negative` in 1st-gen and do not carry forward. 2nd-gen has 4 variants: `neutral`, `info`, `positive`, `negative`.
 - Points of disagreement, see [Design](#design) for more detail:
@@ -73,7 +65,6 @@
 - **Q2** in [Design](#design): action + auto-dismiss. Warn-only vs. hard-disable timeout when an action is present.
 - **Q3** in [Design](#design): action API shape. `action` slot (light DOM) vs. `action-label`/`swc-action` props.
 - **Q4** in [Design](#design): `tabindex` on host. Conditional on container presence (a11y doc) vs. always `0` (RSP S2 reality).
-- **Q5** in [Design](#design): icon source per variant, unresolved (the negative/error icon may be wrong).
 
 ---
 
@@ -180,7 +171,7 @@ No prerequisites. Toast has no dependents in-tree and depends only on `swc-close
 
 ### User confirmation needed
 
-Whether a pausable-countdown utility belongs in `2nd-gen/packages/core/controllers/` now or stays inline in Toast until a second consumer appears. See Q6 in [Architecture and behavior](#architecture-and-behavior).
+Whether a pausable-countdown utility belongs in `2nd-gen/packages/core/controllers/` now or stays inline in Toast until a second consumer appears. See Q5 in [Architecture and behavior](#architecture-and-behavior).
 
 ---
 
@@ -224,7 +215,7 @@ Whether a pausable-countdown utility belongs in `2nd-gen/packages/core/controlle
 
 | # | What is added | Notes |
 | --- | ------------- | ----- |
-| A1 | First-party toast container/queue | Explicitly out of scope this cycle; see Q8 in [Scope and prerequisites](#scope-and-prerequisites) |
+| A1 | First-party toast container/queue | Explicitly out of scope this cycle; see Q7 in [Scope and prerequisites](#scope-and-prerequisites) |
 | A2 | `--swc-*` custom properties | See the recommended initial set in [CSS custom properties (2nd-gen)](#css-custom-properties-2nd-gen) |
 
 ---
@@ -254,9 +245,11 @@ Derived from the 1st-gen implementation, the accessibility migration analysis, t
 | Variant | Figma label | Icon | Default icon label |
 | ------- | ----------- | ---- | ------------------- |
 | `neutral` (default) | Neutral | None | — |
-| `info` | Informative | Info | "Information" |
-| `positive` | Positive | Checkmark | "Success" |
-| `negative` | Negative | Alert | "Error" |
+| `info` | Informative | `InfoCircle` | "Information" |
+| `positive` | Positive | `CheckmarkCircle` | "Success" |
+| `negative` | Negative | `AlertTriangle` | "Error" |
+
+Icons confirmed against Figma. Source from the public `@adobe/spectrum-wc-icons` workflow-icon package (`Icon_InfoCircle()`, `Icon_CheckmarkCircle()`, `Icon_AlertTriangle()`, or the `<swc-icon-*>` elements), not the internal lean icon set in `2nd-gen/packages/swc/components/icon/elements/`. Forward Toast's resolved icon label (default or `icon-label` override) straight into the icon's own `accessible-label`; empty renders it decorative, matching the a11y doc's `icon-label=""` suppression behavior for free.
 
 Action button (when present): secondary, outline, `static-color="white"`. Confirmed by Figma playground and RSP S2 (`variant="secondary" fillStyle="outline" staticColor="white"`).
 
@@ -273,12 +266,14 @@ No `--mod-*` properties will be exposed. New `--swc-*` component-level propertie
 
 **Inferred initial set**, based on the [Component Custom Property Exposure decision tree](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#decision-tree-for-exposure) applied to Toast's own 1st-gen `--mod-toast-*` surface (see [CSS custom properties](#css-custom-properties) above) and precedent from already-migrated components (`swc-badge`):
 
-- `--swc-toast-height`: min block size, changes if the visual spec ever adds a size variant
+- `--swc-toast-height`: min block size, matches `--swc-badge-height` precedent
 - `--swc-toast-corner-radius`: matches the exposed pattern on `swc-badge` and other colored-chip components
-- `--swc-toast-max-width`: Toast has a distinct max-inline-size constraint; consumers commonly need to widen/narrow it
 - `--swc-toast-gap`: spacing between icon and message text
 
-**Excluded from the initial set**, per the guide's exclusions: background color, text color, and icon color. Toast's text/icon color is fixed white against a saturated variant background (the same contrast-intent exclusion as static-color components), and background color is set per semantic variant, not consumer-overridable per the badge/status-light precedent for semantic (non-decorative) variant colors.
+**Excluded from the initial set:**
+
+- Background color, text color, icon color, per the style guide's exclusions. Toast's text/icon color is fixed white against a saturated variant background (the same contrast-intent exclusion as static-color components), and background color is set per semantic variant, not consumer-overridable per the badge/status-light precedent for semantic (non-decorative) variant colors.
+- `max-inline-size`. A single constant value regardless of variant, same as `swc-tooltip`/`swc-popover` (also not exposed). The host is directly stylable from outside (`swc-toast { max-inline-size: 400px; }`), no custom property needed.
 
 ### Behavioral semantics
 
@@ -286,6 +281,8 @@ No `--mod-*` properties will be exposed. New `--swc-*` component-level propertie
 - `role="alertdialog"` + `aria-modal="false"` on host; opening never moves focus.
 - `tabindex` on host follows the a11y doc: no `tabindex` on a standalone host; `tabindex="0"` once the toast is inside a container. See Q4.
 - Close fires a cancelable `close` event before the component closes itself (matches 1st-gen).
+- Text wrapping is automatic, not an option. Content wraps naturally within whatever `max-inline-size` the host is given (directly stylable from outside; no `--swc-*` custom property, see [CSS custom properties (2nd-gen)](#css-custom-properties-2nd-gen)); no `width` property exists on `sp-toast` in 1st-gen or on `Toast` in RSP S2. Long unbroken words specifically need `overflow-wrap`/`word-break` (SWC-475, see [Styling](#styling)) on top of normal wrapping.
+- No `placement` property. Confirmed absent from 1st-gen `sp-toast`'s own API: the 1st-gen story's `placement` values (bottom/left/right/top) belong to `overlay-trigger`, an unrelated demo wrapper, not `sp-toast` itself. RSP's `placement` (`top`/`bottom`/`top end`/`bottom end`) lives on `ToastContainer`, never on individual `Toast`. Placement is a future container-level concern; see Q7.
 
 ### Accessibility semantics notes (2nd-gen)
 
@@ -385,6 +382,7 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 #### Visual regression
 
 - [ ] Add VRT coverage for all variants, with/without action button, closed state
+- [ ] Add VRT coverage for text wrapping: short single-line message, long message wrapping to multiple lines within the host's `max-inline-size`
 - [ ] Add focus-visible regression coverage for the close and action buttons
 
 ### Documentation
@@ -393,6 +391,7 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 
 - [ ] JSDoc on all public props, slots, and CSS custom properties
 - [ ] Storybook stories for each variant, with/without action, with/without icon-label override
+- [ ] Storybook story demonstrating text wrapping with a long message
 
 #### Breaking changes
 
@@ -418,20 +417,19 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 | Q2 | Action + auto-dismiss: dev warning only (a11y doc) or hard-disable timeout whenever an action is present (RSP S2: `timeout` forced to `undefined` if `actionLabel` set)? | Yes | Open ❓ | Design + accessibility reviewer |
 | Q3 | Action API shape: keep light-DOM `action` slot (1st-gen) or switch to `action-label`/`swc-action` event props (RSP S2 `actionLabel`/`onAction`/`shouldCloseOnAction`)? Leaning toward keeping the slot: matches 1st-gen with no consumer migration needed, though this is a deviation from RSP's props-based model. | Yes | Open ❓ | Design + implementation |
 | Q4 | `tabindex` on host: conditional on container presence (a11y doc) or always `0` (RSP S2's actual `useToast.ts`, which has no "standalone" concept because every RSP toast lives in a `ToastRegion`)? | Yes | Open ❓ | Accessibility reviewer |
-| Q5 | Icon source per variant is unresolved. `AlertIcon` (the existing lean render function in `2nd-gen/packages/swc/components/icon/elements/`) may not be the correct glyph for the negative/error state; needs a fresh look against the actual Figma icon before info/checkmark-circle/alert sourcing is finalized. | Yes | Open | Design + implementation |
 
 ### Architecture and behavior
 
 | # | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q6 | Should the pause-preserving countdown be extracted to a shared core controller now, or stay inline in `Toast.base.ts` until a second consumer needs it? | No | Open | Architecture reviewer |
+| Q5 | Should the pause-preserving countdown be extracted to a shared core controller now, or stay inline in `Toast.base.ts` until a second consumer needs it? | No | Open | Architecture reviewer |
 
 ### Scope and prerequisites
 
 | # | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q7 | ~~Full Jira issue list for Toast not yet pulled.~~ **Resolved**: manually triaged, see [Open gen1 issues](#open-gen1-issues). | No | Resolved | Ticket owner |
-| Q8 | Should `swc-toast` later ship alongside a first-party `swc-toast-queue` container, or should authors keep composing their own? Explicitly out of scope for this migration; the a11y doc raises it as a question to bring to a team sync before a container API is added. | No | Open (deferred) | Design + accessibility reviewer |
+| Q6 | ~~Full Jira issue list for Toast not yet pulled.~~ **Resolved**: manually triaged, see [Open gen1 issues](#open-gen1-issues). | No | Resolved | Ticket owner |
+| Q7 | Should `swc-toast` later ship alongside a first-party `swc-toast-queue` container, or should authors keep composing their own? Explicitly out of scope for this migration; the a11y doc raises it as a question to bring to a team sync before a container API is added. If built, `placement` (RSP precedent: `top`/`bottom`/`top end`/`bottom end`) belongs on the container, not on `swc-toast` itself. | No | Open (deferred) | Design + accessibility reviewer |
 
 ---
 
