@@ -16,8 +16,8 @@
   },
   "type": "module",
   "scripts": {
-    "build": "yarn workspaces foreach --from '{@adobe/spectrum-wc-core,@adobe/spectrum-wc}' --recursive run build",
-    "clean": "yarn workspaces foreach --from '{@adobe/spectrum-wc-core,@adobe/spectrum-wc}' --recursive run clean",
+    "build": "yarn workspaces foreach --from '{@adobe/spectrum-wc-core,@adobe/spectrum-wc-icons,@adobe/spectrum-wc}' --recursive run build",
+    "clean": "yarn workspaces foreach --from '{@adobe/spectrum-wc-core,@adobe/spectrum-wc-icons,@adobe/spectrum-wc}' --recursive run clean",
     "dev:analyze": "yarn workspace @adobe/spectrum-wc analyze:watch",
     "dev:core": "yarn workspace @adobe/spectrum-wc-core dev",
     "lint": "cd .. && eslint 2nd-gen --ext .ts,.js,.json",

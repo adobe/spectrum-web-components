@@ -16,6 +16,7 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
 
+import { DragAndDropController } from '../../controllers/drag-and-drop-controller/index.js';
 import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller/index.js';
 import {
   DROP_EFFECTS,
@@ -47,9 +48,9 @@ import {
  *   payload and set the cursor to `none`.
  * @fires swc-dropzone-dragover - Fired once when dragged files enter the zone and are
  *   accepted; does not repeat on subsequent `dragover` ticks while still hovering.
- * @fires swc-dropzone-dragleave - Fired when dragged files leave the zone after a 100 ms
- *   debounce. Detail is a plain snapshot `{ clientX, clientY, relatedTarget }` captured
- *   synchronously from the native event before the timer fires.
+ * @fires swc-dropzone-dragleave - Fired when an accepted drag leaves the zone after a
+ *   100 ms debounce, or immediately when it becomes rejected. Detail is a plain snapshot
+ *   `{ clientX, clientY, relatedTarget }` captured synchronously from the native event.
  * @fires swc-dropzone-drop - Fired when files are dropped on the zone. `element.dragged`
  *   is still `true` when this event fires; it transitions to `false` after dispatch.
  */
@@ -131,6 +132,57 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────────
 
+  protected constructor() {
+    super();
+    new DragAndDropController(this, {
+      isDragged: () => this.dragged,
+      shouldAccept: (event) =>
+        this.dispatchEvent(
+          new CustomEvent<DragEvent>(SWC_DROPZONE_SHOULD_ACCEPT_EVENT, {
+            bubbles: true,
+            cancelable: true,
+            composed: true,
+            detail: event,
+          })
+        ),
+      dropEffect: () => this._dropEffect,
+      onDragEnter: (event) => {
+        this.dragged = true;
+        this.dispatchEvent(
+          new CustomEvent<DragEvent>(SWC_DROPZONE_DRAGOVER_EVENT, {
+            bubbles: true,
+            composed: true,
+            detail: event,
+          })
+        );
+      },
+      onDragLeave: (snapshot) => {
+        this.dragged = false;
+        this.dispatchEvent(
+          new CustomEvent<DropzoneDragLeaveDetail>(
+            SWC_DROPZONE_DRAGLEAVE_EVENT,
+            {
+              bubbles: true,
+              composed: true,
+              detail: snapshot,
+            }
+          )
+        );
+      },
+      onDrop: (event) => {
+        // Dispatch before clearing `dragged`; `updated()` handles the status region after `filled` settles.
+        this.dispatchEvent(
+          new CustomEvent<DragEvent>(SWC_DROPZONE_DROP_EVENT, {
+            bubbles: true,
+            composed: true,
+            detail: event,
+          })
+        );
+        this.dragged = false;
+      },
+    });
+  }
+
   /** @internal */
   private readonly _sizePropagation = new SlotAttributePropagationController(
     this,
@@ -144,126 +196,5 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
   /** @internal */
   protected handleDefaultSlotChange(): void {
     this._sizePropagation.propagate();
-  }
-
-  /**
-   * @internal
-   *
-   * Timer ID for debounced dragleave; prevents flickering on child drag events.
-   */
-  private _dragLeaveTimer: ReturnType<typeof setTimeout> | null = null;
-
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this.addEventListener('drop', this._onDrop);
-    this.addEventListener('dragover', this._onDragOver);
-    this.addEventListener('dragleave', this._onDragLeave);
-  }
-
-  public override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.removeEventListener('drop', this._onDrop);
-    this.removeEventListener('dragover', this._onDragOver);
-    this.removeEventListener('dragleave', this._onDragLeave);
-    this._clearDragLeaveTimer();
-  }
-
-  /** @internal */
-  private readonly _onDragOver = (event: DragEvent): void => {
-    event.preventDefault();
-
-    if (!event.dataTransfer) {
-      return;
-    }
-
-    const shouldAcceptEvent = new CustomEvent<DragEvent>(
-      SWC_DROPZONE_SHOULD_ACCEPT_EVENT,
-      {
-        bubbles: true,
-        cancelable: true,
-        composed: true,
-        detail: event,
-      }
-    );
-
-    const accepted = this.dispatchEvent(shouldAcceptEvent);
-
-    if (!accepted) {
-      event.dataTransfer.dropEffect = 'none';
-      return;
-    }
-
-    this._clearDragLeaveTimer();
-    event.dataTransfer.dropEffect = this._dropEffect;
-
-    // `should-accept` above re-fires on every native `dragover` tick (a
-    // browser requirement: `dropEffect` must be reasserted on each one), but
-    // `dragged` only actually changes once per hover session, so this
-    // informational event fires on entry only, not on every tick.
-    if (!this.dragged) {
-      this.dragged = true;
-
-      this.dispatchEvent(
-        new CustomEvent<DragEvent>(SWC_DROPZONE_DRAGOVER_EVENT, {
-          bubbles: true,
-          composed: true,
-          detail: event,
-        })
-      );
-    }
-  };
-
-  /** @internal */
-  private readonly _onDragLeave = (event: DragEvent): void => {
-    if (event.relatedTarget && this.contains(event.relatedTarget as Node)) {
-      return;
-    }
-
-    this._clearDragLeaveTimer();
-
-    // Capture values synchronously; browsers recycle DragEvent objects after
-    // the synchronous handler returns, so reading them inside setTimeout is unsafe.
-    const { clientX, clientY, relatedTarget } = event;
-
-    this._dragLeaveTimer = setTimeout(() => {
-      this._dragLeaveTimer = null;
-      this.dragged = false;
-
-      this.dispatchEvent(
-        new CustomEvent<DropzoneDragLeaveDetail>(SWC_DROPZONE_DRAGLEAVE_EVENT, {
-          bubbles: true,
-          composed: true,
-          detail: { clientX, clientY, relatedTarget },
-        })
-      );
-    }, 100);
-  };
-
-  /** @internal */
-  private readonly _onDrop = (event: DragEvent): void => {
-    event.preventDefault();
-
-    if (!this.dragged) {
-      return;
-    }
-
-    this._clearDragLeaveTimer();
-    // Dispatch before clearing `dragged`; `updated()` handles the status region after `filled` settles.
-    this.dispatchEvent(
-      new CustomEvent<DragEvent>(SWC_DROPZONE_DROP_EVENT, {
-        bubbles: true,
-        composed: true,
-        detail: event,
-      })
-    );
-    this.dragged = false;
-  };
-
-  /** @internal */
-  private _clearDragLeaveTimer(): void {
-    if (this._dragLeaveTimer !== null) {
-      clearTimeout(this._dragLeaveTimer);
-      this._dragLeaveTimer = null;
-    }
   }
 }
