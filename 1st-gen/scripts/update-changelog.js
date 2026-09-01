@@ -43,7 +43,7 @@ function validateCurrentVersion() {
     process.exit(1);
   }
 
-  const currentTag = `v${currentVersion}`;
+  const currentTag = `gen1-${currentVersion}`;
   try {
     const gitTagOutput = execSync('git tag --sort=-creatordate');
     if (!gitTagOutput) {

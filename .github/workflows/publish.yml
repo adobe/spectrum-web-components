@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'NPM dist-tag for a throwaway snapshot'
+        description: 'NPM dist-tag for a throwaway gen1 snapshot'
         required: false
         default: 'next'
         type: choice
@@ -35,7 +35,6 @@ concurrency:
 jobs:
   check-changesets:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     outputs:
       has_changesets: ${{ steps.check.outputs.has_changesets }}
     steps:

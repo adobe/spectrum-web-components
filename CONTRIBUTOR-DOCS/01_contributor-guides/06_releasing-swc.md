@@ -16,7 +16,6 @@
     - [Make sure changesets are in place](#make-sure-changesets-are-in-place)
     - [Understand the versioning strategy](#understand-the-versioning-strategy)
 - [Release types](#release-types)
-    - [Snapshot release (for testing a PR)](#snapshot-release-for-testing-a-pr)
     - [Pre-release (`next` throwaway snapshot)](#pre-release-next-throwaway-snapshot)
     - [Planned release (Version PR)](#planned-release-version-pr)
     - [Production release (1st-gen `latest`)](#production-release-1st-gen-latest)
@@ -88,31 +87,6 @@ Each generation has its own `config.json` (`1st-gen/.changeset/config.json`, `2n
 ---
 
 ## Release types
-
-### Snapshot release (for testing a PR)
-
-Use this to publish a test version of your changes to npm before merging. This is safe — it publishes under the `snapshot-test` dist-tag and does not affect `latest`.
-
-**How to trigger:**
-
-1. Open your pull request on GitHub.
-2. Add the `snapshot-release` label to the PR.
-3. The workflow triggers automatically. Every subsequent push to the PR also re-triggers it (as long as the label remains).
-
-**What gets published:**
-
-```
-@spectrum-web-components/button@0.0.0-snapshot-test-20260101120000
-@adobe/spectrum-wc@0.0.0-snapshot-test-20260101120000
-```
-
-**Install a snapshot version:**
-
-```bash
-yarn add @spectrum-web-components/button@snapshot-test
-```
-
----
 
 ### Pre-release (`next` throwaway snapshot)
 
