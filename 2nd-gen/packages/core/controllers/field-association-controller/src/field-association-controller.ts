@@ -14,24 +14,17 @@
 //     TYPES
 // ─────────────────────────
 
-/**
- * The values `ElementInternals.setFormValue` accepts. Passing `null` excludes
- * the field from the submitted `FormData`.
- */
+/** Values `setFormValue` accepts; `null` excludes the field from `FormData`. */
 export type FieldFormValue = string | File | FormData | null;
 
 /** Configuration options for {@link FieldAssociationController}. */
 export interface FieldAssociationControllerOptions {
-  /**
-   * The value the field restores to on `formResetCallback`, populated from the
-   * host's `value` attribute. Defaults to `''`.
-   */
+  /** Reset target on `formResetCallback` (usually the host's `value`). Defaults to `''`. */
   defaultValue?: string;
 
   /**
-   * Called when the cascaded (owning form or ancestor `<fieldset disabled>`)
-   * disabled state flips, so the host can re-sync its inner control and
-   * `FormData` participation. The host typically responds with `requestUpdate()`.
+   * Called when the cascaded `<form>`/`<fieldset disabled>` state flips, so the
+   * host can re-sync (typically via `requestUpdate()`).
    */
   onDisabledChange?: (disabled: boolean) => void;
 }
@@ -41,23 +34,16 @@ export interface FieldAssociationControllerOptions {
 // ─────────────────────────
 
 /**
- * Encapsulates the `ElementInternals` surface shared by every form-associated
- * field component (textfield, checkbox, combobox, radio, …): setting or
- * excluding the form value, restoring a default value on reset, reacting to the
- * ancestor form/`<fieldset>` disabled cascade, and the validity pass-throughs.
- * Left unextracted, this boilerplate gets re-implemented and re-tested per
- * component.
+ * Wraps the `ElementInternals` form-participation surface shared by every field
+ * component (textfield, checkbox, radio, combobox): form value, reset default,
+ * the `<fieldset disabled>` cascade, and the validity reads. Extracted so each
+ * field doesn't re-implement it.
  *
- * Unlike the other controllers in this folder, this is a plain class, **not** a
- * Lit `ReactiveController`: it wraps `ElementInternals` and has no host lifecycle
- * work, so there is nothing to register via `host.addController`. The host drives
- * it directly — calling {@link setValue} when its value changes and delegating
- * its `formResetCallback` / `formDisabledCallback` browser hooks.
- *
- * The host element retains `static formAssociated = true` and its own
- * `attachInternals()` call; those cannot be delegated to the controller. The
- * result of `attachInternals()` is passed in here. See the controller's docs
- * page for a full host example.
+ * A plain class, **not** a Lit `ReactiveController`, so there is nothing to
+ * `addController`. The host keeps `static formAssociated = true` and its own
+ * `attachInternals()` (neither can be delegated), passes that result in here, and
+ * delegates its `formResetCallback` / `formDisabledCallback`. See the docs page
+ * for a full host example.
  */
 export class FieldAssociationController {
   private readonly _internals: ElementInternals;
@@ -93,6 +79,7 @@ export class FieldAssociationController {
     return this._defaultValue;
   }
 
+  /** Updates the reset target; coerces `null`/`undefined` to `''`. */
   public set defaultValue(value: string) {
     this._defaultValue = value ?? '';
   }
@@ -101,18 +88,12 @@ export class FieldAssociationController {
   //     DISABLED CASCADE
   // ─────────────────────────
 
-  /**
-   * `true` when an ancestor form or `<fieldset disabled>` has disabled this
-   * field. Combine with the host's own `disabled`: `disabled || formDisabled`.
-   */
+  /** `true` when an ancestor `<form>`/`<fieldset disabled>` disabled the field; OR with the host's own `disabled`. */
   public get formDisabled(): boolean {
     return this._formDisabled;
   }
 
-  /**
-   * Delegate target for the host's `formDisabledCallback` browser hook. Records
-   * the cascaded state and fires `onDisabledChange` only on a real change.
-   */
+  /** Host delegates its `formDisabledCallback` here; fires `onDisabledChange` only on a change. */
   public formDisabledCallback(disabled: boolean): void {
     if (this._formDisabled === disabled) {
       return;
@@ -125,14 +106,17 @@ export class FieldAssociationController {
   //     VALIDITY PASS-THROUGHS
   // ─────────────────────────
 
+  /** The associated form element, or `null`. */
   public get form(): HTMLFormElement | null {
     return this._internals.form;
   }
 
+  /** The field's current `ValidityState`. */
   public get validity(): ValidityState {
     return this._internals.validity;
   }
 
+  /** The localized validation message; empty when valid. */
   public get validationMessage(): string {
     return this._internals.validationMessage;
   }
@@ -142,6 +126,7 @@ export class FieldAssociationController {
     return this._internals.willValidate;
   }
 
+  /** Returns whether the field is valid, firing an `invalid` event if not. */
   public checkValidity(): boolean {
     return this._internals.checkValidity();
   }

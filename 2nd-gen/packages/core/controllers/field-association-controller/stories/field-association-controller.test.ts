@@ -12,7 +12,7 @@
 
 /**
  * These Storybook play tests exercise `FieldAssociationController` through the
- * three throwaway harnesses (`demo-field-text`, `demo-field-radio`,
+ * three dedicated harnesses (`demo-field-text`, `demo-field-radio`,
  * `demo-field-combobox`), so a failure isolates to the controller rather than a
  * full `swc-*` component. Values are read back through the native
  * `new FormData(form)`, which includes form-associated custom elements.
@@ -76,10 +76,7 @@ export default {
   tags: ['!autodocs', 'dev'],
 } as Meta;
 
-// ──────────────────────────────────────────────────────────────────────────
-//     A non-null value is included in FormData
-// ──────────────────────────────────────────────────────────────────────────
-
+// A non-null value is included in FormData.
 export const FormValueTest: Story = {
   ...FormValue,
   play: async ({ canvasElement, step }) => {
@@ -99,10 +96,7 @@ export const FormValueTest: Story = {
 };
 FormValueTest.storyName = 'Form value included (test)';
 
-// ──────────────────────────────────────────────────────────────────────────
-//     setValue(null) excludes an unselected field
-// ──────────────────────────────────────────────────────────────────────────
-
+// setValue(null) excludes an unselected field.
 export const ExclusionTest: Story = {
   ...Exclusion,
   play: async ({ canvasElement, step }) => {
@@ -123,10 +117,7 @@ export const ExclusionTest: Story = {
 };
 ExclusionTest.storyName = 'Excluded when unselected (test)';
 
-// ──────────────────────────────────────────────────────────────────────────
-//     defaultValue restores on formResetCallback
-// ──────────────────────────────────────────────────────────────────────────
-
+// defaultValue restores on formResetCallback.
 export const DefaultValueResetTest: Story = {
   ...DefaultValueReset,
   play: async ({ canvasElement, step }) => {
@@ -155,10 +146,7 @@ export const DefaultValueResetTest: Story = {
 };
 DefaultValueResetTest.storyName = 'Default value restored on reset (test)';
 
-// ──────────────────────────────────────────────────────────────────────────
-//     <fieldset disabled> cascades and fires onDisabledChange once per change
-// ──────────────────────────────────────────────────────────────────────────
-
+// <fieldset disabled> cascades and fires onDisabledChange once per change.
 export const DisabledCascadeTest: Story = {
   ...DisabledCascade,
   play: async ({ canvasElement, step }) => {
@@ -225,10 +213,7 @@ export const DisabledCascadeTest: Story = {
 };
 DisabledCascadeTest.storyName = 'Disabled cascade (test)';
 
-// ──────────────────────────────────────────────────────────────────────────
-//     validity, validationMessage, checkValidity pass through to internals
-// ──────────────────────────────────────────────────────────────────────────
-
+// validity, validationMessage, checkValidity pass through to internals.
 export const ValidityTest: Story = {
   ...Validity,
   play: async ({ canvasElement, step }) => {

@@ -38,17 +38,14 @@ declare global {
 /**
  * @internal
  *
- * Shared base for the Storybook-only form-field harnesses. These are throwaway,
- * intentionally unstyled custom elements built purely to exercise
- * {@link FieldAssociationController} in isolation, so a regression can be triaged
- * as a controller bug rather than reproduced inside a full `swc-*` component.
+ * Shared base for the Storybook-only form-field harnesses: intentionally
+ * unstyled elements that exercise {@link FieldAssociationController} in isolation,
+ * so a regression triages as a controller bug rather than inside a full `swc-*`
+ * component. They double as the controller's living documentation.
  *
- * Everything here is the boilerplate the controller is meant to standardize:
- * `static formAssociated = true` and `attachInternals()` (element-owned, cannot
- * be delegated), the effective-disabled computation, delegating the browser
- * `formResetCallback` / `formDisabledCallback` hooks, and the validity
- * pass-throughs. Each subclass only supplies its inner control and how it maps
- * that control's state to a submitted value (`null` excludes it from `FormData`).
+ * It carries the host boilerplate the controller can't own (`formAssociated`,
+ * `attachInternals()`, the form callbacks). Each subclass supplies its inner
+ * control and its `computeFormValue` mapping (`null` excludes it from `FormData`).
  */
 export abstract class DemoFieldHostBase extends LitElement {
   static formAssociated = true;
@@ -80,52 +77,51 @@ export abstract class DemoFieldHostBase extends LitElement {
     onDisabledChange: () => this.syncCascadedDisabled(),
   });
 
-  /**
-   * Test-observability hook: counts how many times the controller has fired
-   * `onDisabledChange`. Lets tests assert the cascade fires exactly once per
-   * state change.
-   */
+  // Test-only instrumentation, not field or controller API: counts
+  // `onDisabledChange` fires so a test can assert the cascade dedups to
+  // once-per-change. Not surfaced in the bench readout.
   public disabledChangeCount = 0;
 
-  /**
-   * Effective disabled state: the host's own `disabled` attribute OR the
-   * cascaded form/`<fieldset disabled>` state. Never the attribute alone.
-   */
+  /** The host's own `disabled` OR the cascaded form/`<fieldset disabled>` state. */
   protected get effectiveDisabled(): boolean {
     return this.disabled || this.fieldAssoc.formDisabled;
   }
 
-  /** Maps the inner control's state to a submitted value; `null` excludes it. */
+  /**
+   * Maps state to the submitted value (`null` excludes it). A real field concern,
+   * abstract here so one base serves all three harnesses; `TextField.base` inlines it.
+   */
   protected abstract computeFormValue(): FieldFormValue;
 
   protected updateFormValue(): void {
     this.fieldAssoc.setValue(this.computeFormValue());
   }
 
-  // Fires when the ancestor form/fieldset disabled state flips. Re-render so the
-  // inner control's disabled binding updates, then re-sync form participation.
+  // On cascade change: re-render (update() re-pushes the value) and count for tests.
   private syncCascadedDisabled(): void {
     this.disabledChangeCount += 1;
     this.requestUpdate();
-    this.updateFormValue();
   }
 
   protected override firstUpdated(changed: PropertyValues): void {
     super.firstUpdated(changed);
     // The reset target is the initial `value` attribute.
     this.fieldAssoc.defaultValue = this.value;
+  }
+
+  protected override update(changed: PropertyValues): void {
+    super.update(changed);
     this.updateFormValue();
   }
 
   protected override updated(changed: PropertyValues): void {
     super.updated(changed);
-    this.updateFormValue();
+    // Validity mirroring needs the rendered control, so it stays post-render.
     this.syncValidity();
   }
 
-  // Mirror the inner native control's constraint validity onto the host's
-  // ElementInternals so the controller's validity pass-throughs report a real
-  // state. This is host responsibility (setValidity is not on the controller).
+  // Mirror the inner control's validity onto the host's ElementInternals so the
+  // controller's validity reads are real. `setValidity` is host-owned, not on the controller.
   private syncValidity(): void {
     const control = this.renderRoot.querySelector<
       HTMLInputElement | HTMLSelectElement
@@ -229,6 +225,7 @@ export class DemoFieldRadio extends DemoFieldHostBase {
   private defaultChecked = false;
 
   protected override firstUpdated(changed: PropertyValues): void {
+    // Capture the reset target alongside the base's default.
     this.defaultChecked = this.checked;
     super.firstUpdated(changed);
   }
@@ -308,11 +305,9 @@ export class DemoFieldCombobox extends DemoFieldHostBase {
 /**
  * @internal
  *
- * A hands-on bench that wires the three harnesses into one `<form>` with action
- * buttons (submit, reset, check validity, toggle the fieldset's disabled state)
- * and a live readout of the resulting `FormData` and per-field validity. Lets a
- * reader exercise the controller's behavior directly instead of reading it from
- * the automated tests.
+ * Hands-on bench: the three harnesses in one `<form>` with action buttons and a
+ * live `FormData` + validity readout, so a reader can exercise the controller
+ * directly instead of reading the tests.
  */
 @customElement('demo-field-bench')
 export class DemoFieldBench extends LitElement {
@@ -415,8 +410,7 @@ export class DemoFieldBench extends LitElement {
     }
   }
 
-  // Toggles the text field's OWN `disabled`, the other half of effective
-  // disabled (own attribute OR cascaded fieldset state).
+  // Toggles the field's own `disabled` (the other half of effectiveDisabled).
   private handleToggleFieldDisabled(): void {
     const field =
       this.renderRoot.querySelector<DemoFieldText>('demo-field-text');

@@ -15,6 +15,11 @@
  * confirms the real component participates in a native form (value included,
  * excluded when disabled, restored on reset). The controller's own behavior is
  * covered in isolation by its harness tests.
+ *
+ * Scope is programmatic (`.value = …`), a real contract that stays. This is a
+ * seed to grow, not a stopgap to delete.
+ *
+ * @todo add typed-input and required/pattern validity coverage once the input is wired.
  */
 
 import { html } from 'lit';

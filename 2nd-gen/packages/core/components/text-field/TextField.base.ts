@@ -70,22 +70,18 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
   public accessibleLabel = '';
 
   /**
-   * Element IDs, from the light DOM, that provide the field's accessible name.
-   * Takes precedence over `accessibleLabel` and a slotted label.
+   * Light-DOM element IDs that name the field. Takes precedence over
+   * `accessibleLabel` and a slotted label.
    *
-   * @todo (SWC-2466): the `LabellingController` resolves these IDREFs to the
-   * cross-root `ariaLabelledByElements` property; raw `aria-labelledby` is not
-   * exposed on the host.
+   * @todo (SWC-2466): resolved to cross-root element refs by the `LabellingController`.
    */
   @property({ attribute: 'accessible-labelledby' })
   public accessibleLabelledby?: string;
 
   /**
-   * Element IDs, from the light DOM, that describe the field.
+   * Light-DOM element IDs that describe the field.
    *
-   * @todo (SWC-2466): the `LabellingController` resolves these IDREFs to the
-   * cross-root `ariaDescribedByElements` property; raw `aria-describedby` is not
-   * exposed on the host.
+   * @todo (SWC-2466): resolved to cross-root element refs by the `LabellingController`.
    */
   @property({ attribute: 'accessible-describedby' })
   public accessibleDescribedby?: string;
@@ -187,14 +183,12 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────
 
-  // @todo (SWC-2466): resolve the accessible-labelledby / accessible-describedby
-  // IDREF stubs to cross-root element references, and add the "unlabeled field"
-  // dev-warning, via the LabellingController.
+  // @todo (SWC-2466): the LabellingController resolves the labelledby/describedby
+  // IDREF stubs and adds the "unlabeled field" dev-warning.
 
-  // Form association. `formAssociated` (static, above) and `attachInternals`
-  // stay on the element; the controller wraps the ElementInternals surface.
-  // Populating validity from constraints (required/pattern/…) lands with the
-  // labelling and render work.
+  // Form association: `formAssociated` (static, above) and `attachInternals` stay
+  // on the element; the controller wraps the rest. Constraint validity
+  // (required/pattern/…) is populated with the render work.
   private internals = this.attachInternals();
 
   private fieldAssoc = new FieldAssociationController(this.internals, {
@@ -202,9 +196,8 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
   });
 
   /**
-   * Effective disabled state: the host's own `disabled` attribute OR the
-   * cascaded form / `<fieldset disabled>` state. Never the attribute alone.
-   * Internal; the subclass render reads it to disable the inner control.
+   * The host's own `disabled` OR the cascaded form / `<fieldset disabled>` state.
+   * The subclass render reads it to disable the inner control.
    */
   protected get effectiveDisabled(): boolean {
     return this.disabled || this.fieldAssoc.formDisabled;
@@ -250,8 +243,8 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
     this.fieldAssoc.formDisabledCallback(disabled);
   }
 
-  // @todo (Phase 5): setSelectionRange() / select() delegate to the rendered
-  // native <input>, so they land with the render implementation.
+  // @todo setSelectionRange() / select() delegate to the rendered native
+  // <input>; they land with the render implementation.
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);

@@ -23,7 +23,7 @@ The host keeps what cannot be delegated: `static formAssociated = true`, its own
 ```typescript
 import { LitElement, type PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
-import { FieldAssociationController } from '@adobe/spectrum-wc-core/controllers/field-association-controller';
+import { FieldAssociationController } from '@adobe/spectrum-wc-core/controllers/field-association-controller.js';
 
 class SwcField extends LitElement {
   static formAssociated = true;
@@ -60,7 +60,7 @@ class SwcField extends LitElement {
 }
 ```
 
-The demos below use three throwaway, unstyled harnesses (`demo-field-text`, `demo-field-radio`, `demo-field-combobox`), not `swc-*` components.
+The demos below use three unstyled harnesses (`demo-field-text`, `demo-field-radio`, `demo-field-combobox`), not `swc-*` components.
 
 ## Behaviors
 

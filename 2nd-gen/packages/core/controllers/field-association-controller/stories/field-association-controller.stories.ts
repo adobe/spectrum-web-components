@@ -27,7 +27,7 @@ const args = {
   required: false,
 };
 
-const argTypes = {
+const argTypes: Meta['argTypes'] = {
   value: {
     control: 'text',
     description: 'The field value submitted with the form.',
@@ -58,17 +58,13 @@ const argTypes = {
 };
 
 /**
- * `FieldAssociationController` encapsulates the `ElementInternals` surface shared
- * by every form-associated field component: setting or excluding the submitted
- * value, restoring a default on reset, reacting to the ancestor form /
- * `<fieldset disabled>` disabled cascade, and the validity pass-throughs.
+ * `FieldAssociationController` wraps the `ElementInternals` surface shared by
+ * form-associated fields: setting or excluding the submitted value, restoring a
+ * default on reset, the `<fieldset disabled>` cascade, and the validity reads.
  *
- * The three demo elements below (`demo-field-text`, `demo-field-radio`,
- * `demo-field-combobox`) are throwaway, intentionally unstyled harnesses built
- * only to exercise the controller in isolation, not `swc-*` components. The
- * `labelledby` / `describedby` cross-root labelling shown in some form patterns
- * is a separate, opt-in mechanism for rare layouts (data-grid cells, a label
- * shared across fields); it is **not** part of this controller.
+ * The demos below (`demo-field-text`, `demo-field-radio`, `demo-field-combobox`)
+ * are unstyled harnesses that exercise the controller in isolation, not `swc-*`
+ * components.
  */
 const meta: Meta = {
   title: 'Controllers/Field association controller',
