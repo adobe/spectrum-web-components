@@ -313,7 +313,7 @@ Before the plan is considered complete:
 - major provisional decisions are surfaced back to the user for review
 - all `Must ship` / core migration questions are resolved and documented inline in the section they affect, rather than left only in `Blockers and open questions`
 - `Blockers and open questions` no longer contains unresolved items that would materially change the core migration recommendation
-- once core migration questions are resolved and deferred-item tickets exist, replace the drafting-time open-question rows in `Blockers and open questions` with a concise deferred-ticket table
+- once core migration questions are resolved and deferred-item tickets exist, replace the drafting-time open-question rows in `Blockers and open questions` with a concise deferred-ticket table; settled decisions are folded into the `Decision log` instead (see below)
 - the deferred-ticket table should include ticket ID, deferred item summary, why it is deferred, and the migration-plan section it came from
 - settled decisions (from planning or PR review) are folded into the `Decision log` section, keyed by their original `Q`/`B`/`C` id, rather than left as scattered inline "Resolved"/"Confirmed" markers in the open-question tables
 
@@ -388,6 +388,6 @@ After drafting the plan, always end with a structured review prompt. Present it 
 
 1. **Breaking changes to verify** — list each proposed breaking change and ask the user to confirm it is accurately scoped, that a ticket exists or is needed, and whether any requires team sign-off before the plan is treated as settled
 2. **What is still provisional** — call out every decision marked as inferred or open question that could materially change the plan; name which sections would be affected if the decision resolves differently
-3. **What to provide next** — list missing resources or unresolved blockers as numbered actions the user can respond to by number, explain what each unlocks in the plan, and include a call to create Jira tickets under the migration Epic for deferred items using the `deferred` label. Once those tickets exist, the final plan should replace drafting-time deferred open questions with a concise deferred-ticket table in `Blockers and open questions`
+3. **What to provide next** — list missing resources or unresolved blockers as numbered actions the user can respond to by number, explain what each unlocks in the plan, and include a call to create Jira tickets under the migration Epic for deferred items using the `deferred` label. Once those tickets exist, the final plan should replace drafting-time deferred open questions with a concise deferred-ticket table in `Blockers and open questions`, and fold any settled (non-deferred) questions into the `Decision log`
 
 If there are no breaking changes, say so explicitly rather than omitting the section.

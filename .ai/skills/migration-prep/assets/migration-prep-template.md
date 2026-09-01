@@ -430,7 +430,7 @@ Owner examples:
 -->
 
 <!-- Keep the table structure and columns (`Blocking?`, `Status`, `Owner`). Add rows rather than replacing the schema with prose or a different format. -->
-<!-- During drafting, use the tables below for active blockers and open questions. Once all core migration questions are resolved and deferred-item tickets exist, replace the drafting-time rows with a concise deferred-ticket table in this section. -->
+<!-- During drafting, use the tables below for active blockers and open questions. Once an item is settled, move it out per the guidance above: decisions to the Decision log, deferred items to a concise deferred-ticket table in this section. -->
 
 ### Design
 
