@@ -30,6 +30,8 @@ import styles from './conversation-thread.css';
  *
  * @element swc-conversation-thread
  * @slot - Conversation turns, typically `<swc-conversation-turn>` elements.
+ *
+ * @cssprop --swc-conversation-thread-gap - Space between slotted conversation turns.
  */
 export class ConversationThread extends SpectrumElement {
   @queryAssignedElements({ flatten: true, selector: 'swc-conversation-turn' })

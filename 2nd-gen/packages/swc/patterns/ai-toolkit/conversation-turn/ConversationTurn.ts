@@ -34,6 +34,8 @@ import styles from './conversation-turn.css';
  *
  * @element swc-conversation-turn
  * @slot - Turn body (message stack or bubble)
+ *
+ * @cssprop --swc-conversation-turn-group-gap - Space between stacked messages in one turn.
  */
 export class ConversationTurn extends SpectrumElement {
   /**
