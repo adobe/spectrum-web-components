@@ -12,7 +12,7 @@
 
 import { expect, test } from '@playwright/test';
 
-import { gotoCssStory } from '../../../utils/a11y-helpers.js';
+import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
  * Accessibility tests for Link styles (2nd Generation)
@@ -31,7 +31,7 @@ test.describe('Link - ARIA Snapshots', () => {
   test('standalone explicit link exposes link role and name', async ({
     page,
   }) => {
-    const root = await gotoCssStory(
+    const root = await gotoStory(
       page,
       'components-link--standalone',
       'a[href]'
@@ -42,18 +42,14 @@ test.describe('Link - ARIA Snapshots', () => {
   });
 
   test('secondary link exposes link role and name', async ({ page }) => {
-    const root = await gotoCssStory(
-      page,
-      'components-link--secondary',
-      'a[href]'
-    );
+    const root = await gotoStory(page, 'components-link--secondary', 'a[href]');
     await expect(root).toMatchAriaSnapshot(`
       - link "Learn more"
     `);
   });
 
   test('quiet standalone link exposes link role and name', async ({ page }) => {
-    const root = await gotoCssStory(
+    const root = await gotoStory(
       page,
       'components-link--quiet-standalone',
       'a[href]'
@@ -64,22 +60,14 @@ test.describe('Link - ARIA Snapshots', () => {
   });
 
   test('in-prose link is named from visible text', async ({ page }) => {
-    const root = await gotoCssStory(
-      page,
-      'components-link--in-prose',
-      'a[href]'
-    );
+    const root = await gotoStory(page, 'components-link--in-prose', 'a[href]');
     await expect(root).toMatchAriaSnapshot(`
       - link "inline link"
     `);
   });
 
   test('link list renders multiple named links', async ({ page }) => {
-    const root = await gotoCssStory(
-      page,
-      'components-link--link-list',
-      'a[href]'
-    );
+    const root = await gotoStory(page, 'components-link--link-list', 'a[href]');
     await expect(root.locator('.swc-Typography--links')).toMatchAriaSnapshot(`
       - list:
         - listitem:
@@ -94,7 +82,7 @@ test.describe('Link - ARIA Snapshots', () => {
   test('accessibility story renders descriptive prose link', async ({
     page,
   }) => {
-    const root = await gotoCssStory(
+    const root = await gotoStory(
       page,
       'components-link--accessibility',
       'a[href]'
@@ -106,7 +94,7 @@ test.describe('Link - ARIA Snapshots', () => {
   });
 
   test('links are keyboard focusable', async ({ page }) => {
-    const root = await gotoCssStory(
+    const root = await gotoStory(
       page,
       'components-link--standalone',
       'a[href]'

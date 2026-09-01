@@ -12,15 +12,14 @@
 
 import { expect, test } from '@playwright/test';
 
-import { gotoCssStory } from '../../../utils/a11y-helpers.js';
+import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
  * Accessibility tests for Typography styles (2nd Generation)
  *
- * Typography is a CSS-only utility — there is no `<swc-typography>` custom element.
- * `gotoCssStory` navigates to a story and waits for a readiness selector to appear
- * rather than using `customElements.whenDefined()`, which only works for custom
- * elements with a hyphen in the tag name.
+ * Typography is a CSS-only utility; there is no `<swc-typography>` custom element.
+ * `gotoStory` waits for the readiness selector to become visible; since there
+ * is no custom element to upgrade, that visibility check alone is sufficient.
  *
  * ARIA snapshot tests validate the accessibility tree structure.
  * aXe WCAG compliance and color contrast validation are run via
@@ -32,7 +31,7 @@ test.describe('Typography - ARIA Snapshots', () => {
   test('heading variant renders an accessible level-2 heading', async ({
     page,
   }) => {
-    const root = await gotoCssStory(
+    const root = await gotoStory(
       page,
       'components-typography--playground',
       '.typography-samples'
@@ -45,7 +44,7 @@ test.describe('Typography - ARIA Snapshots', () => {
   test('heading variant with all sizes renders multiple accessible headings', async ({
     page,
   }) => {
-    const root = await gotoCssStory(
+    const root = await gotoStory(
       page,
       'components-typography--heading-variant',
       '.typography-samples'
@@ -59,7 +58,7 @@ test.describe('Typography - ARIA Snapshots', () => {
   test('prose container renders nested semantic heading hierarchy', async ({
     page,
   }) => {
-    const root = await gotoCssStory(
+    const root = await gotoStory(
       page,
       'components-typography--prose-container',
       '.typography-samples'
@@ -75,7 +74,7 @@ test.describe('Typography - ARIA Snapshots', () => {
   test('prose container includes an inline link with accessible name', async ({
     page,
   }) => {
-    const root = await gotoCssStory(
+    const root = await gotoStory(
       page,
       'components-typography--prose-container',
       '.typography-samples'
@@ -86,7 +85,7 @@ test.describe('Typography - ARIA Snapshots', () => {
   });
 
   test('link list renders named navigation links', async ({ page }) => {
-    const root = await gotoCssStory(
+    const root = await gotoStory(
       page,
       'components-typography--link-list',
       '.swc-Typography--links'
