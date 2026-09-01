@@ -13,7 +13,7 @@
 import { html, nothing } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../swc-user-message.js';
+import '../../swc-user-message.js';
 
 import {
   createPermutations,
@@ -22,7 +22,7 @@ import {
   row,
   theme,
   vrtParameters,
-} from '../../../../.storybook/helpers/index.js';
+} from '../../../../../.storybook/helpers/index.js';
 import type { UserMessageType } from '../../UserMessage.js';
 
 // Metadata
