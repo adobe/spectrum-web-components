@@ -12,41 +12,46 @@
 <summary><strong>In this doc</strong></summary>
 
 - [TL;DR](#tldr)
-  - [Most blocking open questions](#most-blocking-open-questions)
+    - [Most blocking open questions](#most-blocking-open-questions)
 - [1st-gen API surface](#1st-gen-api-surface)
-  - [Properties / attributes](#properties--attributes)
-  - [Methods](#methods)
-  - [Events](#events)
-  - [Slots](#slots)
-  - [CSS custom properties](#css-custom-properties)
-  - [Shadow DOM output (rendered HTML)](#shadow-dom-output-rendered-html)
+    - [Properties / attributes](#properties--attributes)
+    - [Methods](#methods)
+    - [Events](#events)
+    - [Slots](#slots)
+    - [CSS custom properties](#css-custom-properties)
+    - [Shadow DOM output (rendered HTML)](#shadow-dom-output-rendered-html)
 - [Dependencies](#dependencies)
 - [Open gen1 issues](#open-gen1-issues)
 - [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites)
+    - [Dependency-aware recommendation](#dependency-aware-recommendation)
+    - [Related components and ordering notes](#related-components-and-ordering-notes)
+    - [User confirmation needed](#user-confirmation-needed)
 - [Changes overview](#changes-overview)
-  - [Must ship — breaking or a11y-required](#must-ship--breaking-or-a11y-required)
-  - [Additive — ships when ready, zero breakage for consumers already on 2nd-gen](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)
+    - [Must ship — breaking or a11y-required](#must-ship--breaking-or-a11y-required)
+    - [Additive — ships when ready, zero breakage for consumers already on 2nd-gen](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)
 - [2nd-gen API decisions](#2nd-gen-api-decisions)
-  - [Public API](#public-api)
-  - [Behavioral semantics](#behavioral-semantics)
-  - [Accessibility semantics notes (2nd-gen)](#accessibility-semantics-notes-2nd-gen)
+    - [Public API](#public-api)
+    - [Behavioral semantics](#behavioral-semantics)
+    - [Accessibility semantics notes (2nd-gen)](#accessibility-semantics-notes-2nd-gen)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
 - [Migration checklist](#migration-checklist)
-  - [Preparation (this ticket)](#preparation-this-ticket)
-  - [Setup](#setup)
-  - [API](#api)
-  - [Styling](#styling)
-  - [Accessibility](#accessibility)
-  - [Testing](#testing)
-  - [Documentation](#documentation)
-  - [Review](#review)
+    - [Preparation (this ticket)](#preparation-this-ticket)
+    - [Setup](#setup)
+    - [API](#api)
+    - [Styling](#styling)
+    - [Accessibility](#accessibility)
+    - [Testing](#testing)
+    - [Documentation](#documentation)
+    - [Review](#review)
 - [Blockers and open questions](#blockers-and-open-questions)
-  - [Design](#design)
-  - [Architecture and behavior](#architecture-and-behavior)
-  - [Scope and prerequisites](#scope-and-prerequisites)
+    - [Design](#design)
+    - [Architecture and behavior](#architecture-and-behavior)
+    - [Scope and prerequisites](#scope-and-prerequisites)
 - [References](#references)
 
 </details>
+
+<!-- Document content (editable) -->
 
 ## TL;DR
 
@@ -215,7 +220,7 @@ Whether a pausable-countdown utility belongs in `2nd-gen/packages/core/controlle
 
 | # | What is added | Notes |
 | --- | ------------- | ----- |
-| A1 | First-party toast container/queue | Explicitly out of scope this cycle; see Q7 in [Scope and prerequisites](#scope-and-prerequisites) |
+| A1 | First-party toast container/queue | Explicitly out of scope this cycle; see Q6 in [Scope and prerequisites](#scope-and-prerequisites) |
 | A2 | `--swc-*` custom properties | See the recommended initial set in [CSS custom properties (2nd-gen)](#css-custom-properties-2nd-gen) |
 
 ---
@@ -282,7 +287,7 @@ No `--mod-*` properties will be exposed. New `--swc-*` component-level propertie
 - `tabindex` on host follows the a11y doc: no `tabindex` on a standalone host; `tabindex="0"` once the toast is inside a container. See Q4.
 - Close fires a cancelable `close` event before the component closes itself (matches 1st-gen).
 - Text wrapping is automatic, not an option. Content wraps naturally within whatever `max-inline-size` the host is given (directly stylable from outside; no `--swc-*` custom property, see [CSS custom properties (2nd-gen)](#css-custom-properties-2nd-gen)); no `width` property exists on `sp-toast` in 1st-gen or on `Toast` in RSP S2. Long unbroken words specifically need `overflow-wrap`/`word-break` (SWC-475, see [Styling](#styling)) on top of normal wrapping.
-- No `placement` property. Confirmed absent from 1st-gen `sp-toast`'s own API: the 1st-gen story's `placement` values (bottom/left/right/top) belong to `overlay-trigger`, an unrelated demo wrapper, not `sp-toast` itself. RSP's `placement` (`top`/`bottom`/`top end`/`bottom end`) lives on `ToastContainer`, never on individual `Toast`. Placement is a future container-level concern; see Q7.
+- No `placement` property. Confirmed absent from 1st-gen `sp-toast`'s own API: the 1st-gen story's `placement` values (bottom/left/right/top) belong to `overlay-trigger`, an unrelated demo wrapper, not `sp-toast` itself. RSP's `placement` (`top`/`bottom`/`top end`/`bottom end`) lives on `ToastContainer`, never on individual `Toast`. Placement is a future container-level concern; see Q6.
 
 ### Accessibility semantics notes (2nd-gen)
 
@@ -428,8 +433,7 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 
 | # | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q6 | ~~Full Jira issue list for Toast not yet pulled.~~ **Resolved**: manually triaged, see [Open gen1 issues](#open-gen1-issues). | No | Resolved | Ticket owner |
-| Q7 | Should `swc-toast` later ship alongside a first-party `swc-toast-queue` container, or should authors keep composing their own? Explicitly out of scope for this migration; the a11y doc raises it as a question to bring to a team sync before a container API is added. If built, `placement` (RSP precedent: `top`/`bottom`/`top end`/`bottom end`) belongs on the container, not on `swc-toast` itself. | No | Open (deferred) | Design + accessibility reviewer |
+| Q6 | Should `swc-toast` later ship alongside a first-party `swc-toast-queue` container, or should authors keep composing their own? Explicitly out of scope for this migration; the a11y doc raises it as a question to bring to a team sync before a container API is added. If built, `placement` (RSP precedent: `top`/`bottom`/`top end`/`bottom end`) belongs on the container, not on `swc-toast` itself. | No | Open (deferred) | Design + accessibility reviewer |
 
 ---
 

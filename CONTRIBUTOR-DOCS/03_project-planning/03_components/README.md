@@ -183,6 +183,7 @@
     - [Thumbnail migration roadmap](thumbnail/rendering-and-styling-migration-analysis.md)
 - Toast
     - [Toast accessibility migration analysis](toast/accessibility-migration-analysis.md)
+    - [Toast migration plan](toast/migration-plan.md)
 - Tooltip
     - [Tooltip accessibility migration analysis](tooltip/accessibility-migration-analysis.md)
     - [Tooltip migration plan](tooltip/migration-plan.md)
