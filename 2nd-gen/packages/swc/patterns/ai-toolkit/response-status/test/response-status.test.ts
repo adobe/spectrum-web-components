@@ -132,7 +132,7 @@ export const StatusApiTest: Story = {
             el.shadowRoot
               ?.querySelector('.swc-ResponseStatus-label')
               ?.textContent?.trim()
-          ).toBe('Response generated');
+          ).toBe('Response complete');
         },
         { timeout: 2000 }
       );
