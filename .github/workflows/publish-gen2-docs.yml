@@ -24,7 +24,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: publish-2ndgen-docs
+  group: publish-gen2-docs
   # Docs deploys are cheap to queue and expensive to interrupt: azcopy sync
   # --delete-destination deletes stale files and uploads new ones in the same
   # run, so cancelling one mid-flight can leave the public site (staging or

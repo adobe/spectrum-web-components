@@ -193,7 +193,7 @@ To publish the Gen2 production site manually:
 **From the terminal** (requires [GitHub CLI](https://cli.github.com)):
 
 ```bash
-gh workflow run publish-2ndgen-docs.yml --ref main
+gh workflow run publish-gen2-docs.yml --ref main
 ```
 
 ---
