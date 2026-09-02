@@ -69,7 +69,7 @@
 - **No dependency on `LabellingController`; label/description wiring is implemented directly** via a real, same-root `<label for="…">` and the already-built `SlotPresenceController`. See the [Decision log](#decision-log) for why.
 - **Form-value participation lives entirely on `swc-radio-group`, not per-item (Q12, resolved with a11y SME review).** `swc-radio` does not depend on `FieldAssociationController`. See [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites) and [Decision log](#decision-log) for the reasoning.
 - **Group-level coordination (`RadioGroupController`, SWC-2470) is explicitly out of scope for this plan.** It affects how `swc-radio-group` discovers and drives its items, not this item's own API; tracked as a subticket of `swc-radio-group`'s own migration-plan ticket, SWC-2546.
-- **Visual API is close to a straight carryover.** Sizes (`s`/`m`/`l`/`xl`), `emphasized`, checked/unchecked, hover, and disabled all match between 1st-gen, the rendering analysis, and the Figma size/state/emphasis matrix supplied for this plan. The ~27 `--mod-radio-*` custom properties are not carried forward.
+- **Visual API is close to a straight carryover.** Sizes (`s`/`m`/`l`/`xl`), `emphasized`, checked/unchecked, hover, and disabled all match between 1st-gen, the rendering analysis, and the Figma size/state/emphasis matrix supplied for this plan. The 30 `--mod-radio-*` custom properties are not carried forward.
 - **Delivery is combined with `swc-radio-group` on a shared feature branch.** `swc-radio` cannot ship or be documented independently, so implementation (Phase 2 onward) is tracked jointly with `swc-radio-group` rather than as two parallel component migrations. See [Related components and ordering notes](#related-components-and-ordering-notes).
 
 ### Most blocking open questions
@@ -119,7 +119,7 @@ No other public methods; `activate()`, `handleKeyup()`, and `manageAutoFocus()` 
 
 ### CSS custom properties
 
-1st-gen exposes 27 `--mod-radio-*` modifier custom properties (animation duration, border widths/colors across every focus/hover/checked/emphasized permutation, control size, focus indicator, font/line-height including CJK, disabled colors). See the [rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md#component-specifications) for the full list.
+1st-gen exposes 30 `--mod-radio-*` modifier custom properties (animation duration, border widths/colors across every focus/hover/checked/emphasized permutation, control size, focus indicator, font/line-height including CJK, disabled colors). See the [rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md#component-specifications) for the full list.
 
 This full modifier surface will not be carried forward to 2nd-gen.
 
