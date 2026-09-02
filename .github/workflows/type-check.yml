@@ -79,3 +79,4 @@ jobs:
           echo "::add-matcher::.github/tsc-problem-matcher.json"
           yarn type-check
           echo "::remove-matcher owner=tsc::"
+          echo "::remove-matcher owner=tsc-build::"

@@ -13,6 +13,17 @@
           "message": 6
         }
       ]
+    },
+    {
+      "owner": "tsc-build",
+      "pattern": [
+        {
+          "regexp": "^(error|warning) (TS\\d+): (.+)$",
+          "severity": 1,
+          "code": 2,
+          "message": 3
+        }
+      ]
     }
   ]
 }
