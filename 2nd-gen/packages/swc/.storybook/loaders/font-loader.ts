@@ -16,22 +16,32 @@
 // rendering, and the CI axe smoke test times out on a random story.
 const FONT_LOAD_TIMEOUT_MS = 3000;
 
-export const FontLoader = async () => ({
-  fonts: new Promise<void>((resolve) => {
+// FontLoader is a global loader, so it runs for every story render on the page.
+// Memoize the readiness promise at module scope so the timeout ceiling is paid
+// at most once per page: in the failure mode (Typekit never loads) later stories
+// reuse the already-resolved promise instead of each waiting the full timeout.
+let fontsReady: Promise<void> | undefined;
+
+const whenFontsReady = (): Promise<void> =>
+  (fontsReady ??= new Promise<void>((resolve) => {
     // First check if the fonts are already loaded
     if (typeof window.Typekit !== 'undefined') {
       resolve();
       return;
     }
 
-    // Listen for a custom event indicating the Adobe Fonts have loaded
-    document.addEventListener('typekit-loaded', () => {
-      if (typeof window.Typekit !== 'undefined') {
-        resolve();
-      }
-    });
-
     // Fallback: never block the render on the external font CDN.
-    setTimeout(resolve, FONT_LOAD_TIMEOUT_MS);
-  }),
-});
+    const timer = setTimeout(resolve, FONT_LOAD_TIMEOUT_MS);
+
+    // Listen for a custom event indicating the Adobe Fonts have loaded.
+    document.addEventListener(
+      'typekit-loaded',
+      () => {
+        clearTimeout(timer);
+        resolve();
+      },
+      { once: true }
+    );
+  }));
+
+export const FontLoader = async () => ({ fonts: whenFontsReady() });
