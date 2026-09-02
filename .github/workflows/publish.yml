@@ -17,7 +17,7 @@ on:
     paths:
       - '1st-gen/**'
 
-# 1st-gen-scoped group: this and publish-2nd-gen.yml used to share the literal string
+# gen1-scoped group: this and publish-gen2.yml used to share the literal string
 # `publish-${{ github.ref }}`, which is a repo-wide concurrency key, not scoped to the
 # workflow file it's declared in - so the two workflows' entire runs (not just their
 # release jobs) serialized against each other on every push to main. That made sense
@@ -28,7 +28,7 @@ on:
 # packages), so there's nothing left to protect by blocking one generation's run behind
 # the other's.
 concurrency:
-  group: publish-1st-gen-${{ github.ref }}
+  group: publish-gen1-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -45,7 +45,7 @@ jobs:
         run: |
           # This workflow is 1st-gen only, always - independent of 2nd-gen in every
           # trigger. 2nd-gen has its own changesets setup in 2nd-gen/.changeset/ and
-          # its own workflow, publish-2nd-gen.yml.
+          # its own workflow, publish-gen2.yml.
           GEN1_COUNT=$(find 1st-gen/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
 
           if [ "$GEN1_COUNT" -eq 0 ]; then
@@ -213,7 +213,7 @@ jobs:
   #
   # This does NOT use changesets/action's own built-in PR management. That action derives
   # its PR branch name solely from the base branch (`changeset-release/<baseBranch>`) with
-  # no per-cwd namespacing - since this workflow and publish-2nd-gen.yml both target the
+  # no per-cwd namespacing - since this workflow and publish-gen2.yml both target the
   # same `main` base, two changesets/action calls would both compute the identical branch
   # name `changeset-release/main` and silently overwrite each other's Version PR content
   # whenever both generations have pending changesets (not just under a race - any two

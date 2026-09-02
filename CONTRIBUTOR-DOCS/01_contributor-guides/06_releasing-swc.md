@@ -35,7 +35,7 @@
 > | | Workflow | Changesets | Real-release branch | Ships to |
 > |---|---|---|---|---|
 > | 1st-gen | `.github/workflows/publish.yml` | `1st-gen/.changeset/` | `changeset-release/1st-gen` → PR to `main` | `latest` |
-> | 2nd-gen | `.github/workflows/publish-2nd-gen.yml` | `2nd-gen/.changeset/` | `changeset-release/2nd-gen` → PR to `main` | `beta` (persistent pre-release) |
+> | 2nd-gen | `.github/workflows/publish-gen2.yml` | `2nd-gen/.changeset/` | `changeset-release/2nd-gen` → PR to `main` | `beta` (persistent pre-release) |
 >
 > The sections below still describe the old branch-lock/direct-push model in places and should not be relied on until this page is rewritten to match.
 
@@ -62,7 +62,7 @@ The workflow publishes four package groups:
 
 > For the 2nd-gen changeset format and how entries flow into the CHANGELOG, see the [Changelog strategy](15_changelog-strategy.md).
 
-Each workflow only publishes if there are pending changesets in its own folder — `1st-gen/.changeset/*.md` for `publish.yml`, `2nd-gen/.changeset/*.md` for `publish-2nd-gen.yml`. If no changesets exist for that generation, its publish job is skipped automatically.
+Each workflow only publishes if there are pending changesets in its own folder — `1st-gen/.changeset/*.md` for `publish.yml`, `2nd-gen/.changeset/*.md` for `publish-gen2.yml`. If no changesets exist for that generation, its publish job is skipped automatically.
 
 To check what's pending, look at the relevant `.changeset/` directory (exclude `README.md`). Each changeset file lists the packages it affects and the bump type (`patch`, `minor`, or `major`).
 
@@ -179,10 +179,10 @@ The Gen2 docs site (the Storybook served at `spectrum-web-components.adobe.com`)
 
 | Target | URL | When it deploys |
 | --- | --- | --- |
-| Staging | `https://swcpreviews.z13.web.core.windows.net/docs-staging/` | Every push to `main` that touches non-Gen1 files, every manual run, and every conclusion of **Publish Packages (2nd-gen)** |
-| Production | `spectrum-web-components.adobe.com` (`docs/` path) | Manual run, or once **Publish Packages (2nd-gen)** concludes successfully on a run whose commit message contains `#gen2-publish` |
+| Staging | `https://swcpreviews.z13.web.core.windows.net/docs-staging/` | Every push to `main` that touches non-Gen1 files, every manual run, and every conclusion of **Publish Packages (gen2)** |
+| Production | `spectrum-web-components.adobe.com` (`docs/` path) | Manual run, or once **Publish Packages (gen2)** concludes successfully on a run whose commit message contains `#gen2-publish` |
 
-> **Note:** production deploy is triggered by `Publish Packages (2nd-gen)` *concluding* (a `workflow_run` trigger), not by the push that starts it. That workflow's real npm-publish step can sit behind a required manual approval, so waiting for it to actually finish keeps the docs site from going live before the release it documents has shipped (or shipping stale docs if that approval is rejected). The `#gen2-publish` keyword still gates which concluded run counts as a real release, rather than one that merely opened/updated the Version PR - it deliberately avoids the `#publish` substring so it doesn't also trigger the Gen1 documentation site above.
+> **Note:** production deploy is triggered by `Publish Packages (gen2)` *concluding* (a `workflow_run` trigger), not by the push that starts it. That workflow's real npm-publish step can sit behind a required manual approval, so waiting for it to actually finish keeps the docs site from going live before the release it documents has shipped (or shipping stale docs if that approval is rejected). The `#gen2-publish` keyword still gates which concluded run counts as a real release, rather than one that merely opened/updated the Version PR - it deliberately avoids the `#publish` substring so it doesn't also trigger the Gen1 documentation site above.
 
 To publish the Gen2 production site manually:
 

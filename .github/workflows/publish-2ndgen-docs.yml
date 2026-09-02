@@ -11,13 +11,13 @@ on:
     paths-ignore:
       - '1st-gen/**'
   # Production deploy is driven by this, not by the push above - the push that
-  # merges the 2nd-gen Version PR only starts Publish Packages (2nd-gen), whose
+  # merges the 2nd-gen Version PR only starts Publish Packages (gen2), whose
   # real npm-publish step can sit behind a required manual approval for a long
   # time. Waiting for that workflow to conclude means production docs can't go
   # live before the release they're documenting actually ships (or ships stale
   # docs for a release that never got approved).
   workflow_run:
-    workflows: ['Publish Packages (2nd-gen)']
+    workflows: ['Publish Packages (gen2)']
     types: [completed]
 
 permissions:
@@ -36,15 +36,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy 2nd-Gen Docs
     timeout-minutes: 30
-    # Publish Packages (2nd-gen) also runs on pull_request (labeled/synchronize,
-    # for its snapshot-release path), which means a fork PR can produce a
-    # workflow_run completion too. workflow_run-triggered jobs get this repo's
-    # full secrets regardless of the fork - so if this job ever checked out and
-    # built a fork's head_sha with those secrets in scope, that fork PR would
-    # get arbitrary code execution against our Azure storage credentials.
-    # Restricting to workflow_run events whose *upstream* trigger was `push`
-    # means the upstream run only ever ran against a commit already merged to
-    # main, never an unreviewed fork commit.
+    # Publish Packages (gen2) only triggers on push or workflow_dispatch, never
+    # pull_request - so every workflow_run completion here already ran against a
+    # commit that's either on `main` or manually dispatched by a maintainer, never
+    # an unreviewed fork commit. Restricting to workflow_run events whose *upstream*
+    # trigger was `push` narrows this further to just the real-release path.
     if: >-
       github.event_name != 'workflow_run' ||
       (github.event.workflow_run.event == 'push' &&

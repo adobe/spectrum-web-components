@@ -17,10 +17,12 @@ on:
     paths:
       - '2nd-gen/**'
 
-# 2nd-gen-scoped group: see the identical comment in publish.yml for why this is no
-# longer shared with that workflow's group string.
+# gen2-scoped group: this and publish.yml used to share the literal string
+# `publish-${{ github.ref }}`, a repo-wide concurrency key not scoped to the workflow
+# file it's declared in. Each generation now gets its own group string so a gen1 run
+# and a gen2 run never block on each other.
 concurrency:
-  group: publish-2nd-gen-${{ github.ref }}
+  group: publish-gen2-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -141,12 +143,14 @@ jobs:
   # because that PR was just merged). 2nd-gen has no `latest` channel yet - `beta` is the
   # only real release.
   #
-  # This does NOT use changesets/action's own built-in PR management - see the identical
-  # comment above the `release:` job in publish.yml for why: changesets/action's PR
-  # branch name is derived only from the base branch, and both this workflow and
-  # publish.yml target `main`, so two changesets/action calls would collide on the same
-  # branch name and overwrite each other's Version PR content. peter-evans/create-pull-request@v6's
-  # explicit `branch:` input avoids that.
+  # This does NOT use changesets/action's own built-in PR management. That action derives
+  # its PR branch name solely from the base branch (`changeset-release/<baseBranch>`) with
+  # no per-cwd namespacing - since this workflow and publish.yml both target the same
+  # `main` base, two changesets/action calls would both compute the identical branch name
+  # `changeset-release/main` and silently overwrite each other's Version PR content
+  # whenever both generations have pending changesets (not just under a race - any two
+  # pushes, even hours apart, collide the same way). peter-evans/create-pull-request@v6
+  # takes an explicit `branch:` input, so each generation gets its own dedicated branch.
   release:
     needs: check-changesets
     if: github.event_name == 'push'
