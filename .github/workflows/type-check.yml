@@ -5,10 +5,9 @@ name: Type Check
 # esbuild and does not type-check, so this is what catches type errors.
 #
 # Diagnostics are annotated inline via a GitHub problem matcher (no
-# third-party actions). Currently non-blocking (`|| true`) while the existing
-# type-error backlog is cleared; drop the `|| true` to gate once
-# `yarn type-check` is green on main. Triage the backlog locally with the same
-# `yarn type-check`.
+# third-party actions). The check fails on any type error anywhere in
+# 2nd-gen/packages/** (whole-repo gate), so the backlog must be green on main.
+# Triage locally with the same `yarn type-check`.
 #
 # Lit-template semantics (unknown tag/attribute, binding types) are a dev-time
 # concern handled in the editor; ESLint (eslint-plugin-lit / -lit-a11y / -wc)
@@ -73,10 +72,10 @@ jobs:
         run: yarn install --immutable
 
       # Run the compiler and annotate diagnostics inline via a GitHub problem
-      # matcher (no third-party actions). `|| true` keeps the job green while
-      # the pre-existing backlog is cleared; drop it to gate on any type error.
+      # matcher (no third-party actions). The step fails on any type error
+      # anywhere in 2nd-gen (whole-repo gate).
       - name: Type check
         run: |
           echo "::add-matcher::.github/tsc-problem-matcher.json"
-          yarn type-check || true
+          yarn type-check
           echo "::remove-matcher owner=tsc::"
