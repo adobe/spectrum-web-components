@@ -51,6 +51,7 @@
     - [`label`](#label)
     - [`labeling`](#labeling)
     - [`labelPosition`](#labelposition)
+    - [`labelText`](#labeltext)
     - [`level`](#level)
     - [`loader`](#loader)
     - [`manual`](#manual)
@@ -133,13 +134,18 @@
     - [`swc-message-feedback-change`](#swc-message-feedback-change)
     - [`swc-message-sources-toggle`](#swc-message-sources-toggle)
     - [`swc-open`](#swc-open)
+    - [`swc-prompt-field-drop`](#swc-prompt-field-drop)
     - [`swc-prompt-field-input`](#swc-prompt-field-input)
     - [`swc-prompt-field-stop`](#swc-prompt-field-stop)
     - [`swc-prompt-field-submit`](#swc-prompt-field-submit)
     - [`swc-prompt-field-upload-click`](#swc-prompt-field-upload-click)
+    - [`swc-response-status-step-active-label-change`](#swc-response-status-step-active-label-change)
+    - [`swc-response-status-step-open-change`](#swc-response-status-step-open-change)
+    - [`swc-response-status-step-toggle`](#swc-response-status-step-toggle)
     - [`swc-response-status-toggle`](#swc-response-status-toggle)
     - [`swc-suggestion`](#swc-suggestion)
     - [`swc-upload-attachment-dismiss`](#swc-upload-attachment-dismiss)
+    - [`type`](#type)
 - [Methods](#methods)
     - [`click`](#click)
     - [`focus`](#focus)
@@ -153,7 +159,7 @@
 
 <!-- Document content (editable) -->
 
-_(updated from v.0.0.8 on 9/1/2026)_
+_(updated from v.2.0.0-beta.2 on 9/2/2026)_
 
 Consolidated API surface across all Spectrum Web Components and patterns. Each entry lists every component or pattern that exposes that property, slot, event, or method.
 
@@ -185,7 +191,7 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 
 | Component | Category | Attribute | Description | Data type | Allowed values | Default value |
 | --- | --- | --- | --- | --- | --- | --- |
-| ButtonGroup | Component | align | The alignment of buttons within the group along the main axis. | ButtonGroupAlignment | start \| center \| end | 'start' |
+| ButtonGroup | Component | align | The alignment of buttons within the group along the main axis. | ButtonGroupAlignment | start \| end \| center | 'start' |
 
 ### `allowMultiple`
 
@@ -261,7 +267,7 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 | --- | --- | --- | --- | --- | --- | --- |
 | Accordion | Component | density | Controls vertical spacing between items. | AccordionDensity | compact \| regular \| spacious | 'regular' |
 | Card | Component | density | The density of the card, controlling internal spacing and gaps. | CardDensity | compact \| regular \| spacious | 'regular' |
-| Tabs | Component | density | Layout density: `regular` (default) or `compact` (reduced tab spacing). | TabDensity | regular \| compact | — |
+| Tabs | Component | density | Layout density: `regular` (default) or `compact` (reduced tab spacing). | TabDensity | compact \| regular | — |
 
 ### `direction`
 
@@ -390,8 +396,8 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 
 | Component | Category | Attribute | Description | Data type | Allowed values | Default value |
 | --- | --- | --- | --- | --- | --- | --- |
-| PixelLoader | Pattern | icon | Icon to display. Ignored while `preset` is set. | PixelLoaderIconName | aiLogo \| brush \| eye \| hourglass \| mag \| crop \| flower \| image \| lasso \| page \| wand \| bargraph \| trefoil \| dial \| folder \| arrow \| cloud \| comment \| filter \| microphone \| pencil \| potion \| slider \| timeline \| eyedrop \| adobeA \| adobeD \| adobeO \| adobeB \| adobeE | 'aiLogo' |
-| UiIcon | Component | icon | The logical UI icon to render, matching a key in the icon-set registry (for example `chevron` or `corner-triangle`). | UiIconName | arrow \| asterisk \| checkmark \| chevron \| corner-triangle \| cross \| dash \| drag-handle \| link-out | — |
+| PixelLoader | Pattern | icon | Icon to display. Ignored while `preset` is set. | PixelLoaderIconName | arrow \| folder \| aiLogo \| brush \| eye \| hourglass \| mag \| crop \| flower \| image \| lasso \| page \| wand \| bargraph \| trefoil \| dial \| cloud \| comment \| filter \| microphone \| pencil \| potion \| slider \| timeline \| eyedrop \| adobeA \| adobeD \| adobeO \| adobeB \| adobeE | 'aiLogo' |
+| UiIcon | Component | icon | The logical UI icon to render, matching a key in the icon-set registry (for example `chevron` or `corner-triangle`). | UiIconName | add \| arrow \| asterisk \| checkmark \| chevron \| corner-triangle \| cross \| dash \| drag-handle \| link-out | — |
 
 ### `indeterminate`
 
@@ -432,8 +438,14 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 
 | Component | Category | Attribute | Description | Data type | Allowed values | Default value |
 | --- | --- | --- | --- | --- | --- | --- |
-| Meter | Component | label-position | Position of the label relative to the bar. | LinearProgressLabelPosition | top \| side | 'top' |
-| ProgressBar | Component | label-position | Position of the label relative to the bar. | LinearProgressLabelPosition | top \| side | 'top' |
+| Meter | Component | label-position | Position of the label relative to the bar. | LinearProgressLabelPosition | — | 'top' |
+| ProgressBar | Component | label-position | Position of the label relative to the bar. | LinearProgressLabelPosition | — | 'top' |
+
+### `labelText`
+
+| Component | Category | Attribute | Description | Data type | Allowed values | Default value |
+| --- | --- | --- | --- | --- | --- | --- |
+| ResponseStatusStep | Pattern | — | This step's current label text, read on demand. Exposed so the parent can look up a newly-active step's starting label without reaching into its light DOM itself; ongoing updates while active arrive instead via `swc-response-status-step-active-label-change`. | string | — | — |
 
 ### `level`
 
@@ -445,7 +457,8 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 
 | Component | Category | Attribute | Description | Data type | Allowed values | Default value |
 | --- | --- | --- | --- | --- | --- | --- |
-| PromptField | Pattern | loader | Status loader artwork: a single icon name (static), or a preset name (`cc`, `dc`, `exp`, `analyze`, `mega`) that cycles a themed sequence. Routed to the loader's icon/preset in `_renderStatusIcon`. | PixelLoaderIconName \| PixelLoaderPresetName | — | 'aiLogo' |
+| PromptField | Pattern | loader | Status loader artwork: a single icon name (static), or a preset name (`cc`, `dc`, `exp`, `analyze`, `mega`) that cycles a themed sequence. Routed to the loader's icon/preset in `_renderStatusIcon`. | PixelLoaderIconName \| PixelLoaderPresetName | arrow \| folder \| aiLogo \| brush \| eye \| hourglass \| mag \| crop \| flower \| image \| lasso \| page \| wand \| bargraph \| trefoil \| dial \| cloud \| comment \| filter \| microphone \| pencil \| potion \| slider \| timeline \| eyedrop \| adobeA \| adobeD \| adobeO \| adobeB \| adobeE \| cc \| dc \| exp \| analyze \| mega | 'aiLogo' |
+| ResponseStatus | Pattern | loader | Status loader artwork shown while `status="active"`, matching `swc-prompt-field`'s `loader` attribute for the same underlying control: a preset name (`cc`, `dc`, `exp`, `analyze`, `mega`) cycles a themed icon sequence; an icon name shows a single static icon. Invalid values fall back to the `mega` preset. | PixelLoaderIconName \| PixelLoaderPresetName | arrow \| folder \| aiLogo \| brush \| eye \| hourglass \| mag \| crop \| flower \| image \| lasso \| page \| wand \| bargraph \| trefoil \| dial \| cloud \| comment \| filter \| microphone \| pencil \| potion \| slider \| timeline \| eyedrop \| adobeA \| adobeD \| adobeO \| adobeB \| adobeE \| cc \| dc \| exp \| analyze \| mega | 'mega' |
 
 ### `manual`
 
@@ -509,6 +522,7 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 | MessageSources | Pattern | open | Whether the sources list is open. | boolean | — | false |
 | Popover | Component | open | Whether the popover is open. | boolean | — | false |
 | ResponseStatus | Pattern | open | `true`: step timeline open. | boolean | — | false |
+| ResponseStatusStep | Pattern | open | Whether this step's description is expanded in the timeline. Steps are collapsed by default regardless of `status`. | boolean | — | false |
 | Tooltip | Component | open | Whether the tooltip is visible. | boolean | — | false |
 
 ### `orientation`
@@ -517,7 +531,7 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 | --- | --- | --- | --- | --- | --- | --- |
 | ActionGroup | Component | orientation | The layout direction of the action group. When set to `"vertical"`, the group stacks children vertically and `FocusgroupNavigationController` moves focus with the Up/Down arrow keys instead of Left/Right. Note: this property does NOT set `aria-orientation` on the host. The host's role is fixed to `role="group"`, and `aria-orientation` is only a supported ARIA attribute on roles that expose it (`toolbar`, `listbox`, `menu`, etc.), not `group`, regardless of this component's roving-tabindex keyboard model. Setting it anyway fails axe's `aria-allowed-attr` rule. | ActionGroupOrientation | horizontal \| vertical | 'horizontal' |
 | ButtonGroup | Component | orientation | The layout direction of the button group. Note: this property does NOT set `aria-orientation` on the host because `aria-orientation` is only meaningful for roles that manage arrow-key navigation (e.g. `toolbar`, `listbox`). Since button-group uses sequential Tab navigation (not roving tabindex), the attribute would be invalid. | ButtonGroupOrientation | horizontal \| vertical | 'horizontal' |
-| IllustratedMessage | Component | orientation | The layout orientation | IllustratedMessageOrientation | vertical \| horizontal | 'vertical' |
+| IllustratedMessage | Component | orientation | The layout orientation | IllustratedMessageOrientation | horizontal \| vertical | 'vertical' |
 
 ### `outline`
 
@@ -564,7 +578,7 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 | Component | Category | Attribute | Description | Data type | Allowed values | Default value |
 | --- | --- | --- | --- | --- | --- | --- |
 | Popover | Component | placement | The placement of the popover relative to its trigger. | Placement | bottom \| bottom-left \| bottom-right \| bottom-start \| bottom-end \| top \| top-left \| top-right \| top-start \| top-end \| left \| left-top \| left-bottom \| start \| start-top \| start-bottom \| right \| right-top \| right-bottom \| end \| end-top \| end-bottom | 'bottom' |
-| Tooltip | Component | placement | Preferred placement of the tooltip relative to its trigger. This is always the consumer's requested side; the resolved physical side (after any viewport-driven flip) is reflected as `actual-placement`. | TooltipPlacement | top \| bottom \| left \| right \| start \| end | 'top' |
+| Tooltip | Component | placement | Preferred placement of the tooltip relative to its trigger. This is always the consumer's requested side; the resolved physical side (after any viewport-driven flip) is reflected as `actual-placement`. | TooltipPlacement | bottom \| top \| left \| start \| right \| end | 'top' |
 
 ### `positiveLabel`
 
@@ -623,11 +637,11 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 
 | Component | Category | Attribute | Description | Data type | Allowed values | Default value |
 | --- | --- | --- | --- | --- | --- | --- |
-| ActionButton | Component | — | — | ShadowRootInit | — | { ...SpectrumElement.shadowRootOptions, delegatesFocus: true, } |
-| ActionGroup | Component | — | — | object | — | { ...SpectrumElement.shadowRootOptions, delegatesFocus: true, } |
-| Button | Component | — | — | ShadowRootInit | — | { ...SpectrumElement.shadowRootOptions, delegatesFocus: true, } |
-| CloseButton | Component | — | — | ShadowRootInit | — | { ...SpectrumElement.shadowRootOptions, delegatesFocus: true, } |
-| InfieldButton | Component | — | — | ShadowRootInit | — | { ...SpectrumElement.shadowRootOptions, delegatesFocus: false, } |
+| ActionButton | Component | — |  | ShadowRootInit | — | { ...SpectrumElement.shadowRootOptions, delegatesFocus: true, } |
+| ActionGroup | Component | — |  | object | — | { ...SpectrumElement.shadowRootOptions, delegatesFocus: true, } |
+| Button | Component | — |  | ShadowRootInit | — | { ...SpectrumElement.shadowRootOptions, delegatesFocus: true, } |
+| CloseButton | Component | — |  | ShadowRootInit | — | { ...SpectrumElement.shadowRootOptions, delegatesFocus: true, } |
+| InfieldButton | Component | — |  | ShadowRootInit | — | { ...SpectrumElement.shadowRootOptions, delegatesFocus: false, } |
 
 ### `shouldFlip`
 
@@ -642,13 +656,13 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 | --- | --- | --- | --- | --- | --- | --- |
 | Accordion | Component | size | Size applied to all items. Defaults to `m`. | ElementSize | s \| m \| l \| xl | — |
 | AccordionItem | Component | size | The size of the item. Inherited from the parent accordion; controls which chevron icon is displayed. Has no effect when the item is used standalone. | AccordionSize \| undefined | s \| m \| l \| xl | — |
-| ActionButton | Component | size | The size of the button. | ElementSize | xs \| s \| m \| l \| xl | m |
+| ActionButton | Component | size | The size of the button. | ElementSize | s \| m \| l \| xl | m |
 | ActionGroup | Component | size | The size of the action group. Propagated to all slotted children. | ElementSize | xs \| s \| m \| l \| xl | — |
 | Avatar | Component | size | The size of the avatar. Invalid values fall back to the default (500). | AvatarSize | 50 \| 75 \| 100 \| 200 \| 300 \| 400 \| 500 \| 600 \| 700 \| 800 \| 900 \| 1000 \| 1100 \| 1200 \| 1300 \| 1400 \| 1500 | 500 |
 | Badge | Component | size | The size of the badge. | ElementSize | s \| m \| l \| xl | s |
 | Button | Component | size | The size of the button. | ElementSize | s \| m \| l \| xl | m |
 | ButtonGroup | Component | size | The size of the button group. Propagated to all slotted button children. | ElementSize | s \| m \| l \| xl | m |
-| Card | Component | size | — | ElementSize | xs \| s \| m \| l \| xl | — |
+| Card | Component | size |  | ElementSize | — | — |
 | CloseButton | Component | size | The size of the button. | ElementSize | s \| m \| l \| xl | m |
 | Divider | Component | size | The size of the divider. | ElementSize | s \| m \| l | m |
 | Dropzone | Component | size | The size of the drop zone. | ElementSize | s \| m \| l | m |
@@ -677,8 +691,8 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 | Button | Component | static-color | Static color treatment for display over colored or image backgrounds. Only supported with `primary` and `secondary` variants. | ButtonStaticColor \| undefined | white \| black | — |
 | CloseButton | Component | static-color | Static color treatment for display over colored or image backgrounds. | ButtonStaticColor \| undefined | white \| black | — |
 | Divider | Component | static-color | The static color variant to use for the divider. | DividerStaticColor \| undefined | white \| black | — |
-| Meter | Component | static-color | Static color override for use on images or colored backgrounds. | LinearProgressStaticColor \| undefined | white \| black | — |
-| ProgressBar | Component | static-color | Static color override for use on images or colored backgrounds. | LinearProgressStaticColor \| undefined | white \| black | — |
+| Meter | Component | static-color | Static color override for use on images or colored backgrounds. | LinearProgressStaticColor \| undefined | — | — |
+| ProgressBar | Component | static-color | Static color override for use on images or colored backgrounds. | LinearProgressStaticColor \| undefined | — | — |
 | ProgressCircle | Component | static-color | Static color variant for use on different backgrounds. When set to 'white', the component uses white styling for images with a dark tinted background. When set to 'black', the component uses black styling for images with a light tinted background. | ProgressCircleStaticColor \| undefined | white \| black | — |
 
 ### `status`
@@ -687,7 +701,7 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 | --- | --- | --- | --- | --- | --- | --- |
 | MessageFeedback | Pattern | status | The currently selected feedback status. - `positive`: positive feedback selected - `negative`: negative feedback selected - `undefined`: no feedback selected This is controlled by the consumer. The component dispatches `swc-message-feedback-change` on click and expects the parent to update `status`. | 'positive' \| 'negative' \| undefined | — | — |
 | ResponseStatus | Pattern | status | Whole response lifecycle status. | ResponseStatusStatus | active \| complete \| stopped | 'active' |
-| ResponseStatusStep | Pattern | status | Timeline state for connector icons. | 'active' \| 'complete' \| 'stopped' | — | 'active' |
+| ResponseStatusStep | Pattern | status | Timeline state for connector icons. | ResponseStatusStepStatus | active \| complete \| stopped | 'active' |
 
 ### `stopLabel`
 
@@ -761,13 +775,13 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 | Component | Category | Attribute | Description | Data type | Allowed values | Default value |
 | --- | --- | --- | --- | --- | --- | --- |
 | Asset | Component | variant | The variant of the asset. When not provided, slot content is rendered (e.g., an image). | AssetVariant \| undefined | file \| folder | — |
-| Badge | Component | variant | The semantic or non-semantic color variant of the badge. | BadgeVariant | accent \| informative \| neutral \| positive \| notice \| negative \| fuchsia \| indigo \| magenta \| purple \| seafoam \| yellow \| gray \| red \| orange \| chartreuse \| celery \| green \| cyan \| blue \| pink \| turquoise \| brown \| cinnamon \| silver | 'neutral' |
+| Badge | Component | variant | The semantic or non-semantic color variant of the badge. | BadgeVariant | accent \| negative \| informative \| neutral \| positive \| notice \| fuchsia \| indigo \| magenta \| purple \| seafoam \| yellow \| gray \| red \| orange \| chartreuse \| celery \| green \| cyan \| blue \| pink \| turquoise \| brown \| cinnamon \| silver | 'neutral' |
 | Button | Component | variant | The visual variant of the button. `outline` fill-style is only supported with `primary` and `secondary`. `static-color` is only supported with `primary` and `secondary`. | ButtonVariant | primary \| secondary \| accent \| negative | 'primary' |
-| Card | Component | variant | The visual variant of the card. | CardVariant | primary \| secondary \| tertiary \| quiet | 'primary' |
-| Meter | Component | variant | The variant of the meter. Drives the bar fill color. | MeterVariant | informative \| positive \| notice \| negative | 'informative' |
+| Card | Component | variant | The visual variant of the card. | CardVariant | primary \| secondary \| quiet \| tertiary | 'primary' |
+| Meter | Component | variant | The variant of the meter. Drives the bar fill color. | MeterVariant | negative \| informative \| positive \| notice | 'informative' |
 | PromptField | Pattern | variant | Visual intensity of the AI brand treatment. | 'subtle' \| 'balanced' \| 'prominent' | — | 'balanced' |
-| StatusLight | Component | variant | Semantic or non-semantic color variant for the status dot. | string | — | 'neutral' |
-| Tooltip | Component | variant | The semantic variant of the tooltip. | TooltipVariant | neutral \| informative \| negative | 'neutral' |
+| StatusLight | Component | variant | Semantic or non-semantic color variant for the status dot. | string | negative \| neutral \| positive \| notice \| fuchsia \| indigo \| magenta \| purple \| seafoam \| yellow \| chartreuse \| celery \| cyan \| pink \| turquoise \| brown \| cinnamon \| silver \| info | 'neutral' |
+| Tooltip | Component | variant | The semantic variant of the tooltip. | TooltipVariant | negative \| informative \| neutral | 'neutral' |
 
 ### `vertical`
 
@@ -843,7 +857,7 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 | IllustratedMessage | Component | Supporting description text |
 | Meter | Component | Additional description text below the meter. Referenced via `aria-describedby` on the shadow `meter` role element when assigned nodes are present. |
 | ProgressBar | Component | Additional description text below the progress bar. Referenced via `aria-describedby` on the shadow `progressbar` role element when assigned nodes are present. |
-| ResponseStatusStep | Pattern | Step detail shown in the expanded timeline |
+| ResponseStatusStep | Pattern | Step detail shown in the expanded timeline. Falls back to bare/unslotted children when no `slot="description"` element is present. |
 
 ### `feedback`
 
@@ -887,8 +901,8 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 | AccordionItem | Component | The heading text for this accordion item. |
 | Meter | Component | Visible label for the meter. Referenced via `aria-labelledby` on the shadow `meter` role element. |
 | ProgressBar | Component | Visible label for the progress bar. Referenced via `aria-labelledby` on the shadow `progressbar` role element. |
-| ResponseStatus | Pattern | Header row label. Falls back to the active step label. |
-| ResponseStatusStep | Pattern | Step title (shown in the header when `status="active"`) |
+| ResponseStatus | Pattern | Header row label. Falls back to the active step label while the step timeline is closed, or a generic "Processing…" label while it's open with at least one incomplete step. |
+| ResponseStatusStep | Pattern | Step title. Also shown in the parent's header while `status="active"`. |
 
 ### `legal`
 
@@ -1002,7 +1016,7 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 
 | Component | Category | Description | Returns |
 | --- | --- | --- | --- |
-| Dropzone | Component | Fired when dragged files leave the zone. | — |
+| Dropzone | Component | Fired when an accepted drag leaves the zone or becomes rejected. | — |
 
 ### `swc-dropzone-dragover`
 
@@ -1042,6 +1056,12 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 | Popover | Component | Dispatched when the popover begins opening. | CustomEvent |
 | Tooltip | Component | Dispatched when the tooltip begins to open, before the transition plays. | — |
 
+### `swc-prompt-field-drop`
+
+| Component | Category | Description | Returns |
+| --- | --- | --- | --- |
+| PromptField | Pattern | Dispatched when files are dropped anywhere on the field. Detail: `{ files: File[] }`. Consumers should build and slot `swc-upload-attachment` elements from `files` externally, same as the upload-click flow. | — |
+
 ### `swc-prompt-field-input`
 
 | Component | Category | Description | Returns |
@@ -1066,11 +1086,29 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 | --- | --- | --- | --- |
 | PromptField | Pattern | Dispatched when upload affordance is activated. Consumers should handle file picker flow externally. | CustomEvent |
 
+### `swc-response-status-step-active-label-change`
+
+| Component | Category | Description | Returns |
+| --- | --- | --- | --- |
+| ResponseStatusStep | Pattern | Dispatched when this step's label text changes while `status="active"`, so the parent can keep its header label in sync with streamed text. Detail: `{ label: string }` | — |
+
+### `swc-response-status-step-open-change`
+
+| Component | Category | Description | Returns |
+| --- | --- | --- | --- |
+| ResponseStatusStep | Pattern | Internal signal consumed by the parent to re-dispatch its public `swc-response-status-step-toggle` event with an index; not intended for external use. Detail: `{ open: boolean }` | — |
+
+### `swc-response-status-step-toggle`
+
+| Component | Category | Description | Returns |
+| --- | --- | --- | --- |
+| ResponseStatus | Pattern | Dispatched when the user expands or collapses a step's description. Detail: `{ open: boolean, index: number }` | — |
+
 ### `swc-response-status-toggle`
 
 | Component | Category | Description | Returns |
 | --- | --- | --- | --- |
-| ResponseStatus | Pattern | Dispatched when the user opens or closes the panel. Detail: `{ open: boolean }` | CustomEvent |
+| ResponseStatus | Pattern | Dispatched when the user opens or closes the panel. Detail: `{ open: boolean }` | — |
 
 ### `swc-suggestion`
 
@@ -1084,19 +1122,26 @@ Consolidated API surface across all Spectrum Web Components and patterns. Each e
 | --- | --- | --- | --- |
 | UploadAttachment | Pattern | Dispatched when the dismiss button is pressed. Detail: `{ attachment: this }` | CustomEvent |
 
+### `type`
+
+| Component | Category | Description | Returns |
+| --- | --- | --- | --- |
+| ResponseStatus | Pattern |  | CustomEvent |
+| ResponseStatusStep | Pattern |  | CustomEvent |
+
 ## Methods
 
 ### `click`
 
 | Component | Category | Attribute | Description | Data type | Returns |
 | --- | --- | --- | --- | --- | --- |
-| AccordionItem | Component | — | — | () => void | void |
+| AccordionItem | Component | — |  | () => void | void |
 
 ### `focus`
 
 | Component | Category | Attribute | Description | Data type | Returns |
 | --- | --- | --- | --- | --- | --- |
-| AccordionItem | Component | — | — | (options?) => void | void |
+| AccordionItem | Component | — |  | (options?) => void | void |
 | ActionGroup | Component | — | Focuses the roving tab stop within the group. When the `FocusgroupNavigationController` has memory, restores focus to the last active item; otherwise falls back to the first managed child. | (options?) => void | void |
 | ConversationThread | Pattern | — | Focuses the current active turn. Before focusing, we refresh the slotted turn list and roving-tabindex state so we never target a stale turn when messages were added/removed just before focus. | (options?) => void | void |
 | Tabs | Component | — | Focuses the selected tab, or the first tab when none is selected yet. Slotted tabs live in the light DOM; this is more reliable than relying only on shadow `delegatesFocus` across browsers and test harnesses. | (options?) => void | void |
