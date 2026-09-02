@@ -1,0 +1,100 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../swc/.storybook/blocks';
+
+import * as Stories from './stories/help-text-mixin.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Usage
+
+`HelpTextMixin` adds description/error-text rendering and accessible description wiring to a host so components do not hand-roll it. It is one of two decoupled primitives for form-field labelling:
+
+- **`HelpTextMixin`** (`@adobe/spectrum-wc-core/mixins`) — the `accessible-describedby` property, `description` / `error-text` slot presence tracking, and `renderHelpText()`.
+- **`renderFieldHelpText`** (`@adobe/spectrum-wc-core/directives/render-help-text`) — the underlying render-only directive. The mixin owns and exposes it; use it directly only for stateless rendering without the mixin.
+
+`LabellingMixin` (`@adobe/spectrum-wc-core/mixins`) is the companion mixin for accessible-name association; `swc-text-field` composes both.
+
+### What it does
+
+- **Combined description sources** — unlike accessible-name sources, a slotted `description` and an external `accessibleDescribedby` reference combine rather than override each other: the role element's `ariaDescribedByElements` lists the in-shadow description first, then the resolved external elements.
+- **Invalid-gated error message** — the role element's `ariaErrorMessageElements` points at the in-shadow error-text element only while the host reads as `invalid` (read structurally, so a host that doesn't declare `invalid` at all simply never surfaces an error message).
+- **Conditional rendering** — `renderHelpText()` renders nothing when there is no description content and no active error message.
+
+### Basic usage
+
+1. Apply the mixin to your base class: `class MyField extends HelpTextMixin(SpectrumElement) {}`.
+2. Override `roleElement` to return the element the description/error-message relationships should be wired onto.
+3. Call `renderHelpText()` in your template.
+
+```typescript
+import { html, LitElement } from 'lit';
+import { HelpTextMixin } from '@adobe/spectrum-wc-core/mixins';
+
+class MyField extends HelpTextMixin(LitElement) {
+  invalid = false;
+
+  override get roleElement() {
+    return this.renderRoot.querySelector('input');
+  }
+
+  render() {
+    return html`
+      <input />
+      ${this.renderHelpText()}
+    `;
+  }
+}
+```
+
+## Behaviors
+
+### Combined description sources
+
+<Canvas of={Stories.CombinedDescription} />
+
+### Error text gated by invalid
+
+The error-text element and its `ariaErrorMessageElements` association only appear while the host is `invalid`; the description remains associated regardless.
+
+<Canvas of={Stories.ErrorTextGating} />
+
+## Accessibility
+
+### Features
+
+- **`aria-errormessage`, in addition to `aria-describedby`** — the error message is never the sole description source; it supplements the combined `ariaDescribedByElements` set while `invalid` is `true`.
+- **No default live region** — help/error content is wired through `ariaDescribedByElements`/`ariaErrorMessageElements`, not an `aria-live` region, so a screen reader announces it when focus lands on the field.
+
+### Best practices
+
+- Pair `invalid` with slotted `error-text` so the invalid state is not conveyed by color alone.
+- Use `accessibleDescribedby` for a description composed from light-DOM content the field doesn't own; it combines with, rather than replaces, a slotted `description`.
+
+<Canvas of={Stories.Accessibility} />
+
+## API
+
+### Constructor
+
+`HelpTextMixin(BaseClass)` — returns `BaseClass` extended with the help-text API.
+
+### Members
+
+| Member                      | Description                                                                                                |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `accessibleDescribedby`     | Space-separated element `id`s that describe the role element. Combines with a slotted `description`.       |
+| `hasDescriptionSlotContent` | Read-only. Whether slotted `description` content is present.                                               |
+| `hasErrorTextSlotContent`   | Read-only. Whether slotted `error-text` content is present.                                                |
+| `roleElement`               | `@internal`. The element the resolved description/error relationships are wired onto.                      |
+| `renderHelpText()`          | Renders the description/error-text markup for the current state (via the `renderFieldHelpText` directive). |
+
+### Related primitives
+
+| Export                | Module                                                | Purpose                                                                  |
+| --------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------ |
+| `renderFieldHelpText` | `@adobe/spectrum-wc-core/directives/render-help-text` | Underlying help-text render; exposed via the mixin's `renderHelpText()`. |
+| `LabellingMixin`      | `@adobe/spectrum-wc-core/mixins`                      | Companion mixin for accessible-name association.                         |
+
+<DocsFooter />

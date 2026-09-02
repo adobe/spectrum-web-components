@@ -10,21 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-/* @todo (Phase 5, styling): baseline from spectrum-css (spectrum-two) index.css and
-   consume the shared form-fields stylesheet fragment (including the
-   label-position="side" grid variant, Q22). Keep styling on .swc-TextField,
-   not :host. */
-.swc-TextField {
-  display: inline-flex;
-  flex-direction: column;
-  gap: var(--swc-spacing-75, 4px);
-}
-
-.swc-FieldLabel {
-  font: inherit;
-}
-
-.swc-FieldDescription,
-.swc-FieldErrorText {
-  font-size: var(--swc-body-size-s);
-}
+export {
+  renderFieldHelpText,
+  type RenderFieldHelpTextOptions,
+  type RenderFieldHelpTextResult,
+} from './src/render-help-text.js';

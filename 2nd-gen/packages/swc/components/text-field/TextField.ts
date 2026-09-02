@@ -17,6 +17,8 @@ import { TextFieldBase } from '@adobe/spectrum-wc-core/components/text-field';
 
 import styles from './text-field.css';
 
+let nextTextFieldId = 0;
+
 /**
  * A single-line text field for entering and editing text.
  *
@@ -35,16 +37,41 @@ export class TextField extends TextFieldBase {
     return [styles];
   }
 
+  private readonly _instanceId = ++nextTextFieldId;
+
+  private get _inputId(): string {
+    return `swc-text-field-input-${this._instanceId}`;
+  }
+
+  /**
+   * The real role element `LabellingMixin`/`HelpTextMixin` wire the resolved
+   * ARIA relationships onto.
+   */
+  public override get roleElement(): HTMLInputElement | null {
+    return this.renderRoot.querySelector('input.input');
+  }
+
   protected override render(): TemplateResult {
-    // @todo (SWC-2466 / Phase 4–5): render the visible label, required indicator,
-    // validation icon, and description/error container via the LabellingController.
-    // Until then the input takes its accessible name from `accessible-label`.
     return html`
       <div class="swc-TextField">
+        ${this.renderLabel(this._inputId)}
         <input
+          id=${this._inputId}
           class="input"
-          aria-label=${ifDefined(this.accessibleLabel || undefined)}
+          type=${this.type}
+          .value=${this.value}
+          placeholder=${ifDefined(this.placeholder || undefined)}
+          pattern=${ifDefined(this.pattern)}
+          inputmode=${ifDefined(this.inputmode)}
+          autocomplete=${ifDefined(this.autocomplete)}
+          maxlength=${ifDefined(this.maxlength)}
+          minlength=${ifDefined(this.minlength)}
+          ?readonly=${this.readonly}
+          ?required=${this.required}
+          ?disabled=${this.disabled}
+          aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
         />
+        ${this.renderHelpText()}
       </div>
     `;
   }

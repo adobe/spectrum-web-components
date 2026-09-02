@@ -1,0 +1,95 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../swc/.storybook/blocks';
+
+import * as Stories from './stories/labelling-mixin.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Usage
+
+`LabellingMixin` adds visible-label rendering and accessible-name wiring to a host so components do not hand-roll it. It is one of two decoupled primitives for form-field labelling:
+
+- **`LabellingMixin`** (`@adobe/spectrum-wc-core/mixins`) — the `accessible-label` / `accessible-labelledby` properties, `label` slot presence tracking, the "no accessible name" dev warning, and `renderLabel()`.
+- **`renderFieldLabel`** (`@adobe/spectrum-wc-core/directives/render-label`) — the underlying render-only directive. The mixin owns and exposes it; use it directly only for stateless label rendering without the mixin.
+
+`HelpTextMixin` (`@adobe/spectrum-wc-core/mixins`) is the companion mixin for description/error-text association; `swc-text-field` composes both.
+
+### What it does
+
+- **Precedence-ordered accessible name** — three sources, highest precedence first: `accessibleLabelledby` (resolved against the host's root node, written to the role element's `ariaLabelledByElements`), `accessibleLabel` (written to the role element's `aria-label` attribute), and a slotted visible label (rendered as a real, same-root `<label for>`). Only the highest-precedence source that is actually set is wired.
+- **Conditional label rendering** — `renderLabel()` renders nothing when there is no slotted `label` content, and renders a plain, non-`for` `<span>` (not a `<label for>`) when a higher-precedence source is active, so the visible text isn't hidden but is excluded from the accessible-name computation.
+- **Dev-mode warning** — warns when no accessible-name source resolves to anything.
+
+### Basic usage
+
+1. Apply the mixin to your base class: `class MyField extends LabellingMixin(SpectrumElement) {}`.
+2. Override `roleElement` to return the element the accessible name should be wired onto (usually the rendered `<input>` or other native control).
+3. Call `renderLabel(inputId)` in your template, passing the `id` of that role element (or `null` if it doesn't have one yet).
+
+```typescript
+import { html, LitElement } from 'lit';
+import { LabellingMixin } from '@adobe/spectrum-wc-core/mixins';
+
+class MyField extends LabellingMixin(LitElement) {
+  override get roleElement() {
+    return this.renderRoot.querySelector('input');
+  }
+
+  render() {
+    return html`
+      ${this.renderLabel('my-field-input')}
+      <input id="my-field-input" />
+    `;
+  }
+}
+```
+
+## Behaviors
+
+### Name source precedence
+
+`accessible-labelledby` overrides both `accessible-label` and a slotted label; `accessible-label` overrides a slotted label. Only the winning source is wired onto the role element — a lower-precedence slotted label still renders visually, but is not part of the accessible-name computation, avoiding a [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) mismatch.
+
+<Canvas of={Stories.NameSourcePrecedence} />
+
+## Accessibility
+
+### Features
+
+- **One accessible-name writer** — exactly one of `ariaLabelledByElements`, `aria-label`, or a same-root `<label for>` is wired at a time, by construction.
+- **Native click-to-focus** — when the slotted label is the active source, it renders as a real `<label for>`, so clicking the label focuses the field natively.
+- **Dev-mode warning** — a field with no accessible-name source at all triggers a console warning in development builds.
+
+### Best practices
+
+- Prefer a slotted label for ordinary fields; reserve `accessible-label`/`accessible-labelledby` for fields with no visible label of their own or a name composed from elements the field doesn't own (for example, a grid cell named by its row and column headers).
+- Don't combine a slotted label with `accessible-label`/`accessible-labelledby` that carries different text.
+
+<Canvas of={Stories.Accessibility} />
+
+## API
+
+### Constructor
+
+`LabellingMixin(BaseClass)` — returns `BaseClass` extended with the labelling API.
+
+### Members
+
+| Member                 | Description                                                                                         |
+| ---------------------- | --------------------------------------------------------------------------------------------------- |
+| `accessibleLabel`      | Accessible name, applied as `aria-label`. Lowest precedence after `accessibleLabelledby`.           |
+| `accessibleLabelledby` | Space-separated element `id`s that provide the accessible name. Highest precedence.                 |
+| `hasLabelSlotContent`  | Read-only. Whether slotted `label` content is present.                                              |
+| `roleElement`          | `@internal`. The element the resolved name is wired onto. Override to return the real role element. |
+| `renderLabel(forId)`   | Renders the label markup for the current state (via the `renderFieldLabel` directive).              |
+
+### Related primitives
+
+| Export             | Module                                            | Purpose                                                           |
+| ------------------ | ------------------------------------------------- | ----------------------------------------------------------------- |
+| `renderFieldLabel` | `@adobe/spectrum-wc-core/directives/render-label` | Underlying label render; exposed via the mixin's `renderLabel()`. |
+| `HelpTextMixin`    | `@adobe/spectrum-wc-core/mixins`                  | Companion mixin for description/error-text association.           |
+
+<DocsFooter />

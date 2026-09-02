@@ -1,0 +1,63 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as TextFieldStories from './stories/text-field.stories';
+
+<Meta of={TextFieldStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A text field consists of:
+
+- **Input**: the real, focusable `<input>` that carries the value and native `textbox` role
+- **Label** (optional), provided through the `label` slot: visible text rendered as a real, same-root `<label for>`
+- **Description** (optional), provided through the `description` slot: guidance text associated via `aria-describedby`
+- **Error text** (optional), provided through the `error-text` slot: shown and associated via `aria-errormessage` only while `invalid`
+
+<Canvas of={TextFieldStories.Anatomy} />
+
+## Options
+
+### Labelling
+
+Three sources can provide the field's accessible name, in precedence order (highest first): `accessible-labelledby`, `accessible-label`, and a slotted `label`. Only the highest-precedence source that is set becomes the accessible name — a lower-precedence source with different text does not get silently combined into it, avoiding a [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) mismatch.
+
+- **Slotted `label`**: the default, recommended path for an ordinary standalone field. Renders as a real, same-root `<label for>`, giving native click-to-focus.
+- **`accessible-label`**: a string accessible name for a field with no visible label of its own.
+- **`accessible-labelledby`**: space-separated element `id`s, resolved against the field's root node, for composing a name from elements the field does not own (for example, a grid cell named by its row and column headers).
+
+<Canvas of={TextFieldStories.Labelling} />
+
+## States
+
+Text fields can exist in various states:
+
+- **Default**: normal, editable state
+- **Required**: the native `required` attribute is reflected onto the input; no separate `aria-required` is set
+- **Read-only**: focusable and selectable, but not editable; distinct from disabled
+- **Disabled**: not editable and removed from the tab order
+- **Invalid**: shows the slotted `error-text` and associates it via `aria-errormessage`, in addition to `aria-describedby`
+
+<Canvas of={TextFieldStories.States} />
+
+## Accessibility
+
+### Features
+
+- **Native role** — the host sets no ARIA role; the real `<input>` supplies the implicit `textbox` role.
+- **One accessible-name writer** — `accessible-labelledby` &gt; `accessible-label` &gt; slotted label, in that order; exactly one source is wired at a time.
+- **Combining descriptions** — a slotted `description` and an external `accessible-describedby` reference combine rather than override each other; the in-shadow description comes first.
+- **`aria-errormessage`** — set only while `invalid` is `true`, alongside `aria-describedby`, so the error text is both visible and specifically identified to assistive technology.
+- **Dev-mode warning** — a field with no visible label, no `accessible-label`, and no `accessible-labelledby` triggers a console warning in development builds.
+
+### Best practices
+
+- Prefer a slotted `label` for ordinary fields; reserve `accessible-label`/`accessible-labelledby` for fields with no visible label of their own or a name composed from elements the field doesn't own.
+- Don't combine a slotted label with `accessible-label`/`accessible-labelledby` that carries different text — only the highest-precedence source is used, so a lower-precedence mismatch is a likely authoring error.
+- Always pair `invalid` with slotted `error-text` so the invalid state is not conveyed by color or the validation icon alone.
+
+<Canvas of={TextFieldStories.Accessibility} />
+
+<DocsFooter />
