@@ -53,10 +53,18 @@ jobs:
   # that moment, not on every push. `next` is therefore not a true continuous build of
   # every main commit; it only refreshes when a push coincides with a pending changeset.
   # Also runs for manual workflow_dispatch. Never touches main, never commits, never
-  # opens a PR, never enters persistent pre-release mode. Runs alongside (not instead
-  # of) the `release` job below - both are triggered by
-  # the same push event but never conflict (separate jobs/runners, and the run-level
-  # concurrency group only dedupes overlapping *workflow runs*, not jobs within one run).
+  # opens a PR. Runs alongside (not instead of) the `release` job below - both are
+  # triggered by the same push event but never conflict (separate jobs/runners, and the
+  # run-level concurrency group only dedupes overlapping *workflow runs*, not jobs
+  # within one run).
+  #
+  # This job does NOT pass --snapshot to `changeset version`, unlike gen1's equivalent
+  # job. Once the `release` job below enters persistent pre mode (`2nd-gen/.changeset/pre.json`,
+  # created on the first real gen2 release), changesets refuses `--snapshot` in that same
+  # changeset directory ("Snapshot release is not allowed in pre mode"). A plain
+  # `changeset version` is still effectively throwaway here: this job's checkout is
+  # never committed or pushed, so the version bump it produces only ever exists on the
+  # ephemeral runner before being discarded.
   snapshot:
     needs: check-changesets
     if: needs.check-changesets.outputs.has_changesets == 'true'
@@ -87,11 +95,11 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
         run: npm whoami --registry=https://registry.npmjs.org
 
-      - name: Version packages (snapshot)
+      - name: Version packages
         working-directory: 2nd-gen
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn changeset version --snapshot ${{ steps.extract-tag.outputs.tag }}
+        run: yarn changeset version
 
       - name: Capture released versions
         id: versions
