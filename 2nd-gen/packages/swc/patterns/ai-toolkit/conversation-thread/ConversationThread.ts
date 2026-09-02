@@ -30,6 +30,7 @@ import styles from './conversation-thread.css';
  *
  * @element swc-conversation-thread
  * @slot - Conversation turns, typically `<swc-conversation-turn>` elements.
+ * @since 2.0.0-beta.3
  */
 export class ConversationThread extends SpectrumElement {
   @queryAssignedElements({ flatten: true, selector: 'swc-conversation-turn' })

@@ -57,6 +57,7 @@ export type ResponseStatusStepStatus =
  * @fires swc-response-status-step-active-label-change - Dispatched when this
  * step's label text changes while `status="active"`, so the parent can keep
  * its header label in sync with streamed text. Detail: `{ label: string }`
+ * @since 2.0.0-beta.3
  */
 export class ResponseStatusStep extends SpectrumElement {
   private readonly _toggleId = uniqueId('swc-response-status-step-toggle');

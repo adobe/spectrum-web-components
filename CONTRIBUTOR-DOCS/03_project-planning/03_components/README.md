@@ -142,6 +142,7 @@
     - [Progress Circle migration roadmap](progress-circle/rendering-and-styling-migration-analysis.md)
 - Radio
     - [Radio accessibility migration analysis](radio/accessibility-migration-analysis.md)
+    - [Radio migration plan](radio/migration-plan.md)
     - [Radio migration roadmap](radio/rendering-and-styling-migration-analysis.md)
 - Radio Group
     - [Radio group accessibility migration analysis](radio-group/accessibility-migration-analysis.md)
