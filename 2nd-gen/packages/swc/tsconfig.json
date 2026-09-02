@@ -5,20 +5,25 @@
     "noEmit": false,
     "outDir": "./dist",
     "paths": {
+      "@adobe/spectrum-wc-core/*": ["../core/*"],
       "@adobe/spectrum-wc/*": ["./components/*"],
-      "@adobe/vite-global-elements-css": ["../tools/vite-global-elements-css"],
-      "@adobe/spectrum-wc-core/*": ["../core/*"]
+      "@adobe/vite-global-elements-css": ["../tools/vite-global-elements-css"]
     },
     "rootDir": "./",
     "types": ["@vitest/browser-playwright"]
   },
   "exclude": ["node_modules", "dist"],
   "extends": "../../tsconfig.json",
+  // `dist/custom-elements.json` is a generated artifact imported by VRT stories; listed in `files` (not `include`) so `exclude: ["dist"]` cannot drop it.
+  "files": ["dist/custom-elements.json"],
   "include": [
     "**/*.ts",
     "**/*.d.ts",
     "vite-env.d.ts",
-    ".storybook/storybook-env.d.ts"
+    ".storybook/storybook-env.d.ts",
+    ".storybook/helpers/**/*.ts",
+    ".storybook/decorators/**/*.ts",
+    ".storybook/intl/**/*.json"
   ],
   "references": [
     {
