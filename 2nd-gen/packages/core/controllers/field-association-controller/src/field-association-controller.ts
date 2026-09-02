@@ -88,7 +88,7 @@ export class FieldAssociationController {
   //     DISABLED CASCADE
   // ─────────────────────────
 
-  /** `true` when an ancestor `<form>`/`<fieldset disabled>` disabled the field; OR with the host's own `disabled`. */
+  /** `true` when an ancestor `<form>`/`<fieldset disabled>` cascaded down. Excludes the host's own `disabled` (see host `effectiveDisabled`). */
   public get formDisabled(): boolean {
     return this._formDisabled;
   }
