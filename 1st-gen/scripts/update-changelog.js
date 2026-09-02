@@ -318,7 +318,7 @@ async function createChangelog() {
     firstGen.majorChanges,
     firstGen.minorChanges
   );
-  const nextTag = `v${nextVersion}`;
+  const nextTag = `gen1-${nextVersion}`;
   const date = new Date().toLocaleDateString('en-CA', {
     year: 'numeric',
     month: '2-digit',
