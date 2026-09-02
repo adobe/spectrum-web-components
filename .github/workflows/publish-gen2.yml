@@ -157,7 +157,7 @@ jobs:
   # `main` base, two changesets/action calls would both compute the identical branch name
   # `changeset-release/main` and silently overwrite each other's Version PR content
   # whenever both generations have pending changesets (not just under a race - any two
-  # pushes, even hours apart, collide the same way). peter-evans/create-pull-request@v6
+  # pushes, even hours apart, collide the same way). peter-evans/create-pull-request@v8
   # takes an explicit `branch:` input, so each generation gets its own dedicated branch.
   release:
     needs: check-changesets
@@ -197,7 +197,7 @@ jobs:
 
       - name: Open or update the gen2 Version PR
         if: needs.check-changesets.outputs.has_changesets == 'true'
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           commit-message: 'chore: release gen2 packages #gen2-publish'
           title: 'chore: release gen2 packages (beta) #gen2-publish'
