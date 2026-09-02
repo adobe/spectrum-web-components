@@ -1,16 +1,6 @@
 name: Publish Packages (gen2)
 
 on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'NPM dist-tag for a throwaway gen2 snapshot'
-        required: false
-        default: 'next'
-        type: choice
-        options:
-          - next
-          - snapshot-test
   push:
     branches:
       - main
@@ -42,109 +32,21 @@ jobs:
           COUNT=$(find 2nd-gen/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
           if [ "$COUNT" -eq 0 ]; then
             echo "has_changesets=false" >> $GITHUB_OUTPUT
-            echo "No 2nd-gen changesets found - skipping snapshot publish"
+            echo "No 2nd-gen changesets found - nothing to version"
           else
             echo "has_changesets=true" >> $GITHUB_OUTPUT
             echo "Found $COUNT 2nd-gen changeset(s)"
           fi
 
-  # Throwaway snapshot publish: gated on has_changesets, same as check-changesets - so
-  # this only runs on a push to main that happens to have 2nd-gen changesets pending at
-  # that moment, not on every push. `next` is therefore not a true continuous build of
-  # every main commit; it only refreshes when a push coincides with a pending changeset.
-  # Also runs for manual workflow_dispatch. Never touches main, never commits, never
-  # opens a PR. Runs alongside (not instead of) the `release` job below - both are
-  # triggered by the same push event but never conflict (separate jobs/runners, and the
-  # run-level concurrency group only dedupes overlapping *workflow runs*, not jobs
-  # within one run).
+  # Unlike gen1's equivalent workflow, there is no throwaway "snapshot" job here: once
+  # this `release` job enters persistent pre mode (2nd-gen/.changeset/pre.json, created
+  # on the first real gen2 release), changesets refuses `--snapshot` in that same
+  # changeset directory ("Snapshot release is not allowed in pre mode"), and a
+  # non-snapshot `changeset version` call would compute the exact same deterministic
+  # next version as this job - publishing it early under a throwaway tag would make
+  # the real release's publish fail as an npm version collision. Use the `beta` tag
+  # (published below) to test pending changes instead.
   #
-  # This job does NOT pass --snapshot to `changeset version`, unlike gen1's equivalent
-  # job. Once the `release` job below enters persistent pre mode (`2nd-gen/.changeset/pre.json`,
-  # created on the first real gen2 release), changesets refuses `--snapshot` in that same
-  # changeset directory ("Snapshot release is not allowed in pre mode"). A plain
-  # `changeset version` is still effectively throwaway here: this job's checkout is
-  # never committed or pushed, so the version bump it produces only ever exists on the
-  # ephemeral runner before being discarded.
-  snapshot:
-    needs: check-changesets
-    if: needs.check-changesets.outputs.has_changesets == 'true'
-    runs-on: ubuntu-latest
-    environment: npm-publish
-    env:
-      YARN_ENABLE_IMMUTABLE_INSTALLS: false
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup job and install dependencies
-        uses: ./.github/actions/setup-job
-
-      - name: Determine snapshot tag
-        id: extract-tag
-        env:
-          INPUT_TAG: ${{ github.event.inputs.tag }}
-        run: |
-          WORKFLOW_TAG="${INPUT_TAG:-next}"
-          echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
-
-      - name: Verify NPM authentication
-        id: npm-auth
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
-        run: npm whoami --registry=https://registry.npmjs.org
-
-      - name: Version packages
-        working-directory: 2nd-gen
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn changeset version
-
-      - name: Capture released versions
-        id: versions
-        run: |
-          CORE_VERSION=$(node -p "require('./2nd-gen/packages/core/package.json').version")
-          SWC_VERSION=$(node -p "require('./2nd-gen/packages/swc/package.json').version")
-          echo "core=$CORE_VERSION" >> $GITHUB_OUTPUT
-          echo "swc=$SWC_VERSION" >> $GITHUB_OUTPUT
-
-      - name: Refresh lockfile and rebuild
-        run: |
-          yarn install --refresh-lockfile
-          yarn build
-
-      - name: Publish all packages
-        if: steps.npm-auth.outcome == 'success'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
-        working-directory: 2nd-gen
-        run: yarn changeset publish --no-git-tag --tag ${{ steps.extract-tag.outputs.tag }}
-
-      - name: Publish summary
-        if: always()
-        env:
-          TAG: ${{ steps.extract-tag.outputs.tag }}
-          EVENT_NAME: ${{ github.event_name }}
-          CORE_VERSION: ${{ steps.versions.outputs.core }}
-          SWC_VERSION: ${{ steps.versions.outputs.swc }}
-          AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
-        run: |
-          echo "## Publish summary (gen2 snapshot)" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
-          echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
-          echo "| **Trigger** | \`${EVENT_NAME}\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
-          [ -n "$CORE_VERSION" ] && echo "| **@adobe/spectrum-wc-core** | \`${CORE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
-          [ -n "$SWC_VERSION" ] && echo "| **@adobe/spectrum-wc** | \`${SWC_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
-
-          if [ "$AUTH_OUTCOME" == "success" ]; then
-            echo "✅ Publish completed with tag \`${TAG}\`" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
-          fi
-
   # Real release: version-then-PR for the persistent `beta` pre-release channel, then
   # publish once that PR merges. Every push to main either versions and opens/updates a
   # dedicated Version PR (changesets pending) or publishes (no changesets pending,

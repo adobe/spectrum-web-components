@@ -32,7 +32,7 @@ When a change touches `@adobe/spectrum-wc-core`, include the corresponding `@ado
 ## Publishing process
 
 1. Changesets accumulate here as gen2 PRs merge to `main`.
-2. `publish-gen2.yml` (triggered on push to `main`, or manually) runs changesets from within `2nd-gen/` in pre-release mode and publishes to the `beta` npm tag.
+2. `publish-gen2.yml` (triggered on push to `main`) runs changesets from within `2nd-gen/` in pre-release mode and publishes to the `beta` npm tag.
 3. Consumed changesets are removed as part of that release commit on `main`.
 
 See [Changesets documentation](https://github.com/changesets/changesets) for details on the underlying tool.

@@ -16,7 +16,7 @@
     - [Make sure changesets are in place](#make-sure-changesets-are-in-place)
     - [Understand the versioning strategy](#understand-the-versioning-strategy)
 - [Release types](#release-types)
-    - [Pre-release (`next` throwaway snapshot)](#pre-release-next-throwaway-snapshot)
+    - [Pre-release (`next` throwaway snapshot, 1st-gen only)](#pre-release-next-throwaway-snapshot-1st-gen-only)
     - [Planned release (Version PR)](#planned-release-version-pr)
     - [Production release (1st-gen `latest`)](#production-release-1st-gen-latest)
 - [Approving the publish job](#approving-the-publish-job)
@@ -88,15 +88,16 @@ Each generation has its own `config.json` (`1st-gen/.changeset/config.json`, `2n
 
 ## Release types
 
-### Pre-release (`next` throwaway snapshot)
+### Pre-release (`next` throwaway snapshot, 1st-gen only)
 
-A push to `main` that has pending changesets also publishes a throwaway `next` snapshot for that generation — this is unrelated to the Version PR flow below and never touches `main`'s protection or history. It's gated the same way the Version PR step is (pending changesets present), so it is not a build of every single commit on `main`; a push with no pending changesets for that generation does not refresh `next`.
+A push to `main` that has pending 1st-gen changesets also publishes a throwaway `next` snapshot — this is unrelated to the Version PR flow below and never touches `main`'s protection or history. It's gated the same way the Version PR step is (pending changesets present), so it is not a build of every single commit on `main`; a push with no pending changesets does not refresh `next`.
+
+2nd-gen has no equivalent throwaway snapshot: it's always in changesets' persistent pre-release mode once the first real gen2 release ships, and changesets disallows a `--snapshot` version in that mode. Use the `beta` tag (below) to test pending gen2 changes instead.
 
 **What gets published:**
 
 ```
 @spectrum-web-components/button@1.2.3-next.20260101120000
-@adobe/spectrum-wc@0.0.0-next-20260101120000
 ```
 
 **Install a pre-release version:**
