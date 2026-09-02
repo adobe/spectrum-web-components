@@ -1,0 +1,875 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+import { html, LitElement } from 'lit';
+import { state } from 'lit/decorators.js';
+import type { Meta, StoryObj as Story } from '@storybook/web-components';
+
+import '../swc-conversation-thread.js';
+import '../../conversation-turn/swc-conversation-turn.js';
+import '../../system-message/swc-system-message.js';
+import '../../user-message/swc-user-message.js';
+import '../../response-status/swc-response-status.js';
+import '../../message-feedback/swc-message-feedback.js';
+import '../../message-sources/swc-message-sources.js';
+import '../../suggestion/swc-suggestion-group.js';
+import '../../suggestion-item/swc-suggestion-item.js';
+import '../../prompt-field/swc-prompt-field.js';
+import '../../upload-attachment/swc-upload-attachment.js';
+
+import { uniqueId } from '../../../../utils/id.js';
+
+// ────────────────
+//    METADATA
+// ────────────────
+
+/**
+ * Vertical thread wrapper for chat turns with arrow-key navigation.
+ * Use `ArrowUp` / `ArrowDown` to move across turns and `Home` / `End` to jump.
+ *
+ *
+ * Note: `swc-conversation-thread` uses a per-instance navigation controller that
+ * queries slotted items on slot changes and keyboard events. Virtualization is
+ * explicitly out of scope for this component; it is a presentational layer
+ * only. Products should implement virtualization at the data or model layer
+ * and feed only visible subsets to the thread.
+ */
+const meta: Meta = {
+  title: 'AI Toolkit/Conversation thread',
+  component: 'swc-conversation-thread',
+  parameters: {
+    docs: {
+      packagePath: 'patterns/ai-toolkit/conversation-thread',
+      subtitle:
+        'Stacks conversation turns and enables roving keyboard focus between them.',
+    },
+    layout: 'padded',
+  },
+  excludeStories: ['meta'],
+  tags: ['migrated'],
+};
+
+export { meta };
+export default meta;
+
+const threadExampleSource = `<div style="max-inline-size: 720px;">
+  <swc-conversation-thread>
+    <swc-conversation-turn type="user">
+      <swc-user-message>
+        Can you help me create a 45-minute presentation, with animations, for an executive update?
+      </swc-user-message>
+    </swc-conversation-turn>
+    <swc-conversation-turn type="system">
+      <swc-system-message>
+        <swc-response-status slot="status" status="complete"><span slot="label">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</span></swc-response-status>
+        <div class="swc-Typography--prose">
+          <h3>Big idea/core narrative: The warmth of welcome</h3>
+          <p>Hospitality begins the moment our customers set foot off their plane.</p>
+        </div>
+        <swc-message-feedback slot="feedback"></swc-message-feedback>
+        <swc-message-sources slot="sources">
+          <a href="#source-1">Brand brief Q1 2026</a>
+        </swc-message-sources>
+      </swc-system-message>
+    </swc-conversation-turn>
+    <swc-conversation-turn type="user">
+      <swc-user-message>Great. Can you shorten that into three slides?</swc-user-message>
+    </swc-conversation-turn>
+  </swc-conversation-thread>
+</div>`;
+
+const renderThread = () => html`
+  <div style="max-inline-size: 720px;">
+    <swc-conversation-thread>
+      <swc-conversation-turn type="user">
+        <swc-user-message>
+          Can you help me create a 45-minute presentation, with animations, for
+          an executive update?
+        </swc-user-message>
+      </swc-conversation-turn>
+
+      <swc-conversation-turn type="system">
+        <swc-system-message>
+          <swc-response-status slot="status" status="complete">
+            <span slot="label">
+              I interpreted your request as an executive narrative task and
+              prioritized a concise, audience-ready structure.
+            </span>
+          </swc-response-status>
+          <div class="swc-Typography--prose">
+            <h3>Big idea/core narrative: The warmth of welcome</h3>
+            <p>
+              Hospitality begins the moment our customers set foot off their
+              plane.
+            </p>
+          </div>
+          <swc-message-feedback slot="feedback"></swc-message-feedback>
+          <swc-message-sources slot="sources">
+            <a href="#source-1">Brand brief Q1 2026</a>
+          </swc-message-sources>
+        </swc-system-message>
+      </swc-conversation-turn>
+
+      <swc-conversation-turn type="user">
+        <swc-user-message>
+          Great. Can you shorten that into three slides?
+        </swc-user-message>
+      </swc-conversation-turn>
+    </swc-conversation-thread>
+  </div>
+`;
+
+type DemoAttachment = {
+  id: string;
+  title: string;
+  subtitle: string;
+  /** Image preview URL when the attachment is a visual file. */
+  thumbnailUrl?: string;
+  objectUrl?: string;
+  /** File-type label for non-image media tiles (for example, "PDF"). */
+  badge?: string;
+};
+
+const getFileBadge = (fileName: string): string | undefined => {
+  const match = fileName.toLowerCase().match(/\.([a-z0-9]+)$/);
+  if (!match) {
+    return 'FILE';
+  }
+
+  const extension = match[1];
+  if (/^(png|jpe?g|gif|webp|bmp|svg|avif)$/.test(extension)) {
+    return undefined;
+  }
+
+  if (extension === 'pdf') {
+    return 'PDF';
+  }
+
+  return extension.toUpperCase();
+};
+
+const renderDemoAttachmentThumbnail = (
+  attachment: DemoAttachment
+): ReturnType<typeof html> =>
+  attachment.thumbnailUrl
+    ? html`
+        <img
+          slot="thumbnail"
+          src=${attachment.thumbnailUrl}
+          alt=${attachment.title}
+          style="inline-size:100%;block-size:100%;object-fit:cover;"
+        />
+      `
+    : html`
+        <div
+          slot="thumbnail"
+          role="img"
+          aria-label=${attachment.title}
+          style="inline-size:100%;block-size:100%;background:#f3f3f3;"
+        ></div>
+      `;
+
+type DemoTurn = {
+  id: string;
+  role: 'user' | 'system';
+  text: string;
+  attachments?: DemoAttachment[];
+  loading?: boolean;
+
+  /** Index of the step currently active while `loading`. Advances on a timer
+   * so the timeline fills in one step at a time instead of jumping straight
+   * from "generating" to "complete". */
+  stepIndex?: number;
+  sourcesOpen?: boolean;
+  feedbackStatus?: 'positive' | 'negative' | undefined;
+};
+
+const DEMO_SUGGESTIONS = [
+  'Create year-over-year growth chart',
+  'Generate congratulatory poster',
+  'Summarize development pipeline',
+] as const;
+
+// The last step only appears once the response is complete; the others
+// appear one at a time while generating (see `stepIndex` above).
+const DEMO_RESPONSE_STEPS = [
+  {
+    label: 'Read source context',
+    description:
+      'Reviewed the prompt, uploaded assets, and prior conversation context.',
+  },
+  {
+    label: 'Gather supporting data',
+    description:
+      'Pulled relevant metrics and prior campaign results to support the narrative.',
+  },
+  {
+    label: 'Identify supporting proof points',
+    description:
+      'Selected the strongest data points and prior results to back up the narrative.',
+  },
+  {
+    label: 'Draft response structure',
+    description:
+      'Organizing the answer into a concise narrative with supporting proof points.',
+  },
+  {
+    label: 'Check brand style guidelines',
+    description:
+      'Confirmed terminology, tone, and formatting match brand guidelines.',
+  },
+  {
+    label: 'Review for tone and clarity',
+    description:
+      'Read through the draft once more for a confident, concise executive tone.',
+  },
+  {
+    label: 'Prepare next-step suggestions',
+    description: 'Created follow-up prompts that match the generated response.',
+  },
+] as const;
+
+const DEMO_LOADING_STEP_COUNT = DEMO_RESPONSE_STEPS.length - 1;
+
+// How long each step stays active before the next one takes over. The total
+// generation time scales with the step count so pacing stays even as more
+// steps are added.
+const DEMO_STEP_INTERVAL_MS = 2200;
+const DEMO_GENERATION_DURATION_MS =
+  (DEMO_LOADING_STEP_COUNT + 1) * DEMO_STEP_INTERVAL_MS;
+
+const renderDemoResponseStatusSteps = (
+  stepIndex: number,
+  complete: boolean
+) => {
+  const steps = complete
+    ? DEMO_RESPONSE_STEPS
+    : DEMO_RESPONSE_STEPS.slice(0, stepIndex + 1);
+
+  return html`
+    ${steps.map(
+      (step, index) => html`
+        <swc-response-status-step
+          status=${!complete && index === stepIndex ? 'active' : 'complete'}
+        >
+          <span slot="label">${step.label}</span>
+          <span slot="description">${step.description}</span>
+        </swc-response-status-step>
+      `
+    )}
+  `;
+};
+
+const buildAssistantReply = (prompt: string): string => {
+  const normalized = prompt.trim() || 'your request';
+  return `Great direction. Based on "${normalized}", I suggest a 12-slide structure with a clear narrative arc, three supporting proof points, and a concise close with next steps.`;
+};
+
+class ConversationFullPatternDemo extends LitElement {
+  @state()
+  private turns: DemoTurn[] = [
+    {
+      id: 'user-1',
+      role: 'user',
+      text: 'Can you help me create a 45-minute presentation?',
+    },
+    {
+      id: 'system-1',
+      role: 'system',
+      text: 'I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.',
+      sourcesOpen: false,
+    },
+  ];
+
+  @state()
+  private attachments: DemoAttachment[] = [];
+
+  @state()
+  private promptValue = '';
+
+  @state()
+  private isGenerating = false;
+
+  private readonly fileInputId = `conv-demo-upload-${crypto.randomUUID()}`;
+  private responseTimer: number | null = null;
+  private stepTimer: number | null = null;
+  private responseTargetId: string | null = null;
+  private lastPrompt = '';
+
+  public override disconnectedCallback(): void {
+    if (this.responseTimer !== null) {
+      window.clearTimeout(this.responseTimer);
+      this.responseTimer = null;
+    }
+    this.clearStepTimer();
+    super.disconnectedCallback();
+  }
+
+  private clearStepTimer(): void {
+    if (this.stepTimer !== null) {
+      window.clearInterval(this.stepTimer);
+      this.stepTimer = null;
+    }
+  }
+
+  protected override createRenderRoot(): HTMLElement {
+    return this;
+  }
+
+  protected override updated(): void {
+    requestAnimationFrame(() => {
+      const scrollEl = this.querySelector(
+        '.swc-ConversationFullPatternDemo-scroll'
+      );
+      if (scrollEl) {
+        scrollEl.scrollTop = scrollEl.scrollHeight;
+      }
+    });
+  }
+
+  private submitPrompt(rawValue: string): void {
+    const value = rawValue.trim();
+    const hasAttachments = this.attachments.length > 0;
+    if ((!value && !hasAttachments) || this.isGenerating) {
+      return;
+    }
+
+    const userTurn: DemoTurn = {
+      id: `user-${Date.now()}`,
+      role: 'user',
+      text: value,
+      attachments: hasAttachments ? [...this.attachments] : undefined,
+    };
+    const systemTurn: DemoTurn = {
+      id: `system-${Date.now() + 1}`,
+      role: 'system',
+      text: '',
+      loading: true,
+      stepIndex: 0,
+      sourcesOpen: false,
+    };
+
+    this.turns = [...this.turns, userTurn, systemTurn];
+    this.isGenerating = true;
+    this.lastPrompt =
+      value ||
+      (hasAttachments ? this.attachments.map((a) => a.title).join(', ') : '');
+    this.responseTargetId = systemTurn.id;
+    this.promptValue = '';
+    for (const attachment of this.attachments) {
+      if (attachment.objectUrl) {
+        URL.revokeObjectURL(attachment.objectUrl);
+      }
+    }
+    this.attachments = [];
+
+    // Advance the active step on its own cadence so the timeline fills in
+    // one step at a time instead of sitting static until the reply resolves.
+    const targetId = systemTurn.id;
+    this.stepTimer = window.setInterval(() => {
+      let reachedLastStep = false;
+      this.turns = this.turns.map((turn) => {
+        if (turn.id !== targetId) {
+          return turn;
+        }
+        const nextIndex = Math.min(
+          (turn.stepIndex ?? 0) + 1,
+          DEMO_LOADING_STEP_COUNT - 1
+        );
+        reachedLastStep = nextIndex >= DEMO_LOADING_STEP_COUNT - 1;
+        return { ...turn, stepIndex: nextIndex };
+      });
+      if (reachedLastStep) {
+        this.clearStepTimer();
+      }
+    }, DEMO_STEP_INTERVAL_MS);
+
+    // Keep the generating state visible long enough to read the response
+    // status steps before the reply resolves.
+    this.responseTimer = window.setTimeout(() => {
+      this.completeGeneration();
+    }, DEMO_GENERATION_DURATION_MS);
+  }
+
+  private completeGeneration(): void {
+    if (!this.responseTargetId) {
+      return;
+    }
+
+    const targetId = this.responseTargetId;
+    const reply = buildAssistantReply(this.lastPrompt);
+    this.turns = this.turns.map((turn) =>
+      turn.id === targetId ? { ...turn, loading: false, text: reply } : turn
+    );
+    this.responseTargetId = null;
+    this.responseTimer = null;
+    this.clearStepTimer();
+    this.isGenerating = false;
+  }
+
+  private stopGeneration = (): void => {
+    if (!this.isGenerating) {
+      return;
+    }
+
+    if (this.responseTimer !== null) {
+      window.clearTimeout(this.responseTimer);
+      this.responseTimer = null;
+    }
+    this.clearStepTimer();
+
+    if (this.responseTargetId) {
+      const targetId = this.responseTargetId;
+      this.turns = this.turns.map((turn) =>
+        turn.id === targetId
+          ? {
+              ...turn,
+              loading: false,
+              text: 'Generation stopped. Update the prompt to continue.',
+            }
+          : turn
+      );
+    }
+
+    this.responseTargetId = null;
+    this.isGenerating = false;
+  };
+
+  private handlePromptInput = (event: Event): void => {
+    const inputEvent = event as CustomEvent<{ value?: string }>;
+    this.promptValue = inputEvent.detail?.value ?? '';
+  };
+
+  private handlePromptSubmit = (event: Event): void => {
+    const submitEvent = event as CustomEvent<{ value?: string }>;
+    this.submitPrompt(submitEvent.detail?.value ?? '');
+  };
+
+  private appendFiles(files: File[]): void {
+    const nextAttachments = files.map((file, index) => {
+      const mimeType = file.type || '';
+      const lowerName = file.name.toLowerCase();
+      const isImage =
+        mimeType.startsWith('image/') ||
+        /\.(png|jpe?g|gif|webp|bmp|svg|avif)$/.test(lowerName);
+      const objectUrl = isImage ? URL.createObjectURL(file) : undefined;
+      const sizeLabel =
+        typeof file.size === 'number'
+          ? `${Math.max(1, Math.round(file.size / 1024))} KB`
+          : 'Attachment';
+      const fileName = file.name || 'Attachment';
+
+      return {
+        id: uniqueId(`attachment-${index}`),
+        title: fileName,
+        subtitle: sizeLabel,
+        thumbnailUrl: objectUrl,
+        objectUrl,
+        badge: isImage ? undefined : getFileBadge(fileName),
+      } satisfies DemoAttachment;
+    });
+
+    if (!nextAttachments.length) {
+      return;
+    }
+    this.attachments = [...this.attachments, ...nextAttachments];
+  }
+
+  private handleUploadClick = (event: Event): void => {
+    event.preventDefault();
+    const input = this.querySelector<HTMLInputElement>(`#${this.fileInputId}`);
+    input?.click();
+  };
+
+  private handleExternalInput = (event: Event): void => {
+    const input = event.target as HTMLInputElement;
+    const files = Array.from(input.files ?? []);
+    if (!files.length) {
+      return;
+    }
+    this.appendFiles(files);
+    input.value = '';
+  };
+
+  private handleDrop = (event: Event): void => {
+    const { files } = (event as CustomEvent<{ files: File[] }>).detail;
+    this.appendFiles(files);
+  };
+
+  private handleFeedback = (event: Event): void => {
+    const feedbackEvent = event as CustomEvent<{
+      status?: 'positive' | 'negative' | undefined;
+    }>;
+    const feedbackHost = event.target as HTMLElement | null;
+    const turnId = feedbackHost?.getAttribute('data-feedback-id');
+    if (!turnId) {
+      return;
+    }
+    this.turns = this.turns.map((turn) =>
+      turn.id === turnId
+        ? { ...turn, feedbackStatus: feedbackEvent.detail.status }
+        : turn
+    );
+  };
+
+  private handleSuggestion = (event: Event): void => {
+    const suggestionEvent = event as CustomEvent<{ label?: string }>;
+    const label = suggestionEvent.detail?.label?.trim() ?? '';
+    if (!label) {
+      return;
+    }
+    this.submitPrompt(label);
+  };
+
+  private handleDismiss = (event: Event): void => {
+    const attachment = event.target as HTMLElement | null;
+    const attachmentId = attachment?.getAttribute('data-attachment-id');
+    if (!attachmentId) {
+      return;
+    }
+    const removed = this.attachments.find((item) => item.id === attachmentId);
+    if (removed?.objectUrl) {
+      URL.revokeObjectURL(removed.objectUrl);
+    }
+    this.attachments = this.attachments.filter(
+      (item) => item.id !== attachmentId
+    );
+  };
+
+  private handleSourcesToggle = (event: Event): void => {
+    const toggleEvent = event as CustomEvent<{ open?: boolean }>;
+    const sourcesHost = event.target as HTMLElement | null;
+    const turnId = sourcesHost?.getAttribute('data-sources-id');
+    const open = toggleEvent.detail?.open;
+    if (!turnId || typeof open !== 'boolean') {
+      return;
+    }
+    this.turns = this.turns.map((turn) =>
+      turn.id === turnId ? { ...turn, sourcesOpen: open } : turn
+    );
+  };
+
+  private renderTurns() {
+    return this.turns.map((turn) => {
+      if (turn.role === 'user') {
+        return html`
+          ${(turn.attachments ?? []).map(
+            (attachment) => html`
+              <swc-conversation-turn type="user">
+                <swc-user-message type="media">
+                  ${renderDemoAttachmentThumbnail(attachment)}
+                  <span slot="title">${attachment.title}</span>
+                  <span slot="subtitle">${attachment.subtitle}</span>
+                </swc-user-message>
+              </swc-conversation-turn>
+            `
+          )}
+          ${turn.text
+            ? html`
+                <swc-conversation-turn type="user">
+                  <swc-user-message>${turn.text}</swc-user-message>
+                </swc-conversation-turn>
+              `
+            : ''}
+        `;
+      }
+
+      return html`
+        <swc-conversation-turn type="system">
+          <swc-system-message>
+            ${turn.loading
+              ? html`
+                  <swc-response-status slot="status" status="active">
+                    ${renderDemoResponseStatusSteps(turn.stepIndex ?? 0, false)}
+                  </swc-response-status>
+                `
+              : html`
+                  <swc-response-status slot="status" status="complete">
+                    <span slot="label">Response complete</span>
+                    ${renderDemoResponseStatusSteps(0, true)}
+                  </swc-response-status>
+                `}
+            ${turn.loading
+              ? ''
+              : html`
+                  <div class="swc-Typography--prose">
+                    <p>${turn.text}</p>
+                  </div>
+                `}
+            ${turn.loading
+              ? ''
+              : html`
+                  <swc-message-feedback
+                    slot="feedback"
+                    data-feedback-id=${turn.id}
+                    status=${turn.feedbackStatus ?? ''}
+                  ></swc-message-feedback>
+                `}
+            ${turn.loading
+              ? ''
+              : html`
+                  <swc-message-sources
+                    slot="sources"
+                    data-sources-id=${turn.id}
+                    ?open=${!!turn.sourcesOpen}
+                  >
+                    <a href="#">Brand brief Q1 2026</a>
+                    <a href="#">Market research summary</a>
+                  </swc-message-sources>
+                `}
+            ${turn.loading
+              ? ''
+              : html`
+                  <swc-suggestion-group slot="suggestions">
+                    <h3 slot="heading">What would you like to do next?</h3>
+                    ${DEMO_SUGGESTIONS.map(
+                      (item) => html`
+                        <swc-suggestion-item data-suggestion=${item}>
+                          ${item}
+                        </swc-suggestion-item>
+                      `
+                    )}
+                  </swc-suggestion-group>
+                `}
+          </swc-system-message>
+        </swc-conversation-turn>
+      `;
+    });
+  }
+
+  private renderAttachments() {
+    return this.attachments.map(
+      (attachment) => html`
+        <swc-upload-attachment
+          slot="attachment"
+          type="media"
+          dismissible
+          data-attachment-id=${attachment.id}
+        >
+          ${renderDemoAttachmentThumbnail(attachment)}
+          ${attachment.badge
+            ? html`
+                <span slot="badge">${attachment.badge}</span>
+              `
+            : ''}
+        </swc-upload-attachment>
+      `
+    );
+  }
+
+  protected override render() {
+    this.style.cssText =
+      'display:flex;flex-direction:column;block-size:90vb;max-block-size:100vh;overflow:hidden;box-sizing:border-box;';
+
+    return html`
+      <style>
+        .swc-ConversationFullPatternDemo-shell {
+          max-inline-size: 960px;
+          margin: auto;
+          padding: 24px;
+          block-size: 100%;
+          inline-size: 100%;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .swc-ConversationFullPatternDemo-scroll {
+          flex: 1;
+          min-block-size: 0;
+          overflow-y: auto;
+          overflow-x: hidden;
+          padding-block-end: 24px;
+          padding-block-start: 4px;
+          padding-inline: 4px;
+          scroll-padding-block-end: 24px;
+          overscroll-behavior: contain;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+
+        .swc-ConversationFullPatternDemo-scroll::-webkit-scrollbar {
+          display: none;
+        }
+
+        .swc-ConversationFullPatternDemo-composer {
+          flex-shrink: 0;
+          padding-block-start: 8px;
+        }
+      </style>
+      <div
+        class="swc-ConversationFullPatternDemo-shell"
+        @swc-message-feedback-change=${this.handleFeedback}
+        @swc-suggestion=${this.handleSuggestion}
+        @swc-upload-attachment-dismiss=${this.handleDismiss}
+        @swc-message-sources-toggle=${this.handleSourcesToggle}
+      >
+        <div class="swc-ConversationFullPatternDemo-scroll">
+          <swc-conversation-thread>
+            ${this.renderTurns()}
+          </swc-conversation-thread>
+        </div>
+        <div class="swc-ConversationFullPatternDemo-composer">
+          <swc-prompt-field
+            mode=${this.isGenerating ? 'loading' : 'default'}
+            .value=${this.promptValue}
+            @swc-prompt-field-input=${this.handlePromptInput}
+            @swc-prompt-field-submit=${this.handlePromptSubmit}
+            @swc-prompt-field-stop=${this.stopGeneration}
+            @swc-prompt-field-upload-click=${this.handleUploadClick}
+            @swc-prompt-field-drop=${this.handleDrop}
+          >
+            ${this.renderAttachments()}
+            <p slot="legal" class="swc-PromptField-legal-disclaimer">
+              Responses are generated using AI, and may be inaccurate. Check
+              before using.
+              <a
+                href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+              >
+                AI User Guidelines
+              </a>
+            </p>
+          </swc-prompt-field>
+          <input
+            id=${this.fileInputId}
+            type="file"
+            multiple
+            hidden
+            @change=${this.handleExternalInput}
+          />
+        </div>
+      </div>
+    `;
+  }
+}
+
+if (!customElements.get('swc-conversation-full-pattern-demo')) {
+  customElements.define(
+    'swc-conversation-full-pattern-demo',
+    ConversationFullPatternDemo
+  );
+}
+
+const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+  <swc-conversation-thread>
+    <swc-conversation-turn type="user">
+      <swc-user-message>Can you help me create a 45-minute presentation?</swc-user-message>
+    </swc-conversation-turn>
+    <swc-conversation-turn type="system">
+      <swc-system-message>
+        <swc-response-status slot="status" status="complete" open>
+          <span slot="label">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</span>
+          <swc-response-status-step status="complete">
+            <span slot="label">Read source context</span>
+            <span slot="description">Reviewed the prompt, uploaded assets, and prior conversation context.</span>
+          </swc-response-status-step>
+          <swc-response-status-step status="complete">
+            <span slot="label">Draft response structure</span>
+            <span slot="description">Organized the answer into a concise narrative with supporting proof points.</span>
+          </swc-response-status-step>
+        </swc-response-status>
+        <div class="swc-Typography--prose">
+          <p>Great direction. I suggest a 12-slide structure...</p>
+        </div>
+        <swc-message-feedback slot="feedback"></swc-message-feedback>
+        <swc-message-sources slot="sources">
+          <a href="#">Brand brief Q1 2026</a>
+        </swc-message-sources>
+      </swc-system-message>
+    </swc-conversation-turn>
+  </swc-conversation-thread>
+
+  <swc-prompt-field>
+    <swc-upload-attachment slot="attachment" type="media" dismissible>
+      <div
+        slot="thumbnail"
+        role="img"
+        aria-label="Hilton commercial assets"
+        style="inline-size:100%;block-size:100%;background:#f3f3f3;"
+      ></div>
+      <span slot="badge">PDF</span>
+    </swc-upload-attachment>
+    <p slot="legal" class="swc-PromptField-legal-disclaimer">
+      Responses are generated using AI, and may be inaccurate. Check before
+      using.
+      <a
+        href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+      >
+        AI User Guidelines
+      </a>
+    </p>
+  </swc-prompt-field>
+</div>`;
+
+const renderFullPattern = () => html`
+  <swc-conversation-full-pattern-demo></swc-conversation-full-pattern-demo>
+`;
+
+// ────────────────────
+//    PLAYGROUND STORY
+// ────────────────────
+
+export const Playground: Story = {
+  render: renderThread,
+  tags: ['dev'],
+};
+
+// ──────────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────────
+
+export const Overview: Story = {
+  render: renderThread,
+  tags: ['overview'],
+  parameters: {
+    docs: {
+      source: {
+        code: threadExampleSource,
+      },
+    },
+  },
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORY
+// ────────────────────────────────
+
+export const Accessibility: Story = {
+  render: renderThread,
+  tags: ['a11y'],
+  parameters: {
+    docs: {
+      source: {
+        code: threadExampleSource,
+      },
+    },
+  },
+};
+
+// ──────────────────────────────
+//    FULL PATTERN STORY
+// ──────────────────────────────
+
+export const FullPattern: Story = {
+  render: renderFullPattern,
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      story: {
+        height: '600px',
+      },
+      source: {
+        code: fullPatternSource,
+      },
+    },
+  },
+};

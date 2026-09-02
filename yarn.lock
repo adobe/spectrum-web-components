@@ -182,10 +182,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/spectrum-tokens@npm:14.13.1":
-  version: 14.13.1
-  resolution: "@adobe/spectrum-tokens@npm:14.13.1"
-  checksum: 10c0/2122785bfa595223cbf8903bffbd4e2cef74045a86bc4a30ec9c778ca389eaca32e5b2234ba6b4fee12e26fe178c05aa7ed0b35899bede98349d27d699b3a573
+"@adobe/spectrum-tokens@npm:15.2.0":
+  version: 15.2.0
+  resolution: "@adobe/spectrum-tokens@npm:15.2.0"
+  checksum: 10c0/2b9537f1f5a88c661e71419ea51a17fb2ec7c2ba9c642456323ff61a6e2fd371d21999e8b5bb7a243b9e648b4c7c32427960d798fa0e70825d7b002c4b4a489d
   languageName: node
   linkType: hard
 
@@ -205,15 +205,42 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@adobe/spectrum-wc-icons@workspace:*, @adobe/spectrum-wc-icons@workspace:2nd-gen/packages/icons":
+  version: 0.0.0-use.local
+  resolution: "@adobe/spectrum-wc-icons@workspace:2nd-gen/packages/icons"
+  dependencies:
+    "@adobe/postcss-token": "workspace:*"
+    "@adobe/spectrum-wc-core": "npm:2.0.0-beta.2"
+    "@adobe/swc-tokens": "workspace:*"
+    "@custom-elements-manifest/analyzer": "npm:0.10.8"
+    "@storybook/test": "npm:8.6.14"
+    "@storybook/web-components": "npm:10.4.1"
+    "@vitest/browser-playwright": "npm:4.1.7"
+    autoprefixer: "npm:10.4.21"
+    chromatic: "npm:13.3.5"
+    esbuild: "npm:0.27.3"
+    glob: "npm:11.0.3"
+    lit: "npm:^2.5.0 || ^3.1.3"
+    postcss: "npm:8.5.9"
+    postcss-preset-env: "npm:10.4.0"
+    rimraf: "npm:6.0.1"
+    typescript: "npm:5.9.2"
+    vite: "npm:8.0.8"
+    vite-plugin-dts: "npm:4.5.4"
+    vite-plugin-lit-css: "npm:2.2.2"
+  languageName: unknown
+  linkType: soft
+
 "@adobe/spectrum-wc@workspace:2nd-gen/packages/swc":
   version: 0.0.0-use.local
   resolution: "@adobe/spectrum-wc@workspace:2nd-gen/packages/swc"
   dependencies:
     "@adobe/postcss-token": "workspace:*"
     "@adobe/spectrum-wc-core": "npm:2.0.0-beta.2"
+    "@adobe/spectrum-wc-icons": "workspace:*"
     "@adobe/swc-tokens": "workspace:*"
     "@adobe/vite-global-elements-css": "workspace:*"
-    "@axe-core/playwright": "npm:4.11.2"
+    "@axe-core/playwright": "npm:4.13.0"
     "@chromatic-com/storybook": "npm:5.2.1"
     "@custom-elements-manifest/analyzer": "npm:0.10.8"
     "@github-ui/storybook-addon-performance-panel": "npm:1.1.4"
@@ -261,7 +288,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens"
   dependencies:
-    "@adobe/spectrum-tokens": "npm:14.13.1"
+    "@adobe/spectrum-tokens": "npm:15.2.0"
     prettier: "npm:3.8.1"
     vitest: "npm:4.1.7"
     yargs: "npm:18.0.0"
@@ -296,14 +323,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@axe-core/playwright@npm:4.11.2":
-  version: 4.11.2
-  resolution: "@axe-core/playwright@npm:4.11.2"
+"@axe-core/playwright@npm:4.13.0":
+  version: 4.13.0
+  resolution: "@axe-core/playwright@npm:4.13.0"
   dependencies:
-    axe-core: "npm:~4.11.3"
+    axe-core: "npm:~4.13.0"
   peerDependencies:
     playwright-core: ">= 1.0.0"
-  checksum: 10c0/cb6f259c969668ae41b1c56e9fbf8d380d4b9440ef76f3037faa615fdcd36a748f53451116bb53b101dae52c6adc9183ce8de7f62819beb3866989849a9834b6
+  checksum: 10c0/0938f24f3955bfa11c77c326300646a4f1dcd513389320ace9985d68486a622c443b2a34cd86f6002f617a3395623ad1e99a622450830873166aaa7e0312aa68
   languageName: node
   linkType: hard
 
@@ -12273,17 +12300,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axe-core@npm:^4.2.0, axe-core@npm:^4.3.3":
-  version: 4.11.0
-  resolution: "axe-core@npm:4.11.0"
-  checksum: 10c0/7d7020a568a824c303711858c2fcfe56d001d27e46c0c2ff75dc31b436cfddfd4857a301e70536cc9e64829d25338f7fb782102d23497ebdc66801e9900fc895
-  languageName: node
-  linkType: hard
-
-"axe-core@npm:~4.11.3":
-  version: 4.11.3
-  resolution: "axe-core@npm:4.11.3"
-  checksum: 10c0/bc757775ef41396faf6470752a12e96f3972d0d97cae4ec28e99cec7bca2c5aaa6d040b97e7f0278e8d1ea354fa0b0bf7fcaa51775a725d7ed0a0834e7ea13d7
+"axe-core@npm:4.13.0":
+  version: 4.13.0
+  resolution: "axe-core@npm:4.13.0"
+  checksum: 10c0/0e3be8be10eea64beddefd3007e1425424ff60c26c5f4d5f748ec48c2825356839c02ad4167fc1f03a6d84ecd82108f49fb2846ab7fe949273787391745561ca
   languageName: node
   linkType: hard
 
@@ -29562,7 +29582,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
-    "@axe-core/playwright": "npm:4.11.2"
+    "@axe-core/playwright": "npm:4.13.0"
     "@changesets/cli": "npm:2.29.7"
     "@commitlint/cli": "npm:19.8.1"
     "@commitlint/config-conventional": "npm:19.8.1"

@@ -27,6 +27,19 @@ const browserInstances = (process.env.VITEST_BROWSER_INSTANCES ?? 'chromium')
 const resolvedBrowserInstances =
   browserInstances.length > 0 ? browserInstances : [{ browser: 'chromium' }];
 
+// WebKit browser contexts are memory-heavy. When Vitest runs several test
+// files in parallel (one browser context each), a WebKit-only CI run exhausts
+// the container's memory and gets OOM-killed mid-suite. CircleCI sharding
+// handles wall-clock time; this cap bounds *peak* memory by limiting how many
+// WebKit contexts are alive at once. Chromium and Firefox are lighter and run
+// at the default (CPU-count) parallelism.
+const isWebkitOnly =
+  resolvedBrowserInstances.length === 1 &&
+  resolvedBrowserInstances[0].browser === 'webkit';
+const browserMemoryLimits = isWebkitOnly
+  ? { maxWorkers: 2, minWorkers: 1 }
+  : {};
+
 export default mergeConfig(
   viteConfig,
   defineConfig({
@@ -40,6 +53,9 @@ export default mergeConfig(
       // https://vitest.dev/guide/learn/writing-tests-with-ai.html
       clearMocks: true,
       restoreMocks: true,
+      // Bound peak memory for WebKit-only runs (see browserMemoryLimits).
+      // No-op for Chromium/Firefox.
+      ...browserMemoryLimits,
       // JUnit reporter for CI test results
       reporters: process.env.CI
         ? ['default', ['junit', { outputFile: './test-results/junit.xml' }]]
@@ -123,6 +139,7 @@ export default mergeConfig(
               // Keep the Vite aliases from `vite.config.ts` for Storybook/Vitest.
               // Without these, imports can resolve to built output and/or be excluded from coverage.
               '@adobe/spectrum-wc-core': path.resolve(dirname, '../core'),
+              '@adobe/spectrum-wc-icons': path.resolve(dirname, '../icons/src'),
               '@adobe/spectrum-wc': path.resolve(dirname, './components'),
               '@adobe/postcss-token': path.resolve(
                 dirname,
