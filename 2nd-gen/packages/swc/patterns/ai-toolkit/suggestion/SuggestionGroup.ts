@@ -33,6 +33,7 @@ import styles from './suggestion-group.css';
  * @element swc-suggestion-group
  * @slot heading - Required heading content; consumer controls semantic element.
  * @slot - Suggestion items (recommended: `<swc-suggestion-item>`)
+ * @since 2.0.0-beta.3
  */
 export class SuggestionGroup extends SpectrumElement {
   /**

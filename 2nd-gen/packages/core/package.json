@@ -147,6 +147,10 @@
       "types": "./dist/controllers/color-controller/index.d.ts",
       "import": "./dist/controllers/color-controller/index.js"
     },
+    "./controllers/drag-and-drop-controller.js": {
+      "types": "./dist/controllers/drag-and-drop-controller/index.d.ts",
+      "import": "./dist/controllers/drag-and-drop-controller/index.js"
+    },
     "./controllers/focus-group-navigation-controller.js": {
       "types": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts",
       "import": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.js"
@@ -382,6 +386,9 @@
       ],
       "controllers/color-controller.js": [
         "dist/controllers/color-controller/index.d.ts"
+      ],
+      "controllers/drag-and-drop-controller.js": [
+        "dist/controllers/drag-and-drop-controller/index.d.ts"
       ],
       "controllers/focus-group-navigation-controller/focus-group-navigation-controller.js": [
         "dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts"

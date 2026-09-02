@@ -5,6 +5,7 @@
 .claude/handoffs
 .claude/settings.local.json
 .claude/worktrees
+mcp-server.log
 
 # deep-understanding skill artifact (planning doc, not source)
 /research.md

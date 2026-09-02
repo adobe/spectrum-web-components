@@ -243,7 +243,7 @@ const DEMO_LOADING_STEP_COUNT = DEMO_RESPONSE_STEPS.length - 1;
 // How long each step stays active before the next one takes over. The total
 // generation time scales with the step count so pacing stays even as more
 // steps are added.
-const DEMO_STEP_INTERVAL_MS = 1200;
+const DEMO_STEP_INTERVAL_MS = 2200;
 const DEMO_GENERATION_DURATION_MS =
   (DEMO_LOADING_STEP_COUNT + 1) * DEMO_STEP_INTERVAL_MS;
 
@@ -500,6 +500,11 @@ class ConversationFullPatternDemo extends LitElement {
     input.value = '';
   };
 
+  private handleDrop = (event: Event): void => {
+    const { files } = (event as CustomEvent<{ files: File[] }>).detail;
+    this.appendFiles(files);
+  };
+
   private handleFeedback = (event: Event): void => {
     const feedbackEvent = event as CustomEvent<{
       status?: 'positive' | 'negative' | undefined;
@@ -721,6 +726,7 @@ class ConversationFullPatternDemo extends LitElement {
             @swc-prompt-field-submit=${this.handlePromptSubmit}
             @swc-prompt-field-stop=${this.stopGeneration}
             @swc-prompt-field-upload-click=${this.handleUploadClick}
+            @swc-prompt-field-drop=${this.handleDrop}
           >
             ${this.renderAttachments()}
             <p slot="legal" class="swc-PromptField-legal-disclaimer">
