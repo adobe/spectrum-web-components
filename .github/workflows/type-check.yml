@@ -1,0 +1,95 @@
+name: Type Check
+#
+# Type-checks the library with `tsc -b` (build mode, so cross-package types
+# resolve through the composite project references). The vite build uses
+# esbuild and does not type-check, so this is what catches type errors.
+#
+# Reported via reviewdog, diff-only: pre-existing errors elsewhere are left
+# alone; anything the PR adds is surfaced as an inline review comment and
+# fails the check. Triage the full backlog locally with `yarn type-check`.
+#
+# Lit-template semantics (unknown tag/attribute, binding types) are a dev-time
+# concern handled in the editor; ESLint (eslint-plugin-lit / -lit-a11y / -wc)
+# covers template syntax and a11y in lint.yml.
+#
+
+on:
+  pull_request:
+    branches:
+      - main
+
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - auto_merge_enabled
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  type-check:
+    name: Type Check (2nd-gen)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node version from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: yarn
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      ## --- YARN CACHE --- ##
+      - name: Check for cached dependencies
+        continue-on-error: true
+        id: cache-dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            .cache/yarn
+            node_modules
+          key: ubuntu-latest-${{ hashFiles('.nvmrc', 'package.json', 'yarn.lock') }}
+
+      ## --- INSTALL --- ##
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Set up reviewdog
+        uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest
+
+      # Run the compiler and pipe its diagnostics to reviewdog. Without
+      # `pipefail` the pipeline's exit status is reviewdog's, so tsc's
+      # non-zero exit on the pre-existing backlog is ignored; reviewdog
+      # decides pass/fail from findings within the PR diff (fail_level).
+      - name: Type check with reviewdog
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          yarn type-check 2>&1 \
+            | reviewdog \
+                -f=tsc \
+                -name="tsc (2nd-gen)" \
+                -reporter=github-pr-review \
+                -filter-mode=diff_context \
+                -level=warning \
+                -fail-level=any
