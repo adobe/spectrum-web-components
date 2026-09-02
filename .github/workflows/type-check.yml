@@ -1,22 +1,16 @@
 name: Type Check
 #
-# Language-level checks that the compiler-in-the-editor performs but that the
-# vite build (esbuild, no type-checking) does not catch:
+# Type-checks the library with `tsc -b` (build mode, so cross-package types
+# resolve through the composite project references). The vite build uses
+# esbuild and does not type-check, so this is what catches type errors.
 #
-#   1. TypeScript — `tsc -b` build mode, so cross-package types resolve
-#      through the composite project references. Reported via reviewdog,
-#      diff-only: pre-existing errors elsewhere are left alone; anything the
-#      PR adds is surfaced as an inline review comment and fails the check.
-#   2. Lit templates — `lit-analyzer` (the CLI behind the `runem.lit-plugin`
-#      IDE extension). Annotated on the PR via a problem matcher. Currently
-#      non-blocking (`|| true`) while the existing backlog is cleared; drop
-#      the `|| true` to gate once it is green.
+# Reported via reviewdog, diff-only: pre-existing errors elsewhere are left
+# alone; anything the PR adds is surfaced as an inline review comment and
+# fails the check. Triage the full backlog locally with `yarn type-check`.
 #
-# To triage both backlogs locally, run:
-#
-#   yarn type-check       # TypeScript only
-#   yarn analyze:2nd-gen  # lit-analyzer only
-#   yarn check:2nd-gen    # everything, including lint
+# Lit-template semantics (unknown tag/attribute, binding types) are a dev-time
+# concern handled in the editor; ESLint (eslint-plugin-lit / -lit-a11y / -wc)
+# covers template syntax and a11y in lint.yml.
 #
 
 on:
@@ -99,13 +93,3 @@ jobs:
                 -filter-mode=diff_context \
                 -level=warning \
                 -fail-level=any
-
-      # Lit-template analysis (lit-analyzer). No JSON output is available, so
-      # findings are annotated natively via a problem matcher rather than
-      # reviewdog. `|| true` keeps the job green while the backlog is cleared;
-      # remove it to gate on lit-template errors and warnings.
-      - name: Analyze Lit templates
-        run: |
-          echo "::add-matcher::.github/lit-analyzer-matcher.json"
-          yarn analyze:2nd-gen || true
-          echo "::remove-matcher owner=lit-analyzer::"

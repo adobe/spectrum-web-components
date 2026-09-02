@@ -29613,7 +29613,6 @@ __metadata:
     husky: "npm:9.1.7"
     jsonc-eslint-parser: "npm:2.4.2"
     lint-staged: "npm:16.2.6"
-    lit-analyzer: "npm:2.0.3"
     npm-run-all2: "npm:8.0.4"
     prettier: "npm:3.8.1"
     prettier-plugin-package: "npm:1.4.0"

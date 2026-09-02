@@ -22,18 +22,3 @@ fi
 if git diff --cached --name-only | grep -qE "^2nd-gen/packages/(swc/components|swc/patterns|core/controllers)/.*\.(mdx|stories\.ts)$"; then
   node scripts/validate-docs-pages.js || exit 1
 fi
-
-# If any 2nd-gen TypeScript source is staged, analyze its Lit templates (the
-# CLI behind the runem.lit-plugin IDE extension — tsc and ESLint do not run
-# it). Directory-agnostic and inclusive of stories, tests, and VRT files:
-# template/setup errors there drive docs mistakes and test flakiness, so they
-# are worth catching. New packages and folders are covered automatically.
-# Scoped to the staged files, so it only fires on code you touch. Non-blocking
-# while the backlog is cleared; drop the `|| true` to gate commits.
-LIT_FILES=$(git diff --cached --name-only --diff-filter=ACM \
-  | grep -E "^2nd-gen/.*\.ts$" || true)
-if [ -n "$LIT_FILES" ]; then
-  # lit-analyzer wants file paths before flags; word-split the newline list.
-  # shellcheck disable=SC2086
-  yarn lit-analyzer $LIT_FILES --strict || true
-fi
