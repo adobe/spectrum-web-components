@@ -4,9 +4,11 @@ name: Type Check
 # resolve through the composite project references). The vite build uses
 # esbuild and does not type-check, so this is what catches type errors.
 #
-# Reported via reviewdog, diff-only: pre-existing errors elsewhere are left
-# alone; anything the PR adds is surfaced as an inline review comment and
-# fails the check. Triage the full backlog locally with `yarn type-check`.
+# Diagnostics are annotated inline via a GitHub problem matcher (no
+# third-party actions). Currently non-blocking (`|| true`) while the existing
+# type-error backlog is cleared; drop the `|| true` to gate once
+# `yarn type-check` is green on main. Triage the backlog locally with the same
+# `yarn type-check`.
 #
 # Lit-template semantics (unknown tag/attribute, binding types) are a dev-time
 # concern handled in the editor; ESLint (eslint-plugin-lit / -lit-a11y / -wc)
@@ -26,8 +28,6 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
-  checks: write
 
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
@@ -72,24 +72,11 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Set up reviewdog
-        uses: reviewdog/action-setup@v1
-        with:
-          reviewdog_version: latest
-
-      # Run the compiler and pipe its diagnostics to reviewdog. Without
-      # `pipefail` the pipeline's exit status is reviewdog's, so tsc's
-      # non-zero exit on the pre-existing backlog is ignored; reviewdog
-      # decides pass/fail from findings within the PR diff (fail_level).
-      - name: Type check with reviewdog
-        env:
-          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Run the compiler and annotate diagnostics inline via a GitHub problem
+      # matcher (no third-party actions). `|| true` keeps the job green while
+      # the pre-existing backlog is cleared; drop it to gate on any type error.
+      - name: Type check
         run: |
-          yarn type-check 2>&1 \
-            | reviewdog \
-                -f=tsc \
-                -name="tsc (2nd-gen)" \
-                -reporter=github-pr-review \
-                -filter-mode=diff_context \
-                -level=warning \
-                -fail-level=any
+          echo "::add-matcher::.github/tsc-problem-matcher.json"
+          yarn type-check || true
+          echo "::remove-matcher owner=tsc::"
