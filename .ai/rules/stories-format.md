@@ -210,6 +210,23 @@ const meta: Meta = {
 - **Avoid repetition**: The subtitle and JSDoc description should complement each other, not duplicate content. The subtitle is a brief summary; the JSDoc provides fuller context.
 - **Component links**: When referencing other components in the JSDoc description, use relative Storybook paths: `[ComponentName](../?path=/docs/components-component-name--docs)`
 
+### Controls and options come from the type — don't restate the union
+
+For a property typed as a string-literal union (directly, or via a referenced alias such as `(typeof MY_CONST)[number]`), the select control and its options are generated automatically. The `@wc-toolkit/type-parser` CEM plugin expands the alias into `parsedType` in the manifest, and `@wc-toolkit/storybook-helpers` reads `parsedType` to build both the `select` control and the `options` list.
+
+So do **not** hand-wire the option list just to make values appear in the control or the API table:
+
+```typescript
+// ❌ Redundant — the union already drives the control and the API table.
+argTypes.variant = {
+  ...argTypes.variant,
+  control: { type: 'select' },
+  options: MY_VARIANTS,
+};
+```
+
+Only wire `argTypes.<prop>.options` when you need something the type does not express: a curated ordering, or a "none/clear" sentinel option (e.g. `['', ...MY_STATIC_COLORS]`) for an optional property. Union props that lack a `parsedType` in the generated manifest (for example a `size` supplied through a generic mixin the parser can't resolve) still need the manual wiring.
+
 ### Internal attributes: exclude from the Storybook helper round-trip
 
 If a component manages an **internal DOM attribute directly** via `setAttribute`/`removeAttribute` — i.e. a CSS-only state attribute that is **not** a declared `@property` and not part of the public API (for example Tooltip's `actual-placement`) — you must declare it in `argTypes` with the control disabled, even though it is not a real control.

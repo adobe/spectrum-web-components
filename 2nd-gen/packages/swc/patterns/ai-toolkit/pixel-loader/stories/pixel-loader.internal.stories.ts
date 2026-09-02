@@ -16,19 +16,13 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '../swc-pixel-loader.js';
 
-import { PIXEL_LOADER_ICON_NAMES, PIXEL_LOADER_PRESET_NAMES } from '../data.js';
+import { PIXEL_LOADER_PRESET_NAMES } from '../data.js';
 
 // ────────────────
 //    METADATA
 // ────────────────
 
 const { args, argTypes, template } = getStorybookHelpers('swc-pixel-loader');
-
-argTypes.icon = {
-  ...argTypes.icon,
-  control: { type: 'select' },
-  options: PIXEL_LOADER_ICON_NAMES,
-};
 
 argTypes.preset = {
   ...argTypes.preset,
