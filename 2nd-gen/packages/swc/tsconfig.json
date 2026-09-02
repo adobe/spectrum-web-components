@@ -12,10 +12,15 @@
     "rootDir": "./",
     "types": ["@vitest/browser-playwright"]
   },
-  "exclude": ["node_modules", "dist"],
+  // Exclude only emittable `dist` output, not the whole dir, so the generated `dist/custom-elements.json` (imported by VRT stories) stays resolvable when present; see `custom-elements-json.d.ts` for the absent (CI, no build) case.
+  "exclude": [
+    "node_modules",
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "dist/**/*.map",
+    "dist/**/*.tsbuildinfo"
+  ],
   "extends": "../../tsconfig.json",
-  // `dist/custom-elements.json` is a generated artifact imported by VRT stories; listed in `files` (not `include`) so `exclude: ["dist"]` cannot drop it.
-  "files": ["dist/custom-elements.json"],
   "include": [
     "**/*.ts",
     "**/*.d.ts",
@@ -23,7 +28,8 @@
     ".storybook/storybook-env.d.ts",
     ".storybook/helpers/**/*.ts",
     ".storybook/decorators/**/*.ts",
-    ".storybook/intl/**/*.json"
+    ".storybook/intl/**/*.json",
+    "dist/custom-elements.json"
   ],
   "references": [
     {
