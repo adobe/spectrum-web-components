@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - release-strategy # TODO: remove before merging - testing only
     paths:
       - '2nd-gen/**'
 
@@ -104,7 +105,7 @@ jobs:
           commit-message: 'chore: release gen2 packages #gen2-publish'
           title: 'chore: release gen2 packages (beta) #gen2-publish'
           branch: changeset-release/2nd-gen
-          base: main
+          base: ${{ github.ref_name }} # TODO: pin to main before merging - testing only
           delete-branch: true
           add-paths: |
             2nd-gen
