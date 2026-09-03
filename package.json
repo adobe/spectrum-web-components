@@ -52,7 +52,7 @@
     "tokens:test": "yarn workspace @adobe/swc-tokens test && yarn workspace @adobe/postcss-token test && yarn workspace swc-vscode-token test",
     "tokens:update": "yarn tokens:test && yarn workspace swc-vscode-token tokens && yarn workspace @adobe/spectrum-wc stylesheet:tokens && yarn workspace @adobe/spectrum-wc stylesheet:typography",
     "type-check": "yarn type-check:2nd-gen",
-    "type-check:2nd-gen": "tsc -b 2nd-gen/packages/core 2nd-gen/packages/icons 2nd-gen/packages/swc --force --pretty false"
+    "type-check:2nd-gen": "tsc -b 2nd-gen/packages/core 2nd-gen/packages/icons 2nd-gen/packages/swc --pretty false"
   },
   "workspaces": [
     "1st-gen",
