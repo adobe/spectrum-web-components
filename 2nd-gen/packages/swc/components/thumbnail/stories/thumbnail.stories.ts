@@ -25,7 +25,7 @@ const { args, argTypes, template } = getStorybookHelpers('swc-thumbnail');
  * Wraps a slotted image, such as an asset preview or a layer in a layers
  * panel, in a consistent checkerboard-backed frame.
  *
- * Public API and visual styling land in later migration phases.
+ * Visual styling lands in a later migration phase.
  */
 const meta: Meta = {
   title: 'Thumbnail',
