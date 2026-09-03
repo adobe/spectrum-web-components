@@ -23,7 +23,6 @@
 - [Test helper reference](#test-helper-reference)
     - [`gotoStory(page, storyId, elementSelector)`](#gotostorypage-storyid-elementselector)
     - [`waitForCustomElement(page, tagName)`](#waitforcustomelementpage-tagname)
-    - [`waitForStoryReady(page, elementSelector)`](#waitforstoryreadypage-elementselector)
 - [Finding story IDs](#finding-story-ids)
 - [Running tests](#running-tests)
     - [From project root](#from-project-root)
@@ -218,27 +217,18 @@ await expect(badge).toMatchAriaSnapshot();
 **How it works:**
 
 1. Navigates to story URL
-2. Waits for custom element definition (`customElements.whenDefined`)
-3. Waits for Storybook to render content
-4. Waits for element visibility
-5. Waits for Web Component upgrade
+2. Waits for Storybook to render content
+3. Waits for element visibility
+4. If the element is a custom element, waits for it to be defined in the registry
 
 This eliminates flaky tests caused by testing components before they're ready.
 
 ### `waitForCustomElement(page, tagName)`
 
-Wait for a custom element to be defined.
+Wait for a custom element to be defined in the registry.
 
 ```typescript
 await waitForCustomElement(page, 'sp-badge');
-```
-
-### `waitForStoryReady(page, elementSelector)`
-
-Wait for Storybook story to render and component to be visible.
-
-```typescript
-const element = await waitForStoryReady(page, 'sp-badge');
 ```
 
 ## Finding story IDs
