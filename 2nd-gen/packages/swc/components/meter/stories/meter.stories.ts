@@ -14,7 +14,6 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { Meter } from '@adobe/spectrum-wc/meter';
 import {
   METER_VARIANTS,
   type MeterVariant,
@@ -36,20 +35,8 @@ import '@adobe/spectrum-wc/components/meter/swc-meter.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-meter');
 
-argTypes.variant = {
-  ...argTypes.variant,
-  control: { type: 'select' },
-  options: Meter.VARIANTS,
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'informative' },
-  },
-};
-
 argTypes.size = {
   ...argTypes.size,
-  control: { type: 'select' },
-  options: LINEAR_PROGRESS_VALID_SIZES,
   table: {
     ...argTypes.size?.table,
     category: 'attributes',

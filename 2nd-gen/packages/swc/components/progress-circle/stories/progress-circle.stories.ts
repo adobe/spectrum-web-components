@@ -31,8 +31,6 @@ const { args, argTypes, template } = getStorybookHelpers('swc-progress-circle');
 
 argTypes.size = {
   ...argTypes.size,
-  control: { type: 'select' },
-  options: ProgressCircle.VALID_SIZES,
   table: {
     category: 'attributes',
     defaultValue: {

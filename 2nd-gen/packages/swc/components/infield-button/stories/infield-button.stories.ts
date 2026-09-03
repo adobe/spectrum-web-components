@@ -28,12 +28,6 @@ import '@adobe/spectrum-wc/components/infield-button/swc-infield-button.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-infield-button');
 
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: INFIELD_BUTTON_VALID_SIZES,
-};
-
 // ────────────────────
 //    HELPERS
 // ────────────────────

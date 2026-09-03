@@ -33,8 +33,6 @@ const { args, argTypes, template } = getStorybookHelpers('swc-progress-bar');
 
 argTypes.size = {
   ...argTypes.size,
-  control: { type: 'select' },
-  options: LINEAR_PROGRESS_VALID_SIZES,
   table: {
     ...argTypes.size?.table,
     category: 'attributes',

@@ -18,16 +18,6 @@ import '../swc-upload-artifact.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-upload-artifact');
 
-argTypes.type = {
-  ...argTypes.type,
-  control: { type: 'select' },
-  options: ['card', 'media'],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'card' },
-  },
-};
-
 /**
  * Shared upload artifact primitive used across conversational AI surfaces such as prompt field and user message.
  * Supports **`card`** and **`media`** types with a unified slot model.

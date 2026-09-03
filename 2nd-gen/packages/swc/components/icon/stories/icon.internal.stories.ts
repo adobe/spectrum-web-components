@@ -30,12 +30,6 @@ import * as iconElements from '../elements/index.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-icon');
 
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: ICON_VALID_SIZES,
-};
-
 /**
  * **Internal-only component.**
  *

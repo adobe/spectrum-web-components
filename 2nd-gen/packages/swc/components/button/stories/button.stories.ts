@@ -32,12 +32,6 @@ import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-button');
 
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: BUTTON_VALID_SIZES,
-};
-
 args['default-slot'] = 'Button';
 args.variant = 'primary';
 args['fill-style'] = 'fill';

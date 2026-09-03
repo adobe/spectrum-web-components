@@ -17,8 +17,6 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '../swc-response-status.js';
 
-import { RESPONSE_STATUSES } from '../ResponseStatus.js';
-
 // ────────────────
 //    METADATA
 // ────────────────
@@ -29,17 +27,6 @@ const activeStepsSlot = `<swc-response-status-step status="complete"><span slot=
 
 delete (args as Record<string, unknown>)['summary-slot'];
 delete (argTypes as Record<string, unknown>)['summary-slot'];
-
-argTypes.status = {
-  ...argTypes.status,
-  control: { type: 'select' },
-  options: RESPONSE_STATUSES,
-  table: {
-    ...argTypes.status?.table,
-    category: 'attributes',
-    defaultValue: { summary: 'active' },
-  },
-};
 
 argTypes.open = {
   ...argTypes.open,
