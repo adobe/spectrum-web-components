@@ -2,6 +2,13 @@
 
 ## 2.0.0-beta.3
 
+### Patch Changes
+
+- Updated dependencies [[`9316a9a`](https://github.com/adobe/spectrum-web-components/commit/9316a9a559a233e6648334e69cc8a54305fe31bc), [`9316a9a`](https://github.com/adobe/spectrum-web-components/commit/9316a9a559a233e6648334e69cc8a54305fe31bc), [`9316a9a`](https://github.com/adobe/spectrum-web-components/commit/9316a9a559a233e6648334e69cc8a54305fe31bc), [`9316a9a`](https://github.com/adobe/spectrum-web-components/commit/9316a9a559a233e6648334e69cc8a54305fe31bc), [`9316a9a`](https://github.com/adobe/spectrum-web-components/commit/9316a9a559a233e6648334e69cc8a54305fe31bc), [`9316a9a`](https://github.com/adobe/spectrum-web-components/commit/9316a9a559a233e6648334e69cc8a54305fe31bc), [`9316a9a`](https://github.com/adobe/spectrum-web-components/commit/9316a9a559a233e6648334e69cc8a54305fe31bc)]:
+  - @adobe/spectrum-wc-core@2.0.0-beta.3
+
+## 2.0.0-beta.3
+
 ### Minor Changes
 
 - [#6562](https://github.com/adobe/spectrum-web-components/pull/6562) [`f927ec3`](https://github.com/adobe/spectrum-web-components/commit/f927ec347b6a46f9857759b6830679d4cfdc5c14) Add `@adobe/spectrum-wc-icons`, a new public package delivering the Spectrum 2 **workflow icons** (the icons consumers pick: star, folder, arrows, and the like). It depends only on `@adobe/spectrum-wc-core`.

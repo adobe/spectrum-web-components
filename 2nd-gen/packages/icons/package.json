@@ -1,6 +1,6 @@
 {
   "name": "@adobe/spectrum-wc-icons",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "description": "Spectrum 2 workflow icons as tree-shakeable custom elements and SVG-string functions",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -46,7 +46,7 @@
     "verify:tree-shaking": "node scripts/verify-tree-shaking.mjs"
   },
   "dependencies": {
-    "@adobe/spectrum-wc-core": "2.0.0-beta.2",
+    "@adobe/spectrum-wc-core": "2.0.0-beta.3",
     "lit": "^2.5.0 || ^3.1.3"
   },
   "devDependencies": {

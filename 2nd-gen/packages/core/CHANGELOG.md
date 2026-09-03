@@ -4,6 +4,44 @@
 
 ### Minor Changes
 
+- [#6607](https://github.com/adobe/spectrum-web-components/pull/6607) [`9316a9a`](https://github.com/adobe/spectrum-web-components/commit/9316a9a559a233e6648334e69cc8a54305fe31bc) Thanks [@blunteshwar](https://github.com/blunteshwar)! - Add the 2nd-gen `<swc-close-button>`, migrated from the Spectrum 1 `<sp-close-button>`.
+  - **API**: `size`, `disabled`, `accessible-label`, and `static-color`; omits the legacy `variant` surface in favor of `static-color`.
+  - **Accessibility**: renders a real inner `<button type="button">` with delegated focus; requires `accessible-label` for its icon-only name; the cross icon remains decorative.
+  - **Styling**: ships Spectrum 2 sizing and static-color treatments plus the `--swc-close-button-*` custom-property surface for token-aligned overrides.
+  - **Docs and tests**: includes Storybook docs, consumer migration guidance, unit coverage, and Playwright accessibility and keyboard tests.
+
+- [#6607](https://github.com/adobe/spectrum-web-components/pull/6607) [`9316a9a`](https://github.com/adobe/spectrum-web-components/commit/9316a9a559a233e6648334e69cc8a54305fe31bc) Thanks [@blunteshwar](https://github.com/blunteshwar)! - **feat(color-handle):** Added `<swc-color-handle>`, the Spectrum 2 migration of `sp-color-handle`.
+
+  A non-interactive color-picker primitive exposing `color`, `disabled`, `focused`, `open`, and the new `fill` property, with a built-in `<swc-color-loupe>` and an adaptive white-first dual border that meets WCAG 1.4.11 non-text contrast across the color spectrum. The `--mod-colorhandle-*` custom properties are removed; see the migration guide.
+
+- [#6607](https://github.com/adobe/spectrum-web-components/pull/6607) [`9316a9a`](https://github.com/adobe/spectrum-web-components/commit/9316a9a559a233e6648334e69cc8a54305fe31bc) Thanks [@blunteshwar](https://github.com/blunteshwar)! - Extract the pending (busy) state into reusable, decoupled 2nd-gen core primitives so any pending-capable component can adopt it.
+  - **`@adobe/spectrum-wc-core`**: adds `PendingController` (`/controllers/pending-controller`) for the pending state (delayed activation, inline-size freeze, derived busy accessible name), the render-only `renderPendingSpinner` directive (`/directives/pending-spinner`), and `PendingMixin` (`/mixins`) which wires the controller, the `pending` / `pending-label` properties, and click suppression. `ButtonBase` no longer owns pending state.
+  - **`@adobe/spectrum-wc`**: `swc-button` and `swc-action-button` now consume these primitives via `PendingMixin`. No public API change — `pending` / `pending-label` and the busy behavior are unchanged.
+
+- [#6607](https://github.com/adobe/spectrum-web-components/pull/6607) [`9316a9a`](https://github.com/adobe/spectrum-web-components/commit/9316a9a559a233e6648334e69cc8a54305fe31bc) Thanks [@blunteshwar](https://github.com/blunteshwar)! - **refactor(tabs):** Migrate `<swc-tabs>` keyboard navigation to `FocusgroupNavigationController`.
+
+  Arrow-key, Home, and End navigation is now handled by the controller rather than by manually computed deltas in `handleKeyDown`. The `handleKeyDown` method retains only Enter/Space activation; all roving-tabindex management is delegated to the controller. In automatic activation mode, `focusgroupNavigationActiveChange` events with `source: 'keyboard'` drive selection-follows-focus; events with `source: 'refresh'` or `source: 'programmatic'` are intentionally ignored so that mounting or toggling `disabled` cannot trigger spurious `change` events.
+
+### Patch Changes
+
+- [#6607](https://github.com/adobe/spectrum-web-components/pull/6607) [`9316a9a`](https://github.com/adobe/spectrum-web-components/commit/9316a9a559a233e6648334e69cc8a54305fe31bc) Thanks [@blunteshwar](https://github.com/blunteshwar)! - **fix(color-loupe):** Added an adaptive white-first inner border to `<swc-color-loupe>` so its chrome meets WCAG 1.4.11 non-text contrast (≥3:1) across the color spectrum.
+
+  The inner border's opacity now escalates above its default floor only when the white outer halo can't itself carry 3:1 contrast against the loupe's color. The outer border, shape, and sizing are unchanged, and there is no public API change. This supersedes the prior practical-limits exception, matching the adaptive dual-border approach already shipped for `<swc-color-handle>`.
+
+- [#6607](https://github.com/adobe/spectrum-web-components/pull/6607) [`9316a9a`](https://github.com/adobe/spectrum-web-components/commit/9316a9a559a233e6648334e69cc8a54305fe31bc) Thanks [@blunteshwar](https://github.com/blunteshwar)! - **fix(popover):** Fixed `swc-popover` staying dismissed on the next unrelated outside click after a trigger press was dragged off and released elsewhere.
+
+  A `pointerdown` on the trigger followed by a drag off the trigger and a release elsewhere never dispatches a `click`, so the internal reopen-guard flag was left stuck `true`, misattributing the next unrelated outside light-dismiss to that stale press and swallowing the following legitimate trigger click.
+
+- [#6607](https://github.com/adobe/spectrum-web-components/pull/6607) [`9316a9a`](https://github.com/adobe/spectrum-web-components/commit/9316a9a559a233e6648334e69cc8a54305fe31bc) Thanks [@blunteshwar](https://github.com/blunteshwar)! - **fix(slot-attribute-propagation-controller):** Fixed `SlotAttributePropagationController` permanently skipping re-propagation when a repeated value was recorded before its target slot had resolved, and added support for propagating attributes that are only sometimes present on the host.
+
+  `getValue` may now return `null` to remove the propagated attribute from assigned elements instead of setting it to an empty string. The `hostUpdated()` no-op guard now only records a value as applied once the slot actually resolves, so a slot that resolves after an earlier unsuccessful attempt with the same value is no longer skipped forever.
+
+  `SlotAttributePropagationController` is also now a public export of `@adobe/spectrum-wc-core` (`@spectrum-web-components/core/controllers/slot-attribute-propagation-controller.js`), alongside dedicated tests and a Storybook controller docs page. Existing consumers (`<swc-button-group>`, `<swc-illustrated-message>`) are unaffected aside from benefiting from the propagation-guard fix.
+
+## 2.0.0-beta.3
+
+### Minor Changes
+
 - [#6444](https://github.com/adobe/spectrum-web-components/pull/6444) [`2b26e0b`](https://github.com/adobe/spectrum-web-components/commit/2b26e0b3b6e25d4852e9984472737bd3caa2dfae) Add the 2nd-gen `<swc-action-group>` file structure, API, accessibility semantics, and Spectrum 2 styling, migrated from the Spectrum 1 `<sp-action-group>`.
   - **API**: `accessible-label`, `disabled`, `orientation` (`horizontal` / `vertical`), `compact`, `quiet`, `justified`, `size`, `static-color`; children are collected via the default slot (`swc-action-button` / `swc-action-menu`).
   - **Accessibility**: host always `role="group"` (never `toolbar` or `radiogroup`); `accessible-label` reflects to `aria-label`; no `aria-orientation` on the host in either layout, matching `swc-button-group`; group `disabled` sets `aria-disabled="true"` on the host and propagates `aria-disabled` (not native `disabled`) to all children so they remain keyboard-reachable and discoverable per [APG: Focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols); `FocusgroupNavigationController` wired with `skipDisabled: false` so `aria-disabled` children stay in the arrow-key sequence. A focused child's focus ring is no longer hidden behind an adjacent child's border in `compact` mode.

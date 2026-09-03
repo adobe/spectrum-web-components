@@ -1,0 +1,27 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "@adobe/spectrum-wc-core": "2.0.0-beta.2",
+    "@adobe/spectrum-wc-icons": "2.0.0-beta.2",
+    "@adobe/spectrum-wc": "2.0.0-beta.2"
+  },
+  "changesets": [
+    "close-button-2nd-gen-migration",
+    "color-handle-migration",
+    "color-loupe-adaptive-border",
+    "feat-live-selection-controller",
+    "fix-global-link-css-import-path",
+    "fix-illustrated-message-actions-slot-alignment",
+    "fix-popover-trigger-pointer-active-stuck",
+    "fix-slot-attribute-propagation-controller-optional-attributes",
+    "fix-tabs-keyboard-activation-default",
+    "pending-reusable-primitives",
+    "publish-custom-elements-manifest",
+    "soft-ravens-think",
+    "spicy-melon-parade",
+    "tabs-focusgroup-controller",
+    "testing-release-gen2-a",
+    "testing-release-gen2-b"
+  ]
+}
