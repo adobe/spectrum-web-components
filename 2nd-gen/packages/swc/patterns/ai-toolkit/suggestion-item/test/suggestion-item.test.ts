@@ -112,17 +112,17 @@ export const EventTest: Story = {
         await userEvent.keyboard('{Enter}');
         expect(detail?.label).toBe('Create a slide deck from this');
 
-        detail = undefined;
+        let spaceDetail: { label: string } | undefined;
         el.addEventListener(
           'swc-suggestion',
           (event) => {
-            detail = (event as CustomEvent<{ label: string }>).detail;
+            spaceDetail = (event as CustomEvent<{ label: string }>).detail;
           },
           { once: true }
         );
         button?.focus();
         await userEvent.keyboard(' ');
-        expect(detail?.label).toBe('Create a slide deck from this');
+        expect(spaceDetail?.label).toBe('Create a slide deck from this');
       }
     );
   },

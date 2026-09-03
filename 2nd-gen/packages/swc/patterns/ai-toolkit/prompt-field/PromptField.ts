@@ -136,6 +136,10 @@ export class PromptField extends SpectrumElement {
   @property({ type: String, reflect: true })
   public loader: PixelLoaderIconName | PixelLoaderPresetName = 'aiLogo';
 
+  /** Animates the status loader while generating; otherwise it stays static. Has no visible effect unless `generating` is also `true`. */
+  @property({ type: Boolean, reflect: true, attribute: 'animate-loader' })
+  public animateLoader = false;
+
   /** Accessible name for the textarea; visually hidden. */
   @property({ type: String })
   public label = 'Prompt';
@@ -260,39 +264,42 @@ export class PromptField extends SpectrumElement {
   @state()
   private _dragged = false;
 
-  /** Accepts file drags anywhere on the host and hands dropped files off via `swc-prompt-field-drop`. */
-  private readonly _dragAndDrop = new DragAndDropController(this, {
-    isDragged: () => this._dragged,
-    shouldAccept: (event) => !this.disabled && isFileDrag(event),
-    onDragEnter: () => {
-      this._dragged = true;
-    },
-    onDragLeave: () => {
-      this._dragged = false;
-    },
-    onDrop: (event) => {
-      this._dragged = false;
-      if (this.disabled) {
-        return;
-      }
-      const files = Array.from(event.dataTransfer?.files ?? []);
-      if (files.length === 0) {
-        return;
-      }
-      if (this.shadowRoot?.activeElement !== this._textarea) {
-        this._pendingAttachmentDropFocus = [
-          ...(this._assignedAttachmentElements ?? []),
-        ];
-      }
-      this.dispatchEvent(
-        new CustomEvent('swc-prompt-field-drop', {
-          bubbles: true,
-          composed: true,
-          detail: { files },
-        })
-      );
-    },
-  });
+  public constructor() {
+    super();
+    // Accepts file drags anywhere on the host and hands dropped files off via `swc-prompt-field-drop`; the controller self-registers, so no reference is retained.
+    new DragAndDropController(this, {
+      isDragged: () => this._dragged,
+      shouldAccept: (event) => !this.disabled && isFileDrag(event),
+      onDragEnter: () => {
+        this._dragged = true;
+      },
+      onDragLeave: () => {
+        this._dragged = false;
+      },
+      onDrop: (event) => {
+        this._dragged = false;
+        if (this.disabled) {
+          return;
+        }
+        const files = Array.from(event.dataTransfer?.files ?? []);
+        if (files.length === 0) {
+          return;
+        }
+        if (this.shadowRoot?.activeElement !== this._textarea) {
+          this._pendingAttachmentDropFocus = [
+            ...(this._assignedAttachmentElements ?? []),
+          ];
+        }
+        this.dispatchEvent(
+          new CustomEvent('swc-prompt-field-drop', {
+            bubbles: true,
+            composed: true,
+            detail: { files },
+          })
+        );
+      },
+    });
+  }
 
   public static override get styles(): CSSResultArray {
     return [styles, visuallyHiddenStyles];
@@ -1171,7 +1178,7 @@ export class PromptField extends SpectrumElement {
     `;
   }
 
-  /** Status pixel-loader: paused on a settled frame while idle, animating while generating. */
+  /** Status pixel-loader: static unless both generating and animateLoader are set. */
   private _renderStatusIcon(): TemplateResult {
     // One `loader` value routes to the pixel-loader's icon or preset; the name
     // sets are disjoint, so preset membership disambiguates. Typed against the
@@ -1191,7 +1198,7 @@ export class PromptField extends SpectrumElement {
         <swc-pixel-loader
           icon=${icon}
           preset=${ifDefined(preset)}
-          ?paused=${!this.generating}
+          ?paused=${!(this.generating && this.animateLoader)}
         ></swc-pixel-loader>
       </span>
     `;
