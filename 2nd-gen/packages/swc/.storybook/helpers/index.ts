@@ -16,6 +16,8 @@ export { formatTitle } from './format-title.js';
 export { iconForSize } from './icon-for-size.js';
 export { forcePseudoState } from './pseudo-state.js';
 export type { ForcedPseudoState } from './pseudo-state.js';
+export { SIZE_LABELS } from './size-labels.js';
+export type { SizeLabelKey } from './size-labels.js';
 export {
   coveredCustomProperties,
   customPropertyRows,

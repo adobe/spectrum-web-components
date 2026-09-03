@@ -1,0 +1,126 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../.storybook/blocks';
+
+import * as ResponseStatusStories from './stories/response-status.stories';
+
+<Meta of={ResponseStatusStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A response status indicator consists of:
+
+1. **Status row**: a pixel-loader indicator while active (checkmark when complete), status label, and optional disclosure control
+2. **Step timeline**: optional execution steps that can be expanded for more detail
+
+<Canvas of={ResponseStatusStories.Anatomy} />
+
+## Options
+
+### Statuses
+
+The `status` attribute controls the lifecycle of the whole response:
+
+- **`active`**: the response is actively working
+- **`complete`**: the response finished successfully
+- **`stopped`**: the user interrupted the response
+
+Use `slot="label"` for the visible header text.
+
+Steps are optional in every response state. When `swc-response-status-step` children are present, the component shows the disclosure timeline; when no steps are present, it renders only the status row.
+
+<Canvas of={ResponseStatusStories.Statuses} />
+
+### Generating presets
+
+While `status="active"`, `loader` selects the status pixel-loader's artwork; the same attribute name and control as `swc-prompt-field` uses for its own loader. A preset name (`cc`, `dc`, `exp`, `analyze`, `mega`) cycles a themed icon sequence; an icon name shows a single static icon instead. Defaults to `mega`. Invalid values fall back to `mega`.
+
+<Canvas of={ResponseStatusStories.GeneratingPresets} />
+
+### Steps
+
+Add `swc-response-status-step` children to render an expandable timeline. Set `open` on `swc-response-status` to show the timeline by default.
+
+Each step uses:
+
+- **`status`**: `active`, `complete`, or `stopped`
+- **`slot="label"`**: step title
+- **`slot="description"`**: detail text shown in the expanded timeline; steps with a description get their own disclosure control
+- **`open`**: expands the step's description initially. Steps are collapsed by default; set `open` to expand a specific step.
+
+All provided steps render in their authored order.
+
+<Canvas of={ResponseStatusStories.Steps} />
+
+## Behaviors
+
+### Handling events
+
+`<swc-response-status>` emits **`swc-response-status-toggle`** when users open or close the step timeline. The event **bubbles** and is **composed**.
+
+`event.detail.open` contains the next disclosure state. The component updates its own `open` state before emitting the event.
+
+```js
+status.addEventListener('swc-response-status-toggle', (event) => {
+  const { open } = event.detail;
+  console.log(open);
+});
+```
+
+### Step disclosure
+
+Each step with a `slot="description"` renders its own disclosure control, so users can expand or collapse individual steps independently. Steps are collapsed by default; set `open` on a step to expand it initially.
+
+`<swc-response-status>` emits **`swc-response-status-step-toggle`** when a user expands or collapses a step. The event **bubbles** and is **composed**. `event.detail` contains the next `open` state and the step `index`.
+
+```js
+status.addEventListener('swc-response-status-step-toggle', (event) => {
+  const { open, index } = event.detail;
+  console.log(index, open);
+});
+```
+
+<Canvas of={ResponseStatusStories.StepDisclosure} />
+
+### Long description
+
+A step description shorter than the cap keeps its natural height. When it exceeds the cap, the description scrolls within the step and shows a fade at the top and bottom edges while there is more content in that direction. Override the cap with the `--swc-response-status-step-detail-max-block-size` custom property (defaults to `120px`).
+
+<Canvas of={ResponseStatusStories.LongDescription} />
+
+### Label update cadence
+
+Header-label cadence is consumer-managed. The component rolls the header label whenever its text changes; your app decides when to update that text. If you stream rapid status updates, keep each visible label readable for about 1 second before replacing it.
+
+When `slot="label"` is empty and the response is `active`, the header falls back to the active step's label while the step timeline is closed. While it's open and at least one step hasn't finished, the header shows a generic "Processing…" label instead, since the specific step is already visible in the timeline below.
+
+Once settled (no roll transition in flight), the label wraps across up to 2 lines instead of truncating to one, so it stays more readable in a narrow container or with a longer translation. Text beyond that ellipses on the last visible line. Override the cap with the `--swc-response-status-label-max-lines` custom property. A label stays constrained to a single line only for the brief moment it is actively rolling to a new value.
+
+The `LabelCadence` story demonstrates one consumer-side queue pattern.
+
+<Canvas of={ResponseStatusStories.LabelCadence} />
+
+## Accessibility
+
+### Features
+
+The `<swc-response-status>` element implements the following accessibility features:
+
+- When no steps exist, `active` status labels are exposed with `role="status"` so updates are announced politely without moving focus
+- The pixel loader in the active status row is decorative (`aria-hidden`) so it does not add a nested progressbar; the status label already conveys that work is in progress
+- When steps exist, the disclosure button uses `aria-expanded` and `aria-controls` to communicate panel state
+- The step timeline uses `role="group"` with an accessible name from the `accessible-label` attribute (defaults to “Execution steps”)
+- The ordered step list uses `role="list"` and each rendered step uses `role="listitem"`
+- Each step with a description exposes its own disclosure button, using `aria-expanded` and `aria-controls` and taking its accessible name from the step title
+- A step's description scroll region uses `role="group"` with `aria-labelledby` pointing back to that step's disclosure button, so tabbing into a long, scrollable description (when it becomes keyboard-focusable) still announces which step it belongs to
+
+### Best practices
+
+- Keep step labels concise and action-oriented.
+- Put required state in `slot="label"`; use `slot="description"` for extra context.
+- Provide a meaningful `accessible-label` when multiple response-status components can appear on one screen.
+
+<Canvas of={ResponseStatusStories.Accessibility} />
+
+<DocsFooter />
