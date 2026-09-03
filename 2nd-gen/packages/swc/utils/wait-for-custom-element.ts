@@ -10,5 +10,22 @@
  * governing permissions and limitations under the License.
  */
 
-export { gotoStory } from './goto-story.js';
-export { waitForCustomElement } from './wait-for-custom-element.js';
+import type { Page } from '@playwright/test';
+
+/**
+ * Wait for a custom element to be defined in the custom elements registry.
+ * This is more deterministic than waiting for visibility alone.
+ *
+ * @param page - Playwright page object
+ * @param tagName - Custom element tag name (e.g., 'swc-badge')
+ * @returns Promise that resolves when element is defined
+ */
+export async function waitForCustomElement(
+  page: Page,
+  tagName: string
+): Promise<void> {
+  await page.waitForFunction(
+    (tag) => customElements.get(tag) !== undefined,
+    tagName
+  );
+}
