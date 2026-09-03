@@ -1,6 +1,7 @@
 name: Publish Packages (gen2)
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -46,7 +47,7 @@ jobs:
   # branch (`changeset-release/main`) - gen1 and gen2 would collide on the same branch.
   release:
     needs: check-changesets
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     environment: npm-publish
     permissions:
