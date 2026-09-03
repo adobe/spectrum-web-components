@@ -22,9 +22,9 @@
   │ └───────────────────────────────────────────────┘   │
   └─────────────────────────────────────────────────────┘
 
-  Every color above derives from --swc-prompt-field-brand-color (one OKLCH
-  hue) via oklch(from var(--swc-prompt-field-brand-color) ...); retheming
-  means overriding that single property.
+  Default treatment colors derive from --swc-prompt-field-brand-color (one
+  OKLCH hue) via oklch(from var(--swc-prompt-field-brand-color) ...). Dragged
+  state uses the dropzone and indigo design tokens.
 */
 
 :host {
@@ -114,6 +114,11 @@
    ───────────────────────────────────── */
 
 /* stylelint-disable no-descending-specificity -- flagged pairs are mutually exclusive variant/state combinations, never simultaneously active. */
+
+/* .dragged (set by PromptField while a file is dragged over the field) is
+ * handled separately at the end of this block, after all variant/state
+ * rules: dragging uses its own high-intensity solid fill regardless of the
+ * field's resting `variant`. */
 
 .swc-PromptField-outer-border {
   --_swc-prompt-field-outer-shadow: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 0%));
@@ -456,6 +461,35 @@
     0 20px 20px -24px var(--_swc-prompt-field-prominent-outer-glow-color, transparent),
     0 -3px 10px 1px var(--_swc-prompt-field-drop-shadow-color),
     0 6px 83px rgb(from light-dark(oklch(from var(--swc-prompt-field-brand-color) 85.68% 0.0856 calc(h + 35.2)), oklch(from var(--swc-prompt-field-brand-color) 26.22% 0.105 calc(h - 314.8))) r g b / var(--_swc-prompt-field-spread-shadow-opacity, 50%));
+}
+
+/* The dragged state tints only the container surface and exposes the drop
+ * target with a focus ring. Placed last so it wins across every variant and
+ * generating state. */
+:host .swc-PromptField-outer-border.dragged {
+  --_swc-prompt-field-drag-fill: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 91.32% 0.0721 calc(h + 0.1)) 30%), color-mix(in srgb, token("background-layer-2-color") 85%, token("static-fuchsia-600") 15%));
+  --_swc-prompt-field-drag-focus-indicator-color: token("indigo-800");
+  --_swc-prompt-field-outer-stop-1: var(--_swc-prompt-field-outer-recede-stop);
+  --_swc-prompt-field-outer-stop-2: var(--_swc-prompt-field-outer-recede-stop);
+  --_swc-prompt-field-outer-stop-3: var(--_swc-prompt-field-outer-recede-stop);
+
+  box-shadow: none;
+}
+
+:host .swc-PromptField-outer-border.dragged .swc-PromptField-box {
+  background: var(--_swc-prompt-field-drag-fill);
+  box-shadow: none;
+  outline: token("focus-indicator-thickness") solid var(--_swc-prompt-field-drag-focus-indicator-color);
+  outline-offset: calc(token("focus-indicator-thickness") * -1);
+}
+
+:host .swc-PromptField-outer-border.dragged .swc-PromptField-box::before,
+:host .swc-PromptField-outer-border.dragged .swc-PromptField-gloss {
+  background: none;
+}
+
+:host .swc-PromptField-outer-border.dragged .swc-PromptField-box::after {
+  box-shadow: inset 0 0 0 1px var(--_swc-prompt-field-border-color);
 }
 
 /* stylelint-enable no-descending-specificity */

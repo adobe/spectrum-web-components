@@ -30,6 +30,7 @@ import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 
 import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import {
+  DragAndDropController,
   focusgroupNavigationActiveChange,
   type FocusgroupNavigationActiveChangeDetail,
   FocusgroupNavigationController,
@@ -39,6 +40,7 @@ import {
   deepContains,
   focusableSelector,
   getActiveElement,
+  isFocusVisibleInTree,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
@@ -62,6 +64,13 @@ export interface PromptFieldSubmitDetail {
 
 // Matches the pixel-loader's own `icon` default.
 const DEFAULT_LOADER_ICON: PixelLoaderIconName = 'aiLogo';
+
+const isFileDrag = (event: DragEvent): boolean => {
+  const dataTransfer = event.dataTransfer;
+  return Boolean(
+    dataTransfer?.types.includes('Files') || dataTransfer?.files.length
+  );
+};
 
 // Native CSS textarea auto-sizing; when true, the JS fallback is skipped.
 const SUPPORTS_FIELD_SIZING =
@@ -91,8 +100,12 @@ const SUPPORTS_FIELD_SIZING =
  * @fires swc-prompt-field-stop - Dispatched when stop generation is requested while generating.
  * @fires swc-prompt-field-upload-click - Dispatched when upload affordance is activated.
  * Consumers should handle file picker flow externally.
+ * @fires swc-prompt-field-drop - Dispatched when files are dropped anywhere on the field.
+ * Detail: `{ files: File[] }`. Consumers should build and slot `swc-upload-attachment`
+ * elements from `files` externally, same as the upload-click flow.
  *
  * @cssprop --swc-prompt-field-brand-color - Brand hue driving the AI treatment's ring, wash, and glow colors. Defaults to a fuchsia OKLCH value; only the hue is meaningfully used, lightness/chroma come from each layer's own derived values.
+ * @since 2.0.0-beta.3
  */
 export class PromptField extends SpectrumElement {
   private readonly labelId = uniqueId('swc-prompt-field-label');
@@ -244,6 +257,47 @@ export class PromptField extends SpectrumElement {
     index: number;
   };
 
+  // Attachment tiles present at drop time; diffed on the next slotchange to find the new one(s) to focus.
+  private _pendingAttachmentDropFocus?: HTMLElement[];
+
+  /** Whether a file is currently being dragged over the field. Drives the same visual as the textarea's own focus ring. */
+  @state()
+  private _dragged = false;
+
+  /** Accepts file drags anywhere on the host and hands dropped files off via `swc-prompt-field-drop`. */
+  private readonly _dragAndDrop = new DragAndDropController(this, {
+    isDragged: () => this._dragged,
+    shouldAccept: (event) => !this.disabled && isFileDrag(event),
+    onDragEnter: () => {
+      this._dragged = true;
+    },
+    onDragLeave: () => {
+      this._dragged = false;
+    },
+    onDrop: (event) => {
+      this._dragged = false;
+      if (this.disabled) {
+        return;
+      }
+      const files = Array.from(event.dataTransfer?.files ?? []);
+      if (files.length === 0) {
+        return;
+      }
+      if (this.shadowRoot?.activeElement !== this._textarea) {
+        this._pendingAttachmentDropFocus = [
+          ...(this._assignedAttachmentElements ?? []),
+        ];
+      }
+      this.dispatchEvent(
+        new CustomEvent('swc-prompt-field-drop', {
+          bubbles: true,
+          composed: true,
+          detail: { files },
+        })
+      );
+    },
+  });
+
   public static override get styles(): CSSResultArray {
     return [styles, visuallyHiddenStyles];
   }
@@ -387,6 +441,16 @@ export class PromptField extends SpectrumElement {
     if (dismissedAttachmentWasRemoved) {
       this._pendingAttachmentDismiss = undefined;
       this._restoreAttachmentFocusAfterDismiss(dismissedAttachment.index);
+    }
+    const attachmentsBeforeDrop = this._pendingAttachmentDropFocus;
+    if (attachmentsBeforeDrop) {
+      this._pendingAttachmentDropFocus = undefined;
+      const droppedAttachment = attachments.find(
+        (attachment) => !attachmentsBeforeDrop.includes(attachment)
+      );
+      if (droppedAttachment) {
+        this._prepareAttachmentDropTarget(droppedAttachment);
+      }
     }
     this.requestUpdate();
     void this.updateComplete.then(() => {
@@ -556,6 +620,18 @@ export class PromptField extends SpectrumElement {
       inline: 'nearest',
     });
     el.focus();
+  }
+
+  // Always makes the dropped tile the roving-tabindex entry point (so a later Tab into the strip lands there); only steals focus now if already in a keyboard session.
+  private _prepareAttachmentDropTarget(el: HTMLElement): void {
+    this._attachmentNavigation.setActiveItem(el);
+    if (isFocusVisibleInTree()) {
+      el.scrollIntoView({
+        block: 'nearest',
+        inline: 'nearest',
+      });
+      el.focus();
+    }
   }
 
   /** Reacts to `swc-focusgroup-navigation-active-change` from `_attachmentNavigation`. */
@@ -1131,7 +1207,12 @@ export class PromptField extends SpectrumElement {
 
     return html`
       <div class="swc-PromptField">
-        <div class="swc-PromptField-outer-border">
+        <div
+          class=${classMap({
+            'swc-PromptField-outer-border': true,
+            dragged: this._dragged,
+          })}
+        >
           <div
             class="swc-PromptField-box"
             @pointerdown=${this._handlePromptSurfacePointerDown}

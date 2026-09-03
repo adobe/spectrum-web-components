@@ -10,50 +10,31 @@
  * governing permissions and limitations under the License.
  */
 
-import type { Locator, Page } from '@playwright/test';
 import { expect, test } from '@playwright/test';
+
+import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
  * Accessibility tests for Typography styles (2nd Generation)
  *
- * Typography is a CSS-only utility — there is no `<swc-typography>` custom element.
- * This local helper navigates to a story and waits for the `.typography-samples`
- * container to appear rather than using `customElements.whenDefined()`, which only
- * works for custom elements with a hyphen in the tag name.
+ * Typography is a CSS-only utility; there is no `<swc-typography>` custom element.
+ * `gotoStory` waits for the readiness selector to become visible; since there
+ * is no custom element to upgrade, that visibility check alone is sufficient.
  *
  * ARIA snapshot tests validate the accessibility tree structure.
  * aXe WCAG compliance and color contrast validation are run via
  * test-storybook (see .storybook/test-runner.ts). Both are included
  * in the `test:a11y` command.
  */
-async function gotoTypographyStory(
-  page: Page,
-  storyId: string,
-  readySelector = '.typography-samples'
-): Promise<Locator> {
-  await page.goto(`/iframe.html?id=${storyId}&viewMode=story`, {
-    waitUntil: 'domcontentloaded',
-  });
-
-  // Wait for the Storybook root to contain rendered content
-  await page.waitForFunction(() => {
-    const root = document.querySelector('#storybook-root');
-    return root && root.children.length > 0;
-  });
-
-  // Wait for story-specific content (CSS-only component)
-  await page.locator(readySelector).first().waitFor({ state: 'visible' });
-
-  return page.locator('#storybook-root');
-}
 
 test.describe('Typography - ARIA Snapshots', () => {
   test('heading variant renders an accessible level-2 heading', async ({
     page,
   }) => {
-    const root = await gotoTypographyStory(
+    const root = await gotoStory(
       page,
-      'components-typography--playground'
+      'components-typography--playground',
+      '.typography-samples'
     );
     await expect(root).toMatchAriaSnapshot(`
       - heading /Reserved for main page heading/ [level=2]
@@ -63,9 +44,10 @@ test.describe('Typography - ARIA Snapshots', () => {
   test('heading variant with all sizes renders multiple accessible headings', async ({
     page,
   }) => {
-    const root = await gotoTypographyStory(
+    const root = await gotoStory(
       page,
-      'components-typography--heading-variant'
+      'components-typography--heading-variant',
+      '.typography-samples'
     );
     await expect(root).toMatchAriaSnapshot(`
       - heading /Reserved for main page heading/ [level=2]
@@ -76,9 +58,10 @@ test.describe('Typography - ARIA Snapshots', () => {
   test('prose container renders nested semantic heading hierarchy', async ({
     page,
   }) => {
-    const root = await gotoTypographyStory(
+    const root = await gotoStory(
       page,
-      'components-typography--prose-container'
+      'components-typography--prose-container',
+      '.typography-samples'
     );
     await expect(root).toMatchAriaSnapshot(`
       - heading "Semantic H1" [level=1]
@@ -91,9 +74,10 @@ test.describe('Typography - ARIA Snapshots', () => {
   test('prose container includes an inline link with accessible name', async ({
     page,
   }) => {
-    const root = await gotoTypographyStory(
+    const root = await gotoStory(
       page,
-      'components-typography--prose-container'
+      'components-typography--prose-container',
+      '.typography-samples'
     );
     await expect(root).toMatchAriaSnapshot(`
       - link "inline link"
@@ -101,7 +85,7 @@ test.describe('Typography - ARIA Snapshots', () => {
   });
 
   test('link list renders named navigation links', async ({ page }) => {
-    const root = await gotoTypographyStory(
+    const root = await gotoStory(
       page,
       'components-typography--link-list',
       '.swc-Typography--links'
