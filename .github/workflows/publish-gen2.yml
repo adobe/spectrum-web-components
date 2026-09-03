@@ -42,19 +42,71 @@ jobs:
   # collide with the real release's version. Test pending changes via the real release
   # itself (published under `latest`) once the Version PR merges.
   #
-  # Real release: version-then-PR for the persistent pre-release version format
-  # (2.0.0-beta.N), published under the `latest` npm tag. Publishes once that PR
-  # merges. Uses peter-evans/create-pull-request instead of changesets/action's
-  # built-in PR management, since that derives its branch name only from the base
-  # branch (`changeset-release/main`) - gen1 and gen2 would collide on the same branch.
-  release:
+  # Version-then-PR for the persistent pre-release version format (2.0.0-beta.N). No
+  # npm-publish environment gate here - nothing is published yet, just a bot-authored PR
+  # a human reviews and merges. Uses peter-evans/create-pull-request instead of
+  # changesets/action's built-in PR management, since that derives its branch name only
+  # from the base branch (`changeset-release/main`) - gen1 and gen2 would collide on the
+  # same branch.
+  version-pr:
     needs: check-changesets
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    if: >-
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch') &&
+      needs.check-changesets.outputs.has_changesets == 'true'
     runs-on: ubuntu-latest
-    environment: npm-publish
     permissions:
       contents: write # commits the Version PR branch
       pull-requests: write # opens/updates the Version PR
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup job and install dependencies
+        uses: ./.github/actions/setup-job
+
+      - name: Version gen2 packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ ! -f 2nd-gen/.changeset/pre.json ]; then
+            (cd 2nd-gen && yarn changeset pre enter beta)
+          fi
+          (cd 2nd-gen && yarn changeset version)
+          yarn install --refresh-lockfile
+
+      - name: Open or update the gen2 Version PR
+        uses: peter-evans/create-pull-request@v8
+        with:
+          commit-message: 'chore: release gen2 packages #gen2-publish'
+          title: 'chore: release gen2 packages (beta) #gen2-publish'
+          branch: changeset-release/2nd-gen
+          base: main
+          delete-branch: true
+          add-paths: |
+            2nd-gen
+            yarn.lock
+
+      - name: Version PR summary
+        run: |
+          echo "## Publish summary (gen2)" >> $GITHUB_STEP_SUMMARY
+          echo "📝 Version PR opened/updated at \`changeset-release/2nd-gen\` - nothing published yet" >> $GITHUB_STEP_SUMMARY
+
+  # Real publish, once the Version PR above has merged (no pending changesets left).
+  # Only this job sits behind the npm-publish environment's required-reviewer approval,
+  # since it's the only one that actually publishes to npm.
+  publish:
+    needs: check-changesets
+    if: >-
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch') &&
+      needs.check-changesets.outputs.has_changesets == 'false'
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    permissions:
+      contents: write # pushes the release git tag
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
@@ -72,42 +124,10 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
         run: npm whoami --registry=https://registry.npmjs.org
 
-      - name: Version gen2 packages
-        if: needs.check-changesets.outputs.has_changesets == 'true'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          if [ ! -f 2nd-gen/.changeset/pre.json ]; then
-            (cd 2nd-gen && yarn changeset pre enter beta)
-          fi
-          (cd 2nd-gen && yarn changeset version)
-          yarn install --refresh-lockfile
-
-      - name: Open or update the gen2 Version PR
-        if: needs.check-changesets.outputs.has_changesets == 'true'
-        uses: peter-evans/create-pull-request@v8
-        with:
-          commit-message: 'chore: release gen2 packages #gen2-publish'
-          title: 'chore: release gen2 packages (beta) #gen2-publish'
-          branch: changeset-release/2nd-gen
-          base: main
-          delete-branch: true
-          add-paths: |
-            2nd-gen
-            yarn.lock
-
-      - name: Version PR summary
-        if: needs.check-changesets.outputs.has_changesets == 'true'
-        run: |
-          echo "## Publish summary (gen2)" >> $GITHUB_STEP_SUMMARY
-          echo "📝 Version PR opened/updated at \`changeset-release/2nd-gen\` - nothing published yet" >> $GITHUB_STEP_SUMMARY
-
-      # No pending changesets: either nothing to do, or the Version PR above was just
-      # merged - publish whatever is now on main. The git-tag-existence guard is what
-      # makes this safe to re-run on every subsequent ordinary push once a release has
-      # gone out - mirrors gen1's guard, now that gen2 releases carry their own tag too.
+      # The git-tag-existence guard is what makes this safe to re-run on every subsequent
+      # ordinary push once a release has gone out - mirrors gen1's guard.
       - name: Publish gen2 packages
-        if: needs.check-changesets.outputs.has_changesets == 'false' && steps.npm-auth.outcome == 'success'
+        if: steps.npm-auth.outcome == 'success'
         id: publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
@@ -123,11 +143,11 @@ jobs:
           (cd 2nd-gen && yarn changeset publish --no-git-tag --tag latest)
           git config user.name "github-actions-bot"
           git config user.email "support+actions@github.com"
-          node ./2nd-gen/scripts/create-git-tag.js
+          node ./scripts/create-git-tag.js gen2
           echo "published=true" >> $GITHUB_OUTPUT
 
       - name: Publish summary
-        if: needs.check-changesets.outputs.has_changesets == 'false' && always()
+        if: always()
         env:
           AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
           PUBLISHED: ${{ steps.publish.outputs.published }}

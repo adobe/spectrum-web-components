@@ -128,7 +128,7 @@ yarn add @adobe/spectrum-wc
 
 ### Production release (1st-gen `latest`)
 
-There is no manual trigger for this anymore. Merge the open Version PR (see "Planned release" above) — the resulting push to `main` publishes to `latest`, commits nothing further back (the version bumps already landed via the merged PR), and creates a git tag via `1st-gen/scripts/create-git-tag.js`.
+There is no manual trigger for this anymore. Merge the open Version PR (see "Planned release" above) — the resulting push to `main` publishes to `latest`, commits nothing further back (the version bumps already landed via the merged PR), and creates a git tag via `scripts/create-git-tag.js gen1`.
 
 ---
 
