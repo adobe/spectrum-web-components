@@ -135,6 +135,14 @@
       "types": "./dist/components/tabs/index.d.ts",
       "import": "./dist/components/tabs/index.js"
     },
+    "./components/thumbnail": {
+      "types": "./dist/components/thumbnail/index.d.ts",
+      "import": "./dist/components/thumbnail/index.js"
+    },
+    "./components/thumbnail/index.js": {
+      "types": "./dist/components/thumbnail/index.d.ts",
+      "import": "./dist/components/thumbnail/index.js"
+    },
     "./components/tooltip": {
       "types": "./dist/components/tooltip/index.d.ts",
       "import": "./dist/components/tooltip/index.js"
@@ -377,6 +385,12 @@
       ],
       "components/tabs/index.js": [
         "dist/components/tabs/index.d.ts"
+      ],
+      "components/thumbnail": [
+        "dist/components/thumbnail/index.d.ts"
+      ],
+      "components/thumbnail/index.js": [
+        "dist/components/thumbnail/index.d.ts"
       ],
       "components/tooltip": [
         "dist/components/tooltip/index.d.ts"
