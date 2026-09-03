@@ -21,16 +21,21 @@ import {
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 import {
+  physicalSide,
   resolveTrigger,
   validateAllowedChildren,
+  validateEnum,
   warnIf,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
+  MENU_ALIGNMENTS,
   MENU_ALLOWED_CHILDREN,
+  MENU_DIRECTIONS,
   MENU_VALID_SIZES,
   type MenuAlignment,
   type MenuDirection,
+  type MenuSize,
 } from './Menu.types.js';
 
 /**
@@ -65,6 +70,13 @@ const DOCS_URL =
 export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   validSizes: MENU_VALID_SIZES,
 }) {
+  /**
+   * The size of the menu.
+   *
+   * @default m
+   */
+  declare public size: MenuSize;
+
   // ──────────────────
   //     SHARED API
   // ──────────────────
@@ -238,7 +250,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       placement: this.resolvePlacement(),
       shouldFlip: this.shouldFlip,
       onPlacementChange: (resolvedPlacement) => {
-        this.setAttribute('actual-placement', resolvedPlacement.split('-')[0]);
+        this.setAttribute('actual-placement', physicalSide(resolvedPlacement));
       },
     };
     this.placementController.start(this._trigger, surface, options);
@@ -279,6 +291,23 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
+
+    if (changedProperties.has('direction')) {
+      validateEnum(this, {
+        prop: 'direction',
+        value: this.direction,
+        valid: MENU_DIRECTIONS,
+        url: DOCS_URL,
+      });
+    }
+    if (changedProperties.has('align')) {
+      validateEnum(this, {
+        prop: 'align',
+        value: this.align,
+        valid: MENU_ALIGNMENTS,
+        url: DOCS_URL,
+      });
+    }
 
     if (
       changedProperties.has('for') ||
