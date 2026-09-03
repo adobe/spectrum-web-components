@@ -14,7 +14,6 @@ on:
   push:
     branches:
       - main
-      - release-strategy # TODO: remove before merging - testing only
     paths:
       - '1st-gen/**'
 
@@ -244,7 +243,7 @@ jobs:
           commit-message: 'chore: release gen1 packages'
           title: 'chore: release gen1 packages'
           branch: changeset-release/1st-gen
-          base: ${{ github.ref_name }} # TODO: pin to main before merging - testing only
+          base: main
           delete-branch: true
           add-paths: |
             1st-gen
