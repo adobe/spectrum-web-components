@@ -244,7 +244,10 @@ export const submenuMobileView = (): TemplateResult => html`
       <code>sp-action-menu</code>
       opens its menu in a tray. This story verifies that tapping a submenu item
       drills into the submenu instead of dismissing the tray (regression for
-      GitHub issue #5110).
+      GitHub issue #5110), and that a submenu which isn't the last item drills
+      in reliably on every tap, not just intermittently (regression for a touch
+      tap's compatibility click event — a separate, later event — landing on the
+      "Back" row that a prior tap's drill-down had just inserted).
     </p>
     <ol>
       <li>Open Chrome DevTools (or equivalent).</li>
@@ -254,6 +257,12 @@ export const submenuMobileView = (): TemplateResult => html`
       <li>Tap the action menu button — a tray should appear.</li>
       <li>
         Tap
+        <strong>One</strong>
+        repeatedly (including after tapping the back button to return) — it
+        should drill into its submenu reliably every time, not just sometimes.
+      </li>
+      <li>
+        Tap
         <strong>Select some items</strong>
         — the submenu items should slide into view with a back button. The tray
         must stay open.
@@ -261,7 +270,13 @@ export const submenuMobileView = (): TemplateResult => html`
       <li>Tap the back button — the root menu items should slide back in.</li>
     </ol>
     <sp-action-menu label="More Actions">
-      <sp-menu-item>One</sp-menu-item>
+      <sp-menu-item>
+        One
+        <sp-menu slot="submenu">
+          <sp-menu-item>Option 1</sp-menu-item>
+          <sp-menu-item>Option 2</sp-menu-item>
+        </sp-menu>
+      </sp-menu-item>
       <sp-menu-item>Two</sp-menu-item>
       <sp-menu-item>
         Select some items
