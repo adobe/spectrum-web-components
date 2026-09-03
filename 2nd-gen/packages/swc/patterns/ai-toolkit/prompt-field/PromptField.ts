@@ -123,7 +123,7 @@ export class PromptField extends SpectrumElement {
   @property({ type: String, reflect: true })
   public loader: PixelLoaderIconName | PixelLoaderPresetName = 'aiLogo';
 
-  /** Animates the status loader while generating; otherwise it stays static. */
+  /** Animates the status loader while generating; otherwise it stays static. Has no visible effect unless `generating` is also `true`. */
   @property({ type: Boolean, reflect: true, attribute: 'animate-loader' })
   public animateLoader = false;
 
