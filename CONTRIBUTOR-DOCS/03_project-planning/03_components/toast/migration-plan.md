@@ -61,7 +61,7 @@
 - Points of disagreement, see [Design](#design) for more detail:
     - **Timeout minimum** (6000ms vs. 5000ms)
     - **Action+timeout** (soft warning vs. hard block)
-    - **Action API shape** (light-DOM `action` slot vs. `actionLabel`/`onAction` props
+    - **Action API shape** (light-DOM `action` slot vs. `actionLabel`/`onAction` props)
     - **`tabindex`** (conditional-on-container vs. always `0`)
 
 ### Most blocking open questions
@@ -269,13 +269,9 @@ Action button (when present): secondary, outline, `static-color="white"`. Confir
 
 No `--mod-*` properties will be exposed. New `--swc-*` component-level properties may be introduced where needed — these are additive and not breaking. See [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure) for what to expose and how.
 
-**Inferred initial set**, based on the [Component Custom Property Exposure decision tree](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#decision-tree-for-exposure) applied to Toast's own 1st-gen `--mod-toast-*` surface (see [CSS custom properties](#css-custom-properties) above) and precedent from already-migrated components (`swc-badge`):
+No properties are exposed in the initial set. Add a `--swc-toast-*` property only once implementation surfaces a concrete override need, per the [decision tree](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#decision-tree-for-exposure) above. Height in particular is composed from padding, font-size, and line-height rather than exposed as its own property, matching Design's direction away from explicit height controls.
 
-- `--swc-toast-height`: min block size, matches `--swc-badge-height` precedent
-- `--swc-toast-corner-radius`: matches the exposed pattern on `swc-badge` and other colored-chip components
-- `--swc-toast-gap`: spacing between icon and message text
-
-**Excluded from the initial set:**
+**Excluded:**
 
 - Background color, text color, icon color, per the style guide's exclusions. Toast's text/icon color is fixed white against a saturated variant background (the same contrast-intent exclusion as static-color components), and background color is set per semantic variant, not consumer-overridable per the badge/status-light precedent for semantic (non-decorative) variant colors.
 - `max-inline-size`. A single constant value regardless of variant, same as `swc-tooltip`/`swc-popover` (also not exposed). The host is directly stylable from outside (`swc-toast { max-inline-size: 400px; }`), no custom property needed.
@@ -285,7 +281,7 @@ No `--mod-*` properties will be exposed. New `--swc-*` component-level propertie
 - Auto-dismiss timer pauses on `pointerenter` + `focusin`, preserving remaining time; resumes only once both `pointerleave` and `focusout` have fired.
 - `role="alertdialog"` + `aria-modal="false"` on host; opening never moves focus.
 - `tabindex` on host follows the a11y doc: no `tabindex` on a standalone host; `tabindex="0"` once the toast is inside a container. See Q4.
-- Close fires a cancelable `close` event before the component closes itself (matches 1st-gen).
+- Matches the event set of other visibility-toggling components: `swc-open` before the enter transition plays, `swc-after-open` once it completes, `swc-close` (cancelable) before the exit transition plays, `swc-after-close` once it completes.
 - Text wrapping is automatic, not an option. Content wraps naturally within whatever `max-inline-size` the host is given (directly stylable from outside; no `--swc-*` custom property, see [CSS custom properties (2nd-gen)](#css-custom-properties-2nd-gen)); no `width` property exists on `sp-toast` in 1st-gen or on `Toast` in RSP S2. Long unbroken words specifically need `overflow-wrap`/`word-break` (SWC-475, see [Styling](#styling)) on top of normal wrapping.
 - No `placement` property. Confirmed absent from 1st-gen `sp-toast`'s own API: the 1st-gen story's `placement` values (bottom/left/right/top) belong to `overlay-trigger`, an unrelated demo wrapper, not `sp-toast` itself. RSP's `placement` (`top`/`bottom`/`top end`/`bottom end`) lives on `ToastContainer`, never on individual `Toast`. Placement is a future container-level concern; see Q6.
 
