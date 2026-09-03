@@ -167,6 +167,22 @@ The quiet variant removes the default background.
 </button>
 ```
 
+Action buttons support `disabled` state styles via the native `disabled` attribute, as well as via `aria-disabled="true"` for group-level disabling (for example, when disabled as part of a `swc-action-group`) where the button must remain focusable and in the tab order.
+
+{/* prettier-ignore */}
+<button type="button" class="swc-ActionButton" disabled>As Button (Disabled)</button>
+{/* prettier-ignore */}
+<button type="button" class="swc-ActionButton" aria-disabled="true">As Button (aria-disabled)</button>
+
+```html
+<button type="button" class="swc-ActionButton" disabled>
+  As Button (Disabled)
+</button>
+<button type="button" class="swc-ActionButton" aria-disabled="true">
+  As Button (aria-disabled)
+</button>
+```
+
 Icons are supported with the class `swc-ActionButton-icon`. Add `swc-ActionButton--hasIcon` when combining an icon with a label, or `swc-ActionButton--iconOnly` with `aria-label` for icon-only variants.
 
 {/* prettier-ignore */}
