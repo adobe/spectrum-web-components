@@ -306,10 +306,10 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 | **Core** | `2nd-gen/packages/core/components/thumbnail/` | `Thumbnail.base.ts` (numeric `size` property with `warnIf` validation, `fit` property with `warnIf` validation on invalid values, `decorative` property, alt-fallback and DEBUG-warning logic), `Thumbnail.types.ts` (`ThumbnailSize`, `THUMBNAIL_VALID_SIZES`, `THUMBNAIL_DEFAULT_SIZE`, `ThumbnailFit`). No rendering. |
 | **SWC**  | `2nd-gen/packages/swc/components/thumbnail/`  | `Thumbnail.ts`, `thumbnail.css`, element registration, stories, tests, and the specific S2 rendering/styling for `swc-thumbnail`.                                                                                                            |
 
-Planned rendering shape:
+Rendering shape (implemented in the API/accessibility phases):
 
-- Core owns API normalization (`size` validation/reflection), the `decorative`/`aria-hidden`/alt-fallback logic, and the missing-`alt` DEBUG warning
-- Core's alt-fallback and DEBUG-warning logic is informed by `AvatarBase`'s `warnIf` pattern but is **not** a direct mirror of it: `AvatarBase._warnMissingAlt()` reads a reactive `alt` property declared on the host itself, while Thumbnail has no such property, its `alt` lives on a light-DOM child projected through the default slot. Core needs slot introspection (e.g. a `slotchange` listener plus `assignedElements()` on the slot SWC renders) to read the assigned `<img>`'s `alt`, a mechanism Avatar doesn't need. Since Core has no rendering of its own (no `<slot>` to query), this likely requires SWC to surface the assigned image (or its `alt`) up to Core, or for this logic to live in SWC instead of Core; resolve the exact split during Setup
+- Core owns API normalization (`size` and `fit` validation/reflection) and the `decorative`/`aria-hidden` reflection
+- **Resolved:** the alt-fallback and missing-`alt` DEBUG warning logic lives in SWC (`Thumbnail.ts`), not core. `AvatarBase._warnMissingAlt()` reads a reactive `alt` property declared on the host itself; Thumbnail has no such property; its `alt` lives on a light-DOM child projected through the default slot. Reading it doesn't itself require a rendered `<slot>`, but keeping it in sync with slotted content changes needs a `slotchange` listener bound to the rendered `<slot>`, and core has no `render()` of its own to provide one. `Thumbnail.ts` reads the slotted `<img>` via `this.querySelector('img')` from `updated()` (gated on `changes.has('decorative')`, matching `AvatarBase`'s own gating) and from a `slotchange` listener on the `<slot>` for content swaps that don't otherwise change a reactive property, then applies the `alt=""` fallback or fires the `warnIf` accordingly. See [Decision log](#decision-log) Q5.
 - SWC renders a single shadow-DOM structure, not per-property variant markup, per plan-review feedback:
 
   ```html
@@ -335,23 +335,23 @@ Planned rendering shape:
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/components/thumbnail/`
-- [ ] Create `2nd-gen/packages/swc/components/thumbnail/`
-- [ ] Wire exports in both `package.json` files
+- [x] Create `2nd-gen/packages/core/components/thumbnail/`
+- [x] Create `2nd-gen/packages/swc/components/thumbnail/`
+- [x] Wire exports in both `package.json` files
 - [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
 
 ### API
 
 #### Naming and public surface
 
-- [ ] `Thumbnail.types.ts`: define `ThumbnailSize`, `THUMBNAIL_VALID_SIZES`, `THUMBNAIL_DEFAULT_SIZE` (500), `ThumbnailFit` (`'cover' | 'contain'`)
-- [ ] `Thumbnail.base.ts`: numeric `size` getter/setter with `warnIf` validation (B2); `fit` getter/setter with `warnIf` validation on invalid values, default `'contain'` (B10); `decorative` property and alt-fallback/DEBUG-warning logic (B4, B5)
+- [x] `Thumbnail.types.ts`: define `ThumbnailSize`, `THUMBNAIL_VALID_SIZES`, `THUMBNAIL_DEFAULT_SIZE` (500), `ThumbnailFit` (`'cover' | 'contain'`)
+- [x] `Thumbnail.base.ts`: numeric `size` getter/setter with `warnIf` validation (B2); `fit` getter/setter with `warnIf` validation on invalid values, default `'contain'` (B10); `decorative` property with `aria-hidden` reflection (B4). The alt-fallback/DEBUG-warning half of B4/B5 lives in `Thumbnail.ts` (SWC) instead; see [Architecture: core vs SWC split](#architecture-core-vs-swc-split) and [Decision log](#decision-log) Q5. `background`/`layer` are not implemented, per B7/B8.
 
 ### Styling
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] Render a single `.swc-Thumbnail` wrapper (`<div class="swc-Thumbnail"><slot></slot></div>`) with no per-property variant markup; drive all style changes via `:host()` attribute selectors; keep styling off `:host` itself
+- [x] Render a single `.swc-Thumbnail` wrapper (`<div class="swc-Thumbnail"><slot></slot></div>`) with no per-property variant markup; drive all style changes via `:host()` attribute selectors; keep styling off `:host` itself
 - [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `thumbnail.css` as baseline
 - [ ] Import the shared `_lit-styles/opacity-checkerboard.css` fragment instead of a component-package import
 
@@ -366,15 +366,15 @@ Planned rendering shape:
 
 #### Naming and semantics
 
-- [ ] No `role` attribute on `:host`
-- [ ] `decorative` applies `aria-hidden="true"` to host and `alt=""` fallback to the slotted `<img>` when unset
-- [ ] DEBUG warning fires when `decorative` is unset and the slotted `<img>` has no meaningful `alt`
-- [ ] `disabled`/`focused`/`selected`/`layer` are not implemented as `swc-thumbnail` attributes at all; verify no residual CSS hooks exist for them (see [Decision log](#decision-log) C6, C7)
-- [ ] The `.swc-OpacityCheckerboard` wrapper does **not** get `aria-hidden`, since it directly contains the slotted `<img>` (see [Accessibility semantics notes](#accessibility-semantics-notes-2nd-gen))
+- [x] No `role` attribute on `:host`
+- [x] `decorative` applies `aria-hidden="true"` to host and `alt=""` fallback to the slotted `<img>` when unset
+- [x] DEBUG warning fires when `decorative` is unset and the slotted `<img>` has no meaningful `alt`
+- [x] `disabled`/`focused`/`selected`/`layer` are not implemented as `swc-thumbnail` attributes at all; verify no residual CSS hooks exist for them (see [Decision log](#decision-log) C6, C7)
+- [x] The `.swc-OpacityCheckerboard` wrapper does **not** get `aria-hidden`, since it directly contains the slotted `<img>` (see [Accessibility semantics notes](#accessibility-semantics-notes-2nd-gen))
 
 #### State verification
 
-- [ ] Thumbnail is never part of the tab order, in any state or context, including when used inside a layer/treeview panel (see [Decision log](#decision-log) Q4)
+- [x] Thumbnail is never part of the tab order, in any state or context, including when used inside a layer/treeview panel (see [Decision log](#decision-log) Q4)
 - [ ] Border (inset box-shadow) meets 3:1 contrast against adjacent background, default and high-contrast modes
 
 ### Testing
@@ -445,6 +445,7 @@ Planned rendering shape:
 | **C5** | `cover` is dropped as a `swc-thumbnail` property; not renamed to `fit`. | Asset is separately planning a `fit` property (`'cover' \| 'contain'`, default `'cover'`); an earlier pass of this plan proposed mirroring that naming on Thumbnail with a `'contain'` default to match 1st-gen's existing behavior. On further plan review, Design opted to drop the property entirely instead: the same `cover`/`contain` outcomes are achievable by the consumer applying CSS `object-fit` directly to the slotted `<img>`, which also matches Asset's plan to keep this consumer-owned rather than component-owned. **Superseded by C8:** this was based on a misread PR review comment; the comment was actually about `background`, and `cover` should have become `fit` rather than being dropped. |
 | **Q1** | Whether `background` remains a supported Figma component property. | Resolved as moot: `background` is dropped from `swc-thumbnail` regardless of what Figma shows, since the checkerboard wrapper already covers its letterboxing purpose. See C8 for the full corrected decision. |
 | **C8** | `background` is dropped as a `swc-thumbnail` property (not `cover`); `cover` is renamed and expanded to a `fit` property (`'cover' \| 'contain'`, default `'contain'`), matching Asset's `AssetFit` naming and DEBUG-warning pattern. Supersedes C5; resolves Q1. | C5 mistakenly dropped `cover` entirely, reasoning from a PR review comment thread that got conflated: the actual comment was specifically about `background` ("we can drop this in favor of only a slotted image because we can apply object-fit in CSS for the same outcome of either cover or contain behavior; this matches Asset's plan as well"), and it only mentioned `cover`/`contain` outcomes as an aside, to note that a `background`-image-based approach isn't needed to achieve letterboxing, not to argue for dropping `cover` itself. The comment author clarified directly: drop `background`; replace `cover` with `fit` and the cover/contain behavior noted in that comment. Thumbnail's `fit` default is `'contain'`, not Asset's `'cover'`, to preserve 1st-gen's existing non-cover default. |
+| **Q5** | The alt-fallback and missing-`alt` DEBUG-warning logic (B4/B5) lives in `Thumbnail.ts` (SWC), not `ThumbnailBase` (core), unlike `AvatarBase`'s fully core-owned equivalent. | `AvatarBase._warnMissingAlt()` reads a reactive `alt` property declared on the host itself. Thumbnail's `alt` lives on a light-DOM `<img>` projected through the default slot; reading it doesn't itself require a rendered `<slot>`, but keeping the check in sync with slotted content changes (via a `slotchange` listener) does, and core has no `render()` of its own to provide one. `decorative`'s `aria-hidden` reflection stays in core since it only depends on the host's own reactive property; `fit`'s validation also stays in core for the same reason. Resolved during the API/accessibility implementation, deferred from Setup per the [Architecture](#architecture-core-vs-swc-split) section's original open question. |
 | **C6** | `layer` is dropped as a `swc-thumbnail` property. Supersedes the `layer` portion of C3. | C3 confirmed `layer` carrying forward, based on the published Spectrum 2 design guidelines' Behaviors section. On further plan review, checked against the latest Figma, `layer` is no longer represented there; it's a narrow enough use case that a parent/consumer can apply its own border-style overrides directly instead of Thumbnail owning a dedicated attribute for it. |
 | **C7** | `disabled`, `focused`, and `selected` are dropped as documented `swc-thumbnail` attributes. Supersedes C2 and the `selected` portion of C3. | C2 confirmed these as plain, parent-applied, non-reactive CSS hooks, formalizing existing 1st-gen behavior. On further plan review: since none of these were ever reactive properties, and the equivalent visual treatment (opacity, focus ring, selected border) can be produced by a parent applying its own style overrides, Design opted to drop the documented attribute contract entirely rather than carry forward CSS-only hooks. This also matches Asset's plan for the same states. |
 
