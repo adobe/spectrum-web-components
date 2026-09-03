@@ -12,11 +12,10 @@
 
 import { html, type TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import {
-  KEYBOARD_ACTIVATIONS,
   type KeyboardActivation,
-  TAB_DENSITIES,
   type TabDensity,
   TABS_DIRECTIONS,
   type TabsDirection,
@@ -26,7 +25,7 @@ import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
 import '@adobe/spectrum-wc/components/tabs/swc-tab.js';
 import '@adobe/spectrum-wc/components/tabs/swc-tab-panel.js';
 
-const events = ['change'];
+const { events, args, argTypes } = getStorybookHelpers('swc-tabs');
 
 /**
  * Tabs organize content into multiple sections and allow users to navigate
@@ -42,30 +41,11 @@ const events = ['change'];
 export const meta: Meta = {
   title: 'Tabs',
   component: 'swc-tabs',
-  argTypes: {
-    selected: { control: 'text' },
-    'accessible-label': { control: 'text' },
-    direction: {
-      control: { type: 'select' },
-      options: [...TABS_DIRECTIONS],
-    },
-    'keyboard-activation': {
-      control: { type: 'select' },
-      options: [...KEYBOARD_ACTIVATIONS],
-    },
-    density: {
-      control: { type: 'select' },
-      options: [...TAB_DENSITIES],
-    },
-    disabled: { control: 'boolean' },
-  },
+  argTypes,
   args: {
+    ...args,
     selected: '1',
     'accessible-label': 'Product details',
-    direction: 'horizontal',
-    'keyboard-activation': 'automatic',
-    density: 'regular',
-    disabled: false,
   },
   render: (args) => {
     const raw = args as Record<string, unknown>;
