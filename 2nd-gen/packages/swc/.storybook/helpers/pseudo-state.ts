@@ -70,7 +70,7 @@ function collectMirroredRules(rules: CSSRuleList, out: string[]): void {
         for (const [pseudo, forcedAttribute] of Object.entries(
           PSEUDO_TO_FORCED_ATTRIBUTE
         )) {
-          mirrored = mirrored.replaceAll(pseudo, forcedAttribute);
+          mirrored = mirrored.split(pseudo).join(forcedAttribute);
         }
         out.push(mirrored);
       }

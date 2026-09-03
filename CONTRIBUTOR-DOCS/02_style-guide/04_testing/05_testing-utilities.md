@@ -18,7 +18,6 @@
 - [`setupSwcWarningSpy()`](#setupswcwarningspy)
 - [`gotoStory(page, storyId, elementSelector)`](#gotostorypage-storyid-elementselector)
 - [`waitForCustomElement(page, tagName)`](#waitforcustomelementpage-tagname)
-- [`waitForStoryReady(page, elementSelector)`](#waitforstoryreadypage-elementselector)
 
 </details>
 
@@ -118,10 +117,9 @@ const badge = await gotoStory(page, 'components-badge--default', 'swc-badge');
 How it works:
 
 1. Navigates to the story URL
-2. Waits for custom element definition (`customElements.whenDefined`)
-3. Waits for Storybook to render content
-4. Waits for element visibility
-5. Waits for web component upgrade
+2. Waits for Storybook to render content
+3. Waits for element visibility
+4. If the element is a custom element, waits for it to be defined in the registry
 
 This eliminates flaky tests caused by testing components before they are ready.
 
@@ -133,14 +131,4 @@ Wait for a custom element to be defined in the registry (Playwright only):
 import { waitForCustomElement } from '../../../utils/a11y-helpers.js';
 
 await waitForCustomElement(page, 'swc-badge');
-```
-
-## `waitForStoryReady(page, elementSelector)`
-
-Wait for a Storybook story to render and the component to be visible (Playwright only):
-
-```typescript
-import { waitForStoryReady } from '../../../utils/a11y-helpers.js';
-
-const element = await waitForStoryReady(page, 'swc-badge');
 ```
