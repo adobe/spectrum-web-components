@@ -22,15 +22,27 @@ import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-menu');
 
+// `actual-placement` is internal CSS-only state that `Menu` manages directly
+// via setAttribute (the flip-resolved side from PlacementController, once
+// Phase 5 rendering provides a surface for it to position). The Storybook
+// helper otherwise observes every attribute change, writes it back into
+// `args`, and re-applies it through its `spread` directive on the next
+// render — clobbering the resolved side with a stale value. Declaring it
+// here (control disabled) makes the helper exclude it from the spread.
+argTypes['actual-placement'] = {
+  table: { disable: true },
+  control: false,
+};
+
 /**
  * A menu is a full [menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)
  * host: an externally-referenced trigger opens a `PlacementController`-anchored
  * surface containing a `role="menu"` list of `swc-menu-item` rows.
  *
- * This is a Phase 2 (2nd-gen file structure) placeholder for smoke testing
- * only. `swc-menu-item` doesn't exist yet, so this story slots plain content
- * instead. Trigger resolution, ARIA/keyboard, and full documentation sections
- * land in later migration phases.
+ * This is a Phase 3 (API migration) story for smoke testing only.
+ * `swc-menu-item` doesn't exist yet, so this story slots plain content
+ * instead. Keyboard/focus management, rendering/styling of the anchored
+ * surface, and full documentation sections land in later migration phases.
  */
 const meta: Meta = {
   title: 'Menu',
