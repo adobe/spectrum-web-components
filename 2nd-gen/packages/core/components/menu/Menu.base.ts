@@ -260,19 +260,28 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   // in a later migration phase — so the after-* event fires synchronously
   // right behind the before-* event rather than waiting on `transitionend`
   // the way `Tooltip.base.ts`/`Popover.base.ts` do.
+  //
+  // Each event is dispatched from its own literal `new CustomEvent(...)` call
+  // (not a shared helper keyed by a ternary) because the custom-elements-manifest
+  // analyzer statically scans `dispatchEvent(new CustomEvent(...))` calls to
+  // auto-detect events; a ternary event name has no literal `.text` for it to
+  // read, and it emits an extra nameless event in the manifest for one.
   private dispatchOpenEvents(isOpen: boolean): void {
-    this.dispatchEvent(
-      new CustomEvent(isOpen ? 'swc-open' : 'swc-close', {
-        bubbles: true,
-        composed: true,
-      })
-    );
-    this.dispatchEvent(
-      new CustomEvent(isOpen ? 'swc-after-open' : 'swc-after-close', {
-        bubbles: true,
-        composed: true,
-      })
-    );
+    if (isOpen) {
+      this.dispatchEvent(
+        new CustomEvent('swc-open', { bubbles: true, composed: true })
+      );
+      this.dispatchEvent(
+        new CustomEvent('swc-after-open', { bubbles: true, composed: true })
+      );
+    } else {
+      this.dispatchEvent(
+        new CustomEvent('swc-close', { bubbles: true, composed: true })
+      );
+      this.dispatchEvent(
+        new CustomEvent('swc-after-close', { bubbles: true, composed: true })
+      );
+    }
   }
 
   /**
