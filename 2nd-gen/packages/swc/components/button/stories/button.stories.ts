@@ -16,7 +16,6 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import {
   BUTTON_FILL_STYLES,
-  BUTTON_STATIC_COLORS,
   BUTTON_VALID_SIZES,
   BUTTON_VARIANTS,
   type ButtonFillStyle,
@@ -34,28 +33,10 @@ import { SIZE_LABELS } from '../../../.storybook/helpers/index.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-button');
 
-argTypes.variant = {
-  ...argTypes.variant,
-  control: { type: 'select' },
-  options: BUTTON_VARIANTS,
-};
-
-argTypes['fill-style'] = {
-  ...argTypes['fill-style'],
-  control: { type: 'select' },
-  options: BUTTON_FILL_STYLES,
-};
-
 argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
   options: BUTTON_VALID_SIZES,
-};
-
-argTypes['static-color'] = {
-  ...argTypes['static-color'],
-  control: { type: 'select' },
-  options: BUTTON_STATIC_COLORS,
 };
 
 args['default-slot'] = 'Button';
