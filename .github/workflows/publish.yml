@@ -18,16 +18,8 @@ on:
     paths:
       - '1st-gen/**'
 
-# gen1-scoped group: this and publish-gen2.yml used to share the literal string
-# `publish-${{ github.ref }}`, which is a repo-wide concurrency key, not scoped to the
-# workflow file it's declared in - so the two workflows' entire runs (not just their
-# release jobs) serialized against each other on every push to main. That made sense
-# under the old shared-changeset/direct-push model (both workflows wrote to the same
-# main branch and had to avoid racing), but it directly works against this redesign's
-# goal of fully independent gen1/gen2 release streams: neither writes to anything the
-# other touches anymore (separate Version PR branches, separate dist-tags, separate npm
-# packages), so there's nothing left to protect by blocking one generation's run behind
-# the other's.
+# Scoped to this workflow so a gen1 run and a gen2 run never block on each other -
+# both used to share the same `publish-${{ github.ref }}` group string.
 concurrency:
   group: publish-gen1-${{ github.ref }}
   cancel-in-progress: false
@@ -57,15 +49,9 @@ jobs:
             echo "Found $GEN1_COUNT 1st-gen changeset(s)"
           fi
 
-  # Throwaway snapshot publish: gated on has_changesets, same as check-changesets - so
-  # this only runs on a push to main that happens to have 1st-gen changesets pending at
-  # that moment, not on every push. `next` is therefore not a true continuous build of
-  # every main commit; it only refreshes when a push coincides with a pending changeset.
-  # Also runs for manual workflow_dispatch. Never touches main, never commits, never
-  # opens a PR. Runs alongside (not instead of) the
-  # `release` job below - both are triggered by the same push event but never conflict
-  # (separate jobs/runners, and the run-level concurrency group only dedupes overlapping
-  # *workflow runs*, not jobs within one run).
+  # Throwaway snapshot publish under `next`/`snapshot-test`. Only runs when 1st-gen
+  # changesets are pending; never touches main, commits, or opens a PR. Runs alongside
+  # the `release` job below without conflicting (separate jobs/runners).
   snapshot:
     needs: check-changesets
     if: needs.check-changesets.outputs.has_changesets == 'true'
@@ -202,19 +188,10 @@ jobs:
             echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
           fi
 
-  # Real release: version-then-PR, then publish once that PR merges. Every push to main
-  # either versions and opens/updates a dedicated Version PR (changesets pending) or
-  # publishes (no changesets pending, because that PR was just merged). No direct write
-  # to main outside of a reviewed PR merge; no branch lock needed.
-  #
-  # This does NOT use changesets/action's own built-in PR management. That action derives
-  # its PR branch name solely from the base branch (`changeset-release/<baseBranch>`) with
-  # no per-cwd namespacing - since this workflow and publish-gen2.yml both target the
-  # same `main` base, two changesets/action calls would both compute the identical branch
-  # name `changeset-release/main` and silently overwrite each other's Version PR content
-  # whenever both generations have pending changesets (not just under a race - any two
-  # pushes, even hours apart, collide the same way). peter-evans/create-pull-request@v8
-  # takes an explicit `branch:` input, so each generation gets its own dedicated branch.
+  # Real release: version-then-PR, then publish once that PR merges. Uses
+  # peter-evans/create-pull-request instead of changesets/action's built-in PR
+  # management, since that derives its branch name only from the base branch
+  # (`changeset-release/main`) - gen1 and gen2 would collide on the same branch.
   release:
     needs: check-changesets
     if: github.event_name == 'push'
