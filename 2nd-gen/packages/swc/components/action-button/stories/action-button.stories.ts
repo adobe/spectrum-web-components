@@ -14,12 +14,11 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import {
-  ACTION_BUTTON_VALID_SIZES,
-  type ActionButtonSize,
-} from '@adobe/spectrum-wc-core/components/action-button';
+import { ACTION_BUTTON_VALID_SIZES } from '@adobe/spectrum-wc-core/components/action-button';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
+
+import { SIZE_LABELS } from '../../../.storybook/helpers/index.js';
 
 // ────────────────
 //    METADATA
@@ -32,6 +31,12 @@ argTypes.size = {
   control: { type: 'select' },
   options: ACTION_BUTTON_VALID_SIZES,
 };
+
+// These are programmatic attributes set by parent components (action-group,
+// action-menu) — not user-facing controls.
+argTypes['aria-disabled'] = { table: { disable: true } };
+argTypes['aria-haspopup'] = { table: { disable: true } };
+argTypes['aria-expanded'] = { table: { disable: true } };
 
 /**
  * A compact action button for toolbars, action groups, and icon-first chrome.
@@ -61,14 +66,6 @@ export default meta;
 // ────────────────────
 //    HELPERS
 // ────────────────────
-
-const sizeLabels = {
-  xs: 'Extra-small',
-  s: 'Small',
-  m: 'Medium',
-  l: 'Large',
-  xl: 'Extra-large',
-} as const satisfies Record<ActionButtonSize, string>;
 
 const editIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M33.567 8.2 27.8 2.432a1.215 1.215 0 0 0-.866-.353H26.9a1.371 1.371 0 0 0-.927.406L5.084 23.372a.99.99 0 0 0-.251.422L2.055 33.1c-.114.377.459.851.783.851a.251.251 0 0 0 .062-.007c.276-.063 7.866-2.344 9.311-2.778a.972.972 0 0 0 .414-.249l20.888-20.889a1.372 1.372 0 0 0 .4-.883 1.221 1.221 0 0 0-.346-.945ZM11.4 29.316c-2.161.649-4.862 1.465-6.729 2.022l2.009-6.73Z"/></svg>`;
 
@@ -134,7 +131,7 @@ export const Sizes: Story = {
       template({
         ...args,
         size,
-        'default-slot': sizeLabels[size],
+        'default-slot': SIZE_LABELS[size],
         'icon-slot': editIconSvg,
       })
     )}

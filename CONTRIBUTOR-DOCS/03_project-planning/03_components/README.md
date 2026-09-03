@@ -69,6 +69,8 @@
     - [Color loupe accessibility migration analysis](color-loupe/accessibility-migration-analysis.md)
     - [Color loupe migration checklist](color-loupe/migration-checklist.md)
     - [Color loupe migration analysis](color-loupe/rendering-and-styling-migration-analysis.md)
+- Combobox
+    - [Combobox accessibility migration analysis](combobox/accessibility-migration-analysis.md)
 - Divider
     - [Divider accessibility migration analysis](divider/accessibility-migration-analysis.md)
     - [Divider migration roadmap](divider/rendering-and-styling-migration-analysis.md)
@@ -103,6 +105,7 @@
     - [Link migration roadmap](link/rendering-and-styling-migration-analysis.md)
 - Menu
     - [Menu accessibility migration analysis](menu/accessibility-migration-analysis.md)
+    - [Menu migration plan](menu/migration-plan.md)
     - [Menu migration roadmap](menu/rendering-and-styling-migration-analysis.md)
 - Menu Group
     - [Menu group accessibility migration analysis](menu-group/accessibility-migration-analysis.md)
@@ -120,6 +123,10 @@
     - [Opacity checkerboard accessibility migration analysis](opacity-checkerboard/accessibility-migration-analysis.md)
     - [Opacity Checkerboard migration plan](opacity-checkerboard/migration-plan.md)
     - [Opacity Checkerboard migration roadmap](opacity-checkerboard/rendering-and-styling-migration-analysis.md)
+- Option
+    - [Option accessibility migration analysis](option/accessibility-migration-analysis.md)
+- Option Group
+    - [Option group accessibility migration analysis](option-group/accessibility-migration-analysis.md)
 - Picker Button
     - [Picker button migration roadmap](picker-button/rendering-and-styling-migration-analysis.md)
 - Popover
@@ -134,7 +141,12 @@
     - [Progress circle accessibility migration analysis](progress-circle/accessibility-migration-analysis.md)
     - [Progress Circle migration roadmap](progress-circle/rendering-and-styling-migration-analysis.md)
 - Radio
+    - [Radio accessibility migration analysis](radio/accessibility-migration-analysis.md)
+    - [Radio migration plan](radio/migration-plan.md)
     - [Radio migration roadmap](radio/rendering-and-styling-migration-analysis.md)
+- Radio Group
+    - [Radio group accessibility migration analysis](radio-group/accessibility-migration-analysis.md)
+    - [Radio group migration plan](radio-group/migration-plan.md)
 - Search
     - [Search migration roadmap](search/rendering-and-styling-migration-analysis.md)
 - Sidenav

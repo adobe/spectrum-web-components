@@ -30,7 +30,7 @@ import {
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
-import { iconForSize } from '../../../.storybook/helpers/index.js';
+import { iconForSize, SIZE_LABELS } from '../../../.storybook/helpers/index.js';
 import * as Icons from '../../icon/elements/index.js';
 
 // ────────────────
@@ -113,13 +113,6 @@ export default meta;
 // ────────────────────
 //    HELPERS
 // ────────────────────
-
-const sizeLabels = {
-  s: 'Small',
-  m: 'Medium',
-  l: 'Large',
-  xl: 'Extra-large',
-} as const satisfies Record<BadgeSize, string>;
 
 const semanticLabels = {
   accent: 'New',
@@ -260,7 +253,7 @@ export const Sizes: Story = {
             <swc-icon size=${size} slot="icon">
               ${iconForSize(Icons, 'Checkmark', size)}
             </swc-icon>
-            ${sizeLabels[size]}
+            ${SIZE_LABELS[size]}
           </swc-badge>
         `
       )}
@@ -271,7 +264,7 @@ export const Sizes: Story = {
       ${BADGE_VALID_SIZES.map(
         (size) => html`
           <swc-badge variant=${args.variant} size=${size}>
-            ${sizeLabels[size]}
+            ${SIZE_LABELS[size]}
           </swc-badge>
         `
       )}
@@ -285,7 +278,7 @@ export const Sizes: Story = {
             variant=${args.variant}
             size=${size}
             role="img"
-            aria-label=${sizeLabels[size]}
+            aria-label=${SIZE_LABELS[size]}
           >
             <swc-icon size=${size} slot="icon">
               ${iconForSize(Icons, 'Checkmark', size)}

@@ -1,0 +1,125 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/* ── Host ─────────────────────────────────────────── */
+
+:host {
+  display: inline-flex;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ── Base component ───────────────────────────────── */
+
+.swc-ActionGroup {
+  --_swc-action-group-gap: var(--swc-action-group-gap, token("group-gap-medium"));
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--_swc-action-group-gap);
+  inline-size: 100%;
+}
+
+::slotted(*) {
+  flex-shrink: 0;
+}
+
+/* ── Orientation ──────────────────────────────────── */
+
+:host([orientation="vertical"]) .swc-ActionGroup {
+  flex-direction: column;
+  inline-size: max-content;
+  min-inline-size: 100%;
+}
+
+/* ── Sizes ────────────────────────────────────────── */
+
+:host([size="xs"]) {
+  --swc-action-group-gap: token("group-gap-extra-small");
+}
+
+:host([size="s"]) {
+  --swc-action-group-gap: token("group-gap-small");
+}
+
+:host([size="l"]) {
+  --swc-action-group-gap: token("group-gap-large");
+}
+
+:host([size="xl"]) {
+  --swc-action-group-gap: token("group-gap-extra-large");
+}
+
+/* ── Justified ────────────────────────────────────── */
+
+:host([justified]) ::slotted(*) {
+  flex: 1 1 0%;
+}
+
+/* ── Compact ──────────────────────────────────────── */
+
+:host([compact]:not([quiet])) .swc-ActionGroup {
+  --swc-action-group-gap: token("group-gap-compact");
+
+  flex-wrap: nowrap;
+}
+
+:host([compact]:not([quiet])) ::slotted(*) {
+  position: relative;
+  z-index: 0;
+}
+
+:host([compact]:not([quiet])) ::slotted(:hover) {
+  z-index: 1;
+}
+
+/* `:focus-visible` does not retarget through `delegatesFocus` in Chromium —
+   only `:focus`/`:focus-within` do — so `:focus-within` is used here even
+   though the visual ring itself is still gated by `:focus-visible` inside
+   action-button's own shadow root. */
+:host([compact]:not([quiet])) ::slotted(:focus-within) {
+  z-index: 2;
+}
+
+/* Horizontal: square off the corners where buttons meet. */
+
+:host([compact]:not([quiet], [orientation="vertical"])) ::slotted(:first-child:not(:last-child)) {
+  --swc-action-button-border-start-end-radius: 0;
+  --swc-action-button-border-end-end-radius: 0;
+}
+
+:host([compact]:not([quiet], [orientation="vertical"])) ::slotted(:last-child:not(:first-child)) {
+  --swc-action-button-border-start-start-radius: 0;
+  --swc-action-button-border-end-start-radius: 0;
+}
+
+:host([compact]:not([quiet], [orientation="vertical"])) ::slotted(:not(:first-child, :last-child)) {
+  --swc-action-button-border-radius: 0;
+}
+
+/* Vertical: square off the corners where buttons meet. */
+
+:host([compact]:not([quiet])[orientation="vertical"]) ::slotted(:first-child:not(:last-child)) {
+  --swc-action-button-border-end-start-radius: 0;
+  --swc-action-button-border-end-end-radius: 0;
+}
+
+:host([compact]:not([quiet])[orientation="vertical"]) ::slotted(:last-child:not(:first-child)) {
+  --swc-action-button-border-start-start-radius: 0;
+  --swc-action-button-border-start-end-radius: 0;
+}
+
+:host([compact]:not([quiet])[orientation="vertical"]) ::slotted(:not(:first-child, :last-child)) {
+  --swc-action-button-border-radius: 0;
+}

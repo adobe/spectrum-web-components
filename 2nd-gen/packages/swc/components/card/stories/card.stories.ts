@@ -254,7 +254,7 @@ export const WithCollection: Story = {
     ${template(
       { ...args, size: 'xs' },
       html`
-        <img slot="preview" src="https://picsum.photos/id/56/280/186/" alt="" />
+        <img slot="preview" src="./images/card-preview.jpg" alt="" />
         ${mediaImage('collection')} ${mediaImage('collection')}
         ${mediaImage('collection')}
         <span slot="title">Extra Small</span>
@@ -266,7 +266,7 @@ export const WithCollection: Story = {
     ${template(
       { ...args, size: 'm' },
       html`
-        <img slot="preview" src="https://picsum.photos/id/56/280/186/" alt="" />
+        <img slot="preview" src="./images/card-preview.jpg" alt="" />
         ${mediaImage('collection')} ${mediaImage('collection')}
         ${mediaImage('collection')}
         <span slot="title">Filled Collection Card</span>
@@ -311,7 +311,7 @@ export const Gallery: Story = {
         </swc-badge>
         <swc-avatar
           slot="media"
-          src="https://picsum.photos/id/64/500/500"
+          src="./images/avatar-preview.png"
           alt="Credit: Jane Doe"
           size="100"
           outline

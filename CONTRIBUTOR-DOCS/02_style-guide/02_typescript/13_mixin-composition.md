@@ -16,12 +16,11 @@
 - [Composition order](#composition-order)
 - [Options objects](#options-objects)
     - [SizedMixin options](#sizedmixin-options)
-    - [ObserveSlotText options](#observeslottext-options)
-    - [ObserveSlotPresence options](#observeslotpresence-options)
 - [Available mixins](#available-mixins)
     - [SizedMixin](#sizedmixin)
-    - [ObserveSlotText](#observeslottext)
-    - [ObserveSlotPresence](#observeslotpresence)
+    - [DisabledMixin](#disabledmixin)
+    - [PendingMixin](#pendingmixin)
+    - [LinearProgressMixin](#linearprogressmixin)
 - [Writing a new mixin](#writing-a-new-mixin)
 
 </details>
@@ -57,32 +56,34 @@ The mixin:
 
 **Target: maximum 2 mixins** (plus `SpectrumElement`)
 
-Complex mixin chains (3+ mixins deep) are harder to debug and understand. If a component needs more than 2 mixins worth of behavior, consider using a controller for some of the cross-cutting concerns.
+Complex mixin chains (3+ mixins deep) are harder to debug and understand. If a component needs more than 2 mixins worth of behavior, use a controller (composed as an instance field) for the rest instead of nesting a 3rd mixin.
 
 **Acceptable (depth ≤ 2):**
 
 ```ts
-// Depth 2: SizedMixin → ObserveSlotText → SpectrumElement
-export abstract class StatusLightBase extends SizedMixin(
-  ObserveSlotText(SpectrumElement),
-  { noDefaultSize: true }
+// Depth 2: LinearProgressMixin → SizedMixin → SpectrumElement
+export abstract class ProgressBarBase extends LinearProgressMixin(
+  SizedMixin(SpectrumElement, {
+    validSizes: LINEAR_PROGRESS_VALID_SIZES,
+    defaultSize: 'm',
+  })
 ) {
 ```
 
-**Consider refactoring (depth > 2):**
+**Slot observation is a controller, not a mixin:**
 
-If adding a 3rd mixin, refactor to use a controller instead:
+Slot presence/text observation used to be handled by `ObserveSlotPresence`/`ObserveSlotText` mixins, which pushed some base classes past the depth-2 target when combined with `SizedMixin`. They were replaced by `SlotPresenceController`/`SlotTextController` (see [Controller composition](14_controller-composition.md)), composed as instance fields rather than nested in `extends`:
 
 ```ts
-// Depth 3: SizedMixin → ObserveSlotText → ObserveSlotPresence → SpectrumElement
-// @todo review — exceeds target depth of 2
-export abstract class BadgeBase extends SizedMixin(
-  ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
-  { noDefaultSize: true }
-) {
+export abstract class BadgeBase extends SizedMixin(SpectrumElement, {
+  noDefaultSize: true,
+}) {
+  protected slotPresence = new SlotPresenceController(this, '[slot="icon"]');
+  protected slotText = new SlotTextController(this);
+}
 ```
 
-> BadgeBase currently uses 3 mixins (SizedMixin → ObserveSlotText → ObserveSlotPresence → SpectrumElement). This exceeds the target but works because the mixins are orthogonal. There is a `@todo` in the codebase to review this composition.
+This is the general pattern: when a mixin's behavior doesn't need to add to the component's type/public API in a way subclasses override, prefer a controller so it doesn't count against mixin depth.
 
 **Refactoring example:**
 
@@ -106,36 +107,23 @@ When a base class uses multiple mixins, they are **nested** — the outermost mi
 
 ```ts
 // Innermost → outermost
-export abstract class BadgeBase extends SizedMixin(
-  ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]')),
-  { validSizes: BADGE_VALID_SIZES, noDefaultSize: true }
+export abstract class ProgressBarBase extends LinearProgressMixin(
+  SizedMixin(SpectrumElement, {
+    validSizes: LINEAR_PROGRESS_VALID_SIZES,
+    defaultSize: 'm',
+  })
 ) {
 ```
 
 Reading inside out:
 
 1. `SpectrumElement` — the base element
-2. `ObserveSlotPresence(SpectrumElement, '[slot="icon"]')` — adds slot presence detection
-3. `ObserveSlotText(...)` — adds slot text observation
-4. `SizedMixin(...)` — adds the `size` property with options
+2. `SizedMixin(SpectrumElement, {...})` — adds the `size` property
+3. `LinearProgressMixin(...)` — adds `value`/`minValue`/`maxValue`, locale-aware formatting, and label/description slot-presence tracking
 
-The order matters when mixins depend on each other. For example, `ObserveSlotText` depends on the DOM being available, so it wraps after `ObserveSlotPresence`.
+These two are orthogonal (no dependency ordering required), but `SizedMixin` is conventionally applied innermost since `size` is the most broadly shared property across components.
 
-```ts
-// ✅ Good — innermost → outermost
-SizedMixin(
-  ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]')),
-  { validSizes: BADGE_VALID_SIZES }
-)
-
-// ❌ Bad — reversed order
-ObserveSlotPresence(
-  SizedMixin(ObserveSlotText(SpectrumElement), {}),
-  '[slot="icon"]'
-)
-```
-
-Not every component uses all three mixins. Use only the ones you need:
+Not every component uses a mixin. Use only what you need:
 
 ```ts
 // Status Light — uses SizedMixin only
@@ -182,36 +170,11 @@ SizedMixin(SpectrumElement, {
 })
 ```
 
-### ObserveSlotText options
-
-`ObserveSlotText` takes the slot name and excluded selectors as positional arguments (not an options object):
-
-| Argument | Type | Default | Purpose |
-|----------|------|---------|---------|
-| `slotName` | `string \| undefined` | `undefined` (default slot) | Which slot to observe |
-| `excludedSelectors` | `string[]` | `[]` | Elements to exclude from text detection |
-
-**Example — Badge observing the default slot:**
-
-```ts
-ObserveSlotText(SpectrumElement)
-```
-
-### ObserveSlotPresence options
-
-`ObserveSlotPresence` takes the light DOM selector as a positional argument:
-
-| Argument | Type | Purpose |
-|----------|------|---------|
-| `lightDomSelector` | `string \| string[]` | Selector(s) for direct children to observe |
-
-**Example — Badge observing the icon slot:**
-
-```ts
-ObserveSlotPresence(SpectrumElement, '[slot="icon"]')
-```
+`DisabledMixin`, `PendingMixin`, and `LinearProgressMixin` take no options object; they're configured entirely through the properties they add.
 
 ## Available mixins
+
+For the full inventory (what each one does and which components use it), see [2nd-gen shared resources](../../01_contributor-guides/16_2nd-gen-shared-resources.md#mixins). Composition specifics:
 
 ### SizedMixin
 
@@ -227,36 +190,48 @@ Adds a reactive `size` property with validation. When an invalid size is set, it
 
 **Interface:** `SizedElementInterface` (`{ size: ElementSize }`)
 
-### ObserveSlotText
+### DisabledMixin
 
-Observes text content in a slot. Uses a `MutationController` to watch for character data changes. Sets `slotHasContent` to `true` when the slot has non-empty text.
+Adds a reactive `disabled` property. Sets `aria-disabled` on the host (not the native `disabled` attribute), manages tabindex removal/restoration, and blurs the element if it's focused when disabled becomes `true`. See [Focus management](../../01_contributor-guides/14_focus-management.md#disabledmixin).
 
-**File:** `core/mixins/observe-slot-text.ts`
-
-**Adds to the class:**
-
-- `slotHasContent` property (boolean, not reflected)
-- `manageTextObservedSlot()` method
-- `update()` lifecycle override (checks child nodes before first render)
-- `firstUpdated()` lifecycle override (manages slot content after first render)
-- A `MutationController` observing `characterData` changes
-
-**Interface:** `SlotTextObservingInterface` (`{ slotHasContent: boolean; manageTextObservedSlot(): void }`)
-
-### ObserveSlotPresence
-
-Observes whether specific elements are present in the light DOM. Uses a `MutationController` to watch for child list changes. Useful for detecting whether optional slots (like an icon slot) have content.
-
-**File:** `core/mixins/observe-slot-presence.ts`
+**File:** `core/mixins/disabled-mixin.ts`
 
 **Adds to the class:**
 
-- `slotContentIsPresent` getter (boolean, throws if multiple selectors)
-- `getSlotContentPresence(selector)` method (for multiple selectors)
-- `managePresenceObservedSlot()` method
-- A `MutationController` observing `childList` changes
+- `disabled` property (boolean, reflected)
 
-**Interface:** `SlotPresenceObservingInterface` (`{ slotContentIsPresent: boolean; getSlotContentPresence(selector: string): boolean; managePresenceObservedSlot(): void }`)
+**Interface:** `DisabledInterface` (`{ disabled: boolean }`)
+
+### PendingMixin
+
+Adds `pending`/`pending-label` properties and capture-phase click suppression while pending, backed by a `PendingController` for delayed busy-state activation, size freeze, and accessible-name derivation. Applied on the concrete element rather than the shared `*Base` class, e.g. `Button extends PendingMixin(ButtonBase)`.
+
+**File:** `core/mixins/pending-mixin.ts`
+
+**Adds to the class:**
+
+- `pending` property (boolean, reflected)
+- `pendingLabel` property (string, attribute `pending-label`)
+- `pendingActive` getter
+- `getPendingAccessibleName()` method
+- `renderPendingState()` method (renders the pending spinner)
+- click-suppression listener wired in `connectedCallback()`/`disconnectedCallback()`
+
+**Interface:** `PendingInterface`
+
+### LinearProgressMixin
+
+Shared value/label/percent-format logic for linear-progress-shaped components. Internally composes a `SlotPresenceController` to track `label`/`description` slot presence.
+
+**File:** `core/mixins/linear-progress-mixin.ts`
+
+**Adds to the class:**
+
+- `value`, `minValue`, `maxValue` properties
+- Locale-aware value formatting
+- `label`/`description` slot-presence tracking
+
+**Interface:** `LinearProgressInterface`
 
 ## Writing a new mixin
 

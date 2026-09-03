@@ -23,11 +23,12 @@ import {
   LINEAR_PROGRESS_STATIC_COLORS,
   LINEAR_PROGRESS_VALID_SIZES,
   type LinearProgressLabelPosition,
-  type LinearProgressSize,
   type LinearProgressStaticColor,
 } from '@adobe/spectrum-wc-core/mixins/index.js';
 
 import '@adobe/spectrum-wc/components/meter/swc-meter.js';
+
+import { SIZE_LABELS } from '../../../.storybook/helpers/index.js';
 
 // ────────────────
 //    METADATA
@@ -101,13 +102,6 @@ export default meta;
 // ────────────────────
 //    HELPERS
 // ────────────────────
-
-const sizeLabels = {
-  s: 'Small',
-  m: 'Medium',
-  l: 'Large',
-  xl: 'Extra-large',
-} as const satisfies Record<LinearProgressSize, string>;
 
 const variantLabels = {
   informative: 'Informative',
@@ -195,7 +189,7 @@ export const Sizes: Story = {
       template({
         ...args,
         size,
-        'label-slot': sizeLabels[size],
+        'label-slot': SIZE_LABELS[size],
       })
     )}
   `,

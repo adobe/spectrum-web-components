@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "allowImportingTsExtensions": false,
+    "composite": true,
+    "noEmit": false,
+    "outDir": "./dist",
+    "paths": {
+      "@adobe/spectrum-wc-core/*": ["../core/*"]
+    },
+    "rootDir": "./",
+    "types": ["@vitest/browser-playwright"]
+  },
+  "exclude": ["node_modules", "dist", "**/*.vrt.ts", "**/*.a11y.spec.ts"],
+  "extends": "../../tsconfig.json",
+  "include": ["**/*.ts", "**/*.d.ts", "vite-env.d.ts"],
+  "references": [
+    {
+      "path": "../core"
+    }
+  ]
+}

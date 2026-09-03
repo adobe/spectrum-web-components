@@ -236,9 +236,9 @@ const preview = {
           ],
           'Patterns',
           [
-            'Conversational AI',
+            'AI Toolkit',
             [
-              'Pattern overview',
+              'Conversational pattern overview',
               'Prompt field',
               'User message',
               '*',
@@ -295,6 +295,7 @@ const preview = {
               'Writing migration guides',
               'Focus management',
               'Changelog strategy',
+              '2nd gen shared resources',
             ],
             'Style guide',
             [

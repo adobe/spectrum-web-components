@@ -67,7 +67,7 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-const PLACEHOLDER_SRC = 'https://picsum.photos/id/64/500/500';
+const PLACEHOLDER_SRC = './images/avatar-preview.png';
 
 // ────────────────────
 //    PLAYGROUND STORY

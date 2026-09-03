@@ -253,12 +253,12 @@ These rules apply to every `title` field in meta objects and every `<Meta title=
 - **No filename as label.** Never use a bare filename (`README`, `CHANGELOG`) as a Storybook title or page name. Use a descriptive label: `'Pattern overview'`, `'Migration guide'`.
 - **Flatten single-component groups.** If a Storybook group contains only one component, do not nest it. Use a flat title (`'Color loupe'`) rather than a group path (`'Color components/Color loupe'`).
 
-| ❌ Don't                         | ✅ Do                                  |
-| -------------------------------- | -------------------------------------- |
-| `'Color components/Color loupe'` | `'Color loupe'` (flattened)            |
-| `'Conversational AI/README'`     | `'Conversational AI/Pattern overview'` |
-| `'Badge/Migration Guide'`        | `'Badge/Migration guide'`              |
-| `'Pattern Overview'`             | `'Pattern overview'`                   |
+| ❌ Don't                         | ✅ Do                           |
+| -------------------------------- | ------------------------------- |
+| `'Color components/Color loupe'` | `'Color loupe'` (flattened)     |
+| `'AI Toolkit/README'`            | `'AI Toolkit/Pattern overview'` |
+| `'Badge/Migration Guide'`        | `'Badge/Migration guide'`       |
+| `'Pattern Overview'`             | `'Pattern overview'`            |
 
 ## Layout and decorators
 
