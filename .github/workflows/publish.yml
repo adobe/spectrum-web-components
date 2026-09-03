@@ -93,10 +93,8 @@ jobs:
           echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
           echo "Using npm tag: $WORKFLOW_TAG"
 
-      - name: Verify OIDC token and configure NPM authentication
+      - name: Verify OIDC token
         id: npm-auth
-        env:
-          NPM_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
         run: |
           if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
             echo "✓ OIDC token is available for 1st-gen trusted publishing"
@@ -104,7 +102,6 @@ jobs:
             echo "✗ OIDC token NOT available - trusted publishing will fail"
             exit 1
           fi
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
 
       - name: Generate custom elements manifests
         run: yarn workspace @spectrum-web-components/1st-gen custom-element-json
@@ -130,8 +127,6 @@ jobs:
 
       - name: Publish gen1 packages
         if: steps.npm-auth.outcome == 'success'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
         run: (cd 1st-gen && yarn changeset publish --no-git-tag --tag ${{ steps.extract-tag.outputs.tag }})
 
       # Gated only by this job running at all (needs.check-changesets.outputs.has_changesets
@@ -240,10 +235,8 @@ jobs:
       - name: Setup job and install dependencies
         uses: ./.github/actions/setup-job
 
-      - name: Verify OIDC token and configure NPM authentication
+      - name: Verify OIDC token
         id: npm-auth
-        env:
-          NPM_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
         run: |
           if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
             echo "✓ OIDC token is available for 1st-gen trusted publishing"
@@ -251,7 +244,6 @@ jobs:
             echo "✗ OIDC token NOT available - trusted publishing will fail"
             exit 1
           fi
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
 
       - name: Generate custom elements manifests
         run: yarn workspace @spectrum-web-components/1st-gen custom-element-json
@@ -296,8 +288,6 @@ jobs:
       - name: Publish gen1 packages
         if: needs.check-changesets.outputs.has_changesets == 'false'
         id: publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
         run: |
           RELEASED_VERSION=$(node -p "require('./1st-gen/packages/button/package.json').version")
           if git rev-parse "gen1-$RELEASED_VERSION" >/dev/null 2>&1; then
