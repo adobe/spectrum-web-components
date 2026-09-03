@@ -39,10 +39,12 @@ jobs:
 
   # No throwaway snapshot job here (unlike gen1): once this job enters persistent pre
   # mode, changesets disallows `--snapshot`, and a non-snapshot version call would
-  # collide with the real release's version. Use the `beta` tag to test pending changes.
+  # collide with the real release's version. Test pending changes via the real release
+  # itself (published under `latest`) once the Version PR merges.
   #
-  # Real release: version-then-PR for the persistent `beta` channel, then publish once
-  # that PR merges. Uses peter-evans/create-pull-request instead of changesets/action's
+  # Real release: version-then-PR for the persistent pre-release version format
+  # (2.0.0-beta.N), published under the `latest` npm tag. Publishes once that PR
+  # merges. Uses peter-evans/create-pull-request instead of changesets/action's
   # built-in PR management, since that derives its branch name only from the base
   # branch (`changeset-release/main`) - gen1 and gen2 would collide on the same branch.
   release:
@@ -118,7 +120,7 @@ jobs:
           fi
           yarn install --refresh-lockfile
           yarn build
-          (cd 2nd-gen && yarn changeset publish --no-git-tag --tag beta)
+          (cd 2nd-gen && yarn changeset publish --no-git-tag --tag latest)
           git config user.name "github-actions-bot"
           git config user.email "support+actions@github.com"
           node ./2nd-gen/scripts/create-git-tag.js

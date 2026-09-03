@@ -4,7 +4,7 @@ This folder is an independent `@changesets/cli` setup for 2nd-gen packages only 
 
 ## Why a separate setup
 
-1st-gen ships to `next`/`latest` from `main`. 2nd-gen ships to `beta` from `main` on its own cadence, using changesets pre-release mode. `@changesets/cli` resolves `.changeset/` relative to wherever it's invoked from, so each generation gets its own instance by living in its own package directory (`2nd-gen/`) rather than sharing one at the repo root.
+1st-gen ships to `next`/`latest` from `main`. 2nd-gen ships to `latest` from `main` on its own cadence, using changesets pre-release mode - so versions keep the `2.0.0-beta.N` format even though they publish under the `latest` npm tag. `@changesets/cli` resolves `.changeset/` relative to wherever it's invoked from, so each generation gets its own instance by living in its own package directory (`2nd-gen/`) rather than sharing one at the repo root.
 
 ## Adding a changeset for a 2nd-gen change
 
@@ -32,7 +32,7 @@ When a change touches `@adobe/spectrum-wc-core`, include the corresponding `@ado
 ## Publishing process
 
 1. Changesets accumulate here as gen2 PRs merge to `main`.
-2. `publish-gen2.yml` (triggered on push to `main`) runs changesets from within `2nd-gen/` in pre-release mode and publishes to the `beta` npm tag.
+2. `publish-gen2.yml` (triggered on push to `main`) runs changesets from within `2nd-gen/` in pre-release mode and publishes to the `latest` npm tag.
 3. Consumed changesets are removed as part of that release commit on `main`.
 
 See [Changesets documentation](https://github.com/changesets/changesets) for details on the underlying tool.
