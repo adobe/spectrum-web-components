@@ -58,7 +58,7 @@ parameters:
   # 3. Commit this change to the PR branch where the changes exist.
   current_golden_images_hash:
     type: string
-    default: ed6c0abd2a91f0b94fb3214dfced5ad135f1a409
+    default: a66188883f3e77bbd345ed838155618375a85e02
 
 commands:
   install-azcopy:
