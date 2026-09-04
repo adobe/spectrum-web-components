@@ -47,6 +47,7 @@
     - [Design](#design)
     - [Architecture and behavior](#architecture-and-behavior)
     - [Scope and prerequisites](#scope-and-prerequisites)
+- [Decision log](#decision-log)
 - [References](#references)
 
 </details>
@@ -56,7 +57,7 @@
 ## TL;DR
 
 - Toast is a small, self-contained component: one host, one message slot, one optional action, a close button, an auto-dismiss timer.
-- Toast queue/container is currently out of scope. Toast will ship standalone where consumers compose their own container.
+- Toast ships alongside a first-party container/queue in this migration. The container's shape and API are still being worked out; see Q6 in the [Decision log](#decision-log).
 - 1st-gen defines 5 variant values (`negative`, `positive`, `info`, `error`, `warning`); `error` and `warning` are already deprecated aliases of `negative` in 1st-gen and do not carry forward. 2nd-gen has 4 variants: `neutral`, `info`, `positive`, `negative`.
 - Points of disagreement, see [Design](#design) for more detail:
     - **Timeout minimum** (6000ms vs. 5000ms)
@@ -172,7 +173,7 @@ No prerequisites. Toast has no dependents in-tree and depends only on `swc-close
 | Component | Relationship | Notes |
 | --------- | ------------ | ----- |
 | `swc-close-button` | Dependency, already migrated | `accessible-label` confirmed as the real 2nd-gen attribute (verified in `button` family source) |
-| Toast container / queue | Not in scope | Out of scope for this migration; open design question for a later cycle |
+| Toast container / queue | In scope, ships alongside `swc-toast` | Shape and API still being finalized across this plan; see Q6 |
 
 ### User confirmation needed
 
@@ -216,12 +217,17 @@ Whether a pausable-countdown utility belongs in `2nd-gen/packages/core/controlle
 | A6 | Action + auto-dismiss | Unguarded | ❓ Pending Q2: dev warning vs. hard-disable | Depends on Q2 resolution |
 | A7 | Close button label | `label="Close"` | `accessible-label="Close"` on `swc-close-button` | None |
 
+#### Container and queue
+
+| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| --- | ------------ | ---------------- | ---------------- | ----------------------- |
+| C1 | First-party toast container/queue | None (new functionality) | Ships alongside `swc-toast` in this migration; shape and API still being finalized, see Q6 in the [Decision log](#decision-log) | TBD |
+
 ### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
 
 | # | What is added | Notes |
 | --- | ------------- | ----- |
-| A1 | First-party toast container/queue | Explicitly out of scope this cycle; see Q6 in [Scope and prerequisites](#scope-and-prerequisites) |
-| A2 | `--swc-*` custom properties | See the recommended initial set in [CSS custom properties (2nd-gen)](#css-custom-properties-2nd-gen) |
+| A1 | `--swc-*` custom properties | See the recommended initial set in [CSS custom properties (2nd-gen)](#css-custom-properties-2nd-gen) |
 
 ---
 
@@ -427,9 +433,17 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 
 ### Scope and prerequisites
 
-| # | Item | Blocking? | Status | Owner |
-| --- | ---- | --------- | ------ | ----- |
-| Q6 | Should `swc-toast` later ship alongside a first-party `swc-toast-queue` container, or should authors keep composing their own? Explicitly out of scope for this migration; the a11y doc raises it as a question to bring to a team sync before a container API is added. If built, `placement` (RSP precedent: `top`/`bottom`/`top end`/`bottom end`) belongs on the container, not on `swc-toast` itself. | No | Open (deferred) | Design + accessibility reviewer |
+None currently.
+
+---
+
+## Decision log
+
+Resolved decisions from planning, kept here as a historical record so [Blockers and open questions](#blockers-and-open-questions) stays focused on what's still unresolved. Entries retain their original `Q`/`B`/`C` identifier so inline references elsewhere in the plan still resolve here.
+
+| Ref | Decision | Rationale / context |
+| --- | -------- | -------------------- |
+| Q6 | `swc-toast` ships alongside a first-party container/queue in this migration, rather than standalone with the container deferred. | Settled via team sync. Only "whether to build it in this cycle" is resolved; the container's shape and API (peek stack, expand/collapse, focus management, `clear()`, and related accessibility behavior) remain open and are being worked out incrementally across this plan. If built, `placement` (RSP precedent: `top`/`bottom`/`top end`/`bottom end`) belongs on the container, not on `swc-toast` itself. |
 
 ---
 
