@@ -1,0 +1,159 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../swc/.storybook/blocks';
+
+import * as Stories from './stories/field-association-controller.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Usage
+
+`FieldAssociationController` wraps the `ElementInternals` plumbing every form-associated field (textfield, checkbox, combobox, radio) shares, so each participates in a form the same way instead of re-implementing it.
+
+It handles:
+
+- **Form value**: `setValue(value)` submits the value; `setValue(null)` excludes the field from `FormData` (unchecked, unselected, or disabled).
+- **Reset**: `defaultValue` is the value the field restores to on the host's `formResetCallback`.
+- **Disabled cascade**: the host forwards `formDisabledCallback` here; the controller tracks it as `formDisabled` and fires `onDisabledChange` so the host re-syncs.
+- **Validity**: `validity`, `validationMessage`, `willValidate`, `checkValidity()`, and `reportValidity()` pass through to `ElementInternals`.
+
+The host keeps what cannot be delegated: `static formAssociated = true`, its own `attachInternals()`, writing validity via `internals.setValidity()`, and calling `setValue()` whenever the value changes. Compute effective disabled as the host's own `disabled` OR `fieldAssoc.formDisabled`, never the attribute alone.
+
+```typescript
+import { LitElement, type PropertyValues } from 'lit';
+import { property } from 'lit/decorators.js';
+import { FieldAssociationController } from '@adobe/spectrum-wc-core/controllers/field-association-controller.js';
+
+class SwcField extends LitElement {
+  static formAssociated = true;
+
+  @property({ type: String }) value = '';
+  @property({ type: Boolean, reflect: true }) disabled = false;
+
+  // Element-owned; passed to the controller, never delegated.
+  private internals = this.attachInternals();
+  private fieldAssoc = new FieldAssociationController(this.internals, {
+    onDisabledChange: () => this.requestUpdate(),
+  });
+
+  private get effectiveDisabled(): boolean {
+    return this.disabled || this.fieldAssoc.formDisabled;
+  }
+
+  protected override firstUpdated(): void {
+    this.fieldAssoc.defaultValue = this.value; // reset target
+  }
+
+  protected override update(changed: PropertyValues): void {
+    super.update(changed);
+    this.fieldAssoc.setValue(this.effectiveDisabled ? null : this.value);
+  }
+
+  formResetCallback(): void {
+    this.value = this.fieldAssoc.defaultValue;
+  }
+
+  formDisabledCallback(disabled: boolean): void {
+    this.fieldAssoc.formDisabledCallback(disabled);
+  }
+}
+```
+
+⚠️ **Important:** reflecting `required` (and other constraints) onto the inner control engages the browser's native constraint validation, which surfaces the browser's own error bubble on submit. That competes with Spectrum's inline error message. Until the forms strategy provides a form wrapper, put fields in a form with the [`novalidate`](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation) attribute: it suppresses the native bubble while leaving the constraint API (`internals.validity`, `checkValidity()`, `reportValidity()`) intact for inline messaging. The demos below use `novalidate` for this reason. Note that `novalidate` also turns off submit blocking; a production field will instead cancel the `invalid` event, which suppresses the bubble while keeping submit blocking.
+
+The demos below use three unstyled harnesses (`demo-field-text`, `demo-field-radio`, `demo-field-combobox`), not `swc-*` components.
+
+## Behaviors
+
+### Interactive demo
+
+Edit the fields, then submit, reset, check validity, or toggle disabled (via the fieldset or the field's own attribute). The readout shows the resulting `FormData` and each field's validity.
+
+<Canvas of={Stories.Interactive} />
+
+### Form value
+
+A non-null value is submitted under the field's `name` and appears in `new FormData(form)`.
+
+<Canvas of={Stories.FormValue} />
+
+### Excluding a field
+
+`setValue(null)` removes the field from `FormData` entirely (the key is absent), matching a native unselected control. Exclusion is independent of validity: an optional empty field is excluded but still valid. The combobox submits `null` while its empty option is selected.
+
+<Canvas of={Stories.Exclusion} />
+
+### Default value and reset
+
+`defaultValue` comes from the `value` attribute; a native reset calls the host's `formResetCallback`, which restores it.
+
+<Canvas of={Stories.DefaultValueReset} />
+
+### Disabled cascade
+
+A `<fieldset disabled>` or disabled form disables descendant fields via `formDisabledCallback`. The controller records it as `formDisabled` and fires `onDisabledChange` once per change, so the field disables its control and drops out of `FormData`; re-enabling reverses it.
+
+<Canvas of={Stories.DisabledCascade} />
+
+### Validity pass-throughs
+
+The validity members read straight off `ElementInternals`; writing validity stays with the host (`internals.setValidity`). A `required` field left empty reports `checkValidity()` as `false`. A disabled field reports `willValidate` as `false` and is skipped by validation entirely.
+
+<Canvas of={Stories.Validity} />
+
+## Accessibility
+
+### Features
+
+- **Native form participation**: the browser and assistive technology treat the host as a real form control for submission, reset, and the disabled cascade.
+- **Constraint validation**: the validity pass-throughs expose the same state a native control reports, so error messaging runs off a real validity state.
+
+### Best practices
+
+- Give the field a `name` so its value participates in the form.
+- Provide the inner control an accessible name (a slotted label or `aria-label`); the controller sets no ARIA.
+- `labelledby` / `describedby` cross-root labelling is a separate, opt-in mechanism for rare layouts (a data-grid cell, or one label shared across fields), not part of this controller.
+
+<Canvas of={Stories.Accessibility} />
+
+## API
+
+### Constructor
+
+`new FieldAssociationController(internals, options?)`, where `internals` is the host's `attachInternals()` result. This is a plain class, not a Lit `ReactiveController`: it wraps `ElementInternals` and has no host lifecycle work, so there is nothing to register with `addController`.
+
+### Members
+
+| Member                           | Description                                                                                                                      |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `setValue(value)`                | Sets the form value via `internals.setFormValue`. Pass `null` to exclude the field from `FormData`.                              |
+| `defaultValue`                   | Get/set. The value the field restores to on reset. Defaults to `''`.                                                             |
+| `formDisabled`                   | Read-only. `true` when an ancestor form or `<fieldset disabled>` has disabled the field.                                         |
+| `formDisabledCallback(disabled)` | Delegate target for the host's `formDisabledCallback`. Records the cascaded state and fires `onDisabledChange` on a real change. |
+| `form`                           | Read-only. The associated `HTMLFormElement`, or `null`.                                                                          |
+| `validity`                       | Read-only. The field's `ValidityState`.                                                                                          |
+| `validationMessage`              | Read-only. The localized validation message.                                                                                     |
+| `willValidate`                   | Read-only. Whether the field is a candidate for constraint validation.                                                           |
+| `checkValidity()`                | Runs constraint validation; returns whether the field is valid.                                                                  |
+| `reportValidity()`               | Runs constraint validation and reports the problem to the user if invalid.                                                       |
+
+### Options (`FieldAssociationControllerOptions`)
+
+| Option             | Type                          | Default | Description                                                                                              |
+| ------------------ | ----------------------------- | ------- | -------------------------------------------------------------------------------------------------------- |
+| `defaultValue`     | `string`                      | `''`    | The value the field restores to on `formResetCallback`, usually the host's `value` attribute.            |
+| `onDisabledChange` | `(disabled: boolean) => void` | none    | Called when the cascaded disabled state flips, so the host can re-sync its inner control and `FormData`. |
+
+### Host responsibilities
+
+These stay on the element and cannot be delegated:
+
+| Responsibility                     | Why it stays on the host                                                            |
+| ---------------------------------- | ----------------------------------------------------------------------------------- |
+| `static formAssociated = true`     | Read by the browser at element-definition time off the constructor.                 |
+| `attachInternals()`                | Can only be called on the element; its result is passed into the controller.        |
+| `internals.setValidity(...)`       | Writing validity is per-component logic; the controller only exposes the read side. |
+| Calling `setValue` on value change | The browser does not observe the host's value; the host re-pushes it.               |
+
+<DocsFooter />

@@ -36,14 +36,15 @@ export class TextField extends TextFieldBase {
   }
 
   protected override render(): TemplateResult {
-    // @todo (SWC-2466 / Phase 4–5): render the visible label, required indicator,
-    // validation icon, and description/error container via the LabellingController.
-    // Until then the input takes its accessible name from `accessible-label`.
+    // @todo (SWC-2466): render the visible label, required indicator, validation
+    // icon, and description/error container via the LabellingController. Until
+    // then the input takes its accessible name from `accessible-label`.
     return html`
       <div class="swc-TextField">
         <input
           class="input"
           aria-label=${ifDefined(this.accessibleLabel || undefined)}
+          ?disabled=${this.effectiveDisabled}
         />
       </div>
     `;

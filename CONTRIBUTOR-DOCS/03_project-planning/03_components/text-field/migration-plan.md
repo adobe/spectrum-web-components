@@ -207,7 +207,7 @@ Multiline (`<textarea>`, optionally with a `#sizer` div when `grows` and `rows =
 Migrate `swc-text-field` **first among the field family**, developing it together with the two shared field controllers as their proving ground (rather than waiting for the controllers to be finished in isolation):
 
 1. **`LabellingController`** (SWC-2466): renders label, required indicator, description, and error message in-shadow via a shared render directive (the pattern `renderPendingSpinner` already establishes) plus a shared stylesheet. Exposes `accessible-label`, `accessible-labelledby`, and `accessible-describedby`. Scope it minimally at first, mirroring how [`LinearProgressMixin`](../../../../2nd-gen/packages/core/mixins/linear-progress-mixin.ts) owns the `label`/`description` slots plus the accessible-name warning while staying silent on component specifics.
-2. **`FieldAssociationController`** (SWC-2467): `formAssociated`, `attachInternals()`, `setFormValue()`, `formResetCallback()`, `formDisabledCallback()`.
+2. **`FieldAssociationController`** (SWC-2467): wraps the host's `ElementInternals` for `setFormValue()`, reset-to-default, the `fieldset[disabled]` cascade, and the validity reads. Note `static formAssociated` (read off the constructor at element-definition time) and `attachInternals()` (element-only) cannot live on a plain controller; each host declares them, passes its `attachInternals()` result in, restores the controller's `defaultValue` on `formResetCallback()`, and delegates `formDisabledCallback()` to the controller. Centralizing that host-side boilerplate (plus the `name`/`value`/`disabled` surface) into a shared mixin or base is deferred until a second consumer demonstrates the need, per the `LinearProgressMixin` precedent.
 
 `swc-text-field` is the simplest consumer of both controllers, so it is the right proving ground before `number-field`, `color-field`, and `text-area` adopt them.
 
@@ -525,7 +525,7 @@ Planned rendering shape:
 | Q11 | Carry forward or drop `allowedKeys`. | No | Open; lean drop (niche, undocumented) | API |
 | Q12 | Remove reflected `focused` attribute in favor of `:focus-visible`/`:focus-within`. | No | Inferred | Implementation |
 | Q13 | Simplify `type` handling with `validateEnum`; drop the `_type` reflection quirk. | No | Inferred | Implementation |
-| Q19 | Validation behavior model: RS `native` vs `aria`, native-bubble suppression, and whether to expose custom `validate` / server-error APIs. Deferred to forms-strategy (SWC-1888; ties to its `setValidity()` pass-through). | No | Deferred to forms-strategy work (SWC-1888) | Architecture |
+| Q19 | Validation behavior model: RS `native` vs `aria`, native-bubble suppression, and whether to expose custom `validate` / server-error APIs. Concretely, once validity is populated (host `setValidity()` from `required`/`pattern`), a native form submit surfaces the browser's default error bubble, which competes with Spectrum's inline `error-text`; suppressing it (`novalidate` on the form, or `formnovalidate` per submit) needs control of the enclosing `<form>`, so it hinges on whether the migration ships a form wrapper. Resolve before wiring validity population. Deferred to forms-strategy (SWC-1888; ties to its `setValidity()` pass-through). | No | Deferred to forms-strategy work (SWC-1888) | Architecture |
 
 ### Scope and prerequisites
 
