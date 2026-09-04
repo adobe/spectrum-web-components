@@ -17,14 +17,28 @@ import { readFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const root = join(__dirname, '..');
+
+// Package whose version defines the release tag for each generation - both are
+// members of that generation's fixed/linked group, so any package there would do.
+const GENERATIONS = {
+  gen1: '1st-gen/packages/button/package.json',
+  gen2: '2nd-gen/packages/swc/package.json',
+};
+
+const gen = process.argv[2];
+if (!GENERATIONS[gen]) {
+  console.error(
+    `Usage: node scripts/create-git-tag.js <${Object.keys(GENERATIONS).join('|')}>`
+  );
+  process.exit(1);
+}
 
 // Read package.json directly to avoid caching issues
-const pkgPath = join(__dirname, '../packages/button/package.json');
+const pkgPath = join(root, GENERATIONS[gen]);
 const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'));
-const version = pkg.version;
-const tag = `gen1-${version}`;
+const tag = `${gen}-${pkg.version}`;
 
 try {
   // Check if the tag already exists

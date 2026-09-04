@@ -189,7 +189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/spectrum-wc-core@npm:2.0.0-beta.2, @adobe/spectrum-wc-core@workspace:2nd-gen/packages/core":
+"@adobe/spectrum-wc-core@npm:2.0.0-beta.3, @adobe/spectrum-wc-core@workspace:2nd-gen/packages/core":
   version: 0.0.0-use.local
   resolution: "@adobe/spectrum-wc-core@workspace:2nd-gen/packages/core"
   dependencies:
@@ -210,7 +210,7 @@ __metadata:
   resolution: "@adobe/spectrum-wc-icons@workspace:2nd-gen/packages/icons"
   dependencies:
     "@adobe/postcss-token": "workspace:*"
-    "@adobe/spectrum-wc-core": "npm:2.0.0-beta.2"
+    "@adobe/spectrum-wc-core": "npm:2.0.0-beta.3"
     "@adobe/swc-tokens": "workspace:*"
     "@custom-elements-manifest/analyzer": "npm:0.10.8"
     "@storybook/test": "npm:8.6.14"
@@ -236,7 +236,7 @@ __metadata:
   resolution: "@adobe/spectrum-wc@workspace:2nd-gen/packages/swc"
   dependencies:
     "@adobe/postcss-token": "workspace:*"
-    "@adobe/spectrum-wc-core": "npm:2.0.0-beta.2"
+    "@adobe/spectrum-wc-core": "npm:2.0.0-beta.3"
     "@adobe/spectrum-wc-icons": "workspace:*"
     "@adobe/swc-tokens": "workspace:*"
     "@adobe/vite-global-elements-css": "workspace:*"
@@ -29617,6 +29617,7 @@ __metadata:
     stylelint-config-standard: "npm:40.0.0"
     stylelint-declaration-strict-value: "npm:1.10.11"
     stylelint-order: "npm:7.0.1"
+    typescript: "npm:5.9.2"
     typescript-eslint: "npm:8.54.0"
     yargs: "npm:17.7.2"
   dependenciesMeta:

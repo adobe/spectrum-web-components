@@ -249,7 +249,8 @@ export class ResponseStatusStep extends SpectrumElement {
     this._emit('swc-response-status-step-open-change', { open: this.open });
   }
 
-  private _renderIcon(): TemplateResult {
+  // `choose` is typed `V | undefined` even with a default branch; it never resolves to `undefined` at runtime, and the template call site tolerates it either way.
+  private _renderIcon(): TemplateResult | undefined {
     return choose(
       this._resolvedStatus,
       [

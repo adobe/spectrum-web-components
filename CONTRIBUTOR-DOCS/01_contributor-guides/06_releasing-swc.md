@@ -35,7 +35,7 @@
 > | | Workflow | Changesets | Real-release branch | Ships to |
 > |---|---|---|---|---|
 > | 1st-gen | `.github/workflows/publish.yml` | `1st-gen/.changeset/` | `changeset-release/1st-gen` → PR to `main` | `latest` |
-> | 2nd-gen | `.github/workflows/publish-gen2.yml` | `2nd-gen/.changeset/` | `changeset-release/2nd-gen` → PR to `main` | `beta` (persistent pre-release) |
+> | 2nd-gen | `.github/workflows/publish-gen2.yml` | `2nd-gen/.changeset/` | `changeset-release/2nd-gen` → PR to `main` | `latest` (persistent pre-release, versioned `2.0.0-beta.N`) |
 >
 > The sections below still describe the old branch-lock/direct-push model in places and should not be relied on until this page is rewritten to match.
 
@@ -90,9 +90,9 @@ Each generation has its own `config.json` (`1st-gen/.changeset/config.json`, `2n
 
 ### Pre-release (`next` throwaway snapshot, 1st-gen only)
 
-A push to `main` that has pending 1st-gen changesets also publishes a throwaway `next` snapshot — this is unrelated to the Version PR flow below and never touches `main`'s protection or history. It's gated the same way the Version PR step is (pending changesets present), so it is not a build of every single commit on `main`; a push with no pending changesets does not refresh `next`.
+Manual dispatch only (**Actions → Publish Packages (gen1) → Run workflow**), gated on pending 1st-gen changesets — this is unrelated to the Version PR flow below and never touches `main`'s protection or history. It does not run on push, so it never publishes automatically.
 
-2nd-gen has no equivalent throwaway snapshot: it's always in changesets' persistent pre-release mode once the first real gen2 release ships, and changesets disallows a `--snapshot` version in that mode. Use the `beta` tag (below) to test pending gen2 changes instead.
+2nd-gen has no equivalent throwaway snapshot: it's always in changesets' persistent pre-release mode once the first real gen2 release ships, and changesets disallows a `--snapshot` version in that mode. Gen2 has no separate test channel either - its real release publishes straight to `latest` (see below), so testing pending gen2 changes means waiting for the Version PR to merge.
 
 **What gets published:**
 
@@ -112,23 +112,23 @@ Both generations run `yarn changeset version` directly and open/update a dedicat
 
 **How it works:**
 
-1. Every push to `main` that has pending changesets (in `1st-gen/.changeset/` or `2nd-gen/.changeset/`) opens or updates a bot-authored pull request against `main`. The PR title is `chore: release 1st-gen packages` for 1st-gen or `chore: release 2nd-gen packages (beta)` for 2nd-gen (note the `(beta)` suffix). The PR contains the version bumps and changelog entries `yarn changeset version` would produce.
+1. Every push to `main` that has pending changesets (in `1st-gen/.changeset/` or `2nd-gen/.changeset/`) opens or updates a bot-authored pull request against `main`. The PR title is `chore: release 1st-gen packages` for 1st-gen or `chore: release 2nd-gen packages (beta)` for 2nd-gen (the `(beta)` suffix refers to the `2.0.0-beta.N` version format, not the npm tag it publishes under). The PR contains the version bumps and changelog entries `yarn changeset version` would produce.
 2. A reviewer reviews and merges that pull request like any other PR — this is the audit trail: the exact diff that will ship is visible and approved before anything is published.
 3. Merging the Version PR is itself a push to `main`. That push has no pending changesets left (the merged PR consumed them), so the same workflow instead runs the generation's publish script: builds, `yarn changeset publish`, and (1st-gen only) builds and publishes the React wrappers and creates a git tag.
 
-**Gen2's `beta` channel** is a persistent pre-release (`2nd-gen/.changeset/pre.json`, entered automatically the first time the Version PR flow runs) — there is no `latest` channel for 2nd-gen yet. Gen1's Version PR ships straight to `latest`.
+**Gen2 publishes under the `latest` npm tag**, but stays in changesets' persistent pre-release mode (`2nd-gen/.changeset/pre.json`, entered automatically the first time the Version PR flow runs) - so its version numbers keep the `2.0.0-beta.N` format even though `latest` points at them. Both generations' Version PRs ship straight to `latest`.
 
-**Install a pre-release version:**
+**Install the current release:**
 
 ```bash
-yarn add @adobe/spectrum-wc@beta
+yarn add @adobe/spectrum-wc
 ```
 
 ---
 
 ### Production release (1st-gen `latest`)
 
-There is no manual trigger for this anymore. Merge the open Version PR (see "Planned release" above) — the resulting push to `main` publishes to `latest`, commits nothing further back (the version bumps already landed via the merged PR), and creates a git tag via `1st-gen/scripts/create-git-tag.js`.
+There is no manual trigger for this anymore. Merge the open Version PR (see "Planned release" above) — the resulting push to `main` publishes to `latest`, commits nothing further back (the version bumps already landed via the merged PR), and creates a git tag via `scripts/create-git-tag.js gen1`.
 
 ---
 
@@ -211,7 +211,7 @@ gh workflow run publish-gen2-docs.yml --ref main
 
 - **A React wrapper package failed to publish mid-run** — The workflow retries each package up to 3 times with exponential backoff (2s, 4s). If it still fails after 3 attempts, the workflow exits. Re-triggering the workflow is safe — changeset will skip already-published packages.
 
-- **The workflow ran but versions weren't bumped on `main`** — Version commits and git tags are only created for `latest` releases. Pre-releases (`next`, `beta`, `snapshot-test`, etc.) intentionally skip the commit and tag steps.
+- **The workflow ran but versions weren't bumped on `main`** — Version commits and git tags are only created for real releases. Gen1's throwaway snapshot tags (`next`, `snapshot-test`) intentionally skip the commit and tag steps.
 
 - **A Version PR opened but nothing happens after I merge it** — Confirm the merge actually landed on `main` (not squashed into a differently-named branch) and that `1st-gen/.changeset/*.md` / `2nd-gen/.changeset/*.md` are empty afterward (the merge should have deleted them). If changesets remain, the next push will just update the Version PR again instead of publishing.
 

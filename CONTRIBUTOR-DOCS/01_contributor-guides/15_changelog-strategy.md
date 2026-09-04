@@ -20,7 +20,7 @@
 - [CHANGELOG output](#changelog-output)
 - [How it works](#how-it-works)
 - [Gen1's changelog rollup](#gen1s-changelog-rollup)
-- [Gen2's beta pre-release channel](#gen2s-beta-pre-release-channel)
+- [Gen2's pre-release versioning](#gen2s-pre-release-versioning)
 
 </details>
 
@@ -185,8 +185,8 @@ This script must run before `yarn changeset version`, since `changeset version` 
 
 Gen2 has no equivalent rollup script; it relies solely on `@changesets/changelog-github`.
 
-## Gen2's beta pre-release channel
+## Gen2's pre-release versioning
 
-Gen2 publishes exclusively on a persistent `beta` pre-release channel; there is no `latest` channel yet. The first time the release workflow runs with pending 2nd-gen changesets, it enters changesets' pre-release mode (`yarn changeset pre enter beta`), which creates `2nd-gen/.changeset/pre.json`. Every subsequent run checks for that file and skips re-entering pre-release mode, so it only happens once. There is currently no `changeset pre exit` step configured anywhere, so gen2 stays on the `beta` channel by design.
+Gen2 publishes under the `latest` npm tag, but stays permanently in changesets' persistent pre-release mode - so its version numbers keep the `2.0.0-beta.N` format even though `latest` points at them. The first time the release workflow runs with pending 2nd-gen changesets, it enters pre-release mode (`yarn changeset pre enter beta`), which creates `2nd-gen/.changeset/pre.json`. Every subsequent run checks for that file and skips re-entering pre-release mode, so it only happens once. There is currently no `changeset pre exit` step configured anywhere, so gen2 stays on this versioning scheme by design.
 
 Each release bumps the pre-release number (`beta.1`, `beta.2`, and so on). This is standard `@changesets/cli` pre-release behavior, not custom logic in this repo: each `.changeset/*.md` file is consumed and deleted the first time it is folded into a version, so a given change should not reappear in a later `beta.N` entry.
