@@ -90,7 +90,7 @@ Each generation has its own `config.json` (`1st-gen/.changeset/config.json`, `2n
 
 ### Pre-release (`next` throwaway snapshot, 1st-gen only)
 
-A push to `main` that has pending 1st-gen changesets also publishes a throwaway `next` snapshot — this is unrelated to the Version PR flow below and never touches `main`'s protection or history. It's gated the same way the Version PR step is (pending changesets present), so it is not a build of every single commit on `main`; a push with no pending changesets does not refresh `next`.
+Manual dispatch only (**Actions → Publish Packages (gen1) → Run workflow**), gated on pending 1st-gen changesets — this is unrelated to the Version PR flow below and never touches `main`'s protection or history. It does not run on push, so it never publishes automatically.
 
 2nd-gen has no equivalent throwaway snapshot: it's always in changesets' persistent pre-release mode once the first real gen2 release ships, and changesets disallows a `--snapshot` version in that mode. Gen2 has no separate test channel either - its real release publishes straight to `latest` (see below), so testing pending gen2 changes means waiting for the Version PR to merge.
 

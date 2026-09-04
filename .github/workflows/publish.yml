@@ -48,12 +48,15 @@ jobs:
             echo "Found $GEN1_COUNT 1st-gen changeset(s)"
           fi
 
-  # Throwaway snapshot publish under `next`/`snapshot-test`. Only runs when 1st-gen
-  # changesets are pending; never touches main, commits, or opens a PR. Runs alongside
-  # the `version-pr`/`publish` jobs below without conflicting (separate jobs/runners).
+  # Throwaway snapshot publish under `next`/`snapshot-test`. Manual dispatch only - not
+  # triggered by push, so it doesn't run on every ordinary push with pending changesets.
+  # Never touches main, commits, or opens a PR. Runs alongside the `version-pr`/`publish`
+  # jobs below without conflicting (separate jobs/runners).
   snapshot:
     needs: check-changesets
-    if: needs.check-changesets.outputs.has_changesets == 'true'
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      needs.check-changesets.outputs.has_changesets == 'true'
     runs-on: ubuntu-latest
     environment: npm-publish
     permissions:
