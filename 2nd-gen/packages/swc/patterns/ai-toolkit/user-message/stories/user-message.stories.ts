@@ -25,16 +25,6 @@ const { args, argTypes, template } = getStorybookHelpers('swc-user-message');
 delete (args as Record<string, unknown>).content;
 delete (argTypes as Record<string, unknown>).content;
 
-argTypes.type = {
-  ...argTypes.type,
-  control: { type: 'select' },
-  options: ['copy', 'card', 'media'],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'copy' },
-  },
-};
-
 // Wraps a single swc-user-message in a conversation turn for proper alignment.
 const withUserTurn = (story: () => unknown) => html`
   <swc-conversation-turn type="user">${story()}</swc-conversation-turn>
