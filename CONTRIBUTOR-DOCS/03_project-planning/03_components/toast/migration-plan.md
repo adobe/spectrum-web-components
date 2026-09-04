@@ -208,7 +208,7 @@ Whether a pausable-countdown utility belongs in `2nd-gen/packages/core/controlle
 | # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | A1 | Host role | `role="alert"` on inner `.body` div only | `role="alertdialog"` + `aria-modal="false"` on host; inner `role="alert"` `aria-atomic="true"` | None |
-| A2 | Host naming | None | `aria-label` from default-slot text | None |
+| A2 | Host naming | None | `aria-labelledby` referencing a content-element ID, falling back to `aria-label` from default-slot text | None |
 | A3 | `aria-hidden` when closed | Not set (CSS only) | `aria-hidden="true"` on host when `open` is false | None |
 | A4 | Timer pause | `focusin`/`focusout` only; restarts full timeout | Pause on `pointerenter` + `focusin`; preserve remaining time; resume only when both clear | None |
 | A5 | Timeout minimum | 6000ms | ❓ Pending Q1: 6000ms or 5000ms | None |
@@ -291,9 +291,9 @@ No properties are exposed in the initial set. Add a `--swc-toast-*` property onl
 
 ### Accessibility semantics notes (2nd-gen)
 
-See [Toast accessibility migration analysis](./accessibility-migration-analysis.md) for the full spec. One known open item surfaced by cross-referencing that doc against the real RSP S2 source (not yet reconciled — see [Design](#design)):
+See [Toast accessibility migration analysis](./accessibility-migration-analysis.md) for the full spec.
 
-- `aria-label` from slot text (a11y doc) vs. RSP S2's `aria-labelledby`/`aria-describedby` id pattern — the SWC approach is a deliberate, necessary shadow-DOM adaptation, not a gap.
+- Host naming uses `aria-labelledby` referencing a content-element ID, falling back to `aria-label` from slot text when no explicit ID is available. RSP S2 splits this further into a separate `aria-labelledby` (title) and `aria-describedby` (description) element; `swc-toast`'s single content ID is a deliberate simplification, since it has one default slot for message text rather than separate title/description slots.
 
 ---
 
@@ -305,7 +305,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 | Layer | Path | Contains |
 | ----- | ---- | -------- |
-| **Core** | `2nd-gen/packages/core/components/toast/` | `Toast.base.ts`, `Toast.types.ts`: property declarations, variant validation, `aria-label` derivation, pausable-countdown logic (`pointerenter`/`focusin`/`pointerleave`/`focusout`), timeout flooring. No rendering. |
+| **Core** | `2nd-gen/packages/core/components/toast/` | `Toast.base.ts`, `Toast.types.ts`: property declarations, variant validation, `aria-labelledby`/`aria-label` derivation, pausable-countdown logic (`pointerenter`/`focusin`/`pointerleave`/`focusout`), timeout flooring. No rendering. |
 | **SWC** | `2nd-gen/packages/swc/components/toast/` | `Toast.ts`, `toast.css`: renders host role/state attributes, variant icon, inner `role="alert"` wrapper, default + `action` slots, `swc-close-button`. Element registration, stories, tests. |
 
 Planned rendering shape:
@@ -364,7 +364,7 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 
 #### Naming and semantics
 
-- [ ] Host: `role="alertdialog"`, `aria-modal="false"`, `aria-label` from slot text
+- [ ] Host: `role="alertdialog"`, `aria-modal="false"`, `aria-labelledby` from slot text (or `aria-label` fallback)
 - [ ] Inner wrapper: `role="alert"`, `aria-atomic="true"`
 - [ ] `aria-hidden="true"` on host when `open` is false
 
