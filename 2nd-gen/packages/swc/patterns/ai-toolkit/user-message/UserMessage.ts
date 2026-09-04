@@ -29,6 +29,13 @@ export type UserMessageType = 'copy' | 'card' | 'media';
  * @slot thumbnail - Attachment preview when `type="card"` or `type="media"`.
  * @slot title - Attachment title when `type="card"` or `type="media"`.
  * @slot subtitle - Attachment subtitle when `type="card"` or `type="media"`.
+ * @cssprop --swc-user-message-padding-block - Block padding of the bubble. Defaults to a small spacing token.
+ * @cssprop --swc-user-message-padding-inline - Inline padding of the bubble. Defaults to a large spacing token.
+ * @cssprop --swc-user-message-card-padding - Padding of the bubble at `type="card"`. Defaults to a large spacing token.
+ * @cssprop --swc-user-message-media-padding - Padding of the bubble at `type="media"`. Defaults to a small spacing token.
+ * @cssprop --swc-user-message-attachment-card-gap - Gap between the thumbnail and meta column at `type="card"`. Defaults to a large spacing token.
+ * @cssprop --swc-user-message-attachment-media-gap - Gap between the thumbnail and meta column at `type="media"`. Defaults to a small spacing token.
+ * @cssprop --swc-user-message-meta-gap - Gap between the title and subtitle slots. Defaults to an extra-small spacing token.
  * @since 2.0.0-beta.3
  */
 export class UserMessage extends SpectrumElement {
