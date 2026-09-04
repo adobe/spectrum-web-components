@@ -22,35 +22,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  inline-size: 100%;
-  block-size: 100%;
+  inline-size: var(--_swc-asset-width, auto);
+  block-size: var(--_swc-asset-height, auto);
+  aspect-ratio: var(--_swc-asset-aspect-ratio, var(--swc-asset-aspect-ratio, auto));
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+:host([background="solid"]) .swc-Asset {
+  background-color: var(--swc-asset-background-color, token("gray-100"));
 }
 
 /* Slotted image */
 ::slotted(*) {
   box-sizing: border-box;
-  max-inline-size: 100%;
-  max-block-size: 100%;
-  object-fit: contain;
-  transition: opacity token("animation-duration-100");
-}
-
-.swc-Asset-folder,
-.swc-Asset-file {
-  inline-size: clamp(48px, 100%, 80px);
+  display: block;
+  inline-size: 100%;
   block-size: 100%;
-  margin: clamp(2px, 10%, 20px);
+  object-fit: cover;
 }
 
-.swc-Asset-folderBackground {
-  fill: token("gray-200");
-}
-
-.swc-Asset-fileBackground {
-  fill: light-dark(token("gray-25"), token("gray-200"));
-}
-
-.swc-Asset-folderOutline,
-.swc-Asset-fileOutline {
-  fill: token("gray-500");
+:host([fit="contain"]) ::slotted(*) {
+  object-fit: contain;
 }

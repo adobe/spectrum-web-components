@@ -84,7 +84,7 @@ export abstract class AssetBase extends SpectrumElement {
    *
    * @default cover
    */
-  @property({ type: String })
+  @property({ type: String, reflect: true })
   public fit: AssetFit = 'cover';
 
   /**
@@ -108,7 +108,7 @@ export abstract class AssetBase extends SpectrumElement {
    *
    * @default transparent
    */
-  @property({ type: String })
+  @property({ type: String, reflect: true })
   public background: AssetBackground = 'transparent';
 
   // ──────────────────────

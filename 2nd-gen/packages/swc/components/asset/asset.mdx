@@ -17,6 +17,34 @@ The asset automatically centers its content both horizontally and vertically wit
 
 <Canvas of={AssetStories.Anatomy} />
 
+## Options
+
+### Fit
+
+`fit` controls how slotted content fills the asset's box: `cover` (default) scales content to fill
+the box, cropping if needed; `contain` scales content to fit entirely within the box, letterboxing
+if the aspect ratios differ.
+
+<Canvas of={AssetStories.Fit} />
+
+### Background
+
+`background` controls what shows behind slotted content and around its edges when `fit="contain"`
+letterboxes it: `transparent` (default), a `solid` color, or an opacity `checkerboard`.
+
+Consuming components are responsible for applying other styles such as borders, shadows, and corner rounding to the asset.
+
+<Canvas of={AssetStories.Background} />
+
+## Behaviors
+
+### Sizing
+
+Set `aspect-ratio`, or `width`/`height`, to size the asset. `aspect-ratio` accepts CSS `<ratio>`
+syntax (including the `square` keyword) and has no effect when both `width` and `height` are set.
+
+<Canvas of={AssetStories.Sizing} />
+
 ## Accessibility
 
 ### Features

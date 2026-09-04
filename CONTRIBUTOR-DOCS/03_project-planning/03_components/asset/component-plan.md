@@ -485,17 +485,21 @@ plan contract pattern this document follows).
 
 ### Styling (SWC-2319)
 
-- [ ] Remove `.swc-Asset-file`/`-folder` icon CSS and the inline SVG icon templates
-- [ ] Implement the aspect-ratio weak-sync chain on `.swc-Asset` (`--_swc-asset-aspect-ratio` /
+- [x] Remove `.swc-Asset-file`/`-folder` icon CSS and the inline SVG icon templates (templates
+      removed in Phase 3; CSS removed here)
+- [x] Implement the aspect-ratio weak-sync chain on `.swc-Asset` (`--_swc-asset-aspect-ratio` /
       `--swc-asset-aspect-ratio`)
-- [ ] Implement `width`/`height` private custom properties (`--_swc-asset-width`/`-height`)
-- [ ] Implement `fit` attribute selectors (`cover` default, `contain` override)
-- [ ] Implement `background` treatment (`solid` via `--swc-asset-background-color`;
-      `checkerboard` via the shared fragment; `transparent` as the no-op default)
-- [ ] Add `border-radius: inherit` and `overflow: hidden` to `.swc-Asset` (not `:host`)
-- [ ] Import `2nd-gen/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css`
-- [ ] Add `@cssprop` JSDoc tags for `--swc-asset-aspect-ratio` and `--swc-asset-background-color`
-- [ ] Pass stylelint
+- [x] Implement `width`/`height` private custom properties (`--_swc-asset-width`/`-height`)
+- [x] Implement `fit` attribute selectors (`cover` default, `contain` override); added
+      `reflect: true` to `fit` so the attribute selector responds to JS property sets, not just
+      the HTML attribute (matches the existing `Button.variant`/`fillStyle` convention)
+- [x] Implement `background` treatment (`solid` via `--swc-asset-background-color`;
+      `checkerboard` via the shared fragment; `transparent` as the no-op default); added
+      `reflect: true` to `background` for the same reason as `fit`
+- [x] Add `border-radius: inherit` and `overflow: hidden` to `.swc-Asset` (not `:host`)
+- [x] Import `2nd-gen/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css`
+- [x] Add `@cssprop` JSDoc tags for `--swc-asset-aspect-ratio` and `--swc-asset-background-color`
+- [x] Pass stylelint
 
 ### Accessibility (SWC-2319 implementation, SWC-2320 testing)
 
