@@ -56,11 +56,6 @@
   transition: transform token("animation-duration-100") ease;
 }
 
-/* swc-ui-icon mirrors the chevron itself in RTL via its own `scale`, which composes
- * after this `transform`. Rotating first lands on a down-pointing chevron, and
- * mirroring a down-pointing chevron left-to-right is a no-op (the shape is
- * symmetric on that axis), so no RTL-specific override is needed here, unlike
- * accordion's rotate-based indicator. */
 .swc-MessageSources-chevron--down {
   transform: rotate(90deg);
 }
