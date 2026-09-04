@@ -63,12 +63,14 @@
     - **Timeout minimum** (6000ms vs. 5000ms)
     - **Action+timeout** (soft warning vs. hard block)
     - **Action API shape** (light-DOM `action` slot vs. `actionLabel`/`onAction` props)
+    - **Timer pause scope** (per-toast vs. region-wide)
 
 ### Most blocking open questions
 
 - **Q1** in [Design](#design): timeout minimum. 6000ms (1st-gen/a11y doc) vs. 5000ms (RSP S2).
 - **Q2** in [Design](#design): action + auto-dismiss. Warn-only vs. hard-disable timeout when an action is present.
 - **Q3** in [Design](#design): action API shape. `action` slot (light DOM) vs. `action-label`/`swc-action` props.
+- **Q7** in [Design](#design): timer pause scope. Per-toast (a11y doc's current recommendation) vs. region-wide (RSP S2 reality).
 
 ---
 
@@ -210,7 +212,7 @@ Whether a pausable-countdown utility belongs in `2nd-gen/packages/core/controlle
 | A1 | Host role | `role="alert"` on inner `.body` div only | `role="alertdialog"` + `aria-modal="false"` on host; inner `role="alert"` `aria-atomic="true"` | None |
 | A2 | Host naming | None | `aria-labelledby` referencing a content-element ID, falling back to `aria-label` from default-slot text | None |
 | A3 | `aria-hidden` when closed | Not set (CSS only) | `aria-hidden="true"` on host when `open` is false | None |
-| A4 | Timer pause | `focusin`/`focusout` only; restarts full timeout | Pause on `pointerenter` + `focusin`; preserve remaining time; resume only when both clear | None |
+| A4 | Timer pause | `focusin`/`focusout` only; restarts full timeout | Pause on `pointerenter` + `focusin`; preserve remaining time; resume only when both clear. Per-toast vs. region-wide scope is Q7 | None |
 | A5 | Timeout minimum | 6000ms | ❓ Pending Q1: 6000ms or 5000ms | None |
 | A6 | Action + auto-dismiss | Unguarded | ❓ Pending Q2: dev warning vs. hard-disable | Depends on Q2 resolution |
 | A7 | Close button label | `label="Close"` | `accessible-label="Close"` on `swc-close-button` | None |
@@ -282,7 +284,7 @@ No properties are exposed in the initial set. Add a `--swc-toast-*` property onl
 
 ### Behavioral semantics
 
-- Auto-dismiss timer pauses on `pointerenter` + `focusin`, preserving remaining time; resumes only once both `pointerleave` and `focusout` have fired.
+- Auto-dismiss timer pauses on `pointerenter` + `focusin`, preserving remaining time; resumes only once both `pointerleave` and `focusout` have fired. This describes per-toast pause; whether this should instead be region-wide (matching RSP S2, which pauses every visible toast together) is Q7.
 - `role="alertdialog"` + `aria-modal="false"` on host; opening never moves focus.
 - `tabindex="0"` on host always, per the a11y doc; opening a toast does not move focus there. It makes the host a normal tab stop, matching RSP.
 - Matches the event set of other visibility-toggling components: `swc-open` before the enter transition plays, `swc-after-open` once it completes, `swc-close` (cancelable) before the exit transition plays, `swc-after-close` once it completes.
@@ -305,7 +307,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 | Layer | Path | Contains |
 | ----- | ---- | -------- |
-| **Core** | `2nd-gen/packages/core/components/toast/` | `Toast.base.ts`, `Toast.types.ts`: property declarations, variant validation, `aria-labelledby`/`aria-label` derivation, pausable-countdown logic (`pointerenter`/`focusin`/`pointerleave`/`focusout`), timeout flooring. No rendering. |
+| **Core** | `2nd-gen/packages/core/components/toast/` | `Toast.base.ts`, `Toast.types.ts`: property declarations, variant validation, `aria-labelledby`/`aria-label` derivation, pausable-countdown logic (`pointerenter`/`focusin`/`pointerleave`/`focusout`, scope pending Q7), timeout flooring. No rendering. |
 | **SWC** | `2nd-gen/packages/swc/components/toast/` | `Toast.ts`, `toast.css`: renders host role/state attributes, variant icon, inner `role="alert"` wrapper, default + `action` slots, `swc-close-button`. Element registration, stories, tests. |
 
 Planned rendering shape:
@@ -360,7 +362,7 @@ Planned rendering shape:
 
 ### Accessibility
 
-Checklist items sourced from [accessibility-migration-analysis.md](./accessibility-migration-analysis.md); resolve Q1, Q2 before treating this section as final.
+Checklist items sourced from [accessibility-migration-analysis.md](./accessibility-migration-analysis.md); resolve Q1, Q2, Q7 before treating this section as final.
 
 #### Naming and semantics
 
@@ -370,7 +372,7 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 
 #### State verification
 
-- [ ] Timer pauses on `pointerenter` + `focusin`, preserves remaining time, resumes only when both clear
+- [ ] Timer pauses on `pointerenter` + `focusin`, preserves remaining time, resumes only when both clear; scope (per-toast vs. region-wide) resolved per Q7
 - [ ] Dev warning (or hard block, pending Q2) when `timeout` and `action` slot both set
 - [ ] `tabindex="0"` on host always; opening a toast does not move focus there
 
@@ -421,6 +423,7 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 | Q1 | Timeout minimum: 6000ms (1st-gen, current a11y doc, SWC-610 unresolved) or 5000ms (spectrum.adobe.com spec, RSP S2 `Toast.tsx`)? | Yes | Open ❓ | Accessibility reviewer |
 | Q2 | Action + auto-dismiss: dev warning only (a11y doc) or hard-disable timeout whenever an action is present (RSP S2: `timeout` forced to `undefined` if `actionLabel` set)? | Yes | Open ❓ | Design + accessibility reviewer |
 | Q3 | Action API shape: keep light-DOM `action` slot (1st-gen) or switch to `action-label`/`swc-action` event props (RSP S2 `actionLabel`/`onAction`/`shouldCloseOnAction`)? Leaning toward keeping the slot: matches 1st-gen with no consumer migration needed, though this is a deviation from RSP's props-based model. | Yes | Open ❓ | Design + implementation |
+| Q7 | Timer pause scope: pause only the toast under the pointer or focus (a11y doc's current recommendation, per-toast) or pause every visible toast in the region together (RSP S2's actual `useToastRegion.ts`: `useHover`/`useFocusWithin` at the region level call `pauseAll()`/`resumeAll()` on the whole queue)? | Yes | Open ❓ | Accessibility reviewer |
 
 ### Architecture and behavior
 
