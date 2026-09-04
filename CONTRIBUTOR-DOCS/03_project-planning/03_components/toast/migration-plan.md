@@ -63,14 +63,12 @@
     - **Timeout minimum** (6000ms vs. 5000ms)
     - **Action+timeout** (soft warning vs. hard block)
     - **Action API shape** (light-DOM `action` slot vs. `actionLabel`/`onAction` props)
-    - **`tabindex`** (conditional-on-container vs. always `0`)
 
 ### Most blocking open questions
 
 - **Q1** in [Design](#design): timeout minimum. 6000ms (1st-gen/a11y doc) vs. 5000ms (RSP S2).
 - **Q2** in [Design](#design): action + auto-dismiss. Warn-only vs. hard-disable timeout when an action is present.
 - **Q3** in [Design](#design): action API shape. `action` slot (light DOM) vs. `action-label`/`swc-action` props.
-- **Q4** in [Design](#design): `tabindex` on host. Conditional on container presence (a11y doc) vs. always `0` (RSP S2 reality).
 
 ---
 
@@ -286,7 +284,7 @@ No properties are exposed in the initial set. Add a `--swc-toast-*` property onl
 
 - Auto-dismiss timer pauses on `pointerenter` + `focusin`, preserving remaining time; resumes only once both `pointerleave` and `focusout` have fired.
 - `role="alertdialog"` + `aria-modal="false"` on host; opening never moves focus.
-- `tabindex` on host follows the a11y doc: no `tabindex` on a standalone host; `tabindex="0"` once the toast is inside a container. See Q4.
+- `tabindex="0"` on host always, per the a11y doc; opening a toast does not move focus there. It makes the host a normal tab stop, matching RSP.
 - Matches the event set of other visibility-toggling components: `swc-open` before the enter transition plays, `swc-after-open` once it completes, `swc-close` (cancelable) before the exit transition plays, `swc-after-close` once it completes.
 - Text wrapping is automatic, not an option. Content wraps naturally within whatever `max-inline-size` the host is given (directly stylable from outside; no `--swc-*` custom property, see [CSS custom properties (2nd-gen)](#css-custom-properties-2nd-gen)); no `width` property exists on `sp-toast` in 1st-gen or on `Toast` in RSP S2. Long unbroken words specifically need `overflow-wrap`/`word-break` (SWC-475, see [Styling](#styling)) on top of normal wrapping.
 - No `placement` property. Confirmed absent from 1st-gen `sp-toast`'s own API: the 1st-gen story's `placement` values (bottom/left/right/top) belong to `overlay-trigger`, an unrelated demo wrapper, not `sp-toast` itself. RSP's `placement` (`top`/`bottom`/`top end`/`bottom end`) lives on `ToastContainer`, never on individual `Toast`. Placement is a future container-level concern; see Q6.
@@ -362,7 +360,7 @@ Planned rendering shape:
 
 ### Accessibility
 
-Checklist items sourced from [accessibility-migration-analysis.md](./accessibility-migration-analysis.md); resolve Q1, Q2, Q4 before treating this section as final.
+Checklist items sourced from [accessibility-migration-analysis.md](./accessibility-migration-analysis.md); resolve Q1, Q2 before treating this section as final.
 
 #### Naming and semantics
 
@@ -374,7 +372,7 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 
 - [ ] Timer pauses on `pointerenter` + `focusin`, preserves remaining time, resumes only when both clear
 - [ ] Dev warning (or hard block, pending Q2) when `timeout` and `action` slot both set
-- [ ] `tabindex` behavior resolved per Q4
+- [ ] `tabindex="0"` on host always; opening a toast does not move focus there
 
 ### Testing
 
@@ -423,7 +421,6 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 | Q1 | Timeout minimum: 6000ms (1st-gen, current a11y doc, SWC-610 unresolved) or 5000ms (spectrum.adobe.com spec, RSP S2 `Toast.tsx`)? | Yes | Open ❓ | Accessibility reviewer |
 | Q2 | Action + auto-dismiss: dev warning only (a11y doc) or hard-disable timeout whenever an action is present (RSP S2: `timeout` forced to `undefined` if `actionLabel` set)? | Yes | Open ❓ | Design + accessibility reviewer |
 | Q3 | Action API shape: keep light-DOM `action` slot (1st-gen) or switch to `action-label`/`swc-action` event props (RSP S2 `actionLabel`/`onAction`/`shouldCloseOnAction`)? Leaning toward keeping the slot: matches 1st-gen with no consumer migration needed, though this is a deviation from RSP's props-based model. | Yes | Open ❓ | Design + implementation |
-| Q4 | `tabindex` on host: conditional on container presence (a11y doc) or always `0` (RSP S2's actual `useToast.ts`, which has no "standalone" concept because every RSP toast lives in a `ToastRegion`)? | Yes | Open ❓ | Accessibility reviewer |
 
 ### Architecture and behavior
 
@@ -443,6 +440,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 
 | Ref | Decision | Rationale / context |
 | --- | -------- | -------------------- |
+| Q4 | `tabindex="0"` on host always, not conditional on container presence. Opening a toast does not move focus there. | The accessibility migration analysis previously recommended conditional `tabindex` and focus-on-open; both were corrected after checking the real RSP S2 source, which sets `tabIndex: 0` unconditionally but never autofocuses a toast on open. `tabindex="0"` makes the host a normal tab stop, matching RSP. |
 | Q6 | `swc-toast` ships alongside a first-party container/queue in this migration, rather than standalone with the container deferred. | Settled via team sync. Only "whether to build it in this cycle" is resolved; the container's shape and API (peek stack, expand/collapse, focus management, `clear()`, and related accessibility behavior) remain open and are being worked out incrementally across this plan. If built, `placement` (RSP precedent: `top`/`bottom`/`top end`/`bottom end`) belongs on the container, not on `swc-toast` itself. |
 
 ---
