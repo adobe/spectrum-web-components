@@ -137,6 +137,7 @@ export abstract class AssetBase extends SpectrumElement {
       DOCS_URL
     );
     this.#validateSlottedContent();
+    this.#resolveAccessibleName();
     super.update(changes);
   }
 
@@ -163,5 +164,72 @@ export abstract class AssetBase extends SpectrumElement {
         DOCS_URL
       );
     }
+  }
+
+  /**
+   * Implements `decorative` and the `accessibleLabel` fallback, per the
+   * detection order in the component plan's accessibility semantics notes:
+   *
+   * 1. `decorative` set → `aria-hidden="true"` on the host; everything else
+   *    is skipped, regardless of slotted content.
+   * 2. The slotted `<img>`/`<svg>` already carries its own accessible name
+   *    → leave it alone.
+   * 3. Neither of the above, but `accessibleLabel` is set → apply it to the
+   *    slotted node (`alt` for `<img>`, `aria-label` + `role="img"` for
+   *    `<svg>`, which has no native `alt`).
+   * 4. None of the above → DEBUG warning.
+   */
+  #resolveAccessibleName(): void {
+    if (this.decorative) {
+      this.setAttribute('aria-hidden', 'true');
+      return;
+    }
+    this.removeAttribute('aria-hidden');
+
+    const [child] = Array.from(this.children);
+    if (!child) {
+      return;
+    }
+    const tagName = child.tagName.toLowerCase();
+    if (tagName !== 'img' && tagName !== 'svg') {
+      // Already warned about by #validateSlottedContent.
+      return;
+    }
+
+    if (this.#hasOwnAccessibleName(child, tagName)) {
+      return;
+    }
+
+    if (this.accessibleLabel) {
+      if (tagName === 'img') {
+        (child as HTMLImageElement).alt = this.accessibleLabel;
+      } else {
+        child.setAttribute('role', 'img');
+        child.setAttribute('aria-label', this.accessibleLabel);
+      }
+      return;
+    }
+
+    warnIf(
+      this,
+      true,
+      `<${this.localName}> requires an accessible name: set "alt" on the slotted <img> (or role="img" plus "aria-label"/"aria-labelledby"/a child <title> on the slotted <svg>), set "accessible-label" on <${this.localName}>, or set "decorative".`,
+      DOCS_URL
+    );
+  }
+
+  /**
+   * Whether `child` (an `<img>` or `<svg>`, per `tagName`) already carries
+   * its own accessible name and should be left untouched.
+   */
+  #hasOwnAccessibleName(child: Element, tagName: 'img' | 'svg'): boolean {
+    if (tagName === 'img') {
+      return child.hasAttribute('alt');
+    }
+    const hasRoleImg = child.getAttribute('role') === 'img';
+    const hasAriaName =
+      child.hasAttribute('aria-label') || child.hasAttribute('aria-labelledby');
+    const hasTitleChild = !!child.querySelector(':scope > title');
+    return hasRoleImg && (hasAriaName || hasTitleChild);
   }
 }

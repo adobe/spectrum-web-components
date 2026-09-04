@@ -466,14 +466,14 @@ plan contract pattern this document follows).
 
 ### API (SWC-2319)
 
-- [ ] `Asset.types.ts`: define `AssetFit` (`'cover' | 'contain'`) and `AssetBackground`
+- [x] `Asset.types.ts`: define `AssetFit` (`'cover' | 'contain'`) and `AssetBackground`
       (`'transparent' | 'solid' | 'checkerboard'`); remove `ASSET_VARIANTS`/`AssetVariant`
-- [ ] `Asset.base.ts`: add `aspectRatio`, `width`, `height`, `fit`, `decorative`,
+- [x] `Asset.base.ts`: add `aspectRatio`, `width`, `height`, `fit`, `decorative`,
       `accessibleLabel` (renamed from `label`), `background`; remove `variant`
-- [ ] Implement the `square` aspect-ratio keyword and `:`-to-`/` separator normalization
-- [ ] Implement slotted-content inspection for accessible-name detection (`img[alt]`; `svg` with
+- [x] Implement the `square` aspect-ratio keyword and `:`-to-`/` separator normalization
+- [x] Implement slotted-content inspection for accessible-name detection (`img[alt]`; `svg` with
       `role="img"` + `aria-label`/`aria-labelledby`/child `<title>`) and the DEBUG warning path
-- [ ] Implement DEBUG warnings: invalid `fit`/`background` values; `aspectRatio` set together
+- [x] Implement DEBUG warnings: invalid `fit`/`background` values; `aspectRatio` set together
       with both `width` and `height`; more than one slotted child or an unsupported child type
 - [ ] Update Card to slot `<swc-asset>` in its `preview` slot, as a live validation target for
       this API while it's being built
@@ -499,12 +499,13 @@ plan contract pattern this document follows).
 
 ### Accessibility (SWC-2319 implementation, SWC-2320 testing)
 
-- [ ] `decorative` sets `aria-hidden="true"` on the host
-- [ ] `accessibleLabel` fallback applied per the detection order in
-      [Accessibility semantics notes](#accessibility-semantics-notes) (pending Q4)
-- [ ] DEBUG warning fires when neither `decorative`, existing labeling, nor `accessibleLabel` is
+- [x] `decorative` sets `aria-hidden="true"` on the host
+- [x] `accessibleLabel` fallback applied per the detection order in
+      [Accessibility semantics notes](#accessibility-semantics-notes) (implemented as proposed;
+      still pending final a11y SME sign-off on the SVG branch, Q4)
+- [x] DEBUG warning fires when neither `decorative`, existing labeling, nor `accessibleLabel` is
       present
-- [ ] Confirm Asset exposes no `disabled`/`focused`/`selected`
+- [x] Confirm Asset exposes no `disabled`/`focused`/`selected`
 
 ### Testing (SWC-2320)
 
@@ -525,7 +526,7 @@ plan contract pattern this document follows).
 
 ### Documentation (SWC-2321)
 
-- [ ] Drop `.internal.*` naming and `@status internal`; promote docs/stories to public
+- [x] Drop `.internal.*` naming and `@status internal`; promote docs/stories to public
 - [ ] JSDoc on all public properties, slots, and CSS custom properties
 - [ ] Storybook stories for sizing, `fit`, `background`, and `decorative`/`accessibleLabel`
 - [ ] Consumer migration guide covers the `variant` removal and the `label` →

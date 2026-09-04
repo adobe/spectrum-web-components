@@ -209,3 +209,123 @@ export const UnsupportedChildTypeWarningTest: Story = {
     );
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Accessible name resolution
+// ──────────────────────────────────────────────────────────────
+
+export const DecorativeTest: Story = {
+  render: () => html`
+    <swc-asset decorative><img src="./images/avatar-preview.png" /></swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('sets aria-hidden on the host when decorative', async () => {
+      expect(
+        asset.getAttribute('aria-hidden'),
+        'host has aria-hidden="true"'
+      ).toBe('true');
+    });
+
+    await step(
+      'does not warn about the missing accessible name when decorative',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          asset.requestUpdate();
+          await asset.updateComplete;
+          expect(
+            warnCalls.length,
+            'no warnings are emitted when decorative'
+          ).toBe(0);
+        })
+    );
+  },
+};
+
+export const ExistingAccessibleNameLeftAloneTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Existing name" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'leaves an img with its own alt untouched, even with accessible-label set',
+      async () => {
+        asset.accessibleLabel = 'Fallback name';
+        await asset.updateComplete;
+        const img = asset.querySelector('img');
+        expect(img?.getAttribute('alt'), 'alt is unchanged').toBe(
+          'Existing name'
+        );
+      }
+    );
+  },
+};
+
+export const AccessibleLabelFallbackTest: Story = {
+  render: () => html`
+    <swc-asset accessible-label="Fallback name">
+      <img src="./images/avatar-preview.png" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('applies accessibleLabel as alt on an unlabeled img', () => {
+      const img = asset.querySelector('img');
+      expect(img?.getAttribute('alt'), 'alt is set from accessibleLabel').toBe(
+        'Fallback name'
+      );
+    });
+  },
+};
+
+export const AccessibleLabelFallbackSvgTest: Story = {
+  render: () => html`
+    <swc-asset accessible-label="Fallback name">
+      <svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" /></svg>
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'applies accessibleLabel as role="img" + aria-label on an unlabeled svg',
+      () => {
+        const svg = asset.querySelector('svg');
+        expect(svg?.getAttribute('role'), 'role is set to img').toBe('img');
+        expect(
+          svg?.getAttribute('aria-label'),
+          'aria-label is set from accessibleLabel'
+        ).toBe('Fallback name');
+      }
+    );
+  },
+};
+
+export const MissingAccessibleNameWarningTest: Story = {
+  render: () => html`
+    <swc-asset><img src="./images/avatar-preview.png" /></swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'warns when neither alt, accessible-label, nor decorative is present',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          asset.requestUpdate();
+          await asset.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'at least one warning is emitted for the missing accessible name'
+          ).toBeGreaterThan(0);
+        })
+    );
+  },
+};
