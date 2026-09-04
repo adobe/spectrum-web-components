@@ -290,12 +290,17 @@ No properties are exposed in the initial set. Add a `--swc-toast-*` property onl
 - Matches the event set of other visibility-toggling components: `swc-open` before the enter transition plays, `swc-after-open` once it completes, `swc-close` (cancelable) before the exit transition plays, `swc-after-close` once it completes.
 - Text wrapping is automatic, not an option. Content wraps naturally within whatever `max-inline-size` the host is given (directly stylable from outside; no `--swc-*` custom property, see [CSS custom properties (2nd-gen)](#css-custom-properties-2nd-gen)); no `width` property exists on `sp-toast` in 1st-gen or on `Toast` in RSP S2. Long unbroken words specifically need `overflow-wrap`/`word-break` (SWC-475, see [Styling](#styling)) on top of normal wrapping.
 - No `placement` property. Confirmed absent from 1st-gen `sp-toast`'s own API: the 1st-gen story's `placement` values (bottom/left/right/top) belong to `overlay-trigger`, an unrelated demo wrapper, not `sp-toast` itself. RSP's `placement` (`top`/`bottom`/`top end`/`bottom end`) lives on `ToastContainer`, never on individual `Toast`. Placement is a future container-level concern; see Q6.
+- Peek stack: collapsed with two or more toasts queued, only the front toast renders as a real, interactive alertdialog; the rest render as decorative `role="presentation"` layers with no content. Confirmed against RSP S2's `Toast.tsx` (only the front toast gets the full alertdialog treatment while collapsed; every other toast renders `role="presentation"` instead).
+- An expand control appears on the front toast once two or more toasts are queued. Activating it moves focus to that toast's own host (since the control itself disappears once expanded) and opens every toast into a full list, where each becomes its own real alertdialog.
+- The expanded view takes over the screen: a dismissible scrim, <kbd>Escape</kbd>, and a dedicated Collapse control all collapse it, and focus is contained within it while open (RSP S2: `FocusScope`/`useModalOverlay`). Collapsing moves focus to the container region, not to whatever was focused before expanding (RSP S2: `collapse()` calls `regionRef.current?.focus()`).
+- The expanded view also collapses automatically once the queue empties, without that focus redirect: a separate code path from the explicit collapse triggers above (RSP S2: a queue-subscription effect calls the overlay state's `close()` directly).
 
 ### Accessibility semantics notes (2nd-gen)
 
 See [Toast accessibility migration analysis](./accessibility-migration-analysis.md) for the full spec.
 
 - Host naming uses `aria-labelledby` referencing a content-element ID, falling back to `aria-label` from slot text when no explicit ID is available. RSP S2 splits this further into a separate `aria-labelledby` (title) and `aria-describedby` (description) element; `swc-toast`'s single content ID is a deliberate simplification, since it has one default slot for message text rather than separate title/description slots.
+- Collapsing the expanded view moves focus to the container region (RSP S2: `collapse()` calls `regionRef.current?.focus()`), not to whatever was focused before expanding. The accessibility migration analysis currently describes the latter and needs correcting.
 
 ---
 
