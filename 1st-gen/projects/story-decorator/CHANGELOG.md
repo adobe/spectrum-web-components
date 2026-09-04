@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.12.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @spectrum-web-components/picker@1.12.3
+  - @spectrum-web-components/menu@1.12.3
+  - @spectrum-web-components/overlay@1.12.3
+  - @spectrum-web-components/field-label@1.12.3
+  - @spectrum-web-components/switch@1.12.3
+  - @spectrum-web-components/base@1.12.3
+  - @spectrum-web-components/reactive-controllers@1.12.3
+  - @spectrum-web-components/theme@1.12.3
+
 ## 1.12.2
 
 ### Patch Changes
