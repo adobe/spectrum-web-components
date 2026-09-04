@@ -192,18 +192,14 @@ export const LabelTogglingTest: Story = {
 // TEST: RTL mirroring
 // ──────────────────────────────────────────────────────────────
 
-// Iterates every entry in UI_ICONS against DIRECTIONAL_UI_ICONS rather than
-// hand-picking one directional and one non-directional icon: adding an icon to
-// UI_ICONS without deciding whether it belongs in DIRECTIONAL_UI_ICONS now fails
-// this test immediately instead of silently shipping an icon nobody made a
-// mirroring decision for.
+// Adding an icon to UI_ICONS without deciding whether it belongs in DIRECTIONAL_UI_ICONS now fails this test immediately instead of silently shipping an icon nobody made a mirroring decision for.
 export const DirectionalMirroringTest: Story = {
   render: () => html`
     <div id="rtl-wrapper" dir="rtl">
       ${Object.keys(UI_ICONS).map(
         (name) => html`
           <swc-ui-icon
-            icon=${name}
+            icon=${name as UiIconName}
             data-icon=${name}
             accessible-label=${name}
           ></swc-ui-icon>
@@ -214,7 +210,7 @@ export const DirectionalMirroringTest: Story = {
       ${Object.keys(UI_ICONS).map(
         (name) => html`
           <swc-ui-icon
-            icon=${name}
+            icon=${name as UiIconName}
             data-icon=${name}
             accessible-label=${name}
           ></swc-ui-icon>
@@ -223,6 +219,8 @@ export const DirectionalMirroringTest: Story = {
     </div>
   `,
   play: async ({ canvasElement, step }) => {
+    await getComponent<UiIcon>(canvasElement, 'swc-ui-icon');
+
     const rtlWrapper = canvasElement.querySelector(
       '#rtl-wrapper'
     ) as HTMLElement;
@@ -231,7 +229,7 @@ export const DirectionalMirroringTest: Story = {
     ) as HTMLElement;
 
     await step(
-      'every icon mirrors under RTL iff it is in the directional set',
+      'every icon mirrors under RTL if it is in the directional set',
       async () => {
         for (const name of Object.keys(UI_ICONS) as UiIconName[]) {
           const icon = rtlWrapper.querySelector(`[data-icon="${name}"]`)!;
@@ -252,13 +250,7 @@ export const DirectionalMirroringTest: Story = {
   },
 };
 
-// Mirrors tabs.test.ts's SelectionIndicatorDirectionChangeTest pattern: real
-// consumers (AccordionItem, MessageSources, ResponseStatus) never set `dir`
-// directly on their <swc-ui-icon>; they rely on it inheriting from an
-// ancestor. Verified separately from the direct-attribute tests above since
-// :host(:dir(rtl)[icon="..."])'s selector-matching quirk (see
-// ui-icon-direction.css) makes it worth confirming inherited directionality
-// resolves the same way, not assuming it from spec compliance alone.
+// Real consumers (AccordionItem, MessageSources, ResponseStatus) never set `dir` directly on their <swc-ui-icon>; they rely on it inheriting from an ancestor.
 export const DirectionalIconMirrorsWithInheritedRtlTest: Story = {
   render: () => html`
     <div id="direction-wrapper" dir="ltr">
@@ -300,7 +292,7 @@ export const DirectionalIconMirrorsWithInheritedRtlTest: Story = {
 
 export const UnknownIconTest: Story = {
   render: () => html`
-    <swc-ui-icon icon="not-an-icon"></swc-ui-icon>
+    <swc-ui-icon icon=${'not-an-icon' as UiIconName}></swc-ui-icon>
   `,
   play: async ({ canvasElement, step }) => {
     const icon = await getComponent<UiIcon>(canvasElement, 'swc-ui-icon');

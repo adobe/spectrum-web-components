@@ -12,13 +12,12 @@
 import { UiIconName } from './icon-set/index.js';
 
 /**
- * Logical UI icons that mirror horizontally in RTL. Keep in sync with the
- * `:host()` selector list in `ui-icon-direction.css`; `ui-icons.test.ts` iterates
- * every entry in `UI_ICONS` against this set and fails on drift between the two.
- * Icons not in this set (checkmarks, crosses, the corner-triangle hold-affordance
- * marker, and other non-directional or physically-anchored art) never flip.
+ * Logical UI icons that mirror horizontally in RTL. Keep in sync with the`:host()` selector list in `ui-icon-direction.css`;
+ * `ui-icons.test.ts` iterates every entry in `UI_ICONS` against this set and fails on drift between the two.
+ * Icons not in this set (checkmarks, crosses, and other non-directional art) never flip.
  */
-export const DIRECTIONAL_UI_ICONS = new Set<UiIconName>([
+export const DIRECTIONAL_UI_ICONS: ReadonlySet<UiIconName> = new Set([
   'chevron',
   'arrow',
-]) satisfies ReadonlySet<UiIconName>;
+  'corner-triangle',
+]);
