@@ -20,60 +20,30 @@
   box-sizing: border-box;
 }
 
+/* The chip is a restyled `swc-button` (secondary variant). The secondary
+   variant already supplies the gray-100 / gray-200 state colors, the focus
+   ring, and the press animation, so only the chip-specific geometry is
+   overridden here through the button's public custom properties. */
 .swc-SuggestionItem {
-  -webkit-tap-highlight-color: transparent;
-  display: inline-flex;
-  align-items: center;
-  block-size: var(--swc-suggestion-item-min-block-size, token("component-height-100"));
-  padding: 0;
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-100");
-  font-style: token("default-font-style");
-  font-weight: token("regular-font-weight");
-  line-height: token("line-height-font-size-100");
-  color: token("neutral-content-color-default");
-  background: token("gray-100");
-  border: 1px solid transparent;
-  border-radius: token("corner-radius-extra-large-default");
-  transition: background token("animation-duration-100") token("animation-ease-in-out");
+  --swc-button-min-block-size: var(--swc-suggestion-item-min-block-size, token("component-height-100"));
+  --swc-button-border-radius: token("corner-radius-extra-large-default");
+  --swc-button-edge-to-visual: var(--swc-suggestion-item-icon-margin-inline-start, 14px);
+  --swc-button-gap: var(--swc-suggestion-item-icon-margin-inline-end, 6px);
+  --swc-button-edge-to-text: var(--swc-suggestion-item-label-padding-inline-end, token("spacing-300"));
+  --swc-button-icon-size: token("workflow-icon-medium");
 }
 
-.swc-SuggestionItem:hover,
-.swc-SuggestionItem:focus-visible,
-.swc-SuggestionItem:active {
-  background: token("gray-200");
-}
-
-.swc-SuggestionItem:focus-visible {
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-ring-gap");
-}
-
-.swc-SuggestionItem:active {
-  transform: perspective(64px) translate3d(0, 0, -1px);
-  transition-timing-function: token("animation-ease-in-out");
-  transition-duration: token("animation-duration-200");
-  will-change: transform;
-}
-
+/* swc-icon sizes from its own custom properties rather than the width/height
+   the button applies to slotted icons, so set them explicitly. */
 .swc-SuggestionItem swc-icon {
   --swc-icon-inline-size: token("workflow-icon-medium");
   --swc-icon-block-size: token("workflow-icon-medium");
-
-  flex-shrink: 0;
-  margin-inline-start: var(--swc-suggestion-item-icon-margin-inline-start, 14px);
-  margin-inline-end: var(--swc-suggestion-item-icon-margin-inline-end, 6px);
 }
 
+/* swc-button renders its label at bold weight with no custom-property hook.
+   This wrapper sits between the button's label span and the slotted text, so
+   its explicit weight wins for the chip label. */
 .swc-SuggestionItem-label {
-  display: inline-flex;
-  padding-block: var(--swc-suggestion-item-label-padding-block, 7px);
-  padding-inline-end: var(--swc-suggestion-item-label-padding-inline-end, token("spacing-300"));
-  text-align: start;
-}
-
-@media (forced-colors: active) {
-  .swc-SuggestionItem:focus-visible {
-    outline-color: CanvasText;
-  }
+  padding-block: var(--swc-suggestion-item-label-padding-block, 0);
+  font-weight: token("regular-font-weight");
 }
