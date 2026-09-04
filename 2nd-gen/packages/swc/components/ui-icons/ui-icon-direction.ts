@@ -9,6 +9,15 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './UiIcon.js';
-export * from './icon-set/index.js';
-export * from './ui-icon-direction.js';
+import { UiIconName } from './icon-set/index.js';
+
+/**
+ * Logical UI icons that mirror horizontally in RTL. Keep in sync with the`:host()` selector list in `ui-icon-direction.css`;
+ * `ui-icons.test.ts` iterates every entry in `UI_ICONS` against this set and fails on drift between the two.
+ * Icons not in this set (checkmarks, crosses, and other non-directional art) never flip.
+ */
+export const DIRECTIONAL_UI_ICONS: ReadonlySet<UiIconName> = new Set([
+  'chevron',
+  'arrow',
+  'corner-triangle',
+]);
