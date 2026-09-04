@@ -34,6 +34,7 @@ import styles from './message-sources.css';
  * @slot - Anchor (`<a>`) elements projected into a numbered list when expanded
  * @fires swc-message-sources-toggle - Dispatched when the panel is toggled.
  * Detail: `{ open: boolean }`
+ * @since 2.0.0-beta.3
  */
 export class MessageSources extends SpectrumElement {
   private readonly panelId = uniqueId('swc-sources-panel');

@@ -21,7 +21,23 @@ import '../swc-prompt-field.js';
 
 import { getComponent, withWarningSpy } from '../../../../utils/test-utils.js';
 import { PromptField } from '../PromptField.js';
-import { meta, Overview } from '../stories/prompt-field.stories.js';
+import { meta, Overview, Playground } from '../stories/prompt-field.stories.js';
+
+const makeDragEvent = (type: string, dt?: DataTransfer): DragEvent =>
+  new DragEvent(type, {
+    cancelable: true,
+    bubbles: true,
+    composed: true,
+    dataTransfer: dt,
+  });
+
+const makeFileDataTransfer = (): DataTransfer => {
+  const dataTransfer = new DataTransfer();
+  dataTransfer.items.add(
+    new File(['hello'], 'hello.txt', { type: 'text/plain' })
+  );
+  return dataTransfer;
+};
 
 export default {
   ...meta,
@@ -155,7 +171,7 @@ export const InteractionTest: Story = {
 };
 
 export const LegalMissingWarningTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     await withWarningSpy(async (warnCalls) => {
       render(
@@ -199,7 +215,7 @@ export const LegalMissingWarningTest: Story = {
 };
 
 export const MixedAttachmentWarningTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     await withWarningSpy(async (warnCalls) => {
       render(
@@ -286,7 +302,7 @@ function renderMultiAttachmentPromptField(
 }
 
 export const AttachmentScrollPaginationTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     renderMultiAttachmentPromptField(canvasElement);
 
@@ -399,7 +415,7 @@ export const AttachmentScrollPaginationTest: Story = {
 };
 
 export const AttachmentScrollRTLTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     renderMultiAttachmentPromptField(canvasElement, 'rtl');
 
@@ -486,7 +502,7 @@ function dispatchKeydown(
 }
 
 export const AttachmentFocusOrderTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     renderMultiAttachmentPromptField(canvasElement);
 
@@ -689,7 +705,7 @@ export const AttachmentFocusOrderTest: Story = {
  * @todo SWC-2528 Flaky on Firefox (smooth-scroll focus-settle timing); skipped there until fixed.
  */
 export const AttachmentChevronPagingFocusTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     // Skip on Firefox pending SWC-2528.
     if (navigator.userAgent.includes('Firefox')) {
@@ -846,7 +862,7 @@ export const AttachmentChevronPagingFocusTest: Story = {
 };
 
 export const SingleAttachmentFocusTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     render(
       html`
@@ -900,8 +916,244 @@ export const SingleAttachmentFocusTest: Story = {
   },
 };
 
+export const DragAndDropTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<PromptField>(
+      canvasElement,
+      'swc-prompt-field'
+    );
+    const outerBorder = el.shadowRoot?.querySelector(
+      '.swc-PromptField-outer-border'
+    );
+
+    await step(
+      'dragging a file over the field marks the box dragged',
+      async () => {
+        el.dispatchEvent(makeDragEvent('dragover', makeFileDataTransfer()));
+        await el.updateComplete;
+        expect(outerBorder?.classList.contains('dragged')).toBe(true);
+
+        const box = el.shadowRoot?.querySelector('.swc-PromptField-box');
+        const gloss = el.shadowRoot?.querySelector('.swc-PromptField-gloss');
+        expect(getComputedStyle(outerBorder!).backgroundImage).not.toBe('none');
+        expect(getComputedStyle(box!).backgroundImage).toBe('none');
+        expect(getComputedStyle(box!).outlineStyle).toBe('solid');
+        expect(getComputedStyle(gloss!).backgroundImage).toBe('none');
+        expect(getComputedStyle(outerBorder!).transitionProperty).toContain(
+          'box-shadow'
+        );
+        expect(getComputedStyle(box!).transitionProperty).toContain(
+          'box-shadow'
+        );
+        expect(getComputedStyle(box!, '::after').transitionProperty).toContain(
+          'box-shadow'
+        );
+        await waitFor(() => {
+          expect(getComputedStyle(outerBorder!).boxShadow).toBe('none');
+          expect(getComputedStyle(box!).boxShadow).toBe('none');
+        });
+
+        el.generating = true;
+        await el.updateComplete;
+        expect(outerBorder?.classList.contains('dragged')).toBe(true);
+        expect(getComputedStyle(box!).outlineStyle).toBe('solid');
+      }
+    );
+
+    await step(
+      'dragleave clears the dragged state after the debounce',
+      async () => {
+        el.dispatchEvent(makeDragEvent('dragleave'));
+        await waitFor(() =>
+          expect(outerBorder?.classList.contains('dragged')).toBe(false)
+        );
+        await el.updateComplete;
+        expect(outerBorder?.classList.contains('dragged')).toBe(false);
+      }
+    );
+
+    await step(
+      'dropping files fires swc-prompt-field-drop with the dropped files and clears dragged',
+      async () => {
+        el.dispatchEvent(makeDragEvent('dragover', makeFileDataTransfer()));
+        await el.updateComplete;
+
+        const dt = new DataTransfer();
+        dt.items.add(new File(['hello'], 'hello.txt', { type: 'text/plain' }));
+
+        let detail: { files: File[] } | undefined;
+        el.addEventListener(
+          'swc-prompt-field-drop',
+          (event) => {
+            detail = (event as CustomEvent<{ files: File[] }>).detail;
+          },
+          { once: true }
+        );
+
+        el.dispatchEvent(makeDragEvent('drop', dt));
+        await el.updateComplete;
+
+        expect(detail?.files.length).toBe(1);
+        expect(detail?.files[0].name).toBe('hello.txt');
+        expect(outerBorder?.classList.contains('dragged')).toBe(false);
+      }
+    );
+
+    await step(
+      'dropping with no files does not fire swc-prompt-field-drop',
+      async () => {
+        el.dispatchEvent(makeDragEvent('dragover', makeFileDataTransfer()));
+        await el.updateComplete;
+
+        let fired = false;
+        el.addEventListener(
+          'swc-prompt-field-drop',
+          () => {
+            fired = true;
+          },
+          { once: true }
+        );
+
+        el.dispatchEvent(makeDragEvent('drop', new DataTransfer()));
+        await el.updateComplete;
+
+        expect(fired).toBe(false);
+      }
+    );
+
+    await step('non-file drags are rejected', async () => {
+      const dataTransfer = new DataTransfer();
+      dataTransfer.setData('text/plain', 'not a file');
+      const event = makeDragEvent('dragover', dataTransfer);
+
+      el.generating = false;
+      await el.updateComplete;
+      el.dispatchEvent(event);
+      await el.updateComplete;
+
+      expect(event.dataTransfer?.dropEffect).toBe('none');
+      expect(outerBorder?.classList.contains('dragged')).toBe(false);
+    });
+
+    await step('disabled field rejects the drag entirely', async () => {
+      el.disabled = true;
+      await el.updateComplete;
+
+      const event = makeDragEvent('dragover', makeFileDataTransfer());
+      el.dispatchEvent(event);
+      await el.updateComplete;
+
+      expect(event.dataTransfer?.dropEffect).toBe('none');
+      expect(outerBorder?.classList.contains('dragged')).toBe(false);
+
+      el.disabled = false;
+      await el.updateComplete;
+
+      el.dispatchEvent(makeDragEvent('dragover', makeFileDataTransfer()));
+      await el.updateComplete;
+      expect(outerBorder?.classList.contains('dragged')).toBe(true);
+
+      let fired = false;
+      el.addEventListener('swc-prompt-field-drop', () => (fired = true), {
+        once: true,
+      });
+      el.disabled = true;
+      await el.updateComplete;
+      el.dispatchEvent(makeDragEvent('drop', makeFileDataTransfer()));
+      await el.updateComplete;
+
+      expect(fired).toBe(false);
+      expect(outerBorder?.classList.contains('dragged')).toBe(false);
+    });
+  },
+};
+
+export const PlaygroundDropTest: Story = {
+  ...Playground,
+  play: async ({ canvasElement, step }) => {
+    const demo = canvasElement.querySelector<HTMLElement>(
+      'swc-prompt-field-behavior-demo'
+    );
+    const el = await getComponent<PromptField>(demo!, 'swc-prompt-field');
+    const textarea = el.shadowRoot?.querySelector<HTMLTextAreaElement>(
+      '.swc-PromptField-textarea'
+    );
+
+    const dropFile = (name: string): void => {
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(new File(['hello'], name, { type: 'text/plain' }));
+      el.dispatchEvent(makeDragEvent('dragover', dataTransfer));
+      el.dispatchEvent(makeDragEvent('drop', dataTransfer));
+    };
+
+    await step(
+      'Playground leaves focus alone for a drop with no keyboard focus anywhere',
+      async () => {
+        textarea?.blur();
+        (document.activeElement as HTMLElement | null)?.blur();
+        dropFile('first.txt');
+
+        await waitFor(() => {
+          const attachment = demo?.querySelector<HTMLElement>(
+            '[data-attachment-id]'
+          );
+          expect(attachment).toBeTruthy();
+          expect(getActiveElement()).not.toBe(attachment);
+        });
+      }
+    );
+
+    await step(
+      'A mouse-only drop still becomes the roving-tabindex entry point',
+      () => {
+        const attachment = demo?.querySelector<HTMLElement>(
+          '[data-attachment-id]'
+        );
+        expect(attachment?.tabIndex).toBe(0);
+      }
+    );
+
+    await step(
+      'Playground focuses a dropped attachment when keyboard focus was elsewhere in the field',
+      async () => {
+        // A never-mouse-touched element matches `:focus-visible` once focused,
+        // standing in for "the document is already in a keyboard session".
+        const keyboardFocusHelper = document.createElement('button');
+        document.body.appendChild(keyboardFocusHelper);
+        keyboardFocusHelper.focus();
+
+        dropFile('second.txt');
+
+        await waitFor(() => {
+          const attachments = demo?.querySelectorAll<HTMLElement>(
+            '[data-attachment-id]'
+          );
+          expect(attachments?.length).toBe(2);
+          expect(getActiveElement()).toBe(attachments?.[1]);
+        });
+
+        keyboardFocusHelper.remove();
+      }
+    );
+
+    await step(
+      'Playground preserves prompt input focus when another attachment is dropped',
+      async () => {
+        textarea?.focus();
+        dropFile('third.txt');
+
+        await waitFor(() => {
+          expect(demo?.querySelectorAll('[data-attachment-id]').length).toBe(3);
+          expect(getActiveElement()).toBe(textarea);
+        });
+      }
+    );
+  },
+};
+
 export const StatusLoaderTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     render(
       html`
@@ -909,6 +1161,7 @@ export const StatusLoaderTest: Story = {
           label="Prompt"
           loader="analyze"
           generating
+          animate-loader
         ></swc-prompt-field>
       `,
       canvasElement
@@ -926,7 +1179,7 @@ export const StatusLoaderTest: Story = {
       );
 
     await step(
-      'a preset name routes to the loader preset and generating animates it',
+      'a preset name routes to the loader preset and generating with animate-loader animates it',
       async () => {
         expect(loader()?.getAttribute('preset')).toBe('analyze');
         expect(loader()?.hasAttribute('paused')).toBe(false);
@@ -943,6 +1196,17 @@ export const StatusLoaderTest: Story = {
         expect(loader()?.hasAttribute('paused')).toBe(true);
         expect(loader()?.hasAttribute('preset')).toBe(false);
         expect(loader()?.getAttribute('icon')).toBe('wand');
+      }
+    );
+
+    await step(
+      'generating without animate-loader keeps the loader paused',
+      async () => {
+        el.generating = true;
+        el.animateLoader = false;
+        await el.updateComplete;
+
+        expect(loader()?.hasAttribute('paused')).toBe(true);
       }
     );
   },

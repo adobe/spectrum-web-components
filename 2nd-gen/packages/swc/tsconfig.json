@@ -5,21 +5,32 @@
     "noEmit": false,
     "outDir": "./dist",
     "paths": {
+      "@adobe/spectrum-wc-core/*": ["../core/*"],
       "@adobe/spectrum-wc/*": ["./components/*"],
       "@adobe/vite-global-elements-css": ["../tools/vite-global-elements-css"],
-      "@adobe/spectrum-wc-core/*": ["../core/*"],
       "@adobe/spectrum-wc-icons/*": ["../icons/src/*"]
     },
     "rootDir": "./",
     "types": ["@vitest/browser-playwright"]
   },
-  "exclude": ["node_modules", "dist"],
+  // Exclude only emittable `dist` output, not the whole dir, so the generated `dist/custom-elements.json` (imported by VRT stories) stays resolvable when present; see `custom-elements-json-env.d.ts` for the absent (CI, no build) case.
+  "exclude": [
+    "node_modules",
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "dist/**/*.map",
+    "dist/**/*.tsbuildinfo"
+  ],
   "extends": "../../tsconfig.json",
   "include": [
     "**/*.ts",
     "**/*.d.ts",
     "vite-env.d.ts",
-    ".storybook/storybook-env.d.ts"
+    ".storybook/storybook-env.d.ts",
+    ".storybook/helpers/**/*.ts",
+    ".storybook/decorators/**/*.ts",
+    ".storybook/intl/**/*.json",
+    "dist/custom-elements.json"
   ],
   "references": [
     {

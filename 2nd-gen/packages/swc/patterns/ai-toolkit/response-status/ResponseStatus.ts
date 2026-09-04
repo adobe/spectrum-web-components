@@ -67,6 +67,7 @@ export type ResponseStatusStatus = (typeof RESPONSE_STATUSES)[number];
  * Detail: `{ open: boolean }`
  * @fires swc-response-status-step-toggle - Dispatched when the user expands or collapses
  * a step's description. Detail: `{ open: boolean, index: number }`
+ * @since 2.0.0-beta.3
  */
 export class ResponseStatus extends SpectrumElement {
   private static readonly STATUS_LABEL_CLASS =
@@ -75,7 +76,7 @@ export class ResponseStatus extends SpectrumElement {
   private static readonly DEFAULT_LABELS: Record<ResponseStatusStatus, string> =
     {
       active: 'Generating response',
-      complete: 'Response generated',
+      complete: 'Response complete',
       stopped: 'You stopped the response',
     };
 

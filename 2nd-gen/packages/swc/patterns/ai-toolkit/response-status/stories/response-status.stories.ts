@@ -317,7 +317,6 @@ export const StatusOnly: Story = {
       <span slot="label">Searching repositories for Europe trips</span>
     </swc-response-status>
   `,
-  tags: ['dev'],
 };
 
 export const GeneratingPresets: Story = {

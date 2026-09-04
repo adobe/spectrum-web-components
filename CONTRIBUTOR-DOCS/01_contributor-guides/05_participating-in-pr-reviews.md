@@ -133,7 +133,7 @@ Remember that code reviews are a collaborative process aimed at improving code q
 ### References and alignment
 
 - **[Conventional Comments](https://conventionalcomments.org/)** can clarify what is blocking versus optional.
-- **[Working agreements](https://www.swarms.com/blog/agile-team-working-agreements/)** are one way to capture shared norms (review load, draft vs ready-for-review and tracker states, **AI** assistance in review or drafting, **external contributor** expectations and stale branches, and similar topics).
+- **[Working agreements](https://www.swarms.com/blog/agile-team-working-agreements/)** are one way to capture shared norms (review load, draft vs `Status:Ready for review` and tracker states, **AI** assistance in review or drafting, **external contributor** expectations and stale branches, and similar topics).
 
 ### Reviewer quick reference
 

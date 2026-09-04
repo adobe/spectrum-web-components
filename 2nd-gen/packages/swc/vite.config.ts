@@ -109,6 +109,13 @@ export default defineConfig({
       },
     }),
   ],
+  // Storybook's `staticDirs: ['../public', ...]` (.storybook/main.ts) already copies
+  // this package's public/ directory into the Storybook build output. Vite's own
+  // built-in publicDir copy is redundant with that and, run right after it against the
+  // same output directory, throws EEXIST on the pre-existing nested directories. It
+  // also has no reason to bundle public/ (Storybook-only static assets) into the
+  // library's published dist/.
+  publicDir: false,
   css: {
     transformer: 'postcss',
     postcss: {
