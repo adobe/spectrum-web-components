@@ -28,6 +28,7 @@ declare global {
     'demo-field-radio': DemoFieldRadio;
     'demo-field-combobox': DemoFieldCombobox;
     'demo-field-bench': DemoFieldBench;
+    'demo-form-readout': DemoFormReadout;
   }
 }
 
@@ -241,17 +242,33 @@ export class DemoFieldRadio extends DemoFieldHostBase {
 
   private handleChange(event: Event): void {
     this.checked = (event.target as HTMLInputElement).checked;
+    if (!this.checked) {
+      return;
+    }
+    // Native radios in one group are mutually exclusive; each harness lives in
+    // its own shadow root, so uncheck same-name siblings by hand.
+    this.form
+      ?.querySelectorAll<DemoFieldRadio>(`demo-field-radio[name="${this.name}"]`)
+      .forEach((radio) => {
+        if (radio !== this) {
+          radio.checked = false;
+        }
+      });
   }
 
   protected override render(): TemplateResult {
+    // Wrapping <label> gives the radio a visible, clickable name (native
+    // association), so it isn't a label-less dot in the docs demos.
     return html`
-      <input
-        type="radio"
-        aria-label=${ifDefined(this.label || undefined)}
-        .checked=${this.checked}
-        ?disabled=${this.effectiveDisabled}
-        @change=${this.handleChange}
-      />
+      <label>
+        <input
+          type="radio"
+          .checked=${this.checked}
+          ?disabled=${this.effectiveDisabled}
+          @change=${this.handleChange}
+        />
+        ${this.label}
+      </label>
     `;
   }
 }
@@ -299,6 +316,126 @@ export class DemoFieldCombobox extends DemoFieldHostBase {
 }
 
 // ────────────────────────────────────────
+//     SHARED READOUT
+// ────────────────────────────────────────
+
+/**
+ * @internal
+ *
+ * Builds the `FormData` + validity summary shared by the bench and the drop-in
+ * readout, so a story shows the controller's output instead of hiding it behind
+ * the harnesses.
+ */
+function summarizeForm(form: HTMLFormElement): string {
+  const fields = [
+    ...form.querySelectorAll<DemoFieldHostBase>(
+      'demo-field-text, demo-field-radio, demo-field-combobox'
+    ),
+  ];
+  const entries = [...new FormData(form).entries()].map(
+    ([key, value]) => `  ${key} = ${String(value)}`
+  );
+  const validity = fields.map((field) => {
+    const state = field.checkValidity() ? 'valid' : 'invalid';
+    const message = field.validationMessage
+      ? ` (${field.validationMessage})`
+      : '';
+    return `  ${field.name ?? '(unnamed)'}: ${state}, willValidate=${field.willValidate}${message}`;
+  });
+  return [
+    'FormData:',
+    entries.length ? entries.join('\n') : '  (empty)',
+    '',
+    'Validity:',
+    validity.join('\n'),
+    '',
+    `form.checkValidity(): ${form.checkValidity()}`,
+  ].join('\n');
+}
+
+/**
+ * @internal
+ *
+ * Drop-in `<demo-form-readout>`: place inside a `<form>` to add a Submit button
+ * and a `FormData` + validity readout, so a focused story demonstrates what the
+ * controller contributes *at submit time* (not a live mirror of the fields).
+ */
+@customElement('demo-form-readout')
+export class DemoFormReadout extends LitElement {
+  private static readonly placeholder = 'Submit the form to see its output.';
+  static override styles = css`
+    :host {
+      display: block;
+      margin-top: 12px;
+      font-family: system-ui, sans-serif;
+    }
+    button {
+      margin-bottom: 8px;
+    }
+    .readout {
+      box-sizing: border-box;
+      max-inline-size: 100%;
+      margin: 0;
+      padding: 12px;
+      background: var(--swc-gray-100, #f0f0f0);
+      border-radius: 4px;
+      font-size: 12px;
+      /* Wrap normal text and break long unbroken tokens so a long validity
+         message can't stretch the container. */
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+  `;
+
+  @state()
+  private readout = DemoFormReadout.placeholder;
+
+  // Light-DOM child of the story's form.
+  private get form(): HTMLFormElement | null {
+    return this.closest('form');
+  }
+
+  // Snapshot the form's output on submit; that's the moment worth showing.
+  private handleSubmit = (event: Event): void => {
+    event.preventDefault();
+    const form = this.form;
+    if (form) {
+      this.readout = summarizeForm(form);
+    }
+  };
+
+  // Reset clears the readout back to the prompt.
+  private handleReset = (): void => {
+    this.readout = DemoFormReadout.placeholder;
+  };
+
+  private requestSubmit(): void {
+    this.form?.requestSubmit();
+  }
+
+  public override connectedCallback(): void {
+    super.connectedCallback?.();
+    const form = this.form;
+    form?.addEventListener('submit', this.handleSubmit);
+    form?.addEventListener('reset', this.handleReset);
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback?.();
+    const form = this.form;
+    form?.removeEventListener('submit', this.handleSubmit);
+    form?.removeEventListener('reset', this.handleReset);
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <button type="button" @click=${this.requestSubmit}>Submit</button>
+      <pre class="readout" aria-live="polite">${this.readout}</pre>
+    `;
+  }
+}
+
+// ────────────────────────────────────────
 //     INTERACTIVE TEST BENCH
 // ────────────────────────────────────────
 
@@ -316,6 +453,10 @@ export class DemoFieldBench extends LitElement {
       display: block;
       font-family: system-ui, sans-serif;
     }
+    form {
+      /* Cap the width so a long readout line can't stretch the whole form. */
+      max-inline-size: 480px;
+    }
     fieldset {
       display: flex;
       flex-direction: column;
@@ -329,76 +470,54 @@ export class DemoFieldBench extends LitElement {
       margin: 12px 0;
     }
     .readout {
+      box-sizing: border-box;
+      max-inline-size: 100%;
       margin: 0;
       padding: 12px;
       background: var(--swc-gray-100, #f0f0f0);
       border-radius: 4px;
       font-size: 12px;
+      /* Wrap normal text and break long unbroken tokens so a long validity
+         message can't stretch the container. */
       white-space: pre-wrap;
+      overflow-wrap: anywhere;
     }
   `;
 
+  private static readonly placeholder = 'Submit the form to see its output.';
+
   @state()
-  private readout = '';
+  private readout = DemoFieldBench.placeholder;
 
   private get form(): HTMLFormElement | null {
     return this.renderRoot.querySelector('form');
   }
 
-  private get fields(): DemoFieldHostBase[] {
-    return [
-      ...(this.form?.querySelectorAll<DemoFieldHostBase>(
-        'demo-field-text, demo-field-radio, demo-field-combobox'
-      ) ?? []),
-    ];
-  }
-
-  protected override firstUpdated(): void {
-    this.refresh();
-  }
-
-  private refresh(): void {
+  // Snapshot the form's FormData + validity into the readout. Called on explicit
+  // actions (submit, check, toggle) — never on live typing — so the readout is a
+  // deliberate snapshot, not a mirror of every keystroke.
+  private refresh = (): void => {
     const form = this.form;
-    if (!form) {
-      return;
+    if (form) {
+      this.readout = summarizeForm(form);
     }
-    const entries = [...new FormData(form).entries()].map(
-      ([key, value]) => `  ${key} = ${String(value)}`
-    );
-    const validity = this.fields.map((field) => {
-      const state = field.checkValidity() ? 'valid' : 'invalid';
-      const message = field.validationMessage
-        ? ` (${field.validationMessage})`
-        : '';
-      return `  ${field.name ?? '(unnamed)'}: ${state}, willValidate=${field.willValidate}${message}`;
-    });
-    this.readout = [
-      'FormData:',
-      entries.length ? entries.join('\n') : '  (empty)',
-      '',
-      'Validity:',
-      validity.join('\n'),
-      '',
-      `form.checkValidity(): ${form.checkValidity()}`,
-    ].join('\n');
-  }
-
-  private handleActivity(): void {
-    this.refresh();
-  }
+  };
 
   private handleSubmit(event: Event): void {
     event.preventDefault();
     this.refresh();
   }
 
+  // Reset clears the readout back to the prompt.
   private handleReset(): void {
-    // Reset restores field values via formResetCallback; read the result after.
-    requestAnimationFrame(() => this.refresh());
+    this.readout = DemoFieldBench.placeholder;
   }
 
+  // Use checkValidity(), not reportValidity(): both run the same check, but
+  // checkValidity() is silent whereas reportValidity() would pop the native
+  // bubble. The readout surfaces the result inline, the way a real field would.
   private handleCheckValidity(): void {
-    this.form?.reportValidity();
+    this.form?.checkValidity();
     this.refresh();
   }
 
@@ -406,25 +525,15 @@ export class DemoFieldBench extends LitElement {
     const fieldset = this.renderRoot.querySelector('fieldset');
     if (fieldset) {
       fieldset.disabled = !fieldset.disabled;
-      requestAnimationFrame(() => this.refresh());
-    }
-  }
-
-  // Toggles the field's own `disabled` (the other half of effectiveDisabled).
-  private handleToggleFieldDisabled(): void {
-    const field =
-      this.renderRoot.querySelector<DemoFieldText>('demo-field-text');
-    if (field) {
-      field.disabled = !field.disabled;
-      requestAnimationFrame(() => this.refresh());
+      // The disabled cascade runs through async callbacks; read after it settles.
+      requestAnimationFrame(this.refresh);
     }
   }
 
   protected override render(): TemplateResult {
     return html`
       <form
-        @input=${this.handleActivity}
-        @change=${this.handleActivity}
+        novalidate
         @submit=${this.handleSubmit}
         @reset=${this.handleReset}
       >
@@ -446,6 +555,11 @@ export class DemoFieldBench extends LitElement {
             checked
             label="Subscribe"
           ></demo-field-radio>
+          <demo-field-radio
+            name="subscribe"
+            value="no"
+            label="Do not subscribe"
+          ></demo-field-radio>
         </fieldset>
         <div class="actions">
           <button type="submit">Submit</button>
@@ -455,9 +569,6 @@ export class DemoFieldBench extends LitElement {
           </button>
           <button type="button" @click=${this.handleToggleDisabled}>
             Toggle fieldset disabled
-          </button>
-          <button type="button" @click=${this.handleToggleFieldDisabled}>
-            Toggle Username disabled
           </button>
         </div>
         <pre class="readout" aria-live="polite">${this.readout}</pre>

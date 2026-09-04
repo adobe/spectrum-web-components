@@ -60,6 +60,8 @@ class SwcField extends LitElement {
 }
 ```
 
+⚠️ **Important:** reflecting `required` (and other constraints) onto the inner control engages the browser's native constraint validation, which surfaces the browser's own error bubble on submit. That competes with Spectrum's inline error message. Until the forms strategy provides a form wrapper, put fields in a form with the [`novalidate`](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation) attribute: it suppresses the native bubble while leaving the constraint API (`internals.validity`, `checkValidity()`, `reportValidity()`) intact for inline messaging. The demos below use `novalidate` for this reason. Note that `novalidate` also turns off submit blocking; a production field will instead cancel the `invalid` event, which suppresses the bubble while keeping submit blocking.
+
 The demos below use three unstyled harnesses (`demo-field-text`, `demo-field-radio`, `demo-field-combobox`), not `swc-*` components.
 
 ## Behaviors

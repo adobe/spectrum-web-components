@@ -160,53 +160,68 @@ export const DisabledCascadeTest: Story = {
     await textHost.updateComplete;
     await radioHost.updateComplete;
 
-    await step('both fields participate before disabling', () => {
+    // The story renders `<fieldset disabled>`, so both fields start cascaded
+    // off. Assert cascade counts as deltas from that settled baseline.
+    const textBaseline = textHost.disabledChangeCount;
+    const radioBaseline = radioHost.disabledChangeCount;
+
+    await step('both fields start excluded under the disabled fieldset', () => {
+      expect(
+        textHost.shadowRoot?.querySelector('input')?.disabled,
+        'inner text control starts disabled'
+      ).toBe(true);
       const data = new FormData(form);
-      expect(data.get('first')).toBe('Example');
-      expect(data.get('subscribe')).toBe('yes');
+      expect(data.has('first'), 'text excluded while disabled').toBe(false);
+      expect(data.has('subscribe'), 'radio excluded while disabled').toBe(
+        false
+      );
     });
 
     await step(
-      'disabling the fieldset cascades, fires once, and excludes both',
-      async () => {
-        fieldset.disabled = true;
-        await textHost.updateComplete;
-        await radioHost.updateComplete;
-
-        expect(textHost.disabledChangeCount, 'text cascade fired once').toBe(1);
-        expect(radioHost.disabledChangeCount, 'radio cascade fired once').toBe(
-          1
-        );
-        expect(
-          textHost.shadowRoot?.querySelector('input')?.disabled,
-          'inner text control is disabled'
-        ).toBe(true);
-
-        const data = new FormData(form);
-        expect(data.has('first'), 'text excluded while disabled').toBe(false);
-        expect(data.has('subscribe'), 'radio excluded while disabled').toBe(
-          false
-        );
-      }
-    );
-
-    await step(
-      're-enabling recovers participation and fires once more',
+      'enabling the fieldset recovers participation and fires once',
       async () => {
         fieldset.disabled = false;
         await textHost.updateComplete;
         await radioHost.updateComplete;
 
-        expect(textHost.disabledChangeCount, 'text cascade fired again').toBe(
-          2
-        );
-        expect(radioHost.disabledChangeCount, 'radio cascade fired again').toBe(
-          2
-        );
+        expect(
+          textHost.disabledChangeCount - textBaseline,
+          'text cascade fired once'
+        ).toBe(1);
+        expect(
+          radioHost.disabledChangeCount - radioBaseline,
+          'radio cascade fired once'
+        ).toBe(1);
 
         const data = new FormData(form);
         expect(data.get('first')).toBe('Example');
         expect(data.get('subscribe')).toBe('yes');
+      }
+    );
+
+    await step(
+      'disabling again cascades, excludes both, and fires once more',
+      async () => {
+        fieldset.disabled = true;
+        await textHost.updateComplete;
+        await radioHost.updateComplete;
+
+        expect(
+          textHost.disabledChangeCount - textBaseline,
+          'text cascade fired twice total'
+        ).toBe(2);
+        expect(
+          radioHost.disabledChangeCount - radioBaseline,
+          'radio cascade fired twice total'
+        ).toBe(2);
+        expect(
+          textHost.shadowRoot?.querySelector('input')?.disabled,
+          'inner text control is disabled again'
+        ).toBe(true);
+
+        const data = new FormData(form);
+        expect(data.has('first'), 'text excluded again').toBe(false);
+        expect(data.has('subscribe'), 'radio excluded again').toBe(false);
       }
     );
   },
