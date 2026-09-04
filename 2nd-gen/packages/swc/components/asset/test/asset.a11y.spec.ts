@@ -46,18 +46,8 @@ test.describe('Asset - ARIA Snapshots', () => {
       'swc-asset'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - img "README.md"
-    `);
-  });
-
-  test('should handle variants', async ({ page }) => {
-    const root = await gotoStory(
-      page,
-      'components-asset--variants',
-      'swc-asset'
-    );
-    await expect(root).toMatchAriaSnapshot(`
-      - img "README.md"
+      - img "README.md preview"
+      - img "Folder icon"
     `);
   });
 
@@ -68,6 +58,7 @@ test.describe('Asset - ARIA Snapshots', () => {
       'swc-asset'
     );
     await expect(root).toMatchAriaSnapshot(`
+      - img "Profile photo"
       - img "Project proposal document"
     `);
   });

@@ -10,9 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
-export const ASSET_VARIANTS = [
-  'file',
-  'folder',
+export const ASSET_FIT_VALUES = [
+  'cover',
+  'contain',
 ] as const satisfies readonly string[];
 
-export type AssetVariant = (typeof ASSET_VARIANTS)[number];
+export type AssetFit = (typeof ASSET_FIT_VALUES)[number];
+
+export const ASSET_BACKGROUND_VALUES = [
+  'transparent',
+  'solid',
+  'checkerboard',
+] as const satisfies readonly string[];
+
+export type AssetBackground = (typeof ASSET_BACKGROUND_VALUES)[number];

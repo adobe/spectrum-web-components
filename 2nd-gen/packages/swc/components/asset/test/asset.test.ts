@@ -17,13 +17,9 @@ import { Asset } from '@adobe/spectrum-wc/asset';
 
 import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
-import meta from '../stories/asset.internal.stories.js';
-import { Overview, Variants } from '../stories/asset.internal.stories.js';
+import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
+import meta from '../stories/asset.stories.js';
+import { Overview } from '../stories/asset.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -45,9 +41,12 @@ export const OverviewTest: Story = {
   play: async ({ canvasElement, step }) => {
     const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
 
-    await step('renders slotted content when no variant is set', async () => {
+    await step('renders slotted content with defaults applied', async () => {
       const img = asset.querySelector('img');
-      expect(asset.variant, 'variant when not set').toBeUndefined();
+      expect(asset.fit, 'fit defaults to cover').toBe('cover');
+      expect(asset.background, 'background defaults to transparent').toBe(
+        'transparent'
+      );
       expect(img, 'slotted img element is rendered').toBeTruthy();
       expect(
         img?.getAttribute('alt')?.length,
@@ -58,230 +57,275 @@ export const OverviewTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Slots
-// ──────────────────────────────────────────────────────────────
-
-export const DefaultLabelFallbackTest: Story = {
-  render: () => html`
-    <swc-asset variant="file"></swc-asset>
-    <swc-asset variant="folder"></swc-asset>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const assets = await getComponents<Asset>(canvasElement, 'swc-asset');
-
-    await step('file variant falls back to default aria-label', async () => {
-      const fileAsset = assets.find(
-        (a) => a.getAttribute('variant') === 'file'
-      ) as Asset | null;
-      expect(fileAsset, 'file asset is rendered').toBeTruthy();
-      const svg = fileAsset?.shadowRoot?.querySelector('svg');
-      expect(svg, 'file asset has an SVG in shadow DOM').toBeTruthy();
-      expect(svg?.getAttribute('aria-label'), 'file asset SVG aria-label').toBe(
-        'File'
-      );
-    });
-
-    await step('folder variant falls back to default aria-label', async () => {
-      const folderAsset = assets.find(
-        (a) => a.getAttribute('variant') === 'folder'
-      ) as Asset | null;
-      expect(folderAsset, 'folder asset is rendered').toBeTruthy();
-      const svg = folderAsset?.shadowRoot?.querySelector('svg');
-      expect(svg, 'folder asset has an SVG in shadow DOM').toBeTruthy();
-      expect(
-        svg?.getAttribute('aria-label'),
-        'folder asset SVG defaults to "Folder" aria-label'
-      ).toBe('Folder');
-    });
-  },
-};
-
-// ──────────────────────────────────────────────────────────────
-// TEST: Properties / Attributes
-// ──────────────────────────────────────────────────────────────
-
-export const LabelMutationTest: Story = {
-  render: () => html`
-    <swc-asset variant="file"></swc-asset>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
-
-    await step(
-      'SVG aria-label reflects default "File" when label is empty',
-      async () => {
-        const svg = asset.shadowRoot?.querySelector('svg');
-        expect(svg, 'SVG is rendered initially').toBeTruthy();
-        expect(
-          svg?.getAttribute('aria-label'),
-          'SVG aria-label defaults to "File" when no label is set'
-        ).toBe('File');
-      }
-    );
-
-    await step(
-      'SVG aria-label updates when label property is set',
-      async () => {
-        asset.label = 'Q4 Budget Report';
-        await asset.updateComplete;
-        const svg = asset.shadowRoot?.querySelector('svg');
-        expect(
-          svg?.getAttribute('aria-label'),
-          'SVG aria-label after label update'
-        ).toBe('Q4 Budget Report');
-      }
-    );
-
-    await step(
-      'SVG aria-label reverts to default when label is cleared',
-      async () => {
-        asset.label = '';
-        await asset.updateComplete;
-        const svg = asset.shadowRoot?.querySelector('svg');
-        expect(
-          svg?.getAttribute('aria-label'),
-          'SVG aria-label reverts to "File" when label is cleared'
-        ).toBe('File');
-      }
-    );
-  },
-};
-
-// ──────────────────────────────────────────────────────────────
-// TEST: Variants / States
-// ──────────────────────────────────────────────────────────────
-
-export const VariantsTest: Story = {
-  ...Variants,
-  play: async ({ canvasElement, step }) => {
-    const assets = await getComponents<Asset>(canvasElement, 'swc-asset');
-
-    await step('renders file and folder icons with labels', async () => {
-      const fileAsset = assets.find(
-        (item) => item.getAttribute('variant') === 'file'
-      );
-      const folderAsset = assets.find(
-        (item) => item.getAttribute('variant') === 'folder'
-      );
-
-      expect(fileAsset, 'file variant asset is rendered').toBeTruthy();
-      expect(folderAsset, 'folder variant asset is rendered').toBeTruthy();
-    });
-  },
-};
-
-export const VariantMutationTest: Story = {
-  render: () => html`
-    <swc-asset></swc-asset>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
-
-    await step('initially renders slot when no variant is set', async () => {
-      expect(asset.variant, 'variant is initially undefined').toBeUndefined();
-      const svg = asset.shadowRoot?.querySelector('svg');
-      expect(svg, 'no SVG is rendered when variant is not set').toBeNull();
-    });
-
-    await step('renders file SVG after variant is set to "file"', async () => {
-      asset.variant = 'file';
-      await asset.updateComplete;
-      expect(
-        asset.getAttribute('variant'),
-        'variant attribute is "file" after mutation'
-      ).toBe('file');
-      const svg = asset.shadowRoot?.querySelector('svg');
-      expect(svg, 'file SVG is rendered after variant mutation').toBeTruthy();
-      expect(
-        svg?.getAttribute('aria-label'),
-        'file SVG has default "File" aria-label'
-      ).toBe('File');
-    });
-
-    await step(
-      'renders folder SVG after variant is set to "folder"',
-      async () => {
-        asset.variant = 'folder';
-        await asset.updateComplete;
-        expect(
-          asset.getAttribute('variant'),
-          'variant attribute is "folder" after mutation'
-        ).toBe('folder');
-        const svg = asset.shadowRoot?.querySelector('svg');
-        expect(
-          svg,
-          'folder SVG is rendered after variant mutation'
-        ).toBeTruthy();
-        expect(
-          svg?.getAttribute('aria-label'),
-          'folder SVG has default "Folder" aria-label'
-        ).toBe('Folder');
-      }
-    );
-
-    await step('reverts to slot content when variant is cleared', async () => {
-      asset.variant = undefined;
-      await asset.updateComplete;
-      expect(
-        asset.variant,
-        'variant is undefined after clearing'
-      ).toBeUndefined();
-      expect(
-        asset.hasAttribute('variant'),
-        'variant attribute is absent after clearing'
-      ).toBe(false);
-      const svg = asset.shadowRoot?.querySelector('svg');
-      expect(svg, 'no SVG is rendered after variant is cleared').toBeNull();
-    });
-  },
-};
-
-// ──────────────────────────────────────────────────────────────
 // TEST: Dev mode warnings
 // ──────────────────────────────────────────────────────────────
 
-export const InvalidVariantWarningTest: Story = {
+export const InvalidFitWarningTest: Story = {
   render: () => html`
-    <swc-asset></swc-asset>
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
   `,
   play: async ({ canvasElement, step }) => {
     const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
 
-    await step('warns when an invalid variant is set in DEBUG mode', () =>
+    await step('warns when an invalid fit is set in DEBUG mode', () =>
       withWarningSpy(async (warnCalls) => {
-        asset.variant = 'not-a-variant' as Asset['variant'];
+        asset.fit = 'stretch' as Asset['fit'];
         await asset.updateComplete;
 
         expect(
           warnCalls.length,
-          'at least one warning is emitted for invalid variant'
+          'at least one warning is emitted for invalid fit'
         ).toBeGreaterThan(0);
         expect(
           String(warnCalls[0]?.[1] || ''),
-          'warning message references variant'
-        ).toContain('variant');
+          'warning message references fit'
+        ).toContain('fit');
       })
     );
   },
 };
 
-export const ValidVariantNoWarningTest: Story = {
+export const InvalidBackgroundWarningTest: Story = {
   render: () => html`
-    <swc-asset variant="file" label="Report"></swc-asset>
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
   `,
   play: async ({ canvasElement, step }) => {
     const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
 
-    await step('does not warn when a valid variant is set in DEBUG mode', () =>
+    await step('warns when an invalid background is set in DEBUG mode', () =>
       withWarningSpy(async (warnCalls) => {
-        asset.variant = 'folder';
+        asset.background = 'gradient' as Asset['background'];
         await asset.updateComplete;
 
         expect(
           warnCalls.length,
-          'no warnings are emitted for valid variant'
-        ).toBe(0);
+          'at least one warning is emitted for invalid background'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0]?.[1] || ''),
+          'warning message references background'
+        ).toContain('background');
       })
+    );
+  },
+};
+
+export const AspectRatioNormalizationTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('normalizes the "square" keyword to "1/1"', async () => {
+      asset.aspectRatio = 'square';
+      await asset.updateComplete;
+      expect(asset.aspectRatio, 'square normalizes to 1/1').toBe('1/1');
+    });
+
+    await step('normalizes ":"-separated ratios to "/"', async () => {
+      asset.aspectRatio = '16:9';
+      await asset.updateComplete;
+      expect(asset.aspectRatio, '16:9 normalizes to 16/9').toBe('16/9');
+    });
+  },
+};
+
+export const AspectRatioWidthHeightCombinationWarningTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'warns when aspectRatio is combined with both width and height',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          asset.aspectRatio = '16/9';
+          asset.width = '100px';
+          asset.height = '100px';
+          await asset.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'at least one warning is emitted for the combination'
+          ).toBeGreaterThan(0);
+        })
+    );
+  },
+};
+
+export const MultipleChildrenWarningTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="First" />
+      <img src="./images/avatar-preview.png" alt="Second" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('warns when more than one child is slotted', () =>
+      withWarningSpy(async (warnCalls) => {
+        // Re-trigger validation, which runs on every update.
+        asset.requestUpdate();
+        await asset.updateComplete;
+
+        expect(
+          warnCalls.length,
+          'at least one warning is emitted for multiple children'
+        ).toBeGreaterThan(0);
+      })
+    );
+  },
+};
+
+export const UnsupportedChildTypeWarningTest: Story = {
+  render: () => html`
+    <swc-asset><span>Not an image</span></swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('warns when the slotted child is not img or svg', () =>
+      withWarningSpy(async (warnCalls) => {
+        asset.requestUpdate();
+        await asset.updateComplete;
+
+        expect(
+          warnCalls.length,
+          'at least one warning is emitted for an unsupported child type'
+        ).toBeGreaterThan(0);
+      })
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Accessible name resolution
+// ──────────────────────────────────────────────────────────────
+
+export const DecorativeTest: Story = {
+  render: () => html`
+    <swc-asset decorative><img src="./images/avatar-preview.png" /></swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('sets aria-hidden on the host when decorative', async () => {
+      expect(
+        asset.getAttribute('aria-hidden'),
+        'host has aria-hidden="true"'
+      ).toBe('true');
+    });
+
+    await step(
+      'does not warn about the missing accessible name when decorative',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          asset.requestUpdate();
+          await asset.updateComplete;
+          expect(
+            warnCalls.length,
+            'no warnings are emitted when decorative'
+          ).toBe(0);
+        })
+    );
+  },
+};
+
+export const ExistingAccessibleNameLeftAloneTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Existing name" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'leaves an img with its own alt untouched, even with accessible-label set',
+      async () => {
+        asset.accessibleLabel = 'Fallback name';
+        await asset.updateComplete;
+        const img = asset.querySelector('img');
+        expect(img?.getAttribute('alt'), 'alt is unchanged').toBe(
+          'Existing name'
+        );
+      }
+    );
+  },
+};
+
+export const AccessibleLabelFallbackTest: Story = {
+  render: () => html`
+    <swc-asset accessible-label="Fallback name">
+      <img src="./images/avatar-preview.png" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('applies accessibleLabel as alt on an unlabeled img', () => {
+      const img = asset.querySelector('img');
+      expect(img?.getAttribute('alt'), 'alt is set from accessibleLabel').toBe(
+        'Fallback name'
+      );
+    });
+  },
+};
+
+export const AccessibleLabelFallbackSvgTest: Story = {
+  render: () => html`
+    <swc-asset accessible-label="Fallback name">
+      <svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" /></svg>
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'applies accessibleLabel as role="img" + aria-label on an unlabeled svg',
+      () => {
+        const svg = asset.querySelector('svg');
+        expect(svg?.getAttribute('role'), 'role is set to img').toBe('img');
+        expect(
+          svg?.getAttribute('aria-label'),
+          'aria-label is set from accessibleLabel'
+        ).toBe('Fallback name');
+      }
+    );
+  },
+};
+
+export const MissingAccessibleNameWarningTest: Story = {
+  render: () => html`
+    <swc-asset><img src="./images/avatar-preview.png" /></swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'warns when neither alt, accessible-label, nor decorative is present',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          asset.requestUpdate();
+          await asset.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'at least one warning is emitted for the missing accessible name'
+          ).toBeGreaterThan(0);
+        })
     );
   },
 };

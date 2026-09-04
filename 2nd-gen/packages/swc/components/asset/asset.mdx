@@ -1,0 +1,65 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as AssetStories from './stories/asset.stories';
+
+<Meta of={AssetStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+An asset consists of:
+
+- **Default slot**: a single `<img>` or `<svg>` element to display
+
+The asset automatically centers its content both horizontally and vertically within the available space.
+
+<Canvas of={AssetStories.Anatomy} />
+
+## Options
+
+### Fit
+
+`fit` controls how slotted content fills the asset's box: `cover` (default) scales content to fill
+the box, cropping if needed; `contain` scales content to fit entirely within the box, letterboxing
+if the aspect ratios differ.
+
+<Canvas of={AssetStories.Fit} />
+
+### Background
+
+`background` controls what shows behind slotted content and around its edges when `fit="contain"`
+letterboxes it: `transparent` (default), a `solid` color, or an opacity `checkerboard`.
+
+Consuming components are responsible for applying other styles such as borders, shadows, and corner rounding to the asset.
+
+<Canvas of={AssetStories.Background} />
+
+## Behaviors
+
+### Sizing
+
+Set `aspect-ratio`, or `width`/`height`, to size the asset. `aspect-ratio` accepts CSS `<ratio>`
+syntax (including the `square` keyword) and has no effect when both `width` and `height` are set.
+
+<Canvas of={AssetStories.Sizing} />
+
+## Accessibility
+
+### Features
+
+The `<swc-asset>` element implements several accessibility features:
+
+#### ARIA implementation
+
+- **Non-interactive**: assets have no interactive behavior and are not focusable
+
+### Best practices
+
+- Provide a meaningful `alt` attribute on a slotted `<img>`, or `aria-label` (with `role="img"`) on a slotted `<svg>`
+- For decorative images, use an empty `alt=""` attribute on the img tag
+
+<Canvas of={AssetStories.Accessibility} />
+
+<DocsFooter />
