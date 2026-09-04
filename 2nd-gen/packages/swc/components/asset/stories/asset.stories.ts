@@ -14,8 +14,6 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { Asset } from '@adobe/spectrum-wc/asset';
-
 import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 
 // ────────────────
@@ -24,15 +22,9 @@ import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-asset');
 
-argTypes.variant = {
-  ...argTypes.variant,
-  control: { type: 'select' },
-  options: [undefined, ...Asset.VARIANTS],
-};
-
 /**
- * The `file` and `folder` variants center themselves horizontally and vertically in the space provided.
- * Images are contained within the element, growing to the element's full height while centering within the width provided.
+ * A general image/media primitive that displays a single slotted `<img>` or
+ * `<svg>` element, sized and fit to the space provided.
  */
 const meta: Meta = {
   title: 'Asset',
@@ -41,7 +33,7 @@ const meta: Meta = {
   argTypes,
   parameters: {
     docs: {
-      subtitle: `Visually represent files, folders, or images in your application`,
+      subtitle: `Visually represent an image or media asset in your application`,
     },
     flexLayout: 'row-nowrap',
   },
@@ -56,7 +48,6 @@ export default meta;
 
 export const Playground: Story = {
   args: {
-    label: 'Background',
     'default-slot': `<img src="./images/avatar-preview.png" alt="preview of background" />`,
   },
   tags: ['dev'],
@@ -68,7 +59,6 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   args: {
-    label: 'Background',
     'default-slot': `<img src="./images/avatar-preview.png" alt="preview of background" />`,
   },
   tags: ['overview'],
@@ -80,40 +70,16 @@ export const Overview: Story = {
 
 export const Anatomy: Story = {
   render: (args) => html`
-    ${template({ ...args, variant: 'file', label: 'README.md' })}
-    ${template({ ...args, variant: 'folder', label: 'packages/swc/' })}
     ${template({
       ...args,
-      label: 'images/profile_sm.png',
-      'default-slot': `<img src="./images/avatar-preview.png" alt="Headshot of Jenn" />`,
+      'default-slot': `<img src="./images/avatar-preview.png" alt="README.md preview" />`,
+    })}
+    ${template({
+      ...args,
+      'default-slot': `<svg role="img" aria-label="Folder icon" viewBox="0 0 32 32"><path d="M3,29.5c-1.4,0-2.5-1.1-2.5-2.5V5c0-1.4,1.1-2.5,2.5-2.5h10.1c0.5,0,1,0.2,1.4,0.6l3.1,3.1c0.2,0.2,0.4,0.3,0.7,0.3H29c1.4,0,2.5,1.1,2.5,2.5v18c0,1.4-1.1,2.5-2.5,2.5H3z" /></svg>`,
     })}
   `,
   tags: ['anatomy'],
-};
-
-// ──────────────────────────
-//    OPTIONS STORIES
-// ──────────────────────────
-
-export const Variants: Story = {
-  render: (args) => html`
-    ${template({
-      ...args,
-      variant: 'file',
-      label: 'README.md',
-    })}
-    ${template({
-      ...args,
-      variant: 'folder',
-      label: 'packages/swc/',
-    })}
-    ${template({
-      ...args,
-      label: 'banners/sunset.jpg',
-      'default-slot': `<img src="./images/avatar-preview.png" alt="sunset over a sandy beach" />`,
-    })}
-  `,
-  tags: ['options'],
 };
 
 // ────────────────────────────────
@@ -124,18 +90,11 @@ export const Accessibility: Story = {
   render: (args) => html`
     ${template({
       ...args,
-      variant: 'file',
-      label: 'Project proposal document',
+      'default-slot': `<img src="./images/avatar-preview.png" alt="Profile photo" />`,
     })}
     ${template({
       ...args,
-      variant: 'folder',
-      label: 'Design assets directory',
-    })}
-    ${template({
-      ...args,
-      label: 'User profile photo',
-      'default-slot': `<img src="./images/avatar-preview.png" alt="Profile photo of Maria Rodriguez, Senior Designer" />`,
+      'default-slot': `<svg role="img" aria-label="Project proposal document" viewBox="0 0 128 128"><path d="M24,126c-5.5,0-10-4.5-10-10V12c0-5.5,4.5-10,10-10h61.5c2.1,0,4.1,0.8,5.6,2.3l20.5,20.4c1.5,1.5,2.4,3.5,2.4,5.7V116c0,5.5-4.5,10-10,10H24z" /></svg>`,
     })}
   `,
   tags: ['a11y'],

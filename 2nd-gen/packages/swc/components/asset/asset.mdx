@@ -1,0 +1,37 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as AssetStories from './stories/asset.stories';
+
+<Meta of={AssetStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+An asset consists of:
+
+- **Default slot**: a single `<img>` or `<svg>` element to display
+
+The asset automatically centers its content both horizontally and vertically within the available space.
+
+<Canvas of={AssetStories.Anatomy} />
+
+## Accessibility
+
+### Features
+
+The `<swc-asset>` element implements several accessibility features:
+
+#### ARIA implementation
+
+- **Non-interactive**: assets have no interactive behavior and are not focusable
+
+### Best practices
+
+- Provide a meaningful `alt` attribute on a slotted `<img>`, or `aria-label` (with `role="img"`) on a slotted `<svg>`
+- For decorative images, use an empty `alt=""` attribute on the img tag
+
+<Canvas of={AssetStories.Accessibility} />
+
+<DocsFooter />
