@@ -14,7 +14,7 @@ import { html, nothing } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
-import '@adobe/spectrum-wc/components/icon/swc-icon.js';
+import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 
 import type {
   CustomPropertyCase,
@@ -29,7 +29,6 @@ import {
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
 import customElementsManifest from '../../../../dist/custom-elements.json';
-import { Arrow100Icon } from '../../../icon/elements/Arrow100Icon.js';
 
 // Metadata
 
@@ -49,7 +48,7 @@ const forceButtonStates = forcePseudoStates(
 );
 
 const arrowIcon = () => html`
-  <swc-icon slot="icon" aria-hidden="true">${Arrow100Icon()}</swc-icon>
+  <swc-ui-icon icon="arrow" size="m" slot="icon"></swc-ui-icon>
 `;
 
 // Every `--swc-button-*` custom property is a public contract: consumers
