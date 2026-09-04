@@ -32,9 +32,12 @@ jobs:
     if: github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main'
     outputs:
       has_changesets: ${{ steps.check.outputs.has_changesets }}
+      needs_publish: ${{ steps.check.outputs.needs_publish }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # need tags so the needs_publish idempotency check below can see them
 
       - name: Check for changesets
         id: check
@@ -44,12 +47,27 @@ jobs:
           # its own workflow, publish-gen2.yml.
           GEN1_COUNT=$(find 1st-gen/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
 
-          if [ "$GEN1_COUNT" -eq 0 ]; then
-            echo "has_changesets=false" >> $GITHUB_OUTPUT
-            echo "No changesets found - skipping snapshot publish"
-          else
+          if [ "$GEN1_COUNT" -ne 0 ]; then
             echo "has_changesets=true" >> $GITHUB_OUTPUT
+            echo "needs_publish=false" >> $GITHUB_OUTPUT
             echo "Found $GEN1_COUNT 1st-gen changeset(s)"
+            exit 0
+          fi
+
+          echo "has_changesets=false" >> $GITHUB_OUTPUT
+
+          # Mirror the publish job's git-tag guard here so the npm-publish environment
+          # only parks for reviewer approval when there's genuinely a new release to
+          # ship. The environment gate fires before the publish job's first step runs,
+          # so an in-step guard can't stop the approval prompt - any changeset-less push
+          # to 1st-gen/** would otherwise ping reviewers for a "release" that just no-ops.
+          RELEASED_VERSION=$(node -p "require('./1st-gen/packages/button/package.json').version")
+          if git rev-parse "gen1-$RELEASED_VERSION" >/dev/null 2>&1; then
+            echo "needs_publish=false" >> $GITHUB_OUTPUT
+            echo "gen1-$RELEASED_VERSION already released - no publish approval needed"
+          else
+            echo "needs_publish=true" >> $GITHUB_OUTPUT
+            echo "gen1-$RELEASED_VERSION not yet released - publish approval will be requested"
           fi
 
   # Throwaway snapshot publish under `next`/`snapshot-test`. Manual dispatch only - not
@@ -253,7 +271,8 @@ jobs:
     needs: check-changesets
     if: >-
       (github.event_name == 'push' || github.event_name == 'workflow_dispatch') &&
-      needs.check-changesets.outputs.has_changesets == 'false'
+      needs.check-changesets.outputs.has_changesets == 'false' &&
+      needs.check-changesets.outputs.needs_publish == 'true'
     runs-on: ubuntu-latest
     environment: npm-publish
     permissions:
