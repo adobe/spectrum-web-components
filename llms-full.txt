@@ -1,6 +1,6 @@
 # Spectrum Web Components - Spectrum 1 Full API Reference
 
-> Generated 2026-09-01. For the link index see [llms.txt](https://opensource.adobe.com/spectrum-web-components/llms.txt).
+> Generated 2026-09-04. For the link index see [llms.txt](https://opensource.adobe.com/spectrum-web-components/llms.txt).
 
 All public `sp-*` components with their full attribute, slot, event, and CSS
 custom property tables. Useful when you want the entire API in one context window.
@@ -369,6 +369,8 @@ import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
 
 | Name             | Type                                                                                                                                                                                                                                         | Default     | Description                                                                                                    |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- | -------------------------------------------------------------------------------------------------------------- |
+| `dir`            |                                                                                                                                                                                                                                              | -           |                                                                                                                |
+| `lang`           |                                                                                                                                                                                                                                              | -           |                                                                                                                |
 | `value`          | `string \| undefined`                                                                                                                                                                                                                        | `undefined` |                                                                                                                |
 | `isLastOfType`   | `boolean`                                                                                                                                                                                                                                    | `false`     |                                                                                                                |
 | `download`       | `string \| undefined`                                                                                                                                                                                                                        | -           | Causes the browser to treat the linked URL as a download.                                                      |

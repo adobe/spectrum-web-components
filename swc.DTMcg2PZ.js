@@ -21,4 +21,4 @@ import{t as r}from"./swc.Chuw36y7.js";const t=({width:t=24,height:l=24,hidden:i=
       fill="currentColor"
     />
   </svg>`;export{t as I};
-//# sourceMappingURL=swc.BD8vM12K.js.map
+//# sourceMappingURL=swc.Bk7zmFfb.js.map
