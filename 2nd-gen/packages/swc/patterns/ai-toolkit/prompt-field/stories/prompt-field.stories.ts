@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+import type { PropertyValues } from 'lit';
 import { html, LitElement, nothing } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
@@ -54,6 +55,7 @@ function renderPromptField(
       loader=${storyArgs.loader ?? 'aiLogo'}
       ?disabled=${storyArgs.disabled ?? false}
       ?generating=${storyArgs.generating ?? false}
+      ?animate-loader=${storyArgs['animate-loader'] ?? false}
       accessible-label=${storyArgs['accessible-label'] ?? ''}
       send-label=${storyArgs['send-label'] ?? 'Send'}
       stop-label=${storyArgs['stop-label'] ?? 'Stop generating'}
@@ -108,6 +110,11 @@ export default meta;
 // ────────────────────
 
 export const Playground: Story = {
+  render: (storyArgs) => html`
+    <swc-prompt-field-behavior-demo
+      .storyArgs=${storyArgs}
+    ></swc-prompt-field-behavior-demo>
+  `,
   args: {
     label: 'Prompt',
     placeholder: defaultPlaceholder,
@@ -457,20 +464,47 @@ function fileBadgeLabel(fileName: string): string | undefined {
   return extension ? extension.toUpperCase() : undefined;
 }
 
+function filesToAttachments(files: File[]): PromptFieldBehaviorAttachment[] {
+  return files.map((file, index) => {
+    const isImage =
+      file.type.startsWith('image/') ||
+      /\.(png|jpe?g|gif|webp|bmp|svg|avif)$/i.test(file.name);
+    return {
+      id: `${crypto.randomUUID()}-${index}`,
+      fileName: file.name || 'Attachment',
+      sizeLabel: `${Math.max(1, Math.round(file.size / 1024))} KB`,
+      thumbnailUrl: isImage ? URL.createObjectURL(file) : undefined,
+      badgeLabel: isImage ? undefined : fileBadgeLabel(file.name),
+    } satisfies PromptFieldBehaviorAttachment;
+  });
+}
+
 @customElement('swc-prompt-field-behavior-demo')
 class PromptFieldBehaviorDemo extends LitElement {
+  @property({ attribute: false })
+  public storyArgs?: PromptFieldStoryArgs;
+
   @state()
   private value = 'Summarize the API changes in this branch.';
 
   @state()
   private attachments: PromptFieldBehaviorAttachment[] = [];
 
-  @state()
-  private readout =
-    'Type, submit, add an attachment, or dismiss an attachment to inspect prompt-field integration.';
-
   protected override createRenderRoot(): this {
     return this;
+  }
+
+  protected override willUpdate(changedProperties: PropertyValues<this>): void {
+    if (!changedProperties.has('storyArgs')) {
+      return;
+    }
+
+    const previousArgs = changedProperties.get('storyArgs') as
+      | PromptFieldStoryArgs
+      | undefined;
+    if (this.storyArgs?.value !== previousArgs?.value) {
+      this.value = this.storyArgs?.value ?? '';
+    }
   }
 
   public override disconnectedCallback(): void {
@@ -485,11 +519,9 @@ class PromptFieldBehaviorDemo extends LitElement {
   private _handleInput(event: Event): void {
     const { value } = (event as CustomEvent<{ value: string }>).detail;
     this.value = value;
-    this.readout = `Last swc-prompt-field-input: detail.value = "${value}"`;
   }
 
-  private _handleSubmit(event: Event): void {
-    const { value } = (event as CustomEvent<{ value: string }>).detail;
+  private _handleSubmit(): void {
     for (const attachment of this.attachments) {
       if (attachment.thumbnailUrl) {
         URL.revokeObjectURL(attachment.thumbnailUrl);
@@ -497,15 +529,12 @@ class PromptFieldBehaviorDemo extends LitElement {
     }
     this.value = '';
     this.attachments = [];
-    this.readout = `Last swc-prompt-field-submit: detail.value = "${value}" and the consumer cleared the composer.`;
   }
 
   private _handleUploadClick(event: Event): void {
     event.preventDefault();
     const input = this.querySelector<HTMLInputElement>('[data-file-input]');
     input?.click();
-    this.readout =
-      'Last swc-prompt-field-upload-click: the consumer intercepted the event and opened an external file input.';
   }
 
   private _handleFileChange(event: Event): void {
@@ -515,22 +544,14 @@ class PromptFieldBehaviorDemo extends LitElement {
       return;
     }
 
-    const nextAttachments = files.map((file, index) => {
-      const isImage =
-        file.type.startsWith('image/') ||
-        /\.(png|jpe?g|gif|webp|bmp|svg|avif)$/i.test(file.name);
-      return {
-        id: `${crypto.randomUUID()}-${index}`,
-        fileName: file.name || 'Attachment',
-        sizeLabel: `${Math.max(1, Math.round(file.size / 1024))} KB`,
-        thumbnailUrl: isImage ? URL.createObjectURL(file) : undefined,
-        badgeLabel: isImage ? undefined : fileBadgeLabel(file.name),
-      } satisfies PromptFieldBehaviorAttachment;
-    });
-
+    const nextAttachments = filesToAttachments(files);
     this.attachments = [...this.attachments, ...nextAttachments];
-    this.readout = `External picker selected ${files.length} file${files.length === 1 ? '' : 's'} and the consumer slotted media upload attachments into the prompt.`;
     input.value = '';
+  }
+
+  private _handleDrop(event: Event): void {
+    const { files } = (event as CustomEvent<{ files: File[] }>).detail;
+    this.attachments = [...this.attachments, ...filesToAttachments(files)];
   }
 
   private _handleAttachmentDismiss(event: Event): void {
@@ -548,73 +569,69 @@ class PromptFieldBehaviorDemo extends LitElement {
     this.attachments = this.attachments.filter(
       (item) => item.id !== attachmentId
     );
-    this.readout =
-      'Last swc-upload-attachment-dismiss: the consumer removed the slotted attachment.';
   }
 
   protected override render() {
+    const storyArgs: PromptFieldStoryArgs = {
+      ...this.storyArgs,
+      value: this.value,
+    };
+    const attachmentSlots = html`
+      ${this.attachments.map(
+        (attachment) => html`
+          <swc-upload-attachment
+            slot="attachment"
+            type="media"
+            dismissible
+            accessible-label=${`${attachment.fileName}, ${attachment.sizeLabel}`}
+            dismiss-label=${`Remove ${attachment.fileName}`}
+            data-attachment-id=${attachment.id}
+          >
+            ${attachment.thumbnailUrl
+              ? html`
+                  <img
+                    slot="thumbnail"
+                    src=${attachment.thumbnailUrl}
+                    alt=${attachment.fileName}
+                    style="inline-size:100%;block-size:100%;object-fit:cover;"
+                  />
+                `
+              : html`
+                  <div
+                    slot="thumbnail"
+                    role="img"
+                    aria-label=${attachment.fileName}
+                    style="inline-size:100%;block-size:100%;background:#f3f3f3;"
+                  ></div>
+                `}
+            ${attachment.badgeLabel
+              ? html`
+                  <span slot="badge">${attachment.badgeLabel}</span>
+                `
+              : nothing}
+          </swc-upload-attachment>
+        `
+      )}
+      ${legalDisclaimerSlot}
+    `;
+
     return html`
       <div
-        style="display:flex;flex-direction:column;gap:24px;max-inline-size:640px;"
+        style="max-inline-size:640px;"
+        @swc-prompt-field-input=${this._handleInput}
+        @swc-prompt-field-submit=${this._handleSubmit}
+        @swc-prompt-field-upload-click=${this._handleUploadClick}
+        @swc-prompt-field-drop=${this._handleDrop}
+        @swc-upload-attachment-dismiss=${this._handleAttachmentDismiss}
       >
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <swc-prompt-field
-            label="Prompt"
-            .value=${this.value}
-            @swc-prompt-field-input=${this._handleInput}
-            @swc-prompt-field-submit=${this._handleSubmit}
-            @swc-prompt-field-upload-click=${this._handleUploadClick}
-            @swc-upload-attachment-dismiss=${this._handleAttachmentDismiss}
-          >
-            ${this.attachments.map(
-              (attachment) => html`
-                <swc-upload-attachment
-                  slot="attachment"
-                  type="media"
-                  dismissible
-                  data-attachment-id=${attachment.id}
-                >
-                  ${attachment.thumbnailUrl
-                    ? html`
-                        <img
-                          slot="thumbnail"
-                          src=${attachment.thumbnailUrl}
-                          alt=${attachment.fileName}
-                          style="inline-size:100%;block-size:100%;object-fit:cover;"
-                        />
-                      `
-                    : html`
-                        <div
-                          slot="thumbnail"
-                          role="img"
-                          aria-label=${attachment.fileName}
-                          style="inline-size:100%;block-size:100%;background:#f3f3f3;"
-                        ></div>
-                      `}
-                  ${attachment.badgeLabel
-                    ? html`
-                        <span slot="badge">${attachment.badgeLabel}</span>
-                      `
-                    : nothing}
-                </swc-upload-attachment>
-              `
-            )}
-            ${legalDisclaimerSlot}
-          </swc-prompt-field>
-          <input
-            data-file-input
-            type="file"
-            multiple
-            hidden
-            @change=${this._handleFileChange}
-          />
-          <span class="swc-Detail swc-Detail--sizeS">
-            Input, submit, upload trigger, and external attachment handling
-          </span>
-        </div>
-        <p class="swc-Detail swc-Detail--sizeS" style="margin:0;">
-          ${this.readout}
-        </p>
+        ${renderPromptField(storyArgs, attachmentSlots)}
+        <input
+          data-file-input
+          type="file"
+          multiple
+          hidden
+          @change=${this._handleFileChange}
+        />
       </div>
     `;
   }
@@ -625,16 +642,51 @@ export const HandlingEvents: Story = {
   render: () => html`
     <swc-prompt-field-behavior-demo></swc-prompt-field-behavior-demo>
   `,
-  parameters: {
-    docs: {
-      source: {
-        code: false,
-      },
-    },
-  },
   tags: ['behaviors'],
 };
 HandlingEvents.storyName = 'Handling events';
+
+export const AnimateLoader: Story = {
+  render: () => html`
+    <div style="display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          generating
+          label="Prompt"
+          value="Summarize the API changes in this branch."
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          generating, without animate-loader: status loader stays static
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          generating
+          animate-loader
+          label="Prompt"
+          value="Summarize the API changes in this branch."
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          generating, with animate-loader: status loader animates
+        </span>
+      </div>
+    </div>
+  `,
+  tags: ['behaviors'],
+};
+AnimateLoader.storyName = 'Animate loader';
+
+export const DragAndDrop: Story = {
+  render: () => html`
+    <swc-prompt-field-behavior-demo></swc-prompt-field-behavior-demo>
+  `,
+  tags: ['behaviors'],
+};
+DragAndDrop.storyName = 'Drag and drop';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORY

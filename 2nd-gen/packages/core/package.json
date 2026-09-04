@@ -1,6 +1,6 @@
 {
   "name": "@adobe/spectrum-wc-core",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "description": "Abstract base classes for Spectrum Web Components",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -146,6 +146,10 @@
     "./controllers/color-controller.js": {
       "types": "./dist/controllers/color-controller/index.d.ts",
       "import": "./dist/controllers/color-controller/index.js"
+    },
+    "./controllers/drag-and-drop-controller.js": {
+      "types": "./dist/controllers/drag-and-drop-controller/index.d.ts",
+      "import": "./dist/controllers/drag-and-drop-controller/index.js"
     },
     "./controllers/focus-group-navigation-controller.js": {
       "types": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts",
@@ -382,6 +386,9 @@
       ],
       "controllers/color-controller.js": [
         "dist/controllers/color-controller/index.d.ts"
+      ],
+      "controllers/drag-and-drop-controller.js": [
+        "dist/controllers/drag-and-drop-controller/index.d.ts"
       ],
       "controllers/focus-group-navigation-controller/focus-group-navigation-controller.js": [
         "dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts"

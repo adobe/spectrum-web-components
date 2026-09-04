@@ -37,6 +37,7 @@ import styles from './system-message.css';
  * @slot feedback - Positive / negative feedback controls
  * @slot sources - Collapsible list of sources
  * @slot suggestions - Follow-up suggestion chips (rendered outside the main body)
+ * @since 2.0.0-beta.3
  */
 export class SystemMessage extends SpectrumElement {
   public static override get styles(): CSSResultArray {

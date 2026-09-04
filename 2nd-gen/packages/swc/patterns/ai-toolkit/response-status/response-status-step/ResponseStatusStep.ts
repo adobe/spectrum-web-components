@@ -57,6 +57,7 @@ export type ResponseStatusStepStatus =
  * @fires swc-response-status-step-active-label-change - Dispatched when this
  * step's label text changes while `status="active"`, so the parent can keep
  * its header label in sync with streamed text. Detail: `{ label: string }`
+ * @since 2.0.0-beta.3
  */
 export class ResponseStatusStep extends SpectrumElement {
   private readonly _toggleId = uniqueId('swc-response-status-step-toggle');
@@ -248,7 +249,8 @@ export class ResponseStatusStep extends SpectrumElement {
     this._emit('swc-response-status-step-open-change', { open: this.open });
   }
 
-  private _renderIcon(): TemplateResult {
+  // `choose` is typed `V | undefined` even with a default branch; it never resolves to `undefined` at runtime, and the template call site tolerates it either way.
+  private _renderIcon(): TemplateResult | undefined {
     return choose(
       this._resolvedStatus,
       [
