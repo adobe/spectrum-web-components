@@ -1,0 +1,186 @@
+name: Publish Packages (gen2)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - '2nd-gen/**'
+
+# Scoped to this workflow so a gen1 run and a gen2 run never block on each other -
+# both used to share the same `publish-${{ github.ref }}` group string.
+concurrency:
+  group: publish-gen2-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check-changesets:
+    runs-on: ubuntu-latest
+    # push is already scoped to main by the trigger above; this only blocks a
+    # workflow_dispatch fired from any other branch (dispatch has no branch filter
+    # of its own, so it's the only event that needs this guard).
+    if: github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main'
+    outputs:
+      has_changesets: ${{ steps.check.outputs.has_changesets }}
+      needs_publish: ${{ steps.check.outputs.needs_publish }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # need tags so the needs_publish idempotency check below can see them
+
+      - name: Check for gen2 changesets
+        id: check
+        run: |
+          # Independent of 1st-gen in every trigger - this workflow never reads
+          # 1st-gen/.changeset/.
+          COUNT=$(find 2nd-gen/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
+
+          if [ "$COUNT" -ne 0 ]; then
+            echo "has_changesets=true" >> $GITHUB_OUTPUT
+            echo "needs_publish=false" >> $GITHUB_OUTPUT
+            echo "Found $COUNT 2nd-gen changeset(s)"
+            exit 0
+          fi
+
+          echo "has_changesets=false" >> $GITHUB_OUTPUT
+
+          # Mirror the publish job's git-tag guard here so the npm-publish environment
+          # only parks for reviewer approval when there's genuinely a new release to
+          # ship. The environment gate fires before the publish job's first step runs,
+          # so an in-step guard can't stop the approval prompt - any changeset-less push
+          # to 2nd-gen/** would otherwise ping reviewers for a "release" that just no-ops.
+          RELEASED_VERSION=$(node -p "require('./2nd-gen/packages/swc/package.json').version")
+          if git rev-parse "gen2-$RELEASED_VERSION" >/dev/null 2>&1; then
+            echo "needs_publish=false" >> $GITHUB_OUTPUT
+            echo "gen2-$RELEASED_VERSION already released - no publish approval needed"
+          else
+            echo "needs_publish=true" >> $GITHUB_OUTPUT
+            echo "gen2-$RELEASED_VERSION not yet released - publish approval will be requested"
+          fi
+
+  # No throwaway snapshot job here (unlike gen1): once this job enters persistent pre
+  # mode, changesets disallows `--snapshot`, and a non-snapshot version call would
+  # collide with the real release's version. Test pending changes via the real release
+  # itself (published under `latest`) once the Version PR merges.
+  #
+  # Version-then-PR for the persistent pre-release version format (2.0.0-beta.N). No
+  # npm-publish environment gate here - nothing is published yet, just a bot-authored PR
+  # a human reviews and merges. Uses peter-evans/create-pull-request instead of
+  # changesets/action's built-in PR management, since that derives its branch name only
+  # from the base branch (`changeset-release/main`) - gen1 and gen2 would collide on the
+  # same branch.
+  version-pr:
+    needs: check-changesets
+    if: >-
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch') &&
+      needs.check-changesets.outputs.has_changesets == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # commits the Version PR branch
+      pull-requests: write # opens/updates the Version PR
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup job and install dependencies
+        uses: ./.github/actions/setup-job
+
+      - name: Version gen2 packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ ! -f 2nd-gen/.changeset/pre.json ]; then
+            (cd 2nd-gen && yarn changeset pre enter beta)
+          fi
+          (cd 2nd-gen && yarn changeset version)
+          yarn install --refresh-lockfile
+
+      - name: Open or update the gen2 Version PR
+        uses: peter-evans/create-pull-request@v8
+        with:
+          commit-message: 'chore: release gen2 packages #gen2-publish'
+          title: 'chore: release gen2 packages (beta) #gen2-publish'
+          branch: changeset-release/2nd-gen
+          base: main
+          delete-branch: true
+          add-paths: |
+            2nd-gen
+            yarn.lock
+
+      - name: Version PR summary
+        run: |
+          echo "## Publish summary (gen2)" >> $GITHUB_STEP_SUMMARY
+          echo "📝 Version PR opened/updated at \`changeset-release/2nd-gen\` - nothing published yet" >> $GITHUB_STEP_SUMMARY
+
+  # Real publish, once the Version PR above has merged (no pending changesets left).
+  # Only this job sits behind the npm-publish environment's required-reviewer approval,
+  # since it's the only one that actually publishes to npm.
+  publish:
+    needs: check-changesets
+    if: >-
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch') &&
+      needs.check-changesets.outputs.has_changesets == 'false' &&
+      needs.check-changesets.outputs.needs_publish == 'true'
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    permissions:
+      contents: write # pushes the release git tag
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup job and install dependencies
+        uses: ./.github/actions/setup-job
+
+      - name: Verify NPM authentication
+        id: npm-auth
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+        run: npm whoami --registry=https://registry.npmjs.org
+
+      # The git-tag-existence guard is what makes this safe to re-run on every subsequent
+      # ordinary push once a release has gone out - mirrors gen1's guard.
+      - name: Publish gen2 packages
+        if: steps.npm-auth.outcome == 'success'
+        id: publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+        run: |
+          RELEASED_VERSION=$(node -p "require('./2nd-gen/packages/swc/package.json').version")
+          if git rev-parse "gen2-$RELEASED_VERSION" >/dev/null 2>&1; then
+            echo "gen2-$RELEASED_VERSION already released - nothing to do."
+            echo "published=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          yarn install --refresh-lockfile
+          yarn build
+          (cd 2nd-gen && yarn changeset publish --no-git-tag --tag latest)
+          git config user.name "github-actions-bot"
+          git config user.email "support+actions@github.com"
+          node ./scripts/create-git-tag.js gen2
+          echo "published=true" >> $GITHUB_OUTPUT
+
+      - name: Publish summary
+        if: always()
+        env:
+          AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
+          PUBLISHED: ${{ steps.publish.outputs.published }}
+        run: |
+          echo "## Publish summary (gen2)" >> $GITHUB_STEP_SUMMARY
+          if [ "$PUBLISHED" == "false" ]; then
+            echo "ℹ️ Current version already published - nothing new to ship" >> $GITHUB_STEP_SUMMARY
+          elif [ "$AUTH_OUTCOME" == "success" ]; then
+            echo "✅ Publish step ran - check the changeset publish output above for what shipped" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
+          fi

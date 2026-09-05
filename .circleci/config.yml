@@ -41,7 +41,7 @@ jobs:
               else
                 # Paths that don't affect either gen: docs, AI rules, changesets,
                 # linter config, scripts, root-level markdown, and LICENSE.
-                DOCS_PATTERN='^(CONTRIBUTOR-DOCS/|\.ai/|\.changeset/|linters/|scripts/|[^/]+\.md$|LICENSE$)'
+                DOCS_PATTERN="^(CONTRIBUTOR-DOCS/|\.ai/|(1st-gen|2nd-gen)/\.changeset/|linters/|scripts/|[^/]+\.md$|LICENSE$)"
 
                 # A gen is affected if a changed file is outside the other gen
                 # and isn't docs. Root files (package.json, yarn.lock) match

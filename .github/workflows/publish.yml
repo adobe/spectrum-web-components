@@ -1,77 +1,88 @@
-name: Publish Packages
+name: Publish Packages (gen1)
 
 on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'NPM dist-tag (e.g., latest, beta, snapshot)'
+        description: 'NPM dist-tag for a throwaway gen1 snapshot'
         required: false
         default: 'next'
-  pull_request:
-    types: [labeled, synchronize]
+        type: choice
+        options:
+          - next
+          - snapshot-test
   push:
     branches:
       - main
+    paths:
+      - '1st-gen/**'
 
+# Scoped to this workflow so a gen1 run and a gen2 run never block on each other -
+# both used to share the same `publish-${{ github.ref }}` group string.
 concurrency:
-  group: publish-${{ github.ref }}
+  group: publish-gen1-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
   check-changesets:
     runs-on: ubuntu-latest
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      github.event_name == 'push' ||
-      (github.event_name == 'pull_request' &&
-      contains(github.event.pull_request.labels.*.name, 'snapshot-release'))
+    # push is already scoped to main by the trigger above; this only blocks a
+    # workflow_dispatch fired from any other branch (dispatch has no branch filter
+    # of its own, so it's the only event that needs this guard).
+    if: github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main'
     outputs:
       has_changesets: ${{ steps.check.outputs.has_changesets }}
-      has_1st_gen_changesets: ${{ steps.check.outputs.has_1st_gen_changesets }}
+      needs_publish: ${{ steps.check.outputs.needs_publish }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # need tags so the needs_publish idempotency check below can see them
 
       - name: Check for changesets
         id: check
         run: |
-          if [ -z "$(ls -A .changeset/*.md 2>/dev/null | grep -v README)" ]; then
-            echo "has_changesets=false" >> $GITHUB_OUTPUT
-            echo "has_1st_gen_changesets=false" >> $GITHUB_OUTPUT
-            echo "No changesets found - skipping publish"
-          else
+          # This workflow is 1st-gen only, always - independent of 2nd-gen in every
+          # trigger. 2nd-gen has its own changesets setup in 2nd-gen/.changeset/ and
+          # its own workflow, publish-gen2.yml.
+          GEN1_COUNT=$(find 1st-gen/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
+
+          if [ "$GEN1_COUNT" -ne 0 ]; then
             echo "has_changesets=true" >> $GITHUB_OUTPUT
-            CHANGESET_COUNT=$(ls -1 .changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
-            echo "Found $CHANGESET_COUNT changesets"
-
-            # Check if any changeset mentions 1st-gen packages
-            # 1st-gen packages are @spectrum-web-components/*
-            HAS_1ST_GEN=false
-            for file in .changeset/*.md; do
-              if [ "$(basename "$file")" != "README.md" ]; then
-                if grep -qP "@spectrum-web-components/[a-z-]+" "$file"; then
-                  HAS_1ST_GEN=true
-                  break
-                fi
-              fi
-            done
-
-            echo "has_1st_gen_changesets=$HAS_1ST_GEN" >> $GITHUB_OUTPUT
-            if [ "$HAS_1ST_GEN" = "true" ]; then
-              echo "Found 1st-gen changesets - React wrappers will be built and published"
-            else
-              echo "No 1st-gen changesets found - React wrappers will be skipped"
-            fi
+            echo "needs_publish=false" >> $GITHUB_OUTPUT
+            echo "Found $GEN1_COUNT 1st-gen changeset(s)"
+            exit 0
           fi
 
-  publish:
+          echo "has_changesets=false" >> $GITHUB_OUTPUT
+
+          # Mirror the publish job's git-tag guard here so the npm-publish environment
+          # only parks for reviewer approval when there's genuinely a new release to
+          # ship. The environment gate fires before the publish job's first step runs,
+          # so an in-step guard can't stop the approval prompt - any changeset-less push
+          # to 1st-gen/** would otherwise ping reviewers for a "release" that just no-ops.
+          RELEASED_VERSION=$(node -p "require('./1st-gen/packages/button/package.json').version")
+          if git rev-parse "gen1-$RELEASED_VERSION" >/dev/null 2>&1; then
+            echo "needs_publish=false" >> $GITHUB_OUTPUT
+            echo "gen1-$RELEASED_VERSION already released - no publish approval needed"
+          else
+            echo "needs_publish=true" >> $GITHUB_OUTPUT
+            echo "gen1-$RELEASED_VERSION not yet released - publish approval will be requested"
+          fi
+
+  # Throwaway snapshot publish under `next`/`snapshot-test`. Manual dispatch only - not
+  # triggered by push, so it doesn't run on every ordinary push with pending changesets.
+  # Never touches main, commits, or opens a PR. Runs alongside the `version-pr`/`publish`
+  # jobs below without conflicting (separate jobs/runners).
+  snapshot:
     needs: check-changesets
-    if: needs.check-changesets.outputs.has_changesets == 'true'
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      needs.check-changesets.outputs.has_changesets == 'true'
     runs-on: ubuntu-latest
     environment: npm-publish
     permissions:
-      id-token: write # Required for OIDC trusted publishing (1st-gen )
-      contents: write # Required for git push
+      id-token: write # Required for OIDC trusted publishing (1st-gen)
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
@@ -83,45 +94,17 @@ jobs:
       - name: Setup job and install dependencies
         uses: ./.github/actions/setup-job
 
-      - name: Set Git identity
-        run: |
-          git config --global user.email "support+actions@github.com"
-          git config --global user.name "github-actions-bot"
-
-      - name: Determine release tag
+      - name: Determine snapshot tag
         id: extract-tag
         env:
-          EVENT_NAME: ${{ github.event_name }}
           INPUT_TAG: ${{ github.event.inputs.tag }}
         run: |
-          if [ "$EVENT_NAME" == "pull_request" ]; then
-            # PRs with the snapshot-release label always use snapshot-test
-            WORKFLOW_TAG="snapshot-test"
-          elif [ -n "$INPUT_TAG" ]; then
-            # Use the tag provided via workflow_dispatch input
-            WORKFLOW_TAG="$INPUT_TAG"
-          else
-            # Default tag for push-triggered runs
-            WORKFLOW_TAG="next"
-          fi
-
+          WORKFLOW_TAG="${INPUT_TAG:-next}"
           echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
           echo "Using npm tag: $WORKFLOW_TAG"
 
-      - name: Validate release tag
-        env:
-          TAG: ${{ steps.extract-tag.outputs.tag }}
-          GIT_REF: ${{ github.ref }}
-        run: |
-          if [ "$TAG" == "latest" ] && [ "$GIT_REF" != "refs/heads/main" ]; then
-            echo "ERROR: Cannot publish 'latest' from non-main branch"
-            exit 1
-          fi
-
-      - name: Verify OIDC token and configure NPM authentication
+      - name: Verify OIDC token
         id: npm-auth
-        env:
-          NPM_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
         run: |
           if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
             echo "✓ OIDC token is available for 1st-gen trusted publishing"
@@ -130,82 +113,50 @@ jobs:
             exit 1
           fi
 
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-          echo "✓ NPM authentication configured for 2nd-gen (Adobe namespace)"
-
-      - name: Build all packages
-        run: yarn build
-
       - name: Generate custom elements manifests
         run: yarn workspace @spectrum-web-components/1st-gen custom-element-json
 
       - name: Confirm build artifacts
         run: yarn workspace @spectrum-web-components/1st-gen build:confirm
 
-      - name: Version packages
+      - name: Version gen1 packages (snapshot)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG: ${{ steps.extract-tag.outputs.tag }}
-        run: |
-          if [ "$TAG" == "latest" ]; then
-            yarn workspace @spectrum-web-components/1st-gen changelog:global
-            yarn changeset version
-          else
-            yarn changeset version --snapshot $TAG
-          fi
+        run: (cd 1st-gen && yarn changeset version --snapshot ${{ steps.extract-tag.outputs.tag }})
 
       - name: Capture released versions
         id: versions
         run: |
-          CORE_VERSION=$(node -p "require('./2nd-gen/packages/core/package.json').version")
           BUNDLE_VERSION=$(node -p "require('./1st-gen/tools/bundle/package.json').version")
-          SWC_VERSION=$(node -p "require('./2nd-gen/packages/swc/package.json').version")
-          echo "core=$CORE_VERSION" >> $GITHUB_OUTPUT
           echo "bundle=$BUNDLE_VERSION" >> $GITHUB_OUTPUT
-          echo "swc=$SWC_VERSION" >> $GITHUB_OUTPUT
 
       - name: Refresh lockfile and rebuild
         run: |
           yarn install --refresh-lockfile
           yarn build
 
-      - name: Publish all packages
+      - name: Publish gen1 packages
         if: steps.npm-auth.outcome == 'success'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
-          TAG: ${{ steps.extract-tag.outputs.tag }}
-        run: |
-          # Changeset publishes all packages (1st-gen, core, and 2nd-gen)
-          # npm CLI automatically uses:
-          # - OIDC trusted publishing for 1st-gen packages (configured on npmjs.com)
-          # - Token authentication for 2nd-gen (from .npmrc)
-          if [ "$TAG" == "latest" ]; then
-            yarn changeset publish --no-git-tag
-          else
-            yarn changeset publish --no-git-tag --tag $TAG
-          fi
+        run: (cd 1st-gen && yarn changeset publish --no-git-tag --tag ${{ steps.extract-tag.outputs.tag }})
 
+      # Gated only by this job running at all (needs.check-changesets.outputs.has_changesets
+      # == 'true' at the job level) - the old workflow's separate has_1st_gen_changesets
+      # output was always identical to has_changesets for this gen1-only workflow, so no
+      # extra conditional is needed here.
       - name: Build React wrappers
-        if: needs.check-changesets.outputs.has_1st_gen_changesets == 'true'
         run: yarn workspace @spectrum-web-components/1st-gen build:react
 
       - name: Publish React wrappers
-        if: needs.check-changesets.outputs.has_1st_gen_changesets == 'true'
         env:
           TAG: ${{ steps.extract-tag.outputs.tag }}
         run: |
-          if [ "$TAG" == "latest" ]; then
-            PUBLISH_CMD="npm publish --access public"
-          else
-            PUBLISH_CMD="npm publish --tag $TAG --access public"
-          fi
+          PUBLISH_CMD="npm publish --tag $TAG --access public"
 
-          # Retry function with exponential backoff
           retry_publish() {
             local dir=$1
             local max_attempts=3
             local attempt=1
-            
+
             while [ $attempt -le $max_attempts ]; do
               echo "Publishing $dir (attempt $attempt/$max_attempts)..."
               if (cd "$dir" && $PUBLISH_CMD); then
@@ -235,55 +186,24 @@ jobs:
         env:
           TAG: ${{ steps.extract-tag.outputs.tag }}
           EVENT_NAME: ${{ github.event_name }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          PR_TITLE: ${{ github.event.pull_request.title }}
-          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
-          HEAD_REF: ${{ github.head_ref }}
-          BASE_REF: ${{ github.base_ref }}
-          REF_NAME: ${{ github.ref_name }}
           ACTOR: ${{ github.actor }}
-          COMMIT_SHA: ${{ github.sha }}
           AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
-          CORE_VERSION: ${{ steps.versions.outputs.core }}
           BUNDLE_VERSION: ${{ steps.versions.outputs.bundle }}
-          SWC_VERSION: ${{ steps.versions.outputs.swc }}
         run: |
-          echo "## Publish summary" >> $GITHUB_STEP_SUMMARY
+          echo "## Publish summary (snapshot)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Trigger** | \`${EVENT_NAME}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Actor** | @${ACTOR} |" >> $GITHUB_STEP_SUMMARY
 
-          if [ "$EVENT_NAME" == "pull_request" ]; then
-            echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
-            echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
-            echo "| **Trigger** | Pull request |" >> $GITHUB_STEP_SUMMARY
-            echo "| **PR** | #${PR_NUMBER} — ${PR_TITLE} |" >> $GITHUB_STEP_SUMMARY
-            echo "| **Branch** | \`${HEAD_REF}\` → \`${BASE_REF}\` |" >> $GITHUB_STEP_SUMMARY
-            echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
-            echo "| **Author** | @${PR_AUTHOR} |" >> $GITHUB_STEP_SUMMARY
-          elif [ "$EVENT_NAME" == "workflow_dispatch" ]; then
-            echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
-            echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
-            echo "| **Trigger** | Manual dispatch |" >> $GITHUB_STEP_SUMMARY
-            echo "| **Branch** | \`${REF_NAME}\` |" >> $GITHUB_STEP_SUMMARY
-            echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
-            echo "| **Actor** | @${ACTOR} |" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
-            echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
-            echo "| **Trigger** | Push |" >> $GITHUB_STEP_SUMMARY
-            echo "| **Branch** | \`${REF_NAME}\` |" >> $GITHUB_STEP_SUMMARY
-            echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
-            echo "| **Commit** | \`${COMMIT_SHA}\` |" >> $GITHUB_STEP_SUMMARY
-          fi
-
-          if [ -n "$CORE_VERSION" ] || [ -n "$BUNDLE_VERSION" ] || [ -n "$SWC_VERSION" ]; then
+          if [ -n "$BUNDLE_VERSION" ]; then
             echo "## Versions released" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "| Generation | Package | Version |" >> $GITHUB_STEP_SUMMARY
             echo "|------------|---------|---------|" >> $GITHUB_STEP_SUMMARY
-            [ -n "$CORE_VERSION" ]   && echo "| Core    | \`@adobe/spectrum-wc-core\`   | \`${CORE_VERSION}\`   |" >> $GITHUB_STEP_SUMMARY
-            [ -n "$BUNDLE_VERSION" ] && echo "| 1st gen | \`@spectrum-web-components/bundle\` | \`${BUNDLE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
-            [ -n "$SWC_VERSION" ]    && echo "| 2nd gen | \`@adobe/spectrum-wc\`               | \`${SWC_VERSION}\`    |" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| gen1 | \`@spectrum-web-components/bundle\` | \`${BUNDLE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
           fi
 
           if [ "$AUTH_OUTCOME" == "success" ]; then
@@ -292,14 +212,152 @@ jobs:
             echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
           fi
 
-      - name: Commit and push changes
-        if: steps.extract-tag.outputs.tag == 'latest'
-        run: |
-          git add .
-          git commit --no-verify -m "chore: release packages #publish" || echo "No changes to commit"
-          git pull --rebase origin main
-          git push
+  # Version-then-PR. No npm-publish environment gate here - nothing is published yet,
+  # just a bot-authored PR a human reviews and merges. Uses peter-evans/create-pull-request
+  # instead of changesets/action's built-in PR management, since that derives its branch
+  # name only from the base branch (`changeset-release/main`) - gen1 and gen2 would
+  # collide on the same branch. Accepts workflow_dispatch too, so this can be re-run by
+  # hand if a run fails, without needing an empty commit to main.
+  version-pr:
+    needs: check-changesets
+    if: >-
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch') &&
+      needs.check-changesets.outputs.has_changesets == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # commits the Version PR branch
+      pull-requests: write # opens/updates the Version PR
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Create git tag
-        if: steps.extract-tag.outputs.tag == 'latest'
-        run: node ./1st-gen/scripts/create-git-tag.js
+      - name: Setup job and install dependencies
+        uses: ./.github/actions/setup-job
+
+      - name: Version gen1 packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          yarn workspace @spectrum-web-components/1st-gen changelog:1st-gen
+          (cd 1st-gen && yarn changeset version)
+          yarn install --refresh-lockfile
+
+      - name: Open or update the gen1 Version PR
+        uses: peter-evans/create-pull-request@v8
+        with:
+          commit-message: 'chore: release gen1 packages'
+          title: 'chore: release gen1 packages'
+          branch: changeset-release/1st-gen
+          base: main
+          delete-branch: true
+          add-paths: |
+            1st-gen
+            yarn.lock
+
+      - name: Version PR summary
+        run: |
+          echo "## Publish summary (gen1)" >> $GITHUB_STEP_SUMMARY
+          echo "📝 Version PR opened/updated at \`changeset-release/1st-gen\` - nothing published yet" >> $GITHUB_STEP_SUMMARY
+
+  # Real publish, once the Version PR above has merged (no pending changesets left).
+  # Only this job sits behind the npm-publish environment's required-reviewer approval,
+  # since it's the only one that actually publishes to npm. Accepts workflow_dispatch
+  # too, so a failed publish can be retried by hand instead of needing an empty commit.
+  publish:
+    needs: check-changesets
+    if: >-
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch') &&
+      needs.check-changesets.outputs.has_changesets == 'false' &&
+      needs.check-changesets.outputs.needs_publish == 'true'
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    permissions:
+      id-token: write # Required for OIDC trusted publishing (1st-gen)
+      contents: write # pushes the release git tag
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup job and install dependencies
+        uses: ./.github/actions/setup-job
+
+      - name: Verify OIDC token
+        id: npm-auth
+        run: |
+          if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
+            echo "✓ OIDC token is available for 1st-gen trusted publishing"
+          else
+            echo "✗ OIDC token NOT available - trusted publishing will fail"
+            exit 1
+          fi
+
+      - name: Generate custom elements manifests
+        run: yarn workspace @spectrum-web-components/1st-gen custom-element-json
+
+      - name: Confirm build artifacts
+        run: yarn workspace @spectrum-web-components/1st-gen build:confirm
+
+      # The git-tag-existence guard is what makes this safe to re-run on every subsequent
+      # ordinary push once a release has gone out (changeset publish is separately
+      # idempotent for the changeset-tracked packages). Each React wrapper is also
+      # checked individually before publishing - the tag is only created after every
+      # wrapper succeeds, so without this a partial failure would leave some wrappers
+      # already published with no tag, and the next run would fail republishing them.
+      - name: Publish gen1 packages
+        id: publish
+        run: |
+          RELEASED_VERSION=$(node -p "require('./1st-gen/packages/button/package.json').version")
+          if git rev-parse "gen1-$RELEASED_VERSION" >/dev/null 2>&1; then
+            echo "gen1-$RELEASED_VERSION already released - nothing to do."
+            echo "published=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          yarn install --refresh-lockfile
+          yarn build
+          (cd 1st-gen && yarn changeset publish --no-git-tag)
+          yarn workspace @spectrum-web-components/1st-gen build:react
+          cd 1st-gen/react
+          for dir in */; do
+            pkg_name=$(node -p "require('./${dir}package.json').name")
+            if npm view "${pkg_name}@${RELEASED_VERSION}" version >/dev/null 2>&1; then
+              echo "✓ ${pkg_name}@${RELEASED_VERSION} already published, skipping"
+              continue
+            fi
+            attempt=1
+            max_attempts=3
+            until (cd "$dir" && npm publish --access public); do
+              if [ $attempt -ge $max_attempts ]; then
+                echo "✗ Failed to publish $dir after $max_attempts attempts"
+                exit 1
+              fi
+              wait_time=$((2 ** attempt))
+              echo "✗ Publish failed for $dir, retrying in ${wait_time}s..."
+              sleep $wait_time
+              attempt=$((attempt + 1))
+            done
+          done
+          cd ../..
+          git config user.name "github-actions-bot"
+          git config user.email "support+actions@github.com"
+          node ./scripts/create-git-tag.js gen1
+          echo "published=true" >> $GITHUB_OUTPUT
+
+      - name: Publish summary
+        if: always()
+        env:
+          PUBLISHED: ${{ steps.publish.outputs.published }}
+        run: |
+          echo "## Publish summary (gen1)" >> $GITHUB_STEP_SUMMARY
+          if [ "$PUBLISHED" == "true" ]; then
+            echo "✅ Published a new release" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ No pending changesets and nothing new to publish" >> $GITHUB_STEP_SUMMARY
+          fi
