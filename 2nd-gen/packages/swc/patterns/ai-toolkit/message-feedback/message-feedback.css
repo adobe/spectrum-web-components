@@ -35,7 +35,7 @@
   padding: 0;
   color: token("neutral-content-color-default");
   background: transparent;
-  border: 1px solid transparent;
+  border: token("border-width-100") solid transparent;
   border-radius: token("corner-radius-300");
   transition:
     background token("animation-duration-100") ease,

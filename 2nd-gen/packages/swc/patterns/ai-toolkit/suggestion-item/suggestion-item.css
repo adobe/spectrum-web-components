@@ -33,7 +33,7 @@
   line-height: token("line-height-font-size-100");
   color: token("neutral-content-color-default");
   background: token("gray-100");
-  border: 1px solid transparent;
+  border: token("border-width-100") solid transparent;
   border-radius: token("corner-radius-extra-large-default");
   transition: background token("animation-duration-100") token("animation-ease-in-out");
 }
@@ -62,7 +62,7 @@
 
   flex-shrink: 0;
   margin-inline-start: 14px;
-  margin-inline-end: 6px;
+  margin-inline-end: token("spacing-85");
 }
 
 .swc-SuggestionItem-label {

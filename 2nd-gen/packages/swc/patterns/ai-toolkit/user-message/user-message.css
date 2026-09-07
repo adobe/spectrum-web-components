@@ -24,15 +24,15 @@
   display: block;
   inline-size: fit-content;
   max-inline-size: 536px;
-  padding-block: var(--swc-user-message-padding-block, token("spacing-100"));
-  padding-inline: var(--swc-user-message-padding-inline, token("spacing-300"));
+  padding-block: token("spacing-100");
+  padding-inline: token("spacing-300");
   font-family: token("sans-serif-font");
   font-size: token("font-size-200");
   font-weight: token("regular-font-weight");
   line-height: token("line-height-200");
   color: token("gray-800");
   background: token("gray-50");
-  border: 1px solid transparent;
+  border: token("border-width-100") solid transparent;
   border-radius: token("corner-radius-large-default");
 }
 
@@ -47,13 +47,13 @@
   inline-size: 324px;
   min-inline-size: 212px;
   max-inline-size: 440px;
-  padding: var(--swc-user-message-card-padding, token("spacing-300"));
+  padding: token("spacing-300");
 }
 
 /* Image: shrinks to the fixed 180px inner card + 2×8px padding. */
 :host([type="media"]) {
   inline-size: fit-content;
-  padding: var(--swc-user-message-media-padding, token("spacing-100"));
+  padding: token("spacing-100");
 }
 
 .swc-UserMessage-attachment {
@@ -62,14 +62,14 @@
 }
 
 .swc-UserMessage-attachment--card {
-  gap: var(--swc-user-message-attachment-card-gap, token("spacing-300"));
+  gap: token("spacing-300");
   align-items: center;
 }
 
 /* Media inner card is fixed 180 × 180px, constrained by min/max (Figma spec). */
 .swc-UserMessage-attachment--media {
   flex-direction: column;
-  gap: var(--swc-user-message-attachment-media-gap, token("spacing-100"));
+  gap: token("spacing-100");
   inline-size: 180px;
   min-inline-size: 150px;
   max-inline-size: 210px;
@@ -97,7 +97,7 @@
   flex-shrink: 0;
   inline-size: 32px;
   block-size: 32px;
-  border: 1px solid transparent;
+  border: token("border-width-100") solid transparent;
   border-radius: token("corner-radius-75");
   object-fit: cover;
 }
@@ -109,7 +109,7 @@
   inline-size: 100%;
   min-block-size: 0;
   background: token("gray-100");
-  border: 1px solid transparent;
+  border: token("border-width-100") solid transparent;
   border-radius: token("corner-radius-200");
   overflow: hidden;
 }

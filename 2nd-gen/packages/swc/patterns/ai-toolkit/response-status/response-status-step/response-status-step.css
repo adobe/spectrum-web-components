@@ -70,7 +70,7 @@
   inline-size: 8px;
   block-size: 8px;
   margin: token("spacing-75");
-  margin-block: 6px;
+  margin-block: token("spacing-85");
   color: token("gray-500");
   transition: color token("animation-duration-200") token("animation-ease-in-out");
 }
@@ -83,7 +83,7 @@
 
 .swc-ResponseStatusStep-line {
   flex: 1 1 auto;
-  inline-size: 1px;
+  inline-size: token("border-width-100");
   min-block-size: token("spacing-100");
   margin-block-start: token("spacing-50");
   background: token("gray-300");

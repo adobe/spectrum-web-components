@@ -105,9 +105,7 @@ const SUPPORTS_FIELD_SIZING =
  * elements from `files` externally, same as the upload-click flow.
  *
  * @cssprop --swc-prompt-field-brand-color - Brand hue driving the AI treatment's ring, wash, and glow colors. Defaults to a fuchsia OKLCH value; only the hue is meaningfully used, lightness/chroma come from each layer's own derived values.
- * @cssprop --swc-prompt-field-max-block-size - Maximum block size of the textarea before internal scrolling, combined with `--swc-prompt-field-textarea-max-rows`. Defaults to `40vh`.
- * @cssprop --swc-prompt-field-textarea-min-rows - Minimum visible textarea rows; reflects the `min-rows` attribute. Defaults to 1.
- * @cssprop --swc-prompt-field-textarea-max-rows - Maximum visible textarea rows before internal scrolling; reflects the `max-rows` attribute. Defaults to 999 (effectively unbounded).
+ * @cssprop --swc-prompt-field-max-block-size - Maximum block size of the textarea before internal scrolling, combined with the `max-rows` attribute. Defaults to `40vh`.
  * @cssprop --swc-prompt-field-attachment-card-inline-size - Inline size (and min/max) of `type="card"` attachment tiles. Defaults to 240px.
  * @cssprop --swc-prompt-field-attachment-media-inline-size - Inline size of `type="media"` attachment tiles. Defaults to 68px.
  * @cssprop --swc-prompt-field-attachment-media-min-inline-size - Minimum inline size of `type="media"` attachment tiles. Defaults to 68px.
@@ -1258,10 +1256,10 @@ export class PromptField extends SpectrumElement {
                     ?disabled=${this.disabled}
                     rows=${this._normalizedMinRows}
                     style=${styleMap({
-                      '--swc-prompt-field-textarea-min-rows': String(
+                      '--_swc-prompt-field-textarea-min-rows': String(
                         this._normalizedMinRows
                       ),
-                      '--swc-prompt-field-textarea-max-rows':
+                      '--_swc-prompt-field-textarea-max-rows':
                         this._normalizedMaxRows !== undefined
                           ? String(this._normalizedMaxRows)
                           : undefined,
