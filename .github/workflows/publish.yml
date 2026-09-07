@@ -249,8 +249,14 @@ jobs:
       - name: Open or update the gen1 Version PR
         uses: peter-evans/create-pull-request@v8
         with:
-          commit-message: 'chore: release gen1 packages'
-          title: 'chore: release gen1 packages'
+          # `#publish` in both message and title so the Version PR merge to main
+          # (the only push-to-main this job produces - the PR itself lands on the
+          # changeset-release/1st-gen branch) carries the marker publish-docs-site.yml
+          # keys on, triggering the gen1 docs deploy. Both fields cover every merge
+          # strategy: squash uses the title, rebase the commit-message, merge the title
+          # in the body.
+          commit-message: 'chore: release gen1 packages #publish'
+          title: 'chore: release gen1 packages #publish'
           branch: changeset-release/1st-gen
           base: main
           delete-branch: true
