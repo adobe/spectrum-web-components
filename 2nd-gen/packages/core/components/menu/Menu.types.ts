@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+import type { Placement } from '@adobe/spectrum-wc-core/controllers/index.js';
 import type { ElementSize } from '@adobe/spectrum-wc-core/mixins/index.js';
 
 // ──────────────────
@@ -24,23 +25,28 @@ export const MENU_VALID_SIZES = [
 ] as const satisfies readonly ElementSize[];
 
 /**
- * Where the anchored surface opens relative to the trigger. Matches React
- * Spectrum S2's `MenuTrigger.direction` exactly.
+ * The placement values `<swc-menu>` supports: React Spectrum S2's
+ * `MenuTrigger.direction` sides (`bottom`, `top`, `left`, `right`, `start`,
+ * `end`), each with its two `MenuTrigger.align` alignments. A single
+ * hyphenated property, matching `Tooltip`/`Popover`'s `placement` shape
+ * (`Popover.types.ts`), rather than a separate `direction`/`align` pair;
+ * unlike `Popover`, which narrows to its logical sides only, this keeps
+ * `left`/`right` since `MenuTrigger.direction` supports them.
  */
-export const MENU_DIRECTIONS = [
-  'bottom',
-  'top',
-  'left',
-  'right',
-  'start',
-  'end',
-] as const;
-
-/**
- * Cross-axis alignment of the anchored surface against the trigger. Matches
- * React Spectrum S2's `MenuTrigger.align` exactly.
- */
-export const MENU_ALIGNMENTS = ['start', 'end'] as const;
+export const MENU_PLACEMENTS = [
+  'bottom-start',
+  'bottom-end',
+  'top-start',
+  'top-end',
+  'left-top',
+  'left-bottom',
+  'right-top',
+  'right-bottom',
+  'start-top',
+  'start-bottom',
+  'end-top',
+  'end-bottom',
+] as const satisfies readonly Placement[];
 
 /**
  * Tag names `swc-menu` accepts in its default slot this phase. `swc-menu-group`
@@ -53,5 +59,4 @@ export const MENU_ALLOWED_CHILDREN = ['swc-menu-item'] as const;
 // ──────────────────
 
 export type MenuSize = (typeof MENU_VALID_SIZES)[number];
-export type MenuDirection = (typeof MENU_DIRECTIONS)[number];
-export type MenuAlignment = (typeof MENU_ALIGNMENTS)[number];
+export type MenuPlacement = (typeof MENU_PLACEMENTS)[number];

@@ -14,7 +14,6 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import {
-  type Placement,
   PlacementController,
   type PlacementOptions,
 } from '@adobe/spectrum-wc-core/controllers/index.js';
@@ -29,12 +28,10 @@ import {
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
-  MENU_ALIGNMENTS,
   MENU_ALLOWED_CHILDREN,
-  MENU_DIRECTIONS,
+  MENU_PLACEMENTS,
   MENU_VALID_SIZES,
-  type MenuAlignment,
-  type MenuDirection,
+  type MenuPlacement,
   type MenuSize,
 } from './Menu.types.js';
 
@@ -98,20 +95,13 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   public triggerElement: HTMLElement | null = null;
 
   /**
-   * Where the anchored surface opens relative to the trigger.
+   * Where the anchored surface opens relative to the trigger, and its
+   * cross-axis alignment against it.
    *
-   * @default 'bottom'
+   * @default 'bottom-start'
    */
   @property({ type: String, reflect: true })
-  public direction: MenuDirection = 'bottom';
-
-  /**
-   * Cross-axis alignment of the anchored surface against the trigger.
-   *
-   * @default 'start'
-   */
-  @property({ type: String, reflect: true })
-  public align: MenuAlignment = 'start';
+  public placement: MenuPlacement = 'bottom-start';
 
   /**
    * Whether the surface may reposition to the opposite side when the
@@ -159,25 +149,6 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
    */
   protected get surfaceElement(): HTMLElement | null {
     return null;
-  }
-
-  /**
-   * Translates the public `direction`/`align` pair into the `Placement`
-   * value `PlacementController` understands. Floating UI's `Placement` type
-   * uses physical `top`/`bottom` alignment suffixes for the `left`/`right`/
-   * `start`/`end` sides (`left-top`, `start-bottom`, etc.) — only the
-   * `bottom`/`top` sides pair directly with a `start`/`end` suffix. For the
-   * other four, `align: 'start'` maps to the top-aligned cross-axis edge and
-   * `'end'` to the bottom-aligned edge, mirroring how `start`/`end` already
-   * reads top-to-bottom for block direction elsewhere in the API.
-   */
-  private resolvePlacement(): Placement {
-    const { direction, align } = this;
-    if (direction === 'bottom' || direction === 'top') {
-      return `${direction}-${align}` as Placement;
-    }
-    const crossAxis = align === 'start' ? 'top' : 'bottom';
-    return `${direction}-${crossAxis}` as Placement;
   }
 
   // Removes this menu's aria-controls reference from a previously-wired
@@ -247,7 +218,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       return;
     }
     const options: PlacementOptions = {
-      placement: this.resolvePlacement(),
+      placement: this.placement,
       shouldFlip: this.shouldFlip,
       onPlacementChange: (resolvedPlacement) => {
         this.setAttribute('actual-placement', physicalSide(resolvedPlacement));
@@ -301,19 +272,11 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
 
-    if (changedProperties.has('direction')) {
+    if (changedProperties.has('placement')) {
       validateEnum(this, {
-        prop: 'direction',
-        value: this.direction,
-        valid: MENU_DIRECTIONS,
-        url: DOCS_URL,
-      });
-    }
-    if (changedProperties.has('align')) {
-      validateEnum(this, {
-        prop: 'align',
-        value: this.align,
-        valid: MENU_ALIGNMENTS,
+        prop: 'placement',
+        value: this.placement,
+        valid: MENU_PLACEMENTS,
         url: DOCS_URL,
       });
     }
@@ -337,8 +300,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       }
     } else if (
       this.open &&
-      (changedProperties.has('direction') ||
-        changedProperties.has('align') ||
+      (changedProperties.has('placement') ||
         changedProperties.has('shouldFlip') ||
         changedProperties.has('for') ||
         changedProperties.has('triggerElement'))
