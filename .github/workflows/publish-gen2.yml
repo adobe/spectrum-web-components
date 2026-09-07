@@ -164,7 +164,10 @@ jobs:
           fi
           yarn install --refresh-lockfile
           yarn build
-          (cd 2nd-gen && yarn changeset publish --no-git-tag --tag latest)
+          # No --tag here: changesets forbids a custom dist-tag while in pre mode
+          # (throws "Releasing under custom tag is not allowed in pre mode", exit 1).
+          # In pre mode `changeset publish` ships to the pre tag (beta) automatically.
+          (cd 2nd-gen && yarn changeset publish --no-git-tag)
           git config user.name "github-actions-bot"
           git config user.email "support+actions@github.com"
           node ./scripts/create-git-tag.js gen2
