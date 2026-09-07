@@ -57,6 +57,9 @@ export type ResponseStatusStepStatus =
  * @fires swc-response-status-step-active-label-change - Dispatched when this
  * step's label text changes while `status="active"`, so the parent can keep
  * its header label in sync with streamed text. Detail: `{ label: string }`
+ *
+ * @cssprop --swc-response-status-step-shimmer-spread - Half-width of the shimmer highlight swept across the active step title. Defaults to `4ch`.
+ * @cssprop --swc-response-status-step-detail-max-block-size - Maximum block size of the expanded description before it scrolls. Defaults to 120px.
  * @since 2.0.0-beta.3
  */
 export class ResponseStatusStep extends SpectrumElement {

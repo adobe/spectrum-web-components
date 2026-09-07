@@ -24,7 +24,7 @@
   -webkit-tap-highlight-color: transparent;
   display: inline-flex;
   align-items: center;
-  block-size: var(--swc-suggestion-item-min-block-size, token("component-height-100"));
+  block-size: token("component-height-100");
   padding: 0;
   font-family: token("sans-serif-font");
   font-size: token("font-size-100");
@@ -61,14 +61,14 @@
   --swc-icon-block-size: token("workflow-icon-medium");
 
   flex-shrink: 0;
-  margin-inline-start: var(--swc-suggestion-item-icon-margin-inline-start, 14px);
-  margin-inline-end: var(--swc-suggestion-item-icon-margin-inline-end, 6px);
+  margin-inline-start: 14px;
+  margin-inline-end: 6px;
 }
 
 .swc-SuggestionItem-label {
   display: inline-flex;
-  padding-block: var(--swc-suggestion-item-label-padding-block, 7px);
-  padding-inline-end: var(--swc-suggestion-item-label-padding-inline-end, token("spacing-300"));
+  padding-block: 7px;
+  padding-inline-end: token("spacing-300");
   text-align: start;
 }
 

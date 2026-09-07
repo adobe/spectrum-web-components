@@ -126,7 +126,7 @@
 .swc-UserMessage-meta {
   display: flex;
   flex-direction: column;
-  gap: var(--swc-user-message-meta-gap, token("spacing-50"));
+  gap: token("spacing-50");
   min-inline-size: 0;
 }
 
