@@ -10,7 +10,13 @@
     }
   ],
   "commit": false,
-  "linked": [["@adobe/spectrum-wc", "@adobe/spectrum-wc-core"]],
+  "linked": [
+    [
+      "@adobe/spectrum-wc",
+      "@adobe/spectrum-wc-core",
+      "@adobe/spectrum-wc-icons"
+    ]
+  ],
   "snapshot": {
     "prereleaseTemplate": "{tag}.{datetime}",
     "useCalculatedVersion": true
