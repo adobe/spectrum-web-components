@@ -165,9 +165,20 @@ jobs:
           yarn install --refresh-lockfile
           yarn build
           # No --tag here: changesets forbids a custom dist-tag while in pre mode
-          # (throws "Releasing under custom tag is not allowed in pre mode", exit 1).
-          # In pre mode `changeset publish` ships to the pre tag (beta) automatically.
+          # (throws "Releasing under custom tag is not allowed in pre mode", exit 1),
+          # so `changeset publish` ships to the pre tag (beta).
           (cd 2nd-gen && yarn changeset publish --no-git-tag)
+          # Then move npm's `latest` dist-tag onto the just-published version for each
+          # public gen2 package, with npm directly - the supported way to reach `latest`
+          # from pre mode without editing changesets' internal pre.json state.
+          while IFS= read -r pkg_json; do
+            is_private=$(node -p "!!require('./$pkg_json').private")
+            [ "$is_private" = "true" ] && continue
+            name=$(node -p "require('./$pkg_json').name")
+            version=$(node -p "require('./$pkg_json').version")
+            echo "Pointing latest -> $name@$version"
+            npm dist-tag add "$name@$version" latest
+          done < <(find 2nd-gen/packages -maxdepth 2 -name package.json -not -path '*/node_modules/*')
           git config user.name "github-actions-bot"
           git config user.email "support+actions@github.com"
           node ./scripts/create-git-tag.js gen2
