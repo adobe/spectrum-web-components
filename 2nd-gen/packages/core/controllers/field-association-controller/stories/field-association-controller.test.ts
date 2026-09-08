@@ -117,7 +117,7 @@ export const ExclusionTest: Story = {
 };
 ExclusionTest.storyName = 'Excluded when unselected (test)';
 
-// defaultValue restores on formResetCallback.
+// formResetCallback restores the field to its authored value attribute.
 export const DefaultValueResetTest: Story = {
   ...DefaultValueReset,
   play: async ({ canvasElement, step }) => {

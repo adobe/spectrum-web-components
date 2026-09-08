@@ -14,7 +14,6 @@ import * as Stories from './stories/field-association-controller.stories';
 It handles:
 
 - **Form value**: `setValue(value)` submits the value; `setValue(null)` excludes the field from `FormData` (unchecked, unselected, or disabled).
-- **Reset**: `defaultValue` is the value the field restores to on the host's `formResetCallback`.
 - **Disabled cascade**: the host forwards `formDisabledCallback` here; the controller tracks it as `formDisabled` and fires `onDisabledChange` so the host re-syncs.
 - **Validity**: `validity`, `validationMessage`, `willValidate`, `checkValidity()`, and `reportValidity()` pass through to `ElementInternals`.
 
@@ -41,17 +40,14 @@ class SwcField extends LitElement {
     return this.disabled || this.fieldAssoc.formDisabled;
   }
 
-  protected override firstUpdated(): void {
-    this.fieldAssoc.defaultValue = this.value; // reset target
-  }
-
   protected override update(changed: PropertyValues): void {
     super.update(changed);
     this.fieldAssoc.setValue(this.effectiveDisabled ? null : this.value);
   }
 
   formResetCallback(): void {
-    this.value = this.fieldAssoc.defaultValue;
+    // The unreflected `value` attribute holds the authored default.
+    this.value = this.getAttribute('value') ?? '';
   }
 
   formDisabledCallback(disabled: boolean): void {
@@ -86,7 +82,7 @@ A non-null value is submitted under the field's `name` and appears in `new FormD
 
 ### Default value and reset
 
-`defaultValue` comes from the `value` attribute; a native reset calls the host's `formResetCallback`, which restores it.
+A native reset calls the host's `formResetCallback`, which restores the field to its authored `value` attribute. The reset target lives on the host, not the controller: it is field-shaped (a string here, a boolean `checked` for a checkbox or radio), and reading the attribute lazily keeps a reset that fires before first render from wiping the declared default.
 
 <Canvas of={Stories.DefaultValueReset} />
 
@@ -128,7 +124,6 @@ The validity members read straight off `ElementInternals`; writing validity stay
 | Member                           | Description                                                                                                                      |
 | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | `setValue(value)`                | Sets the form value via `internals.setFormValue`. Pass `null` to exclude the field from `FormData`.                              |
-| `defaultValue`                   | Get/set. The value the field restores to on reset. Defaults to `''`.                                                             |
 | `formDisabled`                   | Read-only. `true` when an ancestor form or `<fieldset disabled>` has disabled the field.                                         |
 | `formDisabledCallback(disabled)` | Delegate target for the host's `formDisabledCallback`. Records the cascaded state and fires `onDisabledChange` on a real change. |
 | `form`                           | Read-only. The associated `HTMLFormElement`, or `null`.                                                                          |
@@ -142,7 +137,6 @@ The validity members read straight off `ElementInternals`; writing validity stay
 
 | Option             | Type                          | Default | Description                                                                                              |
 | ------------------ | ----------------------------- | ------- | -------------------------------------------------------------------------------------------------------- |
-| `defaultValue`     | `string`                      | `''`    | The value the field restores to on `formResetCallback`, usually the host's `value` attribute.            |
 | `onDisabledChange` | `(disabled: boolean) => void` | none    | Called when the cascaded disabled state flips, so the host can re-sync its inner control and `FormData`. |
 
 ### Host responsibilities

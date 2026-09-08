@@ -96,3 +96,80 @@ export const FormParticipationTest: Story = {
   },
 };
 FormParticipationTest.storyName = 'Form participation';
+
+export const DisabledStateTest: Story = {
+  render: () => html`
+    <form>
+      <fieldset>
+        <swc-text-field
+          name="username"
+          value="Example"
+          accessible-label="Username"
+        ></swc-text-field>
+      </fieldset>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const fieldset = canvasElement.querySelector('fieldset');
+    if (!form || !fieldset) {
+      throw new Error('form or fieldset not found');
+    }
+
+    await step('enabled: no disabled state, value participates', () => {
+      expect(field.matches(':state(disabled)'), 'no disabled state').toBe(
+        false
+      );
+      expect(new FormData(form).get('username')).toBe('Example');
+    });
+
+    await step('own disabled sets the custom state', async () => {
+      field.disabled = true;
+      await field.updateComplete;
+      expect(
+        field.matches(':state(disabled)'),
+        'own disabled sets :state(disabled)'
+      ).toBe(true);
+      expect(new FormData(form).has('username')).toBe(false);
+      field.disabled = false;
+      await field.updateComplete;
+    });
+
+    await step(
+      'cascaded <fieldset disabled> sets the state on the host',
+      async () => {
+        fieldset.disabled = true;
+        await field.updateComplete;
+        expect(
+          field.matches(':state(disabled)'),
+          'cascade sets :state(disabled) without the host property'
+        ).toBe(true);
+        expect(
+          field.disabled,
+          'the public property stays false under the cascade'
+        ).toBe(false);
+        expect(
+          field.shadowRoot?.querySelector('input')?.disabled,
+          'inner input is disabled'
+        ).toBe(true);
+        expect(
+          new FormData(form).has('username'),
+          'excluded while cascaded'
+        ).toBe(false);
+
+        fieldset.disabled = false;
+        await field.updateComplete;
+        expect(
+          field.matches(':state(disabled)'),
+          'state clears when re-enabled'
+        ).toBe(false);
+        expect(new FormData(form).get('username')).toBe('Example');
+      }
+    );
+  },
+};
+DisabledStateTest.storyName = 'Disabled state';

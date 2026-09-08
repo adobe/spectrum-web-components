@@ -233,9 +233,9 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
     return this.fieldAssoc.reportValidity();
   }
 
-  /** Restores the value to the initial `value` attribute on a native form reset. */
+  /** Restores the authored `value` attribute (unreflected, so it holds the initial value) on native form reset. */
   public formResetCallback(): void {
-    this.value = this.fieldAssoc.defaultValue;
+    this.value = this.getAttribute('value') ?? '';
   }
 
   /** Delegates the ancestor form / fieldset disabled cascade to the controller. */
@@ -245,12 +245,6 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
 
   // @todo setSelectionRange() / select() delegate to the rendered native
   // <input>; they land with the render implementation.
-
-  protected override firstUpdated(changedProperties: PropertyValues): void {
-    super.firstUpdated(changedProperties);
-    // The reset target is the initial `value` attribute.
-    this.fieldAssoc.defaultValue = this.value;
-  }
 
   protected override update(changedProperties: PropertyValues): void {
     validateEnum(this, {
@@ -266,6 +260,11 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
       url: DOCS_URL,
     });
     super.update(changedProperties);
+    // Custom state for `:host(:state(disabled))`; unlike `[disabled]` it covers
+    // the cascaded `<fieldset disabled>` case, not just the host's own property.
+    this.internals.states[this.effectiveDisabled ? 'add' : 'delete'](
+      'disabled'
+    );
     // Push the current value into the form; exclude it entirely when disabled.
     this.fieldAssoc.setValue(this.effectiveDisabled ? null : this.value);
   }

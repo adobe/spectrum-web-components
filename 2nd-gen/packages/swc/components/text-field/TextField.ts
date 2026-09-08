@@ -35,6 +35,10 @@ export class TextField extends TextFieldBase {
     return [styles];
   }
 
+  private handleInput(event: Event): void {
+    this.value = (event.target as HTMLInputElement).value;
+  }
+
   protected override render(): TemplateResult {
     // @todo (SWC-2466): render the visible label, required indicator, validation
     // icon, and description/error container via the LabellingController. Until
@@ -44,7 +48,9 @@ export class TextField extends TextFieldBase {
         <input
           class="input"
           aria-label=${ifDefined(this.accessibleLabel || undefined)}
+          .value=${this.value}
           ?disabled=${this.effectiveDisabled}
+          @input=${this.handleInput}
         />
       </div>
     `;

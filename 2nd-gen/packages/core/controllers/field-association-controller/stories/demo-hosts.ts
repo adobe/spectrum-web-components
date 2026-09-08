@@ -104,12 +104,6 @@ export abstract class DemoFieldHostBase extends LitElement {
     this.requestUpdate();
   }
 
-  protected override firstUpdated(changed: PropertyValues): void {
-    super.firstUpdated(changed);
-    // The reset target is the initial `value` attribute.
-    this.fieldAssoc.defaultValue = this.value;
-  }
-
   protected override update(changed: PropertyValues): void {
     super.update(changed);
     this.updateFormValue();
@@ -147,9 +141,9 @@ export abstract class DemoFieldHostBase extends LitElement {
     this.fieldAssoc.formDisabledCallback(disabled);
   }
 
-  /** Restores state on native form reset. Subclasses extend as needed. */
+  /** Restores the authored `value` attribute (unreflected) on native form reset. Subclasses extend. */
   protected resetToDefault(): void {
-    this.value = this.fieldAssoc.defaultValue;
+    this.value = this.getAttribute('value') ?? '';
   }
 
   // ── Validity pass-throughs, mirroring a native control ──
@@ -216,6 +210,11 @@ export class DemoFieldText extends DemoFieldHostBase {
  *
  * Single-radio harness. Mirrors the checkbox exclusion pattern: submits its
  * value only when checked and not effectively disabled, otherwise `null`.
+ *
+ * Plumbing-only: this harness exercises form-value participation, not the radio
+ * ARIA pattern. A real radio puts `role="radio"` on the host via
+ * `ElementInternals` and manages roving focus across the group; do not copy this
+ * inner-`<input type="radio">` shape for the radio migration.
  */
 @customElement('demo-field-radio')
 export class DemoFieldRadio extends DemoFieldHostBase {
@@ -223,17 +222,10 @@ export class DemoFieldRadio extends DemoFieldHostBase {
   @property({ type: Boolean })
   public checked = false;
 
-  private defaultChecked = false;
-
-  protected override firstUpdated(changed: PropertyValues): void {
-    // Capture the reset target alongside the base's default.
-    this.defaultChecked = this.checked;
-    super.firstUpdated(changed);
-  }
-
   protected override resetToDefault(): void {
     super.resetToDefault();
-    this.checked = this.defaultChecked;
+    // `checked` is not reflected, so the attribute holds the initial state.
+    this.checked = this.hasAttribute('checked');
   }
 
   protected override computeFormValue(): FieldFormValue {
@@ -285,6 +277,11 @@ const COMBOBOX_OPTIONS = ['Red', 'Green', 'Blue'] as const;
  *
  * Combobox harness backed by a native `<select>`. The empty option represents
  * "unselected"; while unselected (or effectively disabled) it submits `null`.
+ *
+ * Plumbing-only: this harness exercises form-value participation via a native
+ * `<select>`, not the combobox pattern. A real combobox is a text input with a
+ * popup listbox (`role="combobox"`), not a `<select>`; do not copy this shape
+ * for the combobox migration.
  */
 @customElement('demo-field-combobox')
 export class DemoFieldCombobox extends DemoFieldHostBase {

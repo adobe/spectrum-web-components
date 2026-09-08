@@ -12,7 +12,8 @@
 
 /* @todo (Phase 5, styling): baseline from spectrum-css (spectrum-two) index.css and
    consume the shared form-fields stylesheet fragment. Keep styling on
-   .swc-TextField, not :host. */
+   .swc-TextField, not :host. Style disabled via `:host(:state(disabled))`
+   (covers own + cascaded disabled), not `[disabled]`. */
 .swc-TextField {
   display: inline-flex;
 }

@@ -19,9 +19,6 @@ export type FieldFormValue = string | File | FormData | null;
 
 /** Configuration options for {@link FieldAssociationController}. */
 export interface FieldAssociationControllerOptions {
-  /** Reset target on `formResetCallback` (usually the host's `value`). Defaults to `''`. */
-  defaultValue?: string;
-
   /**
    * Called when the cascaded `<form>`/`<fieldset disabled>` state flips, so the
    * host can re-sync (typically via `requestUpdate()`).
@@ -35,9 +32,13 @@ export interface FieldAssociationControllerOptions {
 
 /**
  * Wraps the `ElementInternals` form-participation surface shared by every field
- * component (textfield, checkbox, radio, combobox): form value, reset default,
- * the `<fieldset disabled>` cascade, and the validity reads. Extracted so each
+ * component (textfield, checkbox, radio, combobox): form value, the
+ * `<fieldset disabled>` cascade, and the validity reads. Extracted so each
  * field doesn't re-implement it.
+ *
+ * The reset target stays on the host: it is field-shaped (a string for a text
+ * field, a boolean for a checkbox/radio) and read lazily from the host's own
+ * attribute in `formResetCallback`, so the controller does not own it.
  *
  * A plain class, **not** a Lit `ReactiveController`, so there is nothing to
  * `addController`. The host keeps `static formAssociated = true` and its own
@@ -49,7 +50,6 @@ export class FieldAssociationController {
   private readonly _internals: ElementInternals;
   private readonly _onDisabledChange?: (disabled: boolean) => void;
 
-  private _defaultValue: string;
   private _formDisabled = false;
 
   constructor(
@@ -57,7 +57,6 @@ export class FieldAssociationController {
     options: FieldAssociationControllerOptions = {}
   ) {
     this._internals = internals;
-    this._defaultValue = options.defaultValue ?? '';
     this._onDisabledChange = options.onDisabledChange;
   }
 
@@ -68,20 +67,6 @@ export class FieldAssociationController {
   /** Sets the form value. Pass `null` to exclude the field from `FormData`. */
   public setValue(value: FieldFormValue): void {
     this._internals.setFormValue(value);
-  }
-
-  // ─────────────────────────
-  //     DEFAULT VALUE
-  // ─────────────────────────
-
-  /** The value the field restores to on `formResetCallback`. */
-  public get defaultValue(): string {
-    return this._defaultValue;
-  }
-
-  /** Updates the reset target; coerces `null`/`undefined` to `''`. */
-  public set defaultValue(value: string) {
-    this._defaultValue = value ?? '';
   }
 
   // ─────────────────────────
