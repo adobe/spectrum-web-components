@@ -125,13 +125,16 @@ export const MissingAccessibleNameTest: Story = {
 // TEST: Conflicting label sources DEBUG warning (WCAG 2.5.3)
 // ──────────────────────────────────────────────────────────────
 
+const CONFLICT_PHRASE = 'more than one accessible-name source';
+const IGNORED_PHRASE = 'will not be read';
+
 export const LabelConflictTest: Story = {
   render: () => html`
     <span></span>
   `,
   play: async ({ step }) => {
     await step(
-      'warns when accessible-label is set alongside a slotted label',
+      'warns when accessible-label is set alongside a slotted label, naming the slotted label as ignored',
       () =>
         withWarningSpy(async (warnCalls) => {
           const field = await fixture<TextField>(html`
@@ -143,10 +146,70 @@ export const LabelConflictTest: Story = {
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
           expect(
             messages.some(
-              (m) => m.includes('accessible-label') && m.includes('visible')
+              (m) =>
+                m.includes(CONFLICT_PHRASE) &&
+                m.includes(IGNORED_PHRASE) &&
+                m.includes('the slotted "label"')
             )
           ).toBe(true);
           field.parentElement?.remove();
+        })
+    );
+
+    await step(
+      'warns when accessible-label is set alongside a resolved accessible-labelledby, naming accessible-label as ignored',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const field = await fixture<TextField>(html`
+            <div>
+              <p id="text-field-label-conflict-external">External label</p>
+              <swc-text-field
+                accessible-label="Different text"
+                accessible-labelledby="text-field-label-conflict-external"
+              ></swc-text-field>
+            </div>
+          `);
+          const textField = field.querySelector('swc-text-field') as TextField;
+          await textField.updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          expect(
+            messages.some(
+              (m) =>
+                m.includes(CONFLICT_PHRASE) &&
+                m.includes(IGNORED_PHRASE) &&
+                m.includes('"accessible-label"')
+            )
+          ).toBe(true);
+          field.remove();
+        })
+    );
+
+    await step(
+      'warns when accessible-labelledby is set alongside a slotted label, naming the slotted label as ignored',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const field = await fixture<TextField>(html`
+            <div>
+              <p id="text-field-label-conflict-external-2">External label</p>
+              <swc-text-field
+                accessible-labelledby="text-field-label-conflict-external-2"
+              >
+                <span slot="label">Visible label</span>
+              </swc-text-field>
+            </div>
+          `);
+          const textField = field.querySelector('swc-text-field') as TextField;
+          await textField.updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          expect(
+            messages.some(
+              (m) =>
+                m.includes(CONFLICT_PHRASE) &&
+                m.includes(IGNORED_PHRASE) &&
+                m.includes('the slotted "label"')
+            )
+          ).toBe(true);
+          field.remove();
         })
     );
 
@@ -157,11 +220,7 @@ export const LabelConflictTest: Story = {
         `);
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-        expect(
-          messages.some(
-            (m) => m.includes('accessible-label') && m.includes('visible')
-          )
-        ).toBe(false);
+        expect(messages.some((m) => m.includes(CONFLICT_PHRASE))).toBe(false);
         field.parentElement?.remove();
       })
     );
