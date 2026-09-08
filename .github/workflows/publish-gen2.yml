@@ -73,9 +73,9 @@ jobs:
   # same branch.
   version-pr:
     needs: check-changesets
-    if: >-
-      (github.event_name == 'push' || github.event_name == 'workflow_dispatch') &&
-      needs.check-changesets.outputs.has_changesets == 'true'
+    # No event/branch check needed: push and workflow_dispatch are this workflow's only
+    # triggers, and check-changesets (which this needs) already skips any non-main run.
+    if: needs.check-changesets.outputs.has_changesets == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write # commits the Version PR branch
@@ -123,8 +123,9 @@ jobs:
   # since it's the only one that actually publishes to npm.
   publish:
     needs: check-changesets
+    # No event/branch check needed: push and workflow_dispatch are this workflow's only
+    # triggers, and check-changesets (which this needs) already skips any non-main run.
     if: >-
-      (github.event_name == 'push' || github.event_name == 'workflow_dispatch') &&
       needs.check-changesets.outputs.has_changesets == 'false' &&
       needs.check-changesets.outputs.needs_publish == 'true'
     runs-on: ubuntu-latest
