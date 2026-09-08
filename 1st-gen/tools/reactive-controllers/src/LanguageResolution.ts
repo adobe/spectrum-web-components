@@ -12,6 +12,8 @@
 
 import type { ReactiveController, ReactiveElement } from 'lit';
 
+import { observeAttribute } from './AttributeObserver.js';
+
 // TODO: Update this when theme is migrated to 2nd-gen
 type ProvideLang = {
   callback: (lang: string, unsubscribe: () => void) => void;
@@ -26,37 +28,10 @@ export const languageResolverUpdatedSymbol = Symbol(
   'language resolver updated'
 );
 
-// ────────────────────────────────────────────
-// Shared <html lang> observer (singleton)
-// ────────────────────────────────────────────
-
-type LangChangeListener = () => void;
-
-const listeners = new Set<LangChangeListener>();
-let sharedObserver: MutationObserver | undefined;
-
-function addLangListener(listener: LangChangeListener): () => void {
-  listeners.add(listener);
-
-  if (!sharedObserver) {
-    sharedObserver = new MutationObserver(() => {
-      for (const cb of listeners) {
-        cb();
-      }
-    });
-    sharedObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['lang'],
-    });
-  }
-
-  return () => {
-    listeners.delete(listener);
-    if (listeners.size === 0) {
-      sharedObserver?.disconnect();
-      sharedObserver = undefined;
-    }
-  };
+// Watches `<html lang>` via the shared `AttributeObserver` singleton rather
+// than a dedicated `MutationObserver` per controller.
+function addLangListener(listener: () => void): () => void {
+  return observeAttribute(document.documentElement, 'lang', listener);
 }
 
 /**
