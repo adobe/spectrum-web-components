@@ -36,8 +36,9 @@
     - [Documentation (SWC-2321)](#documentation-swc-2321)
     - [Review (SWC-2322)](#review-swc-2322)
 - [Blockers and open questions](#blockers-and-open-questions)
-    - [Design](#design)
     - [Architecture and behavior](#architecture-and-behavior)
+- [Decision log](#decision-log)
+    - [Q1–Q3: Loading state event names, payload, and default treatment](#q1q3-loading-state-event-names-payload-and-default-treatment)
 - [References](#references)
 
 </details>
@@ -72,9 +73,6 @@ which has already been tested and requires no changes to Card's existing CSS.
 
 ### Most blocking open questions
 
-- **Q1–Q3** in [Design](#design): the loading/pending state's event names, payload, default
-  visual (if any) for standalone use, and whether a failed-load state is part of the same
-  scheme. Explicitly unresolved; may end up deferred out of v1 entirely if not settled in time.
 - **Q4** in [Architecture and behavior](#architecture-and-behavior): the exact SVG
   accessible-name detection algorithm (which of `aria-label` / `aria-labelledby` / child
   `<title>` / existing `role="img"` count as "already labeled") needs sign-off from the team's
@@ -123,7 +121,8 @@ against [React Spectrum Image](https://react-spectrum.adobe.com/Image) for parit
 1. Aspect-ratio and/or width/height sizing (stretch-and-fill model)
 2. `fit`: cover / contain
 3. Accept images and SVG generically (file/folder variants retired)
-4. Loading/pending state — **open, see Q1–Q3**
+4. Loading state (`loadState` property + `swc-asset-load`/`swc-asset-error` events — resolved,
+   see [Decision log](#decision-log))
 5. `background`: transparent, solid color, or opacity checkerboard
 6. `decorative` property and generalized accessible-name fallback
 7. Genre promotion (internal → public)
@@ -140,7 +139,7 @@ Out of scope for v1: responsive/adaptive sizing (`srcset`/`sizes`-equivalent, in
 | `2nd-gen/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css` | Shared `.swc-OpacityCheckerboard` fragment; import directly for the checkerboard background option | No — already exists |
 | `swc-card` (`seckles/swc-card` branch, unmerged) | Primary intended **consumer** once Asset ships; not a build dependency of Asset itself | No — independent timelines, only the aspect-ratio weak-sync contract needs to line up |
 | `swc-thumbnail` (migration not started)   | Sibling visual primitive; a11y model reference only (see [accessibility-migration-analysis.md](../thumbnail/accessibility-migration-analysis.md)) | No |
-| `2nd-gen/packages/core/controllers/pending-controller` | Considered and likely **not** reused as-is for the loading state (see Q1) — scope mismatch between a whole-control busy state and a per-image loading state | No |
+| `2nd-gen/packages/core/controllers/pending-controller` | Considered and **not** reused as-is for the loading state (see [Decision log](#decision-log)) — scope mismatch between a whole-control busy state and a per-image loading state. Its readable-property-plus-transition pattern (`pendingActive`) informed the `loadState` design, though. | No |
 
 No prerequisite migration or shared-base relationship blocks this work. Asset does not need to
 wait on Card, Thumbnail, or any other component's migration.
@@ -173,6 +172,7 @@ docs (SWC-2321) should also reference Asset directly as an example consumer.
 | **B3** | Add `width`/`height` properties as an alternative sizing input | N/A today | Accepts any valid CSS `<length-percentage>` (e.g. `"100px"`, `"90%"`); default unset (`auto`) | Simpler than `aspectRatio` — private-only, no exposed ancestor-default channel, since Card's v1 has no width/height default to hand down |
 | **B4** | Add `fit` property (`'cover' \| 'contain'`, default `'cover'`) | Blanket `::slotted(*) { object-fit: contain }` | Conditional, attribute-selector-driven; `cover` is the new default | Entirely Asset's own concern — no ancestor hand-off (see [Behavioral semantics](#behavioral-semantics)); DEBUG warning on an invalid value |
 | **B5** | Genre promotion: drop `.internal.*` naming and `@status internal` | Internal genre, excluded from production docs/build | Public component | Consumers should be able to slot Asset directly and control its features themselves |
+| **B12** | Add a readable `loadState` property (`'loading' \| 'loaded' \| 'error'`) and `swc-asset-load`/`swc-asset-error` events | N/A today | Asset tracks the slotted `<img>`'s native `load`/`error` events internally and reflects the result; see [Behavioral semantics](#behavioral-semantics) for the full mechanism | Resolves [Q1–Q3](#decision-log) (see [Decision log](#decision-log)) |
 
 #### Accessibility
 
@@ -214,6 +214,7 @@ docs (SWC-2321) should also reference Asset directly as an example consumer.
 | `decorative`      | `boolean`                                                    | `false`     | reflected           | — |
 | `accessibleLabel` | `string \| undefined`                                       | `undefined` | `accessible-label`  | Renamed from `label`, generalized fallback accessible name; matches the existing `accessible-label` convention used by Button/Tabs/ActionButton/etc. Exact SVG detection algorithm is [Q4](#architecture-and-behavior) |
 | `background`      | `'transparent' \| 'solid' \| 'checkerboard'`                 | `'transparent'` | `background`    | `'transparent'` matches today's behavior; `'solid'` uses `--swc-asset-background-color` (default `token("gray-100")`); `'checkerboard'` reuses the shared opacity-checkerboard fragment. DEBUG warning on an invalid value |
+| `loadState`       | `'loading' \| 'loaded' \| 'error'` (readonly)                | `'loading'` (`'loaded'` immediately for a slotted `<svg>` or no child) | `load-state` (reflected) | Set internally by Asset from the slotted `<img>`'s `load`/`error` events; a consumer sets this only by changing what's slotted, not directly. See [Behavioral semantics](#behavioral-semantics) |
 | `variant`         | _(removed)_                                                  | —           | —                   | See B1 |
 
 **Slots (2nd-gen):**
@@ -221,6 +222,13 @@ docs (SWC-2321) should also reference Asset directly as an example consumer.
 | Slot    | Content                          |
 | ------- | ---------------------------------- |
 | default | A single `<img>` or `<svg>` element. More than one child, or an unsupported child type, triggers a DEBUG warning |
+
+**Events (2nd-gen):**
+
+| Event | `detail` | Fired when |
+| ----- | -------- | ---------- |
+| `swc-asset-load` | none | The slotted `<img>` finishes loading successfully. Fires exactly once per slotted `<img>` instance, even if it was already loaded/cached at connect time (see [Behavioral semantics](#behavioral-semantics) for the timing guarantee) |
+| `swc-asset-error` | `{ src: string }` | The slotted `<img>` fails to load. `src` is the failed image's resolved URL, for diagnostics/logging |
 
 ### CSS custom properties
 
@@ -345,10 +353,10 @@ no such requirement and should instead yield to the browser's default forced-col
 any other custom background color.
 
 Whatever `background` is set to shows around the edges when `fit="contain"` letterboxes the
-slotted content, and is also what's visible behind the slot before the image resolves (i.e.
-during the still-unresolved loading state, [Q1–Q3](#design)) — worth calling out explicitly in
-documentation, since pairing `fit="contain"` with a non-transparent `background` is the natural
-way to get a polished letterboxed look.
+slotted content, and is also what's visible behind the slot while `loadState` is `'loading'`
+(see [Behavioral semantics](#behavioral-semantics)) — worth calling out
+explicitly in documentation, since pairing `fit="contain"` with a non-transparent `background`
+is the natural way to get a polished letterboxed look.
 
 Explicitly not pursued: deriving a background color or gradient from the slotted image itself
 (dominant edge color, or opposing-corner colors for a gradient) — see
@@ -381,17 +389,50 @@ grid of many Cards, each with one or more Asset instances — even though (per e
 `loading="lazy"` itself carries no accessibility semantics; it's a pure resource-timing
 recommendation.
 
-#### Loading/pending state — open, see Q1–Q3
+#### Loading state — resolved, see [Decision log](#decision-log)
 
-Current leaning: Asset emits lifecycle events (working names: "loading" / "ready") for its own
-slotted content, rather than folding a busy announcement into its own accessible name the way
-`PendingController` does for whole controls. This fits the Card Figma reference, where a loading
-treatment applies only to the `preview` image, not to the whole card — i.e. loading is a
-per-`swc-asset`-instance concern that the embedding parent should be free to represent however
-fits its own content (a full `ProgressCircle`, a lighter visual-only spinner, or nothing at all).
-Exact event names, payload, whether Asset renders any default visual/accessible treatment for
-standalone (non-Card) use, and whether a failed-load state shares the same event scheme are all
-unresolved — see [Q1–Q3](#design).
+Asset exposes loading progress as both a readable property and a pair of events, rather than
+folding a busy announcement into its own accessible name the way `PendingController` does for
+whole controls. This fits the Card Figma reference, where a loading treatment applies only to the
+`preview` image, not to the whole card — i.e. loading is a per-`swc-asset`-instance concern that
+the embedding parent (Card or any other consumer) is free to represent however fits its own
+content (a full `ProgressCircle`, a lighter visual-only spinner, or nothing at all). Asset itself
+renders no default visual or accessible loading treatment in v1, for standalone or embedded use.
+
+**Mechanism:**
+
+- `loadState` starts at `'loading'` whenever the slotted content is an `<img>`. Asset attaches
+  `load`/`error` listeners to it (on slot assignment, i.e. in the `slotchange` handler already
+  wired for accessible-name resolution) and sets `loadState` to `'loaded'` or `'error'` when one
+  fires.
+- A slotted `<svg>`, or no slotted content at all, has nothing asynchronous to wait for:
+  `loadState` is `'loaded'` immediately.
+- **Timing guarantee:** if the `<img>` is already `complete` (e.g. served from cache) by the time
+  Asset checks, `loadState` reflects `'loaded'`/`'error'` synchronously, but the corresponding
+  `swc-asset-load`/`swc-asset-error` event is still scheduled (microtask) rather than skipped.
+  This means a consumer can always just listen for the event and get exactly one fire per
+  slotted-`<img>` instance, without a separate synchronous check to handle the cached case. The
+  property exists for consumers that want to read current state directly (e.g. on their own first
+  render) rather than only reacting to the transition.
+- `swc-asset-error`'s `detail.src` is read from the `<img>` at error time, mirroring the
+  `DropzoneDragLeaveDetail` pattern of capturing fields synchronously rather than exposing the
+  raw native event, since nothing else about the native `error` event is useful to a consumer here.
+- Swapping the slotted `<img>` after the initial load (already covered by the existing
+  `slotchange`-triggered re-resolution) resets `loadState` to `'loading'` and re-attaches
+  listeners to the new element, the same way accessible-name resolution already re-runs.
+- `loadState` transitions on the native `load`/`error` events only; it does not additionally wait
+  on `HTMLImageElement.decode()`. `load` confirms the fetch succeeded, not that the image has been
+  decoded and is paint-ready — browsers are free to decode independently, and for very large
+  images can end up doing so synchronously at paint time. This gap is normally imperceptible and
+  matches how every major framework's image-load signal works; the plan's own performance guidance
+  (`decoding="async"` on the slotted `<img>`) already pushes decode scheduling to the browser's own
+  idle scheduler rather than Asset trying to strictly guarantee paint-readiness itself. Revisit only
+  if a real, reproducible decode-jank complaint shows up in practice.
+- `loading="lazy"` on the slotted `<img>` needs no special handling: it only defers when the
+  browser starts the fetch (until the element nears the viewport), not the `load`/`error`
+  semantics. `img.complete` correctly stays `false` for a not-yet-started lazy fetch, so the
+  already-complete fast path above doesn't misfire; `loadState` simply stays `'loading'` until the
+  browser actually fetches, however long that takes.
 
 ### Accessibility semantics notes
 
@@ -413,7 +454,10 @@ unresolved — see [Q1–Q3](#design).
   4. None of the above → DEBUG warning, mirroring Thumbnail's "neither alt nor decorative" case.
 
   Exact SVG detection algorithm pending a11y SME sign-off — see [Q4](#architecture-and-behavior).
-- **Open**: loading-state AT exposure (see Q1–Q3).
+- Loading state has no AT exposure of its own (no `aria-busy`, no default accessible name change):
+  the embedding parent owns any busy announcement, matching the "parent owns interactive/visual
+  state" model already used for `disabled`/`focused`/`selected`. See
+  [Decision log](#decision-log).
 
 ---
 
@@ -461,7 +505,7 @@ plan contract pattern this document follows).
 - [x] Changes overview documented (Must ship / Additive)
 - [x] 2nd-gen API decisions drafted
 - [ ] Plan reviewed by at least one other engineer
-- [ ] Loading/pending state design resolved (Q1–Q3)
+- [x] Loading state design resolved (Q1–Q3) — see [Decision log](#decision-log)
 - [x] SVG accessible-name detection algorithm signed off by the team's a11y SME (Q4)
 
 ### API (SWC-2319)
@@ -478,6 +522,14 @@ plan contract pattern this document follows).
 - [ ] Update Card to slot `<swc-asset>` in its `preview` slot, as a live validation target for
       this API while it's being built
 - [ ] Split Card's `card-template.css` preview-slot rule and `card.css` collection-slot rule — see [Behavioral semantics](#behavioral-semantics)
+- [x] `Asset.types.ts`: define `ASSET_LOAD_STATE_VALUES`/`AssetLoadState`
+      (`'loading' | 'loaded' | 'error'`); `Asset.types.ts` or `Asset.base.ts`: define
+      `SWC_ASSET_LOAD_EVENT`/`SWC_ASSET_ERROR_EVENT` constants
+- [x] `Asset.base.ts`: add the readable `loadState` property; attach `load`/`error` listeners to
+      the slotted `<img>` (tracked in `update()`, alongside the existing accessible-name/fit
+      resolution that already re-runs on `slotchange`); dispatch
+      `swc-asset-load`/`swc-asset-error` (with `detail.src` on error) on transition, per the
+      timing guarantee in [Behavioral semantics](#behavioral-semantics)
 
 #### Alignment checks
 
@@ -529,6 +581,11 @@ plan contract pattern this document follows).
       (cover/contain), including `fit="contain"` with a non-transparent `background`
 - [x] VRT coverage for `border-radius` inheritance
 - [x] VRT coverage for `aspect-ratio` including in combination with either `width`, or `height`, or both
+- [x] Unit tests for `loadState` transitions: `<svg>`/no-child immediately `'loaded'`, `<img>`
+      success → `'loaded'` + `swc-asset-load`, `<img>` failure → `'error'` + `swc-asset-error`
+      with `detail.src`
+- [x] Unit test confirming the timing guarantee: an already-`complete` (cached) `<img>` still
+      fires `swc-asset-load` exactly once for a listener attached after connection
 
 ### Documentation (SWC-2321)
 
@@ -546,6 +603,9 @@ plan contract pattern this document follows).
 - [ ] Document that `background` shows around the edges under `fit="contain"` and behind the
       slot before the image resolves, and that pairing a non-transparent `background` with
       `fit="contain"` is the recommended way to get a polished letterboxed/loading look
+- [ ] Document `loadState` and the `swc-asset-load`/`swc-asset-error` events, with a
+      consumer example showing a spinner shown while `loadState === 'loading'` and hidden on
+      `swc-asset-load`/`swc-asset-error`
 
 ### Review (SWC-2322)
 
@@ -561,19 +621,50 @@ plan contract pattern this document follows).
 Only genuinely unresolved items remain here. Everything else has been folded into the section it
 affects.
 
-### Design
-
-| #      | Item | Blocking? | Status | Owner |
-| ------ | ---- | --------- | ------ | ----- |
-| **Q1** | Loading/pending state: exact event name(s) and payload shape | Yes — blocks B-item classification for loading in [Changes overview](#changes-overview) | Open; leaning toward events over an ARIA-busy pattern, not confirmed | Design + implementation |
-| **Q2** | Whether Asset renders any default visual/accessible loading indicator for standalone (non-Card) use | Yes, for standalone use cases | Open | Design + accessibility reviewer |
-| **Q3** | Whether a failed-load (error) state shares the loading event scheme or is a separate concern | No — can resolve after Q1/Q2 | Open | Implementation |
-
 ### Architecture and behavior
 
 | #      | Item | Blocking? | Status | Owner |
 | ------ | ---- | --------- | ------ | ----- |
 | **Q4** | Exact SVG accessible-name detection algorithm (which of `aria-label`/`aria-labelledby`/child `<title>`/existing `role="img"` count as "already labeled") | Yes — blocks finalizing B7 | Author accepts the proposed direction; pending sign-off from the team's a11y SME | Accessibility reviewer |
+
+---
+
+## Decision log
+
+### Q1–Q3: Loading state event names, payload, and default treatment
+
+**Decided:** Asset exposes a readable `loadState` property (`'loading' | 'loaded' | 'error'`,
+reflected as `load-state`) plus two events, `swc-asset-load` and `swc-asset-error`
+(`detail: { src: string }` on error only). Asset renders no default visual or accessible loading
+treatment of its own in v1, standalone or embedded (resolves Q2). A failed load is a third
+`loadState` value sharing the same mechanism, not a separate scheme (resolves Q3).
+
+**Why:**
+
+- `PendingController` (`2nd-gen/packages/core/controllers/pending-controller`) was considered and
+  rejected as a direct fit: it manages a whole control's busy state folded into its accessible
+  name, whereas loading here is a per-`swc-asset`-instance visual concern the embedding parent
+  (Card or otherwise) should represent however fits its own content. Its readable-property pattern
+  (`pendingActive`) did inform the decision to expose `loadState` as a property, not only events.
+- Dropzone (`2nd-gen/packages/core/components/dropzone/Dropzone.types.ts`) is the only existing
+  precedent for custom lifecycle events in 2nd-gen: exported `SWC_<COMPONENT>_<EVENT>_EVENT`
+  constants, a `declare global` `GlobalEventHandlersEventMap` augmentation, and a custom `detail`
+  interface only when specific fields need to survive past the native event (its
+  `DropzoneDragLeaveDetail`). The `swc-asset-*` naming and `detail.src` shape follow that pattern.
+- An events-only design (no property) has a real correctness gap: if the slotted `<img>` is
+  already cached, the native `load` fires before a consumer's listener can attach, and a
+  spinner driven only by "wait for the event" would never hide. `loadState` gives a consumer a
+  synchronous way to check current status; the **timing guarantee** that
+  `swc-asset-load`/`swc-asset-error` still fires exactly once even for an already-`complete` image
+  (scheduled via microtask rather than skipped) means a consumer can also just always listen for
+  the event, without special-casing the cached case.
+- No `aria-busy` or other AT signal was added for the loading state itself: it stays purely
+  visual/behavioral, matching the "parent owns interactive/visual state" model already used for
+  `disabled`/`focused`/`selected` (see [Accessibility semantics notes](#accessibility-semantics-notes)).
+
+**Affects:** [Changes overview](#changes-overview) (B12), [Public API](#public-api) and the new
+Events table, [Behavioral semantics](#behavioral-semantics), [Accessibility semantics
+notes](#accessibility-semantics-notes), [Implementation checklist](#implementation-checklist).
 
 ---
 

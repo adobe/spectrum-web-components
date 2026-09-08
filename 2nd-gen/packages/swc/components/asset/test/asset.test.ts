@@ -579,3 +579,135 @@ export const NoConfigurationDoesNotCollapseInSizedContainerTest: Story = {
     );
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Load state
+// ──────────────────────────────────────────────────────────────
+
+export const LoadStateSvgOrNoChildTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <svg role="img" aria-label="Icon" viewBox="0 0 10 10">
+        <circle cx="5" cy="5" r="4" />
+      </svg>
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'loadState is "loaded" immediately for a slotted svg, nothing to wait for',
+      () => {
+        expect(asset.loadState, 'loadState is loaded').toBe('loaded');
+      }
+    );
+  },
+};
+
+export const LoadStateImgSuccessTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'fires swc-asset-load and resolves loadState to "loaded" on success',
+      async () => {
+        // Attach the listener synchronously, before awaiting anything, so a
+        // fast/already-resolved image can't fire and be missed before this
+        // runs (the same race the timing guarantee protects consumers from).
+        const asset = canvasElement.querySelector('swc-asset') as Asset;
+        const loadFired = new Promise<void>((resolve) => {
+          asset.addEventListener('swc-asset-load', () => resolve(), {
+            once: true,
+          });
+        });
+
+        await asset.updateComplete;
+        await loadFired;
+
+        expect(asset.loadState, 'loadState is loaded').toBe('loaded');
+      }
+    );
+  },
+};
+
+export const LoadStateImgErrorTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/does-not-exist.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'fires swc-asset-error with detail.src and resolves loadState to "error" on failure',
+      async () => {
+        const asset = canvasElement.querySelector('swc-asset') as Asset;
+        const errorEvent = new Promise<CustomEvent<{ src: string }>>(
+          (resolve) => {
+            asset.addEventListener(
+              'swc-asset-error',
+              (event) => resolve(event as CustomEvent<{ src: string }>),
+              { once: true }
+            );
+          }
+        );
+
+        await asset.updateComplete;
+        const event = await errorEvent;
+
+        expect(asset.loadState, 'loadState is error').toBe('error');
+        expect(
+          event.detail.src,
+          'detail.src identifies the failed image'
+        ).toContain('does-not-exist.png');
+      }
+    );
+  },
+};
+
+export const LoadStateCachedImageTimingGuaranteeTest: Story = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'still fires swc-asset-load exactly once for an img that is already complete when slotted',
+      async () => {
+        // Pre-load the image outside any <swc-asset>, so it's already
+        // `complete` by the time the component ever sees it - the exact
+        // "served from cache" scenario the timing guarantee covers.
+        const preloaded = document.createElement('img');
+        preloaded.src = './images/card-preview.jpg';
+        preloaded.alt = 'Preview';
+        await new Promise<void>((resolve, reject) => {
+          preloaded.addEventListener('load', () => resolve(), { once: true });
+          preloaded.addEventListener(
+            'error',
+            () => reject(new Error('preload failed')),
+            { once: true }
+          );
+        });
+
+        const asset = document.createElement('swc-asset') as Asset;
+        asset.appendChild(preloaded);
+
+        const loadFired = new Promise<void>((resolve) => {
+          asset.addEventListener('swc-asset-load', () => resolve(), {
+            once: true,
+          });
+        });
+
+        canvasElement.querySelector('div')?.appendChild(asset);
+        await asset.updateComplete;
+        await loadFired;
+
+        expect(
+          asset.loadState,
+          'loadState resolves to loaded for the pre-loaded image'
+        ).toBe('loaded');
+      }
+    );
+  },
+};

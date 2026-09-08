@@ -37,8 +37,10 @@
 ::slotted(*) {
   box-sizing: border-box;
   display: block;
+  place-content: center;
   inline-size: 100%;
   block-size: 100%;
+  text-align: center;
   object-fit: cover;
 }
 
