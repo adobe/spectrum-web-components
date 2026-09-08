@@ -77,6 +77,8 @@ Setting more than one of `accessible-labelledby`, `accessible-label`, and a slot
 - **Native click-to-focus** — when the slotted label is the active source, it renders as a real `<label for>`, so clicking the label focuses the field natively.
 - **Dev-mode warnings** — a field with no accessible-name source at all triggers a console warning; so does a field that sets more than one of `accessible-labelledby`, `accessible-label`, and a slotted label, naming which source wins and which will not be read.
 
+> **Known axe-core false positive.** A field named only via a resolved `accessible-labelledby` fails automated axe-core scans with a "Form element does not have a label" (`label` rule) violation, even though the name resolves correctly in real browsers and assistive technology. axe-core inspects DOM attributes and has no standardized way to read `ariaLabelledByElements`, the ARIA element-reflection API this mixin uses. Exclude the specific host from the `label` rule with a written `// reason:` comment (see the forms-strategy RFC's axe-core policy, CONTRIBUTOR-DOCS "3.4 axe-core policy") rather than disabling the rule globally; verify the name with manual AT testing instead.
+
 ### Best practices
 
 - Prefer a slotted label for ordinary fields; reserve `accessible-label`/`accessible-labelledby` for fields with no visible label of their own or a name composed from elements the field doesn't own (for example, a grid cell named by its row and column headers).

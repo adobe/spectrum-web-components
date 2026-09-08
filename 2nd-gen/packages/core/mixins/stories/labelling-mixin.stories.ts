@@ -89,12 +89,29 @@ export const NameSourcePrecedence: Story = {
     <div id="labelling-mixin-row-header">Name</div>
     <div id="labelling-mixin-col-header">Billing address</div>
     <demo-labelling-host
+      id="labelling-mixin-labelledby-host"
       accessible-labelledby="labelling-mixin-row-header labelling-mixin-col-header"
     >
       <span slot="label">Ignored: accessible-labelledby wins</span>
     </demo-labelling-host>
   `,
   tags: ['behaviors'],
+  parameters: {
+    a11y: {
+      // reason: axe-core cannot read the ARIA element-reflection API
+      // (`ariaLabelledByElements`), which is how `LabellingMixin` resolves
+      // `accessible-labelledby`. It only inspects attributes, so it reports a
+      // false "Form element does not have a label" ("label" rule) violation
+      // on this host even though the name resolves correctly in real
+      // browsers and assistive technology. See the forms-strategy RFC's
+      // axe-core policy (CONTRIBUTOR-DOCS, "3.4 axe-core policy") for the
+      // documented false-positive list. Remove once axe-core adds ARIAMixin
+      // element-reference support (review quarterly).
+      exclude: {
+        label: ['#labelling-mixin-labelledby-host'],
+      },
+    },
+  },
 };
 NameSourcePrecedence.storyName = 'Name source precedence';
 
@@ -107,6 +124,7 @@ export const ConflictingLabelSources: Story = {
       External label (check console)
     </div>
     <demo-labelling-host
+      id="labelling-mixin-conflict-labelledby-host"
       accessible-label="Different text (check console)"
       accessible-labelledby="labelling-mixin-conflict-header"
     ></demo-labelling-host>
@@ -114,6 +132,7 @@ export const ConflictingLabelSources: Story = {
       External label (check console)
     </div>
     <demo-labelling-host
+      id="labelling-mixin-conflict-labelledby-slot-host"
       accessible-label="Different text (check console)"
       accessible-labelledby="labelling-mixin-conflict-header-2"
     >
@@ -121,6 +140,20 @@ export const ConflictingLabelSources: Story = {
     </demo-labelling-host>
   `,
   tags: ['behaviors'],
+  parameters: {
+    a11y: {
+      // reason: same axe-core / ariaLabelledByElements limitation as
+      // `NameSourcePrecedence` above — these two hosts resolve their
+      // accessible name via `accessible-labelledby`, which axe-core cannot
+      // read.
+      exclude: {
+        label: [
+          '#labelling-mixin-conflict-labelledby-host',
+          '#labelling-mixin-conflict-labelledby-slot-host',
+        ],
+      },
+    },
+  },
 };
 ConflictingLabelSources.storyName = 'Conflicting label sources';
 

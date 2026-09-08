@@ -55,6 +55,8 @@ Setting more than one of `accessible-labelledby`, `accessible-label`, and a slot
 - **One accessible-name writer** — `accessible-labelledby` &gt; `accessible-label` &gt; slotted label, in that order; exactly one source is wired at a time.
 - **Dev-mode warnings** — a field with no visible label, no `accessible-label`, and no `accessible-labelledby` triggers a console warning; so does a field that sets more than one of `accessible-labelledby`, `accessible-label`, and a slotted label, naming which source wins and which will not be read.
 
+> **Known axe-core false positive.** A field named only via `accessible-labelledby` fails automated axe-core scans with a "Form element does not have a label" (`label` rule) violation, even though the name resolves correctly in real browsers and assistive technology — axe-core inspects DOM attributes and has no standardized way to read `ariaLabelledByElements`, the ARIA element-reflection API `LabellingMixin` uses. The affected stories in this file (`Labelling`, `ConflictingLabelSources`, `Accessibility`) exclude the specific host from the `label` rule with a written `// reason:` comment, per the forms-strategy RFC's axe-core policy (CONTRIBUTOR-DOCS "3.4 axe-core policy"), rather than disabling the rule globally.
+
 ### Best practices
 
 - Prefer a slotted `label` for ordinary fields; reserve `accessible-label`/`accessible-labelledby` for fields with no visible label of their own or a name composed from elements the field doesn't own.

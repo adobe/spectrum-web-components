@@ -104,12 +104,28 @@ export const Labelling: Story = {
     <div id="labelling-row-header">Name</div>
     <div id="labelling-col-header">Billing address</div>
     <swc-text-field
+      id="labelling-labelledby-field"
       accessible-labelledby="labelling-row-header labelling-col-header"
     ></swc-text-field>
   `,
   tags: ['options'],
   parameters: {
     flexLayout: 'row-wrap',
+    a11y: {
+      // reason: axe-core cannot read the ARIA element-reflection API
+      // (`ariaLabelledByElements`), which is how `LabellingMixin` resolves
+      // `accessible-labelledby` onto the shadow `<input>`. It only inspects
+      // attributes, so it reports a false "Form element does not have a
+      // label" ("label" rule) violation on this host even though the name
+      // resolves correctly in real browsers and assistive technology. See
+      // the forms-strategy RFC's axe-core policy (CONTRIBUTOR-DOCS,
+      // "3.4 axe-core policy") for the documented false-positive list.
+      // Remove once axe-core adds ARIAMixin element-reference support
+      // (review quarterly).
+      exclude: {
+        label: ['#labelling-labelledby-field'],
+      },
+    },
   },
 };
 
@@ -149,11 +165,13 @@ export const ConflictingLabelSources: Story = {
     </swc-text-field>
     <div id="text-field-conflict-header">External label (check console)</div>
     <swc-text-field
+      id="conflict-labelledby-field"
       accessible-label="Different text (check console)"
       accessible-labelledby="text-field-conflict-header"
     ></swc-text-field>
     <div id="text-field-conflict-header-2">External label (check console)</div>
     <swc-text-field
+      id="conflict-labelledby-slot-field"
       accessible-label="Different text (check console)"
       accessible-labelledby="text-field-conflict-header-2"
     >
@@ -163,6 +181,17 @@ export const ConflictingLabelSources: Story = {
   tags: ['behaviors'],
   parameters: {
     flexLayout: 'row-wrap',
+    a11y: {
+      // reason: same axe-core / ariaLabelledByElements limitation as
+      // `Labelling` above — these two hosts resolve their accessible name via
+      // `accessible-labelledby`, which axe-core cannot read.
+      exclude: {
+        label: [
+          '#conflict-labelledby-field',
+          '#conflict-labelledby-slot-field',
+        ],
+      },
+    },
   },
 };
 ConflictingLabelSources.storyName = 'Conflicting label sources';
@@ -176,11 +205,20 @@ export const Accessibility: Story = {
     <div id="accessibility-row-header">Name</div>
     <div id="accessibility-col-header">Billing address</div>
     <swc-text-field
+      id="accessibility-labelledby-field"
       accessible-labelledby="accessibility-row-header accessibility-col-header"
     ></swc-text-field>
   `,
   tags: ['a11y'],
   parameters: {
     flexLayout: 'row-wrap',
+    a11y: {
+      // reason: same axe-core / ariaLabelledByElements limitation as
+      // `Labelling` above — this host resolves its accessible name via
+      // `accessible-labelledby`, which axe-core cannot read.
+      exclude: {
+        label: ['#accessibility-labelledby-field'],
+      },
+    },
   },
 };
