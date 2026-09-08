@@ -533,3 +533,49 @@ export const InvalidAspectRatioWarningTest: Story = {
     );
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Sizing fallback
+// ──────────────────────────────────────────────────────────────
+
+export const NoConfigurationDoesNotCollapseTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'renders at a non-zero size standalone with no aspectRatio/width/height and no ancestor default',
+      () => {
+        const rect = asset.getBoundingClientRect();
+        expect(rect.width, 'width is non-zero').toBeGreaterThan(0);
+        expect(rect.height, 'height is non-zero').toBeGreaterThan(0);
+      }
+    );
+  },
+};
+
+export const NoConfigurationDoesNotCollapseInSizedContainerTest: Story = {
+  render: () => html`
+    <div style="display: flex; inline-size: 200px; block-size: 150px;">
+      <swc-asset>
+        <img src="./images/avatar-preview.png" alt="Preview" />
+      </swc-asset>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'renders at a non-zero size inside a sized flex container, standing in for an embedding parent (e.g. Card)',
+      () => {
+        const rect = asset.getBoundingClientRect();
+        expect(rect.width, 'width is non-zero').toBeGreaterThan(0);
+        expect(rect.height, 'height is non-zero').toBeGreaterThan(0);
+      }
+    );
+  },
+};

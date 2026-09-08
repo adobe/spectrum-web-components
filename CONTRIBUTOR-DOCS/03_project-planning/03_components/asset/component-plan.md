@@ -462,7 +462,7 @@ plan contract pattern this document follows).
 - [x] 2nd-gen API decisions drafted
 - [ ] Plan reviewed by at least one other engineer
 - [ ] Loading/pending state design resolved (Q1–Q3)
-- [ ] SVG accessible-name detection algorithm signed off by the team's a11y SME (Q4)
+- [x] SVG accessible-name detection algorithm signed off by the team's a11y SME (Q4)
 
 ### API (SWC-2319)
 
@@ -481,7 +481,7 @@ plan contract pattern this document follows).
 
 #### Alignment checks
 
-- [ ] Confirm the exact SVG detection algorithm with the a11y SME before finalizing (Q4)
+- [x] Confirm the exact SVG detection algorithm with the a11y SME before finalizing (Q4)
 
 ### Styling (SWC-2319)
 
@@ -513,20 +513,22 @@ plan contract pattern this document follows).
 
 ### Testing (SWC-2320)
 
-- [ ] Unit tests for `aspectRatio`/`width`/`height`/`fit`/`background` behavior, including the
+- [x] Unit tests for `aspectRatio`/`width`/`height`/`fit`/`background` behavior, including the
       `square` keyword and `:`-to-`/` normalization
-- [ ] Unit tests for each accessible-name detection branch (labeled `img`, labeled `svg`,
+- [x] Unit tests for each accessible-name detection branch (labeled `img`, labeled `svg`,
       `decorative`, DEBUG-warning case)
-- [ ] Unit tests for each new DEBUG-warning path: invalid `fit`/`background`, `aspectRatio` +
+- [x] Unit tests for each new DEBUG-warning path: invalid `fit`/`background`, `aspectRatio` +
       `width` + `height` combined, multiple/unsupported slotted children
-- [ ] Confirm an unconfigured `<swc-asset>` (no `aspectRatio`/`width`/`height`, no ancestor
-      default) doesn't collapse to zero size, across the layout contexts it's expected to be used
-      in (standalone, inside Card's `preview` slot)
-- [ ] Playwright `asset.a11y.spec.ts` with `toMatchAriaSnapshot`
-- [ ] VRT coverage for `background` treatments (transparent/solid/checkerboard) and `fit`
+- [x] Confirm an unconfigured `<swc-asset>` (no `aspectRatio`/`width`/`height`, no ancestor
+      default) doesn't collapse to zero size, standalone and inside a sized flex container. Not
+      literally tested inside Card's `preview` slot, since Card's own Asset integration
+      (`seckles/swc-card` branch) isn't merged into this repo yet; the sized-container case stands
+      in for that embedding context
+- [x] Playwright `asset.a11y.spec.ts` with `toMatchAriaSnapshot`
+- [x] VRT coverage for `background` treatments (transparent/solid/checkerboard) and `fit`
       (cover/contain), including `fit="contain"` with a non-transparent `background`
-- [ ] VRT coverage for `border-radius` inheritance
-- [ ] VRT coverage for `aspect-ratio` including in combination with either `width`, or `height`, or both
+- [x] VRT coverage for `border-radius` inheritance
+- [x] VRT coverage for `aspect-ratio` including in combination with either `width`, or `height`, or both
 
 ### Documentation (SWC-2321)
 

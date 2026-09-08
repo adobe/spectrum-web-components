@@ -45,3 +45,8 @@
 :host([fit="contain"]) ::slotted(*) {
   object-fit: contain;
 }
+
+/* Hide slotted items after the first one */
+::slotted(:nth-child(n + 2)) {
+  display: none;
+}
