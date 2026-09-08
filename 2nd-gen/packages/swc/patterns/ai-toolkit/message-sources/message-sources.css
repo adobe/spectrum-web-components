@@ -32,10 +32,10 @@
 
 .swc-MessageSources-toggle {
   display: inline-flex;
-  gap: var(--swc-message-sources-toggle-gap, token("spacing-100"));
+  gap: token("spacing-100");
   align-items: center;
   inline-size: fit-content;
-  padding: var(--swc-message-sources-toggle-padding, 3px) token("spacing-100");
+  padding: token("base-padding-vertical-extra-small") token("spacing-100");
   font-family: token("sans-serif-font");
   font-size: token("font-size-100");
   font-weight: token("bold-font-weight");

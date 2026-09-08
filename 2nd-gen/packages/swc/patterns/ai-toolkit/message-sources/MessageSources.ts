@@ -35,9 +35,6 @@ import styles from './message-sources.css';
  * @slot - Anchor (`<a>`) elements projected into a numbered list when expanded
  * @fires swc-message-sources-toggle - Dispatched when the panel is toggled.
  * Detail: `{ open: boolean }`
- *
- * @cssprop --swc-message-sources-toggle-gap - Gap between the toggle's chevron and label. Defaults to `spacing-100`.
- * @cssprop --swc-message-sources-toggle-padding - Padding of the toggle button. Defaults to 3px (block) and `spacing-100` (inline).
  * @since 2.0.0-beta.3
  */
 export class MessageSources extends SpectrumElement {
