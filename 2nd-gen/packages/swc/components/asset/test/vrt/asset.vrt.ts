@@ -60,12 +60,45 @@ const renderFitBackground = (
   </swc-asset>
 `;
 
+// Shared inline SVG for every svg-content row below. The viewBox is wide for
+// the same reason the landscape photo is used above: a square source
+// wouldn't show any visible difference between cover and contain, or between
+// aspect-ratio/width/height combinations.
+const sampleSvg = (label: string) => html`
+  <svg role="img" aria-label=${label} viewBox="0 0 200 80">
+    <rect width="200" height="80" fill="#292929" />
+    <circle cx="100" cy="40" r="30" fill="#ffffff" />
+  </svg>
+`;
+
+// Same matrix, but with a slotted <svg> instead of an <img>: `object-fit`
+// doesn't apply to a directly-embedded <svg>, so `fit` is implemented there
+// via `preserveAspectRatio` instead (see AssetBase#applyFitToSvg) - a
+// genuinely different code path that needs its own coverage.
+const renderFitBackgroundSvg = (
+  fit: 'cover' | 'contain',
+  background: 'transparent' | 'solid' | 'checkerboard'
+) => html`
+  <swc-asset fit=${fit} background=${background} width="120px" height="120px">
+    ${sampleSvg(`Fit: ${fit}, background: ${background}`)}
+  </swc-asset>
+`;
+
 // `.swc-Asset` has `border-radius: inherit; overflow: hidden`, so a
 // host-level `border-radius` set by ordinary consumer CSS is expected to
 // clip slotted content to match.
 const renderBorderRadius = () => html`
   <swc-asset width="120px" height="120px" style="border-radius: 24px;">
     <img src=${PORTRAIT_SRC} alt="Rounded corners" />
+  </swc-asset>
+`;
+
+// Same as above, but for a slotted <svg>: covers the interaction between the
+// wrapper's `overflow: hidden` clip and an SVG's own default UA-stylesheet
+// overflow behavior, which an <img> doesn't have.
+const renderBorderRadiusSvg = () => html`
+  <swc-asset width="120px" height="120px" style="border-radius: 24px;">
+    ${sampleSvg('Rounded corners')}
   </swc-asset>
 `;
 
@@ -99,6 +132,34 @@ const renderAspectRatioWithHeight = () => html`
   </swc-asset>
 `;
 
+// Same sizing matrix, but for a slotted <svg>: sizing itself is resolved on
+// `.swc-Asset` regardless of content type, but this confirms an <svg> - which
+// has its own viewBox/intrinsic-ratio concept, unlike a raster <img> - is
+// forced to fill the resulting box the same way.
+const renderAspectRatioOnlySvg = () => html`
+  <swc-asset aspect-ratio="1/1">${sampleSvg('Aspect ratio only')}</swc-asset>
+`;
+
+const renderWidthOnlySvg = () => html`
+  <swc-asset width="120px">${sampleSvg('Width only')}</swc-asset>
+`;
+
+const renderHeightOnlySvg = () => html`
+  <swc-asset height="120px">${sampleSvg('Height only')}</swc-asset>
+`;
+
+const renderAspectRatioWithWidthSvg = () => html`
+  <swc-asset aspect-ratio="3/2" width="40px">
+    ${sampleSvg('Aspect ratio with width')}
+  </swc-asset>
+`;
+
+const renderAspectRatioWithHeightSvg = () => html`
+  <swc-asset aspect-ratio="3/2" height="80px">
+    ${sampleSvg('Aspect ratio with height')}
+  </swc-asset>
+`;
+
 // `decorative` and `accessibleLabel` are deliberately not covered anywhere in
 // this file: neither produces a pixel difference (decorative only toggles
 // `aria-hidden`; accessibleLabel only sets `alt`/`aria-label` on the slotted
@@ -126,8 +187,30 @@ const permutationContent = () => html`
     'Fit / background'
   )}
   ${row(
+    [
+      captioned(
+        renderFitBackgroundSvg('cover', 'transparent'),
+        'cover / transparent'
+      ),
+      captioned(
+        renderFitBackgroundSvg('contain', 'transparent'),
+        'contain / transparent'
+      ),
+      captioned(renderFitBackgroundSvg('contain', 'solid'), 'contain / solid'),
+      captioned(
+        renderFitBackgroundSvg('contain', 'checkerboard'),
+        'contain / checkerboard'
+      ),
+    ],
+    'Fit / background (svg)'
+  )}
+  ${row(
     [captioned(renderBorderRadius(), 'border-radius: 24px')],
     'Border radius'
+  )}
+  ${row(
+    [captioned(renderBorderRadiusSvg(), 'border-radius: 24px')],
+    'Border radius (svg)'
   )}
   ${row(
     [
@@ -138,6 +221,16 @@ const permutationContent = () => html`
       captioned(renderAspectRatioWithHeight(), 'aspect-ratio + height'),
     ],
     'Sizing'
+  )}
+  ${row(
+    [
+      captioned(renderAspectRatioOnlySvg(), 'aspect-ratio only'),
+      captioned(renderWidthOnlySvg(), 'width only'),
+      captioned(renderHeightOnlySvg(), 'height only'),
+      captioned(renderAspectRatioWithWidthSvg(), 'aspect-ratio + width'),
+      captioned(renderAspectRatioWithHeightSvg(), 'aspect-ratio + height'),
+    ],
+    'Sizing (svg)'
   )}
 `;
 
@@ -151,6 +244,16 @@ const forcedColorsContent = () => html`
       ),
     ],
     'Fit / background'
+  )}
+  ${row(
+    [
+      captioned(renderFitBackgroundSvg('contain', 'solid'), 'contain / solid'),
+      captioned(
+        renderFitBackgroundSvg('contain', 'checkerboard'),
+        'contain / checkerboard'
+      ),
+    ],
+    'Fit / background (svg)'
   )}
 `;
 
