@@ -71,6 +71,7 @@
 - **Q2** in [Design](#design): action + auto-dismiss. Warn-only vs. hard-disable timeout when an action is present.
 - **Q3** in [Design](#design): action API shape. `action` slot (light DOM) vs. `action-label`/`swc-action` props.
 - **Q7** in [Design](#design): timer pause scope. Per-toast (a11y doc's current recommendation) vs. region-wide (RSP S2 reality).
+- **Q9** in [Design](#design): message content slot. Default slot (current plan, may lack an ID-bearing wrapper) vs. a named slot (guarantees one).
 
 ---
 
@@ -147,6 +148,16 @@ This full modifier surface will not be carried forward to 2nd-gen.
 | `@spectrum-web-components/icon` | 1.12.2 | Declared in `package.json` but not directly imported anywhere in the toast package; likely a transitive requirement of `icons-workflow` |
 | `@spectrum-web-components/icons-workflow` | 1.12.2 | `sp-icon-info`, `sp-icon-alert`, `sp-icon-checkmark-circle` |
 | `@spectrum-web-components/shared` | 1.12.2 | `FocusVisiblePolyfillMixin` |
+| `SlotPresenceController` | already built | Gates whether the `action` slot has content, for the timeout-plus-action dev warning (Q2) and whether the action button participates in the Tab order. See [`2nd-gen/packages/core/controllers/slot-presence-controller/`](../../../../2nd-gen/packages/core/controllers/slot-presence-controller/slot-presence-controller.mdx). |
+| `SlotAttributePropagationController` | already built | Propagates the host's `size`/`variant` onto the slotted `action` button, so it styles as expected without the consumer setting those attributes twice. See [`2nd-gen/packages/core/controllers/slot-attribute-propagation-controller/`](../../../../2nd-gen/packages/core/controllers/slot-attribute-propagation-controller/slot-attribute-propagation-controller.mdx). |
+| `PageScrollLockController` | already built | Reference-counted page-scroll lock for the expanded view, matching RSP S2's `useModalOverlay` ("prevent scroll... since we take over the whole screen"). Already used by `swc-popover` for the same kind of stacked blocking surface. See [`2nd-gen/packages/core/controllers/page-scroll-lock-controller/`](../../../../2nd-gen/packages/core/controllers/page-scroll-lock-controller/page-scroll-lock-controller.mdx). |
+| `registerDismissible()` / `unregisterDismissible()` / `isTopDismissible()` (`dismissibleStack`, `2nd-gen/packages/core/utils/dismissible-stack.ts`) | already built | Coordinates `Escape`-to-collapse in the expanded view with other open top-layer surfaces (a popover or tooltip open at the same time), so only the topmost one closes. Already shared by `swc-popover` and `swc-tooltip`. |
+| `getActiveElement()` / `deepContains()` (`2nd-gen/packages/core/utils/`) | already built | Shadow-DOM-aware focus tracking, needed to know which toast currently has focus and what was focused before the user entered the region (focus-management-on-close). Already used by `swc-popover`. |
+| `focusableSelector` (`2nd-gen/packages/core/utils/focusable-selectors.ts`) | already built | Spec-based focusable-element selector, needed to enumerate the expanded list's focusable elements for the focus trap. Already used by `prompt-field`. |
+| `uniqueId()` (`2nd-gen/packages/swc/utils/id.ts`) | already built | Generates the content-element ID the host's `aria-labelledby` references. |
+| `warnIf()` / `validateEnum()` (`2nd-gen/packages/core/utils/dev-validation.ts`) | already built | The established dev-mode warning framework; use for variant validation and the timeout-plus-action dev warning (Q2) rather than a hand-rolled `console.warn`. |
+
+None of the shared core resources above are sequenced dependencies; all are already built and available now.
 
 ---
 
@@ -268,8 +279,8 @@ Action button (when present): secondary, outline, `static-color="white"`. Confir
 
 | Slot | Content | Notes |
 | ---- | ------- | ----- |
-| default | Toast message text | **Confirmed.** |
-| `action` | Optional action button | **Open question**, Q3: may become `action-label`/`swc-action` props instead |
+| default | Toast message text | **Open question**, Q9: staying the default slot means content can be a bare text node with no element to hold the `aria-labelledby` target ID (falls back to `aria-label`, see [Accessibility semantics notes](#accessibility-semantics-notes-2nd-gen)); a named slot would let the component guarantee a light-DOM wrapper instead. |
+| `action` | Optional action button | **Open question**, Q3: may become `action-label`/`swc-action` props instead. If the slot is kept, presence is gated by `SlotPresenceController` and `size`/`variant` are propagated onto the slotted button by `SlotAttributePropagationController`, both already built; see [Dependencies](#dependencies). |
 
 #### CSS custom properties (2nd-gen)
 
@@ -290,21 +301,24 @@ No properties are exposed in the initial set. Add a `--swc-toast-*` property onl
 - Matches the event set of other visibility-toggling components: `swc-open` before the enter transition plays, `swc-after-open` once it completes, `swc-close` (cancelable) before the exit transition plays, `swc-after-close` once it completes.
 - Text wrapping is automatic, not an option. Content wraps naturally within whatever `max-inline-size` the host is given (directly stylable from outside; no `--swc-*` custom property, see [CSS custom properties (2nd-gen)](#css-custom-properties-2nd-gen)); no `width` property exists on `sp-toast` in 1st-gen or on `Toast` in RSP S2. Long unbroken words specifically need `overflow-wrap`/`word-break` (SWC-475, see [Styling](#styling)) on top of normal wrapping.
 - No `placement` property. Confirmed absent from 1st-gen `sp-toast`'s own API: the 1st-gen story's `placement` values (bottom/left/right/top) belong to `overlay-trigger`, an unrelated demo wrapper, not `sp-toast` itself. RSP's `placement` (`top`/`bottom`/`top end`/`bottom end`) lives on `ToastContainer`, never on individual `Toast`. Placement is a future container-level concern; see Q6.
-- Peek stack: collapsed with two or more toasts queued, only the front toast renders as a real, interactive alertdialog; the rest render as decorative `role="presentation"` layers with no content. Confirmed against RSP S2's `Toast.tsx` (only the front toast gets the full alertdialog treatment while collapsed; every other toast renders `role="presentation"` instead).
-- An expand control appears on the front toast once two or more toasts are queued. Activating it moves focus to that toast's own host (since the control itself disappears once expanded) and opens every toast into a full list, where each becomes its own real alertdialog.
-- The expanded view takes over the screen: a dismissible scrim, <kbd>Escape</kbd>, and a dedicated Collapse control all collapse it, and focus is contained within it while open (RSP S2: `FocusScope`/`useModalOverlay`). Collapsing moves focus to the container region, not to whatever was focused before expanding (RSP S2: `collapse()` calls `regionRef.current?.focus()`).
+- Every queued toast stays tracked in the queue, with no cap; only a few are ever rendered as full content. RSP S2's own `ToastQueue` is explicitly constructed with `maxVisibleToasts: Infinity` (the primitive's own default is 1, a single visible toast; S2 overrides it), and only the front two peek positions plus the front toast itself render as anything visible.
+- New toasts join the front of the queue, not the back (RSP S2: `queue.unshift(toast)` in `useToastState.ts`), so adding a toast while one is already showing immediately promotes the new one to front and demotes the old one behind it. This is intentional, not a bug: a [reported issue](https://github.com/adobe/react-spectrum/issues/7917) treats it as confusing UX, but there is no FIFO "wait your turn" queuing in the source.
+- Peek stack: collapsed with two or more toasts queued, only the front toast renders as a real, interactive alertdialog; the two behind it render as decorative `role="presentation"` layers with no content. Anything further back stays in the DOM at `opacity: 0` rather than being removed (RSP S2: `opacity: index >= 3 ? 0 : 1`), to support a smooth transition if it's later promoted forward; see Q8. Confirmed against RSP S2's `Toast.tsx` (only the front toast gets the full alertdialog treatment while collapsed; every other toast renders `role="presentation"` instead).
+- An expand control appears on the front toast once two or more toasts are queued, laid out on its own row below the message with the action button (RSP S2: `gridTemplateAreas: ['content content content', 'expand . action']`). Activating it moves focus to that toast's own host (since the control itself disappears once expanded) and opens every toast into a full list, where each becomes its own real alertdialog.
+- The expanded view takes over the screen: a dismissible scrim, <kbd>Escape</kbd>, and a dedicated Collapse control all collapse it, and focus is contained within it while open (RSP S2: `FocusScope`/`useModalOverlay`). `Escape` handling should go through the shared `dismissibleStack` (`registerDismissible()`/`isTopDismissible()`) so it coordinates correctly with a popover or tooltip also open at the same time, and the screen-takeover itself should use `PageScrollLockController` for the scroll lock, both already built; see [Dependencies](#dependencies). Collapsing moves focus to the container region, not to whatever was focused before expanding (RSP S2: `collapse()` calls `regionRef.current?.focus()`).
 - The expanded view also collapses automatically once the queue empties, without that focus redirect: a separate code path from the explicit collapse triggers above (RSP S2: a queue-subscription effect calls the overlay state's `close()` directly).
 - The queue exposes a `clear()` operation that empties every queued toast at once, surfaced via a Clear all control in the expanded view (RSP S2: `queue.clear()`). This is a queue-level method, not an instance method on `swc-toast` itself; 1st-gen's `close()` (single toast) has no equivalent for the whole queue.
-- When a focused toast closes (close button, action button, or auto-dismiss) and other toasts remain, focus moves to the nearest still-open toast: the newer one in front of it if there is one, otherwise the older one behind it. If the user is in pointer modality, focus instead leaves the region entirely, back to whatever was focused before the user entered it, specifically so the remaining toasts' timers don't appear stuck (region-wide pause is tied to focus staying within the region; see Q7). RSP S2's `useToastRegion.ts` branches this way explicitly.
+- When a focused toast closes (close button, action button, or auto-dismiss) and other toasts remain, focus moves to the nearest still-open toast: the newer one in front of it if there is one, otherwise the older one behind it. If the user is in pointer modality, focus instead leaves the region entirely, back to whatever was focused before the user entered it, specifically so the remaining toasts' timers don't appear stuck (region-wide pause is tied to focus staying within the region; see Q7). RSP S2's `useToastRegion.ts` branches this way explicitly. Tracking which toast currently has focus, and what was focused before the user entered the region, should use the shared `getActiveElement()`/`deepContains()` utilities (shadow-DOM-aware); the expanded list's focus trap should enumerate candidates with the shared `focusableSelector`. All already built; see [Dependencies](#dependencies).
 - When the last toast closes and the queue empties, focus always returns to whatever was focused before the user entered the region, regardless of modality (RSP S2: tracked as the region's `focusWithin` `relatedTarget` when focus first entered it).
 - Toast's own enter/exit animation gates `swc-after-open`/`swc-after-close` on the host's CSS transition completion via the existing `runAfterTransition` core utility (`2nd-gen/packages/core/utils/transition.ts`), the same mechanism `swc-popover` and `swc-tooltip` already share for their identical event pairs. No new infrastructure needed here.
 - Repositioning a toast between peek, front, and expanded-list position is a separate, harder problem: no existing 2nd-gen component does this kind of cross-position repositioning (checked Accordion, the closest analog; it has none). RSP S2 wraps queue-level state changes (add/remove/expand/collapse) in the View Transitions API for a smooth cross-position morph, falling back to no animation at all where unsupported. Whether `swc-toast` does the same or accepts an instant swap between positions is Q8.
+- Navigating the expanded list uses <kbd>Tab</kbd> only; arrow keys are not used. `FocusgroupNavigationController` (the shared roving-tabindex/arrow-key controller used by `tabs`, `action-group`, and others) does not apply here for exactly that reason, it's built for arrow-key composite widgets, not this Tab-only model, so it's deliberately not a dependency.
 
 ### Accessibility semantics notes (2nd-gen)
 
 See [Toast accessibility migration analysis](./accessibility-migration-analysis.md) for the full spec.
 
-- Host naming uses `aria-labelledby` referencing a content-element ID, falling back to `aria-label` from slot text when no explicit ID is available. RSP S2 splits this further into a separate `aria-labelledby` (title) and `aria-describedby` (description) element; `swc-toast`'s single content ID is a deliberate simplification, since it has one default slot for message text rather than separate title/description slots.
+- Host naming uses `aria-labelledby` referencing a content-element ID, generated with the shared `uniqueId()` utility (see [Dependencies](#dependencies)), falling back to `aria-label` from slot text when no explicit ID is available. RSP S2 splits this further into a separate `aria-labelledby` (title) and `aria-describedby` (description) element; `swc-toast`'s single content ID is a deliberate simplification, since it has one default slot for message text rather than separate title/description slots.
 - Collapsing the expanded view moves focus to the container region (RSP S2: `collapse()` calls `regionRef.current?.focus()`), not to whatever was focused before expanding.
 - The container region is discoverable via landmark navigation (<kbd>F6</kbd>/<kbd>Shift</kbd> + <kbd>F6</kbd> in JAWS and NVDA) purely as a consequence of carrying `role="region"` and an `aria-label`. No additional code is needed for this; RSP S2 has none either.
 
@@ -320,7 +334,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 | ----- | ---- | -------- |
 | **Core** | `2nd-gen/packages/core/components/toast/` | `Toast.base.ts`, `Toast.types.ts`: property declarations, variant validation, `aria-labelledby`/`aria-label` derivation. Also gates `swc-after-open`/`swc-after-close` on the host's own CSS transition completion via the shared `runAfterTransition` utility, matching `swc-popover`/`swc-tooltip`. No rendering, no timer ownership; see the queue layer below. |
 | **Queue** | `2nd-gen/packages/core/components/toast/` (exact file TBD, see Q5) | Owns each queued toast's countdown: timeout flooring, pause rules (`pointerenter`/`focusin`/`pointerleave`/`focusout`, scope pending Q7), and remaining-time tracking, keyed to the toast's own record in the queue, not to whichever element currently renders it. Persists unchanged whether that toast is the front toast, a decorative peek layer, or in the expanded list. Whether it also coordinates a smooth repositioning animation between those positions is Q8. |
-| **SWC** | `2nd-gen/packages/swc/components/toast/` | `Toast.ts`, `toast.css`: renders host role/state attributes, variant icon, inner `role="alert"` wrapper, default + `action` slots, `swc-close-button`. Element registration, stories, tests. |
+| **SWC** | `2nd-gen/packages/swc/components/toast/` | `Toast.ts`, `toast.css`: renders host role/state attributes, variant icon, inner `role="alert"` wrapper, default + `action` slots, `swc-close-button`. Wires `SlotPresenceController` and `SlotAttributePropagationController` for the `action` slot, and (on whatever renders the queue's expanded view) `PageScrollLockController`, `dismissibleStack`, and `getActiveElement()`/`deepContains()`/`focusableSelector` for scroll lock, `Escape` coordination, and focus management. Element registration, stories, tests. |
 
 Planned rendering shape:
 
@@ -351,12 +365,29 @@ Planned rendering shape:
 #### Naming and public surface
 
 - [ ] `Toast.types.ts`: define `ToastVariant` as `'neutral' | 'info' | 'positive' | 'negative'`
-- [ ] `Toast.base.ts`: variant validation, `icon-label` fallback
+- [ ] `Toast.base.ts`: variant validation via `validateEnum()`, `icon-label` fallback
+- [ ] Wire `SlotPresenceController` to gate on whether the `action` slot has content
+- [ ] Wire `SlotAttributePropagationController` to propagate `size`/`variant` onto the slotted `action` button
+- [ ] Gate `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` on the host's own CSS transition completion via the shared `runAfterTransition`
 - [ ] Queue construct (core, exact location pending Q5): timeout floor (resolve Q1 first), pause/resume rules, remaining-time tracking, keyed to each toast's queue record
+
+#### Container and queue
+
+- [ ] Queue construct: `clear()` method, empties every queued toast at once
+- [ ] Queue construct: new toasts join the front, not the back; no cap on how many stay tracked
+- [ ] Peek-stack rendering: only the front toast is a real `alertdialog`; the two behind it render as `role="presentation"` layers; anything further back stays in the DOM at `opacity: 0`
+- [ ] Expand control on the front toast, shown once two or more toasts are queued, laid out below the message alongside the action button
+- [ ] Expanded-list rendering: every toast becomes its own real `alertdialog`
+- [ ] Expanded-view scrim, dismissible on click
+- [ ] `Escape`-to-collapse wired through the shared `dismissibleStack` (`registerDismissible()`/`isTopDismissible()`)
+- [ ] Scroll lock for the expanded view via `PageScrollLockController`
+- [ ] Focus management via `getActiveElement()`/`deepContains()`/`focusableSelector` (which toast has focus, what was focused before entering the region, enumerating the expanded list's focusable elements)
+- [ ] Container region: `role="region"` + `aria-label`
 
 #### Alignment checks
 
 - [ ] Confirm action API shape with Design (Q3)
+- [ ] Confirm message slot shape with Design (Q9)
 
 ### Styling
 
@@ -375,7 +406,7 @@ Planned rendering shape:
 
 ### Accessibility
 
-Checklist items sourced from [accessibility-migration-analysis.md](./accessibility-migration-analysis.md); resolve Q1, Q2, Q7 before treating this section as final.
+Checklist items sourced from [accessibility-migration-analysis.md](./accessibility-migration-analysis.md); resolve Q1, Q2, Q7, Q9 before treating this section as final.
 
 #### Naming and semantics
 
@@ -386,8 +417,11 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 #### State verification
 
 - [ ] Timer pauses on `pointerenter` + `focusin`, preserves remaining time, resumes only when both clear; scope (per-toast vs. region-wide) resolved per Q7
-- [ ] Dev warning (or hard block, pending Q2) when `timeout` and `action` slot both set
+- [ ] Dev warning via `warnIf()` (or hard block, pending Q2) when `timeout` and `action` slot both set, gated on slot presence via `SlotPresenceController`
 - [ ] `tabindex="0"` on host always; opening a toast does not move focus there
+- [ ] Focus management on toast-close: nearest remaining toast for keyboard users, out of the region entirely for pointer users
+- [ ] Collapsing the expanded view sends focus to the container region
+- [ ] Container region reachable via landmark navigation (<kbd>F6</kbd>/<kbd>Shift</kbd> + <kbd>F6</kbd>), no additional code required
 
 ### Testing
 
@@ -398,11 +432,18 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 
 - [ ] Countdown pause/resume unit tests (pointer, focus, both simultaneously)
 - [ ] Timeout floor enforcement test
+- [ ] Timer persists correctly when a toast is demoted to a peek layer and later promoted back to front (queue-owned state, not instance-owned; see [Architecture](#architecture-core-vs-swc-split))
+- [ ] `clear()` empties the whole queue in one action
+- [ ] Peek-stack rendering: only the front toast is a real `alertdialog`; the rest render `role="presentation"`
+- [ ] Expand/collapse interaction: scrim click, <kbd>Escape</kbd>, and the Collapse control each collapse the expanded view
+- [ ] Focus management: modality branching on toast-close, collapse-to-region, and last-toast-close returning focus to whatever was focused before entering the region
+- [ ] New toasts join the front of the queue, not the back
 
 #### Visual regression
 
 - [ ] Add VRT coverage for all variants, with/without action button, closed state
 - [ ] Add VRT coverage for text wrapping: short single-line message, long message wrapping to multiple lines within the host's `max-inline-size`
+- [ ] Add VRT coverage for the peek stack and the expanded view
 - [ ] Add focus-visible regression coverage for the close and action buttons
 
 ### Documentation
@@ -412,6 +453,7 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 - [ ] JSDoc on all public props, slots, and CSS custom properties
 - [ ] Storybook stories for each variant, with/without action, with/without icon-label override
 - [ ] Storybook story demonstrating text wrapping with a long message
+- [ ] Storybook story demonstrating the container: multiple queued toasts, the peek stack, expand/collapse, and clear-all
 
 #### Breaking changes
 
@@ -437,12 +479,13 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 | Q2 | Action + auto-dismiss: dev warning only (a11y doc) or hard-disable timeout whenever an action is present (RSP S2: `timeout` forced to `undefined` if `actionLabel` set)? | Yes | Open ❓ | Design + accessibility reviewer |
 | Q3 | Action API shape: keep light-DOM `action` slot (1st-gen) or switch to `action-label`/`swc-action` event props (RSP S2 `actionLabel`/`onAction`/`shouldCloseOnAction`)? Leaning toward keeping the slot: matches 1st-gen with no consumer migration needed, though this is a deviation from RSP's props-based model. | Yes | Open ❓ | Design + implementation |
 | Q7 | Timer pause scope: pause only the toast under the pointer or focus (a11y doc's current recommendation, per-toast) or pause every visible toast in the region together (RSP S2's actual `useToastRegion.ts`: `useHover`/`useFocusWithin` at the region level call `pauseAll()`/`resumeAll()` on the whole queue)? | Yes | Open ❓ | Accessibility reviewer |
+| Q9 | Message content: stay the default slot (current plan), or become a named slot? Default-slot content can be a bare text node with no element to hold the `aria-labelledby` target ID, silently falling back to `aria-label`; a named slot would let the component guarantee a light-DOM wrapper instead. | Yes | Open ❓ | Design + accessibility reviewer |
 
 ### Architecture and behavior
 
 | # | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q5 | The pause-preserving countdown can't stay inline in `Toast.base.ts` (see [Architecture](#architecture-core-vs-swc-split)); it needs its own queue-level construct regardless. Should that construct be a shared, cross-component controller in `2nd-gen/packages/core/controllers/` now, or stay toast-specific under `2nd-gen/packages/core/components/toast/` until a second consumer actually needs it? | No | Open | Architecture reviewer |
+| Q5 | The pause-preserving countdown can't stay inline in `Toast.base.ts` (see [Architecture](#architecture-core-vs-swc-split)); it needs its own queue-level construct regardless. Should that construct be a shared, cross-component controller in `2nd-gen/packages/core/controllers/` now, or stay toast-specific under `2nd-gen/packages/core/components/toast/` until a second consumer actually needs it? Either way, it should follow this codebase's established `ReactiveController` pattern (used by `PageScrollLockController`, `SlotPresenceController`, and others) rather than a plain framework-agnostic singleton service. | No | Open | Architecture reviewer |
 | Q8 | Repositioning a toast between peek, front, and expanded-list position (not its own open/close, which reuses `runAfterTransition`, see [Architecture](#architecture-core-vs-swc-split)): should this use the View Transitions API for a smooth cross-position morph (matching RSP S2's queue-level `wrapUpdate` wrapping), with no animation as the fallback where unsupported, or accept an instant swap between positions (no existing 2nd-gen precedent either way)? | No | Open | Architecture reviewer |
 
 ### Scope and prerequisites
@@ -473,6 +516,8 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 - [1st-gen README](../../../../1st-gen/packages/toast/README.md)
 - [React Spectrum S2 Toast source](https://github.com/adobe/react-spectrum/blob/main/packages/@react-spectrum/s2/src/Toast.tsx) — `variant`, `actionLabel`/`onAction`/`shouldCloseOnAction`, 5s timeout floor, hard-block on actionable auto-dismiss
 - [React Aria `useToast`](https://github.com/adobe/react-spectrum/blob/main/packages/react-aria/src/toast/useToast.ts) — `role="alertdialog"`, always-on `tabIndex: 0`, inner `role="alert"`
+- [React Stately `useToastState`](https://github.com/adobe/react-spectrum/blob/main/packages/react-stately/src/toast/useToastState.ts) — queue's `unshift()` newest-to-front ordering, `maxVisibleToasts`, `clear()`
+- [React Aria `useToastRegion`](https://github.com/adobe/react-spectrum/blob/main/packages/react-aria/src/toast/useToastRegion.ts) — region-wide `pauseAll()`/`resumeAll()`, focus management on toast removal, `role="region"` landmark
 - [React Spectrum: Toast (docs)](https://react-spectrum.adobe.com/react-spectrum/Toast.html)
 - [Figma: S2 / Web — Toast](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9908-3216&m=dev)
 - [Spectrum CSS — `spectrum-two` branch, Toast component](https://github.com/adobe/spectrum-css/tree/spectrum-two/components/toast)

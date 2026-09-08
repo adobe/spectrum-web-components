@@ -124,7 +124,7 @@ The inner `role="alert"` element and its contents are entirely within the shadow
 
 The action slot is light DOM; the author-provided button and its label do not create cross-root ARIA concerns.
 
-The close button (`swc-close-button`) is a web component in shadow DOM; its accessible name is set via its own `label` property and does not require cross-root ARIA.
+The close button (`swc-close-button`) is a web component in shadow DOM; its accessible name is set via `accessible-label` and does not require cross-root ARIA.
 
 ### Accessibility tree expectations
 
@@ -175,9 +175,9 @@ Screen reader announces the full alert content when the toast opens. Focus does 
 
 ### Assistive technology, live regions
 
-**Open design question — toast container ownership:** PR review feedback and the React Spectrum implementation surface an important unresolved design question: should `swc-toast` ship alongside a first-party `swc-toast-queue` (or equivalent) container component, or should authors compose their own container? The React Spectrum approach provides a `ToastQueue` that manages a `role="region"` wrapper labeled with the live notification count (for example, `aria-label="2 notifications."`), renders toasts in an ordered list, manages focus across toasts on dismiss, and handles live region coordination for the group. The individual `swc-toast` component alone cannot fully replicate this behavior. This question should be raised at a team sync before finalizing the 2nd-gen API.
+**Toast container:** `swc-toast` ships alongside a first-party container component. The React Spectrum approach provides a `ToastQueue` that manages a `role="region"` wrapper labeled with the live notification count (for example, `aria-label="2 notifications."`), renders toasts in an ordered list, manages focus across toasts on dismiss, and handles live region coordination for the group. The individual `swc-toast` component alone cannot fully replicate this behavior, which is why a container ships with it rather than being left for consumers to compose on their own.
 
-The React Spectrum container structure for reference:
+Applying that pattern to `swc-toast`:
 
 ```html
 <div role="region" tabindex="-1" aria-label="2 notifications.">
@@ -194,11 +194,11 @@ The React Spectrum container structure for reference:
 
 **Assertive inner alert:** The inner `role="alert"` element uses assertive semantics by definition. This is appropriate because each toast is already scoped as an `alertdialog` — the announcement is bounded to a single dialog unit, reducing the interruption risk compared to a page-level assertive live region. Docs should still warn against stacking many toasts simultaneously and recommend batching updates (a single summary toast, or a progress bar) for bulk operations.
 
-**Container region and landmark navigation:** When a container is used, the `role="region"` wrapper with a dynamic `aria-label` (for example, `"2 notifications."`) makes the toast area discoverable via landmark navigation (F6/Shift+F6 in JAWS and NVDA). Without a container, this landmark is absent and screen reader users must rely solely on the live region announcements. If no first-party container ships with 2nd-gen, the docs must show the manual container pattern and note this limitation.
+**Container region and landmark navigation:** The `role="region"` wrapper, with a dynamic `aria-label` (for example, `"2 notifications."`), makes the toast area discoverable via landmark navigation (F6/Shift+F6 in JAWS and NVDA).
 
 **Peek stack (decorative stacking):** When more than one toast is queued, only the front toast is a real, interactive `alertdialog`; toasts stacked behind it render as `role="presentation"` layers with no text content, hidden from the accessibility tree entirely. AT users are not told stacked toasts exist until the list is expanded; docs must state this explicitly rather than implying every queued toast is independently announced.
 
-**Expanding into a full list:** Clicking the stack, or an expand control shown once two or more toasts are queued, opens every toast in a scrollable list behind a dismissible scrim, closable via <kbd>Escape</kbd>, clicking the scrim, or a dedicated collapse control. Expanding turns every toast in the list into its own real `alertdialog`; the peek-stack exception above only applies while collapsed. Each toast's host is its own `tabindex="0"` stop, same as the single-toast case, so <kbd>Tab</kbd> reaches a toast's host, then that toast's action button (if present), then its close button, before moving to the next toast's host. While the list is expanded, focus must be trapped within it: <kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd> cycle only through the visible toasts' hosts and buttons and the expanded view's own controls, never escaping to the rest of the page. Collapsing restores focus to wherever it was before expanding. The view collapses automatically once the queue empties.
+**Expanding into a full list:** Clicking the stack, or an expand control shown once two or more toasts are queued, opens every toast in a scrollable list behind a dismissible scrim, closable via <kbd>Escape</kbd>, clicking the scrim, or a dedicated collapse control. Expanding turns every toast in the list into its own real `alertdialog`; the peek-stack exception above only applies while collapsed. Each toast's host is its own `tabindex="0"` stop, same as the single-toast case, so <kbd>Tab</kbd> reaches a toast's host, then that toast's action button (if present), then its close button, before moving to the next toast's host. While the list is expanded, focus must be trapped within it: <kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd> cycle only through the visible toasts' hosts and buttons and the expanded view's own controls, never escaping to the rest of the page. Collapsing moves focus to the container region. The view collapses automatically once the queue empties.
 
 **Actionable toasts and timing:** When an action button is present, auto-dismiss should generally be disabled or set to a much longer timeout. A screen reader user who hears the alert announcement and moves focus to the toast (via Tab or the live region) needs sufficient time to activate the action. The docs must warn against combining `timeout` with the `action` slot.
 
@@ -215,8 +215,7 @@ When the toast has focus:
 
 Focus management on dismiss:
 
-- When the user activates the close button or action button, the `close` event fires. The calling application is responsible for returning focus to a logical location.
-- When a toast auto-dismisses and focus is on the toast at the time, focus is lost. If a container (`swc-toast-queue` or author-composed) manages the list, it should move focus to the next toast in the list, or return focus to the triggering element when the last toast dismisses. Without a container, `swc-toast` fires the `close` event and the application must handle focus return.
+- When a focused toast closes, whether by close button, action button, or auto-dismiss, the `close` event fires and the container moves focus to the next toast in the list, or returns focus to the triggering element when the last toast dismisses.
 
 Timer pause (hover and focus-within): The auto-dismiss timer must pause both when the pointer enters the toast (`pointerenter`) and when focus moves inside the toast (`focusin`). The timer resumes only when both conditions have ended — `pointerleave` and `focusout`. If a user is both hovering and has focus inside simultaneously, the timer must not resume until both have cleared. The 1st-gen already pauses on `focusin`; 2nd-gen must additionally pause on `pointerenter` to satisfy WCAG 1.4.13 for pointing-device users.
 
@@ -258,7 +257,7 @@ The 1st-gen README mentions the minimum timeout and the `role="region"` containe
 |--------------|----------------|
 | **Unit** | Host has `role="alertdialog"`, `aria-modal="false"`, `tabindex="0"`. Inner shadow element has `role="alert"` and `aria-atomic="true"`. Host has `aria-hidden="true"` when `open` is false. Countdown pauses on `focusin` and `pointerenter`; resumes on `focusout` and `pointerleave`. Close button has accessible name "Close". Timeout below 6000ms is raised to 6000ms. Variant icon labels and `role="img"` render correctly per variant. |
 | **aXe + Storybook** | Run WCAG 2.x rules on all toast stories: default (no variant), positive, negative, info; with and without action button; closed state. |
-| **Playwright ARIA snapshots** | `toast.a11y.spec.ts`: cover closed state (aria-hidden), text-only, icon + text, and with action button. Verify `role="alertdialog"` on host, `role="alert"` on inner element, button accessible names, and correct icon labels per variant. |
+| **Playwright ARIA snapshots** | `toast.a11y.spec.ts`: cover closed state (aria-hidden), text-only, icon + text, and with action button. Verify `role="alertdialog"` on host, `role="alert"` on inner element, button accessible names, and correct icon labels per variant. Also cover the peek stack (only the front toast is a real `alertdialog`; layers behind it carry `role="presentation"`) and the expanded list (every toast becomes a real `alertdialog` with its own `tabindex="0"` host). |
 | **Color contrast** | Verify text contrast (4.5:1) and close button non-text contrast (3:1) for all variants. Check forced-colors (high-contrast) mode. |
 
 ### Manual screen reader testing
@@ -269,6 +268,8 @@ Automated tests can verify ARIA attributes but cannot verify that the live regio
 2. **Tab navigation:** While a toast is open, Tab into it and verify the action button (if present) and close button are reachable and their labels are announced correctly.
 3. **Dismiss and focus return:** Activate the close button from keyboard focus and verify the toast closes; confirm where focus goes and whether the application returns it to an appropriate location.
 4. **Auto-dismiss:** Verify that the auto-dismiss timer fires and that no announcement repeats after the toast closes.
+5. **Multiple toasts and peek stack:** Queue several toasts and verify only the front toast is announced; layers behind it are silent and not reachable by Tab.
+6. **Expand and collapse:** Activate the expand control and verify every toast in the list is announced as reachable via Tab, focus stays trapped within the expanded view, and collapsing (via the Collapse control or <kbd>Escape</kbd>) moves focus to the container region.
 
 See the 2nd-gen Storybook [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide for browser and screen reader combinations to use.
 
@@ -288,14 +289,13 @@ See the 2nd-gen Storybook [Screen reader testing](../../../../2nd-gen/packages/s
 - [ ] Variant icons render with `role="img"` and `aria-label`; defaults are "Information", "Error", "Success" (a `warning` variant is deprecated and not part of 2nd-gen's four variants); author can override via `icon-label`.
 - [ ] Action button slot is limited to one action; docs state this limit explicitly.
 - [ ] Docs warn against using `timeout` when the `action` slot is populated.
-- [ ] Docs include the `role="region"` container pattern (with `aria-label` and notification count) for applications showing multiple toasts.
+- [ ] Docs include the `role="region"` container pattern (with `aria-label` and notification count).
 - [ ] Peek-stack layers behind the front toast use `role="presentation"` and are not independently announced.
-- [ ] Expanding the stack makes every toast a real `alertdialog` with its own `tabindex="0"` host; focus is trapped across all toasts' hosts and buttons plus the expanded view's own controls; collapsing restores prior focus; the view auto-collapses when the queue empties.
-- [ ] Open design question — container ownership — is raised at team sync before the 2nd-gen API is finalized.
+- [ ] Expanding the stack makes every toast a real `alertdialog` with its own `tabindex="0"` host; focus is trapped across all toasts' hosts and buttons plus the expanded view's own controls; collapsing moves focus to the container region; the view auto-collapses when the queue empties.
 - [ ] Docs do not claim `variant` sets ARIA states; color alone does not convey variant meaning.
 - [ ] Dev warning fires when `timeout` and the `action` slot are both set.
 - [ ] aXe (WCAG 2.x) runs on all toast stories.
-- [ ] ARIA snapshot tests cover: closed state, text-only, icon + text, and with action button; verify `role="alertdialog"` on host and `role="alert"` on inner element.
+- [ ] ARIA snapshot tests cover: closed state, text-only, icon + text, with action button, peek stack, and expanded list; verify `role="alertdialog"` on host and `role="alert"` on inner element.
 - [ ] Manual screen reader testing verifies the live region announcement fires without moving focus, and interactive elements are reachable per the [Storybook screen reader testing guide](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx).
 
 ---
