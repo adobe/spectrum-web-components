@@ -304,6 +304,7 @@ See [Toast accessibility migration analysis](./accessibility-migration-analysis.
 
 - Host naming uses `aria-labelledby` referencing a content-element ID, falling back to `aria-label` from slot text when no explicit ID is available. RSP S2 splits this further into a separate `aria-labelledby` (title) and `aria-describedby` (description) element; `swc-toast`'s single content ID is a deliberate simplification, since it has one default slot for message text rather than separate title/description slots.
 - Collapsing the expanded view moves focus to the container region (RSP S2: `collapse()` calls `regionRef.current?.focus()`), not to whatever was focused before expanding.
+- The container region is discoverable via landmark navigation (<kbd>F6</kbd>/<kbd>Shift</kbd> + <kbd>F6</kbd> in JAWS and NVDA) purely as a consequence of carrying `role="region"` and an `aria-label`. No additional code is needed for this; RSP S2 has none either.
 
 ---
 
