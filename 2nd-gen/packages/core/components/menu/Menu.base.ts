@@ -289,7 +289,15 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       this.wireTrigger();
     }
 
-    const openChanged = changedProperties.has('open');
+    // `changedProperties.get('open')` is the previous value. On the very
+    // first `updated()` call, the entry recorded for the property's own
+    // initializer has no real previous value: it reads `undefined`, not
+    // `false`. Checking for that excludes that initialization entry so a
+    // menu that starts closed does not dispatch a phantom `swc-close` (or one
+    // that starts open, `swc-open`) the moment it first renders.
+    const openChanged =
+      changedProperties.has('open') &&
+      changedProperties.get('open') !== undefined;
     if (openChanged) {
       this.dispatchOpenEvents(this.open);
       if (this.open) {
