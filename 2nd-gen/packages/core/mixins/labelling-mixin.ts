@@ -38,7 +38,7 @@ type LabelledByTarget = Element & {
 
 /** The API {@link LabellingMixin} adds to its host. */
 export interface LabellingInterface {
-  accessibleLabel: string;
+  accessibleLabel?: string;
   accessibleLabelledby?: string;
   readonly hasLabelSlotContent: boolean;
 
