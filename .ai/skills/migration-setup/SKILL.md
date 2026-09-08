@@ -49,7 +49,12 @@ Before creating any files:
 1. **Read the migration plan's architecture sections** — specifically "Architecture: core vs SWC split", "Shared semantics reuse", and any other section that constrains what belongs on the base vs. the concrete class. Write down the decisions before touching files.
 2. **Identify any contradiction** between the plan's API checklist items and its architectural decisions. If a checklist item places properties on the base class that an architectural section says belong on the SWC class, the architectural section wins — update the checklist and note the reason before proceeding.
 
-Then follow **[Phase 2: Setup](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-2-setup)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+Then generate the skeleton instead of hand-authoring it:
+
+3. **Run the scaffolder** — from the repo root, run `yarn plop component "<name>"` (or `yarn plop component "<name>" --force` headlessly). This produces the deterministic 2nd-gen skeleton in one step: the `core` base/types/index, the `swc` concrete class, registration, css, per-unit `.mdx`, stories, and test files — all matching the `badge` reference layout. It also wires the `@spectrum-web-components/core` `exports` map (the `swc` package uses wildcard exports and needs no edit) and runs Prettier on the new files. See [`2nd-gen/scaffolding/README.md`](../../../2nd-gen/scaffolding/README.md). Do **not** re-create these files by hand; the generator is the source of truth for the skeleton.
+4. **Apply the plan-specific architecture on top of the skeleton.** The generated files are intentionally generic — every file carries `TODO`/placeholder markers. Your job in this phase is the part the generator cannot know: move properties, methods, and mixins onto the base vs. concrete class exactly as the migration plan dictates, adjust `validSizes`/`defaultSize`, and remove or rename placeholders. Do not leave generic scaffolding in place where the plan specifies otherwise.
+
+Then follow **[Phase 2: Setup](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-2-setup)** in the washing machine workflow doc — it covers what to check, common problems, and the quality gate for this phase. The workflow's manual file-creation steps are now handled by the scaffolder in step 3; use them as a checklist to confirm the generated structure is complete, not as authoring instructions.
 
 **Key file split (SWC package):**
 

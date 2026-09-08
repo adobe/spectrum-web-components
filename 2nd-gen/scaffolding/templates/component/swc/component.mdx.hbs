@@ -1,0 +1,50 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as {{pascalCase name}}Stories from './stories/{{dashCase name}}.stories';
+
+<Meta of={{lb}}{{pascalCase name}}Stories{{rb}} />
+
+<DocsHeader />
+
+## Anatomy
+
+A {{dashCase name}} consists of:
+
+1. **[Part]** — [description]
+
+### Content
+
+- **Default slot**: [description]
+
+<Canvas of={{lb}}{{pascalCase name}}Stories.Anatomy{{rb}} />
+
+## Options
+
+### Sizes
+
+[Describe the available sizes and when to use each.]
+
+<Canvas of={{lb}}{{pascalCase name}}Stories.Sizes{{rb}} />
+
+## States
+
+[Describe the states the component can be in.]
+
+<Canvas of={{lb}}{{pascalCase name}}Stories.States{{rb}} />
+
+## Accessibility
+
+### Features
+
+The `<swc-{{dashCase name}}>` element implements several accessibility features:
+
+- [Feature]
+
+### Best practices
+
+- [Best practice]
+
+<Canvas of={{lb}}{{pascalCase name}}Stories.Accessibility{{rb}} />
+
+<DocsFooter />
