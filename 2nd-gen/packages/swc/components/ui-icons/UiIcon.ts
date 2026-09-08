@@ -26,7 +26,7 @@ import uiIconSizeStyles from './ui-icon-sizes.css';
  * other control internals). The `icon` attribute selects the icon-set, and the
  * element renders the optically-tuned step that matches its `size`. Extends
  * `IconBase` for size and host-owned accessibility. A curated set of directional
- * icons (chevrons, arrows) mirror automatically in RTL; consuming components do not
+ * icons (chevrons, arrows,corner-triangle) mirror automatically in RTL; consuming components do not
  * need their own mirror rule for these icons. Not published for consumers; used by
  * other swc components.
  *
