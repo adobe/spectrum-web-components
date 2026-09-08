@@ -166,7 +166,7 @@ Already-fixed gen1 bugs whose behavior must not regress in 2nd-gen (not listed a
 
 ### Dependency-aware recommendation
 
-No prerequisites. Toast has no dependents in-tree and depends only on `swc-close-button`, which already exists in 2nd-gen (`2nd-gen/packages/swc/components/close-button/`). No shared base or controller currently covers Toast's pause-preserving countdown; recommend implementing it directly in `Toast.base.ts` rather than extracting a shared controller, since no other in-flight component needs it yet.
+No prerequisites. Toast has no dependents in-tree and depends only on `swc-close-button`, which already exists in 2nd-gen (`2nd-gen/packages/swc/components/close-button/`). Toast's pause-preserving countdown can't live inline in `Toast.base.ts`: once a toast can be demoted to a non-rendered peek layer in the queue, per-instance state doesn't survive that. It needs its own queue-level construct, separate from `Toast.base.ts`, regardless of whether any other component ever needs a similar controller. See Q5 in [Architecture and behavior](#architecture-and-behavior).
 
 ### Related components and ordering notes
 
@@ -177,7 +177,7 @@ No prerequisites. Toast has no dependents in-tree and depends only on `swc-close
 
 ### User confirmation needed
 
-Whether a pausable-countdown utility belongs in `2nd-gen/packages/core/controllers/` now or stays inline in Toast until a second consumer appears. See Q5 in [Architecture and behavior](#architecture-and-behavior).
+Whether the queue's countdown construct belongs in a shared, cross-component location (`2nd-gen/packages/core/controllers/`), in case another component needs similar queue behavior later, or stays toast-specific under `2nd-gen/packages/core/components/toast/` until a second consumer actually appears. See Q5 in [Architecture and behavior](#architecture-and-behavior).
 
 ---
 
@@ -294,13 +294,16 @@ No properties are exposed in the initial set. Add a `--swc-toast-*` property onl
 - An expand control appears on the front toast once two or more toasts are queued. Activating it moves focus to that toast's own host (since the control itself disappears once expanded) and opens every toast into a full list, where each becomes its own real alertdialog.
 - The expanded view takes over the screen: a dismissible scrim, <kbd>Escape</kbd>, and a dedicated Collapse control all collapse it, and focus is contained within it while open (RSP S2: `FocusScope`/`useModalOverlay`). Collapsing moves focus to the container region, not to whatever was focused before expanding (RSP S2: `collapse()` calls `regionRef.current?.focus()`).
 - The expanded view also collapses automatically once the queue empties, without that focus redirect: a separate code path from the explicit collapse triggers above (RSP S2: a queue-subscription effect calls the overlay state's `close()` directly).
+- The queue exposes a `clear()` operation that empties every queued toast at once, surfaced via a Clear all control in the expanded view (RSP S2: `queue.clear()`). This is a queue-level method, not an instance method on `swc-toast` itself; 1st-gen's `close()` (single toast) has no equivalent for the whole queue.
+- When a focused toast closes (close button, action button, or auto-dismiss) and other toasts remain, focus moves to the nearest still-open toast: the newer one in front of it if there is one, otherwise the older one behind it. If the user is in pointer modality, focus instead leaves the region entirely, back to whatever was focused before the user entered it, specifically so the remaining toasts' timers don't appear stuck (region-wide pause is tied to focus staying within the region; see Q7). RSP S2's `useToastRegion.ts` branches this way explicitly.
+- When the last toast closes and the queue empties, focus always returns to whatever was focused before the user entered the region, regardless of modality (RSP S2: tracked as the region's `focusWithin` `relatedTarget` when focus first entered it).
 
 ### Accessibility semantics notes (2nd-gen)
 
 See [Toast accessibility migration analysis](./accessibility-migration-analysis.md) for the full spec.
 
 - Host naming uses `aria-labelledby` referencing a content-element ID, falling back to `aria-label` from slot text when no explicit ID is available. RSP S2 splits this further into a separate `aria-labelledby` (title) and `aria-describedby` (description) element; `swc-toast`'s single content ID is a deliberate simplification, since it has one default slot for message text rather than separate title/description slots.
-- Collapsing the expanded view moves focus to the container region (RSP S2: `collapse()` calls `regionRef.current?.focus()`), not to whatever was focused before expanding. The accessibility migration analysis currently describes the latter and needs correcting.
+- Collapsing the expanded view moves focus to the container region (RSP S2: `collapse()` calls `regionRef.current?.focus()`), not to whatever was focused before expanding.
 
 ---
 
@@ -312,12 +315,13 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 | Layer | Path | Contains |
 | ----- | ---- | -------- |
-| **Core** | `2nd-gen/packages/core/components/toast/` | `Toast.base.ts`, `Toast.types.ts`: property declarations, variant validation, `aria-labelledby`/`aria-label` derivation, pausable-countdown logic (`pointerenter`/`focusin`/`pointerleave`/`focusout`, scope pending Q7), timeout flooring. No rendering. |
+| **Core** | `2nd-gen/packages/core/components/toast/` | `Toast.base.ts`, `Toast.types.ts`: property declarations, variant validation, `aria-labelledby`/`aria-label` derivation. No rendering, no timer ownership; see the queue layer below. |
+| **Queue** | `2nd-gen/packages/core/components/toast/` (exact file TBD, see Q5) | Owns each queued toast's countdown: timeout flooring, pause rules (`pointerenter`/`focusin`/`pointerleave`/`focusout`, scope pending Q7), and remaining-time tracking, keyed to the toast's own record in the queue, not to whichever element currently renders it. Persists unchanged whether that toast is the front toast, a decorative peek layer, or in the expanded list. |
 | **SWC** | `2nd-gen/packages/swc/components/toast/` | `Toast.ts`, `toast.css`: renders host role/state attributes, variant icon, inner `role="alert"` wrapper, default + `action` slots, `swc-close-button`. Element registration, stories, tests. |
 
 Planned rendering shape:
 
-- Core owns timer state, ARIA attribute wiring, and variant validation
+- The queue owns timer state; `Toast.base.ts` (core) owns ARIA attribute wiring and variant validation
 - SWC renders: variant icon, inner live-region wrapper, slotted content, close button
 
 ---
@@ -344,7 +348,8 @@ Planned rendering shape:
 #### Naming and public surface
 
 - [ ] `Toast.types.ts`: define `ToastVariant` as `'neutral' | 'info' | 'positive' | 'negative'`
-- [ ] `Toast.base.ts`: variant validation, `icon-label` fallback, timeout floor (resolve Q1 first)
+- [ ] `Toast.base.ts`: variant validation, `icon-label` fallback
+- [ ] Queue construct (core, exact location pending Q5): timeout floor (resolve Q1 first), pause/resume rules, remaining-time tracking, keyed to each toast's queue record
 
 #### Alignment checks
 
@@ -434,7 +439,7 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 
 | # | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q5 | Should the pause-preserving countdown be extracted to a shared core controller now, or stay inline in `Toast.base.ts` until a second consumer needs it? | No | Open | Architecture reviewer |
+| Q5 | The pause-preserving countdown can't stay inline in `Toast.base.ts` (see [Architecture](#architecture-core-vs-swc-split)); it needs its own queue-level construct regardless. Should that construct be a shared, cross-component controller in `2nd-gen/packages/core/controllers/` now, or stay toast-specific under `2nd-gen/packages/core/components/toast/` until a second consumer actually needs it? | No | Open | Architecture reviewer |
 
 ### Scope and prerequisites
 
