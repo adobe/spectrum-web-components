@@ -50,10 +50,12 @@ export const StatesTest: Story = {
     });
 
     await step(
-      'error text is associated via ariaErrorMessageElements, in addition to ariaDescribedByElements',
+      'error text is folded into ariaDescribedByElements, after the description',
       () => {
-        expect(input?.ariaErrorMessageElements).toHaveLength(1);
-        expect(input?.ariaDescribedByElements).toHaveLength(2);
+        const resolved = input?.ariaDescribedByElements ?? [];
+        expect(resolved).toHaveLength(2);
+        expect(resolved[0]?.className).toContain('swc-FieldDescription');
+        expect(resolved[1]?.className).toContain('swc-FieldErrorText');
       }
     );
 

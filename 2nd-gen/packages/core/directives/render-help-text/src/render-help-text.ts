@@ -38,9 +38,8 @@ export interface RenderFieldHelpTextOptions {
  *
  * Most consumers do not call this directly: `HelpTextMixin` exposes
  * `renderHelpText()`, which calls this with the mixin's own resolved state and
- * uses the element callbacks to build `ariaDescribedByElements` /
- * `ariaErrorMessageElements`. Use this directive directly only for stateless
- * rendering without the mixin.
+ * uses the element callbacks to build `ariaDescribedByElements`. Use this
+ * directive directly only for stateless rendering without the mixin.
  *
  * This is render-only and carries no design-token dependency. Pair it with a
  * shared style fragment that themes the `swc-FieldDescription` /

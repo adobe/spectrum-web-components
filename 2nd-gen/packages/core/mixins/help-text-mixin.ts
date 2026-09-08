@@ -28,13 +28,12 @@ const DESCRIPTION_SLOT_SELECTOR = '[slot="description"]';
 const ERROR_TEXT_SLOT_SELECTOR = '[slot="error-text"]';
 
 /**
- * An element carrying the ARIA element-reflection properties `HelpTextMixin`
- * writes the resolved description/error-message relationships onto (for
- * example, the `<input>` inside a text field's own shadow root).
+ * An element carrying the ARIA element-reflection property `HelpTextMixin`
+ * writes the resolved description (including any active error message) onto
+ * (for example, the `<input>` inside a text field's own shadow root).
  */
 type DescribedByTarget = Element & {
   ariaDescribedByElements: Element[] | null;
-  ariaErrorMessageElements: Element[] | null;
 };
 
 /** The API {@link HelpTextMixin} adds to its host. */
@@ -46,8 +45,8 @@ export interface HelpTextInterface {
   /**
    * @internal
    *
-   * The element `HelpTextMixin` wires the resolved description/error-message
-   * ARIA relationships onto. Defaults to `null`; a rendering subclass
+   * The element `HelpTextMixin` wires the resolved description (including
+   * any active error message) onto. Defaults to `null`; a rendering subclass
    * overrides this to return its real role element (e.g. the `<input>`).
    */
   readonly roleElement: Element | null;
@@ -66,11 +65,15 @@ export interface HelpTextInterface {
  * combine rather than override one another: when both a slotted `description`
  * and an external `accessibleDescribedby` are set, {@link roleElement}'s
  * `ariaDescribedByElements` lists the in-shadow description first, then the
- * resolved external elements. The error message, by contrast, is always
- * same-root (there is no external error-text source): {@link roleElement}'s
- * `ariaErrorMessageElements` points at the in-shadow error-text element only
- * while the host reads as `invalid`, read structurally so hosts that don't
- * declare `invalid` at all simply never surface an error message.
+ * resolved external elements. Following React Spectrum's TextField strategy
+ * (https://react-spectrum.adobe.com/TextField), the error message is folded
+ * into that same `ariaDescribedByElements` list, immediately after the
+ * description, rather than pointed at separately via `aria-errormessage` —
+ * AT support for `aria-errormessage` is still inconsistent, while
+ * `aria-describedby` is universally read. The in-shadow error-text element is
+ * only added while the host reads as `invalid` (read structurally so hosts
+ * that don't declare `invalid` at all simply never surface an error
+ * message).
  *
  * Because the role element a text-like field describes is created by the
  * host's own render (e.g. the `<input>`), this mixin never assumes the role
@@ -200,16 +203,16 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
       if (!target) {
         return;
       }
+      const showError = this._isInvalid && this.hasErrorTextSlotContent;
       const describedBy = [
         ...(this._descriptionElement ? [this._descriptionElement] : []),
+        ...(showError && this._errorTextElement
+          ? [this._errorTextElement]
+          : []),
         ...this._resolvedDescribedbyElements,
       ];
       target.ariaDescribedByElements =
         describedBy.length > 0 ? describedBy : null;
-
-      const showError = this._isInvalid && this.hasErrorTextSlotContent;
-      target.ariaErrorMessageElements =
-        showError && this._errorTextElement ? [this._errorTextElement] : null;
     }
   }
   return HelpTextElement as unknown as T & Constructor<HelpTextInterface>;

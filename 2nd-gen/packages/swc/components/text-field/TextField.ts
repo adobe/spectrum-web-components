@@ -36,8 +36,8 @@ export class TextField extends TextFieldBase {
   }
 
   /**
-   * The real role element `HelpTextMixin` wires the resolved
-   * description/error-message ARIA relationships onto.
+   * The real role element `HelpTextMixin` wires the resolved description
+   * (including any active error message) onto.
    */
   public override get roleElement(): HTMLInputElement | null {
     return this.renderRoot.querySelector('input.input');

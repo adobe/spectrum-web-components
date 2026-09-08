@@ -71,27 +71,31 @@ export const ErrorTextGatingTest: Story = {
     );
     const [valid, invalid] = hosts;
 
-    await step('valid host has no error-message association', () => {
-      expect(valid.roleElement?.ariaErrorMessageElements).toBeNull();
+    await step('valid host describedby excludes the error text', () => {
+      expect(valid.roleElement?.ariaDescribedByElements).toHaveLength(1);
       expect(valid.shadowRoot?.querySelector('.swc-FieldErrorText')).toBeNull();
     });
 
-    await step('invalid host associates the error-text element', () => {
-      const resolved = invalid.roleElement?.ariaErrorMessageElements;
-      expect(resolved).toHaveLength(1);
-      expect(
-        invalid.shadowRoot?.querySelector('.swc-FieldErrorText')
-      ).toBeTruthy();
-      // Description remains associated regardless of invalid.
-      expect(invalid.roleElement?.ariaDescribedByElements).toHaveLength(1);
-    });
+    await step(
+      'invalid host folds the error-text element into describedby, after the description',
+      () => {
+        const resolved = invalid.roleElement?.ariaDescribedByElements ?? [];
+        expect(resolved).toHaveLength(2);
+        expect(
+          invalid.shadowRoot?.querySelector('.swc-FieldErrorText')
+        ).toBeTruthy();
+        // Description remains associated regardless of invalid, and comes first.
+        expect(resolved[0]?.className).toContain('swc-FieldDescription');
+        expect(resolved[1]?.className).toContain('swc-FieldErrorText');
+      }
+    );
 
     await step(
-      'clearing invalid removes the error-message association',
+      'clearing invalid removes the error-text element from describedby',
       async () => {
         invalid.invalid = false;
         await invalid.updateComplete;
-        expect(invalid.roleElement?.ariaErrorMessageElements).toBeNull();
+        expect(invalid.roleElement?.ariaDescribedByElements).toHaveLength(1);
       }
     );
   },

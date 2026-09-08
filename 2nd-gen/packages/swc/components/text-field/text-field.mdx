@@ -13,7 +13,7 @@ A text field consists of:
 
 - **Input**: the real, focusable `<input>` that carries the value and native `textbox` role
 - **Description** (optional), provided through the `description` slot: guidance text associated via `aria-describedby`
-- **Error text** (optional), provided through the `error-text` slot: shown and associated via `aria-errormessage` only while `invalid`
+- **Error text** (optional), provided through the `error-text` slot: shown and folded into `aria-describedby` only while `invalid`
 
 <Canvas of={TextFieldStories.Anatomy} />
 
@@ -25,7 +25,7 @@ Text fields can exist in various states:
 - **Required**: the native `required` attribute is reflected onto the input; no separate `aria-required` is set
 - **Read-only**: focusable and selectable, but not editable; distinct from disabled
 - **Disabled**: not editable and removed from the tab order
-- **Invalid**: shows the slotted `error-text` and associates it via `aria-errormessage`, in addition to `aria-describedby`
+- **Invalid**: shows the slotted `error-text` and folds it into `aria-describedby`, after the description
 
 <Canvas of={TextFieldStories.States} />
 
@@ -34,7 +34,7 @@ Text fields can exist in various states:
 ### Features
 
 - **Combining descriptions** — a slotted `description` and an external `accessible-describedby` reference combine rather than override each other; the in-shadow description comes first.
-- **`aria-errormessage`** — set only while `invalid` is `true`, alongside `aria-describedby`, so the error text is both visible and specifically identified to assistive technology.
+- **Error text folded into `aria-describedby`** — following React Spectrum's [TextField](https://react-spectrum.adobe.com/TextField) strategy, the slotted `error-text` is added to `aria-describedby` (after the description) only while `invalid` is `true`, rather than pointed at separately via `aria-errormessage`, since AT support for that attribute is still inconsistent.
 
 ### Best practices
 

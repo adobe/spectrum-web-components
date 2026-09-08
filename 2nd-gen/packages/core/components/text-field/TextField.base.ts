@@ -39,7 +39,7 @@ const DOCS_URL =
  *
  * @slot label - Visible label content, rendered in-shadow as a real `<label for>`.
  * @slot description - Guidance / non-error help text, associated via `aria-describedby`.
- * @slot error-text - Error message shown when `invalid`, targeted by `aria-errormessage`.
+ * @slot error-text - Error message shown when `invalid`, folded into `aria-describedby`.
  */
 export abstract class TextFieldBase extends SizedMixin(
   HelpTextMixin(SpectrumElement),
