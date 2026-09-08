@@ -57,6 +57,7 @@ const meta: Meta = {
     flexLayout: 'row-nowrap',
   },
   render: (args) => template(args),
+  tags: ['migrated'],
 };
 
 export default meta;

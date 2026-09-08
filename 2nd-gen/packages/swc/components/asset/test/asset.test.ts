@@ -87,6 +87,26 @@ export const InvalidFitWarningTest: Story = {
   },
 };
 
+export const ValidFitNoWarningTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('does not warn when a valid fit is set', () =>
+      withWarningSpy(async (warnCalls) => {
+        asset.fit = 'contain';
+        await asset.updateComplete;
+
+        expect(warnCalls.length, 'no warnings for a valid fit').toBe(0);
+      })
+    );
+  },
+};
+
 export const InvalidBackgroundWarningTest: Story = {
   render: () => html`
     <swc-asset>
@@ -114,6 +134,26 @@ export const InvalidBackgroundWarningTest: Story = {
   },
 };
 
+export const ValidBackgroundNoWarningTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('does not warn when a valid background is set', () =>
+      withWarningSpy(async (warnCalls) => {
+        asset.background = 'checkerboard';
+        await asset.updateComplete;
+
+        expect(warnCalls.length, 'no warnings for a valid background').toBe(0);
+      })
+    );
+  },
+};
+
 export const AspectRatioNormalizationTest: Story = {
   render: () => html`
     <swc-asset>
@@ -134,6 +174,26 @@ export const AspectRatioNormalizationTest: Story = {
       await asset.updateComplete;
       expect(asset.aspectRatio, '16:9 normalizes to 16/9').toBe('16/9');
     });
+  },
+};
+
+export const ValidAspectRatioNoWarningTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('does not warn when a valid aspect-ratio is set', () =>
+      withWarningSpy(async (warnCalls) => {
+        asset.aspectRatio = '16/9';
+        await asset.updateComplete;
+
+        expect(warnCalls.length, 'no warnings for a valid ratio').toBe(0);
+      })
+    );
   },
 };
 
