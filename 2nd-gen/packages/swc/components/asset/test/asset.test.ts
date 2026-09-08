@@ -329,3 +329,147 @@ export const MissingAccessibleNameWarningTest: Story = {
     );
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: PR feedback regressions
+// ──────────────────────────────────────────────────────────────
+
+export const SlotChangeReResolvesTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Original" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      're-runs accessible-name resolution when the slotted img is swapped',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const slot = asset.shadowRoot?.querySelector('slot');
+          const slotChanged = new Promise<void>((resolve) => {
+            slot?.addEventListener('slotchange', () => resolve(), {
+              once: true,
+            });
+          });
+
+          const original = asset.querySelector('img');
+          const replacement = document.createElement('img');
+          replacement.src = './images/avatar-preview.png';
+          // No `alt` on the replacement: should trigger the missing
+          // accessible-name warning once slotchange re-runs resolution.
+          original?.replaceWith(replacement);
+
+          // `slotchange` dispatches asynchronously, and only afterward does
+          // `requestUpdate()` schedule the update this assertion needs.
+          await slotChanged;
+          await asset.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'a warning fires for the unlabeled replacement img'
+          ).toBeGreaterThan(0);
+        })
+    );
+  },
+};
+
+export const ConsumerAriaHiddenPreservedTest: Story = {
+  render: () => html`
+    <swc-asset aria-hidden="true">
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'does not remove a consumer-set aria-hidden unrelated to decorative',
+      async () => {
+        asset.requestUpdate();
+        await asset.updateComplete;
+        expect(
+          asset.getAttribute('aria-hidden'),
+          'consumer-set aria-hidden survives'
+        ).toBe('true');
+      }
+    );
+  },
+};
+
+export const ImgAriaLabelCountsAsOwnNameTest: Story = {
+  render: () => html`
+    <swc-asset accessible-label="Fallback name">
+      <img src="./images/avatar-preview.png" aria-label="Existing name" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'leaves an img with only aria-label untouched, not overridden by accessible-label',
+      () => {
+        const img = asset.querySelector('img');
+        expect(img?.getAttribute('aria-label'), 'aria-label is unchanged').toBe(
+          'Existing name'
+        );
+        expect(img?.hasAttribute('alt'), 'alt was not set').toBe(false);
+      }
+    );
+  },
+};
+
+export const SvgFitPreserveAspectRatioTest: Story = {
+  render: () => html`
+    <swc-asset fit="cover">
+      <svg role="img" aria-label="Icon" viewBox="0 0 10 10">
+        <circle cx="5" cy="5" r="4" />
+      </svg>
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      '"cover" sets preserveAspectRatio to xMidYMid slice on a slotted svg',
+      async () => {
+        const svg = asset.querySelector('svg');
+        expect(svg?.getAttribute('preserveAspectRatio')).toBe('xMidYMid slice');
+      }
+    );
+
+    await step(
+      '"contain" sets preserveAspectRatio to xMidYMid meet on a slotted svg',
+      async () => {
+        asset.fit = 'contain';
+        await asset.updateComplete;
+        const svg = asset.querySelector('svg');
+        expect(svg?.getAttribute('preserveAspectRatio')).toBe('xMidYMid meet');
+      }
+    );
+  },
+};
+
+export const InvalidAspectRatioWarningTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('warns when aspect-ratio is a malformed ratio', () =>
+      withWarningSpy(async (warnCalls) => {
+        asset.aspectRatio = '16:9:4';
+        await asset.updateComplete;
+
+        expect(
+          warnCalls.length,
+          'at least one warning is emitted for the malformed ratio'
+        ).toBeGreaterThan(0);
+      })
+    );
+  },
+};

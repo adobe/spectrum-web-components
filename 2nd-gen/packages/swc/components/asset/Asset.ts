@@ -47,6 +47,13 @@ export class Asset extends AssetBase {
     return [opacityCheckerboardStyles, styles];
   }
 
+  // Light DOM mutation (e.g. swapping the slotted <img>) doesn't schedule a
+  // Lit update on its own; re-trigger one so validation and accessible-name
+  // resolution re-run against the new content.
+  private handleSlotchange(): void {
+    this.requestUpdate();
+  }
+
   protected override render(): TemplateResult {
     const style: Record<string, string> = {};
     if (typeof this.aspectRatio !== 'undefined') {
@@ -67,7 +74,7 @@ export class Asset extends AssetBase {
         })}
         style=${styleMap(style)}
       >
-        <slot></slot>
+        <slot @slotchange=${this.handleSlotchange}></slot>
       </div>
     `;
   }

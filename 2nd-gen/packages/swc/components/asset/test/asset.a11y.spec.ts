@@ -46,8 +46,8 @@ test.describe('Asset - ARIA Snapshots', () => {
       'swc-asset'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - img "README.md preview"
-      - img "Folder icon"
+      - img "preview of background"
+      - img "Download icon"
     `);
   });
 
@@ -58,8 +58,8 @@ test.describe('Asset - ARIA Snapshots', () => {
       'swc-asset'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - img "Profile photo"
-      - img "Project proposal document"
+      - img "preview of background"
+      - img "Spectrum logo"
     `);
   });
 });

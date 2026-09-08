@@ -14,7 +14,11 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
+import {
+  isDebug,
+  validateEnum,
+  warnIf,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   ASSET_BACKGROUND_VALUES,
@@ -25,6 +29,16 @@ import {
 
 const DOCS_URL =
   'https://spectrum-web-components.adobe.com/?path=/docs/components-asset--docs';
+
+/** A CSS `<ratio>`: one or two positive numbers separated by `/`. */
+const ASPECT_RATIO_PATTERN = /^\d+(\.\d+)?(\s*\/\s*\d+(\.\d+)?)?$/;
+
+// `object-fit` doesn't apply to a directly-embedded `<svg>` (not a CSS
+// replaced element like `<img>`), so `fit` maps to `preserveAspectRatio`.
+const SVG_PRESERVE_ASPECT_RATIO: Record<AssetFit, string> = {
+  cover: 'xMidYMid slice',
+  contain: 'xMidYMid meet',
+};
 
 /**
  * Normalizes an `aspectRatio` value: maps the `square` keyword to `1/1`, and
@@ -45,7 +59,7 @@ export abstract class AssetBase extends SpectrumElement {
   //     SHARED API
   // ─────────────────
 
-  #aspectRatio: string | undefined;
+  private _aspectRatio: string | undefined;
 
   /**
    * The aspect ratio to apply to the asset, in CSS `<ratio>` syntax (e.g.
@@ -56,12 +70,12 @@ export abstract class AssetBase extends SpectrumElement {
    */
   @property({ attribute: 'aspect-ratio' })
   public get aspectRatio(): string | undefined {
-    return this.#aspectRatio;
+    return this._aspectRatio;
   }
 
   public set aspectRatio(value: string | undefined) {
-    const oldValue = this.#aspectRatio;
-    this.#aspectRatio = normalizeAspectRatio(value);
+    const oldValue = this._aspectRatio;
+    this._aspectRatio = normalizeAspectRatio(value);
     this.requestUpdate('aspectRatio', oldValue);
   }
 
@@ -115,6 +129,10 @@ export abstract class AssetBase extends SpectrumElement {
   //     IMPLEMENTATION
   // ──────────────────────
 
+  // Only remove `aria-hidden` if this instance is the one that set it, so a
+  // consumer-applied `aria-hidden` unrelated to `decorative` survives.
+  private _appliedAriaHidden = false;
+
   protected override update(changes: PropertyValues): void {
     validateEnum(this, {
       prop: 'fit',
@@ -131,13 +149,25 @@ export abstract class AssetBase extends SpectrumElement {
     warnIf(
       this,
       typeof this.aspectRatio !== 'undefined' &&
+        !ASPECT_RATIO_PATTERN.test(this.aspectRatio),
+      `<${this.localName}> expects "aspect-ratio" to be a CSS <ratio> (e.g. "16/9"), the "square" keyword, or a ":"-separated ratio (e.g. "16:9"). Received "${this.aspectRatio}".`,
+      DOCS_URL
+    );
+    warnIf(
+      this,
+      typeof this.aspectRatio !== 'undefined' &&
         typeof this.width !== 'undefined' &&
         typeof this.height !== 'undefined',
       `<${this.localName}> "aspect-ratio" has no effect when both "width" and "height" are set.`,
       DOCS_URL
     );
-    this.#validateSlottedContent();
-    this.#resolveAccessibleName();
+
+    const children = Array.from(this.children);
+    if (isDebug()) {
+      this.validateSlottedContent(children);
+    }
+    this.resolveAccessibleName(children);
+    this.applyFitToSvg(children);
     super.update(changes);
   }
 
@@ -146,8 +176,7 @@ export abstract class AssetBase extends SpectrumElement {
    * that isn't an `<img>` or `<svg>`. There is exactly one (default) slot,
    * so its assigned elements are the host's own light DOM children.
    */
-  #validateSlottedContent(): void {
-    const children = Array.from(this.children);
+  private validateSlottedContent(children: Element[]): void {
     warnIf(
       this,
       children.length > 1,
@@ -179,24 +208,28 @@ export abstract class AssetBase extends SpectrumElement {
    *    `<svg>`, which has no native `alt`).
    * 4. None of the above → DEBUG warning.
    */
-  #resolveAccessibleName(): void {
+  private resolveAccessibleName(children: Element[]): void {
     if (this.decorative) {
       this.setAttribute('aria-hidden', 'true');
+      this._appliedAriaHidden = true;
       return;
     }
-    this.removeAttribute('aria-hidden');
+    if (this._appliedAriaHidden) {
+      this.removeAttribute('aria-hidden');
+      this._appliedAriaHidden = false;
+    }
 
-    const [child] = Array.from(this.children);
+    const [child] = children;
     if (!child) {
       return;
     }
     const tagName = child.tagName.toLowerCase();
     if (tagName !== 'img' && tagName !== 'svg') {
-      // Already warned about by #validateSlottedContent.
+      // Already warned about by validateSlottedContent.
       return;
     }
 
-    if (this.#hasOwnAccessibleName(child, tagName)) {
+    if (this.hasOwnAccessibleName(child, tagName)) {
       return;
     }
 
@@ -222,14 +255,28 @@ export abstract class AssetBase extends SpectrumElement {
    * Whether `child` (an `<img>` or `<svg>`, per `tagName`) already carries
    * its own accessible name and should be left untouched.
    */
-  #hasOwnAccessibleName(child: Element, tagName: 'img' | 'svg'): boolean {
-    if (tagName === 'img') {
-      return child.hasAttribute('alt');
-    }
-    const hasRoleImg = child.getAttribute('role') === 'img';
+  private hasOwnAccessibleName(
+    child: Element,
+    tagName: 'img' | 'svg'
+  ): boolean {
     const hasAriaName =
       child.hasAttribute('aria-label') || child.hasAttribute('aria-labelledby');
+    if (tagName === 'img') {
+      return hasAriaName || child.hasAttribute('alt');
+    }
+    const hasRoleImg = child.getAttribute('role') === 'img';
     const hasTitleChild = !!child.querySelector(':scope > title');
     return hasRoleImg && (hasAriaName || hasTitleChild);
+  }
+
+  private applyFitToSvg(children: Element[]): void {
+    const [child] = children;
+    if (child?.tagName.toLowerCase() !== 'svg') {
+      return;
+    }
+    child.setAttribute(
+      'preserveAspectRatio',
+      SVG_PRESERVE_ASPECT_RATIO[this.fit] ?? SVG_PRESERVE_ASPECT_RATIO.cover
+    );
   }
 }
