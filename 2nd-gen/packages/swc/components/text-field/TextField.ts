@@ -17,7 +17,17 @@ import { TextFieldBase } from '@adobe/spectrum-wc-core/components/text-field';
 
 import styles from './text-field.css';
 
-let nextTextFieldId = 0;
+/**
+ * The `<input>`'s `id`, referenced by the rendered `<label for>`. A fixed
+ * string (not a per-instance counter) is safe here: the `id` only has to be
+ * unique within this component's own shadow root, where exactly one `<input>`
+ * ever exists, and shadow roots are their own `id` scope (same-named `id`s in
+ * other instances' shadow roots never collide). A per-instance counter would
+ * instead depend on module-level mutable state and instantiation order,
+ * which a server render and a client hydration pass are not guaranteed to
+ * agree on.
+ */
+const INPUT_ID = 'input';
 
 /**
  * A single-line text field for entering and editing text.
@@ -37,12 +47,6 @@ export class TextField extends TextFieldBase {
     return [styles];
   }
 
-  private readonly _instanceId = ++nextTextFieldId;
-
-  private get _inputId(): string {
-    return `swc-text-field-input-${this._instanceId}`;
-  }
-
   /**
    * The real role element `LabellingMixin` wires the resolved accessible-name
    * ARIA relationship onto.
@@ -56,9 +60,9 @@ export class TextField extends TextFieldBase {
     // icon, and description/error container via a future help-text mixin.
     return html`
       <div class="swc-TextField">
-        ${this.renderLabel(this._inputId)}
+        ${this.renderLabel(INPUT_ID)}
         <input
-          id=${this._inputId}
+          id=${INPUT_ID}
           class="input"
           type=${this.type}
           .value=${this.value}
