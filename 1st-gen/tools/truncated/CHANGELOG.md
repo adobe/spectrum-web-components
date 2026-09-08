@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.12.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @spectrum-web-components/overlay@1.12.4
+  - @spectrum-web-components/tooltip@1.12.4
+  - @spectrum-web-components/base@1.12.4
+  - @spectrum-web-components/styles@1.12.4
+
 ## 1.12.2
 
 ### Patch Changes
