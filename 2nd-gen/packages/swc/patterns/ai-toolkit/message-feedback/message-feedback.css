@@ -30,8 +30,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  inline-size: 32px;
-  block-size: 32px;
+  inline-size: token("component-height-100");
+  block-size: token("component-height-100");
   padding: 0;
   color: token("neutral-content-color-default");
   background: transparent;

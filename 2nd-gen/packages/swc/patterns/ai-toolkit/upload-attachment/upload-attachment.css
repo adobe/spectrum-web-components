@@ -267,7 +267,7 @@
   z-index: 1;
   align-items: center;
   max-inline-size: calc(100% - (2 * token("spacing-75")));
-  min-block-size: 24px;
+  min-block-size: token("component-height-75");
   padding-block: token("spacing-75");
   padding-inline: calc(token("spacing-75") + token("spacing-50") + token("corner-radius-75"));
   font-family: token("sans-serif-font");

@@ -95,8 +95,8 @@
 :host([type="card"]) .swc-UserMessage-thumbnail ::slotted(*) {
   box-sizing: border-box;
   flex-shrink: 0;
-  inline-size: 32px;
-  block-size: 32px;
+  inline-size: token("thumbnail-size-300");
+  block-size: token("thumbnail-size-300");
   border: token("border-width-100") solid transparent;
   border-radius: token("corner-radius-75");
   object-fit: cover;
