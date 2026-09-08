@@ -241,7 +241,7 @@ Whether the queue's countdown construct belongs in a shared, cross-component loc
 
 | # | What is added | Notes |
 | --- | ------------- | ----- |
-| A1 | `--swc-*` custom properties | See the recommended initial set in [CSS custom properties (2nd-gen)](#css-custom-properties-2nd-gen) |
+| A1 | `--swc-*` custom properties | None in the initial set; add a property only once a concrete override need surfaces, see [CSS custom properties (2nd-gen)](#css-custom-properties-2nd-gen) |
 
 ---
 
@@ -381,10 +381,12 @@ Planned rendering shape:
 - [ ] Expand control on the front toast, shown once two or more toasts are queued, laid out below the message alongside the action button
 - [ ] Expanded-list rendering: every toast becomes its own real `alertdialog`
 - [ ] Expanded-view scrim, dismissible on click
+- [ ] Expanded view's focus containment follows `swc-popover`'s `modal` mode (native `<dialog>.showModal()`): native focus trap, native background inert, native `::backdrop` scrim, instead of a hand-rolled focus-trap implementation
 - [ ] `Escape`-to-collapse wired through the shared `dismissibleStack` (`registerDismissible()`/`isTopDismissible()`)
 - [ ] Scroll lock for the expanded view via `PageScrollLockController`
 - [ ] Focus management via `getActiveElement()`/`deepContains()`/`focusableSelector` (which toast has focus, what was focused before entering the region, enumerating the expanded list's focusable elements)
 - [ ] Container region: `role="region"` + `aria-label`
+- [ ] Expanded list navigates with <kbd>Tab</kbd> only; no arrow-key handling (`FocusgroupNavigationController` deliberately not used)
 
 #### Alignment checks
 
@@ -430,6 +432,7 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 - [ ] Dev warning via `warnIf()` (or hard block, pending Q2) when `timeout` and `action` slot both set, gated on slot presence via `SlotPresenceController`
 - [ ] `tabindex="0"` on host always; opening a toast does not move focus there
 - [ ] Focus management on toast-close: nearest remaining toast for keyboard users, out of the region entirely for pointer users
+- [ ] When the last toast closes and the queue empties, focus returns to whatever was focused before the user entered the region, regardless of modality
 - [ ] Collapsing the expanded view sends focus to the container region
 - [ ] Container region reachable via landmark navigation (<kbd>F6</kbd>/<kbd>Shift</kbd> + <kbd>F6</kbd>), no additional code required
 
