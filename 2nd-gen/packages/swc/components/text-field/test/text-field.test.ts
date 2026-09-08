@@ -160,17 +160,19 @@ export const LabelConflictTest: Story = {
       'warns when accessible-label is set alongside a resolved accessible-labelledby, naming accessible-label as ignored',
       () =>
         withWarningSpy(async (warnCalls) => {
+          // The reference target lives as a plain (unslotted) light-DOM
+          // child of the field itself, rather than a fixture sibling, so
+          // `fixture()` still resolves to the `<swc-text-field>` (its
+          // `firstElementChild` contract).
           const field = await fixture<TextField>(html`
-            <div>
+            <swc-text-field
+              accessible-label="Different text"
+              accessible-labelledby="text-field-label-conflict-external"
+            >
               <p id="text-field-label-conflict-external">External label</p>
-              <swc-text-field
-                accessible-label="Different text"
-                accessible-labelledby="text-field-label-conflict-external"
-              ></swc-text-field>
-            </div>
+            </swc-text-field>
           `);
-          const textField = field.querySelector('swc-text-field') as TextField;
-          await textField.updateComplete;
+          await field.updateComplete;
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
           expect(
             messages.some(
@@ -180,7 +182,7 @@ export const LabelConflictTest: Story = {
                 m.includes('"accessible-label"')
             )
           ).toBe(true);
-          field.remove();
+          field.parentElement?.remove();
         })
     );
 
@@ -189,17 +191,14 @@ export const LabelConflictTest: Story = {
       () =>
         withWarningSpy(async (warnCalls) => {
           const field = await fixture<TextField>(html`
-            <div>
+            <swc-text-field
+              accessible-labelledby="text-field-label-conflict-external-2"
+            >
               <p id="text-field-label-conflict-external-2">External label</p>
-              <swc-text-field
-                accessible-labelledby="text-field-label-conflict-external-2"
-              >
-                <span slot="label">Visible label</span>
-              </swc-text-field>
-            </div>
+              <span slot="label">Visible label</span>
+            </swc-text-field>
           `);
-          const textField = field.querySelector('swc-text-field') as TextField;
-          await textField.updateComplete;
+          await field.updateComplete;
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
           expect(
             messages.some(
@@ -209,7 +208,7 @@ export const LabelConflictTest: Story = {
                 m.includes('the slotted "label"')
             )
           ).toBe(true);
-          field.remove();
+          field.parentElement?.remove();
         })
     );
 

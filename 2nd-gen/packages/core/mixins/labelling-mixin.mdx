@@ -23,7 +23,7 @@ import * as Stories from './stories/labelling-mixin.stories';
   2. **`accessibleLabel`** — written to the role element's `aria-label` attribute.
   3. **A slotted visible label** (lowest) — rendered as a real, same-root `<label for>`.
 - **Conditional label rendering** — `renderLabel()` renders nothing when there is no slotted `label` content, and renders a plain, non-`for` `<span>` (not a `<label for>`) when a higher-precedence source is active, so the visible text isn't hidden but is excluded from the accessible-name computation.
-- **Dev-mode warnings** — warns when no accessible-name source resolves to anything, and separately warns when `accessibleLabel` is set alongside a visible label (slotted or via a resolved `accessibleLabelledby`), since a differently-worded `accessibleLabel` would silently take over the accessible name.
+- **Dev-mode warnings** — warns when no accessible-name source resolves to anything, and separately warns when more than one of `accessibleLabelledby`, `accessibleLabel`, and a slotted label is set at once, naming which source wins and which will not be read.
 
 ### Basic usage
 
@@ -65,7 +65,7 @@ Only the winning source is wired onto the role element — a lower-precedence sl
 
 ### Conflicting label sources
 
-Setting `accessible-label` alongside a visible label (a slotted `label`, or a resolved `accessible-labelledby`) triggers a dev-mode console warning. A visible label is itself the accessible name; a differently-worded `accessible-label` would silently override that computation, which is exactly the [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) mismatch this mixin's precedence order otherwise avoids. The warning fires regardless of which source actually wins, since setting both is a likely authoring mistake either way. Open the browser console to see the warning for the example below.
+Setting more than one of `accessible-labelledby`, `accessible-label`, and a slotted `label` at once triggers a dev-mode console warning, regardless of which combination it is (two sources, or all three). Only the highest-precedence source present is ever read as the accessible name; the rest are silently ignored, which is exactly the [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) mismatch this mixin's precedence order otherwise avoids if their text differs. The warning message names both the winning source and the source(s) that will not be read, so it's actionable without checking the precedence order separately. Open the browser console to see the warning for the example below.
 
 <Canvas of={Stories.ConflictingLabelSources} />
 
@@ -75,12 +75,12 @@ Setting `accessible-label` alongside a visible label (a slotted `label`, or a re
 
 - **One accessible-name writer** — exactly one of `ariaLabelledByElements`, `aria-label`, or a same-root `<label for>` is wired at a time, by construction.
 - **Native click-to-focus** — when the slotted label is the active source, it renders as a real `<label for>`, so clicking the label focuses the field natively.
-- **Dev-mode warnings** — a field with no accessible-name source at all triggers a console warning; so does a field that sets `accessible-label` while a visible label is also present.
+- **Dev-mode warnings** — a field with no accessible-name source at all triggers a console warning; so does a field that sets more than one of `accessible-labelledby`, `accessible-label`, and a slotted label, naming which source wins and which will not be read.
 
 ### Best practices
 
 - Prefer a slotted label for ordinary fields; reserve `accessible-label`/`accessible-labelledby` for fields with no visible label of their own or a name composed from elements the field doesn't own (for example, a grid cell named by its row and column headers).
-- Don't combine a slotted label with `accessible-label`/`accessible-labelledby` that carries different text — this is enforced with a dev-mode warning, not just documented guidance.
+- Set only one of `accessible-labelledby`, `accessible-label`, and a slotted label — combining any two (or all three) with different text is enforced with a dev-mode warning, not just documented guidance.
 
 <Canvas of={Stories.Accessibility} />
 

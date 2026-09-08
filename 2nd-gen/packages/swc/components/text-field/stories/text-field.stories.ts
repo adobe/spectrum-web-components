@@ -147,8 +147,23 @@ export const ConflictingLabelSources: Story = {
     <swc-text-field accessible-label="Different text (check console)">
       <span slot="label">Visible label</span>
     </swc-text-field>
+    <div id="text-field-conflict-header">External label (check console)</div>
+    <swc-text-field
+      accessible-label="Different text (check console)"
+      accessible-labelledby="text-field-conflict-header"
+    ></swc-text-field>
+    <div id="text-field-conflict-header-2">External label (check console)</div>
+    <swc-text-field
+      accessible-label="Different text (check console)"
+      accessible-labelledby="text-field-conflict-header-2"
+    >
+      <span slot="label">Visible label (check console)</span>
+    </swc-text-field>
   `,
   tags: ['behaviors'],
+  parameters: {
+    flexLayout: 'row-wrap',
+  },
 };
 ConflictingLabelSources.storyName = 'Conflicting label sources';
 

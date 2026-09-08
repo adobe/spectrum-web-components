@@ -43,7 +43,7 @@ Text fields can exist in various states:
 
 ### Conflicting label sources
 
-Setting `accessible-label` alongside a visible label (a slotted `label`, or a resolved `accessible-labelledby`) triggers a dev-mode console warning: a visible label is itself the accessible name, so a differently-worded `accessible-label` would silently override it. Open the browser console to see the warning for the example below.
+Setting more than one of `accessible-labelledby`, `accessible-label`, and a slotted `label` at once triggers a dev-mode console warning, regardless of which combination it is (two sources, or all three). Only the highest-precedence source present is ever read as the accessible name; the rest are silently ignored. The warning message names both the winning source and the source(s) that will not be read. Open the browser console to see the warning for the examples below.
 
 <Canvas of={TextFieldStories.ConflictingLabelSources} />
 
@@ -53,12 +53,12 @@ Setting `accessible-label` alongside a visible label (a slotted `label`, or a re
 
 - **Native role** — the host sets no ARIA role; the real `<input>` supplies the implicit `textbox` role.
 - **One accessible-name writer** — `accessible-labelledby` &gt; `accessible-label` &gt; slotted label, in that order; exactly one source is wired at a time.
-- **Dev-mode warnings** — a field with no visible label, no `accessible-label`, and no `accessible-labelledby` triggers a console warning; so does a field that sets `accessible-label` while a visible label is also present.
+- **Dev-mode warnings** — a field with no visible label, no `accessible-label`, and no `accessible-labelledby` triggers a console warning; so does a field that sets more than one of `accessible-labelledby`, `accessible-label`, and a slotted label, naming which source wins and which will not be read.
 
 ### Best practices
 
 - Prefer a slotted `label` for ordinary fields; reserve `accessible-label`/`accessible-labelledby` for fields with no visible label of their own or a name composed from elements the field doesn't own.
-- Don't combine a slotted label with `accessible-label`/`accessible-labelledby` that carries different text — this is enforced with a dev-mode warning, not just documented guidance.
+- Set only one of `accessible-labelledby`, `accessible-label`, and a slotted label — combining any two (or all three) with different text is enforced with a dev-mode warning, not just documented guidance.
 
 <Canvas of={TextFieldStories.Accessibility} />
 

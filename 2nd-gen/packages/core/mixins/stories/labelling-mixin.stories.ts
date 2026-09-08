@@ -103,6 +103,22 @@ export const ConflictingLabelSources: Story = {
     <demo-labelling-host accessible-label="Different text (check console)">
       <span slot="label">Visible label</span>
     </demo-labelling-host>
+    <div id="labelling-mixin-conflict-header">
+      External label (check console)
+    </div>
+    <demo-labelling-host
+      accessible-label="Different text (check console)"
+      accessible-labelledby="labelling-mixin-conflict-header"
+    ></demo-labelling-host>
+    <div id="labelling-mixin-conflict-header-2">
+      External label (check console)
+    </div>
+    <demo-labelling-host
+      accessible-label="Different text (check console)"
+      accessible-labelledby="labelling-mixin-conflict-header-2"
+    >
+      <span slot="label">Visible label (check console)</span>
+    </demo-labelling-host>
   `,
   tags: ['behaviors'],
 };
