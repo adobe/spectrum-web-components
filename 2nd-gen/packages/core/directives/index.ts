@@ -18,3 +18,8 @@ export {
   renderPendingSpinner,
   type PendingSpinnerResult,
 } from './pending-spinner/index.js';
+export {
+  renderFieldLabel,
+  type RenderFieldLabelOptions,
+  type RenderFieldLabelResult,
+} from './render-label/index.js';
