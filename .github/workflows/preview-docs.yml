@@ -110,7 +110,7 @@ jobs:
 
       - name: Build Gen2 Storybook (prod mode)
         # No NODE_ENV override: this is the same production-trimmed build
-        # that publish-2ndgen-docs.yml deploys to the live site, so
+        # that publish-gen2-docs.yml deploys to the live site, so
         # reviewers can validate exactly what will end up on prod.
         env:
           # Cross-link to this PR's gen1 preview instead of the default
