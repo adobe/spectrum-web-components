@@ -18,3 +18,8 @@ export {
   renderPendingSpinner,
   type PendingSpinnerResult,
 } from './pending-spinner/index.js';
+export {
+  renderFieldHelpText,
+  type RenderFieldHelpTextOptions,
+  type RenderFieldHelpTextResult,
+} from './render-help-text/index.js';

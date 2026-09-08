@@ -11,6 +11,7 @@
  */
 
 export { DisabledMixin, type DisabledInterface } from './disabled-mixin.js';
+export { HelpTextMixin, type HelpTextInterface } from './help-text-mixin.js';
 export {
   LINEAR_PROGRESS_LABEL_POSITIONS,
   LINEAR_PROGRESS_STATIC_COLORS,

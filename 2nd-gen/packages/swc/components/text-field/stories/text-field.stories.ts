@@ -58,3 +58,81 @@ export const Playground: Story = {
     ${template({ ...args })}
   `,
 };
+
+// ──────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────
+
+export const Overview: Story = {
+  tags: ['overview'],
+  args: {
+    'accessible-label': 'Example text field',
+  },
+};
+
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
+
+export const Anatomy: Story = {
+  render: () => html`
+    <swc-text-field accessible-label="Email address">
+      <span slot="description">Used for order updates only.</span>
+    </swc-text-field>
+    <swc-text-field accessible-label="Email address" invalid>
+      <span slot="error-text">Enter a valid email address.</span>
+    </swc-text-field>
+  `,
+  tags: ['anatomy'],
+  parameters: {
+    flexLayout: 'row-wrap',
+  },
+};
+
+// ──────────────────────────
+//    STATES STORIES
+// ──────────────────────────
+
+export const States: Story = {
+  render: () => html`
+    <swc-text-field accessible-label="Default"></swc-text-field>
+    <swc-text-field accessible-label="Required" required></swc-text-field>
+    <swc-text-field
+      accessible-label="Read-only"
+      readonly
+      value="Read-only value"
+    ></swc-text-field>
+    <swc-text-field accessible-label="Disabled" disabled></swc-text-field>
+    <swc-text-field accessible-label="Email address" invalid>
+      <span slot="description">We'll never share your email.</span>
+      <span slot="error-text">Enter a valid email address.</span>
+    </swc-text-field>
+  `,
+  tags: ['states'],
+  parameters: {
+    flexLayout: 'row-wrap',
+  },
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+export const Accessibility: Story = {
+  render: () => html`
+    <swc-text-field accessible-label="Comments">
+      <span slot="description">Optional; visible to your team only.</span>
+    </swc-text-field>
+    <p id="accessibility-external-description">
+      Describe the issue in as much detail as possible.
+    </p>
+    <swc-text-field
+      accessible-label="Issue details"
+      accessible-describedby="accessibility-external-description"
+    ></swc-text-field>
+  `,
+  tags: ['a11y'],
+  parameters: {
+    flexLayout: 'row-wrap',
+  },
+};

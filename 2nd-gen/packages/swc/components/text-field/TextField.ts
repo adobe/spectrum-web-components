@@ -35,16 +35,37 @@ export class TextField extends TextFieldBase {
     return [styles];
   }
 
+  /**
+   * The real role element `HelpTextMixin` wires the resolved
+   * description/error-message ARIA relationships onto.
+   */
+  public override get roleElement(): HTMLInputElement | null {
+    return this.renderRoot.querySelector('input.input');
+  }
+
   protected override render(): TemplateResult {
-    // @todo (SWC-2466 / Phase 4–5): render the visible label, required indicator,
-    // validation icon, and description/error container via the LabellingController.
-    // Until then the input takes its accessible name from `accessible-label`.
+    // @todo (SWC-2466 / Phase 4–5): render the visible label and required
+    // indicator via a future labelling mixin. Until then the input takes its
+    // accessible name from `accessible-label`.
     return html`
       <div class="swc-TextField">
         <input
           class="input"
+          type=${this.type}
+          .value=${this.value}
+          placeholder=${ifDefined(this.placeholder || undefined)}
+          pattern=${ifDefined(this.pattern)}
+          inputmode=${ifDefined(this.inputmode)}
+          autocomplete=${ifDefined(this.autocomplete)}
+          maxlength=${ifDefined(this.maxlength)}
+          minlength=${ifDefined(this.minlength)}
+          ?readonly=${this.readonly}
+          ?required=${this.required}
+          ?disabled=${this.disabled}
           aria-label=${ifDefined(this.accessibleLabel || undefined)}
+          aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
         />
+        ${this.renderHelpText()}
       </div>
     `;
   }

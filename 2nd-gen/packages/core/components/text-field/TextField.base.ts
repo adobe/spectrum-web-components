@@ -13,7 +13,10 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import {
+  HelpTextMixin,
+  SizedMixin,
+} from '@adobe/spectrum-wc-core/mixins/index.js';
 import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
@@ -38,10 +41,13 @@ const DOCS_URL =
  * @slot description - Guidance / non-error help text, associated via `aria-describedby`.
  * @slot error-text - Error message shown when `invalid`, targeted by `aria-errormessage`.
  */
-export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
-  validSizes: TEXT_FIELD_VALID_SIZES,
-  defaultSize: 'm',
-}) {
+export abstract class TextFieldBase extends SizedMixin(
+  HelpTextMixin(SpectrumElement),
+  {
+    validSizes: TEXT_FIELD_VALID_SIZES,
+    defaultSize: 'm',
+  }
+) {
   /**
    * Route host focus to the internal native `<input>` so the field is a single
    * tab stop with focus landing on the real control.
@@ -75,16 +81,6 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
    */
   @property({ attribute: 'accessible-labelledby' })
   public accessibleLabelledby?: string;
-
-  /**
-   * Element IDs, from the light DOM, that describe the field.
-   *
-   * @todo (SWC-2466): the `LabellingController` resolves these IDREFs to the
-   * cross-root `ariaDescribedByElements` property; raw `aria-describedby` is not
-   * exposed on the host.
-   */
-  @property({ attribute: 'accessible-describedby' })
-  public accessibleDescribedby?: string;
 
   /**
    * The value of the input.
@@ -183,9 +179,10 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────
 
-  // @todo (SWC-2466): resolve the accessible-labelledby / accessible-describedby
-  // IDREF stubs to cross-root element references, and add the "unlabeled field"
-  // dev-warning, via the LabellingController.
+  // @todo (SWC-2466): resolve the accessible-labelledby IDREF stub to a
+  // cross-root `ariaLabelledByElements` element reference, and add the
+  // "unlabeled field" dev-warning, via a future labelling mixin
+  // (accessible-describedby resolution now lives in HelpTextMixin).
 
   // @todo (SWC-2467): wire the FieldAssociationController (formAssociated,
   // attachInternals, setFormValue, formResetCallback, formDisabledCallback) plus

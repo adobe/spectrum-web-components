@@ -27,6 +27,7 @@ type BrandedSWCWarningID =
  */
 interface ARIAMixin {
   ariaDescribedByElements: readonly Element[] | null;
+  ariaErrorMessageElements: readonly Element[] | null;
   ariaLabelledByElements: readonly Element[] | null;
 }
 

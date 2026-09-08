@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as TextFieldStories from './stories/text-field.stories';
+
+<Meta of={TextFieldStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A text field consists of:
+
+- **Input**: the real, focusable `<input>` that carries the value and native `textbox` role
+- **Description** (optional), provided through the `description` slot: guidance text associated via `aria-describedby`
+- **Error text** (optional), provided through the `error-text` slot: shown and associated via `aria-errormessage` only while `invalid`
+
+<Canvas of={TextFieldStories.Anatomy} />
+
+## States
+
+Text fields can exist in various states:
+
+- **Default**: normal, editable state
+- **Required**: the native `required` attribute is reflected onto the input; no separate `aria-required` is set
+- **Read-only**: focusable and selectable, but not editable; distinct from disabled
+- **Disabled**: not editable and removed from the tab order
+- **Invalid**: shows the slotted `error-text` and associates it via `aria-errormessage`, in addition to `aria-describedby`
+
+<Canvas of={TextFieldStories.States} />
+
+## Accessibility
+
+### Features
+
+- **Combining descriptions** — a slotted `description` and an external `accessible-describedby` reference combine rather than override each other; the in-shadow description comes first.
+- **`aria-errormessage`** — set only while `invalid` is `true`, alongside `aria-describedby`, so the error text is both visible and specifically identified to assistive technology.
+
+### Best practices
+
+- Always pair `invalid` with slotted `error-text` so the invalid state is not conveyed by color or the validation icon alone.
+- Use `accessible-describedby` for a description composed from light-DOM content the field doesn't own; it combines with, rather than replaces, a slotted `description`.
+
+<Canvas of={TextFieldStories.Accessibility} />
+
+<DocsFooter />
