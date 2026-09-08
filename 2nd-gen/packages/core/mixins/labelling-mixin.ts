@@ -62,8 +62,9 @@ export interface LabellingInterface {
  * A mixin that adds visible-label rendering and accessible-name wiring to a
  * host: the reactive `accessible-label` / `accessible-labelledby` properties,
  * light-DOM `label` slot presence tracking (via `SlotPresenceController`), the
- * "no accessible name" dev warning, and `renderLabel()` — which renders the
- * shared label markup via the `renderFieldLabel` directive.
+ * "no accessible name" and "conflicting label sources" dev warnings, and
+ * `renderLabel()` — which renders the shared label markup via the
+ * `renderFieldLabel` directive.
  *
  * Three accessible-name sources are supported, in precedence order (highest
  * first): `accessibleLabelledby` (resolved against the host's root node and
@@ -72,7 +73,11 @@ export interface LabellingInterface {
  * visible label (rendered as a real, same-root `<label for>`). Only the
  * highest-precedence source that is actually set is wired; a lower-precedence
  * slotted label still renders visually (as a plain, non-`for` `<span>`) so it
- * isn't hidden, just excluded from the accessible-name computation.
+ * isn't hidden, just excluded from the accessible-name computation. Setting
+ * `accessibleLabel` alongside a visible label (slotted or via a resolved
+ * `accessibleLabelledby`) triggers a dev-mode warning: a visible label is
+ * itself the accessible name, so a differently-worded `accessibleLabel`
+ * silently overriding it risks a WCAG 2.5.3 (Label in Name) mismatch.
  *
  * Because the role element a text-like field names is created by the host's
  * own render (e.g. the `<input>`), this mixin never assumes the role element's
@@ -205,6 +210,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
       // property.
       if (isDebug()) {
         this._warnMissingAccessibleName();
+        this._warnLabelConflict();
       }
     }
 
@@ -240,6 +246,41 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
             'add visible label content via the "label" named slot, or',
             'set the "accessible-label" attribute (or "accessibleLabel" property), or',
             'set "accessible-labelledby" (or "accessibleLabelledby") to reference an external label.',
+          ],
+        }
+      );
+    }
+
+    /**
+     * @internal
+     *
+     * Warns when `accessibleLabel` is set alongside a visible label (a
+     * slotted `label` or a resolved `accessibleLabelledby`). A visible label
+     * is itself the accessible name; a differently-worded `accessibleLabel`
+     * would silently take over that computation (per precedence order,
+     * `accessibleLabelledby` first, then `accessibleLabel`), which risks a
+     * WCAG 2.5.3 (Label in Name) mismatch between what's shown and what's
+     * announced. Warn regardless of which source actually wins, since
+     * setting both is a likely authoring mistake either way.
+     */
+    private _warnLabelConflict(): void {
+      const hasVisibleLabel =
+        this.hasLabelSlotContent || this._resolvedLabelledbyElements.length > 0;
+      // Early return when there is nothing to conflict with so the message is
+      // not built on every render.
+      if (!this.accessibleLabel || !hasVisibleLabel) {
+        return;
+      }
+      warnIf(
+        this,
+        true,
+        `<${this.localName}> sets "accessible-label" together with a visible label (a "label" slot or "accessible-labelledby"). The visible label already provides the accessible name; a differently-worded "accessible-label" risks a WCAG 2.5.3 (Label in Name) mismatch between what's shown and what's announced.`,
+        this.docsHref,
+        {
+          type: 'accessibility',
+          issues: [
+            'remove "accessible-label" (or "accessibleLabel") and rely on the visible label, or',
+            'remove the visible label and rely on "accessible-label" alone.',
           ],
         }
       );

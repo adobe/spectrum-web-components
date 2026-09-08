@@ -20,7 +20,7 @@ import * as Stories from './stories/labelling-mixin.stories';
 
 - **Precedence-ordered accessible name** — three sources, highest precedence first: `accessibleLabelledby` (resolved against the host's root node, written to the role element's `ariaLabelledByElements`), `accessibleLabel` (written to the role element's `aria-label` attribute), and a slotted visible label (rendered as a real, same-root `<label for>`). Only the highest-precedence source that is actually set is wired.
 - **Conditional label rendering** — `renderLabel()` renders nothing when there is no slotted `label` content, and renders a plain, non-`for` `<span>` (not a `<label for>`) when a higher-precedence source is active, so the visible text isn't hidden but is excluded from the accessible-name computation.
-- **Dev-mode warning** — warns when no accessible-name source resolves to anything.
+- **Dev-mode warnings** — warns when no accessible-name source resolves to anything, and separately warns when `accessibleLabel` is set alongside a visible label (slotted or via a resolved `accessibleLabelledby`), since a differently-worded `accessibleLabel` would silently take over the accessible name.
 
 ### Basic usage
 
@@ -54,18 +54,24 @@ class MyField extends LabellingMixin(LitElement) {
 
 <Canvas of={Stories.NameSourcePrecedence} />
 
+### Conflicting label sources
+
+Setting `accessible-label` alongside a visible label (a slotted `label`, or a resolved `accessible-labelledby`) triggers a dev-mode console warning. A visible label is itself the accessible name; a differently-worded `accessible-label` would silently override that computation, which is exactly the [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) mismatch this mixin's precedence order otherwise avoids. The warning fires regardless of which source actually wins, since setting both is a likely authoring mistake either way. Open the browser console to see the warning for the example below.
+
+<Canvas of={Stories.ConflictingLabelSources} />
+
 ## Accessibility
 
 ### Features
 
 - **One accessible-name writer** — exactly one of `ariaLabelledByElements`, `aria-label`, or a same-root `<label for>` is wired at a time, by construction.
 - **Native click-to-focus** — when the slotted label is the active source, it renders as a real `<label for>`, so clicking the label focuses the field natively.
-- **Dev-mode warning** — a field with no accessible-name source at all triggers a console warning in development builds.
+- **Dev-mode warnings** — a field with no accessible-name source at all triggers a console warning; so does a field that sets `accessible-label` while a visible label is also present.
 
 ### Best practices
 
 - Prefer a slotted label for ordinary fields; reserve `accessible-label`/`accessible-labelledby` for fields with no visible label of their own or a name composed from elements the field doesn't own (for example, a grid cell named by its row and column headers).
-- Don't combine a slotted label with `accessible-label`/`accessible-labelledby` that carries different text.
+- Don't combine a slotted label with `accessible-label`/`accessible-labelledby` that carries different text — this is enforced with a dev-mode warning, not just documented guidance.
 
 <Canvas of={Stories.Accessibility} />
 

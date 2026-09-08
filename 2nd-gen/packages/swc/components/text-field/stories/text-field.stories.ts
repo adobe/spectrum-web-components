@@ -138,6 +138,20 @@ export const States: Story = {
   },
 };
 
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+export const ConflictingLabelSources: Story = {
+  render: () => html`
+    <swc-text-field accessible-label="Different text (check console)">
+      <span slot="label">Visible label</span>
+    </swc-text-field>
+  `,
+  tags: ['behaviors'],
+};
+ConflictingLabelSources.storyName = 'Conflicting label sources';
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────

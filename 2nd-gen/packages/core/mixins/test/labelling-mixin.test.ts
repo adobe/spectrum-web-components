@@ -136,3 +136,94 @@ export const MissingAccessibleNameTest: Story = {
     );
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Conflicting label sources DEBUG warning (WCAG 2.5.3)
+// ──────────────────────────────────────────────────────────────
+
+export const LabelConflictTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ step }) => {
+    await step(
+      'warns when accessible-label is set alongside a slotted label',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const host = document.createElement('demo-labelling-host');
+          host.setAttribute('accessible-label', 'Different text');
+          const slotted = document.createElement('span');
+          slotted.slot = 'label';
+          slotted.textContent = 'Visible label';
+          host.append(slotted);
+          document.body.append(host);
+          await (host as DemoLabellingHost).updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          expect(
+            messages.some(
+              (m) => m.includes('accessible-label') && m.includes('visible')
+            )
+          ).toBe(true);
+          host.remove();
+        })
+    );
+
+    await step(
+      'warns when accessible-label is set alongside a resolved accessible-labelledby',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const external = document.createElement('div');
+          external.id = 'label-conflict-external';
+          external.textContent = 'External label';
+          const host = document.createElement('demo-labelling-host');
+          host.setAttribute('accessible-label', 'Different text');
+          host.setAttribute('accessible-labelledby', 'label-conflict-external');
+          document.body.append(external, host);
+          await (host as DemoLabellingHost).updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          expect(
+            messages.some(
+              (m) => m.includes('accessible-label') && m.includes('visible')
+            )
+          ).toBe(true);
+          external.remove();
+          host.remove();
+        })
+    );
+
+    await step('does not warn when accessible-label is the only source', () =>
+      withWarningSpy(async (warnCalls) => {
+        const host = document.createElement('demo-labelling-host');
+        host.setAttribute('accessible-label', 'Named');
+        document.body.append(host);
+        await (host as DemoLabellingHost).updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(
+          messages.some(
+            (m) => m.includes('accessible-label') && m.includes('visible')
+          )
+        ).toBe(false);
+        host.remove();
+      })
+    );
+
+    await step('does not warn when a slotted label is the only source', () =>
+      withWarningSpy(async (warnCalls) => {
+        const host = document.createElement('demo-labelling-host');
+        const slotted = document.createElement('span');
+        slotted.slot = 'label';
+        slotted.textContent = 'Visible label';
+        host.append(slotted);
+        document.body.append(host);
+        await (host as DemoLabellingHost).updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(
+          messages.some(
+            (m) => m.includes('accessible-label') && m.includes('visible')
+          )
+        ).toBe(false);
+        host.remove();
+      })
+    );
+  },
+};

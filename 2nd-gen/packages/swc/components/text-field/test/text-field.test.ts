@@ -120,3 +120,50 @@ export const MissingAccessibleNameTest: Story = {
     );
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Conflicting label sources DEBUG warning (WCAG 2.5.3)
+// ──────────────────────────────────────────────────────────────
+
+export const LabelConflictTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ step }) => {
+    await step(
+      'warns when accessible-label is set alongside a slotted label',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const field = await fixture<TextField>(html`
+            <swc-text-field accessible-label="Different text">
+              <span slot="label">Visible label</span>
+            </swc-text-field>
+          `);
+          await field.updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          expect(
+            messages.some(
+              (m) => m.includes('accessible-label') && m.includes('visible')
+            )
+          ).toBe(true);
+          field.parentElement?.remove();
+        })
+    );
+
+    await step('does not warn when accessible-label is the only source', () =>
+      withWarningSpy(async (warnCalls) => {
+        const field = await fixture<TextField>(html`
+          <swc-text-field accessible-label="Named"></swc-text-field>
+        `);
+        await field.updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(
+          messages.some(
+            (m) => m.includes('accessible-label') && m.includes('visible')
+          )
+        ).toBe(false);
+        field.parentElement?.remove();
+      })
+    );
+  },
+};

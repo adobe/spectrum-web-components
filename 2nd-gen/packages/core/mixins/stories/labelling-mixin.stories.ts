@@ -98,6 +98,16 @@ export const NameSourcePrecedence: Story = {
 };
 NameSourcePrecedence.storyName = 'Name source precedence';
 
+export const ConflictingLabelSources: Story = {
+  render: () => html`
+    <demo-labelling-host accessible-label="Different text (check console)">
+      <span slot="label">Visible label</span>
+    </demo-labelling-host>
+  `,
+  tags: ['behaviors'],
+};
+ConflictingLabelSources.storyName = 'Conflicting label sources';
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
