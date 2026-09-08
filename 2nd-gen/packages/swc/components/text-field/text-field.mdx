@@ -20,11 +20,11 @@ A text field consists of:
 
 ### Labelling
 
-Three sources can provide the field's accessible name, in precedence order (highest first): `accessible-labelledby`, `accessible-label`, and a slotted `label`. Only the highest-precedence source that is set becomes the accessible name — a lower-precedence source with different text does not get silently combined into it, avoiding a [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) mismatch.
+Three sources can provide the field's accessible name. Only the highest-precedence source that is set becomes the accessible name — a lower-precedence source with different text does not get silently combined into it, avoiding a [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) mismatch:
 
-- **Slotted `label`**: the default, recommended path for an ordinary standalone field. Renders as a real, same-root `<label for>`, giving native click-to-focus.
-- **`accessible-label`**: a string accessible name for a field with no visible label of its own.
-- **`accessible-labelledby`**: space-separated element `id`s, resolved against the field's root node, for composing a name from elements the field does not own (for example, a grid cell named by its row and column headers).
+1. **`accessible-labelledby`** (highest precedence): space-separated element `id`s, resolved against the field's root node, for composing a name from elements the field does not own (for example, a grid cell named by its row and column headers).
+2. **`accessible-label`**: a string accessible name for a field with no visible label of its own.
+3. **A slotted `label`** (lowest precedence): the default, recommended path for an ordinary standalone field. Renders as a real, same-root `<label for>`, giving native click-to-focus.
 
 <Canvas of={TextFieldStories.Labelling} />
 

@@ -18,7 +18,10 @@ import * as Stories from './stories/labelling-mixin.stories';
 
 ### What it does
 
-- **Precedence-ordered accessible name** — three sources, highest precedence first: `accessibleLabelledby` (resolved against the host's root node, written to the role element's `ariaLabelledByElements`), `accessibleLabel` (written to the role element's `aria-label` attribute), and a slotted visible label (rendered as a real, same-root `<label for>`). Only the highest-precedence source that is actually set is wired.
+- **Precedence-ordered accessible name** — only the highest-precedence source that is actually set is wired, in this order:
+  1. **`accessibleLabelledby`** (highest) — resolved against the host's root node, written to the role element's `ariaLabelledByElements`.
+  2. **`accessibleLabel`** — written to the role element's `aria-label` attribute.
+  3. **A slotted visible label** (lowest) — rendered as a real, same-root `<label for>`.
 - **Conditional label rendering** — `renderLabel()` renders nothing when there is no slotted `label` content, and renders a plain, non-`for` `<span>` (not a `<label for>`) when a higher-precedence source is active, so the visible text isn't hidden but is excluded from the accessible-name computation.
 - **Dev-mode warnings** — warns when no accessible-name source resolves to anything, and separately warns when `accessibleLabel` is set alongside a visible label (slotted or via a resolved `accessibleLabelledby`), since a differently-worded `accessibleLabel` would silently take over the accessible name.
 
@@ -50,7 +53,13 @@ class MyField extends LabellingMixin(LitElement) {
 
 ### Name source precedence
 
-`accessible-labelledby` overrides both `accessible-label` and a slotted label; `accessible-label` overrides a slotted label. Only the winning source is wired onto the role element — a lower-precedence slotted label still renders visually, but is not part of the accessible-name computation, avoiding a [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) mismatch.
+Only the highest-precedence source that is set becomes the accessible name, in this order:
+
+1. **`accessible-labelledby`** (highest precedence) — overrides both `accessible-label` and a slotted label.
+2. **`accessible-label`** — overrides a slotted label.
+3. **A slotted `label`** (lowest precedence) — the default when neither of the above is set.
+
+Only the winning source is wired onto the role element — a lower-precedence slotted label still renders visually, but is not part of the accessible-name computation, avoiding a [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) mismatch.
 
 <Canvas of={Stories.NameSourcePrecedence} />
 
