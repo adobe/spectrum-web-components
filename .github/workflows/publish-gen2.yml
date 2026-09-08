@@ -17,10 +17,10 @@ concurrency:
 jobs:
   check-changesets:
     runs-on: ubuntu-latest
-    # push is already scoped to main by the trigger above; this only blocks a
-    # workflow_dispatch fired from any other branch (dispatch has no branch filter
-    # of its own, so it's the only event that needs this guard).
-    if: github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main'
+    # Both triggers reduce to "must be on main": push only fires on main (trigger
+    # above), and a workflow_dispatch is only allowed from main. dispatch from any
+    # other branch skips here, so version-pr/publish (which need this job) skip too.
+    if: github.ref == 'refs/heads/main'
     outputs:
       has_changesets: ${{ steps.check.outputs.has_changesets }}
       needs_publish: ${{ steps.check.outputs.needs_publish }}

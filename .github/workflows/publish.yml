@@ -26,10 +26,10 @@ concurrency:
 jobs:
   check-changesets:
     runs-on: ubuntu-latest
-    # push is already scoped to main by the trigger above; this only blocks a
-    # workflow_dispatch fired from any other branch (dispatch has no branch filter
-    # of its own, so it's the only event that needs this guard).
-    if: github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main'
+    # Always runs - on push to main and on manual dispatch from any branch - so the
+    # snapshot job (dispatchable from any branch) can read its outputs. The main-only
+    # restriction lives on version-pr/publish instead, since only those must be limited
+    # to main.
     outputs:
       has_changesets: ${{ steps.check.outputs.has_changesets }}
       needs_publish: ${{ steps.check.outputs.needs_publish }}
@@ -220,8 +220,11 @@ jobs:
   # hand if a run fails, without needing an empty commit to main.
   version-pr:
     needs: check-changesets
+    # push is main-only via the trigger; a manual dispatch is restricted to main here so
+    # the Version PR is never opened from a feature branch.
     if: >-
-      (github.event_name == 'push' || github.event_name == 'workflow_dispatch') &&
+      (github.event_name == 'push' ||
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')) &&
       needs.check-changesets.outputs.has_changesets == 'true'
     runs-on: ubuntu-latest
     permissions:
@@ -275,8 +278,11 @@ jobs:
   # too, so a failed publish can be retried by hand instead of needing an empty commit.
   publish:
     needs: check-changesets
+    # push is main-only via the trigger; a manual dispatch is restricted to main here so
+    # a real npm publish can never be fired from a feature branch.
     if: >-
-      (github.event_name == 'push' || github.event_name == 'workflow_dispatch') &&
+      (github.event_name == 'push' ||
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')) &&
       needs.check-changesets.outputs.has_changesets == 'false' &&
       needs.check-changesets.outputs.needs_publish == 'true'
     runs-on: ubuntu-latest
