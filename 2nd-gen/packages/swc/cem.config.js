@@ -10,6 +10,23 @@
  * governing permissions and limitations under the License.
  */
 
+import path from 'node:path';
+import { getTsProgram, typeParserPlugin } from '@wc-toolkit/type-parser';
+
+// type-parser logs an ungated `console.warn` for every deep or recursive lib
+// type it declines to expand (DOM element types, `CSSStyleSheet`, etc.). Those
+// bails are expected and only add noise, so drop just the `[type-parser]`
+// lines; all other analyzer warnings pass through.
+const originalWarn = console.warn;
+console.warn = (...args) => {
+  if (
+    args.some((arg) => typeof arg === 'string' && arg.includes('[type-parser]'))
+  ) {
+    return;
+  }
+  originalWarn(...args);
+};
+
 /**
  * CEM plugin that extracts `@status` and `@since` JSDoc tags from class
  * declarations and attaches them to the corresponding CEM declaration.
@@ -77,6 +94,20 @@ export default {
     '../core/mixins/**/*.ts',
     '../core/utils/**/*.ts',
   ],
+  // Give type-parser the TypeScript type checker so it can expand referenced
+  // type aliases (e.g. `(typeof ARRAY)[number]` unions) into literal values.
+  overrideModuleCreation({ ts, globs }) {
+    const program = getTsProgram(ts, globs, 'tsconfig.json');
+    // `globs` here are resolved file paths, some relative with a `../` prefix
+    // (core-package files referenced from this swc-package config). Comparing
+    // raw strings with `includes()` never matches those against the program's
+    // absolute `fileName`s, silently dropping every core-package module (and
+    // with it, most components' base-class attributes) — resolve both sides.
+    const resolvedGlobs = new Set(globs.map((glob) => path.resolve(glob)));
+    return program
+      .getSourceFiles()
+      .filter((sf) => resolvedGlobs.has(path.resolve(sf.fileName)));
+  },
   exclude: [
     '**/*.stories.ts',
     '**/*.test.ts',
@@ -89,5 +120,5 @@ export default {
   outdir: 'dist',
   litelement: true,
   dev: false,
-  plugins: [statusPlugin()],
+  plugins: [statusPlugin(), typeParserPlugin()],
 };

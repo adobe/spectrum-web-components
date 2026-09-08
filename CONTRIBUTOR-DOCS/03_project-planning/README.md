@@ -90,6 +90,7 @@
 - Strategies
     - [Focus Management Strategy: 2nd-Gen Proposal](05_strategies/focus-management-strategy-rfc.md)
     - [Forms Strategy: 2nd-Gen Proposal](05_strategies/forms-strategy-rfc.md)
+    - [Global API list](05_strategies/global-api-list.md)
     - [RFC: 2nd-gen icon strategy (Spectrum 2)](05_strategies/icon-rfc.md)
 
 </details>
