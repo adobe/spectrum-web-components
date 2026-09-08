@@ -14,19 +14,17 @@ import { html, nothing } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
-import '@adobe/spectrum-wc/components/icon/swc-icon.js';
+import '@adobe/spectrum-wc-icons/swc-icon-checkmark.js';
 
 import type { CustomPropertyCase } from '../../../../.storybook/helpers/index.js';
 import {
   coveredCustomProperties,
   customPropertyRows,
-  iconForSize,
   theme,
   verifyCustomPropertyCoverage,
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
 import customElementsManifest from '../../../../dist/custom-elements.json';
-import * as Icons from '../../../icon/elements/index.js';
 
 // Metadata
 
@@ -128,7 +126,7 @@ const renderPropertyCase = (
         aria-label=${label}
         style=${combinedStyle || nothing}
       >
-        <swc-icon slot="icon">${iconForSize(Icons, 'Checkmark', 'm')}</swc-icon>
+        <swc-icon-checkmark slot="icon"></swc-icon-checkmark>
       </swc-badge>
     `;
   }
@@ -141,9 +139,7 @@ const renderPropertyCase = (
     >
       ${withIcon
         ? html`
-            <swc-icon slot="icon" aria-hidden="true">
-              ${iconForSize(Icons, 'Checkmark', 'm')}
-            </swc-icon>
+            <swc-icon-checkmark slot="icon"></swc-icon-checkmark>
           `
         : nothing}
       ${wrap ? wrapLabel : label}

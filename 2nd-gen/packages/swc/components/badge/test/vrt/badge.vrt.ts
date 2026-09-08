@@ -22,19 +22,17 @@ import {
 } from '@adobe/spectrum-wc-core/components/badge';
 
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
-import '@adobe/spectrum-wc/components/icon/swc-icon.js';
+import '@adobe/spectrum-wc-icons/swc-icon-checkmark.js';
 
 import {
   createPermutations,
   forcedColorsVrtParameters,
   groupPermutationsBy,
-  iconForSize,
   renderStorybookPermutation,
   row,
   theme,
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
-import * as Icons from '../../../icon/elements/index.js';
 
 // Metadata
 
@@ -139,17 +137,13 @@ const renderIconAnatomy = ({ size, content }: IconAnatomyCase) => {
           role="img"
           aria-label="Archived"
         >
-          <swc-icon size=${size} slot="icon">
-            ${iconForSize(Icons, 'Checkmark', size)}
-          </swc-icon>
+          <swc-icon-checkmark size=${size} slot="icon"></swc-icon-checkmark>
         </swc-badge>
       `;
     }
     return html`
       <swc-badge variant="neutral" size=${size}>
-        <swc-icon size=${size} slot="icon" aria-hidden="true">
-          ${iconForSize(Icons, 'Checkmark', size)}
-        </swc-icon>
+        <swc-icon-checkmark size=${size} slot="icon"></swc-icon-checkmark>
         Archived
       </swc-badge>
     `;

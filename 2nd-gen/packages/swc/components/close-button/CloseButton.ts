@@ -17,26 +17,13 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import {
   BUTTON_STATIC_COLORS,
   ButtonBase,
-  type ButtonSize,
   type ButtonStaticColor,
 } from '@adobe/spectrum-wc-core/components/button';
 import { validateEnum } from '@adobe/spectrum-wc-core/utils';
 
-import {
-  Cross200Icon,
-  Cross300Icon,
-  Cross400Icon,
-  Cross500Icon,
-} from '../icon/elements/index.js';
+import '../ui-icons/swc-ui-icon.js';
 
 import styles from './close-button.css';
-
-const crossIconBySize: Record<ButtonSize, () => TemplateResult> = {
-  s: Cross200Icon,
-  m: Cross300Icon,
-  l: Cross400Icon,
-  xl: Cross500Icon,
-};
 
 /**
  * A compact dismiss control for dialogs, banners, toasts, and similar chrome.
@@ -101,6 +88,11 @@ export class CloseButton extends ButtonBase {
   }
 
   protected override render(): TemplateResult {
+    // The wrapping .swc-CloseButton-icon span already sets the rendered box via
+    // --swc-close-button-icon-size; "size" on swc-ui-icon only selects which
+    // optically-tuned glyph step it renders, per the RFC's fixed size-to-step
+    // map (CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md, section 7).
+    // Passing the button's own size is the documented pattern for that mapping.
     return html`
       <button
         class="swc-CloseButton"
@@ -110,7 +102,7 @@ export class CloseButton extends ButtonBase {
         aria-label=${ifDefined(this.accessibleLabel ?? undefined)}
       >
         <span class="swc-CloseButton-icon" aria-hidden="true">
-          ${crossIconBySize[this.size as ButtonSize]()}
+          <swc-ui-icon icon="cross" size=${this.size}></swc-ui-icon>
         </span>
       </button>
     `;
