@@ -220,11 +220,11 @@ jobs:
   # hand if a run fails, without needing an empty commit to main.
   version-pr:
     needs: check-changesets
-    # push is main-only via the trigger; a manual dispatch is restricted to main here so
-    # the Version PR is never opened from a feature branch.
+    # Main-only: push only fires on main, and a manual dispatch is restricted to main so
+    # the Version PR is never opened from a feature branch. (check-changesets has no such
+    # guard here - it must stay open for the snapshot job - so the check lives on this job.)
     if: >-
-      (github.event_name == 'push' ||
-      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')) &&
+      github.ref == 'refs/heads/main' &&
       needs.check-changesets.outputs.has_changesets == 'true'
     runs-on: ubuntu-latest
     permissions:
@@ -278,11 +278,11 @@ jobs:
   # too, so a failed publish can be retried by hand instead of needing an empty commit.
   publish:
     needs: check-changesets
-    # push is main-only via the trigger; a manual dispatch is restricted to main here so
-    # a real npm publish can never be fired from a feature branch.
+    # Main-only: push only fires on main, and a manual dispatch is restricted to main so
+    # a real npm publish can never be fired from a feature branch. (check-changesets has no
+    # such guard here - it must stay open for the snapshot job - so the check lives here.)
     if: >-
-      (github.event_name == 'push' ||
-      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')) &&
+      github.ref == 'refs/heads/main' &&
       needs.check-changesets.outputs.has_changesets == 'false' &&
       needs.check-changesets.outputs.needs_publish == 'true'
     runs-on: ubuntu-latest
