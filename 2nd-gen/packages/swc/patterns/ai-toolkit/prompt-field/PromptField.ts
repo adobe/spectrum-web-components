@@ -264,39 +264,42 @@ export class PromptField extends SpectrumElement {
   @state()
   private _dragged = false;
 
-  /** Accepts file drags anywhere on the host and hands dropped files off via `swc-prompt-field-drop`. */
-  private readonly _dragAndDrop = new DragAndDropController(this, {
-    isDragged: () => this._dragged,
-    shouldAccept: (event) => !this.disabled && isFileDrag(event),
-    onDragEnter: () => {
-      this._dragged = true;
-    },
-    onDragLeave: () => {
-      this._dragged = false;
-    },
-    onDrop: (event) => {
-      this._dragged = false;
-      if (this.disabled) {
-        return;
-      }
-      const files = Array.from(event.dataTransfer?.files ?? []);
-      if (files.length === 0) {
-        return;
-      }
-      if (this.shadowRoot?.activeElement !== this._textarea) {
-        this._pendingAttachmentDropFocus = [
-          ...(this._assignedAttachmentElements ?? []),
-        ];
-      }
-      this.dispatchEvent(
-        new CustomEvent('swc-prompt-field-drop', {
-          bubbles: true,
-          composed: true,
-          detail: { files },
-        })
-      );
-    },
-  });
+  public constructor() {
+    super();
+    // Accepts file drags anywhere on the host and hands dropped files off via `swc-prompt-field-drop`; the controller self-registers, so no reference is retained.
+    new DragAndDropController(this, {
+      isDragged: () => this._dragged,
+      shouldAccept: (event) => !this.disabled && isFileDrag(event),
+      onDragEnter: () => {
+        this._dragged = true;
+      },
+      onDragLeave: () => {
+        this._dragged = false;
+      },
+      onDrop: (event) => {
+        this._dragged = false;
+        if (this.disabled) {
+          return;
+        }
+        const files = Array.from(event.dataTransfer?.files ?? []);
+        if (files.length === 0) {
+          return;
+        }
+        if (this.shadowRoot?.activeElement !== this._textarea) {
+          this._pendingAttachmentDropFocus = [
+            ...(this._assignedAttachmentElements ?? []),
+          ];
+        }
+        this.dispatchEvent(
+          new CustomEvent('swc-prompt-field-drop', {
+            bubbles: true,
+            composed: true,
+            detail: { files },
+          })
+        );
+      },
+    });
+  }
 
   public static override get styles(): CSSResultArray {
     return [styles, visuallyHiddenStyles];

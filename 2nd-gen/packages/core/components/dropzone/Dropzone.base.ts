@@ -132,7 +132,7 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────────
 
-  protected constructor() {
+  constructor() {
     super();
     new DragAndDropController(this, {
       isDragged: () => this.dragged,

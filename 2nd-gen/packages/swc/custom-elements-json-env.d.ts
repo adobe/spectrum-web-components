@@ -9,16 +9,22 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './first-focusable-in.js';
-export * from './focus-visible.js';
-export * from './focusable.js';
-export * from './focusable-selectors.js';
-export * from './get-active-element.js';
-export * from './like-anchor.js';
-export * from './observe-slot-presence.js';
-export * from './observe-slot-text.js';
-export * from './platform.js';
-export * from './reparent-children.js';
-export * from './get-label-from-slot.js';
-export * from './random-id.js';
-export * from './walk-ancestors.js';
+
+// `dist/custom-elements.json` is a generated build artifact absent at type-check
+// time (the gate does not build). VRT stories import it for custom-property
+// coverage; this declares its shape so the import type-resolves without the file.
+declare module '*/dist/custom-elements.json' {
+  const manifest: {
+    modules: Array<{
+      path: string;
+      declarations: Array<{
+        name: string;
+        cssProperties?: Array<{ name: string }>;
+        [key: string]: unknown;
+      }>;
+      [key: string]: unknown;
+    }>;
+    [key: string]: unknown;
+  };
+  export default manifest;
+}

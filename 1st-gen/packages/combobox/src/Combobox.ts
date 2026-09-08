@@ -28,6 +28,8 @@ import {
   live,
   repeat,
 } from '@spectrum-web-components/base/src/directives.js';
+import type { Directionality } from '@spectrum-web-components/base/src/normalize-dir.js';
+import { normalizeDir } from '@spectrum-web-components/base/src/normalize-dir.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
 import { Textfield } from '@spectrum-web-components/textfield';
@@ -47,7 +49,38 @@ export type ComboboxOption = {
   value: string;
   itemText: string;
   disabled?: boolean;
+  lang?: string;
+  dir?: Directionality;
 };
+
+// `SpectrumElement` (the base class behind `MenuItem`) overrides `dir` to
+// return the *computed* CSS direction rather than the attribute, so a
+// slotted `MenuItem`'s authored `dir` must be read via `getAttribute`
+// instead of the `dir` property. Plain `ComboboxOption` data has no such
+// override. Check `instanceof HTMLElement` rather than `instanceof MenuItem`
+// so this still narrows correctly if a consumer ends up with two
+// separately-bundled copies of `@spectrum-web-components/menu` (e.g. a
+// yarn/webpack dedup issue) — `HTMLElement` is a single browser global
+// shared across bundles, unlike the bundled `MenuItem` class.
+const getOptionDir = (
+  option: ComboboxOption | MenuItem
+): Directionality | undefined =>
+  normalizeDir(
+    option instanceof HTMLElement ? option.getAttribute('dir') : option.dir
+  );
+
+// `MenuItem.lang` (an `HTMLElement` IDL reflection of the `lang` attribute)
+// returns `''` both when `lang` is unset and when it's explicitly
+// `lang=""`, which per spec mean different things (inherit the ambient
+// language vs. declare the language unknown) — read the attribute directly
+// to preserve that distinction. Plain `ComboboxOption` data has no such
+// reflection quirk.
+const getOptionLang = (
+  option: ComboboxOption | MenuItem
+): string | undefined =>
+  option instanceof HTMLElement
+    ? (option.getAttribute('lang') ?? undefined)
+    : option.lang;
 
 /**
  * @element sp-combobox
@@ -191,10 +224,14 @@ export class Combobox extends Textfield {
   public handleSlotchange(): void {
     this.setOptionsFromSlottedItems();
     this.itemObserver.disconnect();
-    this.optionEls.map((item) => {
+    this.observeOptionEls();
+  }
+
+  private observeOptionEls(): void {
+    this.optionEls.forEach((item) => {
       this.itemObserver.observe(item, {
         attributes: true,
-        attributeFilter: ['id'],
+        attributeFilter: ['id', 'lang', 'dir'],
         childList: true,
       });
     });
@@ -330,6 +367,20 @@ export class Combobox extends Textfield {
     this.inputElement.focus();
   }
 
+  // The input displays the committed option's own text, so it should be
+  // pronounced in that option's language rather than the combobox's
+  // ambient `lang`. `undefined` while typing/filtering (before `itemValue`
+  // resolves to a match), so the input falls back to the ambient `lang`.
+  private get selectedItemLang(): string | undefined {
+    if (!this.itemValue) {
+      return undefined;
+    }
+    const selectedOption = this.availableOptions.find(
+      (option) => option.value === this.itemValue
+    );
+    return selectedOption ? getOptionLang(selectedOption) : undefined;
+  }
+
   protected override shouldUpdate(
     changed: PropertyValues<this & { optionEls: MenuItem[] }>
   ): boolean {
@@ -426,6 +477,7 @@ export class Combobox extends Textfield {
         class="input"
         role="combobox"
         type="text"
+        lang=${ifDefined(this.selectedItemLang)}
         .value=${live(this.displayValue)}
         tabindex="0"
         @sp-closed=${this.handleClosed}
@@ -503,6 +555,8 @@ export class Combobox extends Textfield {
                     return html`
                       <sp-menu-item
                         id=${option.value}
+                        lang=${ifDefined(getOptionLang(option))}
+                        dir=${ifDefined(getOptionDir(option))}
                         ?focused=${this.activeDescendant?.value ===
                         option.value}
                         aria-selected=${this.activeDescendant?.value ===
@@ -518,7 +572,7 @@ export class Combobox extends Textfield {
                     `;
                   }
                 )
-              : html``}
+              : nothing}
             <slot hidden @slotchange=${this.handleSlotchange}></slot>
           </sp-menu>
         </sp-popover>
@@ -635,6 +689,12 @@ export class Combobox extends Textfield {
       this.itemObserver = new MutationObserver(
         this.setOptionsFromSlottedItems.bind(this)
       );
+    } else {
+      // Reattaching this combobox doesn't change its slot assignments, so no
+      // `slotchange` fires to re-register `itemObserver` via
+      // `handleSlotchange()` after `disconnectedCallback()` disconnected it —
+      // re-observe the already-known `optionEls` explicitly instead.
+      this.observeOptionEls();
     }
   }
 
