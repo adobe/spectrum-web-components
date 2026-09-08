@@ -188,7 +188,7 @@ No prerequisites. Toast has no dependents in-tree and depends only on `swc-close
 
 ### User confirmation needed
 
-Whether the queue's countdown construct belongs in a shared, cross-component location (`2nd-gen/packages/core/controllers/`), in case another component needs similar queue behavior later, or stays toast-specific under `2nd-gen/packages/core/components/toast/` until a second consumer actually appears. See Q5 in [Architecture and behavior](#architecture-and-behavior).
+Whether the queue's countdown construct belongs in a shared, cross-component location (`2nd-gen/packages/core/controllers/`), in case another component needs similar queue behavior later, or stays toast-specific under `2nd-gen/packages/core/components/toast/` until a second consumer actually appears. Also unresolved: what owns the container's visual rendering (region wrapper, list, peek-stack layering, expanded view), since the Queue construct as currently scoped is state-only. See Q5 in [Architecture and behavior](#architecture-and-behavior).
 
 ---
 
@@ -215,6 +215,8 @@ Whether the queue's countdown construct belongs in a shared, cross-component loc
 | # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | S1 | Adopt S2 tokens | S1 tokens | S2 tokens from `spectrum-css` `spectrum-two` | Visual update only |
+| S2 | Peek-stack depth styling | None (no queue exists) | Stacked-card depth behind the front toast: positional offset and opacity falloff, `opacity: 0` beyond the third position, matching RSP S2 | None (new functionality) |
+| S3 | Expand/collapse layout | None (no queue exists) | Full-screen expanded-view layout with a dismissible scrim and a collapsed/expanded transition; front-toast expand control laid out via `gridTemplateAreas` alongside the action button | None (new functionality) |
 
 #### Accessibility and behavior
 
@@ -404,6 +406,14 @@ Planned rendering shape:
 - [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
 - [ ] Set `overflow-wrap: break-word` and `word-break: break-word` on the message content wrapper (SWC-475: long unbroken words overflow the toast bounds in 1st-gen; RSP S2 already does this)
 
+#### Container and queue visuals
+
+- [ ] Author peek-stack depth CSS: positional offset and opacity falloff behind the front toast (`opacity: 0` beyond the third position), matching RSP S2
+- [ ] Author the expand control's row layout on the front toast (`gridTemplateAreas` alongside the action button)
+- [ ] Author the expanded-view full-screen layout: scrim, list layout, and the collapsed/expanded transition
+- [ ] Toast's own open/close transition CSS carries over from 1st-gen (opacity/transform), updated to S2 tokens; gates `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` via the shared `runAfterTransition`
+- [ ] Cross-position repositioning animation (peek/front/expanded) depends on Q8; do not implement until that's resolved
+
 ### Accessibility
 
 Checklist items sourced from [accessibility-migration-analysis.md](./accessibility-migration-analysis.md); resolve Q1, Q2, Q7, Q9 before treating this section as final.
@@ -485,7 +495,7 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 
 | # | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q5 | The pause-preserving countdown can't stay inline in `Toast.base.ts` (see [Architecture](#architecture-core-vs-swc-split)); it needs its own queue-level construct regardless. Should that construct be a shared, cross-component controller in `2nd-gen/packages/core/controllers/` now, or stay toast-specific under `2nd-gen/packages/core/components/toast/` until a second consumer actually needs it? Either way, it should follow this codebase's established `ReactiveController` pattern (used by `PageScrollLockController`, `SlotPresenceController`, and others) rather than a plain framework-agnostic singleton service. | No | Open | Architecture reviewer |
+| Q5 | The pause-preserving countdown can't stay inline in `Toast.base.ts` (see [Architecture](#architecture-core-vs-swc-split)); it needs its own queue-level construct regardless. Should that construct be a shared, cross-component controller in `2nd-gen/packages/core/controllers/` now, or stay toast-specific under `2nd-gen/packages/core/components/toast/` until a second consumer actually needs it? Either way, it should follow this codebase's established `ReactiveController` pattern (used by `PageScrollLockController`, `SlotPresenceController`, and others) rather than a plain framework-agnostic singleton service. Separately, the Architecture table's "Queue" row only owns state (timers, pause rules); nothing currently owns the container's visual rendering (the `role="region"` wrapper, the list, peek-stack depth/opacity layering, the expanded full-screen view). Whether that rendering belongs to the same Queue construct, to a distinct container custom element with its own core/SWC split, or somewhere else entirely is unresolved and should be settled alongside the sharing-scope question above. | No | Open | Architecture reviewer |
 | Q8 | Repositioning a toast between peek, front, and expanded-list position (not its own open/close, which reuses `runAfterTransition`, see [Architecture](#architecture-core-vs-swc-split)): should this use the View Transitions API for a smooth cross-position morph (matching RSP S2's queue-level `wrapUpdate` wrapping), with no animation as the fallback where unsupported, or accept an instant swap between positions (no existing 2nd-gen precedent either way)? | No | Open | Architecture reviewer |
 
 ### Scope and prerequisites
