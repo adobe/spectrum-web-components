@@ -297,6 +297,8 @@ No properties are exposed in the initial set. Add a `--swc-toast-*` property onl
 - The queue exposes a `clear()` operation that empties every queued toast at once, surfaced via a Clear all control in the expanded view (RSP S2: `queue.clear()`). This is a queue-level method, not an instance method on `swc-toast` itself; 1st-gen's `close()` (single toast) has no equivalent for the whole queue.
 - When a focused toast closes (close button, action button, or auto-dismiss) and other toasts remain, focus moves to the nearest still-open toast: the newer one in front of it if there is one, otherwise the older one behind it. If the user is in pointer modality, focus instead leaves the region entirely, back to whatever was focused before the user entered it, specifically so the remaining toasts' timers don't appear stuck (region-wide pause is tied to focus staying within the region; see Q7). RSP S2's `useToastRegion.ts` branches this way explicitly.
 - When the last toast closes and the queue empties, focus always returns to whatever was focused before the user entered the region, regardless of modality (RSP S2: tracked as the region's `focusWithin` `relatedTarget` when focus first entered it).
+- Toast's own enter/exit animation gates `swc-after-open`/`swc-after-close` on the host's CSS transition completion via the existing `runAfterTransition` core utility (`2nd-gen/packages/core/utils/transition.ts`), the same mechanism `swc-popover` and `swc-tooltip` already share for their identical event pairs. No new infrastructure needed here.
+- Repositioning a toast between peek, front, and expanded-list position is a separate, harder problem: no existing 2nd-gen component does this kind of cross-position repositioning (checked Accordion, the closest analog; it has none). RSP S2 wraps queue-level state changes (add/remove/expand/collapse) in the View Transitions API for a smooth cross-position morph, falling back to no animation at all where unsupported. Whether `swc-toast` does the same or accepts an instant swap between positions is Q8.
 
 ### Accessibility semantics notes (2nd-gen)
 
@@ -316,8 +318,8 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 | Layer | Path | Contains |
 | ----- | ---- | -------- |
-| **Core** | `2nd-gen/packages/core/components/toast/` | `Toast.base.ts`, `Toast.types.ts`: property declarations, variant validation, `aria-labelledby`/`aria-label` derivation. No rendering, no timer ownership; see the queue layer below. |
-| **Queue** | `2nd-gen/packages/core/components/toast/` (exact file TBD, see Q5) | Owns each queued toast's countdown: timeout flooring, pause rules (`pointerenter`/`focusin`/`pointerleave`/`focusout`, scope pending Q7), and remaining-time tracking, keyed to the toast's own record in the queue, not to whichever element currently renders it. Persists unchanged whether that toast is the front toast, a decorative peek layer, or in the expanded list. |
+| **Core** | `2nd-gen/packages/core/components/toast/` | `Toast.base.ts`, `Toast.types.ts`: property declarations, variant validation, `aria-labelledby`/`aria-label` derivation. Also gates `swc-after-open`/`swc-after-close` on the host's own CSS transition completion via the shared `runAfterTransition` utility, matching `swc-popover`/`swc-tooltip`. No rendering, no timer ownership; see the queue layer below. |
+| **Queue** | `2nd-gen/packages/core/components/toast/` (exact file TBD, see Q5) | Owns each queued toast's countdown: timeout flooring, pause rules (`pointerenter`/`focusin`/`pointerleave`/`focusout`, scope pending Q7), and remaining-time tracking, keyed to the toast's own record in the queue, not to whichever element currently renders it. Persists unchanged whether that toast is the front toast, a decorative peek layer, or in the expanded list. Whether it also coordinates a smooth repositioning animation between those positions is Q8. |
 | **SWC** | `2nd-gen/packages/swc/components/toast/` | `Toast.ts`, `toast.css`: renders host role/state attributes, variant icon, inner `role="alert"` wrapper, default + `action` slots, `swc-close-button`. Element registration, stories, tests. |
 
 Planned rendering shape:
@@ -441,6 +443,7 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 | # | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
 | Q5 | The pause-preserving countdown can't stay inline in `Toast.base.ts` (see [Architecture](#architecture-core-vs-swc-split)); it needs its own queue-level construct regardless. Should that construct be a shared, cross-component controller in `2nd-gen/packages/core/controllers/` now, or stay toast-specific under `2nd-gen/packages/core/components/toast/` until a second consumer actually needs it? | No | Open | Architecture reviewer |
+| Q8 | Repositioning a toast between peek, front, and expanded-list position (not its own open/close, which reuses `runAfterTransition`, see [Architecture](#architecture-core-vs-swc-split)): should this use the View Transitions API for a smooth cross-position morph (matching RSP S2's queue-level `wrapUpdate` wrapping), with no animation as the fallback where unsupported, or accept an instant swap between positions (no existing 2nd-gen precedent either way)? | No | Open | Architecture reviewer |
 
 ### Scope and prerequisites
 
