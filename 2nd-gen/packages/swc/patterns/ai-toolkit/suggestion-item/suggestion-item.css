@@ -67,7 +67,7 @@
 
 .swc-SuggestionItem-label {
   display: inline-flex;
-  padding-block: 7px;
+  padding-block: token("base-padding-vertical-medium");
   padding-inline-end: token("spacing-300");
   text-align: start;
 }
