@@ -171,7 +171,7 @@ export const InteractionTest: Story = {
 };
 
 export const LegalMissingWarningTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     await withWarningSpy(async (warnCalls) => {
       render(
@@ -215,7 +215,7 @@ export const LegalMissingWarningTest: Story = {
 };
 
 export const MixedAttachmentWarningTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     await withWarningSpy(async (warnCalls) => {
       render(
@@ -302,7 +302,7 @@ function renderMultiAttachmentPromptField(
 }
 
 export const AttachmentScrollPaginationTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     renderMultiAttachmentPromptField(canvasElement);
 
@@ -415,7 +415,7 @@ export const AttachmentScrollPaginationTest: Story = {
 };
 
 export const AttachmentScrollRTLTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     renderMultiAttachmentPromptField(canvasElement, 'rtl');
 
@@ -502,7 +502,7 @@ function dispatchKeydown(
 }
 
 export const AttachmentFocusOrderTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     renderMultiAttachmentPromptField(canvasElement);
 
@@ -705,7 +705,7 @@ export const AttachmentFocusOrderTest: Story = {
  * @todo SWC-2528 Flaky on Firefox (smooth-scroll focus-settle timing); skipped there until fixed.
  */
 export const AttachmentChevronPagingFocusTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     // Skip on Firefox pending SWC-2528.
     if (navigator.userAgent.includes('Firefox')) {
@@ -862,7 +862,7 @@ export const AttachmentChevronPagingFocusTest: Story = {
 };
 
 export const SingleAttachmentFocusTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     render(
       html`
@@ -1072,7 +1072,9 @@ export const DragAndDropTest: Story = {
 export const PlaygroundDropTest: Story = {
   ...Playground,
   play: async ({ canvasElement, step }) => {
-    const demo = canvasElement.querySelector('swc-prompt-field-behavior-demo');
+    const demo = canvasElement.querySelector<HTMLElement>(
+      'swc-prompt-field-behavior-demo'
+    );
     const el = await getComponent<PromptField>(demo!, 'swc-prompt-field');
     const textarea = el.shadowRoot?.querySelector<HTMLTextAreaElement>(
       '.swc-PromptField-textarea'
@@ -1151,7 +1153,7 @@ export const PlaygroundDropTest: Story = {
 };
 
 export const StatusLoaderTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     render(
       html`
@@ -1159,6 +1161,7 @@ export const StatusLoaderTest: Story = {
           label="Prompt"
           loader="analyze"
           generating
+          animate-loader
         ></swc-prompt-field>
       `,
       canvasElement
@@ -1176,7 +1179,7 @@ export const StatusLoaderTest: Story = {
       );
 
     await step(
-      'a preset name routes to the loader preset and generating animates it',
+      'a preset name routes to the loader preset and generating with animate-loader animates it',
       async () => {
         expect(loader()?.getAttribute('preset')).toBe('analyze');
         expect(loader()?.hasAttribute('paused')).toBe(false);
@@ -1193,6 +1196,17 @@ export const StatusLoaderTest: Story = {
         expect(loader()?.hasAttribute('paused')).toBe(true);
         expect(loader()?.hasAttribute('preset')).toBe(false);
         expect(loader()?.getAttribute('icon')).toBe('wand');
+      }
+    );
+
+    await step(
+      'generating without animate-loader keeps the loader paused',
+      async () => {
+        el.generating = true;
+        el.animateLoader = false;
+        await el.updateComplete;
+
+        expect(loader()?.hasAttribute('paused')).toBe(true);
       }
     );
   },

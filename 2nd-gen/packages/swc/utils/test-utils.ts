@@ -20,7 +20,10 @@ type SwcTestGlobals = {
 
 // Returns the shared SWC test globals, creating defaults when needed.
 export const getSwcTestGlobals = (): SwcTestGlobals => {
-  const swcWindow = window as Window & { __swc?: SwcTestGlobals };
+  // The global `Window.__swc` is richly typed and required; override it with the loose test shape so the minimal stub below is assignable.
+  const swcWindow = window as Omit<Window, '__swc'> & {
+    __swc?: SwcTestGlobals;
+  };
 
   if (!swcWindow.__swc) {
     swcWindow.__swc = { warn: () => {} };

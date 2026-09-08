@@ -19,3 +19,10 @@
 :host([disabled]) {
   pointer-events: none;
 }
+
+/* A `dir` set on this host (e.g. to localize one item's text) should not
+   flip this item's own layout or its separator's mirrored chevron; only
+   `#item-link` (see BreadcrumbItem.ts) picks up that direction. */
+:host([dir]) {
+  direction: inherit;
+}

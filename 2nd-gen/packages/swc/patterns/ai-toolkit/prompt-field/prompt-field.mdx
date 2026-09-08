@@ -129,6 +129,12 @@ Consumers are responsible for handling upload flows and can mirror `value` from 
 
 <Canvas of={PromptFieldStories.HandlingEvents} />
 
+### Animate loader
+
+The status loader stays static by default. Set `animate-loader` to animate it while `generating` is set; the loader returns to static once generation ends.
+
+<Canvas of={PromptFieldStories.AnimateLoader} />
+
 ### Drag and drop
 
 Dragging a file anywhere over `swc-prompt-field` applies a high-intensity solid fill to the container surface and a blue focus ring around the drop target, regardless of the field's own `variant` or `generating` state: a drop target should be unmistakable even on a `subtle` field. Text and URL drags, plus fields in `disabled` mode, are rejected (the OS cursor shows "not allowed"). Dropping fires **`swc-prompt-field-drop`** with `detail: { files: File[] }`; consumers build and slot `<swc-upload-attachment>` elements from those files the same way they do for the **`+`** button's external picker flow.

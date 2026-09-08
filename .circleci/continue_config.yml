@@ -58,7 +58,7 @@ parameters:
   # 3. Commit this change to the PR branch where the changes exist.
   current_golden_images_hash:
     type: string
-    default: ed6c0abd2a91f0b94fb3214dfced5ad135f1a409
+    default: a66188883f3e77bbd345ed838155618375a85e02
 
 commands:
   install-azcopy:
@@ -448,7 +448,7 @@ jobs:
           name: Run axe-core WCAG tests
           command: |
             mkdir -p 2nd-gen/packages/swc/test-results
-            yarn start-server-and-test "npx http-server 2nd-gen/packages/swc/storybook-static -p 6006 --silent" http://127.0.0.1:6006 "JEST_JUNIT_OUTPUT_DIR=./test-results JEST_JUNIT_OUTPUT_NAME=junit.xml yarn workspace @adobe/spectrum-wc test:storybook --url http://127.0.0.1:6006 --index-json --ci --junit"
+            yarn start-server-and-test "npx http-server 2nd-gen/packages/swc/storybook-static -p 6006 --silent" http://127.0.0.1:6006 "JEST_JUNIT_OUTPUT_DIR=./test-results JEST_JUNIT_OUTPUT_NAME=junit.xml yarn workspace @adobe/spectrum-wc test:storybook --url http://127.0.0.1:6006 --index-json --ci --junit --maxWorkers=2 --testTimeout=30000"
       - store_test_results:
           path: /root/project/2nd-gen/packages/swc/test-results
 

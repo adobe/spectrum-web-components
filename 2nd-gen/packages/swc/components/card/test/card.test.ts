@@ -48,7 +48,7 @@ export default {
 } as Meta;
 
 const previewImage = (slot = 'preview'): ReturnType<typeof html> => html`
-  <img slot=${slot} src="https://picsum.photos/id/64/240/160" alt="" />
+  <img slot=${slot} src="./images/card-preview.jpg" alt="" />
 `;
 
 // ──────────────────────────────────────────────────────────────
