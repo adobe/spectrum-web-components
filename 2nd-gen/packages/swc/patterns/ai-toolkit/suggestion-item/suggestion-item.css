@@ -25,25 +25,13 @@
    ring, and the press animation, so only the chip-specific geometry is
    overridden here through the button's public custom properties. */
 .swc-SuggestionItem {
-  --swc-button-min-block-size: var(--swc-suggestion-item-min-block-size, token("component-height-100"));
-  --swc-button-border-radius: token("corner-radius-extra-large-default");
   --swc-button-edge-to-visual: var(--swc-suggestion-item-icon-margin-inline-start, 14px);
-  --swc-button-gap: var(--swc-suggestion-item-icon-margin-inline-end, 6px);
   --swc-button-edge-to-text: var(--swc-suggestion-item-label-padding-inline-end, token("spacing-300"));
-  --swc-button-icon-size: token("workflow-icon-medium");
-}
-
-/* swc-icon sizes from its own custom properties rather than the width/height
-   the button applies to slotted icons, so set them explicitly. */
-.swc-SuggestionItem swc-icon {
-  --swc-icon-inline-size: token("workflow-icon-medium");
-  --swc-icon-block-size: token("workflow-icon-medium");
 }
 
 /* swc-button renders its label at bold weight with no custom-property hook.
    This wrapper sits between the button's label span and the slotted text, so
    its explicit weight wins for the chip label. */
 .swc-SuggestionItem-label {
-  padding-block: var(--swc-suggestion-item-label-padding-block, 0);
   font-weight: token("regular-font-weight");
 }

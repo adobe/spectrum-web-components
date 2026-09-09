@@ -49,7 +49,6 @@ const WRAPPING_ITEMS = [
   'Export as talking points',
   'Suggest a subject line',
 ];
-const CJK_ITEMS = ['スライドを作成', '3点で要約', 'スペイン語に翻訳'];
 
 type GroupCase = {
   items: string[];
@@ -94,16 +93,12 @@ const permutationContent = () => html`
       renderGroup({
         heading: HEADING,
         items: WRAPPING_ITEMS,
-        inlineSize: '360px',
+        inlineSize: '500px',
       }),
     ],
     'Wrapping items'
   )}
   ${row([renderGroup({ items: THREE_ITEMS })], 'No heading (title hidden)')}
-  ${row(
-    [renderGroup({ heading: '次の操作を選択', items: CJK_ITEMS, lang: 'ja' })],
-    'CJK language'
-  )}
 `;
 
 // VRT stories

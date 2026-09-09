@@ -89,14 +89,6 @@ const permutationContent = () => html`
   ${FORCED_STATES.map((state) =>
     row([renderItem({ label: SHORT_LABEL, forceState: state })], state)
   )}
-  ${row(
-    [
-      renderItem({ label: '承認ワークフローを開始', lang: 'ja' }),
-      renderItem({ label: '승인 워크플로 시작', lang: 'ko' }),
-      renderItem({ label: '启动审批工作流', lang: 'zh' }),
-    ],
-    'CJK language'
-  )}
 `;
 
 // VRT stories

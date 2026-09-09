@@ -32,12 +32,6 @@ import styles from './suggestion-item.css';
  * @slot - Suggestion label text/content.
  * @fires swc-suggestion - Dispatched when the suggestion chip is activated.
  * Detail: `{ label: string }`
- *
- * @cssprop --swc-suggestion-item-min-block-size - Minimum block size of the chip.
- * @cssprop --swc-suggestion-item-icon-margin-inline-start - Inline spacing from the leading edge to the icon.
- * @cssprop --swc-suggestion-item-icon-margin-inline-end - Gap between the icon and the label.
- * @cssprop --swc-suggestion-item-label-padding-block - Block padding applied to the label.
- * @cssprop --swc-suggestion-item-label-padding-inline-end - Inline spacing from the label to the trailing edge.
  * @since 2.0.0-beta.3
  */
 export class SuggestionItem extends SpectrumElement {
