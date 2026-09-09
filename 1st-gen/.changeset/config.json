@@ -10,18 +10,9 @@
     }
   ],
   "commit": false,
-  "fixed": [
-    [
-      "@spectrum-web-components/*",
-      "!@spectrum-web-components/1st-gen",
-      "!@spectrum-web-components/2nd-gen"
-    ]
-  ],
-  "ignore": [
-    "@spectrum-web-components/1st-gen",
-    "@spectrum-web-components/2nd-gen"
-  ],
-  "linked": [["@adobe/spectrum-wc", "@adobe/spectrum-wc-core"]],
+  "fixed": [["@spectrum-web-components/*"]],
+  "ignore": [],
+  "privatePackages": false,
   "snapshot": {
     "prereleaseTemplate": "{tag}.{datetime}",
     "useCalculatedVersion": true
