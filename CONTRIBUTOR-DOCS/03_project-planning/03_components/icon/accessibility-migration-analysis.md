@@ -145,11 +145,11 @@ Confirmed by `icon.a11y.spec.ts`:
 **Sizes story (`icon.a11y.spec.ts`):**
 
 ```text
-- img "Extra-small"
+- img "Extra small"
 - img "Small"
 - img "Medium"
 - img "Large"
-- img "Extra-large"
+- img "Extra large"
 ```
 
 **Meaningful workflow icon (with `label`) — exotic, discouraged use case**

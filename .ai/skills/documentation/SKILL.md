@@ -266,4 +266,5 @@ Data | Data
 - [In-product word list](https://spectrum.adobe.com/page/in-product-word-list/)
 - [Writing for errors](https://spectrum.adobe.com/page/writing-for-errors/)
 - [Writing for onboarding](https://spectrum.adobe.com/page/writing-for-onboarding/)
-- [Writing a changeset](https://github.com/adobe/spectrum-web-components/blob/main/.changeset/README.md)
+- [Writing a changeset (1st-gen)](https://github.com/adobe/spectrum-web-components/blob/main/1st-gen/.changeset/README.md)
+- [Writing a changeset (2nd-gen)](https://github.com/adobe/spectrum-web-components/blob/main/2nd-gen/.changeset/README.md)

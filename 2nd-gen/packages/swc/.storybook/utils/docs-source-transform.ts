@@ -13,14 +13,14 @@ import type { StoryContext } from '@storybook/web-components';
 
 import customElements from '../../dist/custom-elements.json';
 
-const PATTERN_TITLE_PREFIX = 'Patterns/Conversational AI/';
+const PATTERN_TITLE_PREFIX = 'Patterns/AI Toolkit/';
 
 // Attribute names declared as `boolean` on every custom element that has them.
 const BOOLEAN_ATTRIBUTE_NAMES = computeBooleanAttributeNames(customElements);
 
 /**
  * Format source snippets for Storybook code panel.
- * For conversational AI pattern stories, this removes CSF wrapper noise and
+ * For AI Toolkit pattern stories, this removes CSF wrapper noise and
  * keeps only the `html\`...\`` content when possible.
  */
 export async function transformDocsSource(

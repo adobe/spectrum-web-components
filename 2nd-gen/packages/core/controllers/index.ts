@@ -25,6 +25,11 @@ export {
   type FieldFormValue,
 } from './field-association-controller/index.js';
 export {
+  DragAndDropController,
+  type DragAndDropControllerOptions,
+  type DragLeaveSnapshot,
+} from './drag-and-drop-controller/index.js';
+export {
   focusgroupNavigationActiveChange,
   FocusgroupNavigationController,
   type FocusgroupActiveChangeSource,

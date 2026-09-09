@@ -93,6 +93,11 @@ const CORE_STORIES = {
   titlePrefix: 'Core',
 };
 
+const ICONS_STORIES = {
+  directory: '../../icons',
+  titlePrefix: 'Icons',
+};
+
 const GUIDES = [
   {
     directory: 'learn-about-swc',
@@ -122,11 +127,13 @@ const TEST_FIXTURES = [
   { ...COMPONENT_STORIES, files: '**/*.test.ts' },
   { ...PATTERN_STORIES, files: '**/*.test.ts' },
   { ...CORE_STORIES, files: '**/*.test.ts' },
+  { ...ICONS_STORIES, files: '**/*.test.ts' },
 ];
 
 const VRT_STORIES = [
   { ...COMPONENT_STORIES, files: '**/*.vrt.ts' },
   { ...PATTERN_STORIES, files: '**/*.vrt.ts' },
+  { ...ICONS_STORIES, files: '**/*.vrt.ts' },
 ];
 
 // What each mode builds, spelled out per-mode rather than composed from
@@ -139,6 +146,8 @@ const STORIES_BY_MODE: Record<StorybookMode, StorybookConfig['stories']> = {
     { ...PATTERN_STORIES, files: '**/*.stories.ts' },
     { ...PATTERN_STORIES, files: '**/*.mdx' },
     { ...COMPONENT_STORIES, files: '**/*.mdx' },
+    { ...ICONS_STORIES, files: '**/*.stories.ts' },
+    { ...ICONS_STORIES, files: '**/*.mdx' },
     ...CORE_AND_CONTRIBUTOR_DOCS,
     ...GUIDES,
     ...TEST_FIXTURES,
@@ -152,6 +161,8 @@ const STORIES_BY_MODE: Record<StorybookMode, StorybookConfig['stories']> = {
     { ...PATTERN_STORIES, files: '**/*.stories.ts' },
     { ...PATTERN_STORIES, files: '**/*.mdx' },
     { ...COMPONENT_STORIES, files: '**/!(*.internal).mdx' },
+    { ...ICONS_STORIES, files: '**/!(*.internal).stories.ts' },
+    { ...ICONS_STORIES, files: '**/!(*.internal).mdx' },
     ...GUIDES,
   ],
   // CI accessibility checks: component/pattern stories only. addon-docs
@@ -162,6 +173,7 @@ const STORIES_BY_MODE: Record<StorybookMode, StorybookConfig['stories']> = {
     { ...COMPONENT_STORIES, files: '**/*.stories.ts' },
     { ...PATTERN_STORIES, files: '**/*.stories.ts' },
     { ...PATTERN_STORIES, files: '**/*.mdx' },
+    { ...ICONS_STORIES, files: '**/*.stories.ts' },
   ],
   // Chromatic-only: just the hand-picked VRT stories.
   vrt: VRT_STORIES,
@@ -272,6 +284,12 @@ const config: StorybookConfig = {
           {
             find: '@adobe/spectrum-wc-core',
             replacement: resolve(__dirname, '../../core'),
+          },
+          // Workflow icons resolve to source so the gallery renders without a prior
+          // build of the icons package. Must precede the `@adobe/spectrum-wc` alias.
+          {
+            find: '@adobe/spectrum-wc-icons',
+            replacement: resolve(__dirname, '../../icons/src'),
           },
           // Long-form imports (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`)
           // resolve directly to the source under `./components`. This must come

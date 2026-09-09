@@ -65,6 +65,8 @@ Flag any divergence. If a change was confirmed in-session, update the plan and p
 
 Once implementation and plan are aligned, update the plan's checklists for the current phase to reflect the work completed. Mark off completed items, fill in any "to be determined" fields that were resolved during this phase, and note any decisions made. The plan checklists are the record that this phase was done and what was produced — keep them current.
 
+Also fold any open question that was **settled** this phase into the plan's `Decision log` section, keyed by its original `Q`/`B`/`C` id, and remove it from the `Blockers and open questions` tables. Do not leave scattered inline "Resolved"/"Confirmed" markers in the open-question tables; the Decision log is the single home for settled decisions and their rationale, and it keeps the open-question tables focused on what still needs attention. (Deferred items with tickets go to the deferred-ticket table instead, as before.) If the plan predates the Decision log convention and has no such section, add it from the migration-prep template.
+
 ### Check 2: Intra-plan consistency (cascading updates)
 
 When any part of the plan changes — whether from a session-confirmed decision or a correction — scan the entire plan for other sections affected by that change. Plans are multi-section documents where a single decision can appear in several places.

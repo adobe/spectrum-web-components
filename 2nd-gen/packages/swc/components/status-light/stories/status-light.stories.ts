@@ -21,12 +21,12 @@ import {
   STATUS_LIGHT_VARIANTS_SEMANTIC,
   StatusLightColorVariant,
   StatusLightSemanticVariant,
-  type StatusLightSize,
 } from '@adobe/spectrum-wc-core/components/status-light';
 
 import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
 
 import { getTranslationKey } from '../../../.storybook/helpers/get-translation-key.js';
+import { SIZE_LABELS } from '../../../.storybook/helpers/index.js';
 import translations from '../../../.storybook/intl/translations.json';
 type TranslationKey = keyof typeof translations;
 
@@ -112,13 +112,6 @@ const nonSemanticLabels = {
   silver: 'Version 1.2.10',
 } as const satisfies Record<StatusLightColorVariant, string>;
 
-const sizeLabels = {
-  s: 'Small',
-  m: 'Medium',
-  l: 'Large',
-  xl: 'Extra-large',
-} as const satisfies Record<StatusLightSize, string>;
-
 // ────────────────────
 //    PLAYGROUND STORY
 // ────────────────────
@@ -166,7 +159,7 @@ export const Sizes: Story = {
       template({
         ...args,
         size,
-        'default-slot': sizeLabels[size],
+        'default-slot': SIZE_LABELS[size],
       })
     )}
   `,
