@@ -14,6 +14,10 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Asset } from '@adobe/spectrum-wc/asset';
+import {
+  ASSET_BACKGROUND_VALUES,
+  ASSET_FIT_VALUES,
+} from '@adobe/spectrum-wc-core/components/asset';
 
 import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 
@@ -96,12 +100,14 @@ export const ValidFitNoWarningTest: Story = {
   play: async ({ canvasElement, step }) => {
     const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
 
-    await step('does not warn when a valid fit is set', () =>
+    await step('does not warn for any valid fit value', () =>
       withWarningSpy(async (warnCalls) => {
-        asset.fit = 'contain';
-        await asset.updateComplete;
+        for (const fit of ASSET_FIT_VALUES) {
+          asset.fit = fit;
+          await asset.updateComplete;
+        }
 
-        expect(warnCalls.length, 'no warnings for a valid fit').toBe(0);
+        expect(warnCalls.length, 'no warnings for any valid fit').toBe(0);
       })
     );
   },
@@ -143,12 +149,16 @@ export const ValidBackgroundNoWarningTest: Story = {
   play: async ({ canvasElement, step }) => {
     const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
 
-    await step('does not warn when a valid background is set', () =>
+    await step('does not warn for any valid background value', () =>
       withWarningSpy(async (warnCalls) => {
-        asset.background = 'checkerboard';
-        await asset.updateComplete;
+        for (const background of ASSET_BACKGROUND_VALUES) {
+          asset.background = background;
+          await asset.updateComplete;
+        }
 
-        expect(warnCalls.length, 'no warnings for a valid background').toBe(0);
+        expect(warnCalls.length, 'no warnings for any valid background').toBe(
+          0
+        );
       })
     );
   },
@@ -618,16 +628,16 @@ export const LoadStateImgSuccessTest: Story = {
         // fast/already-resolved image can't fire and be missed before this
         // runs (the same race the timing guarantee protects consumers from).
         const asset = canvasElement.querySelector('swc-asset') as Asset;
-        const loadFired = new Promise<void>((resolve) => {
-          asset.addEventListener('swc-asset-load', () => resolve(), {
-            once: true,
-          });
+        const loadEvent = new Promise<Event>((resolve) => {
+          asset.addEventListener('swc-asset-load', resolve, { once: true });
         });
 
         await asset.updateComplete;
-        await loadFired;
+        const event = await loadEvent;
 
         expect(asset.loadState, 'loadState is loaded').toBe('loaded');
+        expect(event.bubbles, 'event bubbles').toBe(true);
+        expect(event.composed, 'event is composed').toBe(true);
       }
     );
   },
@@ -662,6 +672,8 @@ export const LoadStateImgErrorTest: Story = {
           event.detail.src,
           'detail.src identifies the failed image'
         ).toContain('does-not-exist.png');
+        expect(event.bubbles, 'event bubbles').toBe(true);
+        expect(event.composed, 'event is composed').toBe(true);
       }
     );
   },
@@ -707,6 +719,65 @@ export const LoadStateCachedImageTimingGuaranteeTest: Story = {
           asset.loadState,
           'loadState resolves to loaded for the pre-loaded image'
         ).toBe('loaded');
+      }
+    );
+  },
+};
+
+export const SlotChangeResetsLoadStateTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Original" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('resolves loadState for the original img first', async () => {
+      if (asset.loadState === 'loading') {
+        await new Promise<void>((resolve) => {
+          asset.addEventListener('swc-asset-load', () => resolve(), {
+            once: true,
+          });
+        });
+      }
+      expect(asset.loadState, 'loadState is loaded for the original img').toBe(
+        'loaded'
+      );
+    });
+
+    await step(
+      're-wires load tracking to a swapped-in img, firing a fresh event for it rather than leaving stale state from the original',
+      async () => {
+        const slot = asset.shadowRoot?.querySelector('slot');
+        const slotChanged = new Promise<void>((resolve) => {
+          slot?.addEventListener('slotchange', () => resolve(), {
+            once: true,
+          });
+        });
+        // A guaranteed-fresh failing path (never cached) so this doesn't
+        // race the same cache-timing concern the timing-guarantee test
+        // exists to handle - this test is only about re-wiring, not timing.
+        const errorFired = new Promise<void>((resolve) => {
+          asset.addEventListener('swc-asset-error', () => resolve(), {
+            once: true,
+          });
+        });
+
+        const original = asset.querySelector('img');
+        const replacement = document.createElement('img');
+        replacement.src = './images/does-not-exist-2.png';
+        replacement.alt = 'Replacement';
+        original?.replaceWith(replacement);
+
+        await slotChanged;
+        await asset.updateComplete;
+        await errorFired;
+
+        expect(
+          asset.loadState,
+          'loadState reflects the replacement img, not stale state from the original'
+        ).toBe('error');
       }
     );
   },

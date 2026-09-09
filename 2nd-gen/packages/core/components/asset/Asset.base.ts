@@ -23,6 +23,7 @@ import {
 import {
   ASSET_BACKGROUND_VALUES,
   ASSET_FIT_VALUES,
+  ASSET_LOAD_STATE_VALUES,
   type AssetBackground,
   type AssetErrorEventDetail,
   type AssetFit,
@@ -168,6 +169,12 @@ export abstract class AssetBase extends SpectrumElement {
       prop: 'background',
       value: this.background,
       valid: ASSET_BACKGROUND_VALUES,
+      url: DOCS_URL,
+    });
+    validateEnum(this, {
+      prop: 'load-state',
+      value: this.loadState,
+      valid: ASSET_LOAD_STATE_VALUES,
       url: DOCS_URL,
     });
     warnIf(
