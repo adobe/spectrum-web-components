@@ -52,3 +52,8 @@
 ::slotted(:nth-child(n + 2)) {
   display: none;
 }
+
+/* Ensure contrast for failure message */
+:host([background="checkerboard"]) ::slotted(*) {
+  color: token("static-black-text-color");
+}
