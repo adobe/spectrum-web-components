@@ -178,14 +178,9 @@
   padding: token("spacing-50") token("spacing-100");
   margin: 0;
   color: token("gray-600");
-  border-radius: token("corner-radius-300");
   transition:
     background token("animation-duration-100") token("animation-ease-in-out"),
     color 100ms token("animation-ease-in-out");
-}
-
-.swc-ResponseStatusStep-toggle:hover .swc-ResponseStatusStep-title {
-  background: token("gray-75");
 }
 
 /* Masked, `translate`-animated overlay clone of the label: cheaper to
@@ -242,13 +237,24 @@
   display: flex;
   gap: token("spacing-100");
   align-items: center;
-  inline-size: 100%;
+  inline-size: fit-content;
   padding: 0;
-  padding-block-end: token("spacing-75");
+  margin-block-end: token("spacing-75");
   color: inherit;
   text-align: start;
   background: transparent;
   border: none;
+  border-radius: token("corner-radius-300");
+}
+
+.swc-ResponseStatusStep-toggle:hover,
+.swc-ResponseStatusStep-toggle:focus-visible {
+  background: token("gray-75");
+}
+
+.swc-ResponseStatusStep-toggle:focus-visible {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
 }
 
 /* Shared collapse mechanics with `response-status.css`'s
@@ -320,6 +326,19 @@
   border-radius: 9999px;
 }
 
+/* The scroll region sits inside an overflow:hidden clip wrapper, so the
+   ring is painted on the open panel (the visible card) instead of being
+   clipped. `outline: none` here suppresses the UA ring on the focused
+   scroll box itself. */
+.swc-ResponseStatusStep-detailScroll:focus-visible {
+  outline: none;
+}
+
+.swc-ResponseStatusStep-detailPanel:has(.swc-ResponseStatusStep-detailScroll:focus-visible) {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
+}
+
 /* Fade cues while the description overflows. Scroll-driven: with no overflow
    the scroll timeline is inactive, so the base (unmasked) style applies and
    short descriptions never fade. At the start only the bottom fades; while
@@ -378,6 +397,11 @@
   .swc-ResponseStatusStep-detailScroll {
     mask-image: none;
     animation: none;
+  }
+
+  .swc-ResponseStatusStep-toggle:focus-visible,
+  .swc-ResponseStatusStep-detailPanel:has(.swc-ResponseStatusStep-detailScroll:focus-visible) {
+    outline-color: CanvasText;
   }
 
   /* The masked shimmer overlay is unreliable under forced colors; fall back

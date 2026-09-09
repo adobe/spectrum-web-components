@@ -46,12 +46,20 @@ const statusLabels: Record<ResponseStatusStatus, string> = {
   stopped: 'You stopped the response',
 };
 
+const LONG_DESCRIPTION =
+  'Prioritizing data from your documents like the ‘2023 Annual Report’ and press releases. Cross-referencing each source against the quarterly figures, reconciling discrepancies between the filed numbers and the summary tables, and flagging any line items that need a second pass. Prioritizing data from your documents like the ‘2023 Annual Report’ and press releases. Cross-referencing each source against the quarterly figures, reconciling discrepancies between the filed numbers and the summary tables, and flagging any line items that need a second pass.';
+
+type ForcedState = 'hover' | 'focus-visible';
+
 type StepCase = {
   status: ResponseStatusStepStatus;
   label: string;
   description?: string;
   open?: boolean;
-  forceState?: 'hover';
+  forceState?: ForcedState;
+  // Distinguishes the overflowing description from the step toggle: both live
+  // on the same host, so `data-force-state` alone can't pick the internal.
+  forceTarget?: 'scroll';
 };
 
 // A step's own label/description spans are live-projected via `<slot>`, so
@@ -65,11 +73,13 @@ const renderStep = ({
   description,
   open = false,
   forceState,
+  forceTarget,
 }: StepCase) => html`
   <swc-response-status-step
     status=${status}
     ?open=${open}
     data-force-state=${forceState ?? nothing}
+    data-force-target=${forceTarget ?? nothing}
   >
     <span slot="label">${label}</span>
     ${description
@@ -86,7 +96,7 @@ type StatusCase = {
   lang?: string;
   open?: boolean;
   steps?: unknown;
-  forceState?: 'hover';
+  forceState?: ForcedState;
 };
 
 const renderStatus = ({
@@ -110,14 +120,28 @@ const renderStatus = ({
   </swc-response-status>
 `;
 
-const forceDisclosureRowHover = forcePseudoStates(
+const captioned = (content: unknown, label: string) => html`
+  <div
+    style="display: flex; flex-direction: column; align-items: start; gap: var(--swc-spacing-100);"
+  >
+    ${content}
+    <span class="swc-Detail swc-Detail--sizeM">${label}</span>
+  </div>
+`;
+
+const forceDisclosureRowStates = forcePseudoStates(
   'swc-response-status[data-force-state]',
   '.swc-ResponseStatus-row--button'
 );
 
-const forceStepToggleHover = forcePseudoStates(
-  'swc-response-status-step[data-force-state]',
+const forceStepToggleStates = forcePseudoStates(
+  'swc-response-status-step[data-force-state]:not([data-force-target="scroll"])',
   '.swc-ResponseStatusStep-toggle'
+);
+
+const forceStepScrollStates = forcePseudoStates(
+  'swc-response-status-step[data-force-target="scroll"]',
+  '.swc-ResponseStatusStep-detailScroll'
 );
 
 // The active-status leading icon is a live, JS-ticked `swc-pixel-loader`
@@ -134,10 +158,11 @@ const pauseLoaders = ({ canvasElement }: { canvasElement: HTMLElement }) => {
 };
 
 const forceAll = async (
-  context: Parameters<typeof forceDisclosureRowHover>[0]
+  context: Parameters<typeof forceDisclosureRowStates>[0]
 ) => {
-  await forceDisclosureRowHover(context);
-  await forceStepToggleHover(context);
+  await forceDisclosureRowStates(context);
+  await forceStepToggleStates(context);
+  await forceStepScrollStates(context);
   pauseLoaders(context);
 };
 
@@ -148,9 +173,9 @@ const forceAll = async (
 // visible; the active+open case also exercises the generic "Processing…"
 // header fallback since an active step is present while open). Step
 // disclosure (collapsed vs. expanded detail panel side by side), a
-// description long enough to overflow the scroll cap, forced hover on both
-// the response row and a step's own toggle (the only pseudo-states either
-// stylesheet defines), settled multi-line label wrapping with ellipsis past
+// description long enough to overflow the scroll cap, forced hover and
+// focus-visible on each focusable control (header disclosure, step toggle,
+// overflowing description), settled multi-line label wrapping with ellipsis past
 // the 2-line cap, and CJK label/step text complete the coverage.
 const permutationContent = () => html`
   ${row(
@@ -252,8 +277,7 @@ const permutationContent = () => html`
         steps: renderStep({
           status: 'active',
           label: 'Reviewing internal documentation',
-          description:
-            'Prioritizing data from your documents like the ‘2023 Annual Report’ and press releases. Cross-referencing each source against the quarterly figures, reconciling discrepancies between the filed numbers and the summary tables, and flagging any line items that need a second pass. Prioritizing data from your documents like the ‘2023 Annual Report’ and press releases. Cross-referencing each source against the quarterly figures, reconciling discrepancies between the filed numbers and the summary tables, and flagging any line items that need a second pass.',
+          description: LONG_DESCRIPTION,
           open: true,
         }),
       }),
@@ -284,6 +308,52 @@ const permutationContent = () => html`
       }),
     ],
     'Forced hover'
+  )}
+  ${row(
+    [
+      captioned(
+        renderStatus({
+          status: 'active',
+          open: true,
+          forceState: 'focus-visible',
+          steps: renderStep({
+            status: 'active',
+            label: 'Searching repositories',
+          }),
+        }),
+        'Header disclosure'
+      ),
+      captioned(
+        renderStatus({
+          status: 'complete',
+          label: 'Thought for 9 seconds',
+          open: true,
+          steps: renderStep({
+            status: 'complete',
+            label: 'Compose response',
+            description: 'Synthesizing findings into a structured comparison.',
+            forceState: 'focus-visible',
+          }),
+        }),
+        'Step toggle'
+      ),
+      captioned(
+        renderStatus({
+          status: 'active',
+          open: true,
+          steps: renderStep({
+            status: 'active',
+            label: 'Reviewing internal documentation',
+            description: LONG_DESCRIPTION,
+            open: true,
+            forceState: 'focus-visible',
+            forceTarget: 'scroll',
+          }),
+        }),
+        'Scroll region'
+      ),
+    ],
+    'Forced focus'
   )}
   ${row(
     [

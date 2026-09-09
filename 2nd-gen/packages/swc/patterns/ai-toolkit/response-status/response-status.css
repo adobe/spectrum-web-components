@@ -186,6 +186,7 @@
 }
 
 .swc-ResponseStatus-row--button:hover .swc-ResponseStatus-label,
+.swc-ResponseStatus-row--button:focus-visible .swc-ResponseStatus-label,
 .swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-label {
   --swc-body-font-color: token("gray-800");
 
@@ -193,6 +194,7 @@
 }
 
 .swc-ResponseStatus-row--button:hover .swc-ResponseStatus-chevron,
+.swc-ResponseStatus-row--button:focus-visible .swc-ResponseStatus-chevron,
 .swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-chevron {
   color: token("gray-800");
   transition:
@@ -201,8 +203,14 @@
 }
 
 .swc-ResponseStatus-row--button:hover .swc-ResponseStatus-loader,
+.swc-ResponseStatus-row--button:focus-visible .swc-ResponseStatus-loader,
 .swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-loader {
   --swc-pixel-loader-color: token("gray-800");
+}
+
+.swc-ResponseStatus-row--button:focus-visible {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
 }
 
 /* ─────────────────────────────────────
@@ -324,5 +332,9 @@
 @media (forced-colors: active) {
   .swc-ResponseStatus-loader {
     color: CanvasText;
+  }
+
+  .swc-ResponseStatus-row--button:focus-visible {
+    outline-color: CanvasText;
   }
 }
