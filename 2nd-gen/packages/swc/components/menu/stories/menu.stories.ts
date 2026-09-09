@@ -38,12 +38,6 @@ argTypes['actual-placement'] = {
  * A menu is a full [menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)
  * host: an externally-referenced trigger opens a `PlacementController`-anchored
  * surface containing a `role="menu"` list of `swc-menu-item` rows.
- *
- * This is a Phase 4 (accessibility migration) story for smoke testing only.
- * `swc-menu-item` doesn't exist yet, so this story slots placeholder rows
- * instead. The anchored surface positions and shows/hides on `open`, but is
- * otherwise unstyled; full visual styling and documentation sections land in
- * later migration phases.
  */
 const meta: Meta = {
   title: 'Menu',
