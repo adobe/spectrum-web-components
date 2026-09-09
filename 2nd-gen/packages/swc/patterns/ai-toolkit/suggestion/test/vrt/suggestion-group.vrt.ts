@@ -44,10 +44,16 @@ const THREE_ITEMS = [
 // Longer set that forces the items row to wrap at the constrained width below.
 const WRAPPING_ITEMS = [
   'Refine the executive summary',
-  'Add competitive analysis',
-  'Shorten for a 5-minute read',
-  'Export as talking points',
-  'Suggest a subject line',
+  'Add competitive analysis to the report',
+  'Shorten the report for a 5-minute read',
+  'Export the report as talking points',
+  'Suggest a subject line for the report',
+];
+
+const LONG_LABEL_ITEMS = [
+  'Create a year-over-year growth chart for the next decade for the client',
+  'Summarize in 3 bullet points for a 5-minute read for a client meeting with the CEO',
+  'Suggest a subject line for the report to make it more engaging for the client meeting with the CEO',
 ];
 
 type GroupCase = {
@@ -93,17 +99,26 @@ const permutationContent = () => html`
       renderGroup({
         heading: HEADING,
         items: WRAPPING_ITEMS,
-        inlineSize: '500px',
       }),
     ],
     'Wrapping items'
+  )}
+  ${row(
+    [
+      renderGroup({
+        heading: HEADING,
+        items: LONG_LABEL_ITEMS,
+        inlineSize: '260px',
+      }),
+    ],
+    'Long label items'
   )}
   ${row([renderGroup({ items: THREE_ITEMS })], 'No heading (title hidden)')}
 `;
 
 // VRT stories
 
-// Heading composition, the hidden-title case, wrapping, and CJK rendering,
+// Heading composition, the hidden-title case, and chips wrapping to new rows,
 // once in light/ltr and once in dark/rtl (that pair covers both axes,
 // including RTL mirroring of the wrapped chips), all in a single story so it
 // costs one snapshot.
