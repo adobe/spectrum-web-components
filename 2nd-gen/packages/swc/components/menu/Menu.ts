@@ -30,6 +30,13 @@ import styles from './menu.css';
  *   <swc-menu-item>Copy</swc-menu-item>
  *   <swc-menu-item>Paste</swc-menu-item>
  * </swc-menu>
+ *
+ * @slot - `swc-menu-item` elements.
+ *
+ * @fires swc-open - Dispatched when the menu begins to open.
+ * @fires swc-after-open - Dispatched after the menu finishes opening.
+ * @fires swc-close - Dispatched when the menu begins to close.
+ * @fires swc-after-close - Dispatched after the menu finishes closing.
  */
 export class Menu extends MenuBase {
   public static override get styles(): CSSResultArray {
@@ -39,7 +46,7 @@ export class Menu extends MenuBase {
   protected override render(): TemplateResult {
     return html`
       <div class="swc-Menu">
-        <slot></slot>
+        <slot @slotchange=${this.handleDefaultSlotChange}></slot>
       </div>
     `;
   }
