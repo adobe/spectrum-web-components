@@ -12,6 +12,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import type { TestRunnerConfig } from '@storybook/test-runner';
 import { getStoryContext } from '@storybook/test-runner';
+import type { Page } from 'playwright';
 
 type StorybookA11yConfig = {
   disabledRules?: string[];
@@ -25,7 +26,28 @@ type StorybookTestContext = {
   };
 };
 
+// Wait for web fonts to settle so axe measures color-contrast against the final
+// glyphs, not the fallback face. `document.fonts.ready` resolves even when the
+// font CDN fails (unlike the custom `typekit-loaded` event), and the timeout
+// race guarantees the scan never hangs on a slow or blocked CDN.
+const FONT_SETTLE_TIMEOUT_MS = 3000;
+const waitForFonts = (page: Page) =>
+  page.evaluate(
+    (timeout: number) =>
+      new Promise<void>((resolve) => {
+        Promise.resolve(document.fonts.ready).then(() => resolve());
+        setTimeout(resolve, timeout);
+      }),
+    FONT_SETTLE_TIMEOUT_MS
+  );
+
 const config: TestRunnerConfig = {
+  // Render every story with reduced motion so axe never scans a mid-animation
+  // frame (e.g. pixel-loader, response-status agentic steps), which produces
+  // flaky color-contrast violations and shifting target elements.
+  async preVisit(page) {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+  },
   async postVisit(page, context) {
     const storyContext = (await getStoryContext(
       page,
@@ -37,103 +59,76 @@ const config: TestRunnerConfig = {
     }
 
     const a11yConfig = storyContext.parameters?.a11y;
-    const analyzeView = async (
-      targetPage: typeof page,
-      viewLabel: 'story' | 'docs'
-    ): Promise<string | null> => {
-      const axeBuilder = new AxeBuilder({ page: targetPage })
-        .include('#storybook-root')
-        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
 
-      if (
-        a11yConfig?.disabledRules &&
-        Array.isArray(a11yConfig.disabledRules)
-      ) {
-        axeBuilder.disableRules(a11yConfig.disabledRules);
-      }
+    // Only the story view is scanned. In docs mode Storybook renders into
+    // `#storybook-docs`, with each embedded example in its own nested
+    // docs-story canvas, so an axe run scoped to `#storybook-root` never
+    // reached the docs content: the earlier docs pass was a silent no-op.
+    // Docs-view a11y coverage is tracked separately with the vitest-addon
+    // migration.
+    await waitForFonts(page);
 
-      const results = await axeBuilder.analyze();
+    const axeBuilder = new AxeBuilder({ page })
+      .include('#storybook-root')
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
 
-      // Filter violations using rule-specific exclusions from story parameters.
-      // parameters.a11y.exclude: { 'rule-id': ['selector1', 'selector2'] }
-      // Only the specified rule is affected; all other rules still validate the element.
-      const excludeMap = a11yConfig?.exclude;
+    if (a11yConfig?.disabledRules && Array.isArray(a11yConfig.disabledRules)) {
+      axeBuilder.disableRules(a11yConfig.disabledRules);
+    }
 
-      const violations = excludeMap
-        ? results.violations
-            .map((violation) => {
-              const excludedSelectors = excludeMap[violation.id];
-              if (!excludedSelectors) {
-                return violation;
-              }
+    const results = await axeBuilder.analyze();
 
-              const remainingNodes = violation.nodes.filter(
-                (node) =>
-                  !node.target.some((target) =>
-                    excludedSelectors.some((selector) =>
-                      String(target).includes(selector)
-                    )
-                  )
-              );
+    // Filter violations using rule-specific exclusions from story parameters.
+    // parameters.a11y.exclude: { 'rule-id': ['selector1', 'selector2'] }
+    // Only the specified rule is affected; all other rules still validate the element.
+    const excludeMap = a11yConfig?.exclude;
 
-              return { ...violation, nodes: remainingNodes };
-            })
-            .filter((violation) => violation.nodes.length > 0)
-        : results.violations;
-
-      if (violations.length > 0) {
-        const details = violations
+    const violations = excludeMap
+      ? results.violations
           .map((violation) => {
-            const nodeDetails = violation.nodes
-              .map((node) => {
-                const target = node.target.join(', ');
-                const failureSummary =
-                  node.failureSummary?.trim() ?? 'No summary';
-                return `  - Target: ${target}\n    Summary: ${failureSummary}`;
-              })
-              .join('\n');
+            const excludedSelectors = excludeMap[violation.id];
+            if (!excludedSelectors) {
+              return violation;
+            }
 
-            return [
-              `${violation.id} (${violation.impact ?? 'unknown impact'})`,
-              `Description: ${violation.description}`,
-              `Help: ${violation.help}`,
-              `More info: ${violation.helpUrl}`,
-              'Nodes:',
-              nodeDetails,
-            ].join('\n');
+            const remainingNodes = violation.nodes.filter(
+              (node) =>
+                !node.target.some((target) =>
+                  excludedSelectors.some((selector) =>
+                    String(target).includes(selector)
+                  )
+                )
+            );
+
+            return { ...violation, nodes: remainingNodes };
           })
-          .join('\n\n');
+          .filter((violation) => violation.nodes.length > 0)
+      : results.violations;
 
-        return `A11y violations in ${context.id} (${viewLabel} view):\n${details}`;
-      }
+    if (violations.length > 0) {
+      const details = violations
+        .map((violation) => {
+          const nodeDetails = violation.nodes
+            .map((node) => {
+              const target = node.target.join(', ');
+              const failureSummary =
+                node.failureSummary?.trim() ?? 'No summary';
+              return `  - Target: ${target}\n    Summary: ${failureSummary}`;
+            })
+            .join('\n');
 
-      return null;
-    };
+          return [
+            `${violation.id} (${violation.impact ?? 'unknown impact'})`,
+            `Description: ${violation.description}`,
+            `Help: ${violation.help}`,
+            `More info: ${violation.helpUrl}`,
+            'Nodes:',
+            nodeDetails,
+          ].join('\n');
+        })
+        .join('\n\n');
 
-    // Storybook test-runner smoke tests default to story view.
-    const failures: string[] = [];
-    const storyFailure = await analyzeView(page, 'story');
-    if (storyFailure) {
-      failures.push(storyFailure);
-    }
-
-    // Check docs on a separate page so Storybook test-runner state remains intact.
-    const docsPage = await page.context().newPage();
-    try {
-      const docsUrl = new URL(page.url());
-      docsUrl.searchParams.set('id', context.id);
-      docsUrl.searchParams.set('viewMode', 'docs');
-      await docsPage.goto(docsUrl.toString(), { waitUntil: 'networkidle' });
-      const docsFailure = await analyzeView(docsPage, 'docs');
-      if (docsFailure) {
-        failures.push(docsFailure);
-      }
-    } finally {
-      await docsPage.close();
-    }
-
-    if (failures.length > 0) {
-      throw new Error(failures.join('\n\n'));
+      throw new Error(`A11y violations in ${context.id}:\n${details}`);
     }
   },
 };

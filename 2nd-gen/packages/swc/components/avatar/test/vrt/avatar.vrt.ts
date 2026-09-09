@@ -39,7 +39,7 @@ export default meta;
 
 // Helpers
 
-const PLACEHOLDER_SRC = 'https://picsum.photos/id/64/500/500';
+const PLACEHOLDER_SRC = './images/avatar-preview.png';
 
 const renderAvatar = (size: AvatarSize) => html`
   <swc-avatar src=${PLACEHOLDER_SRC} alt="Jane Doe" size=${size}></swc-avatar>
