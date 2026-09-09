@@ -97,7 +97,7 @@ const modResponseStatusStepProperty = (
   _case: ResponseStatusStepPropertyCase,
   style?: string
 ) => html`
-  <swc-response-status status="complete" style="max-inline-size: 240px;">
+  <swc-response-status status="complete" style="max-inline-size: 240px;" open>
     <span slot="label">Thought for 9 seconds</span>
     <swc-response-status-step status="complete" open style=${style ?? nothing}>
       <span slot="label">Looked through documentation</span>

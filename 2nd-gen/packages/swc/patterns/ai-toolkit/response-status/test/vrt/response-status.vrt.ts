@@ -253,7 +253,7 @@ const permutationContent = () => html`
           status: 'active',
           label: 'Reviewing internal documentation',
           description:
-            'Prioritizing data from your documents like the ‘2023 Annual Report’ and press releases. Cross-referencing each source against the quarterly figures, reconciling discrepancies between the filed numbers and the summary tables, and flagging any line items that need a second pass.',
+            'Prioritizing data from your documents like the ‘2023 Annual Report’ and press releases. Cross-referencing each source against the quarterly figures, reconciling discrepancies between the filed numbers and the summary tables, and flagging any line items that need a second pass. Prioritizing data from your documents like the ‘2023 Annual Report’ and press releases. Cross-referencing each source against the quarterly figures, reconciling discrepancies between the filed numbers and the summary tables, and flagging any line items that need a second pass.',
           open: true,
         }),
       }),
