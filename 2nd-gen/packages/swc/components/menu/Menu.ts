@@ -33,11 +33,6 @@ import styles from './menu.css';
  *
  * @slot - `swc-menu-item` elements.
  *
- * @cssprop --swc-menu-content-padding - Padding around the slotted items. Defaults to the `popover-padding` token.
- * @cssprop --swc-menu-background-color - Background color of the surface. Defaults to the `background-layer-2-color` token.
- * @cssprop --swc-menu-border-color - Border color of the surface. Defaults to the `popover-border-color` token.
- * @cssprop --swc-menu-corner-radius - Corner radius of the surface. Defaults to the `corner-radius-700` token.
- *
  * @fires swc-open - Dispatched when the menu begins to open.
  * @fires swc-after-open - Dispatched after the menu finishes opening.
  * @fires swc-close - Dispatched when the menu begins to close.
