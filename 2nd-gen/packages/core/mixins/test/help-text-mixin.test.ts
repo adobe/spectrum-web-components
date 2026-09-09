@@ -52,7 +52,10 @@ export const CombinedDescriptionTest: Story = {
       () => {
         const resolved = combined.roleElement?.ariaDescribedByElements ?? [];
         expect(resolved).toHaveLength(2);
-        expect(resolved[0]?.closest('demo-help-text-host')).toBe(combined);
+        // The shadow description is an in-shadow element reference, so it is
+        // identified by class rather than `closest()` (which cannot cross the
+        // shadow boundary).
+        expect(resolved[0]?.className).toContain('swc-FieldDescription');
         expect(resolved[1]?.id).toBe('help-text-mixin-external-description');
       }
     );
