@@ -211,6 +211,29 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this.open = false;
   };
 
+  // Closes the menu on a click outside both its own content and its
+  // trigger. `composedPath()`, not `event.target`, so a click on a slotted
+  // `swc-menu-item` (light DOM) or inside the shadow-internal surface is
+  // correctly seen as "inside" rather than retargeted to `swc-menu` itself
+  // and treated as ambiguous. `click`, not `pointerdown`: this menu has no
+  // native light-dismiss to race against (unlike Popover's default mode),
+  // so there is no need to catch the gesture before it completes. Clicking
+  // the trigger itself is excluded here; that toggle is already handled by
+  // `_handleTriggerClick`.
+  private readonly handleOutsideClick = (event: MouseEvent): void => {
+    if (!this.open) {
+      return;
+    }
+    const path = event.composedPath();
+    if (
+      path.includes(this) ||
+      (this._trigger && path.includes(this._trigger))
+    ) {
+      return;
+    }
+    this.open = false;
+  };
+
   // Removes this menu's aria-controls reference from a previously-wired
   // trigger and clears the state/expanded attributes it owns, so a stale
   // trigger never retains a reference to this menu.
@@ -380,6 +403,9 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
         document.addEventListener('keydown', this.handleKeyDown, {
           capture: true,
         });
+        document.addEventListener('click', this.handleOutsideClick, {
+          capture: true,
+        });
         this.startPlacement();
         // Re-checks eligibility (e.g. newly visible rows) before moving focus
         // in, then delegates "first item" to the controller's own preferred-
@@ -396,6 +422,9 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       } else {
         unregisterDismissible(this);
         document.removeEventListener('keydown', this.handleKeyDown, {
+          capture: true,
+        });
+        document.removeEventListener('click', this.handleOutsideClick, {
           capture: true,
         });
         this.placementController.stop();
@@ -424,6 +453,9 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this.removeTriggerClickListener();
     unregisterDismissible(this);
     document.removeEventListener('keydown', this.handleKeyDown, {
+      capture: true,
+    });
+    document.removeEventListener('click', this.handleOutsideClick, {
       capture: true,
     });
   }
