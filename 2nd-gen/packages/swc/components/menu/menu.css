@@ -21,11 +21,19 @@
  * elevation, padding) wrapping `.spectrum-Menu` (the list itself: box model,
  * scroll, no padding of its own — see `@spectrum-css/actionmenu`'s documented
  * markup). Values below are `swc-popover`'s own surface tokens, since this
- * plays the same "floating chrome surface" role without a tip/arrow. */
+ * plays the same "floating chrome surface" role without a tip/arrow.
+ *
+ * `spectrum-css`'s `.spectrum-Menu` is a `<ul>`, whose `<li>` rows stack
+ * vertically with no layout rule needed. `.swc-Menu` is a plain `<div>`, and
+ * slotted rows can default to any display value (an unregistered custom
+ * element like the current placeholder story rows defaults to `inline`), so
+ * `display: flex` / `flex-direction: column` stacks them explicitly. */
 .swc-Menu {
   box-sizing: border-box;
+  display: flex;
   position: absolute;
   inset: auto;
+  flex-direction: column;
   inline-size: max-content;
   max-inline-size: min(var(--swc-placement-available-width, 100vi), calc(100vi - 24px));
   max-block-size: min(var(--swc-placement-available-height, 90vb), 90vb);
