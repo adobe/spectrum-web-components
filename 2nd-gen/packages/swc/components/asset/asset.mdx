@@ -13,7 +13,7 @@ An asset consists of:
 
 - **Default slot**: a single `<img>` or `<svg>` element to display
 
-The asset automatically centers its content both horizontally and vertically within the available space.
+The asset automatically centers its content both horizontally and vertically within the available space. Only one slotted element is allowed; additional elements will be hidden.
 
 <Canvas of={AssetStories.Anatomy} />
 
@@ -36,6 +36,11 @@ attribute instead (`xMidYMid slice` for `cover`, `xMidYMid meet` for `contain`).
 `background` controls what shows behind slotted content and around its edges when `fit="contain"`
 letterboxes it: `transparent` (default), a `solid` color, or an opacity `checkerboard`.
 
+`background` is also what's visible behind the slot while the asset is loading (see
+[Loading state](#loading-state)). Pairing a non-transparent `background` with `fit="contain"` is
+the recommended way to get a polished letterboxed look that also reads well during loading,
+since the same fill shows in both cases.
+
 Consuming components are responsible for applying other styles such as borders, shadows, and corner rounding to the asset.
 
 <Canvas of={AssetStories.Background} />
@@ -45,9 +50,55 @@ Consuming components are responsible for applying other styles such as borders, 
 ### Sizing
 
 Set `aspect-ratio`, or `width`/`height`, to size the asset. `aspect-ratio` accepts CSS `<ratio>`
-syntax (including the `square` keyword) and has no effect when both `width` and `height` are set.
+syntax (including the `square` keyword). Pairing `aspect-ratio` with only one of `width` or
+`height` derives the other dimension from the ratio; setting both `width` and `height` leaves
+`aspect-ratio` with no effect, since both dimensions are already fixed.
 
 <Canvas of={AssetStories.Sizing} />
+
+### Loading state
+
+`load-state` reflects the load progress of a slotted `<img>`:
+
+- `loading` while its request is in flight
+- `loaded` on success
+- `error` on failure.
+
+It's `loaded` immediately for a slotted `<svg>`
+or when nothing is slotted, since there's nothing asynchronous to wait for.
+
+`load-state` is set
+internally from the slotted `<img>`'s own `load`/`error` events; a consumer influences it only by
+changing what's slotted, not by setting it directly.
+
+Two events accompany the same transitions, so a consumer doesn't need to poll the property:
+
+- **`swc-asset-load`**: fired when the slotted `<img>` finishes loading successfully
+- **`swc-asset-error`**: fired when the slotted `<img>` fails to load; `detail.src` is the failed
+  image's resolved URL
+
+Both events fire exactly once per slotted `<img>` instance, even if the image was already loaded
+from cache by the time a listener is attached. Swapping the slotted `<img>` for a new one resets
+`load-state` and re-attaches listeners to it.
+
+```javascript
+const asset = document.querySelector('swc-asset');
+const spinner = document.querySelector('swc-progress-circle');
+
+spinner.hidden = asset.loadState !== 'loading';
+asset.addEventListener('swc-asset-load', () => (spinner.hidden = true));
+asset.addEventListener('swc-asset-error', () => (spinner.hidden = true));
+```
+
+Open the **Actions** panel in Storybook to observe the events as the images below load.
+
+<Canvas of={AssetStories.LoadingState} />
+
+Set `loading="lazy"` and `decoding="async"` on the slotted `<img>` for offscreen assets, such as
+in a scrolling grid: `loading="lazy"` defers the browser starting the fetch until the image nears
+the viewport, and `decoding="async"` lets the browser decode the image off the main thread. Neither
+attribute changes `load-state`'s semantics; a lazy image simply stays `loading` until the browser
+actually starts and finishes its fetch.
 
 ## Accessibility
 
@@ -59,11 +110,12 @@ The `<swc-asset>` element implements several accessibility features:
 
 - **Non-interactive**: assets have no interactive behavior and are not focusable
 - **`decorative`**: sets `aria-hidden="true"` on the host, removing the entire asset (and its slotted content) from the accessibility tree
+- **Accessible name detection**: a slotted `<img>` already has its own name via `alt`, `aria-label`, or `aria-labelledby`; a slotted `<svg>` already has its own name via `aria-label`, `aria-labelledby`, or a child `<title>` element. A named `<svg>` missing `role="img"` gets it added automatically, since `<svg>` has no reliable implicit role the way `<img>` does
 - **`accessible-label`**: applied as a fallback accessible name (`alt` on a slotted `<img>`, or `role="img"` plus `aria-label` on a slotted `<svg>`) only when the slotted content doesn't already carry its own accessible name
 
 ### Best practices
 
-- Provide a meaningful `alt` attribute on a slotted `<img>`, or `aria-label` (with `role="img"`) on a slotted `<svg>`, when the asset conveys information
+- Provide a meaningful `alt` attribute on a slotted `<img>`, or an `aria-label` or a child `<title>` element on a slotted `<svg>`, when the asset conveys information
 - For decorative content, set `decorative` on `<swc-asset>` rather than `alt=""` on the slotted `<img>`; `decorative` removes the whole asset from the accessibility tree, not just the image
 
 <Canvas of={AssetStories.Accessibility} />

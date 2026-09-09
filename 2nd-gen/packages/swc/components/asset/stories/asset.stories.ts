@@ -27,7 +27,11 @@ import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 //    METADATA
 // ────────────────
 
-const { args, argTypes, template } = getStorybookHelpers('swc-asset');
+const {
+  args,
+  argTypes,
+  template: templateWithLoadState,
+} = getStorybookHelpers('swc-asset');
 
 argTypes.fit = {
   ...argTypes.fit,
@@ -41,6 +45,22 @@ argTypes.background = {
   options: ASSET_BACKGROUND_VALUES,
 };
 
+// Set internally from the slotted <img>'s load/error events; not a consumer input. Hidden
+// from the Controls table, and stripped below before every template() call so it never
+// appears in generated code snippets, which would misleadingly suggest a consumer sets it.
+argTypes['load-state'] = {
+  table: { disable: true },
+  control: false,
+};
+
+const template = (storyArgs: Record<string, unknown>) => {
+  const rest = { ...storyArgs };
+  delete rest['load-state'];
+  return templateWithLoadState(rest);
+};
+
+const events = ['swc-asset-load', 'swc-asset-error'];
+
 /**
  * A general image/media primitive that displays a single slotted `<img>` or
  * `<svg>` element, sized and fit to the space provided.
@@ -51,6 +71,7 @@ const meta: Meta = {
   args,
   argTypes,
   parameters: {
+    actions: { handles: events },
     docs: {
       subtitle: `Visually represent an image or media asset in your application`,
     },
@@ -187,6 +208,28 @@ export const Sizing: Story = {
   parameters: { flexLayout: 'row-wrap' },
 };
 
+export const LoadingState: Story = {
+  render: (args) => html`
+    ${template({
+      ...args,
+      width: '160px',
+      height: '160px',
+      background: 'checkerboard',
+      'default-slot': `<img src="./images/card-preview.jpg" alt="Loads successfully" />`,
+    })}
+    ${template({
+      ...args,
+      width: '160px',
+      height: '160px',
+      background: 'checkerboard',
+      'default-slot': `<img src="./images/does-not-exist.jpg" alt="Fails to load" />`,
+    })}
+  `,
+  tags: ['behaviors'],
+  parameters: { flexLayout: 'row-wrap' },
+};
+LoadingState.storyName = 'Loading state';
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
@@ -196,7 +239,14 @@ export const Accessibility: Story = {
     ${template({
       ...args,
       width: '160px',
-      'default-slot': `<img src="./images/card-preview.jpg" alt="preview of background" />`,
+      'accessible-label': 'preview of background',
+      'default-slot': `<img src="./images/card-preview.jpg" />`,
+    })}
+    ${template({
+      ...args,
+      width: '160px',
+      decorative: true,
+      'default-slot': `<img src="./images/landscape-asset.jpg" />`,
     })}
     ${template({
       ...args,

@@ -590,20 +590,21 @@ plan contract pattern this document follows).
 ### Documentation (SWC-2321)
 
 - [x] Drop `.internal.*` naming and `@status internal`; promote docs/stories to public
-- [ ] JSDoc on all public properties, slots, and CSS custom properties
-- [ ] Storybook stories for sizing, `fit`, `background`, and `decorative`/`accessibleLabel`
+- [x] JSDoc on all public properties, slots, and CSS custom properties
+- [x] Storybook stories for sizing, `fit`, `background`, and `decorative`/`accessibleLabel`
 - [ ] Consumer migration guide covers the `variant` removal and the `label` →
       `accessibleLabel` rename
 - [ ] Reference Card directly as an example consumer (Storybook docs and/or the consumer
-      migration guide), pointing at its `preview` and `collection` slot usage
-- [ ] Document v1 support for a single `img` or `svg` child only
-- [ ] Document `loading="lazy"`/`decoding="async"` performance guidance
-- [ ] Document the resulting CSS behavior when combining `aspectRatio` with only one of
+      migration guide), pointing at its `preview` and `collection` slot usage — deferred until
+      Card's own Asset integration (`seckles/swc-card` branch) merges
+- [x] Document v1 support for a single `img` or `svg` child only
+- [x] Document `loading="lazy"`/`decoding="async"` performance guidance
+- [x] Document the resulting CSS behavior when combining `aspectRatio` with only one of
       `width`/`height` (the supported pattern — one dimension fixed, the other derived)
-- [ ] Document that `background` shows around the edges under `fit="contain"` and behind the
+- [x] Document that `background` shows around the edges under `fit="contain"` and behind the
       slot before the image resolves, and that pairing a non-transparent `background` with
       `fit="contain"` is the recommended way to get a polished letterboxed/loading look
-- [ ] Document `loadState` and the `swc-asset-load`/`swc-asset-error` events, with a
+- [x] Document `loadState` and the `swc-asset-load`/`swc-asset-error` events, with a
       consumer example showing a spinner shown while `loadState === 'loading'` and hidden on
       `swc-asset-load`/`swc-asset-error`
 
