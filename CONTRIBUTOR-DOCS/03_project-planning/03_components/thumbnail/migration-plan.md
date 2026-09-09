@@ -28,11 +28,11 @@
     - [User confirmation needed](#user-confirmation-needed)
 - [Changes overview](#changes-overview)
     - [Must ship — breaking or a11y-required](#must-ship--breaking-or-a11y-required)
-    - [Additive — ships when ready, zero breakage for consumers already on 2nd-gen](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)
-- [2nd-gen API decisions](#2nd-gen-api-decisions)
+    - [Additive — ships when ready, zero breakage for consumers already on gen2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-gen2)
+- [gen2 API decisions](#gen2-api-decisions)
     - [Public API](#public-api)
     - [Behavioral semantics](#behavioral-semantics)
-    - [Accessibility semantics notes (2nd-gen)](#accessibility-semantics-notes-2nd-gen)
+    - [Accessibility semantics notes (gen2)](#accessibility-semantics-notes-gen2)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
 - [Migration checklist](#migration-checklist)
     - [Preparation (this ticket)](#preparation-this-ticket)
@@ -111,7 +111,7 @@ None.
 
 | Slot | Content | Notes |
 | ---- | ------- | ----- |
-| default (unnamed) | An `<img>` element to present in the thumbnail | The class JSDoc says `@slot image`, but `render()` only ever emits an unnamed `<slot></slot>`; there is no `name="image"` slot in the shadow DOM. Any 1st-gen consumer that set `slot="image"` on the child, trusting the JSDoc, would silently fail to render it. This is a pre-existing 1st-gen documentation bug; 2nd-gen should document the default slot correctly from the start (see [Public API](#public-api)). |
+| default (unnamed) | An `<img>` element to present in the thumbnail | The class JSDoc says `@slot image`, but `render()` only ever emits an unnamed `<slot></slot>`; there is no `name="image"` slot in the shadow DOM. Any 1st-gen consumer that set `slot="image"` on the child, trusting the JSDoc, would silently fail to render it. This is a pre-existing 1st-gen documentation bug; gen2 should document the default slot correctly from the start (see [Public API](#public-api)). |
 
 ### CSS custom properties
 
@@ -119,7 +119,7 @@ Passthrough: `--mod-opacity-checkerboard-size`.
 
 Deprecated modifiers (`--mod-thumbnail-border-color`, `--mod-thumbnail-border-color-selected`, `--mod-thumbnail-border-radius`, `--mod-thumbnail-border-width`, `--mod-thumbnail-border-width-selected`, `--mod-thumbnail-color-opacity-disabled`, `--mod-thumbnail-focus-indicator-color`, `--mod-thumbnail-focus-indicator-gap`, `--mod-thumbnail-focus-indicator-thickness`, `--mod-thumbnail-layer-border-color-inner`, `--mod-thumbnail-layer-border-color-outer`, `--mod-thumbnail-layer-border-width-inner`, `--mod-thumbnail-layer-border-width-outer`, `--mod-thumbnail-size`).
 
-This full modifier surface will not be carried forward to 2nd-gen.
+This full modifier surface will not be carried forward to gen2.
 
 ### Shadow DOM output (rendered HTML)
 
@@ -164,14 +164,14 @@ This full modifier surface will not be carried forward to 2nd-gen.
 
 ### Dependency-aware recommendation
 
-Migrate Thumbnail now, independently. It has no unmigrated prerequisite dependency: its only real dependency, Opacity Checkerboard, is already analyzed and styled in 2nd-gen (status table: Analyze ✓, Render & Style ✓), and its shared `_lit-styles/opacity-checkerboard.css` fragment is ready to consume directly.
+Migrate Thumbnail now, independently. It has no unmigrated prerequisite dependency: its only real dependency, Opacity Checkerboard, is already analyzed and styled in gen2 (status table: Analyze ✓, Render & Style ✓), and its shared `_lit-styles/opacity-checkerboard.css` fragment is ready to consume directly.
 
 ### Related components and ordering notes
 
-- **Opacity Checkerboard**: 2nd-gen already exposes a shared, importable `css` fragment at `2nd-gen/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css` (`.swc-OpacityCheckerboard` class), documented as "a shared CSS utility, not a custom element." Thumbnail should import this fragment directly into its `styles` array, exactly as 1st-gen imports `@spectrum-web-components/opacity-checkerboard`'s styles today. No new fragment is needed.
+- **Opacity Checkerboard**: gen2 already exposes a shared, importable `css` fragment at `2nd-gen/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css` (`.swc-OpacityCheckerboard` class), documented as "a shared CSS utility, not a custom element." Thumbnail should import this fragment directly into its `styles` array, exactly as 1st-gen imports `@spectrum-web-components/opacity-checkerboard`'s styles today. No new fragment is needed.
 - **Card**: `card.mdx` documents a future **product card** that will add a "logo thumbnail glyph," and `card-template.ts`'s `renderGlyph` option already anticipates an avatar/thumbnail glyph in its JSDoc. Product card has not started analysis yet (status table shows no ✓ in the Analyze column for Card). RSP's `ProductCard` (`@react-spectrum/s2/src/Card.tsx`) and `AttachmentList` (`@react-spectrum/ai/src/AttachmentList.tsx`) both implement their "thumbnail" as a plain, card-scoped `<Image slot="thumbnail">`, and RSP has no dedicated Thumbnail component at all. Despite that, the Card strategy author confirmed SWC's product card is expected to consume `<swc-thumbnail>` directly. This does not change the recommendation to migrate Thumbnail first, since Thumbnail has no unmigrated prerequisite of its own and product card analysis hasn't started; it does mean Card should be treated as a real future consumer of the `swc-thumbnail` public API once its own migration begins, not merely a sibling sharing size tokens. See [Decision log](#decision-log) C4.
-- **Asset**: a closely related component sharing several presentation concerns with Thumbnail (checkerboard letterboxing, disabled/selected-style treatments, and `fit`). The most notable difference is that Asset sizes itself via aspect ratio rather than Thumbnail's fixed 12-value size scale, so the two should not share a sizing implementation. Several 2nd-gen API decisions were aligned with Asset's plan; see [Decision log](#decision-log) C6, C7, C8.
-- **Avatar**: not a structural dependency, but `AvatarBase`'s bespoke numeric `size` property is the direct architectural precedent used in [2nd-gen API decisions](#2nd-gen-api-decisions) below.
+- **Asset**: a closely related component sharing several presentation concerns with Thumbnail (checkerboard letterboxing, disabled/selected-style treatments, and `fit`). The most notable difference is that Asset sizes itself via aspect ratio rather than Thumbnail's fixed 12-value size scale, so the two should not share a sizing implementation. Several gen2 API decisions were aligned with Asset's plan; see [Decision log](#decision-log) C6, C7, C8.
+- **Avatar**: not a structural dependency, but `AvatarBase`'s bespoke numeric `size` property is the direct architectural precedent used in [gen2 API decisions](#gen2-api-decisions) below.
 
 ### User confirmation needed
 
@@ -196,14 +196,14 @@ Migrate Thumbnail now, independently. It has no unmigrated prerequisite dependen
 
 #### API and naming
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ----------------- | ----------------- | ------------------------ |
-| **B1** | Tag rename | `<sp-thumbnail>` | `<swc-thumbnail>` | Update tag name and import path to the 2nd-gen package/entry point. |
+| **B1** | Tag rename | `<sp-thumbnail>` | `<swc-thumbnail>` | Update tag name and import path to the gen2 package/entry point. |
 | **B2** | `size` becomes numeric-typed | `el.size` is a `string` (e.g. `'500'`); invalid values fall back silently | `el.size` is a `number` (e.g. `500`); invalid values fall back to `500` with a dev-mode `warnIf` warning (see [B2 rationale](#behavioral-semantics)) | Update JS that reads/sets `.size` programmatically to use numeric literals. The HTML attribute value is unaffected (attributes are always strings). |
 
 #### Styling and visuals
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ----------------- | ----------------- | ------------------------ |
 | **B3** | `--mod-thumbnail-*` modifiers dropped | 14 deprecated `--mod-*` properties documented (see [CSS custom properties](#css-custom-properties)) | None exposed; see [Public API](#public-api) | None expected to be in active use; flag if a real consumer dependency surfaces during review. |
 | **B7** | `background` string dropped | `background` (`string \| undefined`): CSS `background` value applied inline to the checkerboard wrapper for letterboxing non-square content | Not exposed as a component property. The checkerboard wrapper already indicates empty/transparent content on its own, so a separate custom letterbox color/gradient is unnecessary. Matches Asset's plan, where the checkerboard similarly covers this purpose. See [Decision log](#decision-log) C8. | Remove the `background` attribute. If a custom letterbox color is still needed, apply it via CSS to a wrapping element. |
@@ -213,13 +213,13 @@ Migrate Thumbnail now, independently. It has no unmigrated prerequisite dependen
 
 #### Accessibility and behavior
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ----------------- | ----------------- | ------------------------ |
 | **B4** | New `decorative` property | Not present | `decorative` (reflected boolean); sets `aria-hidden="true"` on the host and forces `alt=""` on the slotted `<img>` if unset | Set `decorative` on thumbnails whose image content is already described by surrounding context. Additive, non-breaking. |
 | **B5** | New missing-`alt` DEBUG warning | No warning | Emits a DEBUG-mode warning when `decorative` is unset and the slotted `<img>` has no meaningful `alt` | Dev-mode only; no consumer-facing runtime change. |
 | **B6** | Formalize "not interactive" contract | No `role`, not focusable (true today, but not tested/documented) | Same behavior, explicitly tested: no ARIA role on host, never part of the tab order | No consumer action; existing behavior, now covered by tests. |
 
-### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
+### Additive — ships when ready, zero breakage for consumers already on gen2
 
 | #   | What is added | Notes |
 | --- | ------------- | ----- |
@@ -228,7 +228,7 @@ Migrate Thumbnail now, independently. It has no unmigrated prerequisite dependen
 
 ---
 
-## 2nd-gen API decisions
+## gen2 API decisions
 
 These are derived from the 1st-gen implementation, the accessibility migration analysis, the Figma `S2 / Web` Thumbnail spec, and the `spectrum-css` `spectrum-two` rendering roadmap. There is no React Spectrum S2 implementation to cross-reference for this component. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
 
@@ -240,7 +240,7 @@ Use lightweight confidence labels where helpful:
 
 ### Public API
 
-#### Properties / attributes (2nd-gen)
+#### Properties / attributes (gen2)
 
 | Property | Type | Default | Attribute | Notes |
 | -------- | ---- | ------- | --------- | ----- |
@@ -250,21 +250,21 @@ Use lightweight confidence labels where helpful:
 
 `background`, `layer`, `disabled`, `focused`, and `selected` are intentionally **not** carried forward as `swc-thumbnail` properties or attributes (B7–B9). The checkerboard wrapper already covers `background`'s letterboxing purpose; direct style overrides targeting `swc-thumbnail` (or a wrapper element) replace `layer`/`disabled`/`focused`/`selected`. See [Decision log](#decision-log) C6–C8 and [Behavioral semantics](#behavioral-semantics).
 
-#### Visual matrix (2nd-gen)
+#### Visual matrix (gen2)
 
 | Axis | Values | Source |
 | ---- | ------ | ------ |
 | Size | `50` (16px) · `75` (20px) · `100` (24px) · `200` (28px) · `300` (32px) · `400` (36px) · `500` (40px, default) · `600` (44px) · `700` (48px) · `800` (52px) · `900` (56px) · `1000` (64px) | Figma-confirmed (`Copy as PNG`, Size axis); px values match `@adobe/spectrum-tokens` `thumbnail-size-*` exactly. Independently corroborated: React Spectrum S2's `ProductCard` and `AttachmentList` `thumbnail` image slots map their own `XS`/`S`/`M`/`L`/`XL` sizes to `24`/`36`/`40`/`44`/`56` px, a subset of this same scale. |
 | State | Default, Disabled, **Selected** (design states; not all are `swc-thumbnail` attributes) | Figma-confirmed (State axis on the same frame) plus the [Spectrum 2 design guidelines](https://s2.spectrum.corp.adobe.com/page/thumbnail/) States table, which additionally lists Selected as Supported (Hover, Down, Keyboard focus, Dragged, and Error are all explicitly Not supported). Disabled and Selected are supported design states, not supported `swc-thumbnail` properties; see [Decision log](#decision-log) C7 for why the visual treatment is consumer-applied instead. |
-| Presentation | Default only, plus component-owned `fit` (`cover`/`contain`); `layer`/`selected` presentation is consumer-applied, `background` is dropped | `fit` carries forward from 1st-gen's `cover` as a component-owned attribute-selector-driven property (see [Behavioral semantics](#behavioral-semantics)). 1st-gen's `layer`/`selected` presentation behaviors are achievable by a consumer via their own border/selected styling instead, so 2nd-gen Thumbnail renders a single shadow-DOM structure and lets consumers layer that styling on top; see [Decision log](#decision-log) C6, C7. `background` is dropped, see C8. |
+| Presentation | Default only, plus component-owned `fit` (`cover`/`contain`); `layer`/`selected` presentation is consumer-applied, `background` is dropped | `fit` carries forward from 1st-gen's `cover` as a component-owned attribute-selector-driven property (see [Behavioral semantics](#behavioral-semantics)). 1st-gen's `layer`/`selected` presentation behaviors are achievable by a consumer via their own border/selected styling instead, so gen2 Thumbnail renders a single shadow-DOM structure and lets consumers layer that styling on top; see [Decision log](#decision-log) C6, C7. `background` is dropped, see C8. |
 
-#### Slots (2nd-gen)
+#### Slots (gen2)
 
 | Slot | Content | Notes |
 | ---- | ------- | ----- |
 | default | Slotted `<img>` element | **Confirmed.** Document as the default (unnamed) slot; do not repeat 1st-gen's inaccurate `@slot image` JSDoc (see [1st-gen Slots](#slots)). |
 
-#### CSS custom properties (2nd-gen)
+#### CSS custom properties (gen2)
 
 No `--mod-*` properties will be exposed. New `--swc-*` component-level properties may be introduced where needed — these are additive and not breaking. See [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure) for what to expose and how.
 
@@ -282,13 +282,13 @@ Initial expectation for Thumbnail is **no new `--swc-thumbnail-*` properties** (
 
 **`background` (dropped).** Not exposed as a `swc-thumbnail` property. The checkerboard wrapper already indicates empty/transparent content on its own, so a separate custom letterbox color/gradient string is unnecessary; matches Asset's plan, where the checkerboard similarly covers this purpose. See [Decision log](#decision-log) C8.
 
-**`disabled` / `focused` / `selected` / `layer` (dropped).** None of these are exposed as `swc-thumbnail` properties or documented attributes. 1st-gen implemented them as CSS-only hooks (`:host([disabled])`, etc.) with no reactive property or ARIA reflection; 2nd-gen removes even that attribute contract and expects the parent/consumer to apply the equivalent visual treatment directly (its own CSS targeting `swc-thumbnail`, or a wrapping element), matching Asset's plan for the same states. See [Decision log](#decision-log) C6, C7.
+**`disabled` / `focused` / `selected` / `layer` (dropped).** None of these are exposed as `swc-thumbnail` properties or documented attributes. 1st-gen implemented them as CSS-only hooks (`:host([disabled])`, etc.) with no reactive property or ARIA reflection; gen2 removes even that attribute contract and expects the parent/consumer to apply the equivalent visual treatment directly (its own CSS targeting `swc-thumbnail`, or a wrapping element), matching Asset's plan for the same states. See [Decision log](#decision-log) C6, C7.
 
-### Accessibility semantics notes (2nd-gen)
+### Accessibility semantics notes (gen2)
 
 Full detail lives in the [accessibility migration analysis](./accessibility-migration-analysis.md). Summary: no ARIA role on `:host`; the slotted `<img>`'s implicit `img` role and `alt` carry the accessible name; the thumbnail is never in the tab order; shadow DOM wrapper elements are decorative and carry no ARIA. `disabled`/`focused`/`selected`/`layer` visual states are not implemented by `swc-thumbnail` at all; they are fully owned and applied by the parent/consumer component. See [Decision log](#decision-log) C6, C7.
 
-The [opacity-checkerboard accessibility migration analysis](../opacity-checkerboard/accessibility-migration-analysis.md) explicitly carves out `sp-thumbnail` from the shared fragment's generic `aria-hidden="true"` usage guidance: because the checkerboard wrapper directly contains the slotted `<img>` (see the [2nd-gen rendering shape](#architecture-core-vs-swc-split)), marking it `aria-hidden` would hide the accessibly-named image along with it. Do not apply `aria-hidden` to the `.swc-OpacityCheckerboard` wrapper on this component.
+The [opacity-checkerboard accessibility migration analysis](../opacity-checkerboard/accessibility-migration-analysis.md) explicitly carves out `sp-thumbnail` from the shared fragment's generic `aria-hidden="true"` usage guidance: because the checkerboard wrapper directly contains the slotted `<img>` (see the [gen2 rendering shape](#architecture-core-vs-swc-split)), marking it `aria-hidden` would hide the accessibly-named image along with it. Do not apply `aria-hidden` to the `.swc-OpacityCheckerboard` wrapper on this component.
 
 The published [Spectrum 2 design guidelines](https://s2.spectrum.corp.adobe.com/page/thumbnail/) note that thumbnails "can be navigated using a keyboard in certain scenarios, such as layers or layer masks," which reads as conflicting with the "never in the tab order" rule above. **Resolved in favor of the accessibility migration analysis** (see [Decision log](#decision-log) Q4). `swc-thumbnail` stays out of the tab order in all cases; any keyboard navigation across a set of thumbnails is the wrapping treeview/layer-panel component's responsibility, not this component's.
 
@@ -296,7 +296,7 @@ The published [Spectrum 2 design guidelines](https://s2.spectrum.corp.adobe.com/
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
+> The 1st-gen component is a **reference only** — gen2 is built independently. Neither generation imports from the other.
 
 Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
 
@@ -329,7 +329,7 @@ Planned rendering shape:
 - [x] 1st-gen API surface documented
 - [x] Dependencies identified
 - [x] Breaking changes documented
-- [x] 2nd-gen API decisions drafted
+- [x] gen2 API decisions drafted
 - [ ] Plan reviewed by at least one other engineer
 
 ### Setup
@@ -369,7 +369,7 @@ Planned rendering shape:
 - [ ] `decorative` applies `aria-hidden="true"` to host and `alt=""` fallback to the slotted `<img>` when unset
 - [ ] DEBUG warning fires when `decorative` is unset and the slotted `<img>` has no meaningful `alt`
 - [ ] `disabled`/`focused`/`selected`/`layer` are not implemented as `swc-thumbnail` attributes at all; verify no residual CSS hooks exist for them (see [Decision log](#decision-log) C6, C7)
-- [ ] The `.swc-OpacityCheckerboard` wrapper does **not** get `aria-hidden`, since it directly contains the slotted `<img>` (see [Accessibility semantics notes](#accessibility-semantics-notes-2nd-gen))
+- [ ] The `.swc-OpacityCheckerboard` wrapper does **not** get `aria-hidden`, since it directly contains the slotted `<img>` (see [Accessibility semantics notes](#accessibility-semantics-notes-gen2))
 
 #### State verification
 
@@ -437,7 +437,7 @@ Planned rendering shape:
 | --- | -------- | -------------------- |
 | **C1** | Thumbnail ships as a standalone `swc-thumbnail` custom element, not a shared non-standalone utility. | The status table's "Utility components (no standalone SWC)" section text names thumbnail as an example, but the actual utility table only lists Opacity Checkerboard, and Thumbnail appears in the main standalone-component table (Analyze ✓). The existing accessibility migration analysis also already assumes a standalone `<swc-thumbnail>`. The status doc's prose is stale and should be corrected separately. |
 | **C2** | `disabled`, `focused`, and `selected` remain plain, non-reactive, parent-applied attributes with no ARIA reflection on `swc-thumbnail`. | Sourced directly from the accessibility migration analysis; confirmed consistent with 1st-gen, which never declared these as Lit `@property` accessors either, only CSS attribute selectors. Not a behavior change, just a formalized decision. **Superseded by C7:** on further plan review, the attribute contract itself is dropped, not merely formalized. |
-| **C3** | `layer` and `selected` carry forward as supported Thumbnail properties; not dropped. | An earlier draft of this plan considered dropping both, reasoning from a single Figma instance's "Component properties" panel (which listed only `Size`, `State`, `Show image`) plus the observation that React Spectrum has no equivalent concept. That reasoning was corrected: RSP has no Thumbnail component at all, so its silence isn't evidence either way. The published [Spectrum 2 design guidelines](https://s2.spectrum.corp.adobe.com/page/thumbnail/) directly settle it: the States table lists "Selected" as Supported, and the Behaviors section documents both "Layer" (thick gray border in Treeview/layer panels) and "Selected layer" (thick blue border) as current guidance. **Superseded by C6 (for `layer`) and C7 (for `selected`):** on further plan review, checked against the latest Figma, both are dropped as component properties after all. |
+| **C3** | **Reversed by C6 (`layer`) and C7 (`selected`) — see those rows for the final decision:** an earlier draft of this plan concluded `layer` and `selected` carry forward as supported Thumbnail properties, not dropped. | An earlier draft of this plan considered dropping both, reasoning from a single Figma instance's "Component properties" panel (which listed only `Size`, `State`, `Show image`) plus the observation that React Spectrum has no equivalent concept. That reasoning was corrected: RSP has no Thumbnail component at all, so its silence isn't evidence either way. The published [Spectrum 2 design guidelines](https://s2.spectrum.corp.adobe.com/page/thumbnail/) directly settle it: the States table lists "Selected" as Supported, and the Behaviors section documents both "Layer" (thick gray border in Treeview/layer panels) and "Selected layer" (thick blue border) as current guidance. On further plan review, checked against the latest Figma, both are dropped as component properties after all. |
 | **Q4** | `swc-thumbnail` stays out of the tab order in all cases, including `layer`; the accessibility migration analysis's "never in the tab order" rule stands as-is, with no exception. | The published [Spectrum 2 design guidelines](https://s2.spectrum.corp.adobe.com/page/thumbnail/) note that thumbnails "can be navigated using a keyboard in certain scenarios, such as layers or layer masks," which read as conflicting. Resolved: keyboard navigation across a set of thumbnails in a layer/treeview context is the wrapping treeview/layer-panel component's responsibility (roving tabindex/arrow-key handling at that level), consistent with how `disabled`/`focused`/`selected` styling is already parent-owned rather than thumbnail-owned. This is a user decision, not something derived from further source material. |
 | **Q2** | Implement `size` as a bespoke numeric property on `ThumbnailBase`, mirroring `AvatarBase`, rather than the shared `SizedMixin`. | `SizedMixin` is hard-locked to the `xxs`–`xxl` `ElementSize` union and can't express a 12-value px-driven numeric scale (50–1000). `AvatarBase` already solves the same shape of problem the same way. Checked for a recorded team rationale beyond the code itself: none found in the [Avatar 2nd-gen migration PR](https://github.com/adobe/spectrum-web-components/pull/6113) description or its 30+ review comments, or in `2nd-gen/packages/core/AGENTS.md`/`README.md`/`MIGRATION.md`. This is a user decision made on the strength of the `AvatarBase` precedent alone. |
 | **C4** | Card's future product card is expected to directly consume `<swc-thumbnail>`, not a card-scoped styled `<img>` slot. | An earlier draft inferred a looser, card-scoped-image-slot pattern from React Spectrum S2's `ProductCard`/`AttachmentList` (neither has a dedicated Thumbnail component to consume). The Card strategy author confirmed during plan review that Card will pick up Thumbnail directly. Non-blocking for this plan: Thumbnail migrates first regardless, but Card should be tracked as a real future consumer of the `swc-thumbnail` public API. |
@@ -452,7 +452,7 @@ Planned rendering shape:
 ## References
 
 - [Washing machine workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
-- [2nd-gen migration status table](../../02_workstreams/02_2nd-gen-component-migration/01_status.md)
+- [gen2 migration status table](../../02_workstreams/02_2nd-gen-component-migration/01_status.md)
 - [Accessibility migration analysis](./accessibility-migration-analysis.md)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
@@ -466,10 +466,10 @@ Planned rendering shape:
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - [Avatar migration plan](../avatar/migration-plan.md) and [`Avatar.base.ts`](../../../../2nd-gen/packages/core/components/avatar/Avatar.base.ts): precedent for the numeric `size` decision (see [Decision log](#decision-log) Q2)
 - [Asset component plan](../asset/component-plan.md): source for the `fit` (`'cover' | 'contain'`) property naming and DEBUG-warning pattern Thumbnail's `cover` → `fit` decision mirrors, and for the `layer`/`disabled`/`focused`/`selected` consumer-owned styling precedent (see [Decision log](#decision-log) C6–C8)
-- [Avatar 2nd-gen migration PR #6113](https://github.com/adobe/spectrum-web-components/pull/6113): checked for explicit rationale on the numeric-vs-`SizedMixin` choice; none recorded in the description or review comments beyond the type-level comment in `Avatar.types.ts`
+- [Avatar gen2 migration PR #6113](https://github.com/adobe/spectrum-web-components/pull/6113): checked for explicit rationale on the numeric-vs-`SizedMixin` choice; none recorded in the description or review comments beyond the type-level comment in `Avatar.types.ts`
 - [Shared opacity-checkerboard fragment](../../../../2nd-gen/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css) and its [internal docs](../../../../2nd-gen/packages/swc/components/opacity-checkerboard/opacity-checkerboard.internal.mdx)
 - [Opacity-checkerboard accessibility migration analysis](../opacity-checkerboard/accessibility-migration-analysis.md): source of the `sp-thumbnail`-specific `aria-hidden` carve-out (do not hide the checkerboard wrapper when it contains the slotted `<img>`)
 - [`Avatar.base.ts`](../../../../2nd-gen/packages/core/components/avatar/Avatar.base.ts) `_warnMissingAlt()`: checked directly to confirm it mirrors only the `size`/`aria-hidden` pattern, not the alt-detection mechanism (see [Architecture: core vs SWC split](#architecture-core-vs-swc-split))
-- [2nd-gen shared resources](../../../01_contributor-guides/16_2nd-gen-shared-resources.md): `SizedMixin`, `warnIf`/`window.__swc.warn`
+- [gen2 shared resources](../../../01_contributor-guides/16_2nd-gen-shared-resources.md): `SizedMixin`, `warnIf`/`window.__swc.warn`
 - [Card component](../../../../2nd-gen/packages/swc/components/card/card.mdx) and [`card-template.ts`](../../../../2nd-gen/packages/swc/components/card/card-template.ts): future downstream consumer of a thumbnail glyph
 - Epic: SWC-2195 - Thumbnail epic

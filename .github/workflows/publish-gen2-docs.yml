@@ -1,0 +1,145 @@
+name: Publish 2nd-Gen Documentation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    # Skip the publish when a main push only touches 1st-gen files. Root-level
+    # changes (anything outside `1st-gen/`) still trigger the workflow so shared
+    # config / scripts / 2nd-gen edits keep deploying the 2nd-gen docs.
+    paths-ignore:
+      - '1st-gen/**'
+  # Production deploy is driven by this, not by the push above - the push that
+  # merges the 2nd-gen Version PR only starts Publish Packages (gen2), whose
+  # real npm-publish step can sit behind a required manual approval for a long
+  # time. Waiting for that workflow to conclude means production docs can't go
+  # live before the release they're documenting actually ships (or ships stale
+  # docs for a release that never got approved).
+  workflow_run:
+    workflows: ['Publish Packages (gen2)']
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-gen2-docs
+  # Docs deploys are cheap to queue and expensive to interrupt: azcopy sync
+  # --delete-destination deletes stale files and uploads new ones in the same
+  # run, so cancelling one mid-flight can leave the public site (staging or
+  # prod) with files deleted but not yet replaced.
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    name: Build and Deploy 2nd-Gen Docs
+    timeout-minutes: 30
+    # Publish Packages (gen2) only triggers on push or workflow_dispatch, never
+    # pull_request - so every workflow_run completion here already ran against a
+    # commit that's either on `main` or manually dispatched by a maintainer, never
+    # an unreviewed fork commit. Restricting to workflow_run events whose *upstream*
+    # trigger was `push` narrows this further to just the real-release path.
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.conclusion == 'success')
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          # For workflow_run triggers, pin to the commit that the upstream
+          # release run actually built/published, not whatever is on main by
+          # the time this workflow starts.
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Use Node version from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: yarn
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Check for cached dependencies
+        continue-on-error: true
+        id: cache-dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            .cache/yarn
+            node_modules
+          key: ubuntu-latest-${{ hashFiles('.nvmrc', 'package.json', 'yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build all generations
+        run: yarn build
+
+      - name: Generate Custom Elements Manifest
+        run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
+
+      - name: Generate LLM reference files
+        run: yarn generate:llms
+
+      - name: Generate Agent Skills
+        run: yarn generate:skills
+
+      - name: Build 2nd-gen Storybook
+        run: yarn workspace @spectrum-web-components/2nd-gen storybook:build
+
+      - name: Setup AzCopy
+        uses: ./.github/actions/setup-azcopy
+
+      # Every trigger of this workflow refreshes the staging path (docs-staging/) -
+      # push, workflow_dispatch, and the workflow_run that follows a real 2nd-gen
+      # release. It's cheap to re-sync and always safe to keep it tracking main.
+      #
+      # AZCOPY_* creds are scoped to just this step and "Deploy to production"
+      # below, not the whole job, so earlier steps (install, build) never have
+      # them in their process environment.
+      - name: Deploy to staging
+        env:
+          AZCOPY_AUTO_LOGIN_TYPE: SPN
+          AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        run: |
+          echo "Deploying 2nd-gen docs to docs-staging/"
+          azcopy sync "2nd-gen/packages/swc/storybook-static/" \
+            "https://swcpreviews.blob.core.windows.net/\$web/docs-staging/" \
+            --recursive \
+            --delete-destination=true \
+            --from-to LocalBlob
+          echo "Deployed to https://swcpreviews.z13.web.core.windows.net/docs-staging/"
+
+      - name: Deploy to production
+        # spectrum-web-components.adobe.com maps to the /docs path in the storage
+        # container, so deploying to $web/docs/ IS the domain root. The generated
+        # .well-known/agent-skills/ directory inside storybook-static/ is therefore
+        # served at the expected discovery URL without a separate upload step.
+        #
+        # The job-level `if` already restricts workflow_run to push-sourced,
+        # successfully-concluded upstream runs, so by the time we're here a
+        # workflow_run event is already known-safe - this only needs to check
+        # for the #gen2-publish keyword, to skip a run that merely opened/
+        # updated the Version PR with no real publish.
+        if: >-
+          github.event_name == 'workflow_dispatch' ||
+          contains(github.event.workflow_run.head_commit.message, '#gen2-publish')
+        env:
+          AZCOPY_AUTO_LOGIN_TYPE: SPN
+          AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        run: |
+          echo "Deploying 2nd-gen docs to docs/"
+          azcopy sync "2nd-gen/packages/swc/storybook-static/" \
+            "https://swcpreviews.blob.core.windows.net/\$web/docs/" \
+            --recursive \
+            --delete-destination=true \
+            --from-to LocalBlob
+          echo "Deployed to https://swcpreviews.z13.web.core.windows.net/docs/"
