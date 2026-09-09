@@ -301,17 +301,29 @@ function stripEleventy(content) {
  * to handle one level of brace nesting (covers {{...}} double-brace JSX
  * expressions). This avoids the greedy-match bug where [^>]* inside {} would
  * stop at the first > in an expression such as style={{ padding: 4 > 0 }}.
+ *
+ * Fenced ```code blocks``` are swapped for placeholders before any of the
+ * above run, and restored verbatim afterward, so an example snippet's own
+ * `import ...` line (or any other MDX-looking text inside a fence) survives
+ * intact instead of being mistaken for real MDX syntax.
  */
 function stripMdx(content) {
-  return (
-    content
+  const codeBlocks = [];
+  const withPlaceholders = content.replace(/```[\s\S]*?```/g, (match) => {
+    codeBlocks.push(match);
+    return `CODE_BLOCK_${codeBlocks.length - 1}`;
+  });
+
+  const stripped =
+    withPlaceholders
       // Remove import statements
       .replace(/^import\s+.*?from\s+['"][^'"]+['"]\s*;?\s*\n/gm, '')
       // Remove <Meta .../> (single-line self-closing)
       .replace(/^<Meta\s[^>]*\/>\s*\n/gm, '')
       // Remove <DocsHeader /> / <DocsFooter /> — Storybook chrome rendered
       // from the unit's stories.ts meta and a live CEM-backed API table
-      // (the latter is regenerated separately from custom-elements.json).
+      // (the former is rebuilt as Markdown by buildDocsHeader, the latter
+      // by buildApiSection, both from the same stories.ts / CEM sources).
       .replace(/^<DocsHeader\s*\/>\s*\n?/gm, '')
       .replace(/^<DocsFooter\s*\/>\s*\n?/gm, '')
       // Replace Storybook-only Canvas examples with a plain Markdown note
@@ -337,7 +349,11 @@ function stripMdx(content) {
       // Collapse runs of 3+ blank lines introduced by removals
       .replace(/\n{3,}/g, '\n\n')
       .replace(/^\n+/, '')
-      .trimEnd() + '\n'
+      .trimEnd() + '\n';
+
+  return stripped.replace(
+    /CODE_BLOCK_(\d+)/g,
+    (_, i) => codeBlocks[Number(i)]
   );
 }
 
@@ -505,6 +521,10 @@ function listGen2Units(dir) {
 
 /**
  * Patterns nest one level deeper than components: patterns/<group>/<unit>/<unit>.mdx.
+ * `group` is kept alongside the unit (rather than folded into `dir`, which stays
+ * the leaf name used to resolve stories.ts paths) so two groups can each contain
+ * a same-named unit without one's generated reference overwriting the other's;
+ * see `unitSlug`.
  */
 function listGen2Patterns() {
   const units = [];
@@ -514,9 +534,19 @@ function listGen2Patterns() {
     if (!group.isDirectory()) {
       continue;
     }
-    units.push(...listGen2Units(join(SECOND_GEN_PATTERNS, group.name)));
+    for (const unit of listGen2Units(join(SECOND_GEN_PATTERNS, group.name))) {
+      units.push({ ...unit, group: group.name });
+    }
   }
-  return units.sort((a, b) => a.dir.localeCompare(b.dir));
+  return units.sort((a, b) => unitSlug(a).localeCompare(unitSlug(b)));
+}
+
+/**
+ * The path/filename segment for a unit's generated reference: namespaced under
+ * its pattern group when it has one, otherwise just the leaf dir name.
+ */
+function unitSlug(unit) {
+  return unit.group ? `${unit.group}/${unit.dir}` : unit.dir;
 }
 
 /**
@@ -687,18 +717,29 @@ function buildApiTables(tagName, cem, headingLevel) {
  * that array with a regex rather than a full TS parse — the value is always
  * a static string-literal array.
  */
+const storiesSourceCache = new Map();
+
+function readStoriesSource(storiesPath) {
+  if (!existsSync(storiesPath)) {
+    return null;
+  }
+  if (!storiesSourceCache.has(storiesPath)) {
+    storiesSourceCache.set(storiesPath, readFileSync(storiesPath, 'utf8'));
+  }
+  return storiesSourceCache.get(storiesPath);
+}
+
 function readAdditionalApiTags(unit) {
   const storiesPath = join(
     dirname(unit.mdxPath),
     'stories',
     `${unit.dir}.stories.ts`
   );
-  if (!existsSync(storiesPath)) {
+  const source = readStoriesSource(storiesPath);
+  if (source === null) {
     return [];
   }
-  const match = readFileSync(storiesPath, 'utf8').match(
-    /additionalApiTables:\s*\[([^\]]*)\]/
-  );
+  const match = source.match(/additionalApiTables:\s*\[([^\]]*)\]/);
   if (!match) {
     return [];
   }
@@ -735,6 +776,158 @@ function buildApiSection(unit, cem) {
   }
 
   return '## API\n\n' + blocks.join('\n\n');
+}
+
+/**
+ * Read the fields off a unit's stories.ts meta object that `<DocsHeader />`
+ * renders: `title`, `parameters.docs.subtitle`, `parameters.docs.packagePath`,
+ * `tags`, and the meta-level JSDoc description (the block comment immediately
+ * above `const meta`). Extracted with regexes rather than a full TS parse,
+ * scoped to the text between `const meta` and the first `export const` so
+ * story-level `tags`/`title`-like text further down the file can't match.
+ */
+function readStoriesMeta(unit) {
+  const storiesPath = join(
+    dirname(unit.mdxPath),
+    'stories',
+    `${unit.dir}.stories.ts`
+  );
+  const source = readStoriesSource(storiesPath);
+  if (source === null) {
+    return null;
+  }
+
+  const metaStart = source.indexOf('const meta');
+  if (metaStart === -1) {
+    return null;
+  }
+  const nextExport = source.slice(metaStart).match(/\nexport const /);
+  const metaBlock = nextExport
+    ? source.slice(metaStart, metaStart + nextExport.index)
+    : source.slice(metaStart);
+
+  const titleMatch = metaBlock.match(/title:\s*['"`]([^'"`]+)['"`]/);
+  const subtitleMatch = metaBlock.match(/subtitle:\s*['"`]([^'"`]*)['"`]/);
+  const packagePathMatch = metaBlock.match(
+    /packagePath:\s*['"`]([^'"`]*)['"`]/
+  );
+  const tagsMatch = metaBlock.match(/tags:\s*\[([^\]]*)\]/);
+  const tags = tagsMatch
+    ? [...tagsMatch[1].matchAll(/['"`]([^'"`]+)['"`]/g)].map((m) => m[1])
+    : [];
+
+  // Meta-level JSDoc: the block comment immediately preceding `const meta`,
+  // guarded against matching an earlier comment (e.g. the copyright header)
+  // by disallowing `*/` inside the captured content.
+  const jsdocMatch = source
+    .slice(0, metaStart)
+    .match(/\/\*\*((?:(?!\*\/)[\s\S])*)\*\/\s*$/);
+  const description = jsdocMatch
+    ? jsdocMatch[1]
+        .split('\n')
+        .map((line) => line.replace(/^\s*\*\s?/, ''))
+        .join('\n')
+        .trim()
+    : null;
+
+  return {
+    title: titleMatch ? titleMatch[1] : null,
+    subtitle: subtitleMatch ? subtitleMatch[1].trim() : null,
+    packagePath: packagePathMatch ? packagePathMatch[1] : null,
+    tags,
+    description,
+  };
+}
+
+const toPascalCase = (kebab) =>
+  kebab
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join('');
+
+/**
+ * Rebuild the `## Getting started` block that `<GettingStarted />` renders,
+ * mirroring its three branches (utility / controller / migrated) exactly:
+ * .storybook/blocks/GettingStarted.tsx.
+ */
+function buildGettingStarted(unit, meta) {
+  if (meta.tags.includes('utility')) {
+    return null;
+  }
+
+  const packageName = unit.dir;
+  const baseClassName = toPascalCase(packageName);
+
+  if (meta.tags.includes('controller')) {
+    return `## Getting started
+
+Controllers are not published as packages. Instead, they are imported directly from the core package.
+
+Import the controller directly from the core package:
+
+\`\`\`typescript
+import { ${baseClassName} } from '@adobe/spectrum-wc-core/controllers/${packageName}.js';
+\`\`\`
+`;
+  }
+
+  if (meta.tags.includes('migrated')) {
+    const tagName = unit.tagName ?? `swc-${packageName}`;
+    const resolvedPackagePath = meta.packagePath || `components/${packageName}`;
+
+    return `## Getting started
+
+Add the package to your project:
+
+\`\`\`zsh
+yarn add @adobe/spectrum-wc
+\`\`\`
+
+Import the side effectful registration of \`<${tagName}>\` via:
+
+\`\`\`typescript
+import '@adobe/spectrum-wc/${resolvedPackagePath}/${tagName}.js';
+\`\`\`
+
+To reference the \`${baseClassName}\` type, import it as a type-only import:
+
+\`\`\`typescript
+import type { ${baseClassName} } from '@adobe/spectrum-wc/${resolvedPackagePath}';
+\`\`\`
+
+> The class is exposed primarily for type purposes. Extending it is possible, but the internal shape is not part of the public API — if you choose to subclass, you do so at your own risk and may need to adjust your code between releases.
+`;
+  }
+
+  return null;
+}
+
+/**
+ * Rebuild the top-of-page Markdown that `<DocsHeader />` renders: title,
+ * subtitle, description, and getting-started instructions. `<StatusBadge />`
+ * and `<OverviewStory />` are visual-only (a badge, a live canvas) with no
+ * textual equivalent, so they're skipped. Returns null when the unit's
+ * stories.ts meta can't be read (readStoriesMeta already warned).
+ */
+function buildDocsHeader(unit, meta) {
+  if (!meta) {
+    return null;
+  }
+
+  const title = meta.title?.split('/').pop() ?? unit.dir;
+  const blocks = [`# ${title}`];
+  if (meta.subtitle) {
+    blocks.push(meta.subtitle);
+  }
+  if (meta.description) {
+    blocks.push(meta.description);
+  }
+  const gettingStarted = buildGettingStarted(unit, meta);
+  if (gettingStarted) {
+    blocks.push(gettingStarted);
+  }
+
+  return blocks.join('\n\n');
 }
 
 // ---------------------------------------------------------------------------
@@ -781,7 +974,9 @@ function buildMigrationComponentList(components) {
 
 function buildGen2UnitList(units, subdir) {
   return units
-    .map((u) => `- [${u.tagName ?? u.dir}](references/${subdir}/${u.dir}.md)`)
+    .map(
+      (u) => `- [${u.tagName ?? u.dir}](references/${subdir}/${unitSlug(u)}.md)`
+    )
     .join('\n');
 }
 
@@ -937,12 +1132,19 @@ function buildGen2DocsSkill(skillDir) {
 
   function writeUnitDocs(units, subdir) {
     for (const unit of units) {
+      const meta = readStoriesMeta(unit);
       let content = stripMdx(readFileSync(unit.mdxPath, 'utf8'));
+      const header = buildDocsHeader(unit, meta);
+      if (header) {
+        content = header + '\n\n' + content;
+      }
       const api = unit.tagName ? buildApiSection(unit, cem) : null;
       if (api) {
         content = content.trimEnd() + '\n\n' + api + '\n';
       }
-      writeFileSync(join(refsDir, subdir, `${unit.dir}.md`), content);
+      const outPath = join(refsDir, subdir, `${unitSlug(unit)}.md`);
+      mkdirSync(dirname(outPath), { recursive: true });
+      writeFileSync(outPath, content);
     }
     return units.length;
   }

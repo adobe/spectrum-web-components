@@ -24,7 +24,7 @@ yarn add @adobe/spectrum-wc
 ```
 
 ```ts
-// App entry — import once
+// App entry: import once
 import '@adobe/spectrum-wc/swc.css';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 ```
@@ -39,22 +39,22 @@ import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 ## Key concepts
 
-- **Single package, subpath imports** — `@adobe/spectrum-wc` is a monolithic
+- **Single package, subpath imports**: `@adobe/spectrum-wc` is a monolithic
   package; import each component from its own subpath so bundlers only include
   what is used: `@adobe/spectrum-wc/components/badge/swc-badge.js`.
 
-- **Theme classes, not a theme element** — unlike Spectrum 1's `<sp-theme>`
+- **Theme classes, not a theme element**: unlike Spectrum 1's `<sp-theme>`
   wrapper, Spectrum 2 applies theme and scale via CSS classes on an ancestor
   element: `swc-theme--light`, `swc-theme--dark`, `swc-theme--adaptive`.
 
-- **Side-effectful import** — importing the `.js` entry registers the custom
+- **Side-effectful import**: importing the `.js` entry registers the custom
   element. Import the class directly (e.g. from `Button.js`) for extension or typing.
 
-- **`@adobe/spectrum-wc-core`** — shared controllers (hover, placement, focus
+- **`@adobe/spectrum-wc-core`**: shared controllers (hover, placement, focus
   group navigation, pending, slot presence, etc.) used to build components.
   Reach for a controller instead of re-implementing common interaction logic.
 
-- **Accessibility** — `swc-*` components expose correct ARIA roles, labels, and
+- **Accessibility**: `swc-*` components expose correct ARIA roles, labels, and
   keyboard navigation. Each component reference documents its accessibility
   features and best practices.
 
@@ -62,8 +62,9 @@ import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 The `references/` directory contains guides and one Markdown file per component,
 pattern, and controller. Each component/pattern reference ends with an **API**
-section (Properties, Slots, Events, CSS Custom Properties, CSS Parts) generated
-from the component's source.
+section (properties, slots, events, CSS custom properties, CSS parts) generated
+from the component's source. Multi-element components (e.g. accordion, tabs)
+document each sibling custom element under its own subheading within that section.
 
 ### Guides
 
