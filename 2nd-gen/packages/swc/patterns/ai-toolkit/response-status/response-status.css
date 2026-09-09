@@ -163,7 +163,7 @@
 }
 
 .swc-ResponseStatus-loader {
-  --swc-pixel-loader-size: 20px;
+  --swc-pixel-loader-size: token("workflow-icon-large");
   --swc-pixel-loader-color: token("gray-600");
 
   flex-shrink: 0;
@@ -239,8 +239,8 @@
 .swc-ResponseStatus-leadingIcon {
   display: flex;
   flex-shrink: 0;
-  inline-size: 20px;
-  block-size: 20px;
+  inline-size: token("workflow-icon-large");
+  block-size: token("workflow-icon-large");
   overflow: hidden;
   opacity: 1;
   transition:

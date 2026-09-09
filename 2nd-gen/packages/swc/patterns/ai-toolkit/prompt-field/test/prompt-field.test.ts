@@ -83,10 +83,14 @@ export const OverviewTest: Story = {
         el.shadowRoot?.querySelector<HTMLTextAreaElement>('textarea');
       expect(textarea?.rows).toBe(3);
       expect(
-        textarea?.style.getPropertyValue('--swc-prompt-field-textarea-min-rows')
+        textarea?.style.getPropertyValue(
+          '--_swc-prompt-field-textarea-min-rows'
+        )
       ).toBe('3');
       expect(
-        textarea?.style.getPropertyValue('--swc-prompt-field-textarea-max-rows')
+        textarea?.style.getPropertyValue(
+          '--_swc-prompt-field-textarea-max-rows'
+        )
       ).toBe('6');
 
       el.minRows = undefined;
@@ -171,7 +175,7 @@ export const InteractionTest: Story = {
 };
 
 export const LegalMissingWarningTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     await withWarningSpy(async (warnCalls) => {
       render(
@@ -215,7 +219,7 @@ export const LegalMissingWarningTest: Story = {
 };
 
 export const MixedAttachmentWarningTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     await withWarningSpy(async (warnCalls) => {
       render(
@@ -302,7 +306,7 @@ function renderMultiAttachmentPromptField(
 }
 
 export const AttachmentScrollPaginationTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     renderMultiAttachmentPromptField(canvasElement);
 
@@ -415,7 +419,7 @@ export const AttachmentScrollPaginationTest: Story = {
 };
 
 export const AttachmentScrollRTLTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     renderMultiAttachmentPromptField(canvasElement, 'rtl');
 
@@ -502,7 +506,7 @@ function dispatchKeydown(
 }
 
 export const AttachmentFocusOrderTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     renderMultiAttachmentPromptField(canvasElement);
 
@@ -705,7 +709,7 @@ export const AttachmentFocusOrderTest: Story = {
  * @todo SWC-2528 Flaky on Firefox (smooth-scroll focus-settle timing); skipped there until fixed.
  */
 export const AttachmentChevronPagingFocusTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     // Skip on Firefox pending SWC-2528.
     if (navigator.userAgent.includes('Firefox')) {
@@ -862,7 +866,7 @@ export const AttachmentChevronPagingFocusTest: Story = {
 };
 
 export const SingleAttachmentFocusTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     render(
       html`
@@ -1072,7 +1076,9 @@ export const DragAndDropTest: Story = {
 export const PlaygroundDropTest: Story = {
   ...Playground,
   play: async ({ canvasElement, step }) => {
-    const demo = canvasElement.querySelector('swc-prompt-field-behavior-demo');
+    const demo = canvasElement.querySelector<HTMLElement>(
+      'swc-prompt-field-behavior-demo'
+    );
     const el = await getComponent<PromptField>(demo!, 'swc-prompt-field');
     const textarea = el.shadowRoot?.querySelector<HTMLTextAreaElement>(
       '.swc-PromptField-textarea'
@@ -1151,7 +1157,7 @@ export const PlaygroundDropTest: Story = {
 };
 
 export const StatusLoaderTest: Story = {
-  render: () => nothing,
+  render: () => '',
   play: async ({ canvasElement, step }) => {
     render(
       html`

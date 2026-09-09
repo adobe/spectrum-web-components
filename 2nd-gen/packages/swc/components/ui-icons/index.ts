@@ -11,3 +11,4 @@
  */
 export * from './UiIcon.js';
 export * from './icon-set/index.js';
+export * from './ui-icon-direction.js';
