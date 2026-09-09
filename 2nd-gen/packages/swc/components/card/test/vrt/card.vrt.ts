@@ -214,7 +214,7 @@ const contentOnlyCards = [
 // Collection: 1–3 items show; a 4th is hidden. Independently optional from
 // preview (collection-only renders with no preview above it).
 const collectionPreviewImage = html`
-  <img slot="preview" src="https://picsum.photos/id/56/280/186/" alt="" />
+  <img slot="preview" src="./images/card-preview.jpg" alt="" />
 `;
 const collectionCards = [
   renderCard(
@@ -310,7 +310,7 @@ const galleryCards = [
       </swc-badge>
       <swc-avatar
         slot="media"
-        src="https://picsum.photos/id/823/80/80"
+        src="./images/avatar-preview.png"
         alt="Credit: Jane Doe"
         size="100"
         outline

@@ -49,7 +49,7 @@ export const SWC_DROPZONE_SHOULD_ACCEPT_EVENT = 'swc-dropzone-should-accept';
 /** Fired when files are dragged over the drop zone and accepted. */
 export const SWC_DROPZONE_DRAGOVER_EVENT = 'swc-dropzone-dragover';
 
-/** Fired when dragged files leave the drop zone without being dropped. */
+/** Fired when an accepted drag leaves the drop zone or becomes rejected. */
 export const SWC_DROPZONE_DRAGLEAVE_EVENT = 'swc-dropzone-dragleave';
 
 /** Fired when files are dropped on the drop zone. */

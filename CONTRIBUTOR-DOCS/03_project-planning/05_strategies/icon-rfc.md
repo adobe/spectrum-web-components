@@ -38,7 +38,7 @@
 
 |                |                                                                   |
 | -------------- | ----------------------------------------------------------------- |
-| **Status**     | Accepted: Phase 0 (UI icons) in progress                          |
+| **Status**     | Accepted: Phases 0–4 implemented (UI icons + public workflow icons) |
 | **Scope**      | Spectrum 2 (S2) icon delivery for 2nd-gen Spectrum Web Components |
 | **Supersedes** | 1st-gen `icon`, `iconset`, `icons`, `icons-workflow`, `icons-ui`  |
 
@@ -131,7 +131,7 @@ So a consumer only ever touches two public things: **workflow icons** and the
 | **Audience**                | Public                                                                                   | Internal (components only)                                                                  | Public                                  |
 | **Package home**            | `@adobe/spectrum-wc-icons` (icons)                                                       | `@adobe/spectrum-wc` (swc, `components/ui-icons/`)                                          | `@adobe/spectrum-wc` (swc)              |
 | **Art source**              | S2 Icon Global Set Open Source (413, no third-party/brand)                               | S2 UI Icon Global Set                                                                       | Consumer-supplied SVG                   |
-| **Ships as**                | Per-icon element (`<swc-icon-star>`) **and** per-icon SVG-string function (`StarIcon()`) | Internal `<swc-ui-icon>` element (Lit `TemplateResult`), rendered by components; not public | One generic element                     |
+| **Ships as**                | Per-icon element (`<swc-icon-star>`) **and** per-icon SVG-string function (`Icon_Star()`) | Internal `<swc-ui-icon>` element (Lit `TemplateResult`), rendered by components; not public | One generic element                     |
 | **Sizing**                  | One asset scaled to a token box; `size` sets the box, CSS resize is safe                 | Discrete optical assets; `size` **selects** the step, do not CSS-resize                     | `size` sets the box; slotted art scales |
 | **Baseline styling**        | In the element's shadow CSS; the function alone is raw SVG                               | Shared via `IconBase` (the internal element)                                                | In the element's shadow CSS             |
 | **A11y owner**              | Host element (`accessibleLabel` → `role="img"`; empty → decorative)                      | Consuming component                                                                         | Host element                            |
@@ -146,12 +146,21 @@ Three complementary outputs, none coupling a consumer to Lit:
 - **Per-icon custom element** (`<swc-icon-star>`): a tag that renders in any
   framework with zero ceremony (no injection, no wrapper, no Lit), carrying size,
   color, and accessibility. Primary consumer API for workflow icons.
-- **Per-icon SVG-string function** (`StarIcon()`, imported by subpath
+- **Per-icon SVG-string function** (`Icon_Star()`, imported by subpath
   `@adobe/spectrum-wc-icons/Star.js`): the tree-shakeable substrate. It is what the
   elements are generated from and what build-time, SSR, and internal component
   code use directly.
 - **Generic `<swc-icon>` frame**: holds an arbitrary slotted SVG for custom
   (non-Spectrum) icons; also the stable slot target other components style.
+
+**Naming.** For an A4U logical name `<Name>` (PascalCase), the function is
+`Icon_<Name>()`, the element class is `Icon<Name>`, and the tag is
+`swc-icon-<kebab>` (e.g. `AddCircle` gives `Icon_AddCircle()`, `IconAddCircle`,
+`<swc-icon-add-circle>`). The function uses the `Icon_` prefix rather than a
+`<Name>Icon` suffix so that digit-led names remain valid identifiers (`Icon_3DAsset`,
+not the illegal `3DAssetIcon`) with one uniform rule, and so the function name stays
+distinct from the element class `Icon<Name>` (the element module imports the function
+and declares the class together).
 
 ### 5.1 Why a string function, not a Lit template
 
@@ -182,8 +191,8 @@ import '@adobe/spectrum-wc-icons/swc-icon-star.js';
 
 ```ts
 // Substrate function, for build-time / SSR / custom composition
-import { StarIcon } from '@adobe/spectrum-wc-icons/Star.js';
-element.innerHTML = StarIcon();
+import { Icon_Star } from '@adobe/spectrum-wc-icons/Star.js';
+element.innerHTML = Icon_Star();
 
 // Generic frame for an arbitrary SVG
 // <swc-icon size="s"><svg viewBox="0 0 20 20">…</svg></swc-icon>
@@ -318,19 +327,19 @@ underlying substrate function.**
 
 ```ts
 // @adobe/spectrum-wc-icons/Star.js  (substrate function, framework-agnostic)
-export function StarIcon(): string {
+export function Icon_Star(): string {
   return '<svg viewBox="0 0 20 20"><path fill="var(--swc-icon-color, currentColor)" d="…"/></svg>';
 }
 
 // @adobe/spectrum-wc-icons/swc-icon-star.js  (generated element, extends IconBase)
 import { IconBase } from '@adobe/spectrum-wc-core';
-import { StarIcon } from './Star.js';
+import { Icon_Star } from './Star.js';
 
 export class IconStar extends IconBase {
   static styles = [iconBaseCss];
   render() {
     return html`
-      <span class="swc-Icon">${unsafeSVG(StarIcon())}</span>
+      <span class="swc-Icon">${unsafeSVG(Icon_Star())}</span>
     `; // baked in
   }
 }

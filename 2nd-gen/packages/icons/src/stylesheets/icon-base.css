@@ -1,0 +1,74 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/*
+ * Box styling for the workflow icon elements. Establishes a square box that the baked-in
+ * SVG fills, and sizes it from the workflow-icon token scale. Workflow icons ship one
+ * drawing scaled to the box (CSS resize is safe), so `size` sets the box and the drawing
+ * scales. This is the package-local counterpart of swc's shared _lit-styles/icon-base.css:
+ * the icons package depends only on core, so it cannot import that swc stylesheet and
+ * ships its own copy. See CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md,
+ * section 7.
+ *
+ * @todo Consolidate shared icon styling. This duplicates swc's _lit-styles/icon-base.css,
+ * and other shared lit-styles (for example the pending-spinner/pending-state styles) are
+ * likewise copied per package. Revisit a shared home for these once the dependency
+ * direction allows it.
+ */
+:host {
+  --swc-icon-inline-size: token("workflow-icon-medium");
+  --swc-icon-block-size: token("workflow-icon-medium");
+
+  display: inline-flex;
+  inline-size: var(--swc-icon-inline-size);
+  block-size: var(--swc-icon-block-size);
+  color: var(--swc-icon-color, currentColor);
+}
+
+:host([size="xs"]) {
+  --swc-icon-inline-size: token("workflow-icon-extra-small");
+  --swc-icon-block-size: token("workflow-icon-extra-small");
+}
+
+:host([size="s"]) {
+  --swc-icon-inline-size: token("workflow-icon-small");
+  --swc-icon-block-size: token("workflow-icon-small");
+}
+
+:host([size="m"]) {
+  --swc-icon-inline-size: token("workflow-icon-medium");
+  --swc-icon-block-size: token("workflow-icon-medium");
+}
+
+:host([size="l"]) {
+  --swc-icon-inline-size: token("workflow-icon-large");
+  --swc-icon-block-size: token("workflow-icon-large");
+}
+
+:host([size="xl"]) {
+  --swc-icon-inline-size: token("workflow-icon-extra-large");
+  --swc-icon-block-size: token("workflow-icon-extra-large");
+}
+
+.swc-Icon {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+svg,
+.swc-Icon > svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  fill: currentcolor;
+}

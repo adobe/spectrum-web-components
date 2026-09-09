@@ -18,6 +18,9 @@
       "path": "./packages/core"
     },
     {
+      "path": "./packages/icons"
+    },
+    {
       "path": "./packages/swc"
     }
   ]

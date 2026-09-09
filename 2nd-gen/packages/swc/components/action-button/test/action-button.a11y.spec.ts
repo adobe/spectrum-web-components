@@ -59,11 +59,11 @@ test.describe('Action Button - ARIA Snapshots', () => {
       'swc-action-button'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - button "Extra-small"
+      - button "Extra small"
       - button "Small"
       - button "Medium"
       - button "Large"
-      - button "Extra-large"
+      - button "Extra large"
     `);
   });
 

@@ -109,6 +109,13 @@ export default defineConfig({
       },
     }),
   ],
+  // Storybook's `staticDirs: ['../public', ...]` (.storybook/main.ts) already copies
+  // this package's public/ directory into the Storybook build output. Vite's own
+  // built-in publicDir copy is redundant with that and, run right after it against the
+  // same output directory, throws EEXIST on the pre-existing nested directories. It
+  // also has no reason to bundle public/ (Storybook-only static assets) into the
+  // library's published dist/.
+  publicDir: false,
   css: {
     transformer: 'postcss',
     postcss: {
@@ -166,6 +173,15 @@ export default defineConfig({
         find: '@adobe/spectrum-wc-core',
         replacement: resolve(__dirname, '../core'),
       },
+      // Workflow icon imports (e.g. `@adobe/spectrum-wc-icons/swc-icon-checkmark.js`)
+      // resolve to the icons package source, mirroring its published `./*.js`
+      // export (`./dist/*.js`) without requiring a prior build. Kept above the
+      // `@adobe/spectrum-wc` short-form alias; the alias matcher requires a `/`
+      // boundary, so `-icons` never collides with `@adobe/spectrum-wc`.
+      {
+        find: '@adobe/spectrum-wc-icons',
+        replacement: resolve(__dirname, '../icons/src'),
+      },
       // Long-form imports (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`)
       // resolve directly to the source under `./components`. This must come before
       // the short-form alias below so the more specific prefix wins.
@@ -173,7 +189,7 @@ export default defineConfig({
         find: '@adobe/spectrum-wc/components',
         replacement: resolve(__dirname, 'components'),
       },
-      // Pattern imports (e.g. `@adobe/spectrum-wc/patterns/conversational-ai/response-status`)
+      // Pattern imports (e.g. `@adobe/spectrum-wc/patterns/ai-toolkit/response-status`)
       // resolve to `./patterns`, mirroring the published `./patterns/*` export.
       {
         find: '@adobe/spectrum-wc/patterns',

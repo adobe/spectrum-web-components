@@ -68,9 +68,9 @@ const asLinkAndButton = (classes: string, label: string) => [
 // A <swc-avatar> carrying the `.swc-ActionButton-icon` class, which the global
 // stylesheet gives `--swc-avatar-size: var(--_swc-action-button-icon-size)` so
 // the avatar tracks the button size — the class-based counterpart to the
-// shadow-DOM ::slotted rule covered in action-button.vrt.ts. A fixed picsum id
+// shadow-DOM ::slotted rule covered in action-button.vrt.ts. A local asset
 // keeps the image deterministic for Chromatic (matching the docs stories).
-const AVATAR_ICON_SRC = 'https://picsum.photos/id/64/500/500';
+const AVATAR_ICON_SRC = './images/avatar-preview.png';
 
 const globalAvatarIcon = html`
   <swc-avatar

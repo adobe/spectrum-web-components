@@ -20,6 +20,16 @@ export {
   type ColorTypes,
 } from './color-controller/index.js';
 export {
+  FieldAssociationController,
+  type FieldAssociationControllerOptions,
+  type FieldFormValue,
+} from './field-association-controller/index.js';
+export {
+  DragAndDropController,
+  type DragAndDropControllerOptions,
+  type DragLeaveSnapshot,
+} from './drag-and-drop-controller/index.js';
+export {
   focusgroupNavigationActiveChange,
   FocusgroupNavigationController,
   type FocusgroupActiveChangeSource,

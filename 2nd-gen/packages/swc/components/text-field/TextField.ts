@@ -55,6 +55,19 @@ export class TextField extends TextFieldBase {
     return this.renderRoot.querySelector('input.input');
   }
 
+  private handleInput(event: Event): void {
+    this.value = (event.target as HTMLInputElement).value;
+  }
+
+  /**
+   * Re-dispatch `change` from the host: the native `change` event is
+   * `composed: false`, so it never crosses the shadow boundary and a consumer's
+   * `<swc-text-field @change=…>` would otherwise never fire.
+   */
+  private handleChange(): void {
+    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+  }
+
   protected override render(): TemplateResult {
     // @todo (SWC-2466 / Phase 4–5): render the required indicator, validation
     // icon, and description/error container via a future help-text mixin.
@@ -74,8 +87,10 @@ export class TextField extends TextFieldBase {
           minlength=${ifDefined(this.minlength)}
           ?readonly=${this.readonly}
           ?required=${this.required}
-          ?disabled=${this.disabled}
+          ?disabled=${this.effectiveDisabled}
           aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
+          @input=${this.handleInput}
+          @change=${this.handleChange}
         />
       </div>
     `;

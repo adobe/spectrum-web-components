@@ -19,6 +19,7 @@ import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 
 import {
   fixture,
+  getComponent,
   getComponents,
   withWarningSpy,
 } from '../../../utils/test-utils.js';
@@ -225,3 +226,160 @@ export const LabelConflictTest: Story = {
     );
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Form participation via FieldAssociationController
+// ──────────────────────────────────────────────────────────────
+
+export const FormParticipationTest: Story = {
+  render: () => html`
+    <form>
+      <swc-text-field
+        name="username"
+        value="Example"
+        accessible-label="Username"
+      ></swc-text-field>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    if (!form) {
+      throw new Error('form not found');
+    }
+
+    await step('value participates in FormData', () => {
+      expect(new FormData(form).get('username')).toBe('Example');
+      expect(field.form, 'form pass-through resolves to the owning form').toBe(
+        form
+      );
+    });
+
+    await step('disabling excludes it, re-enabling recovers', async () => {
+      field.disabled = true;
+      await field.updateComplete;
+      expect(new FormData(form).has('username')).toBe(false);
+      field.disabled = false;
+      await field.updateComplete;
+      expect(new FormData(form).get('username')).toBe('Example');
+    });
+
+    await step(
+      'native reset restores the value attribute default',
+      async () => {
+        field.value = 'Updated';
+        await field.updateComplete;
+        expect(new FormData(form).get('username')).toBe('Updated');
+        form.reset();
+        await field.updateComplete;
+        expect(field.value, 'value restored to the initial attribute').toBe(
+          'Example'
+        );
+        expect(new FormData(form).get('username')).toBe('Example');
+      }
+    );
+  },
+};
+FormParticipationTest.storyName = 'Form participation';
+
+export const DisabledStateTest: Story = {
+  render: () => html`
+    <form>
+      <fieldset>
+        <swc-text-field
+          name="username"
+          value="Example"
+          accessible-label="Username"
+        ></swc-text-field>
+      </fieldset>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const fieldset = canvasElement.querySelector('fieldset');
+    if (!form || !fieldset) {
+      throw new Error('form or fieldset not found');
+    }
+
+    await step('enabled: no disabled state, value participates', () => {
+      expect(field.matches(':state(disabled)'), 'no disabled state').toBe(
+        false
+      );
+      expect(new FormData(form).get('username')).toBe('Example');
+    });
+
+    await step('own disabled sets the custom state', async () => {
+      field.disabled = true;
+      await field.updateComplete;
+      expect(
+        field.matches(':state(disabled)'),
+        'own disabled sets :state(disabled)'
+      ).toBe(true);
+      expect(new FormData(form).has('username')).toBe(false);
+      field.disabled = false;
+      await field.updateComplete;
+    });
+
+    await step(
+      'cascaded <fieldset disabled> sets the state on the host',
+      async () => {
+        fieldset.disabled = true;
+        await field.updateComplete;
+        expect(
+          field.matches(':state(disabled)'),
+          'cascade sets :state(disabled) without the host property'
+        ).toBe(true);
+        expect(
+          field.disabled,
+          'the public property stays false under the cascade'
+        ).toBe(false);
+        expect(
+          field.shadowRoot?.querySelector('input')?.disabled,
+          'inner input is disabled'
+        ).toBe(true);
+        expect(
+          new FormData(form).has('username'),
+          'excluded while cascaded'
+        ).toBe(false);
+
+        fieldset.disabled = false;
+        await field.updateComplete;
+        expect(
+          field.matches(':state(disabled)'),
+          'state clears when re-enabled'
+        ).toBe(false);
+        expect(new FormData(form).get('username')).toBe('Example');
+      }
+    );
+  },
+};
+DisabledStateTest.storyName = 'Disabled state';
+
+export const ChangeEventTest: Story = {
+  render: () => html`
+    <swc-text-field accessible-label="Username"></swc-text-field>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+
+    await step('change re-dispatches across the shadow boundary', () => {
+      // Native change is composed:false and would never reach a host listener.
+      let heard = false;
+      field.addEventListener('change', () => (heard = true));
+      const input = field.shadowRoot?.querySelector('input');
+      input?.dispatchEvent(new Event('change'));
+      expect(heard, 'host emits a change event').toBe(true);
+    });
+  },
+};
+ChangeEventTest.storyName = 'Change event';
