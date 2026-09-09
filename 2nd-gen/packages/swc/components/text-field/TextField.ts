@@ -35,15 +35,32 @@ export class TextField extends TextFieldBase {
     return [styles];
   }
 
+  private handleInput(event: Event): void {
+    this.value = (event.target as HTMLInputElement).value;
+  }
+
+  /**
+   * Re-dispatch `change` from the host: the native `change` event is
+   * `composed: false`, so it never crosses the shadow boundary and a consumer's
+   * `<swc-text-field @change=…>` would otherwise never fire.
+   */
+  private handleChange(): void {
+    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+  }
+
   protected override render(): TemplateResult {
-    // @todo (SWC-2466 / Phase 4–5): render the visible label, required indicator,
-    // validation icon, and description/error container via the LabellingController.
-    // Until then the input takes its accessible name from `accessible-label`.
+    // @todo (SWC-2466): render the visible label, required indicator, validation
+    // icon, and description/error container via the LabellingController. Until
+    // then the input takes its accessible name from `accessible-label`.
     return html`
       <div class="swc-TextField">
         <input
           class="input"
           aria-label=${ifDefined(this.accessibleLabel || undefined)}
+          .value=${this.value}
+          ?disabled=${this.effectiveDisabled}
+          @input=${this.handleInput}
+          @change=${this.handleChange}
         />
       </div>
     `;

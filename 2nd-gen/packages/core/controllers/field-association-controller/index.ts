@@ -10,10 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-/* @todo (Phase 5, styling): baseline from spectrum-css (spectrum-two) index.css and
-   consume the shared form-fields stylesheet fragment. Keep styling on
-   .swc-TextField, not :host. Style disabled via `:host(:state(disabled))`
-   (covers own + cascaded disabled), not `[disabled]`. */
-.swc-TextField {
-  display: inline-flex;
-}
+export {
+  FieldAssociationController,
+  type FieldAssociationControllerOptions,
+  type FieldFormValue,
+} from './src/field-association-controller.js';
