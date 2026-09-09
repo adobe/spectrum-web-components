@@ -29,6 +29,15 @@
   flex-direction: column;
 }
 
+/* `[hidden]` and `.swc-Menu` are both single-selector specificity (0,1,0),
+ * and this stylesheet's `display: flex` above comes after the UA
+ * stylesheet's `[hidden] { display: none }` in the cascade, so it was
+ * winning the tie and the surface never actually hid despite the attribute
+ * being set correctly. The extra specificity here (0,2,0) restores it. */
+.swc-Menu[hidden] {
+  display: none;
+}
+
 /* Minimal padding so slotted rows are visually distinct and roving focus is
  * easy to see moving between them; not a real row treatment. `swc-menu-item`
  * owns its own padding once it exists, superseding this. */
