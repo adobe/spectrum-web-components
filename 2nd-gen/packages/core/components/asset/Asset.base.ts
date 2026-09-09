@@ -30,11 +30,17 @@ import {
 const DOCS_URL =
   'https://spectrum-web-components.adobe.com/?path=/docs/components-asset--docs';
 
-/** A CSS `<ratio>`: one or two positive numbers separated by `/`. */
-const ASPECT_RATIO_PATTERN = /^\d+(\.\d+)?(\s*\/\s*\d+(\.\d+)?)?$/;
+// A plain CSS <number>: "16", "1.5", or ".5".
+const NUMBER = String.raw`(?:\d+\.?\d*|\.\d+)`;
+// A CSS <ratio>, optionally paired with `auto` on either side (both orders
+// are valid, e.g. "auto 16/9" or "16/9 auto").
+const RATIO = String.raw`${NUMBER}(?:\s*\/\s*${NUMBER})?`;
+const ASPECT_RATIO_PATTERN = new RegExp(
+  `^(?:auto|${RATIO}|auto\\s+${RATIO}|${RATIO}\\s+auto)$`
+);
 
-// `object-fit` doesn't apply to a directly-embedded `<svg>` (not a CSS
-// replaced element like `<img>`), so `fit` maps to `preserveAspectRatio`.
+// object-fit doesn't apply to inline <svg>, so `fit` drives
+// `preserveAspectRatio` instead.
 const SVG_PRESERVE_ASPECT_RATIO: Record<AssetFit, string> = {
   cover: 'xMidYMid slice',
   contain: 'xMidYMid meet',
@@ -61,6 +67,9 @@ export abstract class AssetBase extends SpectrumElement {
 
   private _aspectRatio: string | undefined;
 
+  // The pre-normalization value, kept for the malformed-ratio warning
+  private _rawAspectRatio: string | undefined;
+
   /**
    * The aspect ratio to apply to the asset, in CSS `<ratio>` syntax (e.g.
    * `"16/9"`), plus the `square` keyword. `:`-separated ratios (e.g.
@@ -75,6 +84,7 @@ export abstract class AssetBase extends SpectrumElement {
 
   public set aspectRatio(value: string | undefined) {
     const oldValue = this._aspectRatio;
+    this._rawAspectRatio = value;
     this._aspectRatio = normalizeAspectRatio(value);
     this.requestUpdate('aspectRatio', oldValue);
   }
@@ -129,9 +139,13 @@ export abstract class AssetBase extends SpectrumElement {
   //     IMPLEMENTATION
   // ──────────────────────
 
-  // Only remove `aria-hidden` if this instance is the one that set it, so a
-  // consumer-applied `aria-hidden` unrelated to `decorative` survives.
+  // Only clear `aria-hidden` if this instance set it, so a consumer's own
+  // attribute survives.
   private _appliedAriaHidden = false;
+
+  // The <svg> this instance owns `preserveAspectRatio` on, so a
+  // consumer-set value is left alone until this instance takes over.
+  private _preserveAspectRatioAppliedTo: Element | null = null;
 
   protected override update(changes: PropertyValues): void {
     validateEnum(this, {
@@ -150,7 +164,7 @@ export abstract class AssetBase extends SpectrumElement {
       this,
       typeof this.aspectRatio !== 'undefined' &&
         !ASPECT_RATIO_PATTERN.test(this.aspectRatio),
-      `<${this.localName}> expects "aspect-ratio" to be a CSS <ratio> (e.g. "16/9"), the "square" keyword, or a ":"-separated ratio (e.g. "16:9"). Received "${this.aspectRatio}".`,
+      `<${this.localName}> expects "aspect-ratio" to be a CSS <ratio> (e.g. "16/9"), the "square" keyword, or a ":"-separated ratio (e.g. "16:9"). Received "${this._rawAspectRatio}".`,
       DOCS_URL
     );
     warnIf(
@@ -196,22 +210,15 @@ export abstract class AssetBase extends SpectrumElement {
   }
 
   /**
-   * Implements `decorative` and the `accessibleLabel` fallback, per the
-   * detection order in the component plan's accessibility semantics notes:
-   *
-   * 1. `decorative` set → `aria-hidden="true"` on the host; everything else
-   *    is skipped, regardless of slotted content.
-   * 2. The slotted `<img>`/`<svg>` already carries its own accessible name
-   *    → leave it alone.
-   * 3. Neither of the above, but `accessibleLabel` is set → apply it to the
-   *    slotted node (`alt` for `<img>`, `aria-label` + `role="img"` for
-   *    `<svg>`, which has no native `alt`).
-   * 4. None of the above → DEBUG warning.
+   * Implements `decorative` and the `accessibleLabel` fallback, in priority
+   * order: `decorative` > the child's own name (self-healing a missing
+   * `role="img"` on a named `<svg>`) > `accessibleLabel` > warn.
    */
   private resolveAccessibleName(children: Element[]): void {
     if (this.decorative) {
+      // Don't claim ownership of a consumer's own `aria-hidden`.
+      this._appliedAriaHidden = !this.hasAttribute('aria-hidden');
       this.setAttribute('aria-hidden', 'true');
-      this._appliedAriaHidden = true;
       return;
     }
     if (this._appliedAriaHidden) {
@@ -229,31 +236,32 @@ export abstract class AssetBase extends SpectrumElement {
       return;
     }
 
-    if (this.hasOwnAccessibleName(child, tagName)) {
-      return;
-    }
-
-    if (this.accessibleLabel) {
+    const hasOwnName = this.hasOwnAccessibleName(child, tagName);
+    if (hasOwnName) {
+      if (tagName === 'svg' && !child.hasAttribute('role')) {
+        child.setAttribute('role', 'img');
+      }
+    } else if (this.accessibleLabel) {
       if (tagName === 'img') {
         (child as HTMLImageElement).alt = this.accessibleLabel;
       } else {
         child.setAttribute('role', 'img');
         child.setAttribute('aria-label', this.accessibleLabel);
       }
-      return;
     }
 
     warnIf(
       this,
-      true,
+      !hasOwnName && !this.accessibleLabel,
       `<${this.localName}> requires an accessible name: set "alt" on the slotted <img> (or role="img" plus "aria-label"/"aria-labelledby"/a child <title> on the slotted <svg>), set "accessible-label" on <${this.localName}>, or set "decorative".`,
       DOCS_URL
     );
   }
 
   /**
-   * Whether `child` (an `<img>` or `<svg>`, per `tagName`) already carries
-   * its own accessible name and should be left untouched.
+   * Whether `child` already has its own accessible name. The `<svg>` branch
+   * doesn't require `role="img"` — `resolveAccessibleName` self-heals a
+   * missing role separately.
    */
   private hasOwnAccessibleName(
     child: Element,
@@ -264,19 +272,29 @@ export abstract class AssetBase extends SpectrumElement {
     if (tagName === 'img') {
       return hasAriaName || child.hasAttribute('alt');
     }
-    const hasRoleImg = child.getAttribute('role') === 'img';
     const hasTitleChild = !!child.querySelector(':scope > title');
-    return hasRoleImg && (hasAriaName || hasTitleChild);
+    return hasAriaName || hasTitleChild;
   }
 
+  /**
+   * Applies `fit` to a slotted `<svg>` via `preserveAspectRatio`, without
+   * overwriting a consumer-set value or writing on every update.
+   */
   private applyFitToSvg(children: Element[]): void {
     const [child] = children;
     if (child?.tagName.toLowerCase() !== 'svg') {
+      this._preserveAspectRatioAppliedTo = null;
       return;
     }
-    child.setAttribute(
-      'preserveAspectRatio',
-      SVG_PRESERVE_ASPECT_RATIO[this.fit] ?? SVG_PRESERVE_ASPECT_RATIO.cover
-    );
+    const alreadyOwned = this._preserveAspectRatioAppliedTo === child;
+    if (child.hasAttribute('preserveAspectRatio') && !alreadyOwned) {
+      return;
+    }
+    const value =
+      SVG_PRESERVE_ASPECT_RATIO[this.fit] ?? SVG_PRESERVE_ASPECT_RATIO.cover;
+    if (child.getAttribute('preserveAspectRatio') !== value) {
+      child.setAttribute('preserveAspectRatio', value);
+    }
+    this._preserveAspectRatioAppliedTo = child;
   }
 }
