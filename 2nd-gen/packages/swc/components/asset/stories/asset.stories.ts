@@ -128,7 +128,7 @@ export const Fit: Story = {
           width: '160px',
           height: '160px',
           background: 'checkerboard',
-          'default-slot': `<img src="./images/portrait-asset.jpg" alt="Fit: ${fit}" />`,
+          'default-slot': `<img src="./images/portrait-asset.jpg" alt="Fit ${fit}" />`,
         })}
       `
     )}
@@ -138,7 +138,7 @@ export const Fit: Story = {
       width: '160px',
       height: '160px',
       background: 'checkerboard',
-      'default-slot': `<img src="./images/landscape-asset.jpg" alt="Fit: contain, landscape" />`,
+      'default-slot': `<img src="./images/landscape-asset.jpg" alt="Fit contain, landscape" />`,
     })}
   `,
   tags: ['options'],
@@ -155,7 +155,7 @@ export const Background: Story = {
           width: '160px',
           height: '160px',
           fit: 'contain',
-          'default-slot': `<img src="./images/card-preview.jpg" alt="Background: ${background}" />`,
+          'default-slot': `<img src="./images/card-preview.jpg" alt="Background ${background}" />`,
         })}
       `
     )}
