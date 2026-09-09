@@ -530,16 +530,210 @@ export const InvalidAspectRatioWarningTest: Story = {
   play: async ({ canvasElement, step }) => {
     const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
 
-    await step('warns when aspect-ratio is a malformed ratio', () =>
-      withWarningSpy(async (warnCalls) => {
-        asset.aspectRatio = '16:9:4';
-        await asset.updateComplete;
+    await step(
+      'warns when aspect-ratio is a malformed ratio, quoting the raw input rather than the colon-normalized form',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          asset.aspectRatio = 'foo:bar';
+          await asset.updateComplete;
 
+          expect(
+            warnCalls.length,
+            'at least one warning is emitted for the malformed ratio'
+          ).toBeGreaterThan(0);
+          const message = String(warnCalls[0]?.[1] || '');
+          expect(
+            message,
+            'warning quotes the raw "foo:bar" input the consumer set'
+          ).toContain('foo:bar');
+          expect(
+            message,
+            'warning does not show the colon-normalized "foo/bar" form'
+          ).not.toContain('foo/bar');
+        })
+    );
+  },
+};
+
+export const AspectRatioAutoAndDecimalNoWarningTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'does not warn for "auto", "auto 16/9", or a leading-dot decimal',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          for (const value of ['auto', 'auto 16/9', '.5']) {
+            asset.aspectRatio = value;
+            await asset.updateComplete;
+          }
+
+          expect(
+            warnCalls.length,
+            'no warnings for any of these valid CSS values'
+          ).toBe(0);
+        })
+    );
+  },
+};
+
+export const AriaHiddenSurvivesDecorativeToggleTest: Story = {
+  render: () => html`
+    <swc-asset aria-hidden="true">
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'does not remove a pre-existing consumer aria-hidden after toggling decorative on and back off',
+      async () => {
+        asset.decorative = true;
+        await asset.updateComplete;
         expect(
-          warnCalls.length,
-          'at least one warning is emitted for the malformed ratio'
-        ).toBeGreaterThan(0);
-      })
+          asset.getAttribute('aria-hidden'),
+          'aria-hidden stays true while decorative'
+        ).toBe('true');
+
+        asset.decorative = false;
+        await asset.updateComplete;
+        expect(
+          asset.getAttribute('aria-hidden'),
+          'consumer-set aria-hidden survives after decorative is unset'
+        ).toBe('true');
+      }
+    );
+  },
+};
+
+export const ConsumerPreserveAspectRatioRespectedTest: Story = {
+  render: () => html`
+    <swc-asset fit="cover">
+      <svg
+        role="img"
+        aria-label="Icon"
+        viewBox="0 0 10 10"
+        preserveAspectRatio="none"
+      >
+        <circle cx="5" cy="5" r="4" />
+      </svg>
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'does not overwrite a consumer-set preserveAspectRatio, even across a fit change',
+      async () => {
+        const svg = asset.querySelector('svg');
+        expect(
+          svg?.getAttribute('preserveAspectRatio'),
+          'consumer value survives initial render'
+        ).toBe('none');
+
+        asset.fit = 'contain';
+        await asset.updateComplete;
+        expect(
+          svg?.getAttribute('preserveAspectRatio'),
+          'consumer value survives a fit change too'
+        ).toBe('none');
+      }
+    );
+  },
+};
+
+export const SvgTitleSelfHealsRoleTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <svg viewBox="0 0 10 10">
+        <title>Chart</title>
+        <circle cx="5" cy="5" r="4" />
+      </svg>
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'adds role="img" for a title-named svg missing it, without warning or touching the title',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          asset.requestUpdate();
+          await asset.updateComplete;
+
+          const svg = asset.querySelector('svg');
+          expect(svg?.getAttribute('role'), 'role is self-healed to img').toBe(
+            'img'
+          );
+          expect(
+            svg?.querySelector('title')?.textContent,
+            'title content is unchanged'
+          ).toBe('Chart');
+          expect(warnCalls.length, 'no warning for an already-named svg').toBe(
+            0
+          );
+        })
+    );
+  },
+};
+
+export const SvgExplicitRoleNotOverriddenTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <svg role="presentation" viewBox="0 0 10 10">
+        <title>Chart</title>
+        <circle cx="5" cy="5" r="4" />
+      </svg>
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      "does not override a consumer's own, different role",
+      async () => {
+        asset.requestUpdate();
+        await asset.updateComplete;
+        const svg = asset.querySelector('svg');
+        expect(svg?.getAttribute('role'), 'role is unchanged').toBe(
+          'presentation'
+        );
+      }
+    );
+  },
+};
+
+export const AccessibleLabelDoesNotOverrideTitleTest: Story = {
+  render: () => html`
+    <swc-asset accessible-label="Should not be used">
+      <svg viewBox="0 0 10 10">
+        <title>Chart</title>
+        <circle cx="5" cy="5" r="4" />
+      </svg>
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'leaves a title-named svg alone even when accessible-label is set',
+      () => {
+        const svg = asset.querySelector('svg');
+        expect(
+          svg?.hasAttribute('aria-label'),
+          'aria-label was not applied over the existing title'
+        ).toBe(false);
+        expect(
+          svg?.getAttribute('role'),
+          'role is still self-healed to img'
+        ).toBe('img');
+      }
     );
   },
 };
