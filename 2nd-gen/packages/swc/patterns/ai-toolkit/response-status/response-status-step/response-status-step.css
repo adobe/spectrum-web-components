@@ -70,7 +70,7 @@
   inline-size: 8px;
   block-size: 8px;
   margin: token("spacing-75");
-  margin-block: 6px;
+  margin-block: token("spacing-85");
   color: token("gray-500");
   transition: color token("animation-duration-200") token("animation-ease-in-out");
 }
@@ -83,7 +83,7 @@
 
 .swc-ResponseStatusStep-line {
   flex: 1 1 auto;
-  inline-size: 1px;
+  inline-size: token("border-width-100");
   min-block-size: token("spacing-100");
   margin-block-start: token("spacing-50");
   background: token("gray-300");
@@ -191,7 +191,7 @@
 /* Masked, `translate`-animated overlay clone of the label: cheaper to
    animate on the compositor than sweeping `background-position` on the text. */
 .swc-ResponseStatusStep-titleShimmer {
-  --swc-response-status-step-shimmer-spread: 4ch;
+  --_swc-response-status-step-shimmer-spread: 4ch;
 
   position: absolute;
   inset: 0;
@@ -214,7 +214,7 @@
 :host([status="active"]) .swc-ResponseStatusStep-titleShimmer::after {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent calc(50% - var(--swc-response-status-step-shimmer-spread)), token("gray-900") 50%, transparent calc(50% + var(--swc-response-status-step-shimmer-spread)));
+  background: linear-gradient(90deg, transparent calc(50% - var(--_swc-response-status-step-shimmer-spread)), token("gray-900") 50%, transparent calc(50% + var(--_swc-response-status-step-shimmer-spread)));
   content: "";
   animation: swc-response-status-step-shimmer 1800ms infinite;
   will-change: transform;
