@@ -66,9 +66,9 @@ test.describe('Asset - ARIA Snapshots', () => {
   test('should handle fit story', async ({ page }) => {
     const root = await gotoStory(page, 'components-asset--fit', 'swc-asset');
     await expect(root).toMatchAriaSnapshot(`
-      - img "Fit: cover"
-      - img "Fit: contain"
-      - img "Fit: contain, landscape"
+      - img "Fit cover"
+      - img "Fit contain"
+      - img "Fit contain, landscape"
     `);
   });
 
@@ -79,9 +79,9 @@ test.describe('Asset - ARIA Snapshots', () => {
       'swc-asset'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - img "Background: transparent"
-      - img "Background: solid"
-      - img "Background: checkerboard"
+      - img "Background transparent"
+      - img "Background solid"
+      - img "Background checkerboard"
     `);
   });
 

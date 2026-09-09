@@ -60,6 +60,21 @@ const renderFitBackground = (
   </swc-asset>
 `;
 
+// Deliberately unresolvable (a nonexistent local path), so this deterministically renders
+// the browser's native broken-image treatment against each background option, rather than
+// depending on a real network failure. Not covered for a slotted <svg>: `loadState` has no
+// error path for `<svg>` content (see AssetBase#updateLoadState), so there is nothing
+// visually distinct to capture there.
+const BROKEN_SRC = './images/does-not-exist.jpg';
+
+const renderLoadFailure = (
+  background: 'transparent' | 'solid' | 'checkerboard'
+) => html`
+  <swc-asset background=${background} width="120px" height="120px">
+    <img src=${BROKEN_SRC} alt="Failed to load" />
+  </swc-asset>
+`;
+
 // Shared inline SVG for every svg-content row below. The viewBox is wide for
 // the same reason the landscape photo is used above: a square source
 // wouldn't show any visible difference between cover and contain, or between
@@ -205,6 +220,14 @@ const permutationContent = () => html`
     'Fit / background (svg)'
   )}
   ${row(
+    [
+      captioned(renderLoadFailure('transparent'), 'transparent'),
+      captioned(renderLoadFailure('solid'), 'solid'),
+      captioned(renderLoadFailure('checkerboard'), 'checkerboard'),
+    ],
+    'Load failure'
+  )}
+  ${row(
     [captioned(renderBorderRadius(), 'border-radius: 24px')],
     'Border radius'
   )}
@@ -254,6 +277,13 @@ const forcedColorsContent = () => html`
       ),
     ],
     'Fit / background (svg)'
+  )}
+  ${row(
+    [
+      captioned(renderLoadFailure('solid'), 'solid'),
+      captioned(renderLoadFailure('checkerboard'), 'checkerboard'),
+    ],
+    'Load failure'
   )}
 `;
 
