@@ -14,14 +14,20 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import {
+  FocusgroupNavigationController,
   PlacementController,
   type PlacementOptions,
 } from '@adobe/spectrum-wc-core/controllers/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 import {
+  deepContains,
+  getActiveElement,
+  isTopDismissible,
   physicalSide,
+  registerDismissible,
   resolveTrigger,
+  unregisterDismissible,
   validateAllowedChildren,
   validateEnum,
   warnIf,
@@ -52,9 +58,9 @@ const DOCS_URL =
  * {@link https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/ | menu button}
  * pattern: an externally-referenced trigger (`for`/`triggerElement`) opens a
  * `PlacementController`-anchored surface containing a `role="menu"` list.
- * ARIA and click-to-toggle wiring on the trigger, and open/close events, are
- * handled here. Keyboard/focus management inside the list is added in a
- * later migration phase.
+ * ARIA and click-to-toggle wiring on the trigger, open/close events, roving
+ * `tabindex` and arrow-key navigation among `swc-menu-item` rows, Escape to
+ * close, and initial/return focus are all handled here.
  *
  * @slot - `swc-menu-item` elements. `swc-menu-group` and `swc-divider` (as a
  *   separator) join in a later migration phase.
@@ -150,6 +156,60 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   protected get surfaceElement(): HTMLElement | null {
     return null;
   }
+
+  /**
+   * Roving-tabindex and arrow-key navigation among `swc-menu-item` rows.
+   * `wrap: true` overrides the controller's toolbar-oriented default so
+   * ArrowDown from the last item goes to the first (and reverse), matching
+   * menu-button convention; `skipDisabled` and `memory` keep the controller's
+   * own defaults (`false`/`true`) — disabled rows stay in the roving set per
+   * the APG's focusability-of-disabled-controls guidance.
+   */
+  private readonly focusNavigation = new FocusgroupNavigationController(this, {
+    direction: 'vertical',
+    wrap: true,
+    getItems: () => this.getMenuItems(),
+  });
+
+  /**
+   * Whether focus should return to the trigger once the current close
+   * finishes. Snapshotted in `willUpdate()`, before render can react to the
+   * new `open` value, so a later show/hide mechanism dropping focus to the
+   * document does not race this check.
+   */
+  private _restoreFocusToTrigger = false;
+
+  // Direct `swc-menu-item` children only this phase; `swc-menu-group` joins
+  // once it exists (Phase B), extending this to also collect its default
+  // slot's items, matching the a11y analysis's illustrative query.
+  private getMenuItems(): HTMLElement[] {
+    return Array.from(
+      this.querySelectorAll<HTMLElement>(':scope > swc-menu-item')
+    );
+  }
+
+  // `deepContains` crosses shadow boundaries, so focus inside a slotted
+  // custom element's own shadow tree (e.g. a future `swc-menu-item` internal
+  // part) is still detected as "inside the menu".
+  private isFocusWithin(): boolean {
+    return deepContains(this, getActiveElement());
+  }
+
+  // Escape closes the menu. Registered on `document` (capture) only while
+  // open (see `updated()`), matching `Tooltip.base.ts`/`Popover.base.ts`:
+  // `swc-menu` has no native top-layer light-dismiss to fall back on.
+  private readonly handleKeyDown = (event: KeyboardEvent): void => {
+    if (event.key !== 'Escape' || !this.open) {
+      return;
+    }
+    // Only the topmost dismissible handles Escape; a surface above us
+    // (e.g. a submenu, once those exist) gets it first.
+    if (!isTopDismissible(this)) {
+      return;
+    }
+    event.preventDefault();
+    this.open = false;
+  };
 
   // Removes this menu's aria-controls reference from a previously-wired
   // trigger and clears the state/expanded attributes it owns, so a stale
@@ -267,6 +327,21 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       'default',
       DOCS_URL
     );
+    this.focusNavigation.refresh();
+  }
+
+  protected override willUpdate(changedProperties: PropertyValues): void {
+    super.willUpdate(changedProperties);
+    // Snapshot before render reacts to the new `open` value (see
+    // `_restoreFocusToTrigger`'s own doc). Reuses the same "not the
+    // initialization entry" check as the `openChanged` guard below.
+    if (
+      changedProperties.has('open') &&
+      changedProperties.get('open') !== undefined &&
+      !this.open
+    ) {
+      this._restoreFocusToTrigger = this.isFocusWithin();
+    }
   }
 
   protected override updated(changedProperties: PropertyValues): void {
@@ -301,10 +376,34 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     if (openChanged) {
       this.dispatchOpenEvents(this.open);
       if (this.open) {
+        registerDismissible(this);
+        document.addEventListener('keydown', this.handleKeyDown, {
+          capture: true,
+        });
         this.startPlacement();
+        // Re-checks eligibility (e.g. newly visible rows) before moving focus
+        // in, then delegates "first item" to the controller's own preferred-
+        // item algorithm rather than re-deriving eligibility here.
+        this.focusNavigation.refresh();
+        const active = this.focusNavigation.getActiveItem();
+        if (active) {
+          // Deferred with `queueMicrotask` per the controller's own
+          // documented pattern for focusing from a trigger `click` handler:
+          // otherwise the browser moves focus back to the trigger after the
+          // click handler (which set `open`) returns.
+          queueMicrotask(() => active.focus());
+        }
       } else {
+        unregisterDismissible(this);
+        document.removeEventListener('keydown', this.handleKeyDown, {
+          capture: true,
+        });
         this.placementController.stop();
         this.removeAttribute('actual-placement');
+        if (this._restoreFocusToTrigger) {
+          this._restoreFocusToTrigger = false;
+          this._interactiveElement?.focus({ preventScroll: true });
+        }
       }
     } else if (
       this.open &&
@@ -323,5 +422,9 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this.placementController.stop();
     this.clearTriggerAria();
     this.removeTriggerClickListener();
+    unregisterDismissible(this);
+    document.removeEventListener('keydown', this.handleKeyDown, {
+      capture: true,
+    });
   }
 }

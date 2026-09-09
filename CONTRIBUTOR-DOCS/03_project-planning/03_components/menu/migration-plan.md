@@ -629,18 +629,18 @@ Planned rendering shape:
 
 #### Naming and semantics
 
-- [ ] Internal `role="menu"` lives in shadow DOM, not on the `<swc-menu>` host
-- [ ] Trigger is externally referenced via `for`/`triggerElement`, not shadow-rendered; `aria-haspopup="menu"` and `aria-expanded` are wired onto the `resolveTrigger`-resolved `interactiveElement` (decided, [Q16](#blockers-and-open-questions))
-- [ ] Menu slot accepts `swc-menu-item` this pass (`swc-menu-group` and `swc-divider` join in Phase B); do not slot `swc-menu`/`swc-action-menu` into `swc-menu`, `swc-action-menu`, or `swc-menu-item`
-- [ ] `swc-menu-item` carries no `href` and renders no anchor; link rows are out of scope (decided, [Q17](#cross-component-follow-ups-not-blocking-swc-menu)) — a separate `swc-menu-link` component, not yet planned
+- [x] Internal `role="menu"` lives in shadow DOM, not on the `<swc-menu>` host — set on `Menu.ts`'s rendered wrapper (a11y migration ticket)
+- [x] Trigger is externally referenced via `for`/`triggerElement`, not shadow-rendered; `aria-haspopup="menu"` and `aria-expanded` are wired onto the `resolveTrigger`-resolved `interactiveElement` (decided, [Q16](#blockers-and-open-questions)) — done in the API migration ticket
+- [x] Menu slot accepts `swc-menu-item` this pass (`swc-menu-group` and `swc-divider` join in Phase B); do not slot `swc-menu`/`swc-action-menu` into `swc-menu`, `swc-action-menu`, or `swc-menu-item` — `validateAllowedChildren` enforcement done in the API migration ticket
+- [ ] `swc-menu-item` carries no `href` and renders no anchor; link rows are out of scope (decided, [Q17](#cross-component-follow-ups-not-blocking-swc-menu)) — a separate `swc-menu-link` component, not yet planned. Not verifiable from `swc-menu`'s own implementation; belongs to `swc-menu-item`'s own ticket.
 
 #### State verification
 
-- [ ] Disabled `swc-menu-item` rows expose `aria-disabled="true"` and do not run their action on Enter/Space, while remaining in the roving set
-- [ ] Open/close and initial/return focus satisfy the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)
-- [ ] In-menu navigation (arrow keys, Home, End) uses `FocusgroupNavigationController` configured `direction: 'vertical'`, `wrap: true` (decided — override the controller's `false` default), `skipDisabled: false` (controller default, matches [B7](#must-ship)); not `aria-activedescendant` — see [Behavioral semantics](#behavioral-semantics)
-- [ ] If shipped, printable character navigation is consistent between top-level and submenu lists ([A7](#deferred-to-later-phases))
-- [ ] 1st-gen defects in [Open gen1 issues](#open-gen1-issues) and the [a11y analysis's Jira table](./accessibility-migration-analysis.md#related-1st-gen-accessibility-jira) are retested or explicitly superseded
+- [ ] Disabled `swc-menu-item` rows expose `aria-disabled="true"` and do not run their action on Enter/Space, while remaining in the roving set. `swc-menu` already keeps disabled rows in the roving set (`skipDisabled: false`, below) — the `aria-disabled`/no-action half is `swc-menu-item`'s own ticket, not yet scheduled, so this can't be verified end-to-end until then.
+- [x] Open/close and initial/return focus satisfy the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) — opening moves focus to the first eligible item (`FocusgroupNavigationController.refresh()` + `getActiveItem()`, deferred with `queueMicrotask`); Escape and any other close path return focus to the resolved trigger when focus was inside the menu (a11y migration ticket)
+- [x] In-menu navigation (arrow keys, Home, End) uses `FocusgroupNavigationController` configured `direction: 'vertical'`, `wrap: true` (decided — override the controller's `false` default), `skipDisabled: false` (controller default, matches [B7](#must-ship)); not `aria-activedescendant` — see [Behavioral semantics](#behavioral-semantics) (a11y migration ticket). Exercised in Storybook today via placeholder `<swc-menu-item role="menuitem">` tags, since `swc-menu-item` itself doesn't exist yet.
+- [ ] If shipped, printable character navigation is consistent between top-level and submenu lists ([A7](#deferred-to-later-phases)) — not shipped this phase; optional and still deferred
+- [ ] 1st-gen defects in [Open gen1 issues](#open-gen1-issues) and the [a11y analysis's Jira table](./accessibility-migration-analysis.md#related-1st-gen-accessibility-jira) are retested or explicitly superseded — every listed defect involves links, submenus, or items, none of which exist in `swc-menu`'s Phase A surface yet, so none can be reproduced or retested until those ship
 
 ### Testing
 

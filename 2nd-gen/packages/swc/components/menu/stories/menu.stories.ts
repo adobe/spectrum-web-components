@@ -39,10 +39,10 @@ argTypes['actual-placement'] = {
  * host: an externally-referenced trigger opens a `PlacementController`-anchored
  * surface containing a `role="menu"` list of `swc-menu-item` rows.
  *
- * This is a Phase 3 (API migration) story for smoke testing only.
- * `swc-menu-item` doesn't exist yet, so this story slots plain content
- * instead. Keyboard/focus management, rendering/styling of the anchored
- * surface, and full documentation sections land in later migration phases.
+ * This is a Phase 4 (accessibility migration) story for smoke testing only.
+ * `swc-menu-item` doesn't exist yet, so this story slots placeholder rows
+ * instead. Rendering/styling of the anchored surface and full documentation
+ * sections land in later migration phases.
  */
 const meta: Meta = {
   title: 'Menu',
@@ -62,10 +62,16 @@ export default meta;
 //    PLAYGROUND STORY
 // ────────────────────
 
+// `swc-menu-item` doesn't exist yet (Phase A minimal surface, tracked
+// separately from this ticket). These placeholders use its own tag name and
+// `role="menuitem"` (the role `swc-menu-item` sets on its host once it
+// exists) so the story exercises the same tag-based item query
+// `focusNavigation` runs against, and stays aXe-clean under the `role="menu"`
+// container, which requires `menuitem` children.
 const defaultItems = html`
-  <div>Cut</div>
-  <div>Copy</div>
-  <div>Paste</div>
+  <swc-menu-item role="menuitem" tabindex="-1">Cut</swc-menu-item>
+  <swc-menu-item role="menuitem" tabindex="-1">Copy</swc-menu-item>
+  <swc-menu-item role="menuitem" tabindex="-1">Paste</swc-menu-item>
 `;
 
 export const Playground: Story = {

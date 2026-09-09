@@ -40,7 +40,7 @@ Index of shared, reusable resources in 2nd-gen: controllers, mixins, utilities, 
 |---|---|---|
 | `PlacementController` | Floating UI-based positioning (flip, shift, arrow, size) for anchored surfaces | `tooltip`, `popover`, `menu` |
 | `HoverController` | Hover and keyboard-focus wiring for native-Popover-API triggers | `tooltip` |
-| `FocusgroupNavigationController` | Roving-tabindex arrow key navigation for composite widgets ([Open UI `focusgroup`](https://open-ui.org/components/focusgroup.explainer/)-aligned). See [Focus management](14_focus-management.md) | `tabs`, `action-group`, `message-feedback`, `conversation-thread`, `prompt-field` |
+| `FocusgroupNavigationController` | Roving-tabindex arrow key navigation for composite widgets ([Open UI `focusgroup`](https://open-ui.org/components/focusgroup.explainer/)-aligned). See [Focus management](14_focus-management.md) | `tabs`, `action-group`, `message-feedback`, `conversation-thread`, `prompt-field`, `menu` |
 | `SlotAttributePropagationController` | Propagates a host attribute (e.g. `size`) to slotted children | `card`, `dropzone`, `illustrated-message`, `button-group` |
 | `SlotPresenceController` | Observes whether slotted content matching a selector is present | `button`, `action-button`, `badge`, `accordion`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
 | `SlotTextController` | Observes whether a slot has meaningful text/element content | `card`, `button`, `action-button`, `illustrated-message`, `badge` |
@@ -64,9 +64,9 @@ Index of shared, reusable resources in 2nd-gen: controllers, mixins, utilities, 
 | Utility | What it does | Used by |
 |---|---|---|
 | `resolveTrigger()` | Resolves `for` ID / `triggerElement` to a trigger, and its AT-facing inner `<button>` across shadow boundaries | `tooltip`, `popover`, `menu` |
-| `getActiveElement()` | Deepest focused element, across shadow boundaries | `popover`, `conversation-thread`, `prompt-field` |
-| `deepContains()` | Shadow-piercing containment check | `popover`, `prompt-field` |
-| `registerDismissible()` / `unregisterDismissible()` / `isTopDismissible()` (`dismissibleStack`) | LIFO stack coordinating Escape handling across top-layer mechanisms | `popover`, `tooltip` |
+| `getActiveElement()` | Deepest focused element, across shadow boundaries | `popover`, `conversation-thread`, `prompt-field`, `menu` |
+| `deepContains()` | Shadow-piercing containment check | `popover`, `prompt-field`, `menu` |
+| `registerDismissible()` / `unregisterDismissible()` / `isTopDismissible()` (`dismissibleStack`) | LIFO stack coordinating Escape handling across top-layer mechanisms | `popover`, `tooltip`, `menu` |
 | `warnIf()`, `validateEnum()` | Batched, deduped dev-mode warning framework (see below and [Debug and validation](../02_style-guide/02_typescript/17_debug-validation.md)) | 10+ components, `prompt-field`, `pixel-loader` |
 | `focusableSelector` | Spec-based focusable-element selector. See [Focus management](14_focus-management.md#focusableselector-and-tabbableselector) | `prompt-field` |
 | `tabbableSelector` | Spec-based tabbable-element selector | none |
