@@ -28,7 +28,6 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 
-import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import {
   DragAndDropController,
   focusgroupNavigationActiveChange,
@@ -44,6 +43,7 @@ import {
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
+import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '../pixel-loader/swc-pixel-loader.js';
 
@@ -1104,9 +1104,11 @@ export class PromptField extends SpectrumElement {
                   tabindex=${this._attachmentCanScrollPrev ? nothing : -1}
                   @click=${this._handleAttachmentScrollPrev}
                 >
-                  <swc-icon slot="icon" size="s" aria-hidden="true">
-                    ${Chevron75Icon()}
-                  </swc-icon>
+                  <swc-ui-icon
+                    slot="icon"
+                    icon="chevron"
+                    size="s"
+                  ></swc-ui-icon>
                 </swc-action-button>
               `
             : nothing}
@@ -1142,9 +1144,11 @@ export class PromptField extends SpectrumElement {
                   tabindex=${this._attachmentCanScrollNext ? nothing : -1}
                   @click=${this._handleAttachmentScrollNext}
                 >
-                  <swc-icon slot="icon" size="s" aria-hidden="true">
-                    ${Chevron75Icon()}
-                  </swc-icon>
+                  <swc-ui-icon
+                    slot="icon"
+                    icon="chevron"
+                    size="s"
+                  ></swc-ui-icon>
                 </swc-action-button>
               `
             : nothing}

@@ -21,7 +21,7 @@ import {
 } from '@adobe/spectrum-wc-core/components/button';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
-import '@adobe/spectrum-wc/components/icon/swc-icon.js';
+import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 
 import {
   createPermutations,
@@ -35,7 +35,6 @@ import {
   theme,
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
-import { Arrow100Icon } from '../../../icon/elements/Arrow100Icon.js';
 
 // Metadata
 
@@ -49,11 +48,9 @@ export default meta;
 
 // Helpers
 
-// Matches Arrow100Icon.ts's markup, wrapped the same way arrowIcon() below
-// wraps it. This needs to be a plain string since template()'s icon-slot
-// takes markup, not a lit TemplateResult.
-const ICON_SLOT_MARKUP =
-  '<swc-icon aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M9.60547 4.46973 6.3457 1.20996c-.29297-.29297-.76758-.29297-1.06055 0s-.29297.76758 0 1.06055l1.97949 1.97949H.9248c-.41406 0-.75.33594-.75.75s.33594.75.75.75h6.33984l-1.97949 1.97949c-.29297.29297-.29297.76758 0 1.06055.14648.14648.33789.21973.53027.21973s.38379-.07324.53027-.21973l3.25977-3.25977c.29297-.29297.29297-.76758 0-1.06055Z"></path></svg></swc-icon>';
+// Matches arrowIcon() below. This needs to be a plain string since template()'s
+// icon-slot takes markup, not a lit TemplateResult.
+const ICON_SLOT_MARKUP = '<swc-ui-icon icon="arrow" size="m"></swc-ui-icon>';
 
 // Main button permutations: variant x fill-style x size, disabled/pending,
 // forced hover/focus-visible/active per variant, and icon+label anatomy.
@@ -169,12 +166,12 @@ const renderIconOnlyPermutation = ({
     ?pending=${pending}
     accessible-label="Button"
   >
-    <swc-icon slot="icon" aria-hidden="true">${Arrow100Icon()}</swc-icon>
+    <swc-ui-icon icon="arrow" size="m" slot="icon"></swc-ui-icon>
   </swc-button>
 `;
 
 const arrowIcon = () => html`
-  <swc-icon slot="icon" aria-hidden="true">${Arrow100Icon()}</swc-icon>
+  <swc-ui-icon icon="arrow" size="m" slot="icon"></swc-ui-icon>
 `;
 
 const forceButtonStates = forcePseudoStates(
