@@ -43,9 +43,16 @@ export class Menu extends MenuBase {
     return [styles];
   }
 
+  // The element `PlacementController` positions. A plain `querySelector` (not
+  // a cached `@query`) since it must resolve to the current shadow tree on
+  // every read.
+  protected override get surfaceElement(): HTMLElement | null {
+    return this.shadowRoot?.querySelector('.swc-Menu') ?? null;
+  }
+
   protected override render(): TemplateResult {
     return html`
-      <div class="swc-Menu" role="menu">
+      <div class="swc-Menu" role="menu" ?hidden=${!this.open}>
         <slot @slotchange=${this.handleDefaultSlotChange}></slot>
       </div>
     `;

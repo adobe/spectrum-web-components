@@ -13,3 +13,10 @@
 :host {
   display: block;
 }
+
+/* Unstyled positioning only: PlacementController writes top/left/translate
+ * inline, which needs the surface out of static flow. Full visual styling
+ * lands in a later migration phase. */
+.swc-Menu {
+  position: absolute;
+}

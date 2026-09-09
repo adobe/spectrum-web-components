@@ -14,6 +14,7 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 
 // ────────────────
@@ -23,10 +24,9 @@ import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 const { args, argTypes, template } = getStorybookHelpers('swc-menu');
 
 // `actual-placement` is internal CSS-only state that `Menu` manages directly
-// via setAttribute (the flip-resolved side from PlacementController, once
-// Phase 5 rendering provides a surface for it to position). The Storybook
-// helper otherwise observes every attribute change, writes it back into
-// `args`, and re-applies it through its `spread` directive on the next
+// via setAttribute (the flip-resolved side from PlacementController). The
+// Storybook helper otherwise observes every attribute change, writes it back
+// into `args`, and re-applies it through its `spread` directive on the next
 // render — clobbering the resolved side with a stale value. Declaring it
 // here (control disabled) makes the helper exclude it from the spread.
 argTypes['actual-placement'] = {
@@ -41,8 +41,9 @@ argTypes['actual-placement'] = {
  *
  * This is a Phase 4 (accessibility migration) story for smoke testing only.
  * `swc-menu-item` doesn't exist yet, so this story slots placeholder rows
- * instead. Rendering/styling of the anchored surface and full documentation
- * sections land in later migration phases.
+ * instead. The anchored surface positions and shows/hides on `open`, but is
+ * otherwise unstyled; full visual styling and documentation sections land in
+ * later migration phases.
  */
 const meta: Meta = {
   title: 'Menu',
@@ -75,6 +76,13 @@ const defaultItems = html`
 `;
 
 export const Playground: Story = {
-  render: (args) => template(args, defaultItems),
+  args: {
+    open: false,
+    for: 'playground-trigger',
+  },
+  render: (args) => html`
+    <swc-button id="playground-trigger">Open menu</swc-button>
+    ${template(args, defaultItems)}
+  `,
   tags: ['autodocs', 'dev'],
 };
