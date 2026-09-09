@@ -155,7 +155,11 @@
       "types": "./dist/controllers/color-controller/index.d.ts",
       "import": "./dist/controllers/color-controller/index.js"
     },
-    "./controllers/field-association-controller.js": {
+    "./controllers/field-association-controller": {
+      "types": "./dist/controllers/field-association-controller/index.d.ts",
+      "import": "./dist/controllers/field-association-controller/index.js"
+    },
+    "./controllers/field-association-controller/index.js": {
       "types": "./dist/controllers/field-association-controller/index.d.ts",
       "import": "./dist/controllers/field-association-controller/index.js"
     },
@@ -400,6 +404,12 @@
       ],
       "controllers/color-controller.js": [
         "dist/controllers/color-controller/index.d.ts"
+      ],
+      "controllers/field-association-controller": [
+        "dist/controllers/field-association-controller/index.d.ts"
+      ],
+      "controllers/field-association-controller/index.js": [
+        "dist/controllers/field-association-controller/index.d.ts"
       ],
       "controllers/focus-group-navigation-controller/focus-group-navigation-controller.js": [
         "dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts"
