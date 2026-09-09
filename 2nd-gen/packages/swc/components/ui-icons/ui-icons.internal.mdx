@@ -41,4 +41,11 @@ name, so `<swc-ui-icon>` sets `aria-hidden="true"` on itself when no
 sole meaning of its container; the element then exposes itself as an image
 (`role="img"` with that label). The rendered SVG never carries its own semantics.
 
+Consumers should not write an explicit `aria-hidden` attribute on `<swc-ui-icon>`
+in markup: the attribute is host-owned and applied by `IconBase` after first
+render, so a hand-authored value only duplicates that logic. When a component
+wraps `<swc-ui-icon>` in another element for layout reasons (for example sizing
+a box via a wrapping `<span>`), hiding that wrapper from assistive technology is
+fine and does not need to be repeated on the icon itself.
+
 <DocsFooter />
