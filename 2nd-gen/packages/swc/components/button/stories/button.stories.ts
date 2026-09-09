@@ -20,12 +20,13 @@ import {
   BUTTON_VALID_SIZES,
   BUTTON_VARIANTS,
   type ButtonFillStyle,
-  type ButtonSize,
   type ButtonStaticColor,
   type ButtonVariant,
 } from '@adobe/spectrum-wc-core/components/button';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
+
+import { SIZE_LABELS } from '../../../.storybook/helpers/index.js';
 
 // ────────────────
 //    METADATA
@@ -90,13 +91,6 @@ export default meta;
 // ────────────────────
 //    HELPERS
 // ────────────────────
-
-const sizeLabels = {
-  s: 'Small',
-  m: 'Medium',
-  l: 'Large',
-  xl: 'Extra-large',
-} as const satisfies Record<ButtonSize, string>;
 
 const variantLabels = {
   primary: 'Primary',
@@ -192,7 +186,7 @@ export const Anatomy: Story = {
 export const Sizes: Story = {
   render: (args) => html`
     ${BUTTON_VALID_SIZES.map((size) =>
-      template({ ...args, size, 'default-slot': sizeLabels[size] })
+      template({ ...args, size, 'default-slot': SIZE_LABELS[size] })
     )}
   `,
   parameters: { flexLayout: 'row-wrap' },

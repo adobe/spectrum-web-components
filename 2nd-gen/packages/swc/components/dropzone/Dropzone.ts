@@ -41,7 +41,7 @@ import styles from './dropzone.css';
  *   payload and set the cursor to `none`.
  * @fires swc-dropzone-dragover - Fired once when dragged files enter the zone and are
  *   accepted; does not repeat on subsequent `dragover` ticks while still hovering.
- * @fires swc-dropzone-dragleave - Fired when dragged files leave the zone.
+ * @fires swc-dropzone-dragleave - Fired when an accepted drag leaves the zone or becomes rejected.
  * @fires swc-dropzone-drop - Fired when files are dropped on the zone. Set `filled` in
  *   your handler to transition the zone to its filled state.
  *

@@ -1,0 +1,82 @@
+name: Type Check
+#
+# Type-checks the library with `tsc -b` (build mode, so cross-package types
+# resolve through the composite project references). The vite build uses
+# esbuild and does not type-check, so this is what catches type errors.
+#
+# Diagnostics are annotated inline via a GitHub problem matcher (no
+# third-party actions). The check fails on any type error anywhere in
+# 2nd-gen/packages/** (whole-repo gate), so the backlog must be green on main.
+# Triage locally with the same `yarn type-check`.
+#
+# Lit-template semantics (unknown tag/attribute, binding types) are a dev-time
+# concern handled in the editor; ESLint (eslint-plugin-lit / -lit-a11y / -wc)
+# covers template syntax and a11y in lint.yml.
+#
+
+on:
+  pull_request:
+    branches:
+      - main
+
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - auto_merge_enabled
+
+permissions:
+  contents: read
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  type-check:
+    name: Type Check (2nd-gen)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node version from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: yarn
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      ## --- YARN CACHE --- ##
+      - name: Check for cached dependencies
+        continue-on-error: true
+        id: cache-dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            .cache/yarn
+            node_modules
+          key: ubuntu-latest-${{ hashFiles('.nvmrc', 'package.json', 'yarn.lock') }}
+
+      ## --- INSTALL --- ##
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      # Run the compiler and annotate diagnostics inline via a GitHub problem
+      # matcher (no third-party actions). The step fails on any type error
+      # anywhere in 2nd-gen (whole-repo gate).
+      - name: Type check
+        run: |
+          echo "::add-matcher::.github/tsc-problem-matcher.json"
+          yarn type-check
+          echo "::remove-matcher owner=tsc::"
+          echo "::remove-matcher owner=tsc-build::"

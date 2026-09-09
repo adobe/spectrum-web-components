@@ -1,6 +1,6 @@
 {
   "name": "@adobe/spectrum-wc-core",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "description": "Abstract base classes for Spectrum Web Components",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -91,13 +91,13 @@
       "types": "./dist/components/icon/index.d.ts",
       "import": "./dist/components/icon/index.js"
     },
-    "./components/infield-button": {
-      "types": "./dist/components/infield-button/index.d.ts",
-      "import": "./dist/components/infield-button/index.js"
-    },
     "./components/illustrated-message": {
       "types": "./dist/components/illustrated-message/index.d.ts",
       "import": "./dist/components/illustrated-message/index.js"
+    },
+    "./components/infield-button": {
+      "types": "./dist/components/infield-button/index.d.ts",
+      "import": "./dist/components/infield-button/index.js"
     },
     "./components/meter": {
       "types": "./dist/components/meter/index.d.ts",
@@ -154,6 +154,18 @@
     "./controllers/color-controller.js": {
       "types": "./dist/controllers/color-controller/index.d.ts",
       "import": "./dist/controllers/color-controller/index.js"
+    },
+    "./controllers/drag-and-drop-controller.js": {
+      "types": "./dist/controllers/drag-and-drop-controller/index.d.ts",
+      "import": "./dist/controllers/drag-and-drop-controller/index.js"
+    },
+    "./controllers/field-association-controller": {
+      "types": "./dist/controllers/field-association-controller/index.d.ts",
+      "import": "./dist/controllers/field-association-controller/index.js"
+    },
+    "./controllers/field-association-controller/index.js": {
+      "types": "./dist/controllers/field-association-controller/index.d.ts",
+      "import": "./dist/controllers/field-association-controller/index.js"
     },
     "./controllers/focus-group-navigation-controller.js": {
       "types": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts",
@@ -363,11 +375,11 @@
       "components/icon": [
         "dist/components/icon/index.d.ts"
       ],
-      "components/infield-button": [
-        "dist/components/infield-button/index.d.ts"
-      ],
       "components/illustrated-message": [
         "dist/components/illustrated-message/index.d.ts"
+      ],
+      "components/infield-button": [
+        "dist/components/infield-button/index.d.ts"
       ],
       "components/meter": [
         "dist/components/meter/index.d.ts"
@@ -404,6 +416,15 @@
       ],
       "controllers/color-controller.js": [
         "dist/controllers/color-controller/index.d.ts"
+      ],
+      "controllers/drag-and-drop-controller.js": [
+        "dist/controllers/drag-and-drop-controller/index.d.ts"
+      ],
+      "controllers/field-association-controller": [
+        "dist/controllers/field-association-controller/index.d.ts"
+      ],
+      "controllers/field-association-controller/index.js": [
+        "dist/controllers/field-association-controller/index.d.ts"
       ],
       "controllers/focus-group-navigation-controller/focus-group-navigation-controller.js": [
         "dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts"

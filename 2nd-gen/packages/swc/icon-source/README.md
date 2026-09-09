@@ -6,10 +6,10 @@ See the icon strategy RFC (`CONTRIBUTOR-DOCS/03_project-planning/05_strategies/i
 
 ## Families
 
-| Folder      | Family                                  | Generator                 | Output                          | Status    |
-| ----------- | --------------------------------------- | ------------------------- | ------------------------------- | --------- |
-| `ui/`       | Internal UI icons (control internals)   | `yarn generate:ui-icons`  | `components/ui-icons/icon-set/` | Available |
-| `workflow/` | Public workflow icons (consumer-facing) | (added in RFC Phases 3–4) | `@adobe/spectrum-wc-icons`      | Planned   |
+| Folder      | Family                                  | Generator                      | Output                          | Status    |
+| ----------- | --------------------------------------- | ------------------------------ | ------------------------------- | --------- |
+| `ui/`       | Internal UI icons (control internals)   | `yarn generate:ui-icons`       | `components/ui-icons/icon-set/` | Available |
+| `workflow/` | Public workflow icons (consumer-facing) | `yarn generate:workflow-icons` | `@adobe/spectrum-wc-icons`      | Available |
 
 Add a new family by creating its folder here and pointing its generator at it; the `icon-source.json` metadata and this README are shared across families. Family-agnostic generator helpers (SVG cleanup, kebab-casing, license and banner) live in `utils/`.
 
@@ -58,11 +58,23 @@ Not every logical icon ships every step; the element falls back to the nearest a
 
 ### Workflow icons (`workflow/`)
 
-Naming and pipeline are defined when the workflow family lands (RFC Phases 3–4). Workflow icons ship one drawing per icon scaled to a token box, so they do not use the per-step numeral scale above.
+`S2_Icon_<LogicalName>_20_N.svg`
+
+```
+S2_Icon_Star_20_N.svg
+S2_Icon_AddCircle_20_N.svg
+S2_Icon_AlertTriangle_20_N.svg
+S2_Icon_3DAsset_20_N.svg
+…
+```
+
+Workflow icons ship **one drawing per icon** scaled to a token box, so unlike UI icons they do not use the per-step numeral scale above: every file carries the fixed `20` (a 20px source box) and `N` (normal) markers. The generator parses `<LogicalName>` and emits, per icon, an SVG-string function (`Icon_<Name>()`) and a custom element (`<swc-icon-<kebab>>`) into the `@adobe/spectrum-wc-icons` package.
+
+The kebab-case tag suffix comes from the shared `toKebab`, which splits on acronym and camel boundaries so digit-led names read cleanly: `AddCircle` becomes `swc-icon-add-circle` and `3DAsset` becomes `swc-icon-3d-asset`. See the [icons package README](../../icons/README.md) for the full naming table (function, class, tag, subpath).
 
 ## What the generators do
 
-Run the family's generator (for UI icons, `yarn generate:ui-icons` from the swc package) after adding or updating that family's SVGs.
+Run the family's generator (`yarn generate:ui-icons` or `yarn generate:workflow-icons`, both from the swc package) after adding or updating that family's SVGs.
 
 - Cleans each SVG with SVGO (`preset-default` keeps the `viewBox`; `removeDimensions` drops `width`/`height` so the element sizes the box) and rewrites the A4U `var(--iconPrimary, …)` fill to `var(--swc-icon-color, currentColor)`.
 - Emits per-logical-icon Lit `html` `TemplateResult` bundles (UI icons) or per-icon elements and SVG-string functions (workflow icons) to the family's output above.

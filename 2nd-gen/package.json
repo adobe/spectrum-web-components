@@ -16,8 +16,8 @@
   },
   "type": "module",
   "scripts": {
-    "build": "yarn workspaces foreach --from '{@adobe/spectrum-wc-core,@adobe/spectrum-wc}' --recursive run build",
-    "clean": "yarn workspaces foreach --from '{@adobe/spectrum-wc-core,@adobe/spectrum-wc}' --recursive run clean",
+    "build": "yarn workspaces foreach --from '{@adobe/spectrum-wc-core,@adobe/spectrum-wc-icons,@adobe/spectrum-wc}' --recursive run build",
+    "clean": "yarn workspaces foreach --from '{@adobe/spectrum-wc-core,@adobe/spectrum-wc-icons,@adobe/spectrum-wc}' --recursive run clean",
     "dev:analyze": "yarn workspace @adobe/spectrum-wc analyze:watch",
     "dev:core": "yarn workspace @adobe/spectrum-wc-core dev",
     "lint": "cd .. && eslint 2nd-gen --ext .ts,.js,.json",
@@ -39,6 +39,8 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@changesets/changelog-github": "0.5.1",
+    "@changesets/cli": "2.29.7",
     "@storybook/addon-vitest": "10.3.5",
     "eslint": "9.39.2",
     "eslint-plugin-simple-import-sort": "12.1.1",

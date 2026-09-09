@@ -64,7 +64,7 @@ test.describe('Status Light - ARIA Snapshots', () => {
       'swc-status-light'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - text: Small Medium Large Extra-large
+      - text: Small Medium Large Extra large
     `);
   });
 });

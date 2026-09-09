@@ -4,5 +4,10 @@
     "pulledAt": "22/07/2026",
     "set": "S2 UI Icon Global Set",
     "version": "2.0.1"
+  },
+  "workflow": {
+    "pulledAt": "29/07/2026",
+    "set": "S2 Icon Global Set Open Source",
+    "version": "7.0.0"
   }
 }

@@ -45,11 +45,11 @@ test.describe('Icon - ARIA Snapshots', () => {
   test('should expose all sizes with correct aria-labels', async ({ page }) => {
     const root = await gotoStory(page, 'components-icon--sizes', 'swc-icon');
     await expect(root).toMatchAriaSnapshot(`
-      - img "Extra-small"
+      - img "Extra small"
       - img "Small"
       - img "Medium"
       - img "Large"
-      - img "Extra-large"
+      - img "Extra large"
     `);
   });
 });

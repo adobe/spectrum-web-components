@@ -163,9 +163,9 @@ const renderIconOnlyPermutation = ({
 // the avatar tracks each button size without the consumer restating a size on
 // the avatar. Written as direct markup (not template()) for the same icon-slot
 // parsing reason as icon-only above, and rendered across every size because
-// size is the axis this scaling actually drives. A fixed picsum id keeps the
+// size is the axis this scaling actually drives. A local asset keeps the
 // image deterministic for Chromatic (matching the docs stories).
-const AVATAR_ICON_SRC = 'https://picsum.photos/id/64/500/500';
+const AVATAR_ICON_SRC = './images/avatar-preview.png';
 
 const renderAvatarActionButton = (
   size: (typeof ACTION_BUTTON_VALID_SIZES)[number],

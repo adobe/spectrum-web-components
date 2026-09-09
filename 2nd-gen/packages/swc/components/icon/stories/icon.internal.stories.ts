@@ -14,13 +14,11 @@ import { styleMap } from 'lit/directives/style-map.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import {
-  ICON_VALID_SIZES,
-  type IconSize,
-} from '@adobe/spectrum-wc-core/components/icon';
+import { ICON_VALID_SIZES } from '@adobe/spectrum-wc-core/components/icon';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
+import { SIZE_LABELS } from '../../../.storybook/helpers/index.js';
 import { Chevron100Icon } from '../elements/index.js';
 import * as iconElements from '../elements/index.js';
 
@@ -63,14 +61,6 @@ export default meta;
 // ────────────────────
 
 const iconSvg = Chevron100Icon();
-
-const sizeLabels = {
-  xs: 'Extra-small',
-  s: 'Small',
-  m: 'Medium',
-  l: 'Large',
-  xl: 'Extra-large',
-} as const satisfies Record<IconSize, string>;
 
 const iconCardStyles = {
   display: 'inline-flex',
@@ -133,7 +123,7 @@ export const Sizes: Story = {
       template(
         {
           ...args,
-          'accessible-label': args['accessible-label'] || sizeLabels[size],
+          'accessible-label': args['accessible-label'] || SIZE_LABELS[size],
           size,
         },
         iconSvg

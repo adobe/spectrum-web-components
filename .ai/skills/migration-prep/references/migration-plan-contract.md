@@ -9,6 +9,7 @@ Use the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[c
 - `Architecture: core vs SWC split` for component boundaries and expected file layout
 - `Migration checklist` for phase-specific expectations
 - `Blockers and open questions` for unresolved items that must not be silently decided in code during drafting, or the deferred-ticket table in that section once the plan is finalized
+- `Decision log` for settled decisions and their rationale (keyed by the original `Q`/`B`/`C` id); consult it before re-opening a question that looks unresolved elsewhere
 
 ## Drift rule
 

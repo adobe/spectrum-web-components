@@ -28,6 +28,7 @@ import {
   forcedColorsVrtParameters,
   forcePseudoStates,
   row,
+  SIZE_LABELS,
   theme,
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
@@ -43,13 +44,6 @@ const meta: Meta = {
 export default meta;
 
 // Helpers
-
-const sizeLabels = {
-  s: 'Small',
-  m: 'Medium',
-  l: 'Large',
-  xl: 'Extra-large',
-} as const satisfies Record<(typeof ACCORDION_VALID_SIZES)[number], string>;
 
 const densityLabels = {
   compact: 'Compact',
@@ -157,8 +151,8 @@ const permutationContent = () => html`
       renderAccordion({
         size,
         items: html`
-          ${renderItem({ label: `${sizeLabels[size]} · open`, open: true })}
-          ${renderItem({ label: `${sizeLabels[size]} · closed` })}
+          ${renderItem({ label: `${SIZE_LABELS[size]} · open`, open: true })}
+          ${renderItem({ label: `${SIZE_LABELS[size]} · closed` })}
         `,
       })
     ),

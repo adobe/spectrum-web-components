@@ -12,6 +12,7 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
+import { FieldAssociationController } from '@adobe/spectrum-wc-core/controllers/field-association-controller/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   HelpTextMixin,
@@ -57,6 +58,9 @@ export abstract class TextFieldBase extends SizedMixin(
     delegatesFocus: true,
   };
 
+  /** Opts the element into native form participation. */
+  static formAssociated = true;
+
   /**
    * The size of the text field.
    *
@@ -72,12 +76,10 @@ export abstract class TextFieldBase extends SizedMixin(
   public accessibleLabel = '';
 
   /**
-   * Element IDs, from the light DOM, that provide the field's accessible name.
-   * Takes precedence over `accessibleLabel` and a slotted label.
+   * Light-DOM element IDs that name the field. Takes precedence over
+   * `accessibleLabel` and a slotted label.
    *
-   * @todo (SWC-2466): the `LabellingController` resolves these IDREFs to the
-   * cross-root `ariaLabelledByElements` property; raw `aria-labelledby` is not
-   * exposed on the host.
+   * @todo (SWC-2466): resolved to cross-root element refs by the `LabellingController`.
    */
   @property({ attribute: 'accessible-labelledby' })
   public accessibleLabelledby?: string;
@@ -184,12 +186,65 @@ export abstract class TextFieldBase extends SizedMixin(
   // "unlabeled field" dev-warning, via a future labelling mixin
   // (accessible-describedby resolution now lives in HelpTextMixin).
 
-  // @todo (SWC-2467): wire the FieldAssociationController (formAssociated,
-  // attachInternals, setFormValue, formResetCallback, formDisabledCallback) plus
-  // its checkValidity()/reportValidity()/validity pass-throughs.
+  // Form association: `formAssociated` (static, above) and `attachInternals` stay
+  // on the element; the controller wraps the rest. Constraint validity
+  // (required/pattern/…) is populated with the render work.
+  private internals = this.attachInternals();
 
-  // @todo (Phase 5): setSelectionRange() / select() delegate to the rendered
-  // native <input>, so they land with the render implementation.
+  private fieldAssoc = new FieldAssociationController(this.internals, {
+    onDisabledChange: () => this.requestUpdate(),
+  });
+
+  /**
+   * The host's own `disabled` OR the cascaded form / `<fieldset disabled>` state.
+   * The subclass render reads it to disable the inner control.
+   */
+  protected get effectiveDisabled(): boolean {
+    return this.disabled || this.fieldAssoc.formDisabled;
+  }
+
+  /** The form the field participates in, or `null`. */
+  public get form(): HTMLFormElement | null {
+    return this.fieldAssoc.form;
+  }
+
+  /** The field's constraint-validation state. */
+  public get validity(): ValidityState {
+    return this.fieldAssoc.validity;
+  }
+
+  /** The localized validation message. */
+  public get validationMessage(): string {
+    return this.fieldAssoc.validationMessage;
+  }
+
+  /** Whether the field is a candidate for constraint validation. */
+  public get willValidate(): boolean {
+    return this.fieldAssoc.willValidate;
+  }
+
+  /** Runs constraint validation; returns whether the field is valid. */
+  public checkValidity(): boolean {
+    return this.fieldAssoc.checkValidity();
+  }
+
+  /** Runs constraint validation and reports any problem to the user. */
+  public reportValidity(): boolean {
+    return this.fieldAssoc.reportValidity();
+  }
+
+  /** Restores the authored `value` attribute (unreflected, so it holds the initial value) on native form reset. */
+  public formResetCallback(): void {
+    this.value = this.getAttribute('value') ?? '';
+  }
+
+  /** Delegates the ancestor form / fieldset disabled cascade to the controller. */
+  public formDisabledCallback(disabled: boolean): void {
+    this.fieldAssoc.formDisabledCallback(disabled);
+  }
+
+  // @todo setSelectionRange() / select() delegate to the rendered native
+  // <input>; they land with the render implementation.
 
   protected override update(changedProperties: PropertyValues): void {
     validateEnum(this, {
@@ -205,5 +260,12 @@ export abstract class TextFieldBase extends SizedMixin(
       url: DOCS_URL,
     });
     super.update(changedProperties);
+    // Custom state for `:host(:state(disabled))`; unlike `[disabled]` it covers
+    // the cascaded `<fieldset disabled>` case, not just the host's own property.
+    this.internals.states[this.effectiveDisabled ? 'add' : 'delete'](
+      'disabled'
+    );
+    // Push the current value into the form; exclude it entirely when disabled.
+    this.fieldAssoc.setValue(this.effectiveDisabled ? null : this.value);
   }
 }
