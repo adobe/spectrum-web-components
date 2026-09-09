@@ -64,9 +64,15 @@ export class FieldAssociationController {
   //     FORM VALUE
   // ─────────────────────────
 
-  /** Sets the form value. Pass `null` to exclude the field from `FormData`. */
-  public setValue(value: FieldFormValue): void {
-    this._internals.setFormValue(value);
+  /**
+   * Sets the form value. Pass `null` to exclude the field from `FormData`.
+   *
+   * `state` is the value to restore on autofill / back-forward navigation when it
+   * differs from the submitted `value` (e.g. a checkbox's checked-state vs its
+   * submitted string). Omit it to restore `value` itself.
+   */
+  public setValue(value: FieldFormValue, state?: FieldFormValue): void {
+    this._internals.setFormValue(value, state);
   }
 
   // ─────────────────────────

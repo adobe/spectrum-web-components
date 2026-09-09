@@ -39,6 +39,15 @@ export class TextField extends TextFieldBase {
     this.value = (event.target as HTMLInputElement).value;
   }
 
+  /**
+   * Re-dispatch `change` from the host: the native `change` event is
+   * `composed: false`, so it never crosses the shadow boundary and a consumer's
+   * `<swc-text-field @change=…>` would otherwise never fire.
+   */
+  private handleChange(): void {
+    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+  }
+
   protected override render(): TemplateResult {
     // @todo (SWC-2466): render the visible label, required indicator, validation
     // icon, and description/error container via the LabellingController. Until
@@ -51,6 +60,7 @@ export class TextField extends TextFieldBase {
           .value=${this.value}
           ?disabled=${this.effectiveDisabled}
           @input=${this.handleInput}
+          @change=${this.handleChange}
         />
       </div>
     `;

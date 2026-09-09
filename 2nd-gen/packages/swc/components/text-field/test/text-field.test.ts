@@ -173,3 +173,25 @@ export const DisabledStateTest: Story = {
   },
 };
 DisabledStateTest.storyName = 'Disabled state';
+
+export const ChangeEventTest: Story = {
+  render: () => html`
+    <swc-text-field accessible-label="Username"></swc-text-field>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+
+    await step('change re-dispatches across the shadow boundary', () => {
+      // Native change is composed:false and would never reach a host listener.
+      let heard = false;
+      field.addEventListener('change', () => (heard = true));
+      const input = field.shadowRoot?.querySelector('input');
+      input?.dispatchEvent(new Event('change'));
+      expect(heard, 'host emits a change event').toBe(true);
+    });
+  },
+};
+ChangeEventTest.storyName = 'Change event';
