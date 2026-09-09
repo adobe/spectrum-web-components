@@ -240,7 +240,9 @@ export class DemoFieldRadio extends DemoFieldHostBase {
     // Native radios in one group are mutually exclusive; each harness lives in
     // its own shadow root, so uncheck same-name siblings by hand.
     this.form
-      ?.querySelectorAll<DemoFieldRadio>(`demo-field-radio[name="${this.name}"]`)
+      ?.querySelectorAll<DemoFieldRadio>(
+        `demo-field-radio[name="${this.name}"]`
+      )
       .forEach((radio) => {
         if (radio !== this) {
           radio.checked = false;
@@ -529,11 +531,7 @@ export class DemoFieldBench extends LitElement {
 
   protected override render(): TemplateResult {
     return html`
-      <form
-        novalidate
-        @submit=${this.handleSubmit}
-        @reset=${this.handleReset}
-      >
+      <form novalidate @submit=${this.handleSubmit} @reset=${this.handleReset}>
         <fieldset>
           <legend>Profile</legend>
           <demo-field-text
