@@ -23,7 +23,13 @@
 .swc-ResponseStatus {
   display: flex;
   flex-direction: column;
-  gap: token("spacing-100");
+}
+
+/* No gap when closed: the panel is zero-height then, so a gap would just be
+   trailing space. Split between this and the steps list's padding-block
+   below when open. */
+:host([open]) .swc-ResponseStatus {
+  gap: token("spacing-75");
 }
 
 /* ─────────────────────────────────────
@@ -35,19 +41,23 @@
   gap: token("spacing-100");
   align-items: center;
   min-block-size: var(--_swc-response-status-row-block-size, 32px);
-  padding-inline: token("spacing-100");
 }
 
 /* When the row is a button (reasoning toggle). Full inline-size so the
    entire row is clickable. */
 .swc-ResponseStatus-row--button {
   inline-size: 100%;
-  padding: var(--_swc-response-status-toggle-padding-block, 3px) token("spacing-100");
+  padding: 0;
   color: inherit;
   text-align: start;
   background: transparent;
   border: none;
   border-radius: token("corner-radius-medium-default");
+}
+
+.swc-ResponseStatus-row--button:focus-visible {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
 }
 
 .swc-ResponseStatus-label {
@@ -212,7 +222,6 @@
 .swc-ResponseStatus--agentic {
   gap: token("spacing-100");
   inline-size: 100%;
-  max-inline-size: 540px;
 }
 
 .swc-ResponseStatus-row--processing {
@@ -289,6 +298,11 @@
   padding-inline-start: token("spacing-500");
   margin: 0;
   list-style: none;
+}
+
+/* Only when open, so the collapsed panel still shrinks to true zero. */
+.swc-ResponseStatus-panel--open .swc-ResponseStatus-steps {
+  padding-block: token("spacing-75");
 }
 
 /* Typography utilities (shadow-local; mirrors typography.css) */
