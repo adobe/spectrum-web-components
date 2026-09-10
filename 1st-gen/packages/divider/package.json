@@ -1,6 +1,6 @@
 {
   "name": "@spectrum-web-components/divider",
-  "version": "1.12.2",
+  "version": "1.12.3",
   "description": "",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -55,7 +55,7 @@
   ],
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@spectrum-web-components/base": "1.12.2"
+    "@spectrum-web-components/base": "1.12.3"
   },
   "keywords": [
     "design-system",

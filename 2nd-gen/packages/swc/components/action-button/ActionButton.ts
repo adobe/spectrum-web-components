@@ -87,6 +87,14 @@ export class ActionButton extends PendingMixin(ButtonBase) {
   static override readonly VALID_SIZES: readonly ActionButtonSize[] =
     ACTION_BUTTON_VALID_SIZES;
 
+  /**
+   * The `m` size is the default and most frequently used option. Use the other sizes sparingly; they should be used to create a hierarchy of importance within the page.
+   *
+   * @default m
+   */
+  // @ts-expect-error TS2416: intentional widening of the inherited `size` type and matches runtime behavior.
+  declare public size: ActionButtonSize;
+
   // aria-haspopup, aria-expanded, and aria-disabled are observed without
   // @property to avoid conflicting with ARIAMixin types and appearing in the CEM.
   /** @internal */

@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import type { Locator, Page } from '@playwright/test';
 import { expect, test } from '@playwright/test';
+
+import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
  * Accessibility tests for Link styles (2nd Generation)
@@ -25,57 +26,48 @@ import { expect, test } from '@playwright/test';
  * test-storybook (see .storybook/test-runner.ts). Both are included
  * in the `test:a11y` command.
  */
-async function gotoLinkStory(page: Page, storyId: string): Promise<Locator> {
-  await page.goto(`/iframe.html?id=${storyId}&viewMode=story`, {
-    waitUntil: 'domcontentloaded',
-  });
-
-  await page.waitForFunction(() => {
-    const root = document.querySelector('#storybook-root');
-    return root && root.children.length > 0;
-  });
-
-  await page
-    .locator('#storybook-root a[href]')
-    .first()
-    .waitFor({ state: 'visible' });
-
-  return page.locator('#storybook-root');
-}
 
 test.describe('Link - ARIA Snapshots', () => {
   test('standalone explicit link exposes link role and name', async ({
     page,
   }) => {
-    const root = await gotoLinkStory(page, 'components-link--standalone');
+    const root = await gotoStory(
+      page,
+      'components-link--standalone',
+      'a[href]'
+    );
     await expect(root).toMatchAriaSnapshot(`
       - link "Account settings"
     `);
   });
 
   test('secondary link exposes link role and name', async ({ page }) => {
-    const root = await gotoLinkStory(page, 'components-link--secondary');
+    const root = await gotoStory(page, 'components-link--secondary', 'a[href]');
     await expect(root).toMatchAriaSnapshot(`
       - link "Learn more"
     `);
   });
 
   test('quiet standalone link exposes link role and name', async ({ page }) => {
-    const root = await gotoLinkStory(page, 'components-link--quiet-standalone');
+    const root = await gotoStory(
+      page,
+      'components-link--quiet-standalone',
+      'a[href]'
+    );
     await expect(root).toMatchAriaSnapshot(`
       - link "Privacy policy"
     `);
   });
 
   test('in-prose link is named from visible text', async ({ page }) => {
-    const root = await gotoLinkStory(page, 'components-link--in-prose');
+    const root = await gotoStory(page, 'components-link--in-prose', 'a[href]');
     await expect(root).toMatchAriaSnapshot(`
       - link "inline link"
     `);
   });
 
   test('link list renders multiple named links', async ({ page }) => {
-    const root = await gotoLinkStory(page, 'components-link--link-list');
+    const root = await gotoStory(page, 'components-link--link-list', 'a[href]');
     await expect(root.locator('.swc-Typography--links')).toMatchAriaSnapshot(`
       - list:
         - listitem:
@@ -90,7 +82,11 @@ test.describe('Link - ARIA Snapshots', () => {
   test('accessibility story renders descriptive prose link', async ({
     page,
   }) => {
-    const root = await gotoLinkStory(page, 'components-link--accessibility');
+    const root = await gotoStory(
+      page,
+      'components-link--accessibility',
+      'a[href]'
+    );
     await expect(root).toMatchAriaSnapshot(`
       - paragraph:
         - link "view the full schedule"
@@ -98,7 +94,11 @@ test.describe('Link - ARIA Snapshots', () => {
   });
 
   test('links are keyboard focusable', async ({ page }) => {
-    const root = await gotoLinkStory(page, 'components-link--standalone');
+    const root = await gotoStory(
+      page,
+      'components-link--standalone',
+      'a[href]'
+    );
     const anchor = root.locator('a[href]').first();
     await anchor.focus();
     await expect(anchor).toBeFocused();

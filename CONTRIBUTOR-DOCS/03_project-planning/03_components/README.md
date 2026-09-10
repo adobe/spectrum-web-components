@@ -146,6 +146,7 @@
     - [Radio migration roadmap](radio/rendering-and-styling-migration-analysis.md)
 - Radio Group
     - [Radio group accessibility migration analysis](radio-group/accessibility-migration-analysis.md)
+    - [Radio group migration plan](radio-group/migration-plan.md)
 - Search
     - [Search migration roadmap](search/rendering-and-styling-migration-analysis.md)
 - Sidenav
@@ -179,6 +180,7 @@
     - [Textfield and Textarea migration roadmap](textfield/rendering-and-styling-migration-analysis.md)
 - Thumbnail
     - [Thumbnail accessibility migration analysis](thumbnail/accessibility-migration-analysis.md)
+    - [Thumbnail migration plan](thumbnail/migration-plan.md)
     - [Thumbnail migration roadmap](thumbnail/rendering-and-styling-migration-analysis.md)
 - Toast
     - [Toast accessibility migration analysis](toast/accessibility-migration-analysis.md)

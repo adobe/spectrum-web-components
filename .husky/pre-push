@@ -1,0 +1,13 @@
+# Comprehensive 2nd-gen check before pushing: lint (ESLint, Stylelint,
+# Prettier, AI tooling), TypeScript (`tsc -b`), and Lit-template analysis.
+#
+# This is the catch-all net. Unlike the per-file lint-staged globs on
+# pre-commit, it runs the real lint commands over the whole 2nd-gen tree, so
+# it covers every file type and any new directory without curated patterns —
+# nothing slips through. Slower, but push is infrequent and results are
+# cached, so re-runs are fast.
+#
+# Non-blocking while the existing backlog is cleared — the report prints but
+# the push proceeds. Once `yarn check:2nd-gen` is green, drop the `|| true`
+# below to gate pushes.
+yarn check:2nd-gen || true

@@ -11,11 +11,9 @@
  */
 
 /**
- * Global Changelog Generator
+ * Changelog Generator (1st-gen)
  *
- * Processes changeset files to generate and update changelogs for:
- * - 1st-gen Spectrum Web Components → 1st-gen/CHANGELOG.md
- * - @spectrum-web-components/core → 2nd-gen/packages/core/CHANGELOG.md
+ * Processes 1st-gen changeset files and updates 1st-gen/CHANGELOG.md.
  *
  * Extracts major, minor, and patch changes from changesets and formats them
  * into organized changelog entries.
@@ -45,7 +43,10 @@ function validateCurrentVersion() {
     process.exit(1);
   }
 
-  const currentTag = `v${currentVersion}`;
+  // Releases tag as `gen1-<version>` going forward (see create-git-tag.js), but
+  // releases published before that switch were tagged as `v<version>` - fall back
+  // to the old prefix so the changelog compare URL still resolves for those.
+  const candidateTags = [`gen1-${currentVersion}`, `v${currentVersion}`];
   try {
     const gitTagOutput = execSync('git tag --sort=-creatordate');
     if (!gitTagOutput) {
@@ -57,11 +58,11 @@ function validateCurrentVersion() {
       throw new Error('No git tags found in repository');
     }
 
-    const gitTag = gitTagList.find((tag) => tag === currentTag);
+    const gitTag = candidateTags.find((tag) => gitTagList.includes(tag));
     if (!gitTag) {
       throw new Error('Could not find a matching tag for the current version');
     }
-    return currentTag;
+    return gitTag;
   } catch (error) {
     console.error(`Failed to get current git tag: ${error.message}`);
     process.exit(1);
@@ -98,12 +99,12 @@ function extractChanges(frontmatter, description, pattern, prefix = '') {
 }
 
 /**
- * Processes changeset files and categorizes changes by type and target
+ * Processes changeset files and categorizes 1st-gen changes by type
  *
- * @returns {Promise<object>} Object containing categorized changes for both 1st-gen and core
+ * @returns {Promise<object>} Object containing categorized 1st-gen changes
  */
 async function processChangesets() {
-  const changesetDir = path.resolve(__dirname, '../../.changeset');
+  const changesetDir = path.resolve(__dirname, '../.changeset');
 
   // Use non-blocking I/O for directory read
   const files = await fsPromises.readdir(changesetDir);
@@ -118,9 +119,8 @@ async function processChangesets() {
     )
   );
 
-  // Prepare change containers
+  // Prepare change container
   const firstGen = { majorChanges: [], minorChanges: [], patchChanges: [] };
-  const core = { majorChanges: [], minorChanges: [], patchChanges: [] };
 
   for (const content of fileContents) {
     const frontmatterMatch = content.match(/---\n([\s\S]*?)\n---\n([\s\S]*)/);
@@ -139,24 +139,13 @@ async function processChangesets() {
       'sp-'
     );
 
-    // Extract @spectrum-web-components/core changes
-    const coreChanges = extractChanges(
-      frontmatter,
-      cleanDescription,
-      /['"]@spectrum-web-components\/core['"]:\s*(major|minor|patch)/g
-    );
-
     // Merge results into categorized buckets
     firstGen.majorChanges.push(...swcChanges.major);
     firstGen.minorChanges.push(...swcChanges.minor);
     firstGen.patchChanges.push(...swcChanges.patch);
-
-    core.majorChanges.push(...coreChanges.major);
-    core.minorChanges.push(...coreChanges.minor);
-    core.patchChanges.push(...coreChanges.patch);
   }
 
-  return { firstGen, core };
+  return { firstGen };
 }
 
 /**
@@ -298,29 +287,25 @@ function updateChangelogFile(
 }
 
 /**
- * Creates or updates the global CHANGELOG.md file based on changeset files.
+ * Creates or updates 1st-gen/CHANGELOG.md based on 1st-gen changeset files.
  *
- * Reads changeset files, categorizes changes by type (major/minor/patch),
- * and updates both the 1st-gen and @spectrum-web-components/core changelogs accordingly.
+ * Reads changeset files and categorizes changes by type (major/minor/patch)
+ * before writing the changelog entry.
  *
  * Should be run during the release process before changeset version.
- * Automatically called by the unified publish script for regular releases.
  *
  * @returns {Promise<void>}
  * @throws {Error} If there's an issue with git tags or file operations
  */
-async function createGlobalChangelog() {
+async function createChangelog() {
   const currentTag = validateCurrentVersion();
-  const { firstGen, core } = await processChangesets();
+  const { firstGen } = await processChangesets();
 
   // Early exit if no changes detected
   if (
     !firstGen.majorChanges.length &&
     !firstGen.minorChanges.length &&
-    !firstGen.patchChanges.length &&
-    !core.majorChanges.length &&
-    !core.minorChanges.length &&
-    !core.patchChanges.length
+    !firstGen.patchChanges.length
   ) {
     console.log(
       '🚫 No new changesets detected. Skipping changelog generation.'
@@ -333,7 +318,7 @@ async function createGlobalChangelog() {
     firstGen.majorChanges,
     firstGen.minorChanges
   );
-  const nextTag = `v${nextVersion}`;
+  const nextTag = `gen1-${nextVersion}`;
   const date = new Date().toLocaleDateString('en-CA', {
     year: 'numeric',
     month: '2-digit',
@@ -352,58 +337,13 @@ async function createGlobalChangelog() {
     firstGen,
     '##',
     `# \\[${nextVersion.replace(/\./g, '\\.')}\\]`,
-    `⚠️ Version ${nextVersion} already has an entry in the CHANGELOG. Skipping global update.`,
+    `⚠️ Version ${nextVersion} already has an entry in the CHANGELOG. Skipping changelog update.`,
     `✅ CHANGELOG updated for ${nextVersion}`
   );
-
-  // Update @spectrum-web-components/core changelog if there are core changes
-  const coreChangelogPath = path.resolve(
-    __dirname,
-    '../../2nd-gen/packages/core/CHANGELOG.md'
-  );
-
-  if (
-    core.majorChanges.length ||
-    core.minorChanges.length ||
-    core.patchChanges.length
-  ) {
-    const corePackageJson = JSON.parse(
-      fs.readFileSync(
-        path.resolve(__dirname, '../../2nd-gen/packages/core/package.json'),
-        'utf8'
-      )
-    );
-    const coreCurrentVersion = corePackageJson.version;
-    const coreNextVersion = calculateNextVersion(
-      coreCurrentVersion,
-      core.majorChanges,
-      core.minorChanges
-    );
-
-    const coreCurrentTag = `@spectrum-web-components/core@${coreCurrentVersion}`;
-    const coreNextTag = `@spectrum-web-components/core@${coreNextVersion}`;
-    const coreCompareUrl = `${repoUrl}/compare/${coreCurrentTag}...${coreNextTag}`;
-
-    updateChangelogFile(
-      coreChangelogPath,
-      coreNextVersion,
-      coreCompareUrl,
-      date,
-      core,
-      '###',
-      `## \\[${coreNextVersion.replace(/\\./g, '\\\\.')}\\]`,
-      `⚠️ Version ${coreNextVersion} already has an entry in the @spectrum-web-components/core CHANGELOG. Skipping core update.`,
-      `✅ @spectrum-web-components/core CHANGELOG updated for ${coreNextVersion}`
-    );
-  } else {
-    console.log(
-      'ℹ️ No @spectrum-web-components/core changes to add to the core changelog.'
-    );
-  }
 }
 (async () => {
   try {
-    await createGlobalChangelog();
+    await createChangelog();
   } catch (error) {
     console.error('Error updating changelog:', error);
     process.exit(1);
