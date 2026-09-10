@@ -25,8 +25,8 @@
    ring, and the press animation, so only the chip-specific geometry is
    overridden here through the button's public custom properties. */
 .swc-SuggestionItem {
-  --swc-button-edge-to-visual: var(--swc-suggestion-item-icon-margin-inline-start, 14px);
-  --swc-button-edge-to-text: var(--swc-suggestion-item-label-padding-inline-end, token("spacing-300"));
+  --swc-button-edge-to-visual: 14px;
+  --swc-button-edge-to-text: token("spacing-300");
 }
 
 /* swc-button renders its label at bold weight with no custom-property hook.
