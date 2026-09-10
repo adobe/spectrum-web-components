@@ -59,8 +59,9 @@ const DOCS_URL =
  * pattern: an externally-referenced trigger (`for`/`triggerElement`) opens a
  * `PlacementController`-anchored surface containing a `role="menu"` list.
  * ARIA and click-to-toggle wiring on the trigger, open/close events, roving
- * `tabindex` and arrow-key navigation among `swc-menu-item` rows, Escape to
- * close, and initial/return focus are all handled here.
+ * `tabindex` and arrow-key navigation among `swc-menu-item` rows, and
+ * initial/return focus are all handled here. Closes on Escape, an outside
+ * click, Tab/Shift+Tab moving focus out, or a slotted row being activated.
  *
  * @slot - `swc-menu-item` elements. `swc-menu-group` and `swc-divider` (as a
  *   separator) join in a later migration phase.
@@ -179,6 +180,18 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
    */
   private _restoreFocusToTrigger = false;
 
+  /**
+   * Set at the end of every `updated()` call. Gates the same narrow thing it
+   * does in `Popover.base.ts`/`Tooltip.base.ts`: whether this is genuinely
+   * the first render (an initially-`open` menu should not steal focus or
+   * dispatch a phantom `swc-open` on mount) versus a later, real open/close
+   * transition, which must still run the full open/close branch — register
+   * the dismissible, wire the Escape/outside-click listeners, position the
+   * surface. Do not gate that whole branch on this flag; only the two things
+   * named above.
+   */
+  private _hasCompletedFirstUpdate = false;
+
   // Direct `swc-menu-item` children only this phase; `swc-menu-group` joins
   // once it exists (Phase B), extending this to also collect its default
   // slot's items, matching the a11y analysis's illustrative query.
@@ -233,6 +246,58 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     }
     this.open = false;
   };
+
+  // Closes the menu when focus leaves it entirely (Tab or Shift+Tab out of
+  // the last/first item), per the menu button pattern's keyboard table:
+  // Tab moves focus out of an open menu and closes it. Lets focus continue
+  // wherever it was headed rather than redirecting it back to the trigger
+  // (that redirect is `_restoreFocusToTrigger`'s job for Escape/outside
+  // click/item activation, all of which drop focus with nowhere else to
+  // go). Registered on `this`, not `document`: `focusout` bubbles from any
+  // losing-focus descendant, so no capture-phase/open-close lifecycle
+  // wiring is needed here the way the document-level listeners need.
+  private readonly handleFocusOut = (event: FocusEvent): void => {
+    if (!this.open) {
+      return;
+    }
+    const next = event.relatedTarget;
+    if (next instanceof Node && deepContains(this, next)) {
+      return;
+    }
+    this.open = false;
+  };
+
+  // Closes the menu when a slotted row is activated. This phase has no
+  // submenus or selection to special-case yet, so any click landing on one
+  // of the roving-tabindex items (not just anywhere inside the surface,
+  // e.g. its padding) counts — matches the menu button pattern: choosing a
+  // plain command item closes the menu. `composedPath()` against the same
+  // item set `FocusgroupNavigationController` collects, so this and arrow
+  // navigation never disagree about what counts as a row.
+  private readonly handleItemActivate = (event: MouseEvent): void => {
+    if (!this.open) {
+      return;
+    }
+    const items = new Set(this.getMenuItems());
+    const activatedItem = event
+      .composedPath()
+      .some((node) => items.has(node as HTMLElement));
+    if (!activatedItem) {
+      return;
+    }
+    this.open = false;
+  };
+
+  // `focusout`/`click` bubble from any descendant regardless of `open`, and
+  // both handlers already no-op when closed, so these are wired once for
+  // the component's whole connected lifetime rather than toggled per
+  // open/close the way the document-level Escape/outside-click listeners
+  // are (those need the capture-phase dance; these do not).
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('focusout', this.handleFocusOut);
+    this.addEventListener('click', this.handleItemActivate);
+  }
 
   // Removes this menu's aria-controls reference from a previously-wired
   // trigger and clears the state/expanded attributes it owns, so a stale
@@ -356,12 +421,13 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   protected override willUpdate(changedProperties: PropertyValues): void {
     super.willUpdate(changedProperties);
     // Snapshot before render reacts to the new `open` value (see
-    // `_restoreFocusToTrigger`'s own doc). Reuses the same "not the
-    // initialization entry" check as the `openChanged` guard below.
+    // `_restoreFocusToTrigger`'s own doc). `_hasCompletedFirstUpdate` is
+    // still false during the very first call, so a menu that starts closed
+    // does not treat its own initialization as "a close just happened".
     if (
       changedProperties.has('open') &&
-      changedProperties.get('open') !== undefined &&
-      !this.open
+      !this.open &&
+      this._hasCompletedFirstUpdate
     ) {
       this._restoreFocusToTrigger = this.isFocusWithin();
     }
@@ -387,17 +453,17 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       this.wireTrigger();
     }
 
-    // `changedProperties.get('open')` is the previous value. On the very
-    // first `updated()` call, the entry recorded for the property's own
-    // initializer has no real previous value: it reads `undefined`, not
-    // `false`. Checking for that excludes that initialization entry so a
-    // menu that starts closed does not dispatch a phantom `swc-close` (or one
-    // that starts open, `swc-open`) the moment it first renders.
-    const openChanged =
-      changedProperties.has('open') &&
-      changedProperties.get('open') !== undefined;
-    if (openChanged) {
-      this.dispatchOpenEvents(this.open);
+    // Runs whenever `open` changes at all, including the very first
+    // `updated()` call for a menu that starts open (`<swc-menu open>`) --
+    // matching `Popover.base.ts`/`Tooltip.base.ts`'s own precedent: both run
+    // this full branch (dismiss registration, listeners, positioning) on
+    // that first call too, and narrowly suppress only the phantom
+    // `swc-open`/`swc-close` event and the initial focus-steal below via
+    // `_hasCompletedFirstUpdate`, not by skipping the branch outright.
+    if (changedProperties.has('open')) {
+      if (this._hasCompletedFirstUpdate) {
+        this.dispatchOpenEvents(this.open);
+      }
       if (this.open) {
         registerDismissible(this);
         document.addEventListener('keydown', this.handleKeyDown, {
@@ -407,17 +473,28 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
           capture: true,
         });
         this.startPlacement();
-        // Re-checks eligibility (e.g. newly visible rows) before moving focus
-        // in, then delegates "first item" to the controller's own preferred-
-        // item algorithm rather than re-deriving eligibility here.
-        this.focusNavigation.refresh();
-        const active = this.focusNavigation.getActiveItem();
-        if (active) {
-          // Deferred with `queueMicrotask` per the controller's own
-          // documented pattern for focusing from a trigger `click` handler:
-          // otherwise the browser moves focus back to the trigger after the
-          // click handler (which set `open`) returns.
-          queueMicrotask(() => active.focus());
+        if (this._hasCompletedFirstUpdate) {
+          // Re-checks eligibility (e.g. newly visible rows) first. Forces
+          // the first item active rather than trusting the controller's own
+          // memory-preferring `refresh()` + `getActiveItem()`: every normal
+          // open must land on the first item regardless of which row was
+          // active the last time this menu was open, not wherever `memory`
+          // last parked the roving tab stop. Falls back to `getActiveItem()`
+          // only if the first raw item is not eligible (e.g. mid-transition).
+          this.focusNavigation.refresh();
+          const firstItem = this.getMenuItems()[0];
+          const active =
+            (firstItem &&
+              this.focusNavigation.setActiveItem(firstItem) &&
+              firstItem) ||
+            this.focusNavigation.getActiveItem();
+          if (active) {
+            // Deferred with `queueMicrotask` per the controller's own
+            // documented pattern for focusing from a trigger `click`
+            // handler: otherwise the browser moves focus back to the
+            // trigger after the click handler (which set `open`) returns.
+            queueMicrotask(() => active.focus());
+          }
         }
       } else {
         unregisterDismissible(this);
@@ -444,6 +521,8 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       // Re-anchor while open when a positioning input or the trigger changes.
       this.startPlacement();
     }
+
+    this._hasCompletedFirstUpdate = true;
   }
 
   public override disconnectedCallback(): void {
@@ -458,5 +537,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     document.removeEventListener('click', this.handleOutsideClick, {
       capture: true,
     });
+    this.removeEventListener('focusout', this.handleFocusOut);
+    this.removeEventListener('click', this.handleItemActivate);
   }
 }
