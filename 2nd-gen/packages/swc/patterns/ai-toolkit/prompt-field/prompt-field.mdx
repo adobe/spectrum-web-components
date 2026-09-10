@@ -61,6 +61,19 @@ Every prompt field in production must include Legal-approved disclaimer copy bel
 
 Slotted `legal` content inherits the footer typography automatically. When it contains links, add the `swc-Typography--links` class to the wrapping element so the links inherit that typography and render in the subdued neutral color instead of the default accent blue. `swc-prompt-field` logs a development warning when the `legal` slot is empty.
 
+```html
+<swc-prompt-field>
+  <p slot="legal" class="swc-Typography--links">
+    Responses are generated using AI, and may be inaccurate. Check before using.
+    <a
+      href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+    >
+      AI User Guidelines
+    </a>
+  </p>
+</swc-prompt-field>
+```
+
 ### Attachment
 
 Attachment layout is inferred from the **`attachment`** slot content:
