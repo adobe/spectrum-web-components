@@ -134,9 +134,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
     /**
      * @internal
      *
-     * Documentation URL used in the missing-accessible-name DEBUG warning.
-     * Derived from the custom element tag name so each concrete component
-     * gets an accurate link with no per-subclass override needed.
+     * Docs URL for the dev warnings, derived from the element's tag name.
      */
     protected get docsHref(): string {
       const name = this.localName.replace(/^swc-/, '');
@@ -146,9 +144,8 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
     /**
      * @internal
      *
-     * Resolves `accessibleLabelledby`'s space-separated `id`s against the
-     * host's root node. `id`s that don't resolve to an element are dropped
-     * silently; the caller falls back to a lower-precedence source.
+     * Resolves `accessibleLabelledby`'s `id`s against the host's root node.
+     * Unresolved `id`s are dropped silently.
      */
     private get _resolvedLabelledbyElements(): Element[] {
       if (!this.accessibleLabelledby) {
