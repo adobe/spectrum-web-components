@@ -100,6 +100,99 @@ export const StatesTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: readonly, aria-invalid, and value round-trip bindings
+// ──────────────────────────────────────────────────────────────
+
+export const BindingsTest: Story = {
+  render: () => html`
+    <swc-text-field accessible-label="Username"></swc-text-field>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const input = () =>
+      field.shadowRoot?.querySelector('input') as HTMLInputElement;
+
+    await step('readonly reflects onto the native input', async () => {
+      expect(input().readOnly).toBe(false);
+      field.readonly = true;
+      await field.updateComplete;
+      expect(input().readOnly).toBe(true);
+    });
+
+    await step('invalid sets aria-invalid on the native input', async () => {
+      expect(input().getAttribute('aria-invalid')).toBe(null);
+      field.invalid = true;
+      await field.updateComplete;
+      expect(input().getAttribute('aria-invalid')).toBe('true');
+    });
+
+    await step('typing round-trips the native value back to the host', () => {
+      // The @input handler is the only path that syncs user edits onto
+      // the host `value`; assert it so `.value` in render can't silently
+      // drift from what the user sees.
+      input().value = 'typed by user';
+      input().dispatchEvent(new Event('input'));
+      expect(field.value).toBe('typed by user');
+    });
+
+    await step('focusing the host delegates to the native input', () => {
+      // delegatesFocus makes the field a single tab stop with focus
+      // landing on the real control rather than the host wrapper.
+      field.focus();
+      expect(field.shadowRoot?.activeElement).toBe(input());
+    });
+  },
+};
+BindingsTest.storyName = 'Bindings';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Invalid enum values emit a DEBUG warning
+// ──────────────────────────────────────────────────────────────
+
+export const EnumValidationTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ step }) => {
+    await step('warns when "type" is not a supported value', () =>
+      withWarningSpy(async (warnCalls) => {
+        const field = await fixture<TextField>(html`
+          <swc-text-field
+            accessible-label="Named"
+            type="bogus"
+          ></swc-text-field>
+        `);
+        await field.updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(messages.some((m) => m.includes('expects "type"'))).toBe(true);
+        field.parentElement?.remove();
+      })
+    );
+
+    await step('warns when "label-position" is not a supported value', () =>
+      withWarningSpy(async (warnCalls) => {
+        const field = await fixture<TextField>(html`
+          <swc-text-field
+            accessible-label="Named"
+            label-position="sideways"
+          ></swc-text-field>
+        `);
+        await field.updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(messages.some((m) => m.includes('expects "label-position"'))).toBe(
+          true
+        );
+        field.parentElement?.remove();
+      })
+    );
+  },
+};
+EnumValidationTest.storyName = 'Enum validation';
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Missing accessible-name DEBUG warning
 // ──────────────────────────────────────────────────────────────
 
