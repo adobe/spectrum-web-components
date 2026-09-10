@@ -24,6 +24,11 @@ import styles from './thumbnail.css';
  * @element swc-thumbnail
  *
  * @slot - Image element to present in the thumbnail.
+ *
+ * @example
+ * <swc-thumbnail>
+ *   <img src="/preview.png" alt="Preview" />
+ * </swc-thumbnail>
  */
 export class Thumbnail extends ThumbnailBase {
   public static override get styles(): CSSResultArray {
