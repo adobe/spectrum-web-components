@@ -27,10 +27,10 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
-import { Chevron75Icon } from '@adobe/spectrum-wc/icon/elements/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
+import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 import '../pixel-loader/swc-pixel-loader.js';
 
 import { uniqueId } from '../../../utils/id.js';
@@ -67,6 +67,8 @@ export type ResponseStatusStatus = (typeof RESPONSE_STATUSES)[number];
  * Detail: `{ open: boolean }`
  * @fires swc-response-status-step-toggle - Dispatched when the user expands or collapses
  * a step's description. Detail: `{ open: boolean, index: number }`
+ *
+ * @cssprop --swc-response-status-label-max-lines - Maximum number of lines the settled header label clamps to before ellipsing. Defaults to 2.
  * @since 2.0.0-beta.3
  */
 export class ResponseStatus extends SpectrumElement {
@@ -567,13 +569,11 @@ export class ResponseStatus extends SpectrumElement {
   private _renderChevron(open: boolean): TemplateResult {
     const baseClass = 'swc-ResponseStatus-chevron';
     return html`
-      <swc-icon
+      <swc-ui-icon
         class=${open ? `${baseClass} ${baseClass}--down` : baseClass}
-        style="--swc-icon-inline-size:10px;--swc-icon-block-size:10px;"
-        aria-hidden="true"
-      >
-        ${Chevron75Icon()}
-      </swc-icon>
+        icon="chevron"
+        size="s"
+      ></swc-ui-icon>
     `;
   }
 

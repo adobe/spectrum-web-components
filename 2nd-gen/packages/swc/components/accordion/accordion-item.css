@@ -111,25 +111,22 @@
 /* ── Disclosure indicator (chevron) ─────────────────────────────────── */
 
 /* swc-ui-icon maps the item size to the correct optical step and sizes its own box
- * from the ui-icon-* token scale, so the accordion only passes size. Rotation and RTL
- * mirroring remain here as accordion-specific behavior. */
+ * from the ui-icon-* token scale, so the accordion only passes size. swc-ui-icon also
+ * owns RTL mirroring for the chevron itself; rotation on open remains here as
+ * accordion-specific behavior. */
 .swc-AccordionItem-indicator {
   flex-shrink: 0;
   rotate: 0deg;
   transition: rotate token("animation-duration-100") token("animation-ease-in-out");
 }
 
-/* Mirror for RTL so the chevron points left. The UI icon element does not yet mirror
- * directional icons itself, so the accordion handles RTL mirroring for now. */
-:dir(rtl) .swc-AccordionItem-indicator {
-  scale: -1 1;
-}
-
 :host([open]) .swc-AccordionItem-indicator {
   rotate: 90deg;
 }
 
-/* RTL + open: rotate the opposite direction */
+/* RTL + open: swc-ui-icon has already mirrored the chevron horizontally, so rotating
+ * the same direction as LTR would point the wrong way; rotate the opposite direction
+ * to still land on "pointing down" once open. */
 :host([open]):dir(rtl) .swc-AccordionItem-indicator {
   rotate: -90deg;
 }
