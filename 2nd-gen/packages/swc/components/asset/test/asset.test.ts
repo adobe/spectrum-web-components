@@ -612,6 +612,43 @@ export const AriaHiddenSurvivesDecorativeToggleTest: Story = {
   },
 };
 
+export const DecorativeToggleRemovesOwnAriaHiddenTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'removes its own aria-hidden after toggling decorative off, even across an intervening update',
+      async () => {
+        asset.decorative = true;
+        await asset.updateComplete;
+        expect(
+          asset.getAttribute('aria-hidden'),
+          'Asset applies aria-hidden itself'
+        ).toBe('true');
+
+        // An unrelated property change forces a second `update()` while
+        // `decorative` is still true, re-running `resolveAccessibleName()`
+        // with the attribute already present - the exact scenario that
+        // previously caused Asset to lose track of owning it.
+        asset.background = 'solid';
+        await asset.updateComplete;
+
+        asset.decorative = false;
+        await asset.updateComplete;
+        expect(
+          asset.hasAttribute('aria-hidden'),
+          'Asset removes the aria-hidden it applied itself'
+        ).toBe(false);
+      }
+    );
+  },
+};
+
 export const ConsumerPreserveAspectRatioRespectedTest: Story = {
   render: () => html`
     <swc-asset fit="cover">

@@ -37,7 +37,7 @@
 ::slotted(*) {
   box-sizing: border-box;
   display: block;
-  place-content: center;
+  place-content: center; /* Aligns the message block for a failed load */
   inline-size: 100%;
   block-size: 100%;
   text-align: center;
