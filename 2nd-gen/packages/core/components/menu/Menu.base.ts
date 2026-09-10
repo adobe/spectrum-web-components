@@ -61,7 +61,7 @@ const DOCS_URL =
  * ARIA and click-to-toggle wiring on the trigger, open/close events, roving
  * `tabindex` and arrow-key navigation among `swc-menu-item` rows, and
  * initial/return focus are all handled here. Closes on Escape, an outside
- * click, Tab/Shift+Tab moving focus out, or a slotted row being activated.
+ * click, or a slotted row being activated (by click or <kbd>Enter</kbd>).
  *
  * @slot - `swc-menu-item` elements. `swc-menu-group` and `swc-divider` (as a
  *   separator) join in a later migration phase.
@@ -208,20 +208,44 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     return deepContains(this, getActiveElement());
   }
 
-  // Escape closes the menu. Registered on `document` (capture) only while
-  // open (see `updated()`), matching `Tooltip.base.ts`/`Popover.base.ts`:
-  // `swc-menu` has no native top-layer light-dismiss to fall back on.
+  // Shared by the Escape/Enter keydown handler and the click handler below:
+  // whether the event's path crosses one of the roving-tabindex rows
+  // `FocusgroupNavigationController` collects, so keyboard and pointer
+  // activation never disagree about what counts as a row.
+  private isMenuItemEventTarget(event: Event): boolean {
+    const items = new Set(this.getMenuItems());
+    return event.composedPath().some((node) => items.has(node as HTMLElement));
+  }
+
+  // Escape closes the menu; Enter on a focused row activates it, matching
+  // click (see `handleItemActivate`). Registered on `document` (capture)
+  // only while open (see `updated()`), matching `Tooltip.base.ts`/
+  // `Popover.base.ts`: `swc-menu` has no native top-layer light-dismiss to
+  // fall back on.
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
-    if (event.key !== 'Escape' || !this.open) {
+    if (!this.open) {
       return;
     }
-    // Only the topmost dismissible handles Escape; a surface above us
-    // (e.g. a submenu, once those exist) gets it first.
-    if (!isTopDismissible(this)) {
+    if (event.key === 'Escape') {
+      // Only the topmost dismissible handles Escape; a surface above us
+      // (e.g. a submenu, once those exist) gets it first.
+      if (!isTopDismissible(this)) {
+        return;
+      }
+      event.preventDefault();
+      this.open = false;
       return;
     }
-    event.preventDefault();
-    this.open = false;
+    if (event.key === 'Enter' && this.isMenuItemEventTarget(event)) {
+      // Prevents the browser's own Enter default-action from firing too.
+      // That default action resolves against whatever element has focus
+      // once it actually runs, not this event's original target — and
+      // closing the menu synchronously refocuses the trigger `<button>`
+      // (see `_restoreFocusToTrigger`), so an un-prevented Enter here
+      // re-activates that button and reopens the menu it just closed.
+      event.preventDefault();
+      this.open = false;
+    }
   };
 
   // Closes the menu on a click outside both its own content and its
@@ -247,55 +271,25 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this.open = false;
   };
 
-  // Closes the menu when focus leaves it entirely (Tab or Shift+Tab out of
-  // the last/first item), per the menu button pattern's keyboard table:
-  // Tab moves focus out of an open menu and closes it. Lets focus continue
-  // wherever it was headed rather than redirecting it back to the trigger
-  // (that redirect is `_restoreFocusToTrigger`'s job for Escape/outside
-  // click/item activation, all of which drop focus with nowhere else to
-  // go). Registered on `this`, not `document`: `focusout` bubbles from any
-  // losing-focus descendant, so no capture-phase/open-close lifecycle
-  // wiring is needed here the way the document-level listeners need.
-  private readonly handleFocusOut = (event: FocusEvent): void => {
-    if (!this.open) {
-      return;
-    }
-    const next = event.relatedTarget;
-    if (next instanceof Node && deepContains(this, next)) {
-      return;
-    }
-    this.open = false;
-  };
-
   // Closes the menu when a slotted row is activated. This phase has no
   // submenus or selection to special-case yet, so any click landing on one
   // of the roving-tabindex items (not just anywhere inside the surface,
   // e.g. its padding) counts — matches the menu button pattern: choosing a
-  // plain command item closes the menu. `composedPath()` against the same
-  // item set `FocusgroupNavigationController` collects, so this and arrow
-  // navigation never disagree about what counts as a row.
+  // plain command item closes the menu.
   private readonly handleItemActivate = (event: MouseEvent): void => {
-    if (!this.open) {
-      return;
-    }
-    const items = new Set(this.getMenuItems());
-    const activatedItem = event
-      .composedPath()
-      .some((node) => items.has(node as HTMLElement));
-    if (!activatedItem) {
+    if (!this.open || !this.isMenuItemEventTarget(event)) {
       return;
     }
     this.open = false;
   };
 
-  // `focusout`/`click` bubble from any descendant regardless of `open`, and
-  // both handlers already no-op when closed, so these are wired once for
-  // the component's whole connected lifetime rather than toggled per
-  // open/close the way the document-level Escape/outside-click listeners
-  // are (those need the capture-phase dance; these do not).
+  // `click` bubbles from any descendant regardless of `open`, and the
+  // handler already no-ops when closed, so it is wired once for the
+  // component's whole connected lifetime rather than toggled per open/close
+  // the way the document-level Escape/outside-click listeners are (those
+  // need the capture-phase dance; this does not).
   public override connectedCallback(): void {
     super.connectedCallback();
-    this.addEventListener('focusout', this.handleFocusOut);
     this.addEventListener('click', this.handleItemActivate);
   }
 
@@ -537,7 +531,6 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     document.removeEventListener('click', this.handleOutsideClick, {
       capture: true,
     });
-    this.removeEventListener('focusout', this.handleFocusOut);
     this.removeEventListener('click', this.handleItemActivate);
   }
 }
