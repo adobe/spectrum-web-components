@@ -13,7 +13,7 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
+import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   THUMBNAIL_DEFAULT_FIT,
@@ -30,14 +30,6 @@ import {
  * Provides the core API for wrapping a slotted preview image in a
  * checkerboard-backed frame. Concrete classes supply the stylesheet and
  * render template.
- *
- * `background`, `layer`, `disabled`, `focused`, and `selected` are
- * intentionally not declared here, or anywhere else on this component. The
- * checkerboard wrapper already covers `background`'s letterboxing purpose,
- * and a consumer reproduces the `layer`/`disabled`/`focused`/`selected`
- * visual outcomes with its own CSS targeting `swc-thumbnail` (or a wrapper
- * element). 1st-gen's `cover` boolean is replaced by `fit` below, not
- * dropped.
  */
 export abstract class ThumbnailBase extends SpectrumElement {
   // ─────────────────────────
@@ -47,11 +39,7 @@ export abstract class ThumbnailBase extends SpectrumElement {
   /**
    * @internal
    *
-   * The set of valid numeric size values for the thumbnail.
-   *
-   * This is an internal property not intended for consumer use, but used in
-   * internal validation logic, stories, and tests to keep them in sync with
-   * the canonical type definition in `Thumbnail.types.ts`.
+   * Valid numeric size values, exposed for validation, stories, and tests.
    */
   static readonly VALID_SIZES: readonly ThumbnailSize[] = THUMBNAIL_VALID_SIZES;
 
@@ -115,13 +103,12 @@ export abstract class ThumbnailBase extends SpectrumElement {
     const isValid = (THUMBNAIL_VALID_FITS as readonly string[]).includes(value);
     const validFit = isValid ? value : THUMBNAIL_DEFAULT_FIT;
 
-    warnIf(
-      this,
-      !isValid,
-      `<${this.localName}> expects "fit" to be one of: ${THUMBNAIL_VALID_FITS.join(', ')}. Received "${value}".`,
-      'https://spectrum-web-components.adobe.com/?path=/docs/components-thumbnail--docs',
-      { issues: [`fit="${value}"`] }
-    );
+    validateEnum(this, {
+      prop: 'fit',
+      value,
+      valid: THUMBNAIL_VALID_FITS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-thumbnail--docs',
+    });
 
     if (this._fit === validFit) {
       return;
@@ -140,11 +127,8 @@ export abstract class ThumbnailBase extends SpectrumElement {
 
   /**
    * Marks the thumbnail as decorative, hiding it (and its slotted image)
-   * from assistive technology via `aria-hidden`. Concrete elements
-   * additionally give the slotted image `alt=""` when unset; see the
-   * `Thumbnail` class for that logic, which lives there because it needs a
-   * `slotchange` listener bound to the rendered `<slot>` that this base
-   * class does not have.
+   * from assistive technology via `aria-hidden`. The `Thumbnail` class
+   * additionally gives the slotted image `alt=""` when unset.
    */
   @property({ type: Boolean, reflect: true })
   public decorative = false;
@@ -171,11 +155,19 @@ export abstract class ThumbnailBase extends SpectrumElement {
     }
   }
 
+  // Only clear `aria-hidden` if this instance set it, so a consumer's own
+  // attribute survives.
+  private _appliedAriaHidden = false;
+
   private _syncAriaHidden(): void {
     if (this.decorative) {
+      this._appliedAriaHidden = !this.hasAttribute('aria-hidden');
       this.setAttribute('aria-hidden', 'true');
-    } else {
+      return;
+    }
+    if (this._appliedAriaHidden) {
       this.removeAttribute('aria-hidden');
+      this._appliedAriaHidden = false;
     }
   }
 }

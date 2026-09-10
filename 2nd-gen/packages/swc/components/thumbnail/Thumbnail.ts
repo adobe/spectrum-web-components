@@ -31,19 +31,17 @@ import styles from './thumbnail.css';
  * </swc-thumbnail>
  */
 export class Thumbnail extends ThumbnailBase {
+  // ──────────────────────────────
+  //     RENDERING & STYLING
+  // ──────────────────────────────
+
   public static override get styles(): CSSResultArray {
     return [opacityCheckerboardStyles, styles];
   }
 
-  // ──────────────────────
-  //     IMPLEMENTATION
-  // ──────────────────────
-
   /**
-   * `Thumbnail.base.ts` owns `decorative`'s `aria-hidden` reflection, but its
-   * `alt` fallback and missing-`alt` warning live here instead: keeping them
-   * in sync with slotted content changes needs a `slotchange` listener bound
-   * to the rendered `<slot>`, and core has no `render()` to provide one.
+   * The `alt` fallback and warning live here, not in `Thumbnail.base.ts`,
+   * because they need a `slotchange` listener on the rendered `<slot>`.
    */
   protected override updated(changes: PropertyValues): void {
     super.updated(changes);
@@ -69,19 +67,22 @@ export class Thumbnail extends ThumbnailBase {
       return;
     }
 
-    const hasMeaningfulAlt =
-      img.hasAttribute('alt') && img.getAttribute('alt') !== '';
+    const hasAccessibleName =
+      img.hasAttribute('alt') ||
+      !!img.getAttribute('aria-label') ||
+      !!img.getAttribute('aria-labelledby');
 
     warnIf(
       this,
-      !hasMeaningfulAlt,
-      `<${this.localName}> requires a meaningful "alt" attribute on its slotted image.`,
+      !hasAccessibleName,
+      `<${this.localName}> requires an accessible name on its slotted image.`,
       'https://spectrum-web-components.adobe.com/?path=/docs/components-thumbnail--docs',
       {
         type: 'accessibility',
         issues: [
-          'add a meaningful `alt` attribute to the slotted `<img>`, or',
-          "set `decorative` on the thumbnail if the image's content is already described by surrounding context.",
+          'add an `alt` attribute (an empty string is valid when the image is already described by surrounding context) to the slotted `<img>`, or',
+          'add `aria-label` or `aria-labelledby` to the slotted `<img>`, or',
+          'set `decorative` on the thumbnail if the image is purely presentational.',
         ],
       }
     );
