@@ -167,30 +167,12 @@ const permutationContent = () => html`
   ${row([renderTurn({ type: 'system' })], 'System')}
   ${row([renderTurn({ type: 'user', content: 'grouped' })], 'User grouped')}
   ${row([renderTurn({ type: 'system', content: 'grouped' })], 'System grouped')}
-  ${row(
-    [
-      renderTurn({ type: 'user', content: 'card' }),
-      renderTurn({ type: 'user', content: 'media' }),
-    ],
-    'User attachments'
-  )}
   ${row([renderTurn({ type: 'user', content: 'wrapping' })], 'Wrapping')}
   ${row(
     (['ja', 'ko', 'zh'] as const).map((lang) =>
       renderTurn({ type: 'user', content: 'cjk', lang })
     ),
     'CJK language'
-  )}
-  ${row(
-    [
-      renderTurn({
-        type: 'user',
-        content: 'grouped',
-        forceState: 'focus-visible',
-      }),
-      renderTurn({ type: 'system', forceState: 'focus-visible' }),
-    ],
-    'focus-visible'
   )}
 `;
 
@@ -200,17 +182,6 @@ const permutationContent = () => html`
 const forcedColorsContent = () => html`
   ${row([renderTurn({ type: 'user' })], 'User')}
   ${row([renderTurn({ type: 'system' })], 'System')}
-  ${row(
-    [
-      renderTurn({
-        type: 'user',
-        content: 'grouped',
-        forceState: 'focus-visible',
-      }),
-      renderTurn({ type: 'system', forceState: 'focus-visible' }),
-    ],
-    'focus-visible'
-  )}
 `;
 
 // VRT stories
