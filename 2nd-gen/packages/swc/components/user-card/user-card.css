@@ -1,0 +1,76 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  --_swc-user-card-avatar-size: token("avatar-size-300");
+  --swc-card-base-preview-aspect-ratio: 3/1;
+}
+
+.swc-UserCard {
+  grid-template-areas:
+    "media"
+    "glyph"
+    "content"
+    "footer";
+  grid-template-rows: auto auto 1fr auto;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SIZE VARIANTS
+   Mirrors the AVATAR_SIZE_BY_CARD_SIZE scale UserCard.ts propagates onto the
+   slotted avatar's own `size` attribute, so the pull-up overlap below can be
+   computed from a known value instead of reading the avatar's rendered size
+   back out across the shadow boundary.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host([size="m"]) {
+  --_swc-user-card-avatar-size: token("avatar-size-500");
+}
+
+:host([size="l"]) {
+  --_swc-user-card-avatar-size: token("avatar-size-700");
+}
+
+:host([size="xl"]) {
+  --_swc-user-card-avatar-size: token("avatar-size-900");
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   AVATAR GLYPH
+   Rendered in its own row between the media and content areas. When a
+   preview banner is present, the avatar is pulled up by half its own size to
+   overlap the banner's bottom edge; otherwise it sits flush at the top of
+   its own row. UserCard.ts always sets `outline` on the slotted avatar; a
+   fixed 2px width is set here since `swc-avatar` only forces 2px on its own
+   at size >= 1000, larger than any size this card propagates.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+::slotted([slot="avatar"]) {
+  --swc-avatar-outline-width: 2px;
+
+  grid-area: glyph;
+  align-self: start;
+  justify-self: start;
+  margin-block-start: var(--_swc-card-base-content-padding);
+  margin-inline-start: var(--_swc-card-base-content-padding);
+}
+
+:host(:has([slot="preview"])) ::slotted([slot="avatar"]) {
+  margin-block-start: calc(var(--_swc-user-card-avatar-size) / -2);
+}
+
+/* Chromium :host(:has()) support */
+@scope {
+  :scope:has([slot="preview"]) ::slotted([slot="avatar"]) {
+    margin-block-start: calc(var(--_swc-user-card-avatar-size) / -2);
+  }
+}

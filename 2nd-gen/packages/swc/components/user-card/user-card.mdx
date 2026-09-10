@@ -1,0 +1,72 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as Stories from './stories/user-card.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A user card shares `preview`, `title`, `description`, the default slot, and `footer` with [Card](../?path=/docs/components-card--docs). It adds one part:
+
+- **`avatar`**: the person's avatar, shown between the preview and the content. Expects an [Avatar](../?path=/docs/components-avatar--docs) element
+
+<Canvas of={Stories.Anatomy} />
+
+## Options
+
+### Sizes
+
+Sizes match [Card](../?path=/docs/components-card--docs): five sizes (`xs`–`xl`, medium default) scale typography, padding, and maximum inline size. The one addition: size also sets the slotted avatar's own `size` attribute from a fixed scale (`xs`/`s`: `300`, `m`: `500`, `l`: `700`, `xl`: `900`), overwriting any `size` the consumer sets directly.
+
+<Canvas of={Stories.Sizes} />
+
+### Variants
+
+Variants match [Card](../?path=/docs/components-card--docs)'s `primary`/`secondary`/`tertiary`; `quiet` is not supported.
+
+<Canvas of={Stories.Variants} />
+
+### Density
+
+Density matches [Card](../?path=/docs/components-card--docs): `compact`, `regular` (default), and `spacious`.
+
+<Canvas of={Stories.Density} />
+
+### With preview
+
+Populating the `preview` slot renders a wide banner image above the avatar, at a `3/1` aspect ratio by default. When a preview is present, the avatar is pulled up to overlap its bottom edge by half the avatar's own size; without a preview, the avatar sits flush at the top of its row. The card always sets `outline` on the avatar with a fixed 2px width, so it reads clearly against the preview.
+
+<Canvas of={Stories.WithPreview} />
+
+## Behaviors
+
+### Title as link
+
+Identical to [Card](../?path=/docs/components-card--docs)'s `title-as-link`: wrap the `title` slot content in a real link and set the attribute to extend its hit area across the whole card surface.
+
+<Canvas of={Stories.TitleAsLink} />
+
+### Selectable
+
+Identical to [Card](../?path=/docs/components-card--docs)'s `selectable`: makes the card focusable and dispatches `swc-card-click` on click, <kbd>Enter</kbd>, or <kbd>Space</kbd>.
+
+<Canvas of={Stories.Selectable} />
+
+## Accessibility
+
+### Features
+
+- **`avatar`** expects an [Avatar](../?path=/docs/components-avatar--docs) element, which owns its own `alt`/`decorative` labeling contract; the card does not add or manage its accessible name.
+- **`title-as-link`** and **`selectable`** behave identically to [Card](../?path=/docs/components-card--docs); see its Accessibility section for details.
+
+### Best practices
+
+- Provide a meaningful `alt` on the slotted avatar, or mark it `decorative` if the person's name is already announced by the adjacent `title` content, to avoid the avatar repeating the same name a second time.
+- For `title-as-link` and `selectable` usage guidance, see [Card](../?path=/docs/components-card--docs)'s Accessibility section.
+
+<Canvas of={Stories.Accessibility} />
+
+<DocsFooter />
