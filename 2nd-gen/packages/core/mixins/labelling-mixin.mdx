@@ -18,10 +18,7 @@ import * as Stories from './stories/labelling-mixin.stories';
 
 ### What it does
 
-- **Accessible name**: each source is wired independently, and the browser's [accessible-name computation](https://www.w3.org/TR/accname-1.2/) picks which one is announced, in this order:
-  1. **`accessibleLabelledby`** (highest): resolved against the host's root node, written to the role element's `ariaLabelledByElements`.
-  2. **`accessibleLabel`**: written to the role element's `aria-label` attribute.
-  3. **A slotted visible label** (lowest): rendered as a real, same-root `<label for>`.
+- **Accessible name**: three sources feed the name: `accessibleLabelledby` (resolved against the host's root node and written to the role element's `ariaLabelledByElements`), `accessibleLabel` (written to `aria-label`), and a slotted visible label (a real, same-root `<label for>`). The mixin wires each one it is given independently; when more than one is set, the browser's [accessible-name computation](https://www.w3.org/TR/accname-1.2/) decides which is announced. See [Name source precedence](#name-source-precedence) for the order it applies.
 - **Label rendering**: `renderLabel()` renders nothing when there is no slotted `label` content, and otherwise always renders a real `<label for>`, so a visible label keeps native click-to-focus even when a programmatic name is announced instead.
 - **Dev-mode warnings**: warns when no accessible-name source is set, and separately warns when both `accessibleLabelledby` and `accessibleLabel` are set (the lower-precedence one is ignored).
 
