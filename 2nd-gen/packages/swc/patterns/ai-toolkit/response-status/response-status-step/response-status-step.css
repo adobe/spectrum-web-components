@@ -14,7 +14,7 @@
   display: grid;
   grid-template-columns: 20px 1fr;
   align-items: stretch;
-  column-gap: token("spacing-100");
+  column-gap: token("spacing-85");
 }
 
 *,
@@ -249,6 +249,18 @@
   text-align: start;
   background: transparent;
   border: none;
+}
+
+/* The toggle button is full-width for a large click target, but the visible
+   surface is just the title pill; render the ring there instead of around
+   the full-width button. */
+.swc-ResponseStatusStep-toggle:focus-visible {
+  outline: none;
+}
+
+.swc-ResponseStatusStep-toggle:focus-visible .swc-ResponseStatusStep-title {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
 }
 
 /* Shared collapse mechanics with `response-status.css`'s
