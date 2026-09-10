@@ -1,0 +1,208 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/* Gradient hue derives from --swc-ai-button-brand-color; override it to retint. */
+
+:host {
+  /* Default fuchsia anchor; the OKLCH stops below are offsets from this hue. */
+  --swc-ai-button-brand-color: oklch(73.58% 0.2376 322.4deg);
+
+  display: inline-flex;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ponytail: S2 con-bg tokens absent here, so stop colors inlined as brand-relative OKLCH. */
+.swc-AIButton {
+  --_swc-ai-button-height: token("component-height-100");
+  --_swc-ai-button-font-size: token("font-size-100");
+  --_swc-ai-button-fill-y: 4px;
+  --_swc-ai-button-fill-x: 2px;
+
+  /* con-bg idle stop-4 mixed into the text color, per the source treatment. */
+  --_swc-ai-button-label-color: color-mix(in srgb, light-dark(black, white), light-dark(oklch(from var(--swc-ai-button-brand-color) 95.08% 0.0433 calc(h - 243.9)), oklch(from var(--swc-ai-button-brand-color) 22.42% 0.072 calc(h - 288.8))) 20%);
+  --_swc-ai-button-surface: light-dark(rgb(255 255 255), rgb(48 48 48));
+
+  /* Ambient brand glow (prompt-field technique): subtle at rest, swapped stronger on hover. */
+  --_swc-ai-button-glow: light-dark(oklch(from var(--swc-ai-button-brand-color) 73.58% 0.2376 h / 12%), oklch(from var(--swc-ai-button-brand-color) 66.17% 0.2508 calc(h - 0.5) / 18%));
+  --_swc-ai-button-drop: light-dark(rgb(0 0 0 / 6%), rgb(0 0 0 / 30%));
+
+  -webkit-tap-highlight-color: transparent;
+  display: inline-flex;
+  position: relative;
+  z-index: 0;
+  gap: token("spacing-100");
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--_swc-ai-button-height);
+  block-size: var(--_swc-ai-button-height);
+  padding-inline: token("spacing-200");
+  font-family: token("sans-serif-font");
+  font-size: var(--_swc-ai-button-font-size);
+  font-style: token("default-font-style");
+  font-weight: token("bold-font-weight");
+  line-height: token("line-height-100");
+  color: var(--_swc-ai-button-label-color);
+  text-align: start;
+  background: var(--_swc-ai-button-surface);
+  border: 0;
+
+  /* Half-height stadium radius; token("corner-radius-full") is 50% (an ellipse). */
+  border-radius: 9999px;
+  box-shadow:
+    inset 0 0.5px 0 0 light-dark(transparent, rgb(255 255 255 / 10%)),
+    inset 0 0 0 0.5px light-dark(rgb(0 0 0 / 4%), rgb(255 255 255 / 10%)),
+    inset 0 2px 8px light-dark(transparent, rgb(95 95 95 / 50%)),
+    0 2px 6px -2px var(--_swc-ai-button-drop),
+    0 8px 28px -6px var(--_swc-ai-button-glow);
+  overflow: hidden;
+  user-select: none;
+  forced-color-adjust: none;
+  transition:
+    box-shadow token("animation-duration-200") token("animation-ease-in-out"),
+    transform token("animation-duration-100") token("animation-ease-in-out");
+}
+
+.swc-AIButton.is-icon-only {
+  padding-inline: 0;
+}
+
+/* Blurred color wash, sitting low in the pill. */
+.swc-AIButton::before {
+  position: absolute;
+  inset: var(--_swc-ai-button-fill-y) var(--_swc-ai-button-fill-x) 0;
+  z-index: -1;
+  background-image: linear-gradient(
+    to right in oklch,
+    light-dark(oklch(from var(--swc-ai-button-brand-color) 95.52% 0.0222 calc(h - 294.6)), oklch(from var(--swc-ai-button-brand-color) 25.8% 0.0855 calc(h - 290.4))) 0%,
+    light-dark(oklch(from var(--swc-ai-button-brand-color) 91.32% 0.0721 calc(h + 0.1)), oklch(from var(--swc-ai-button-brand-color) 23.18% 0.1116 calc(h - 3.1))) 12%,
+    light-dark(oklch(from var(--swc-ai-button-brand-color) 95.08% 0.0433 calc(h - 243.9)), oklch(from var(--swc-ai-button-brand-color) 23.87% 0.1407 calc(h - 38.8))) 77%
+  );
+  border-radius: 9999px;
+  pointer-events: none;
+  content: "";
+  opacity: 0.75;
+  filter: blur(4px);
+  transition: opacity token("animation-duration-200") token("animation-ease-in-out");
+}
+
+/* Inset gloss dome: bright top-left highlight over the wash. */
+.swc-AIButton::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 -0.5px 1px light-dark(oklch(from var(--swc-ai-button-brand-color) 95.08% 0.0433 calc(h - 243.9)), transparent),
+    inset 0.5px -1.5px 6px light-dark(oklch(from var(--swc-ai-button-brand-color) 93.97% 0.027 calc(h - 319)), transparent),
+    inset -7px -23px 9px -12px light-dark(rgb(255 255 255 / 75%), rgb(255 255 255 / 6%));
+  pointer-events: none;
+  content: "";
+}
+
+/* Hover swaps the glow/drop colors and lifts the wash. */
+.swc-AIButton:hover {
+  --_swc-ai-button-glow: light-dark(oklch(from var(--swc-ai-button-brand-color) 73.58% 0.2376 h / 30%), oklch(from var(--swc-ai-button-brand-color) 66.17% 0.2508 calc(h - 0.5) / 40%));
+  --_swc-ai-button-drop: light-dark(rgb(0 0 0 / 10%), rgb(0 0 0 / 35%));
+}
+
+.swc-AIButton:hover::before {
+  opacity: 0.95;
+}
+
+/* ─────────────────────────────────────
+   Icon + label
+   ───────────────────────────────────── */
+
+.swc-AIButton-icon {
+  --swc-icon-inline-size: 1em;
+  --swc-icon-block-size: 1em;
+
+  flex-shrink: 0;
+}
+
+.swc-AIButton-label {
+  display: inline-flex;
+}
+
+.swc-AIButton.is-icon-only .swc-AIButton-label {
+  display: none;
+}
+
+/* ─────────────────────────────────────
+   Focus
+   ───────────────────────────────────── */
+
+.swc-AIButton:focus-visible {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
+}
+
+/* ─────────────────────────────────────
+   Disabled
+   ───────────────────────────────────── */
+
+.swc-AIButton:disabled {
+  color: token("disabled-content-color");
+  background: light-dark(rgb(248 248 248), rgb(48 48 48));
+  box-shadow: inset 0 0 0 0.5px light-dark(rgb(0 0 0 / 4%), rgb(255 255 255 / 10%));
+}
+
+.swc-AIButton:disabled::before {
+  opacity: 0;
+}
+
+.swc-AIButton:disabled::after {
+  box-shadow: none;
+}
+
+/* Down/pressed state (not while disabled). */
+.swc-AIButton:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* ─────────────────────────────────────
+   Sizes
+   ───────────────────────────────────── */
+
+:host([size="s"]) .swc-AIButton {
+  --_swc-ai-button-height: token("component-height-75");
+  --_swc-ai-button-font-size: token("font-size-75");
+}
+
+:host([size="l"]) .swc-AIButton {
+  --_swc-ai-button-height: token("component-height-200");
+  --_swc-ai-button-font-size: token("font-size-200");
+  --_swc-ai-button-fill-y: 6px;
+  --_swc-ai-button-fill-x: 4px;
+}
+
+:host([size="xl"]) .swc-AIButton {
+  --_swc-ai-button-height: token("component-height-300");
+  --_swc-ai-button-font-size: token("font-size-300");
+  --_swc-ai-button-fill-y: 10px;
+  --_swc-ai-button-fill-x: 4px;
+}
+
+/* ─────────────────────────────────────
+   High contrast
+   ───────────────────────────────────── */
+
+@media (forced-colors: active) {
+  .swc-AIButton:focus-visible {
+    outline-color: CanvasText;
+  }
+}
