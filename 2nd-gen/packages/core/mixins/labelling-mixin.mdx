@@ -11,25 +11,25 @@ import * as Stories from './stories/labelling-mixin.stories';
 
 `LabellingMixin` adds visible-label rendering and accessible-name wiring to a host so components do not hand-roll it. It is one of two decoupled primitives for form-field labelling:
 
-- **`LabellingMixin`** (`@adobe/spectrum-wc-core/mixins`) — the `accessible-label` / `accessible-labelledby` properties, `label` slot presence tracking, the "no accessible name" dev warning, and `renderLabel()`.
-- **`renderFieldLabel`** (`@adobe/spectrum-wc-core/directives/render-label`) — the underlying render-only directive. The mixin owns and exposes it; use it directly only for stateless label rendering without the mixin.
+- **`LabellingMixin`** (`@adobe/spectrum-wc-core/mixins`): the `accessible-label` / `accessible-labelledby` properties, `label` slot presence tracking, the "no accessible name" dev warning, and `renderLabel()`.
+- **`renderFieldLabel`** (`@adobe/spectrum-wc-core/directives/render-label`): the underlying render-only directive. The mixin owns and exposes it; use it directly only for stateless label rendering without the mixin.
 
 `HelpTextMixin` (`@adobe/spectrum-wc-core/mixins`) is the companion mixin for description/error-text association; `swc-text-field` composes both.
 
 ### What it does
 
-- **Precedence-ordered accessible name** — only the highest-precedence source that is actually set is wired, in this order:
-  1. **`accessibleLabelledby`** (highest) — resolved against the host's root node, written to the role element's `ariaLabelledByElements`.
-  2. **`accessibleLabel`** — written to the role element's `aria-label` attribute.
-  3. **A slotted visible label** (lowest) — rendered as a real, same-root `<label for>`.
-- **Conditional label rendering** — `renderLabel()` renders nothing when there is no slotted `label` content, and renders a plain, non-`for` `<span>` (not a `<label for>`) when a higher-precedence source is active, so the visible text isn't hidden but is excluded from the accessible-name computation.
-- **Dev-mode warnings** — warns when no accessible-name source resolves to anything, and separately warns when more than one of `accessibleLabelledby`, `accessibleLabel`, and a slotted label is set at once, naming which source wins and which will not be read.
+- **Accessible name**: each source is wired independently, and the browser's [accessible-name computation](https://www.w3.org/TR/accname-1.2/) picks which one is announced, in this order:
+  1. **`accessibleLabelledby`** (highest): resolved against the host's root node, written to the role element's `ariaLabelledByElements`.
+  2. **`accessibleLabel`**: written to the role element's `aria-label` attribute.
+  3. **A slotted visible label** (lowest): rendered as a real, same-root `<label for>`.
+- **Label rendering**: `renderLabel()` renders nothing when there is no slotted `label` content, and otherwise always renders a real `<label for>`, so a visible label keeps native click-to-focus even when a programmatic name is announced instead.
+- **Dev-mode warnings**: warns when no accessible-name source is set, and separately warns when both `accessibleLabelledby` and `accessibleLabel` are set (the lower-precedence one is ignored).
 
 ### Basic usage
 
 1. Apply the mixin to your base class: `class MyField extends LabellingMixin(SpectrumElement) {}`.
 2. Override `roleElement` to return the element the accessible name should be wired onto (usually the rendered `<input>` or other native control).
-3. Call `renderLabel(inputId)` in your template, passing the `id` of that role element (or `null` if it doesn't have one yet).
+3. Call `renderLabel(inputId)` in your template, passing the `id` of that role element.
 
 ```typescript
 import { html, LitElement } from 'lit';
@@ -53,19 +53,19 @@ class MyField extends LabellingMixin(LitElement) {
 
 ### Name source precedence
 
-Only the highest-precedence source that is set becomes the accessible name, in this order:
+When more than one source is set, the browser's [accessible-name computation](https://www.w3.org/TR/accname-1.2/) decides which one is announced, in this order:
 
-1. **`accessible-labelledby`** (highest precedence) — overrides both `accessible-label` and a slotted label.
-2. **`accessible-label`** — overrides a slotted label.
-3. **A slotted `label`** (lowest precedence) — the default when neither of the above is set.
+1. **`accessible-labelledby`** (highest precedence): wins over both `accessible-label` and a slotted label.
+2. **`accessible-label`**: wins over a slotted label.
+3. **A slotted `label`** (lowest precedence): used when neither of the above is set.
 
-Only the winning source is wired onto the role element — a lower-precedence slotted label still renders visually, but is not part of the accessible-name computation, avoiding a [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) mismatch.
+The mixin wires each source independently; it does not enforce this order itself, because the browser already applies it when computing the accessible name. A slotted visible label always renders as a real `<label for>`, so it keeps native click-to-focus even when a higher-precedence source provides the announced name.
 
 <Canvas of={Stories.NameSourcePrecedence} />
 
 ### Conflicting label sources
 
-Setting more than one of `accessible-labelledby`, `accessible-label`, and a slotted `label` at once triggers a dev-mode console warning, regardless of which combination it is (two sources, or all three). Only the highest-precedence source present is ever read as the accessible name; the rest are silently ignored, which is exactly the [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) mismatch this mixin's precedence order otherwise avoids if their text differs. The warning message names both the winning source and the source(s) that will not be read, so it's actionable without checking the precedence order separately. Open the browser console to see the warning for the example below.
+Setting both `accessible-labelledby` and `accessible-label` triggers a dev-mode console warning: they are two ways to give the same field a name, so one is always ignored. The warning names `accessible-labelledby` as the source that is used. Pairing a visible slotted label with either one does not warn; that is the recommended way to satisfy [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html), where the announced name contains the visible text. Open the browser console to see the warning for the example below.
 
 <Canvas of={Stories.ConflictingLabelSources} />
 
@@ -73,16 +73,16 @@ Setting more than one of `accessible-labelledby`, `accessible-label`, and a slot
 
 ### Features
 
-- **One accessible-name writer** — exactly one of `ariaLabelledByElements`, `aria-label`, or a same-root `<label for>` is wired at a time, by construction.
-- **Native click-to-focus** — when the slotted label is the active source, it renders as a real `<label for>`, so clicking the label focuses the field natively.
-- **Dev-mode warnings** — a field with no accessible-name source at all triggers a console warning; so does a field that sets more than one of `accessible-labelledby`, `accessible-label`, and a slotted label, naming which source wins and which will not be read.
+- **Browser-resolved name**: each source (`ariaLabelledByElements`, `aria-label`, a same-root `<label for>`) is wired independently, and the browser's accessible-name computation picks the one that is announced.
+- **Native click-to-focus**: a slotted visible label always renders as a real `<label for>`, so clicking the label focuses the field natively, even when a programmatic name is announced.
+- **Dev-mode warnings**: a field with no accessible-name source at all triggers a console warning, and so does a field that sets both `accessible-labelledby` and `accessible-label`.
 
 > **Known axe-core false positive.** A field named only via a resolved `accessible-labelledby` fails automated axe-core scans with a "Form element does not have a label" (`label` rule) violation, even though the name resolves correctly in real browsers and assistive technology. axe-core inspects DOM attributes and has no standardized way to read `ariaLabelledByElements`, the ARIA element-reflection API this mixin uses. Exclude the specific host from the `label` rule with a written `// reason:` comment (see the forms-strategy RFC's axe-core policy, CONTRIBUTOR-DOCS "3.4 axe-core policy") rather than disabling the rule globally; verify the name with manual AT testing instead.
 
 ### Best practices
 
-- Prefer a slotted label for ordinary fields; reserve `accessible-label`/`accessible-labelledby` for fields with no visible label of their own or a name composed from elements the field doesn't own (for example, a grid cell named by its row and column headers).
-- Set only one of `accessible-labelledby`, `accessible-label`, and a slotted label — combining any two (or all three) with different text is enforced with a dev-mode warning, not just documented guidance.
+- Prefer a slotted label for ordinary fields. Reserve `accessible-label` and `accessible-labelledby` for fields with no visible label of their own, or a name composed from elements the field doesn't own (for example, a grid cell named by its row and column headers).
+- When a field has both a visible label and a programmatic name, make sure the programmatic name contains the visible text, per [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html). Do not set both `accessible-label` and `accessible-labelledby`; a dev-mode warning flags that combination.
 
 <Canvas of={Stories.Accessibility} />
 
@@ -90,7 +90,7 @@ Setting more than one of `accessible-labelledby`, `accessible-label`, and a slot
 
 ### Constructor
 
-`LabellingMixin(BaseClass)` — returns `BaseClass` extended with the labelling API.
+`LabellingMixin(BaseClass)` returns `BaseClass` extended with the labelling API.
 
 ### Members
 

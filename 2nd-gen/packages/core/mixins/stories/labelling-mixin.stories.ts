@@ -25,11 +25,11 @@ import './demo-hosts.js';
  * slot presence tracking, the "no accessible name" dev warning, and
  * `renderLabel()`.
  *
- * Three accessible-name sources are supported, in precedence order (highest
- * first): `accessible-labelledby`, `accessible-label`, and a slotted visible
- * label. Only the highest-precedence source that is set is wired.
- * `HelpTextMixin` (`@adobe/spectrum-wc-core/mixins`) is the companion mixin
- * for description/error-text association.
+ * Three accessible-name sources are supported: `accessible-labelledby`,
+ * `accessible-label`, and a slotted visible label. Each is wired
+ * independently, and the browser picks which one is announced (in that
+ * order). `HelpTextMixin` (`@adobe/spectrum-wc-core/mixins`) is the companion
+ * mixin for description/error-text association.
  */
 const meta: Meta = {
   title: 'Mixins/Labelling mixin',
@@ -117,9 +117,6 @@ NameSourcePrecedence.storyName = 'Name source precedence';
 
 export const ConflictingLabelSources: Story = {
   render: () => html`
-    <demo-labelling-host accessible-label="Different text (check console)">
-      <span slot="label">Visible label</span>
-    </demo-labelling-host>
     <div id="labelling-mixin-conflict-header">
       External label (check console)
     </div>
@@ -136,16 +133,15 @@ export const ConflictingLabelSources: Story = {
       accessible-label="Different text (check console)"
       accessible-labelledby="labelling-mixin-conflict-header-2"
     >
-      <span slot="label">Visible label (check console)</span>
+      <span slot="label">Visible label</span>
     </demo-labelling-host>
   `,
   tags: ['behaviors'],
   parameters: {
     a11y: {
       // reason: same axe-core / ariaLabelledByElements limitation as
-      // `NameSourcePrecedence` above — these two hosts resolve their
-      // accessible name via `accessible-labelledby`, which axe-core cannot
-      // read.
+      // `NameSourcePrecedence` above. These hosts resolve their accessible
+      // name via `accessible-labelledby`, which axe-core cannot read.
       exclude: {
         label: [
           '#labelling-mixin-conflict-labelledby-host',

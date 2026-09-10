@@ -20,7 +20,7 @@ A text field consists of:
 
 ### Labelling
 
-Three sources can provide the field's accessible name. Only the highest-precedence source that is set becomes the accessible name — a lower-precedence source with different text does not get silently combined into it, avoiding a [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html) mismatch:
+Three sources can provide the field's accessible name. When more than one is set, the browser's [accessible-name computation](https://www.w3.org/TR/accname-1.2/) decides which one is announced, in this order:
 
 1. **`accessible-labelledby`** (highest precedence): space-separated element `id`s, resolved against the field's root node, for composing a name from elements the field does not own (for example, a grid cell named by its row and column headers).
 2. **`accessible-label`**: a string accessible name for a field with no visible label of its own.
@@ -43,7 +43,7 @@ Text fields can exist in various states:
 
 ### Conflicting label sources
 
-Setting more than one of `accessible-labelledby`, `accessible-label`, and a slotted `label` at once triggers a dev-mode console warning, regardless of which combination it is (two sources, or all three). Only the highest-precedence source present is ever read as the accessible name; the rest are silently ignored. The warning message names both the winning source and the source(s) that will not be read. Open the browser console to see the warning for the examples below.
+Setting both `accessible-labelledby` and `accessible-label` triggers a dev-mode console warning: they are two ways to name the same field, so one is always ignored. The warning names `accessible-labelledby` as the source that is used. Pairing a visible label with either one does not warn; that is the recommended way to satisfy [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html). Open the browser console to see the warning for the examples below.
 
 <Canvas of={TextFieldStories.ConflictingLabelSources} />
 
@@ -51,16 +51,16 @@ Setting more than one of `accessible-labelledby`, `accessible-label`, and a slot
 
 ### Features
 
-- **Native role** — the host sets no ARIA role; the real `<input>` supplies the implicit `textbox` role.
-- **One accessible-name writer** — `accessible-labelledby` &gt; `accessible-label` &gt; slotted label, in that order; exactly one source is wired at a time.
-- **Dev-mode warnings** — a field with no visible label, no `accessible-label`, and no `accessible-labelledby` triggers a console warning; so does a field that sets more than one of `accessible-labelledby`, `accessible-label`, and a slotted label, naming which source wins and which will not be read.
+- **Native role**: the host sets no ARIA role; the real `<input>` supplies the implicit `textbox` role.
+- **Browser-resolved name**: each source is wired independently, and the browser's accessible-name computation picks the one that is announced, in the order `accessible-labelledby` &gt; `accessible-label` &gt; slotted label. A slotted visible label always renders as a real `<label for>`, keeping native click-to-focus.
+- **Dev-mode warnings**: a field with no visible label, no `accessible-label`, and no `accessible-labelledby` triggers a console warning, and so does a field that sets both `accessible-labelledby` and `accessible-label`.
 
-> **Known axe-core false positive.** A field named only via `accessible-labelledby` fails automated axe-core scans with a "Form element does not have a label" (`label` rule) violation, even though the name resolves correctly in real browsers and assistive technology — axe-core inspects DOM attributes and has no standardized way to read `ariaLabelledByElements`, the ARIA element-reflection API `LabellingMixin` uses. The affected stories in this file (`Labelling`, `ConflictingLabelSources`, `Accessibility`) exclude the specific host from the `label` rule with a written `// reason:` comment, per the forms-strategy RFC's axe-core policy (CONTRIBUTOR-DOCS "3.4 axe-core policy"), rather than disabling the rule globally.
+> **Known axe-core false positive.** A field named only via `accessible-labelledby` fails automated axe-core scans with a "Form element does not have a label" (`label` rule) violation, even though the name resolves correctly in real browsers and assistive technology. axe-core inspects DOM attributes and has no standardized way to read `ariaLabelledByElements`, the ARIA element-reflection API in use.
 
 ### Best practices
 
 - Prefer a slotted `label` for ordinary fields; reserve `accessible-label`/`accessible-labelledby` for fields with no visible label of their own or a name composed from elements the field doesn't own.
-- Set only one of `accessible-labelledby`, `accessible-label`, and a slotted label — combining any two (or all three) with different text is enforced with a dev-mode warning, not just documented guidance.
+- When a field has both a visible label and a programmatic name, make sure the programmatic name contains the visible text, per [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html). Do not set both `accessible-label` and `accessible-labelledby`; a dev-mode warning flags that combination.
 
 <Canvas of={TextFieldStories.Accessibility} />
 
