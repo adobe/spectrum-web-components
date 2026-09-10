@@ -13,7 +13,5 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 /**
  * Base class for the thumbnail component.
- *
- * Public API lands in a later migration phase.
  */
 export abstract class ThumbnailBase extends SpectrumElement {}

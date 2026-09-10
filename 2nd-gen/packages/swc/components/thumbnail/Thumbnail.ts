@@ -16,9 +16,17 @@ import { ThumbnailBase } from '@adobe/spectrum-wc-core/components/thumbnail';
 import styles from './thumbnail.css';
 
 /**
+ * Wraps a slotted image, such as an asset preview or a layer in a layers
+ * panel, in a consistent checkerboard-backed frame.
+ *
  * @element swc-thumbnail
  *
- * Full public API and rendering land in later migration phases.
+ * @slot - The image (or other visual content) to display in the frame.
+ *
+ * @example
+ * <swc-thumbnail>
+ *   <img src="/preview.png" alt="Preview" />
+ * </swc-thumbnail>
  */
 export class Thumbnail extends ThumbnailBase {
   public static override get styles(): CSSResultArray {

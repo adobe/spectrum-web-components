@@ -10,3 +10,4 @@
  * governing permissions and limitations under the License.
  */
 export * from './Thumbnail.base.js';
+export * from './Thumbnail.types.js';
