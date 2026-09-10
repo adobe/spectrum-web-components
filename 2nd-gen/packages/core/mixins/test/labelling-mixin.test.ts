@@ -200,6 +200,75 @@ function appendExternalLabelledbyTarget(): HTMLElement {
 const CONFLICT_PHRASE =
   'sets both "accessible-labelledby" and "accessible-label"';
 const IGNORED_PHRASE = '"accessible-label" is ignored';
+const UNRESOLVED_PHRASE = 'resolve to an element';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Unresolved accessible-labelledby DEBUG warning
+// ──────────────────────────────────────────────────────────────
+
+export const UnresolvedLabelledbyTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ step }) => {
+    await step(
+      'warns and names the id when accessible-labelledby resolves to nothing',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const host = document.createElement('demo-labelling-host');
+          host.setAttribute('accessible-labelledby', 'does-not-exist');
+          document.body.append(host);
+          await (host as DemoLabellingHost).updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          expect(
+            messages.some(
+              (m) =>
+                m.includes(UNRESOLVED_PHRASE) && m.includes('"does-not-exist"')
+            )
+          ).toBe(true);
+          host.remove();
+        })
+    );
+
+    await step('does not warn when the referenced id resolves', () =>
+      withWarningSpy(async (warnCalls) => {
+        const external = appendExternalLabelledbyTarget();
+        const host = document.createElement('demo-labelling-host');
+        host.setAttribute('accessible-labelledby', 'label-conflict-external');
+        document.body.append(host);
+        await (host as DemoLabellingHost).updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(messages.some((m) => m.includes(UNRESOLVED_PHRASE))).toBe(false);
+        external.remove();
+        host.remove();
+      })
+    );
+
+    await step(
+      'names only the unresolved id when some resolve and some do not',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const external = appendExternalLabelledbyTarget();
+          const host = document.createElement('demo-labelling-host');
+          host.setAttribute(
+            'accessible-labelledby',
+            'label-conflict-external missing-one'
+          );
+          document.body.append(host);
+          await (host as DemoLabellingHost).updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          const unresolvedMsg = messages.find((m) =>
+            m.includes(UNRESOLVED_PHRASE)
+          );
+          expect(unresolvedMsg).toBeTruthy();
+          expect(unresolvedMsg).toContain('"missing-one"');
+          expect(unresolvedMsg).not.toContain('"label-conflict-external"');
+          external.remove();
+          host.remove();
+        })
+    );
+  },
+};
 
 export const LabelConflictTest: Story = {
   render: () => html`

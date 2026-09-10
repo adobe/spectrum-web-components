@@ -75,7 +75,7 @@ Setting both `accessible-labelledby` and `accessible-label` triggers a dev-mode 
 
 - **Browser-resolved name**: each source (`ariaLabelledByElements`, `aria-label`, a same-root `<label for>`) is wired independently, and the browser's accessible-name computation picks the one that is announced.
 - **Native click-to-focus**: a slotted visible label always renders as a real `<label for>`, so clicking the label focuses the field natively, even when a programmatic name is announced.
-- **Dev-mode warnings**: a field with no accessible-name source at all triggers a console warning, and so does a field that sets both `accessible-labelledby` and `accessible-label`.
+- **Dev-mode warnings**: a console warning fires for a field with no accessible-name source, for a field that sets both `accessible-labelledby` and `accessible-label`, and for an `accessible-labelledby` that references an `id` matching no element in the field's root.
 
 > **Known axe-core false positive.** A field named only via a resolved `accessible-labelledby` fails automated axe-core scans with a "Form element does not have a label" (`label` rule) violation, even though the name resolves correctly in real browsers and assistive technology. axe-core inspects DOM attributes and has no standardized way to read `ariaLabelledByElements`, the ARIA element-reflection API this mixin uses. Exclude the specific host from the `label` rule with a written `// reason:` comment (see the forms-strategy RFC's axe-core policy, CONTRIBUTOR-DOCS "3.4 axe-core policy") rather than disabling the rule globally; verify the name with manual AT testing instead.
 
@@ -83,6 +83,7 @@ Setting both `accessible-labelledby` and `accessible-label` triggers a dev-mode 
 
 - Prefer a slotted label for ordinary fields. Reserve `accessible-label` and `accessible-labelledby` for fields with no visible label of their own, or a name composed from elements the field doesn't own (for example, a grid cell named by its row and column headers).
 - When a field has both a visible label and a programmatic name, make sure the programmatic name contains the visible text, per [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html). Do not set both `accessible-label` and `accessible-labelledby`; a dev-mode warning flags that combination.
+- `accessible-labelledby` `id`s are resolved against the field's root node (the document or shadow root that contains it) once per render, so the referenced elements must already exist when the field renders. An element inserted afterward is not picked up until the next render; reassign `accessible-labelledby` after inserting it to force a re-resolution.
 
 <Canvas of={Stories.Accessibility} />
 

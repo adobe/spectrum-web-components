@@ -145,18 +145,22 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
      * @internal
      *
      * Resolves `accessibleLabelledby`'s `id`s against the host's root node.
-     * Unresolved `id`s are dropped silently.
+     * Unresolved `id`s are dropped here and surfaced by
+     * {@link _warnUnresolvedLabelledby} in dev mode.
      */
     private get _resolvedLabelledbyElements(): Element[] {
       if (!this.accessibleLabelledby) {
         return [];
       }
       const root = this.getRootNode() as Document | ShadowRoot;
-      return this.accessibleLabelledby
-        .split(/\s+/)
-        .filter(Boolean)
+      return this._labelledbyIds
         .map((id) => root.getElementById?.(id) ?? null)
         .filter((element): element is HTMLElement => element !== null);
+    }
+
+    /** @internal The `id` tokens listed in `accessibleLabelledby`. */
+    private get _labelledbyIds(): string[] {
+      return (this.accessibleLabelledby ?? '').split(/\s+/).filter(Boolean);
     }
 
     /**
@@ -187,6 +191,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
       // so re-check every render; the warning dedup handles repeats.
       if (isDebug()) {
         this._warnMissingAccessibleName();
+        this._warnUnresolvedLabelledby();
         this._warnLabelConflict();
       }
     }
@@ -225,6 +230,38 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
             'add visible label content via the "label" named slot, or',
             'set the "accessible-label" attribute (or "accessibleLabel" property), or',
             'set "accessible-labelledby" (or "accessibleLabelledby") to reference an external label.',
+          ],
+        }
+      );
+    }
+
+    /**
+     * @internal
+     *
+     * Warns when `accessibleLabelledby` references an `id` that resolves to no
+     * element. This is a silent failure otherwise.
+     */
+    private _warnUnresolvedLabelledby(): void {
+      const root = this.getRootNode() as Document | ShadowRoot;
+      const unresolved = this._labelledbyIds.filter(
+        (id) => !(root.getElementById?.(id) ?? null)
+      );
+      if (unresolved.length === 0) {
+        return;
+      }
+      const ids = unresolved.map((id) => `"${id}"`).join(', ');
+      warnIf(
+        this,
+        true,
+        `<${this.localName}> "accessible-labelledby" references ${
+          unresolved.length === 1 ? 'an id that does' : 'ids that do'
+        } not resolve to an element: ${ids}.`,
+        this.docsHref,
+        {
+          type: 'accessibility',
+          issues: [
+            'reference elements that share the field\'s root (document or shadow root), and',
+            'ensure they exist before the field renders (ids are resolved once per render).',
           ],
         }
       );
