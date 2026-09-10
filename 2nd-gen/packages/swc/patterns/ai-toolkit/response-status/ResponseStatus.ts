@@ -630,12 +630,10 @@ export class ResponseStatus extends SpectrumElement {
       .join(' ');
 
     const rowContent = html`
-      <span class="swc-ResponseStatus-headerVisible">
-        ${this._renderLeadingIcon()}
-        <span class="swc-ResponseStatus-headerTrail">
-          ${this._renderLabel()}
-          ${showDisclosure ? this._renderChevron(this.open) : nothing}
-        </span>
+      ${this._renderLeadingIcon()}
+      <span class="swc-ResponseStatus-headerTrail">
+        ${this._renderLabel()}
+        ${showDisclosure ? this._renderChevron(this.open) : nothing}
       </span>
     `;
 

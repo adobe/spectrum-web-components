@@ -259,6 +259,8 @@
 }
 
 .swc-ResponseStatusStep-toggle:focus-visible .swc-ResponseStatusStep-title {
+  position: relative;
+  z-index: 1;
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
   outline-offset: token("focus-ring-gap");
 }

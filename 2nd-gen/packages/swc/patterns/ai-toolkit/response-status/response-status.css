@@ -23,7 +23,9 @@
 .swc-ResponseStatus {
   display: flex;
   flex-direction: column;
-  gap: token("spacing-100");
+
+  /* Offsets the steps list's own padding-block below. */
+  gap: token("spacing-75");
 }
 
 /* ─────────────────────────────────────
@@ -32,6 +34,7 @@
 
 .swc-ResponseStatus-row {
   display: flex;
+  gap: token("spacing-100");
   align-items: center;
   min-block-size: var(--_swc-response-status-row-block-size, 32px);
 }
@@ -48,21 +51,7 @@
   border-radius: token("corner-radius-medium-default");
 }
 
-/* Groups the icon and label/chevron trail so the focus ring below can hug
-   just this visible content instead of the full-width clickable row. */
-.swc-ResponseStatus-headerVisible {
-  display: inline-flex;
-  gap: token("spacing-100");
-  align-items: center;
-  min-inline-size: 0;
-}
-
 .swc-ResponseStatus-row--button:focus-visible {
-  outline: none;
-}
-
-.swc-ResponseStatus-row--button:focus-visible .swc-ResponseStatus-headerVisible {
-  border-radius: token("corner-radius-medium-default");
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
   outline-offset: token("focus-ring-gap");
 }
@@ -229,7 +218,6 @@
 .swc-ResponseStatus--agentic {
   gap: token("spacing-100");
   inline-size: 100%;
-  max-inline-size: 540px;
 }
 
 .swc-ResponseStatus-row--processing {
@@ -302,7 +290,9 @@
   opacity: 1;
 }
 
+/* padding-block keeps the first/last step's focus ring from clipping against the collapse panel's overflow:hidden edge. */
 .swc-ResponseStatus-steps {
+  padding-block: token("spacing-75");
   padding-inline-start: token("spacing-500");
   margin: 0;
   list-style: none;
