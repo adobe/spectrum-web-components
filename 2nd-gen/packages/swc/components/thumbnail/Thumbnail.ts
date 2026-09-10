@@ -39,10 +39,6 @@ export class Thumbnail extends ThumbnailBase {
     return [opacityCheckerboardStyles, styles];
   }
 
-  /**
-   * The `alt` fallback and warning live here, not in `Thumbnail.base.ts`,
-   * because they need a `slotchange` listener on the rendered `<slot>`.
-   */
   protected override updated(changes: PropertyValues): void {
     super.updated(changes);
     if (changes.has('decorative')) {

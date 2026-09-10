@@ -24,13 +24,6 @@ import {
   type ThumbnailSize,
 } from './Thumbnail.types.js';
 
-/**
- * Base class for the thumbnail component.
- *
- * Provides the core API for wrapping a slotted preview image in a
- * checkerboard-backed frame. Concrete classes supply the stylesheet and
- * render template.
- */
 export abstract class ThumbnailBase extends SpectrumElement {
   // ─────────────────────────
   //     STATIC
