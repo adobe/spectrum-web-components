@@ -52,7 +52,7 @@ export class TextField extends TextFieldBase {
    * ARIA relationship onto.
    */
   public override get roleElement(): HTMLInputElement | null {
-    return this.renderRoot.querySelector('input.input');
+    return this.renderRoot.querySelector('input#input');
   }
 
   private handleInput(event: Event): void {
