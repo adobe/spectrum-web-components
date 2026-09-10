@@ -152,15 +152,20 @@ const typeRows = () =>
 
 const extraRows = () => [
   // Narrow column forces wrap before the 536px cap; unconstrained long copy
-  // hits that cap. Captions distinguish the two widths, which otherwise read
-  // as similar wrapping bubbles.
+  // hits that cap. The 536px cap now lives on the parent `swc-conversation-turn`,
+  // so it's applied here via maxInlineSize to reproduce it in isolation.
+  // Captions distinguish the two widths, which otherwise read as similar
+  // wrapping bubbles.
   row(
     [
       captioned(
         renderMessage({ copy: LONG_COPY, maxInlineSize: '220px' }),
         'Narrow column (220px)'
       ),
-      captioned(renderMessage({ copy: LONG_COPY }), 'Max inline size (536px)'),
+      captioned(
+        renderMessage({ copy: LONG_COPY, maxInlineSize: '536px' }),
+        'Max inline size (536px)'
+      ),
     ],
     'Wrapping'
   ),

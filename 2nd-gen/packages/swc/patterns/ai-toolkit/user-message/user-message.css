@@ -12,7 +12,8 @@
 
 /* Sizing per explicit user-message type sourced from Figma spec (node 5-2281), full-screen modality.
  *
- * copy  — fills available column width, capped at 536px (text reflows naturally)
+ * copy  — fills available column width (text reflows naturally); the reading-width
+ *         cap is owned by the parent `swc-conversation-turn`, not this component
  * card  — fixed 324px (content 292px = 324px − 2×16px padding), capped at 440px
  * media — shrinks to the fixed 180×180px inner card + 2×8px padding ≈ 196px square
  *
@@ -23,7 +24,6 @@
 :host {
   display: block;
   inline-size: fit-content;
-  max-inline-size: 536px;
   padding-block: token("spacing-100");
   padding-inline: token("spacing-300");
   font-family: token("sans-serif-font");
