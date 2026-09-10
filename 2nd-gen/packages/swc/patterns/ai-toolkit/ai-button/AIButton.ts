@@ -22,6 +22,9 @@ import { SparkleIcon } from '../utils/icons/index.js';
 
 import styles from './ai-button.css';
 
+/** Distance (px) beyond the button edge at which the pointer glow starts. */
+const PROXIMITY_RADIUS = 140;
+
 /**
  * A button that triggers an AI-powered action, with a branded gradient
  * treatment. The sparkle icon is always shown; the label comes from the
@@ -29,6 +32,10 @@ import styles from './ai-button.css';
  *
  * Retint the whole button by overriding the `--swc-ai-button-brand-color`
  * custom property (an OKLCH color) inline or from a stylesheet.
+ *
+ * A border reflection tracks the pointer: the glow strengthens as the pointer
+ * approaches (`--_swc-ai-button-proximity`) and lights the edge nearest it
+ * (`--_swc-ai-button-pointer-x/y`).
  *
  * @element swc-ai-button
  * @slot - Button label text.
@@ -50,6 +57,54 @@ export class AIButton extends ButtonBase {
     return [styles];
   }
 
+  private _pointerFrame = 0;
+
+  private _handlePointerMove = (event: PointerEvent): void => {
+    if (this._pointerFrame) {
+      return;
+    }
+    const { clientX, clientY } = event;
+    this._pointerFrame = requestAnimationFrame(() => {
+      this._pointerFrame = 0;
+      this._updateProximity(clientX, clientY);
+    });
+  };
+
+  private _updateProximity(clientX: number, clientY: number): void {
+    if (this.disabled) {
+      return;
+    }
+    const rect = this.getBoundingClientRect();
+    // Nearest-point distance from the pointer to the button box (0 when inside).
+    const dx = Math.max(rect.left - clientX, 0, clientX - rect.right);
+    const dy = Math.max(rect.top - clientY, 0, clientY - rect.bottom);
+    const distance = Math.hypot(dx, dy);
+    const proximity = Math.max(0, 1 - distance / PROXIMITY_RADIUS);
+
+    const px = ((clientX - rect.left) / rect.width) * 100;
+    const py = ((clientY - rect.top) / rect.height) * 100;
+
+    this.style.setProperty('--_swc-ai-button-proximity', `${proximity}`);
+    this.style.setProperty('--_swc-ai-button-pointer-x', `${px}%`);
+    this.style.setProperty('--_swc-ai-button-pointer-y', `${py}%`);
+  }
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    window.addEventListener('pointermove', this._handlePointerMove, {
+      passive: true,
+    });
+  }
+
+  public override disconnectedCallback(): void {
+    window.removeEventListener('pointermove', this._handlePointerMove);
+    if (this._pointerFrame) {
+      cancelAnimationFrame(this._pointerFrame);
+      this._pointerFrame = 0;
+    }
+    super.disconnectedCallback();
+  }
+
   protected override render(): TemplateResult {
     return html`
       <button
@@ -62,6 +117,7 @@ export class AIButton extends ButtonBase {
         ?disabled=${this.disabled}
         aria-label=${ifDefined(this.accessibleLabel ?? undefined)}
       >
+        <span class="swc-AIButton-reflection" aria-hidden="true"></span>
         <swc-icon class="swc-AIButton-icon" aria-hidden="true">
           ${SparkleIcon()}
         </swc-icon>

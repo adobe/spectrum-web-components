@@ -36,9 +36,14 @@
   --_swc-ai-button-label-color: color-mix(in srgb, light-dark(black, white), light-dark(oklch(from var(--swc-ai-button-brand-color) 95.08% 0.0433 calc(h - 243.9)), oklch(from var(--swc-ai-button-brand-color) 22.42% 0.072 calc(h - 288.8))) 20%);
   --_swc-ai-button-surface: light-dark(rgb(255 255 255), rgb(48 48 48));
 
-  /* Ambient brand glow (prompt-field technique): subtle at rest, swapped stronger on hover. */
-  --_swc-ai-button-glow: light-dark(oklch(from var(--swc-ai-button-brand-color) 73.58% 0.2376 h / 12%), oklch(from var(--swc-ai-button-brand-color) 66.17% 0.2508 calc(h - 0.5) / 18%));
-  --_swc-ai-button-drop: light-dark(rgb(0 0 0 / 6%), rgb(0 0 0 / 30%));
+  /* Pointer proximity (0 far → 1 inside) and position, written by the element. */
+  --_swc-ai-button-proximity: 0;
+  --_swc-ai-button-pointer-x: 50%;
+  --_swc-ai-button-pointer-y: 50%;
+
+  /* Ambient brand glow, strengthening with pointer proximity. */
+  --_swc-ai-button-glow: light-dark(oklch(from var(--swc-ai-button-brand-color) 73.58% 0.2376 h / calc(var(--_swc-ai-button-proximity) * 40%)), oklch(from var(--swc-ai-button-brand-color) 66.17% 0.2508 calc(h - 0.5) / calc(var(--_swc-ai-button-proximity) * 50%)));
+  --_swc-ai-button-drop: light-dark(rgb(0 0 0 / 8%), rgb(0 0 0 / 30%));
 
   -webkit-tap-highlight-color: transparent;
   display: inline-flex;
@@ -94,8 +99,25 @@
   border-radius: 9999px;
   pointer-events: none;
   content: "";
-  opacity: 0.75;
+  opacity: calc(0.7 + var(--_swc-ai-button-proximity) * 0.25);
   filter: blur(4px);
+  transition: opacity token("animation-duration-200") token("animation-ease-in-out");
+}
+
+/* Border reflection that lights the edge nearest the pointer. */
+.swc-AIButton-reflection {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  padding: 1.5px;
+  background: radial-gradient(circle 80px at var(--_swc-ai-button-pointer-x) var(--_swc-ai-button-pointer-y), oklch(from var(--swc-ai-button-brand-color) 82% 0.2 h / 90%), transparent 65%);
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: var(--_swc-ai-button-proximity);
+  mask:
+    linear-gradient(rgb(0 0 0) 0 0) content-box,
+    linear-gradient(rgb(0 0 0) 0 0);
+  mask-composite: exclude;
   transition: opacity token("animation-duration-200") token("animation-ease-in-out");
 }
 
@@ -113,14 +135,9 @@
   content: "";
 }
 
-/* Hover swaps the glow/drop colors and lifts the wash. */
+/* Fallback for environments without pointer tracking (JS drives proximity via inline style otherwise). */
 .swc-AIButton:hover {
-  --_swc-ai-button-glow: light-dark(oklch(from var(--swc-ai-button-brand-color) 73.58% 0.2376 h / 30%), oklch(from var(--swc-ai-button-brand-color) 66.17% 0.2508 calc(h - 0.5) / 40%));
-  --_swc-ai-button-drop: light-dark(rgb(0 0 0 / 10%), rgb(0 0 0 / 35%));
-}
-
-.swc-AIButton:hover::before {
-  opacity: 0.95;
+  --_swc-ai-button-proximity: 1;
 }
 
 /* ─────────────────────────────────────
@@ -167,6 +184,10 @@
 
 .swc-AIButton:disabled::after {
   box-shadow: none;
+}
+
+.swc-AIButton:disabled .swc-AIButton-reflection {
+  opacity: 0;
 }
 
 /* Down/pressed state (not while disabled). */
