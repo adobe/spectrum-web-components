@@ -21,15 +21,10 @@ export interface RenderFieldLabelOptions {
   hasLabelSlotContent: boolean;
 
   /**
-   * The `id` of the field's role element (e.g. the `<input>`). When set, the
-   * slotted label is the field's active accessible-name source and renders as
-   * a real `<label for>`, giving native click-to-focus. When `null` (a
-   * higher-precedence source, `accessible-labelledby` or `accessible-label`,
-   * is active instead), the label renders as a plain, non-`for` `<span>`:
-   * still visible, but excluded from the accessible-name computation so it
-   * doesn't create a conflicting second name.
+   * The `id` of the field's role element (e.g. the `<input>`), wired as the
+   * rendered `<label for>` so the visible label gives native click-to-focus.
    */
-  forId: string | null;
+  forId: string;
 }
 
 /**
@@ -52,14 +47,9 @@ export function renderFieldLabel({
   if (!hasLabelSlotContent) {
     return nothing;
   }
-  if (forId) {
-    return html`
-      <label class="swc-FieldLabel" for=${forId}>
-        <slot name="label"></slot>
-      </label>
-    `;
-  }
   return html`
-    <span class="swc-FieldLabel"><slot name="label"></slot></span>
+    <label class="swc-FieldLabel" for=${forId}>
+      <slot name="label"></slot>
+    </label>
   `;
 }

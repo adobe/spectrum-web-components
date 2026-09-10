@@ -84,14 +84,17 @@ export const NameSourcePrecedenceTest: Story = {
     });
 
     await step(
-      'accessible-labelledby wins over a slotted label: no aria-label, no <label for>, ariaLabelledByElements resolved',
+      'accessible-labelledby wins the announced name while the slotted label still renders as a real <label for>: no aria-label, ariaLabelledByElements resolved',
       () => {
         expect(labelledbyWins.roleElement?.hasAttribute('aria-label')).toBe(
           false
         );
-        expect(labelledbyWins.shadowRoot?.querySelector('label')).toBeNull();
-        // The slotted label still renders visually as a plain span.
-        expect(labelledbyWins.shadowRoot?.querySelector('span')).toBeTruthy();
+        // The visible label keeps its real <label for> (and click-to-focus);
+        // accessible-labelledby only wins the computed accessible name.
+        const label = labelledbyWins.shadowRoot?.querySelector('label');
+        expect(label).toBeTruthy();
+        expect(label?.getAttribute('for')).toBe(labelledbyWins.roleElement?.id);
+        expect(labelledbyWins.shadowRoot?.querySelector('span')).toBeNull();
         const resolved = labelledbyWins.roleElement?.ariaLabelledByElements;
         expect(resolved).toHaveLength(2);
         expect(resolved?.map((el) => el.id)).toEqual([
@@ -164,8 +167,9 @@ function appendExternalLabelledbyTarget(): HTMLElement {
   return external;
 }
 
-const CONFLICT_PHRASE = 'more than one accessible-name source';
-const IGNORED_PHRASE = 'will not be read';
+const CONFLICT_PHRASE =
+  'sets both "accessible-labelledby" and "accessible-label"';
+const IGNORED_PHRASE = '"accessible-label" is ignored';
 
 export const LabelConflictTest: Story = {
   render: () => html`
@@ -173,29 +177,7 @@ export const LabelConflictTest: Story = {
   `,
   play: async ({ step }) => {
     await step(
-      'warns when accessible-label is set alongside a slotted label, naming the slotted label as ignored',
-      () =>
-        withWarningSpy(async (warnCalls) => {
-          const host = document.createElement('demo-labelling-host');
-          host.setAttribute('accessible-label', 'Different text');
-          appendSlottedLabel(host);
-          document.body.append(host);
-          await (host as DemoLabellingHost).updateComplete;
-          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-          expect(
-            messages.some(
-              (m) =>
-                m.includes(CONFLICT_PHRASE) &&
-                m.includes(IGNORED_PHRASE) &&
-                m.includes('the slotted "label"')
-            )
-          ).toBe(true);
-          host.remove();
-        })
-    );
-
-    await step(
-      'warns when accessible-label is set alongside a resolved accessible-labelledby, naming accessible-label as ignored',
+      'warns when both accessible-label and accessible-labelledby are set',
       () =>
         withWarningSpy(async (warnCalls) => {
           const external = appendExternalLabelledbyTarget();
@@ -207,10 +189,7 @@ export const LabelConflictTest: Story = {
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
           expect(
             messages.some(
-              (m) =>
-                m.includes(CONFLICT_PHRASE) &&
-                m.includes(IGNORED_PHRASE) &&
-                m.includes('"accessible-label"')
+              (m) => m.includes(CONFLICT_PHRASE) && m.includes(IGNORED_PHRASE)
             )
           ).toBe(true);
           external.remove();
@@ -219,31 +198,7 @@ export const LabelConflictTest: Story = {
     );
 
     await step(
-      'warns when accessible-labelledby is set alongside a slotted label, naming the slotted label as ignored',
-      () =>
-        withWarningSpy(async (warnCalls) => {
-          const external = appendExternalLabelledbyTarget();
-          const host = document.createElement('demo-labelling-host');
-          host.setAttribute('accessible-labelledby', 'label-conflict-external');
-          appendSlottedLabel(host);
-          document.body.append(host);
-          await (host as DemoLabellingHost).updateComplete;
-          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-          expect(
-            messages.some(
-              (m) =>
-                m.includes(CONFLICT_PHRASE) &&
-                m.includes(IGNORED_PHRASE) &&
-                m.includes('the slotted "label"')
-            )
-          ).toBe(true);
-          external.remove();
-          host.remove();
-        })
-    );
-
-    await step(
-      'warns when all three sources are set, naming both accessible-label and the slotted label as ignored',
+      'still warns when a slotted visible label is also present (the label + labelledby conflict remains)',
       () =>
         withWarningSpy(async (warnCalls) => {
           const external = appendExternalLabelledbyTarget();
@@ -256,13 +211,41 @@ export const LabelConflictTest: Story = {
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
           expect(
             messages.some(
-              (m) =>
-                m.includes(CONFLICT_PHRASE) &&
-                m.includes(IGNORED_PHRASE) &&
-                m.includes('"accessible-label"') &&
-                m.includes('the slotted "label"')
+              (m) => m.includes(CONFLICT_PHRASE) && m.includes(IGNORED_PHRASE)
             )
           ).toBe(true);
+          external.remove();
+          host.remove();
+        })
+    );
+
+    await step(
+      'does not warn when a visible label is paired with accessible-label (the recommended WCAG 2.5.3 pattern)',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const host = document.createElement('demo-labelling-host');
+          host.setAttribute('accessible-label', 'Query products');
+          appendSlottedLabel(host, 'Query');
+          document.body.append(host);
+          await (host as DemoLabellingHost).updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          expect(messages.some((m) => m.includes(CONFLICT_PHRASE))).toBe(false);
+          host.remove();
+        })
+    );
+
+    await step(
+      'does not warn when a visible label is paired with accessible-labelledby',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const external = appendExternalLabelledbyTarget();
+          const host = document.createElement('demo-labelling-host');
+          host.setAttribute('accessible-labelledby', 'label-conflict-external');
+          appendSlottedLabel(host);
+          document.body.append(host);
+          await (host as DemoLabellingHost).updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          expect(messages.some((m) => m.includes(CONFLICT_PHRASE))).toBe(false);
           external.remove();
           host.remove();
         })

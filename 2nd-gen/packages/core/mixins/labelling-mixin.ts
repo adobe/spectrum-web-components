@@ -52,38 +52,25 @@ export interface LabellingInterface {
   readonly roleElement: Element | null;
 
   /**
-   * Renders the visible label for the given role-element `id`. Pass `null`
-   * when the role element has no stable `id` yet.
+   * Renders the visible label as a `<label for>` targeting the role-element `id`.
    */
-  renderLabel(forId: string | null): RenderFieldLabelResult;
+  renderLabel(forId: string): RenderFieldLabelResult;
 }
 
 /**
- * A mixin that adds visible-label rendering and accessible-name wiring to a
- * host: the reactive `accessible-label` / `accessible-labelledby` properties,
- * light-DOM `label` slot presence tracking (via `SlotPresenceController`), the
- * "no accessible name" and "conflicting label sources" dev warnings, and
- * `renderLabel()` — which renders the shared label markup via the
- * `renderFieldLabel` directive.
+ * Adds visible-label rendering and accessible-name wiring to a host: the
+ * `accessible-label` / `accessible-labelledby` properties, `label` slot
+ * tracking, `renderLabel()`, and dev-mode warnings for a missing or
+ * conflicting name.
  *
- * Three accessible-name sources are supported, in precedence order (highest
- * first): `accessibleLabelledby` (resolved against the host's root node and
- * written to {@link roleElement}'s `ariaLabelledByElements`), `accessibleLabel`
- * (written to {@link roleElement}'s `aria-label` attribute), and a slotted
- * visible label (rendered as a real, same-root `<label for>`). Only the
- * highest-precedence source that is actually set is wired; a lower-precedence
- * slotted label still renders visually (as a plain, non-`for` `<span>`) so it
- * isn't hidden, just excluded from the accessible-name computation. Setting
- * more than one of these sources at once triggers a dev-mode warning that
- * names which source wins and which will not be read, since a silently
- * ignored source risks a WCAG 2.5.3 (Label in Name) mismatch when its text
- * differs from the winning source's.
+ * The name sources are wired independently; the browser ranks them
+ * `accessible-labelledby` over `accessible-label` over a slotted `<label>`, so
+ * a visible label keeps native click-to-focus even when a programmatic name
+ * wins what is announced. Setting both programmatic sources warns. See the MDX
+ * page for the full precedence and WCAG 2.5.3 (Label in Name) guidance.
  *
- * Because the role element a text-like field names is created by the host's
- * own render (e.g. the `<input>`), this mixin never assumes the role element's
- * shape: hosts applying `LabellingMixin` before their own render layer exists
- * (for example, a core base class) override {@link roleElement} once the real
- * element is available.
+ * The host renders its own role element (e.g. the `<input>`), so a rendering
+ * subclass overrides {@link roleElement} to return it.
  *
  * @example
  * ```typescript
@@ -178,50 +165,29 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
     /**
      * @internal
      *
-     * The accessible-name sources that are currently set, in precedence
-     * order (highest first): a resolved `accessibleLabelledby`,
-     * `accessibleLabel`, then a slotted `label`. More than one entry means
-     * only the first is actually read as the accessible name; the rest are
-     * ignored (see {@link _warnLabelConflict}).
+     * Whether any accessible-name source is set: a resolved
+     * `accessibleLabelledby`, `accessibleLabel`, or a slotted `label`.
      */
-    private get _presentNameSources(): Array<'labelledby' | 'label' | 'slot'> {
-      const present: Array<'labelledby' | 'label' | 'slot'> = [];
-      if (this._resolvedLabelledbyElements.length > 0) {
-        present.push('labelledby');
-      }
-      if (this.accessibleLabel) {
-        present.push('label');
-      }
-      if (this.hasLabelSlotContent) {
-        present.push('slot');
-      }
-      return present;
+    private get _hasAccessibleName(): boolean {
+      return (
+        this._resolvedLabelledbyElements.length > 0 ||
+        !!this.accessibleLabel ||
+        this.hasLabelSlotContent
+      );
     }
 
-    /**
-     * @internal
-     *
-     * The currently active accessible-name source, in precedence order.
-     */
-    private get _activeNameSource(): 'labelledby' | 'label' | 'slot' | 'none' {
-      return this._presentNameSources[0] ?? 'none';
-    }
-
-    public renderLabel(forId: string | null): RenderFieldLabelResult {
+    public renderLabel(forId: string): RenderFieldLabelResult {
       return renderFieldLabel({
         hasLabelSlotContent: this.hasLabelSlotContent,
-        forId: this._activeNameSource === 'slot' ? forId : null,
+        forId,
       });
     }
 
     protected override updated(changedProperties: PropertyValues): void {
       super.updated(changedProperties);
       this._syncLabelling();
-      // The accessible name can come from a property or the label slot
-      // (tracked by a slot controller that requests an update without
-      // surfacing a changed property), so re-check on every dev render and
-      // let the warning dedup handle repeats rather than gating on one
-      // property.
+      // Slot changes request an update without surfacing a changed property,
+      // so re-check every render; the warning dedup handles repeats.
       if (isDebug()) {
         this._warnMissingAccessibleName();
         this._warnLabelConflict();
@@ -233,10 +199,12 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
       if (!target) {
         return;
       }
-      const source = this._activeNameSource;
-      target.ariaLabelledByElements =
-        source === 'labelledby' ? this._resolvedLabelledbyElements : null;
-      if (source === 'label') {
+      // Wire each source independently; the browser ranks labelledby over
+      // aria-label over <label for>. The else branch clears a stale value, it
+      // does not enforce precedence.
+      const refs = this._resolvedLabelledbyElements;
+      target.ariaLabelledByElements = refs.length > 0 ? refs : null;
+      if (this.accessibleLabel) {
         target.setAttribute('aria-label', this.accessibleLabel);
       } else {
         target.removeAttribute('aria-label');
@@ -245,8 +213,8 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
 
     private _warnMissingAccessibleName(): void {
       // Early return when a name is present so the message is not built on
-      // every in-named render.
-      if (this._activeNameSource !== 'none') {
+      // every named render.
+      if (this._hasAccessibleName) {
         return;
       }
       warnIf(
@@ -268,52 +236,29 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
     /**
      * @internal
      *
-     * Human-readable name for a name source, used in the conflicting-label
-     * dev warning.
-     */
-    private _describeNameSource(
-      source: 'labelledby' | 'label' | 'slot'
-    ): string {
-      return {
-        labelledby: '"accessible-labelledby"',
-        label: '"accessible-label"',
-        slot: 'the slotted "label"',
-      }[source];
-    }
-
-    /**
-     * @internal
-     *
-     * Warns when more than one accessible-name source is set at once (some
-     * combination of a resolved `accessibleLabelledby`, `accessibleLabel`,
-     * and a slotted `label`). Only the highest-precedence source present is
-     * ever read as the accessible name; the rest are silently ignored, which
-     * risks a WCAG 2.5.3 (Label in Name) mismatch between what's shown and
-     * what's announced if their text differs. The message names which
-     * source wins and which will not be read, so the warning is actionable
-     * regardless of which combination triggered it.
+     * Warns when both `accessibleLabelledby` and `accessibleLabel` are set:
+     * two competing programmatic names. Per the accessible-name computation,
+     * `accessibleLabelledby` is used and `accessibleLabel` is silently ignored.
+     * A visible slotted label paired with either one is the recommended
+     * WCAG 2.5.3 (Label in Name) pattern and does not warn.
      */
     private _warnLabelConflict(): void {
-      const present = this._presentNameSources;
-      // Early return when at most one source is set so the message is not
-      // built on every render.
-      if (present.length < 2) {
+      // Only two programmatic name sources conflict; a visible label never does.
+      if (
+        this._resolvedLabelledbyElements.length === 0 ||
+        !this.accessibleLabel
+      ) {
         return;
       }
-      const [winner, ...ignored] = present;
-      const describe = (source: 'labelledby' | 'label' | 'slot') =>
-        this._describeNameSource(source);
-      const allNames = present.map(describe).join(', ');
-      const ignoredNames = ignored.map(describe).join(' and ');
       warnIf(
         this,
         true,
-        `<${this.localName}> sets more than one accessible-name source: ${allNames}. Only ${describe(winner)} is read as the accessible name; ${ignoredNames} will not be read, risking a WCAG 2.5.3 (Label in Name) mismatch between what's shown and what's announced.`,
+        `<${this.localName}> sets both "accessible-labelledby" and "accessible-label". Per the accessible-name computation, "accessible-labelledby" is used and "accessible-label" is ignored.`,
         this.docsHref,
         {
           type: 'accessibility',
           issues: [
-            'set only one of "accessible-labelledby", "accessible-label", or a slotted "label".',
+            'set only one of "accessible-labelledby" or "accessible-label".',
           ],
         }
       );

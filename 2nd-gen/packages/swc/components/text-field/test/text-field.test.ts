@@ -126,8 +126,9 @@ export const MissingAccessibleNameTest: Story = {
 // TEST: Conflicting label sources DEBUG warning (WCAG 2.5.3)
 // ──────────────────────────────────────────────────────────────
 
-const CONFLICT_PHRASE = 'more than one accessible-name source';
-const IGNORED_PHRASE = 'will not be read';
+const CONFLICT_PHRASE =
+  'sets both "accessible-labelledby" and "accessible-label"';
+const IGNORED_PHRASE = '"accessible-label" is ignored';
 
 export const LabelConflictTest: Story = {
   render: () => html`
@@ -135,30 +136,7 @@ export const LabelConflictTest: Story = {
   `,
   play: async ({ step }) => {
     await step(
-      'warns when accessible-label is set alongside a slotted label, naming the slotted label as ignored',
-      () =>
-        withWarningSpy(async (warnCalls) => {
-          const field = await fixture<TextField>(html`
-            <swc-text-field accessible-label="Different text">
-              <span slot="label">Visible label</span>
-            </swc-text-field>
-          `);
-          await field.updateComplete;
-          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-          expect(
-            messages.some(
-              (m) =>
-                m.includes(CONFLICT_PHRASE) &&
-                m.includes(IGNORED_PHRASE) &&
-                m.includes('the slotted "label"')
-            )
-          ).toBe(true);
-          field.parentElement?.remove();
-        })
-    );
-
-    await step(
-      'warns when accessible-label is set alongside a resolved accessible-labelledby, naming accessible-label as ignored',
+      'warns when both accessible-label and accessible-labelledby are set',
       () =>
         withWarningSpy(async (warnCalls) => {
           // The reference target lives as a plain (unslotted) light-DOM
@@ -177,10 +155,7 @@ export const LabelConflictTest: Story = {
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
           expect(
             messages.some(
-              (m) =>
-                m.includes(CONFLICT_PHRASE) &&
-                m.includes(IGNORED_PHRASE) &&
-                m.includes('"accessible-label"')
+              (m) => m.includes(CONFLICT_PHRASE) && m.includes(IGNORED_PHRASE)
             )
           ).toBe(true);
           field.parentElement?.remove();
@@ -188,7 +163,23 @@ export const LabelConflictTest: Story = {
     );
 
     await step(
-      'warns when accessible-labelledby is set alongside a slotted label, naming the slotted label as ignored',
+      'does not warn when a visible label is paired with accessible-label (the recommended WCAG 2.5.3 pattern)',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const field = await fixture<TextField>(html`
+            <swc-text-field accessible-label="Query products">
+              <span slot="label">Query</span>
+            </swc-text-field>
+          `);
+          await field.updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          expect(messages.some((m) => m.includes(CONFLICT_PHRASE))).toBe(false);
+          field.parentElement?.remove();
+        })
+    );
+
+    await step(
+      'does not warn when a visible label is paired with accessible-labelledby',
       () =>
         withWarningSpy(async (warnCalls) => {
           const field = await fixture<TextField>(html`
@@ -201,14 +192,7 @@ export const LabelConflictTest: Story = {
           `);
           await field.updateComplete;
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-          expect(
-            messages.some(
-              (m) =>
-                m.includes(CONFLICT_PHRASE) &&
-                m.includes(IGNORED_PHRASE) &&
-                m.includes('the slotted "label"')
-            )
-          ).toBe(true);
+          expect(messages.some((m) => m.includes(CONFLICT_PHRASE))).toBe(false);
           field.parentElement?.remove();
         })
     );
