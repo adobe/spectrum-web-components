@@ -155,7 +155,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
       return this.accessibleLabelledby
         .split(/\s+/)
         .filter(Boolean)
-        .map((id) => root.getElementById(id))
+        .map((id) => root.getElementById?.(id) ?? null)
         .filter((element): element is HTMLElement => element !== null);
     }
 

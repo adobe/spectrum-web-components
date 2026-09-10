@@ -141,6 +141,36 @@ export const MissingAccessibleNameTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Detached host resolves accessible-labelledby without throwing
+// ──────────────────────────────────────────────────────────────
+
+export const DetachedHostTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ step }) => {
+    await step(
+      'resolving accessible-labelledby after the host is removed does not throw',
+      async () => {
+        const host = document.createElement(
+          'demo-labelling-host'
+        ) as DemoLabellingHost;
+        host.setAttribute('accessible-labelledby', 'labelling-mixin-detached');
+        document.body.append(host);
+        await host.updateComplete;
+        host.remove();
+        // A reactive change after disconnect flushes another update, which
+        // re-resolves the labelledby ids against the now-detached root:
+        // getRootNode() returns the host element, which has no getElementById.
+        host.accessibleLabel = 'Detached';
+        await host.updateComplete;
+        expect(host.roleElement?.ariaLabelledByElements).toBeNull();
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Conflicting label sources DEBUG warning (WCAG 2.5.3)
 // ──────────────────────────────────────────────────────────────
 
