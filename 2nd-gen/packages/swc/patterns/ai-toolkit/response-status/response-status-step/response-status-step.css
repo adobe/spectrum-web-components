@@ -81,6 +81,10 @@
     opacity token("animation-duration-200") token("animation-ease-in-out");
 }
 
+:host(:first-of-type) .swc-ResponseStatusStep-icon {
+  margin-block-start: 14px;
+}
+
 .swc-ResponseStatusStep-line {
   flex: 1 1 auto;
   inline-size: token("border-width-100");
@@ -112,6 +116,10 @@
 
 :host(:not(:last-of-type)) .swc-ResponseStatusStep-body {
   padding-block-end: token("spacing-200");
+}
+
+:host(:first-of-type) .swc-ResponseStatusStep-body:not(:has(> .swc-ResponseStatusStep-toggle)) {
+  margin-block-start: token("spacing-100");
 }
 
 /* Typography utilities (shadow-local; mirrors typography.css) */
@@ -257,6 +265,10 @@
   outline-offset: token("focus-ring-gap");
 }
 
+:host(:first-of-type) .swc-ResponseStatusStep-toggle {
+  margin-block-start: token("spacing-100");
+}
+
 /* Shared collapse mechanics with `response-status.css`'s
    `.swc-ResponseStatus-panel`: animates `grid-template-rows` between 0fr and
    1fr rather than `block-size` to/from `auto`, since the block-size +
@@ -335,6 +347,8 @@
 }
 
 .swc-ResponseStatusStep-detailPanel:has(.swc-ResponseStatusStep-detailScroll:focus-visible) {
+  margin-block-end: token("spacing-75");
+  margin-inline-end: token("spacing-75");
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
   outline-offset: token("focus-ring-gap");
 }

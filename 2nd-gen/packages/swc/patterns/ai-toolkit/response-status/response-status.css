@@ -23,7 +23,6 @@
 .swc-ResponseStatus {
   display: flex;
   flex-direction: column;
-  gap: token("spacing-100");
 }
 
 /* ─────────────────────────────────────
@@ -218,7 +217,6 @@
    ───────────────────────────────────── */
 
 .swc-ResponseStatus--agentic {
-  gap: token("spacing-100");
   inline-size: 100%;
   max-inline-size: 540px;
 }
