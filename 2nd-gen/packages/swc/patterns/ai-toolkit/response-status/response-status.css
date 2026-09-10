@@ -23,8 +23,12 @@
 .swc-ResponseStatus {
   display: flex;
   flex-direction: column;
+}
 
-  /* Offsets the steps list's own padding-block below. */
+/* No gap when closed: the panel is zero-height then, so a gap would just be
+   trailing space. Split between this and the steps list's padding-block
+   below when open. */
+:host([open]) .swc-ResponseStatus {
   gap: token("spacing-75");
 }
 
@@ -290,12 +294,15 @@
   opacity: 1;
 }
 
-/* padding-block keeps the first/last step's focus ring from clipping against the collapse panel's overflow:hidden edge. */
 .swc-ResponseStatus-steps {
-  padding-block: token("spacing-75");
   padding-inline-start: token("spacing-500");
   margin: 0;
   list-style: none;
+}
+
+/* Only when open, so the collapsed panel still shrinks to true zero. */
+.swc-ResponseStatus-panel--open .swc-ResponseStatus-steps {
+  padding-block: token("spacing-75");
 }
 
 /* Typography utilities (shadow-local; mirrors typography.css) */
