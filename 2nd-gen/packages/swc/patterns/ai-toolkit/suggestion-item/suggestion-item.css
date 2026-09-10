@@ -24,7 +24,7 @@
   -webkit-tap-highlight-color: transparent;
   display: inline-flex;
   align-items: center;
-  block-size: var(--swc-suggestion-item-min-block-size, token("component-height-100"));
+  block-size: token("component-height-100");
   padding: 0;
   font-family: token("sans-serif-font");
   font-size: token("font-size-100");
@@ -33,7 +33,7 @@
   line-height: token("line-height-font-size-100");
   color: token("neutral-content-color-default");
   background: token("gray-100");
-  border: 1px solid transparent;
+  border: token("border-width-100") solid transparent;
   border-radius: token("corner-radius-extra-large-default");
   transition: background token("animation-duration-100") token("animation-ease-in-out");
 }
@@ -61,14 +61,14 @@
   --swc-icon-block-size: token("workflow-icon-medium");
 
   flex-shrink: 0;
-  margin-inline-start: var(--swc-suggestion-item-icon-margin-inline-start, 14px);
-  margin-inline-end: var(--swc-suggestion-item-icon-margin-inline-end, 6px);
+  margin-inline-start: 14px;
+  margin-inline-end: token("spacing-85");
 }
 
 .swc-SuggestionItem-label {
   display: inline-flex;
-  padding-block: var(--swc-suggestion-item-label-padding-block, 7px);
-  padding-inline-end: var(--swc-suggestion-item-label-padding-inline-end, token("spacing-300"));
+  padding-block: token("base-padding-vertical-medium");
+  padding-inline-end: token("spacing-300");
   text-align: start;
 }
 

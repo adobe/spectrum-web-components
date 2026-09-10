@@ -83,10 +83,14 @@ export const OverviewTest: Story = {
         el.shadowRoot?.querySelector<HTMLTextAreaElement>('textarea');
       expect(textarea?.rows).toBe(3);
       expect(
-        textarea?.style.getPropertyValue('--swc-prompt-field-textarea-min-rows')
+        textarea?.style.getPropertyValue(
+          '--_swc-prompt-field-textarea-min-rows'
+        )
       ).toBe('3');
       expect(
-        textarea?.style.getPropertyValue('--swc-prompt-field-textarea-max-rows')
+        textarea?.style.getPropertyValue(
+          '--_swc-prompt-field-textarea-max-rows'
+        )
       ).toBe('6');
 
       el.minRows = undefined;

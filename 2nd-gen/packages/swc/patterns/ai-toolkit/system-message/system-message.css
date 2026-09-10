@@ -32,7 +32,7 @@
 .swc-SystemMessage {
   display: flex;
   flex-direction: column;
-  gap: var(--swc-system-message-gap, token("spacing-300"));
+  gap: token("spacing-300");
 }
 
 /* ─────────────────────────────────────
@@ -42,7 +42,7 @@
 .swc-SystemMessage-body {
   display: flex;
   flex-direction: column;
-  gap: var(--swc-system-message-body-gap, token("spacing-100"));
+  gap: token("spacing-100");
 }
 
 /* ─────────────────────────────────────
@@ -52,7 +52,7 @@
 .swc-SystemMessage-output {
   display: flex;
   flex-direction: column;
-  gap: var(--swc-system-message-output-gap, token("spacing-300"));
+  gap: token("spacing-300");
 }
 
 /* ─────────────────────────────────────
@@ -62,5 +62,5 @@
 .swc-SystemMessage-content {
   display: flex;
   flex-direction: column;
-  gap: var(--swc-system-message-content-gap, token("spacing-100"));
+  gap: token("spacing-100");
 }
