@@ -60,33 +60,11 @@ export interface LabellingInterface {
 /**
  * Adds visible-label rendering and accessible-name wiring to a host: the
  * `accessible-label` / `accessible-labelledby` properties, `label` slot
- * tracking, `renderLabel()`, and dev-mode warnings for a missing or
- * conflicting name.
+ * tracking, `renderLabel()`, and dev-mode name warnings.
  *
- * The name sources are wired independently; the browser ranks them
- * `accessible-labelledby` over `accessible-label` over a slotted `<label>`, so
- * a visible label keeps native click-to-focus even when a programmatic name
- * wins what is announced. Setting both programmatic sources warns. See the MDX
- * page for the full precedence and WCAG 2.5.3 (Label in Name) guidance.
- *
- * The host renders its own role element (e.g. the `<input>`), so a rendering
- * subclass overrides {@link roleElement} to return it.
- *
- * @example
- * ```typescript
- * class MyField extends LabellingMixin(SpectrumElement) {
- *   override get roleElement() {
- *     return this.renderRoot.querySelector('input');
- *   }
- *
- *   render() {
- *     return html`
- *       ${this.renderLabel('my-field-input')}
- *       <input id="my-field-input" />
- *     `;
- *   }
- * }
- * ```
+ * A rendering subclass overrides {@link roleElement} to return the element the
+ * accessible name is wired onto (usually the rendered `<input>`). Name-source
+ * precedence, the conflict warning, and a usage example live in the MDX page.
  */
 export function LabellingMixin<T extends Constructor<ReactiveElement>>(
   constructor: T
@@ -205,6 +183,12 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
       // aria-label over <label for>. The else branch clears a stale value, it
       // does not enforce precedence.
       const refs = this._resolvedLabelledbyElements;
+      // @todo: `ariaLabelledByElements` is the ARIA element-reflection API,
+      // unsupported in Firefox (as of v143). There it is a silent no-op, so
+      // `accessible-labelledby` produces no name — a same-root `aria-labelledby`
+      // IDREF string cannot substitute because the target lives in the shadow
+      // root while the ids resolve against the host's root. Document as a known
+      // gap until Firefox ships reflection or a cross-root fallback is designed.
       target.ariaLabelledByElements = refs.length > 0 ? refs : null;
       if (this.accessibleLabel) {
         target.setAttribute('aria-label', this.accessibleLabel);

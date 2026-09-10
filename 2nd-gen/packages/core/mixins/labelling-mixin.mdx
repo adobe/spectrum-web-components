@@ -79,6 +79,8 @@ Setting both `accessible-labelledby` and `accessible-label` triggers a dev-mode 
 
 > **Known axe-core false positive.** A field named only via a resolved `accessible-labelledby` fails automated axe-core scans with a "Form element does not have a label" (`label` rule) violation, even though the name resolves correctly in real browsers and assistive technology. axe-core inspects DOM attributes and has no standardized way to read `ariaLabelledByElements`, the ARIA element-reflection API this mixin uses. Exclude the specific host from the `label` rule with a written `// reason:` comment (see the forms-strategy RFC's axe-core policy, CONTRIBUTOR-DOCS "3.4 axe-core policy") rather than disabling the rule globally; verify the name with manual AT testing instead.
 
+> ⚠️ **Important:** `accessible-labelledby` depends on the ARIA element-reflection API (`ariaLabelledByElements`), which Firefox does not yet support (as of Firefox 143). In an engine without it, assigning the reflected elements is a silent no-op, so a field named only via `accessible-labelledby` has no accessible name there. A same-root `aria-labelledby` IDREF string cannot substitute, because the referenced ids resolve against the host's root while the name is wired onto the control inside the shadow root. For fields that must be named in all engines today, prefer a slotted visible label or `accessible-label`.
+
 ### Best practices
 
 - Prefer a slotted label for ordinary fields. Reserve `accessible-label` and `accessible-labelledby` for fields with no visible label of their own, or a name composed from elements the field doesn't own (for example, a grid cell named by its row and column headers).
