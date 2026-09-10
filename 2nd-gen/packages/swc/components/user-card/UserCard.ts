@@ -32,7 +32,7 @@ import styles from './user-card.css';
  * `size`. Overwrites any `size` the consumer set on their own avatar.
  */
 const AVATAR_SIZE_BY_CARD_SIZE = {
-  xs: '300',
+  xs: '100',
   s: '300',
   m: '500',
   l: '700',

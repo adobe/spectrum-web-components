@@ -32,6 +32,10 @@
    back out across the shadow boundary.
    ───────────────────────────────────────────────────────────────────────────── */
 
+:host([size="xs"]) {
+  --_swc-user-card-avatar-size: token("avatar-size-100");
+}
+
 :host([size="m"]) {
   --_swc-user-card-avatar-size: token("avatar-size-500");
 }
