@@ -18,7 +18,7 @@
 .swc-TextField {
   display: inline-flex;
   flex-direction: column;
-  gap: var(--swc-spacing-75, 4px);
+  gap: token("spacing-75");
 }
 
 .swc-FieldLabel {
