@@ -183,12 +183,6 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
       // aria-label over <label for>. The else branch clears a stale value, it
       // does not enforce precedence.
       const refs = this._resolvedLabelledbyElements;
-      // @todo: `ariaLabelledByElements` is the ARIA element-reflection API,
-      // unsupported in Firefox (as of v143). There it is a silent no-op, so
-      // `accessible-labelledby` produces no name — a same-root `aria-labelledby`
-      // IDREF string cannot substitute because the target lives in the shadow
-      // root while the ids resolve against the host's root. Document as a known
-      // gap until Firefox ships reflection or a cross-root fallback is designed.
       target.ariaLabelledByElements = refs.length > 0 ? refs : null;
       if (this.accessibleLabel) {
         target.setAttribute('aria-label', this.accessibleLabel);
