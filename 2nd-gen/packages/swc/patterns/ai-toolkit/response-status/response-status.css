@@ -35,14 +35,13 @@
   gap: token("spacing-100");
   align-items: center;
   min-block-size: var(--_swc-response-status-row-block-size, 32px);
-  padding-inline: token("spacing-100");
 }
 
 /* When the row is a button (reasoning toggle). Full inline-size so the
    entire row is clickable. */
 .swc-ResponseStatus-row--button {
   inline-size: 100%;
-  padding: var(--_swc-response-status-toggle-padding-block, 3px) token("spacing-100");
+  padding: 0;
   color: inherit;
   text-align: start;
   background: transparent;
