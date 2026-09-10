@@ -60,8 +60,10 @@ const DOCS_URL =
  * `PlacementController`-anchored surface containing a `role="menu"` list.
  * ARIA and click-to-toggle wiring on the trigger, open/close events, roving
  * `tabindex` and arrow-key navigation among `swc-menu-item` rows, and
- * initial/return focus are all handled here. Closes on Escape, an outside
- * click, or a slotted row being activated (by click or <kbd>Enter</kbd>).
+ * initial/return focus are all handled here. `Tab`/`Shift+Tab` are trapped
+ * on the active row rather than leaving the menu; only arrow keys move
+ * among rows. Closes on Escape, an outside click, or a slotted row being
+ * activated (by click or <kbd>Enter</kbd>).
  *
  * @slot - `swc-menu-item` elements. `swc-menu-group` and `swc-divider` (as a
  *   separator) join in a later migration phase.
@@ -234,6 +236,15 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       }
       event.preventDefault();
       this.open = false;
+      return;
+    }
+    if (event.key === 'Tab' && this.isMenuItemEventTarget(event)) {
+      // Traps focus on the roving-tabindex row rather than letting Tab (or
+      // Shift+Tab) carry it out of the menu to whatever's next/previous in
+      // the page's tab order. Arrow keys are still the only way to move
+      // among rows (`FocusgroupNavigationController`); Tab does nothing
+      // while the menu is open.
+      event.preventDefault();
       return;
     }
     if (event.key === 'Enter' && this.isMenuItemEventTarget(event)) {
