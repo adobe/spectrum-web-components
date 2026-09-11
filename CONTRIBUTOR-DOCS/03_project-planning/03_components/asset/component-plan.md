@@ -504,7 +504,7 @@ plan contract pattern this document follows).
 - [x] Dependencies identified
 - [x] Changes overview documented (Must ship / Additive)
 - [x] 2nd-gen API decisions drafted
-- [ ] Plan reviewed by at least one other engineer
+- [x] Plan reviewed by at least one other engineer
 - [x] Loading state design resolved (Q1–Q3) — see [Decision log](#decision-log)
 - [x] SVG accessible-name detection algorithm signed off by the team's a11y SME (Q4)
 
@@ -592,11 +592,11 @@ plan contract pattern this document follows).
 - [x] Drop `.internal.*` naming and `@status internal`; promote docs/stories to public
 - [x] JSDoc on all public properties, slots, and CSS custom properties
 - [x] Storybook stories for sizing, `fit`, `background`, and `decorative`/`accessibleLabel`
-- [ ] Consumer migration guide covers the `variant` removal and the `label` →
+- [x] Consumer migration guide covers the `variant` removal and the `label` →
       `accessibleLabel` rename
 - [ ] Reference Card directly as an example consumer (Storybook docs and/or the consumer
       migration guide), pointing at its `preview` and `collection` slot usage — deferred until
-      Card's own Asset integration (`seckles/swc-card` branch) merges
+      Card's own Asset integration merges
 - [x] Document v1 support for a single `img` or `svg` child only
 - [x] Document `loading="lazy"`/`decoding="async"` performance guidance
 - [x] Document the resulting CSS behavior when combining `aspectRatio` with only one of

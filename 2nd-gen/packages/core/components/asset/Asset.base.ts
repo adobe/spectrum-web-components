@@ -248,9 +248,12 @@ export abstract class AssetBase extends SpectrumElement {
    */
   private resolveAccessibleName(children: Element[]): void {
     if (this.decorative) {
-      // Don't claim ownership of a consumer's own `aria-hidden`.
-      this._appliedAriaHidden = !this.hasAttribute('aria-hidden');
-      this.setAttribute('aria-hidden', 'true');
+      // Only claim ownership (and write the attribute) when it isn't
+      // already present, to avoid redundant attribute writes.
+      if (!this.hasAttribute('aria-hidden')) {
+        this._appliedAriaHidden = true;
+        this.setAttribute('aria-hidden', 'true');
+      }
       return;
     }
     if (this._appliedAriaHidden) {
