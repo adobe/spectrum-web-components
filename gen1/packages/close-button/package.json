@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/components/close-button",
   "repository": {
-    "directory": "1st-gen/packages/close-button",
+    "directory": "gen1/packages/close-button",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

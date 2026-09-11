@@ -60,7 +60,7 @@ Use these existing docs when matching structure, headings, tables, and phrasing:
 
 - Verify behavior and ARIA in **2nd-gen source** before stating what the component exposes — do not document ARIA the code does not set
 - Ask clarifying questions for uncertain mappings instead of guessing
-- **Dual or conditional host roles:** When 1st-gen source, RSP/Figma, or migration notes show the **same component** taking **more than one host `role`** (for example `toolbar` vs `radiogroup`, or a property that swaps roles), **stop and prompt the user** before writing Recommendations. A component that legitimately serves **two or more ARIA roles** should **most likely be two distinct components**—not one element whose role changes. Do not document multiple host roles as acceptable without an explicit product decision; see [Dual or conditional ARIA roles](#dual-or-conditional-aria-roles) in **Full instructions**.
+- **Dual or conditional host roles:** When gen1 source, RSP/Figma, or migration notes show the **same component** taking **more than one host `role`** (for example `toolbar` vs `radiogroup`, or a property that swaps roles), **stop and prompt the user** before writing Recommendations. A component that legitimately serves **two or more ARIA roles** should **most likely be two distinct components**—not one element whose role changes. Do not document multiple host roles as acceptable without an explicit product decision; see [Dual or conditional ARIA roles](#dual-or-conditional-aria-roles) in **Full instructions**.
 - When the doc covers **progress**, **loading**, **busy**, or **spinner** UX, align guidance with Adobe’s Figma file **Loading animation discovery** ([Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery)); if you cite or rely on it in the doc body, **also** list that link under **`## References`**
 
 ## Full instructions
@@ -71,7 +71,7 @@ Use this **H2** order. **Do not** skip any of these top-level **H2** blocks for 
 
 1. `## Overview`
 2. `## ARIA and WCAG context`
-3. `## Related 1st-gen accessibility (Jira)`
+3. `## Related gen1 accessibility (Jira)`
 4. `## Recommendations: \`<swc-component-name>\``
 5. `## Testing` with `### Automated tests` and, when the component is **not focusable** in its default supported use, `### Manual screen reader testing` (see [Testing](#testing) below)
 6. `## Summary checklist`
@@ -85,7 +85,7 @@ Under **`## Recommendations`**, use these **`###` subsections** in order:
 4. **Optional (when product guidance needs it):** e.g. `### Assistive technology, live regions`—place **after** accessibility tree expectations and **before** keyboard and focus. For **motion** (WCAG 2.2.2, reduced motion, Spectrum tokens), add rows to **Guidelines that apply** and the **Recommendations** table instead of a separate `### Motion` section—see **`progress-circle/accessibility-migration-analysis.md`**. For **loading / progress** design intent (variants, motion), align with Figma **Loading animation discovery** ([Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery)) and **list it under `## References`** whenever the contributor doc cites it.
 5. `### Keyboard and focus`
 
-Separate major sections with a horizontal rule (`---`) where existing docs use it (after Overview, after ARIA and WCAG context, after Related 1st-gen accessibility (Jira) before Recommendations, after Recommendations block before Testing).
+Separate major sections with a horizontal rule (`---`) where existing docs use it (after Overview, after ARIA and WCAG context, after Related gen1 accessibility (Jira) before Recommendations, after Recommendations block before Testing).
 
 ### `###` subsections that do not apply (keep the heading)
 
@@ -106,7 +106,7 @@ The **H2** list above is mandatory. **Within Recommendations** and **Testing**, 
 | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `### Also read`                            | Always—point at the component’s `rendering-and-styling-migration-analysis.md` (and optional related a11y docs).                                                                                                                                                                                       |
 | `### What it is` or `### What a <noun> is` | Always—one clear definition.                                                                                                                                                                                                                                                                          |
-| `### When to use something else`           | When authors often confuse this with another component—link to other migration or a11y docs with relative paths. When 1st-gen used **conditional host roles**, note which **2nd-gen component** (or outer wrapper pattern) replaces each role—after the user confirms the split or fixed role policy. |
+| `### When to use something else`           | When authors often confuse this with another component—link to other migration or a11y docs with relative paths. When gen1 used **conditional host roles**, note which **2nd-gen component** (or outer wrapper pattern) replaces each role—after the user confirms the split or fixed role policy. |
 | `### What it is not`                       | When a common mistaken identity exists (e.g. progress ring vs in-field spinner).                                                                                                                                                                                                                      |
 | `### Related`                              | Optional—related components (e.g. progress bar vs progress circle).                                                                                                                                                                                                                                   |
 
@@ -119,22 +119,22 @@ Body text under each `###` is normal paragraphs and/or bullets.
 - Use the heading **`### Guidelines that apply`** (not “Guidelines that still apply”) for consistency across components.
 - Optional closing paragraph: `**Bottom line:** …` before `---`.
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 - **Placement:** Third **H2**, immediately **after** `## ARIA and WCAG context` and **before** `## Recommendations`, separated with `---` like other major sections.
 - **Content:** Put the **markdown table** immediately under the **H2** (no intro paragraph). **Adobe Jira** is authoritative for **open** vs **closed** status and for **resolution**—refresh table cells when you triage; this table is only a snapshot. Use link targets such as `https://jira.corp.adobe.com/browse/SWC-####`.
 - **After the table:** Do **not** add follow-up paragraphs that list excluded issues or explain cross-component scope (for example paragraphs starting with **Omitted from this table (by doc rules)** or **Scope note**). Apply **Exclude** by **omitting rows**; put any needed nuance in an optional **Notes** column or in the **Summary** cell.
 - **Columns (recommended): Jira** | **Type** (Story, Bug, Epic, …) | **Status (snapshot)** | **Resolution (snapshot)** (e.g. Unresolved, Done, Fixed—omit or use “—” when not applicable) | **Summary**. Optional **Notes** when helpful (PR references, file paths, `@todo` locations, “applies to related `sp-*` …”).
-- **Scope:** Include rows your team tracks for this component’s **1st-gen** (`sp-*`) accessibility work; **add rows** when you file or discover issues, and **trim or update** when Jira state or scope changes. Do **not** maintain a separate contributor-doc index file for the same list.
+- **Scope:** Include rows your team tracks for this component’s **gen1** (`sp-*`) accessibility work; **add rows** when you file or discover issues, and **trim or update** when Jira state or scope changes. Do **not** maintain a separate contributor-doc index file for the same list.
 - **Exclude (always apply when curating the table):**
-  - **Labels:** Do **not** list issues that carry Jira labels **`gen2`** or **`gen-2`** (match your project’s spelling and casing). This section tracks **1st-gen** (`sp-*`) accessibility work, not 2nd-gen program-only tickets.
+  - **Labels:** Do **not** list issues that carry Jira labels **`gen2`** or **`gen-2`** (match your project’s spelling and casing). This section tracks **gen1** (`sp-*`) accessibility work, not 2nd-gen program-only tickets.
   - **Audit:** Do **not** list **audit** issues whose **summary begins with Audit and improve** (usually **Epics** for cross-cutting accessibility audits—e.g. primitive components, card and meter). Track those in Jira or program views, not in per-component tables.
   - **Migration consultation:** Do **not** list **stories** whose summary follows **Migration (YYYY-MM-DD): Accessibility consultation for 2nd-gen migration** (program-level 2nd-gen consultation; track in migration/program views, not per-component tables).
 - **Reference:** See **`badge/accessibility-migration-analysis.md`** (and sibling component docs) for a full example table. **Avatar** currently documents the Jira block in **`avatar/rendering-and-styling-migration-analysis.md`** alongside other accessibility migration content—prefer splitting to **`avatar/accessibility-migration-analysis.md`** when that file is added.
 
 ### Dual or conditional ARIA roles
 
-**Before writing `## Recommendations`**, check whether the component (especially in **1st-gen** source) could expose **more than one host `role`** across modes, properties, or author overrides.
+**Before writing `## Recommendations`**, check whether the component (especially in **gen1** source) could expose **more than one host `role`** across modes, properties, or author overrides.
 
 **Prompt the user** when you find any of these:
 
@@ -150,7 +150,7 @@ Body text under each `###` is normal paragraphs and/or bullets.
 **After the user decides**, record the outcome in the doc:
 
 - **Fixed single role** — state the prescribed role and that other former roles move to **different components** or **parent markup** (link to those components in **`### When to use something else`** when helpful).
-- **Split** — name the **two (or more) distinct 2nd-gen components** and which role each owns; note 1st-gen API surfaces that map to each.
+- **Split** — name the **two (or more) distinct 2nd-gen components** and which role each owns; note gen1 API surfaces that map to each.
 - **Wrapper pattern** — when only a **landmark** role differs (for example `toolbar` around a `group`), document **outer wrapper + inner component**, not role swapping on the inner host.
 
 Do **not** guess which role wins when multiple are plausible—use the **ask-questions** skill if needed.
@@ -161,7 +161,7 @@ Use a **table** (`Topic | What to do`).
 
 **Single semantic role policy** (always address):
 
-- **One host role per component:** Every **`swc-*`** maps to **one** semantic host role (or **no** host role when semantics live on a child). A component that serves **more than one role** should **most likely be two distinct components**—confirm with the user when 1st-gen or design artifacts suggest otherwise (see [Dual or conditional ARIA roles](#dual-or-conditional-aria-roles)).
+- **One host role per component:** Every **`swc-*`** maps to **one** semantic host role (or **no** host role when semantics live on a child). A component that serves **more than one role** should **most likely be two distinct components**—confirm with the user when gen1 or design artifacts suggest otherwise (see [Dual or conditional ARIA roles](#dual-or-conditional-aria-roles)).
 - **Prescribed host role** (e.g. `separator`, `progressbar`, `group`): State that the role is **prescribed** and **fixed**, **must not** be author-overridable in implementation or docs. If another role is needed, authors must use **different markup or a different component**—not a role override on this element.
 - **No default host role** (e.g. badge, status light): State that the component should still represent **one** clear semantic thing; **do not** set a conflicting host `role` (e.g. `button`, `progressbar`) to fake another widget—use the appropriate **button / link / tag / other** component instead.
 - **Never** recommend **`aria-live="assertive"`** for loading or routine progress.
@@ -227,7 +227,7 @@ In the **body**, point to the **Browse mode (document/scan mode)** section. Add 
 ## Summary checklist
 
 - Markdown task list (`- [ ]`) of concrete, verifiable items (stories, docs, tree, focus, tooling, and for non-focusable components manual screen reader / browse mode per the Storybook guide when `### Manual screen reader testing` is present).
-- When the component had **conditional or multiple plausible host roles** in 1st-gen, include a checklist item that **2nd-gen uses one fixed host role** (or **split components / wrapper pattern** per user decision)—not role switching on one tag.
+- When the component had **conditional or multiple plausible host roles** in gen1, include a checklist item that **2nd-gen uses one fixed host role** (or **split components / wrapper pattern** per user decision)—not role switching on one tag.
 
 ## References
 
@@ -284,9 +284,9 @@ In spectrum-web-components/CONTRIBUTOR-DOCS/03_project-planning/03_components/{{
 - Accessibility tree expectations documented, including expected node roles, names, states, and hierarchy
 - Keyboard interaction model fully specified, covering focus management, key bindings, roving tabindex or active-descendant patterns, and focus trapping where applicable
 - Testing requirements defined, including unit tests, integration tests, and manual screen reader testing matrix (JAWS, NVDA, VoiceOver)
-- Known 1st-gen accessibility issues cataloged with disposition (fix in 2nd-gen, defer, or won't fix) and linked to any open GitHub issues or bugs
+- Known gen1 accessibility issues cataloged with disposition (fix in 2nd-gen, defer, or won't fix) and linked to any open GitHub issues or bugs
 - Applicable WAI-ARIA design pattern identified with relevant ARIA roles documented
-- 1st-gen component analysis completed, covering current ARIA implementation, keyboard handling, existing test coverage, and known issues with dispositions
+- gen1 component analysis completed, covering current ARIA implementation, keyboard handling, existing test coverage, and known issues with dispositions
 
 ## Motivation and context
 
@@ -327,7 +327,7 @@ Review the [{{component-readable-name}} accessibility migration analysis](https:
 - [ ] Accessibility tree documented
 - [ ] Keyboard interaction fully specified
 - [ ] Testing requirements defined
-- [ ] Known 1st-gen issues cataloged with dispositions
+- [ ] Known gen1 issues cataloged with dispositions
 - [ ] Review the changes that include the adaptive dual-border guidance
 ```
 

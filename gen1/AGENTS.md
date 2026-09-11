@@ -1,13 +1,13 @@
-# 1st-gen
+# gen1
 
-**This is the past.** 1st-gen is being actively migrated to 2nd-gen and will be deprecated once that migration is complete. Do not add new features. Bug fixes and migration work only.
+**This is the past.** gen1 is being actively migrated to 2nd-gen and will be deprecated once that migration is complete. Do not add new features. Bug fixes and migration work only.
 
 If a change belongs in both generations, make it in `2nd-gen/packages/core/` so both benefit.
 
 ## Structure
 
 ```text
-1st-gen/
+gen1/
 ├── packages/   # 69 component packages + 9 shared tool packages
 ├── tools/      # Shared base classes, mixins, reactive controllers
 ├── projects/   # Non-component workspaces (docs, VRT, templates, types)

@@ -19,8 +19,8 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
-- [1st-gen implementation notes (avoid in 2nd-gen)](#1st-gen-implementation-notes-avoid-in-2nd-gen)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
+- [gen1 implementation notes (avoid in 2nd-gen)](#gen1-implementation-notes-avoid-in-2nd-gen)
 - [Recommendations: `<swc-button>`](#recommendations-swc-button)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -39,7 +39,7 @@
 
 ## Overview
 
-This doc describes how **`swc-button`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. **Navigation** uses **`swc-link`**, **native `<a href>`**, or Spectrum global styling on anchors—not a button-with-**`href`**. In 1st-gen, **`href`** on **`<sp-button>`** was **deprecated** with a migration warning; 2nd-gen **continues** that direction: **do not** ship a **link button** or revive **`href`** on the button component. **Pending / loading** treatment aligns with Spectrum loading guidance ([Figma — Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery)) and internal **general / accessibility guidance** for loading indicators (delay before show, determinate vs indeterminate, placement, status announcements, and motion).
+This doc describes how **`swc-button`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. **Navigation** uses **`swc-link`**, **native `<a href>`**, or Spectrum global styling on anchors—not a button-with-**`href`**. In gen1, **`href`** on **`<sp-button>`** was **deprecated** with a migration warning; 2nd-gen **continues** that direction: **do not** ship a **link button** or revive **`href`** on the button component. **Pending / loading** treatment aligns with Spectrum loading guidance ([Figma — Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery)) and internal **general / accessibility guidance** for loading indicators (delay before show, determinate vs indeterminate, placement, status announcements, and motion).
 
 **Shared infra:** [spectrum-web-components#6120](https://github.com/adobe/spectrum-web-components/pull/6120) proposes moving mixins and utilities into **`@adobe/spectrum-wc-core`**. **`swc-button`** does **not** need **`like-anchor.ts`** (`LikeAnchor`)—that mixin existed to bolt **anchor** behavior onto controls that already looked like buttons; **`swc-button`** is **only** a **`<button>`**, and navigation stays on **`swc-link`** / **`<a>`**.
 
@@ -50,7 +50,7 @@ This doc describes how **`swc-button`** should behave for **accessibility** in 2
 ### What it is
 
 - **`swc-button`:** A **commit control** for in-page actions: submits, opens dialogs, toggles UI, etc. The **custom element host must not** take **`role="button"`** or act as the tab stop: it should **delegate focus** to a **real** `<button>` inside shadow DOM (or slotted light DOM) so the **`<button>`** is what assistive technologies see and what receives **Tab** focus. Alternatively, **CSS-only** Spectrum button appearance on a native `<button>` without a misleading host role.
-- **Navigation** (another URL or route): use **`swc-link`**, a **native `<a href>`**, or Spectrum **global element** styles on anchors—not **`href`** on **`swc-button`** (deprecated in 1st-gen and **not** returning in 2nd-gen).
+- **Navigation** (another URL or route): use **`swc-link`**, a **native `<a href>`**, or Spectrum **global element** styles on anchors—not **`href`** on **`swc-button`** (deprecated in gen1 and **not** returning in 2nd-gen).
 - **CSS-only** Spectrum typography on **native** `<button>` / `<a>` is fine when global / token styles are sufficient—accessibility comes from correct **native** roles and attributes.
 
 ### When to use something else
@@ -61,7 +61,7 @@ This doc describes how **`swc-button`** should behave for **accessibility** in 2
 
 ### What it is not
 
-- **Not any kind of link:** **`swc-button`** must **only** expose **`<button>`** semantics—**not** **`href`**, **not** **`role="link"`**, **not** anchor activation or **`LikeAnchor`** hybrids. 1st-gen **`href`** on **`<sp-button>`** was **deprecated** for that reason; 2nd-gen does **not** bring it back. Use **`swc-link`** or **native `<a>`** for navigation.
+- **Not any kind of link:** **`swc-button`** must **only** expose **`<button>`** semantics—**not** **`href`**, **not** **`role="link"`**, **not** anchor activation or **`LikeAnchor`** hybrids. gen1 **`href`** on **`<sp-button>`** was **deprecated** for that reason; 2nd-gen does **not** bring it back. Use **`swc-link`** or **native `<a>`** for navigation.
 - **Not `role="progressbar"`** on the control surface for **pending** work: a **progress circle** carries **different** meaning (unknown or known **task** progress). For “button is busy,” use an **animated progress icon** (decorative or labeled icon treatment) plus **name / live region** guidance below—not **`swc-progress-circle`** inside the label.
 
 ---
@@ -86,11 +86,11 @@ This doc describes how **`swc-button`** should behave for **accessibility** in 2
 | Loading UX (Spectrum / design guidance) | **~100 ms delay** before showing a progress indicator to avoid **flicker** on fast operations; place the indicator **near** the content it represents. |
 | **Pending** control during load ([SWC-459](https://jira.corp.adobe.com/browse/SWC-459)) | Use **`aria-disabled="true"`** on the inner **`<button>`** while keeping it **focusable** (do **not** use native **`disabled`** if that would drop the control from the path users need). This matches common **React** loading-button behavior and keeps the initiating control **discoverable** while signaling **not** actionable—pair with visible pending styling and **name** / live-region guidance below. |
 
-**Bottom line:** **`swc-button`** = real **button** semantics only; **no** **`href`** / link-button hybrid (**deprecated** in 1st-gen, unchanged in intent for 2nd-gen). **Pending** = **`aria-disabled`** + **focusable** + **animated icon** + careful **announcements**, not a **progressbar** inside the action. **`aria-labelledby`** / **`aria-describedby`** across light and shadow DOM and **form-associated** **`submit`** / **`reset`** are **deferred** until **`ElementInternals`** and **axe-core** line up—see sections below.
+**Bottom line:** **`swc-button`** = real **button** semantics only; **no** **`href`** / link-button hybrid (**deprecated** in gen1, unchanged in intent for 2nd-gen). **Pending** = **`aria-disabled`** + **focusable** + **animated icon** + careful **announcements**, not a **progressbar** inside the action. **`aria-labelledby`** / **`aria-describedby`** across light and shadow DOM and **form-associated** **`submit`** / **`reset`** are **deferred** until **`ElementInternals`** and **axe-core** line up—see sections below.
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 Adobe Jira is authoritative for current status and resolution; refresh cells when you triage.
 
@@ -114,11 +114,11 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 
 ---
 
-## 1st-gen implementation notes (avoid in 2nd-gen)
+## gen1 implementation notes (avoid in 2nd-gen)
 
-1st-gen built **link-like** behavior with **`LikeAnchor`** (`like-anchor.ts`) and deprecated **`href`** on **`<sp-button>`**; [#6120](https://github.com/adobe/spectrum-web-components/pull/6120) proposes **dropping** that mixin from the shared → core migration. 2nd-gen **`swc-button`** should **not** revive **`LikeAnchor`** or **`href`** on the button.
+gen1 built **link-like** behavior with **`LikeAnchor`** (`like-anchor.ts`) and deprecated **`href`** on **`<sp-button>`**; [#6120](https://github.com/adobe/spectrum-web-components/pull/6120) proposes **dropping** that mixin from the shared → core migration. 2nd-gen **`swc-button`** should **not** revive **`LikeAnchor`** or **`href`** on the button.
 
-1st-gen **`ButtonBase`** documents **“Click HTML anchor element by proxy”** and wires **`aria-hidden="true"`** on the shadow anchor while toggling **`role="link"`** on the host—combine that with host **`tabindex="0"`** and **`focusElement`** returning **`this`**, and navigation / assistive tech no longer match a **single native** surface:
+gen1 **`ButtonBase`** documents **“Click HTML anchor element by proxy”** and wires **`aria-hidden="true"`** on the shadow anchor while toggling **`role="link"`** on the host—combine that with host **`tabindex="0"`** and **`focusElement`** returning **`this`**, and navigation / assistive tech no longer match a **single native** surface:
 
 ```53:56:gen1/packages/button/src/ButtonBase.ts
    * HTML anchor element that component clicks by proxy
@@ -175,7 +175,7 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 | Topic | What to do |
 | --- | --- |
 | **`swc-button` — native mapping** | Render a **real** `<button>` (see **Form-associated buttons** for **`type`** scope). The **host must not** have **`role="button"`** or be the primary tab stop: use **`delegatesFocus: true`** (or an equivalent pattern) so **focus** and **activation** land on the **internal** `<button>`. Do **not** hide a focusable `<button>` behind a host that pretends to be the button. |
-| **`href` not supported** | **`href`** on **`sp-button`** was **deprecated** in 1st-gen with a **`DEBUG`** warning; **`swc-button`** **does not** accept **`href`**. Authors use **`swc-link`**, **native `<a>`**, or global anchor styling for navigation—**no** link-button hybrid. |
+| **`href` not supported** | **`href`** on **`sp-button`** was **deprecated** in gen1 with a **`DEBUG`** warning; **`swc-button`** **does not** accept **`href`**. Authors use **`swc-link`**, **native `<a>`**, or global anchor styling for navigation—**no** link-button hybrid. |
 | **`aria-disabled` on `<button>`** | For **pending** work, set **`aria-disabled="true"`** on the inner **`<button>`** and keep it **focusable** (**no** native **`disabled`** for that state unless product requires removing it from tab order). Align with **[SWC-459](https://jira.corp.adobe.com/browse/SWC-459)** and typical **React** loading-button behavior. Use native **`disabled`** when the control should **not** receive focus. Document both patterns in Storybook. |
 | **Pending / loading (visual)** | Use an **animated progress icon** (e.g. looping SVG) **without** **`role="progressbar"`** on that graphic unless it truly represents **measurable** progress. **Do not** embed **`swc-progress-circle`** for button pending—that component is for **progressbar** semantics ([progress circle a11y doc](../progress-circle/accessibility-migration-analysis.md)). |
 | **Pending / loading (name)** | Keep the control **named**: update **visible** label (“Saving…”), **`aria-label`**, or reflected **`aria-*`** mapped onto the shadow **`<button>`** when wiring exists. Prefer **specific** strings (“Uploading document…”) over generic “Loading” when context allows. Full **`aria-labelledby`** / **`aria-describedby`** from **light DOM** across shadow roots is **deferred**—see **Shadow DOM** below. |
@@ -233,7 +233,7 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 
 ## Summary checklist
 
-- [ ] **No `href`** on **`swc-button`** (same deprecation stance as 1st-gen); navigation via **`swc-link`** / **native `<a>`**; **no** **`LikeAnchor`** revival (see [#6120](https://github.com/adobe/spectrum-web-components/pull/6120)).
+- [ ] **No `href`** on **`swc-button`** (same deprecation stance as gen1); navigation via **`swc-link`** / **native `<a>`**; **no** **`LikeAnchor`** revival (see [#6120](https://github.com/adobe/spectrum-web-components/pull/6120)).
 - [ ] **Hosts** do **not** use **`role="button"`**; **focus** targets the internal **native** `<button>` (delegation).
 - [ ] **Pending:** **`aria-disabled="true"`** on the inner **`<button>`**, **still focusable**—align with **[SWC-459](https://jira.corp.adobe.com/browse/SWC-459)** and **React**-style loading buttons; **animated icon**, not **`swc-progress-circle`**; **polite** / **status** announcements; **no assertive** live region for default loading.
 - [ ] **Reduced motion** / delay-before-show called out in docs where implementation exists.

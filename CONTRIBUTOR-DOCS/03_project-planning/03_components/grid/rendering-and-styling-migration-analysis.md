@@ -21,7 +21,7 @@
 
 ## Overview
 
-This doc will capture **rendering**, **layout**, **virtualization**, and **styling** for **`swc-grid`** (2nd-gen successor to 1st-gen **`sp-grid`** in [`gen1/tools/grid`](../../../../gen1/tools/grid/)). **`swc-grid`** is a **tooling / layout** host built on **`lit-virtualizer`**, not a Spectrum-visual “component” in the same sense as **`swc-button`**.
+This doc will capture **rendering**, **layout**, **virtualization**, and **styling** for **`swc-grid`** (2nd-gen successor to gen1 **`sp-grid`** in [`gen1/tools/grid`](../../../../gen1/tools/grid/)). **`swc-grid`** is a **tooling / layout** host built on **`lit-virtualizer`**, not a Spectrum-visual “component” in the same sense as **`swc-button`**.
 
 **Primary consumer:** planned **`swc-card-view`** (aligned with [React Spectrum CardView](https://react-spectrum.adobe.com/CardView))—a virtualized collection of cards with selection, async loading, and bulk actions.
 
@@ -35,8 +35,8 @@ This doc will capture **rendering**, **layout**, **virtualization**, and **styli
 | --- | --- |
 | **Layout** | Configurable **gap**, **padding**, **item size**, and layout modes (for example fixed **grid** vs **waterfall** for CardView). |
 | **Virtualization** | **`lit-virtualizer`** (or successor) so only visible items (+ buffer) mount in the DOM. |
-| **Keyboard** | **`FocusgroupNavigationController`** on the host—**not** 1st-gen **`RovingTabindexController`** ([Focus management](../../../01_contributor-guides/14_focus-management.md)). |
-| **1st-gen API** | **`items`**, **`renderItem`**, **`selected`**, **`focusableSelector`**, **`itemSize`**, **`gap`**—reshape for 2nd-gen collections and **`swc-card`** slotted content. |
+| **Keyboard** | **`FocusgroupNavigationController`** on the host—**not** gen1 **`RovingTabindexController`** ([Focus management](../../../01_contributor-guides/14_focus-management.md)). |
+| **gen1 API** | **`items`**, **`renderItem`**, **`selected`**, **`focusableSelector`**, **`itemSize`**, **`gap`**—reshape for 2nd-gen collections and **`swc-card`** slotted content. |
 
 ## Also read
 

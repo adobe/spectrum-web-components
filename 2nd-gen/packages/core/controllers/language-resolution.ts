@@ -79,7 +79,7 @@ function addLangListener(listener: LangChangeListener): () => void {
  *
  * This controller:
  * - Gets initial language from `<html lang>`, then `navigator.language`, then `'en-US'`
- * - Optionally subscribes to a provider (e.g. 1st-gen `<sp-theme>`) via the
+ * - Optionally subscribes to a provider (e.g. gen1 `<sp-theme>`) via the
  *   `sp-language-context` event; if something up the tree handles it and calls the
  *   callback, that becomes the source of truth for live updates
  * - Observes `<html lang>` attribute changes via a shared singleton observer so that

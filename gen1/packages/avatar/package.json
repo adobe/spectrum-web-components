@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/components/avatar",
   "repository": {
-    "directory": "1st-gen/packages/avatar",
+    "directory": "gen1/packages/avatar",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

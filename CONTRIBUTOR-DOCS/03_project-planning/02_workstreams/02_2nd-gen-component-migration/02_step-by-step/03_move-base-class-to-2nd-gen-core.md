@@ -8,10 +8,10 @@
 
 <!-- Document content (editable) -->
 
-> **Note:** 1st-gen and 2nd-gen are independent — there is no runtime dependency between them. The base class is created in core for 2nd-gen use only. 1st-gen retains its own implementation.
+> **Note:** gen1 and 2nd-gen are independent — there is no runtime dependency between them. The base class is created in core for 2nd-gen use only. gen1 retains its own implementation.
 
 - Create a directory for the component under `core/components`
-- Create `[Component].base.ts` using the 1st-gen implementation as a reference
+- Create `[Component].base.ts` using the gen1 implementation as a reference
 - Apply incremental improvements where justified (bugs, accessibility, feature gaps) — avoid speculative rewrites
 - Add `[Component].types.ts` for shared constants and types
 - Add `index.ts` barrel file

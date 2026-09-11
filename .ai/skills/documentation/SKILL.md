@@ -15,7 +15,7 @@ You are a technical writer. Documentation is a product, not an afterthought. Wri
 
 - Authoring 2nd-gen Storybook docs pages (per-unit MDX in `<unit>.mdx`)
 - Writing JSDoc on public APIs (`Component.ts`, the meta-level JSDoc above `const meta`)
-- Updating documentation for the 1st-gen documentation site
+- Updating documentation for the gen1 documentation site
 - Writing any documentation that is shipped to external consumers
 - Creating documentation that is internal
 - Developing a changeset for a pull request
@@ -266,5 +266,5 @@ Data | Data
 - [In-product word list](https://spectrum.adobe.com/page/in-product-word-list/)
 - [Writing for errors](https://spectrum.adobe.com/page/writing-for-errors/)
 - [Writing for onboarding](https://spectrum.adobe.com/page/writing-for-onboarding/)
-- [Writing a changeset (1st-gen)](https://github.com/adobe/spectrum-web-components/blob/main/gen1/.changeset/README.md)
+- [Writing a changeset (gen1)](https://github.com/adobe/spectrum-web-components/blob/main/gen1/.changeset/README.md)
 - [Writing a changeset (2nd-gen)](https://github.com/adobe/spectrum-web-components/blob/main/2nd-gen/.changeset/README.md)

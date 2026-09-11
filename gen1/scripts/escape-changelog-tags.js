@@ -14,7 +14,7 @@ import { replaceInFile } from 'replace-in-file';
 
 // make sure inline tags are escaped
 const tagOptions = {
-  files: '{1st-gen,2nd-gen}/.changeset/*.md',
+  files: '{gen1,2nd-gen}/.changeset/*.md',
   from: /(?<=\n\s*-\s.*)`?(<\w+(-\w+)*[^>]*>)`?/g,
   to: '`$1`',
 };
@@ -22,12 +22,12 @@ const tagOptions = {
 try {
   const results = await replaceInFile(tagOptions);
   console.log(
-    'Replaced unescaped tags in {1st-gen,2nd-gen}/.changeset/*.md:',
+    'Replaced unescaped tags in {gen1,2nd-gen}/.changeset/*.md:',
     results
   );
 } catch (error) {
   console.error(
-    'Error occurred replacing unescaped tags in {1st-gen,2nd-gen}/.changeset/*.md:',
+    'Error occurred replacing unescaped tags in {gen1,2nd-gen}/.changeset/*.md:',
     error
   );
 }

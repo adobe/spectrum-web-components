@@ -94,7 +94,7 @@ export class ScreenReaderPanel extends LitElement {
 
   private detectTheme(): 'light' | 'dark' {
     // Detect theme by checking Storybook's actual background color
-    // This works for both explicit themes (1st-gen) and auto themes (2nd-gen)
+    // This works for both explicit themes (gen1) and auto themes (2nd-gen)
     const body = document.body;
     const computedStyle = getComputedStyle(body);
     const bgColor = computedStyle.backgroundColor;

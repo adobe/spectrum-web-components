@@ -1,11 +1,11 @@
 ---
 name: migration-styling
-description: Phase 5 of 1st-gen to 2nd-gen component migration. Use to migrate CSS to the 2nd-gen structure, apply Spectrum 2 tokens, and ensure stylelint passes.
+description: Phase 5 of gen1 to 2nd-gen component migration. Use to migrate CSS to the 2nd-gen structure, apply Spectrum 2 tokens, and ensure stylelint passes.
 ---
 
 # Migration styling ([Phase 5](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md))
 
-[Phase 5](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is to migrate CSS to the 2nd-gen structure, replace hard-coded values with tokens, and ensure the component's CSS passes stylelint with no errors.
+[Phase 5](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the gen1 → 2nd-gen component migration. The goal is to migrate CSS to the 2nd-gen structure, replace hard-coded values with tokens, and ensure the component's CSS passes stylelint with no errors.
 
 ## Mindset
 
@@ -15,7 +15,7 @@ You are translating, not redesigning. Your job is not to invent new visual decis
 
 - **Visual scope** — what visual changes are approved vs. out of scope
 - **Custom-property decisions** — which custom properties to keep, rename, or remove
-- **Intentional divergences** — places where 2nd-gen deliberately differs from 1st-gen
+- **Intentional divergences** — places where 2nd-gen deliberately differs from gen1
 - **Planned surface-area reductions or splits** — variants, sizes, or features that are being dropped or deferred
 
 If the plan is missing, stale, or intentionally incomplete, derive the needed context from source material, call out the missing plan as a risk, and proceed only for the fields you can resolve confidently. See [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md) for the full drift rule and when to pause.

@@ -13,7 +13,7 @@
 
 - [TL;DR](#tldr)
     - [Most blocking open questions](#most-blocking-open-questions)
-- [1st-gen API surface](#1st-gen-api-surface)
+- [gen1 API surface](#gen1-api-surface)
     - [Properties / attributes](#properties--attributes)
     - [Methods](#methods)
     - [Events](#events)
@@ -65,7 +65,7 @@
 ## TL;DR
 
 - **Atypical migration.** The approved [accessibility migration analysis](./accessibility-migration-analysis.md) positions 2nd-gen **default** link delivery as **Spectrum link styles on native `<a href>`** in the light DOM (especially inside prose / typography), **not** a per-sentence `<sp-link>` custom element. **Q2 (resolved):** **CSS + native `<a>` only** — no transitional `sp-link` compatibility CE in scope for this migration.
-- **Styling / S2 parity.** Spectrum CSS may use internal selectors (e.g. `.spectrum-Link--inline`) while mapping S2; **authors do not get an “inline” variant** in the sense 1st-gen `variant` attributes worked. Default `<a>` styles should **inherit surrounding typography** and “blend in” inside paragraphs; Storybook demonstrates links **in body copy** without treating inline as a separate consumer-facing variant ([rendering analysis](./rendering-and-styling-migration-analysis.md) remains the CSS source reference).
+- **Styling / S2 parity.** Spectrum CSS may use internal selectors (e.g. `.spectrum-Link--inline`) while mapping S2; **authors do not get an “inline” variant** in the sense gen1 `variant` attributes worked. Default `<a>` styles should **inherit surrounding typography** and “blend in” inside paragraphs; Storybook demonstrates links **in body copy** without treating inline as a separate consumer-facing variant ([rendering analysis](./rendering-and-styling-migration-analysis.md) remains the CSS source reference).
 - **A11y-required corrections.** Remove or deprecate **`disabled` on navigational links** ([SWC-966](https://jira.corp.adobe.com/browse/SWC-966)); align contrast and “link vs body text” presentation with WCAG expectations ([SWC-1160](https://jira.corp.adobe.com/browse/SWC-1160)); document **quiet** links for **section-scoped** patterns (e.g. footers), not undifferentiated body prose (per accessibility analysis).
 - **Consumer migration.** Track global native-anchor styling and API deprecation direction ([SWC-926](https://jira.corp.adobe.com/browse/SWC-926), [SWC-1428](https://jira.corp.adobe.com/browse/SWC-1428)) in the written migration path for teams still on `sp-link`.
 - **Packaging defaults (Q4):** **Resolved** for engineering direction — see [Recommended packaging (default)](#recommended-packaging-default) and **PR 6304** peer review (2026-05-15). **Additive:** confirm **trailing icon** with Design / React (Figma update ~Feb 2026); not required for initial release.
@@ -76,7 +76,7 @@
 
 ---
 
-## 1st-gen API surface
+## gen1 API surface
 
 **Source:** [`gen1/packages/link/src/Link.ts`](../../../../gen1/packages/link/src/Link.ts)
 **Version:** `@spectrum-web-components/link@1.12.0`
@@ -115,7 +115,7 @@ No component-specific custom events documented on `Link`. Activation follows the
 
 ### CSS custom properties
 
-1st-gen bundles Spectrum-derived rules plus overrides; public `--mod-*` surface is **not** a supported consumer contract for 2nd-gen (see [Rendering analysis — Modifiers](./rendering-and-styling-migration-analysis.md)). 2nd-gen will not re-expose `--mod-*`; any new surface follows [`--swc-*` guidelines](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure).
+gen1 bundles Spectrum-derived rules plus overrides; public `--mod-*` surface is **not** a supported consumer contract for 2nd-gen (see [Rendering analysis — Modifiers](./rendering-and-styling-migration-analysis.md)). 2nd-gen will not re-expose `--mod-*`; any new surface follows [`--swc-*` guidelines](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure).
 
 ### Shadow DOM output (rendered HTML)
 
@@ -155,7 +155,7 @@ No component-specific custom events documented on `Link`. Activation follows the
 ### Related components and ordering notes
 
 - **Typography (2nd-gen):** Primary integration point for prose link appearance and documentation ([`typography` component](../../../../2nd-gen/packages/swc/components/typography/), [migration guide](../../../../2nd-gen/packages/swc/components/typography/migration-guide.mdx)).
-- **Button / app navigation:** Accessibility analysis distinguishes **button-shaped route changes** (prefer real `<button>` + routing) from text links — aligns with existing 1st-gen direction away from “link that looks like a button” misuse.
+- **Button / app navigation:** Accessibility analysis distinguishes **button-shaped route changes** (prefer real `<button>` + routing) from text links — aligns with existing gen1 direction away from “link that looks like a button” misuse.
 
 ### User confirmation needed
 
@@ -192,21 +192,21 @@ Engineering review on [PR 6304](https://github.com/adobe/spectrum-web-components
 
 #### API and naming
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B1** | Prefer **native `<a href>`** for in-body / prose links | `<sp-link>` wraps shadow anchor | Classed **`<a>`** with Spectrum S2 link CSS; docs show prose wrapper patterns | Replace `sp-link` in running text with `<a class="…">` + import documented CSS; follow [SWC-1428](https://jira.corp.adobe.com/browse/SWC-1428) / [SWC-926](https://jira.corp.adobe.com/browse/SWC-926) when tickets land |
 | **B2** | Remove **`disabled`** as a supported pattern on navigational links | `disabled` blocks click in tests | Not supported on real anchors; use button + routing or remove control | Remove `disabled` from links; use disabled **button** or different UX ([SWC-966](https://jira.corp.adobe.com/browse/SWC-966)) |
 
 #### Styling and visuals
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
-| **B3** | **S2 typography + link parity** | 1st-gen `sp-link` predates some S2 selector nuances | Default anchors in prose **inherit** surrounding type; internal CSS may mirror Spectrum’s inline/standalone selectors where needed — **not** a new author “variant” vs 1st-gen (no `inline` attribute parity) | Rely on **typography generator** + **`link.css`** docs; add Storybook for **link inside body copy** |
+| **B3** | **S2 typography + link parity** | gen1 `sp-link` predates some S2 selector nuances | Default anchors in prose **inherit** surrounding type; internal CSS may mirror Spectrum’s inline/standalone selectors where needed — **not** a new author “variant” vs gen1 (no `inline` attribute parity) | Rely on **typography generator** + **`link.css`** docs; add Storybook for **link inside body copy** |
 | **B4** | **Token / contrast** fixes | Known contrast risk vs body ([SWC-1160](https://jira.corp.adobe.com/browse/SWC-1160)) | S2 tokens + tests in prose contexts | Retest adjacent-text contrast in authored examples |
 
 #### Accessibility and behavior
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B5** | **Quiet** usage scope | README warns but attribute is global | Docs + design guidance: quiet styles only where section context makes links obvious | Restrict quiet styling to approved patterns (footer-like regions) per [accessibility analysis](./accessibility-migration-analysis.md) |
 | **B6** | Avoid **double-activation** architectures | Ecosystem issues referenced in analysis | Single real target for `href` + router | Follow [SWC-923](https://jira.corp.adobe.com/browse/SWC-923), [SWC-921](https://jira.corp.adobe.com/browse/SWC-921) patterns in docs |
@@ -223,7 +223,7 @@ Engineering review on [PR 6304](https://github.com/adobe/spectrum-web-components
 
 ## 2nd-gen API decisions
 
-These are derived from 1st-gen, the [rendering roadmap](./rendering-and-styling-migration-analysis.md), the [accessibility analysis](./accessibility-migration-analysis.md), and [React Spectrum Link](https://react-spectrum.adobe.com/Link). **Q1** (Figma), **Q2** (native `<a>` only), **Q3** (Epic), and **Q4** (packaging — [PR 6304](https://github.com/adobe/spectrum-web-components/pull/6304) review) are **resolved** for planning purposes. Remaining work is **implementation** plus **additive** **A3** coordination.
+These are derived from gen1, the [rendering roadmap](./rendering-and-styling-migration-analysis.md), the [accessibility analysis](./accessibility-migration-analysis.md), and [React Spectrum Link](https://react-spectrum.adobe.com/Link). **Q1** (Figma), **Q2** (native `<a>` only), **Q3** (Epic), and **Q4** (packaging — [PR 6304](https://github.com/adobe/spectrum-web-components/pull/6304) review) are **resolved** for planning purposes. Remaining work is **implementation** plus **additive** **A3** coordination.
 
 ### Public API
 
@@ -235,7 +235,7 @@ These are derived from 1st-gen, the [rendering roadmap](./rendering-and-styling-
 
 #### Visual matrix (2nd-gen)
 
-N/A as a “fill / outline” matrix. Planned **presentation modes** (from roadmap + 1st-gen README + React):
+N/A as a “fill / outline” matrix. Planned **presentation modes** (from roadmap + gen1 README + React):
 
 | Mode | Notes |
 | ---- | ----- |
@@ -267,7 +267,7 @@ Follow the [accessibility migration analysis](./accessibility-migration-analysis
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
+> The gen1 component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
 
 **Link-specific deviation:** the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) describes the default **core + `sp-*` SWC** split. For Link, the **primary** 2nd-gen deliverable is **shared CSS + documentation** with **native anchors** (**Q2** resolved). Packaging defaults are **set** in [Recommended packaging (default)](#recommended-packaging-default) (including **PR 6304** review).
 
@@ -288,7 +288,7 @@ Planned rendering shape (native-`<a>` model — **preferred**):
 
 ### Preparation (this ticket)
 
-- [x] 1st-gen API surface documented
+- [x] gen1 API surface documented
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] 2nd-gen API decisions drafted
@@ -410,11 +410,11 @@ Planned rendering shape (native-`<a>` model — **preferred**):
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
-- [1st-gen `Link.ts`](../../../../gen1/packages/link/src/Link.ts)
-- [1st-gen `LikeAnchor` mixin](../../../../gen1/tools/shared/src/like-anchor.ts)
-- [1st-gen `Focusable` mixin](../../../../gen1/tools/shared/src/focusable.ts)
-- [1st-gen tests — `link.test.ts`](../../../../gen1/packages/link/test/link.test.ts)
-- [1st-gen README](../../../../gen1/packages/link/README.md)
+- [gen1 `Link.ts`](../../../../gen1/packages/link/src/Link.ts)
+- [gen1 `LikeAnchor` mixin](../../../../gen1/tools/shared/src/like-anchor.ts)
+- [gen1 `Focusable` mixin](../../../../gen1/tools/shared/src/focusable.ts)
+- [gen1 tests — `link.test.ts`](../../../../gen1/packages/link/test/link.test.ts)
+- [gen1 README](../../../../gen1/packages/link/README.md)
 - [React Spectrum — Link](https://react-spectrum.adobe.com/Link)
 - [Spectrum CSS — `spectrum-two` / `components/link`](https://github.com/adobe/spectrum-css/tree/spectrum-two/components/link)
 - [Spectrum CSS migration PR (context)](https://github.com/adobe/spectrum-css/pull/3570)

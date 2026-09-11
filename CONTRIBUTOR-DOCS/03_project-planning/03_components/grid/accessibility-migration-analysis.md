@@ -20,8 +20,8 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
-- [1st-gen implementation notes (avoid in 2nd-gen)](#1st-gen-implementation-notes-avoid-in-2nd-gen)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
+- [gen1 implementation notes (avoid in 2nd-gen)](#gen1-implementation-notes-avoid-in-2nd-gen)
 - [Recommendations: `<swc-grid>`](#recommendations-swc-grid)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -40,13 +40,13 @@
 
 ## Overview
 
-This doc describes how **`swc-grid`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. **`swc-grid`** is a **virtualized layout grid** host (successor to 1st-gen **`sp-grid`** in [`gen1/tools/grid`](../../../../gen1/tools/grid/)) used to present **many focusable items** in rows and columns with **arrow-key** navigation. The primary product consumer is planned **`swc-card-view`**, modeled on [React Spectrum CardView](https://react-spectrum.adobe.com/CardView) (collections of cards, selection, async **loading**, bulk actions). There is **no** Spectrum 2 Figma file for **`swc-grid`** at planning time—semantics follow the [APG Grid pattern](https://www.w3.org/WAI/ARIA/apg/patterns/grid/) and [Data Grid Examples](https://www.w3.org/WAI/ARIA/apg/patterns/grid/examples/data-grids/).
+This doc describes how **`swc-grid`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. **`swc-grid`** is a **virtualized layout grid** host (successor to gen1 **`sp-grid`** in [`gen1/tools/grid`](../../../../gen1/tools/grid/)) used to present **many focusable items** in rows and columns with **arrow-key** navigation. The primary product consumer is planned **`swc-card-view`**, modeled on [React Spectrum CardView](https://react-spectrum.adobe.com/CardView) (collections of cards, selection, async **loading**, bulk actions). There is **no** Spectrum 2 Figma file for **`swc-grid`** at planning time—semantics follow the [APG Grid pattern](https://www.w3.org/WAI/ARIA/apg/patterns/grid/) and [Data Grid Examples](https://www.w3.org/WAI/ARIA/apg/patterns/grid/examples/data-grids/).
 
-**2nd-gen direction:** Prescribed host **`role="grid"`** with **roving** **`tabindex`** on **cells** (or **rows**, per layout contract), implemented with **`FocusgroupNavigationController`** and **`direction: 'grid'`** ([Focus management](../../../01_contributor-guides/14_focus-management.md))—**not** 1st-gen **`RovingTabindexController`**. **Virtualization** must keep **logical** row/column position and **focus** stable when items mount and unmount. **Layout** styling (**gap**, **item size**, **grid** vs **waterfall**) is visual only and must not replace grid **roles** or **keyboard** contracts.
+**2nd-gen direction:** Prescribed host **`role="grid"`** with **roving** **`tabindex`** on **cells** (or **rows**, per layout contract), implemented with **`FocusgroupNavigationController`** and **`direction: 'grid'`** ([Focus management](../../../01_contributor-guides/14_focus-management.md))—**not** gen1 **`RovingTabindexController`**. **Virtualization** must keep **logical** row/column position and **focus** stable when items mount and unmount. **Layout** styling (**gap**, **item size**, **grid** vs **waterfall**) is visual only and must not replace grid **roles** or **keyboard** contracts.
 
 ### Also read
 
-[Grid migration roadmap](./rendering-and-styling-migration-analysis.md) (virtualization, layout, 1st-gen **`sp-grid`** API). [Focus management](../../../01_contributor-guides/14_focus-management.md) (**`FocusgroupNavigationController`**). [React Spectrum CardView](https://react-spectrum.adobe.com/CardView) (target collection UX). When **`swc-card-view`** exists, its accessibility doc should reference this file for **grid** keyboard and **ARIA** ownership.
+[Grid migration roadmap](./rendering-and-styling-migration-analysis.md) (virtualization, layout, gen1 **`sp-grid`** API). [Focus management](../../../01_contributor-guides/14_focus-management.md) (**`FocusgroupNavigationController`**). [React Spectrum CardView](https://react-spectrum.adobe.com/CardView) (target collection UX). When **`swc-card-view`** exists, its accessibility doc should reference this file for **grid** keyboard and **ARIA** ownership.
 
 ### What it is
 
@@ -65,14 +65,14 @@ This doc describes how **`swc-grid`** should behave for **accessibility** in 2nd
 
 ### What it is not
 
-- **Not a 1st-gen `RovingTabindexController` host:** 2nd-gen must use **`FocusgroupNavigationController`** (bounding-rect **grid** layout, **Ctrl+Home** / **Ctrl+End**, optional **pageStep**).
+- **Not a gen1 `RovingTabindexController` host:** 2nd-gen must use **`FocusgroupNavigationController`** (bounding-rect **grid** layout, **Ctrl+Home** / **Ctrl+End**, optional **pageStep**).
 - **Not author-overridable `role`:** **`grid`** is **prescribed**; do not expose **`role="list"`**, **`role="table"`**, or **`role="grid"`** overrides on **`swc-grid`**.
 - **Not free of item semantics:** **`renderItem`** / slotted cards must supply **row** / **gridcell** / **name** / **selected**—the grid does not invent names from images alone.
 - **Not CardView itself:** **`swc-card-view`** composes **`swc-grid`** + **`swc-card`** (and action bar, empty state, etc.); bulk **action bar** keyboard lives on **`swc-action-bar`** / toolbar patterns.
 
 ### Program (2nd-gen, Jira snapshot)
 
-Add **`gen2`** program tickets here when filed (**`swc-grid`**, **`swc-card-view`**, virtualization, CardView parity). Those items are **out of scope** for the **Related 1st-gen** table below.
+Add **`gen2`** program tickets here when filed (**`swc-grid`**, **`swc-card-view`**, virtualization, CardView parity). Those items are **out of scope** for the **Related gen1** table below.
 
 ---
 
@@ -99,20 +99,20 @@ Add **`gen2`** program tickets here when filed (**`swc-grid`**, **`swc-card-view
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 Adobe Jira is authoritative for current status and resolution; refresh cells when you triage. **gen2**-labeled tickets belong in **Program (2nd-gen)** above, not here. Audit epic **[SWC-872](https://jira.corp.adobe.com/browse/SWC-872)** is omitted per contributor-doc rules.
 
-No **`sp-grid`** / **Grid** component accessibility rows were available in the migration brief at authoring time—**add rows** when you file or discover 1st-gen issues (for example keyboard, virtualization focus loss, selection announcements).
+No **`sp-grid`** / **Grid** component accessibility rows were available in the migration brief at authoring time—**add rows** when you file or discover gen1 issues (for example keyboard, virtualization focus loss, selection announcements).
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 | --- | --- | --- | --- | --- |
 
 ---
 
-## 1st-gen implementation notes (avoid in 2nd-gen)
+## gen1 implementation notes (avoid in 2nd-gen)
 
-**`sp-grid`** ([`Grid.ts`](../../../../gen1/tools/grid/src/Grid.ts), [`GridController.ts`](../../../../gen1/tools/grid/src/GridController.ts)) virtualizes with **`lit-virtualizer`**, uses **`RovingTabindexController`** with **`direction: 'grid'`**, and expects authors to set **`role="grid"`**, **`aria-label`**, **`aria-multiselectable`**, **`aria-rowcount`**, **`aria-colcount`**, and per-item **`role="row"`** / **`aria-selected`** / **`aria-rowindex`** in **`renderItem`** (see [1st-gen README](../../../../gen1/tools/grid/README.md) and [grid stories](../../../../gen1/tools/grid/stories/grid.stories.ts)).
+**`sp-grid`** ([`Grid.ts`](../../../../gen1/tools/grid/src/Grid.ts), [`GridController.ts`](../../../../gen1/tools/grid/src/GridController.ts)) virtualizes with **`lit-virtualizer`**, uses **`RovingTabindexController`** with **`direction: 'grid'`**, and expects authors to set **`role="grid"`**, **`aria-label`**, **`aria-multiselectable`**, **`aria-rowcount`**, **`aria-colcount`**, and per-item **`role="row"`** / **`aria-selected`** / **`aria-rowindex`** in **`renderItem`** (see [gen1 README](../../../../gen1/tools/grid/README.md) and [grid stories](../../../../gen1/tools/grid/stories/grid.stories.ts)).
 
 **2nd-gen should:**
 
@@ -120,7 +120,7 @@ No **`sp-grid`** / **Grid** component accessibility rows were available in the m
 - **Own** default **`role="grid"`** and required **label** API on **`swc-grid`**—do not rely on Storybook-only ARIA wiring.
 - Call **`navigation.refresh()`** when **virtualizer** visible range or **`items`** length changes so roving **tabindex** and **memory** stay correct.
 - Preserve **`focusableSelector`** (or equivalent) so **`renderItem`** can target **`swc-card`** (or inner button/link) as the **cell** focus target.
-- Keep **focus** on **logical** index when scrolling—1st-gen documents that focus enters at index **0** of the **full** set, not only visible DOM nodes; verify the same with virtualization + **`FocusgroupNavigationController`**.
+- Keep **focus** on **logical** index when scrolling—gen1 documents that focus enters at index **0** of the **full** set, not only visible DOM nodes; verify the same with virtualization + **`FocusgroupNavigationController`**.
 
 ---
 
@@ -192,12 +192,12 @@ No **`sp-grid`** / **Grid** component accessibility rows were available in the m
 ## Summary checklist
 
 - [ ] **`swc-grid`** prescribes **`role="grid"`**; required **accessible name** on the grid.
-- [ ] **`FocusgroupNavigationController`** (**`direction: 'grid'`**) replaces 1st-gen **`RovingTabindexController`**.
+- [ ] **`FocusgroupNavigationController`** (**`direction: 'grid'`**) replaces gen1 **`RovingTabindexController`**.
 - [ ] **Arrow**, **Home** / **End**, **Ctrl+Home** / **Ctrl+End**, and **Page Up** / **Down** (when scrollable) match [Data Grid Examples](https://www.w3.org/WAI/ARIA/apg/patterns/grid/examples/data-grids/).
 - [ ] **Virtualization:** **`aria-rowcount`** / **`aria-colcount`** and per-item **indices**; **`refresh()`** on range changes; focus policy documented and tested.
 - [ ] **Items** expose **names** and **`aria-selected`**; **`skipDisabled`** for disabled keys.
 - [ ] **CardView** doc links here; **loading** / **empty** / **action bar** do not use **`assertive`** live on the grid host.
-- [ ] **1st-gen Jira** table populated when tickets are triaged.
+- [ ] **gen1 Jira** table populated when tickets are triaged.
 - [ ] Cross-links to [Grid migration roadmap](./rendering-and-styling-migration-analysis.md) and [Focus management](../../../01_contributor-guides/14_focus-management.md).
 
 ---
@@ -213,8 +213,8 @@ No **`sp-grid`** / **Grid** component accessibility rows were available in the m
 - [React Spectrum: CardView](https://react-spectrum.adobe.com/CardView)
 - [Grid migration roadmap](./rendering-and-styling-migration-analysis.md)
 - [Focus management (contributor guide)](../../../01_contributor-guides/14_focus-management.md)
-- [1st-gen `sp-grid` README](../../../../gen1/tools/grid/README.md)
-- [`Grid.ts` (1st-gen)](../../../../gen1/tools/grid/src/Grid.ts)
-- [`GridController.ts` (1st-gen)](../../../../gen1/tools/grid/src/GridController.ts)
+- [gen1 `sp-grid` README](../../../../gen1/tools/grid/README.md)
+- [`Grid.ts` (gen1)](../../../../gen1/tools/grid/src/Grid.ts)
+- [`GridController.ts` (gen1)](../../../../gen1/tools/grid/src/GridController.ts)
 - [Keyboard testing (2nd-gen Storybook accessibility guide)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
 - [Screen reader testing (2nd-gen Storybook accessibility guide)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)

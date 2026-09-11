@@ -65,7 +65,7 @@ export abstract class ColorHandleBase
   public open = false;
 
   /**
-   * Reflected. `true` shows the inner color swatch (1st-gen behavior);
+   * Reflected. `true` shows the inner color swatch (gen1 behavior);
    * `false` renders an outline-only handle.
    */
   @property({ type: Boolean, reflect: true })

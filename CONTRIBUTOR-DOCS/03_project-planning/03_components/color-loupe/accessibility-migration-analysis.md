@@ -17,14 +17,14 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: `<swc-color-loupe>`](#recommendations-swc-color-loupe)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
     - [Accessibility tree expectations](#accessibility-tree-expectations)
     - [Keyboard and focus](#keyboard-and-focus)
     - [Story and test examples](#story-and-test-examples)
-- [Known 1st-gen issues](#known-1st-gen-issues)
+- [Known gen1 issues](#known-gen1-issues)
     - [Non-text contrast on loupe chrome (WCAG 1.4.11)](#non-text-contrast-on-loupe-chrome-wcag-1411)
 - [Implementation: loupe adaptive borders](#implementation-loupe-adaptive-borders)
     - [Loupe SVG rendering](#loupe-svg-rendering)
@@ -64,20 +64,20 @@ This doc explains how **`swc-color-loupe`** should work for **accessibility**. I
 
 | Idea | Plain meaning |
 |------|----------------|
-| [Non-text contrast (WCAG 1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | Loupe borders and chrome must meet 3:1 against adjacent colors. The **adaptive dual-border** approach achieves this across the full HSV cube: a dark border at variable opacity (floor 42%, climbing until 3:1 is met) combined with a white separator, checked additively — chrome passes if either border meets 3:1 on every adjacency. See SWC-1193, RSP-2021, SDS-16402, and Known 1st-gen issues. |
-| [Non-text content (WCAG 1.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content) | **1st-gen** marks the **SVG** **`aria-hidden="true"`**—the graphic is **decorative** relative to assistive tech **if** the **parent** pattern exposes the **color** and **purpose** in text or other accessible names. |
+| [Non-text contrast (WCAG 1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | Loupe borders and chrome must meet 3:1 against adjacent colors. The **adaptive dual-border** approach achieves this across the full HSV cube: a dark border at variable opacity (floor 42%, climbing until 3:1 is met) combined with a white separator, checked additively — chrome passes if either border meets 3:1 on every adjacency. See SWC-1193, RSP-2021, SDS-16402, and Known gen1 issues. |
+| [Non-text content (WCAG 1.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content) | **gen1** marks the **SVG** **`aria-hidden="true"`**—the graphic is **decorative** relative to assistive tech **if** the **parent** pattern exposes the **color** and **purpose** in text or other accessible names. |
 | [Use of color (WCAG 1.4.1)](https://www.w3.org/TR/WCAG22/#use-of-color) | The **loupe** shows **color**; meaning must **not** rely on the loupe **alone**. The **field** / **slider** / **hex** input must **state** what is being adjusted. |
 
 **Bottom line:** Pair `swc-color-loupe` with a fully labeled color workflow. Implement the **adaptive dual-border** approach (RSP-2021, SDS-16402) to achieve 3:1 non-text contrast on loupe chrome across all background colors; the 1.4.11 limitation documented in SWC-1193 is resolved by the conformant solution.
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 |------|------|-------------------|-------------------------|---------|
 | [SWC-1193](https://jira.corp.adobe.com/browse/SWC-1193) | Bug | Done | Working As Designed | [Accessibility] Graphical object lacks 3:1 contrast ratio — `sp-color-loupe` (Color Loupe Example) |
-| [RSP-2021](https://jira.corp.adobe.com/browse/RSP-2021) | — | — | — | Adaptive border contrast for color loupe — specification for the dual-border adaptive opacity approach that resolves 1.4.11 on spectrum tracks; see Known 1st-gen issues |
+| [RSP-2021](https://jira.corp.adobe.com/browse/RSP-2021) | — | — | — | Adaptive border contrast for color loupe — specification for the dual-border adaptive opacity approach that resolves 1.4.11 on spectrum tracks; see Known gen1 issues |
 | [SDS-16402](https://jira.corp.adobe.com/browse/SDS-16402) | — | — | — | Non-text contrast — color loupe adaptive border specification; Spectrum Design System design decision for adaptive border opacity; drives the 2nd-gen implementation |
 
 ---
@@ -97,7 +97,7 @@ None
 
 ### Accessibility tree expectations
 
-- With **1st-gen** **`aria-hidden`** **SVG**, assistive technologies typically **ignore** the **vector** graphic; users rely on **paired** **controls** and **text** for **color** and **context**.
+- With **gen1** **`aria-hidden`** **SVG**, assistive technologies typically **ignore** the **vector** graphic; users rely on **paired** **controls** and **text** for **color** and **context**.
 - If **`open`** is **false**, the loupe is **hidden** visually; behavior should stay **consistent** with **CSS** / **display** and **not** trap **focus** in a **closed** loupe.
 
 ### Keyboard and focus
@@ -111,11 +111,11 @@ None
 
 ---
 
-## Known 1st-gen issues
+## Known gen1 issues
 
 ### Non-text contrast on loupe chrome (WCAG 1.4.11)
 
-1st-gen `<sp-color-loupe>` border and outline styling frequently fails the 3:1 non-text contrast threshold required by WCAG 2.2 SC 1.4.11. SWC-1193 recorded this as a case where meeting 1.4.11 may not be achievable given variable background content and Spectrum visual intent, leaving it as a practical-limits exception.
+gen1 `<sp-color-loupe>` border and outline styling frequently fails the 3:1 non-text contrast threshold required by WCAG 2.2 SC 1.4.11. SWC-1193 recorded this as a case where meeting 1.4.11 may not be achievable given variable background content and Spectrum visual intent, leaving it as a practical-limits exception.
 
 **Resolution for 2nd-gen (RSP-2021, SDS-16402):** An adaptive dual-border approach has been specified and prototyped ([color-area-adaptive-borders.zip](https://jira.corp.adobe.com/secure/attachment/18750666/18750666_color-area-adaptive-borders.zip)) that achieves 3:1 across every color in the HSV cube. The prototype demonstrates four border modes — current static 42% opacity, 100% static, and two adaptive modes (white-first and live α) — with live contrast readouts. The two adaptive modes are the reference for 2nd-gen:
 
@@ -158,7 +158,7 @@ The loupe's border structure differs from the handle. Rather than two dark rings
 
 ### When the loupe is shown
 
-The loupe appears only when the parent handle is in the active state (focused or being dragged) — matching the 1st-gen behavior where `open` is set on touch input to prevent the finger obscuring the selected color. In the inactive state, only the handle circles are rendered; the loupe SVG group is omitted.
+The loupe appears only when the parent handle is in the active state (focused or being dragged) — matching the gen1 behavior where `open` is set on touch input to prevent the finger obscuring the selected color. In the inactive state, only the handle circles are rendered; the loupe SVG group is omitted.
 
 ### Teardrop path construction
 

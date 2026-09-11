@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/components/color-loupe",
   "repository": {
-    "directory": "1st-gen/packages/color-loupe",
+    "directory": "gen1/packages/color-loupe",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

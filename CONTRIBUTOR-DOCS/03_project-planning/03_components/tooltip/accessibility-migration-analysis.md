@@ -22,7 +22,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: `<swc-tooltip>`](#recommendations-swc-tooltip)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -118,7 +118,7 @@ Pick **contextual help** when the UX is “user opens explicit help”—not “
 
 ### Related
 
-- 1st-gen: [`sp-overlay`](../../../../gen1/packages/overlay/README.md) **`type="hint"`** plus [`overlay-trigger`](../../../../gen1/packages/overlay/overlay-trigger.md) handle stacking plus **`aria-describedby`** heuristics today.
+- gen1: [`sp-overlay`](../../../../gen1/packages/overlay/README.md) **`type="hint"`** plus [`overlay-trigger`](../../../../gen1/packages/overlay/overlay-trigger.md) handle stacking plus **`aria-describedby`** heuristics today.
 - 2nd-gen: keep placement implementation aligned with **[Tooltip rendering and styling](./rendering-and-styling-migration-analysis.md)** (overlay/Floating UI roadmap today); revisit **CSS anchor positioning** when browser support and caret/collision behavior meet product bars.
 
 ---
@@ -165,7 +165,7 @@ More demos and patterns:
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary | Notes |
 | --- | --- | --- | --- | --- | --- |
@@ -313,7 +313,7 @@ Manual flow (paired with **[Screen reader testing](../../../../2nd-gen/packages/
 - [ ] Confirm **`Escape`** closes hints without trapping focus.
 - [ ] Automated suites exercise shadow/light **`aria-describedby`**, stacking/hit-testing (**[SWC-321](https://jira.corp.adobe.com/browse/SWC-321)**, **[SWC-890](https://jira.corp.adobe.com/browse/SWC-890)**), overlay re-anchor (**[SWC-324](https://jira.corp.adobe.com/browse/SWC-324)**) under **[SWC-2025](https://jira.corp.adobe.com/browse/SWC-2025)** umbrellas.
 - [ ] Manual **[screen reader](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)** plus keyboard + USWDS buckets (**general / zoom / keyboard / SR**) inside **live product chrome**, not story shells alone (**[USWDS tests](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)**).
-- [ ] Keep **[Related 1st-gen accessibility](#related-1st-gen-accessibility-jira)** table fresh as Jira changes (default: skip standalone **`gen2`**-only mirrors—keep **[SWC-2022](https://jira.corp.adobe.com/browse/SWC-2022)** here as the Tooltip a11y program anchor for toggle vs **`longpress`** work).
+- [ ] Keep **[Related gen1 accessibility](#related-gen1-accessibility-jira)** table fresh as Jira changes (default: skip standalone **`gen2`**-only mirrors—keep **[SWC-2022](https://jira.corp.adobe.com/browse/SWC-2022)** here as the Tooltip a11y program anchor for toggle vs **`longpress`** work).
 
 ---
 
@@ -331,9 +331,9 @@ Manual flow (paired with **[Screen reader testing](../../../../2nd-gen/packages/
 - [CSS-Tricks: CSS anchor positioning guide](https://css-tricks.com/css-anchor-positioning-guide/)
 - [MDN: CSS anchor positioning](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning)
 - [React Spectrum: Tooltip — interactions, accessibility notices, TooltipTrigger props](https://react-spectrum.adobe.com/Tooltip)
-- Spectrum design: [Contextual help](https://spectrum.adobe.com/page/contextual-help/); React Spectrum: [`ContextualHelp`](https://react-spectrum.adobe.com/ContextualHelp); 1st-gen: [`sp-contextual-help` README](../../../../gen1/packages/contextual-help/README.md)
+- Spectrum design: [Contextual help](https://spectrum.adobe.com/page/contextual-help/); React Spectrum: [`ContextualHelp`](https://react-spectrum.adobe.com/ContextualHelp); gen1: [`sp-contextual-help` README](../../../../gen1/packages/contextual-help/README.md)
 - WCAG **2.2**: [Understanding](https://www.w3.org/WAI/WCAG22/Understanding/) (topics cited above)
-- 1st-gen: [`Tooltip.ts`](../../../../gen1/packages/tooltip/src/Tooltip.ts), [`HoverController.ts`](../../../../gen1/packages/overlay/src/HoverController.ts) (description wiring), [`OverlayStack.ts`](../../../../gen1/packages/overlay/src/OverlayStack.ts) (Escape closes `hint` overlays)
+- gen1: [`Tooltip.ts`](../../../../gen1/packages/tooltip/src/Tooltip.ts), [`HoverController.ts`](../../../../gen1/packages/overlay/src/HoverController.ts) (description wiring), [`OverlayStack.ts`](../../../../gen1/packages/overlay/src/OverlayStack.ts) (Escape closes `hint` overlays)
 - Tooltip [rendering-and-styling migration](./rendering-and-styling-migration-analysis.md); Popover [accessibility migration analysis](../popover/accessibility-migration-analysis.md)
 - 2nd-gen guides: [Semantic HTML and ARIA](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx), [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx), [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
-- Adobe Jira (**1st-gen** snapshot table + Tooltip a11y program cross-ref): [Related 1st-gen accessibility](#related-1st-gen-accessibility-jira)
+- Adobe Jira (**gen1** snapshot table + Tooltip a11y program cross-ref): [Related gen1 accessibility](#related-gen1-accessibility-jira)

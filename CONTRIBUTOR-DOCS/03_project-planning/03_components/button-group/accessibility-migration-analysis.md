@@ -20,7 +20,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: `<swc-button-group>`](#recommendations-swc-button-group)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -43,7 +43,7 @@ This doc describes how **`swc-button-group`** should behave for **accessibility*
 
 ### Also read
 
-[Button group migration roadmap](./rendering-and-styling-migration-analysis.md). [Button accessibility migration analysis](../button/accessibility-migration-analysis.md). [Button migration plan](../button/migration-plan.md). **Keyboard inside composites** (for **consumer** docs, not **`swc-button-group`** itself): [APG — Keyboard navigation inside components](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents), [APG Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/); optional **`FocusgroupNavigationController`** on **toolbars** and other **composite** hosts—[Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md), [Focus management contributor guide](../../../01_contributor-guides/14_focus-management.md). Toolbar and **action-strip** context: [Action group migration roadmap](../action-group/rendering-and-styling-migration-analysis.md), [Action button migration roadmap](../action-button/rendering-and-styling-migration-analysis.md) (toolbar vs **button-group** layering). Spectrum 2 **Button group** visuals: [Spectrum 2 — Web (desktop scale): Button group (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13663-6530). Consumer docs: [Button Group — Spectrum Web Components (1st-gen)](https://opensource.adobe.com/spectrum-web-components/components/button-group/). React Spectrum reference: [React Spectrum: ButtonGroup](https://react-spectrum.adobe.com/ButtonGroup).
+[Button group migration roadmap](./rendering-and-styling-migration-analysis.md). [Button accessibility migration analysis](../button/accessibility-migration-analysis.md). [Button migration plan](../button/migration-plan.md). **Keyboard inside composites** (for **consumer** docs, not **`swc-button-group`** itself): [APG — Keyboard navigation inside components](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents), [APG Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/); optional **`FocusgroupNavigationController`** on **toolbars** and other **composite** hosts—[Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md), [Focus management contributor guide](../../../01_contributor-guides/14_focus-management.md). Toolbar and **action-strip** context: [Action group migration roadmap](../action-group/rendering-and-styling-migration-analysis.md), [Action button migration roadmap](../action-button/rendering-and-styling-migration-analysis.md) (toolbar vs **button-group** layering). Spectrum 2 **Button group** visuals: [Spectrum 2 — Web (desktop scale): Button group (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13663-6530). Consumer docs: [Button Group — Spectrum Web Components (gen1)](https://opensource.adobe.com/spectrum-web-components/components/button-group/). React Spectrum reference: [React Spectrum: ButtonGroup](https://react-spectrum.adobe.com/ButtonGroup).
 
 ### What it is
 
@@ -64,7 +64,7 @@ This doc describes how **`swc-button-group`** should behave for **accessibility*
 
 ### Program (2nd-gen, Jira snapshot)
 
-Planning and migration work is tracked in Adobe Jira with **`gen2`** labels (for example [SWC-2071](https://jira.corp.adobe.com/browse/SWC-2071) **epic**, [SWC-2072](https://jira.corp.adobe.com/browse/SWC-2072) accessibility recommendations, [SWC-2073](https://jira.corp.adobe.com/browse/SWC-2073) migration plan analysis, [SWC-2074](https://jira.corp.adobe.com/browse/SWC-2074) implementation). Cross-cutting **focusgroup** / **roving tabindex** direction lives in [SWC-1676](https://jira.corp.adobe.com/browse/SWC-1676) (RFC; **Done** snapshot—see [Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md)). Those **`gen2`** items are **out of scope** for the **Related 1st-gen** table below, which lists **1st-gen** documentation snapshots only.
+Planning and migration work is tracked in Adobe Jira with **`gen2`** labels (for example [SWC-2071](https://jira.corp.adobe.com/browse/SWC-2071) **epic**, [SWC-2072](https://jira.corp.adobe.com/browse/SWC-2072) accessibility recommendations, [SWC-2073](https://jira.corp.adobe.com/browse/SWC-2073) migration plan analysis, [SWC-2074](https://jira.corp.adobe.com/browse/SWC-2074) implementation). Cross-cutting **focusgroup** / **roving tabindex** direction lives in [SWC-1676](https://jira.corp.adobe.com/browse/SWC-1676) (RFC; **Done** snapshot—see [Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md)). Those **`gen2`** items are **out of scope** for the **Related gen1** table below, which lists **gen1** documentation snapshots only.
 
 ---
 
@@ -90,7 +90,7 @@ Planning and migration work is tracked in Adobe Jira with **`gen2`** labels (for
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 Adobe Jira is authoritative for current status and resolution; refresh cells when you triage. **gen2**-labeled program tickets are omitted here (see **Program (2nd-gen)** above). Audit epic **[SWC-872](https://jira.corp.adobe.com/browse/SWC-872)** is omitted per contributor-doc rules for cross-cutting audits.
 
@@ -142,7 +142,7 @@ None
 - **`swc-button-group` host:** **Not** a **Tab** stop; **do not** put **`tabindex="0"`** on the **group** host. **Do not** wire **`FocusgroupNavigationController`** on **`swc-button-group`**.
 - **`swc-button` children:** **Tab** / **Shift+Tab** move among **buttons** in **DOM** order by default. **Enter** / **Return** or **Space** activate each **button** ([Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)).
 - **Consumer docs — composites and toolbars:** When product needs **keyboard navigation inside components** ([APG](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents))—for example **one** **Tab** stop into a bar and **Arrow** keys among **Copy** / **Cut** / **Paste** as in the [Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/)—**recommend** **`FocusgroupNavigationController`** on the **toolbar** or other **composite** **host** (**`role="toolbar"`**, **`swc-action-group`**, or app-owned wrapper), **not** on **`swc-button-group`**. A typical **APG** layering is **`toolbar`** on the **outer** landmark, **`role="group"`** on each **`swc-button-group`** cluster inside it, with **roving** **`tabindex`** owned by the **toolbar** (see [Action group migration roadmap](../action-group/rendering-and-styling-migration-analysis.md), [Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md)).
-- **1st-gen gap:** **`sp-button-group`** does **not** set **`role="group"`** in [`ButtonGroup.ts`](../../../../gen1/packages/button-group/src/ButtonGroup.ts); 2nd-gen should **add** **`role="group"`** to match this doc and the **APG** **toolbar** example’s **inner** **group** cluster—not **roving** behavior on the **group** host itself.
+- **gen1 gap:** **`sp-button-group`** does **not** set **`role="group"`** in [`ButtonGroup.ts`](../../../../gen1/packages/button-group/src/ButtonGroup.ts); 2nd-gen should **add** **`role="group"`** to match this doc and the **APG** **toolbar** example’s **inner** **group** cluster—not **roving** behavior on the **group** host itself.
 
 ---
 
@@ -184,7 +184,7 @@ None
 - [WAI-ARIA APG: Read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
 - [React Spectrum: ButtonGroup](https://react-spectrum.adobe.com/ButtonGroup)
-- [Button Group — Spectrum Web Components (1st-gen)](https://opensource.adobe.com/spectrum-web-components/components/button-group/)
+- [Button Group — Spectrum Web Components (gen1)](https://opensource.adobe.com/spectrum-web-components/components/button-group/)
 - [Spectrum 2 — Web (desktop scale): Button group (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13663-6530)
 - [Button group migration roadmap](./rendering-and-styling-migration-analysis.md)
 - [Button accessibility migration analysis](../button/accessibility-migration-analysis.md)
@@ -192,4 +192,4 @@ None
 - [Action group migration roadmap](../action-group/rendering-and-styling-migration-analysis.md)
 - [Action button migration roadmap](../action-button/rendering-and-styling-migration-analysis.md)
 - [Keyboard testing (2nd-gen Storybook accessibility guide)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
-- [`ButtonGroup.ts` (1st-gen)](../../../../gen1/packages/button-group/src/ButtonGroup.ts)
+- [`ButtonGroup.ts` (gen1)](../../../../gen1/packages/button-group/src/ButtonGroup.ts)

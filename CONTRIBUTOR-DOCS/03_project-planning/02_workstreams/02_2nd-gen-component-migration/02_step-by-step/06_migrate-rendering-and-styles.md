@@ -49,11 +49,11 @@ cp -r spectrum-css/components/<component-name>/dist/index.css spectrum-web-compo
 
 ## Update styles in the 2nd-generation component
 
-Now that we have the base styles in place, we need to check the 1st-gen implementation for any unique web component-specific styles that would not exist in the vanilla CSS implementation. This information will most likely be found in the `gen1/packages/components/<component-name>/<component-name>.css` file.
+Now that we have the base styles in place, we need to check the gen1 implementation for any unique web component-specific styles that would not exist in the vanilla CSS implementation. This information will most likely be found in the `gen1/packages/components/<component-name>/<component-name>.css` file.
 
 For example, look for styles specific to slots, such as `::slotted([name="icon"]) {}`.
 
-If these styles are found, we need to confirm if they are needed in the 2nd-generation component. Not all 1st-gen overrides or component-specific styles are needed in the 2nd-generation components and sometimes there are other ways to source those styles using the original classes provided by the Spectrum CSS asset.
+If these styles are found, we need to confirm if they are needed in the 2nd-generation component. Not all gen1 overrides or component-specific styles are needed in the 2nd-generation components and sometimes there are other ways to source those styles using the original classes provided by the Spectrum CSS asset.
 
 It might be helpful, at this point, to define the render function for the 2nd-gen component so you can spin up Storybook and start seeing these new styles in action. A quick way to kick this off is to copy the `spectrum-css/components/<component-name>/stories/template.js` file into a render function on your new 2nd-generation component.
 
@@ -110,7 +110,7 @@ protected override render(): TemplateResult {
 }
 ```
 
-Let's compare this to the 1st-generation implementation:
+Let's compare this to the gen1eration implementation:
 
 ```ts
 protected override render(): TemplateResult {
@@ -136,4 +136,4 @@ As you can see, the 2nd-generation implementation leverages the `classMap` funct
 - It creates a container inside the Shadow DOM which provides stronger encapsulation
 - It allows for more efficient rendering by only applying the necessary classes to the component
 
-In our 2nd-generation version, we will likely want to maintain any slots available in the 1st-generation component unless design changes from S2 provide a compelling reason to change or remove them.
+In our 2nd-generation version, we will likely want to maintain any slots available in the gen1eration component unless design changes from S2 provide a compelling reason to change or remove them.

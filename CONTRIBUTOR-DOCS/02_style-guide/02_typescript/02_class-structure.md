@@ -239,7 +239,7 @@ public override variant: BadgeVariant = 'informative';
 
 ### Section: API ADDITIONS
 
-This section holds properties that exist **only** in this generation. They are not declared in the base class. Use this section when 2nd-gen introduces new features that 1st-gen does not have.
+This section holds properties that exist **only** in this generation. They are not declared in the base class. Use this section when 2nd-gen introduces new features that gen1 does not have.
 
 **What goes here:**
 
@@ -255,7 +255,7 @@ This section holds properties that exist **only** in this generation. They are n
 /**
  * Whether the badge is subtle.
  *
- * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
+ * @todo This can be moved to the base class once we are no longer maintaining gen1.
  */
 @property({ type: Boolean, reflect: true })
 public subtle: boolean = false;
@@ -265,7 +265,7 @@ public subtle: boolean = false;
  *
  * Can only be used with semantic variants.
  *
- * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
+ * @todo This can be moved to the base class once we are no longer maintaining gen1.
  */
 @property({ type: Boolean, reflect: true })
 public outline: boolean = false;

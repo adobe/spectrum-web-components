@@ -130,7 +130,7 @@ module.exports = defineConfig({
         workspace.set('main', './dist/index.js');
         workspace.set('module', './dist/index.js');
       } else {
-        // 1st-gen packages use src folder
+        // gen1 packages use src folder
         // A subset of components have a different entry point than the default
         if (
           [
@@ -153,7 +153,7 @@ module.exports = defineConfig({
      * This function enforces consistent dependencies within each generation separately
      */
     function enforceConsistentDependenciesWithinGenerations({ Yarn }) {
-      // Enforce consistency within 1st-gen only
+      // Enforce consistency within gen1 only
       enforceConsistencyForWorkspaceGroup(
         { Yarn },
         (workspace) => !workspace.cwd.startsWith('2nd-gen/')

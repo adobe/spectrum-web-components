@@ -21,7 +21,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: native `a` with Spectrum / prose link styles](#recommendations-native-a-with-spectrum--prose-link-styles)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA issues](#shadow-dom-and-cross-root-aria-issues)
@@ -55,11 +55,11 @@
 
 ### Button-shaped navigation to another route
 
-1st-gen has been moving away from “links as buttons” (for example, anchors or `href`-driven custom elements that use button visuals to move between routes). 2nd-gen continues that direction: for in-app navigation when the design is button-shaped, prefer a real **`<button type="button">`** (or a framework control with the same **role** and keyboard behavior) with Spectrum button styles, and wire routing from that control, instead of link styling or a link-like `href` surface to get a button look. Inline text links in prose still use a classed **`<a href>`**.
+gen1 has been moving away from “links as buttons” (for example, anchors or `href`-driven custom elements that use button visuals to move between routes). 2nd-gen continues that direction: for in-app navigation when the design is button-shaped, prefer a real **`<button type="button">`** (or a framework control with the same **role** and keyboard behavior) with Spectrum button styles, and wire routing from that control, instead of link styling or a link-like `href` surface to get a button look. Inline text links in prose still use a classed **`<a href>`**.
 
 ### Why avoid a link component (for default content)
 
-- **Proxy** and **double-activation** problems can appear when web components wrap or duplicate **`<a>`** behavior (see patterns similar to `sp-button` / `sp-action-button` with `href` and 1st-gen `sp-link`). [SWC-923](https://jira.corp.adobe.com/browse/SWC-923) and [SWC-921](https://jira.corp.adobe.com/browse/SWC-921) illustrate ecosystem issues with `href` composition and duplicate handlers; [SWC-598](https://jira.corp.adobe.com/browse/SWC-598) is related refactor context. A classed **`<a href>`** in the light DOM is one clear activation target with normal browser and assistive technology behavior.
+- **Proxy** and **double-activation** problems can appear when web components wrap or duplicate **`<a>`** behavior (see patterns similar to `sp-button` / `sp-action-button` with `href` and gen1 `sp-link`). [SWC-923](https://jira.corp.adobe.com/browse/SWC-923) and [SWC-921](https://jira.corp.adobe.com/browse/SWC-921) illustrate ecosystem issues with `href` composition and duplicate handlers; [SWC-598](https://jira.corp.adobe.com/browse/SWC-598) is related refactor context. A classed **`<a href>`** in the light DOM is one clear activation target with normal browser and assistive technology behavior.
 
 ### Related
 
@@ -78,7 +78,7 @@
 | Idea | Plain meaning |
 |------|---------------|
 | [Link purpose (2.4.4 / 2.4.9)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context.html) | Link text (or name from image/label) must make sense in context. Avoid “click here” as the only label. If you support 2.4.9, destination information must meet that criterion. |
-| [Use of color (1.4.1)](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html) & [contrast (1.4.3 / 1.4.6)](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum) | Do not mark links by color alone. Link text and states (default, hover, **focus-visible**, visited if styled) must be readable; [SWC-1160](https://jira.corp.adobe.com/browse/SWC-1160) tracks 1st-gen `sp-link` contrast next to body text—2nd-gen **CSS** and tokens should not reintroduce that failure. |
+| [Use of color (1.4.1)](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html) & [contrast (1.4.3 / 1.4.6)](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum) | Do not mark links by color alone. Link text and states (default, hover, **focus-visible**, visited if styled) must be readable; [SWC-1160](https://jira.corp.adobe.com/browse/SWC-1160) tracks gen1 `sp-link` contrast next to body text—2nd-gen **CSS** and tokens should not reintroduce that failure. |
 | Quiet / minimal link presentation | **Quiet** styling (for example, links without underlines) should be used only in **sections** such as **footers** (or similar scoped regions) where the **section** itself provides enough **visible** context to indicate that each item is a link—not in undifferentiated body copy. |
 | [Focus visible (2.4.7 / 1.4.11 as applicable)](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible) | Prose and static-color link styles should not remove perceivable focus treatment without a deliberate replacement. |
 | [Non-text content (1.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content) | Icon-only or image-only links: sufficient `alt`, or `aria-label`, or visible text plus a visually hidden label if needed. |
@@ -88,7 +88,7 @@
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 |------|------|-------------------|-------------------------|---------|
@@ -111,7 +111,7 @@ There is no `<swc-link>` host in this model. Authors apply shared link classes t
 | **Name** | Visible text in the element; for icon-only links, `aria-label` or `alt` + text pattern; meet [4.1.2](https://www.w3.org/WAI/WCAG22/#name-role-value). |
 | **Attributes** | `target`, `rel`, `download`, `lang`, and `type` on the real element—no cross-root ID wiring for a CE host. |
 | **Styles** | Class names from the Spectrum link system and **prose** (see [Typography: prose (preview)](https://swcpreviews.z13.web.core.windows.net/docs/?path=/docs/components-typography--readme#prose-container) and the roadmap). Use **quiet** (non-underline) link styles only in **sections** such as **footers** (or other clearly scoped link groups) where the **section** gives enough visible context that items read as links; in long **body** **prose**, use a more obvious link treatment. Prefer a classed **`<a>`** in running text over inventing a new `sp-` link for each paragraph. |
-| **No `disabled` on a navigational link** | A real `<a href>` is not a disabled form control. If the action is unavailable, use a **`<button disabled>`** (with explanation) or **remove** the **link**—[SWC-966](https://jira.corp.adobe.com/browse/SWC-966) removes the invalid 1st-gen `disabled` pattern on `sp-link`; do not bring it back as a “class-only” feature. |
+| **No `disabled` on a navigational link** | A real `<a href>` is not a disabled form control. If the action is unavailable, use a **`<button disabled>`** (with explanation) or **remove** the **link**—[SWC-966](https://jira.corp.adobe.com/browse/SWC-966) removes the invalid gen1 `disabled` pattern on `sp-link`; do not bring it back as a “class-only” feature. |
 | **Ecosystem** | Avoid architectures that attach `href` twice or layer router and custom-element `click` listeners in ways that [duplicate navigation](https://jira.corp.adobe.com/browse/SWC-923) or [open two tabs](https://jira.corp.adobe.com/browse/SWC-921) on one user gesture. Styling a single native `a` avoids an extra indirection for plain prose links. |
 
 ### Shadow DOM and cross-root ARIA issues
@@ -147,9 +147,9 @@ Native links participate in the **tab** order; **Enter** (and platform conventio
 
 - [ ] Typography and prose **Storybook** docs and examples show classed **`<a href>`**; 2nd-gen in-body copy does not require **`<sp-link>`**.
 - [ ] Deprecate or document away `disabled` on `sp-link`; align consumer guides with [SWC-966](https://jira.corp.adobe.com/browse/SWC-966) (see [roadmap](./rendering-and-styling-migration-analysis.md)).
-- [ ] Contrast and 1.4.1 for link vs surrounding text: avoid repeating [SWC-1160](https://jira.corp.adobe.com/browse/SWC-1160); use [SWC-926](https://jira.corp.adobe.com/browse/SWC-926) and [SWC-1428](https://jira.corp.adobe.com/browse/SWC-1428) as pointers from 1st-gen / roadmap to native anchor styling.
+- [ ] Contrast and 1.4.1 for link vs surrounding text: avoid repeating [SWC-1160](https://jira.corp.adobe.com/browse/SWC-1160); use [SWC-926](https://jira.corp.adobe.com/browse/SWC-926) and [SWC-1428](https://jira.corp.adobe.com/browse/SWC-1428) as pointers from gen1 / roadmap to native anchor styling.
 - [ ] [Semantic HTML and ARIA examples](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx) and link-purpose guidance appear in or alongside prose docs; **Storybook** and usage docs call out that **quiet** (non-underline) link styles are for **section**-scoped patterns such as **footers**, not generic body text.
-- [ ] Program-level (gen2) Jira is tracked in Jira, not duplicated in the 1st-gen table above, per the accessibility-migration skill.
+- [ ] Program-level (gen2) Jira is tracked in Jira, not duplicated in the gen1 table above, per the accessibility-migration skill.
 
 ## References
 

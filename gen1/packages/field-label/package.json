@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/components/field-label",
   "repository": {
-    "directory": "1st-gen/packages/field-label",
+    "directory": "gen1/packages/field-label",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

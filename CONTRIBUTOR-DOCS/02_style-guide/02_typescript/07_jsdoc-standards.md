@@ -370,7 +370,7 @@ Marks future work or known issues. Use it to flag things that need attention lat
 /**
  * Whether the badge is subtle.
  *
- * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
+ * @todo This can be moved to the base class once we are no longer maintaining gen1.
  */
 ```
 

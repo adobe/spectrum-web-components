@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://adobe.github.io/spectrum-web-components/components/breadcrumbs",
   "repository": {
-    "directory": "1st-gen/packages/breadcrumbs",
+    "directory": "gen1/packages/breadcrumbs",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

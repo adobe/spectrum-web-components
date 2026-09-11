@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/components/card",
   "repository": {
-    "directory": "1st-gen/packages/card",
+    "directory": "gen1/packages/card",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

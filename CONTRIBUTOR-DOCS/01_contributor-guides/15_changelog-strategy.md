@@ -51,7 +51,7 @@ Run `yarn changeset:2nd-gen` to start the interactive CLI, scoped to 2nd-gen's o
 | `@adobe/spectrum-wc` | Any component change (new component, feature, bug fix) |
 | `@adobe/spectrum-wc-core` | Changes to shared core logic (mixins, controllers, base classes) |
 
-1st-gen (`@spectrum-web-components/*`) has its own separate changesets setup in `gen1/.changeset/` (`yarn changeset:1st-gen`) and follows a separate process. If your PR changes both core and a component, run `yarn changeset:2nd-gen` twice and create one changeset for each package.
+gen1 (`@spectrum-web-components/*`) has its own separate changesets setup in `gen1/.changeset/` (`yarn changeset:gen1`) and follows a separate process. If your PR changes both core and a component, run `yarn changeset:2nd-gen` twice and create one changeset for each package.
 
 After selecting the package, choose a bump type, then write the body using the format above.
 
@@ -177,9 +177,9 @@ No custom scripts are involved. The changeset body you write is preserved as-is;
 
 ## Gen1's changelog rollup
 
-1st-gen (`gen1/.changeset/config.json`) also uses `@changesets/changelog-github`, so per-package `CHANGELOG.md` files (e.g. `gen1/packages/button/CHANGELOG.md`) are generated the same way as gen2's.
+gen1 (`gen1/.changeset/config.json`) also uses `@changesets/changelog-github`, so per-package `CHANGELOG.md` files (e.g. `gen1/packages/button/CHANGELOG.md`) are generated the same way as gen2's.
 
-On top of that, gen1 runs one additional step: `yarn workspace @spectrum-web-components/1st-gen changelog:1st-gen` (`gen1/scripts/update-changelog.js`), which rolls up the currently pending `gen1/.changeset/*.md` files into a single dated entry at the top of the root `gen1/CHANGELOG.md`. It builds this entry independently, straight from the changeset frontmatter and body text, rather than from `@changesets/changelog-github`'s output.
+On top of that, gen1 runs one additional step: `yarn workspace @spectrum-web-components/gen1 changelog:gen1` (`gen1/scripts/update-changelog.js`), which rolls up the currently pending `gen1/.changeset/*.md` files into a single dated entry at the top of the root `gen1/CHANGELOG.md`. It builds this entry independently, straight from the changeset frontmatter and body text, rather than from `@changesets/changelog-github`'s output.
 
 This script must run before `yarn changeset version`, since `changeset version` deletes each `.changeset/*.md` file once it folds it into the per-package changelogs. In the release workflow (`.github/workflows/publish.yml`), both steps run in the same job, so the resulting `gen1/CHANGELOG.md` rollup entry and the per-package `CHANGELOG.md` updates land in the same Version PR commit for review.
 

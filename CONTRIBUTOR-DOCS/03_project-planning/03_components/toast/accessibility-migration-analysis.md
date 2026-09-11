@@ -19,14 +19,14 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: `<swc-toast>`](#recommendations-swc-toast)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
     - [Accessibility tree expectations](#accessibility-tree-expectations)
     - [Assistive technology, live regions](#assistive-technology-live-regions)
     - [Keyboard and focus](#keyboard-and-focus)
-- [Known 1st-gen issues](#known-1st-gen-issues)
+- [Known gen1 issues](#known-gen1-issues)
     - [Role placement and type](#role-placement-and-type)
     - [Timer pause incomplete](#timer-pause-incomplete)
     - [`aria-hidden` when closed](#aria-hidden-when-closed)
@@ -93,7 +93,7 @@ Not a replacement for critical error messaging or decisions requiring mandatory 
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 |------|------|-------------------|-------------------------|---------|
@@ -115,7 +115,7 @@ Not a replacement for critical error messaging or decisions requiring mandatory 
 | **`aria-hidden` when closed** | When the toast is not open, set `aria-hidden="true"` on the host to suppress the alertdialog and its inner live region from the accessibility tree. Remove `aria-hidden` (or set `aria-hidden="false"`) when the toast opens. This is more reliable across browsers than relying on CSS `visibility: hidden` to suppress live region announcements, and prevents unexpected announcements when DOM content changes while the toast is hidden. |
 | **Timer pause (hover and focus-within)** | The auto-dismiss timer must pause both when the pointer is over the component (`pointerenter`) and when focus is within the component (`focusin`). Resume the timer only when both conditions have ended (`pointerleave` and `focusout`). These two conditions are independent: if both are active simultaneously, the timer must not resume until both have cleared. Pausing on pointer hover satisfies WCAG 1.4.13; pausing on focus-within ensures keyboard and screen reader users have sufficient time to read and interact with the toast before it dismisses. |
 | **Variant icon labels** | Variant icons carry accessible labels as part of the live region content. Align with the React Spectrum structure: render the icon with `role="img"` and `aria-label` set to the icon label ("Information", "Error", "Success" by default). Authors can override via the `icon-label` attribute. Document that the icon label may produce redundant announcements if the message already states the type (for example, "Error: Your upload failed"). Authors can set `icon-label=""` to suppress it when the message text conveys the type fully. |
-| **Close button** | Must have an accessible name ("Close"). 1st-gen uses `label="Close"` on `sp-close-button`. 2nd-gen should use `swc-close-button` with the same label. The close button's label is on the button element itself; no cross-root ARIA concern. |
+| **Close button** | Must have an accessible name ("Close"). gen1 uses `label="Close"` on `sp-close-button`. 2nd-gen should use `swc-close-button` with the same label. The close button's label is on the button element itself; no cross-root ARIA concern. |
 | **Action button slot** | Design allows a maximum of one action button per toast. The `action` slot is light DOM; authors must provide a descriptive label (for example, "Undo file deletion" rather than just "Undo"). Docs must state the one-action limit explicitly. |
 | **`variant` and color** | `variant` is visual-only. Do not auto-map `variant` to `aria-invalid`, `aria-relevant`, or other ARIA properties. The icon label and message text carry semantic meaning; color is supplementary and must not be the only differentiator. |
 | **Docs** | Document the `role="alertdialog"` + inner `role="alert"` pattern and why it is used. Document the 6-second minimum, the hover-and-focus pause behavior, and the one-action limit. Do not claim `variant` sets ARIA states. |
@@ -219,35 +219,35 @@ Focus management on dismiss:
 - When the user activates the close button or action button, the `close` event fires. The calling application is responsible for returning focus to a logical location.
 - When a toast auto-dismisses and focus is on the toast at the time, focus is lost. If a container (`swc-toast-queue` or author-composed) manages the list, it should move focus to the next toast in the list, or return focus to the triggering element when the last toast dismisses. Without a container, `swc-toast` fires the `close` event and the application must handle focus return.
 
-Timer pause (hover and focus-within): The auto-dismiss timer must pause both when the pointer enters the toast (`pointerenter`) and when focus moves inside the toast (`focusin`). The timer resumes only when both conditions have ended — `pointerleave` and `focusout`. If a user is both hovering and has focus inside simultaneously, the timer must not resume until both have cleared. The 1st-gen already pauses on `focusin`; 2nd-gen must additionally pause on `pointerenter` to satisfy WCAG 1.4.13 for pointing-device users.
+Timer pause (hover and focus-within): The auto-dismiss timer must pause both when the pointer enters the toast (`pointerenter`) and when focus moves inside the toast (`focusin`). The timer resumes only when both conditions have ended — `pointerleave` and `focusout`. If a user is both hovering and has focus inside simultaneously, the timer must not resume until both have cleared. The gen1 already pauses on `focusin`; 2nd-gen must additionally pause on `pointerenter` to satisfy WCAG 1.4.13 for pointing-device users.
 
 ---
 
-## Known 1st-gen issues
+## Known gen1 issues
 
 Gaps in `sp-toast` that `swc-toast` should fix and cover with tests.
 
 ### Role placement and type
 
-The 1st-gen places `role="alert"` directly on the inner shadow DOM `.body` div with no outer dialog semantics. This exposes a flat live region with no interactive dialog identity — the toast announces its content but does not signal to AT that it is a dismissible, potentially actionable notification. The 2nd-gen should use `role="alertdialog"` (with `aria-modal="false"` and `tabindex="0"`) on the host for the dialog semantics, and retain `role="alert"` with `aria-atomic="true"` on an inner shadow DOM element for the live region announcement. This aligns with the React Spectrum implementation and properly represents the component's interactive nature. The migration guide should document both the structural change and the rationale.
+The gen1 places `role="alert"` directly on the inner shadow DOM `.body` div with no outer dialog semantics. This exposes a flat live region with no interactive dialog identity — the toast announces its content but does not signal to AT that it is a dismissible, potentially actionable notification. The 2nd-gen should use `role="alertdialog"` (with `aria-modal="false"` and `tabindex="0"`) on the host for the dialog semantics, and retain `role="alert"` with `aria-atomic="true"` on an inner shadow DOM element for the live region announcement. This aligns with the React Spectrum implementation and properly represents the component's interactive nature. The migration guide should document both the structural change and the rationale.
 
 ### Timer pause incomplete
 
-The 1st-gen pauses the countdown timer on `focusin` and resumes on `focusout`, but does not pause on hover. WCAG 1.4.13 requires that content appearing on pointer hover can be kept visible while the pointer is over it. For auto-dismissing toasts, pausing on hover lets sighted users with pointing devices read the content without racing the timer.
+The gen1 pauses the countdown timer on `focusin` and resumes on `focusout`, but does not pause on hover. WCAG 1.4.13 requires that content appearing on pointer hover can be kept visible while the pointer is over it. For auto-dismissing toasts, pausing on hover lets sighted users with pointing devices read the content without racing the timer.
 
 The 2nd-gen must pause the timer on both `pointerenter` and `focusin`, and resume only when both conditions have cleared (`pointerleave` and `focusout`). If the pointer is over the toast while focus is also inside it, the timer must not resume until both have ended.
 
 ### `aria-hidden` when closed
 
-The 1st-gen controls visibility via CSS (`visibility: hidden; opacity: 0` when not open) but does not set `aria-hidden` on the host. The inner `role="alert"` div remains in the accessibility tree when the toast is closed, which can cause unexpected announcements in some browsers when DOM content changes while the toast is hidden. The 2nd-gen should set `aria-hidden="true"` on the host when `open` is false.
+The gen1 controls visibility via CSS (`visibility: hidden; opacity: 0` when not open) but does not set `aria-hidden` on the host. The inner `role="alert"` div remains in the accessibility tree when the toast is closed, which can cause unexpected announcements in some browsers when DOM content changes while the toast is hidden. The 2nd-gen should set `aria-hidden="true"` on the host when `open` is false.
 
 ### Action button and auto-dismiss
 
-The 1st-gen has no documentation or guardrails preventing auto-dismiss from triggering when an action button is in the slot. A user relying on a screen reader may hear the toast announcement and then try to Tab to the action button, only to have the toast dismiss before they get there. The 2nd-gen docs should strongly advise against combining `timeout` with the `action` slot, and a dev warning should fire when both are set simultaneously.
+The gen1 has no documentation or guardrails preventing auto-dismiss from triggering when an action button is in the slot. A user relying on a screen reader may hear the toast announcement and then try to Tab to the action button, only to have the toast dismiss before they get there. The 2nd-gen docs should strongly advise against combining `timeout` with the `action` slot, and a dev warning should fire when both are set simultaneously.
 
 ### Documentation
 
-The 1st-gen README mentions the minimum timeout and the `role="region"` container recommendation, but does not address hover pause, does not explain why `role="alert"` is not recommended for application use, and does not warn about the action-button-plus-auto-dismiss hazard.
+The gen1 README mentions the minimum timeout and the `role="region"` container recommendation, but does not address hover pause, does not explain why `role="alert"` is not recommended for application use, and does not warn about the action-button-plus-auto-dismiss hazard.
 
 ---
 

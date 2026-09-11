@@ -146,7 +146,7 @@ commands:
           when: always
           name: VRT Run
           command: |
-            yarn workspace @spectrum-web-components/1st-gen test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+            yarn workspace @spectrum-web-components/gen1 test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
       # store results and artifacts before rearranging things for the new cache.
       - store_test_results:
           path: /root/project/gen1/results/
@@ -168,7 +168,7 @@ commands:
           name: Create review site
           command: |
             branch=$(git symbolic-ref --short HEAD)
-            cd 1st-gen && node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>" && yarn rollup -c test/visual/rollup.config.js
+            cd gen1 && node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>" && yarn rollup -c test/visual/rollup.config.js
       - install-azcopy
       - run:
           when: always
@@ -314,8 +314,8 @@ jobs:
       - run:
           name: Run chromium tests
           command: |
-            TEST=$(circleci tests glob "gen1/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
-            yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config ./web-test-runner.config.ci-chromium.js --group unit-ci
+            TEST=$(circleci tests glob "gen1/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/gen1\///')
+            yarn workspace @spectrum-web-components/gen1 test:start --files $TEST --config ./web-test-runner.config.ci-chromium.js --group unit-ci
       - store_test_results:
           path: /root/project/gen1/results/
 
@@ -325,7 +325,7 @@ jobs:
       - downstream
       - run:
           name: Run chromium tests with coverage
-          command: yarn workspace @spectrum-web-components/1st-gen test:focus unit --config web-test-runner.config.ci-chromium.js --coverage
+          command: yarn workspace @spectrum-web-components/gen1 test:focus unit --config web-test-runner.config.ci-chromium.js --coverage
       - store_test_results:
           path: /root/project/gen1/results/
       # Coverage artifact lives on the job that actually runs `--coverage`.
@@ -340,9 +340,9 @@ jobs:
       - run:
           name: Run memory tests
           command: |
-            TEST=$(circleci tests glob "gen1/{packages,tools}/*/test/*-memory.test.js" | grep -v "packages/color-.*/test/.*-memory\.test\.js" | grep -v "tools/grid/test/.*-memory\.test\.js" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
+            TEST=$(circleci tests glob "gen1/{packages,tools}/*/test/*-memory.test.js" | grep -v "packages/color-.*/test/.*-memory\.test\.js" | grep -v "tools/grid/test/.*-memory\.test\.js" | circleci tests split --split-by=timings | sed 's/gen1\///')
             echo $TEST
-            yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-chromium-memory.js --group unit-ci
+            yarn workspace @spectrum-web-components/gen1 test:start --files $TEST --config web-test-runner.config.ci-chromium-memory.js --group unit-ci
       - store_test_results:
           path: /root/project/gen1/results/
 
@@ -354,8 +354,8 @@ jobs:
       - run:
           name: Run firefox tests
           command: |
-            TEST=$(circleci tests glob "gen1/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
-            yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
+            TEST=$(circleci tests glob "gen1/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/gen1\///')
+            yarn workspace @spectrum-web-components/gen1 test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
       - store_test_results:
           path: /root/project/gen1/results/
 
@@ -367,8 +367,8 @@ jobs:
       - run:
           name: Run webkit tests
           command: |
-            TEST=$(circleci tests glob "gen1/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
-            yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
+            TEST=$(circleci tests glob "gen1/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/gen1\///')
+            yarn workspace @spectrum-web-components/gen1 test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
       - store_test_results:
           path: /root/project/gen1/results/
 
@@ -461,7 +461,7 @@ jobs:
       - downstream
       - run:
           name: Generate Custom Elements Manifest
-          command: yarn workspace @spectrum-web-components/1st-gen docs:analyze
+          command: yarn workspace @spectrum-web-components/gen1 docs:analyze
       - run:
           name: Move CEM to Storybook directory
           command: cp gen1/projects/documentation/custom-elements.json gen1/storybook/
@@ -472,10 +472,10 @@ jobs:
             source $BASH_ENV
       - run:
           name: Build documentation
-          command: yarn workspace @spectrum-web-components/1st-gen docs:build
+          command: yarn workspace @spectrum-web-components/gen1 docs:build
       - run:
           name: Build gen1 Storybook (beta docs)
-          command: yarn workspace @spectrum-web-components/1st-gen storybook:build
+          command: yarn workspace @spectrum-web-components/gen1 storybook:build
       - install-azcopy
       - run:
           name: Deploy Beta Documentation to Azure Blob Storage
@@ -524,7 +524,7 @@ jobs:
           when: always
           name: VRT Run
           command: |
-            yarn workspace @spectrum-web-components/1st-gen test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
+            yarn workspace @spectrum-web-components/gen1 test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
       # store results and artifacts before rearranging things for the new cache.
       - store_test_results:
           path: /root/project/gen1/results/
@@ -546,7 +546,7 @@ jobs:
           name: Create review site
           command: |
             branch=$(git symbolic-ref --short HEAD)
-            cd 1st-gen && node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm" && yarn rollup -c test/visual/rollup.config.js
+            cd gen1 && node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm" && yarn rollup -c test/visual/rollup.config.js
       - install-azcopy
       - run:
           when: always

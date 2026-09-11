@@ -20,7 +20,7 @@ jobs:
         uses: ./.github/actions/setup-job
 
       - name: Generate Custom Elements Manifest
-        run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
+        run: yarn workspace @spectrum-web-components/gen1 docs:analyze
 
       - name: Analyze 2nd-gen components
         run: yarn workspace @adobe/spectrum-wc analyze
@@ -32,10 +32,10 @@ jobs:
         run: cp gen1/projects/documentation/custom-elements.json gen1/storybook/
 
       - name: Build documentation
-        run: yarn workspace @spectrum-web-components/1st-gen docs:production
+        run: yarn workspace @spectrum-web-components/gen1 docs:production
 
       - name: Build Storybook
-        run: yarn workspace @spectrum-web-components/1st-gen storybook:build
+        run: yarn workspace @spectrum-web-components/gen1 storybook:build
 
       - name: Add redirects to documentation
         run: echo '/*    /index.html   200' > gen1/projects/documentation/dist/_redirects
@@ -43,6 +43,6 @@ jobs:
       - name: Deploy to GitHub Pages
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          cd 1st-gen && npx gh-pages -d projects/documentation/dist -m "[skip ci] update demonstration site" -t -u "github-actions-bot <support+actions@github.com>" --nojekyll
+          cd gen1 && npx gh-pages -d projects/documentation/dist -m "[skip ci] update demonstration site" -t -u "github-actions-bot <support+actions@github.com>" --nojekyll
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

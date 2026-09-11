@@ -18,13 +18,13 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: `<swc-dropzone>`](#recommendations-swc-dropzone)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
     - [Accessibility tree expectations](#accessibility-tree-expectations)
     - [Keyboard and focus](#keyboard-and-focus)
-- [Known 1st-gen issues](#known-1st-gen-issues)
+- [Known gen1 issues](#known-gen1-issues)
     - [No default host role or accessible name](#no-default-host-role-or-accessible-name)
     - [No status announcements for drag state changes](#no-status-announcements-for-drag-state-changes)
     - [Drag-and-drop not reliably keyboard-accessible by default](#drag-and-drop-not-reliably-keyboard-accessible-by-default)
@@ -41,7 +41,7 @@
 
 ## Overview
 
-This doc covers how **`swc-dropzone`** should work for **accessibility** and targets **WCAG 2.2 Level AA**. Until a `2nd-gen` implementation exists, use `gen1/packages/dropzone/src/Dropzone.ts` (`<sp-dropzone>`) to validate 1st-gen behavior, and update this spec against the real 2nd-gen source when it ships.
+This doc covers how **`swc-dropzone`** should work for **accessibility** and targets **WCAG 2.2 Level AA**. Until a `2nd-gen` implementation exists, use `gen1/packages/dropzone/src/Dropzone.ts` (`<sp-dropzone>`) to validate gen1 behavior, and update this spec against the real 2nd-gen source when it ships.
 
 ### Also read
 
@@ -88,7 +88,7 @@ The component has three visual states:
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 |------|------|-------------------|-------------------------|---------|
@@ -116,7 +116,7 @@ The component has three visual states:
 
 ### Shadow DOM and cross-root ARIA Issues
 
-The 1st-gen `sp-dropzone` renders only `<slot></slot>` in shadow DOM with no internal ARIA. For 2nd-gen, the shadow DOM adds a single `role="status"` element for announcements. All interactive elements (browse button, illustrated message, uploaded content) remain in light DOM via the default slot and own their own accessible semantics.
+The gen1 `sp-dropzone` renders only `<slot></slot>` in shadow DOM with no internal ARIA. For 2nd-gen, the shadow DOM adds a single `role="status"` element for announcements. All interactive elements (browse button, illustrated message, uploaded content) remain in light DOM via the default slot and own their own accessible semantics.
 
 ```html
 <!-- shadow root -->
@@ -174,25 +174,25 @@ The browse control is **required** in the slot; its absence is a conformance fai
 
 ---
 
-## Known 1st-gen issues
+## Known gen1 issues
 
-The following gaps in 1st-gen `<sp-dropzone>` should be addressed in 2nd-gen `<swc-dropzone>` and covered with tests.
+The following gaps in gen1 `<sp-dropzone>` should be addressed in 2nd-gen `<swc-dropzone>` and covered with tests.
 
 ### No default host role or accessible name
 
-The 1st-gen host has no default `role` or accessible name. The README defers this to consumers ("supply the appropriate `role` and `aria-label` attributes"). This makes the accessible boundary of the upload region entirely dependent on consumer markup, which is inconsistently applied in practice. In 2nd-gen, `role="group"` is fixed on the host and a dev warning fires when no accessible name is provided.
+The gen1 host has no default `role` or accessible name. The README defers this to consumers ("supply the appropriate `role` and `aria-label` attributes"). This makes the accessible boundary of the upload region entirely dependent on consumer markup, which is inconsistently applied in practice. In 2nd-gen, `role="group"` is fixed on the host and a dev warning fires when no accessible name is provided.
 
 ### No status announcements for drag state changes
 
-1st-gen changes the `isDragged` and `isFilled` attributes but provides no mechanism for AT to learn about these state changes. A user dragging a file over the zone has no programmatic cue that the zone is "active." In 2nd-gen, a shadow DOM `role="status"` element provides default announcements for drag state and upload completion.
+gen1 changes the `isDragged` and `isFilled` attributes but provides no mechanism for AT to learn about these state changes. A user dragging a file over the zone has no programmatic cue that the zone is "active." In 2nd-gen, a shadow DOM `role="status"` element provides default announcements for drag state and upload completion.
 
 ### Drag-and-drop not reliably keyboard-accessible by default
 
-1st-gen README guidance to add `tabindex` and a browse control is advisory only. The component does not enforce the browse control. SWC-2069 also documents that the `sp-dropzone-drop` event does not fire on Windows Chrome in some cases, further degrading the drag path. In 2nd-gen, stories and documentation should always include a browse control, and the drop event bug should be covered by a regression test.
+gen1 README guidance to add `tabindex` and a browse control is advisory only. The component does not enforce the browse control. SWC-2069 also documents that the `sp-dropzone-drop` event does not fire on Windows Chrome in some cases, further degrading the drag path. In 2nd-gen, stories and documentation should always include a browse control, and the drop event bug should be covered by a regression test.
 
 ### Documentation anti-patterns
 
-1st-gen README examples use `javascript:;` as the `href` on browse links, which is an accessibility anti-pattern (produces incorrect link behavior in some AT). 2nd-gen documentation should use a proper `<sp-button>` or a `<sp-link>` that triggers the hidden file input via a `click()` call inside an event listener, not via an inline `onclick` on a parent element.
+gen1 README examples use `javascript:;` as the `href` on browse links, which is an accessibility anti-pattern (produces incorrect link behavior in some AT). 2nd-gen documentation should use a proper `<sp-button>` or a `<sp-link>` that triggers the hidden file input via a `click()` call inside an event listener, not via an inline `onclick` on a parent element.
 
 ---
 
@@ -242,7 +242,7 @@ See the 2nd-gen Storybook [Screen reader testing](../../../../2nd-gen/packages/s
 - [ ] Keyboard users can open the OS file picker via the browse button using `Tab` then `Enter` or `Space`.
 - [ ] Dashed border and drop zone chrome meet non-text contrast (3:1) in all states, including forced-colors mode.
 - [ ] Illustrated message text meets text contrast (4.5:1).
-- [ ] 1st-gen documentation anti-patterns (`javascript:;` hrefs, inline `onclick`) are replaced with accessible patterns in 2nd-gen docs and stories.
+- [ ] gen1 documentation anti-patterns (`javascript:;` hrefs, inline `onclick`) are replaced with accessible patterns in 2nd-gen docs and stories.
 - [ ] SWC-2069 regression (drop event on Windows Chrome) is covered by integration tests.
 - [ ] aXe (WCAG 2.x) runs on all dropzone stories.
 - [ ] Playwright ARIA snapshot tests cover default, dragged, filled, and filled + dragged states.

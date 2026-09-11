@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/components/action-button",
   "repository": {
-    "directory": "1st-gen/packages/action-button",
+    "directory": "gen1/packages/action-button",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

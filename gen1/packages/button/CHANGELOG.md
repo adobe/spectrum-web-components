@@ -33,7 +33,7 @@
 ### Minor Changes
 
 - [#6051](https://github.com/adobe/spectrum-web-components/pull/6051) [`c720445`](https://github.com/adobe/spectrum-web-components/commit/c7204456810326960b31f80955e842cc3e5555e3) Thanks [@5t3ph](https://github.com/5t3ph)! - - **Added**: Introduced global button element styles in `@spectrum-web-components/styles` via `global-button.css` and `global-elements.css` (including public exports), enabling native links with `.spectrum-Button*` classes to render with Spectrum button styling.
-  - **Documented**: Added 1st-gen button guidance and Storybook examples for rendering native `<a>` links as static button-styled UI, including limitations (for example, no disabled or pending support for link-based buttons).
+  - **Documented**: Added gen1 button guidance and Storybook examples for rendering native `<a>` links as static button-styled UI, including limitations (for example, no disabled or pending support for link-based buttons).
 
 ### Patch Changes
 
@@ -44,7 +44,7 @@
 
   The fix checks if the anchor element is already in the click event's composed path before triggering a proxy click. When the user clicks directly on the button, the absolutely-positioned anchor naturally receives the click, so no proxy is needed. The proxy click is now only triggered for keyboard activation and VoiceOver, where the anchor isn't in the click path.
 
-- [#6254](https://github.com/adobe/spectrum-web-components/pull/6254) [`38a463f`](https://github.com/adobe/spectrum-web-components/commit/38a463f7f4745373d143cdb08c7d87ba932cf1dd) Thanks [@5t3ph](https://github.com/5t3ph)! - **deprecate(button):** Mark 1st-gen `sp-button` properties and exports as deprecated ahead of 2nd-gen migration.
+- [#6254](https://github.com/adobe/spectrum-web-components/pull/6254) [`38a463f`](https://github.com/adobe/spectrum-web-components/commit/38a463f7f4745373d143cdb08c7d87ba932cf1dd) Thanks [@5t3ph](https://github.com/5t3ph)! - **deprecate(button):** Mark gen1 `sp-button` properties and exports as deprecated ahead of 2nd-gen migration.
   - `quiet` property: deprecated with `@deprecated` JSDoc and runtime `window.__swc.warn()`; use `treatment="outline"` instead
   - `treatment` property: deprecated with `@deprecated` JSDoc; use `fill-style` in 2nd-gen
   - `no-wrap` property: deprecated with `@deprecated` JSDoc; use `truncate` in 2nd-gen

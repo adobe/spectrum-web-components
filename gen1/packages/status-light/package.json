@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/components/status-light",
   "repository": {
-    "directory": "1st-gen/packages/status-light",
+    "directory": "gen1/packages/status-light",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

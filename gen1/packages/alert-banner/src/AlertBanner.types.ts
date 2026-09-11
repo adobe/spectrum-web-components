@@ -22,6 +22,6 @@ export type AlertBannerVariant =
 
 /**
  * @deprecated Use `AlertBannerVariant` instead.
- * Kept as `string` for backward compatibility with 1st-gen.
+ * Kept as `string` for backward compatibility with gen1.
  */
 export type AlertBannerVariants = string;

@@ -1,11 +1,11 @@
 ---
 name: migration-prep
-description: Phase 1 of 1st-gen to 2nd-gen component migration. Use to understand the component, plan breaking changes, and define scope before any refactoring begins.
+description: Phase 1 of gen1 to 2nd-gen component migration. Use to understand the component, plan breaking changes, and define scope before any refactoring begins.
 ---
 
 # Migration prep (Phase 1)
 
-[Phase 1](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is to thoroughly understand the component and produce a written migration plan—covering API surface, breaking changes, file layout, and naming decisions—before any code is moved or refactored.
+[Phase 1](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the gen1 → 2nd-gen component migration. The goal is to thoroughly understand the component and produce a written migration plan—covering API surface, breaking changes, file layout, and naming decisions—before any code is moved or refactored.
 
 ## Mindset
 
@@ -21,7 +21,7 @@ Actively watch for drift as you draft. Decisions recorded early can conflict wit
 
 ## When to use this skill
 
-- You are starting a 1st-gen → 2nd-gen component migration
+- You are starting a gen1 → 2nd-gen component migration
 - The user asks to "prep" or "prepare" a component for migration
 - The user asks to plan or scope a component migration before implementation
 
@@ -35,7 +35,7 @@ Actively watch for drift as you draft. Decisions recorded early can conflict wit
 - Challenge weak or inconsistent inputs respectfully and with concrete reasoning
 - When an API or naming choice seems likely to confuse consumers, propose a better alternative and explain why
 - When sources disagree, do not silently choose one; surface the disagreement, recommend a resolution path, and record it clearly in the plan
-- Prefer reducing long-term API complexity over preserving accidental 1st-gen quirks unless compatibility clearly demands otherwise
+- Prefer reducing long-term API complexity over preserving accidental gen1 quirks unless compatibility clearly demands otherwise
 - Proactively identify opportunities to improve clarity, consistency, accessibility, and migration ergonomics
 
 ## How to invoke
@@ -59,7 +59,7 @@ Review these sources before filling out the plan:
 - The 2nd-gen migration status table in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/01_status.md`
 - The component's rendering and styling analysis doc in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/`
 - The component's accessibility migration analysis doc in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/`, if available
-- The 1st-gen source, tests, README, and any shared mixins or helpers it depends on
+- The gen1 source, tests, README, and any shared mixins or helpers it depends on
 - Relevant gen1 bug tickets and prior migration decisions
 - Relevant Figma and React Spectrum references for naming, variants, and expected behavior
 
@@ -107,13 +107,13 @@ In the section titled "Open gen1 issues" in the [assets/migration-prep-template.
   - **Labels:** Do **not** list issues that carry Jira labels **`a11y`** or **`gen2`**. This section tracks **gen1** (`sp-*`) issues only, not gen2 tickets or a11y issues for the gen1 component.
   - **Resolution:** Do **not** list issues that have been resolved, ie with a Jira Workflow Status of "Done".
   - **Issue types:** Do **not** list issues of the type Epic or Initiative. Track those in Jira or program views, not in per-component tables.
-- **Reference:** See the section "## Related 1st-gen accessibility (Jira)" in **`avatar/rendering-and-styling-migration-analysis.md`** (and sibling component docs) for a full example table. This example only includes accessibility issues. It should follow the same format, but document non-accessibility gen1 issues.
+- **Reference:** See the section "## Related gen1 accessibility (Jira)" in **`avatar/rendering-and-styling-migration-analysis.md`** (and sibling component docs) for a full example table. This example only includes accessibility issues. It should follow the same format, but document non-accessibility gen1 issues.
 
 ## Readiness threshold
 
 Do not present the plan as review-ready until all of the following are available:
 
-- 1st-gen source
+- gen1 source
 - Rendering and styling migration analysis
 - Figma reference image(s) from **`S2 / Web`**, copied as PNG from the _Component_ frame that includes the variants
 - A table of existing gen1 issues for the component, which are pulled from Jira
@@ -222,14 +222,14 @@ For API naming, behavior, and migration ergonomics:
 1. React implementation
 2. Figma visual spec
 3. `spectrum-css` at `spectrum-two` branch component CSS and the render found in `[component]/stories/template`
-4. 1st-gen implementation
+4. gen1 implementation
 
 For visual decisions and supported presentation modes:
 
 1. Figma visual spec
 2. React implementation
 3. `spectrum-css` at `spectrum-two` branch component CSS and the render found in `[component]/stories/template`
-4. 1st-gen implementation
+4. gen1 implementation
 
 If a required source is missing, call that out in the plan and add it to blockers or prerequisites. Links to most sources are available in "References" in the plan template.
 
@@ -238,7 +238,7 @@ If a required source is missing, call that out in the plan and add it to blocker
 Pause and actively discuss with the user when you find any of the following:
 
 - API naming that conflicts with React, Figma, or established repo conventions
-- A 1st-gen behavior that appears confusing, inconsistent, or not worth carrying forward
+- A gen1 behavior that appears confusing, inconsistent, or not worth carrying forward
 - Multiple plausible component boundaries, such as one component vs several
 - A component dependency or extension relationship changes the recommended migration order
 - This component shares structural CSS patterns with another component, suggesting a `_lit-styles/` fragment should be created or consumed — flag the opportunity, name the abstraction, and note whether extraction affects migration order or requires coordination
@@ -296,7 +296,7 @@ Instead:
 - Do not present inferred details as confirmed. Mark decisions as confirmed, inferred, or open questions based on the quality of the source material
 - For any proposed rename, deprecation, or breaking change, include at least one concrete supporting source. If you cannot support it, keep it as an open question instead of presenting it as settled
 - Before finalizing, remove or replace unresolved placeholders such as `[component]`, `[Component]`, `[component-version]`, and `Epic SWC-####`
-- Before finalizing, verify the highest-value links and references in the completed plan: 1st-gen source, analysis docs, tests, README, workflow doc, and React S2 component docs
+- Before finalizing, verify the highest-value links and references in the completed plan: gen1 source, analysis docs, tests, README, workflow doc, and React S2 component docs
 - Keep `TL;DR`, `Most blocking open questions`, `Changes overview`, `2nd-gen API decisions`, and `References` populated. If information is unavailable, say so explicitly instead of leaving them blank
 - Keep blocker numbering in the template's required `Q{#}` format. Number open questions sequentially across all blocker sections, and reuse those exact `Q{#}` IDs in `Most blocking open questions`. Do not invent a second numbering scheme there or deviate from the existing `Q{#}` format. Do not create empty links for questions.
 - Do not invent slots, events, CSS custom properties, or visual variants that are not supported by source material or guided by the user
@@ -311,7 +311,7 @@ Before the plan is considered complete:
 - key references have been verified (links resolve, anchors exist, version strings are real)
 - unresolved placeholders have been removed or explicitly addressed with the user (`[component]`, `[Component]`, `[component-version]`, `Epic SWC-####`)
 - required sections are populated or explicitly marked with a reason (`TL;DR`, `Most blocking open questions`, `Changes overview`, `2nd-gen API decisions`, `References`)
-- the feature/functionality inventory is documented well enough across `1st-gen API surface`, `Dependencies`, and `Changes overview` to support `Must ship`, `Additive`, and open-question decisions
+- the feature/functionality inventory is documented well enough across `gen1 API surface`, `Dependencies`, and `Changes overview` to support `Must ship`, `Additive`, and open-question decisions
 - dependency-aware sequencing decisions are called out
 - major provisional decisions are surfaced back to the user for review
 - all `Must ship` / core migration questions are resolved and documented inline in the section they affect, rather than left only in `Blockers and open questions`
@@ -375,7 +375,7 @@ This is the **quality reflection** the agent must perform after `Definition of d
 
 Before finalizing the plan, assess whether:
 
-- The proposed 2nd-gen API is simpler and clearer than the 1st-gen API
+- The proposed 2nd-gen API is simpler and clearer than the gen1 API
 - Naming is consistent across the plan and aligned with the strongest available source material
 - Any preserved quirks are intentional and justified, not accidental carryovers
 - Breaking changes are minimized where possible, but not avoided at the expense of long-term API quality

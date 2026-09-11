@@ -19,7 +19,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: `<swc-menu-group>`](#recommendations-swc-menu-group)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -106,9 +106,9 @@ In tests, mirror the same list placement and internal `role="menu"` shape.
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
-Treat **menu-wide** defects as authoritative in [Menu — Related 1st-gen accessibility (Jira)](../menu/accessibility-migration-analysis.md#related-1st-gen-accessibility-jira). Add rows here only when an issue narrowly targets **`sp-menu-group`** / group labeling; otherwise omit and rely on that table.
+Treat **menu-wide** defects as authoritative in [Menu — Related gen1 accessibility (Jira)](../menu/accessibility-migration-analysis.md#related-gen1-accessibility-jira). Add rows here only when an issue narrowly targets **`sp-menu-group`** / group labeling; otherwise omit and rely on that table.
 
 ---
 

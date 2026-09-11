@@ -20,13 +20,13 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: `<swc-meter>`](#recommendations-swc-meter)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA](#shadow-dom-and-cross-root-aria)
     - [Accessibility tree expectations](#accessibility-tree-expectations)
     - [Keyboard and focus](#keyboard-and-focus)
-- [Known 1st-gen issues](#known-1st-gen-issues)
+- [Known gen1 issues](#known-gen1-issues)
     - [Role and value attributes](#role-and-value-attributes)
     - [Labeling and description](#labeling-and-description)
     - [Non-text contrast at 0% (WCAG 1.4.11)](#non-text-contrast-at-0-wcag-1411)
@@ -92,11 +92,11 @@ This doc explains how **`swc-meter`** should work for **accessibility**. It supp
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 |------|------|-------------------|-------------------------|---------|
-| — | — | — | — | *No 1st-gen `sp-meter`–specific items in this snapshot.* |
+| — | — | — | — | *No gen1 `sp-meter`–specific items in this snapshot.* |
 
 ---
 
@@ -106,12 +106,12 @@ This doc explains how **`swc-meter`** should work for **accessibility**. It supp
 
 | Topic | What to do |
 |-------|------------|
-| **`role=”meter”`** | **Prescribed** and **fixed** on an **inner shadow DOM element** (not the host). The host carries **no** ARIA **role**. Placing the role in shadow DOM avoids polluting the custom element’s host ARIA contract and allows the internal element to use shadow-DOM-internal ID references for `aria-labelledby` and `aria-describedby` without cross-root ARIA issues. Do **not** set **`role=”progressbar”`** and do **not** use a **combined** or **space-separated** `role` string (1st-gen’s **`role=”meter progressbar”`** is **not** a valid use of a single ARIA **role** value). If authors need a **task progress** widget, they should use **`<swc-progress-bar>`** / **`<swc-progress-circle>`**. |
+| **`role=”meter”`** | **Prescribed** and **fixed** on an **inner shadow DOM element** (not the host). The host carries **no** ARIA **role**. Placing the role in shadow DOM avoids polluting the custom element’s host ARIA contract and allows the internal element to use shadow-DOM-internal ID references for `aria-labelledby` and `aria-describedby` without cross-root ARIA issues. Do **not** set **`role=”progressbar”`** and do **not** use a **combined** or **space-separated** `role` string (gen1’s **`role=”meter progressbar”`** is **not** a valid use of a single ARIA **role** value). If authors need a **task progress** widget, they should use **`<swc-progress-bar>`** / **`<swc-progress-circle>`**. |
 | **Label slot (visible label)** | A **`label` slot** provides the **visible** **label** text. The slot content is wrapped in a shadow DOM container that has a **stable ID** (for example `label`). The inner element with `role=”meter”` references that ID via **`aria-labelledby`**. This keeps the ID reference entirely within the shadow tree and avoids cross-root ARIA. |
 | **`accessibleLabel` property (screen reader-only label)** | For **rare** contexts where no visible label is appropriate (for example a data grid column where the column header already labels the meter), authors set **`accessibleLabel`** on the component. When this property is non-empty, the inner element with `role=”meter”` sets **`aria-label`** to its value instead of using **`aria-labelledby`**. Do **not** use both simultaneously. A **dev warning** in debug builds is appropriate when neither a label slot value nor `accessibleLabel` is provable. |
 | **Description slot** | A **`description` slot** renders **additional text below the meter** (for example “2 GB of 10 GB used”). The slot content is wrapped in a shadow DOM container that has a **stable ID** (for example `description`). The inner element with `role=”meter”` references that ID via **`aria-describedby`**. Do **not** call this slot “help text”: that term implies the meter is a form field, which it is not. |
-| **`aria-valuemin` / `aria-valuemax`** | Set to **`”0”`** and **`”100”`** to match the **current** public **`progress` API** (0–100). 1st-gen does **not** set these; **2nd-gen** should. If the product later allows **arbitrary** ranges, recompute all three of **min**, **max**, and **now** from the same **source of truth** as the visible value. |
-| **`aria-valuenow`** | Mirror **`progress`**, updated on change (1st-gen does this). |
+| **`aria-valuemin` / `aria-valuemax`** | Set to **`”0”`** and **`”100”`** to match the **current** public **`progress` API** (0–100). gen1 does **not** set these; **2nd-gen** should. If the product later allows **arbitrary** ranges, recompute all three of **min**, **max**, and **now** from the same **source of truth** as the visible value. |
+| **`aria-valuenow`** | Mirror **`progress`**, updated on change (gen1 does this). |
 | **`aria-valuetext`** | Expose a **string** that matches the **displayed** **percentage** (for example the same **localized** value as the **`sp-field-label`** in the **percentage** area). This keeps **AT** in sync with sighted users, and satisfies the APG when a **percent** is a **sensible** “human” value. If the value should **not** be spoken as a **percent** only, set **`aria-valuetext`** to the **user-friendly** string. |
 | **0% appearance ([WCAG 1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast))** | When **`progress` = 0**, the **fill** is effectively **invisible**—at-risk **non-text** **contrast** on the **track** only. **Mitigate** using the **bar** / **track** / **fill** **rules** in the [**Loading animation discovery** Figma](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery) (and align with the [Progress bar 0% guidance](../progress-bar/accessibility-migration-analysis.md#non-text-contrast-at-0-wcag-1411) where the **bar** is shared), so **graphical** parts **meet** **3:1**; **`aria-valuenow`**, **`aria-valuetext`**, and any **visible** **percent** must still read as **0%**—treatment is for **perception** only. |
 | **`variant` / `size` / `static-color` / `side-label`** | **Layout** and **tint** only, unless a future spec ties **variant** to **advisory** (non-essential) hints—do not invent **ARIA** mappings without product agreement. |
@@ -146,7 +146,7 @@ When **`accessibleLabel`** is provided (and no visible label slot is used), the 
 
 #### Why not on the host?
 
-Placing the role on a shadow DOM node is a deliberate departure from the 1st-gen pattern. It avoids the following problems:
+Placing the role on a shadow DOM node is a deliberate departure from the gen1 pattern. It avoids the following problems:
 
 - A host `role="meter"` would require external `aria-labelledby` pointing to light-DOM elements. Those references work, but tightly couple the consumer's DOM structure to the component's accessible name.
 - The label and description slots are rendered inside the shadow DOM. If the role were on the host, `aria-labelledby` and `aria-describedby` from the host could not reference shadow-DOM IDs.
@@ -171,9 +171,9 @@ Placing the role on a shadow DOM node is a deliberate departure from the 1st-gen
 
 ---
 
-## Known 1st-gen issues
+## Known gen1 issues
 
-Gaps in **1st-gen** **`<sp-meter>`** that **2nd-gen** **`swc-meter`** should fix and cover with tests.
+Gaps in **gen1** **`<sp-meter>`** that **2nd-gen** **`swc-meter`** should fix and cover with tests.
 
 ### Role and value attributes
 
@@ -182,7 +182,7 @@ Gaps in **1st-gen** **`<sp-meter>`** that **2nd-gen** **`swc-meter`** should fix
 
 ### Labeling and description
 
-- 1st-gen exposes a **`label` property** and a **default slot** that feed the visible label, but there is no explicit **description** slot. In **2nd-gen**, the **label slot** replaces the `label` attribute as the primary visible-label surface, and a **description slot** replaces the "help text" pattern (which incorrectly frames the meter as a form field). Consumers who need a screen reader-only label in labelless contexts use the **`accessibleLabel`** property.
+- gen1 exposes a **`label` property** and a **default slot** that feed the visible label, but there is no explicit **description** slot. In **2nd-gen**, the **label slot** replaces the `label` attribute as the primary visible-label surface, and a **description slot** replaces the "help text" pattern (which incorrectly frames the meter as a form field). Consumers who need a screen reader-only label in labelless contexts use the **`accessibleLabel`** property.
 
 ### Non-text contrast at 0% (WCAG 1.4.11)
 
@@ -190,7 +190,7 @@ Gaps in **1st-gen** **`<sp-meter>`** that **2nd-gen** **`swc-meter`** should fix
 
 ### Documentation (README)
 
-- 1st-gen [`gen1/packages/meter/README.md`](../../../../gen1/packages/meter/README.md) describes **`role=”meter progressbar”`** as if both roles apply. Update consumer docs for **`swc-meter`** to a **single** **`meter`** **role** (on an inner shadow DOM element, not the host), a short **”meter vs progress”** blurb (task progress vs static level), and guidance on using the **label slot**, the **`accessibleLabel`** property, and the **description slot**.
+- gen1 [`gen1/packages/meter/README.md`](../../../../gen1/packages/meter/README.md) describes **`role=”meter progressbar”`** as if both roles apply. Update consumer docs for **`swc-meter`** to a **single** **`meter`** **role** (on an inner shadow DOM element, not the host), a short **”meter vs progress”** blurb (task progress vs static level), and guidance on using the **label slot**, the **`accessibleLabel`** property, and the **description slot**.
 
 ---
 
@@ -201,7 +201,7 @@ Gaps in **1st-gen** **`<sp-meter>`** that **2nd-gen** **`swc-meter`** should fix
 | Kind of test | What to check |
 |--------------|----------------|
 | **Unit** | Inner shadow DOM element carries **single** **`role="meter"`**; host has **no** ARIA role. **Min**/**max**/**now**/**valuetext** correct. Name resolves via **`aria-labelledby`** to label slot container ID, or via **`aria-label`** when `accessibleLabel` is set. Description resolves via **`aria-describedby`** to description slot container ID when content is present. Host **not** **focusable** by default. |
-| **aXe + Storybook** | **WCAG 2.x** on **meter** stories (1st-gen now; 2nd-gen when added). |
+| **aXe + Storybook** | **WCAG 2.x** on **meter** stories (gen1 now; 2nd-gen when added). |
 | **Playwright ARIA snapshots** | Add **`meter.a11y.spec.ts`** for 2nd-gen, covering **side-label**, **sizes**, **variants**, and **key** `progress` values, mirroring the **progress-bar** / **progress-circle** snapshot approach. |
 | **Contrast** | **0%**, **variants**, **`staticColor`**, and any **over-photo** or **on-image** use cases. |
 
@@ -222,7 +222,7 @@ The **meter** is not in the **Tab** order, so you will not reach it the same way
 - [ ] **No** **`aria-live="assertive"`**; **`polite`** **live** regions are **rare** and only when a single **primary** announcement strategy exists.
 - [ ] **0%** and **variant** stories meet **non-text contrast** expectations, including **0%** **mitigations** aligned with the **Figma** *Loading* file where the **bar** spec applies.
 - [ ] **Dev warning** (if any) fires when neither a label slot value nor `accessibleLabel` is provable at runtime.
-- [ ] **1st-gen** issues (combined **role** on host, missing min/max/valuetext, no description slot) are **regression-tested** in 2nd-gen.
+- [ ] **gen1** issues (combined **role** on host, missing min/max/valuetext, no description slot) are **regression-tested** in 2nd-gen.
 - [ ] **aXe** (WCAG 2.x) runs on **meter** stories.
 - [ ] **Manual** **screen** **reader** **testing** uses **browse** **mode** per the Storybook [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide, because the **meter** is **not** **keyboard** **focusable**.
 

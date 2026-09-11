@@ -559,7 +559,7 @@ export default defineConfig([
   },
 
   // ────────────────────────────────────────────────────────────────────────────
-  // 1st-gen project and tool files: allow devDependencies imports
+  // gen1 project and tool files: allow devDependencies imports
   // ────────────────────────────────────────────────────────────────────────────
   {
     files: [

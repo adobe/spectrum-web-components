@@ -16,9 +16,9 @@
     - [Make sure changesets are in place](#make-sure-changesets-are-in-place)
     - [Understand the versioning strategy](#understand-the-versioning-strategy)
 - [Release types](#release-types)
-    - [Pre-release (`next` throwaway snapshot, 1st-gen only)](#pre-release-next-throwaway-snapshot-1st-gen-only)
+    - [Pre-release (`next` throwaway snapshot, gen1 only)](#pre-release-next-throwaway-snapshot-gen1-only)
     - [Planned release (Version PR)](#planned-release-version-pr)
-    - [Production release (1st-gen `latest`)](#production-release-1st-gen-latest)
+    - [Production release (gen1 `latest`)](#production-release-gen1-latest)
 - [Approving the publish job](#approving-the-publish-job)
 - [Verifying the release](#verifying-the-release)
 - [Publishing the documentation site](#publishing-the-documentation-site)
@@ -34,7 +34,7 @@
 >
 > | | Workflow | Changesets | Real-release branch | Ships to |
 > |---|---|---|---|---|
-> | 1st-gen | `.github/workflows/publish.yml` | `gen1/.changeset/` | `changeset-release/1st-gen` → PR to `main` | `latest` |
+> | gen1 | `.github/workflows/publish.yml` | `gen1/.changeset/` | `changeset-release/gen1` → PR to `main` | `latest` |
 > | 2nd-gen | `.github/workflows/publish-gen2.yml` | `2nd-gen/.changeset/` | `changeset-release/2nd-gen` → PR to `main` | `latest` (persistent pre-release, versioned `2.0.0-beta.N`) |
 >
 > The sections below still describe the old branch-lock/direct-push model in places and should not be relied on until this page is rewritten to match.
@@ -47,12 +47,12 @@ The workflow publishes four package groups:
 
 | Package group | npm namespace | Auth method |
 |---|---|---|
-| 1st-gen components | `@spectrum-web-components/*` | OIDC trusted publishing |
+| gen1 components | `@spectrum-web-components/*` | OIDC trusted publishing |
 | Core | `@adobe/spectrum-wc-core` | OIDC trusted publishing |
 | 2nd-gen components | `@adobe/spectrum-wc` | npm token (`ADOBE_BOT_NPM_TOKEN`) |
 | React wrappers | `@swc-react/*` | OIDC trusted publishing |
 
-> **Note:** React wrappers are only built and published when 1st-gen packages have changesets.
+> **Note:** React wrappers are only built and published when gen1 packages have changesets.
 
 ---
 
@@ -69,28 +69,28 @@ To check what's pending, look at the relevant `.changeset/` directory (exclude `
 **If changesets are missing for packages you expected to update**, add them before triggering the release:
 
 ```bash
-yarn changeset:1st-gen
+yarn changeset:gen1
 yarn changeset:2nd-gen
 ```
 
 Follow the prompts to select packages and bump type.
 
-> **Note:** 1st-gen and 2nd-gen are independent. Changes to `@adobe/spectrum-wc-core` only affect 2nd-gen. The `linked` versioning between Core and 2nd-gen handles this automatically. 1st-gen packages are in a separate `fixed` group.
+> **Note:** gen1 and 2nd-gen are independent. Changes to `@adobe/spectrum-wc-core` only affect 2nd-gen. The `linked` versioning between Core and 2nd-gen handles this automatically. gen1 packages are in a separate `fixed` group.
 
 ### Understand the versioning strategy
 
 Each generation has its own `config.json` (`gen1/.changeset/config.json`, `2nd-gen/.changeset/config.json`) defining how its own packages version together:
 
-- **Fixed group** (1st-gen) – All `@spectrum-web-components/*` packages always version together at the same number.
+- **Fixed group** (gen1) – All `@spectrum-web-components/*` packages always version together at the same number.
 - **Linked group** (2nd-gen) – `@adobe/spectrum-wc` and `@adobe/spectrum-wc-core` receive the same bump type when either changes.
 
 ---
 
 ## Release types
 
-### Pre-release (`next` throwaway snapshot, 1st-gen only)
+### Pre-release (`next` throwaway snapshot, gen1 only)
 
-Manual dispatch only (**Actions → Publish Packages (gen1) → Run workflow**), gated on pending 1st-gen changesets — this is unrelated to the Version PR flow below and never touches `main`'s protection or history. It does not run on push, so it never publishes automatically.
+Manual dispatch only (**Actions → Publish Packages (gen1) → Run workflow**), gated on pending gen1 changesets — this is unrelated to the Version PR flow below and never touches `main`'s protection or history. It does not run on push, so it never publishes automatically.
 
 2nd-gen has no equivalent throwaway snapshot: it's always in changesets' persistent pre-release mode once the first real gen2 release ships, and changesets disallows a `--snapshot` version in that mode. Gen2 has no separate test channel either - its real release publishes straight to `latest` (see below), so testing pending gen2 changes means waiting for the Version PR to merge.
 
@@ -108,13 +108,13 @@ yarn add @spectrum-web-components/button@next
 
 ### Planned release (Version PR)
 
-Both generations run `yarn changeset version` directly and open/update a dedicated Version PR via [`peter-evans/create-pull-request`](https://github.com/peter-evans/create-pull-request) — each generation gets its own branch (`changeset-release/1st-gen` / `changeset-release/2nd-gen`) so the two never collide on the same branch name.
+Both generations run `yarn changeset version` directly and open/update a dedicated Version PR via [`peter-evans/create-pull-request`](https://github.com/peter-evans/create-pull-request) — each generation gets its own branch (`changeset-release/gen1` / `changeset-release/2nd-gen`) so the two never collide on the same branch name.
 
 **How it works:**
 
-1. Every push to `main` that has pending changesets (in `gen1/.changeset/` or `2nd-gen/.changeset/`) opens or updates a bot-authored pull request against `main`. The PR title is `chore: release 1st-gen packages` for 1st-gen or `chore: release 2nd-gen packages (beta)` for 2nd-gen (the `(beta)` suffix refers to the `2.0.0-beta.N` version format, not the npm tag it publishes under). The PR contains the version bumps and changelog entries `yarn changeset version` would produce.
+1. Every push to `main` that has pending changesets (in `gen1/.changeset/` or `2nd-gen/.changeset/`) opens or updates a bot-authored pull request against `main`. The PR title is `chore: release gen1 packages` for gen1 or `chore: release 2nd-gen packages (beta)` for 2nd-gen (the `(beta)` suffix refers to the `2.0.0-beta.N` version format, not the npm tag it publishes under). The PR contains the version bumps and changelog entries `yarn changeset version` would produce.
 2. A reviewer reviews and merges that pull request like any other PR — this is the audit trail: the exact diff that will ship is visible and approved before anything is published.
-3. Merging the Version PR is itself a push to `main`. That push has no pending changesets left (the merged PR consumed them), so the same workflow instead runs the generation's publish script: builds, `yarn changeset publish`, and (1st-gen only) builds and publishes the React wrappers and creates a git tag.
+3. Merging the Version PR is itself a push to `main`. That push has no pending changesets left (the merged PR consumed them), so the same workflow instead runs the generation's publish script: builds, `yarn changeset publish`, and (gen1 only) builds and publishes the React wrappers and creates a git tag.
 
 **Gen2 publishes under the `latest` npm tag**, but stays in changesets' persistent pre-release mode (`2nd-gen/.changeset/pre.json`, entered automatically the first time the Version PR flow runs) - so its version numbers keep the `2.0.0-beta.N` format even though `latest` points at them. Both generations' Version PRs ship straight to `latest`.
 
@@ -126,7 +126,7 @@ yarn add @adobe/spectrum-wc
 
 ---
 
-### Production release (1st-gen `latest`)
+### Production release (gen1 `latest`)
 
 There is no manual trigger for this anymore. Merge the open Version PR (see "Planned release" above) — the resulting push to `main` publishes to `latest`, commits nothing further back (the version bumps already landed via the merged PR), and creates a git tag via `scripts/create-git-tag.js gen1`.
 
@@ -207,7 +207,7 @@ gh workflow run publish-gen2-docs.yml --ref main
 
 - **"OIDC token NOT available – trusted publishing will fail"** — The workflow requires `id-token: write` permissions. Ensure the workflow is running in the `npm-publish` environment and that the repository's GitHub Actions permissions allow OIDC token generation.
 
-- **Publishing succeeded but React wrappers were skipped** — React wrappers are only built and published when 1st-gen packages (`@spectrum-web-components/*`) have changesets. If only Core or 2nd-gen changed, the React wrapper step is intentionally skipped.
+- **Publishing succeeded but React wrappers were skipped** — React wrappers are only built and published when gen1 packages (`@spectrum-web-components/*`) have changesets. If only Core or 2nd-gen changed, the React wrapper step is intentionally skipped.
 
 - **A React wrapper package failed to publish mid-run** — The workflow retries each package up to 3 times with exponential backoff (2s, 4s). If it still fails after 3 attempts, the workflow exits. Re-triggering the workflow is safe — changeset will skip already-published packages.
 

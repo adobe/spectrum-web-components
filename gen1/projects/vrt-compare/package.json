@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/",
   "repository": {
-    "directory": "1st-gen/projects/vrt-compare",
+    "directory": "gen1/projects/vrt-compare",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

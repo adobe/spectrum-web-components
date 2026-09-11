@@ -19,7 +19,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: `<swc-menu-separator>`](#recommendations-swc-menu-separator)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -47,9 +47,9 @@ This page is for 2nd-gen `swc-menu-separator` in Spectrum Web Components. It is 
 
 - The host has **no** slotted children—it is a line only (see 2nd-gen source).
 - Place it as a **direct** list child of `swc-menu`, `swc-action-menu`, or `swc-menu-item` (submenu when the item’s `submenu` slot is in use). **Not** inside `swc-menu-group` ([Menu group](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-2nd-gen)).
-- It is not a `menuitem`. [FocusgroupNavigationController](https://github.com/adobe/spectrum-web-components/pull/6129) should skip it for roving focus, like 1st-gen `sp-menu-separator` tests.
+- It is not a `menuitem`. [FocusgroupNavigationController](https://github.com/adobe/spectrum-web-components/pull/6129) should skip it for roving focus, like gen1 `sp-menu-separator` tests.
 
-1st-gen used [`sp-menu-separator` / `MenuDivider`](https://github.com/adobe/spectrum-web-components/blob/main/gen1/packages/menu/src/MenuDivider.ts) with `role="separator"` on the host. 2nd-gen should match; confirm attribute timing in source before you lock this copy.
+gen1 used [`sp-menu-separator` / `MenuDivider`](https://github.com/adobe/spectrum-web-components/blob/main/gen1/packages/menu/src/MenuDivider.ts) with `role="separator"` on the host. 2nd-gen should match; confirm attribute timing in source before you lock this copy.
 
 **Docs and examples:** avoid separators unless they sit next to [labelled `swc-menu-group`](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-2nd-gen) blocks. Random lines between loose items can add screen reader noise; prefer real groups for structure.
 
@@ -92,9 +92,9 @@ This page is for 2nd-gen `swc-menu-separator` in Spectrum Web Components. It is 
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
-Treat **menu-wide** defects as authoritative in [Menu — Related 1st-gen accessibility (Jira)](../menu/accessibility-migration-analysis.md#related-1st-gen-accessibility-jira). Log rows here **only** if an issue is specific to **`sp-menu-separator`** / separator announcement or traversal; otherwise omit.
+Treat **menu-wide** defects as authoritative in [Menu — Related gen1 accessibility (Jira)](../menu/accessibility-migration-analysis.md#related-gen1-accessibility-jira). Log rows here **only** if an issue is specific to **`sp-menu-separator`** / separator announcement or traversal; otherwise omit.
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 | --- | --- | --- | --- | --- |

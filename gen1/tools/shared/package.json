@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/shared",
   "repository": {
-    "directory": "1st-gen/tools/shared",
+    "directory": "gen1/tools/shared",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

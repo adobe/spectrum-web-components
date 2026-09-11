@@ -69,7 +69,7 @@ For every fetched issue (summary + description), perform these replacements:
 | `[[COMPONENT]]`       | `[Action button]` (Sentence case in summary brackets) |
 
 Do **not** replace `[PLACEHOLDER: ...]` markers — leave those intact for the
-engineer to fill in manually (Figma links, Stackblitz links, 1st-gen source paths).
+engineer to fill in manually (Figma links, Stackblitz links, gen1 source paths).
 
 ### Step 3 — Create the epic first, one at a time
 
@@ -167,8 +167,8 @@ updates in Jira:
 
 - Figma design link (SWC-1762 and SWC-1765 equivalents)
 - Stackblitz link (SWC-1765 equivalent)
-- 1st-gen component source path (SWC-1757, SWC-1758, SWC-1759 equivalents)
-- 1st-gen test path (SWC-1758 equivalent)
+- gen1 component source path (SWC-1757, SWC-1758, SWC-1759 equivalents)
+- gen1 test path (SWC-1758 equivalent)
 
 ---
 

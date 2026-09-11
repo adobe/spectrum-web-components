@@ -407,7 +407,7 @@ export const MissingAccessibleNameTest: Story = {
         await progressBar.updateComplete;
         const elements = warnCalls.map((c) => c?.[0]);
         // The first argument is the element itself; its localName must be
-        // swc-progress-bar, not swc-progress-circle (1st-gen copy-paste bug).
+        // swc-progress-bar, not swc-progress-circle (gen1 copy-paste bug).
         const warnedElement = elements[0] as HTMLElement | undefined;
         expect(warnedElement?.localName).toBe('swc-progress-bar');
         progressBar.parentElement?.remove();

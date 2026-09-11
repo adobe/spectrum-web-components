@@ -20,7 +20,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: `<swc-text-area>`](#recommendations-swc-text-area)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -37,11 +37,11 @@
 
 ## Overview
 
-This doc tells you how **`swc-text-area`** should work for **accessibility**. It matches the goal of **WCAG 2.2 Level AA**. `swc-text-area` is the 2nd-gen replacement for the multiline configuration of 1st-gen `sp-textfield` (`sp-textfield[multiline]`). 1st-gen has no separate textarea package — multiline is a mode of the single `Textfield` class. 2nd-gen splits it into its own component, matching [React Spectrum's `TextField`](https://react-spectrum.adobe.com/TextField) / [`TextArea`](https://react-spectrum.adobe.com/TextArea) split. This doc shares most of its ARIA and form-association guidance with [`swc-text-field`'s accessibility migration analysis](../text-field/accessibility-migration-analysis.md); it calls out only what differs for multiline input.
+This doc tells you how **`swc-text-area`** should work for **accessibility**. It matches the goal of **WCAG 2.2 Level AA**. `swc-text-area` is the 2nd-gen replacement for the multiline configuration of gen1 `sp-textfield` (`sp-textfield[multiline]`). gen1 has no separate textarea package — multiline is a mode of the single `Textfield` class. 2nd-gen splits it into its own component, matching [React Spectrum's `TextField`](https://react-spectrum.adobe.com/TextField) / [`TextArea`](https://react-spectrum.adobe.com/TextArea) split. This doc shares most of its ARIA and form-association guidance with [`swc-text-field`'s accessibility migration analysis](../text-field/accessibility-migration-analysis.md); it calls out only what differs for multiline input.
 
 ### Also read
 
-- [Textfield and Textarea migration roadmap](../textfield/rendering-and-styling-migration-analysis.md) for layout, CSS, and DOM changes (still filed under the combined 1st-gen `textfield/` folder pending a rendering-doc split).
+- [Textfield and Textarea migration roadmap](../textfield/rendering-and-styling-migration-analysis.md) for layout, CSS, and DOM changes (still filed under the combined gen1 `textfield/` folder pending a rendering-doc split).
 - [Text field accessibility migration analysis](../text-field/accessibility-migration-analysis.md) for the single-line sibling; most of its [ARIA roles, states, and properties](../text-field/accessibility-migration-analysis.md#aria-roles-states-and-properties) and [Shadow DOM and cross-root ARIA Issues](../text-field/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) content applies here unchanged.
 
 ### What it is
@@ -61,7 +61,7 @@ This doc tells you how **`swc-text-area`** should work for **accessibility**. It
 
 ### Related
 
-- 1st-gen [`sp-field-label`](../../../../gen1/packages/field-label/README.md) and [`sp-help-text`](../../../../gen1/packages/help-text/README.md) are being retired as standalone 2nd-gen components for this use case, same as for `swc-text-field`. Their visual output moves into the shared render directive `LabellingController` calls from inside `swc-text-area`'s own template — see [`swc-text-field`'s Related section](../text-field/accessibility-migration-analysis.md#related) for the full explanation and the [SWC-1316](https://jira.corp.adobe.com/browse/SWC-1316) predecessor work.
+- gen1 [`sp-field-label`](../../../../gen1/packages/field-label/README.md) and [`sp-help-text`](../../../../gen1/packages/help-text/README.md) are being retired as standalone 2nd-gen components for this use case, same as for `swc-text-field`. Their visual output moves into the shared render directive `LabellingController` calls from inside `swc-text-area`'s own template — see [`swc-text-field`'s Related section](../text-field/accessibility-migration-analysis.md#related) for the full explanation and the [SWC-1316](https://jira.corp.adobe.com/browse/SWC-1316) predecessor work.
 - [`LabellingController`](https://jira.corp.adobe.com/browse/SWC-2466) and [`FieldAssociationController`](https://jira.corp.adobe.com/browse/SWC-2467) — the same two shared controllers `swc-text-field` depends on; `swc-text-area` should use the exact same integration, not a parallel one.
 
 ---
@@ -89,7 +89,7 @@ This doc tells you how **`swc-text-area`** should work for **accessibility**. It
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 | --- | --- | --- | --- | --- |
@@ -116,22 +116,22 @@ This doc tells you how **`swc-text-area`** should work for **accessibility**. It
 
 ## Recommendations: `<swc-text-area>`
 
-Component tag may change until API freeze. `swc-text-area` covers only the multiline configuration of 1st-gen `sp-textfield[multiline]`; see [`swc-text-field`](../text-field/accessibility-migration-analysis.md#recommendations-swc-text-field) for the single-line sibling. Everything in that doc's [ARIA roles, states, and properties](../text-field/accessibility-migration-analysis.md#aria-roles-states-and-properties) table applies here as well (host role, accessible-name single-writer rule, placeholder-is-never-the-name, `aria-invalid`, required, validation icon, live-region policy, character count, `FieldAssociationController` wiring) — only the rows below are specific to multiline.
+Component tag may change until API freeze. `swc-text-area` covers only the multiline configuration of gen1 `sp-textfield[multiline]`; see [`swc-text-field`](../text-field/accessibility-migration-analysis.md#recommendations-swc-text-field) for the single-line sibling. Everything in that doc's [ARIA roles, states, and properties](../text-field/accessibility-migration-analysis.md#aria-roles-states-and-properties) table applies here as well (host role, accessible-name single-writer rule, placeholder-is-never-the-name, `aria-invalid`, required, validation icon, live-region policy, character count, `FieldAssociationController` wiring) — only the rows below are specific to multiline.
 
 ### ARIA roles, states, and properties
 
 | Topic | What to do |
 | --- | --- |
-| **Host role** | None, same as `swc-text-field`. The inner, real `<textarea>` supplies the implicit `textbox` role plus an implicit `aria-multiline="true"` — both from the browser's native HTML-AAM mapping, not from component code. Document this precisely: 1st-gen's `textarea.md` says `aria-multiline="true"` "is automatically applied," which is true only in the sense that the browser supplies it; `swc-text-area` itself should not set `aria-multiline` explicitly. |
+| **Host role** | None, same as `swc-text-field`. The inner, real `<textarea>` supplies the implicit `textbox` role plus an implicit `aria-multiline="true"` — both from the browser's native HTML-AAM mapping, not from component code. Document this precisely: gen1's `textarea.md` says `aria-multiline="true"` "is automatically applied," which is true only in the sense that the browser supplies it; `swc-text-area` itself should not set `aria-multiline` explicitly. |
 | **Accessible name, description, live region, validation icon, character count** | Identical policy to [`swc-text-field`](../text-field/accessibility-migration-analysis.md#aria-roles-states-and-properties) — same `LabellingController`/single-writer rule, same "no `aria-live="assertive"` by default," same decorative validation icon. Do not create a second, parallel implementation of any of this for multiline; both components should call into the same controllers. |
-| **`pattern` has no native support on `<textarea>`** | The native `<textarea>` element does not support the `pattern` attribute or constraint at all — this is a browser/spec limitation, not a bug. 1st-gen already works around this by running a manual regex check in `checkValidity()` when `multiline` is set. 2nd-gen must keep this JS-side emulation **and** feed its result into `internals.setValidity()` (via the `FieldAssociationController`) so the form's native validity state, `:invalid` styling, and `invalid` event fire correctly — otherwise a `pattern`-constrained `swc-text-area` would silently never register as invalid through the native form-validation path. |
+| **`pattern` has no native support on `<textarea>`** | The native `<textarea>` element does not support the `pattern` attribute or constraint at all — this is a browser/spec limitation, not a bug. gen1 already works around this by running a manual regex check in `checkValidity()` when `multiline` is set. 2nd-gen must keep this JS-side emulation **and** feed its result into `internals.setValidity()` (via the `FieldAssociationController`) so the form's native validity state, `:invalid` styling, and `invalid` event fire correctly — otherwise a `pattern`-constrained `swc-text-area` would silently never register as invalid through the native form-validation path. |
 | **`grows` auto-sizing sizer** | When `grows` is set with an unset `rows`, an invisible sizer element mirrors the value purely for CSS measurement purposes. It must stay `aria-hidden="true"` and must never end up with its own accessible name or role — it exists only so the browser can compute layout, and duplicating the value into the tree a second time (even hidden) is worth double-checking on every markup change so it never accidentally becomes exposed. |
-| **No truncation handling needed** | `swc-text-field` drops its custom truncation tooltip entirely in favor of a native `title` attribute (see [that doc](../text-field/accessibility-migration-analysis.md#aria-roles-states-and-properties)); `swc-text-area` doesn't need even that. Multiline text wraps instead of clipping, so there is no truncated single line of value to reveal in the first place. 1st-gen's tooltip controller already explicitly skips setup when `multiline` is set — there is nothing to carry forward here either way. |
+| **No truncation handling needed** | `swc-text-field` drops its custom truncation tooltip entirely in favor of a native `title` attribute (see [that doc](../text-field/accessibility-migration-analysis.md#aria-roles-states-and-properties)); `swc-text-area` doesn't need even that. Multiline text wraps instead of clipping, so there is no truncated single line of value to reveal in the first place. gen1's tooltip controller already explicitly skips setup when `multiline` is set — there is nothing to carry forward here either way. |
 | **Reflow across languages** | Verify `rows`/`grows` sizing does not force an unwanted scrollbar at small row counts in CJK text ([SWC-779](https://jira.corp.adobe.com/browse/SWC-779)) and that `grows` sizing is accurate when `value` is empty or unset ([SWC-1520](https://jira.corp.adobe.com/browse/SWC-1520), [SWC-1035](https://jira.corp.adobe.com/browse/SWC-1035)) — these are functional bugs with a real [reflow (1.4.10)](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html) consequence, not purely cosmetic ones. |
 
 ### Shadow DOM and cross-root ARIA Issues
 
-**None — same resolution as [`swc-text-field`](../text-field/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues), not a parallel one.** 1st-gen has the same cross-root problem for `sp-textfield[multiline]` as for single-line: `sp-field-label` labels the field by reaching into its shadow root and mutating the inner `<textarea>`'s `aria-label` directly. 2nd-gen removes the boundary itself: the `LabellingController` renders label, required indicator, help text, and error message inside `swc-text-area`'s own shadow root via the same shared render directive `swc-text-field` uses — one implementation serving both components, not two. Label, `<textarea>`, and help-text/error container are therefore always same-root, so a real `<label for>`/`id` pair for the slotted-label case, `aria-label` for the `accessible-label`-property case, and same-root `aria-describedby`/`aria-errormessage` for help text and errors, all work without any element-reference API. The same `accessible-labelledby` property `swc-text-field` uses for grid-style row/column-header naming (via `ariaLabelledByElements`, not an IDREF string), and its symmetric `accessible-describedby` counterpart for cross-root descriptions (via `ariaDescribedByElements`), are available here too — one implementation, not two. See the linked section for the full explanation of why this is a genuine fix, not an assumption.
+**None — same resolution as [`swc-text-field`](../text-field/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues), not a parallel one.** gen1 has the same cross-root problem for `sp-textfield[multiline]` as for single-line: `sp-field-label` labels the field by reaching into its shadow root and mutating the inner `<textarea>`'s `aria-label` directly. 2nd-gen removes the boundary itself: the `LabellingController` renders label, required indicator, help text, and error message inside `swc-text-area`'s own shadow root via the same shared render directive `swc-text-field` uses — one implementation serving both components, not two. Label, `<textarea>`, and help-text/error container are therefore always same-root, so a real `<label for>`/`id` pair for the slotted-label case, `aria-label` for the `accessible-label`-property case, and same-root `aria-describedby`/`aria-errormessage` for help text and errors, all work without any element-reference API. The same `accessible-labelledby` property `swc-text-field` uses for grid-style row/column-header naming (via `ariaLabelledByElements`, not an IDREF string), and its symmetric `accessible-describedby` counterpart for cross-root descriptions (via `ariaDescribedByElements`), are available here too — one implementation, not two. See the linked section for the full explanation of why this is a genuine fix, not an assumption.
 
 ### Accessibility tree expectations
 
@@ -176,7 +176,7 @@ Component tag may change until API freeze. `swc-text-area` covers only the multi
 - [ ] No custom truncation tooltip and no native-`title` truncation treatment either — multiline wraps instead of clipping, so neither is needed.
 - [ ] `aria-multiline` is never set explicitly by component code; it stays a native, implicit mapping.
 - [ ] <kbd>Enter</kbd> inserts a newline and does not submit the form.
-- [ ] Reflow regressions from 1st-gen ([SWC-779](https://jira.corp.adobe.com/browse/SWC-779) CJK scrollbar, [SWC-1520](https://jira.corp.adobe.com/browse/SWC-1520)/[SWC-1035](https://jira.corp.adobe.com/browse/SWC-1035) inaccurate `grows`/positioning) are verified fixed, not just re-implemented as-is.
+- [ ] Reflow regressions from gen1 ([SWC-779](https://jira.corp.adobe.com/browse/SWC-779) CJK scrollbar, [SWC-1520](https://jira.corp.adobe.com/browse/SWC-1520)/[SWC-1035](https://jira.corp.adobe.com/browse/SWC-1035) inaccurate `grows`/positioning) are verified fixed, not just re-implemented as-is.
 - [ ] `readonly` and `disabled` remain distinct in the tab order.
 - [ ] Keyboard-focus vs. pointer-focus styling is differentiated, same as `swc-text-field`.
 
@@ -189,7 +189,7 @@ Component tag may change until API freeze. `swc-text-area` covers only the multi
 - [React Spectrum: TextArea](https://react-spectrum.adobe.com/TextArea)
 - [`renderPendingSpinner` (this repo)](../../../../2nd-gen/packages/core/directives/pending-spinner/src/pending-spinner.ts) — the shared-directive structural precedent `LabellingController` follows
 - [Spectrum 2: Text field](https://s2.spectrum.corp.adobe.com/page/text-field/), [Spectrum 2: Field label](https://s2.spectrum.corp.adobe.com/page/field-label/) (internal, SSO-gated — verify directly if you have access; not independently fetchable while drafting this doc)
-- 1st-gen: [`sp-textfield`](../../../../gen1/packages/textfield/README.md) (see `textarea.md` in that package for the informal 1st-gen "textarea" spec), [`sp-field-label`](../../../../gen1/packages/field-label/README.md), [`sp-help-text`](../../../../gen1/packages/help-text/README.md)
+- gen1: [`sp-textfield`](../../../../gen1/packages/textfield/README.md) (see `textarea.md` in that package for the informal gen1 "textarea" spec), [`sp-field-label`](../../../../gen1/packages/field-label/README.md), [`sp-help-text`](../../../../gen1/packages/help-text/README.md)
 - [Textfield and Textarea migration roadmap (this repo)](../textfield/rendering-and-styling-migration-analysis.md)
 - [Text field accessibility migration analysis (this repo)](../text-field/accessibility-migration-analysis.md)
 - Jira: [SWC-2323](https://jira.corp.adobe.com/browse/SWC-2323) (epic), [SWC-2324](https://jira.corp.adobe.com/browse/SWC-2324) (this research ticket), [SWC-2466](https://jira.corp.adobe.com/browse/SWC-2466) (`LabellingController`), [SWC-2467](https://jira.corp.adobe.com/browse/SWC-2467) (`FieldAssociationController`), [SWC-1888](https://jira.corp.adobe.com/browse/SWC-1888) (RFC: form field strategy for 2nd-gen migration)

@@ -73,7 +73,7 @@ jobs:
         run: yarn build
 
       - name: Generate Custom Elements Manifest
-        run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
+        run: yarn workspace @spectrum-web-components/gen1 docs:analyze
 
       - name: Analyze 2nd-gen components
         run: yarn workspace @adobe/spectrum-wc analyze
@@ -91,14 +91,14 @@ jobs:
         env:
           SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs/gen1-docs
         run: |
-          yarn workspace @spectrum-web-components/1st-gen docs:build
+          yarn workspace @spectrum-web-components/gen1 docs:build
 
       - name: Build Gen1 Storybook
         env:
           # Cross-link to this PR's gen2 preview (prod-mode build) instead of
           # the default production URL.
           SWC_GEN2_STORYBOOK_URL: https://swcpreviews.z13.web.core.windows.net/${{ steps.pr_hash.outputs.hash }}/docs/gen2-storybook-prod/
-        run: yarn workspace @spectrum-web-components/1st-gen storybook:build
+        run: yarn workspace @spectrum-web-components/gen1 storybook:build
 
       - name: Build Gen2 Storybook (dev mode)
         env:
@@ -242,10 +242,10 @@ jobs:
         uses: ./.github/actions/setup-job
 
       - name: Install Playwright Browsers
-        run: cd 1st-gen && yarn playwright install --with-deps
+        run: cd gen1 && yarn playwright install --with-deps
 
       - name: Run Playwright tests
-        run: cd 1st-gen && yarn playwright test projects/documentation/e2e/
+        run: cd gen1 && yarn playwright test projects/documentation/e2e/
         env:
           DOC_PREVIEW_URL: ${{ needs.build_and_deploy_job.outputs.first_gen_docs_url }}
           SWC_DIR: pr-${{ github.event.pull_request.number }}

@@ -16,10 +16,10 @@
  * aligning with https://react-spectrum.adobe.com/llms.txt.
  *
  * Data sources:
- *   - gen1/projects/documentation/custom-elements.json  (1st-gen APIs)
+ *   - gen1/projects/documentation/custom-elements.json  (gen1 APIs)
  *   - 2nd-gen/packages/swc/dist/custom-elements.json  (2nd-gen APIs)
- *   - gen1/packages/[name]/README.md  (1st-gen descriptions)
- *   - gen1/projects/documentation/content/*.md  (1st-gen guide pages, Eleventy frontmatter)
+ *   - gen1/packages/[name]/README.md  (gen1 descriptions)
+ *   - gen1/projects/documentation/content/*.md  (gen1 guide pages, Eleventy frontmatter)
  *   - 2nd-gen/packages/swc/.storybook/{guides,learn-about-swc}/**\/*.mdx  (2nd-gen guides)
  *
  * Output per generation:
@@ -79,7 +79,7 @@ const ROOT = join(__dirname, '..');
 /**
  * Where each generation's files land so they're served at the right URL.
  *
- * 1st-gen: content/ is Eleventy's input dir; files are passthrough-copied to
+ * gen1: content/ is Eleventy's input dir; files are passthrough-copied to
  *          _site/ then Rollup copies them into dist/, which GitHub Pages serves
  *          at https://opensource.adobe.com/spectrum-web-components/
  *
@@ -130,7 +130,7 @@ function readCem(cemPath) {
 }
 
 /**
- * Parses the first meaningful sentence from a 1st-gen README's ## Overview
+ * Parses the first meaningful sentence from a gen1 README's ## Overview
  * section to use as the component description.
  */
 function readmeDescription(packageName) {
@@ -170,7 +170,7 @@ function readmeDescription(packageName) {
 }
 
 /**
- * Derive the npm package directory name from a 1st-gen CEM module path.
+ * Derive the npm package directory name from a gen1 CEM module path.
  * Pattern: packages/[name]/src/ComponentName.js
  */
 function packageNameFromPath(modulePath) {
@@ -311,7 +311,7 @@ function parseEleventyFrontmatter(filePath) {
 }
 
 /**
- * Returns guide entries for 1st-gen from Eleventy content directory.
+ * Returns guide entries for gen1 from Eleventy content directory.
  * Each entry: { title, url, section }
  *   section 'guides'          top-level pages (getting-started, etc.)
  *   section 'developer-guides'  content/guides/ subdirectory
@@ -572,7 +572,7 @@ function generateLlmsTxt({ components, guides, gen, docsUrl, crossLink }) {
     `- [Documentation](${docsUrl}): Full docs with live examples`,
     '- [GitHub](https://github.com/adobe/spectrum-web-components): Source code and issues',
     is1st
-      ? '- [npm](https://www.npmjs.com/search?q=%40spectrum-web-components): All 1st-gen packages'
+      ? '- [npm](https://www.npmjs.com/search?q=%40spectrum-web-components): All gen1 packages'
       : '- [npm (@adobe/spectrum-wc)](https://www.npmjs.com/package/@adobe/spectrum-wc): Package',
     `- [llms-full.txt](${docsUrl}/llms-full.txt): All ${spectrumVersion} component APIs in one file`,
   ];
@@ -621,7 +621,7 @@ function generateLlmsFullTxt({ components, gen, docsUrl, now }) {
 
 /**
  * XML sitemap listing all doc URLs for this generation.
- * 1st-gen links to HTML pages; 2nd-gen links to Storybook SPA routes.
+ * gen1 links to HTML pages; 2nd-gen links to Storybook SPA routes.
  */
 function generateSitemap({ components, guides, gen, docsUrl, now }) {
   const entry = (loc, priority, changefreq) =>
@@ -640,7 +640,7 @@ function generateSitemap({ components, guides, gen, docsUrl, now }) {
   // Component pages
   for (const comp of components) {
     if (gen === 1 && comp.packageDir) {
-      // 1st-gen component docs are HTML pages at /components/[dir]/
+      // gen1 component docs are HTML pages at /components/[dir]/
       entries.push(
         entry(`${docsUrl}/components/${comp.packageDir}/`, '0.7', 'monthly')
       );
@@ -713,16 +713,16 @@ function main() {
   const firstGen = extractComponents(firstGenCem, 1);
   const secondGen = extractComponents(secondGenCem, 2);
 
-  console.log(`  1st-gen: ${firstGen.length} components`);
+  console.log(`  gen1: ${firstGen.length} components`);
   console.log(`  2nd-gen: ${secondGen.length} components`);
 
   if (firstGenCem.missing) {
     console.warn(
-      'Warning: 1st-gen CEM not found; skipping 1st-gen output. Run `yarn docs:analyze` first.'
+      'Warning: gen1 CEM not found; skipping gen1 output. Run `yarn docs:analyze` first.'
     );
   } else if (firstGen.length === 0) {
     console.error(
-      'Error: 1st-gen CEM found but yielded 0 components. The manifest may be malformed.'
+      'Error: gen1 CEM found but yielded 0 components. The manifest may be malformed.'
     );
     process.exit(1);
   }
@@ -741,7 +741,7 @@ function main() {
   console.log('Reading guide metadata...');
   const firstGenGuides = readFirstGenGuides();
   const secondGenGuides = readSecondGenGuides();
-  console.log(`  1st-gen: ${firstGenGuides.length} guides`);
+  console.log(`  gen1: ${firstGenGuides.length} guides`);
   console.log(`  2nd-gen: ${secondGenGuides.length} guides`);
 
   if (!firstGenCem.missing) {
@@ -767,7 +767,7 @@ function main() {
       outDir: SECOND_GEN_OUT,
       docsUrl: SECOND_GEN_URL,
       crossLink: {
-        label: '1st-gen llms.txt',
+        label: 'gen1 llms.txt',
         url: `${FIRST_GEN_URL}/llms.txt`,
         desc: 'Spectrum 1 (sp-*) component index',
       },

@@ -30,7 +30,7 @@ This doc is **project-management guidance** for tracking a component migration i
 
 ## TODO: Greenfield 2nd-gen contributor guide
 
-> **Planned:** A separate contributor guide for **new** 2nd-gen components **without** a 1st-gen counterpart is not written yet (Rise outlined this track). The [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md) applies only when a 1st-gen package exists or is the migration target. **Add the Jira epic or ticket link here** when it is filed.
+> **Planned:** A separate contributor guide for **new** 2nd-gen components **without** a gen1 counterpart is not written yet (Rise outlined this track). The [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md) applies only when a gen1 package exists or is the migration target. **Add the Jira epic or ticket link here** when it is filed.
 
 ---
 
@@ -54,7 +54,7 @@ Use one **Epic** per component migration and create **standard tickets** aligned
 
 - Branching: use a **dedicated feature branch** for this Epic; **tickets 1–5** merge via PR into that branch; **ticket 6** is final QA on the integrated branch, then **merge the feature branch to `main`**.
 
-- Migrate [Component] from 1st-gen to 2nd-gen following the [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md).
+- Migrate [Component] from gen1 to 2nd-gen following the [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md).
 - Scope: core base + types, SWC component, styles, a11y, tests, stories, and PR.
 - Branching: use a **dedicated feature branch** for this Epic; **tickets 1–5** merge via PR into that branch; **ticket 6** is final Q&A on the integrated branch, then **merge the feature branch to `main`**.
 - Reference: 2nd-gen Badge (`2nd-gen/packages/core/components/badge/`, `2nd-gen/packages/swc/components/badge/`).

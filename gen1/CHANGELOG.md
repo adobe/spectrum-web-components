@@ -7,14 +7,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## Patch Changes
 
-**sp-accordion**: **feat(accordion):** Add 2nd-gen `<swc-accordion>` and `<swc-accordion-item>` with Spectrum 2-oriented behavior. Key changes from 1st-gen `<sp-accordion>` / `<sp-accordion-item>`:
+**sp-accordion**: **feat(accordion):** Add 2nd-gen `<swc-accordion>` and `<swc-accordion-item>` with Spectrum 2-oriented behavior. Key changes from gen1 `<sp-accordion>` / `<sp-accordion-item>`:
 
 - Core `AccordionBase` / `AccordionItemBase` with public API: `allow-multiple`, `level`, `size`, `density`, `quiet`, host `disabled`, item `open` / `disabled`, slotted heading (`slot="label"`), optional `slot="actions"`, and cancellable `swc-accordion-item-toggle`
 - APG-aligned accessibility: `<h*>` wrapping a native header `<button>`, `aria-expanded` / `aria-controls`, `role="region"` + `aria-labelledby`, closed panels use `aria-hidden="true"` plus CSS collapse (not HTML `hidden`; supports `calc-size()` height animation), disabled items use `aria-disabled` on the header and `inert` on the panel (no roving `tabindex` or arrow-key header navigation)
 - Space on the header calls `preventDefault()` and toggles without scrolling overflow containers (SWC-1487)
 - Controlled `open` is frozen while the host or item is disabled (imperative assignment cannot expand or collapse)
 
-**chore(accordion):** Add Spectrum 2 deprecation warnings in dev mode on 1st-gen accordion for `label`, item `level`, and host `focus()`, with matching tests.
+**chore(accordion):** Add Spectrum 2 deprecation warnings in dev mode on gen1 accordion for `label`, item `level`, and host `focus()`, with matching tests.
 
 **sp-action-button**: Added `<swc-action-button>` with full Spectrum 2 visual fidelity, migrated from the Spectrum 1 `<sp-action-button>`. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-action-button--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-action-button-migration-guide--docs).
 
@@ -70,7 +70,7 @@ In build systems that alias `@spectrum-web-components/*` packages (for example U
 
 **sp-base**: Refactored size mixin exports and badge type naming for consistency.
 
-**@spectrum-web-components/base (1st-gen)**
+**@spectrum-web-components/base (gen1)**
 
 - **Added**: New exports `ELEMENT_SIZES` and `DEFAULT_ELEMENT_SIZES` for typed size arrays
 - **Deprecated**: `ElementSizes` record is now deprecated in favor of `ELEMENT_SIZES`. The export is preserved for backward compatibility but will be removed in a future major release.
@@ -87,7 +87,7 @@ In build systems that alias `@spectrum-web-components/*` packages (for example U
 
 **sp-core**: Refactored size mixin exports and badge type naming for consistency.
 
-**@spectrum-web-components/base (1st-gen)**
+**@spectrum-web-components/base (gen1)**
 
 - **Added**: New exports `ELEMENT_SIZES` and `DEFAULT_ELEMENT_SIZES` for typed size arrays
 - **Deprecated**: `ElementSizes` record is now deprecated in favor of `ELEMENT_SIZES`. The export is preserved for backward compatibility but will be removed in a future major release.
@@ -108,11 +108,11 @@ In build systems that alias `@spectrum-web-components/*` packages (for example U
 
 **sp-action-button**: - **Added**: Introduced global action button element styles in `@spectrum-web-components/styles` via `global-action-button.css`, enabling native links with `.spectrum-ActionButton*` classes to render with Spectrum action button styling.
 
-- **Documented**: Added 1st-gen action button guidance and Storybook examples for rendering native `<a>` links as static actio button-styled UI, including limitations (for example, no disabled, selected, or hold affordance support for link-based buttons).
+- **Documented**: Added gen1 action button guidance and Storybook examples for rendering native `<a>` links as static actio button-styled UI, including limitations (for example, no disabled, selected, or hold affordance support for link-based buttons).
 
 **sp-styles**: - **Added**: Introduced global action button element styles in `@spectrum-web-components/styles` via `global-action-button.css`, enabling native links with `.spectrum-ActionButton*` classes to render with Spectrum action button styling.
 
-- **Documented**: Added 1st-gen action button guidance and Storybook examples for rendering native `<a>` links as static actio button-styled UI, including limitations (for example, no disabled, selected, or hold affordance support for link-based buttons).
+- **Documented**: Added gen1 action button guidance and Storybook examples for rendering native `<a>` links as static actio button-styled UI, including limitations (for example, no disabled, selected, or hold affordance support for link-based buttons).
 
 **sp-core**: **Breaking**: `<swc-badge>` migration includes new `subtle`/`outline` styles, additional non-semantic color variants, and default behavior updates (`variant="neutral"` and reflected `size="s"` when omitted). `--mod-badge-*` hooks are removed, and `--swc-badge-*` hooks are **not** a strict 1:1 replacement surface for every previous override. See the badge consumer migration guide.
 
@@ -154,7 +154,7 @@ In build systems that alias `@spectrum-web-components/*` packages (for example U
 
 **Breaking**: `<swc-status-light>` migration removes the deprecated `disabled` attribute, removes the `accent` variant, and updates default behavior (`variant="neutral"` when omitted). `--mod-status-light-*` hooks are removed, and `--swc-status-light-*` hooks are **not** a strict 1:1 replacement for every previous override pattern. `StatusLightSize` is exported from core for typed usage. See the status light consumer migration guide.
 
-**sp-core**: **feat(tabs):** Add 2nd-gen tabs (`swc-tabs`, `swc-tab`, `swc-tab-panel`) with Spectrum 2 styling, selection indicator, and WAI-ARIA tabs keyboard behavior. A single side-effect import `@adobe/spectrum-wc/components/tabs/swc-tabs.js` registers all three elements. See `components/tabs/migration.md` for migration from 1st-gen `sp-tabs`.
+**sp-core**: **feat(tabs):** Add 2nd-gen tabs (`swc-tabs`, `swc-tab`, `swc-tab-panel`) with Spectrum 2 styling, selection indicator, and WAI-ARIA tabs keyboard behavior. A single side-effect import `@adobe/spectrum-wc/components/tabs/swc-tabs.js` registers all three elements. See `components/tabs/migration.md` for migration from gen1 `sp-tabs`.
 
 **sp-illustrated-message**: Migrated `<sp-illustrated-message>` to Spectrum 2 (2nd-gen) architecture.
 
@@ -166,11 +166,11 @@ In build systems that alias `@spectrum-web-components/*` packages (for example U
 
 **sp-button**: - **Added**: Introduced global button element styles in `@spectrum-web-components/styles` via `global-button.css` and `global-elements.css` (including public exports), enabling native links with `.spectrum-Button*` classes to render with Spectrum button styling.
 
-- **Documented**: Added 1st-gen button guidance and Storybook examples for rendering native `<a>` links as static button-styled UI, including limitations (for example, no disabled or pending support for link-based buttons).
+- **Documented**: Added gen1 button guidance and Storybook examples for rendering native `<a>` links as static button-styled UI, including limitations (for example, no disabled or pending support for link-based buttons).
 
 **sp-styles**: - **Added**: Introduced global button element styles in `@spectrum-web-components/styles` via `global-button.css` and `global-elements.css` (including public exports), enabling native links with `.spectrum-Button*` classes to render with Spectrum button styling.
 
-- **Documented**: Added 1st-gen button guidance and Storybook examples for rendering native `<a>` links as static button-styled UI, including limitations (for example, no disabled or pending support for link-based buttons).
+- **Documented**: Added gen1 button guidance and Storybook examples for rendering native `<a>` links as static button-styled UI, including limitations (for example, no disabled or pending support for link-based buttons).
 
 **sp-accordion**: **Added**: Added `level` property to `<sp-accordion-item>` to allow customization of the semantic heading level (2-6) used for accordion item titles. The property defaults to `3`, maintaining backward compatibility with existing implementations.
 
@@ -234,9 +234,9 @@ sp-switch {
 
 - **Documented**: Updated button README with deprecation notices.
 
-**sp-action-button**: Updated 1st-gen Action Button color wiring so S2 colors match spec while Spectrum 1 remains visually unchanged.
+**sp-action-button**: Updated gen1 Action Button color wiring so S2 colors match spec while Spectrum 1 remains visually unchanged.
 
-- Updated S2-only token values in `1st-gen/tools/styles/tokens-v2/system-theme-bridge.css`:
+- Updated S2-only token values in `gen1/tools/styles/tokens-v2/system-theme-bridge.css`:
   - `--system-action-button-content-color-selected` -> `var(--spectrum-gray-25)`
   - static quiet disabled backgrounds:
     - black -> `var(--spectrum-transparent-black-25)`
@@ -245,15 +245,15 @@ sp-switch {
     - `--system-action-button-static-black-content-color-{default,hover,down,focus}`
     - `--system-action-button-static-white-content-color-{default,hover,down,focus}`
 
-- Updated `1st-gen/packages/action-button/src/action-button-overrides.css` to map new S2 `--system-*` static content tokens into `--spectrum-*` action-button vars.
+- Updated `gen1/packages/action-button/src/action-button-overrides.css` to map new S2 `--system-*` static content tokens into `--spectrum-*` action-button vars.
 
-- Updated `1st-gen/packages/action-button/src/spectrum-action-button.css` static color content assignments to read from `--spectrum-actionbutton-static-*-content-color-*` with S1-safe fallbacks:
+- Updated `gen1/packages/action-button/src/spectrum-action-button.css` static color content assignments to read from `--spectrum-actionbutton-static-*-content-color-*` with S1-safe fallbacks:
   - black fallback remains `var(--spectrum-black)`
   - white fallback remains `var(--spectrum-white)`
 
-**sp-styles**: Updated 1st-gen Action Button color wiring so S2 colors match spec while Spectrum 1 remains visually unchanged.
+**sp-styles**: Updated gen1 Action Button color wiring so S2 colors match spec while Spectrum 1 remains visually unchanged.
 
-- Updated S2-only token values in `1st-gen/tools/styles/tokens-v2/system-theme-bridge.css`:
+- Updated S2-only token values in `gen1/tools/styles/tokens-v2/system-theme-bridge.css`:
   - `--system-action-button-content-color-selected` -> `var(--spectrum-gray-25)`
   - static quiet disabled backgrounds:
     - black -> `var(--spectrum-transparent-black-25)`
@@ -262,9 +262,9 @@ sp-switch {
     - `--system-action-button-static-black-content-color-{default,hover,down,focus}`
     - `--system-action-button-static-white-content-color-{default,hover,down,focus}`
 
-- Updated `1st-gen/packages/action-button/src/action-button-overrides.css` to map new S2 `--system-*` static content tokens into `--spectrum-*` action-button vars.
+- Updated `gen1/packages/action-button/src/action-button-overrides.css` to map new S2 `--system-*` static content tokens into `--spectrum-*` action-button vars.
 
-- Updated `1st-gen/packages/action-button/src/spectrum-action-button.css` static color content assignments to read from `--spectrum-actionbutton-static-*-content-color-*` with S1-safe fallbacks:
+- Updated `gen1/packages/action-button/src/spectrum-action-button.css` static color content assignments to read from `--spectrum-actionbutton-static-*-content-color-*` with S1-safe fallbacks:
   - black fallback remains `var(--spectrum-black)`
   - white fallback remains `var(--spectrum-white)`
 
@@ -374,7 +374,7 @@ The fix checks if the anchor element is already in the click event's composed pa
 
 - Added internal property `describeTrigger` (`'auto' | 'none'`, default `'auto'`). When set to `'none'`, the overlay does not set `aria-describedby` on the trigger when open (handled in `HoverController` and `LongpressController`), avoiding double announcement for screen readers when the overlay content duplicates the trigger (e.g. truncated-value tooltips). Textfield’s truncated-value tooltip uses this so the tooltip is visual-only for a11y.
 
-**sp-button**: **deprecate(button):** Mark 1st-gen `sp-button` properties and exports as deprecated ahead of 2nd-gen migration.
+**sp-button**: **deprecate(button):** Mark gen1 `sp-button` properties and exports as deprecated ahead of 2nd-gen migration.
 
 - `quiet` property: deprecated with `@deprecated` JSDoc and runtime `window.__swc.warn()`; use `treatment="outline"` instead
 - `treatment` property: deprecated with `@deprecated` JSDoc; use `fill-style` in 2nd-gen
@@ -630,7 +630,7 @@ Adds required ARIA attributes to associate the trigger button with popover conte
 
 **sp-base**: No customer-facing changes.
 
-Introduced architectural changes to support side-by-side development of 1st-gen and 2nd-gen components.
+Introduced architectural changes to support side-by-side development of gen1 and 2nd-gen components.
 
 # [1.9.1](https://github.com/adobe/spectrum-web-components/compare/v1.9.0...v1.9.1) (2025-11-05)
 

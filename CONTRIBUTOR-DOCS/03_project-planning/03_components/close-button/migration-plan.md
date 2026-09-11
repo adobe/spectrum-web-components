@@ -13,7 +13,7 @@
 
 - [TL;DR](#tldr)
     - [Most blocking open questions](#most-blocking-open-questions)
-- [1st-gen API surface](#1st-gen-api-surface)
+- [gen1 API surface](#gen1-api-surface)
     - [Properties / attributes](#properties--attributes)
     - [Methods](#methods)
     - [Events](#events)
@@ -57,8 +57,8 @@
 
 - `swc-close-button` should ship as a dedicated 2nd-gen SWC component extending `ButtonBase`, not as an extension point buried inside `swc-button`.
 - API should align with modern button conventions: `accessible-label` (consumer-facing), `static-color`, and `size` (`s|m|l|xl`).
-- 2nd-gen does not ship the 1st-gen `variant="white|black"` alias; use `static-color` only. Deprecation of `variant` is a 1st-gen (`sp-close-button`) concern.
-- Styling source of truth is Spectrum CSS `spectrum-two` `components/closebutton`; 2nd-gen should not re-expose the 1st-gen `--mod-closebutton-*` surface.
+- 2nd-gen does not ship the gen1 `variant="white|black"` alias; use `static-color` only. Deprecation of `variant` is a gen1 (`sp-close-button`) concern.
+- Styling source of truth is Spectrum CSS `spectrum-two` `components/closebutton`; 2nd-gen should not re-expose the gen1 `--mod-closebutton-*` surface.
 - Accessibility is must-ship: real inner `<button type="button">`, delegated focus, mandatory discernible name, and keyboard parity for Enter/Space.
 
 ### Most blocking open questions
@@ -67,7 +67,7 @@ None at this time. [Q1](#architecture-and-behavior) (icon scale) is resolved: no
 
 ---
 
-## 1st-gen API surface
+## gen1 API surface
 
 **Source:** [`gen1/packages/button/src/CloseButton.ts`](../../../../gen1/packages/button/src/CloseButton.ts)
 **Version:** `@spectrum-web-components/button@1.x`
@@ -79,7 +79,7 @@ None at this time. [Q1](#architecture-and-behavior) (icon scale) is resolved: no
 | --- | --- | --- | --- | --- |
 | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | no reflected default (`noDefaultSize`) | `size` | Visual default behaves as medium when omitted. |
 | `variant` | `'white' \| 'black' \| ''` | `''` | `variant` | Legacy static-color alias. |
-| `staticColor` | `'white' \| 'black' \| undefined` | `undefined` | `static-color` | Preferred static color signal in 1st-gen. |
+| `staticColor` | `'white' \| 'black' \| undefined` | `undefined` | `static-color` | Preferred static color signal in gen1. |
 | `label` | `string \| undefined` | `undefined` | `label` | Accessible name channel inherited from button base stack. |
 | `disabled` | `boolean` | `false` | `disabled` | Inherited interaction state. |
 
@@ -100,7 +100,7 @@ No close-button-specific custom events.
 
 ### CSS custom properties
 
-1st-gen styling depends on `--mod-closebutton-*` and related inherited `--mod-button-*` pass-throughs. This surface is not carried forward to 2nd-gen.
+gen1 styling depends on `--mod-closebutton-*` and related inherited `--mod-button-*` pass-throughs. This surface is not carried forward to 2nd-gen.
 
 ### Shadow DOM output (rendered HTML)
 
@@ -117,10 +117,10 @@ No close-button-specific custom events.
 
 | Package | Version | Role |
 | --- | --- | --- |
-| `@spectrum-web-components/base` | 1st-gen | Sized mixin and template base |
-| `@spectrum-web-components/button` | 1st-gen | `StyledButton`/`ButtonBase` inheritance |
-| `@spectrum-web-components/close-button` | 1st-gen | Close button CSS bundle |
-| `@spectrum-web-components/icons-ui` | 1st-gen | Cross icon set (200-500) |
+| `@spectrum-web-components/base` | gen1 | Sized mixin and template base |
+| `@spectrum-web-components/button` | gen1 | `StyledButton`/`ButtonBase` inheritance |
+| `@spectrum-web-components/close-button` | gen1 | Close button CSS bundle |
+| `@spectrum-web-components/icons-ui` | gen1 | Cross icon set (200-500) |
 
 ---
 
@@ -145,7 +145,7 @@ Prerequisite dependency:
 
 #### API and naming
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | --- | --- | --- | --- |
 | B1 | Tag rename | `<sp-close-button>` | `<swc-close-button>` | Rename markup and import path. |
 | B2 | Accessible name channel rename | `label` | `accessible-label` | Rename attribute/property and keep semantics identical. |
@@ -153,14 +153,14 @@ Prerequisite dependency:
 
 #### Styling and visuals
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | --- | --- | --- | --- |
 | B4 | Remove legacy modifier surface | `--mod-closebutton-*` overrides | Reviewed `--swc-close-button-*` only | Migrate to published 2nd-gen custom props. |
 | B5 | S2 token parity | Legacy token references and class stack | S2 token mapping from `spectrum-two` closebutton CSS | Visual diff review against S2 resources. |
 
 #### Accessibility and behavior
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | --- | --- | --- | --- |
 | B6 | Semantic button implementation | Host-level semantics from legacy stack | Real inner `<button type="button">` + delegated focus | No API change; update tests asserting internals. |
 | B7 | Required discernible name | Can rely on hidden slot or label | Must always expose accessible name (`accessible-label` or slot text) | Ensure every usage has clear name text. |
@@ -184,7 +184,7 @@ Prerequisite dependency:
 | `staticColor` | `'white' \| 'black' \| undefined` | `undefined` | `static-color` | Confirmed |
 | `accessibleLabel` | `string \| undefined` | `undefined` | `accessible-label` | Confirmed |
 | `disabled` | `boolean` | `false` | `disabled` | Confirmed |
-| — | — | — | `variant` | **Removed in 2nd-gen.** Use `static-color` only. Deprecation and alias mapping belong on 1st-gen (`sp-close-button`) until that generation is retired. |
+| — | — | — | `variant` | **Removed in 2nd-gen.** Use `static-color` only. Deprecation and alias mapping belong on gen1 (`sp-close-button`) until that generation is retired. |
 
 ### Behavioral semantics
 

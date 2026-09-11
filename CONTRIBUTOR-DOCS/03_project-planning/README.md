@@ -24,7 +24,7 @@
     - [2nd-gen Component Migration](02_workstreams/02_2nd-gen-component-migration/README.md)
     - [Accessibility Improvements](02_workstreams/03_accessibility-improvements/README.md)
     - [Component Improvements](02_workstreams/04_component-improvements/README.md)
-    - [1st-gen Spectrum 2 Enhancements](02_workstreams/05_1st-gen-spectrum-2-enhancements/README.md)
+    - [gen1 Spectrum 2 Enhancements](02_workstreams/05_gen1-spectrum-2-enhancements/README.md)
 - [Components](03_components/README.md)
     - Accordion
     - Action Button
@@ -108,7 +108,7 @@ The documentation here helps us:
 
 ## Contents
 
-- **[Objectives and Strategy](./01_objectives-and-strategy.md)** - Strategic context for the 1st-gen-to-2nd-gen transition, including our goals and approach.
+- **[Objectives and Strategy](./01_objectives-and-strategy.md)** - Strategic context for the gen1-to-2nd-gen transition, including our goals and approach.
 
 - **[Workstreams](./02_workstreams/README.md)** - Detailed information about our active workstreams, offering a workstream-centric view of cross-cutting work affecting many or all components.
 

@@ -1,6 +1,6 @@
 # 2nd-gen
 
-**This is the future.** 2nd-gen is the desired end state of Spectrum Web Components — cleaner conventions, stricter tooling, and a clear core/rendering split. When 1st-gen and 2nd-gen differ, follow 2nd-gen conventions.
+**This is the future.** 2nd-gen is the desired end state of Spectrum Web Components — cleaner conventions, stricter tooling, and a clear core/rendering split. When gen1 and 2nd-gen differ, follow 2nd-gen conventions.
 
 ## Structure
 

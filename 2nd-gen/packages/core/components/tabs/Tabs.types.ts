@@ -13,7 +13,7 @@
 /**
  * Valid orientation directions for the tabs component.
  *
- * **`vertical-right`** was supported in 1st-gen but is not part of the
+ * **`vertical-right`** was supported in gen1 but is not part of the
  * S2-aligned `swc-tabs` surface; use `direction="vertical"` instead.
  */
 export const TABS_DIRECTIONS = ['horizontal', 'vertical'] as const;

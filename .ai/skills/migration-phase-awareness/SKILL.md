@@ -5,7 +5,7 @@ description: Keeps multi-phase migration obligations in context during a session
 
 # Migration phase awareness
 
-When working on any part of a 1st-gen to 2nd-gen component migration, maintain explicit awareness of which phase is active, which phases are complete, and what obligations remain — even when the conversation drifts to other topics.
+When working on any part of a gen1 to 2nd-gen component migration, maintain explicit awareness of which phase is active, which phases are complete, and what obligations remain — even when the conversation drifts to other topics.
 
 ## When to use this skill
 

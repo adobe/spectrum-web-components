@@ -24,7 +24,7 @@ AGENT / CONTRIBUTOR QUICK START:
 
 - [TL;DR](#tldr)
   - [Most blocking open questions](#most-blocking-open-questions)
-- [1st-gen API surface](#1st-gen-api-surface)
+- [gen1 API surface](#gen1-api-surface)
   - [Properties / attributes](#properties--attributes)
   - [Methods](#methods)
   - [Events](#events)
@@ -84,7 +84,7 @@ AGENT / CONTRIBUTOR QUICK START:
 
 ---
 
-## 1st-gen API surface
+## gen1 API surface
 
 **Source:** [`gen1/packages/[component]/src/[Component].ts`](../../../../gen1/packages/[component]/src/[Component].ts)
 **Version:** `@spectrum-web-components/[component]@[component-version]`
@@ -92,38 +92,38 @@ AGENT / CONTRIBUTOR QUICK START:
 
 ### Properties / attributes
 
-<!-- Fill in 1st-gen properties / attributes -->
+<!-- Fill in gen1 properties / attributes -->
 
 | Property | Type | Default | Attribute | Notes |
 | -------- | ---- | ------- | --------- | ----- |
 
 ### Methods
 
-<!-- Fill in 1st-gen methods -->
+<!-- Fill in gen1 methods -->
 
 | Method | Signature | Notes |
 | ------ | --------- | ----- |
 
 ### Events
 
-<!-- Fill in 1st-gen events -->
+<!-- Fill in gen1 events -->
 
 ### Slots
 
-<!-- Fill in 1st-gen slots -->
+<!-- Fill in gen1 slots -->
 
 | Slot | Content | Notes |
 | ---- | ------- | ----- |
 
 ### CSS custom properties
 
-<!-- 1st-gen - very surface level overview of highlights from the associated rendering-and-styling-migration-analysis.md -->
+<!-- gen1 - very surface level overview of highlights from the associated rendering-and-styling-migration-analysis.md -->
 
 This full modifier surface will not be carried forward to 2nd-gen.
 
 ### Shadow DOM output (rendered HTML)
 
-<!-- Fill in 1st-gen HTML output, may be multiple versions -->
+<!-- Fill in gen1 HTML output, may be multiple versions -->
 
 ```html
 
@@ -133,7 +133,7 @@ This full modifier surface will not be carried forward to 2nd-gen.
 
 ## Dependencies
 
-<!-- Fill in 1st-gen dependencies -->
+<!-- Fill in gen1 dependencies -->
 
 | Package | Version | Role |
 | ------- | ------- | ---- |
@@ -190,17 +190,17 @@ Summarize must-ship aspects across the following categories.
 
 <!-- Prefer a short source note in the "What changes" or "Notes" text when a breaking change is recommended, especially for renames or deprecations. -->
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 
 #### Styling and visuals
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 
 #### Accessibility and behavior
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 
 ### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
@@ -219,7 +219,7 @@ Summarize additive aspects across the following categories.
 
 ## 2nd-gen API decisions
 
-These are derived from the 1st-gen implementation, current deprecations, the Figma `S2 / Web` [component] spec, the React S2 implementation, and the rendering roadmap. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
+These are derived from the gen1 implementation, current deprecations, the Figma `S2 / Web` [component] spec, the React S2 implementation, and the rendering roadmap. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
 
 Use lightweight confidence labels where helpful:
 
@@ -292,7 +292,7 @@ Initial expectation for [Component] is a small reviewed set.
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
+> The gen1 component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
 
 Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
 
@@ -320,7 +320,7 @@ Planned rendering shape:
 
 ### Preparation (this ticket)
 
-- [ ] 1st-gen API surface documented
+- [ ] gen1 API surface documented
 - [ ] Dependencies identified
 - [ ] Breaking changes documented
 - [ ] 2nd-gen API decisions drafted
@@ -473,7 +473,7 @@ Rules:
 ## References
 
 <!-- IMPORTANT: Use as references for compiling data and details and informing decisions for all other sections of this plan. -->
-<!-- Do not leave this section sparse. Include the analysis docs, 1st-gen implementation references, relevant design references, and any bug tickets that informed decisions. -->
+<!-- Do not leave this section sparse. Include the analysis docs, gen1 implementation references, relevant design references, and any bug tickets that informed decisions. -->
 
 - [Washing machine workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [2nd-gen migration status table](../../02_workstreams/02_2nd-gen-component-migration/01_status.md)
@@ -481,10 +481,10 @@ Rules:
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
-- [1st-gen source](../../../../gen1/packages/[component]/src/[Component].ts)
-- [1st-gen shared base / mixins](../../../../gen1/packages/[component]/src/) — include only if the component has shared base or mixin files
-- [1st-gen tests](../../../../gen1/packages/[component]/test/[component].test.ts) — include only if a test file exists
-- [1st-gen README](../../../../gen1/packages/[component]/README.md) — include only if a README exists
+- [gen1 source](../../../../gen1/packages/[component]/src/[Component].ts)
+- [gen1 shared base / mixins](../../../../gen1/packages/[component]/src/) — include only if the component has shared base or mixin files
+- [gen1 tests](../../../../gen1/packages/[component]/test/[component].test.ts) — include only if a test file exists
+- [gen1 README](../../../../gen1/packages/[component]/README.md) — include only if a README exists
 - [React Spectrum S2 [Component]](https://react-spectrum.adobe.com/[Component]) — confirm the URL slug matches the actual React Spectrum docs page
 - [Spectrum CSS — `spectrum-two` branch](https://github.com/adobe/spectrum-css/tree/spectrum-two) — S2 styling source of truth for the component. Replace this generic repo link with the explicit component source you reviewed when possible, typically `spectrum-css/components/[component]/index.css` from a sibling checkout on **`spectrum-two`** (not `/dist`). See the [Setup](#setup) checklist.
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)

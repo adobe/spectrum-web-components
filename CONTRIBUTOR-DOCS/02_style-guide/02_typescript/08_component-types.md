@@ -81,7 +81,7 @@ Use the component name in `UPPER_SNAKE_CASE` with underscores separating words:
 
 Do not merge multi-word names (e.g., `STATUSLIGHT_`). Consistent underscore separators make constants greppable and predictable.
 
-**Renaming existing merged prefixes:** If a component's types file in core already uses a merged prefix (e.g., `STATUSLIGHT_`), rename the constants to the underscore-separated form (`STATUS_LIGHT_`) in core. Since 1st-gen does not import from core, this is a safe rename with no cross-generation impact.
+**Renaming existing merged prefixes:** If a component's types file in core already uses a merged prefix (e.g., `STATUSLIGHT_`), rename the constants to the underscore-separated form (`STATUS_LIGHT_`) in core. Since gen1 does not import from core, this is a safe rename with no cross-generation impact.
 
 ### Type names
 
@@ -102,7 +102,7 @@ Use the component name in `PascalCase` matching the class name:
 | Canonical | `BADGE_VARIANTS_COLOR` | Values supported in 2nd-gen |
 | Canonical | `BadgeVariant` | Type for 2nd-gen consumers |
 
-> **Note:** S1-only constants and types (`_S1` suffix) are no longer needed in core. If you encounter them in existing files, they can be removed. 1st-gen manages its own values independently.
+> **Note:** S1-only constants and types (`_S1` suffix) are no longer needed in core. If you encounter them in existing files, they can be removed. gen1 manages its own values independently.
 
 ## File structure
 
@@ -116,7 +116,7 @@ Organize the file in this order:
 4. **Canonical constants** — composed arrays that spread from base arrays (e.g., `BADGE_VARIANTS`)
 5. **Types** — types derived from the const arrays (e.g., `BadgeSize`, `BadgeColorVariant`, `BadgeVariant`)
 
-> **Note:** S1-only constants and types are no longer needed in core. Since 1st-gen does not import from core, you only need to define the canonical S2 values here. If you encounter existing S1 sections in types files, they can be removed.
+> **Note:** S1-only constants and types are no longer needed in core. Since gen1 does not import from core, you only need to define the canonical S2 values here. If you encounter existing S1 sections in types files, they can be removed.
 
 ### Section separators
 
@@ -128,7 +128,7 @@ Use the same ASCII separator pattern as base and SWC classes:
 // ──────────────────
 
 // ──────────────────────────────────────────
-//     S1-ONLY (remove with 1st-gen)
+//     S1-ONLY (remove with gen1)
 // ──────────────────────────────────────────
 
 // ──────────────────
@@ -140,7 +140,7 @@ Use the same ASCII separator pattern as base and SWC classes:
 // ──────────────────
 ```
 
-The `S1-ONLY (remove with 1st-gen)` label makes removal mechanical — delete everything between that separator and the next.
+The `S1-ONLY (remove with gen1)` label makes removal mechanical — delete everything between that separator and the next.
 
 ## Constant patterns
 
@@ -204,7 +204,7 @@ export const BADGE_VARIANTS_COLOR = [
     'silver',
 ] as const;
 
-// ── S1-ONLY (remove with 1st-gen) ──
+// ── S1-ONLY (remove with gen1) ──
 
 // S1 subset — satisfies ensures all values exist in the canonical set
 export const BADGE_VARIANTS_COLOR_S1 = [
@@ -291,8 +291,8 @@ Group types at the bottom of the file in this order:
 2. **S1-only types** — mark with an inline comment for removal
 
     ```typescript
-    export type BadgeColorVariantS1 = (typeof BADGE_VARIANTS_COLOR_S1)[number]; // @todo remove with 1st-gen
-    export type BadgeVariantS1 = (typeof BADGE_VARIANTS_S1)[number]; // @todo remove with 1st-gen
+    export type BadgeColorVariantS1 = (typeof BADGE_VARIANTS_COLOR_S1)[number]; // @todo remove with gen1
+    export type BadgeVariantS1 = (typeof BADGE_VARIANTS_S1)[number]; // @todo remove with gen1
     ```
 
 3. **Canonical types** — the clean, unsuffixed names that 2nd-gen consumers use
@@ -325,7 +325,7 @@ This means:
 
 ### Removing S1
 
-When 1st-gen is retired, the removal process for each types file is:
+When gen1 is retired, the removal process for each types file is:
 
 1. Delete the `S1-ONLY` section (constants and types)
 2. Delete the `S1-ONLY` section separator
@@ -345,7 +345,7 @@ A complete types file for a component with sized variants and an S1/S2 color spl
  */
 
 /*
- * @todo The S1 types can be removed once we are no longer maintaining 1st-gen.
+ * @todo The S1 types can be removed once we are no longer maintaining gen1.
  */
 
 import type { ElementSize } from '@adobe/spectrum-wc-core/mixins/index.js';
@@ -379,7 +379,7 @@ export const COMPONENT_VARIANTS_COLOR = [
 ] as const;
 
 // ──────────────────────────────────────────
-//     S1-ONLY (remove with 1st-gen)
+//     S1-ONLY (remove with gen1)
 // ──────────────────────────────────────────
 
 export const COMPONENT_VARIANTS_COLOR_S1 = [
@@ -411,9 +411,9 @@ export type ComponentSize = (typeof COMPONENT_VALID_SIZES)[number];
 export type ComponentSemanticVariant = (typeof COMPONENT_VARIANTS_SEMANTIC)[number];
 export type ComponentColorVariant = (typeof COMPONENT_VARIANTS_COLOR)[number];
 
-// S1-only (remove with 1st-gen)
-export type ComponentColorVariantS1 = (typeof COMPONENT_VARIANTS_COLOR_S1)[number]; // @todo remove with 1st-gen
-export type ComponentVariantS1 = (typeof COMPONENT_VARIANTS_S1)[number]; // @todo remove with 1st-gen
+// S1-only (remove with gen1)
+export type ComponentColorVariantS1 = (typeof COMPONENT_VARIANTS_COLOR_S1)[number]; // @todo remove with gen1
+export type ComponentVariantS1 = (typeof COMPONENT_VARIANTS_S1)[number]; // @todo remove with gen1
 
 // Canonical
 export type ComponentVariant = (typeof COMPONENT_VARIANTS)[number];
@@ -485,7 +485,7 @@ export const BADGE_VARIANTS_COLOR_S1 = [...] as const;
 export const BADGE_VARIANTS_SEMANTIC = [...] as const;
 export const BADGE_VARIANTS_COLOR = [...] as const;
 
-// ── S1-ONLY (remove with 1st-gen) ──
+// ── S1-ONLY (remove with gen1) ──
 export const BADGE_VARIANTS_COLOR_S1 = [...] as const satisfies readonly BadgeColorVariant[];
 ```
 
@@ -516,8 +516,8 @@ Use this when creating or reviewing a types file:
 - [ ] Canonical composed arrays do not spread from S1 arrays
 - [ ] S1 arrays spread only from shared constants or are self-contained
 - [ ] Sections are separated with ASCII separators (shared, S1-only, canonical, types)
-- [ ] S1-only section is labeled `(remove with 1st-gen)`
-- [ ] S1-only types have an inline `// @todo remove with 1st-gen` comment
+- [ ] S1-only section is labeled `(remove with gen1)`
+- [ ] S1-only types have an inline `// @todo remove with gen1` comment
 - [ ] Types are derived via `(typeof CONSTANT)[number]` indexed access
 - [ ] No union types combining S1 and S2 (canonical type is sufficient)
 - [ ] `@todo` comment at top of file references S1 removal

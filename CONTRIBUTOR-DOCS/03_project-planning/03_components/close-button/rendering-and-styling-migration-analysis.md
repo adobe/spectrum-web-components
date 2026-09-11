@@ -49,7 +49,7 @@ Primary token groups used by Spectrum CSS:
 
 ### SWC
 
-**Current 1st-gen implementation source:** `gen1/packages/button/src/CloseButton.ts`
+**Current gen1 implementation source:** `gen1/packages/button/src/CloseButton.ts`
 
 Current behavior and structure:
 
@@ -63,12 +63,12 @@ Current behavior and structure:
 
 ### DOM structure changes
 
-| Area | 1st-gen | 2nd-gen target |
+| Area | gen1 | 2nd-gen target |
 | --- | --- | --- |
 | Host tag | `<sp-close-button>` | `<swc-close-button>` |
 | Interactive element | Host-level button-like behavior via `ButtonBase` | Real inner `<button type="button">` with delegated focus |
 | Labeling | `label` + hidden slot text | `accessible-label` + optional hidden/slot text fallback |
-| Visual class root | 1st-gen button/close-button class stack | `swc-CloseButton` class contract mapped to S2 selectors |
+| Visual class root | gen1 button/close-button class stack | `swc-CloseButton` class contract mapped to S2 selectors |
 
 ### CSS => SWC mapping
 

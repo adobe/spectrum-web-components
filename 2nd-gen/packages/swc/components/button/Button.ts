@@ -107,7 +107,7 @@ export class Button extends PendingMixin(ButtonBase) {
 
   /**
    * Whether overflowing text is truncated with an ellipsis rather than
-   * wrapping. Replaces the legacy `no-wrap` attribute from 1st-gen.
+   * wrapping. Replaces the legacy `no-wrap` attribute from gen1.
    */
   @property({ type: Boolean, reflect: true })
   public truncate: boolean = false;

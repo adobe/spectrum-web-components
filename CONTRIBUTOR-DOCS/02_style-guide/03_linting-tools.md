@@ -26,7 +26,7 @@
     - [Troubleshooting IDE issues](#troubleshooting-ide-issues)
 - [Generation-specific notes](#generation-specific-notes)
     - [2nd-gen](#2nd-gen)
-    - [1st-gen](#1st-gen)
+    - [gen1](#gen1)
 - [Common rules and conventions](#common-rules-and-conventions)
     - [Copyright headers](#copyright-headers)
     - [Import sorting](#import-sorting)
@@ -98,7 +98,7 @@ Pre-commit hooks via `lint-staged` run linting and formatting on staged files au
 | Command                | Description                               |
 | ---------------------- | ----------------------------------------- |
 | `yarn lint`            | Check all (ESLint, Stylelint, Prettier)   |
-| `yarn lint:1st-gen`    | Check all on 1st-gen only                 |
+| `yarn lint:gen1`    | Check all on gen1 only                 |
 | `yarn lint:2nd-gen`    | Check all on 2nd-gen only                 |
 | `yarn lint:eslint`     | Check JavaScript/TypeScript only          |
 | `yarn lint:styles`     | Check CSS only                            |
@@ -150,7 +150,7 @@ LINT_PATH=gen1/packages/checkbox yarn format:styles
 
 For generation-wide linting without a path, you can also use:
 
-- `yarn lint:1st-gen` — Runs all linters on `1st-gen` only
+- `yarn lint:gen1` — Runs all linters on `gen1` only
 - `yarn lint:2nd-gen` — Runs all linters on `2nd-gen` only
 
 ### Pre-commit hooks
@@ -196,9 +196,9 @@ If linting isn't working in your IDE:
 - Accessibility linting via `eslint-plugin-lit-a11y` with targeted allow-lists
 - Stylelint enforces design tokens via `stylelint-declaration-strict-value`
 
-### 1st-gen
+### gen1
 
-- Uses root `eslint.config.js` with 1st-gen specific overrides for legacy patterns
+- Uses root `eslint.config.js` with gen1 specific overrides for legacy patterns
 - Import sorting via `simple-import-sort` (migrated from `sort-imports`)
 - Accessibility linting via `eslint-plugin-lit-a11y` with allow-list for click events on specific components
 - Stylelint uses root config (no token enforcement)

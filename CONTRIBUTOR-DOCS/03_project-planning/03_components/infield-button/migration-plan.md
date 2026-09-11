@@ -13,7 +13,7 @@
 
 - [TL;DR](#tldr)
     - [Most blocking open questions](#most-blocking-open-questions)
-- [1st-gen API surface](#1st-gen-api-surface)
+- [gen1 API surface](#gen1-api-surface)
     - [Properties / attributes](#properties--attributes)
     - [Methods](#methods)
     - [Events](#events)
@@ -55,7 +55,7 @@
 > **Epic SWC-2105** · Planning output. Must be reviewed before implementation begins.
 >
 > This plan is **provisionally complete**. The materially blocking design and CSS inputs are resolved; remaining open items are architecture/scope decisions for team review (see **Most blocking open questions** below).
-> The API, breaking-change table, sequencing, accessibility decisions, and visual matrix are based on confirmed source material (1st-gen source, both analysis docs, ButtonBase 2nd-gen, number-field analysis, Figma S2 spec). The `spectrum-css` `spectrum-two` CSS baseline for Phase 5 has been confirmed (Q2 resolved).
+> The API, breaking-change table, sequencing, accessibility decisions, and visual matrix are based on confirmed source material (gen1 source, both analysis docs, ButtonBase 2nd-gen, number-field analysis, Figma S2 spec). The `spectrum-css` `spectrum-two` CSS baseline for Phase 5 has been confirmed (Q2 resolved).
 
 ---
 
@@ -64,7 +64,7 @@
 `swc-infield-button` is a compact, always-icon-only field-chrome button. It extends 2nd-gen `ButtonBase` with one visual variant (`quiet`) and four sizes. There is no React Spectrum counterpart; Figma and `spectrum-css` (`spectrum-two` branch) are the design sources.
 
 - **6 confirmed breaking changes:** (B1) remove `block`, (B2) remove `inline`, (B3) rename `label` → `accessible-label`, (B4) remove link API (`href`, `target`, `download`, `rel`, `referrerpolicy`), (B5) remove `--mod-infield-button-*` CSS custom properties, and (B6) icon content moves from the default slot to the named `icon` slot.
-- **The `block`/`inline` removal is the largest consumer-facing breaking change.** 1st-gen consumers who composed stacked stepper buttons using `block="start"/"end"` must rework their layouts. S2 uses a consistent corner radius and delegates layout responsibility to the parent field host.
+- **The `block`/`inline` removal is the largest consumer-facing breaking change.** gen1 consumers who composed stacked stepper buttons using `block="start"/"end"` must rework their layouts. S2 uses a consistent corner radius and delegates layout responsibility to the parent field host.
 - **Sequencing dependency:** `swc-infield-button` must complete before `swc-number-field` migration, since the number-field S2 HTML explicitly uses `swc-infield-button` for its stepper controls.
 - **Scope decision (component existence) surfaced for team review:** The ticket notes ask whether this component is needed and whether it intersects with Clear/Close button. Recommendation is to **keep `swc-infield-button` as a standalone component** (see Q4 in Architecture and behavior).
 - **Design, CSS, and sequencing resolved:** the Figma S2 spec (Q1), `spectrum-two` CSS baseline (Q2), migration ordering (Q3), and clear-button scope boundary (Q5) are all confirmed. One architecture decision remains open.
@@ -75,7 +75,7 @@
 
 ---
 
-## 1st-gen API surface
+## gen1 API surface
 
 **Source:** [`gen1/packages/infield-button/src/InfieldButton.ts`](../../../../gen1/packages/infield-button/src/InfieldButton.ts)
 **Version:** `@spectrum-web-components/infield-button@1.12.1`
@@ -94,13 +94,13 @@
 | `active` | `boolean` | `false` | `active` | Inherited from `ButtonBase`. Renders pressed/active visual state. |
 | `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | `type` | Button type. Inherited from `ButtonBase`. |
 | `tabIndex` | `number` | `0` | — | Inherited from `ButtonBase`. |
-| `href` | `string \| undefined` | undefined | `href` | Link href. Inherited via `LikeAnchor` mixin in 1st-gen `ButtonBase`. **Removed in 2nd-gen (B4).** |
+| `href` | `string \| undefined` | undefined | `href` | Link href. Inherited via `LikeAnchor` mixin in gen1 `ButtonBase`. **Removed in 2nd-gen (B4).** |
 | `target` | `string \| undefined` | undefined | `target` | Link target. **Removed in 2nd-gen (B4).** |
 | `download` | `string \| undefined` | undefined | `download` | Link download. **Removed in 2nd-gen (B4).** |
 | `rel` | `string \| undefined` | undefined | `rel` | Link rel. **Removed in 2nd-gen (B4).** |
 | `referrerpolicy` | `string \| undefined` | undefined | `referrerpolicy` | Referrer policy for link. **Removed in 2nd-gen (B4).** |
 
-> **Note on `pending`:** 1st-gen `ButtonBase` (via `PendingMixin`) may expose `pending` and `pending-label` on the public site's API listing for `sp-infield-button`. Do **not** carry `pending` forward on `swc-infield-button`. When the parent field is pending, the parent host disables slotted in-field buttons and owns busy UI and announcements. See [Accessibility semantics notes (2nd-gen)](#accessibility-semantics-notes-2nd-gen).
+> **Note on `pending`:** gen1 `ButtonBase` (via `PendingMixin`) may expose `pending` and `pending-label` on the public site's API listing for `sp-infield-button`. Do **not** carry `pending` forward on `swc-infield-button`. When the parent field is pending, the parent host disables slotted in-field buttons and owns busy UI and announcements. See [Accessibility semantics notes (2nd-gen)](#accessibility-semantics-notes-2nd-gen).
 
 ### Methods
 
@@ -118,11 +118,11 @@
 
 | Slot | Content | Notes |
 | ---- | ------- | ----- |
-| (default) | Icon or content | In 1st-gen, icons are placed in the default slot (no named `icon` slot). Wrapped by `<div class="fill">` in shadow DOM. |
+| (default) | Icon or content | In gen1, icons are placed in the default slot (no named `icon` slot). Wrapped by `<div class="fill">` in shadow DOM. |
 
 ### CSS custom properties
 
-The full 1st-gen `--mod-infield-button-*` modifier surface (17 properties) is documented in the [rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md). Key highlights:
+The full gen1 `--mod-infield-button-*` modifier surface (17 properties) is documented in the [rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md). Key highlights:
 
 - Background color, border, icon color, height, width, fill padding, and border-radius modifiers
 - Seven stacked-layout modifiers (border radius resets, inner padding) that are removed in S2 along with `block`/`inline`
@@ -132,7 +132,7 @@ This full modifier surface will not be carried forward to 2nd-gen.
 ### Shadow DOM output (rendered HTML)
 
 ```html
-<!-- 1st-gen shadow DOM -->
+<!-- gen1 shadow DOM -->
 <button class="spectrum-InfieldButton">
   <div class="fill">
     <slot></slot>
@@ -147,7 +147,7 @@ This full modifier surface will not be carried forward to 2nd-gen.
 | Package | Version | Role |
 | ------- | ------- | ---- |
 | `@spectrum-web-components/base` | workspace | `CSSResultArray`, `html`, `SizedMixin`, `TemplateResult`, `property` decorator |
-| `@spectrum-web-components/button` | workspace | `ButtonBase` (1st-gen) — extended as `SizedMixin(ButtonBase, { noDefaultSize: true, validSizes: ['s', 'm', 'l', 'xl'] })` |
+| `@spectrum-web-components/button` | workspace | `ButtonBase` (gen1) — extended as `SizedMixin(ButtonBase, { noDefaultSize: true, validSizes: ['s', 'm', 'l', 'xl'] })` |
 
 **2nd-gen dependency:**
 
@@ -199,32 +199,32 @@ The ordering recommendation (infield-button before number-field) is derived from
 
 #### API and naming
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B1** | Remove `block` attribute | `block="start"/"end"` adjusted corner radius and border for stacked stepper pairs | Removed. S2 uses consistent corner radius. | Remove `block` attribute from all `sp-infield-button` usages. |
 | **B2** | Remove `inline` attribute | `inline="start"/"end"` adjusted corner radius and edge attachment for horizontal inline groups | Removed. Same reason as B1. The parent field host owns inline-group layout (it renders the `.swc-InfieldButton-inline` wrapper). | Remove `inline` attribute. Ensure the parent field host wraps the in-field buttons in the `.swc-InfieldButton-inline` container (or equivalent CSS context). |
 | **B3** | Rename `label` → `accessible-label` | `label` attribute maps to `aria-label` on inner `<button>` | `accessible-label` attribute maps to `aria-label` on inner `<button>`, via `ButtonBase`'s `accessibleLabel` property | Replace `label="…"` with `accessible-label="…"` on each `sp-infield-button`. **Required; dev warning fires if omitted.** |
-| **B4** | Remove link API (`href`, `target`, `download`, `rel`, `referrerpolicy`) | Inherited from 1st-gen `ButtonBase` via `LikeAnchor` mixin | Not implemented. `swc-infield-button` is always `type="button"`. 2nd-gen `ButtonBase` does not expose link attributes. | Remove any `href`-based usage of `sp-infield-button`. Use `<a>` or `swc-button` with an `href` when navigation is needed in a field context (uncommon). |
+| **B4** | Remove link API (`href`, `target`, `download`, `rel`, `referrerpolicy`) | Inherited from gen1 `ButtonBase` via `LikeAnchor` mixin | Not implemented. `swc-infield-button` is always `type="button"`. 2nd-gen `ButtonBase` does not expose link attributes. | Remove any `href`-based usage of `sp-infield-button`. Use `<a>` or `swc-button` with an `href` when navigation is needed in a field context (uncommon). |
 | **B5** | Remove `--mod-infield-button-*` CSS custom properties | 17 modifier properties supported | None of the `--mod-infield-button-*` properties are carried forward. `--swc-infield-button-*` properties may be introduced selectively (see A1). | Consumers overriding infield-button styling via `--mod-infield-button-*` must switch to `--swc-infield-button-*` equivalents when available. 2nd-gen styling relies on design tokens directly rather than the `--mod-*` override surface. |
 | **B6** | Icons move from default slot → `icon` slot | `<sp-infield-button label="…"><sp-icon-add></sp-icon-add></sp-infield-button>` (icon in default slot) | Icon must be in the named `icon` slot to trigger `ButtonBase`'s `hasIcon` detection and the `accessible-label` dev warning | Slot the icon element with `slot="icon"`: `<swc-infield-button accessible-label="…"><swc-icon slot="icon"><svg>…</svg></swc-icon></swc-infield-button>`. See PR [#6415](https://github.com/adobe/spectrum-web-components/pull/6415) for the `<swc-icon>` SVG-slot pattern. |
 
-> **Note on B1/B2:** These are the largest consumer-facing breaking changes. 1st-gen consumers who composed `sp-number-field` stepper buttons with `block="start"/"end"` or composed inline groups with `inline="start"/"end"` must restructure their parent field layouts. The migration guide (deferred to Phase 7) must include a worked example showing the equivalent 2nd-gen composition pattern using the parent field's CSS and DOM structure.
+> **Note on B1/B2:** These are the largest consumer-facing breaking changes. gen1 consumers who composed `sp-number-field` stepper buttons with `block="start"/"end"` or composed inline groups with `inline="start"/"end"` must restructure their parent field layouts. The migration guide (deferred to Phase 7) must include a worked example showing the equivalent 2nd-gen composition pattern using the parent field's CSS and DOM structure.
 
 #### Styling and visuals
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **S1** | CSS custom properties (see B5 in API table above) | `--mod-infield-button-*` | `--swc-infield-button-*` (limited set; see A1) | Same as B5 in API table |
 | **S2** | Stacked-border tokens removed | `--mod-infield-button-stacked-*` tokens handled inner border radius resets for stacked pairs | Removed entirely; S2 uses a consistent corner radius on each button | No consumer action needed if `block`/`inline` are removed per B1/B2 |
-| **S3** | Focus state ownership moves entirely to parent field | 1st-gen: each `sp-infield-button` manages its own `:focus-visible` ring | 2nd-gen: infield buttons are not independently focusable and not in the tab order. The inner `<button>` sets `outline: none`. The parent field owns both the visible focus ring and all keyboard behavior. There is no standalone usage scenario. | Verify with field-level stories that the parent field's focus ring is visible and meets WCAG 2.4.7. |
+| **S3** | Focus state ownership moves entirely to parent field | gen1: each `sp-infield-button` manages its own `:focus-visible` ring | 2nd-gen: infield buttons are not independently focusable and not in the tab order. The inner `<button>` sets `outline: none`. The parent field owns both the visible focus ring and all keyboard behavior. There is no standalone usage scenario. | Verify with field-level stories that the parent field's focus ring is visible and meets WCAG 2.4.7. |
 
 #### Accessibility and behavior
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **A11Y-1** | `role="presentation"` removed from inner `<button>` | Some S2 CSS samples and the rendering diff show `role="presentation"` on the inner `<button>` | 2nd-gen keeps native `button` role on the focus target via `ButtonBase` + `delegatesFocus`. `role="presentation"` is explicitly disallowed on the activatable element. | No consumer action; internal implementation concern. |
 | **A11Y-2** | `accessible-label` required for icon-only | `label` was used but enforcement was loose | `ButtonBase` fires a dev-mode warning when `hasIcon && !hasLabel && !accessibleLabel`. Consumers must set `accessible-label`. | Add `accessible-label` to every `swc-infield-button`. |
-| **A11Y-3** | `pending` removed from this component | `pending` may be listed in 1st-gen API surface from `PendingMixin` inheritance | `swc-infield-button` does not expose `pending`. When the parent field is pending, the parent host disables slotted in-field buttons. | Do not use `pending` on `swc-infield-button`. Move busy/pending state to the parent field host. |
+| **A11Y-3** | `pending` removed from this component | `pending` may be listed in gen1 API surface from `PendingMixin` inheritance | `swc-infield-button` does not expose `pending`. When the parent field is pending, the parent host disables slotted in-field buttons. | Do not use `pending` on `swc-infield-button`. Move busy/pending state to the parent field host. |
 
 ### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
 
@@ -239,7 +239,7 @@ The ordering recommendation (infield-button before number-field) is derived from
 
 ## 2nd-gen API decisions
 
-These are derived from the 1st-gen implementation, both analysis docs, the 2nd-gen `ButtonBase`, and the number-field rendering analysis. Confirmed items are based on multiple sources; provisional items require Figma or spectrum-two CSS confirmation.
+These are derived from the gen1 implementation, both analysis docs, the 2nd-gen `ButtonBase`, and the number-field rendering analysis. Confirmed items are based on multiple sources; provisional items require Figma or spectrum-two CSS confirmation.
 
 Use lightweight confidence labels: **Confirmed**, **Inferred**, **Open question**.
 
@@ -249,7 +249,7 @@ Use lightweight confidence labels: **Confirmed**, **Inferred**, **Open question*
 
 | Property | Type | Default | Attribute | Confidence | Notes |
 | -------- | ---- | ------- | --------- | ---------- | ----- |
-| `quiet` | `boolean` | `false` | `quiet` | **Confirmed** | Visual variant only; no role or name change. From 1st-gen; preserved in S2 spec. |
+| `quiet` | `boolean` | `false` | `quiet` | **Confirmed** | Visual variant only; no role or name change. From gen1; preserved in S2 spec. |
 | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | none | `size` | **Confirmed** | `noDefaultSize: true` preserved; parent field host must provide size. |
 | `disabled` | `boolean` | `false` | `disabled` | **Confirmed** | From `ButtonBase`. Both self-disabled and parent-driven `disabled` must work. |
 | `accessibleLabel` | `string \| undefined` | undefined | `accessible-label` | **Confirmed** | From 2nd-gen `ButtonBase`. Required for icon-only. Dev warning fires when `hasIcon && !hasLabel && !accessibleLabel`. |
@@ -267,13 +267,13 @@ Use lightweight confidence labels: **Confirmed**, **Inferred**, **Open question*
 | Mode | Supported | Source |
 | ---- | --------- | ------ |
 | Default (filled background, subtle border) | Yes | Figma S2 spec, rendering analysis |
-| Quiet (transparent background, no visible border at rest) | Yes | Figma S2 spec, 1st-gen, rendering analysis |
+| Quiet (transparent background, no visible border at rest) | Yes | Figma S2 spec, gen1, rendering analysis |
 | Disabled (default variant) | Yes | Figma S2 spec, ButtonBase, a11y analysis |
 | Disabled (quiet variant) | Yes | Rendering analysis CSS selectors |
 | Hover | Yes | Rendering analysis (CSS selectors) |
 | Active / pressed | Yes | Rendering analysis |
 | Focus-visible (parent field owns the ring; inner `<button>` sets `outline: none`; button is not independently focusable) | Yes | a11y analysis + S2 CSS (`:focus-visible { outline: none }`); focus chrome shown at the parent field |
-| Sizes: S, M, L, XL | Yes | Figma S2 spec, 1st-gen `validSizes`, rendering analysis |
+| Sizes: S, M, L, XL | Yes | Figma S2 spec, gen1 `validSizes`, rendering analysis |
 
 **Icon affordances (consumer-supplied via the `icon` slot, not component variants).** Figma documents four icon shapes for in-field buttons; these are the icons consumers slot in, not properties on the component:
 
@@ -287,13 +287,13 @@ Use lightweight confidence labels: **Confirmed**, **Inferred**, **Open question*
 Additional presentation modes **not supported in 2nd-gen:**
 - Stacked position variant (`block="start"/"end"`) — removed; consistent corner radius in S2
 - Inline position variant (`inline="start"/"end"`) — removed; the parent field host owns inline-group layout (it renders the `.swc-InfieldButton-inline` wrapper around the slotted buttons), not `swc-infield-button` itself
-- Static color (`static-color="white"/"black"`) — **not present** in Figma S2 spec; confirmed absent (not in 1st-gen; no field-chrome use case for static color). PR #6410 explored adding `staticColor` to `ButtonBase`, but the close-button PR reverted that decision specifically because infield-button and clear-button do not use static colors. No exclusion needed.
+- Static color (`static-color="white"/"black"`) — **not present** in Figma S2 spec; confirmed absent (not in gen1; no field-chrome use case for static color). PR #6410 explored adding `staticColor` to `ButtonBase`, but the close-button PR reverted that decision specifically because infield-button and clear-button do not use static colors. No exclusion needed.
 
 #### Slots (2nd-gen)
 
 | Slot | Content | Notes |
 | ---- | ------- | ----- |
-| `icon` | Icon element | **Confirmed.** Named `icon` slot (from `ButtonBase`). `ObserveSlotPresence` in `ButtonBase` monitors `[slot="icon"]` for icon presence. The `swc-icon` component sets `aria-hidden="true"` on itself; no manual attribute needed on the slotted element. **Breaking change from 1st-gen default slot (B6).** |
+| `icon` | Icon element | **Confirmed.** Named `icon` slot (from `ButtonBase`). `ObserveSlotPresence` in `ButtonBase` monitors `[slot="icon"]` for icon presence. The `swc-icon` component sets `aria-hidden="true"` on itself; no manual attribute needed on the slotted element. **Breaking change from gen1 default slot (B6).** |
 | (default) | Optional visible label text | **Inferred.** Unlikely to contain content in typical use — `swc-infield-button` is always icon-only in practice. Defined in the concrete component's template (not by `ButtonBase`, which has no render method). `ObserveSlotText` in `ButtonBase` monitors the default slot text to set `hasLabel`. |
 
 #### CSS custom properties (2nd-gen)
@@ -345,7 +345,7 @@ Full details are in the [accessibility migration analysis](./accessibility-migra
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
+> The gen1 component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
 
 Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
 
@@ -390,7 +390,7 @@ html`
 
 ### Preparation (this ticket)
 
-- [x] 1st-gen API surface documented
+- [x] gen1 API surface documented
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] 2nd-gen API decisions drafted
@@ -547,7 +547,7 @@ html`
 | # | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
 | **Q2** | **spectrum-css `spectrum-two` branch CSS baseline confirmed.** `components/infieldbutton/index.css` read directly from GitHub API (`spectrum-two` branch, SHA `a1e54ec`). Confirmed: `.spectrum-InfieldButton--top` / `--bottom` stacked classes **absent**. S2 token structure present (`--spectrum-component-height-*`, `--spectrum-in-field-button-*`, `--spectrum-corner-radius-small-size-*`). No `:lang(ja/ko/zh)` selectors. Forced-colors block present for both default and quiet variants. Styling checklist updated accordingly. | No | **Resolved** | — |
-| **Q6** | **`noDefaultSize: true` inheritance from 1st-gen.** Confirmed in 1st-gen source. Verified that 2nd-gen `BUTTON_VALID_SIZES` in `Button.types.ts` is `['s', 'm', 'l', 'xl']`, which already matches the infield-button size set, so `validSizes` does **not** need overriding. `InfieldButton.base.ts` only needs to re-apply `SizedMixin(ButtonBase, { noDefaultSize: true })`; no `INFIELD_BUTTON_VALID_SIZES` constant is required. | No — low risk | **Resolved** | — |
+| **Q6** | **`noDefaultSize: true` inheritance from gen1.** Confirmed in gen1 source. Verified that 2nd-gen `BUTTON_VALID_SIZES` in `Button.types.ts` is `['s', 'm', 'l', 'xl']`, which already matches the infield-button size set, so `validSizes` does **not** need overriding. `InfieldButton.base.ts` only needs to re-apply `SizedMixin(ButtonBase, { noDefaultSize: true })`; no `INFIELD_BUTTON_VALID_SIZES` constant is required. | No — low risk | **Resolved** | — |
 
 ---
 
@@ -559,9 +559,9 @@ html`
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
-- [1st-gen source — `InfieldButton.ts`](../../../../gen1/packages/infield-button/src/InfieldButton.ts)
-- [1st-gen tests](../../../../gen1/packages/infield-button/test/infield-button.test.ts)
-- [1st-gen README](../../../../gen1/packages/infield-button/README.md)
+- [gen1 source — `InfieldButton.ts`](../../../../gen1/packages/infield-button/src/InfieldButton.ts)
+- [gen1 tests](../../../../gen1/packages/infield-button/test/infield-button.test.ts)
+- [gen1 README](../../../../gen1/packages/infield-button/README.md)
 - [2nd-gen `ButtonBase`](../../../../2nd-gen/packages/core/components/button/Button.base.ts)
 - [Button migration plan](../button/migration-plan.md)
 - [Button accessibility migration analysis](../button/accessibility-migration-analysis.md)

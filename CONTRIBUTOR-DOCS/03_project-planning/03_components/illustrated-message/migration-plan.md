@@ -12,7 +12,7 @@
 <summary><strong>In this doc</strong></summary>
 
 - [Table of contents](#table-of-contents)
-- [1st-gen API surface](#1st-gen-api-surface)
+- [gen1 API surface](#gen1-api-surface)
     - [Properties / attributes](#properties--attributes)
     - [Methods](#methods)
     - [Events](#events)
@@ -50,7 +50,7 @@
 
 ## Table of contents
 
-- [1st-gen API surface](#1st-gen-api-surface)
+- [gen1 API surface](#gen1-api-surface)
 - [Dependencies](#dependencies)
 - [Changes overview](#changes-overview)
 - [2nd-gen API decisions](#2nd-gen-api-decisions)
@@ -61,7 +61,7 @@
 
 ---
 
-## 1st-gen API surface
+## gen1 API surface
 
 **Source:** [`gen1/packages/illustrated-message/src/IllustratedMessage.ts`](../../../../gen1/packages/illustrated-message/src/IllustratedMessage.ts)
 **Version:** `@spectrum-web-components/illustrated-message@1.11.2`
@@ -92,7 +92,7 @@ None dispatched.
 
 ### CSS custom properties
 
-The 1st-gen component imports `spectrum-illustratedmessage.css` (Spectrum 1 tokens) and `illustratedmessage-overrides.css`. The overrides file uses `--mod-*` and `--spectrum-*` chains internally but these were never documented or intended as public consumer API.
+The gen1 component imports `spectrum-illustratedmessage.css` (Spectrum 1 tokens) and `illustratedmessage-overrides.css`. The overrides file uses `--mod-*` and `--spectrum-*` chains internally but these were never documented or intended as public consumer API.
 
 ### Shadow DOM output (rendered HTML)
 
@@ -112,7 +112,7 @@ The 1st-gen component imports `spectrum-illustratedmessage.css` (Spectrum 1 toke
 
 | Package | Version | Role |
 |---|---|---|
-| `@spectrum-web-components/base` | `1.11.2` | `SpectrumElement`, `html`, `property` decorator — 1st-gen internal package only |
+| `@spectrum-web-components/base` | `1.11.2` | `SpectrumElement`, `html`, `property` decorator — gen1 internal package only |
 | `@spectrum-web-components/styles` | `1.11.2` | `bodyStyles`, `headingStyles` (applied via `static get styles()`). Note: 2nd-gen has typography classes but whether they will be importable in the same way is TBD — tracked in SWC-1545. |
 
 No mixins, no shared utilities, no other SWC components composed inside. No dependency on `@adobe/spectrum-wc-core` (2nd-gen).
@@ -128,7 +128,7 @@ No mixins, no shared utilities, no other SWC components composed inside. No depe
 
 ### Must ship — breaking or a11y-required
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 |---|---|---|---|---|
 | **B1** | Heading slot content type | Accepts any node inside `<h2>` | Accepts `<span>` only; shadow DOM owns the heading tag | Consumers slotting plain text or `<span>` are unaffected. Consumers who slotted `<h2>`–`<h6>` (incorrect but possible) must switch to `<span>`. Ships now — deferring would cause font property inheritance side-effects and a second migration event. |
 | **B2** | CSS token migration (S1 → S2) | Uses `--spectrum-*` base tokens with `--mod-*` override chains (e.g. `var(--mod-illustrated-message-title-color, var(--spectrum-illustrated-message-title-color))`). Forced-colors override applied on `:host`. | `--mod-*` and `--spectrum-*` chains removed; collapsed into `--swc-*` (exposed) or `--_swc-*` (private) properties per [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure). Forced colors moved to internal `.swc-IllustratedMessage` selector. | Since no `--mod-*` properties were ever documented as public API, there is no consumer breakage. Any new `--swc-*` properties introduced are additive capability. |
@@ -175,7 +175,7 @@ No `--mod-*` properties will be exposed. New `--swc-*` component-level propertie
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
+> The gen1 component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
 
 Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
 
@@ -190,7 +190,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 ### Preparation (this ticket)
 
-- [x] 1st-gen API surface documented
+- [x] gen1 API surface documented
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] 2nd-gen API decisions drafted
@@ -206,7 +206,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 ### API
 
 - [ ] `IllustratedMessage.types.ts`: `ILLUSTRATED_MESSAGE_VALID_SIZES`, `ILLUSTRATED_MESSAGE_VALID_HEADING_LEVELS`, derived types
-- [ ] `IllustratedMessage.base.ts`: abstract base class built from 1st-gen as reference; `headingLevel`, `size`, `orientation`, `heading`, `description` properties; `getHeadingLevel()` clamping helper; `window.__swc?.DEBUG` warnings for invalid `heading-level` and heading-slot content type; new S2 properties go directly in base with correct names (no old-name forwarding)
+- [ ] `IllustratedMessage.base.ts`: abstract base class built from gen1 as reference; `headingLevel`, `size`, `orientation`, `heading`, `description` properties; `getHeadingLevel()` clamping helper; `window.__swc?.DEBUG` warnings for invalid `heading-level` and heading-slot content type; new S2 properties go directly in base with correct names (no old-name forwarding)
 - [ ] `IllustratedMessage.ts` (SWC): extends base, static `VALID_SIZES`, S2 rendering
 
 ### Styling
@@ -273,8 +273,8 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
-- [1st-gen source](../../../../gen1/packages/illustrated-message/src/IllustratedMessage.ts)
-- [1st-gen tests](../../../../gen1/packages/illustrated-message/test/illustrated-message.test.ts)
+- [gen1 source](../../../../gen1/packages/illustrated-message/src/IllustratedMessage.ts)
+- [gen1 tests](../../../../gen1/packages/illustrated-message/test/illustrated-message.test.ts)
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - [spectrum-css migration PR #3246](https://github.com/adobe/spectrum-css/pull/3246)
 - SWC-1834 (this ticket), SWC-1466 (accordion heading level — analogous precedent), SWC-1545 (typography classes)

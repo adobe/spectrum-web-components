@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/reactive-controllers",
   "repository": {
-    "directory": "1st-gen/tools/reactive-controllers",
+    "directory": "gen1/tools/reactive-controllers",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

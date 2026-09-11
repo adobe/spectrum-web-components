@@ -28,7 +28,7 @@ The work for this milestone is being done on the `barebones` branch and includes
 - Moving virtually all previous repository contents into a new `gen1/` folder
 - Creating the `2nd-gen/` folder structure with both the Core library and the 2nd-gen SWC library
 - Migrating 5 simple components to the new multi-generation architecture
-- Verifying that all existing 1st-gen tests still pass
-- Confirming that 1st-gen releases continue to work as expected
+- Verifying that all existing gen1 tests still pass
+- Confirming that gen1 releases continue to work as expected
 
 The milestone will be considered complete when the `barebones` branch is merged into `main`, validating that the strategy is viable before scaling the approach to all components.

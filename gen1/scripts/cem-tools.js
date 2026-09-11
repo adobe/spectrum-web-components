@@ -74,16 +74,16 @@ export function getWorkspacePackages(
     .filter(
       (pkg) =>
         !ignoredPackages.includes(pkg.name) &&
-        pkg.name !== '@spectrum-web-components/1st-gen' &&
+        pkg.name !== '@spectrum-web-components/gen1' &&
         pkg.name !== '@spectrum-web-components/2nd-gen' &&
-        // Only include packages in 1st-gen packages/ and tools/ directories
-        (pkg.location.startsWith('1st-gen/packages/') ||
-          pkg.location.startsWith('1st-gen/tools/'))
+        // Only include packages in gen1 packages/ and tools/ directories
+        (pkg.location.startsWith('gen1/packages/') ||
+          pkg.location.startsWith('gen1/tools/'))
     )
     .map((pkg) => ({
       name: pkg.name,
-      // Remove '1st-gen/' prefix since rootDir is already set to 1st-gen
-      path: pkg.location.replace(/^1st-gen\//, ''),
+      // Remove 'gen1/' prefix since rootDir is already set to gen1
+      path: pkg.location.replace(/^gen1\//, ''),
     }));
 }
 

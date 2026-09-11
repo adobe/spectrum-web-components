@@ -24,7 +24,7 @@
     - [Shadow DOM and cross-root ARIA issues](#shadow-dom-and-cross-root-aria-issues)
     - [Accessibility tree expectations](#accessibility-tree-expectations)
     - [Keyboard and focus](#keyboard-and-focus)
-- [Known 1st-gen issues](#known-1st-gen-issues)
+- [Known gen1 issues](#known-gen1-issues)
 - [Testing](#testing)
     - [Automated tests](#automated-tests)
 - [Summary checklist](#summary-checklist)
@@ -58,7 +58,7 @@ Do not use `h1` for the illustrated message title. `h1` is for the primary page 
 - `heading-level` property (attribute `heading-level`): integers `2`–`6`, default `2`. The shadow tree renders exactly one `<h2>` … `<h6>` matching that value. Values outside `2`–`6` (including `1`) must be clamped or coerced to `2`–`6` (for example `1` → `2`), or rejected in types with a documented default—pick one policy and document it in Storybook.
 - `heading` slot: accepts a `span` only (or equivalent documented phrasing: a single `span` wrapper as the slotted node). Do not allow slotted `<h1>`–`<h6>`; authors must not put heading elements in light DOM for this slot. Implementation may validate in dev and warn or ignore invalid slotted tags.
 
-This differs from putting a real heading in the slot (as in accordion item titles) and from 1st-gen, which always wraps the slot in `<h2>` with no level control. Accordion still allows `level` `1`–`6` on the parent ([SWC-1466](https://jira.corp.adobe.com/browse/SWC-1466), [PR #5969](https://github.com/adobe/spectrum-web-components/pull/5969)); illustrated message uses `heading-level` `2`–`6` only (no `h1`).
+This differs from putting a real heading in the slot (as in accordion item titles) and from gen1, which always wraps the slot in `<h2>` with no level control. Accordion still allows `level` `1`–`6` on the parent ([SWC-1466](https://jira.corp.adobe.com/browse/SWC-1466), [PR #5969](https://github.com/adobe/spectrum-web-components/pull/5969)); illustrated message uses `heading-level` `2`–`6` only (no `h1`).
 
 Documentation and Storybook must tell authors to set `heading-level` from document outline, not from visual preference alone.
 
@@ -122,7 +122,7 @@ Typical open state
 
 ---
 
-## Known 1st-gen issues
+## Known gen1 issues
 
 - `sp-illustrated-message` always wraps the heading slot in `<h2 id="heading">` ([`IllustratedMessage.ts`](https://github.com/adobe/spectrum-web-components/blob/main/gen1/packages/illustrated-message/src/IllustratedMessage.ts)) with no `heading-level` API—authors cannot match outline when the block should be `h3`–`h6`.
 - The slot accepts any node; slotted heading elements would nest incorrectly inside `<h2>`. 2nd-gen fixes this by owning the heading tag and restricting the slot to `span` only.
@@ -145,7 +145,7 @@ Typical open state
 
 - [ ] API documented: `heading-level` `2`–`6` (default `2`); `heading` slot span-only; shadow DOM owns `<h2>`–`<h6>`; no `<h1>`.
 - [ ] Storybook examples vary `heading-level` by context (not always `2`).
-- [ ] 1st-gen fixed `h2` called out as migration motivation; link SWC-1466 / accordion for “configurable level” precedent only (different slot rules).
+- [ ] gen1 fixed `h2` called out as migration motivation; link SWC-1466 / accordion for “configurable level” precedent only (different slot rules).
 - [ ] Decorative vs meaningful illustration documented for SVG slot.
 - [ ] `button-group` slot meets button label requirements.
 

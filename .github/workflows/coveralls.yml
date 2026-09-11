@@ -13,7 +13,7 @@ permissions:
   pull-requests: read
 
 jobs:
-  # Detect whether the change touches 1st-gen sources. The 1st-gen coverage report
+  # Detect whether the change touches gen1 sources. The gen1 coverage report
   # only runs when files under gen1/ change; 2nd-gen-only and root-level/shared
   # changes skip it (skipped jobs report success in branch-protection checks).
   detect-changes:
@@ -24,7 +24,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Detect 1st-gen-relevant changes
+      - name: Detect gen1-relevant changes
         id: filter
         uses: step-security/changed-files@v46
         with:
@@ -47,10 +47,10 @@ jobs:
         uses: ./.github/actions/setup-job
 
       - name: Install Playwright
-        run: cd 1st-gen && yarn playwright install --with-deps
+        run: cd gen1 && yarn playwright install --with-deps
 
       - name: Run unit tests with coverage
-        run: cd 1st-gen && yarn test:ci --config web-test-runner.config.ci-chromium.js --group unit --coverage
+        run: cd gen1 && yarn test:ci --config web-test-runner.config.ci-chromium.js --group unit --coverage
         continue-on-error: true
 
       - name: Upload coverage to Coveralls

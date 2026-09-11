@@ -34,7 +34,7 @@
     - [getActiveElement()](#getactiveelement)
     - [focusableSelector and tabbableSelector](#focusableselector-and-tabbableselector)
     - [isFocusVisibleInTree()](#isfocusvisibleintree)
-- [Migration from 1st-gen](#migration-from-1st-gen)
+- [Migration from gen1](#migration-from-gen1)
     - [Replacing Focusable base class](#replacing-focusable-base-class)
     - [Replacing focusElement getter](#replacing-focuselement-getter)
     - [Replacing FocusGroupController](#replacing-focusgroupcontroller)
@@ -47,7 +47,7 @@
 
 ## Overview
 
-2nd-gen Spectrum Web Components use three composable, opt-in primitives for focus management instead of the 1st-gen `Focusable` base class inheritance chain. Each component picks only what it needs:
+2nd-gen Spectrum Web Components use three composable, opt-in primitives for focus management instead of the gen1 `Focusable` base class inheritance chain. Each component picks only what it needs:
 
 ```
 SpectrumElement (base, no focus logic)
@@ -515,7 +515,7 @@ const first = container.querySelector(focusableSelector);
 const tabbable = [...container.querySelectorAll(tabbableSelector)];
 ```
 
-These use standard HTML focusability rules only. The 1st-gen `[focusable]` attribute selector is not included — native `delegatesFocus` replaces that workaround.
+These use standard HTML focusability rules only. The gen1 `[focusable]` attribute selector is not included — native `delegatesFocus` replaces that workaround.
 
 ### isFocusVisibleInTree()
 
@@ -537,12 +537,12 @@ Previously this was a `hasVisibleFocusInTree()` method on `SpectrumElement`. It 
 
 ---
 
-## Migration from 1st-gen
+## Migration from gen1
 
 ### Replacing Focusable base class
 
 ```typescript
-// 1st-gen
+// gen1
 import { Focusable } from '@spectrum-web-components/shared';
 
 class SpTextfield extends Focusable {
@@ -564,14 +564,14 @@ class SpTextfield extends DisabledMixin(SpectrumElement) {
 }
 ```
 
-> **⚠️ `aria-disabled` does not block click events.** Unlike the native `disabled` attribute used in 1st-gen's `Focusable`, `DisabledMixin` uses `aria-disabled` which leaves the element interactive at the DOM level. Every interaction handler must explicitly guard with `if (this.disabled) return;`. This is the most common migration mistake — in 1st-gen, the native `disabled` attribute on inner elements blocked clicks automatically; in 2nd-gen, you must guard them yourself.
+> **⚠️ `aria-disabled` does not block click events.** Unlike the native `disabled` attribute used in gen1's `Focusable`, `DisabledMixin` uses `aria-disabled` which leaves the element interactive at the DOM level. Every interaction handler must explicitly guard with `if (this.disabled) return;`. This is the most common migration mistake — in gen1, the native `disabled` attribute on inner elements blocked clicks automatically; in 2nd-gen, you must guard them yourself.
 
 ### Replacing focusElement getter
 
 The `focusElement` getter is no longer needed. `delegatesFocus: true` automatically delegates to the first focusable child. Make sure the focus target is first in the template:
 
 ```typescript
-// 1st-gen: explicit focusElement
+// gen1: explicit focusElement
 get focusElement() {
   return this.shadowRoot.querySelector('#inner-input');
 }
@@ -587,10 +587,10 @@ override render() {
 
 ### Replacing FocusGroupController
 
-`FocusGroupController` and `RovingTabindexController` no longer exist as separate classes. Their logic is consolidated into `FocusgroupNavigationController`, which is aligned with the Open UI `focusgroup` attribute. If you were using either controller in 1st-gen, switch to `FocusgroupNavigationController`:
+`FocusGroupController` and `RovingTabindexController` no longer exist as separate classes. Their logic is consolidated into `FocusgroupNavigationController`, which is aligned with the Open UI `focusgroup` attribute. If you were using either controller in gen1, switch to `FocusgroupNavigationController`:
 
 ```typescript
-// 1st-gen
+// gen1
 import { FocusGroupController } from '@spectrum-web-components/reactive-controllers';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers';
 
@@ -598,7 +598,7 @@ import { RovingTabindexController } from '@spectrum-web-components/reactive-cont
 import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers';
 ```
 
-Key API differences from 1st-gen:
+Key API differences from gen1:
 - `elements` → `getItems` (function returning `HTMLElement[]`)
 - `elementEnterAction` / `focusInIndex` → `onActiveItemChange` callback
 - `isFocusableElement` → `skipDisabled` option (checks `disabled` + `aria-disabled`)

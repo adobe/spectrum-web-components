@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/components/icons-ui",
   "repository": {
-    "directory": "1st-gen/packages/icons-ui",
+    "directory": "gen1/packages/icons-ui",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

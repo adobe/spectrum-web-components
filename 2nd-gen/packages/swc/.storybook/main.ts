@@ -154,7 +154,7 @@ const STORIES_BY_MODE: Record<StorybookMode, StorybookConfig['stories']> = {
     ...VRT_STORIES,
   ],
   // Production build: same as dev, minus internal-only stories/docs, core
-  // controllers, contributor docs (both can pull in 1st-gen-linked
+  // controllers, contributor docs (both can pull in gen1-linked
   // dependencies production doesn't need), and .test.ts fixtures.
   build: [
     { ...COMPONENT_STORIES, files: '**/!(*.internal).stories.ts' },
@@ -232,14 +232,14 @@ const config: StorybookConfig = {
   staticDirs: ['../public', { from: '../coverage', to: '/coverage' }],
   addons,
   experimental_indexers: [testStoryIndexer, vrtStoryIndexer],
-  // Cross-link to the 1st-gen Storybook. Omitted from the minimal ci-a11y test
+  // Cross-link to the gen1 Storybook. Omitted from the minimal ci-a11y test
   // build. Defaults to production; CI overrides this to the matching PR-preview
   // URL when building a per-PR preview.
   refs:
     storybookMode === 'ci-a11y'
       ? {}
       : {
-          '1st-gen': {
+          'gen1': {
             title: 'SWC Gen1',
             url:
               process.env.SWC_GEN1_STORYBOOK_URL ||

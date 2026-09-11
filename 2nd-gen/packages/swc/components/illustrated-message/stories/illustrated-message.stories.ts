@@ -51,9 +51,9 @@ argTypes.orientation = {
  * to match the document outline. The component validates the slot content in
  * development but does not control the heading level.
  *
- * ### Migration from 1st-gen
+ * ### Migration from gen1
  *
- * The `heading` and `description` plain-text attributes from 1st-gen
+ * The `heading` and `description` plain-text attributes from gen1
  * (`sp-illustrated-message`) have been removed. All content must be provided
  * via slots.
  */

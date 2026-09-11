@@ -100,7 +100,7 @@ export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
 
   protected override update(changes: PropertyValues): void {
     const constructor = this.constructor as typeof StatusLightBase;
-    // @ts-expect-error -- intentional runtime guard: 1st-gen consumers may pass 'accent'
+    // @ts-expect-error -- intentional runtime guard: gen1 consumers may pass 'accent'
     if (this.variant === 'accent') {
       warnIf(
         this,

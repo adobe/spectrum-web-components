@@ -18,7 +18,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: `<swc-status-light>`](#recommendations-swc-status-light)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -70,9 +70,9 @@ This doc explains how **`swc-status-light`** should work for **accessibility**. 
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
-| Jira | Summary (short) | Typical 1st-gen / scope | Notes |
+| Jira | Summary (short) | Typical gen1 / scope | Notes |
 |------|-----------------|-------------------------|--------|
 
 None of the rows above target **`sp-status-light` / `swc-status-light`** specifically. Add a row when you file or find a Jira issue for this component.

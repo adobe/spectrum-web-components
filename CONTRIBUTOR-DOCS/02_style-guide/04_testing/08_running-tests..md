@@ -28,7 +28,7 @@
 | Run tests in UI mode | `yarn workspace @adobe/swc test:ui` | Interactive Vitest UI for debugging |
 | Run tests in visible browser | `yarn workspace @adobe/swc test:browser` | Browser window for live debugging |
 | Run tests with coverage | `yarn workspace @adobe/swc test:coverage` | Generates V8 coverage report |
-| Run all a11y tests | `yarn test:a11y` | Both 1st-gen and 2nd-gen |
+| Run all a11y tests | `yarn test:a11y` | Both gen1 and 2nd-gen |
 | Run 2nd-gen a11y tests | `yarn test:a11y:2nd` | 2nd-gen only |
 | Run a11y tests with UI | `yarn test:a11y:ui` | Interactive Playwright UI |
 | Update ARIA snapshots | `yarn test:a11y <component> --update-snapshots` | After intentional a11y tree changes |

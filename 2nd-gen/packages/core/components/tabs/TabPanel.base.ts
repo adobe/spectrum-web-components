@@ -24,7 +24,7 @@ let panelIdCounter = 0;
  * focus-in/out behavior that prevents Tab-key trapping inside panel
  * content.
  *
- * In 1st-gen, `slot="tab-panel"` was
+ * In gen1, `slot="tab-panel"` was
  * assigned programmatically in `firstUpdated` so consumers never
  * wrote it in markup. This behavior is preserved in 2nd-gen.
  *

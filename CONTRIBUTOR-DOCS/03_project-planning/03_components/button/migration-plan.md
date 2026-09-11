@@ -13,7 +13,7 @@
 
 - [TL;DR](#tldr)
     - [Most blocking open questions](#most-blocking-open-questions)
-- [1st-gen API surface](#1st-gen-api-surface)
+- [gen1 API surface](#gen1-api-surface)
     - [Properties / attributes](#properties--attributes)
     - [Methods](#methods)
     - [Events](#events)
@@ -71,7 +71,7 @@ None currently.
 
 ---
 
-## 1st-gen API surface
+## gen1 API surface
 
 **Source:** [`gen1/packages/button/src/Button.ts`](../../../../gen1/packages/button/src/Button.ts)
 **Version:** `@spectrum-web-components/button@1.11.2`
@@ -88,7 +88,7 @@ None currently.
 | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | no explicit default from `SizedMixin` | `size` | `Button` uses `SizedMixin(..., { noDefaultSize: true })`; CSS treats missing size as medium styling. |
 | `pending` | `boolean` | `false` | `pending` | Disables interaction and swaps accessible label to pending text while active. |
 | `pendingLabel` | `string` | `'Pending'` | `pending-label` | Temporary accessible name used during pending state. |
-| `noWrap` | `boolean` | `false` | `no-wrap` | 1st-gen off-spec escape hatch to disable wrapping; candidate for rename in 2nd-gen. |
+| `noWrap` | `boolean` | `false` | `no-wrap` | gen1 off-spec escape hatch to disable wrapping; candidate for rename in 2nd-gen. |
 | `active` | `boolean` | `false` | `active` | Reflected pressed-state flag used during keyboard interaction. |
 | `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | `type` | Submit/reset is proxied through a temporary native `<button>`. |
 | `disabled` | `boolean` | `false` | `disabled` | Inherited from `Focusable`; manages tabindex and `aria-disabled`. |
@@ -121,7 +121,7 @@ No custom events. Consumers rely on native `click`.
 
 ### CSS custom properties
 
-The 1st-gen implementation exposes a large legacy customization surface through imported [`button-base.css`](../../../../gen1/packages/button/src/button-base.css), [`spectrum-button.css`](../../../../gen1/packages/button/src/spectrum-button.css), and [`button-overrides.css`](../../../../gen1/packages/button/src/button-overrides.css). In practice this includes:
+The gen1 implementation exposes a large legacy customization surface through imported [`button-base.css`](../../../../gen1/packages/button/src/button-base.css), [`spectrum-button.css`](../../../../gen1/packages/button/src/spectrum-button.css), and [`button-overrides.css`](../../../../gen1/packages/button/src/button-overrides.css). In practice this includes:
 
 - Many `--mod-button-*` variables for sizing, spacing, color, border, and focus ring
 - Legacy `--spectrum-button-*` token fallback chains
@@ -185,28 +185,28 @@ This full modifier surface will not be carried forward to 2nd-gen.
 
 #### API and naming
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 |---|---|---|---|---|
 | **B1** | Remove link API from `sp-button` | `href` and related anchor attrs turn the host into a link-like control, but this mode is already deprecated in docs and runtime warnings. | `sp-button` is button-only. Navigation uses native `<a>` with global button styles, not `sp-button`. | Replace `<sp-button href="...">` with native `<a class="swc-Button ...">` or equivalent global-element styling. |
-| **B2** | Align visual API names to the confirmed Design source of truth and React terminology | 1st-gen uses `primary`, `secondary`, `accent`, `negative`, deprecated color aliases, `quiet`, and `treatment`. | 2nd-gen visual API should use `primary`, `secondary`, `accent`, and `negative`, plus static white/black combinations where shown, and prefer React-aligned `fillStyle` terminology instead of `treatment`. | Migrate deprecated `variant` values to canonical `variant` + `static-color` + `fill-style` combinations. |
-| **B3** | Collapse legacy host-managed semantics into native internal control | 1st-gen host manages `role`, `tabindex`, keyboard handling, click proxying, and submit/reset proxy behavior itself. | 2nd-gen should prefer a real internal `<button>` for semantics and keyboard behavior, with host API mapping onto that internal control. | Consumer markup usually stays the same, but any shadow DOM poking or role/tabindex assertions must be updated. |
+| **B2** | Align visual API names to the confirmed Design source of truth and React terminology | gen1 uses `primary`, `secondary`, `accent`, `negative`, deprecated color aliases, `quiet`, and `treatment`. | 2nd-gen visual API should use `primary`, `secondary`, `accent`, and `negative`, plus static white/black combinations where shown, and prefer React-aligned `fillStyle` terminology instead of `treatment`. | Migrate deprecated `variant` values to canonical `variant` + `static-color` + `fill-style` combinations. |
+| **B3** | Collapse legacy host-managed semantics into native internal control | gen1 host manages `role`, `tabindex`, keyboard handling, click proxying, and submit/reset proxy behavior itself. | 2nd-gen should prefer a real internal `<button>` for semantics and keyboard behavior, with host API mapping onto that internal control. | Consumer markup usually stays the same, but any shadow DOM poking or role/tabindex assertions must be updated. |
 | **B4** | Remove `--mod-*` customization surface | Consumers can override many colors, sizes, and spacings through legacy modifier chains. | 2nd-gen exposes only reviewed `--swc-*` component-level properties, if any. | Migrate custom styling to supported `--swc-*` properties or wrapper-level CSS. |
 
 #### Styling and visuals
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 |---|---|---|---|---|
-| **B5** | Restrict treatment/style combinations to those present in Design/Figma | 1st-gen exposes outline and static combinations broadly, and `quiet` can alias to outline on any variant. | 2nd-gen should only ship the confirmed combinations: fill + outline for `primary` and `secondary`; fill-only for `accent` and `negative`; static white/black only for the primary/secondary families shown in Design/Figma. | Audit any unsupported combinations and migrate them to the nearest supported equivalent. |
+| **B5** | Restrict treatment/style combinations to those present in Design/Figma | gen1 exposes outline and static combinations broadly, and `quiet` can alias to outline on any variant. | 2nd-gen should only ship the confirmed combinations: fill + outline for `primary` and `secondary`; fill-only for `accent` and `negative`; static white/black only for the primary/secondary families shown in Design/Figma. | Audit any unsupported combinations and migrate them to the nearest supported equivalent. |
 | **B6** | Resolve static white outline contrast bug (`SWC-1139`) | The static white outline variant can be shown over backgrounds where hover-state contrast between white text/border and the background is insufficient. | When rendering the static white outline button in 2nd-gen docs/stories/examples, it must be paired with a background color that preserves required contrast on hover. The migration should treat this as a must-ship a11y/visual correctness requirement, not an optional docs polish item. | Update examples, stories, and visual regression fixtures so static white outline is only demonstrated on approved backgrounds. |
 
 #### Accessibility and behavior
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 |---|---|---|---|---|
 | **B7** | Resolve pending-state accessibility bug (`SWC-459`) | Pending currently blocks activation, but the accessibility contract is incomplete: assistive tech is not clearly told the control is unavailable, the default pending label is too generic (`"Pending"`), and high-contrast presentation does not fully communicate the disabled/unavailable state. | Pending in 2nd-gen must expose unavailable state to assistive tech, use a more descriptive default accessible label than bare `"Pending"`, and render with disabled high-contrast styling because the control cannot be activated while pending. | Consumers using custom `pending-label` values may need to update wording to the new recommended pattern. |
 | **B8** | Preserve host `visibility` behavior on the label (`SWC-701`) | The button label can manage its own visibility in a way that breaks host-level `visibility: hidden`, leaving label text visible when the host is hidden. | In 2nd-gen, the label must inherit visibility from the host, or avoid setting its visibility separately, so host-level hiding hides the entire control consistently. | Consumers relying on `visibility: hidden` at the host level should see the bug resolved without markup changes. |
 | **B9** | Replace box-shadow focus ring with outline for truncated buttons (`SWC-886`) | Truncated buttons need `overflow: hidden`, which can clip a box-shadow-based focus ring. | 2nd-gen focus indication must use `outline` / `outline-offset` so focus remains visible even when truncation requires clipped overflow. | No consumer markup change expected; visual/focus behavior improves automatically. |
-| **B10** | Defer form-associated `submit` / `reset` behavior from the initial 2nd-gen Button scope | 1st-gen proxies `submit` / `reset` through a temporary light-DOM native `<button>`. | Initial 2nd-gen Button scope should default to button semantics only while form-associated behavior is deferred pending an ElementInternals/tooling recommendation. | Consumers needing `submit` / `reset` should continue using native buttons/global styles or stay on 1st-gen behavior until the follow-up lands. |
+| **B10** | Defer form-associated `submit` / `reset` behavior from the initial 2nd-gen Button scope | gen1 proxies `submit` / `reset` through a temporary light-DOM native `<button>`. | Initial 2nd-gen Button scope should default to button semantics only while form-associated behavior is deferred pending an ElementInternals/tooling recommendation. | Consumers needing `submit` / `reset` should continue using native buttons/global styles or stay on gen1 behavior until the follow-up lands. |
 
 ### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
 
@@ -218,13 +218,13 @@ This full modifier surface will not be carried forward to 2nd-gen.
 | **A4** | Future support for form-associated `submit` / `reset` | Deferred to `SWC-2034` until the ElementInternals/tooling path is settled. |
 | **A5** | Host `focus` / `blur` compatibility parity | Deferred to `SWC-2035`; initial 2nd-gen Button will document `click` plus bubbling `focusin` / `focusout` as the supported host-listener contract. |
 | **A6** | React Spectrum-only `genai` and `premium` variants | Deferred to `SWC-2036` because they are not part of the approved baseline Button scope in this plan. |
-| **A7** | `justified` — full-width layout mode | Not present in 1st-gen. Added in 2nd-gen based on a post-planning S2 Design update. Requires the container to allow stretching. |
+| **A7** | `justified` — full-width layout mode | Not present in gen1. Added in 2nd-gen based on a post-planning S2 Design update. Requires the container to allow stretching. |
 
 ---
 
 ## 2nd-gen API decisions
 
-These are derived from the 1st-gen implementation, current deprecations, the Figma Desktop button spec, and the rendering roadmap. For visual API, Figma is the source of truth. Confirmed items are marked; deferred follow-up work is tracked in [Blockers and open questions](#blockers-and-open-questions).
+These are derived from the gen1 implementation, current deprecations, the Figma Desktop button spec, and the rendering roadmap. For visual API, Figma is the source of truth. Confirmed items are marked; deferred follow-up work is tracked in [Blockers and open questions](#blockers-and-open-questions).
 
 **Scope note:** this plan is for `sp-button` only. `sp-clear-button` and `sp-close-button` live in the same package today, but they are intentionally out of scope for this migration plan and should not block the core `sp-button` migration.
 
@@ -240,13 +240,13 @@ These are derived from the 1st-gen implementation, current deprecations, the Fig
 | `staticColor` | `'white' \| 'black' \| undefined` | `undefined` | `static-color` | **Confirmed.** Static color is only spec-backed with the `primary` and `secondary` families shown in Design/Figma. |
 | `disabled` | `boolean` | `false` | `disabled` | **Confirmed.** Maps to native disabled behavior on the internal button. |
 | `pending` | `boolean` | `false` | `pending` | **Confirmed.** Keep public API; while pending, the button remains focusable but is otherwise unavailable. |
-| `accessibleLabel` | `string \| undefined` | `undefined` | `accessible-label` | **Confirmed.** Replaces both `label` (1st-gen) and ad-hoc `aria-label` on the host. Forwarded as `aria-label` on the internal `<button>`. Required for icon-only usage. |
+| `accessibleLabel` | `string \| undefined` | `undefined` | `accessible-label` | **Confirmed.** Replaces both `label` (gen1) and ad-hoc `aria-label` on the host. Forwarded as `aria-label` on the internal `<button>`. Required for icon-only usage. |
 | `pendingLabel` | `string` | derived from the resolved non-busy accessible name + busy suffix | `pending-label` | **Adjusted for `SWC-459`.** Distinct from the control name; overrides the default busy-state announcement when supplied. |
 | `type` | deferred beyond initial scope | `'button'` | maybe none / future | **Deferred.** Initial 2nd-gen Button should behave as a regular button; `submit` / `reset` are future work. |
 | `label` | deprecated | n/a | `label` | **Planned removal.** Replaced by `accessible-label` / `accessibleLabel`. |
 | `iconOnly` | removed | n/a | removed | **Deviation from plan.** Not kept as a consumer attribute. Icon-only layout is now auto-derived from slot presence: `swc-Button--iconOnly` (circular layout) and `swc-Button--hasIcon` (label `text-align: start`) are applied via `classMap` in `ButtonBase`. Matches the CSS style-guide rule that derived states must not appear as host attributes. |
 | `truncate` | `boolean` | `false` | `truncate` | **Confirmed rename.** Replaces legacy `no-wrap` with a more explicit name for the actual behavior: single-line truncation with overflow handling rather than wrapping. Tooltip guidance for clipped content is documentation guidance, not built-in Button behavior. |
-| `justified` | `boolean` | `false` | `justified` | **Additive (A7).** Not in 1st-gen. S2 Design addition: makes the button stretch to fill its container. Requires the container to permit stretching. |
+| `justified` | `boolean` | `false` | `justified` | **Additive (A7).** Not in gen1. S2 Design addition: makes the button stretch to fill its container. Requires the container to permit stretching. |
 | `active` | internal styling state | n/a | maybe none / internal only | **Proposed.** Do not preserve as a documented consumer-controlled API unless styling proves it necessary. |
 | `href`, `target`, `download`, `referrerpolicy`, `rel` | removed | n/a | removed | **Confirmed removal.** Use native anchors for navigation. |
 
@@ -326,7 +326,7 @@ Using an internal semantic `<button>` also means:
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
+> The gen1 component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
 
 Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
 
@@ -416,7 +416,7 @@ Allowed differences:
 
 ### Preparation (this ticket)
 
-- [x] 1st-gen API surface documented
+- [x] gen1 API surface documented
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] 2nd-gen API decisions drafted
@@ -438,14 +438,14 @@ Allowed differences:
 - [x] `Button.types.ts`: define canonical `ButtonVariant`, `ButtonFillStyle`, `ButtonStaticColor`, and `ButtonSize`
 - [x] `Button.base.ts` (core): retain `disabled`, `pending`, `pendingLabel`, and accessible-name/pending-label logic. Also includes `SizedMixin` with `BUTTON_VALID_SIZES` — **deviation from plan**: the plan placed `size` in SWC as a non-reusable concern, but `SizedMixin` captures `validSizes` at construction time via closure; subclass static overrides have no effect at runtime. Because all Spectrum button-like components share the same four sizes (`s`, `m`, `l`, `xl`), placing `SizedMixin` in `ButtonBase` is safe and avoids requiring each subclass to re-apply the mixin. `variant`, `fillStyle`, and `staticColor` remain SWC-only.
 - [x] `Button.ts` (SWC): define `variant`, `fillStyle`, `staticColor`, `truncate`, `justified`, and visual combination validation warnings. `size` moved to `ButtonBase` (see above). `iconOnly` removed as a consumer attribute — icon-only layout is auto-derived from slot presence via `classMap` (see deviation note in the Public API table). Static class members (`VARIANTS`, `FILL_STYLES`, `STATIC_COLORS`, `VALID_SIZES`) were omitted — **deviation from plan**: these would be re-pointing the same module-level constants; debug validation code references the module constants directly instead. Click handler named `handleClick` without underscore prefix — **deviation from plan**: the plan's architecture sketch used `_handleClick` notation, but `handleClick` was used in implementation; the method is `protected readonly` to allow subclasses to reference it in template `@click` bindings.
-- [x] Rename legacy `noWrap` to `truncate` in the 2nd-gen API — 2nd-gen `Button.ts` exposes `truncate`; `no-wrap` is deprecated in 1st-gen with `@deprecated` JSDoc and `window.__swc.warn()`
-- [x] Add `@deprecated` JSDoc to 1st-gen type and const exports (`ButtonVariants`, `ButtonTreatments`, `ButtonStaticColors`, `DeprecatedButtonVariants`, `VALID_VARIANTS`, `VALID_STATIC_COLORS`)
-- [x] Add `@deprecated` JSDoc to 1st-gen `treatment` property; no runtime warn added because `treatment` is set internally by the `quiet` setter and the `overBackground` variant alias, which already emit their own deprecation warnings
-- [x] Add `@deprecated` JSDoc and `window.__swc.warn()` to 1st-gen `quiet` property
+- [x] Rename legacy `noWrap` to `truncate` in the 2nd-gen API — 2nd-gen `Button.ts` exposes `truncate`; `no-wrap` is deprecated in gen1 with `@deprecated` JSDoc and `window.__swc.warn()`
+- [x] Add `@deprecated` JSDoc to gen1 type and const exports (`ButtonVariants`, `ButtonTreatments`, `ButtonStaticColors`, `DeprecatedButtonVariants`, `VALID_VARIANTS`, `VALID_STATIC_COLORS`)
+- [x] Add `@deprecated` JSDoc to gen1 `treatment` property; no runtime warn added because `treatment` is set internally by the `quiet` setter and the `overBackground` variant alias, which already emit their own deprecation warnings
+- [x] Add `@deprecated` JSDoc and `window.__swc.warn()` to gen1 `quiet` property
 - [x] Remove `label` in favor of `accessible-label` / `accessibleLabel` — 2nd-gen `ButtonBase` exposes `accessibleLabel` (attribute: `accessible-label`) forwarded as `aria-label` on the internal `<button>`; no `label` prop in 2nd-gen
 - [x] Remove deprecated link API (`href`, `target`, `download`, `referrerpolicy`, `rel`) from the 2nd-gen public surface — absent from 2nd-gen `Button.ts`
 - [x] Remove deprecated `variant` aliases (`cta`, `overBackground`, `white`, `black`) from the 2nd-gen public surface — already absent in 2nd-gen `Button.ts`
-- [x] Do not carry forward `quiet` as a 2nd-gen visual API — `quiet` is absent from 2nd-gen; deprecated in 1st-gen with `@deprecated` JSDoc and `window.__swc.warn()`
+- [x] Do not carry forward `quiet` as a 2nd-gen visual API — `quiet` is absent from 2nd-gen; deprecated in gen1 with `@deprecated` JSDoc and `window.__swc.warn()`
 - [x] Document migration from `no-wrap` to `truncate`
 
 #### Semantics and forms
@@ -622,10 +622,10 @@ These items require manual assistive-technology (AT) verification and cannot be 
 - [PR #6120 — core/shared migration and LikeAnchor removal](https://github.com/adobe/spectrum-web-components/pull/6120)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
-- [1st-gen source](../../../../gen1/packages/button/src/Button.ts)
-- [1st-gen button base](../../../../gen1/packages/button/src/ButtonBase.ts)
-- [1st-gen tests](../../../../gen1/packages/button/test/button.test.ts)
-- [1st-gen README](../../../../gen1/packages/button/README.md)
+- [gen1 source](../../../../gen1/packages/button/src/Button.ts)
+- [gen1 button base](../../../../gen1/packages/button/src/ButtonBase.ts)
+- [gen1 tests](../../../../gen1/packages/button/test/button.test.ts)
+- [gen1 README](../../../../gen1/packages/button/README.md)
 - [2nd-gen global button stylesheet](../../../../2nd-gen/packages/swc/stylesheets/global/global-button.css)
 - [2nd-gen global elements stylesheet](../../../../2nd-gen/packages/swc/stylesheets/global/global-elements.css)
 - [React Spectrum S2 Button](https://react-spectrum.adobe.com/Button)

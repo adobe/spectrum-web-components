@@ -1,10 +1,10 @@
 # Changesets (2nd-gen)
 
-This folder is an independent `@changesets/cli` setup for 2nd-gen packages only (`@adobe/spectrum-wc`, `@adobe/spectrum-wc-core`), with its own `config.json`. 1st-gen (`@spectrum-web-components/*`) has its own separate setup in [`gen1/.changeset/`](../../gen1/.changeset/README.md) — the two do not share a config, a folder, or a versioning run.
+This folder is an independent `@changesets/cli` setup for 2nd-gen packages only (`@adobe/spectrum-wc`, `@adobe/spectrum-wc-core`), with its own `config.json`. gen1 (`@spectrum-web-components/*`) has its own separate setup in [`gen1/.changeset/`](../../gen1/.changeset/README.md) — the two do not share a config, a folder, or a versioning run.
 
 ## Why a separate setup
 
-1st-gen ships to `next`/`latest` from `main`. 2nd-gen ships to `latest` from `main` on its own cadence, using changesets pre-release mode - so versions keep the `2.0.0-beta.N` format even though they publish under the `latest` npm tag. `@changesets/cli` resolves `.changeset/` relative to wherever it's invoked from, so each generation gets its own instance by living in its own package directory (`2nd-gen/`) rather than sharing one at the repo root.
+gen1 ships to `next`/`latest` from `main`. 2nd-gen ships to `latest` from `main` on its own cadence, using changesets pre-release mode - so versions keep the `2.0.0-beta.N` format even though they publish under the `latest` npm tag. `@changesets/cli` resolves `.changeset/` relative to wherever it's invoked from, so each generation gets its own instance by living in its own package directory (`2nd-gen/`) rather than sharing one at the repo root.
 
 ## Adding a changeset for a 2nd-gen change
 

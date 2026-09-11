@@ -627,7 +627,7 @@ export const KeyboardSpacePreventDefaultTest: Story = {
 };
 
 /**
- * Guards the B3 breaking change: 2nd-gen drops the 1st-gen `FocusGroupController`
+ * Guards the B3 breaking change: 2nd-gen drops the gen1 `FocusGroupController`
  * arrow/Home/End navigation between headers. This test fails if that behavior is
  * accidentally reintroduced.
  */

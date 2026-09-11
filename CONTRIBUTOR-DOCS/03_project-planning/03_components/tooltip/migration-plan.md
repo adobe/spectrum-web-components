@@ -12,7 +12,7 @@
 <summary><strong>In this doc</strong></summary>
 
 - [TL;DR](#tldr)
-- [1st-gen API surface](#1st-gen-api-surface)
+- [gen1 API surface](#gen1-api-surface)
     - [Properties / attributes](#properties--attributes)
     - [Methods](#methods)
     - [Events](#events)
@@ -80,17 +80,17 @@
 Tooltip is a visually simple component with high behavioral complexity in its automatic trigger-wiring mode. The S2 migration carries six confirmed breaking changes and one critical a11y fix. The core tooltip (variants, CSS, `role="tooltip"`, native `popover="auto"` open/close) can ship now; trigger integration is additive pending two extracted controllers.
 
 - **Breaking (B1–B3):** Icon slot removed, `positive` variant removed, `variant="info"` renamed to `variant="informative"`. All three confirmed by design, Figma, S2 CSS, and accessibility analysis.
-- **Additive/type change (B4):** Logical placement values (`start`, `end`) were missing in 1st-gen; now shipping. Physical values unchanged. Not runtime-breaking; the only consumer impact is a TypeScript type-union widening — exhaustive `switch` or `satisfies` checks against `Placement` will need updating.
+- **Additive/type change (B4):** Logical placement values (`start`, `end`) were missing in gen1; now shipping. Physical values unchanged. Not runtime-breaking; the only consumer impact is a TypeScript type-union widening — exhaustive `switch` or `satisfies` checks against `Placement` will need updating.
 - **Breaking (B5):** Event renames: `sp-opened`/`sp-closed` removed; 2nd-gen fires `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close`. Event timing also differs due to native popover lifecycle; must document in consumer migration guide.
-- **A11y critical (SWC-1558):** `role="tooltip"` is absent in 1st-gen; must ship in 2nd-gen.
-- **Infrastructure change:** `sp-overlay` dependency dropped. 2nd-gen uses native popover API + Floating UI per the [Overlay Strategy RFC](https://www.dropbox.com/scl/fi/eae4rywxitn4zfmuw4o59/RFC-Overlay-strategy-for-1st-gen-and-2nd-gen.paper?rlkey=ljezd8mt8joy2zc3lv88usrh6&dl=0). The `self-managed` attribute is removed (B6); automatic trigger wiring is on by default; the `manual` attribute opts out. Internal mechanics change significantly.
+- **A11y critical (SWC-1558):** `role="tooltip"` is absent in gen1; must ship in 2nd-gen.
+- **Infrastructure change:** `sp-overlay` dependency dropped. 2nd-gen uses native popover API + Floating UI per the [Overlay Strategy RFC](https://www.dropbox.com/scl/fi/eae4rywxitn4zfmuw4o59/RFC-Overlay-strategy-for-gen1-and-2nd-gen.paper?rlkey=ljezd8mt8joy2zc3lv88usrh6&dl=0). The `self-managed` attribute is removed (B6); automatic trigger wiring is on by default; the `manual` attribute opts out. Internal mechanics change significantly.
 - **HoverController and PlacementController integrated:** Both controllers are wired in `Tooltip.base.ts`. Hover/focus event wiring, warm-up/cooldown, `disabled` guard, WCAG 1.4.13 pointer bridge, `manual` suppression, and pixel positioning are all active. `delay`, `disabled`, `manual`, `offset`, `cross-offset`, `container-padding`, and `should-flip` are all live API. The Floating UI inline-style workaround in stories has been removed.
-- **Authoring pattern change:** `<swc-tooltip>` is authored as a sibling of the trigger — not inside it as in 1st-gen. With `popover="auto"` moving the tooltip to the top layer at render time, physical DOM nesting is no longer needed. Trigger resolution uses the `for` attribute to reference the trigger by ID in the same document tree root; `trigger-element` provides an element reference override for cross-shadow-root and programmatic cases where ID resolution does not apply. Add `manual` to opt out of automatic wiring entirely. The 1st-gen ancestor-walking (`resolveSelfManagedTriggerElement`) is not ported.
+- **Authoring pattern change:** `<swc-tooltip>` is authored as a sibling of the trigger — not inside it as in gen1. With `popover="auto"` moving the tooltip to the top layer at render time, physical DOM nesting is no longer needed. Trigger resolution uses the `for` attribute to reference the trigger by ID in the same document tree root; `trigger-element` provides an element reference override for cross-shadow-root and programmatic cases where ID resolution does not apply. Add `manual` to opt out of automatic wiring entirely. The gen1 ancestor-walking (`resolveSelfManagedTriggerElement`) is not ported.
 - **No open questions.** Q1 (`tip-padding`) and Q2 (`popover="auto"` stack isolation) are both resolved. See [Blockers and open questions](#blockers-and-open-questions).
 
 ---
 
-## 1st-gen API surface
+## gen1 API surface
 
 **Source:** [`gen1/packages/tooltip/src/Tooltip.ts`](../../../../gen1/packages/tooltip/src/Tooltip.ts)
 **Version:** `@spectrum-web-components/tooltip@1.12.0`
@@ -163,7 +163,7 @@ Self-managed:
 </sp-overlay>
 ```
 
-`TooltipOpenable` (`sp-tooltip-openable`) is an internal plain `HTMLElement` subclass that bridges the 1st-gen overlay boundary by re-dispatching `sp-opened`/`sp-closed` events and exposing `tipElement` for positioning. It is an implementation detail, not a public API, and does not carry forward to 2nd-gen.
+`TooltipOpenable` (`sp-tooltip-openable`) is an internal plain `HTMLElement` subclass that bridges the gen1 overlay boundary by re-dispatching `sp-opened`/`sp-closed` events and exposing `tipElement` for positioning. It is an implementation detail, not a public API, and does not carry forward to 2nd-gen.
 
 ---
 
@@ -212,7 +212,7 @@ Both controllers are integrated. No outstanding controller prerequisites remain.
 
 #### API and naming
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | B1 | `slot="icon"` removed | Accepts an icon element in `slot="icon"`; rendered at label start for variant tooltips | Slot removed; no icon rendering in S2 Tooltip | Remove all `slot="icon"` usage; no replacement |
 | B2 | `variant="positive"` removed | Accepts `positive`; renders green background | Accepts `neutral`, `informative`, `negative` only | Replace `positive` with `informative`, `neutral`, or `negative` as content warrants |
@@ -223,7 +223,7 @@ Both controllers are integrated. No outstanding controller prerequisites remain.
 
 #### Styling and visuals
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | S1 | Adopt S2 design tokens | S1 Spectrum tokens | S2 tokens from `spectrum-css` `spectrum-two` branch | Visual update; no API change |
 | S2 | Remove `.spectrum-Tooltip-typeIcon` and all icon rendering styles | Type icon wrapper and icon logic present for variant tooltips | Removed; no icon in any variant | No consumer action |
@@ -232,12 +232,12 @@ Both controllers are integrated. No outstanding controller prerequisites remain.
 
 #### Accessibility and behavior
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | A1 | Add `role="tooltip"` to host element | Missing (SWC-1558) | `role="tooltip"` on the host element | No consumer action; fixes AT behavior |
 | A2 | Native popover open/close | Uses `sp-overlay type="hint"` + `HoverController` + `triggerInteraction="hover"` | Host gets `popover="auto"`; `beforetoggle`/`toggle`/`transitionend` event listeners handle state sync and the four `swc-*` lifecycle events. Participates in the auto popover stack — opening closes other open `auto` popovers. See [Auto-stack behavior](#auto-stack-behavior). | No consumer action; automatic trigger wiring ships inactive in the initial release |
-| A3 | `Escape` dismissal | Handled by `OverlayStack` in 1st-gen | `popover="auto"` provides built-in Esc-to-close and light-dismiss (primary mechanism). A `document` `keydown` listener is also wired as a belt-and-suspenders measure for test environments where the native popover dismiss may not fire; it sets `this.open = false` on Escape. The listener is registered only while the tooltip is open (added in `updated()` when `open` becomes `true`, removed on close and on disconnect), so at most one listener is active at a time rather than one per connected instance. | No consumer action |
-| A4 | ARIA relationship wiring | No automatic ARIA association in 1st-gen | On `open = true`: SWC resolves trigger via `for` / `trigger-element`, applies inner-button resolution (shadow `<button>` for SWC components; host for native elements), and sets `Element.ariaDescribedByElements = [tooltipHost]`. Removed on `open = false`. Active in both automatic and manual modes. See [ARIA relationship wiring](#aria-relationship-wiring) for the full two-path resolution and browser support. | Set `for` on `<swc-tooltip>` pointing to the trigger's `id`; or set `trigger-element` programmatically. No other action required. |
+| A3 | `Escape` dismissal | Handled by `OverlayStack` in gen1 | `popover="auto"` provides built-in Esc-to-close and light-dismiss (primary mechanism). A `document` `keydown` listener is also wired as a belt-and-suspenders measure for test environments where the native popover dismiss may not fire; it sets `this.open = false` on Escape. The listener is registered only while the tooltip is open (added in `updated()` when `open` becomes `true`, removed on close and on disconnect), so at most one listener is active at a time rather than one per connected instance. | No consumer action |
+| A4 | ARIA relationship wiring | No automatic ARIA association in gen1 | On `open = true`: SWC resolves trigger via `for` / `trigger-element`, applies inner-button resolution (shadow `<button>` for SWC components; host for native elements), and sets `Element.ariaDescribedByElements = [tooltipHost]`. Removed on `open = false`. Active in both automatic and manual modes. See [ARIA relationship wiring](#aria-relationship-wiring) for the full two-path resolution and browser support. | Set `for` on `<swc-tooltip>` pointing to the trigger's `id`; or set `trigger-element` programmatically. No other action required. |
 
 ### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
 
@@ -248,7 +248,7 @@ Both controllers are integrated. No outstanding controller prerequisites remain.
 | ~~A3~~ | ~~`disabled` for automatic mode~~ | **Shipped.** `disabled` prevents hover/focus response via `HoverController`'s guard. |
 | ~~A4~~ | ~~WCAG 1.4.13 pointer bridge~~ | **Shipped.** Pointer can move from trigger into the tooltip bubble without closing; managed by `HoverController`. |
 | ~~A5~~ | ~~`no-tip` property~~ | **Not pursuing (as of 2026-07-22).** Shown in Figma (Orientation section, "No tip") and tracked as SWC-2278, but confirmed out of scope for 2nd-gen Tooltip. |
-| A6 | `tooltip-directive` for 2nd-gen | Lit directive for programmatic tooltip insertion. The 2nd-gen directive will be simpler than 1st-gen: no `sp-overlay` wrapper needed; it creates `<swc-tooltip>`, inserts it as a sibling of the target, sets `trigger-element` (element reference, bypassing ID management), and handles lifecycle cleanup. Both controllers are now active; this can proceed when prioritized. |
+| A6 | `tooltip-directive` for 2nd-gen | Lit directive for programmatic tooltip insertion. The 2nd-gen directive will be simpler than gen1: no `sp-overlay` wrapper needed; it creates `<swc-tooltip>`, inserts it as a sibling of the target, sets `trigger-element` (element reference, bypassing ID management), and handles lifecycle cleanup. Both controllers are now active; this can proceed when prioritized. |
 | ~~A7~~ | ~~`container-padding`~~ | **Shipped.** Default `12`. Passed to `PlacementController` `containerPadding` option. |
 | ~~A8~~ | ~~`cross-offset`~~ | **Shipped.** Default `0`. Passed to `PlacementController` `crossOffset` option. |
 | ~~A9~~ | ~~`should-flip`~~ | **Shipped.** Default `true`. Passed to `PlacementController` `shouldFlip` option. |
@@ -263,7 +263,7 @@ Full behavioral requirements for this feature are in the [HoverController interf
 
 ## 2nd-gen API decisions
 
-Derived from the 1st-gen implementation, the rendering analysis, the accessibility analysis, the Figma `S2 / Web (Desktop scale)` tooltip frame, and the team RFC for native popover + Floating UI. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
+Derived from the gen1 implementation, the rendering analysis, the accessibility analysis, the Figma `S2 / Web (Desktop scale)` tooltip frame, and the team RFC for native popover + Floating UI. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
 
 - **Confirmed**: directly supported by source material
 - **Inferred**: recommended based on multiple signals, not one authoritative source
@@ -275,13 +275,13 @@ Derived from the 1st-gen implementation, the rendering analysis, the accessibili
 
 | Property | Type | Default | Attribute | Notes |
 | -------- | ---- | ------- | --------- | ----- |
-| `variant` | `'neutral' \| 'informative' \| 'negative'` | `'neutral'` | `variant` (reflect) | **Confirmed.** Positive removed. `informative` confirmed; CSS class stays `.spectrum-Tooltip--info` internally. **Behavioral change from 1st-gen:** default was `''` (empty string), which caused the setter to call `removeAttribute('variant')` — so the neutral state had no `variant` attribute on the host. In 2nd-gen, `variant="neutral"` is reflected. Consumers with `:not([variant])` selectors or `getAttribute('variant') === null` checks for neutral detection will need updating. |
-| `placement` | `TooltipPlacement` | `'top'` | `placement` (reflect) | **Confirmed.** React Spectrum default is `top`. S2 CSS adds `start`/`end` and sub-variants. **Behavioral change from 1st-gen:** 1st-gen defaulted to `undefined` (no placement attribute or CSS class). Consumers that relied on an unplaced tooltip will now receive `placement="top"` and the corresponding CSS class. This attribute always holds the consumer's declared value; `PlacementController` never mutates it. See `actual-placement` for the resolved physical side. |
+| `variant` | `'neutral' \| 'informative' \| 'negative'` | `'neutral'` | `variant` (reflect) | **Confirmed.** Positive removed. `informative` confirmed; CSS class stays `.spectrum-Tooltip--info` internally. **Behavioral change from gen1:** default was `''` (empty string), which caused the setter to call `removeAttribute('variant')` — so the neutral state had no `variant` attribute on the host. In 2nd-gen, `variant="neutral"` is reflected. Consumers with `:not([variant])` selectors or `getAttribute('variant') === null` checks for neutral detection will need updating. |
+| `placement` | `TooltipPlacement` | `'top'` | `placement` (reflect) | **Confirmed.** React Spectrum default is `top`. S2 CSS adds `start`/`end` and sub-variants. **Behavioral change from gen1:** gen1 defaulted to `undefined` (no placement attribute or CSS class). Consumers that relied on an unplaced tooltip will now receive `placement="top"` and the corresponding CSS class. This attribute always holds the consumer's declared value; `PlacementController` never mutates it. See `actual-placement` for the resolved physical side. |
 | — | — | — | `actual-placement` (internal) | Internal CSS-only state attribute. Not a Lit `@property`; not in the public API, TypeDoc, or CEM. Written by `Tooltip.base.ts` via direct `setAttribute` — once synchronously before `showPopover()` (initial declared side) and again by `onPlacementChange` after `computePlacement()` resolves (resolved physical side). Always a physical cardinal side: `'top' \| 'bottom' \| 'left' \| 'right'`. Cleared by `clearPositioningState()` after the exit transition completes (called from `dispatchAfterEvent(false)`) — it is not cleared at `hidePopover()` time to avoid a CSS selector change while the tooltip is still visible and fading. All CSS selectors for tip direction, margin spacing, and `@starting-style` animation target this attribute. |
 | `open` | `boolean` | `false` | `open` (reflect) | **Confirmed.** |
 | `for` | `string` | `undefined` | `for` | **Confirmed.** ID of the trigger element in the same document tree root. The tooltip calls `getRootNode().getElementById(this.for)` to resolve the trigger, then wires the ARIA relationship on `open` change (see [ARIA relationship wiring](#aria-relationship-wiring)). Active in both automatic and manual modes — see the trigger-mode interaction table in [Behavioral semantics](#behavioral-semantics). HoverController hover/focus auto-wiring is additive. |
 | `trigger-element` | `HTMLElement \| null` | `null` | — (setter only) | **Confirmed.** Explicit trigger element reference; overrides `for` when set. Drives the same ARIA wiring on `open` change as `for`, via direct element reference rather than ID lookup. Use for cross-shadow-root triggers where `getRootNode().getElementById()` is scoped to the wrong tree root, or for the directive (programmatic insertion). `HoverController` and `PlacementController` receive the resolved value and do not perform their own trigger resolution. |
-| `delay` | `number` | `1500` | `delay` | **Confirmed. Active.** Duration in ms of the warm-up before the tooltip shows on hover; keyboard focus always opens immediately regardless of this value. The cooldown duration after pointer leave is 300ms (fixed, independent of `delay`). Set to `0` to show immediately on hover. Warm-up/cooldown is the default behavior — no attribute needed to enable it. **Behavioral change from 1st-gen:** 1st-gen had `delayed: boolean` (default `false`, opt-in); 2nd-gen is opt-out. |
+| `delay` | `number` | `1500` | `delay` | **Confirmed. Active.** Duration in ms of the warm-up before the tooltip shows on hover; keyboard focus always opens immediately regardless of this value. The cooldown duration after pointer leave is 300ms (fixed, independent of `delay`). Set to `0` to show immediately on hover. Warm-up/cooldown is the default behavior — no attribute needed to enable it. **Behavioral change from gen1:** gen1 had `delayed: boolean` (default `false`, opt-in); 2nd-gen is opt-out. |
 | `disabled` | `boolean` | `false` | `disabled` | **Confirmed. Active.** Prevents the tooltip from opening — via hover, focus, or a programmatic `open = true` (enforced in `willUpdate`, see [D9](#d9-disabled-takes-priority-over-open)). Takes priority over `manual`. |
 | `manual` | `boolean` | `false` | `manual` | **Confirmed. Active.** Suppresses `HoverController` and `PlacementController` wiring. `for` and `trigger-element` are still resolved; ARIA wiring still fires on `open` change. Consumer manages open/close via the `open` property or the popover API directly. |
 | `offset` | `number` | `4` | `offset` | **Confirmed. Active.** Gap in pixels along the placement axis between the trigger and the tooltip bubble. Passed to `PlacementController` offset middleware. Also drives `--_swc-tooltip-animation-distance` so the enter animation travel distance matches the gap. |
@@ -331,7 +331,7 @@ Initial expectation for Tooltip is zero or a very small reviewed set.
 
 **Automatic trigger-wiring mode:**
 
-The `TooltipOpenable` intermediate element is an implementation detail of the 1st-gen overlay bridge and does not carry forward. Both `HoverController` and `PlacementController` are now active.
+The `TooltipOpenable` intermediate element is an implementation detail of the gen1 overlay bridge and does not carry forward. Both `HoverController` and `PlacementController` are now active.
 
 1. The tooltip uses `popover="auto"`. Built-in Esc-to-close and light-dismiss are included. Note: participates in the auto stack — opening a tooltip will close other open `auto` popovers (menus, pickers).
 2. `HoverController` manages open/close timing (warm-up/cooldown using the `delay` value; default 1500ms), keyboard-focus parity (opens immediately), and the WCAG 1.4.13 pointer bridge. Wired in `Tooltip.base.ts`; target is set from `resolveTrigger()` whenever `for` or `triggerElement` changes. ARIA relationship wiring is handled by the SWC layer on `open` change, not by `HoverController`.
@@ -342,7 +342,7 @@ The `TooltipOpenable` intermediate element is an implementation detail of the 1s
 
 **Trigger resolution:**
 
-The 1st-gen `resolveSelfManagedTriggerElement()` ancestor-walking is **not ported**. With `popover="auto"`, the tooltip renders in the browser top layer regardless of its authored DOM position. The authoring pattern changes: `<swc-tooltip>` is authored as a sibling of the trigger rather than nested inside it.
+The gen1 `resolveSelfManagedTriggerElement()` ancestor-walking is **not ported**. With `popover="auto"`, the tooltip renders in the browser top layer regardless of its authored DOM position. The authoring pattern changes: `<swc-tooltip>` is authored as a sibling of the trigger rather than nested inside it.
 
 Default resolution: the `for` attribute. The tooltip calls `getRootNode().getElementById(this.for)` to resolve the trigger. This is explicit in markup, not positionally inferred — the relationship is declared and visible to tooling and DevTools. If `for` is not set or the referenced ID does not exist, automatic wiring is a no-op.
 
@@ -480,7 +480,7 @@ Two resolution paths, in order of preference:
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
+> The gen1 component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
 
 Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
 
@@ -576,11 +576,11 @@ No arrow middleware is used — the tip is CSS-centered on the computed side. `P
 
 `popover="auto"` participates in the browser's auto popover stack from the initial release. Opening a tooltip **dismisses any other open `auto` popover** — menus, pickers, selects, and other tooltips.
 
-**This is a UX regression from 1st-gen.** In 1st-gen, `sp-overlay type="hint"` was intentionally isolated: opening a tooltip left menus and pickers open, and a tooltip was only closed by Escape or by another `hint`-type overlay opening on the same trigger. `popover="auto"` has no equivalent isolation tier.
+**This is a UX regression from gen1.** In gen1, `sp-overlay type="hint"` was intentionally isolated: opening a tooltip left menus and pickers open, and a tooltip was only closed by Escape or by another `hint`-type overlay opening on the same trigger. `popover="auto"` has no equivalent isolation tier.
 
 The impact is most acute in the additive phase, when `HoverController` opens the tooltip on hover — hovering a trigger next to an open picker will close the picker. The initial release is unaffected (no hover wiring).
 
-**Resolved (Path A):** The auto-stack behavior is accepted. This is a known difference from 1st-gen and must be documented in the consumer migration guide and the Behaviors story.
+**Resolved (Path A):** The auto-stack behavior is accepted. This is a known difference from gen1 and must be documented in the consumer migration guide and the Behaviors story.
 
 ---
 
@@ -588,7 +588,7 @@ The impact is most acute in the additive phase, when `HoverController` opens the
 
 ### Preparation (this ticket)
 
-- [x] 1st-gen API surface documented
+- [x] gen1 API surface documented
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] 2nd-gen API decisions drafted
@@ -610,7 +610,7 @@ The impact is most acute in the additive phase, when `HoverController` opens the
 - [x] `Tooltip.base.ts` (Core): `popover="auto"` and `role="tooltip"` set via `connectedCallback`; `beforetoggle`/`toggle`/`transitionend` listeners wired in `connectedCallback`, `document` `keydown` listener wired only while open; trigger resolution via `for`/`triggerElement`; ARIA relationship wiring (`ariaDescribedByElements` / `ariaLabelledByElements`) on `open` and `labeling` changes; `HoverController` and `PlacementController` instantiated and managed in `updated()` and `connectedCallback`/`disconnectedCallback`.
 - [x] `Tooltip.ts` (SWC): rendering only — `render()` returns tip element and default slot; `tipElement` getter override returns `.swc-Tooltip-tip` for arrow middleware; CSS via `tooltip.css`.
 
-#### 1st-gen deprecation notices
+#### gen1 deprecation notices
 
 - [x] `@deprecated` JSDoc on `selfManaged` property; runtime warn in existing `connectedCallback` code path when `selfManaged` is true
 - [x] `@deprecated` JSDoc on `tipPadding` property (no existing setter; JSDoc only)
@@ -718,11 +718,11 @@ The impact is most acute in the additive phase, when `HoverController` opens the
 - [x] Consumer migration guide: replace `variant="positive"` with `variant="informative"`, `variant="neutral"`, or `variant="negative"` as content warrants (B2)
 - [x] Consumer migration guide: update `variant="info"` → `variant="informative"` (B3)
 - [x] Consumer migration guide: remove `sp-opened`/`sp-closed` listeners; add `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` listeners as needed (B5)
-- [x] Consumer migration guide: note event timing change — native popover lifecycle fires at different points than the 1st-gen overlay sequence (B5)
+- [x] Consumer migration guide: note event timing change — native popover lifecycle fires at different points than the gen1 overlay sequence (B5)
 - [x] Consumer migration guide: remove `self-managed` attribute from all existing tooltip usage; automatic trigger wiring is on by default with no attribute required; add `manual` only when programmatic open/close control is needed (B6)
-- [x] Consumer migration guide: authoring pattern change — move `<sp-tooltip>` out of the trigger component (1st-gen pattern); add `id` to the trigger element and `for="[id]"` to the tooltip; the tooltip may be placed anywhere in the same document tree root (additive phase)
+- [x] Consumer migration guide: authoring pattern change — move `<sp-tooltip>` out of the trigger component (gen1 pattern); add `id` to the trigger element and `for="[id]"` to the tooltip; the tooltip may be placed anywhere in the same document tree root (additive phase)
 - [x] Consumer migration guide: for cross-shadow-root triggers or programmatic wiring where ID resolution cannot reach the trigger, set the `trigger-element` property to a direct element reference (additive phase)
-- [x] Consumer migration guide: document that `popover="auto"` auto-stack behavior differs from 1st-gen `type="hint"` isolation — opening a tooltip closes other open auto popovers (menus, pickers); this is accepted behavior, not a bug
+- [x] Consumer migration guide: document that `popover="auto"` auto-stack behavior differs from gen1 `type="hint"` isolation — opening a tooltip closes other open auto popovers (menus, pickers); this is accepted behavior, not a bug
 - [x] Behaviors story: note the auto-stack behavior and that it is expected (Q2 resolved, Path A)
 
 #### Accessibility documentation
@@ -754,8 +754,8 @@ The impact is most acute in the additive phase, when `HoverController` opens the
 
 | # | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q1 | **`tip-padding` semantics.** In 1st-gen, `tipPadding` was passed to `sp-overlay` for tip position calculation. **Resolved.** The 1st-gen `tip-padding` attribute is not exposed. The `arrow` middleware IS used (via `Tooltip.ts` overriding `tipElement` to return the shadow-DOM `.swc-Tooltip-tip` element), which keeps the tip aligned with the trigger center when the bubble shifts from `crossOffset` or viewport `shift` middleware. The `tipPadding` option on `PlacementOptions` uses the controller's default of 8px; no consumer-facing attribute is exposed unless override needs emerge. | N/A | Resolved | Team |
-| Q2 | **`popover="auto"` stack isolation regression.** In 1st-gen, `type="hint"` overlays were isolated — opening a tooltip did not dismiss open menus or pickers. `popover="auto"` has no isolation tier; any auto popover opening dismisses all others. **Resolved: Path A accepted.** The behavior is documented as a known difference from 1st-gen. No workaround; document in consumer migration guide and Behaviors story. | N/A | Resolved | Team |
+| Q1 | **`tip-padding` semantics.** In gen1, `tipPadding` was passed to `sp-overlay` for tip position calculation. **Resolved.** The gen1 `tip-padding` attribute is not exposed. The `arrow` middleware IS used (via `Tooltip.ts` overriding `tipElement` to return the shadow-DOM `.swc-Tooltip-tip` element), which keeps the tip aligned with the trigger center when the bubble shifts from `crossOffset` or viewport `shift` middleware. The `tipPadding` option on `PlacementOptions` uses the controller's default of 8px; no consumer-facing attribute is exposed unless override needs emerge. | N/A | Resolved | Team |
+| Q2 | **`popover="auto"` stack isolation regression.** In gen1, `type="hint"` overlays were isolated — opening a tooltip did not dismiss open menus or pickers. `popover="auto"` has no isolation tier; any auto popover opening dismisses all others. **Resolved: Path A accepted.** The behavior is documented as a known difference from gen1. No workaround; document in consumer migration guide and Behaviors story. | N/A | Resolved | Team |
 
 ### Deferred implementation tickets
 
@@ -765,7 +765,7 @@ Create these tickets before this migration PR closes. Link each to Epic SWC-2017
 | ------ | ------- | ------------ | ------------- |
 | ~~SWC-2210~~ | ~~**Integrate PlacementController into Tooltip.**~~ | **Shipped.** `PlacementController` wired in `Tooltip.base.ts`; `start()`/`stop()` called on `open` changes; `onPlacementChange` calls `setAttribute('actual-placement', resolvedSide)` directly; `placement` is never mutated and always holds the consumer's declared value. All `[actual-placement]` CSS selectors handle tip direction, margin spacing, and `@starting-style` animation. `offset`, `cross-offset`, `container-padding`, and `should-flip` feed directly into controller options. | ~~Additive A1 (positioning), A7, A8, A9~~ |
 | ~~SWC-2210~~ | ~~**Integrate HoverController into Tooltip.**~~ | **Shipped.** `TooltipBase` implements `HoverControllerHost`; `HoverController` wired with `warmStateKey: 'swc-tooltip'`; target set from `resolveTrigger()` in `updated()`. Hover/focus wiring, warm-up/cooldown, `disabled` guard, and WCAG 1.4.13 pointer bridge are all active. | ~~Additive A1 (hover/focus), A2, A3, A4~~ |
-| SWC-2279 | **2nd-gen tooltip-directive.** Lit directive for programmatic tooltip insertion. Creates `<swc-tooltip>` as a sibling of the target and handles lifecycle cleanup. Simpler than 1st-gen: no `sp-overlay` wrapper needed; automatic trigger wiring activates because `manual` is not set. | Both controllers are now active; this can proceed. | Additive A6 |
+| SWC-2279 | **2nd-gen tooltip-directive.** Lit directive for programmatic tooltip insertion. Creates `<swc-tooltip>` as a sibling of the target and handles lifecycle cleanup. Simpler than gen1: no `sp-overlay` wrapper needed; automatic trigger wiring activates because `manual` is not set. | Both controllers are now active; this can proceed. | Additive A6 |
 | ~~SWC-2278~~ | ~~**`no-tip` attribute.** Remove the directional tip arrow.~~ | **Not pursuing (as of 2026-07-22).** Confirmed out of scope for 2nd-gen Tooltip. | ~~Additive A5~~ |
 
 ---
@@ -960,7 +960,7 @@ Decisions made after the initial plan was approved and implementation had begun.
 
 **Root cause:** Confirmed (via stack-trace instrumentation) **not** an implementation bug. Same Storybook-helper family as [D7](#d7-exclude-actual-placement-from-the-storybook-helper-round-trip): `open` is a reflected `@property`, so when `HoverController` opens the first tooltip, Lit reflects `open` to the attribute; the helper's `argObserver` (which watches only the **first** `<swc-tooltip>` in the DOM) writes `open: true` into the **shared** story `args`; the `spread` directive then applies `open` to **every** tooltip instance on re-render; and because `popover="auto"` permits only one open popover in the top layer, the instances dismiss one another, producing an oscillation. Every close in the logs was a native popover dismissal (`handleToggle newState=closed` while `this.open=true`) with no `HoverController` close call preceding it. Unlike `actual-placement`, `open` is a real CEM attribute (it flows through `attrOperators`, not `additionalAttrs`), so the D7 `argTypes` exclusion cannot suppress it.
 
-**Decision:** Accepted as a Storybook-only dev artifact; not fixed. Rationale: it surfaces only in isolation mode on the first of multiple triggers, never in the flow of the main docs page, so encounter likelihood is low. Automated tests and VRT are unaffected (their play functions open a non-first tooltip — `Variants` index 1, `Placements` index 3), and **production consumers are unaffected** because no framework round-trips reflected attributes the way the Storybook helper does. The candidate real fix — dropping `reflect` from `open` — was rejected as a disproportionate public-API change (it would remove the `[open]` attribute reflection that 1st-gen exposed and that `OpenCloseTest` asserts) for a dev-only glitch.
+**Decision:** Accepted as a Storybook-only dev artifact; not fixed. Rationale: it surfaces only in isolation mode on the first of multiple triggers, never in the flow of the main docs page, so encounter likelihood is low. Automated tests and VRT are unaffected (their play functions open a non-first tooltip — `Variants` index 1, `Placements` index 3), and **production consumers are unaffected** because no framework round-trips reflected attributes the way the Storybook helper does. The candidate real fix — dropping `reflect` from `open` — was rejected as a disproportionate public-API change (it would remove the `[open]` attribute reflection that gen1 exposed and that `OpenCloseTest` asserts) for a dev-only glitch.
 
 **Files changed:** none (documentation only).
 
@@ -989,10 +989,10 @@ Decisions made after the initial plan was approved and implementation had begun.
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
-- [1st-gen source](../../../../gen1/packages/tooltip/src/Tooltip.ts)
-- [1st-gen tooltip-directive](../../../../gen1/packages/tooltip/src/tooltip-directive.ts)
-- [1st-gen tests](../../../../gen1/packages/tooltip/test/tooltip.test.ts)
-- [1st-gen README](../../../../gen1/packages/tooltip/README.md)
+- [gen1 source](../../../../gen1/packages/tooltip/src/Tooltip.ts)
+- [gen1 tooltip-directive](../../../../gen1/packages/tooltip/src/tooltip-directive.ts)
+- [gen1 tests](../../../../gen1/packages/tooltip/test/tooltip.test.ts)
+- [gen1 README](../../../../gen1/packages/tooltip/README.md)
 - [React Spectrum S2 Tooltip](https://react-spectrum.adobe.com/Tooltip)
 - [`ariaDescribedByElements` cross-root POC (CodePen)](https://codepen.io/spectrum-css/pen/pvNEVda?editors=0010) — validates inner shadow `<button>` wiring across Chrome/Edge 135+, Firefox 136+, Safari 16.4+; AT-validated with NVDA and VoiceOver
 - [Spectrum CSS — `tooltip/index.css` on `spectrum-two` branch](../../../../../spectrum-css/components/tooltip/index.css)

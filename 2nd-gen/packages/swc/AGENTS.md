@@ -25,7 +25,7 @@ Use [Badge](./components/badge/) as the reference implementation.
 - Shared logic, validation, or lifecycle hooks — goes in the core base class
 - Type definitions or const arrays — goes in `Component.types.ts` in core
 - `abstract` class definitions — goes in core
-- Anything 1st-gen also needs — goes in core
+- Anything gen1 also needs — goes in core
 
 ## Where to look next
 

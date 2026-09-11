@@ -36,7 +36,7 @@ export const a11yUse: PlaywrightTestConfig['use'] = {
 };
 
 export const firstGenA11yProject: PlaywrightTestProject = {
-  name: '1st-gen',
+  name: 'gen1',
   testDir: './gen1/',
   testMatch: '**/packages/*/test/**/*.a11y.spec.ts',
   use: {
@@ -60,7 +60,7 @@ export const secondGenA11yProject: PlaywrightTestProject = {
 };
 
 export const firstGenStorybookServer: PlaywrightTestConfig['webServer'] = {
-  command: 'cd 1st-gen && yarn storybook',
+  command: 'cd gen1 && yarn storybook',
   port: 8080,
   reuseExistingServer: !process.env.CI,
   timeout: 120 * 1000,

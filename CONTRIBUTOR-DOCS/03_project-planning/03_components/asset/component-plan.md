@@ -14,7 +14,7 @@
 - [TL;DR](#tldr)
     - [Most blocking open questions](#most-blocking-open-questions)
 - [Current API surface](#current-api-surface)
-    - [1st-gen (`sp-asset`, published — out of scope)](#1st-gen-sp-asset-published--out-of-scope)
+    - [gen1 (`sp-asset`, published — out of scope)](#gen1-sp-asset-published--out-of-scope)
     - [2nd-gen (`swc-asset`, internal genre — the starting point for this plan)](#2nd-gen-swc-asset-internal-genre--the-starting-point-for-this-plan)
 - [Dependencies](#dependencies)
 - [Changes overview](#changes-overview)
@@ -46,7 +46,7 @@
 
 > **Epic SWC-2317** — [Asset] Expanded feature set.
 >
-> This is not a 1st-gen → 2nd-gen migration. `swc-asset` already exists (internal genre); this
+> This is not a gen1 → 2nd-gen migration. `swc-asset` already exists (internal genre); this
 > plan covers **expanding it in place** into a general image/media primitive, then promoting it
 > to a public component.
 
@@ -84,7 +84,7 @@ which has already been tested and requires no changes to Card's existing CSS.
 
 ## Current API surface
 
-### 1st-gen (`sp-asset`, published — out of scope)
+### gen1 (`sp-asset`, published — out of scope)
 
 **Source:** [`gen1/packages/asset/src/Asset.ts`](../../../../gen1/packages/asset/src/Asset.ts), [`Asset.base.ts`](../../../../gen1/packages/asset/src/Asset.base.ts)
 **Package:** `@spectrum-web-components/asset`
@@ -108,8 +108,8 @@ externally published; nothing here changes as part of this plan — out of scope
 
 | Property  | Type                        | Default    | Attribute | Notes                                                    |
 | --------- | --------------------------- | ---------- | --------- | --------------------------------------------------------- |
-| `variant` | `AssetVariant \| undefined` (`'file' \| 'folder'`) | `undefined` | reflected | Mirrors 1st-gen; retired as part of this plan |
-| `label`   | `string`                    | `''`       | attribute | Mirrors 1st-gen; renamed to `accessibleLabel` and repurposed as part of this plan (see [Accessibility semantics notes](#accessibility-semantics-notes)) |
+| `variant` | `AssetVariant \| undefined` (`'file' \| 'folder'`) | `undefined` | reflected | Mirrors gen1; retired as part of this plan |
+| `label`   | `string`                    | `''`       | attribute | Mirrors gen1; renamed to `accessibleLabel` and repurposed as part of this plan (see [Accessibility semantics notes](#accessibility-semantics-notes)) |
 
 **Slots:** default slot — custom content when `variant` is unset (renders `<slot></slot>`
 inside an internal `.swc-Asset` wrapper).
@@ -456,7 +456,7 @@ plan contract pattern this document follows).
 
 ### Preparation (SWC-2318, this document)
 
-- [x] Current API surface documented (1st-gen and 2nd-gen)
+- [x] Current API surface documented (gen1 and 2nd-gen)
 - [x] Dependencies identified
 - [x] Changes overview documented (Must ship / Additive)
 - [x] 2nd-gen API decisions drafted
@@ -575,7 +575,7 @@ affects.
 - [Asset research.md](./research.md) — the deep-read artifact this plan is drawn from, including the full reasoning behind the aspect-ratio weak-sync mechanism and the Card Gen2 findings
 - [Thumbnail accessibility migration analysis](../thumbnail/accessibility-migration-analysis.md) — a11y model reference (decorative, no disabled/focused/selected, host has no ARIA role)
 - [Asset rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
-- [1st-gen source](../../../../gen1/packages/asset/src/Asset.ts)
+- [gen1 source](../../../../gen1/packages/asset/src/Asset.ts)
 - [2nd-gen source (core)](../../../../2nd-gen/packages/core/components/asset/Asset.base.ts)
 - [2nd-gen source (SWC)](../../../../2nd-gen/packages/swc/components/asset/Asset.ts)
 - [Opacity checkerboard shared style](../../../../2nd-gen/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css)

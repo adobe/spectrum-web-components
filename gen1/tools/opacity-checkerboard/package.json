@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/components/opacity-checkerboard",
   "repository": {
-    "directory": "1st-gen/tools/opacity-checkerboard",
+    "directory": "gen1/tools/opacity-checkerboard",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

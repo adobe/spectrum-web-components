@@ -11,11 +11,11 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [1. 1st-Gen API Surface](#1-1st-gen-api-surface)
+- [1. gen1 API Surface](#1-gen1-api-surface)
     - [Properties](#properties)
 - [2. 2nd-Gen API Surface (implemented)](#2-2nd-gen-api-surface-implemented)
     - [Properties](#properties)
-    - [Dropped from 1st-gen](#dropped-from-1st-gen)
+    - [Dropped from gen1](#dropped-from-gen1)
 - [3. Dependencies](#3-dependencies)
 - [4. Breaking Changes](#4-breaking-changes)
     - [4.1 Size System](#41-size-system)
@@ -42,12 +42,12 @@
 > **Input documents**
 > - [Rendering & Styling Migration Analysis](./rendering-and-styling-migration-analysis.md)
 > - [Washing Machine Workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
-> - 1st-gen source: `gen1/packages/avatar/src/Avatar.ts`
-> - 1st-gen tests: `gen1/packages/avatar/test/`
+> - gen1 source: `gen1/packages/avatar/src/Avatar.ts`
+> - gen1 tests: `gen1/packages/avatar/test/`
 
 ---
 
-## 1. 1st-Gen API Surface
+## 1. gen1 API Surface
 
 ### Properties
 
@@ -80,7 +80,7 @@
 | `disabled` | `boolean` | `false` | Yes | Renders at reduced opacity; entity is inactive or unavailable |
 | `decorative` | `boolean` | `false` | Yes | Marks image as decorative; sets `aria-hidden="true"` on host. Use together with `alt=""` for full semantic correctness. Replaces `isDecorative`. |
 
-### Dropped from 1st-gen
+### Dropped from gen1
 
 | Property | Reason |
 |---|---|
@@ -90,7 +90,7 @@
 
 ## 3. Dependencies
 
-| Dependency | 1st-Gen Source | 2nd-Gen Equivalent | Status |
+| Dependency | gen1 Source | 2nd-Gen Equivalent | Status |
 |---|---|---|---|
 | `Focusable` mixin | `@spectrum-web-components/shared` | Not needed | **Closed — linked variant dropped** |
 | `LikeAnchor` mixin | `@spectrum-web-components/shared` | Not needed | **Closed — linked variant dropped** |
@@ -123,7 +123,7 @@ All `--mod-avatar-*` customization properties removed. Consumers must migrate to
 
 ### 4.6 CSS Class Wrapper
 
-2nd-gen components use a `<div class="swc-Avatar">` wrapper. 1st-gen renders `<img>` directly into the shadow root. Consumers targeting shadow internals will need to update.
+2nd-gen components use a `<div class="swc-Avatar">` wrapper. gen1 renders `<img>` directly into the shadow root. Consumers targeting shadow internals will need to update.
 
 ---
 

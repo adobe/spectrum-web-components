@@ -1,13 +1,13 @@
-# 1st-gen/tools
+# gen1/tools
 
-Shared packages used by all 1st-gen components. Before writing any new utility, mixin, or controller, check here first — the pattern likely already exists.
+Shared packages used by all gen1 components. Before writing any new utility, mixin, or controller, check here first — the pattern likely already exists.
 
 ## Packages
 
 | Package                | Purpose                                                              |
 | ---------------------- | -------------------------------------------------------------------- |
 | `base`                 | `SpectrumElement`, `SizedMixin`, Lit re-exports, decorators          |
-| `bundle`               | Meta-package re-exporting all 1st-gen components for prototyping     |
+| `bundle`               | Meta-package re-exporting all gen1 components for prototyping     |
 | `grid`                 | `sp-grid` — Spectrum grid layout component                           |
 | `opacity-checkerboard` | CSS utility for checkerboard transparency background                 |
 | `reactive-controllers` | `FocusGroup`, `RovingTabindex`, `PendingState`, `ColorController`, … |
@@ -18,5 +18,5 @@ Shared packages used by all 1st-gen components. Before writing any new utility, 
 
 ## Where to look next
 
-- [`../AGENTS.md`](../AGENTS.md) — 1st-gen overview
+- [`../AGENTS.md`](../AGENTS.md) — gen1 overview
 - [`../packages/AGENTS.md`](../packages/AGENTS.md) — component packages

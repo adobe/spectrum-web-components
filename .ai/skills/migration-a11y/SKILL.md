@@ -1,11 +1,11 @@
 ---
 name: migration-a11y
-description: Phase 4 of 1st-gen to 2nd-gen component migration. Use to implement WCAG-aligned semantics, ARIA, keyboard support, and focus management, and document accessibility behavior.
+description: Phase 4 of gen1 to 2nd-gen component migration. Use to implement WCAG-aligned semantics, ARIA, keyboard support, and focus management, and document accessibility behavior.
 ---
 
 # Migration a11y ([Phase 4](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md))
 
-[Phase 4](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is to implement WCAG-aligned behavior — semantics, ARIA, keyboard support, and focus management — and verify it with assistive technology and automated tests.
+[Phase 4](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the gen1 → 2nd-gen component migration. The goal is to implement WCAG-aligned behavior — semantics, ARIA, keyboard support, and focus management — and verify it with assistive technology and automated tests.
 
 See also: [`accessibility-compliance`](../accessibility-compliance/SKILL.md) for general WCAG 2.2 patterns, ARIA reference, and testing tools.
 

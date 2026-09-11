@@ -30,7 +30,7 @@ import Color from 'colorjs.io';
  * smooth gradients and approximate at steep or saturated edges.
  */
 
-/** Minimum dark-border opacity (matches the 1st-gen static 42%). */
+/** Minimum dark-border opacity (matches the gen1 static 42%). */
 export const COLOR_HANDLE_ALPHA_FLOOR = 0.42;
 
 /** WCAG 1.4.11 non-text contrast target. */
@@ -111,7 +111,7 @@ function parseToRgb255(color: string): Rgb | null {
 /**
  * Computes the adaptive dark-border opacity for a handle showing `color`,
  * using the white-first strategy. Returns the floor when `color` cannot be
- * parsed so the border is never weaker than 1st-gen.
+ * parsed so the border is never weaker than gen1.
  */
 export function computeBorderAlpha(
   color: string,

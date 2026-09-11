@@ -25,11 +25,11 @@
 
 ## About this guide
 
-This guide explains when and how to write a consumer-facing migration guide for a 2nd-gen component. Migration guides help consumers move from the 1st-gen `sp-*` components to 2nd-gen `swc-*` components with confidence.
+This guide explains when and how to write a consumer-facing migration guide for a 2nd-gen component. Migration guides help consumers move from the gen1 `sp-*` components to 2nd-gen `swc-*` components with confidence.
 
 ## When to write a migration guide
 
-Write a migration guide when a 2nd-gen component is approaching production readiness and consumers will need to migrate from the equivalent 1st-gen component. A migration guide is required before a component is considered fully production-ready.
+Write a migration guide when a 2nd-gen component is approaching production readiness and consumers will need to migrate from the equivalent gen1 component. A migration guide is required before a component is considered fully production-ready.
 
 You do not need to wait until the component is feature-complete — guides can be updated as the API stabilizes.
 
@@ -72,7 +72,7 @@ Use the `consumer-migration-guide` skill in Claude Code:
 
 The agent will:
 
-- Read the 1st-gen and 2nd-gen component source to identify real API changes
+- Read the gen1 and 2nd-gen component source to identify real API changes
 - Generate before/after examples for each change
 - Build the What changed tables
 - Write component-specific accessibility and styling notes

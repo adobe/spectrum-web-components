@@ -11,7 +11,7 @@
  */
 
 /* The dark-border opacity is set adaptively by the component (white-first
-   contrast, SWC-2295); the floor here matches the 1st-gen static 42% and is
+   contrast, SWC-2295); the floor here matches the gen1 static 42% and is
    the fallback before the component computes a value. The dark→white→dark
    stack (outer box-shadow, white host border, inner inset border) provides the
    additive dual-border: the handle stays visible if either the dark borders or

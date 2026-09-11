@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://adobe.github.io/spectrum-web-components/components/infield-button",
   "repository": {
-    "directory": "1st-gen/packages/infield-button",
+    "directory": "gen1/packages/infield-button",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

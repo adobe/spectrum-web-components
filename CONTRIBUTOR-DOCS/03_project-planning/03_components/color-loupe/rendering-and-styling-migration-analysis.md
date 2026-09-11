@@ -134,7 +134,7 @@ None. Extends `SpectrumElement` directly.
 - **Double-Z path bug**: The SVG path data ends with `61.575ZZ` (double close command); fix to `61.575Z`.
 - **Mask ID mismatch**: `<use xlink:href="#path">` inside `<mask>` references a non-existent `#path` ID — should be `#loupe-path`. Fix in gen-2.
 - **S2 token migration**: The `spectrum-two` branch of spectrum-css introduces `--spectrum-colorloupe-*` intermediary tokens and switches drop shadows to `--spectrum-drop-shadow-elevated-*`. In SWC gen-2 these map to `token("color-loupe-*")` and `token("drop-shadow-elevated-*")`.
-- **Opacity checkerboard**: 1st-gen imports from `@spectrum-web-components/opacity-checkerboard`. Gen-2 should inline the checkerboard pattern using `--swc-opacity-checkerboard-*` tokens from `tokens.css`.
+- **Opacity checkerboard**: gen1 imports from `@spectrum-web-components/opacity-checkerboard`. Gen-2 should inline the checkerboard pattern using `--swc-opacity-checkerboard-*` tokens from `tokens.css`.
 - **No new S2 properties anticipated**: The component API (`open`, `color`) is unchanged between S1 and S2.
 
 ## Factor assessment

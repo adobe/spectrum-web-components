@@ -22,7 +22,7 @@
     - [Why disclosure navigation (not tree, menu, or tablist)](#why-disclosure-navigation-not-tree-menu-or-tablist)
     - [Category items](#category-items)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: `<swc-sidenav>` / `<swc-sidenav-item>`](#recommendations-swc-sidenav--swc-sidenav-item)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Links vs disclosure buttons: the proxy click constraint](#links-vs-disclosure-buttons-the-proxy-click-constraint)
@@ -123,7 +123,7 @@ Category items map to the same concept as `swc-sidenav-heading` — they provide
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 | --- | --- | --- | --- | --- |
@@ -150,7 +150,7 @@ Category items map to the same concept as `swc-sidenav-heading` — they provide
 | **`swc-sidenav-heading`** | Renders a visible `<h*>` (heading level appropriate to context — expose via a `heading-level` property) whose `id` is referenced by `aria-labelledby` on the associated item group `<ul>`. Do not use a presentational `<h2>` with a fixed level; expose the heading level to consumers. |
 | **Disabled items** | Use `aria-disabled="true"` on the `<a>` or `<button>`. Do **not** use the HTML `disabled` attribute on `<a>` (invalid) or on the button if that would remove it from the tab order entirely (some browsers). Disabled items should remain visible in the focus sequence so users know the item exists but is unavailable; script must block activation. |
 | **Icons** | Icons are decorative when the label text carries the full meaning: set `aria-hidden="true"` on the icon element. For icon-only configurations (if supported), the item's `<a>` or `<button>` must carry an accessible name via `aria-label` or a visually hidden text element. |
-| **`label` property** | `swc-sidenav` needs a `label` property that maps to `aria-label` on the `<nav>` element, mirroring 1st-gen. Document this as required for products with multiple navigation landmarks. |
+| **`label` property** | `swc-sidenav` needs a `label` property that maps to `aria-label` on the `<nav>` element, mirroring gen1. Document this as required for products with multiple navigation landmarks. |
 | **`value` property** | Preserve the `value` property on `swc-sidenav-item` for consumers to identify which item is current. The consumer is responsible for comparing this value against their routing state and setting the `current` (or `selected`) property on the matching item. |
 | **Docs** | Document `aria-label` on `swc-sidenav` as required when used alongside other nav landmarks. Document that the component does not manage routing — consumers must set the current item based on their URL or routing system. Document the required `label` property. |
 
@@ -158,7 +158,7 @@ Category items map to the same concept as `swc-sidenav-heading` — they provide
 
 **Do not use the proxy click pattern for items with `href`.**
 
-In 1st-gen (`sp-sidenav-item`), the anchor `href` renders as a real `<a>` element and `handleClick` prevents default only when the item has no `href`. This is correct behavior. In 2nd-gen, the same constraint applies and must be treated as a hard requirement:
+In gen1 (`sp-sidenav-item`), the anchor `href` renders as a real `<a>` element and `handleClick` prevents default only when the item has no `href`. This is correct behavior. In 2nd-gen, the same constraint applies and must be treated as a hard requirement:
 
 - Items with `href` **must** render a real `<a href="...">` element in shadow DOM.
 - The `<a>` must be the element that receives focus and keyboard activation (Enter) for navigation.
@@ -176,7 +176,7 @@ For items that have both `href` and children, follow the [APG hybrid disclosure 
 
 The primary ARIA cross-root concern is the **`role="listitem"`** requirement for `<swc-sidenav-item>` hosts that are slotted into the `<swc-sidenav>` shadow DOM's `<ul>`.
 
-The 1st-gen approach sets `role="listitem"` on the host element in `firstUpdated`. This is a known workaround for slotted custom elements in a `<ul>` context: a `<swc-sidenav-item>` is not a native `<li>`, so the browser's accessibility tree may not expose it as a list item without an explicit role.
+The gen1 approach sets `role="listitem"` on the host element in `firstUpdated`. This is a known workaround for slotted custom elements in a `<ul>` context: a `<swc-sidenav-item>` is not a native `<li>`, so the browser's accessibility tree may not expose it as a list item without an explicit role.
 
 **Recommendation:** Continue setting `role="listitem"` on the `swc-sidenav-item` host element so the outer `<ul>` in `swc-sidenav`'s shadow DOM produces a valid list structure. Verify against the flat-tree accessibility tree in Chrome, Firefox, and Safari to confirm the list/listitem relationship is computed correctly.
 

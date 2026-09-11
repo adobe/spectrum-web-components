@@ -575,7 +575,7 @@ swc-accordion[size="compact"] {
 
 ### Why This Happens
 
-- Carried over from 1st-gen Spectrum CSS, which managed focus rings through its own system
+- Carried over from gen1 Spectrum CSS, which managed focus rings through its own system
 
 ### Why This Is a Problem
 

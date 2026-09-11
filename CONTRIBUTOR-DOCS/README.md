@@ -8,7 +8,7 @@
 <summary><strong>In this doc</strong></summary>
 
 - [About Spectrum Web Components](#about-spectrum-web-components)
-- [About the 1st-gen-to-2nd-gen transition](#about-the-1st-gen-to-2nd-gen-transition)
+- [About the gen1-to-2nd-gen transition](#about-the-gen1-to-2nd-gen-transition)
 - [About these docs](#about-these-docs)
 
 </details>
@@ -57,9 +57,9 @@ While SWC is used primarily by Adobe product teams, it is open-sourced and avail
 
 SWC is developed by a core team in Adobe Design Engineering, but we welcome contributions from inside and outside Adobe.
 
-## About the 1st-gen-to-2nd-gen transition
+## About the gen1-to-2nd-gen transition
 
-Spectrum Web Components is currently in transition from its first generation (1st-gen) to its second generation (2nd-gen).
+Spectrum Web Components is currently in transition from its first generation (gen1) to its second generation (2nd-gen).
 
 - To understand how this transition affects the SWC code base, see [Repository Structure](./01_contributor-guides/03_working-in-the-swc-repo.md#repository-structure).
 - To understand the motivation for this transition, see [Objectives and Strategy](./03_project-planning/01_objectives-and-strategy.md).
@@ -78,7 +78,7 @@ The docs are organized into sections to help you find the information you need:
 
 **[Project Planning](./03_project-planning/README.md)** - Strategic planning documentation including objectives, workstreams, component roadmaps, and milestones. This section contains:
 
-- **[Objectives and Strategy](./03_project-planning/01_objectives-and-strategy.md)** - Strategic context for the 1st-gen-to-2nd-gen transition, including our goals and approach.
+- **[Objectives and Strategy](./03_project-planning/01_objectives-and-strategy.md)** - Strategic context for the gen1-to-2nd-gen transition, including our goals and approach.
 
 - **[Workstreams](./03_project-planning/02_workstreams/README.md)** - Workstream-centric view of cross-cutting work affecting many or all components, helping us work toward specific objectives and coordinate efforts.
 

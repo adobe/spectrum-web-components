@@ -62,7 +62,7 @@ export const FIXED_VALUES = [
 ] as const;
 
 // ──────────────────────────────────────────
-//     S1-ONLY (remove with 1st-gen)
+//     S1-ONLY (remove with gen1)
 // ──────────────────────────────────────────
 
 export const BADGE_VARIANTS_COLOR_S1 = [
@@ -105,9 +105,9 @@ export type FixedValues = (typeof FIXED_VALUES)[number];
 export type BadgeSize = (typeof BADGE_VALID_SIZES)[number];
 export type BadgeSemanticVariant = (typeof BADGE_VARIANTS_SEMANTIC)[number];
 
-// S1-only (remove with 1st-gen)
-export type BadgeColorVariantS1 = (typeof BADGE_VARIANTS_COLOR_S1)[number]; // remove with 1st-gen
-export type BadgeVariantS1 = (typeof BADGE_VARIANTS_S1)[number]; // remove with 1st-gen
+// S1-only (remove with gen1)
+export type BadgeColorVariantS1 = (typeof BADGE_VARIANTS_COLOR_S1)[number]; // remove with gen1
+export type BadgeVariantS1 = (typeof BADGE_VARIANTS_S1)[number]; // remove with gen1
 
 // Canonical
 export type BadgeColorVariant = (typeof BADGE_VARIANTS_COLOR)[number];

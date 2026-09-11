@@ -20,7 +20,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: `<swc-option>`](#recommendations-swc-option)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -38,9 +38,9 @@
 
 ## Overview
 
-This doc tells you how **`swc-option`** should work for **accessibility**. It matches the goal of **WCAG 2.2 Level AA**. `swc-option` is a new 2nd-gen component — it has no 1st-gen `sp-option` predecessor. It is the selectable row inside a `listbox`: a single value the user can choose. Its first consumer is [`swc-combobox`](../combobox/accessibility-migration-analysis.md), which replaces 1st-gen's practice of borrowing `sp-menu-item` for combobox options.
+This doc tells you how **`swc-option`** should work for **accessibility**. It matches the goal of **WCAG 2.2 Level AA**. `swc-option` is a new 2nd-gen component — it has no gen1 `sp-option` predecessor. It is the selectable row inside a `listbox`: a single value the user can choose. Its first consumer is [`swc-combobox`](../combobox/accessibility-migration-analysis.md), which replaces gen1's practice of borrowing `sp-menu-item` for combobox options.
 
-The reason `swc-option` exists is **role ownership**. 1st-gen `sp-combobox` builds its popup from `sp-menu` / `sp-menu-item`, which carry `menu`/`menuitem` semantics, and then works around that mismatch by re-rendering shadow-DOM copies of the options so it can attach the `listbox`/`option` roles it actually needs. A dedicated `swc-option` that **owns `role="option"` on its own host** lets the combobox point `aria-activedescendant` straight at the author's real element, across shadow roots, with the correct role already in place — no menu-to-listbox impedance mismatch and no duplicate rendering. See [`swc-combobox`'s Shadow DOM section](../combobox/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) for the parent side of this relationship.
+The reason `swc-option` exists is **role ownership**. gen1 `sp-combobox` builds its popup from `sp-menu` / `sp-menu-item`, which carry `menu`/`menuitem` semantics, and then works around that mismatch by re-rendering shadow-DOM copies of the options so it can attach the `listbox`/`option` roles it actually needs. A dedicated `swc-option` that **owns `role="option"` on its own host** lets the combobox point `aria-activedescendant` straight at the author's real element, across shadow roots, with the correct role already in place — no menu-to-listbox impedance mismatch and no duplicate rendering. See [`swc-combobox`'s Shadow DOM section](../combobox/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) for the parent side of this relationship.
 
 ### Also read
 
@@ -64,7 +64,7 @@ The reason `swc-option` exists is **role ownership**. 1st-gen `sp-combobox` buil
 
 ### What it is not
 
-- Not a menu item. Even though 1st-gen composes combobox options from `sp-menu-item`, `swc-option` must not inherit `menuitem` semantics, menu-button keyboard behavior, or a `submenu` slot. It is a leaf `option`.
+- Not a menu item. Even though gen1 composes combobox options from `sp-menu-item`, `swc-option` must not inherit `menuitem` semantics, menu-button keyboard behavior, or a `submenu` slot. It is a leaf `option`.
 - Not an independently focusable control in its default (combobox) use. In the active-descendant model, DOM focus stays on the combobox input and never moves to the option (see [Keyboard and focus](#keyboard-and-focus)).
 - Not a container for interactive children. Per [React Spectrum's guidance](https://react-spectrum.adobe.com/ComboBox), buttons or other interactive elements inside an option break keyboard and screen reader navigation; `swc-option` should hold only text and decorative graphics.
 
@@ -99,7 +99,7 @@ The reason `swc-option` exists is **role ownership**. 1st-gen `sp-combobox` buil
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 | --- | --- | --- | --- | --- |
@@ -111,7 +111,7 @@ The reason `swc-option` exists is **role ownership**. 1st-gen `sp-combobox` buil
 
 ## Recommendations: `<swc-option>`
 
-Component tag may change until API freeze. `swc-option` is new in 2nd-gen; there is no 1st-gen `sp-option` to preserve compatibility with. Where behavior is inherited from a parent, this doc points at [`swc-combobox`](../combobox/accessibility-migration-analysis.md) rather than restating it.
+Component tag may change until API freeze. `swc-option` is new in 2nd-gen; there is no gen1 `sp-option` to preserve compatibility with. Where behavior is inherited from a parent, this doc points at [`swc-combobox`](../combobox/accessibility-migration-analysis.md) rather than restating it.
 
 ### ARIA roles, states, and properties
 
@@ -119,9 +119,9 @@ Component tag may change until API freeze. `swc-option` is new in 2nd-gen; there
 | --- | --- |
 | **Host role** | `option`, set on the host via `ElementInternals` (`internals.role = 'option'`). This is the whole point of the component: the role lives on the real, author-supplied element so a parent in a different shadow root can reference it. Do not put `menuitem` or any other role on `swc-option`, and do not move the role into the shadow root — a cross-root `aria-activedescendant` reference must land on a node that itself carries `role="option"`. |
 | **Accessible name** | From the option's slotted label content by default. Provide a `textValue`-style string property for typeahead and for cases where the visible content is not plain readable text (icon-only, or label-plus-description), matching [React Spectrum's `textValue`](https://react-spectrum.adobe.com/ComboBox). Do not rely on a description slot for the name; the name is the label. |
-| **`value` — separate from the label, always unique** | Each option carries a **`value`** property that identifies it for selection and form submission, **decoupled from the displayed label**. This separation is a deliberate fix for a real 1st-gen limitation: consumers with duplicate display text have no key to disambiguate on. `value` is what the combobox submits and what selection is keyed on; the label is what the user reads. Every option in a combobox must have a **unique `value`** across the whole widget (including options inside any [`swc-option-group`](../option-group/accessibility-migration-analysis.md)); the combobox **dev-warns** on a duplicate or missing `value`. A duplicate `value` makes selection ambiguous (the 1st-gen root of [SWC-23](https://jira.corp.adobe.com/browse/SWC-23)). |
+| **`value` — separate from the label, always unique** | Each option carries a **`value`** property that identifies it for selection and form submission, **decoupled from the displayed label**. This separation is a deliberate fix for a real gen1 limitation: consumers with duplicate display text have no key to disambiguate on. `value` is what the combobox submits and what selection is keyed on; the label is what the user reads. Every option in a combobox must have a **unique `value`** across the whole widget (including options inside any [`swc-option-group`](../option-group/accessibility-migration-analysis.md)); the combobox **dev-warns** on a duplicate or missing `value`. A duplicate `value` makes selection ambiguous (the gen1 root of [SWC-23](https://jira.corp.adobe.com/browse/SWC-23)). |
 | **Distinct label among siblings** | Sibling options — options sharing one parent (the combobox directly, or the same `swc-option-group`) — must have **distinct computed labels**, where the computed label is the option's text content **including the alt text of any icon or image** that visually distinguishes it. Two siblings that read identically to a screen reader (and look identical to a sighted user) cannot be told apart, so the combobox **dev-warns** when two sibling options compute to the same label. Options in *different* groups may repeat a label because the group name disambiguates them. Give near-identical options a distinguishing suffix, description, or image alt so the computed labels differ. |
-| **`aria-selected`** | Reflects whether this option is the chosen value. Exactly one option per single-select listbox is `aria-selected="true"` at a time; the parent enforces that via the `LiveSelectionController`. Keep `aria-selected` distinct from *active* state: being the keyboard-active row (the combobox's `aria-activedescendant` target) is **not** selection and must not set `aria-selected`. This separation is the fix for 1st-gen conflating the two. |
+| **`aria-selected`** | Reflects whether this option is the chosen value. Exactly one option per single-select listbox is `aria-selected="true"` at a time; the parent enforces that via the `LiveSelectionController`. Keep `aria-selected` distinct from *active* state: being the keyboard-active row (the combobox's `aria-activedescendant` target) is **not** selection and must not set `aria-selected`. This separation is the fix for gen1 conflating the two. |
 | **`aria-disabled`, not native `disabled`** | Disabled options use `aria-disabled="true"` and stay in the listbox so screen reader users can perceive them and the parent can skip them during arrow traversal (a roving-`tabindex` listbox skips them via the `FocusgroupNavigationController`'s `skipDisabled`; the active-descendant combobox skips them in its own arrow handler). Do not use native `disabled` (it is not valid on the host and would risk removing the element from the accessibility tree). |
 | **Active state (owned by the parent)** | The option does **not** set its own active state. The parent combobox marks the active option through `aria-activedescendant` / `ariaActiveDescendantElement`. `swc-option` should expose a hook (attribute or property) the parent can toggle purely for the *visual* active indicator, but that hook must not write `aria-selected` or any role-bearing ARIA — it is presentation only. |
 | **`lang` passthrough** | Whatever `lang` the author sets on `<swc-option lang="…">` must remain on the element that carries `role="option"`, so AT pronounces the option in the right language ([WCAG 3.1.2](https://www.w3.org/WAI/WCAG22/Understanding/language-of-parts.html), [SWC-2359](https://jira.corp.adobe.com/browse/SWC-2359)). This is automatic when the host is the option element and there is no shadow-copy re-render. |
@@ -132,7 +132,7 @@ Component tag may change until API freeze. `swc-option` is new in 2nd-gen; there
 
 `swc-option`'s own label and description render in its shadow root, and its accessible name computes from that content same-root, so the option has no internal cross-root problem. The cross-root relationship is **between the option and its parent**, and it is resolved on the parent's side: the combobox (or listbox) references the option via the `ariaActiveDescendantElement` and `ariaControlsElements` element-reference properties, which resolve across shadow boundaries — see [`swc-combobox`'s Shadow DOM section](../combobox/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues).
 
-What `swc-option` must guarantee for that to work: it carries `role="option"` **on the referenceable host** (not on an inner shadow node the parent cannot reach), and its `lang`, name, and `aria-selected`/`aria-disabled` state are all on that same host node. Because the option is the author's real element (slotted into the combobox or picker and projected into that parent's internal shadow-DOM listbox), there is no duplicate shadow-DOM copy to keep in sync — the defect class 1st-gen's re-render created ([SWC-592](https://jira.corp.adobe.com/browse/SWC-592), [SWC-2359](https://jira.corp.adobe.com/browse/SWC-2359)) does not exist here.
+What `swc-option` must guarantee for that to work: it carries `role="option"` **on the referenceable host** (not on an inner shadow node the parent cannot reach), and its `lang`, name, and `aria-selected`/`aria-disabled` state are all on that same host node. Because the option is the author's real element (slotted into the combobox or picker and projected into that parent's internal shadow-DOM listbox), there is no duplicate shadow-DOM copy to keep in sync — the defect class gen1's re-render created ([SWC-592](https://jira.corp.adobe.com/browse/SWC-592), [SWC-2359](https://jira.corp.adobe.com/browse/SWC-2359)) does not exist here.
 
 **Embedded case — demonstrated by proof of concept:** whether the parent's `ariaActiveDescendantElement` resolves to this option when it is projected by slot into a combobox's or picker's internal shadow-DOM listbox — and especially when it is nested one further level inside a `swc-option-group` — is shown to work by the [hybrid grouped-combobox POC](https://nikkimk.github.io/web-component-form-strategy-demos/demo-hybrid.html), where the active-descendant reference points at the option (never its group) across the slot projection. This is tracked on the parent side; see [`swc-combobox`'s Shadow DOM section](../combobox/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues). `swc-option`'s obligation is only to keep the role and state on the referenceable host so the reference has a valid target.
 

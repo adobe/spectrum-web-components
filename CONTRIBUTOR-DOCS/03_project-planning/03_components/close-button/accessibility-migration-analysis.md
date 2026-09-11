@@ -20,8 +20,8 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
-- [1st-gen implementation notes](#1st-gen-implementation-notes)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
+- [gen1 implementation notes](#gen1-implementation-notes)
 - [Recommendations: `<swc-close-button>`](#recommendations-swc-close-button)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -40,7 +40,7 @@
 
 ## Overview
 
-This doc describes how **`swc-close-button`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. **`sp-close-button`** lives in the **`button`** package and extends **`StyledButton`** → **`ButtonBase`** in 1st-gen (alongside **`sp-button`**); 2nd-gen semantics should stay aligned with [Button migration plan](../button/migration-plan.md) for shared **`ButtonBase`** / **core** sequencing, **`aria-label`** / **`label`** reflection, and other **`swc-button`** outcomes tracked there (**e.g.** [SWC-1333](https://jira.corp.adobe.com/browse/SWC-1333)). It aligns with [Button accessibility migration analysis](../button/accessibility-migration-analysis.md) and the same **native button**, **focus delegation**, and **naming** expectations as compact **chrome** controls in [Action button migration roadmap](../action-button/rendering-and-styling-migration-analysis.md): a **real** **`<button type="button">`**, **delegated focus**, a **discernible name**, and **no** duplicate host **`role="button"`** when an inner button is the focus target. **`swc-close-button`** is the **dismiss** affordance for dialogs, banners, action bars, and similar surfaces—authors must not ship it **icon-only** without an explicit **accessible name** that matches the **action** (for example **Close** vs **Clear selection**). For **how** **close** differs from **default button** and **clear**, see [Button, close button, and clear button (compared)](#button-close-button-and-clear-button-compared).
+This doc describes how **`swc-close-button`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. **`sp-close-button`** lives in the **`button`** package and extends **`StyledButton`** → **`ButtonBase`** in gen1 (alongside **`sp-button`**); 2nd-gen semantics should stay aligned with [Button migration plan](../button/migration-plan.md) for shared **`ButtonBase`** / **core** sequencing, **`aria-label`** / **`label`** reflection, and other **`swc-button`** outcomes tracked there (**e.g.** [SWC-1333](https://jira.corp.adobe.com/browse/SWC-1333)). It aligns with [Button accessibility migration analysis](../button/accessibility-migration-analysis.md) and the same **native button**, **focus delegation**, and **naming** expectations as compact **chrome** controls in [Action button migration roadmap](../action-button/rendering-and-styling-migration-analysis.md): a **real** **`<button type="button">`**, **delegated focus**, a **discernible name**, and **no** duplicate host **`role="button"`** when an inner button is the focus target. **`swc-close-button`** is the **dismiss** affordance for dialogs, banners, action bars, and similar surfaces—authors must not ship it **icon-only** without an explicit **accessible name** that matches the **action** (for example **Close** vs **Clear selection**). For **how** **close** differs from **default button** and **clear**, see [Button, close button, and clear button (compared)](#button-close-button-and-clear-button-compared).
 
 ### Also read
 
@@ -55,7 +55,7 @@ All three are **`role="button"`** surfaces in Spectrum: **native** **`<button ty
 | **Primary job** | General **commit** actions: submit, open dialog, toggle UI, choose variant, etc. | **Dismiss** or **close** a **container** or chrome region (dialog, popover, toast, action bar, banner). | **Clear** or **reset** a **value** in an **input** or similar control (search field, text field, tag)—the **parent** surface usually **stays** open. |
 | **Typical context** | Forms, pages, dialogs (primary actions), toolbars. | **Chrome** on overlays and layout regions that **end** when dismissed. | **Adornments** on **fields** and **compact** controls ([Search](../search/rendering-and-styling-migration-analysis.md) patterns show **`sp-clear-button`**). |
 | **Visual / emphasis** | Full **button** scale and variants (fill, outline, pending, …). | **Compact** **cross**-forward **dismiss** styling. | **Compact** **cross**-forward **clear** styling (often **quiet**). |
-| **Accessible name** | From visible label, **`aria-label`**, or reflected props—breadth of Spectrum **button** content. | **Must** describe **dismiss** in context (**Close**, **Dismiss**, …)—not a bare cross ([SWC-1150](https://jira.corp.adobe.com/browse/SWC-1150)). **Do not** label a **close** control as if it **cleared** a selection when it actually **closes** the bar ([SWC-550](https://jira.corp.adobe.com/browse/SWC-550)). | **Must** describe **clearing** the value (**Clear**, **Clear search**, **Clear text**, …)—not **Close**. In 1st-gen, **`label`** is **required** and maps to **`aria-label`** only (not visually rendered by default); see snippet below. |
+| **Accessible name** | From visible label, **`aria-label`**, or reflected props—breadth of Spectrum **button** content. | **Must** describe **dismiss** in context (**Close**, **Dismiss**, …)—not a bare cross ([SWC-1150](https://jira.corp.adobe.com/browse/SWC-1150)). **Do not** label a **close** control as if it **cleared** a selection when it actually **closes** the bar ([SWC-550](https://jira.corp.adobe.com/browse/SWC-550)). | **Must** describe **clearing** the value (**Clear**, **Clear search**, **Clear text**, …)—not **Close**. In gen1, **`label`** is **required** and maps to **`aria-label`** only (not visually rendered by default); see snippet below. |
 | **Pending / loading** | Full **`swc-button`** **pending** contract ([Button accessibility migration analysis](../button/accessibility-migration-analysis.md)). | Not a typical **close** surface; if product adds async dismiss, align with **`swc-button`** **pending** guidance. | Same as **close**—not the primary **pending** surface. |
 | **`href` / link** | **No** **`href`** on **`swc-button`** (navigation on **`swc-link`** / **`<a>`**). | **No** **`href`**. | **No** **`href`**. |
 | **2nd-gen a11y doc** | [Button accessibility migration analysis](../button/accessibility-migration-analysis.md) | This doc. | **Dedicated** **`swc-clear-button`** accessibility migration analysis **when** that component is migrated—until then, apply the same **name** / **keyboard** / **delegation** rules here and in field composite docs. |
@@ -75,7 +75,7 @@ All three are **`role="button"`** surfaces in Spectrum: **native** **`<button ty
 ### What it is
 
 - **`swc-close-button`:** A **compact** control whose **primary** job is to **close** or **dismiss** a region (dialog, popover, toast, selection bar, etc.). It is **keyboard-focusable** and activates with **Enter** / **Return** or **Space** like any **button** ([APG Button](https://www.w3.org/WAI/ARIA/apg/patterns/button/)).
-- **Name:** Comes from the **`label`** attribute (reflected to the underlying button when wired), visible slotted text (1st-gen places default slot content in a **visually hidden** span so the **cross** icon can dominate layout), and/or **`aria-label`** on the focus target—**every** instance needs a **name** that describes the **outcome** for assistive technologies.
+- **Name:** Comes from the **`label`** attribute (reflected to the underlying button when wired), visible slotted text (gen1 places default slot content in a **visually hidden** span so the **cross** icon can dominate layout), and/or **`aria-label`** on the focus target—**every** instance needs a **name** that describes the **outcome** for assistive technologies.
 
 ### When to use something else
 
@@ -111,7 +111,7 @@ All three are **`role="button"`** surfaces in Spectrum: **native** **`<button ty
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 Adobe Jira is authoritative for current status and resolution; refresh cells when you triage. Rows below omit issues labeled **`gen2`** / **`gen-2`** from the shared **Button / ButtonBase / Close button** query and omit **audit** epic **[SWC-872](https://jira.corp.adobe.com/browse/SWC-872)** (cross-cutting audit).
 
@@ -127,7 +127,7 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 
 ---
 
-## 1st-gen implementation notes
+## gen1 implementation notes
 
 **`sp-close-button`** lives in the **`button`** package and extends **`StyledButton`** → **`ButtonBase`** (same **`focusElement`** / anchor concerns as [Button accessibility migration analysis](../button/accessibility-migration-analysis.md) until 2nd-gen converges on **inner** **`<button>`** + **delegation**). **2nd-gen** implementation order and shared **core** decisions should follow [Button migration plan](../button/migration-plan.md). Default content is wrapped in a **visually hidden** span so the **cross** icon remains the visible affordance—authors still owe a **real** **name** via **`label`**, slot text, or reflected **`aria-*`** on the focus target.
 
@@ -173,7 +173,7 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 
 ### Live regions, loading, and announcements
 
-**Does not apply** for the current **1st-gen** **`sp-close-button`** (no **pending** surface). If product adds **async close**, align with [Figma — Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery) and **`swc-button`** guidance—**never** **`aria-live="assertive"`** for routine UI.
+**Does not apply** for the current **gen1** **`sp-close-button`** (no **pending** surface). If product adds **async close**, align with [Figma — Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery) and **`swc-button`** guidance—**never** **`aria-live="assertive"`** for routine UI.
 
 ### Keyboard and focus
 

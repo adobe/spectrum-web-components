@@ -19,7 +19,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: avatar image](#recommendations-avatar-image)
     - [SWC style (native **`<img>`**)](#swc-style-native-img)
     - [**`<swc-avatar>`** (component)](#swc-avatar-component)
@@ -28,7 +28,7 @@
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
     - [Accessibility tree expectations](#accessibility-tree-expectations)
     - [Keyboard and focus](#keyboard-and-focus)
-- [Known 1st-gen issues](#known-1st-gen-issues)
+- [Known gen1 issues](#known-gen1-issues)
 - [Testing](#testing)
     - [Automated tests](#automated-tests)
 - [Summary checklist](#summary-checklist)
@@ -43,11 +43,11 @@
 This doc defines how the **avatar image** should work for **accessibility**—the **static**, **non-navigating** photo (not wrapped in a link)—targeting **WCAG 2.2 Level AA**. **2nd-gen** should **offer** the avatar image in **two** ways so teams can choose what fits their stack:
 
 1. **SWC style** — Spectrum **CSS** / **design tokens** and **usage guidance** applied to a native **`<img>`** (or equivalent) in **light** DOM.
-2. **Component** — **`<swc-avatar>`** (no **`href`**) that **encapsulates** the same **visual** **language**, **`src`**, **`label`** → shadow **`<img alt>`**, **`isDecorative`**, and **dev** **warnings**, matching **1st-gen** **`<sp-avatar>`** without **`href`** in spirit.
+2. **Component** — **`<swc-avatar>`** (no **`href`**) that **encapsulates** the same **visual** **language**, **`src`**, **`label`** → shadow **`<img alt>`**, **`isDecorative`**, and **dev** **warnings**, matching **gen1** **`<sp-avatar>`** without **`href`** in spirit.
 
 **Linked** avatars (hyperlink affordance) use a **separate** **component**: **`swc-avatar-link`** (see [Avatar — linked variant (`swc-avatar-link`)](../avatar/accessibility-migration-analysis.md#the-linked-variant-avatar-link)).
 
-**1st-gen** **`<sp-avatar>`** mixes **avatar image** and **`href`** on one tag; **2nd-gen** splits **`<swc-avatar>`** (static) **or** **styled** **`<img>`** from **`swc-avatar-link`**.
+**gen1** **`<sp-avatar>`** mixes **avatar image** and **`href`** on one tag; **2nd-gen** splits **`<swc-avatar>`** (static) **or** **styled** **`<img>`** from **`swc-avatar-link`**.
 
 ### Also read
 
@@ -57,12 +57,12 @@ This doc defines how the **avatar image** should work for **accessibility**—th
 ### Avatar image as an SWC style
 
 - **Visual:** circular (or Spectrum-shaped) chrome via shared classes / custom properties (see the rendering roadmap), applied to a standard **`<img>`**.
-- **Semantics:** **`alt`** / **`alt=""`** + **`aria-hidden="true"`** are **author-owned**; optional **ESLint**, Storybook, or docs checks can mirror **1st-gen** **warnings** when **avatar** **styling** is detected.
+- **Semantics:** **`alt`** / **`alt=""`** + **`aria-hidden="true"`** are **author-owned**; optional **ESLint**, Storybook, or docs checks can mirror **gen1** **warnings** when **avatar** **styling** is detected.
 
 ### Avatar image as **`<swc-avatar>`** (component)
 
 - **Visual:** same **tokens** / **stylesheet** surface as the **SWC** **style** path so **`swc-avatar-link`** and **`<swc-avatar>`** stay **visually** **aligned**.
-- **Semantics:** expose **`label`** → shadow **`<img alt>`**, **`isDecorative`** (reflect **`is-decorative`**), and **dev-only** **`window.__swc.warn`** when **`!label && !isDecorative`**, per **1st-gen** **`Avatar.ts`** and resolved **[SWC-915](https://jira.corp.adobe.com/browse/SWC-915)** (Adobe internal Jira).
+- **Semantics:** expose **`label`** → shadow **`<img alt>`**, **`isDecorative`** (reflect **`is-decorative`**), and **dev-only** **`window.__swc.warn`** when **`!label && !isDecorative`**, per **gen1** **`Avatar.ts`** and resolved **[SWC-915](https://jira.corp.adobe.com/browse/SWC-915)** (Adobe internal Jira).
 - **No `href`** on **`<swc-avatar>`**; navigation is **`swc-avatar-link`** only.
 
 ### When to use **`swc-avatar-link`** instead
@@ -84,11 +84,11 @@ This doc defines how the **avatar image** should work for **accessibility**—th
 | [Non-text content (1.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content) | Meaningful avatar images need **`alt`** text; decorative ones use **`alt=""`** and hide from AT when appropriate (**`aria-hidden="true"`**). |
 | [Name, role, value (4.1.2)](https://www.w3.org/TR/WCAG22/#name-role-value) | The meaningful node is the **`<img>`** (name via **`alt`**); the **avatar image** is not an interactive widget. |
 
-**Bottom line:** The **avatar image** is not a link or button. Do not put it in the **Tab** order. A native **`<img>`** is not tab-focusable by default; **`<swc-avatar>`** must **not** delegate **focus** to the host or shadow **`<img>`** (fix **1st-gen** **`Focusable`** behavior for the static case).
+**Bottom line:** The **avatar image** is not a link or button. Do not put it in the **Tab** order. A native **`<img>`** is not tab-focusable by default; **`<swc-avatar>`** must **not** delegate **focus** to the host or shadow **`<img>`** (fix **gen1** **`Focusable`** behavior for the static case).
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 |------|------|-------------------|-------------------------|---------|
@@ -111,9 +111,9 @@ This doc defines how the **avatar image** should work for **accessibility**—th
 
 | Topic | What to do |
 |-------|------------|
-| **`isDecorative`** | Add **`is-decorative`**; **`alt=""`** and **`aria-hidden="true"`** on shadow **`<img>`** when decorative and not linked (match **1st-gen** render rules). |
+| **`isDecorative`** | Add **`is-decorative`**; **`alt=""`** and **`aria-hidden="true"`** on shadow **`<img>`** when decorative and not linked (match **gen1** render rules). |
 | **`label`** | Maps to shadow **`<img alt>`** when the image is informative. |
-| **Dev warning** | **`!label && !isDecorative`** → **`window.__swc.warn`** in dev, as **1st-gen**. |
+| **Dev warning** | **`!label && !isDecorative`** → **`window.__swc.warn`** in dev, as **gen1**. |
 | **No `href`** | Reject or ignore **`href`** on **`<swc-avatar>`**; authors use **`swc-avatar-link`**. Consider a dev mode warning for **`href`** on **`<swc-avatar>`** to help teams migrate to **`swc-avatar-link`**.|
 | **Focus** | **Not** **focusable**; do **not** extend **`Focusable`** for the static avatar image, or ensure **`tabIndex`** **-1** and **no** **delegated** **focus** **to** **host**. |
 
@@ -144,11 +144,11 @@ This doc defines how the **avatar image** should work for **accessibility**—th
 
 ---
 
-## Known 1st-gen issues
+## Known gen1 issues
 
 - **Single** **`<sp-avatar>`** supports **`href`** and **`Focusable`**, mixing **avatar image** and **link**—migrate to **`<swc-avatar>`** **or** **SWC** **style** **+** **`img`**, **plus** **`swc-avatar-link`** for links.
 - **Non-link** **`Focusable`** may leave the host as **`focusElement`** when **`#link`** is absent—**`<swc-avatar>`** must not repeat that for static avatar images.
-- **`warnMissingAlt`** and **[SWC-915](https://jira.corp.adobe.com/browse/SWC-915)** define **1st-gen** avatar image rules; **2nd-gen** **`swc-avatar`** should preserve them on the component path, and the **SWC** **style** path should document the same rules for authors and optional lint.
+- **`warnMissingAlt`** and **[SWC-915](https://jira.corp.adobe.com/browse/SWC-915)** define **gen1** avatar image rules; **2nd-gen** **`swc-avatar`** should preserve them on the component path, and the **SWC** **style** path should document the same rules for authors and optional lint.
 
 ---
 
@@ -159,7 +159,7 @@ This doc defines how the **avatar image** should work for **accessibility**—th
 | Kind of test | What to check |
 |--------------|----------------|
 | **Docs / examples** | **SWC** **style:** styled **`<img>`** has **`alt`** or decorative pattern (**`alt=""`** + **`aria-hidden`**). **Component:** **`<swc-avatar>`** stories cover **`label`**, **`isDecorative`**, and dev warnings. |
-| **Unit (`swc-avatar`)** | **`label`** → **`img.alt`**; **`isDecorative`** matches **1st-gen**; **`href`** not supported. |
+| **Unit (`swc-avatar`)** | **`label`** → **`img.alt`**; **`isDecorative`** matches **gen1**; **`href`** not supported. |
 | **Focus** | **`<swc-avatar>`** is in the Tab order. |
 | **aXe + Storybook** | Stories cover both **style** and **component** examples with real **`alt`** or explicit decorative markup. |
 
@@ -170,7 +170,7 @@ This doc defines how the **avatar image** should work for **accessibility**—th
 - [ ] **Avatar image** is offered and documented as **both** **SWC** **style** (**`<img>`**) **and** **`<swc-avatar>`** (no **`href`**).
 - [ ] Shared **CSS** / **tokens** keep **`<swc-avatar>`**, **SWC** **style**, and **`swc-avatar-link`** visually aligned.
 - [ ] Guidance covers decorative vs informative **`alt`**, **`aria-hidden`**, and **`isDecorative`** / **`label`** on **`<swc-avatar>`**.
-- [ ] **`<swc-avatar>`** uses dev warnings like **1st-gen**; **SWC** **style** path documents optional lint or docs checks.
+- [ ] **`<swc-avatar>`** uses dev warnings like **gen1**; **SWC** **style** path documents optional lint or docs checks.
 - [ ] Avatar image is not keyboard-focusable on either path.
 - [ ] **`swc-avatar-link`** owns linked cases; cross-link [Avatar — linked variant (`swc-avatar-link`)](../avatar/accessibility-migration-analysis.md#the-linked-variant-avatar-link) from Storybook.
 

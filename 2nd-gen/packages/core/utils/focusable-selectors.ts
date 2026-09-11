@@ -14,7 +14,7 @@
  * CSS selector strings for matching focusable and tabbable DOM elements
  * per the HTML specification.
  *
- * These selectors use standard HTML focusability rules only — the 1st-gen
+ * These selectors use standard HTML focusability rules only — the gen1
  * custom `[focusable]` attribute selector is intentionally not included,
  * as native `delegatesFocus` replaces that workaround.
  */

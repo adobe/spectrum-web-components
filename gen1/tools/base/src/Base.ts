@@ -79,11 +79,11 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 }
 
 /**
- * Base class for 1st-gen Spectrum Web Components.
+ * Base class for gen1 Spectrum Web Components.
  */
 export class SpectrumElement extends SpectrumMixin(LitElement) {
   /**
-   * The version of the 1st-gen Spectrum Web Components library.
+   * The version of the gen1 Spectrum Web Components library.
    */
   static VERSION = version;
 

@@ -22,7 +22,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: `<swc-action-menu>`](#recommendations-swc-action-menu)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -111,14 +111,14 @@ These items wait on a single product decision from design and accessibility:
 | --- | --- |
 | [Name, role, value (4.1.2)](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value) | Trigger has button semantics and a name; menu and items are exposed per [Menu](../menu/accessibility-migration-analysis.md). Ellipses-only action menus still need a name. Disabled `swc-menu-item` rows use `aria-disabled="true"` when the row is disabled and cannot be activated, same as [Menu item — ARIA: Disabled row](../menu-item/accessibility-migration-analysis.md#aria-roles-states-and-properties) and [Menu — Guidelines that apply](../menu/accessibility-migration-analysis.md#guidelines-that-apply). |
 | [Focus order (2.4.3)](https://www.w3.org/WAI/WCAG22/Understanding/focus-order) / [Focus visible (2.4.7)](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible) | Open moves focus into the menu; Escape returns focus to the trigger; roving tabindex in the list (`FocusgroupNavigationController`). |
-| [Keyboard (2.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/keyboard) | All commands from the [menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) pattern; no pointer-only submenus (1st-gen [SWC-1332](https://jira.corp.adobe.com/browse/SWC-1332), [SWC-671](https://jira.corp.adobe.com/browse/SWC-671)). |
+| [Keyboard (2.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/keyboard) | All commands from the [menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) pattern; no pointer-only submenus (gen1 [SWC-1332](https://jira.corp.adobe.com/browse/SWC-1332), [SWC-671](https://jira.corp.adobe.com/browse/SWC-671)). |
 | [Non-text contrast (1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | Focus indicators on items and submenu parents ([SWC-1517](https://jira.corp.adobe.com/browse/SWC-1517)). |
 
 **Bottom line:** `swc-action-menu` is a full menu-button host like `swc-menu` (trigger, `swc-popover`, `role="menu"` in shadow DOM, items / groups / separators in the menu slot). Submenus sit on `swc-menu-item` in its shadow tree, not a second `swc-menu` in the list. Row and submenu details are in the [menu item doc](../menu-item/accessibility-migration-analysis.md) and [menu doc](../menu/accessibility-migration-analysis.md). This doc centers ActionMenu trigger defaults, wiring, and tests. Tray and selectable rows follow [Migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current).
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 | --- | --- | --- | --- | --- |
@@ -208,15 +208,15 @@ Intentionally omitted. If popover open/close uses motion, treat it like other la
 
 ### Keyboard testing
 
-Follow the 2nd-gen Storybook [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) guide on a fully composed path (**`swc-action-menu`** or **`swc-menu`**: **trigger** + **internal** **`role="menu"`** **(shadow)** + **`swc-popover`**, not the 1st-gen overlay stack). Cover the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) on the trigger (open/close, focus return) and in-menu keys on the **open** **menu** **surface** ([FocusgroupNavigationController](https://github.com/adobe/spectrum-web-components/pull/6129)); if implemented, cover [printable character navigation (not typeahead)](../menu/accessibility-migration-analysis.md#printable-character-navigation-optional-not-typeahead) on the top-level list and in submenus. Include Escape, **submenu** **item** / **`submenu` slot** cases, and small-viewport popover positioning as relevant. See [Menu: Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing) for menu surface detail, [Menu item: Keyboard and focus](../menu-item/accessibility-migration-analysis.md#keyboard-and-focus) for **submenu** **rows**, and [Recommendations: Keyboard and focus](#keyboard-and-focus) here.
+Follow the 2nd-gen Storybook [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) guide on a fully composed path (**`swc-action-menu`** or **`swc-menu`**: **trigger** + **internal** **`role="menu"`** **(shadow)** + **`swc-popover`**, not the gen1 overlay stack). Cover the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) on the trigger (open/close, focus return) and in-menu keys on the **open** **menu** **surface** ([FocusgroupNavigationController](https://github.com/adobe/spectrum-web-components/pull/6129)); if implemented, cover [printable character navigation (not typeahead)](../menu/accessibility-migration-analysis.md#printable-character-navigation-optional-not-typeahead) on the top-level list and in submenus. Include Escape, **submenu** **item** / **`submenu` slot** cases, and small-viewport popover positioning as relevant. See [Menu: Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing) for menu surface detail, [Menu item: Keyboard and focus](../menu-item/accessibility-migration-analysis.md#keyboard-and-focus) for **submenu** **rows**, and [Recommendations: Keyboard and focus](#keyboard-and-focus) here.
 
 ### Playwright-only or host-only accessibility gates
 
-Mirror test cases from 1st-gen defects in the Jira table; add 2nd-gen stories for ellipsis, icon naming, and a fully composed **Action menu** (or **Menu**) path: **trigger** + **top-level** **`swc-popover`**. Mobile tray is out of scope for the current migration (no separate tray test branch here).
+Mirror test cases from gen1 defects in the Jira table; add 2nd-gen stories for ellipsis, icon naming, and a fully composed **Action menu** (or **Menu**) path: **trigger** + **top-level** **`swc-popover`**. Mobile tray is out of scope for the current migration (no separate tray test branch here).
 
 ### Manual and screen reader testing
 
-- macOS + iOS VoiceOver, NVDA; follow [Keyboard testing](#keyboard-testing) and [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) on a fully composed **`swc-action-menu`** (or equivalent **Menu** host) path (**trigger** + **`swc-popover`**, not the 1st-gen overlay stack).
+- macOS + iOS VoiceOver, NVDA; follow [Keyboard testing](#keyboard-testing) and [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) on a fully composed **`swc-action-menu`** (or equivalent **Menu** host) path (**trigger** + **`swc-popover`**, not the gen1 overlay stack).
 - Submenus and mobile/touch ([SWC-686](https://jira.corp.adobe.com/browse/SWC-686), [SWC-89](https://jira.corp.adobe.com/browse/SWC-89)): tray-related issues may not apply until tray is in scope; still verify popover-positioned menus on small viewports where relevant.
 
 Do not require checkbox or radio menu item stories or selection-mode coverage until [Menu migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current) closes; the APG [editor menubar example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/) remains a future reference when that work ships.
@@ -233,8 +233,8 @@ If 2nd-gen supports **cascading** **menus** via **`swc-menu-item`’s** **`subme
 - [ ] Both `swc-menu` and `swc-action-menu` are full menu-button hosts; `role="menu"` is in shadow DOM, not the CE host ([Menu — Overview](../menu/accessibility-migration-analysis.md#overview)). Do not slot `swc-menu` / `swc-action-menu` as list children. Menu slot: only item, group, separator (check source). Submenus: `submenu` slot on `swc-menu-item` in shadow, not a nested `swc-menu` in the list.
 - [ ] Disabled `swc-menu-item` rows: `aria-disabled="true"` and no activation when disabled, aligned with [Menu item — ARIA: Disabled row](../menu-item/accessibility-migration-analysis.md#aria-roles-states-and-properties) and [Menu — Recommendations](../menu/accessibility-migration-analysis.md#recommendations-swc-menu).
 - [ ] Open/close and keyboard wiring (see [Menu doc](../menu/accessibility-migration-analysis.md); may split controller, `swc-popover`, menu hosts). `FocusgroupNavigationController` for in-list move; `swc-popover` anchors the layer. If implemented, [printable character navigation (not typeahead)](../menu/accessibility-migration-analysis.md#printable-character-navigation-optional-not-typeahead) on `swc-action-menu` and submenus matches `swc-menu`. Tray and item selection: [Migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current).
-- [ ] Jira backlog (1st-gen table above) triaged alongside current migration work in Jira; tests for `swc-popover`-positioned menus (no tray branch in this scope).
-- [ ] iOS, touch, and submenus ([SWC-686](https://jira.corp.adobe.com/browse/SWC-686), [SWC-89](https://jira.corp.adobe.com/browse/SWC-89), [SWC-1332](https://jira.corp.adobe.com/browse/SWC-1332), [SWC-671](https://jira.corp.adobe.com/browse/SWC-671))—SWC-686 references 1st-gen tray; revalidate against `swc-popover` where applicable.
+- [ ] Jira backlog (gen1 table above) triaged alongside current migration work in Jira; tests for `swc-popover`-positioned menus (no tray branch in this scope).
+- [ ] iOS, touch, and submenus ([SWC-686](https://jira.corp.adobe.com/browse/SWC-686), [SWC-89](https://jira.corp.adobe.com/browse/SWC-89), [SWC-1332](https://jira.corp.adobe.com/browse/SWC-1332), [SWC-671](https://jira.corp.adobe.com/browse/SWC-671))—SWC-686 references gen1 tray; revalidate against `swc-popover` where applicable.
 
 ---
 

@@ -50,7 +50,7 @@ export class Tabs extends TabsBase {
    *
    * Shadow `delegatesFocus: true` keeps native focus-delegation where supported;
    * `TabsBase.focus()` focuses the selected slotted tab explicitly so
-   * programmatic `focus()` matches 1st-gen expectations regardless of engine.
+   * programmatic `focus()` matches gen1 expectations regardless of engine.
    */
   public static override shadowRootOptions: ShadowRootInit = {
     delegatesFocus: true,

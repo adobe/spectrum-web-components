@@ -13,7 +13,7 @@
 
 - [TL;DR](#tldr)
     - [Resolved questions](#resolved-questions)
-- [1st-gen API surface](#1st-gen-api-surface)
+- [gen1 API surface](#gen1-api-surface)
     - [Properties / attributes](#properties--attributes)
     - [Methods](#methods)
     - [Events](#events)
@@ -58,10 +58,10 @@
 
 ## TL;DR
 
-Button group is a simple layout and semantics wrapper for related button actions. The 1st-gen implementation is minimal (flexbox container with size propagation), making the migration straightforward. The core changes are:
+Button group is a simple layout and semantics wrapper for related button actions. The gen1 implementation is minimal (flexbox container with size propagation), making the migration straightforward. The core changes are:
 
 - **Rename `vertical` boolean to `orientation` property** (aligns with React Spectrum S2 and Figma); this is the only consumer-facing breaking change.
-- **Add `role="group"`** on the host for WCAG compliance (1st-gen is missing this).
+- **Add `role="group"`** on the host for WCAG compliance (gen1 is missing this).
 - **Add `align` property** for button alignment (start/center/end); matches React S2.
 - **Propagate disabled state** from group to children via an optional `disabled` attribute.
 - **Overflow behavior (flex wrapping or auto-switch to vertical)** is documented in React S2 but is not in the Figma design spec; deferred from MVP. Regular flex wrapping may be an acceptable starting point since arrow-key navigation is not managed by button-group.
@@ -74,7 +74,7 @@ Button group is a simple layout and semantics wrapper for related button actions
 
 ---
 
-## 1st-gen API surface
+## gen1 API surface
 
 **Source:** [`gen1/packages/button-group/src/ButtonGroup.ts`](../../../../gen1/packages/button-group/src/ButtonGroup.ts)
 **Version:** `@spectrum-web-components/button-group@1.12.1`
@@ -173,20 +173,20 @@ None. Button group can proceed independently because `swc-button` is already com
 
 #### API and naming
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B1** | `vertical` boolean → `orientation` property | `vertical` boolean attribute switches to column layout | `orientation="horizontal"` (default) or `orientation="vertical"`; explicit API aligned with React S2 and Figma | Replace `vertical` attribute with `orientation="vertical"`. Source: React S2 `orientation` prop. |
 | **B2** | Default size introduced | Accepts `'s'` \| `'m'` \| `'l'` \| `'xl'` (no default) | Accepts `'s'` \| `'m'` \| `'l'` \| `'xl'` with default `'m'` | Consumers without explicit `size` will now get `'m'` behavior. XL is supported; same 12px gap token as M/L. |
 
 #### Styling and visuals
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B3** | Updated spacing tokens | Uses `--spectrum-spacing-300` (default), `--spectrum-spacing-200` (S) | Same tokens from spectrum-css `spectrum-two`; no visual change expected | No consumer action needed; visual refresh happens automatically. |
 
 #### Accessibility and behavior
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B4** | Add `role="group"` on host | No role set on host | Host exposes `role="group"` via ElementInternals or explicit attribute | No consumer action; improvement is transparent. |
 | **B5** | Disabled propagation to children | Not supported | `disabled` attribute on host propagates `disabled` to each slotted `swc-button` | Consumers gain group-level disable; no breaking change. |
@@ -203,7 +203,7 @@ None. Button group can proceed independently because `swc-button` is already com
 
 ## 2nd-gen API decisions
 
-These are derived from the 1st-gen implementation, current deprecations, the Figma Desktop Button group spec, the React S2 implementation, and the rendering roadmap. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
+These are derived from the gen1 implementation, current deprecations, the Figma Desktop Button group spec, the React S2 implementation, and the rendering roadmap. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
 
 ### Public API
 
@@ -212,7 +212,7 @@ These are derived from the 1st-gen implementation, current deprecations, the Fig
 | Property | Type | Default | Attribute | Notes |
 | -------- | ---- | ------- | --------- | ----- |
 | `orientation` | `'horizontal'` \| `'vertical'` | `'horizontal'` | `orientation` | **Confirmed.** Replaces `vertical` boolean. Aligns with React S2. |
-| `size` | `'s'` \| `'m'` \| `'l'` \| `'xl'` | `'m'` | `size` | **Confirmed.** React S2 includes XL. Size S uses 8px gap; M/L/XL share the same 12px gap token. 1st-gen had no default; 2nd-gen defaults to `'m'`. |
+| `size` | `'s'` \| `'m'` \| `'l'` \| `'xl'` | `'m'` | `size` | **Confirmed.** React S2 includes XL. Size S uses 8px gap; M/L/XL share the same 12px gap token. gen1 had no default; 2nd-gen defaults to `'m'`. |
 | `disabled` | `boolean` | `false` | `disabled` | **Confirmed.** Aligns with React S2 `isDisabled`. Propagates to child buttons. |
 
 #### Visual matrix (2nd-gen)
@@ -249,7 +249,7 @@ Initial expectation for Button Group is a small reviewed set:
 
 #### Size propagation
 
-When the `size` attribute changes or new children are slotted, the component iterates all assigned `swc-button` elements in the default slot and sets their `size` property to match. This matches 1st-gen behavior.
+When the `size` attribute changes or new children are slotted, the component iterates all assigned `swc-button` elements in the default slot and sets their `size` property to match. This matches gen1 behavior.
 
 #### Disabled propagation
 
@@ -274,7 +274,7 @@ Sourced from the [accessibility migration analysis](./accessibility-migration-an
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
+> The gen1 component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
 
 Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
 
@@ -294,7 +294,7 @@ Planned rendering shape:
 
 ### Preparation (this ticket)
 
-- [x] 1st-gen API surface documented
+- [x] gen1 API surface documented
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] 2nd-gen API decisions drafted
@@ -379,7 +379,7 @@ Planned rendering shape:
 #### Breaking changes
 
 - [x] Document `vertical` → `orientation="vertical"` migration path
-- [x] Document default size change (1st-gen: none → 2nd-gen: `m`)
+- [x] Document default size change (gen1: none → 2nd-gen: `m`)
 
 ### Review
 
@@ -408,7 +408,7 @@ Planned rendering shape:
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| **Q3** | Should `align` be part of MVP or additive? React S2 has `align` ("start"/"center"/"end") with "start" default. 1st-gen does not have it. **Recommendation:** Include in MVP; it is a simple CSS property mapping with no behavioral complexity. | No — recommended for MVP but not blocking | Open | Implementation |
+| **Q3** | Should `align` be part of MVP or additive? React S2 has `align` ("start"/"center"/"end") with "start" default. gen1 does not have it. **Recommendation:** Include in MVP; it is a simple CSS property mapping with no behavioral complexity. | No — recommended for MVP but not blocking | Open | Implementation |
 
 ---
 
@@ -420,9 +420,9 @@ Planned rendering shape:
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
-- [1st-gen source](../../../../gen1/packages/button-group/src/ButtonGroup.ts)
-- [1st-gen tests](../../../../gen1/packages/button-group/test/button-group.test.ts)
-- [1st-gen README](../../../../gen1/packages/button-group/README.md)
+- [gen1 source](../../../../gen1/packages/button-group/src/ButtonGroup.ts)
+- [gen1 tests](../../../../gen1/packages/button-group/test/button-group.test.ts)
+- [gen1 README](../../../../gen1/packages/button-group/README.md)
 - [React Spectrum S2 ButtonGroup](https://react-spectrum.adobe.com/ButtonGroup)
 - [Spectrum CSS — `spectrum-two` branch — `components/buttongroup/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/buttongroup/index.css)
 - [Spectrum CSS migration PR #2457](https://github.com/adobe/spectrum-css/pull/2457)

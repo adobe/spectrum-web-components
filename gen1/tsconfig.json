@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    // 1st-gen specific: Build configuration
+    // gen1 specific: Build configuration
     "baseUrl": "./packages",
     "emitDeclarationOnly": true,
     "importHelpers": true,

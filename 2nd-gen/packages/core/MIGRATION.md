@@ -1,8 +1,8 @@
 # Migration guide
 
-> **Note:** 1st-gen and 2nd-gen are **independent** — there is no runtime dependency between them. Code in 2nd-gen core is for 2nd-gen components only. 1st-gen has its own self-contained implementations.
+> **Note:** gen1 and 2nd-gen are **independent** — there is no runtime dependency between them. Code in 2nd-gen core is for 2nd-gen components only. gen1 has its own self-contained implementations.
 
-When building 2nd-gen components (using 1st-gen as a reference), place files according to their type:
+When building 2nd-gen components (using gen1 as a reference), place files according to their type:
 
 | Type                   | Location       | Examples                            |
 | ---------------------- | -------------- | ----------------------------------- |

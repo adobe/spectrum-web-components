@@ -13,7 +13,7 @@
 
 - [TL;DR](#tldr)
     - [Most blocking open questions](#most-blocking-open-questions)
-- [1st-gen API surface](#1st-gen-api-surface)
+- [gen1 API surface](#gen1-api-surface)
     - [Properties / attributes](#properties--attributes)
     - [Methods](#methods)
     - [Events](#events)
@@ -34,7 +34,7 @@
     - [Default lifecycle — `div.showPopover()`](#default-lifecycle--divshowpopover)
     - [Opt-in lifecycle — `dialog.showModal()`](#opt-in-lifecycle--dialogshowmodal)
     - [Stacking](#stacking)
-    - [Differences from 1st-gen popovers](#differences-from-1st-gen-popovers)
+    - [Differences from gen1 popovers](#differences-from-gen1-popovers)
     - [Trigger resolution](#trigger-resolution)
     - [Trigger-side ARIA wiring](#trigger-side-aria-wiring)
     - [Event lifecycle](#event-lifecycle)
@@ -72,14 +72,14 @@
 
 > **Amendment (dialog surface, both modes).** Later in the migration, `<swc-popover>` was made a **dialog in both modes**: the default-mode `<div popover>` carries `role="dialog"`, forwards `accessible-label` as `aria-label`, is focusable (`tabindex="-1"`), and moves focus into the surface on open (restoring to the trigger on close); the trigger carries `aria-haspopup="dialog"` in both modes, and a missing name is dev-warned in both. This was possible because `menu` / `listbox` / `combobox` do **not** wrap the `<swc-popover>` component — they build on the shared `PlacementController` with their own roles — so the surface no longer needs to be a roleless host. Where statements below describe the default-mode surface as roleless / focus as consumer-managed / `aria-haspopup` as modal-only, this amendment supersedes them. Full rationale: [accessibility-migration-analysis.md](./accessibility-migration-analysis.md#2nd-gen-design-update-amends-this-analysis--q4).
 
-The 1st-gen `<sp-popover>` is a 75-line, styles-only component. Open/close, positioning, focus trap, dismissal, and ARIA were all delegated to `<sp-overlay>` or to the consumer. In 2nd-gen, `<swc-popover>` becomes an **opinionated, self-contained component** that renders an internal `<div popover="auto">` for non-modal behavior and an internal `<dialog>` for modal behavior, selecting the element and open method from the `modal` attribute. Native top-layer, light-dismiss (in default mode), anchored positioning, and trigger-side ARIA wiring all come out of the box.
+The gen1 `<sp-popover>` is a 75-line, styles-only component. Open/close, positioning, focus trap, dismissal, and ARIA were all delegated to `<sp-overlay>` or to the consumer. In 2nd-gen, `<swc-popover>` becomes an **opinionated, self-contained component** that renders an internal `<div popover="auto">` for non-modal behavior and an internal `<dialog>` for modal behavior, selecting the element and open method from the `modal` attribute. Native top-layer, light-dismiss (in default mode), anchored positioning, and trigger-side ARIA wiring all come out of the box.
 
 - **Two supported behavior modes — the `modal` attribute selects the internal element and open method:**
   - The component renders an internal `<div popover="auto">` in the default mode and an internal `<dialog>` in modal mode. The `modal` attribute determines both which element is rendered and which open method runs when `open` becomes true. The two render shapes differ only in the outer element; the inner `.swc-Popover-content` wrapper and slotted content are identical.
-  - **Default mode (no `modal` attribute) — `div.showPopover()`:** uses the popover-API lifecycle on a non-modal `<div popover="auto">`. Browser provides native top-layer rendering, light-dismiss (click outside, Escape), and auto-stack participation (opening one auto popover dismisses other open auto popovers). Page behind stays interactive and scrollable. Matches 1st-gen consumer UX for menus, pickers, action-menus, contextual-help, and customer-facing popover surfaces.
+  - **Default mode (no `modal` attribute) — `div.showPopover()`:** uses the popover-API lifecycle on a non-modal `<div popover="auto">`. Browser provides native top-layer rendering, light-dismiss (click outside, Escape), and auto-stack participation (opening one auto popover dismisses other open auto popovers). Page behind stays interactive and scrollable. Matches gen1 consumer UX for menus, pickers, action-menus, contextual-help, and customer-facing popover surfaces.
   - **Opt-in via `modal` attribute — `dialog.showModal()`:** renders a `<dialog>` (no `popover` attribute) and uses the modal dialog lifecycle. Browser provides `role="dialog"`, focus trap, background inert, native Escape via the `cancel` event. Page behind is blocking and non-scrollable.
   - **API additions (B-series):** new properties — `modal`, `offset`, `cross-offset`, `container-padding`, `should-flip`, `for`, `trigger-element` (setter), `manual`; new behavior — the component wires trigger click-to-toggle by default (`manual` opts out); new ARIA wiring on the trigger — durable `ariaControlsElements` and `aria-expanded` in both modes, plus `aria-haspopup="dialog"` when `modal` is set; new event contract — `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close` with a `source` detail.
-- **API removals (B-series):** `[dialog]` host attribute removed. **No direct migration path in v1** — no public `.swc-Popover` class is distributed in this migration, so consumers using `[dialog]` for dialog-padding chrome must either wait for `<swc-dialog>` to ship as a separate migration, or duplicate the visual styling in their own CSS. 1st-gen's `placement="undefined"` default changes — new default is `'bottom'` (React Spectrum-aligned).
+- **API removals (B-series):** `[dialog]` host attribute removed. **No direct migration path in v1** — no public `.swc-Popover` class is distributed in this migration, so consumers using `[dialog]` for dialog-padding chrome must either wait for `<swc-dialog>` to ship as a separate migration, or duplicate the visual styling in their own CSS. gen1's `placement="undefined"` default changes — new default is `'bottom'` (React Spectrum-aligned).
 - **Stacking is browser-managed for the default (auto) mode.** `popover="auto"` provides sibling-dismissal between auto popovers and light-dismiss for free. We do **not** use the `anchor` HTML attribute (browser support is too uneven for v1) nor `popovertarget` (kept off the API per the "just `for=`/`id`" rule). Native auto-popover-stack handles "one popover at a time" UX; nested-popover scenarios that need a parent to stay open while a child opens are out of scope for v1 (e.g., submenus belong to the `<swc-menu>` migration's call).
 - **New `dismissibleStack` utility for cross-mechanism Escape coordination.** A small module in `core/utils/`. Components register themselves on open and check `isTopDismissible(this)` before processing any custom Escape handling. Generic across all 2nd-gen dismissible top-layer UI — popover, dialog, tooltip, picker, menu, action-menu, coachmark, etc. Each component adopts it in its own migration.
 - **Tooltip stays unchanged for this migration.** It keeps the lifecycle from its own migration plan. Tooltip can adopt the `dismissibleStack` and `resolveTrigger()` in a follow-up refactor; behavior is unchanged either way. The separate question of whether Tooltip eventually switches to `popover="manual"` (to avoid auto-stack pollution when hovering background buttons while a picker is open) belongs to a conversation with React Spectrum / Design teams; not in scope here.
@@ -104,7 +104,7 @@ None blocking implementation. Items needing follow-up alignment / verification:
 
 ---
 
-## 1st-gen API surface
+## gen1 API surface
 
 **Source:** [`gen1/packages/popover/src/Popover.ts`](../../../../gen1/packages/popover/src/Popover.ts)
 **Version:** `@spectrum-web-components/popover@1.12.0`
@@ -115,7 +115,7 @@ None blocking implementation. Items needing follow-up alignment / verification:
 | Property | Type | Default | Attribute | Notes |
 | -------- | ---- | ------- | --------- | ----- |
 | `open` | `boolean` | `false` | `open` (reflect) | Reflects open state. Has no side effects — open/close is driven externally (typically by `<sp-overlay>`). |
-| `placement` | `Placement \| undefined` | `undefined` | `placement` (reflect) | Imported from `@spectrum-web-components/overlay/src/overlay-types.js`. 12 physical values; logical values (`start`, `end`, sub-variants) missing in 1st-gen. The host has no CSS class applied when `placement` is `undefined`. |
+| `placement` | `Placement \| undefined` | `undefined` | `placement` (reflect) | Imported from `@spectrum-web-components/overlay/src/overlay-types.js`. 12 physical values; logical values (`start`, `end`, sub-variants) missing in gen1. The host has no CSS class applied when `placement` is `undefined`. |
 | `tip` | `boolean` | `false` | `tip` (reflect) | When set, renders an internal SVG tip element with `id="tip"` that is positioned by the consuming Overlay's `PlacementController` arrow middleware. |
 
 ### Methods
@@ -134,7 +134,7 @@ None. Open/close events are dispatched by the surrounding `<sp-overlay>`, not by
 
 ### CSS custom properties
 
-Surface in 1st-gen uses Spectrum CSS `--mod-popover-*` modifiers (e.g. `--mod-popover-inline-size`, `--mod-popover-dialog-min-width`, `--mod-popover-dialog-padding`) plus Spectrum tokens. This full modifier surface will not be carried forward to 2nd-gen. See the [rendering and styling analysis](./rendering-and-styling-migration-analysis.md) for the modifier inventory.
+Surface in gen1 uses Spectrum CSS `--mod-popover-*` modifiers (e.g. `--mod-popover-inline-size`, `--mod-popover-dialog-min-width`, `--mod-popover-dialog-padding`) plus Spectrum tokens. This full modifier surface will not be carried forward to 2nd-gen. See the [rendering and styling analysis](./rendering-and-styling-migration-analysis.md) for the modifier inventory.
 
 ### Shadow DOM output (rendered HTML)
 
@@ -169,7 +169,7 @@ The `:host([dialog])` selector in `popover.css` applies dialog padding when the 
 | `@spectrum-web-components/base` | 1.12.0 | Lit base class, `html` template tag, decorators |
 | `@spectrum-web-components/overlay` | 1.12.0 | Type import only (`Placement` from `overlay-types.js`). **Dropped in 2nd-gen.** The `Placement` type moves to `2nd-gen/packages/core/controllers/placement-controller/`. |
 
-1st-gen consumers (action-bar, action-menu, card, coachmark, combobox, contextual-help, menu, picker, slider, tooltip) import `@spectrum-web-components/popover` and use `<sp-popover>` to host their dropdown / menu / listbox / help surfaces — but they orchestrate behavior through `<sp-overlay>`. In 2nd-gen, external authors adopt first-party components (Picker, Action Menu, etc.) or use `<swc-popover>` with `for=` / `open`. First-party implementations decide per pattern: embed `<swc-popover>` in shadow when the built-in lifecycle fits, or wire `PlacementController` + shared `.swc-Popover` styles directly when it does not (e.g. combobox, submenus).
+gen1 consumers (action-bar, action-menu, card, coachmark, combobox, contextual-help, menu, picker, slider, tooltip) import `@spectrum-web-components/popover` and use `<sp-popover>` to host their dropdown / menu / listbox / help surfaces — but they orchestrate behavior through `<sp-overlay>`. In 2nd-gen, external authors adopt first-party components (Picker, Action Menu, etc.) or use `<swc-popover>` with `for=` / `open`. First-party implementations decide per pattern: embed `<swc-popover>` in shadow when the built-in lifecycle fits, or wire `PlacementController` + shared `.swc-Popover` styles directly when it does not (e.g. combobox, submenus).
 
 ---
 
@@ -197,8 +197,8 @@ This migration also ships shared primitives — `PlacementController`, `resolveT
 
 The architectural decisions were resolved with the user during planning. The most consequential confirmations needed before implementation:
 
-- Default mode (`popover="auto"`) preserves 1st-gen UX semantics. Modal mode (`modal` attribute opt-in) introduces `<dialog>`-based blocking semantics that the [existing accessibility analysis](./accessibility-migration-analysis.md) needs to be amended for. Q4 in [Blockers](#architecture-and-behavior) tracks the analysis amendment.
-- D5 (no external light-DOM composition) — external authors use first-party 2nd-gen components or `<swc-popover>` directly; first-party shadow use of `<swc-popover>` vs shared primitives is decided per downstream migration. The [Consumer migration guide ticket SWC-2003](https://jira.corp.adobe.com/browse/SWC-2003) must reflect that 1st-gen `<sp-overlay>` + `<sp-popover>` does not map one-for-one to light-DOM `<swc-popover>`.
+- Default mode (`popover="auto"`) preserves gen1 UX semantics. Modal mode (`modal` attribute opt-in) introduces `<dialog>`-based blocking semantics that the [existing accessibility analysis](./accessibility-migration-analysis.md) needs to be amended for. Q4 in [Blockers](#architecture-and-behavior) tracks the analysis amendment.
+- D5 (no external light-DOM composition) — external authors use first-party 2nd-gen components or `<swc-popover>` directly; first-party shadow use of `<swc-popover>` vs shared primitives is decided per downstream migration. The [Consumer migration guide ticket SWC-2003](https://jira.corp.adobe.com/browse/SWC-2003) must reflect that gen1 `<sp-overlay>` + `<sp-popover>` does not map one-for-one to light-DOM `<swc-popover>`.
 - Backdrop-click-to-close policy resolved during planning as option (b): light-dismiss is wired by default in modal mode. No strict-modal opt-out — that pattern belongs to `<swc-dialog>`, a separate component for modal dialogs, not to `<swc-popover>` (which is anchored UI).
 
 ---
@@ -216,41 +216,41 @@ The architectural decisions were resolved with the user during planning. The mos
 
 #### API and naming
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
-| B1  | Component renders an internal `<div popover="auto">` with native top-layer behavior (default) — moderate UX shift | `<sp-popover>` was a plain `HTMLElement`; no behavior; open/close driven externally by `<sp-overlay>`. Click outside closed the popover via 1st-gen `OverlayStack` light-dismiss. | The `<swc-popover>` host element stays in the light DOM where the consumer authors it. Inside its shadow root, the component renders an internal `<div popover="auto">` and opens it via `div.showPopover()` (popover-API lifecycle: the **internal element** enters the top layer, the host element doesn't move). Browser handles Escape and click-outside dismissal natively. Page behind remains interactive and scrollable. UX largely matches 1st-gen consumer expectations. See [Differences from 1st-gen popovers](#differences-from-1st-gen-popovers). | Consumers stop pairing `<sp-popover>` with `<sp-overlay>`. They either (a) use `<swc-popover>` with `open` property control (and `for=` for trigger reference), or (b) use a first-party 2nd-gen component with popover built-in (Picker, Action Menu, etc.). No public `.swc-Popover` class distribution in v1. |
+| B1  | Component renders an internal `<div popover="auto">` with native top-layer behavior (default) — moderate UX shift | `<sp-popover>` was a plain `HTMLElement`; no behavior; open/close driven externally by `<sp-overlay>`. Click outside closed the popover via gen1 `OverlayStack` light-dismiss. | The `<swc-popover>` host element stays in the light DOM where the consumer authors it. Inside its shadow root, the component renders an internal `<div popover="auto">` and opens it via `div.showPopover()` (popover-API lifecycle: the **internal element** enters the top layer, the host element doesn't move). Browser handles Escape and click-outside dismissal natively. Page behind remains interactive and scrollable. UX largely matches gen1 consumer expectations. See [Differences from gen1 popovers](#differences-from-gen1-popovers). | Consumers stop pairing `<sp-popover>` with `<sp-overlay>`. They either (a) use `<swc-popover>` with `open` property control (and `for=` for trigger reference), or (b) use a first-party 2nd-gen component with popover built-in (Picker, Action Menu, etc.). No public `.swc-Popover` class distribution in v1. |
 | B2  | New `modal` attribute — opt-in to blocking modal behavior | n/a | When set, the component renders an internal `<dialog>` (no `popover` attribute) instead of the `<div>` and opens it via `dialog.showModal()`. Browser provides `role="dialog"`, focus trap, background inert, native Escape via `cancel`. Page behind is blocking and non-scrollable. Backdrop-click-to-close is wired by the component via the `pointerdown` + `event.target === dialog` pattern. | New attribute; opt-in. Most consumers won't set it. Use for popover-shaped surfaces that genuinely need modal semantics (rare). |
 | B3  | Default placement value | `undefined` (no placement attribute, no CSS class applied) | `'bottom'` (matches React Spectrum's `Popover` default and Spectrum 2 guidelines) | Consumers relying on an unplaced popover (no class applied) must update: omitting the attribute is no longer enough; the host always has a placement class. Existing call sites that set a placement are unaffected. |
 | B4  | Trigger resolution: `for` and `trigger-element` | Implicit — the surrounding `<sp-overlay>` resolved the trigger from its `triggerElement` setter or DOM ancestor chain | Explicit on the popover: `for="<id>"` attribute references the trigger by ID in the same tree root; `trigger-element` setter takes a direct element reference for cross-root cases or async triggers. Mirrors the tooltip migration plan's authoring pattern. | New API. Consumers move from "I wrap the popover in `<sp-overlay>` and let overlay find the trigger" to "I set `for=` on `<swc-popover>` or assign `trigger-element` programmatically." See [Trigger resolution](#trigger-resolution). |
-| B5  | Event contract — `swc-*` lifecycle | None; events came from `<sp-overlay>` | Fires `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close` regardless of mode. Auto mode wires events to `beforetoggle` / `toggle`; modal mode wires to `cancel` / `close` plus a synchronous `swc-open` dispatch from the setter. Both modes use `transitionend` for the after-events. `swc-close.detail.source` carries `'escape'`, `'outside'`, or `'programmatic'`. See [Events (2nd-gen)](#events-2nd-gen). | Consumers wire 2nd-gen event listeners. 1st-gen `sp-opened` / `sp-closed` listeners on the overlay don't apply. New listeners on `<swc-popover>` directly. |
+| B5  | Event contract — `swc-*` lifecycle | None; events came from `<sp-overlay>` | Fires `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close` regardless of mode. Auto mode wires events to `beforetoggle` / `toggle`; modal mode wires to `cancel` / `close` plus a synchronous `swc-open` dispatch from the setter. Both modes use `transitionend` for the after-events. `swc-close.detail.source` carries `'escape'`, `'outside'`, or `'programmatic'`. See [Events (2nd-gen)](#events-2nd-gen). | Consumers wire 2nd-gen event listeners. gen1 `sp-opened` / `sp-closed` listeners on the overlay don't apply. New listeners on `<swc-popover>` directly. |
 | B6  | `[dialog]` host attribute removed | `:host([dialog])` applied dialog-padding styling | Removed (D4). | **No direct v1 migration path.** No public `.swc-Popover` class is shipped in this migration. Consumers using `[dialog]` either wait for `<swc-dialog>` (separate migration) and adopt whatever public surface that ships, or duplicate the visual styling in their own CSS. |
 | B7  | `tip` attribute renamed to `hide-arrow` (inverted semantics); rendering moves to internal element | `<sp-popover tip>` (opt-in: set `tip` to show the arrow) renders an SVG tip directly inside the host's shadow root with `id="tip"` | Arrow is shown by default (React Spectrum S2 alignment). Set `hide-arrow` to hide it. The tip renders inside the internal `.swc-Popover` semantic container with `class="swc-Popover-tip"`. Orientation is driven by the `actual-placement` host attribute; along-edge positioning via the `PlacementController`'s `arrow` middleware and `tipElement`. (Naming decided with design: `hide-arrow`.) | **Breaking:** consumers setting `tip` must remove it (arrow now shows by default). Consumers that did not set `tip` (no arrow) must add `hide-arrow` to preserve the hide-arrow behavior. |
-| B8  | Computed placement not exposed as a public property | `actual-placement` was an Overlay-internal attribute set on the popover element | The host's `placement` attribute reflects the input (consumer request). The computed placement after `flip` middleware reorients is **not** exposed as a public, writable property. The component reflects it as an internal `actual-placement` attribute on the host (set via `setAttribute`, removed on close) and styles via `:host([actual-placement])`, matching Tooltip. CSS that wants to react to placement targets that host attribute. | No consumer migration needed. Existing CSS that targeted 1st-gen `actual-placement` (if any) was already operating on Overlay-internal markup; that markup is gone. |
+| B8  | Computed placement not exposed as a public property | `actual-placement` was an Overlay-internal attribute set on the popover element | The host's `placement` attribute reflects the input (consumer request). The computed placement after `flip` middleware reorients is **not** exposed as a public, writable property. The component reflects it as an internal `actual-placement` attribute on the host (set via `setAttribute`, removed on close) and styles via `:host([actual-placement])`, matching Tooltip. CSS that wants to react to placement targets that host attribute. | No consumer migration needed. Existing CSS that targeted gen1 `actual-placement` (if any) was already operating on Overlay-internal markup; that markup is gone. |
 
 #### Styling and visuals
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | S1  | Adopt S2 design tokens | S1 Spectrum tokens | S2 tokens from `spectrum-css` `spectrum-two` branch (`components/popover/index.css` and `components/popover/themes/spectrum-two.css`) | Visual update; no API change |
 | S2  | Move styling from `:host` to `.swc-Popover` internal element | All rules on `:host` and `:host([dialog])` | Structural / surface rules on `.swc-Popover` (the internal `<div popover="auto">` in default mode, the internal `<dialog>` in modal mode) and `.swc-Popover-tip` for the tip element; placement-dependent rules (tip orientation, arrow-gap margin) are keyed off the `actual-placement` host attribute. The internal element wraps `.swc-Popover-content` which holds the padding; the wrapper is required in modal mode (where the `<dialog>` element's hit-test region for backdrop-click detection includes its padding box) and harmless in default mode (where light-dismiss is browser-handled and padding doesn't matter for click routing). Keep the inner wrapper in both modes for render consistency. The modal-mode `<dialog>` needs UA chrome resets (default margin, padding, border, `::backdrop`); the default-mode `<div>` has none to reset. Host has only the structural rules needed for popover top-layer semantics. | No consumer action. |
 | S3  | Internal style sharing for first-party consumers | n/a | Popover styles live in `popover.css`. First-party components either embed `<swc-popover>` or import the same chrome internally — constructed stylesheets, shared CSS imports, or per-component duplication; decided per pattern. **No public `global-popover.css` distribution in v1.** External authors who want the `.swc-Popover` class outside the component wait for an additive customer-facing distribution if/when consumer demand emerges. | No customer-facing API change. |
-| S4  | Forced-colors / high-contrast support | Present in 1st-gen via Spectrum CSS | Preserved; `forced-colors` media query sorts to the bottom of `popover.css` per the project styling rules | No consumer action |
-| S5  | Tip orientation via the `actual-placement` host attribute; along-edge position via the controller's `arrow` middleware | 1st-gen Overlay's `PlacementController` writes `translate` on the tip element and the popover host | Tip **orientation** (which side it points from) is CSS, keyed off the `actual-placement` host attribute (the computed physical side) set by the component — mirroring Tooltip. Tip **along-edge position** (aligning the tip to the trigger) is handled by the 2nd-gen `PlacementController`'s `arrow` middleware, which writes `translate` on the tip element only (not the host) — the controller already implements this; the popover wires its tip element in via `tipElement`. | No consumer action |
+| S4  | Forced-colors / high-contrast support | Present in gen1 via Spectrum CSS | Preserved; `forced-colors` media query sorts to the bottom of `popover.css` per the project styling rules | No consumer action |
+| S5  | Tip orientation via the `actual-placement` host attribute; along-edge position via the controller's `arrow` middleware | gen1 Overlay's `PlacementController` writes `translate` on the tip element and the popover host | Tip **orientation** (which side it points from) is CSS, keyed off the `actual-placement` host attribute (the computed physical side) set by the component — mirroring Tooltip. Tip **along-edge position** (aligning the tip to the trigger) is handled by the 2nd-gen `PlacementController`'s `arrow` middleware, which writes `translate` on the tip element only (not the host) — the controller already implements this; the popover wires its tip element in via `tipElement`. | No consumer action |
 | S6  | RTL tip placement fix (SWC-917) | Tip placement in RTL had a known bug | Logical placement classes (`start`, `end`, sub-variants) are first-class and correct in RTL | No consumer action |
-| S7  | Scroll behavior | n/a (1st-gen overlay handled scroll-lock via custom JS) | **Implemented (CSS):** the popover surface uses `overscroll-behavior: contain` to prevent scroll chaining out of any internal scroll region. **Implemented (JS):** modal mode locks page scroll by setting `overflow: hidden` on `documentElement` on open and restoring the prior inline value on close. This must be JS, not CSS: the component's shadow stylesheet cannot reach `html`. **Default (auto) mode:** no scroll lock; users can scroll the page freely while the popover is open, consistent with `popover="auto"` UX. | No consumer action; behavior is internal. |
+| S7  | Scroll behavior | n/a (gen1 overlay handled scroll-lock via custom JS) | **Implemented (CSS):** the popover surface uses `overscroll-behavior: contain` to prevent scroll chaining out of any internal scroll region. **Implemented (JS):** modal mode locks page scroll by setting `overflow: hidden` on `documentElement` on open and restoring the prior inline value on close. This must be JS, not CSS: the component's shadow stylesheet cannot reach `html`. **Default (auto) mode:** no scroll lock; users can scroll the page freely while the popover is open, consistent with `popover="auto"` UX. | No consumer action; behavior is internal. |
 
 #### Accessibility and behavior
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
-| A1  | Native top-layer rendering | 1st-gen `OverlayStack` managed stacking via portaling and z-index | Browser top layer in both modes — `popover="auto"` in default mode; `<dialog>.showModal()` in modal mode. | No consumer action. Browser handles top-layer placement. |
+| A1  | Native top-layer rendering | gen1 `OverlayStack` managed stacking via portaling and z-index | Browser top layer in both modes — `popover="auto"` in default mode; `<dialog>.showModal()` in modal mode. | No consumer action. Browser handles top-layer placement. |
 | A2  | Native dismissal — light-dismiss in auto mode; native `<dialog>` Escape + wired backdrop-click in modal mode | Required wiring by overlay / consumer | **Auto mode (default):** browser provides Escape + click-outside dismiss automatically (`popover="auto"` light-dismiss). **Modal mode:** native `<dialog>` cancel handles Escape; backdrop-click-to-close is wired by the component via `pointerdown` on the internal `<dialog>`. Both modes restore focus to the previously-focused element on close. | No consumer action |
 | A3  | Trigger-side `aria-expanded` automatic | Consumer wired manually | The popover writes `aria-expanded="true"` / `"false"` on the trigger element on `open` change. For 2nd-gen component triggers, the attribute is set on the inner `<button>` (same inner-button resolution the tooltip plan uses). | No consumer action when using `for=` / `trigger-element`. Consumers wiring `aria-expanded` manually on their trigger should remove the manual wiring. |
 | A4  | Trigger-side `ariaControlsElements` automatic and durable | Consumer wired manually | The popover sets `interactiveElement.ariaControlsElements = [popoverHost]` on the resolved inner button (or trigger host when no inner button) **as soon as `for=` / `trigger-element` resolves**, not on `open` change. Element references bypass cross-root ID scoping — string `aria-controls` on the host must not be used as a fallback (same approach as the [tooltip migration plan](../tooltip/migration-plan.md#aria-relationship-wiring)). The relationship is durable — visibility is communicated by `aria-expanded`. Cleared only when the popover is disconnected, `for=` is removed, or `trigger-element` is set to null. | No consumer action when using `for=` / `trigger-element`. |
 | A5  | Trigger resolution and inner-button discovery | Implicit via `<sp-overlay>` traversal | `for="<id>"` resolves via `getRootNode().getElementById()` (same-root only); `trigger-element` setter accepts a JS reference (cross-root). For 2nd-gen component triggers with an open shadow root, the `resolveTrigger()` helper reaches into `host.shadowRoot.querySelector('button')` to find the AT-facing inner button. Closed-shadow triggers fall back to wiring on the host. | New API. See [Trigger resolution](#trigger-resolution). |
 | A6  | Modal-mode dialog semantics (opt-in) | Consumer (`<sp-overlay type="modal">`) or call site manually wired focus and inert | When the consumer sets `modal`: internal element is `<dialog>`, opens via `showModal()`. Browser provides `role="dialog"`, focus trap, background inert, native Escape. The accessibility analysis amendment (Q4) covers this branch. | Opt-in. Consumers who want true modal popover semantics set the `modal` attribute. |
 | A7  | Modal-mode `aria-haspopup="dialog"` on the trigger | Consumer wired pattern-specific `aria-haspopup` manually | When `modal` is set, the popover writes `aria-haspopup="dialog"` on the resolved interactive element alongside `ariaControlsElements` and `aria-expanded`. Cleared when `modal` is removed or the trigger relationship is torn down. **Auto mode (default):** the component does not set `aria-haspopup` — consumers set a pattern-specific value (`menu`, `listbox`, etc.) if their slotted content warrants it. | Modal mode: no consumer action when using `for=` / `trigger-element`. Auto mode: wire `aria-haspopup` manually when the pattern is known. |
-| A8  | High-contrast border preserved | Present in 1st-gen | Preserved in 2nd-gen forced-colors handling | No consumer action |
+| A8  | High-contrast border preserved | Present in gen1 | Preserved in 2nd-gen forced-colors handling | No consumer action |
 | A9  | `dismissibleStack` registration for cross-mechanism Escape coordination | n/a | The component registers itself with the shared `dismissibleStack` on open and unregisters on close. Browser-managed Escape for `popover="auto"` and `<dialog>` already orders correctly within the same mechanism; the stack is needed when multiple mechanisms are open simultaneously (e.g., a modal `<swc-popover>` open while a tooltip is also visible — Escape should hit only the topmost). The stack is a shared 2nd-gen utility (deliverable #3 in this migration) consumed by every dismissible top-layer component. | No consumer action |
 
 ### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
@@ -263,13 +263,13 @@ The architectural decisions were resolved with the user during planning. The mos
 | A4  | Reflect `actualPlacement` as a host attribute | `actualPlacement` is a readonly property in v1 (B8). |
 | A5  | Inner-button resolution override | Today's resolution uses `querySelector('button')`. Some 2nd-gen components may wrap a different element (`<a>`, `<input>` for combobox-adjacent patterns). A future override hook on the trigger element (e.g., a registered "focal element" property) would let those components opt in. Out of scope for v1; revisit when a consumer needs it. |
 | A6  | `swc-popover` directive (Lit directive) for programmatic insertion | Mirrors the deferred tooltip directive. Creates `<swc-popover>` adjacent to a target, sets `trigger-element`, and manages lifecycle cleanup. Defer until consumer demand exists. |
-| A7  | Coachmark `extends Popover` decision | 1st-gen `Coachmark extends Popover`. 2nd-gen coachmark may extend `<swc-popover>` (inheritance) or implement its own lifecycle alongside `PlacementController` (composition). Decision belongs to the coachmark migration; tracked as Q6. |
+| A7  | Coachmark `extends Popover` decision | gen1 `Coachmark extends Popover`. 2nd-gen coachmark may extend `<swc-popover>` (inheritance) or implement its own lifecycle alongside `PlacementController` (composition). Decision belongs to the coachmark migration; tracked as Q6. |
 
 ---
 
 ## 2nd-gen API decisions
 
-These are derived from the 1st-gen implementation, the [rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md), the [accessibility migration analysis](./accessibility-migration-analysis.md), the [Overlay strategy RFC](#references), the Figma `S2 / Web (Desktop scale)` Popover frame, and React Spectrum's `Popover`. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
+These are derived from the gen1 implementation, the [rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md), the [accessibility migration analysis](./accessibility-migration-analysis.md), the [Overlay strategy RFC](#references), the Figma `S2 / Web (Desktop scale)` Popover frame, and React Spectrum's `Popover`. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
 
 - **Confirmed**: directly supported by source material
 - **Inferred**: recommended based on multiple signals, not one authoritative source
@@ -288,12 +288,12 @@ Properties marked **Internal (`@internal`)** below are positioning implementatio
 | `accessibleLabel` | `string` | `''` | `accessible-label` | **New in 2nd-gen.** Accessible name for the popover's dialog surface; forwarded as `aria-label` onto the internal element. Applies in **both** modes — the surface is a dialog in the default mode too (see the dialog-surface amendment). A popover opened without it is dev-warned in both modes. |
 | `placement` | `Placement` | `'bottom'` | `placement` (reflect) | **Confirmed (revised in session: logical 12-value set).** "The placement of the element with respect to its anchor element." `<swc-popover>` accepts the block sides and the **logical** inline sides, each with two alignments (hyphenated): `top`, `top-start`, `top-end`, `bottom`, `bottom-start`, `bottom-end`, `start`, `start-top`, `start-bottom`, `end`, `end-top`, `end-bottom`. Logical sides resolve against the writing direction (`start` is the left in LTR, the right in RTL), so placements stay correct under RTL without physical aliases. The `PlacementController` (which can also resolve the physical `left`/`right` variants) converts the requested placement to Floating UI's hyphenated form using the element's computed direction; the controller's resolved **physical** side is reflected as the `actual-placement` host attribute for CSS (tip orientation, entry slide). `POPOVER_VALID_PLACEMENTS` is this 12-value logical set, validated at runtime in `update()`. Each downstream first-party component narrows further per the proxy pattern by re-declaring `placement` with its own union and `VALID_PLACEMENTS`. (Earlier draft proposed the full 22-value physical + logical union; narrowed to the logical 12 in session to match the design-recommended positions while staying RTL-correct.) |
 | `size` | `PopoverSize \| undefined` | `undefined` | `size` (reflect) | **New in 2nd-gen.** Optional fixed size. When set, the popover uses a fixed inline size (`s` = 336px, `m` = 416px, `l` = 576px); when unset, it fits its contents. Aligned with React Spectrum S2 `Popover` sizing. |
-| `hide-arrow` | `boolean` | `false` | `hide-arrow` (reflect) | **Renamed from 1st-gen `tip` (B7).** Inverted semantics: in 1st-gen, `tip` was opt-in (set `tip` to show the arrow); in 2nd-gen, the arrow is shown by default and `hide-arrow` hides it. Aligned with React Spectrum S2 where `Popover` shows an arrow by default. The tip element has `class="swc-Popover-tip"` and is positioned by the `PlacementController`'s `arrow` middleware via `tipElement`; orientation comes from the `actual-placement` host attribute. Naming decided with design: `hide-arrow`. |
+| `hide-arrow` | `boolean` | `false` | `hide-arrow` (reflect) | **Renamed from gen1 `tip` (B7).** Inverted semantics: in gen1, `tip` was opt-in (set `tip` to show the arrow); in 2nd-gen, the arrow is shown by default and `hide-arrow` hides it. Aligned with React Spectrum S2 where `Popover` shows an arrow by default. The tip element has `class="swc-Popover-tip"` and is positioned by the `PlacementController`'s `arrow` middleware via `tipElement`; orientation comes from the `actual-placement` host attribute. Naming decided with design: `hide-arrow`. |
 | `offset` | `number` | `8` | `offset` | **Confirmed.** Main-axis offset in pixels from the trigger. Default is 8, aligned with React Spectrum S2 `Popover` default. Passed to `PlacementController`. |
 | `cross-offset` | `number` | `0` | `cross-offset` | **Confirmed.** Cross-axis offset in pixels. Passed to `PlacementController`. |
 | `should-flip` | `boolean` | `true` | `should-flip` (reflect) | **Confirmed. Public.** When `false`, disables `flip` middleware — the popover stays in the requested placement even when constrained. Kept public because the flipping behavior can be aggressive and consumers (e.g., long menus, pickers) may need to disable it. |
 | `manual` | `boolean` | `false` | `manual` (reflect) | **New in 2nd-gen.** Suppresses the automatic click-to-toggle wiring on the resolved trigger. When set, consumers control visibility through the `open` property instead. ARIA relationship wiring still applies. |
-| `container-padding` | `number` | `8` | `container-padding` | **Internal (`@internal`). Confirmed.** Distance from viewport edge for `flip` and `shift` middleware. Matches 1st-gen's `REQUIRED_DISTANCE_TO_EDGE`. Set by first-party components; excluded from the public API table. |
+| `container-padding` | `number` | `8` | `container-padding` | **Internal (`@internal`). Confirmed.** Distance from viewport edge for `flip` and `shift` middleware. Matches gen1's `REQUIRED_DISTANCE_TO_EDGE`. Set by first-party components; excluded from the public API table. |
 | `tip-padding` | `number` | `8` | `tip-padding` | **Internal (`@internal`). Confirmed.** Minimum inset of the tip from the popover's corners; passed to the `PlacementController`'s `arrow` middleware as its `padding`. Functional in v1 (the popover wires its tip element to the controller). Excluded from the public API table as a positioning implementation detail set by first-party components. |
 | `for` | `string` | `undefined` | `for` | **Confirmed.** ID of the trigger element in the same document tree root (`getRootNode().getElementById(this.for)`). Drives `aria-expanded` / `ariaControlsElements` wiring on the resolved interactive element and the `PlacementController` anchor element. The browser's auto-popover-stack relationship is not declared via this attribute — see [Stacking](#stacking). |
 | `trigger-element` | `HTMLElement \| VirtualTrigger \| null` | `null` | — (setter only) | **Confirmed.** Direct element reference. Overrides `for` when both set. Use for cross-shadow-root triggers or programmatic wiring. `VirtualTrigger` shape is accepted by `PlacementController` v1 but is exposed on `<swc-popover>` as additive (A1). |
@@ -395,7 +395,7 @@ Stacking is browser-managed within each mode. We do not declare popover parent-c
 **Auto mode (default) — browser-managed auto-popover-stack:**
 
 - The internal `<div popover="auto">` participates in the browser's auto-popover-stack (via the `popover="auto"` attribute; the open method `showPopover()` is what activates this lifecycle).
-- Opening one auto popover dismisses any other open auto popover. "One popover at a time" UX, conventional and matches 1st-gen's typical behavior between sibling popovers.
+- Opening one auto popover dismisses any other open auto popover. "One popover at a time" UX, conventional and matches gen1's typical behavior between sibling popovers.
 - No nesting awareness in v1: a child popover opening will dismiss its parent. Nested-popover patterns (submenu inside menu, tooltip on menu item) need component-specific handling (e.g., `popover="manual"` for the child) — decided by each consuming migration.
 
 **Modal mode (`modal` attribute) — `<dialog>` top-layer stack:**
@@ -423,40 +423,40 @@ if (event.key === 'Escape' && isTopDismissible(this)) {
 
 For `<swc-popover>` specifically, both modes register / unregister on open / close. Custom Escape handling (beyond the browser's built-in) is rare for popover — but registering with the stack means OTHER dismissibles can correctly defer to popover when popover is the topmost dismissible. This is the cross-mechanism benefit.
 
-**Known regression vs 1st-gen `OverlayStack`:**
+**Known regression vs gen1 `OverlayStack`:**
 
 - In auto mode, the auto-popover-stack dismisses siblings even when they're conceptually parent-child. The clearest example: hovering a background button that has a tooltip (also `popover="auto"`) will close an open picker / menu / action-menu. Tooltip's choice of `popover="auto"` vs `popover="manual"` (its own migration plan's call) determines whether this regression bites. Coordination item with React Spectrum / Design teams.
 - No native nesting support in v1; nested-popover use cases (submenu, contextual help inside a menu, etc.) are handled by the consuming migration, typically via `popover="manual"` + manual dismissal coordination through the dismissible stack.
 
-### Differences from 1st-gen popovers
+### Differences from gen1 popovers
 
-The shift from "styles-only host + `<sp-overlay>` orchestration" to "self-contained popover host" preserves most of the 1st-gen UX in the default (auto) mode. Modal mode is an explicit opt-in for the few cases that want true blocking semantics.
+The shift from "styles-only host + `<sp-overlay>` orchestration" to "self-contained popover host" preserves most of the gen1 UX in the default (auto) mode. Modal mode is an explicit opt-in for the few cases that want true blocking semantics.
 
 **Default mode (`popover="auto"`) — what changes:**
 
-| Behavior | 1st-gen `<sp-popover>` (typical via `<sp-overlay>`) | 2nd-gen `<swc-popover>` default |
+| Behavior | gen1 `<sp-popover>` (typical via `<sp-overlay>`) | 2nd-gen `<swc-popover>` default |
 | -------- | --------------------------------------------------- | -------------------------------- |
 | **Page behind interactivity** | Remained interactive | **Still interactive.** Auto popovers don't inert anything. |
 | **Page background scroll** | Allowed | **Still allowed.** Auto popovers don't lock scroll. |
-| **Click outside the popover** | Closed the popover (1st-gen `OverlayStack` light-dismiss) | **Closes the popover** (native popover-auto light-dismiss). UX preserved. |
+| **Click outside the popover** | Closed the popover (gen1 `OverlayStack` light-dismiss) | **Closes the popover** (native popover-auto light-dismiss). UX preserved. |
 | **Escape to close** | Required wiring | **Native** (popover-auto). |
-| **Focus trap** | Not applied (1st-gen popovers were non-modal) | **Not applied.** Focus is consumer/pattern-managed. |
+| **Focus trap** | Not applied (gen1 popovers were non-modal) | **Not applied.** Focus is consumer/pattern-managed. |
 | **Stacking sibling popovers** | `OverlayStack` typically dismissed the prior popover | **Browser dismisses prior auto popover.** Same UX. |
-| **Stacking nested popovers** | `OverlayStack` kept parent open | **No native nesting support in v1.** A child popover (`popover="auto"`) opening dismisses its parent. Nested-popover patterns (submenu, etc.) handled per-component-migration via `popover="manual"`. Regression vs 1st-gen; documented in [Stacking](#stacking). |
+| **Stacking nested popovers** | `OverlayStack` kept parent open | **No native nesting support in v1.** A child popover (`popover="auto"`) opening dismisses its parent. Nested-popover patterns (submenu, etc.) handled per-component-migration via `popover="manual"`. Regression vs gen1; documented in [Stacking](#stacking). |
 | **Default placement** | `undefined` — no class applied | `'bottom'` (B3). The host always has a placement class. |
 | **`role="dialog"` on the surface** | Not set; consumers added `role="presentation"` to strip semantics | **Set in both modes.** The default-mode `<div popover>` carries `role="dialog"` (see the dialog-surface amendment); modal mode gets it natively from `<dialog>`. |
 
 For the default mode, the only consumer-visible API change is "use `for=` on the popover instead of authoring it inside `<sp-overlay>`." The dismissal UX is preserved, the page behavior is preserved, and sibling-popover dismissal is preserved (browser-managed instead of `OverlayStack`-managed). The one real regression is nested-popover support — see [Stacking](#stacking).
 
-**Modal mode (`modal` attribute) — additional changes vs 1st-gen:**
+**Modal mode (`modal` attribute) — additional changes vs gen1:**
 
-| Behavior | 1st-gen | 2nd-gen `<swc-popover modal>` |
+| Behavior | gen1 | 2nd-gen `<swc-popover modal>` |
 | -------- | ------- | ------------------------------ |
 | **Page behind interactivity** | Remained interactive | **Blocked.** Native `<dialog>` inerts the rest of the page. |
 | **Page background scroll** | Allowed | **Blocked.** `<dialog>.showModal()` prevents scroll behind (with iOS caveats — Q7). |
 | **Focus trap** | Not applied | **Automatic.** `<dialog>` traps focus inside. |
 | **Tab away to other page content** | Permitted | **Blocked while open.** |
-| **Click outside the popover** | Closed (1st-gen light-dismiss) | **Closes** via wired backdrop-click listener (component-implemented; see [Opt-in lifecycle — `dialog.showModal()`](#opt-in-lifecycle--dialogshowmodal)). |
+| **Click outside the popover** | Closed (gen1 light-dismiss) | **Closes** via wired backdrop-click listener (component-implemented; see [Opt-in lifecycle — `dialog.showModal()`](#opt-in-lifecycle--dialogshowmodal)). |
 | **Backdrop visual** | None | **Native `::backdrop`** pseudo-element renders behind the dialog. Spectrum 2 chrome TBD per Figma. |
 | **Stacking with other popovers** | `OverlayStack` managed | **Separate top-layer stack** from auto popovers. Multiple modal popovers stack LIFO. |
 | **Initial focus** | Configured via `<sp-overlay receivesFocus>` | **Focus moves into the dialog surface on open** in both modes (modal via native `<dialog>` autofocus; default mode focuses the surface), and restores to the trigger on close. |
@@ -555,7 +555,7 @@ The computed placement is **not** exposed as a public, writable property — the
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
+> The gen1 component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
 
 Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core / SWC split.
 
@@ -614,7 +614,7 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 
 ### Preparation (this ticket)
 
-- [x] 1st-gen API surface documented
+- [x] gen1 API surface documented
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] 2nd-gen API decisions drafted
@@ -631,7 +631,7 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 - [x] Create `2nd-gen/packages/swc/components/popover/` (`Popover.ts` render stub branching on `modal`, `popover.css` stub, `index.ts`, `swc-popover.ts`, plus empty-but-valid `stories/popover.stories.ts`, `test/popover.test.ts`, and `test/popover.a11y.spec.ts`). The stories (Playground + Overview) and the smoke test pass in the vitest storybook project (3/3); full stories and behavioral tests land in Phases 6/7.
 - [x] Wire exports in all `package.json` files. Core: added `./components/popover`, `./components/popover/index.js`, `./utils/dismissible-stack.js`, `./utils/resolve-trigger.js`. SWC: no edits needed — the build auto-discovers `components/*/index.ts` and `components/*/swc-*.ts` via glob, and the `./components/*.js` export wildcard resolves `components/popover/swc-popover.js`. No `swc/stylesheets/global` entry — no public global CSS is shipped in this migration.
 - [x] Confirm `spectrum-css` is checked out as a sibling directory (`../../spectrum-css/` from `2nd-gen/`). Verify the `spectrum-two` branch at the start of Phase 5.
-- [x] Confirm `@floating-ui/dom` is available in `2nd-gen/packages/core/`'s dependencies (`1.7.6`, carried over from 1st-gen)
+- [x] Confirm `@floating-ui/dom` is available in `2nd-gen/packages/core/`'s dependencies (`1.7.6`, carried over from gen1)
 
 ### API
 
@@ -641,8 +641,8 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 - [ ] `PlacementController.ts`: implement constructor `(host, config)`; methods `start()`, `stop()`, `recompute()`; properties `actualPlacement`, `isConstrained`; ReactiveController lifecycle (`hostConnected`, `hostUpdated`, `hostDisconnected`)
 - [ ] Floating UI middleware composition: `offset`, `flip` (gated on `shouldFlip`), `shift`, `size`, `arrow` (gated on `tipElement` resolver returning non-null)
 - [ ] `autoUpdate` wiring split: ancestor-resize-channel calls `onPlacementChange`; scroll/element-resize channel calls `recompute`
-- [ ] WebKit visual-viewport compensation (carry over from 1st-gen)
-- [ ] DPR rounding of computed `(x, y)` (carry over from 1st-gen)
+- [ ] WebKit visual-viewport compensation (carry over from gen1)
+- [ ] DPR rounding of computed `(x, y)` (carry over from gen1)
 - [ ] Rapid-open guard (calling `start()` twice tears down the prior session first)
 - [ ] No `<sp-update-overlays>` document event listener — 2nd-gen does not have a global update bus; the host calls `recompute()` when it needs to
 
@@ -686,7 +686,7 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 
 - [ ] Figma `S2 / Web (Desktop scale)` Popover frame confirms the full placement matrix
 - [ ] React Spectrum `Popover` props mapped: `placement`, `offset`, `crossOffset`, `containerPadding`, `shouldFlip` → our equivalents (kebab-case) ✓; `isNonModal` → inverted: our default is non-modal (auto), `modal` attribute opts in; `arrowSize` / `arrowBoundaryOffset` → covered by `tip-padding` (wired to the controller's `arrow` middleware in v1)
-- [ ] Tip rendering verified against Figma — does it match the 1st-gen SVG dimensions, or does Spectrum 2 use a different tip geometry?
+- [ ] Tip rendering verified against Figma — does it match the gen1 SVG dimensions, or does Spectrum 2 use a different tip geometry?
 
 ### Styling
 
@@ -709,7 +709,7 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 - [ ] Verify chrome (border, drop shadow, radius, background) matches Figma at all placements
 - [ ] Verify tip geometry across the 12 placement values (3 bottom, 3 top, 3 start, 3 end) in both LTR and RTL (logical `start` / `end` resolve to opposite physical sides per direction)
 - [ ] Verify forced-colors / high-contrast mode
-- [ ] Document that v1 has no public migration path for 1st-gen's `[dialog]` attribute. Visual parity with 1st-gen's dialog-padding behavior is not shipped as a customer-facing surface — consumers needing that visual treatment wait for `<swc-dialog>` to ship as a separate migration.
+- [ ] Document that v1 has no public migration path for gen1's `[dialog]` attribute. Visual parity with gen1's dialog-padding behavior is not shipped as a customer-facing surface — consumers needing that visual treatment wait for `<swc-dialog>` to ship as a separate migration.
 
 ### Accessibility
 
@@ -791,7 +791,7 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 - [x] The `actual-placement` host attribute reflects the computed physical side after `flip` reorients (set by `onPlacementChange`, removed on close). No public `actualPlacement` property and no modifier class. Both modes.
 - [ ] `should-flip="false"` disables flip middleware — popover stays in requested placement when constrained. Both modes.
 - [ ] Trigger-disconnect graceful degradation: `PlacementController` bails out on `!trigger.isConnected`; at close time component re-resolves via `for=` to handle React-rerender pattern; dev-mode warning when trigger is gone for good
-- [ ] UX verification (manual): auto mode preserves 1st-gen behavior (page interactive, scrollable, click-outside closes); modal mode is blocking and non-scrollable
+- [ ] UX verification (manual): auto mode preserves gen1 behavior (page interactive, scrollable, click-outside closes); modal mode is blocking and non-scrollable
 
 #### Visual regression
 
@@ -810,13 +810,13 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 
 #### Breaking changes
 
-- [ ] Consumer migration guide ([SWC-2003](https://jira.corp.adobe.com/browse/SWC-2003)): explain that 1st-gen `<sp-overlay>` + `<sp-popover>` composition does NOT translate to `<swc-overlay>` + `<swc-popover>` in 2nd-gen — the recommended migration is to either (a) adopt the first-party 2nd-gen component (Picker, Action Menu, etc.) that has popover built-in, or (b) use `<swc-popover>` directly with `for=` / `open` if a custom anchored popover is needed
-- [ ] Consumer migration guide: **distinguish the two modes**. Default mode (`popover="auto"`) preserves 1st-gen UX — light-dismiss, page-behind interactive, scrollable; the only change is the `for=` authoring pattern replacing `<sp-overlay>` wrapping. Modal mode (`modal` attribute opt-in) introduces blocking page-behind, focus trap, and the `<dialog>` semantics from the [differences table](#differences-from-1st-gen-popovers) — opt-in for the rare cases that need it.
+- [ ] Consumer migration guide ([SWC-2003](https://jira.corp.adobe.com/browse/SWC-2003)): explain that gen1 `<sp-overlay>` + `<sp-popover>` composition does NOT translate to `<swc-overlay>` + `<swc-popover>` in 2nd-gen — the recommended migration is to either (a) adopt the first-party 2nd-gen component (Picker, Action Menu, etc.) that has popover built-in, or (b) use `<swc-popover>` directly with `for=` / `open` if a custom anchored popover is needed
+- [ ] Consumer migration guide: **distinguish the two modes**. Default mode (`popover="auto"`) preserves gen1 UX — light-dismiss, page-behind interactive, scrollable; the only change is the `for=` authoring pattern replacing `<sp-overlay>` wrapping. Modal mode (`modal` attribute opt-in) introduces blocking page-behind, focus trap, and the `<dialog>` semantics from the [differences table](#differences-from-gen1-popovers) — opt-in for the rare cases that need it.
 - [ ] Consumer migration guide: document the `[dialog]` attribute removal and that there is **no v1 migration path** for dialog-padding chrome — consumers wait for `<swc-dialog>` or duplicate the visual styling themselves
 - [ ] Consumer migration guide: document the new event contract (`swc-open` / `swc-after-open` / `swc-close` / `swc-after-close`) and timing differences vs `<sp-overlay>`'s `sp-opened` / `sp-closed`
 - [ ] Consumer migration guide: document trigger ARIA — `ariaControlsElements` and `aria-expanded` in both modes; `aria-haspopup="dialog"` when `modal` is set; auto-mode `aria-haspopup` remains consumer-owned when the pattern is known
 - [ ] Consumer migration guide: note that `<swc-popover>` is non-modal by default (auto mode); the `modal` attribute opts in to `<dialog>.showModal()`-based blocking behavior for the rare cases that need it
-- [ ] Behaviors story: demonstrate the modal-dialog blocking behavior with a representative trigger, and call out the differences from 1st-gen for testers
+- [ ] Behaviors story: demonstrate the modal-dialog blocking behavior with a representative trigger, and call out the differences from gen1 for testers
 
 #### Accessibility
 
@@ -846,7 +846,7 @@ During drafting, this section tracks active blockers and open questions. None ar
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
 | Q1  | **Figma `S2 / Web (Desktop scale)` Popover frame** must be captured as PNG and committed to this folder before the styling phase begins. Confirms full placement matrix, tip dimensions, and minimum-size rules. | No | Pending | Ruben Carvalho |
-| Q2  | **Tip geometry validation.** Confirm whether Spectrum 2 changes tip dimensions or geometry vs 1st-gen's 16×9 / 9×16 SVG. If yes, S2 source dictates; if no, carry forward. | No | Pending | CSS reviewer |
+| Q2  | **Tip geometry validation.** Confirm whether Spectrum 2 changes tip dimensions or geometry vs gen1's 16×9 / 9×16 SVG. If yes, S2 source dictates; if no, carry forward. | No | Pending | CSS reviewer |
 
 ### Architecture and behavior
 
@@ -855,15 +855,15 @@ During drafting, this section tracks active blockers and open questions. None ar
 | Q3  | **iOS Safari `<dialog>.showModal()` benchmark** for the modal opt-in path on representative 2nd-gen consumer DOMs. Only relevant when modal mode is used; default mode doesn't use `showModal()`. Per the Overlay strategy RFC. Smoke test in this migration is sufficient; full benchmark by the first first-party migration that adopts modal mode. | No (for Popover) | Pending | Performance reviewer |
 | Q4  | **Amend [`accessibility-migration-analysis.md`](./accessibility-migration-analysis.md)** to reflect both modes: default `popover="auto"` (no host role; consumer-managed semantics) and `modal` (`<dialog>` provides `role="dialog"`, focus trap, inert). The original analysis assumed a role-free host — accurate for default mode, needs an amendment for modal mode. | No (this migration); confirmed-direction decision | **Resolved** (amended in the "2nd-gen design update — Q4" section: both modes, trigger-side ARIA, keyboard/focus per mode) | Accessibility reviewer |
 | Q5  | **React Spectrum / Design alignment on the modal opt-in.** Specific UX requirements for modal popovers, whether modal popover should look visually distinct from auto popover, whether some downstream consumers (e.g. coachmark) actually need modal mode at all. Tooltip's `popover="auto"` vs `popover="manual"` question is also part of this conversation (impacts auto-stack pollution when hovering background buttons while a picker is open). | No | Pending — multi-team conversation in progress | Ruben Carvalho |
-| Q6  | **Coachmark inheritance vs composition.** 1st-gen `Coachmark extends Popover`. Decide during the coachmark migration whether 2nd-gen `<swc-coachmark>` embeds `<swc-popover>` or wires `PlacementController` + shared styles directly — same case-by-case choice as other first-party consumers. | No | Deferred | Coachmark migration owner |
+| Q6  | **Coachmark inheritance vs composition.** gen1 `Coachmark extends Popover`. Decide during the coachmark migration whether 2nd-gen `<swc-coachmark>` embeds `<swc-popover>` or wires `PlacementController` + shared styles directly — same case-by-case choice as other first-party consumers. | No | Deferred | Coachmark migration owner |
 | Q7  | **Modal-mode scroll lock.** Resolved: `<swc-popover modal>` locks page scroll in JS. On open it sets `overflow: hidden` on `documentElement` (saving the prior inline value, restored on close), because a component's shadow stylesheet cannot reach `html`. The popover surface also uses `overscroll-behavior: contain` (CSS) to prevent scroll chaining out of internal scroll regions. No iOS-specific workarounds in v1. Default (auto) mode does NOT lock page scroll (consistent with `popover="auto"` semantics). | No | **Resolved** (JS overflow lock + CSS overscroll-behavior; implemented in Phase 4+5) | Ruben Carvalho |
 
 ### Scope and prerequisites
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q8  | **Consumer migration guide content for the `<sp-overlay>` + `<sp-popover>` → 2nd-gen translation.** Existing ticket [SWC-2003](https://jira.corp.adobe.com/browse/SWC-2003). Content depends on this plan and on subsequent first-party component migrations (Picker, Action Menu, etc.). The guide must distinguish the two modes: default-mode migration is near-zero-friction (UX preserved); modal-mode adoption is a deliberate choice with the blocking-page consequences documented in the [differences table](#differences-from-1st-gen-popovers). Updated incrementally per first-party migration. | No (for Popover) | In progress | Documentation owner |
-| Q9  | **`<swc-dialog>` migration** is independent. The 1st-gen `[dialog]` attribute is removed without a direct migration path in v1 (no public `.swc-Popover` class); consumers wanting dialog padding chrome wait for `<swc-dialog>` to ship and then adopt its styles directly. Coordinate timing. | No (architectural decoupling is intentional) | Pending coordination | Dialog migration owner |
+| Q8  | **Consumer migration guide content for the `<sp-overlay>` + `<sp-popover>` → 2nd-gen translation.** Existing ticket [SWC-2003](https://jira.corp.adobe.com/browse/SWC-2003). Content depends on this plan and on subsequent first-party component migrations (Picker, Action Menu, etc.). The guide must distinguish the two modes: default-mode migration is near-zero-friction (UX preserved); modal-mode adoption is a deliberate choice with the blocking-page consequences documented in the [differences table](#differences-from-gen1-popovers). Updated incrementally per first-party migration. | No (for Popover) | In progress | Documentation owner |
+| Q9  | **`<swc-dialog>` migration** is independent. The gen1 `[dialog]` attribute is removed without a direct migration path in v1 (no public `.swc-Popover` class); consumers wanting dialog padding chrome wait for `<swc-dialog>` to ship and then adopt its styles directly. Coordinate timing. | No (architectural decoupling is intentional) | Pending coordination | Dialog migration owner |
 | Q10 | **Internal style-sharing mechanism for first-party consumers.** First-party components (Menu, Picker, Action Menu, etc.) that need the `.swc-Popover` chrome share styles internally. The mechanism is unspecified in this plan: candidates are constructed stylesheets imported from a shared internal path, shared CSS imports via package internals, or per-component duplication. Decide during implementation; defer to whoever ships the second consumer (likely `<swc-menu>`). | No (Popover ships standalone in v1) | To resolve at second-consumer migration | Architecture reviewer |
 
 ---
@@ -877,10 +877,10 @@ During drafting, this section tracks active blockers and open questions. None ar
 - [Tooltip migration plan](../tooltip/migration-plan.md) — architectural reference for native top-layer + `swc-*` event lifecycle + inner-button ARIA wiring patterns
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
-- [1st-gen source](../../../../gen1/packages/popover/src/Popover.ts)
-- [1st-gen styles](../../../../gen1/packages/popover/src/popover.css)
-- [1st-gen README](../../../../gen1/packages/popover/README.md)
-- [1st-gen `PlacementController`](../../../../gen1/packages/overlay/src/PlacementController.ts) — extraction target
+- [gen1 source](../../../../gen1/packages/popover/src/Popover.ts)
+- [gen1 styles](../../../../gen1/packages/popover/src/popover.css)
+- [gen1 README](../../../../gen1/packages/popover/README.md)
+- [gen1 `PlacementController`](../../../../gen1/packages/overlay/src/PlacementController.ts) — extraction target
 - [React Spectrum S2 Popover](https://react-spectrum.adobe.com/Popover) — product alignment
 - [Spectrum CSS — `components/popover/index.css` on `spectrum-two` branch](../../../../../spectrum-css/components/popover/index.css)
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)

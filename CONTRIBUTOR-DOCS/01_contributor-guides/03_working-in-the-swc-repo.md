@@ -69,32 +69,32 @@ This setting uses the `.git-blame-ignore-revs` file in the repository root.
 
 ## Repository structure
 
-SWC is currently in transition from its first generation (**1st-gen**) to its second generation (**2nd-gen**).
+SWC is currently in transition from its first generation (**gen1**) to its second generation (**2nd-gen**).
 
 > This transition is motivated by some important strategic goals. For more information, see [Objectives and Strategy](../03_project-planning/01_objectives-and-strategy.md).
 
-Instead of creating a separate branch or repo for 2nd-gen, we are working on both projects side-by-side in this repository. The two generations are **independent** — there is no runtime dependency between them. Code in 2nd-gen does not affect 1st-gen, and vice versa.
+Instead of creating a separate branch or repo for 2nd-gen, we are working on both projects side-by-side in this repository. The two generations are **independent** — there is no runtime dependency between them. Code in 2nd-gen does not affect gen1, and vice versa.
 
 Reflecting this structure, the repository is organized into two top-level workspaces:
 
-- **`gen1/`** contains all of the 1st-gen packages, tooling, and supporting materials. It is self-contained.
+- **`gen1/`** contains all of the gen1 packages, tooling, and supporting materials. It is self-contained.
 
-    While we'll continue doing work in `1st-gen` as needed to accomplish our goals, we expect this work to decrease steadily toward none.
+    While we'll continue doing work in `gen1` as needed to accomplish our goals, we expect this work to decrease steadily toward none.
 
 - **`2nd-gen/`** is a new workspace that we're building from the ground up to serve as a clean foundation for our future work. It includes:
     - A Core library (`packages/core/`), which contains behavior, API, and shared logic for 2nd-gen components
 
     - The 2nd-gen SWC library (`packages/swc/`).
 
-Within both 1st-gen and 2nd-gen, the repo separates **components** (user-facing UI that matches Spectrum design) from **tools/utilities** (base classes, theme, grid, tokens, reactive controllers, etc.). For how we decide where new or existing code belongs, see [Tools vs packages](12_tools-vs-packages.md).
+Within both gen1 and 2nd-gen, the repo separates **components** (user-facing UI that matches Spectrum design) from **tools/utilities** (base classes, theme, grid, tokens, reactive controllers, etc.). For how we decide where new or existing code belongs, see [Tools vs packages](12_tools-vs-packages.md).
 
-During this transition, depending on what you're trying to accomplish, you may end up working in `[1st-gen](/gen1/README.md)`, `[2nd-gen](/2nd-gen/README.md)`, or both. If you have any questions, [please ask](./01_getting-involved.md#community--support)—we're happy to help.
+During this transition, depending on what you're trying to accomplish, you may end up working in `[gen1](/gen1/README.md)`, `[2nd-gen](/2nd-gen/README.md)`, or both. If you have any questions, [please ask](./01_getting-involved.md#community--support)—we're happy to help.
 
 ## Development workflow
 
 The project's top-level `package.json` file defines [several commands](#command-reference) that can be run from the repository root, covering the most important parts of the development workflow.
 
-> By default, each command is run in both the 1st-gen and 2nd-gen workspaces, but you can add a `:1st-gen` or `:2nd-gen` suffix to any command to run it for only one workspace.
+> By default, each command is run in both the gen1 and 2nd-gen workspaces, but you can add a `:gen1` or `:2nd-gen` suffix to any command to run it for only one workspace.
 
 ### Developing
 
@@ -142,21 +142,21 @@ Here are the most frequently used commands available from the repository root:
 
 | Command                | Description                                  |
 | ---------------------- | -------------------------------------------- |
-| `yarn start`           | Start Storybook for both 1st-gen and 2nd-gen |
-| `yarn start:1st-gen`   | Start Storybook for 1st-gen only             |
+| `yarn start`           | Start Storybook for both gen1 and 2nd-gen |
+| `yarn start:gen1`   | Start Storybook for gen1 only             |
 | `yarn start:2nd-gen`   | Start Storybook for 2nd-gen only             |
-| `yarn test`            | Run tests for both 1st-gen and 2nd-gen       |
-| `yarn test:1st-gen`    | Run tests for 1st-gen only                   |
+| `yarn test`            | Run tests for both gen1 and 2nd-gen       |
+| `yarn test:gen1`    | Run tests for gen1 only                   |
 | `yarn test:2nd-gen`    | Run tests for 2nd-gen only                   |
 | `yarn test:a11y`       | Run accessibility tests (both generations)   |
-| `yarn test:a11y:1st`   | Run accessibility tests for 1st-gen only     |
+| `yarn test:a11y:1st`   | Run accessibility tests for gen1 only     |
 | `yarn test:a11y:2nd`   | Run accessibility tests for 2nd-gen only     |
 | `yarn test:a11y:ui`    | Interactive accessibility test UI            |
 | `yarn lint`            | Check for linting issues (staged files)      |
-| `yarn lint:1st-gen`    | Check for linting issues in 1st-gen only     |
+| `yarn lint:gen1`    | Check for linting issues in gen1 only     |
 | `yarn lint:2nd-gen`    | Check for linting issues in 2nd-gen only     |
-| `yarn build`           | Build all packages (2nd-gen then 1st-gen)    |
-| `yarn build:1st-gen`   | Build 1st-gen packages only                  |
+| `yarn build`           | Build all packages (2nd-gen then gen1)    |
+| `yarn build:gen1`   | Build gen1 packages only                  |
 | `yarn build:2nd-gen`   | Build 2nd-gen packages only                  |
 
 For more specific workflows and advanced topics, refer to the other contributor guides, especially [Accessibility testing](./09_accessibility-testing.md) for detailed information about writing and running accessibility tests.

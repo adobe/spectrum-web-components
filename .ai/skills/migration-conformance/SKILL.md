@@ -1,6 +1,6 @@
 ---
 name: migration-conformance
-description: Sub-task after Phase 6 of 1st-gen to 2nd-gen component migration. Use to verify all migrated files conform to the project style guides, run linters, and surface any guideline gaps as PR comment notes.
+description: Sub-task after Phase 6 of gen1 to 2nd-gen component migration. Use to verify all migrated files conform to the project style guides, run linters, and surface any guideline gaps as PR comment notes.
 ---
 
 # Migration conformance (sub-task after Phase 6)

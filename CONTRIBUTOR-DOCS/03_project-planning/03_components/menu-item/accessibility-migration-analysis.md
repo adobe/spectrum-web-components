@@ -20,7 +20,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: `<swc-menu-item>`](#recommendations-swc-menu-item)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -88,21 +88,21 @@ This page is for 2nd-gen `swc-menu-item` in Spectrum Web Components. Most rows a
 | Idea | Plain meaning |
 | --- | --- |
 | [Name, role, value (4.1.2)](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value) | `menuitem` name from content or `aria-*`; disabled items use `aria-disabled="true"` when appropriate. |
-| [Keyboard (2.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/keyboard) | Activate with **Enter** / **Space** per pattern; **no** pointer-only rows (see 1st-gen [SWC-1332](https://jira.corp.adobe.com/browse/SWC-1332)). |
+| [Keyboard (2.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/keyboard) | Activate with **Enter** / **Space** per pattern; **no** pointer-only rows (see gen1 [SWC-1332](https://jira.corp.adobe.com/browse/SWC-1332)). |
 | [Link purpose (2.4.4)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context) | Link rows expose a **clear** link **name**; avoid duplicate activations ([SWC-923](https://jira.corp.adobe.com/browse/SWC-923)). |
 
 **Bottom line:** Items use roving `tabindex` and `FocusgroupNavigationController`. Submenu parents wire open, close, focus return, and child `role="menu"` in the item’s shadow, not the CE. Top-level hosts stay `swc-menu` / `swc-action-menu` ([Menu](../menu/accessibility-migration-analysis.md), [Action menu](../action-menu/accessibility-migration-analysis.md)).
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 | --- | --- | --- | --- | --- |
 | [SWC-923](https://jira.corp.adobe.com/browse/SWC-923) | Bug | To Do | Unresolved | `menu-item` with `href` triggers link twice |
 | [SWC-1332](https://jira.corp.adobe.com/browse/SWC-1332) | Bug | To Do | Unresolved | Custom content as submenu not keyboard accessible |
 
-See [Menu — Related 1st-gen accessibility (Jira)](../menu/accessibility-migration-analysis.md#related-1st-gen-accessibility-jira) for the full menu-family table.
+See [Menu — Related gen1 accessibility (Jira)](../menu/accessibility-migration-analysis.md#related-gen1-accessibility-jira) for the full menu-family table.
 
 ---
 

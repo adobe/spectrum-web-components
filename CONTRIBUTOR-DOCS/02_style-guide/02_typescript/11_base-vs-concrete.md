@@ -175,7 +175,7 @@ export class Badge extends BadgeBase {
   // ───────────────────
 
   /**
-   * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
+   * @todo This can be moved to the base class once we are no longer maintaining gen1.
    */
   @property({ type: Boolean, reflect: true })
   public subtle: boolean = false;

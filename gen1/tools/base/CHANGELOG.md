@@ -10,7 +10,7 @@
 
 - [#6067](https://github.com/adobe/spectrum-web-components/pull/6067) [`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89) Thanks [@caseyisonit](https://github.com/caseyisonit)! - Refactored size mixin exports and badge type naming for consistency.
 
-  **@spectrum-web-components/base (1st-gen)**
+  **@spectrum-web-components/base (gen1)**
   - **Added**: New exports `ELEMENT_SIZES` and `DEFAULT_ELEMENT_SIZES` for typed size arrays
   - **Deprecated**: `ElementSizes` record is now deprecated in favor of `ELEMENT_SIZES`. The export is preserved for backward compatibility but will be removed in a future major release.
 
@@ -62,7 +62,7 @@
 
 - No customer-facing changes.
 
-  Introduced architectural changes to support side-by-side development of 1st-gen and 2nd-gen components.
+  Introduced architectural changes to support side-by-side development of gen1 and 2nd-gen components.
 
 ## 1.9.1
 

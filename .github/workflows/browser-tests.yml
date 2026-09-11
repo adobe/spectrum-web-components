@@ -44,10 +44,10 @@ jobs:
           echo "Checking Chrome version..."
           google-chrome --version
           echo "Checking tachometer chromedriver version..."
-          cd 1st-gen && yarn tachometer --version
+          cd gen1 && yarn tachometer --version
 
       - name: Tachometer the changed packages
-        run: cd 1st-gen && yarn test:changed --browser=${{ matrix.browser }}
+        run: cd gen1 && yarn test:changed --browser=${{ matrix.browser }}
 
       - name: Create a dummy file to ensure at least one results file exists
         run: touch gen1/tachometer.${{ matrix.browser }}-ran.txt

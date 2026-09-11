@@ -20,7 +20,7 @@ export default {
     'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
   ],
   'gen1/{packages,tools}/*/src/**/!(*.css).ts': [
-    'yarn workspace @spectrum-web-components/1st-gen lit-analyzer',
+    'yarn workspace @spectrum-web-components/gen1 lit-analyzer',
   ],
   'package.json': () => [
     'node scripts/generate-versions.js',
@@ -28,7 +28,7 @@ export default {
     'yarn install --refresh-lockfile',
     'git add gen1/tools/base/src/version.ts 2nd-gen/packages/core/element/version.ts yarn.lock',
   ],
-  '{1st-gen,2nd-gen}/.changeset/*.md': [
+  '{gen1,2nd-gen}/.changeset/*.md': [
     'node gen1/scripts/escape-changelog-tags.js',
   ],
   '!(*.css|*.ts)': [

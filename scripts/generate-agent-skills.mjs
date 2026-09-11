@@ -221,7 +221,7 @@ const GEN2_MIGRATION_GUIDES = [
 // ---------------------------------------------------------------------------
 
 /**
- * Strip Eleventy-specific syntax from 1st-gen Markdown content files.
+ * Strip Eleventy-specific syntax from gen1 Markdown content files.
  *
  * Removes:
  *   - YAML frontmatter (--- ... ---)
@@ -341,7 +341,7 @@ function collectFiles(dir, base = dir) {
 }
 
 /**
- * Extract the first sentence of the Overview section from a 1st-gen README
+ * Extract the first sentence of the Overview section from a gen1 README
  * for use as an inline description in the component list.
  */
 function readmeDescription(packageDir) {
@@ -366,7 +366,7 @@ function readmeDescription(packageDir) {
 }
 
 /**
- * Read the pre-generated CEM-based per-component reference for a 1st-gen tag.
+ * Read the pre-generated CEM-based per-component reference for a gen1 tag.
  * Falls back to a minimal reference built from the component's README when the
  * pre-generated file is absent (e.g. when docs:analyze hasn't run yet).
  */
@@ -400,7 +400,7 @@ function readGen1Reference(tagName, packageDir) {
 }
 
 /**
- * List all 1st-gen packages that have a README.
+ * List all gen1 packages that have a README.
  * Returns [{ packageDir, tagName }] sorted by tagName.
  */
 function listGen1Components() {

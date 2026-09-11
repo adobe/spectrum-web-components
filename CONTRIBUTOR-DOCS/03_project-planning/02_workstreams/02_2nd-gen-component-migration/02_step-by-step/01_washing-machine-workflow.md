@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../../README.md) / [Project planning](../../../README.md) / [Workstreams](../../README.md) / [2nd-gen Component Migration](../README.md) / Step By Step / Washing machine: migrating an existing 1st-gen component to 2nd-gen
+[CONTRIBUTOR-DOCS](../../../../README.md) / [Project planning](../../../README.md) / [Workstreams](../../README.md) / [2nd-gen Component Migration](../README.md) / Step By Step / Washing machine: migrating an existing gen1 component to 2nd-gen
 
 <!-- Document title (editable) -->
 
-# Washing machine: migrating an existing 1st-gen component to 2nd-gen
+# Washing machine: migrating an existing gen1 component to 2nd-gen
 
 <!-- Generated TOC - DO NOT EDIT -->
 
@@ -15,7 +15,7 @@
 - [Quick Migration Checklist](#quick-migration-checklist)
 - [Relationship to this workstream](#relationship-to-this-workstream)
 - [Workflow overview](#workflow-overview)
-- [Starting from 1st-gen (reference, not dependency)](#starting-from-1st-gen-reference-not-dependency)
+- [Starting from gen1 (reference, not dependency)](#starting-from-gen1-reference-not-dependency)
 - [Core vs SWC: where does code go?](#core-vs-swc-where-does-code-go)
 - [Phase 1: Preparation](#phase-1-preparation)
     - [What to do](#what-to-do)
@@ -72,7 +72,7 @@
 
 <!-- Document content (editable) -->
 
-**Scope:** This guide applies **only** when a **1st-gen Spectrum Web Component already exists** (or 1st-gen is explicitly the package you are migrating—you refactor that surface, move shared logic to core, then add 2nd-gen). **Greenfield / net-new** 2nd-gen (no 1st-gen counterpart) is **out of scope** here; see [TODO: Greenfield 2nd-gen contributor guide](../03_migration-project-planning.md#todo-greenfield-2nd-gen-contributor-guide) in [Migration project planning](../03_migration-project-planning.md).
+**Scope:** This guide applies **only** when a **gen1 Spectrum Web Component already exists** (or gen1 is explicitly the package you are migrating—you refactor that surface, move shared logic to core, then add 2nd-gen). **Greenfield / net-new** 2nd-gen (no gen1 counterpart) is **out of scope** here; see [TODO: Greenfield 2nd-gen contributor guide](../03_migration-project-planning.md#todo-greenfield-2nd-gen-contributor-guide) in [Migration project planning](../03_migration-project-planning.md).
 
 It **orchestrates** the migration: eight phases with checklists and quality gates, plus links to the step-by-step docs and style guides for implementation detail. It does not duplicate those guides—it sequences **what** to do and **when**.
 
@@ -109,7 +109,7 @@ Keep **spectrum-web-components** (this repo) and **[spectrum-css](https://github
 
 Use this doc for **what order** to do things and **what to check**; use the linked docs for **how to do** each phase.
 
-- **Workstream:** [2nd-gen Component Migration](../README.md) — README, status table, and **7 step-by-step docs** that describe the migration path (study 1st-gen, create base in core, build 2nd-gen).
+- **Workstream:** [2nd-gen Component Migration](../README.md) — README, status table, and **7 step-by-step docs** that describe the migration path (study gen1, create base in core, build 2nd-gen).
 - **Status table:** [01_status.md](../01_status.md) — use it to see which components have completed which steps and to **update progress** when you finish a migration.
 - **Jira / Epics:** [Migration project planning — Epics and tickets](../03_migration-project-planning.md) — epic templates, phase-aligned tickets, tracking.
 
@@ -118,7 +118,7 @@ Use this doc for **what order** to do things and **what to check**; use the link
 | Washing machine phase | Step-by-step doc(s) |
 |----------------------|---------------------------|
 | **1. Preparation** | Uses output of **Step 1: Analyze rendering and styling** (read the component analysis). Plan breaking changes and scope. |
-| **2. Setup** | **Steps 2–3** — study 1st-gen structure, create base class in core — then create 2nd-gen core/SWC layout per Phase 2. |
+| **2. Setup** | **Steps 2–3** — study gen1 structure, create base class in core — then create 2nd-gen core/SWC layout per Phase 2. |
 | **3. API migration** | **Step 4: Formalize Spectrum data model** + **Step 5: Add 2nd-gen SWC** (API overrides/additions). |
 | **4. Accessibility** | Use the **accessibility migration analysis** (`03_components/<component>/accessibility-migration-analysis.md`). |
 | **5. Styling** | **Step 6: Migrate rendering & styles from Spectrum CSS**. |
@@ -126,7 +126,7 @@ Use this doc for **what order** to do things and **what to check**; use the link
 | **7. Documentation** | **Step 7: Add stories for 2nd-gen component** + per-component MDX docs page + public-API JSDoc on `Component.ts`. |
 | **8. Review** | (No dedicated step — this guide adds checklist and PR.) |
 
-Reference to guide to [understand the 1st-gen component structure](../02_step-by-step/02_factor-rendering-out-of-1st-gen-component.md) and the linked step-by-step docs for Steps 2–3. If those steps are **already** done, start **Phase 2** at SWC package setup and the Phase 2 “What to do” list.
+Reference to guide to [understand the gen1 component structure](../02_step-by-step/02_factor-rendering-out-of-gen1-component.md) and the linked step-by-step docs for Steps 2–3. If those steps are **already** done, start **Phase 2** at SWC package setup and the Phase 2 “What to do” list.
 
 ---
 
@@ -135,7 +135,7 @@ Reference to guide to [understand the 1st-gen component structure](../02_step-by
 ```mermaid
 flowchart LR
     subgraph Input
-        A[Existing 1st-gen component]
+        A[Existing gen1 component]
     end
     subgraph Phases
         B[1. Preparation]
@@ -155,17 +155,17 @@ flowchart LR
 
 ---
 
-## Starting from 1st-gen (reference, not dependency)
+## Starting from gen1 (reference, not dependency)
 
-This workflow assumes a **1st-gen package** (`gen1/packages/<component>/` or equivalent) exists and serves as the **reference implementation**. You use it to understand the component's API, behavior, and edge cases — but neither generation imports from or depends on the other at runtime.
+This workflow assumes a **gen1 package** (`gen1/packages/<component>/` or equivalent) exists and serves as the **reference implementation**. You use it to understand the component's API, behavior, and edge cases — but neither generation imports from or depends on the other at runtime.
 
 The approach:
 
-1. **Study the 1st-gen implementation** — understand the public API, mixins, controllers, and rendering.
-2. **Create the 2nd-gen base class in core** — start from the 1st-gen logic, applying improvements incrementally. Do not speculatively rewrite — changes should be informed by existing bugs, accessibility considerations, or feature disparity.
+1. **Study the gen1 implementation** — understand the public API, mixins, controllers, and rendering.
+2. **Create the 2nd-gen base class in core** — start from the gen1 logic, applying improvements incrementally. Do not speculatively rewrite — changes should be informed by existing bugs, accessibility considerations, or feature disparity.
 3. **Create the 2nd-gen concrete class in SWC** — add rendering, styles, and element registration.
 
-1st-gen remains self-contained. It is **not** updated to import from 2nd-gen core.
+gen1 remains self-contained. It is **not** updated to import from 2nd-gen core.
 
 ---
 
@@ -198,7 +198,7 @@ Before you start, know the split:
 ### What to do
 
 1. **Read or generate the component analysis** — See [Step 1: Analyze rendering and styling](01_analyze-rendering-and-styling/README.md). Analysis docs live under [03_components/](../../../03_components/) (e.g. `badge/rendering-and-styling-migration-analysis.md`). Have **spectrum-css** in the [same workspace](#workspace-setup) so comparisons to Spectrum 2 source are practical. **Optional (AI-assisted):** If you use Cursor, the **component-migration-analysis** skill (when available in your setup) can be used together with Step 1’s [Cursor prompt](01_analyze-rendering-and-styling/README.md#using-the-cursor-prompt) to produce or update the analysis; still follow Step 1 QA before treating the doc as final.
-2. **Read the 1st-gen code** and dependencies (mixins, shared modules).
+2. **Read the gen1 code** and dependencies (mixins, shared modules).
 3. **List breaking changes** and existing bug tickets for the gen1 implementation; consider severity and whether fixes require breaking changes.
 4. **Write a short migration plan** — scope, risks, order of work. A reusable template is available at [`.ai/skills/migration-prep/assets/migration-prep-template.md`](../../../../../.ai/skills/migration-prep/assets/migration-prep-template.md); copy it to `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` before editing so the relative links resolve correctly.
 5. **Capture API washing / naming cleanup in the plan** — Note alignment with **React Spectrum** where relevant, **Figma** option names, possible **splits** (e.g. menu vs listbox), and **overlay / event** conventions (`sp-opened`, `sp-closed`, which components may emit them); **get team review on the plan before large refactors** so downstream phases stay aligned.
@@ -214,8 +214,8 @@ Before you start, know the split:
 
 | Problem | Solution |
 |--------|----------|
-| No component analysis doc | Use Badge as reference; run the Analyze step Cursor prompt to generate one, or compare 1st-gen vs 2nd-gen structure. |
-| Existing 1st-gen bugs | Consider severity, whether fixes require breaking changes, etc., before deciding how to proceed. |
+| No component analysis doc | Use Badge as reference; run the Analyze step Cursor prompt to generate one, or compare gen1 vs 2nd-gen structure. |
+| Existing gen1 bugs | Consider severity, whether fixes require breaking changes, etc., before deciding how to proceed. |
 | Many variants or modes | Plan decision tree: one component vs several (see Decision trees below). |
 
 <details>
@@ -242,7 +242,7 @@ Use the decision tree under **Decision trees** below. If the answer is "split," 
    - `swc-<tag>.ts` — side-effect entry point that calls `defineElement('swc-<tag>', Component)` and declares the `HTMLElementTagNameMap` augmentation. Use `2nd-gen/packages/swc/components/badge/swc-badge.ts` as the reference.
 3. **Wire up exports** in `package.json` with a `./components/<name>/swc-<tag>.js` export entry so the side-effect file is importable as `@adobe/spectrum-wc/components/<name>/swc-<tag>.js`.
 
-See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_move-base-class-to-2nd-gen-core.md) for directory layout, code structure, and reference implementations (Badge).
+See [Step 2](02_factor-rendering-out-of-gen1-component.md) and [Step 3](03_move-base-class-to-2nd-gen-core.md) for directory layout, code structure, and reference implementations (Badge).
 
 ### What to check
 
@@ -254,7 +254,7 @@ See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_mo
 
 | Problem | Solution |
 |--------|----------|
-| Wrong base or mixin | See Badge and [Step 2](02_factor-rendering-out-of-1st-gen-component.md). |
+| Wrong base or mixin | See Badge and [Step 2](02_factor-rendering-out-of-gen1-component.md). |
 | CSS not applied | Add `static override get styles()` and import the CSS module. See Badge. |
 | Package not exporting | Add a `./components/<name>/swc-<tag>.js` entry to the SWC `package.json` exports map. |
 | `defineElement` in `index.ts` | Move it to `swc-<tag>.ts`; `index.ts` should only re-export the class. |
@@ -268,11 +268,11 @@ See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_mo
 
 ## Phase 3: API migration
 
-**Goal:** Define properties, methods, and types in 2nd-gen (using 1st-gen as reference); keep a clear public API.
+**Goal:** Define properties, methods, and types in 2nd-gen (using gen1 as reference); keep a clear public API.
 
 ### What to do
 
-1. **List the public API** from 1st-gen (attributes, properties, slots, events).
+1. **List the public API** from gen1 (attributes, properties, slots, events).
 2. **Define types** in `Component.types.ts`; put shared API in base (core), SWC-only in concrete class.
 3. **Mark internal API** with JSDoc `@internal`; add JSDoc for public props/slots.
 4. **Implement static readonly arrays and debug warnings** — follow [API patterns (statics and warnings)](#api-patterns-statics-and-warnings) below; reference implementation: 2nd-gen Badge (`Badge.base.ts`, `Badge.ts`).
@@ -282,7 +282,7 @@ See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_mo
 
 | Scenario | Where it goes | Action |
 |----------|---------------|--------|
-| **Same in S1 and S2** | Base (core) | Carry over from 1st-gen reference. |
+| **Same in S1 and S2** | Base (core) | Carry over from gen1 reference. |
 | **Renamed in S2** | Base (core) with new name | Use the new name directly. No need to maintain the old name. |
 | **Removed in S2** | Do not migrate | Document removal in component README. |
 | **New in S2** | Base or SWC | Put in base if it's behavior; SWC if it's rendering-only. |
@@ -326,11 +326,11 @@ Full worked examples for each category are in
 [Reusable validation helpers](../../../../02_style-guide/02_typescript/17_debug-validation.md#reusable-validation-helpers)
 and [Slot validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#slot-validation).
 
-**Deprecating 1st-gen APIs during migration**
+**Deprecating gen1 APIs during migration**
 
-When the 2nd-gen API diverges from 1st-gen — a renamed attribute, a removed prop, a replaced export — mark the 1st-gen surface as deprecated so consumers have a clear migration path before 1st-gen is retired.
+When the 2nd-gen API diverges from gen1 — a renamed attribute, a removed prop, a replaced export — mark the gen1 surface as deprecated so consumers have a clear migration path before gen1 is retired.
 
-Convention: **all 1st-gen deprecations introduced as part of a 2nd-gen migration must surface a runtime notice through the swc warn system** (`window.__swc.warn()` with `level: 'deprecation'`). A `@deprecated` JSDoc tag alone is not enough — types and IDE tooling pick it up, but consumers building against compiled output won't see it. The warn system fires once per element/type/level in dev mode, is silent in production, and routes through the existing `ignoreWarning*` filters so consumers can opt out.
+Convention: **all gen1 deprecations introduced as part of a 2nd-gen migration must surface a runtime notice through the swc warn system** (`window.__swc.warn()` with `level: 'deprecation'`). A `@deprecated` JSDoc tag alone is not enough — types and IDE tooling pick it up, but consumers building against compiled output won't see it. The warn system fires once per element/type/level in dev mode, is silent in production, and routes through the existing `ignoreWarning*` filters so consumers can opt out.
 
 Apply this to:
 
@@ -387,7 +387,7 @@ Wire the field per the approved [forms strategy](../../../05_strategies/forms-st
 
 ### What to check
 
-- [ ] All relevant 1st-gen props have a 2nd-gen home (base or SWC).
+- [ ] All relevant gen1 props have a 2nd-gen home (base or SWC).
 - [ ] Types are in core and used by SWC.
 - [ ] Internal helpers are marked `@internal`.
 - [ ] Static `readonly` arrays match types; used for validation, Storybook, and tests where applicable.
@@ -401,7 +401,7 @@ Wire the field per the approved [forms strategy](../../../05_strategies/forms-st
 
 | Problem | Solution |
 |--------|----------|
-| Different options from 1st-gen | Define const arrays in types; base uses canonical set; SWC overrides if needed. See Badge. |
+| Different options from gen1 | Define const arrays in types; base uses canonical set; SWC overrides if needed. See Badge. |
 | Complex getter/setter | Use only for attribute sync or validation; otherwise `@property`. |
 | Native `<input>` (Checkbox) | See `Checkbox.base.ts` and `Checkbox.ts` for abstract `inputElement`, `handleChange`, `delegatesFocus`. |
 
@@ -414,7 +414,7 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 ### Quality gate
 
 - [ ] Public API is documented; types are in core; base holds behavior; SWC holds rendering.
-- [ ] Static readonly pattern, debug warnings, and 1st-gen deprecation notices align with Badge (or equivalent) and TypeScript conventions.
+- [ ] Static readonly pattern, debug warnings, and gen1 deprecation notices align with Badge (or equivalent) and TypeScript conventions.
 - [ ] Dev-warning validation uses the shared `core/utils` helpers for every applicable category (see table above), not hand-rolled checks.
 
 ---
@@ -442,7 +442,7 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 - [ ] ARIA and semantics match the chosen APG pattern that the analysis identified.
 - [ ] Component behaves as expected with screen reader. 
 - [ ] Keyboard and focus behavior are implemented and tested.
-- [ ] No accessibility regressions vs 1st-gen.
+- [ ] No accessibility regressions vs gen1.
 - [ ] Accessible-name validation (required or conditionally required `accessibleLabel`/label slot, required label/heading slots, allowed slot children) uses the shared `core/utils` helpers with `{ type: 'accessibility' }`. See [Reusable validation helpers](../../../../02_style-guide/02_typescript/17_debug-validation.md#reusable-validation-helpers) and [Slot validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#slot-validation).
 
 ### Common problems and solutions
@@ -479,7 +479,7 @@ Prefer native events when they give the right semantics (e.g. `click`). Add cust
 ### What to do
 
 1. **Verify or create the stories file** — Visual verification requires a stories file. If `stories/[component].stories.ts` does not exist, create it before writing CSS using the `migration-styling` skill’s Phase 5 stories template. The stories file at this phase should have Playground, Overview, Anatomy, Options, States, and CSS-visible Behaviors — no story-level JSDoc (story prose lives in the per-component MDX authored in Phase 7), and the Accessibility story left as a `// TODO` comment. Confirm the component renders in Storybook with no console errors before touching CSS.
-2. **Align render template class names with CSS selectors** — Read the component’s `render()` method and note every class name emitted. The CSS you write must use those exact names; mismatches cause styles to silently not apply. When migrating from 1st-gen single-hyphen naming (e.g. `.swc-Button-label`) to 2nd-gen BEM double-underscore notation (e.g. `.swc-Button__label`), update `render()` first, confirm the component still renders, then write the CSS.
+2. **Align render template class names with CSS selectors** — Read the component’s `render()` method and note every class name emitted. The CSS you write must use those exact names; mismatches cause styles to silently not apply. When migrating from gen1 single-hyphen naming (e.g. `.swc-Button-label`) to 2nd-gen BEM double-underscore notation (e.g. `.swc-Button__label`), update `render()` first, confirm the component still renders, then write the CSS.
 3. **Follow the migration steps** — [Step 6](06_migrate-rendering-and-styles.md) and the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md). Use [03_components/](../../../03_components/) for spectrum-two alignment. Copy S2 styles from your **spectrum-css** clone, **`spectrum-two`** branch, component `index.css` (not `dist`).
 4. **Use tokens** — Replace hard-coded values with `token(...)`. Follow [component CSS](../../../../02_style-guide/01_css/01_component-css.md) and [custom properties](../../../../02_style-guide/01_css/02_custom-properties.md).
 5. **Run stylelint** — After updating CSS, run `nx run swc:lint`. Fix all errors. The 2nd-gen config enforces: **property order** (see `linters/stylelint-property-order.js`); **no descending specificity** (e.g. `:host([disabled])` before `:host([checked][disabled])`); **declaration empty line** (empty line between groups); **token usage** (`token("...")` for color, font-size, etc.).
@@ -489,7 +489,7 @@ For templates, `render()`, icons (inline SVG), and detailed examples, see [Step 
 ### What to check
 
 - [ ] Stories file exists and component renders in Storybook with no console errors.
-- [ ] Class names emitted by `render()` match the selectors in the component CSS (no stale 1st-gen names).
+- [ ] Class names emitted by `render()` match the selectors in the component CSS (no stale gen1 names).
 - [ ] No inline styles for theme/size; use CSS and classes.
 - [ ] Tokens and custom properties align with Spectrum 2.
 - [ ] Follows the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md).
@@ -498,7 +498,7 @@ For templates, `render()`, icons (inline SVG), and detailed examples, see [Step 
 
 ### Common problems and solutions
 
-For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheets vs plain `.css`, variant classes, size/density), see the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md) and [component styling guidelines](../../../../02_style-guide/01_css/01_component-css.md).
+For troubleshooting and detailed patterns (e.g. gen1 Constructable Stylesheets vs plain `.css`, variant classes, size/density), see the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md) and [component styling guidelines](../../../../02_style-guide/01_css/01_component-css.md).
 
 | Problem | Solution |
 |--------|----------|
@@ -511,7 +511,7 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 ### Quality gate
 
 - [ ] Stories file exists; component renders correctly in Storybook.
-- [ ] Render template class names match CSS selectors (no stale names from 1st-gen).
+- [ ] Render template class names match CSS selectors (no stale names from gen1).
 - [ ] Every exposed `--swc-*` custom property has a `@cssprop` JSDoc tag on the primary SWC component class (e.g. `@cssprop --swc-button-height - Block size of the button.`). Storybook surfaces these automatically in the API docs panel.
 - [ ] Follows the [full migration steps](../../../../02_style-guide/01_css/04_spectrum-swc-migration.md).
 - [ ] Adheres to the [component styling guidelines](../../../../02_style-guide/01_css/01_component-css.md).
@@ -570,7 +570,7 @@ Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.s
 3. **Finalize the stories file:** If Phase 5 was completed, `stories/[component].stories.ts` already exists with Playground, Overview, Anatomy, Options, States, and Behaviors stories — all correctly structured with no story-level JSDoc and the Accessibility story body left as `// TODO`. Phase 7 augments that file: complete the Accessibility story body, drop `'autodocs'` from the Playground story (keep `'dev'`) so the per-component MDX is the unit's Docs page, and add any stories deferred from earlier phases. Do **not** add JSDoc above story exports — prose lives in the MDX. Do not recreate the file from scratch. Reference `badge/stories/badge.stories.ts` + `badge/badge.mdx` and `divider/stories/divider.stories.ts` + `divider/divider.mdx` for complete examples.
 4. **Meta-level JSDoc:** above `const meta: Meta = { ... }` in the stories file. This is the only retained JSDoc on the stories side; it renders in the docs-page header via `<Description />`. Should describe the component's purpose and link to related components.
 5. **Size/variant controls:** Ensure controls drive the component. If the attribute comes from a mixin (e.g. `SizedMixin`), declare it on the SWC class with `@property({ reflect: true })` so the CEM includes it; run `yarn analyze` to regenerate the manifest.
-6. **Review, usage docs, migration notes:** Confirm the MDX renders correctly; document API changes from 1st-gen via the `consumer-migration-guide` skill (separate from the docs page).
+6. **Review, usage docs, migration notes:** Confirm the MDX renders correctly; document API changes from gen1 via the `consumer-migration-guide` skill (separate from the docs page).
 
 See [Step 7](07_add-stories-for-2nd-gen-component.md) for structure and examples.
 
@@ -641,7 +641,7 @@ Use these when you are not sure how to structure the migration.
 
 ### Should this component be combined with another?
 
-- Are two 1st-gen components **always used together** or **almost the same API**?  
+- Are two gen1 components **always used together** or **almost the same API**?  
   → Consider one 2nd-gen component with a prop (e.g. "mode") or a single unified API.
 - Are they **separate in Spectrum design** and used in different contexts?  
   → Keep separate.
@@ -658,7 +658,7 @@ Use these when you are not sure how to structure the migration.
 - **Small, fixed set** (e.g. size: S/M/L): Use a **string attribute** and reflect it; use a const array for type and Storybook options.
 - Match the **primary role** of the component (button, listbox, combobox, dialog, etc.) to native HTML or an existing accessible [pattern](https://www.w3.org/WAI/ARIA/apg/patterns/).
 - **Boolean toggles** (e.g. disabled, readonly): Use **boolean attributes** and reflect.
-- **Stop and ask** when the 1st-gen uses a different pattern (e.g. only classes) and you want to change to attributes.
+- **Stop and ask** when the gen1 uses a different pattern (e.g. only classes) and you want to change to attributes.
 
 ### What accessibility pattern applies?
 
@@ -671,7 +671,7 @@ Use these when you are not sure how to structure the migration.
 
 Use Badge as the reference implementation:
 
-| Area | 1st-gen (reference) | 2nd-gen core | 2nd-gen SWC |
+| Area | gen1 (reference) | 2nd-gen core | 2nd-gen SWC |
 |------|---------------------|--------------|-------------|
 | **Base class** | `src/Badge.ts` (study as reference) | `Badge.base.ts` (behavior, validation) | — |
 | **Concrete class** | — | — | `Badge.ts` (extends BadgeBase, render, styles) |
@@ -682,7 +682,7 @@ Use Badge as the reference implementation:
 
 **Paths:**
 
-- 1st-gen: `gen1/packages/badge/`
+- gen1: `gen1/packages/badge/`
 - 2nd-gen core: `2nd-gen/packages/core/components/badge/`
 - 2nd-gen SWC: `2nd-gen/packages/swc/components/badge/`
 

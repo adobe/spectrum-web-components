@@ -13,7 +13,7 @@
 
 - [TL;DR](#tldr)
     - [Most blocking open questions](#most-blocking-open-questions)
-- [1st-gen API surface](#1st-gen-api-surface)
+- [gen1 API surface](#gen1-api-surface)
     - [Properties / attributes](#properties--attributes)
     - [Methods](#methods)
     - [Events](#events)
@@ -58,13 +58,13 @@
 
 ## TL;DR
 
-- **Component**: `<sp-meter>` (1st-gen, `@spectrum-web-components/meter@1.11.2`) → `<swc-meter>` (2nd-gen).
+- **Component**: `<sp-meter>` (gen1, `@spectrum-web-components/meter@1.11.2`) → `<swc-meter>` (2nd-gen).
 - **What this is**: a non-focusable, read-only bar that shows a value (`value`, default range 0–100) inside a fixed range. ARIA pattern is **`role="meter"`**, distinct from `progressbar` task progress (separate component).
 - **Architecture**: `<swc-meter>` shares a **thin `LinearProgressMixin`** in `core` with the future `<swc-progress-bar>`. The mixin holds every property, computed value, and behavior that both components share (value clamping, fill-fraction, locale formatting, slot tracking, DEBUG warning) but is intentionally silent on ARIA role and animation — those are left to each component's own base class. `MeterBase` extends `LinearProgressMixin` and adds `variant` + meter-specific ARIA resolution. The SWC layer renders S2 markup against the `swc-Meter` wrapper class. Shared bar/track/fill/label-layout CSS lives in a `linear-progress-base.css` file that both `meter.css` and future `progress-bar.css` import.
 - **API alignment**: 2nd-gen aligns with [React Spectrum S2 Meter](https://react-spectrum.adobe.com/Meter.html) and the Figma `S2 / Web (Desktop scale)` Meter frame supplied with this plan. Net effect: rename `progress` → `value`, add `minValue`/`maxValue`, replace `side-label` boolean with `label-position` enum, expose `value-label`, expose `formatOptions` (`Intl.NumberFormatOptions`) as a JS property, align `variant` set to `{informative (default), positive, notice, negative}`, expose `static-color` as `{white, black}`, and add `label` + `description` named slots.
-- **Must-ship breaking/a11y**: tag rename `<sp-meter>` → `<swc-meter>`; replace 1st-gen's invalid combined `role="meter progressbar"` with `role="meter"` only, placed on the shadow `.swc-LinearProgress` element (not the host); add `aria-valuemin`, `aria-valuemax`, and `aria-valuetext` (localized formatted value) on the role element; drop `--mod-*` passthroughs in favor of the shared `--swc-linear-progress-*` set; render inside a `<div class="swc-LinearProgress">` wrapper instead of styling the host.
+- **Must-ship breaking/a11y**: tag rename `<sp-meter>` → `<swc-meter>`; replace gen1's invalid combined `role="meter progressbar"` with `role="meter"` only, placed on the shadow `.swc-LinearProgress` element (not the host); add `aria-valuemin`, `aria-valuemax`, and `aria-valuetext` (localized formatted value) on the role element; drop `--mod-*` passthroughs in favor of the shared `--swc-linear-progress-*` set; render inside a `<div class="swc-LinearProgress">` wrapper instead of styling the host.
 - **Net-new from S2/React**: arbitrary numeric range (`minValue`/`maxValue`); custom `value-label` (e.g. `"1 of 4"`); custom `formatOptions` (`Intl.NumberFormatOptions`, JS property only — full pass-through to `Intl.NumberFormat`); `static-color="black"`; **`description` named slot** for additional text below the meter (not a "help-text" attribute — meter is not a form field).
-- **Field-label rendering**: 1st-gen renders internal `<sp-field-label>` for label and percent. 2nd-gen renders plain `<span>` elements inside the shadow root (SWC-prefixed selectors per the [contributor docs selector patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#selector-patterns)). `<label>` is not used because `role="meter"` is not pair-able with native `<label>` semantics.
+- **Field-label rendering**: gen1 renders internal `<sp-field-label>` for label and percent. 2nd-gen renders plain `<span>` elements inside the shadow root (SWC-prefixed selectors per the [contributor docs selector patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#selector-patterns)). `<label>` is not used because `role="meter"` is not pair-able with native `<label>` semantics.
 - **Accessible-name model**: visible label via the **`label`** named slot; the `meter` role element in shadow DOM `aria-labelledby`-references the label slot's container id. `accessibleLabel` JS property (attr `accessible-label`) is reserved for **rare cases without a visible label** (e.g. a data grid of meters) — when provided, the role element sets it as `aria-label`. Description via the **`description`** named slot; the role element `aria-describedby`-references its container id.
 
 ### Most blocking open questions
@@ -73,7 +73,7 @@ None currently. Q1–Q6 from the drafting cycle are closed; resolutions are refl
 
 ---
 
-## 1st-gen API surface
+## gen1 API surface
 
 **Source:** [`gen1/packages/meter/src/Meter.ts`](../../../../gen1/packages/meter/src/Meter.ts)
 **Version:** `@spectrum-web-components/meter@1.11.2`
@@ -84,10 +84,10 @@ None currently. Q1–Q6 from the drafting cycle are closed; resolutions are refl
 | Property     | Type                                             | Default     | Attribute       | Notes                                                                                                                  |
 | ------------ | ------------------------------------------------ | ----------- | --------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | `progress`   | `number`                                         | `0`         | `progress`      | 0–100. Drives `aria-valuenow` and the `transform: scaleX(...)` of the fill.                                            |
-| `variant`    | `'positive' \| 'notice' \| 'negative' \| ''`     | `''`        | `variant`       | Custom setter; invalid values clear the attribute. Empty string is the "informative" default in 1st-gen.                |
+| `variant`    | `'positive' \| 'notice' \| 'negative' \| ''`     | `''`        | `variant`       | Custom setter; invalid values clear the attribute. Empty string is the "informative" default in gen1.                |
 | `label`      | `string`                                         | `''`        | `label`         | Reflected. Mirrored to `aria-label` on update. Slot text is hoisted to `label` via `getLabelFromSlot`.                  |
 | `sideLabel`  | `boolean`                                        | `false`     | `side-label`    | Reflected. Layout-only.                                                                                                |
-| `staticColor`| `'white' \| undefined`                           | `undefined` | `static-color`  | Reflected. White only in 1st-gen.                                                                                      |
+| `staticColor`| `'white' \| undefined`                           | `undefined` | `static-color`  | Reflected. White only in gen1.                                                                                      |
 | `size`       | `'s' \| 'm' \| 'l' \| 'xl'`                      | unset       | `size`          | From `SizedMixin({ noDefaultSize: true })`. No default size attribute is set; consumers pass one of the four values.   |
 
 ### Methods
@@ -110,10 +110,10 @@ None custom. (No `dispatchEvent` calls in `Meter.ts`.)
 
 ### CSS custom properties
 
-1st-gen exposes the following `--mod-*` properties via inheritance from progress-bar styles (`@import url("./spectrum-progress-bar.css"); @import url("./progress-bar-overrides.css");` in [`meter.css`](../../../../gen1/packages/meter/src/meter.css)) and the meter-specific overrides:
+gen1 exposes the following `--mod-*` properties via inheritance from progress-bar styles (`@import url("./spectrum-progress-bar.css"); @import url("./progress-bar-overrides.css");` in [`meter.css`](../../../../gen1/packages/meter/src/meter.css)) and the meter-specific overrides:
 
 - Passthroughs (progress-bar): `--mod-progressbar-fill-color`, `--mod-progressbar-max-size`, `--mod-progressbar-min-size`, `--mod-progressbar-thickness`
-- Meter modifiers: `--mod-meter-help-text-to-progress-bar`, `--mod-meter-max-width`, `--mod-meter-min-width` _(1st-gen names retained for historical accuracy; these dimensions have no public 2nd-gen custom property and are handled internally. The shared `--swc-linear-progress-*` set covers fill, track, text, thickness, font-size, and top-to-text spacing.)_
+- Meter modifiers: `--mod-meter-help-text-to-progress-bar`, `--mod-meter-max-width`, `--mod-meter-min-width` _(gen1 names retained for historical accuracy; these dimensions have no public 2nd-gen custom property and are handled internally. The shared `--swc-linear-progress-*` set covers fill, track, text, thickness, font-size, and top-to-text spacing.)_
 
 This full modifier surface will not be carried forward to 2nd-gen.
 
@@ -131,7 +131,7 @@ Rendered by `Meter.render()`:
 </div>
 ```
 
-Plus the host receives `role="meter progressbar"` (invalid combined ARIA role string — see [Known 1st-gen issues](./accessibility-migration-analysis.md#known-1st-gen-issues)).
+Plus the host receives `role="meter progressbar"` (invalid combined ARIA role string — see [Known gen1 issues](./accessibility-migration-analysis.md#known-gen1-issues)).
 
 ---
 
@@ -146,7 +146,7 @@ Plus the host receives `role="meter progressbar"` (invalid combined ARIA role st
 
 2nd-gen equivalents:
 
-| 1st-gen import | 2nd-gen equivalent | Status |
+| gen1 import | 2nd-gen equivalent | Status |
 | --- | --- | --- |
 | `SpectrumElement` from `@spectrum-web-components/base` | `@adobe/spectrum-wc-core/element/index.js` | Available |
 | `SizedMixin` from `@spectrum-web-components/base` | `@adobe/spectrum-wc-core/mixins/index.js` | Available |
@@ -170,7 +170,7 @@ Rationale for keeping role and animation out of the mixin:
 
 - `role="meter"` vs `role="progressbar"` require different `aria-value*` behavior (progress-bar omits `aria-valuenow` when indeterminate; meter is always determinate). Mixing these in one base would require gating logic that makes the mixin harder to reason about.
 - The indeterminate animation is entirely progress-bar-specific and has no meter equivalent. Keeping it out of the mixin keeps the mixin small and easy to test in isolation.
-- The 1st-gen `<sp-meter>` inherited CSS via `@import` of `spectrum-progress-bar.css`, which created maintenance coupling. The shared CSS file approach keeps the visual contract explicit without re-introducing that coupling.
+- The gen1 `<sp-meter>` inherited CSS via `@import` of `spectrum-progress-bar.css`, which created maintenance coupling. The shared CSS file approach keeps the visual contract explicit without re-introducing that coupling.
 
 ### Related components and ordering notes
 
@@ -198,7 +198,7 @@ None outstanding. All architecture and dependency decisions are settled per dire
 
 #### API and naming
 
-| #  | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #  | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | -- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B1** | Custom element tag rename | `<sp-meter>` | `<swc-meter>` | Update all tag references; install `@spectrum-web-components/swc-meter`. |
 | **B2** | `progress` → `value` rename. _(Source: [React Spectrum S2 Meter API](https://react-spectrum.adobe.com/Meter.html); user direction to align with React.)_ | `progress` (number, 0–100) | `value` (number, default 0). Range is bounded by `minValue`/`maxValue`. | Rename attribute and property. `<sp-meter progress="50">` → `<swc-meter value="50">`. |
@@ -209,13 +209,13 @@ None outstanding. All architecture and dependency decisions are settled per dire
 
 #### Styling and visuals
 
-| #  | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #  | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | -- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B8** | Internal label rendering. _(Source: contributor docs selector patterns; `role="meter"` does not pair with native `<label>`.)_ | `<sp-field-label>` rendered twice in shadow (label + percentage). | Plain `<span class="swc-Meter-label">` / `<span class="swc-Meter-value">` (SWC-namespaced selectors; `<span>`, not `<label>`). The shadow `meter` role element uses `aria-labelledby` to reference the `label` slot's container `<span>`. | None for top-level consumers. Consumers querying `sp-field-label` inside shadow DOM update selectors. |
 
 #### Accessibility and behavior
 
-| #  | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #  | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | -- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B9** | ARIA role placement. _(Source: [accessibility-migration-analysis.md § Role and value attributes](./accessibility-migration-analysis.md#role-and-value-attributes); [WAI-ARIA 1.2 `meter`](https://www.w3.org/TR/wai-aria-1.2/#meter); [APG meter pattern](https://www.w3.org/WAI/ARIA/apg/patterns/meter/); initiative leads a11y direction.)_ | `role="meter progressbar"` (invalid combined ARIA role token) set on the host. | `role="meter"` only, set on the shadow `.swc-Meter` element (not the host). All `aria-value*`, `aria-label`, `aria-labelledby`, `aria-describedby` for the meter live on that role element. Nothing role-related is set on the host. | None — AT-only. Tests/snapshots that assert the combined string or host-level ARIA update. |
 | **B10** | Value attributes. _(Source: [accessibility-migration-analysis.md § ARIA roles, states, and properties](./accessibility-migration-analysis.md#aria-roles-states-and-properties); React Spectrum S2 Meter API.)_ | Only `aria-valuenow` is set; no `aria-valuemin`/`aria-valuemax`/`aria-valuetext`. | `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<value>`, and `aria-valuetext=<formatted value>` (formatted via `Intl.NumberFormat` using `formatOptions` and the resolved locale). | None — AT-only. |
@@ -225,7 +225,7 @@ None outstanding. All architecture and dependency decisions are settled per dire
 
 | #  | What is added | Notes |
 | -- | ------------- | ----- |
-| **A1** | `static-color="black"` | `spectrum-css` `spectrum-two` adds the `staticBlack` modifier (`progressbar/index.css` line 189). 1st-gen has white only. Ships in this migration. |
+| **A1** | `static-color="black"` | `spectrum-css` `spectrum-two` adds the `staticBlack` modifier (`progressbar/index.css` line 189). gen1 has white only. Ships in this migration. |
 | **A2** | `description` named slot | New for S2 (`spectrum-css` `spectrum-two` adds the description region inside the meter HTML; ported as `swc-Meter-description` in `meter.css`). Public API: `slot="description"` for additional text below the meter. Renders into an internal `<span class="swc-Meter-description">` container; the shadow `meter` role element `aria-describedby`-references that container's id when the slot has assigned nodes. "Help text" terminology is not used because it implies a form field. Ships in this migration. |
 | **A3** | `value-label` (string attribute). _(Source: React Spectrum S2 `valueLabel`.)_ | New for S2/React. Replaces the auto-formatted percentage. `<swc-meter value-label="1 of 4">` overrides the rendered value text and feeds `aria-valuetext`. String only — matches React's `valueLabel` API; no slot version. Auto-formatting (Intl.NumberFormat) remains the default when omitted. |
 | **A4** | `formatOptions` JS property. _(Source: React Spectrum S2 `formatOptions`.)_ | `Intl.NumberFormatOptions` object — JS property only, not a string attribute. Full pass-through to `Intl.NumberFormat` so the API stays in sync with the native spec as new fields ship (`notation`, `roundingMode`, `signDisplay`, future additions). Default `{ style: 'percent' }`. Drives both the rendered value text and `aria-valuetext`. Ignored when `value-label` is set. |
@@ -234,7 +234,7 @@ None outstanding. All architecture and dependency decisions are settled per dire
 
 ## 2nd-gen API decisions
 
-These are derived from the 1st-gen implementation, the rendering and styling roadmap, the accessibility migration analysis, the `spectrum-css` `spectrum-two` source, and the React S2 implementation. Confidence labels:
+These are derived from the gen1 implementation, the rendering and styling roadmap, the accessibility migration analysis, the `spectrum-css` `spectrum-two` source, and the React S2 implementation. Confidence labels:
 
 - **Confirmed**: directly supported by source material.
 - **Inferred**: recommended based on multiple signals; not explicitly specified in one authoritative source.
@@ -246,14 +246,14 @@ These are derived from the 1st-gen implementation, the rendering and styling roa
 
 | Property        | Type                                                          | Default       | Attribute         | Notes |
 | --------------- | ------------------------------------------------------------- | ------------- | ----------------- | ----- |
-| `value`         | `number`                                                      | `0`           | `value`           | **Confirmed.** Renamed from 1st-gen `progress`. Clamped to `[minValue, maxValue]`. Drives `aria-valuenow` and the bar fill. |
+| `value`         | `number`                                                      | `0`           | `value`           | **Confirmed.** Renamed from gen1 `progress`. Clamped to `[minValue, maxValue]`. Drives `aria-valuenow` and the bar fill. |
 | `minValue`      | `number`                                                      | `0`           | `min-value`       | **Confirmed.** Reflected. Bottom of the value range. Mirrors React Spectrum `minValue`. |
 | `maxValue`      | `number`                                                      | `100`         | `max-value`       | **Confirmed.** Reflected. Top of the value range. Mirrors React Spectrum `maxValue`. |
 | `accessibleLabel` | `string`                                                    | `''`          | `accessible-label` | **Confirmed.** **Rare-case fallback** used when there is no visible `label` slot content — e.g. a data grid of meters where each meter's name is implied by its row/column context. Sets `aria-label` on the shadow `meter` role element when provided. When the `label` slot has content, `accessibleLabel` is ignored (`aria-labelledby` to the slot container takes precedence). |
 | `valueLabel`    | `string \| undefined`                                         | `undefined`   | `value-label`     | **Confirmed.** Custom value text (e.g. `"1 of 4"`). Overrides the auto-formatted percent in both rendered text and `aria-valuetext`. Mirrors React Spectrum `valueLabel`. |
 | `formatOptions` | `Intl.NumberFormatOptions \| undefined`                       | `{ style: 'percent' }` | _(property only)_ | **Confirmed.** JS property only — full pass-through to `Intl.NumberFormat`. Avoids flattening or remapping native spec fields (`notation`, `roundingMode`, `signDisplay`, etc.). Drives the auto-formatted value text and `aria-valuetext` when `value-label` is not set. |
-| `variant`       | `'informative' \| 'positive' \| 'notice' \| 'negative'`       | `'informative'` | `variant`       | **Confirmed.** Reflected. Default is the named `informative` value (1st-gen used the empty string for this case). |
-| `labelPosition` | `'top' \| 'side'`                                             | `'top'`       | `label-position`  | **Confirmed.** Reflected. Replaces 1st-gen `side-label` boolean. |
+| `variant`       | `'informative' \| 'positive' \| 'notice' \| 'negative'`       | `'informative'` | `variant`       | **Confirmed.** Reflected. Default is the named `informative` value (gen1 used the empty string for this case). |
+| `labelPosition` | `'top' \| 'side'`                                             | `'top'`       | `label-position`  | **Confirmed.** Reflected. Replaces gen1 `side-label` boolean. |
 | `staticColor`   | `'white' \| 'black' \| undefined`                             | `undefined`   | `static-color`    | **Confirmed.** Reflected. `'auto'` from React Spectrum is **deferred** — `spectrum-css` `spectrum-two` does not include a `staticAuto` modifier. |
 | `size`          | `'s' \| 'm' \| 'l' \| 'xl'`                                   | `'m'`         | `size`            | **Confirmed.** Default `m` per Figma `S2 / Web (Desktop scale)` Properties panel and React Spectrum default. |
 
@@ -290,11 +290,11 @@ The earlier `--swc-meter-min-width`, `--swc-meter-max-width`, `--swc-meter-descr
 ### Behavioral semantics
 
 - **Read-only display.** Host is not focusable. No `tabindex`. Keyboard skips the component.
-- **Value clamping.** `value` is clamped into `[minValue, maxValue]` for both rendering (`fill` width as `(value − minValue) / (maxValue − minValue)`) and `aria-valuenow`. `minValue` defaults to `0`, `maxValue` to `100`; default behavior matches the 1st-gen 0–100 range.
+- **Value clamping.** `value` is clamped into `[minValue, maxValue]` for both rendering (`fill` width as `(value − minValue) / (maxValue − minValue)`) and `aria-valuenow`. `minValue` defaults to `0`, `maxValue` to `100`; default behavior matches the gen1 0–100 range.
 - **Locale-aware formatting.** When `value-label` is unset, format the visible value and `aria-valuetext` via `new Intl.NumberFormat(language, formatOptions ?? { style: 'percent' })`. The `language` argument comes from the shared `LanguageResolutionController` (subscribed in `LinearProgressMixin`); on `language-resolver-updated`, the formatted value + `aria-valuetext` are re-rendered. For percent style, feed the normalized fraction `(value − minValue) / (maxValue − minValue)`. Re-format on any of `value`, `minValue`, `maxValue`, `valueLabel`, `formatOptions` changing.
 - **`value-label` precedence.** Non-empty `value-label` attribute overrides auto-formatted text in both the visible value cell and `aria-valuetext`. String only — no slot version (matches React's `valueLabel` API).
-- **Variant validation.** `variant` is a typed enum; unknown values fall back to `'informative'`. Tracked in `Meter.types.ts` rather than via the 1st-gen string-coercing setter.
-- **No custom events.** No `dispatchEvent` calls; behavior parity with 1st-gen.
+- **Variant validation.** `variant` is a typed enum; unknown values fall back to `'informative'`. Tracked in `Meter.types.ts` rather than via the gen1 string-coercing setter.
+- **No custom events.** No `dispatchEvent` calls; behavior parity with gen1.
 
 ### Accessibility semantics notes (2nd-gen)
 
@@ -313,7 +313,7 @@ Sourced from [`accessibility-migration-analysis.md`](./accessibility-migration-a
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
+> The gen1 component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
 
 Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) for structural patterns.
 
@@ -373,7 +373,7 @@ Notes:
 
 ### Preparation (this ticket)
 
-- [x] 1st-gen API surface documented
+- [x] gen1 API surface documented
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] 2nd-gen API decisions drafted
@@ -525,11 +525,11 @@ All drafting-time questions are resolved. Resolutions:
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
 - [CSS style guide — Spectrum SWC migration](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md)
 - [CSS style guide — Anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md)
-- [1st-gen source — `Meter.ts`](../../../../gen1/packages/meter/src/Meter.ts)
-- [1st-gen styles — `meter.css`](../../../../gen1/packages/meter/src/meter.css)
-- [1st-gen tests — `meter.test.ts`](../../../../gen1/packages/meter/test/meter.test.ts)
-- [1st-gen stories — `meter.stories.ts`](../../../../gen1/packages/meter/stories/meter.stories.ts)
-- [1st-gen README](../../../../gen1/packages/meter/README.md)
+- [gen1 source — `Meter.ts`](../../../../gen1/packages/meter/src/Meter.ts)
+- [gen1 styles — `meter.css`](../../../../gen1/packages/meter/src/meter.css)
+- [gen1 tests — `meter.test.ts`](../../../../gen1/packages/meter/test/meter.test.ts)
+- [gen1 stories — `meter.stories.ts`](../../../../gen1/packages/meter/stories/meter.stories.ts)
+- [gen1 README](../../../../gen1/packages/meter/README.md)
 - [Spectrum CSS — `spectrum-two` branch, `components/meter/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/meter/index.css)
 - [Spectrum CSS — `spectrum-two` branch, `components/progressbar/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/progressbar/index.css)
 - [React Spectrum S2 Meter](https://react-spectrum.adobe.com/Meter)

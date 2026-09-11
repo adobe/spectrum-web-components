@@ -42,7 +42,7 @@ jobs:
       - name: Check for changesets
         id: check
         run: |
-          # This workflow is 1st-gen only, always - independent of 2nd-gen in every
+          # This workflow is gen1 only, always - independent of 2nd-gen in every
           # trigger. 2nd-gen has its own changesets setup in 2nd-gen/.changeset/ and
           # its own workflow, publish-gen2.yml.
           GEN1_COUNT=$(find gen1/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
@@ -50,7 +50,7 @@ jobs:
           if [ "$GEN1_COUNT" -ne 0 ]; then
             echo "has_changesets=true" >> $GITHUB_OUTPUT
             echo "needs_publish=false" >> $GITHUB_OUTPUT
-            echo "Found $GEN1_COUNT 1st-gen changeset(s)"
+            echo "Found $GEN1_COUNT gen1 changeset(s)"
             exit 0
           fi
 
@@ -82,7 +82,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: npm-publish
     permissions:
-      id-token: write # Required for OIDC trusted publishing (1st-gen)
+      id-token: write # Required for OIDC trusted publishing (gen1)
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
@@ -107,22 +107,22 @@ jobs:
         id: npm-auth
         run: |
           if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
-            echo "✓ OIDC token is available for 1st-gen trusted publishing"
+            echo "✓ OIDC token is available for gen1 trusted publishing"
           else
             echo "✗ OIDC token NOT available - trusted publishing will fail"
             exit 1
           fi
 
       - name: Generate custom elements manifests
-        run: yarn workspace @spectrum-web-components/1st-gen custom-element-json
+        run: yarn workspace @spectrum-web-components/gen1 custom-element-json
 
       - name: Confirm build artifacts
-        run: yarn workspace @spectrum-web-components/1st-gen build:confirm
+        run: yarn workspace @spectrum-web-components/gen1 build:confirm
 
       - name: Version gen1 packages (snapshot)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: (cd 1st-gen && yarn changeset version --snapshot ${{ steps.extract-tag.outputs.tag }})
+        run: (cd gen1 && yarn changeset version --snapshot ${{ steps.extract-tag.outputs.tag }})
 
       - name: Capture released versions
         id: versions
@@ -137,14 +137,14 @@ jobs:
 
       - name: Publish gen1 packages
         if: steps.npm-auth.outcome == 'success'
-        run: (cd 1st-gen && yarn changeset publish --no-git-tag --tag ${{ steps.extract-tag.outputs.tag }})
+        run: (cd gen1 && yarn changeset publish --no-git-tag --tag ${{ steps.extract-tag.outputs.tag }})
 
       # Gated only by this job running at all (needs.check-changesets.outputs.has_changesets
       # == 'true' at the job level) - the old workflow's separate has_1st_gen_changesets
       # output was always identical to has_changesets for this gen1-only workflow, so no
       # extra conditional is needed here.
       - name: Build React wrappers
-        run: yarn workspace @spectrum-web-components/1st-gen build:react
+        run: yarn workspace @spectrum-web-components/gen1 build:react
 
       - name: Publish React wrappers
         env:
@@ -245,8 +245,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          yarn workspace @spectrum-web-components/1st-gen changelog:1st-gen
-          (cd 1st-gen && yarn changeset version)
+          yarn workspace @spectrum-web-components/gen1 changelog:gen1
+          (cd gen1 && yarn changeset version)
           yarn install --refresh-lockfile
 
       - name: Open or update the gen1 Version PR
@@ -254,23 +254,23 @@ jobs:
         with:
           # `#publish` in both message and title so the Version PR merge to main
           # (the only push-to-main this job produces - the PR itself lands on the
-          # changeset-release/1st-gen branch) carries the marker publish-docs-site.yml
+          # changeset-release/gen1 branch) carries the marker publish-docs-site.yml
           # keys on, triggering the gen1 docs deploy. Both fields cover every merge
           # strategy: squash uses the title, rebase the commit-message, merge the title
           # in the body.
           commit-message: 'chore: release gen1 packages #publish'
           title: 'chore: release gen1 packages #publish'
-          branch: changeset-release/1st-gen
+          branch: changeset-release/gen1
           base: main
           delete-branch: true
           add-paths: |
-            1st-gen
+            gen1
             yarn.lock
 
       - name: Version PR summary
         run: |
           echo "## Publish summary (gen1)" >> $GITHUB_STEP_SUMMARY
-          echo "📝 Version PR opened/updated at \`changeset-release/1st-gen\` - nothing published yet" >> $GITHUB_STEP_SUMMARY
+          echo "📝 Version PR opened/updated at \`changeset-release/gen1\` - nothing published yet" >> $GITHUB_STEP_SUMMARY
 
   # Real publish, once the Version PR above has merged (no pending changesets left).
   # Only this job sits behind the npm-publish environment's required-reviewer approval,
@@ -288,7 +288,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: npm-publish
     permissions:
-      id-token: write # Required for OIDC trusted publishing (1st-gen)
+      id-token: write # Required for OIDC trusted publishing (gen1)
       contents: write # pushes the release git tag
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
@@ -305,17 +305,17 @@ jobs:
         id: npm-auth
         run: |
           if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
-            echo "✓ OIDC token is available for 1st-gen trusted publishing"
+            echo "✓ OIDC token is available for gen1 trusted publishing"
           else
             echo "✗ OIDC token NOT available - trusted publishing will fail"
             exit 1
           fi
 
       - name: Generate custom elements manifests
-        run: yarn workspace @spectrum-web-components/1st-gen custom-element-json
+        run: yarn workspace @spectrum-web-components/gen1 custom-element-json
 
       - name: Confirm build artifacts
-        run: yarn workspace @spectrum-web-components/1st-gen build:confirm
+        run: yarn workspace @spectrum-web-components/gen1 build:confirm
 
       # The git-tag-existence guard is what makes this safe to re-run on every subsequent
       # ordinary push once a release has gone out (changeset publish is separately
@@ -334,8 +334,8 @@ jobs:
           fi
           yarn install --refresh-lockfile
           yarn build
-          (cd 1st-gen && yarn changeset publish --no-git-tag)
-          yarn workspace @spectrum-web-components/1st-gen build:react
+          (cd gen1 && yarn changeset publish --no-git-tag)
+          yarn workspace @spectrum-web-components/gen1 build:react
           cd gen1/react
           for dir in */; do
             pkg_name=$(node -p "require('./${dir}package.json').name")

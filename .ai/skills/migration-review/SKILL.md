@@ -1,11 +1,11 @@
 ---
 name: migration-review
-description: Phase 8 of 1st-gen to 2nd-gen component migration. Use to run final checks, verify lint/tests/build/Storybook, update the workstream status table, and open a PR.
+description: Phase 8 of gen1 to 2nd-gen component migration. Use to run final checks, verify lint/tests/build/Storybook, update the workstream status table, and open a PR.
 ---
 
 # Migration review ([Phase 8](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md))
 
-[Phase 8](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is final checks — lint, tests, build, and Storybook — then updating the workstream status table and opening a PR.
+[Phase 8](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the gen1 → 2nd-gen component migration. The goal is final checks — lint, tests, build, and Storybook — then updating the workstream status table and opening a PR.
 
 ## Mindset
 

@@ -94,7 +94,7 @@ const CAPITALIZATION_MAP = {
   '1st': '1st',
   '2nd': '2nd',
   '2ndgen': '2nd-gen',
-  '1stgen': '1st-gen',
+  '1stgen': 'gen1',
 };
 
 /**

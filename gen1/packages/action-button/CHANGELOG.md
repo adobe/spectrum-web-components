@@ -34,12 +34,12 @@
 ### Minor Changes
 
 - [#6071](https://github.com/adobe/spectrum-web-components/pull/6071) [`26f16c4`](https://github.com/adobe/spectrum-web-components/commit/26f16c42613d96ed89baeebf6d1ec274768571e5) Thanks [@5t3ph](https://github.com/5t3ph)! - - **Added**: Introduced global action button element styles in `@spectrum-web-components/styles` via `global-action-button.css`, enabling native links with `.spectrum-ActionButton*` classes to render with Spectrum action button styling.
-  - **Documented**: Added 1st-gen action button guidance and Storybook examples for rendering native `<a>` links as static actio button-styled UI, including limitations (for example, no disabled, selected, or hold affordance support for link-based buttons).
+  - **Documented**: Added gen1 action button guidance and Storybook examples for rendering native `<a>` links as static actio button-styled UI, including limitations (for example, no disabled, selected, or hold affordance support for link-based buttons).
 
 ### Patch Changes
 
-- [#6025](https://github.com/adobe/spectrum-web-components/pull/6025) [`018d316`](https://github.com/adobe/spectrum-web-components/commit/018d3163efb830478e1d1e2e1f696639c1423e84) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Updated 1st-gen Action Button color wiring so S2 colors match spec while Spectrum 1 remains visually unchanged.
-  - Updated S2-only token values in `1st-gen/tools/styles/tokens-v2/system-theme-bridge.css`:
+- [#6025](https://github.com/adobe/spectrum-web-components/pull/6025) [`018d316`](https://github.com/adobe/spectrum-web-components/commit/018d3163efb830478e1d1e2e1f696639c1423e84) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Updated gen1 Action Button color wiring so S2 colors match spec while Spectrum 1 remains visually unchanged.
+  - Updated S2-only token values in `gen1/tools/styles/tokens-v2/system-theme-bridge.css`:
     - `--system-action-button-content-color-selected` -> `var(--spectrum-gray-25)`
     - static quiet disabled backgrounds:
       - black -> `var(--spectrum-transparent-black-25)`
@@ -47,8 +47,8 @@
     - added S2 static content tokens:
       - `--system-action-button-static-black-content-color-{default,hover,down,focus}`
       - `--system-action-button-static-white-content-color-{default,hover,down,focus}`
-  - Updated `1st-gen/packages/action-button/src/action-button-overrides.css` to map new S2 `--system-*` static content tokens into `--spectrum-*` action-button vars.
-  - Updated `1st-gen/packages/action-button/src/spectrum-action-button.css` static color content assignments to read from `--spectrum-actionbutton-static-*-content-color-*` with S1-safe fallbacks:
+  - Updated `gen1/packages/action-button/src/action-button-overrides.css` to map new S2 `--system-*` static content tokens into `--spectrum-*` action-button vars.
+  - Updated `gen1/packages/action-button/src/spectrum-action-button.css` static color content assignments to read from `--spectrum-actionbutton-static-*-content-color-*` with S1-safe fallbacks:
     - black fallback remains `var(--spectrum-black)`
     - white fallback remains `var(--spectrum-white)`
 

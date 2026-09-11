@@ -19,7 +19,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: `<swc-split-view>`](#recommendations-swc-split-view)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -36,7 +36,7 @@
 
 ## Overview
 
-This doc explains how **`swc-split-view`** should work for **accessibility**. It supports **WCAG 2.2 Level AA**. There is no React Spectrum equivalent and no Figma file for this component; recommendations below are based on the 1st-gen implementation, the current WAI-ARIA 1.2 specification, and comparable external implementations of the same pattern (see [References](#references)). The 2nd-gen API is expected to match 1st-gen's API (`vertical`, `resizable`, `collapsible`, `primary-min`, `primary-max`, `primary-size`, `secondary-min`, `secondary-max`, `splitter-pos`, `label`, and the `change` event).
+This doc explains how **`swc-split-view`** should work for **accessibility**. It supports **WCAG 2.2 Level AA**. There is no React Spectrum equivalent and no Figma file for this component; recommendations below are based on the gen1 implementation, the current WAI-ARIA 1.2 specification, and comparable external implementations of the same pattern (see [References](#references)). The 2nd-gen API is expected to match gen1's API (`vertical`, `resizable`, `collapsible`, `primary-min`, `primary-max`, `primary-size`, `secondary-min`, `secondary-max`, `splitter-pos`, `label`, and the `change` event).
 
 ### Also read
 
@@ -65,7 +65,7 @@ This doc explains how **`swc-split-view`** should work for **accessibility**. It
 ### Pattern in the APG
 
 - There is **no** current APG pattern page for a resizable "window splitter." The ARIA Authoring Practices Guide previously carried a "Window Splitter" pattern in early drafts, but it was not carried forward as a maintained pattern, and the gap is still an open topic in the working group: see [w3c/aria#1443](https://github.com/w3c/aria/issues/1443), which discusses that neither the plain `slider` role nor the (not-yet-shipped) `splitter` role proposal fully covers a two-dimensional resize handle, and that no dedicated role has been adopted.
-- In the absence of a named pattern, the **[`separator` role](https://www.w3.org/TR/wai-aria-1.2/#separator)** is the correct fit and is what 1st-gen already implements: the specification states that when a `separator` is **focusable**, it behaves like a **range widget** and should expose `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and `aria-orientation` — the same shape recommended by external implementations of this exact pattern, for example [Nord Health's resizable handle component](https://nordhealth.design/components/resizable-handle/), which implements the ARIA window-splitter shape (`aria-controls`, `aria-orientation`, `aria-valuenow`/`min`/`max`, a default localized name, and arrow/<kbd>Home</kbd>/<kbd>End</kbd> keyboard support).
+- In the absence of a named pattern, the **[`separator` role](https://www.w3.org/TR/wai-aria-1.2/#separator)** is the correct fit and is what gen1 already implements: the specification states that when a `separator` is **focusable**, it behaves like a **range widget** and should expose `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and `aria-orientation` — the same shape recommended by external implementations of this exact pattern, for example [Nord Health's resizable handle component](https://nordhealth.design/components/resizable-handle/), which implements the ARIA window-splitter shape (`aria-controls`, `aria-orientation`, `aria-valuenow`/`min`/`max`, a default localized name, and arrow/<kbd>Home</kbd>/<kbd>End</kbd> keyboard support).
 - A non-focusable divider (non-`resizable` split view) has no widget semantics and should not carry value attributes, matching the plain [Divider](../divider/accessibility-migration-analysis.md) guidance.
 
 ### Guidelines that apply
@@ -84,7 +84,7 @@ This doc explains how **`swc-split-view`** should work for **accessibility**. It
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 |------|------|-------------------|-------------------------|---------|
@@ -99,11 +99,11 @@ This doc explains how **`swc-split-view`** should work for **accessibility**. It
 | Topic | What to do |
 |-------|------------|
 | **One semantic role, on the divider** | The divider maps to **one** semantic role, `separator`, and it is **prescribed and fixed** — not author-overridable. The outer `swc-split-view` host carries **no** ARIA role of its own; it is a layout container. This satisfies the single-role policy without needing a split into multiple components. |
-| **Name is required whenever focusable ([SWC-276](https://jira.corp.adobe.com/browse/SWC-276))** | Preserve the 1st-gen fix: apply a default accessible name (1st-gen uses `"Resize the panels"`) to the divider whenever `resizable` is set, overridable via the `label` property/attribute. Do **not** set a name when the divider is not `resizable` — a non-interactive line needs no name, matching [Divider](../divider/accessibility-migration-analysis.md). Never ship a focusable divider with no name; that combination is the exact regression [SWC-276](https://jira.corp.adobe.com/browse/SWC-276) fixed. |
+| **Name is required whenever focusable ([SWC-276](https://jira.corp.adobe.com/browse/SWC-276))** | Preserve the gen1 fix: apply a default accessible name (gen1 uses `"Resize the panels"`) to the divider whenever `resizable` is set, overridable via the `label` property/attribute. Do **not** set a name when the divider is not `resizable` — a non-interactive line needs no name, matching [Divider](../divider/accessibility-migration-analysis.md). Never ship a focusable divider with no name; that combination is the exact regression [SWC-276](https://jira.corp.adobe.com/browse/SWC-276) fixed. |
 | **`aria-valuenow` (required when resizable)** | Keep reporting the primary pane's size as a percentage of the total split-view size, updated on every drag or keyboard move. |
-| **`aria-valuemin` / `aria-valuemax` (gap to close)** | 1st-gen sets `aria-valuenow` but never sets `aria-valuemin` / `aria-valuemax`. Per the [WAI-ARIA `separator` role](https://www.w3.org/TR/wai-aria-1.2/#separator), a focusable separator "behaves as a range widget" and is expected to expose min/max alongside now. Add `aria-valuemin="0"` and `aria-valuemax="100"` (matching the percentage basis already used for `aria-valuenow`) when `resizable` is set. |
+| **`aria-valuemin` / `aria-valuemax` (gap to close)** | gen1 sets `aria-valuenow` but never sets `aria-valuemin` / `aria-valuemax`. Per the [WAI-ARIA `separator` role](https://www.w3.org/TR/wai-aria-1.2/#separator), a focusable separator "behaves as a range widget" and is expected to expose min/max alongside now. Add `aria-valuemin="0"` and `aria-valuemax="100"` (matching the percentage basis already used for `aria-valuenow`) when `resizable` is set. |
 | **`aria-valuetext` (consider)** | A bare percentage ("62%") does not say what is 62% of what. Consider a localized `aria-valuetext` (for example, "62% — First panel") so the announcement is meaningful without requiring the user to already know which pane is "now." Keep `aria-valuenow` numeric and correct even when `aria-valuetext` is present. |
-| **`aria-orientation`** | Keep setting this whenever `resizable`. **Verify** the current mapping during manual AT testing: 1st-gen sets `aria-orientation` to describe the divider **line's** visual orientation (a vertical split gets `aria-orientation="vertical"`, i.e. the line drawn between side-by-side panes). Because this is a *focusable range widget*, some assistive technology may instead expect `aria-orientation` to describe the **axis of motion** (how the value changes when arrow keys are pressed) — the same ambiguity the [w3c/aria#1443](https://github.com/w3c/aria/issues/1443) discussion flags for this widget shape generally. Do not change the mapping without confirming actual screen reader announcements; document whichever convention is kept. |
+| **`aria-orientation`** | Keep setting this whenever `resizable`. **Verify** the current mapping during manual AT testing: gen1 sets `aria-orientation` to describe the divider **line's** visual orientation (a vertical split gets `aria-orientation="vertical"`, i.e. the line drawn between side-by-side panes). Because this is a *focusable range widget*, some assistive technology may instead expect `aria-orientation` to describe the **axis of motion** (how the value changes when arrow keys are pressed) — the same ambiguity the [w3c/aria#1443](https://github.com/w3c/aria/issues/1443) discussion flags for this widget shape generally. Do not change the mapping without confirming actual screen reader announcements; document whichever convention is kept. |
 | **`aria-controls`** | Keep pointing at the primary (first) pane so assistive technology can identify what the divider resizes. Consider whether `aria-controls` should reference **both** panes (it accepts a space-separated list of IDs) since dragging changes the size of both, not only the primary one — Nord Health's implementation controls "the affected panel elements" (plural). See [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues) for how this reference should be wired in 2nd-gen. |
 | **`collapsible` and its effect on value** | When `collapsible` drives `aria-valuenow` to 0 or 100, that is enough for a screen reader user to infer "collapsed," but it is not explicit. Consider naming the collapsed state directly in `aria-valuetext` when this feature is implemented (e.g. "0% — First panel (collapsed)") rather than relying on the bare number. |
 | **`vertical`, `primary-min/max`, `secondary-min/max`, `primary-size`, `splitter-pos`** | Layout-only; no independent ARIA mapping beyond feeding the computed `aria-valuenow`/`min`/`max` described above. |
@@ -111,7 +111,7 @@ This doc explains how **`swc-split-view`** should work for **accessibility**. It
 
 ### Shadow DOM and cross-root ARIA Issues
 
-1st-gen sets `aria-controls` on the divider (rendered in the component's shadow root) to the `id` of the primary pane — a **light-DOM** slotted child whose `id` the component assigns itself. An ID reference set on a shadow-tree element pointing at a light-DOM node is a cross-root relationship: it is not guaranteed to resolve consistently for every browser/assistive-technology combination, because IDREF resolution is scoped per tree and the referencing attribute and the referenced ID sit in different trees (shadow root vs. light DOM). Recommend that 2nd-gen expose this relationship through the project's established **element-reference IDL** pattern (the same `ariaControlsElements`-style approach used for tooltip/popover triggers) in addition to, or instead of, a plain ID string — setting the controls relationship as a live element reference removes the dependency on ID resolution crossing the shadow boundary. Verify with manual screen reader testing whichever approach ships, since IDREF-across-shadow-boundary behavior varies by browser.
+gen1 sets `aria-controls` on the divider (rendered in the component's shadow root) to the `id` of the primary pane — a **light-DOM** slotted child whose `id` the component assigns itself. An ID reference set on a shadow-tree element pointing at a light-DOM node is a cross-root relationship: it is not guaranteed to resolve consistently for every browser/assistive-technology combination, because IDREF resolution is scoped per tree and the referencing attribute and the referenced ID sit in different trees (shadow root vs. light DOM). Recommend that 2nd-gen expose this relationship through the project's established **element-reference IDL** pattern (the same `ariaControlsElements`-style approach used for tooltip/popover triggers) in addition to, or instead of, a plain ID string — setting the controls relationship as a live element reference removes the dependency on ID resolution crossing the shadow boundary. Verify with manual screen reader testing whichever approach ships, since IDREF-across-shadow-boundary behavior varies by browser.
 
 ### Accessibility tree expectations
 
@@ -137,7 +137,7 @@ This doc explains how **`swc-split-view`** should work for **accessibility**. It
 Split view has two distinct focus profiles depending on `resizable`:
 
 - **Non-resizable (default):** the divider has no `tabindex` and is not part of the tab order. **Not focusable.** Keyboard navigation should skip this component and move to the next focusable element — the same rule as [Divider](../divider/accessibility-migration-analysis.md).
-- **Resizable:** the divider is `tabindex="0"` and is a genuine keyboard widget. Preserve the 1st-gen key map (already covered by unit tests):
+- **Resizable:** the divider is `tabindex="0"` and is a genuine keyboard widget. Preserve the gen1 key map (already covered by unit tests):
 
 | Key | Effect |
 |-----|--------|
@@ -147,7 +147,7 @@ Split view has two distinct focus profiles depending on `resizable`:
 | <kbd>Home</kbd> | Move to the minimum position (or fully collapse the start, when `collapsible`). |
 | <kbd>End</kbd> | Move to the maximum position (or fully collapse the end, when `collapsible`). |
 
-No key currently exists to toggle collapse without moving to an extreme (1st-gen has no <kbd>Enter</kbd> behavior on the divider). Since the API should match 1st-gen, this is not a required addition, but it is worth flagging as an optional, purely additive enhancement — comparable external implementations (for example Nord Health's resizable handle) bind <kbd>Enter</kbd> to toggle the primary pane's collapsed state, which would give keyboard/screen reader users parity with a pointer user who drags past the collapse threshold.
+No key currently exists to toggle collapse without moving to an extreme (gen1 has no <kbd>Enter</kbd> behavior on the divider). Since the API should match gen1, this is not a required addition, but it is worth flagging as an optional, purely additive enhancement — comparable external implementations (for example Nord Health's resizable handle) bind <kbd>Enter</kbd> to toggle the primary pane's collapsed state, which would give keyboard/screen reader users parity with a pointer user who drags past the collapse threshold.
 
 ---
 
@@ -169,9 +169,9 @@ No key currently exists to toggle collapse without moving to an extreme (1st-gen
 
 - [ ] Non-resizable divider stays roleless-of-name, valueless, and out of the tab order; resizable divider always has a name, `aria-valuenow`, and (new) `aria-valuemin` / `aria-valuemax`.
 - [ ] The [SWC-276](https://jira.corp.adobe.com/browse/SWC-276) fix (default `aria-label` whenever `resizable`) is preserved and unit-tested; a resizable, unnamed divider is treated as a regression.
-- [ ] `aria-orientation` convention (line orientation vs. movement axis) is confirmed against real screen reader output, not just carried over from 1st-gen unexamined.
+- [ ] `aria-orientation` convention (line orientation vs. movement axis) is confirmed against real screen reader output, not just carried over from gen1 unexamined.
 - [ ] `aria-controls` relationship to the primary pane is wired with the project's element-reference IDL pattern, not only a plain ID string, given the shadow-root-to-light-DOM crossing.
-- [ ] Keyboard map (arrows, Page Up/Down, Home, End, Tab/Shift+Tab) matches 1st-gen and is RTL- and `vertical`-aware.
+- [ ] Keyboard map (arrows, Page Up/Down, Home, End, Tab/Shift+Tab) matches gen1 and is RTL- and `vertical`-aware.
 - [ ] Non-text contrast for the divider/gripper passes in default, hover, focus-visible, and `forced-colors` states.
 - [ ] Touch/pointer target size for the drag handle is confirmed or documented as an accepted exception.
 - [ ] `aXe` (WCAG 2.x tags) runs on default, resizable, collapsible, vertical, and nested stories.
@@ -190,6 +190,6 @@ No key currently exists to toggle collapse without moving to an extreme (1st-gen
 - [Nord Health: Resizable handle component](https://nordhealth.design/components/resizable-handle/)
 - [Stack Overflow — proper accessibility/ARIA role for a resize handle](https://stackoverflow.com/questions/42981485/proper-accessibility-or-aria-role-for-a-resize-handle)
 - [Lenovo glossary — sizing handle](https://www.lenovo.com/us/en/glossary/sizing-handle/)
-- 1st-gen: [`sp-split-view`](../../../../gen1/packages/split-view/README.md)
+- gen1: [`sp-split-view`](../../../../gen1/packages/split-view/README.md)
 - [Divider accessibility migration analysis](../divider/accessibility-migration-analysis.md)
 - [Split view migration roadmap](./rendering-and-styling-migration-analysis.md) (once written)

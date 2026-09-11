@@ -11,9 +11,9 @@
  */
 
 /**
- * Changelog Generator (1st-gen)
+ * Changelog Generator (gen1)
  *
- * Processes 1st-gen changeset files and updates 1st-gen/CHANGELOG.md.
+ * Processes gen1 changeset files and updates gen1/CHANGELOG.md.
  *
  * Extracts major, minor, and patch changes from changesets and formats them
  * into organized changelog entries.
@@ -99,9 +99,9 @@ function extractChanges(frontmatter, description, pattern, prefix = '') {
 }
 
 /**
- * Processes changeset files and categorizes 1st-gen changes by type
+ * Processes changeset files and categorizes gen1 changes by type
  *
- * @returns {Promise<object>} Object containing categorized 1st-gen changes
+ * @returns {Promise<object>} Object containing categorized gen1 changes
  */
 async function processChangesets() {
   const changesetDir = path.resolve(__dirname, '../.changeset');
@@ -131,7 +131,7 @@ async function processChangesets() {
     const [, frontmatter, description] = frontmatterMatch;
     const cleanDescription = description.trim();
 
-    // Extract 1st-gen (@spectrum-web-components/*) changes
+    // Extract gen1 (@spectrum-web-components/*) changes
     const swcChanges = extractChanges(
       frontmatter,
       cleanDescription,
@@ -287,7 +287,7 @@ function updateChangelogFile(
 }
 
 /**
- * Creates or updates 1st-gen/CHANGELOG.md based on 1st-gen changeset files.
+ * Creates or updates gen1/CHANGELOG.md based on gen1 changeset files.
  *
  * Reads changeset files and categorizes changes by type (major/minor/patch)
  * before writing the changelog entry.
@@ -325,7 +325,7 @@ async function createChangelog() {
     day: '2-digit',
   });
 
-  // Update 1st-gen changelog
+  // Update gen1 changelog
   const changelogPath = path.resolve(__dirname, '../CHANGELOG.md');
   const compareUrl = `${repoUrl}/compare/${currentTag}...${nextTag}`;
 

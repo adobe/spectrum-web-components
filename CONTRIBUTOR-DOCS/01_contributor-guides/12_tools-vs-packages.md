@@ -24,7 +24,7 @@
 
 ## Overview
 
-**Scope: 1st-gen → 2nd-gen.** This guide applies when migrating or designing for 2nd-gen (where we can rethink placement). 1st-gen stays as-is: packages/ for components, tools/ for tools.
+**Scope: gen1 → 2nd-gen.** This guide applies when migrating or designing for 2nd-gen (where we can rethink placement). gen1 stays as-is: packages/ for components, tools/ for tools.
 
 Not everything falls neatly into "component" or "tool"—the deciding factor is whether code depends on the rendering layer (Spectrum styles, theming). The [decision process](#decision-process) below replaces the old binary split.
 
@@ -54,9 +54,9 @@ For placement within `core/`, see [packages/core/MIGRATION.md](../../2nd-gen/pac
 
 ## Abstraction targets (2nd-gen)
 
-When reclassifying 1st-gen tools or tool-like components for 2nd-gen, use the [decision process](#decision-process) to determine the category, then target the appropriate abstraction:
+When reclassifying gen1 tools or tool-like components for 2nd-gen, use the [decision process](#decision-process) to determine the category, then target the appropriate abstraction:
 
-| 1st-gen package / tool | 2nd-gen abstraction | Location / form |
+| gen1 package / tool | 2nd-gen abstraction | Location / form |
 | ---------------------- | ------------------- | ---------------- |
 | **Asset** | Web component (unchanged) | Remains in `components/`; recategorize under Tools/Utilities in docs since it is not a Spectrum design component |
 | **Opacity-Checkerboard** | CSS utility class | Shared CSS (utility class only; no custom element) |
@@ -65,21 +65,21 @@ When reclassifying 1st-gen tools or tool-like components for 2nd-gen, use the [d
 
 ## Migration and deprecation for reclassified items
 
-When a 1st-gen **component** or **tool** is reclassified in 2nd-gen as a utility (e.g. CSS + helpers instead of a full package):
+When a gen1 **component** or **tool** is reclassified in 2nd-gen as a utility (e.g. CSS + helpers instead of a full package):
 
 1. **Do not** migrate 1:1 as a new 2nd-gen component package. Implement the 2nd-gen side as the chosen abstraction (utils, CSS utilities, etc.) as in [Abstraction targets](#abstraction-targets-2nd-gen).
 
-2. **1st-gen:** Keep the existing package supported until a deprecation path is agreed. When deprecating:
-   - Add a deprecation notice in the 1st-gen package (e.g. in README and/or `package.json` deprecation field).
+2. **gen1:** Keep the existing package supported until a deprecation path is agreed. When deprecating:
+   - Add a deprecation notice in the gen1 package (e.g. in README and/or `package.json` deprecation field).
    - Document the 2nd-gen replacement. Note that not all utilities belong in `core/`—if the utility depends on the rendering layer or carries Spectrum 2 styles (e.g. a reclassified `swc-asset`), it may live in `swc/utils/` instead of `core/utils/`.
    - Follow the project's deprecation and changelog process so consumers can plan migration.
 
 3. **Docs and Storybook:** Update contributor and public docs to point to the new abstraction.
 
-4. **Timeline:** Define deprecation timeline and any major-version plan in the same way as other 1st-gen deprecations (e.g. in RFCs, Jira, or project planning), so consumers know when to migrate.
+4. **Timeline:** Define deprecation timeline and any major-version plan in the same way as other gen1 deprecations (e.g. in RFCs, Jira, or project planning), so consumers know when to migrate.
 
 ## Deliverables (code, Storybook, docs)
 
-- **Code** — Place code according to [2nd-gen layout](#2nd-gen-layout). Do not add new 1st-gen-style top-level "tools" packages in 2nd-gen.
+- **Code** — Place code according to [2nd-gen layout](#2nd-gen-layout). Do not add new gen1-style top-level "tools" packages in 2nd-gen.
 - **Storybook** — Tools with a visual or interactive aspect (e.g. theme, grid) can have stories; pure base classes or build-time tools typically do not need one.
 - **Contributor docs** — This document is the contributor-facing process for evaluating tools vs packages in 2nd-gen.

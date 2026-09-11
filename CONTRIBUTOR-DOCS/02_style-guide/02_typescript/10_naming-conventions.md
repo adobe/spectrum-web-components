@@ -157,14 +157,14 @@ CSS classes use the `swc-` prefix with PascalCase component name and optional BE
 | Variant modifier | `swc-Badge--positive`, `swc-Badge--subtle` |
 | Element (rare) | `swc-Badge-icon`, `swc-Badge-label` |
 
-**Never use the `spectrum-` prefix** — this is a 1st-gen convention:
+**Never use the `spectrum-` prefix** — this is a gen1 convention:
 
 ```css
 /* ✅ Good */
 .swc-Badge { }
 .swc-Badge--positive { }
 
-/* ❌ Bad — 1st-gen prefix */
+/* ❌ Bad — gen1 prefix */
 .spectrum-Badge { }
 .spectrum-Badge--positive { }
 ```

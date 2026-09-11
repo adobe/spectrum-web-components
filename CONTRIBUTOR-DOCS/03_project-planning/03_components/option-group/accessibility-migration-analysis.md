@@ -20,7 +20,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: `<swc-option-group>`](#recommendations-swc-option-group)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -38,7 +38,7 @@
 
 ## Overview
 
-This doc tells you how **`swc-option-group`** should work for **accessibility**. It matches the goal of **WCAG 2.2 Level AA**. `swc-option-group` is a new 2nd-gen component — there is no 1st-gen `sp-option-group`, and 1st-gen `sp-combobox` had no grouping at all. It is a labeled container that groups related [`swc-option`](../option/accessibility-migration-analysis.md) elements inside a listbox, implementing the APG [grouped listbox](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/examples/listbox-grouped/) pattern for [`swc-combobox`](../combobox/accessibility-migration-analysis.md).
+This doc tells you how **`swc-option-group`** should work for **accessibility**. It matches the goal of **WCAG 2.2 Level AA**. `swc-option-group` is a new 2nd-gen component — there is no gen1 `sp-option-group`, and gen1 `sp-combobox` had no grouping at all. It is a labeled container that groups related [`swc-option`](../option/accessibility-migration-analysis.md) elements inside a listbox, implementing the APG [grouped listbox](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/examples/listbox-grouped/) pattern for [`swc-combobox`](../combobox/accessibility-migration-analysis.md).
 
 Like `swc-option`, its reason for existing is **role ownership**: it carries `role="group"` on its own host and names that group, so a combobox in a different shadow root can present grouped options with correct structure and correct group labels, without re-rendering shadow-DOM copies.
 
@@ -94,18 +94,18 @@ Like `swc-option`, its reason for existing is **role ownership**: it carries `ro
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary | Notes |
 | --- | --- | --- | --- | --- | --- |
-| [SWC-592](https://jira.corp.adobe.com/browse/SWC-592) | Bug | To Do | Unresolved | Combobox a11y issues speaking the options | Grouping adds category context to option announcements; net-new in 2nd-gen (1st-gen combobox had no groups) |
+| [SWC-592](https://jira.corp.adobe.com/browse/SWC-592) | Bug | To Do | Unresolved | Combobox a11y issues speaking the options | Grouping adds category context to option announcements; net-new in 2nd-gen (gen1 combobox had no groups) |
 | [SWC-1373](https://jira.corp.adobe.com/browse/SWC-1373) | Story | To Do | Unresolved | Spike: compare semantics across menu, action menu, combobox, and picker | Informs how option groups relate to menu groups |
 
 ---
 
 ## Recommendations: `<swc-option-group>`
 
-Component tag may change until API freeze. `swc-option-group` is new in 2nd-gen; there is no 1st-gen equivalent to preserve compatibility with.
+Component tag may change until API freeze. `swc-option-group` is new in 2nd-gen; there is no gen1 equivalent to preserve compatibility with.
 
 ### ARIA roles, states, and properties
 

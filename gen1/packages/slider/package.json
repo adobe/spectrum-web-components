@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/components/slider",
   "repository": {
-    "directory": "1st-gen/packages/slider",
+    "directory": "gen1/packages/slider",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

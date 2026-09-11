@@ -1,4 +1,4 @@
-# 1st-gen/projects
+# gen1/projects
 
 Supporting workspaces that are not components and are not published as part of the component library. Do not look here for component logic or shared utilities.
 
@@ -15,4 +15,4 @@ Supporting workspaces that are not components and are not published as part of t
 
 ## Where to look next
 
-- [`../AGENTS.md`](../AGENTS.md) — 1st-gen overview
+- [`../AGENTS.md`](../AGENTS.md) — gen1 overview

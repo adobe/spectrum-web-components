@@ -18,7 +18,7 @@
     - [1. ARIA snapshots](#1-aria-snapshots)
     - [2. aXe-core validation](#2-axe-core-validation)
 - [Adding tests to a component](#adding-tests-to-a-component)
-    - [1st generation components](#1st-generation-components)
+    - [1st generation components](#gen1eration-components)
     - [2nd generation components](#2nd-generation-components)
 - [Test helper reference](#test-helper-reference)
     - [`gotoStory(page, storyId, elementSelector)`](#gotostorypage-storyid-elementselector)
@@ -51,7 +51,7 @@
 
 ## About this guide
 
-This guide covers automated accessibility testing for Spectrum Web Components using Playwright. You'll learn how to write, run, and maintain accessibility tests for both 1st-gen and 2nd-gen components.
+This guide covers automated accessibility testing for Spectrum Web Components using Playwright. You'll learn how to write, run, and maintain accessibility tests for both gen1 and 2nd-gen components.
 
 ## Why manual testing is necessary
 
@@ -66,7 +66,7 @@ For every PR that affects interactive components, you must perform **manual keyb
 ## Quick start
 
 ```bash
-# From project root, 1st-gen, or 2nd-gen directory
+# From project root, gen1, or 2nd-gen directory
 yarn test:a11y              # Run all tests (both generations)
 yarn test:a11y:1st          # Run only 1st generation tests
 yarn test:a11y:2nd          # Run only 2nd generation tests
@@ -142,7 +142,7 @@ test.describe('Badge - aXe Validation', () => {
 
 - Story ID: `'badge--default'` (check Storybook URL at `localhost:8080`)
 - Element name: `'sp-badge'` (the custom element tag name)
-- Helper import: `'../../../test/a11y-helpers.js'` (1st-gen test helpers)
+- Helper import: `'../../../test/a11y-helpers.js'` (gen1 test helpers)
 
 ### 2nd generation components
 
@@ -265,8 +265,8 @@ yarn test:a11y:ui           # Interactive UI mode
 ### From generation directories
 
 ```bash
-# From 1st-gen
-cd 1st-gen
+# From gen1
+cd gen1
 yarn test:a11y                           # All tests (both generations)
 yarn test:a11y badge                     # Specific component
 yarn test:a11y:1st                       # Only 1st gen
@@ -394,7 +394,7 @@ The root config `playwright.a11y.config.ts` defines two projects:
 ```typescript
 projects: [
     {
-        name: '1st-gen',
+        name: 'gen1',
         testMatch: '**/packages/*/test/**/*.a11y.spec.ts',
         use: { baseURL: 'http://localhost:8080' },
     },
@@ -417,7 +417,7 @@ Tests automatically start Storybook when needed:
 ```typescript
 webServer: [
     {
-        command: 'cd ../1st-gen && yarn storybook',
+        command: 'cd ../gen1 && yarn storybook',
         port: 8080,
         reuseExistingServer: !process.env.CI,
     },

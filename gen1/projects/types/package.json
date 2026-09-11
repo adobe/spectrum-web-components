@@ -20,7 +20,7 @@
   "name": "@types/swc",
   "private": true,
   "repository": {
-    "directory": "1st-gen/projects/types",
+    "directory": "gen1/projects/types",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

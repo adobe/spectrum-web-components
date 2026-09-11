@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/components/checkbox",
   "repository": {
-    "directory": "1st-gen/packages/checkbox",
+    "directory": "gen1/packages/checkbox",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

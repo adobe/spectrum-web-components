@@ -1,14 +1,14 @@
 ---
 name: migration-documentation
 description:
-  Phase 7 of 1st-gen to 2nd-gen component migration. Use to author the
+  Phase 7 of gen1 to 2nd-gen component migration. Use to author the
   per-component MDX docs page and finalize Storybook stories so the
   component is usable and understandable by others.
 ---
 
 # Migration documentation ([Phase 7](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md))
 
-[Phase 7](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is the per-component MDX docs page (`<component>.mdx`) authored to render every Storybook section with prose and `<Canvas>` references, plus JSDoc on the public API exposed by `Component.ts` (the source class).
+[Phase 7](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the gen1 → 2nd-gen component migration. The goal is the per-component MDX docs page (`<component>.mdx`) authored to render every Storybook section with prose and `<Canvas>` references, plus JSDoc on the public API exposed by `Component.ts` (the source class).
 
 See also:
 
@@ -56,7 +56,7 @@ Before writing any "when to use" or "why to use" descriptions for sizes, variant
 
 - The [Spectrum 2 Design site](https://s2.spectrum.corp.adobe.com/)
 - The component's Figma spec from `S2 / Web`
-- The 1st-gen component README (`gen1/packages/[component]/README.md`)
+- The gen1 component README (`gen1/packages/[component]/README.md`)
 - An explicit statement in the migration plan
 
 If no source is available at authoring time, limit the prose to technically verifiable facts only (see [What NOT to include](#what-not-to-include-in-mdx-or-jsdoc) below). Do not invent guidance. Implementors cannot easily distinguish AI-invented guidance from documented design decisions, which erodes trust in the documentation.
@@ -95,7 +95,7 @@ Follow the rules in [What NOT to include](#what-not-to-include-in-mdx-or-jsdoc) 
 Return to the list from Step 0. For each unchecked documentation item in the migration plan:
 
 - If it is now covered by an MDX section, a Canvas reference, or a JSDoc comment on the public API in `Component.ts`, note it as done.
-- If it belongs in the consumer migration guide (breaking changes, migration paths from 1st-gen), note it as deferred to the `consumer-migration-guide` skill — do **not** add it to the per-component MDX or the stories file.
+- If it belongs in the consumer migration guide (breaking changes, migration paths from gen1), note it as deferred to the `consumer-migration-guide` skill — do **not** add it to the per-component MDX or the stories file.
 - If it is genuinely missing from both the docs and the consumer guide, flag it to the user.
 
 **Verify `@cssprop` completeness and accuracy.** Read the component's CSS file (`2nd-gen/packages/swc/components/[component]/[component].css`) and list every exposed `--swc-*` property. Then read the SWC class (`2nd-gen/packages/swc/components/[component]/[Component].ts`) and confirm:
@@ -118,7 +118,7 @@ Do not author JSDoc comments above any `export const Foo: Story = ...` declarati
 
 ### Migration notes
 
-Do not include "Migration note:", "replaces legacy X", or "1st-gen vs 2nd-gen" content in the per-component MDX or in stories-file JSDoc. Migration guidance is for developers upgrading from 1st-gen and belongs in the dedicated consumer migration guide produced by the `consumer-migration-guide` skill. The Storybook docs page is consumed by all users of the component, not only by people migrating.
+Do not include "Migration note:", "replaces legacy X", or "gen1 vs 2nd-gen" content in the per-component MDX or in stories-file JSDoc. Migration guidance is for developers upgrading from gen1 and belongs in the dedicated consumer migration guide produced by the `consumer-migration-guide` skill. The Storybook docs page is consumed by all users of the component, not only by people migrating.
 
 ### Invented usage guidance
 

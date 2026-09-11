@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/components/action-group",
   "repository": {
-    "directory": "1st-gen/packages/action-group",
+    "directory": "gen1/packages/action-group",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

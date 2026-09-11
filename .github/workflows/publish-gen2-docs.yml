@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-    # Skip the publish when a main push only touches 1st-gen files. Root-level
+    # Skip the publish when a main push only touches gen1 files. Root-level
     # changes (anything outside `gen1/`) still trigger the workflow so shared
     # config / scripts / 2nd-gen edits keep deploying the 2nd-gen docs.
     paths-ignore:
@@ -80,7 +80,7 @@ jobs:
         run: yarn build
 
       - name: Generate Custom Elements Manifest
-        run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
+        run: yarn workspace @spectrum-web-components/gen1 docs:analyze
 
       - name: Generate LLM reference files
         run: yarn generate:llms

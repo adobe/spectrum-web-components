@@ -13,7 +13,7 @@
 
 - [TL;DR](#tldr)
     - [Most blocking open questions](#most-blocking-open-questions)
-- [1st-gen API surface](#1st-gen-api-surface)
+- [gen1 API surface](#gen1-api-surface)
     - [Properties / attributes](#properties--attributes)
     - [Methods](#methods)
     - [Events](#events)
@@ -60,18 +60,18 @@
 
 ## TL;DR
 
-Opacity Checkerboard is **not a component migration**. It is a **reclassification** of a 1st-gen CSS-only tool (`gen1/tools/opacity-checkerboard/`, no custom element) into a 2nd-gen shared CSS utility, per [Tools vs packages](../../../../CONTRIBUTOR-DOCS/01_contributor-guides/12_tools-vs-packages.md#abstraction-targets-2nd-gen). There is no web component, no base class, no ARIA/events/slots, and no `core/`/`swc/` component split to plan.
+Opacity Checkerboard is **not a component migration**. It is a **reclassification** of a gen1 CSS-only tool (`gen1/tools/opacity-checkerboard/`, no custom element) into a 2nd-gen shared CSS utility, per [Tools vs packages](../../../../CONTRIBUTOR-DOCS/01_contributor-guides/12_tools-vs-packages.md#abstraction-targets-2nd-gen). There is no web component, no base class, no ARIA/events/slots, and no `core/`/`swc/` component split to plan.
 
 Must-ship work is small and almost entirely structural:
 
 - **Ship a 2nd-gen shared CSS utility** for the checkerboard pattern at `2nd-gen/packages/swc/stylesheets/_lit-styles/` — an importable `css` style fragment. The pattern itself already works in 2nd-gen: gen-2 tokens (`--swc-opacity-checkerboard-square-*`) exist in `tokens.css`, and `color-loupe` already renders the pattern by **inlining** the rule into its own component CSS (it does not import any shared artifact). The shared fragment de-duplicates that rule for shadow-DOM consumers.
-- **Deprecate the 1st-gen `@spectrum-web-components/opacity-checkerboard` package** with a notice and a pointer to the 2nd-gen replacement (timeline-gated).
+- **Deprecate the gen1 `@spectrum-web-components/opacity-checkerboard` package** with a notice and a pointer to the 2nd-gen replacement (timeline-gated).
 - **Drop the `--mod-*` surface** (`--mod-opacity-checkerboard-{dark,light,size,position}`) — consistent with all 2nd-gen migrations, which do not expose `--mod-*`.
 - **Contributor docs stay internal-only for now**, outside the Components section, since the utility is Lit-consumption-only and not a public standalone API.
 
 The utility is exported **only** as a Lit `CSSResult` (`opacityCheckerboardStyles`) for import into a component's `styles` array. No global `.css` artifact is emitted, so there is no light-DOM or document-level usage path.
 
-Why a shared `css` fragment and not a global class: **a global stylesheet class cannot pierce shadow DOM.** Every real 1st-gen consumer (color-handle, color-loupe, color-slider, swatch, thumbnail) uses the pattern *inside* its own shadow root, and `color-loupe` already set the precedent of inlining. A fragment importable into a component's `styles` array reaches those consumers; a global class would not.
+Why a shared `css` fragment and not a global class: **a global stylesheet class cannot pierce shadow DOM.** Every real gen1 consumer (color-handle, color-loupe, color-slider, swatch, thumbnail) uses the pattern *inside* its own shadow root, and `color-loupe` already set the precedent of inlining. A fragment importable into a component's `styles` array reaches those consumers; a global class would not.
 
 ### Most blocking open questions
 
@@ -79,13 +79,13 @@ None block implementation. The deliverable form (importable `css` fragment under
 
 ---
 
-## 1st-gen API surface
+## gen1 API surface
 
 **Source:** [`gen1/tools/opacity-checkerboard/src/opacity-checkerboard.css`](../../../../gen1/tools/opacity-checkerboard/src/opacity-checkerboard.css)
 **Version:** `@spectrum-web-components/opacity-checkerboard@1.12.1`
 **Custom element tag:** N/A — this is a CSS-only tool, not a custom element. There is no `sp-opacity-checkerboard`.
 
-The 1st-gen "API" is a single CSS class plus a deprecated `--mod-*` override surface. It is consumed by adding the exported stylesheet to a component's `styles` array and applying the `.opacity-checkerboard` class to an element.
+The gen1 "API" is a single CSS class plus a deprecated `--mod-*` override surface. It is consumed by adding the exported stylesheet to a component's `styles` array and applying the `.opacity-checkerboard` class to an element.
 
 ### Properties / attributes
 
@@ -105,7 +105,7 @@ N/A — no custom element, no slots. Consumers place their own content over an e
 
 ### CSS custom properties
 
-The 1st-gen utility reads Spectrum design tokens and allows per-instance overrides via a deprecated `--mod-*` surface:
+The gen1 utility reads Spectrum design tokens and allows per-instance overrides via a deprecated `--mod-*` surface:
 
 | Custom property | Role | 2nd-gen disposition |
 | --- | --- | --- |
@@ -114,18 +114,18 @@ The 1st-gen utility reads Spectrum design tokens and allows per-instance overrid
 | `--mod-opacity-checkerboard-size` | Override the square size | **Dropped.** |
 | `--mod-opacity-checkerboard-position` | Override the background position | **Dropped.** |
 
-Underlying tokens consumed (1st-gen): `--spectrum-opacity-checkerboard-square-light`, `--spectrum-opacity-checkerboard-square-dark`, `--spectrum-opacity-checkerboard-square-size`. The full `--mod-*` modifier surface will not be carried forward to 2nd-gen.
+Underlying tokens consumed (gen1): `--spectrum-opacity-checkerboard-square-light`, `--spectrum-opacity-checkerboard-square-dark`, `--spectrum-opacity-checkerboard-square-size`. The full `--mod-*` modifier surface will not be carried forward to 2nd-gen.
 
 ### Shadow DOM output (rendered HTML)
 
-N/A — no shadow DOM. The 1st-gen tool ships CSS only. Applied form in consumers:
+N/A — no shadow DOM. The gen1 tool ships CSS only. Applied form in consumers:
 
 ```html
 <!-- consumer applies the class to an element inside its own shadow root -->
 <div class="opacity-checkerboard"></div>
 ```
 
-The 1st-gen CSS itself:
+The gen1 CSS itself:
 
 ```css
 .opacity-checkerboard {
@@ -155,9 +155,9 @@ The 1st-gen CSS itself:
 
 | Package | Version | Role |
 | --- | --- | --- |
-| `@spectrum-web-components/base` | `1.12.1` | Declared 1st-gen dependency. Used only to wrap CSS as a Lit `css` result via the build pipeline; no runtime component dependency. |
+| `@spectrum-web-components/base` | `1.12.1` | Declared gen1 dependency. Used only to wrap CSS as a Lit `css` result via the build pipeline; no runtime component dependency. |
 
-**1st-gen consumers of this package** (who imports `@spectrum-web-components/opacity-checkerboard`): `color-handle`, `color-loupe`, `color-slider`, `swatch`, `thumbnail`. All apply the pattern **inside their own shadow roots**. This is why the deliverable is an importable `css` fragment, not a global class: a global utility class would not reach any of these consumers.
+**gen1 consumers of this package** (who imports `@spectrum-web-components/opacity-checkerboard`): `color-handle`, `color-loupe`, `color-slider`, `swatch`, `thumbnail`. All apply the pattern **inside their own shadow roots**. This is why the deliverable is an importable `css` fragment, not a global class: a global utility class would not reach any of these consumers.
 
 ---
 
@@ -172,7 +172,7 @@ Once the shared fragment exists, `color-loupe` (and future color components) sho
 ### Related components and ordering notes
 
 - **color-loupe** (2nd-gen, already migrated) — inlines `.swc-ColorLoupe-checkerboard` with `light-dark()` + `token()`. Precedent for the rule the fragment will own.
-- **color-handle, color-slider, swatch, thumbnail** (1st-gen consumers) — will import the shared fragment when each is migrated.
+- **color-handle, color-slider, swatch, thumbnail** (gen1 consumers) — will import the shared fragment when each is migrated.
 - `thumbnail` carries its own size token (`--swc-thumbnail-opacity-checkerboard-square-size`), so the fragment must not hard-bake a single size.
 
 ### User confirmation needed
@@ -194,20 +194,20 @@ Once the shared fragment exists, `color-loupe` (and future color components) sho
 
 #### API and naming
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B1** | Drop the `--mod-*` override surface (source: 2nd-gen CSS policy — no `--mod-*` exposed). | `--mod-opacity-checkerboard-{light,dark,size,position}` override the pattern per instance. | No `--mod-*`. Pattern is driven by `--swc-*` tokens; size handled by token, not per-instance mod. | Consumers stop setting `--mod-*`; use token-driven size or component-scoped `--swc-*` where a knob is genuinely needed. |
-| **B2** | Reclassify package → shared CSS utility; deprecate `@spectrum-web-components/opacity-checkerboard` (source: [Tools vs packages](../../../../CONTRIBUTOR-DOCS/01_contributor-guides/12_tools-vs-packages.md#migration-and-deprecation-for-reclassified-items)). | Standalone npm package exporting CSS-as-JS artifacts. | No standalone 2nd-gen package. Pattern shipped as an importable `css` fragment in `swc/stylesheets/_lit-styles/`. | Consumers import the 2nd-gen fragment into their `styles` array instead of the 1st-gen package. |
+| **B2** | Reclassify package → shared CSS utility; deprecate `@spectrum-web-components/opacity-checkerboard` (source: [Tools vs packages](../../../../CONTRIBUTOR-DOCS/01_contributor-guides/12_tools-vs-packages.md#migration-and-deprecation-for-reclassified-items)). | Standalone npm package exporting CSS-as-JS artifacts. | No standalone 2nd-gen package. Pattern shipped as an importable `css` fragment in `swc/stylesheets/_lit-styles/`. | Consumers import the 2nd-gen fragment into their `styles` array instead of the gen1 package. |
 
 #### Styling and visuals
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B3** | Tokens move to `--swc-*` namespace with explicit light/dark dark-square variants. | Single `--spectrum-opacity-checkerboard-square-dark`; theme handled upstream. | `--swc-opacity-checkerboard-square-dark-light` / `-dark-dark` resolved via `light-dark()`; `-light`, `-size-small`, `-size-medium` per `tokens.css`. | Visual result equivalent; consumers rely on tokens, not raw values. |
 
 #### Accessibility and behavior
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | gen1 behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B4** | None functional. Carry forward `forced-color-adjust: none` under `forced-colors: active` so the pattern stays visible in high-contrast. | `forced-color-adjust: none`. | Same — required for the pattern to remain meaningful. | No action. The pattern is decorative; consuming elements remain responsible for `aria-hidden` and conveying opacity textually (see [a11y notes](#accessibility-semantics-notes-2nd-gen)). |
 
@@ -256,7 +256,7 @@ No `--mod-*` properties will be exposed. The fragment consumes existing `--swc-o
 
 ### Behavioral semantics
 
-The pattern is a pure CSS `background` (a `repeating-conic-gradient`). No JS behavior. The `@supports` guard from 1st-gen is no longer needed if the 2nd-gen browser support matrix already requires `repeating-conic-gradient` — default = drop it, matching `color-loupe`, which ships only the single modern declaration.
+The pattern is a pure CSS `background` (a `repeating-conic-gradient`). No JS behavior. The `@supports` guard from gen1 is no longer needed if the 2nd-gen browser support matrix already requires `repeating-conic-gradient` — default = drop it, matching `color-loupe`, which ships only the single modern declaration.
 
 ### Accessibility semantics notes (2nd-gen)
 
@@ -272,7 +272,7 @@ The checkerboard is **decorative**. Responsibility stays with the *consuming* el
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen tool is a **reference only** — 2nd-gen is built independently.
+> The gen1 tool is a **reference only** — 2nd-gen is built independently.
 
 **Not a core/SWC component split.** This is a rendering-layer-dependent, non-web-component UI artifact, so it lands in `swc/`, **not** `core/`, per [Tools vs packages](../../../../CONTRIBUTOR-DOCS/01_contributor-guides/12_tools-vs-packages.md#2nd-gen-layout). The standard `[Component].base.ts` / `[Component].ts` split does not apply.
 
@@ -293,7 +293,7 @@ Decided form:
 
 ### Preparation (this ticket)
 
-- [x] 1st-gen API surface documented
+- [x] gen1 API surface documented
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] 2nd-gen API decisions drafted
@@ -332,14 +332,14 @@ N/A — no public component API (no properties, methods, events, slots). The onl
 
 - [ ] VRT: render the pattern at `small` and `medium` sizes, light + dark theme, and under `forced-colors`
 - [ ] No unit/Playwright a11y spec needed (no interactive element); if a Storybook host is added, give it `aria-hidden`
-- [ ] ~~Port `1st-gen test/` coverage~~ — N/A (1st-gen tool has no test suite)
+- [ ] ~~Port `gen1 test/` coverage~~ — N/A (gen1 tool has no test suite)
 
 ### Documentation
 
 > Internal-only for now. The utility is consumed by SWC components via Lit `styles`, not by application authors directly, so it does not belong in the public Components docs. Any Storybook entry goes under an internal/Tools section (e.g. an `.internal.mdx`-style page excluded from production docs builds), not under Components.
 
 - [ ] Internal Storybook page (outside Components) demonstrating the fragment imported into a small Lit host's `styles` array, with `.swc-OpacityCheckerboard` applied to a decorative element in its shadow root — no light-DOM/global-stylesheet usage, since the fragment is exported only for Lit consumption
-- [ ] Document the deprecation + replacement in the 1st-gen `opacity-checkerboard` README and `package.json` deprecation field
+- [ ] Document the deprecation + replacement in the gen1 `opacity-checkerboard` README and `package.json` deprecation field
 - [ ] Keep contributor docs internal for now; no public-facing Components docs entry
 
 #### Breaking changes
@@ -381,9 +381,9 @@ None.
 - Accessibility migration analysis — **TODO / not present** for this unit (see Scope and prerequisites)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
-- [1st-gen source (CSS)](../../../../gen1/tools/opacity-checkerboard/src/opacity-checkerboard.css)
-- [1st-gen underlying pattern CSS](../../../../gen1/tools/opacity-checkerboard/src/spectrum-opacity-checkerboard.css)
-- [1st-gen README](../../../../gen1/tools/opacity-checkerboard/README.md)
+- [gen1 source (CSS)](../../../../gen1/tools/opacity-checkerboard/src/opacity-checkerboard.css)
+- [gen1 underlying pattern CSS](../../../../gen1/tools/opacity-checkerboard/src/spectrum-opacity-checkerboard.css)
+- [gen1 README](../../../../gen1/tools/opacity-checkerboard/README.md)
 - 2nd-gen `color-loupe` inline precedent: `2nd-gen/packages/swc/components/color-loupe/color-loupe.css` (`.swc-ColorLoupe-checkerboard`)
 - 2nd-gen tokens: `2nd-gen/packages/swc/stylesheets/tokens.css` (`--swc-opacity-checkerboard-square-*`)
 - Spectrum CSS `spectrum-two` source: `spectrum-css/components/opacitycheckerboard/index.css`

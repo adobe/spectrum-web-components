@@ -20,7 +20,7 @@
     - [Pattern in the APG](#pattern-in-the-apg)
     - [First-gen (`sp-tabs`) activation and keyboard](#first-gen-sp-tabs-activation-and-keyboard)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related gen1 accessibility (Jira)](#related-gen1-accessibility-jira)
 - [Recommendations: `<swc-tabs>`](#recommendations-swc-tabs)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -130,7 +130,7 @@ This doc describes how `swc-tabs` (with `swc-tab` and `swc-tab-panel`) should be
 
 - **Automatic pattern** (`auto` true) — matches [tabs with automatic activation](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/examples/tabs-automatic/): when roving focus enters a tab, `elementEnterAction` runs `selectTarget(el)`, so selection (and visible panel) follows arrow navigation without a separate Enter or Space. Click still selects via `onClick`.
 
-**2nd-gen note:** 1st-gen uses `RovingTabindexController` from `@spectrum-web-components/reactive-controllers`. 2nd-gen should use `FocusgroupNavigationController` ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)) for arrow navigation inside the tablist while preserving the same `auto` semantics (selection on focus move vs selection only on activate).
+**2nd-gen note:** gen1 uses `RovingTabindexController` from `@spectrum-web-components/reactive-controllers`. 2nd-gen should use `FocusgroupNavigationController` ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)) for arrow navigation inside the tablist while preserving the same `auto` semantics (selection on focus move vs selection only on activate).
 
 ### Guidelines that apply
 
@@ -146,7 +146,7 @@ This doc describes how `swc-tabs` (with `swc-tab` and `swc-tab-panel`) should be
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related gen1 accessibility (Jira)
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 | --- | --- | --- | --- | --- |

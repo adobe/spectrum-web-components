@@ -33,7 +33,7 @@ jobs:
       - name: Check for gen2 changesets
         id: check
         run: |
-          # Independent of 1st-gen in every trigger - this workflow never reads
+          # Independent of gen1 in every trigger - this workflow never reads
           # gen1/.changeset/.
           COUNT=$(find 2nd-gen/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
 

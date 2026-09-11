@@ -6,7 +6,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/components/action-menu",
   "repository": {
-    "directory": "1st-gen/packages/action-menu",
+    "directory": "gen1/packages/action-menu",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },
