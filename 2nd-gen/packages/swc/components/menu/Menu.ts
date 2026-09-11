@@ -37,6 +37,10 @@ import styles from './menu.css';
  * @fires swc-after-open - Dispatched after the menu finishes opening.
  * @fires swc-close - Dispatched when the menu begins to close.
  * @fires swc-after-close - Dispatched after the menu finishes closing.
+ *
+ * @cssprop --swc-menu-background-color - Background fill of the menu surface. Defaults to the layer-2 background token.
+ * @cssprop --swc-menu-border-color - Border color of the menu surface. Defaults to the popover border token.
+ * @cssprop --swc-menu-corner-radius - Corner radius of the menu surface. Defaults to the large popover corner-radius token.
  */
 export class Menu extends MenuBase {
   public static override get styles(): CSSResultArray {
