@@ -529,6 +529,7 @@ export class MenuItem extends LikeAnchor(
     if (
       event.pointerType === 'touch' &&
       this.hasSubmenu &&
+      !this.isMobileView &&
       !targetIsInOverlay &&
       this._activePointerId === undefined
     ) {
@@ -570,25 +571,15 @@ export class MenuItem extends LikeAnchor(
     this._touchHandledViaPointerup = true;
     this._activePointerId = undefined;
 
-    if (this.isMobileView) {
-      this._mobileRootMenu?.openMobileSubmenu(this);
-      // Defer clearing the flag until after the synthetic `click`
-      // dispatched by the same touch sequence has been handled, so
-      // `handleSubmenuClick` can suppress that duplicate activation.
-      setTimeout(() => {
-        this._touchHandledViaPointerup = false;
-      }, 0);
-      return;
-    }
-
     if (this.open) {
       this.open = false;
     } else {
       this.openOverlay();
     }
 
-    // Same rationale as above: keep the suppression flag set through
-    // the trailing `click` event before resetting it.
+    // Defer clearing the flag until after the synthetic `click`
+    // dispatched by the same touch sequence has been handled, so
+    // `handleSubmenuClick` can suppress that duplicate activation.
     setTimeout(() => {
       this._touchHandledViaPointerup = false;
     }, 0);
