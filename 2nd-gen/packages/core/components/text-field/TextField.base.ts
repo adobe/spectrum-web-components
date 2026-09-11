@@ -195,6 +195,11 @@ export abstract class TextFieldBase extends SizedMixin(
     return this.disabled || this.fieldAssoc.formDisabled;
   }
 
+  /** Exposes the placeholder to `LabellingMixin`'s placeholder-only-name warning. */
+  public override get placeholderText(): string | undefined {
+    return this.placeholder || undefined;
+  }
+
   /** The form the field participates in, or `null`. */
   public get form(): HTMLFormElement | null {
     return this.fieldAssoc.form;

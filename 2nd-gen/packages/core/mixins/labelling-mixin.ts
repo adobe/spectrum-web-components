@@ -45,6 +45,19 @@ export interface LabellingInterface {
   readonly roleElement: Element | null;
 
   /**
+   * @internal Host `ElementInternals` for a control with no inner role element
+   * (e.g. a radio group); the name wires onto it instead of {@link roleElement}.
+   * Defaults to `null`; a consumer overrides it.
+   */
+  readonly labelInternals: ElementInternals | null;
+
+  /**
+   * @internal The host's placeholder, exposed so the mixin can warn on a
+   * placeholder-only name. Defaults to `undefined`; a host overrides it.
+   */
+  readonly placeholderText: string | undefined;
+
+  /**
    * Renders the visible label as a `<label for>` targeting the role-element `id`.
    */
   renderLabel(forId: string): RenderFieldLabelResult;
@@ -93,6 +106,16 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
       return null;
     }
 
+    /** @internal */
+    public get labelInternals(): ElementInternals | null {
+      return null;
+    }
+
+    /** @internal */
+    public get placeholderText(): string | undefined {
+      return undefined;
+    }
+
     /** @internal Docs URL for dev warnings, derived from the tag name. */
     protected get docsHref(): string {
       const name = this.localName.replace(/^swc-/, '');
@@ -138,21 +161,34 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
       // so re-check every render; the warning dedup handles repeats.
       if (isDebug()) {
         this._warnMissingAccessibleName();
+        this._warnPlaceholderOnlyName();
         this._warnUnresolvedLabelledby();
         this._warnLabelConflict();
+        this._warnHostAriaLabel();
       }
     }
 
     private _syncLabelling(): void {
+      // Wire each source independently; the browser ranks labelledby over
+      // aria-label over <label for>. Clearing a value does not enforce
+      // precedence.
+      const refs = this._resolvedLabelledbyElements;
+      const nextRefs = refs.length > 0 ? refs : null;
+
+      // A group host with no inner control names the host itself via
+      // ElementInternals (no attribute to set).
+      const internals = this.labelInternals;
+      if (internals) {
+        internals.ariaLabelledByElements = nextRefs;
+        internals.ariaLabel = this.accessibleLabel || null;
+        return;
+      }
+
       const target = this.roleElement as LabelledByTarget | null;
       if (!target) {
         return;
       }
-      // Wire each source independently; the browser ranks labelledby over
-      // aria-label over <label for>. The else branch clears a stale value, it
-      // does not enforce precedence.
-      const refs = this._resolvedLabelledbyElements;
-      target.ariaLabelledByElements = refs.length > 0 ? refs : null;
+      target.ariaLabelledByElements = nextRefs;
       if (this.accessibleLabel) {
         target.setAttribute('aria-label', this.accessibleLabel);
       } else {
@@ -166,6 +202,10 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
       if (this._hasAccessibleName) {
         return;
       }
+      // A placeholder-only field gets the more specific placeholder warning.
+      if (this.placeholderText) {
+        return;
+      }
       warnIf(
         this,
         true,
@@ -177,6 +217,57 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
             'add visible label content via the "label" named slot, or',
             'set the "accessible-label" attribute (or "accessibleLabel" property), or',
             'set "accessible-labelledby" (or "accessibleLabelledby") to reference an external label.',
+          ],
+        }
+      );
+    }
+
+    /** @internal Warns when a field is named only by its `placeholder` (unreliable as an accessible name). */
+    private _warnPlaceholderOnlyName(): void {
+      if (this._hasAccessibleName || !this.placeholderText) {
+        return;
+      }
+      warnIf(
+        this,
+        true,
+        `<${this.localName}> is named only by its placeholder, which is not a reliable accessible name.`,
+        this.docsHref,
+        {
+          type: 'accessibility',
+          issues: [
+            'add visible label content via the "label" named slot, or',
+            'set the "accessible-label" attribute (or "accessibleLabel" property), or',
+            'set "accessible-labelledby" (or "accessibleLabelledby") to reference an external label.',
+          ],
+        }
+      );
+    }
+
+    /**
+     * @internal Warns when `aria-label`/`aria-labelledby` is set on the host,
+     * which does not name the field. Skipped for internals-based hosts.
+     */
+    private _warnHostAriaLabel(): void {
+      if (this.labelInternals) {
+        return;
+      }
+      const attrs = ['aria-label', 'aria-labelledby'].filter((attr) =>
+        this.hasAttribute(attr)
+      );
+      if (attrs.length === 0) {
+        return;
+      }
+      const list = attrs.map((attr) => `"${attr}"`).join(' and ');
+      warnIf(
+        this,
+        true,
+        `<${this.localName}> ignores ${list} set on the host; the accessible name is applied to the field's role element, not the host.`,
+        this.docsHref,
+        {
+          type: 'accessibility',
+          issues: [
+            'use "accessible-label" (or "accessibleLabel") for a string name, or',
+            'use "accessible-labelledby" (or "accessibleLabelledby") to reference elements.',
           ],
         }
       );

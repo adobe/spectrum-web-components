@@ -216,6 +216,75 @@ export const MissingAccessibleNameTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Placeholder-only name DEBUG warning
+// ──────────────────────────────────────────────────────────────
+
+export const PlaceholderOnlyNameTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ step }) => {
+    await step('warns when named only by a placeholder', () =>
+      withWarningSpy(async (warnCalls) => {
+        const field = await fixture<TextField>(html`
+          <swc-text-field placeholder="Search"></swc-text-field>
+        `);
+        await field.updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(
+          messages.some((m) => m.includes('named only by its placeholder'))
+        ).toBe(true);
+        // The generic missing-name warning is suppressed in favor of this one.
+        expect(
+          messages.some((m) => m.includes('requires an accessible name'))
+        ).toBe(false);
+        field.parentElement?.remove();
+      })
+    );
+
+    await step('does not warn when a placeholder accompanies a name', () =>
+      withWarningSpy(async (warnCalls) => {
+        const field = await fixture<TextField>(html`
+          <swc-text-field
+            accessible-label="Search"
+            placeholder="Search"
+          ></swc-text-field>
+        `);
+        await field.updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(messages.some((m) => m.includes('placeholder'))).toBe(false);
+        field.parentElement?.remove();
+      })
+    );
+  },
+};
+PlaceholderOnlyNameTest.storyName = 'Placeholder-only name';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: aria-label / aria-labelledby on the host DEBUG warning
+// ──────────────────────────────────────────────────────────────
+
+export const HostAriaLabelWarningTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ step }) => {
+    await step('warns when aria-label is set on the host', () =>
+      withWarningSpy(async (warnCalls) => {
+        const field = await fixture<TextField>(html`
+          <swc-text-field aria-label="Name"></swc-text-field>
+        `);
+        await field.updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(messages.some((m) => m.includes('set on the host'))).toBe(true);
+        field.parentElement?.remove();
+      })
+    );
+  },
+};
+HostAriaLabelWarningTest.storyName = 'Host aria-label warning';
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Conflicting label sources DEBUG warning (WCAG 2.5.3)
 // ──────────────────────────────────────────────────────────────
 
