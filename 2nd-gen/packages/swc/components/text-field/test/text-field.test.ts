@@ -24,7 +24,11 @@ import {
   withWarningSpy,
 } from '../../../utils/test-utils.js';
 import meta from '../stories/text-field.stories.js';
-import { Labelling, States } from '../stories/text-field.stories.js';
+import {
+  Accessibility,
+  Labelling,
+  States,
+} from '../stories/text-field.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -80,7 +84,7 @@ export const LabellingTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: required is reflected onto the native input
+// TEST: States — required reflection + invalid description/error wiring
 // ──────────────────────────────────────────────────────────────
 
 export const StatesTest: Story = {
@@ -90,11 +94,49 @@ export const StatesTest: Story = {
       canvasElement,
       'swc-text-field'
     );
+    const invalidField = fields[fields.length - 1];
+    const input = invalidField.shadowRoot?.querySelector('input');
+
+    await step('invalid input carries aria-invalid', () => {
+      expect(input?.getAttribute('aria-invalid')).toBe('true');
+    });
+
+    await step(
+      'error text is folded into ariaDescribedByElements, after the description',
+      () => {
+        const resolved = input?.ariaDescribedByElements ?? [];
+        expect(resolved).toHaveLength(2);
+        expect(resolved[0]?.className).toContain('swc-FieldDescription');
+        expect(resolved[1]?.className).toContain('swc-FieldErrorText');
+      }
+    );
 
     await step('required is reflected onto the native input', () => {
       const requiredField = fields[1];
       const requiredInput = requiredField.shadowRoot?.querySelector('input');
       expect(requiredInput?.required).toBe(true);
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: accessible-describedby combines with a slotted description
+// ──────────────────────────────────────────────────────────────
+
+export const AccessibilityTest: Story = {
+  ...Accessibility,
+  play: async ({ canvasElement, step }) => {
+    const fields = await getComponents<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const externallyDescribed = fields[1];
+    const input = externallyDescribed.shadowRoot?.querySelector('input');
+
+    await step('accessible-describedby resolves the external paragraph', () => {
+      const resolved = input?.ariaDescribedByElements ?? [];
+      expect(resolved).toHaveLength(1);
+      expect(resolved[0]?.id).toBe('accessibility-external-description');
     });
   },
 };
@@ -182,9 +224,9 @@ export const EnumValidationTest: Story = {
         `);
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-        expect(messages.some((m) => m.includes('expects "label-position"'))).toBe(
-          true
-        );
+        expect(
+          messages.some((m) => m.includes('expects "label-position"'))
+        ).toBe(true);
         field.parentElement?.remove();
       })
     );

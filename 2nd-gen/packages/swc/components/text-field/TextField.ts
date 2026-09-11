@@ -43,8 +43,9 @@ export class TextField extends TextFieldBase {
   }
 
   /**
-   * The real role element `LabellingMixin` wires the resolved accessible-name
-   * ARIA relationship onto.
+   * The `<input>` that both `LabellingMixin` (accessible name / `<label for>`)
+   * and `HelpTextMixin` (resolved description) wire their ARIA relationships
+   * onto. Queried by its stable `id` (referenced by the rendered `<label for>`).
    */
   public override get roleElement(): HTMLInputElement | null {
     return this.renderRoot.querySelector('input#input');
@@ -64,8 +65,8 @@ export class TextField extends TextFieldBase {
   }
 
   protected override render(): TemplateResult {
-    // @todo (SWC-2466 / Phase 4–5): render the required indicator, validation
-    // icon, and description/error container via a future help-text mixin.
+    // @todo (SWC-2466 / Phase 4–5): render the required indicator and
+    // validation icon.
     return html`
       <div class="swc-TextField">
         ${this.renderLabel(INPUT_ID)}
@@ -87,6 +88,7 @@ export class TextField extends TextFieldBase {
           @input=${this.handleInput}
           @change=${this.handleChange}
         />
+        ${this.renderHelpText()}
       </div>
     `;
   }

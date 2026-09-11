@@ -11,12 +11,14 @@
  */
 
 import { css, html, LitElement, type TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { LabellingMixin } from '../index.js';
+import { HelpTextMixin, LabellingMixin } from '../index.js';
 
 declare global {
   interface HTMLElementTagNameMap {
+    'demo-help-text-host': DemoHelpTextHost;
     'demo-labelling-host': DemoLabellingHost;
   }
 }
@@ -36,7 +38,38 @@ const DEMO_STYLES = css`
     border: 1px solid var(--swc-gray-500);
     border-radius: 4px;
   }
+
+  .swc-FieldDescription,
+  .swc-FieldErrorText {
+    font-size: smaller;
+  }
 `;
+
+/**
+ * @internal
+ *
+ * Storybook-only host that consumes {@link HelpTextMixin} directly. Exposes a
+ * plain `invalid` property so the demo can show `error-text` gating.
+ */
+@customElement('demo-help-text-host')
+export class DemoHelpTextHost extends HelpTextMixin(LitElement) {
+  static override styles = DEMO_STYLES;
+
+  /** Whether the demo field is in an invalid state. */
+  @property({ type: Boolean, reflect: true })
+  public invalid = false;
+
+  public override get roleElement(): HTMLInputElement | null {
+    return this.renderRoot.querySelector('input');
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <input aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)} />
+      ${this.renderHelpText()}
+    `;
+  }
+}
 
 /**
  * @internal
