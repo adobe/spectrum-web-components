@@ -23,7 +23,6 @@
 .swc-ResponseStatus {
   display: flex;
   flex-direction: column;
-  gap: token("spacing-100");
 }
 
 /* ─────────────────────────────────────
@@ -35,7 +34,6 @@
   gap: token("spacing-100");
   align-items: center;
   min-block-size: var(--_swc-response-status-row-block-size, 32px);
-  padding-inline: token("spacing-100");
 }
 
 /* When the row is a button (reasoning toggle). Full inline-size so the
@@ -186,6 +184,7 @@
 }
 
 .swc-ResponseStatus-row--button:hover .swc-ResponseStatus-label,
+.swc-ResponseStatus-row--button:focus-visible .swc-ResponseStatus-label,
 .swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-label {
   --swc-body-font-color: token("gray-800");
 
@@ -193,6 +192,7 @@
 }
 
 .swc-ResponseStatus-row--button:hover .swc-ResponseStatus-chevron,
+.swc-ResponseStatus-row--button:focus-visible .swc-ResponseStatus-chevron,
 .swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-chevron {
   color: token("gray-800");
   transition:
@@ -201,8 +201,14 @@
 }
 
 .swc-ResponseStatus-row--button:hover .swc-ResponseStatus-loader,
+.swc-ResponseStatus-row--button:focus-visible .swc-ResponseStatus-loader,
 .swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-loader {
   --swc-pixel-loader-color: token("gray-800");
+}
+
+.swc-ResponseStatus-row--button:focus-visible {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
 }
 
 /* ─────────────────────────────────────
@@ -210,7 +216,6 @@
    ───────────────────────────────────── */
 
 .swc-ResponseStatus--agentic {
-  gap: token("spacing-100");
   inline-size: 100%;
   max-inline-size: 540px;
 }
@@ -324,5 +329,9 @@
 @media (forced-colors: active) {
   .swc-ResponseStatus-loader {
     color: CanvasText;
+  }
+
+  .swc-ResponseStatus-row--button:focus-visible {
+    outline-color: CanvasText;
   }
 }
