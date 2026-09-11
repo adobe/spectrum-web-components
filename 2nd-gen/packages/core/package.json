@@ -71,6 +71,14 @@
       "types": "./dist/components/color-handle/index.d.ts",
       "import": "./dist/components/color-handle/index.js"
     },
+    "./components/color-loupe": {
+      "types": "./dist/components/color-loupe/index.d.ts",
+      "import": "./dist/components/color-loupe/index.js"
+    },
+    "./components/color-loupe/index.js": {
+      "types": "./dist/components/color-loupe/index.d.ts",
+      "import": "./dist/components/color-loupe/index.js"
+    },
     "./components/divider": {
       "types": "./dist/components/divider/index.d.ts",
       "import": "./dist/components/divider/index.js"
@@ -335,6 +343,12 @@
       ],
       "components/color-handle/index.js": [
         "dist/components/color-handle/index.d.ts"
+      ],
+      "components/color-loupe": [
+        "dist/components/color-loupe/index.d.ts"
+      ],
+      "components/color-loupe/index.js": [
+        "dist/components/color-loupe/index.d.ts"
       ],
       "components/divider": [
         "dist/components/divider/index.d.ts"
