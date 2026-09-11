@@ -17,6 +17,7 @@ import {
   renderFieldHelpText,
   type RenderFieldHelpTextResult,
 } from '../directives/render-help-text/index.js';
+import { isDebug, warnIf } from '../utils/index.js';
 
 type Constructor<T = Record<string, unknown>> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,11 +28,7 @@ type Constructor<T = Record<string, unknown>> = {
 const DESCRIPTION_SLOT_SELECTOR = '[slot="description"]';
 const ERROR_TEXT_SLOT_SELECTOR = '[slot="error-text"]';
 
-/**
- * An element carrying the ARIA element-reflection property `HelpTextMixin`
- * writes the resolved description (including any active error message) onto
- * (for example, the `<input>` inside a text field's own shadow root).
- */
+/** An element carrying the `ariaDescribedByElements` reflection property the resolved description is written onto (e.g. the field's `<input>`). */
 type DescribedByTarget = Element & {
   ariaDescribedByElements: Element[] | null;
 };
@@ -43,11 +40,8 @@ export interface HelpTextInterface {
   readonly hasErrorTextSlotContent: boolean;
 
   /**
-   * @internal
-   *
-   * The element `HelpTextMixin` wires the resolved description (including
-   * any active error message) onto. Defaults to `null`; a rendering subclass
-   * overrides this to return its real role element (e.g. the `<input>`).
+   * @internal Element the resolved description is wired onto. Defaults to
+   * `null`; a rendering subclass overrides it to return the real role element.
    */
   readonly roleElement: Element | null;
   /** Renders the description/error-text markup for the current state. */
@@ -55,56 +49,20 @@ export interface HelpTextInterface {
 }
 
 /**
- * A mixin that adds description/error-text rendering and accessible
- * description wiring to a host: the reactive `accessible-describedby`
- * property, light-DOM `description`/`error-text` slot presence tracking (via
- * `SlotPresenceController`), and `renderHelpText()` — which renders the
- * shared help-text markup via the `renderFieldHelpText` directive.
+ * Adds description/error-text rendering and accessible-description wiring to a
+ * host: the `accessible-describedby` property, `description`/`error-text` slot
+ * tracking, `renderHelpText()`, and a dev-mode warning for unresolved
+ * `accessible-describedby` id references.
  *
- * Unlike accessible-name sources (see `LabellingMixin`), description sources
- * combine rather than override one another: when both a slotted `description`
- * and an external `accessibleDescribedby` are set, {@link roleElement}'s
- * `ariaDescribedByElements` lists the in-shadow description first, then the
- * resolved external elements. Following React Spectrum's TextField strategy
- * (https://react-spectrum.adobe.com/TextField), the error message is folded
- * into that same `ariaDescribedByElements` list, immediately after the
- * description, rather than pointed at separately via `aria-errormessage` —
- * AT support for `aria-errormessage` is still inconsistent, while
- * `aria-describedby` is universally read. The in-shadow error-text element is
- * only added while the host reads as `invalid` (read structurally so hosts
- * that don't declare `invalid` at all simply never surface an error
- * message).
- *
- * Because the role element a text-like field describes is created by the
- * host's own render (e.g. the `<input>`), this mixin never assumes the role
- * element's shape: hosts applying `HelpTextMixin` before their own render
- * layer exists (for example, a core base class) override {@link roleElement}
- * once the real element is available.
- *
- * @example
- * ```typescript
- * class MyField extends HelpTextMixin(SpectrumElement) {
- *   override get roleElement() {
- *     return this.renderRoot.querySelector('input');
- *   }
- *
- *   render() {
- *     return html`
- *       <input />
- *       ${this.renderHelpText()}
- *     `;
- *   }
- * }
- * ```
+ * A rendering subclass overrides {@link roleElement} to return the element the
+ * description is wired onto (usually the rendered `<input>`). Source combining
+ * and the invalid-gated error fold into `aria-describedby` live in the MDX page.
  */
 export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
   constructor: T
 ): T & Constructor<HelpTextInterface> {
   class HelpTextElement extends constructor implements HelpTextInterface {
-    /**
-     * Observes the light-DOM `description` and `error-text` slots so the
-     * shadow-DOM containers and slots can be fully conditional.
-     */
+    /** Tracks the `description`/`error-text` slots so the shadow containers stay conditional. */
     private readonly _helpTextSlotPresence = new SlotPresenceController(this, [
       DESCRIPTION_SLOT_SELECTOR,
       ERROR_TEXT_SLOT_SELECTOR,
@@ -112,9 +70,8 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
 
     /**
      * Space-separated element `id`s, resolved against the host's root node,
-     * that describe the role element. Combines with a slotted `description`
-     * rather than overriding it: the in-shadow description, when present,
-     * comes first in the resulting `ariaDescribedByElements`.
+     * that describe the role element. Combines with (does not override) a
+     * slotted `description`.
      */
     @property({ attribute: 'accessible-describedby' })
     public accessibleDescribedby?: string;
@@ -125,33 +82,30 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
     /** @internal */
     private _errorTextElement: Element | undefined;
 
-    /**
-     * @internal
-     */
+    /** @internal */
     public get hasDescriptionSlotContent(): boolean {
       return this._helpTextSlotPresence.getPresence(DESCRIPTION_SLOT_SELECTOR);
     }
 
-    /**
-     * @internal
-     */
+    /** @internal */
     public get hasErrorTextSlotContent(): boolean {
       return this._helpTextSlotPresence.getPresence(ERROR_TEXT_SLOT_SELECTOR);
     }
 
-    /**
-     * @internal
-     */
+    /** @internal */
     public get roleElement(): Element | null {
       return null;
     }
 
+    /** @internal Docs URL for dev warnings, derived from the tag name. */
+    protected get docsHref(): string {
+      const name = this.localName.replace(/^swc-/, '');
+      return `https://spectrum-web-components.adobe.com/?path=/docs/components-${name}--docs`;
+    }
+
     /**
-     * @internal
-     *
-     * Reads `invalid` via a structural (not generic-constrained) check so
-     * this mixin stays composable on hosts that don't declare `invalid` at
-     * all — they simply never show an error message.
+     * @internal Reads `invalid` structurally so the mixin composes on hosts
+     * that don't declare it (they simply never show an error).
      */
     private get _isInvalid(): boolean {
       return (
@@ -160,22 +114,19 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
       );
     }
 
-    /**
-     * @internal
-     *
-     * Resolves `accessibleDescribedby`'s space-separated `id`s against the
-     * host's root node. `id`s that don't resolve to an element are dropped
-     * silently.
-     */
+    /** @internal The `id` tokens listed in `accessibleDescribedby`. */
+    private get _describedbyIds(): string[] {
+      return (this.accessibleDescribedby ?? '').split(/\s+/).filter(Boolean);
+    }
+
+    /** @internal Resolves `accessibleDescribedby` ids against the host's root; unresolved ids are dropped (and warned in dev). */
     private get _resolvedDescribedbyElements(): Element[] {
       if (!this.accessibleDescribedby) {
         return [];
       }
       const root = this.getRootNode() as Document | ShadowRoot;
-      return this.accessibleDescribedby
-        .split(/\s+/)
-        .filter(Boolean)
-        .map((id) => root.getElementById(id))
+      return this._describedbyIds
+        .map((id) => root.getElementById?.(id) ?? null)
         .filter((element): element is HTMLElement => element !== null);
     }
 
@@ -196,6 +147,39 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
     protected override updated(changedProperties: PropertyValues): void {
       super.updated(changedProperties);
       this._syncHelpText();
+      if (isDebug()) {
+        this._warnUnresolvedDescribedby();
+      }
+    }
+
+    /**
+     * @internal Warns when `accessibleDescribedby` references an `id` that
+     * resolves to no element (a silent failure otherwise).
+     */
+    private _warnUnresolvedDescribedby(): void {
+      const root = this.getRootNode() as Document | ShadowRoot;
+      const unresolved = this._describedbyIds.filter(
+        (id) => !(root.getElementById?.(id) ?? null)
+      );
+      if (unresolved.length === 0) {
+        return;
+      }
+      const ids = unresolved.map((id) => `"${id}"`).join(', ');
+      warnIf(
+        this,
+        true,
+        `<${this.localName}> "accessible-describedby" references ${
+          unresolved.length === 1 ? 'an id that does' : 'ids that do'
+        } not resolve to an element: ${ids}.`,
+        this.docsHref,
+        {
+          type: 'accessibility',
+          issues: [
+            "reference elements that share the field's root (document or shadow root), and",
+            'ensure they exist before the field renders (ids are resolved once per render).',
+          ],
+        }
+      );
     }
 
     private _syncHelpText(): void {
