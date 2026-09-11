@@ -14,14 +14,20 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import {
+  FocusgroupNavigationController,
   PlacementController,
   type PlacementOptions,
 } from '@adobe/spectrum-wc-core/controllers/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 import {
+  deepContains,
+  getActiveElement,
+  isTopDismissible,
   physicalSide,
+  registerDismissible,
   resolveTrigger,
+  unregisterDismissible,
   validateAllowedChildren,
   validateEnum,
   warnIf,
@@ -52,9 +58,12 @@ const DOCS_URL =
  * {@link https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/ | menu button}
  * pattern: an externally-referenced trigger (`for`/`triggerElement`) opens a
  * `PlacementController`-anchored surface containing a `role="menu"` list.
- * ARIA and click-to-toggle wiring on the trigger, and open/close events, are
- * handled here. Keyboard/focus management inside the list is added in a
- * later migration phase.
+ * ARIA and click-to-toggle wiring on the trigger, open/close events, roving
+ * `tabindex` and arrow-key navigation among `swc-menu-item` rows, and
+ * initial/return focus are all handled here. `Tab`/`Shift+Tab` are trapped
+ * on the active row rather than leaving the menu; only arrow keys move
+ * among rows. Closes on Escape, an outside click, or a slotted row being
+ * activated (by click or <kbd>Enter</kbd>).
  *
  * @slot - `swc-menu-item` elements. `swc-menu-group` and `swc-divider` (as a
  *   separator) join in a later migration phase.
@@ -149,6 +158,150 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
    */
   protected get surfaceElement(): HTMLElement | null {
     return null;
+  }
+
+  /**
+   * Roving-tabindex and arrow-key navigation among `swc-menu-item` rows.
+   * `wrap: true` overrides the controller's toolbar-oriented default so
+   * ArrowDown from the last item goes to the first (and reverse), matching
+   * menu-button convention; `skipDisabled` and `memory` keep the controller's
+   * own defaults (`false`/`true`) — disabled rows stay in the roving set per
+   * the APG's focusability-of-disabled-controls guidance.
+   */
+  private readonly focusNavigation = new FocusgroupNavigationController(this, {
+    direction: 'vertical',
+    wrap: true,
+    getItems: () => this.getMenuItems(),
+  });
+
+  /**
+   * Whether focus should return to the trigger once the current close
+   * finishes. Snapshotted in `willUpdate()`, before render can react to the
+   * new `open` value, so a later show/hide mechanism dropping focus to the
+   * document does not race this check.
+   */
+  private _restoreFocusToTrigger = false;
+
+  /**
+   * Set at the end of every `updated()` call. Gates the same narrow thing it
+   * does in `Popover.base.ts`/`Tooltip.base.ts`: whether this is genuinely
+   * the first render (an initially-`open` menu should not steal focus or
+   * dispatch a phantom `swc-open` on mount) versus a later, real open/close
+   * transition, which must still run the full open/close branch — register
+   * the dismissible, wire the Escape/outside-click listeners, position the
+   * surface. Do not gate that whole branch on this flag; only the two things
+   * named above.
+   */
+  private _hasCompletedFirstUpdate = false;
+
+  // Direct `swc-menu-item` children only this phase; `swc-menu-group` joins
+  // once it exists (Phase B), extending this to also collect its default
+  // slot's items, matching the a11y analysis's illustrative query.
+  private getMenuItems(): HTMLElement[] {
+    return Array.from(
+      this.querySelectorAll<HTMLElement>(':scope > swc-menu-item')
+    );
+  }
+
+  // `deepContains` crosses shadow boundaries, so focus inside a slotted
+  // custom element's own shadow tree (e.g. a future `swc-menu-item` internal
+  // part) is still detected as "inside the menu".
+  private isFocusWithin(): boolean {
+    return deepContains(this, getActiveElement());
+  }
+
+  // Shared by the Escape/Enter keydown handler and the click handler below:
+  // whether the event's path crosses one of the roving-tabindex rows
+  // `FocusgroupNavigationController` collects, so keyboard and pointer
+  // activation never disagree about what counts as a row.
+  private isMenuItemEventTarget(event: Event): boolean {
+    const items = new Set(this.getMenuItems());
+    return event.composedPath().some((node) => items.has(node as HTMLElement));
+  }
+
+  // Escape closes the menu; Enter on a focused row activates it, matching
+  // click (see `handleItemActivate`). Registered on `document` (capture)
+  // only while open (see `updated()`), matching `Tooltip.base.ts`/
+  // `Popover.base.ts`: `swc-menu` has no native top-layer light-dismiss to
+  // fall back on.
+  private readonly handleKeyDown = (event: KeyboardEvent): void => {
+    if (!this.open) {
+      return;
+    }
+    if (event.key === 'Escape') {
+      // Only the topmost dismissible handles Escape; a surface above us
+      // (e.g. a submenu, once those exist) gets it first.
+      if (!isTopDismissible(this)) {
+        return;
+      }
+      event.preventDefault();
+      this.open = false;
+      return;
+    }
+    if (event.key === 'Tab' && this.isMenuItemEventTarget(event)) {
+      // Traps focus on the roving-tabindex row rather than letting Tab (or
+      // Shift+Tab) carry it out of the menu to whatever's next/previous in
+      // the page's tab order. Arrow keys are still the only way to move
+      // among rows (`FocusgroupNavigationController`); Tab does nothing
+      // while the menu is open.
+      event.preventDefault();
+      return;
+    }
+    if (event.key === 'Enter' && this.isMenuItemEventTarget(event)) {
+      // Prevents the browser's own Enter default-action from firing too.
+      // That default action resolves against whatever element has focus
+      // once it actually runs, not this event's original target — and
+      // closing the menu synchronously refocuses the trigger `<button>`
+      // (see `_restoreFocusToTrigger`), so an un-prevented Enter here
+      // re-activates that button and reopens the menu it just closed.
+      event.preventDefault();
+      this.open = false;
+    }
+  };
+
+  // Closes the menu on a click outside both its own content and its
+  // trigger. `composedPath()`, not `event.target`, so a click on a slotted
+  // `swc-menu-item` (light DOM) or inside the shadow-internal surface is
+  // correctly seen as "inside" rather than retargeted to `swc-menu` itself
+  // and treated as ambiguous. `click`, not `pointerdown`: this menu has no
+  // native light-dismiss to race against (unlike Popover's default mode),
+  // so there is no need to catch the gesture before it completes. Clicking
+  // the trigger itself is excluded here; that toggle is already handled by
+  // `_handleTriggerClick`.
+  private readonly handleOutsideClick = (event: MouseEvent): void => {
+    if (!this.open) {
+      return;
+    }
+    const path = event.composedPath();
+    if (
+      path.includes(this) ||
+      (this._trigger && path.includes(this._trigger))
+    ) {
+      return;
+    }
+    this.open = false;
+  };
+
+  // Closes the menu when a slotted row is activated. This phase has no
+  // submenus or selection to special-case yet, so any click landing on one
+  // of the roving-tabindex items (not just anywhere inside the surface,
+  // e.g. its padding) counts — matches the menu button pattern: choosing a
+  // plain command item closes the menu.
+  private readonly handleItemActivate = (event: MouseEvent): void => {
+    if (!this.open || !this.isMenuItemEventTarget(event)) {
+      return;
+    }
+    this.open = false;
+  };
+
+  // `click` bubbles from any descendant regardless of `open`, and the
+  // handler already no-ops when closed, so it is wired once for the
+  // component's whole connected lifetime rather than toggled per open/close
+  // the way the document-level Escape/outside-click listeners are (those
+  // need the capture-phase dance; this does not).
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('click', this.handleItemActivate);
   }
 
   // Removes this menu's aria-controls reference from a previously-wired
@@ -267,6 +420,22 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       'default',
       DOCS_URL
     );
+    this.focusNavigation.refresh();
+  }
+
+  protected override willUpdate(changedProperties: PropertyValues): void {
+    super.willUpdate(changedProperties);
+    // Snapshot before render reacts to the new `open` value (see
+    // `_restoreFocusToTrigger`'s own doc). `_hasCompletedFirstUpdate` is
+    // still false during the very first call, so a menu that starts closed
+    // does not treat its own initialization as "a close just happened".
+    if (
+      changedProperties.has('open') &&
+      !this.open &&
+      this._hasCompletedFirstUpdate
+    ) {
+      this._restoreFocusToTrigger = this.isFocusWithin();
+    }
   }
 
   protected override updated(changedProperties: PropertyValues): void {
@@ -289,22 +458,63 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       this.wireTrigger();
     }
 
-    // `changedProperties.get('open')` is the previous value. On the very
-    // first `updated()` call, the entry recorded for the property's own
-    // initializer has no real previous value: it reads `undefined`, not
-    // `false`. Checking for that excludes that initialization entry so a
-    // menu that starts closed does not dispatch a phantom `swc-close` (or one
-    // that starts open, `swc-open`) the moment it first renders.
-    const openChanged =
-      changedProperties.has('open') &&
-      changedProperties.get('open') !== undefined;
-    if (openChanged) {
-      this.dispatchOpenEvents(this.open);
+    // Runs whenever `open` changes at all, including the very first
+    // `updated()` call for a menu that starts open (`<swc-menu open>`) --
+    // matching `Popover.base.ts`/`Tooltip.base.ts`'s own precedent: both run
+    // this full branch (dismiss registration, listeners, positioning) on
+    // that first call too, and narrowly suppress only the phantom
+    // `swc-open`/`swc-close` event and the initial focus-steal below via
+    // `_hasCompletedFirstUpdate`, not by skipping the branch outright.
+    if (changedProperties.has('open')) {
+      if (this._hasCompletedFirstUpdate) {
+        this.dispatchOpenEvents(this.open);
+      }
       if (this.open) {
+        registerDismissible(this);
+        document.addEventListener('keydown', this.handleKeyDown, {
+          capture: true,
+        });
+        document.addEventListener('click', this.handleOutsideClick, {
+          capture: true,
+        });
         this.startPlacement();
+        if (this._hasCompletedFirstUpdate) {
+          // Re-checks eligibility (e.g. newly visible rows) first. Forces
+          // the first item active rather than trusting the controller's own
+          // memory-preferring `refresh()` + `getActiveItem()`: every normal
+          // open must land on the first item regardless of which row was
+          // active the last time this menu was open, not wherever `memory`
+          // last parked the roving tab stop. Falls back to `getActiveItem()`
+          // only if the first raw item is not eligible (e.g. mid-transition).
+          this.focusNavigation.refresh();
+          const firstItem = this.getMenuItems()[0];
+          const active =
+            (firstItem &&
+              this.focusNavigation.setActiveItem(firstItem) &&
+              firstItem) ||
+            this.focusNavigation.getActiveItem();
+          if (active) {
+            // Deferred with `queueMicrotask` per the controller's own
+            // documented pattern for focusing from a trigger `click`
+            // handler: otherwise the browser moves focus back to the
+            // trigger after the click handler (which set `open`) returns.
+            queueMicrotask(() => active.focus());
+          }
+        }
       } else {
+        unregisterDismissible(this);
+        document.removeEventListener('keydown', this.handleKeyDown, {
+          capture: true,
+        });
+        document.removeEventListener('click', this.handleOutsideClick, {
+          capture: true,
+        });
         this.placementController.stop();
         this.removeAttribute('actual-placement');
+        if (this._restoreFocusToTrigger) {
+          this._restoreFocusToTrigger = false;
+          this._interactiveElement?.focus({ preventScroll: true });
+        }
       }
     } else if (
       this.open &&
@@ -316,6 +526,8 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       // Re-anchor while open when a positioning input or the trigger changes.
       this.startPlacement();
     }
+
+    this._hasCompletedFirstUpdate = true;
   }
 
   public override disconnectedCallback(): void {
@@ -323,5 +535,13 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this.placementController.stop();
     this.clearTriggerAria();
     this.removeTriggerClickListener();
+    unregisterDismissible(this);
+    document.removeEventListener('keydown', this.handleKeyDown, {
+      capture: true,
+    });
+    document.removeEventListener('click', this.handleOutsideClick, {
+      capture: true,
+    });
+    this.removeEventListener('click', this.handleItemActivate);
   }
 }

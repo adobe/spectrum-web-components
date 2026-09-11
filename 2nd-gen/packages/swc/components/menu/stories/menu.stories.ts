@@ -14,6 +14,7 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 
 // ────────────────
@@ -23,10 +24,9 @@ import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 const { args, argTypes, template } = getStorybookHelpers('swc-menu');
 
 // `actual-placement` is internal CSS-only state that `Menu` manages directly
-// via setAttribute (the flip-resolved side from PlacementController, once
-// Phase 5 rendering provides a surface for it to position). The Storybook
-// helper otherwise observes every attribute change, writes it back into
-// `args`, and re-applies it through its `spread` directive on the next
+// via setAttribute (the flip-resolved side from PlacementController). The
+// Storybook helper otherwise observes every attribute change, writes it back
+// into `args`, and re-applies it through its `spread` directive on the next
 // render — clobbering the resolved side with a stale value. Declaring it
 // here (control disabled) makes the helper exclude it from the spread.
 argTypes['actual-placement'] = {
@@ -38,11 +38,6 @@ argTypes['actual-placement'] = {
  * A menu is a full [menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)
  * host: an externally-referenced trigger opens a `PlacementController`-anchored
  * surface containing a `role="menu"` list of `swc-menu-item` rows.
- *
- * This is a Phase 3 (API migration) story for smoke testing only.
- * `swc-menu-item` doesn't exist yet, so this story slots plain content
- * instead. Keyboard/focus management, rendering/styling of the anchored
- * surface, and full documentation sections land in later migration phases.
  */
 const meta: Meta = {
   title: 'Menu',
@@ -62,13 +57,26 @@ export default meta;
 //    PLAYGROUND STORY
 // ────────────────────
 
+// `swc-menu-item` doesn't exist yet (Phase A minimal surface, tracked
+// separately from this ticket). These placeholders use its own tag name and
+// `role="menuitem"` (the role `swc-menu-item` sets on its host once it
+// exists) so the story exercises the same tag-based item query
+// `focusNavigation` runs against, and stays aXe-clean under the `role="menu"`
+// container, which requires `menuitem` children.
 const defaultItems = html`
-  <div>Cut</div>
-  <div>Copy</div>
-  <div>Paste</div>
+  <swc-menu-item role="menuitem" tabindex="-1">Cut</swc-menu-item>
+  <swc-menu-item role="menuitem" tabindex="-1">Copy</swc-menu-item>
+  <swc-menu-item role="menuitem" tabindex="-1">Paste</swc-menu-item>
 `;
 
 export const Playground: Story = {
-  render: (args) => template(args, defaultItems),
+  args: {
+    open: false,
+    for: 'playground-trigger',
+  },
+  render: (args) => html`
+    <swc-button id="playground-trigger">Open menu</swc-button>
+    ${template(args, defaultItems)}
+  `,
   tags: ['autodocs', 'dev'],
 };

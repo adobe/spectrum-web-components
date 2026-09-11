@@ -13,3 +13,34 @@
 :host {
   display: block;
 }
+
+/* Unstyled positioning and layout only: `position: absolute` is what
+ * `PlacementController` needs to place the surface (writes top/left/translate
+ * inline), and `display: flex` / `flex-direction: column` stacks slotted rows
+ * vertically regardless of their own default display (an unregistered custom
+ * element, like the current placeholder story rows, defaults to `inline`).
+ * Visual styling (background, border, radius, elevation) is deferred until
+ * `swc-menu-item` exists to style and size against for real; see the
+ * migration plan's Architecture section for why this single class will carry
+ * both the `spectrum-css` popover-chrome and menu-list roles once it lands. */
+.swc-Menu {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+}
+
+/* `[hidden]` and `.swc-Menu` are both single-selector specificity (0,1,0),
+ * and this stylesheet's `display: flex` above comes after the UA
+ * stylesheet's `[hidden] { display: none }` in the cascade, so it was
+ * winning the tie and the surface never actually hid despite the attribute
+ * being set correctly. The extra specificity here (0,2,0) restores it. */
+.swc-Menu[hidden] {
+  display: none;
+}
+
+/* Minimal padding so slotted rows are visually distinct and roving focus is
+ * easy to see moving between them; not a real row treatment. `swc-menu-item`
+ * owns its own padding once it exists, superseding this. */
+::slotted(*) {
+  padding: token("spacing-100");
+}
