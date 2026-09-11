@@ -42,8 +42,8 @@
 > **Input documents**
 > - [Rendering & Styling Migration Analysis](./rendering-and-styling-migration-analysis.md)
 > - [Washing Machine Workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
-> - 1st-gen source: `1st-gen/packages/avatar/src/Avatar.ts`
-> - 1st-gen tests: `1st-gen/packages/avatar/test/`
+> - 1st-gen source: `gen1/packages/avatar/src/Avatar.ts`
+> - 1st-gen tests: `gen1/packages/avatar/test/`
 
 ---
 

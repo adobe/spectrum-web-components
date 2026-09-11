@@ -39,7 +39,7 @@
 
 ## Overview
 
-This doc explains how **`swc-progress-bar`** should work for **accessibility**. It supports **WCAG 2.2 Level AA**. Until **`swc-progress-bar`** ships, treat **`1st-gen/packages/progress-bar/src/ProgressBar.ts`** (`<sp-progress-bar>`) as the primary reference for behavior; align 2nd-gen with this doc and the [progress bar migration roadmap](./rendering-and-styling-migration-analysis.md).
+This doc explains how **`swc-progress-bar`** should work for **accessibility**. It supports **WCAG 2.2 Level AA**. Until **`swc-progress-bar`** ships, treat **`gen1/packages/progress-bar/src/ProgressBar.ts`** (`<sp-progress-bar>`) as the primary reference for behavior; align 2nd-gen with this doc and the [progress bar migration roadmap](./rendering-and-styling-migration-analysis.md).
 
 ### Also read
 
@@ -133,7 +133,7 @@ None
 
 ## Known 1st-gen issues
 
-Gaps in **1st-gen** **`<sp-progress-bar>`** (`1st-gen/packages/progress-bar/src/ProgressBar.ts`) that **2nd-gen** **`swc-progress-bar`** should fix or cover with regression tests.
+Gaps in **1st-gen** **`<sp-progress-bar>`** (`gen1/packages/progress-bar/src/ProgressBar.ts`) that **2nd-gen** **`swc-progress-bar`** should fix or cover with regression tests.
 
 ### Non-text contrast at 0% (WCAG 1.4.11)
 

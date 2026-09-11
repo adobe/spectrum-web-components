@@ -79,7 +79,7 @@ None currently — all resolved; see [Decision log](#decision-log).
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/radio/src/Radio.ts`](../../../../1st-gen/packages/radio/src/Radio.ts)
+**Source:** [`gen1/packages/radio/src/Radio.ts`](../../../../gen1/packages/radio/src/Radio.ts)
 **Version:** `@spectrum-web-components/radio@1.12.2`
 **Custom element tag:** `sp-radio`
 
@@ -429,7 +429,7 @@ Planned rendering shape:
 
 <!-- Fill in comprehensive test cases -->
 
-- [ ] Port `1st-gen/packages/radio/test/radio.test.ts` coverage that still applies (item only, not `radio-group.test.ts`)
+- [ ] Port `gen1/packages/radio/test/radio.test.ts` coverage that still applies (item only, not `radio-group.test.ts`)
 - [ ] Add Playwright `radio.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Behavior
@@ -529,9 +529,9 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 - [Text field migration plan](../text-field/migration-plan.md) — the first form-field-related 2nd-gen implementation; source of the `FieldAssociationController` sequencing `swc-radio-group`'s plan depends on, and of the `LabellingController`/shared `form-fields` stylesheet this plan deliberately does not depend on (see [Decision log](#decision-log)) (not yet merged at time of drafting)
 - [`SlotPresenceController`](../../../../2nd-gen/packages/core/controllers/slot-presence-controller/slot-presence-controller.mdx) — already-built controller this plan uses to gate the `description` slot/`aria-describedby`
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
-- [1st-gen source](../../../../1st-gen/packages/radio/src/Radio.ts)
-- [1st-gen tests](../../../../1st-gen/packages/radio/test/radio.test.ts)
-- [1st-gen README](../../../../1st-gen/packages/radio/README.md)
+- [1st-gen source](../../../../gen1/packages/radio/src/Radio.ts)
+- [1st-gen tests](../../../../gen1/packages/radio/test/radio.test.ts)
+- [1st-gen README](../../../../gen1/packages/radio/README.md)
 - [React Spectrum RadioGroup](https://react-spectrum.adobe.com/RadioGroup) (covers both `RadioGroup` and `Radio` props, including per-item `description`)
 - [Spectrum CSS — `spectrum-two` branch, `components/radio/index.css`](https://github.com/adobe/spectrum-css/tree/spectrum-two/components/radio): reviewed via a sibling checkout at `spectrum-css/components/radio/index.css`
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)

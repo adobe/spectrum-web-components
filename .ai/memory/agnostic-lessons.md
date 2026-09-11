@@ -22,7 +22,7 @@ Accumulated lessons from working sessions on this project. Grouped by category. 
 ## Project structure
 
 - **Root `package.json` has `"type": "module"`**: All `.js` scripts in this repo use ESM `import`/`export` syntax. Write new scripts with `import`, not `require`.
-- **`linters/` is at the repo root**: The `stylelint-property-order.js` and ESLint plugin live at `linters/`, not inside `2nd-gen/` or `1st-gen/`.
+- **`linters/` is at the repo root**: The `stylelint-property-order.js` and ESLint plugin live at `linters/`, not inside `2nd-gen/` or `gen1/`.
 - **`.ai/memory/` is the persistent lessons store**: Lessons and cross-session notes belong here, not in session-handoff documents or code comments.
 
 ---

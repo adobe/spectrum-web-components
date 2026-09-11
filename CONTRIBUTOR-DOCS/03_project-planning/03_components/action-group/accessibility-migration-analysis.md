@@ -42,7 +42,7 @@
 
 ## Overview
 
-This doc describes how **`swc-action-group`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. It pairs with [Action group migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, tokens, and DOM. **`1st-gen/packages/action-group/src/ActionGroup.ts`** (`<sp-action-group>`) is historical reference for **roving tabindex** only — **`selects`** / **`selected`** were dropped entirely in 2nd-gen (see [Recommendations](#recommendations-swc-action-group)).
+This doc describes how **`swc-action-group`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. It pairs with [Action group migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, tokens, and DOM. **`gen1/packages/action-group/src/ActionGroup.ts`** (`<sp-action-group>`) is historical reference for **roving tabindex** only — **`selects`** / **`selected`** were dropped entirely in 2nd-gen (see [Recommendations](#recommendations-swc-action-group)).
 
 React Spectrum names the pattern [**ActionButtonGroup**](https://react-spectrum.adobe.com/ActionButtonGroup); Spectrum 2 documents [**Action group**](https://s2.spectrum.corp.adobe.com/page/action-group/). **`swc-action-group`** groups related **`swc-action-button`** and **`swc-action-menu`** controls with Spectrum spacing in **horizontal** or **vertical** layout. The host **always** maps to **`role="group"`** (prescribed and fixed). The main accessibility difference from **`swc-button-group`** is **composite keyboard navigation**: **`swc-action-group`** owns **roving **`tabindex`**** (**one Tab stop** into the strip, **arrow keys** among items), while **`swc-button-group`** also uses **`role="group"`** but **Tab** visits **each** **`swc-button`** ([Button group accessibility migration analysis](../button-group/accessibility-migration-analysis.md)).
 
@@ -281,5 +281,5 @@ Exercise **Tab**, **Shift+Tab**, **Arrow** keys, **Home** / **End**, and **Enter
 - [Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md)
 - [Focus management contributor guide](../../../01_contributor-guides/14_focus-management.md)
 - [Keyboard testing (2nd-gen Storybook accessibility guide)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
-- [`ActionGroup.ts` (1st-gen)](../../../../1st-gen/packages/action-group/src/ActionGroup.ts)
+- [`ActionGroup.ts` (1st-gen)](../../../../gen1/packages/action-group/src/ActionGroup.ts)
 - [`focusgroup-navigation-controller.ts` (2nd-gen core)](../../../../2nd-gen/packages/core/controllers/focusgroup-navigation-controller/src/focusgroup-navigation-controller.ts)

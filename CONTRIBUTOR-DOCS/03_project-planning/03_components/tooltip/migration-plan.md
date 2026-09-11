@@ -92,7 +92,7 @@ Tooltip is a visually simple component with high behavioral complexity in its au
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/tooltip/src/Tooltip.ts`](../../../../1st-gen/packages/tooltip/src/Tooltip.ts)
+**Source:** [`gen1/packages/tooltip/src/Tooltip.ts`](../../../../gen1/packages/tooltip/src/Tooltip.ts)
 **Version:** `@spectrum-web-components/tooltip@1.12.0`
 **Custom element tag:** `sp-tooltip`
 
@@ -662,8 +662,8 @@ The impact is most acute in the additive phase, when `HoverController` opens the
 
 ### Testing
 
-- [x] Port `1st-gen/packages/tooltip/test/tooltip.test.ts` coverage that still applies
-- [x] Do not port `1st-gen/packages/tooltip/test/tooltip-directive.test.ts` — directive is deferred; tests will be written fresh against the 2nd-gen directive when it ships
+- [x] Port `gen1/packages/tooltip/test/tooltip.test.ts` coverage that still applies
+- [x] Do not port `gen1/packages/tooltip/test/tooltip-directive.test.ts` — directive is deferred; tests will be written fresh against the 2nd-gen directive when it ships
 - [x] Add Playwright `tooltip.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Behavior
@@ -989,10 +989,10 @@ Decisions made after the initial plan was approved and implementation had begun.
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
-- [1st-gen source](../../../../1st-gen/packages/tooltip/src/Tooltip.ts)
-- [1st-gen tooltip-directive](../../../../1st-gen/packages/tooltip/src/tooltip-directive.ts)
-- [1st-gen tests](../../../../1st-gen/packages/tooltip/test/tooltip.test.ts)
-- [1st-gen README](../../../../1st-gen/packages/tooltip/README.md)
+- [1st-gen source](../../../../gen1/packages/tooltip/src/Tooltip.ts)
+- [1st-gen tooltip-directive](../../../../gen1/packages/tooltip/src/tooltip-directive.ts)
+- [1st-gen tests](../../../../gen1/packages/tooltip/test/tooltip.test.ts)
+- [1st-gen README](../../../../gen1/packages/tooltip/README.md)
 - [React Spectrum S2 Tooltip](https://react-spectrum.adobe.com/Tooltip)
 - [`ariaDescribedByElements` cross-root POC (CodePen)](https://codepen.io/spectrum-css/pen/pvNEVda?editors=0010) — validates inner shadow `<button>` wiring across Chrome/Edge 135+, Firefox 136+, Safari 16.4+; AT-validated with NVDA and VoiceOver
 - [Spectrum CSS — `tooltip/index.css` on `spectrum-two` branch](../../../../../spectrum-css/components/tooltip/index.css)

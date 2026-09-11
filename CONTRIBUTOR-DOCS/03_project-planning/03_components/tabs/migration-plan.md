@@ -98,8 +98,8 @@ The first **`swc-tabs`**, **`swc-tab`**, and **`swc-tab-panel`** implementation 
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/tabs/src/`](../../../../1st-gen/packages/tabs/src/) (`Tabs.ts`, `Tab.ts`, `TabPanel.ts`, `TabsOverflow.ts`)
-**Tests:** [`1st-gen/packages/tabs/test/`](../../../../1st-gen/packages/tabs/test/) (`tabs.test.ts`, `tab.test.ts`, `tabs-overflow.test.ts`)
+**Source:** [`gen1/packages/tabs/src/`](../../../../gen1/packages/tabs/src/) (`Tabs.ts`, `Tab.ts`, `TabPanel.ts`, `TabsOverflow.ts`)
+**Tests:** [`gen1/packages/tabs/test/`](../../../../gen1/packages/tabs/test/) (`tabs.test.ts`, `tab.test.ts`, `tabs-overflow.test.ts`)
 **Version:** `@spectrum-web-components/tabs`
 **Custom element tags:** `sp-tabs`, `sp-tab`, `sp-tab-panel`, `sp-tabs-overflow`
 
@@ -593,7 +593,7 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 
 ### Testing
 
-- [ ] Port `1st-gen/packages/tabs/test/tabs.test.ts` coverage that still applies
+- [ ] Port `gen1/packages/tabs/test/tabs.test.ts` coverage that still applies
 - [ ] Add Playwright `tabs.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Unit tests (red/green TDD)
@@ -801,8 +801,8 @@ Any 2nd-gen change to DOM arrangement must preserve ID resolution. Options inclu
 
 - [Washing machine workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [CSS style guide — Custom properties](../../../02_style-guide/01_css/02_custom-properties.md)
-- [1st-gen source](../../../../1st-gen/packages/tabs/src/)
-- [1st-gen tests](../../../../1st-gen/packages/tabs/test/)
+- [1st-gen source](../../../../gen1/packages/tabs/src/)
+- [1st-gen tests](../../../../gen1/packages/tabs/test/)
 - [Consumer migration guide](../../../../2nd-gen/packages/swc/components/tabs/migration-guide.mdx)
 - [WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-1.2/)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)

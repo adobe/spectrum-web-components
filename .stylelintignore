@@ -27,11 +27,11 @@
 **/*.yml
 
 # Project-specific ignores
-1st-gen/projects/example-project/dist
-1st-gen/tools/styles
-1st-gen/spectrum-*.css
-1st-gen/packages/icons
-1st-gen/packages/iconset
-1st-gen/packages/icons-ui
-1st-gen/packages/icons-workflow
+gen1/projects/example-project/dist
+gen1/tools/styles
+gen1/spectrum-*.css
+gen1/packages/icons
+gen1/packages/iconset
+gen1/packages/icons-ui
+gen1/packages/icons-workflow
 2nd-gen/packages/swc/stylesheets/global

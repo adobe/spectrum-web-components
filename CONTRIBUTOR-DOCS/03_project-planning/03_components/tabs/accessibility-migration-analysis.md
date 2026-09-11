@@ -73,7 +73,7 @@ This doc describes how `swc-tabs` (with `swc-tab` and `swc-tab-panel`) should be
 
 `<sp-tabs>` maps APG manual vs automatic activation to the boolean `auto` attribute / property (default `false`). The JSDoc points authors to [Deciding When to Make Selection Automatically Follow Focus](https://w3c.github.io/aria-practices/#kbd_selection_follows_focus) (same idea as the APG examples).
 
-```116:125:1st-gen/packages/tabs/src/Tabs.ts
+```116:125:gen1/packages/tabs/src/Tabs.ts
   /**
    * Whether to activate a tab on keyboard focus or not.
    *
@@ -88,7 +88,7 @@ This doc describes how `swc-tabs` (with `swc-tab` and `swc-tab-panel`) should be
 
 - **Manual pattern** (`auto` omitted or `false`) — matches [tabs with manual activation](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/examples/tabs-manual/): `RovingTabindexController` moves focus between `sp-tab` elements with arrow keys, but `elementEnterAction` does not change selection when `auto` is false. The user activates the focused tab with Enter or Space (or click). `onKeyDown` on the tablist calls `selectTarget` for Enter and Space only.
 
-```206:230:1st-gen/packages/tabs/src/Tabs.ts
+```206:230:gen1/packages/tabs/src/Tabs.ts
   rovingTabindexController = new RovingTabindexController<Tab>(this, {
     focusInIndex: (elements) => {
       let focusInIndex = 0;
@@ -116,7 +116,7 @@ This doc describes how `swc-tabs` (with `swc-tab` and `swc-tab-panel`) should be
   });
 ```
 
-```476:484:1st-gen/packages/tabs/src/Tabs.ts
+```476:484:gen1/packages/tabs/src/Tabs.ts
   private onKeyDown = (event: KeyboardEvent): void => {
     if (event.code === 'Enter' || event.code === 'Space') {
       event.preventDefault();

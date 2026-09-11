@@ -124,7 +124,7 @@ Typical open state
 
 ## Known 1st-gen issues
 
-- `sp-illustrated-message` always wraps the heading slot in `<h2 id="heading">` ([`IllustratedMessage.ts`](https://github.com/adobe/spectrum-web-components/blob/main/1st-gen/packages/illustrated-message/src/IllustratedMessage.ts)) with no `heading-level` API—authors cannot match outline when the block should be `h3`–`h6`.
+- `sp-illustrated-message` always wraps the heading slot in `<h2 id="heading">` ([`IllustratedMessage.ts`](https://github.com/adobe/spectrum-web-components/blob/main/gen1/packages/illustrated-message/src/IllustratedMessage.ts)) with no `heading-level` API—authors cannot match outline when the block should be `h3`–`h6`.
 - The slot accepts any node; slotted heading elements would nest incorrectly inside `<h2>`. 2nd-gen fixes this by owning the heading tag and restricting the slot to `span` only.
 
 ---

@@ -174,7 +174,7 @@ None as a design risk, but the actual wiring mechanism is more specific than an 
 - [WAI-ARIA APG: Radio Group pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)
 - [WAI-ARIA](https://www.w3.org/TR/wai-aria-1.2/), [WCAG 2.2](https://www.w3.org/TR/WCAG22/), [APG: read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [React Spectrum: RadioGroup](https://react-spectrum.adobe.com/RadioGroup) (covers both `RadioGroup` and `Radio` props)
-- 1st-gen: [`sp-radio`/`sp-radio-group`](../../../../1st-gen/packages/radio/README.md)
+- 1st-gen: [`sp-radio`/`sp-radio-group`](../../../../gen1/packages/radio/README.md)
 - [Radio migration roadmap (this repo)](./rendering-and-styling-migration-analysis.md)
 - [Radio group accessibility migration analysis (this repo)](../radio-group/accessibility-migration-analysis.md)
 - Jira: [SWC-2348](https://jira.corp.adobe.com/browse/SWC-2348) (epic), [SWC-2349](https://jira.corp.adobe.com/browse/SWC-2349) (this research ticket), [SWC-2470](https://jira.corp.adobe.com/browse/SWC-2470) (`RadioGroupController` research spike), [SWC-2467](https://jira.corp.adobe.com/browse/SWC-2467) (`FieldAssociationController`), [SWC-1888](https://jira.corp.adobe.com/browse/SWC-1888) (RFC: form field strategy for 2nd-gen migration)

@@ -77,7 +77,7 @@
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/infield-button/src/InfieldButton.ts`](../../../../1st-gen/packages/infield-button/src/InfieldButton.ts)
+**Source:** [`gen1/packages/infield-button/src/InfieldButton.ts`](../../../../gen1/packages/infield-button/src/InfieldButton.ts)
 **Version:** `@spectrum-web-components/infield-button@1.12.1`
 **Custom element tag:** `sp-infield-button`
 
@@ -475,7 +475,7 @@ html`
 
 ### Testing
 
-- [x] Port applicable coverage from [`1st-gen/packages/infield-button/test/infield-button.test.ts`](../../../../1st-gen/packages/infield-button/test/infield-button.test.ts):
+- [x] Port applicable coverage from [`gen1/packages/infield-button/test/infield-button.test.ts`](../../../../gen1/packages/infield-button/test/infield-button.test.ts):
   - Default rendering accessible (axe)
   - Stacked rendering accessible — **NOTE:** stacked with `block` attribute is removed; replaced with parent-composed stepper fixture
 - [x] Add Playwright `infield-button.a11y.spec.ts` with `toMatchAriaSnapshot`
@@ -559,9 +559,9 @@ html`
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
-- [1st-gen source — `InfieldButton.ts`](../../../../1st-gen/packages/infield-button/src/InfieldButton.ts)
-- [1st-gen tests](../../../../1st-gen/packages/infield-button/test/infield-button.test.ts)
-- [1st-gen README](../../../../1st-gen/packages/infield-button/README.md)
+- [1st-gen source — `InfieldButton.ts`](../../../../gen1/packages/infield-button/src/InfieldButton.ts)
+- [1st-gen tests](../../../../gen1/packages/infield-button/test/infield-button.test.ts)
+- [1st-gen README](../../../../gen1/packages/infield-button/README.md)
 - [2nd-gen `ButtonBase`](../../../../2nd-gen/packages/core/components/button/Button.base.ts)
 - [Button migration plan](../button/migration-plan.md)
 - [Button accessibility migration analysis](../button/accessibility-migration-analysis.md)

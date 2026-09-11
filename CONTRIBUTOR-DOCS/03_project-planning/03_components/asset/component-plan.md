@@ -86,7 +86,7 @@ which has already been tested and requires no changes to Card's existing CSS.
 
 ### 1st-gen (`sp-asset`, published — out of scope)
 
-**Source:** [`1st-gen/packages/asset/src/Asset.ts`](../../../../1st-gen/packages/asset/src/Asset.ts), [`Asset.base.ts`](../../../../1st-gen/packages/asset/src/Asset.base.ts)
+**Source:** [`gen1/packages/asset/src/Asset.ts`](../../../../gen1/packages/asset/src/Asset.ts), [`Asset.base.ts`](../../../../gen1/packages/asset/src/Asset.base.ts)
 **Package:** `@spectrum-web-components/asset`
 **Custom element tag:** `sp-asset`
 
@@ -575,7 +575,7 @@ affects.
 - [Asset research.md](./research.md) — the deep-read artifact this plan is drawn from, including the full reasoning behind the aspect-ratio weak-sync mechanism and the Card Gen2 findings
 - [Thumbnail accessibility migration analysis](../thumbnail/accessibility-migration-analysis.md) — a11y model reference (decorative, no disabled/focused/selected, host has no ARIA role)
 - [Asset rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
-- [1st-gen source](../../../../1st-gen/packages/asset/src/Asset.ts)
+- [1st-gen source](../../../../gen1/packages/asset/src/Asset.ts)
 - [2nd-gen source (core)](../../../../2nd-gen/packages/core/components/asset/Asset.base.ts)
 - [2nd-gen source (SWC)](../../../../2nd-gen/packages/swc/components/asset/Asset.ts)
 - [Opacity checkerboard shared style](../../../../2nd-gen/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css)

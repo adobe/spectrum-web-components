@@ -76,7 +76,7 @@ Button group is a simple layout and semantics wrapper for related button actions
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/button-group/src/ButtonGroup.ts`](../../../../1st-gen/packages/button-group/src/ButtonGroup.ts)
+**Source:** [`gen1/packages/button-group/src/ButtonGroup.ts`](../../../../gen1/packages/button-group/src/ButtonGroup.ts)
 **Version:** `@spectrum-web-components/button-group@1.12.1`
 **Custom element tag:** `sp-button-group`
 
@@ -351,7 +351,7 @@ Planned rendering shape:
 
 ### Testing
 
-- [x] Port `1st-gen/packages/button-group/test/button-group.test.ts` coverage that still applies
+- [x] Port `gen1/packages/button-group/test/button-group.test.ts` coverage that still applies
 - [x] Add Playwright `button-group.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Behavior
@@ -420,9 +420,9 @@ Planned rendering shape:
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
-- [1st-gen source](../../../../1st-gen/packages/button-group/src/ButtonGroup.ts)
-- [1st-gen tests](../../../../1st-gen/packages/button-group/test/button-group.test.ts)
-- [1st-gen README](../../../../1st-gen/packages/button-group/README.md)
+- [1st-gen source](../../../../gen1/packages/button-group/src/ButtonGroup.ts)
+- [1st-gen tests](../../../../gen1/packages/button-group/test/button-group.test.ts)
+- [1st-gen README](../../../../gen1/packages/button-group/README.md)
 - [React Spectrum S2 ButtonGroup](https://react-spectrum.adobe.com/ButtonGroup)
 - [Spectrum CSS — `spectrum-two` branch — `components/buttongroup/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/buttongroup/index.css)
 - [Spectrum CSS migration PR #2457](https://github.com/adobe/spectrum-css/pull/2457)

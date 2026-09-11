@@ -87,7 +87,7 @@ The agent will:
 - [ ] Every step in Update your code has a before/after code block
 - [ ] Accessibility section does not duplicate snippets already in Update your code
 - [ ] Styling section lists only public `--swc-*` custom properties verified against the Spectrum 2 source
-- [ ] All claims verified against `1st-gen/packages/[component]/` and `2nd-gen/packages/swc/components/[component]/`
+- [ ] All claims verified against `gen1/packages/[component]/` and `2nd-gen/packages/swc/components/[component]/`
 - [ ] All code examples are accessible and use meaningful content
 
 ## Examples

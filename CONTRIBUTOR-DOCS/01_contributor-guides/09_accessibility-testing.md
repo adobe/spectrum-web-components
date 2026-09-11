@@ -112,7 +112,7 @@ Automatically checks ~50+ WCAG 2.0/2.1 Level A/AA rules:
 Create `<component>.a11y.spec.ts` in your component's `test/` directory:
 
 ```typescript
-// 1st-gen/packages/badge/test/badge.a11y.spec.ts
+// gen1/packages/badge/test/badge.a11y.spec.ts
 
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
@@ -189,7 +189,7 @@ test.describe('Badge - aXe Validation', () => {
 ## Test helper reference
 
 Test helpers are available in each generation:
-- 1st gen: `1st-gen/test/a11y-helpers.ts`
+- 1st gen: `gen1/test/a11y-helpers.ts`
 - 2nd gen: `2nd-gen/packages/swc/utils/a11y-helpers.ts`
 
 ### `gotoStory(page, storyId, elementSelector)`
@@ -448,7 +448,7 @@ spectrum-web-components/
 ├── CONTRIBUTOR-DOCS/
 │   └── 01_contributor-guides/
 │       └── 09_accessibility-testing.md    # This guide
-├── 1st-gen/
+├── gen1/
 │   ├── package.json                       # Test scripts (points to root config)
 │   ├── test/
 │   │   └── a11y-helpers.ts                # 1st gen test helpers

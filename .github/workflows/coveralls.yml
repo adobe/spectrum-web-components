@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   # Detect whether the change touches 1st-gen sources. The 1st-gen coverage report
-  # only runs when files under 1st-gen/ change; 2nd-gen-only and root-level/shared
+  # only runs when files under gen1/ change; 2nd-gen-only and root-level/shared
   # changes skip it (skipped jobs report success in branch-protection checks).
   detect-changes:
     runs-on: ubuntu-latest
@@ -30,7 +30,7 @@ jobs:
         with:
           files_yaml: |
             first_gen:
-              - '1st-gen/**'
+              - 'gen1/**'
 
   code-coverage-report:
     needs: detect-changes

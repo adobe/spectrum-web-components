@@ -157,7 +157,7 @@ flowchart LR
 
 ## Starting from 1st-gen (reference, not dependency)
 
-This workflow assumes a **1st-gen package** (`1st-gen/packages/<component>/` or equivalent) exists and serves as the **reference implementation**. You use it to understand the component's API, behavior, and edge cases — but neither generation imports from or depends on the other at runtime.
+This workflow assumes a **1st-gen package** (`gen1/packages/<component>/` or equivalent) exists and serves as the **reference implementation**. You use it to understand the component's API, behavior, and edge cases — but neither generation imports from or depends on the other at runtime.
 
 The approach:
 
@@ -335,12 +335,12 @@ Convention: **all 1st-gen deprecations introduced as part of a 2nd-gen migration
 Apply this to:
 
 - **Renamed or replaced attributes/properties** — fire the warning from the setter when the deprecated value is assigned.
-- **Type and const exports** — prefer statics on the custom element class (`Component.VARIANTS`, etc.) over package-level exports; deprecate the standalone exports and document migration to inference from the element (e.g. `typeof Badge.prototype.variant`, `typeof Badge.FIXED_VALUES`). See `@deprecated` JSDoc on exports in `1st-gen/packages/badge/src/Badge.ts`.
+- **Type and const exports** — prefer statics on the custom element class (`Component.VARIANTS`, etc.) over package-level exports; deprecate the standalone exports and document migration to inference from the element (e.g. `typeof Badge.prototype.variant`, `typeof Badge.FIXED_VALUES`). See `@deprecated` JSDoc on exports in `gen1/packages/badge/src/Badge.ts`.
 - **Removed APIs** — warn from the getter/setter or method body (e.g. `update()`, `connectedCallback()`, or other instance methods) before falling back to the new behavior.
 
 **Example: `over-background` → `static-color="white"` on `sp-progress-bar`**
 
-`1st-gen/packages/progress-bar/src/ProgressBar.ts`:
+`gen1/packages/progress-bar/src/ProgressBar.ts`:
 
 ```ts
 /**
@@ -682,7 +682,7 @@ Use Badge as the reference implementation:
 
 **Paths:**
 
-- 1st-gen: `1st-gen/packages/badge/`
+- 1st-gen: `gen1/packages/badge/`
 - 2nd-gen core: `2nd-gen/packages/core/components/badge/`
 - 2nd-gen SWC: `2nd-gen/packages/swc/components/badge/`
 

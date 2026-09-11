@@ -1,6 +1,6 @@
 # Changesets (2nd-gen)
 
-This folder is an independent `@changesets/cli` setup for 2nd-gen packages only (`@adobe/spectrum-wc`, `@adobe/spectrum-wc-core`), with its own `config.json`. 1st-gen (`@spectrum-web-components/*`) has its own separate setup in [`1st-gen/.changeset/`](../../1st-gen/.changeset/README.md) — the two do not share a config, a folder, or a versioning run.
+This folder is an independent `@changesets/cli` setup for 2nd-gen packages only (`@adobe/spectrum-wc`, `@adobe/spectrum-wc-core`), with its own `config.json`. 1st-gen (`@spectrum-web-components/*`) has its own separate setup in [`gen1/.changeset/`](../../gen1/.changeset/README.md) — the two do not share a config, a folder, or a versioning run.
 
 ## Why a separate setup
 

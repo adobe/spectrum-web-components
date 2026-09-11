@@ -78,7 +78,7 @@
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/link/src/Link.ts`](../../../../1st-gen/packages/link/src/Link.ts)
+**Source:** [`gen1/packages/link/src/Link.ts`](../../../../gen1/packages/link/src/Link.ts)
 **Version:** `@spectrum-web-components/link@1.12.0`
 **Custom element tag:** `sp-link`
 
@@ -141,7 +141,7 @@ No component-specific custom events documented on `Link`. Activation follows the
 | Package | Version | Role |
 | ------- | ------- | ---- |
 | `@spectrum-web-components/base` | `1.12.0` | `SpectrumElement`, Lit `html`, `@property` |
-| `@spectrum-web-components/shared` | `1.12.0` | `LikeAnchor` ([`like-anchor.ts`](../../../../1st-gen/tools/shared/src/like-anchor.ts)), `Focusable` ([`focusable.ts`](../../../../1st-gen/tools/shared/src/focusable.ts)) |
+| `@spectrum-web-components/shared` | `1.12.0` | `LikeAnchor` ([`like-anchor.ts`](../../../../gen1/tools/shared/src/like-anchor.ts)), `Focusable` ([`focusable.ts`](../../../../gen1/tools/shared/src/focusable.ts)) |
 
 ---
 
@@ -340,7 +340,7 @@ Planned rendering shape (native-`<a>` model — **preferred**):
 
 ### Testing
 
-- [x] Port applicable assertions from [`1st-gen/packages/link/test/link.test.ts`](../../../../1st-gen/packages/link/test/link.test.ts) **only if** a CE remains; otherwise replace with **native `<a>`** fixture tests in typography / pattern packages
+- [x] Port applicable assertions from [`gen1/packages/link/test/link.test.ts`](../../../../gen1/packages/link/test/link.test.ts) **only if** a CE remains; otherwise replace with **native `<a>`** fixture tests in typography / pattern packages
 - [x] Add Playwright coverage for prose + links (`toMatchAriaSnapshot`) in the package that owns prose styles
 
 #### Behavior
@@ -410,11 +410,11 @@ Planned rendering shape (native-`<a>` model — **preferred**):
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
-- [1st-gen `Link.ts`](../../../../1st-gen/packages/link/src/Link.ts)
-- [1st-gen `LikeAnchor` mixin](../../../../1st-gen/tools/shared/src/like-anchor.ts)
-- [1st-gen `Focusable` mixin](../../../../1st-gen/tools/shared/src/focusable.ts)
-- [1st-gen tests — `link.test.ts`](../../../../1st-gen/packages/link/test/link.test.ts)
-- [1st-gen README](../../../../1st-gen/packages/link/README.md)
+- [1st-gen `Link.ts`](../../../../gen1/packages/link/src/Link.ts)
+- [1st-gen `LikeAnchor` mixin](../../../../gen1/tools/shared/src/like-anchor.ts)
+- [1st-gen `Focusable` mixin](../../../../gen1/tools/shared/src/focusable.ts)
+- [1st-gen tests — `link.test.ts`](../../../../gen1/packages/link/test/link.test.ts)
+- [1st-gen README](../../../../gen1/packages/link/README.md)
 - [React Spectrum — Link](https://react-spectrum.adobe.com/Link)
 - [Spectrum CSS — `spectrum-two` / `components/link`](https://github.com/adobe/spectrum-css/tree/spectrum-two/components/link)
 - [Spectrum CSS migration PR (context)](https://github.com/adobe/spectrum-css/pull/3570)

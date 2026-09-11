@@ -15,7 +15,7 @@ on:
     branches:
       - main
     paths:
-      - '1st-gen/**'
+      - 'gen1/**'
 
 # Scoped to this workflow so a gen1 run and a gen2 run never block on each other -
 # both used to share the same `publish-${{ github.ref }}` group string.
@@ -45,7 +45,7 @@ jobs:
           # This workflow is 1st-gen only, always - independent of 2nd-gen in every
           # trigger. 2nd-gen has its own changesets setup in 2nd-gen/.changeset/ and
           # its own workflow, publish-gen2.yml.
-          GEN1_COUNT=$(find 1st-gen/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
+          GEN1_COUNT=$(find gen1/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
 
           if [ "$GEN1_COUNT" -ne 0 ]; then
             echo "has_changesets=true" >> $GITHUB_OUTPUT
@@ -60,8 +60,8 @@ jobs:
           # only parks for reviewer approval when there's genuinely a new release to
           # ship. The environment gate fires before the publish job's first step runs,
           # so an in-step guard can't stop the approval prompt - any changeset-less push
-          # to 1st-gen/** would otherwise ping reviewers for a "release" that just no-ops.
-          RELEASED_VERSION=$(node -p "require('./1st-gen/packages/button/package.json').version")
+          # to gen1/** would otherwise ping reviewers for a "release" that just no-ops.
+          RELEASED_VERSION=$(node -p "require('./gen1/packages/button/package.json').version")
           if git rev-parse "gen1-$RELEASED_VERSION" >/dev/null 2>&1; then
             echo "needs_publish=false" >> $GITHUB_OUTPUT
             echo "gen1-$RELEASED_VERSION already released - no publish approval needed"
@@ -127,7 +127,7 @@ jobs:
       - name: Capture released versions
         id: versions
         run: |
-          BUNDLE_VERSION=$(node -p "require('./1st-gen/tools/bundle/package.json').version")
+          BUNDLE_VERSION=$(node -p "require('./gen1/tools/bundle/package.json').version")
           echo "bundle=$BUNDLE_VERSION" >> $GITHUB_OUTPUT
 
       - name: Refresh lockfile and rebuild
@@ -176,7 +176,7 @@ jobs:
             done
           }
 
-          cd 1st-gen/react
+          cd gen1/react
           for dir in */; do
             retry_publish "$dir" || exit 1
           done
@@ -326,7 +326,7 @@ jobs:
       - name: Publish gen1 packages
         id: publish
         run: |
-          RELEASED_VERSION=$(node -p "require('./1st-gen/packages/button/package.json').version")
+          RELEASED_VERSION=$(node -p "require('./gen1/packages/button/package.json').version")
           if git rev-parse "gen1-$RELEASED_VERSION" >/dev/null 2>&1; then
             echo "gen1-$RELEASED_VERSION already released - nothing to do."
             echo "published=false" >> $GITHUB_OUTPUT
@@ -336,7 +336,7 @@ jobs:
           yarn build
           (cd 1st-gen && yarn changeset publish --no-git-tag)
           yarn workspace @spectrum-web-components/1st-gen build:react
-          cd 1st-gen/react
+          cd gen1/react
           for dir in */; do
             pkg_name=$(node -p "require('./${dir}package.json').name")
             if npm view "${pkg_name}@${RELEASED_VERSION}" version >/dev/null 2>&1; then

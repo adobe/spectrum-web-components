@@ -28,7 +28,7 @@ module.exports = defineConfig({
      * @type {string[]} components
      */
     const components = fg.sync(
-      '{1st-gen/{packages,tools},2nd-gen/packages}/*',
+      '{gen1/{packages,tools},2nd-gen/packages}/*',
       {
         cwd: __dirname,
         onlyDirectories: true,
@@ -250,7 +250,7 @@ module.exports = defineConfig({
        * Process the components workspaces with component-specific configuration
        */
       if (isComponent) {
-        // Get the last part of the path (e.g., 'button' from '1st-gen/packages/button')
+        // Get the last part of the path (e.g., 'button' from 'gen1/packages/button')
         const folderName = workspace.cwd?.split('/').pop();
         const is2ndGen = workspace.cwd.startsWith('2nd-gen/');
         validateComponentPackageJson(workspace, folderName, is2ndGen);

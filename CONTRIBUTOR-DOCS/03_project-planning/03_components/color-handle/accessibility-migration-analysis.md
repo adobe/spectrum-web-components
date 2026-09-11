@@ -50,7 +50,7 @@
 
 ## Overview
 
-This doc explains how **`swc-color-handle`** should work for **accessibility**. It targets **WCAG 2.2 Level AA**, including full conformance for non-text contrast on handle borders via the adaptive dual-border approach specified in RSP-2021 and SDS-16402. Until **`swc-color-handle`** ships under `2nd-gen/`, use **`1st-gen/packages/color-handle/src/ColorHandle.ts`** (`<sp-color-handle>`) as the behavioral reference and update this spec against the real 2nd-gen source when it lands.
+This doc explains how **`swc-color-handle`** should work for **accessibility**. It targets **WCAG 2.2 Level AA**, including full conformance for non-text contrast on handle borders via the adaptive dual-border approach specified in RSP-2021 and SDS-16402. Until **`swc-color-handle`** ships under `2nd-gen/`, use **`gen1/packages/color-handle/src/ColorHandle.ts`** (`<sp-color-handle>`) as the behavioral reference and update this spec against the real 2nd-gen source when it lands.
 
 ### Also read
 

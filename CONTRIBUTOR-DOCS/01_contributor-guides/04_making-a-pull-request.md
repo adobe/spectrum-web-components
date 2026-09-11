@@ -42,7 +42,7 @@ Quality and stability are important. We require writing tests for any fixes or f
 - New features work as intended for all users.
 - Overall library reliability remains high.
 
-For 1st-gen testing guidance, see the [1st-gen README.md](../../1st-gen/README.md). Testing guidance for 2nd-gen is forthcoming.
+For 1st-gen testing guidance, see the [1st-gen README.md](../../gen1/README.md). Testing guidance for 2nd-gen is forthcoming.
 
 If you're unsure how to write tests for certain parts of the library, don't hesitate to ask maintainers for guidance. We appreciate every effort to keep the code solid!
 

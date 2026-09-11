@@ -6,10 +6,10 @@ on:
     branches:
       - main
     # Skip the publish when a main push only touches 1st-gen files. Root-level
-    # changes (anything outside `1st-gen/`) still trigger the workflow so shared
+    # changes (anything outside `gen1/`) still trigger the workflow so shared
     # config / scripts / 2nd-gen edits keep deploying the 2nd-gen docs.
     paths-ignore:
-      - '1st-gen/**'
+      - 'gen1/**'
   # Production deploy is driven by this, not by the push above - the push that
   # merges the 2nd-gen Version PR only starts Publish Packages (gen2), whose
   # real npm-publish step can sit behind a required manual approval for a long

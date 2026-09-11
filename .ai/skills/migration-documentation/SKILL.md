@@ -56,7 +56,7 @@ Before writing any "when to use" or "why to use" descriptions for sizes, variant
 
 - The [Spectrum 2 Design site](https://s2.spectrum.corp.adobe.com/)
 - The component's Figma spec from `S2 / Web`
-- The 1st-gen component README (`1st-gen/packages/[component]/README.md`)
+- The 1st-gen component README (`gen1/packages/[component]/README.md`)
 - An explicit statement in the migration plan
 
 If no source is available at authoring time, limit the prose to technically verifiable facts only (see [What NOT to include](#what-not-to-include-in-mdx-or-jsdoc) below). Do not invent guidance. Implementors cannot easily distinguish AI-invented guidance from documented design decisions, which erodes trust in the documentation.

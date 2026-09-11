@@ -75,7 +75,7 @@ None currently. Q1–Q6 from the drafting cycle are closed; resolutions are refl
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/meter/src/Meter.ts`](../../../../1st-gen/packages/meter/src/Meter.ts)
+**Source:** [`gen1/packages/meter/src/Meter.ts`](../../../../gen1/packages/meter/src/Meter.ts)
 **Version:** `@spectrum-web-components/meter@1.11.2`
 **Custom element tag:** `sp-meter`
 
@@ -110,7 +110,7 @@ None custom. (No `dispatchEvent` calls in `Meter.ts`.)
 
 ### CSS custom properties
 
-1st-gen exposes the following `--mod-*` properties via inheritance from progress-bar styles (`@import url("./spectrum-progress-bar.css"); @import url("./progress-bar-overrides.css");` in [`meter.css`](../../../../1st-gen/packages/meter/src/meter.css)) and the meter-specific overrides:
+1st-gen exposes the following `--mod-*` properties via inheritance from progress-bar styles (`@import url("./spectrum-progress-bar.css"); @import url("./progress-bar-overrides.css");` in [`meter.css`](../../../../gen1/packages/meter/src/meter.css)) and the meter-specific overrides:
 
 - Passthroughs (progress-bar): `--mod-progressbar-fill-color`, `--mod-progressbar-max-size`, `--mod-progressbar-min-size`, `--mod-progressbar-thickness`
 - Meter modifiers: `--mod-meter-help-text-to-progress-bar`, `--mod-meter-max-width`, `--mod-meter-min-width` _(1st-gen names retained for historical accuracy; these dimensions have no public 2nd-gen custom property and are handled internally. The shared `--swc-linear-progress-*` set covers fill, track, text, thickness, font-size, and top-to-text spacing.)_
@@ -174,7 +174,7 @@ Rationale for keeping role and animation out of the mixin:
 
 ### Related components and ordering notes
 
-- **Progress bar** ([`1st-gen/packages/progress-bar`](../../../../1st-gen/packages/progress-bar/)) — independent migration on its own epic. Will consume `LinearProgressMixin` and `linear-progress-base.css` without changes to those files (the mixin and shared CSS are designed to be additive-only after Meter ships).
+- **Progress bar** ([`gen1/packages/progress-bar`](../../../../gen1/packages/progress-bar/)) — independent migration on its own epic. Will consume `LinearProgressMixin` and `linear-progress-base.css` without changes to those files (the mixin and shared CSS are designed to be additive-only after Meter ships).
 - **Field label** — internal render dependency; not migrated. 2nd-gen `<swc-meter>` renders plain `<span class="swc-Meter-label">` / `<span class="swc-Meter-value">` inside its shadow root (`<span>`, not `<label>`, because `role="meter"` is not pair-able with native `<label>` semantics; the `meter` role element uses `aria-labelledby` to reference the `<span>` containing the label slot). SWC-namespaced selectors per the [contributor docs selector patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#selector-patterns). No dependency on `<swc-field-label>`.
 - **Description** — exposed as a **`description`** named slot on `<swc-meter>`. The slot's shadow container carries an internal id and is `aria-describedby`-referenced from the role element. "Help text" terminology is not used because it implies a form field; meter is a non-interactive display.
 
@@ -450,7 +450,7 @@ Notes:
 
 ### Testing
 
-- [x] Port `1st-gen/packages/meter/test/meter.test.ts` coverage that still applies, adapted to the new API (variant validation, label-from-slot, `value`→`aria-valuenow`, locale resolution `en-US` and `ar-sa`) — `2nd-gen/packages/swc/components/meter/test/meter.test.ts`
+- [x] Port `gen1/packages/meter/test/meter.test.ts` coverage that still applies, adapted to the new API (variant validation, label-from-slot, `value`→`aria-valuenow`, locale resolution `en-US` and `ar-sa`) — `2nd-gen/packages/swc/components/meter/test/meter.test.ts`
 - [x] Add Playwright `meter.a11y.spec.ts` with `toMatchAriaSnapshot` covering size × variant × `label-position` × key `value` values (0%, 25%, 50%, 75%, 100%) × `label` slot vs `accessibleLabel` × `description` slot present/absent. Static-color stories carry `!test`, so they are excluded from a11y snapshots (contrast is evaluated against a decorator gradient); their coverage stays in VRT.
 
 #### Behavior
@@ -525,11 +525,11 @@ All drafting-time questions are resolved. Resolutions:
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
 - [CSS style guide — Spectrum SWC migration](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md)
 - [CSS style guide — Anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md)
-- [1st-gen source — `Meter.ts`](../../../../1st-gen/packages/meter/src/Meter.ts)
-- [1st-gen styles — `meter.css`](../../../../1st-gen/packages/meter/src/meter.css)
-- [1st-gen tests — `meter.test.ts`](../../../../1st-gen/packages/meter/test/meter.test.ts)
-- [1st-gen stories — `meter.stories.ts`](../../../../1st-gen/packages/meter/stories/meter.stories.ts)
-- [1st-gen README](../../../../1st-gen/packages/meter/README.md)
+- [1st-gen source — `Meter.ts`](../../../../gen1/packages/meter/src/Meter.ts)
+- [1st-gen styles — `meter.css`](../../../../gen1/packages/meter/src/meter.css)
+- [1st-gen tests — `meter.test.ts`](../../../../gen1/packages/meter/test/meter.test.ts)
+- [1st-gen stories — `meter.stories.ts`](../../../../gen1/packages/meter/stories/meter.stories.ts)
+- [1st-gen README](../../../../gen1/packages/meter/README.md)
 - [Spectrum CSS — `spectrum-two` branch, `components/meter/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/meter/index.css)
 - [Spectrum CSS — `spectrum-two` branch, `components/progressbar/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/progressbar/index.css)
 - [React Spectrum S2 Meter](https://react-spectrum.adobe.com/Meter)

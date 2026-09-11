@@ -190,6 +190,6 @@ No key currently exists to toggle collapse without moving to an extreme (1st-gen
 - [Nord Health: Resizable handle component](https://nordhealth.design/components/resizable-handle/)
 - [Stack Overflow — proper accessibility/ARIA role for a resize handle](https://stackoverflow.com/questions/42981485/proper-accessibility-or-aria-role-for-a-resize-handle)
 - [Lenovo glossary — sizing handle](https://www.lenovo.com/us/en/glossary/sizing-handle/)
-- 1st-gen: [`sp-split-view`](../../../../1st-gen/packages/split-view/README.md)
+- 1st-gen: [`sp-split-view`](../../../../gen1/packages/split-view/README.md)
 - [Divider accessibility migration analysis](../divider/accessibility-migration-analysis.md)
 - [Split view migration roadmap](./rendering-and-styling-migration-analysis.md) (once written)

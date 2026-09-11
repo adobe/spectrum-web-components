@@ -81,12 +81,12 @@ The following controllers exist in 1st-gen and may be recreated in 2nd-gen core 
 
 | Controller | 1st-gen location | Purpose |
 |-----------|-----------------|---------|
-| `RovingTabindexController` | `1st-gen/packages/shared/` | Keyboard navigation (superseded by `FocusgroupNavigationController` in 2nd-gen) |
-| `MatchMediaController` | `1st-gen/packages/picker/` | Device-adaptive behavior |
-| `InteractionController` (base) | `1st-gen/packages/overlay/` | Base for trigger behavior |
-| `ClickController` | `1st-gen/packages/overlay/` | Click-to-open overlay |
-| `LongpressController` | `1st-gen/packages/overlay/` | Longpress-to-open overlay |
-| `GridController` | `1st-gen/tools/grid/` | Grid layout with virtual scrolling |
+| `RovingTabindexController` | `gen1/packages/shared/` | Keyboard navigation (superseded by `FocusgroupNavigationController` in 2nd-gen) |
+| `MatchMediaController` | `gen1/packages/picker/` | Device-adaptive behavior |
+| `InteractionController` (base) | `gen1/packages/overlay/` | Base for trigger behavior |
+| `ClickController` | `gen1/packages/overlay/` | Click-to-open overlay |
+| `LongpressController` | `gen1/packages/overlay/` | Longpress-to-open overlay |
+| `GridController` | `gen1/tools/grid/` | Grid layout with virtual scrolling |
 
 ## FocusgroupNavigationController
 

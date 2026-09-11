@@ -85,7 +85,7 @@
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/action-button/src/ActionButton.ts`](../../../../1st-gen/packages/action-button/src/ActionButton.ts)
+**Source:** [`gen1/packages/action-button/src/ActionButton.ts`](../../../../gen1/packages/action-button/src/ActionButton.ts)
 **Version:** `@spectrum-web-components/action-button@1.12.1`
 **Custom element tag:** `sp-action-button`
 **Extends:** `SizedMixin(ButtonBase, { validSizes: ['xs', 's', 'm', 'l', 'xl'], noDefaultSize: true })`
@@ -660,9 +660,9 @@ Manual verification steps for each breaking change. Run against the component's 
 - [Action button rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [Button migration plan](../button/migration-plan.md)
 - [Button accessibility migration analysis](../button/accessibility-migration-analysis.md)
-- [1st-gen source](../../../../1st-gen/packages/action-button/src/ActionButton.ts)
-- [1st-gen tests](../../../../1st-gen/packages/action-button/test/action-button.test.ts)
-- [1st-gen README](../../../../1st-gen/packages/action-button/README.md)
+- [1st-gen source](../../../../gen1/packages/action-button/src/ActionButton.ts)
+- [1st-gen tests](../../../../gen1/packages/action-button/test/action-button.test.ts)
+- [1st-gen README](../../../../gen1/packages/action-button/README.md)
 - [2nd-gen ButtonBase](../../../../2nd-gen/packages/core/components/button/Button.base.ts)
 - [2nd-gen Button types](../../../../2nd-gen/packages/core/components/button/Button.types.ts)
 - [2nd-gen Button implementation](../../../../2nd-gen/packages/swc/components/button/Button.ts)

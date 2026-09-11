@@ -106,7 +106,7 @@ None blocking implementation. Items needing follow-up alignment / verification:
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/popover/src/Popover.ts`](../../../../1st-gen/packages/popover/src/Popover.ts)
+**Source:** [`gen1/packages/popover/src/Popover.ts`](../../../../gen1/packages/popover/src/Popover.ts)
 **Version:** `@spectrum-web-components/popover@1.12.0`
 **Custom element tag:** `sp-popover`
 
@@ -877,10 +877,10 @@ During drafting, this section tracks active blockers and open questions. None ar
 - [Tooltip migration plan](../tooltip/migration-plan.md) — architectural reference for native top-layer + `swc-*` event lifecycle + inner-button ARIA wiring patterns
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
-- [1st-gen source](../../../../1st-gen/packages/popover/src/Popover.ts)
-- [1st-gen styles](../../../../1st-gen/packages/popover/src/popover.css)
-- [1st-gen README](../../../../1st-gen/packages/popover/README.md)
-- [1st-gen `PlacementController`](../../../../1st-gen/packages/overlay/src/PlacementController.ts) — extraction target
+- [1st-gen source](../../../../gen1/packages/popover/src/Popover.ts)
+- [1st-gen styles](../../../../gen1/packages/popover/src/popover.css)
+- [1st-gen README](../../../../gen1/packages/popover/README.md)
+- [1st-gen `PlacementController`](../../../../gen1/packages/overlay/src/PlacementController.ts) — extraction target
 - [React Spectrum S2 Popover](https://react-spectrum.adobe.com/Popover) — product alignment
 - [Spectrum CSS — `components/popover/index.css` on `spectrum-two` branch](../../../../../spectrum-css/components/popover/index.css)
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)

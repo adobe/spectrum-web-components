@@ -86,7 +86,7 @@ React's card implementation is simplified to four patterns, mixed with consumer-
 
 ### 1st-gen `sp-card` (secondary reference)
 
-`1st-gen/packages/card` already exists. The differences below are **deliberate redesign decisions**, not migration gaps — this section stays light on purpose and fed the consumer migration guide (`2nd-gen/packages/swc/components/card/migration-guide.mdx`), which is the authored, consumer-facing form of this comparison:
+`gen1/packages/card` already exists. The differences below are **deliberate redesign decisions**, not migration gaps — this section stays light on purpose and fed the consumer migration guide (`2nd-gen/packages/swc/components/card/migration-guide.mdx`), which is the authored, consumer-facing form of this comparison:
 
 - **Variant model split.** 1st-gen's `variant` (`'standard' | 'gallery' | 'quiet'`) conflates layout and style in one enum. 2nd-gen splits these: layout is implicit (driven by which slots are populated — see Scope), and `variant` becomes a pure style axis (`primary` / `secondary` / `tertiary` / `quiet`).
 - **Slot consolidation.** 1st-gen uses two image-area slot names (`cover-photo` for standard/quiet, `preview` for gallery). 2nd-gen consolidates to one `preview` slot.
@@ -203,7 +203,7 @@ Only `swc-product-card` and `swc-user-card` include a glyph slot, named `thumbna
 
 ### A11y-3: Whole-card-clickable while preserving nested interactive targets
 
-**1st-gen precedent:** `sp-card` solves this via the `LikeAnchor` mixin (`1st-gen/tools/shared/src/like-anchor.ts`), which accepts `href`/`target`/`rel`/`download`/`referrerpolicy`/`label` properties directly on the card and renders its own `<a>`. The 2nd-gen approach below deliberately avoids accepting link properties on Card at all — navigation stays fully consumer-owned.
+**1st-gen precedent:** `sp-card` solves this via the `LikeAnchor` mixin (`gen1/tools/shared/src/like-anchor.ts`), which accepts `href`/`target`/`rel`/`download`/`referrerpolicy`/`label` properties directly on the card and renders its own `<a>`. The 2nd-gen approach below deliberately avoids accepting link properties on Card at all — navigation stays fully consumer-owned.
 
 **Decision:** the consumer supplies their own real `<a>` (or router link) inside the `title` slot; Card only extends that link's hit area to cover the card surface. Two independent, opt-in boolean attributes:
 
@@ -352,8 +352,8 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
 
 - **SWC-2316** — template scaffold/reusable-styles ticket for this workstream
 - `research.md` (repo root) — `CardBase` sibling-inheritance precedent research
-- 1st-gen source: [`1st-gen/packages/card/src/Card.ts`](../../../../1st-gen/packages/card/src/Card.ts), [`1st-gen/tools/shared/src/like-anchor.ts`](../../../../1st-gen/tools/shared/src/like-anchor.ts)
-- 1st-gen docs: [`1st-gen/packages/card/README.md`](../../../../1st-gen/packages/card/README.md)
+- 1st-gen source: [`gen1/packages/card/src/Card.ts`](../../../../gen1/packages/card/src/Card.ts), [`gen1/tools/shared/src/like-anchor.ts`](../../../../gen1/tools/shared/src/like-anchor.ts)
+- 1st-gen docs: [`gen1/packages/card/README.md`](../../../../gen1/packages/card/README.md)
 - Existing 2nd-gen files: [`Card.base.ts`](../../../../2nd-gen/packages/core/components/card/Card.base.ts), [`Card.types.ts`](../../../../2nd-gen/packages/core/components/card/Card.types.ts), [`card-template.ts`](../../../../2nd-gen/packages/swc/components/card/card-template.ts), [`card-template.css`](../../../../2nd-gen/packages/swc/stylesheets/_lit-styles/card-template.css)
 - Tests: [`card.test.ts`](../../../../2nd-gen/packages/swc/components/card/test/card.test.ts), [`card.a11y.spec.ts`](../../../../2nd-gen/packages/swc/components/card/test/card.a11y.spec.ts)
 - Docs: [`card.mdx`](../../../../2nd-gen/packages/swc/components/card/card.mdx) (Storybook docs page), [`migration-guide.mdx`](../../../../2nd-gen/packages/swc/components/card/migration-guide.mdx) (consumer migration guide)

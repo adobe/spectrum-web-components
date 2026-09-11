@@ -120,14 +120,14 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 
 1st-gen **`ButtonBase`** documents **“Click HTML anchor element by proxy”** and wires **`aria-hidden="true"`** on the shadow anchor while toggling **`role="link"`** on the host—combine that with host **`tabindex="0"`** and **`focusElement`** returning **`this`**, and navigation / assistive tech no longer match a **single native** surface:
 
-```53:56:1st-gen/packages/button/src/ButtonBase.ts
+```53:56:gen1/packages/button/src/ButtonBase.ts
    * HTML anchor element that component clicks by proxy
    */
   @query('.anchor')
   private anchorElement!: HTMLAnchorElement;
 ```
 
-```116:126:1st-gen/packages/button/src/ButtonBase.ts
+```116:126:gen1/packages/button/src/ButtonBase.ts
     if (this.anchorElement) {
       // Check if the click already went through the anchor element.
       // If so, the browser will handle navigation naturally and we
@@ -140,7 +140,7 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
       this.anchorElement.click();
 ```
 
-```141:149:1st-gen/packages/button/src/ButtonBase.ts
+```141:149:gen1/packages/button/src/ButtonBase.ts
   public override renderAnchor(): TemplateResult {
     return html`
       ${this.buttonContent}
@@ -154,7 +154,7 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
   }
 ```
 
-```237:245:1st-gen/packages/button/src/ButtonBase.ts
+```237:245:gen1/packages/button/src/ButtonBase.ts
   private warnLinkAPIDeprecation(): void {
     if (window.__swc?.DEBUG) {
       const componentSlug =

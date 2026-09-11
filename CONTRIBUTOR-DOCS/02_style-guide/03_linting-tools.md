@@ -134,16 +134,16 @@ Set the `LINT_PATH` environment variable to limit lint or format to a single dir
 
 ```bash
 # Lint one package or directory
-LINT_PATH=1st-gen/packages/checkbox yarn lint
+LINT_PATH=gen1/packages/checkbox yarn lint
 LINT_PATH=2nd-gen/packages/swc yarn lint
 
 # Format one package or directory
-LINT_PATH=1st-gen/packages/checkbox yarn format
+LINT_PATH=gen1/packages/checkbox yarn format
 
 # Same for individual tools
-LINT_PATH=1st-gen/packages/checkbox yarn lint:eslint
-LINT_PATH=1st-gen/packages/checkbox yarn lint:styles
-LINT_PATH=1st-gen/packages/checkbox yarn format:styles
+LINT_PATH=gen1/packages/checkbox yarn lint:eslint
+LINT_PATH=gen1/packages/checkbox yarn lint:styles
+LINT_PATH=gen1/packages/checkbox yarn format:styles
 ```
 
 `LINT_PATH` is a directory path only (e.g. a package folder). All three tools (ESLint, Stylelint, Prettier) use that path when set.

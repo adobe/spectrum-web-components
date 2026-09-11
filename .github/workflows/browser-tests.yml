@@ -50,7 +50,7 @@ jobs:
         run: cd 1st-gen && yarn test:changed --browser=${{ matrix.browser }}
 
       - name: Create a dummy file to ensure at least one results file exists
-        run: touch 1st-gen/tachometer.${{ matrix.browser }}-ran.txt
+        run: touch gen1/tachometer.${{ matrix.browser }}-ran.txt
 
       - name: Archive ${{ matrix.browser }} tachometer results
         id: upload-artifact
@@ -58,8 +58,8 @@ jobs:
         with:
           name: tachometer-results-${{ matrix.browser }}
           path: |
-            1st-gen/tach-results.${{ matrix.browser }}.*.json
-            1st-gen/tachometer.${{ matrix.browser }}-ran.txt
+            gen1/tach-results.${{ matrix.browser }}.*.json
+            gen1/tachometer.${{ matrix.browser }}-ran.txt
 
   comment-performance:
     name: Comment tachometer performance results

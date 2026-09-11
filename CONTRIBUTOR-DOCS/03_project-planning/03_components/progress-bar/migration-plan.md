@@ -78,7 +78,7 @@
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/progress-bar/src/ProgressBar.ts`](../../../../1st-gen/packages/progress-bar/src/ProgressBar.ts)
+**Source:** [`gen1/packages/progress-bar/src/ProgressBar.ts`](../../../../gen1/packages/progress-bar/src/ProgressBar.ts)
 **Version:** `@spectrum-web-components/progress-bar@1.11.2`
 **Custom element tag:** `sp-progress-bar`
 
@@ -482,7 +482,7 @@ Exact keyframe geometry, duration token, and fallback width are **Q2** — to be
 
 ### Testing
 
-- [ ] Port `1st-gen/packages/progress-bar/test/progress-bar.test.ts` coverage that still applies, adapted to the new API (label-from-slot → slot presence; `progress`→`value`/`aria-valuenow`; determinate↔indeterminate value-attr toggling; locale `en-US`/`ar-sa`; deprecated `over-background` test dropped per B5)
+- [ ] Port `gen1/packages/progress-bar/test/progress-bar.test.ts` coverage that still applies, adapted to the new API (label-from-slot → slot presence; `progress`→`value`/`aria-valuenow`; determinate↔indeterminate value-attr toggling; locale `en-US`/`ar-sa`; deprecated `over-background` test dropped per B5)
 - [ ] Add Playwright `progress-bar.a11y.spec.ts` with `toMatchAriaSnapshot` covering size × `label-position` × key `value` values (0/25/50/75/100%) × determinate vs **indeterminate** × `label` slot vs `accessibleLabel` × `description` present/absent. Static-color stories carry `!test` (axe vs decorator gradient); coverage restored via a `staticColorsDemo` test story, mirroring meter.
 
 #### Behavior
@@ -561,10 +561,10 @@ Exact keyframe geometry, duration token, and fallback width are **Q2** — to be
 - [Meter migration plan](../meter/migration-plan.md) — sibling reference; defines the shared `LinearProgressMixin` and `linear-progress-base.css` contract
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
-- [1st-gen source — `ProgressBar.ts`](../../../../1st-gen/packages/progress-bar/src/ProgressBar.ts)
-- [1st-gen styles — `progress-bar.css`](../../../../1st-gen/packages/progress-bar/src/progress-bar.css)
-- [1st-gen tests — `progress-bar.test.ts`](../../../../1st-gen/packages/progress-bar/test/progress-bar.test.ts)
-- [1st-gen README](../../../../1st-gen/packages/progress-bar/README.md)
+- [1st-gen source — `ProgressBar.ts`](../../../../gen1/packages/progress-bar/src/ProgressBar.ts)
+- [1st-gen styles — `progress-bar.css`](../../../../gen1/packages/progress-bar/src/progress-bar.css)
+- [1st-gen tests — `progress-bar.test.ts`](../../../../gen1/packages/progress-bar/test/progress-bar.test.ts)
+- [1st-gen README](../../../../gen1/packages/progress-bar/README.md)
 - [2nd-gen shared mixin — `linear-progress-mixin.ts`](../../../../2nd-gen/packages/core/mixins/linear-progress-mixin.ts)
 - [2nd-gen shared CSS — `linear-progress-base.css`](../../../../2nd-gen/packages/swc/stylesheets/_lit-styles/linear-progress-base.css)
 - [2nd-gen sibling — `Meter.ts`](../../../../2nd-gen/packages/swc/components/meter/Meter.ts)

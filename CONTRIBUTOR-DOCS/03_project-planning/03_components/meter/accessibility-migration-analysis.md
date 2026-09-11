@@ -43,7 +43,7 @@
 
 ## Overview
 
-This doc explains how **`swc-meter`** should work for **accessibility**. It supports **WCAG 2.2 Level AA**. Until **`swc-meter`** exists under `2nd-gen/`, use **`1st-gen/packages/meter/src/Meter.ts`** (`<sp-meter>`) to validate behavior, and update this spec against the real 2nd-gen source when it ships.
+This doc explains how **`swc-meter`** should work for **accessibility**. It supports **WCAG 2.2 Level AA**. Until **`swc-meter`** exists under `2nd-gen/`, use **`gen1/packages/meter/src/Meter.ts`** (`<sp-meter>`) to validate behavior, and update this spec against the real 2nd-gen source when it ships.
 
 ### Also read
 
@@ -190,7 +190,7 @@ Gaps in **1st-gen** **`<sp-meter>`** that **2nd-gen** **`swc-meter`** should fix
 
 ### Documentation (README)
 
-- 1st-gen [`1st-gen/packages/meter/README.md`](../../../../1st-gen/packages/meter/README.md) describes **`role=”meter progressbar”`** as if both roles apply. Update consumer docs for **`swc-meter`** to a **single** **`meter`** **role** (on an inner shadow DOM element, not the host), a short **”meter vs progress”** blurb (task progress vs static level), and guidance on using the **label slot**, the **`accessibleLabel`** property, and the **description slot**.
+- 1st-gen [`gen1/packages/meter/README.md`](../../../../gen1/packages/meter/README.md) describes **`role=”meter progressbar”`** as if both roles apply. Update consumer docs for **`swc-meter`** to a **single** **`meter`** **role** (on an inner shadow DOM element, not the host), a short **”meter vs progress”** blurb (task progress vs static level), and guidance on using the **label slot**, the **`accessibleLabel`** property, and the **description slot**.
 
 ---
 

@@ -61,7 +61,7 @@ This doc tells you how **`swc-text-area`** should work for **accessibility**. It
 
 ### Related
 
-- 1st-gen [`sp-field-label`](../../../../1st-gen/packages/field-label/README.md) and [`sp-help-text`](../../../../1st-gen/packages/help-text/README.md) are being retired as standalone 2nd-gen components for this use case, same as for `swc-text-field`. Their visual output moves into the shared render directive `LabellingController` calls from inside `swc-text-area`'s own template — see [`swc-text-field`'s Related section](../text-field/accessibility-migration-analysis.md#related) for the full explanation and the [SWC-1316](https://jira.corp.adobe.com/browse/SWC-1316) predecessor work.
+- 1st-gen [`sp-field-label`](../../../../gen1/packages/field-label/README.md) and [`sp-help-text`](../../../../gen1/packages/help-text/README.md) are being retired as standalone 2nd-gen components for this use case, same as for `swc-text-field`. Their visual output moves into the shared render directive `LabellingController` calls from inside `swc-text-area`'s own template — see [`swc-text-field`'s Related section](../text-field/accessibility-migration-analysis.md#related) for the full explanation and the [SWC-1316](https://jira.corp.adobe.com/browse/SWC-1316) predecessor work.
 - [`LabellingController`](https://jira.corp.adobe.com/browse/SWC-2466) and [`FieldAssociationController`](https://jira.corp.adobe.com/browse/SWC-2467) — the same two shared controllers `swc-text-field` depends on; `swc-text-area` should use the exact same integration, not a parallel one.
 
 ---
@@ -189,7 +189,7 @@ Component tag may change until API freeze. `swc-text-area` covers only the multi
 - [React Spectrum: TextArea](https://react-spectrum.adobe.com/TextArea)
 - [`renderPendingSpinner` (this repo)](../../../../2nd-gen/packages/core/directives/pending-spinner/src/pending-spinner.ts) — the shared-directive structural precedent `LabellingController` follows
 - [Spectrum 2: Text field](https://s2.spectrum.corp.adobe.com/page/text-field/), [Spectrum 2: Field label](https://s2.spectrum.corp.adobe.com/page/field-label/) (internal, SSO-gated — verify directly if you have access; not independently fetchable while drafting this doc)
-- 1st-gen: [`sp-textfield`](../../../../1st-gen/packages/textfield/README.md) (see `textarea.md` in that package for the informal 1st-gen "textarea" spec), [`sp-field-label`](../../../../1st-gen/packages/field-label/README.md), [`sp-help-text`](../../../../1st-gen/packages/help-text/README.md)
+- 1st-gen: [`sp-textfield`](../../../../gen1/packages/textfield/README.md) (see `textarea.md` in that package for the informal 1st-gen "textarea" spec), [`sp-field-label`](../../../../gen1/packages/field-label/README.md), [`sp-help-text`](../../../../gen1/packages/help-text/README.md)
 - [Textfield and Textarea migration roadmap (this repo)](../textfield/rendering-and-styling-migration-analysis.md)
 - [Text field accessibility migration analysis (this repo)](../text-field/accessibility-migration-analysis.md)
 - Jira: [SWC-2323](https://jira.corp.adobe.com/browse/SWC-2323) (epic), [SWC-2324](https://jira.corp.adobe.com/browse/SWC-2324) (this research ticket), [SWC-2466](https://jira.corp.adobe.com/browse/SWC-2466) (`LabellingController`), [SWC-2467](https://jira.corp.adobe.com/browse/SWC-2467) (`FieldAssociationController`), [SWC-1888](https://jira.corp.adobe.com/browse/SWC-1888) (RFC: form field strategy for 2nd-gen migration)

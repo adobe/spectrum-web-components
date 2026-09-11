@@ -69,7 +69,7 @@ None at this time. [Q1](#architecture-and-behavior) (icon scale) is resolved: no
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/button/src/CloseButton.ts`](../../../../1st-gen/packages/button/src/CloseButton.ts)
+**Source:** [`gen1/packages/button/src/CloseButton.ts`](../../../../gen1/packages/button/src/CloseButton.ts)
 **Version:** `@spectrum-web-components/button@1.x`
 **Custom element tag:** `sp-close-button`
 
@@ -275,8 +275,8 @@ Prerequisite dependency:
 
 ## References
 
-- [`1st-gen/packages/button/src/CloseButton.ts`](../../../../1st-gen/packages/button/src/CloseButton.ts)
-- [`1st-gen/packages/button/test/close-button.test.ts`](../../../../1st-gen/packages/button/test/close-button.test.ts)
+- [`gen1/packages/button/src/CloseButton.ts`](../../../../gen1/packages/button/src/CloseButton.ts)
+- [`gen1/packages/button/test/close-button.test.ts`](../../../../gen1/packages/button/test/close-button.test.ts)
 - [Close button accessibility migration analysis](./accessibility-migration-analysis.md)
 - [Button migration plan](../button/migration-plan.md)
 - [Button migration roadmap](../button/rendering-and-styling-migration-analysis.md)

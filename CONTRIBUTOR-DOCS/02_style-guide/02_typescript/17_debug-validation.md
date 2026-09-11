@@ -440,7 +440,7 @@ The `changes.has()` + non-default-value guard above assumes the *only* way the p
 
 Neither the `changes.has()` guard nor a non-default-value check can distinguish "a consumer wrote `element.oldProp = x`" from "the attribute was parsed/reflected" or "the component set it internally," because both paths call the same reactive-property setter Lit itself observes. There is no general fix available today: `ReactiveElement`'s attribute-to-property sync is internal by the time `updated()` runs, so the two paths aren't observably different from a component's own `updated()` override.
 
-**When you hit this shape, skip the runtime warning and keep the `@deprecated` JSDoc only.** Note in a comment near the property why there's no paired warning, so a future reader doesn't assume it was forgotten. See `1st-gen/packages/dropzone/src/Dropzone.ts`'s `isDragged`/`isFilled` properties for a worked example and rationale comment.
+**When you hit this shape, skip the runtime warning and keep the `@deprecated` JSDoc only.** Note in a comment near the property why there's no paired warning, so a future reader doesn't assume it was forgotten. See `gen1/packages/dropzone/src/Dropzone.ts`'s `isDragged`/`isFilled` properties for a worked example and rationale comment.
 
 ### Referencing a replacement in the message
 

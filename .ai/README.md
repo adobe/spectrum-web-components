@@ -104,7 +104,7 @@ These two rules share the same glob/path set (`2nd-gen/**/stories/**` and `2nd-g
   - Starts with `## Overview`, not `# Component Name`
 - **code_examples**: All examples must include accessible labels and unique IDs
 - **sp_tabs**: Must include `selected`, `auto`, and `label` attributes
-- Applies to: `1st-gen/packages/*/README.md`
+- Applies to: `gen1/packages/*/README.md`
 
 ##### Contributor docs
 
@@ -148,7 +148,7 @@ These two rules share the same glob/path set (`2nd-gen/**/stories/**` and `2nd-g
 | text-formatting                |               |        x         |                   |              | `**/*.md`, `**/*.txt`, `**/*.mdx` |
 | stories-documentation          |               |        x         |                   |              | `2nd-gen/**/*.mdx`                |
 | stories-format                 |               |        x         |                   |              | `2nd-gen/**/stories/**`           |
-| component-readme               |               |        x         |                   |              | `1st-gen/packages/*/README.md`    |
+| component-readme               |               |        x         |                   |              | `gen1/packages/*/README.md`    |
 | contributor-doc-update         |               |        x         |                   |              | `CONTRIBUTOR-DOCS/**`             |
 | storybook-mdx-conversion       |               |        x         |                   |              | `**/*.md`, `**/*.mdx`             |
 | contributor-docs-nav           |               |                  |         x         |              | —                                 |

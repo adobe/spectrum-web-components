@@ -85,7 +85,7 @@ jobs:
         run: yarn generate:skills
 
       - name: Move CEM to Storybook directory
-        run: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
+        run: cp gen1/projects/documentation/custom-elements.json gen1/storybook/
 
       - name: Build documentation with path prefix
         env:
@@ -127,7 +127,7 @@ jobs:
           PR_HASH: ${{ steps.pr_hash.outputs.hash }}
         run: |
           echo "Uploading Gen1 documentation to ${PR_HASH}/docs/gen1-docs/"
-          azcopy copy "1st-gen/projects/documentation/dist/*" \
+          azcopy copy "gen1/projects/documentation/dist/*" \
             "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/gen1-docs/" \
             --recursive \
             --from-to LocalBlob
@@ -138,7 +138,7 @@ jobs:
           PR_HASH: ${{ steps.pr_hash.outputs.hash }}
         run: |
           echo "Uploading Gen1 Storybook to ${PR_HASH}/docs/gen1-storybook/"
-          azcopy copy "1st-gen/projects/documentation/dist/storybook/*" \
+          azcopy copy "gen1/projects/documentation/dist/storybook/*" \
             "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/gen1-storybook/" \
             --recursive \
             --from-to LocalBlob

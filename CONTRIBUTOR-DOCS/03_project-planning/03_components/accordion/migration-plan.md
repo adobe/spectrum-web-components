@@ -72,11 +72,11 @@ None for **starting** implementation. **`label` vs slot** is **decided:** slotte
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/accordion/src/`](../../../../1st-gen/packages/accordion/src/) (`Accordion.ts`, `AccordionItem.ts`)  
-**Tests:** [`1st-gen/packages/accordion/test/`](../../../../1st-gen/packages/accordion/test/)  
+**Source:** [`gen1/packages/accordion/src/`](../../../../gen1/packages/accordion/src/) (`Accordion.ts`, `AccordionItem.ts`)  
+**Tests:** [`gen1/packages/accordion/test/`](../../../../gen1/packages/accordion/test/)  
 **Version:** `@spectrum-web-components/accordion@1.11.2`  
 **Custom element tags:** `sp-accordion`, `sp-accordion-item`  
-**Registration:** [`sp-accordion.ts`](../../../../1st-gen/packages/accordion/sp-accordion.ts), [`sp-accordion-item.ts`](../../../../1st-gen/packages/accordion/sp-accordion-item.ts)
+**Registration:** [`sp-accordion.ts`](../../../../gen1/packages/accordion/sp-accordion.ts), [`sp-accordion-item.ts`](../../../../gen1/packages/accordion/sp-accordion-item.ts)
 
 ### `sp-accordion` (`Accordion`)
 
@@ -143,7 +143,7 @@ Inherited: `SizedMixin(Focusable)` — `tabIndex` / `focus` / `blur` / `click` d
 
 ### CSS custom properties
 
-1st-gen accordion pulls Spectrum 1 styles from [`spectrum-accordion.css`](../../../../1st-gen/packages/accordion/src/spectrum-accordion.css), [`spectrum-accordion-item.css`](../../../../1st-gen/packages/accordion/src/spectrum-accordion-item.css), and related files; authors could reach a **broad** **`--spectrum-accordion-*`** / **`--mod-*`** surface for overrides.
+1st-gen accordion pulls Spectrum 1 styles from [`spectrum-accordion.css`](../../../../gen1/packages/accordion/src/spectrum-accordion.css), [`spectrum-accordion-item.css`](../../../../gen1/packages/accordion/src/spectrum-accordion-item.css), and related files; authors could reach a **broad** **`--spectrum-accordion-*`** / **`--mod-*`** surface for overrides.
 
 **2nd-gen:** This full modifier surface **will not** be carried forward. Replace with S2 tokens and a **narrow**, reviewed customization story (see Phase 4 mapping).
 
@@ -398,8 +398,8 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 
 ### Testing
 
-- [x] [`keyboard.test.ts`](../../../../1st-gen/packages/accordion/test/keyboard.test.ts) expectations updated (Tab order, no `FocusGroup` arrows — covered by `NoArrowKeyNavTest`, `KeyboardEnterTest`, `KeyboardSpaceTest` in 2nd-gen test file)
-- [x] Port / extend: [`a11y-tree.test.ts`](../../../../1st-gen/packages/accordion/test/a11y-tree.test.ts) → Playwright ARIA snapshots; [`controlled.test.ts`](../../../../1st-gen/packages/accordion/test/controlled.test.ts) → `CanceledToggleTest`; [`declarative.test.ts`](../../../../1st-gen/packages/accordion/test/declarative.test.ts) → `HeadingLevelPropagationTest`, `DisabledItemNoToggleTest`; [`imperative.test.ts`](../../../../1st-gen/packages/accordion/test/imperative.test.ts) → `ExclusiveOpenTest`, `AllowMultipleTest`, `SizePropagationTest`; `dev-mode.test.ts` → **not applicable** (density omit-warning removed as dead code — `density` is a reflected property with a default value so Lit always sets the attribute before `firstUpdated` checks it); `memory.test.ts` / `accordion-memory.test.ts` → **not ported** (Vitest browser lacks the heap-snapshot API; memory behaviour is unchanged from 1st-gen)
+- [x] [`keyboard.test.ts`](../../../../gen1/packages/accordion/test/keyboard.test.ts) expectations updated (Tab order, no `FocusGroup` arrows — covered by `NoArrowKeyNavTest`, `KeyboardEnterTest`, `KeyboardSpaceTest` in 2nd-gen test file)
+- [x] Port / extend: [`a11y-tree.test.ts`](../../../../gen1/packages/accordion/test/a11y-tree.test.ts) → Playwright ARIA snapshots; [`controlled.test.ts`](../../../../gen1/packages/accordion/test/controlled.test.ts) → `CanceledToggleTest`; [`declarative.test.ts`](../../../../gen1/packages/accordion/test/declarative.test.ts) → `HeadingLevelPropagationTest`, `DisabledItemNoToggleTest`; [`imperative.test.ts`](../../../../gen1/packages/accordion/test/imperative.test.ts) → `ExclusiveOpenTest`, `AllowMultipleTest`, `SizePropagationTest`; `dev-mode.test.ts` → **not applicable** (density omit-warning removed as dead code — `density` is a reflected property with a default value so Lit always sets the attribute before `firstUpdated` checks it); `memory.test.ts` / `accordion-memory.test.ts` → **not ported** (Vitest browser lacks the heap-snapshot API; memory behaviour is unchanged from 1st-gen)
 - [x] Playwright ARIA snapshots — [`accordion.a11y.spec.ts`](../../../../2nd-gen/packages/swc/components/accordion/test/accordion.a11y.spec.ts) (Overview, Item states, Disabled accordion, Allow multiple, Quiet, Heading level, Direct actions, Accessibility)
 - [x] Storybook play functions ([`accordion.test.ts`](../../../../2nd-gen/packages/swc/components/accordion/test/accordion.test.ts)) — 27 stories covering defaults, property reflection, anatomy/slots, toggle open/close, exclusive open, allow-multiple, canceled toggle, keyboard (Space, Space-preventDefault, no arrow-key navigation between headers [B3 guard], panel keys), disabled item (aria-disabled, not native; panel inert), host disabled, host re-enable preserves per-item state, direct actions no-toggle, events (toggle incl. bubbles+composed, open/close, after-open/close), ARIA (aria-expanded true/false asserted explicitly, aria-hidden + no `hidden` attr, aria-controls, role=region, aria-labelledby), heading level propagation + clamping, standalone item default, dynamic size propagation, enforce-exclusive-open on re-enable. The `aria-expanded="true"` open state is additionally validated by the Playwright ARIA snapshots ([`accordion.a11y.spec.ts`](../../../../2nd-gen/packages/swc/components/accordion/test/accordion.a11y.spec.ts)); the closed `aria-expanded="false"` value is asserted in the unit test because ARIA snapshots cannot distinguish it from a missing attribute
 
@@ -450,9 +450,9 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_2nd-ge
 - [Washing machine workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [Migration project planning (epics / tickets)](../../02_workstreams/02_2nd-gen-component-migration/03_migration-project-planning.md)
 - [Accessibility migration analysis](./accessibility-migration-analysis.md)
-- [1st-gen source — `Accordion.ts`](../../../../1st-gen/packages/accordion/src/Accordion.ts)
-- [1st-gen source — `AccordionItem.ts`](../../../../1st-gen/packages/accordion/src/AccordionItem.ts)
-- [1st-gen tests directory](../../../../1st-gen/packages/accordion/test/)
-- [1st-gen README](../../../../1st-gen/packages/accordion/README.md)
-- [1st-gen accordion item doc](../../../../1st-gen/packages/accordion/accordion-item.md)
+- [1st-gen source — `Accordion.ts`](../../../../gen1/packages/accordion/src/Accordion.ts)
+- [1st-gen source — `AccordionItem.ts`](../../../../gen1/packages/accordion/src/AccordionItem.ts)
+- [1st-gen tests directory](../../../../gen1/packages/accordion/test/)
+- [1st-gen README](../../../../gen1/packages/accordion/README.md)
+- [1st-gen accordion item doc](../../../../gen1/packages/accordion/accordion-item.md)
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)

@@ -63,7 +63,7 @@
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/illustrated-message/src/IllustratedMessage.ts`](../../../../1st-gen/packages/illustrated-message/src/IllustratedMessage.ts)
+**Source:** [`gen1/packages/illustrated-message/src/IllustratedMessage.ts`](../../../../gen1/packages/illustrated-message/src/IllustratedMessage.ts)
 **Version:** `@spectrum-web-components/illustrated-message@1.11.2`
 **Custom element tag:** `sp-illustrated-message`
 
@@ -273,8 +273,8 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
-- [1st-gen source](../../../../1st-gen/packages/illustrated-message/src/IllustratedMessage.ts)
-- [1st-gen tests](../../../../1st-gen/packages/illustrated-message/test/illustrated-message.test.ts)
+- [1st-gen source](../../../../gen1/packages/illustrated-message/src/IllustratedMessage.ts)
+- [1st-gen tests](../../../../gen1/packages/illustrated-message/test/illustrated-message.test.ts)
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - [spectrum-css migration PR #3246](https://github.com/adobe/spectrum-css/pull/3246)
 - SWC-1834 (this ticket), SWC-1466 (accordion heading level — analogous precedent), SWC-1545 (typography classes)

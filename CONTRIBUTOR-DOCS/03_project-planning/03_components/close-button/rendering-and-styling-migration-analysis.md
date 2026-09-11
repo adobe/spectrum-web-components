@@ -49,7 +49,7 @@ Primary token groups used by Spectrum CSS:
 
 ### SWC
 
-**Current 1st-gen implementation source:** `1st-gen/packages/button/src/CloseButton.ts`
+**Current 1st-gen implementation source:** `gen1/packages/button/src/CloseButton.ts`
 
 Current behavior and structure:
 
@@ -97,8 +97,8 @@ Current behavior and structure:
 
 ## Resources
 
-- `1st-gen/packages/button/src/CloseButton.ts`
-- `1st-gen/packages/button/test/close-button.test.ts`
+- `gen1/packages/button/src/CloseButton.ts`
+- `gen1/packages/button/test/close-button.test.ts`
 - `CONTRIBUTOR-DOCS/03_project-planning/03_components/close-button/accessibility-migration-analysis.md`
 - `CONTRIBUTOR-DOCS/03_project-planning/03_components/button/migration-plan.md`
 - [S2 Web Desktop scale (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=125265-577&t=99qlf018hYjRXRft-4)

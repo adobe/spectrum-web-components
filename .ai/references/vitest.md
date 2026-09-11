@@ -4,7 +4,7 @@ Pointer file. Not auto-loaded; read when working on Vitest config, tests, or tes
 
 ## Where Vitest is used in this repo
 
-There are **five** Vitest configs in `2nd-gen/`. Nothing in `1st-gen/` uses Vitest.
+There are **five** Vitest configs in `2nd-gen/`. Nothing in `gen1/` uses Vitest.
 
 ### Browser-mode (Storybook-driven) — `2nd-gen/packages/swc/vitest.config.js`
 
@@ -40,7 +40,7 @@ Four small package-local configs, all `environment: 'node'`, all run via their o
 
 Do not confuse these with Vitest:
 
-- `1st-gen/**` — uses `web-test-runner` (`wtr`), Karma, and a custom `yarn test:focus unit` setup. Different config files, different glob conventions.
+- `gen1/**` — uses `web-test-runner` (`wtr`), Karma, and a custom `yarn test:focus unit` setup. Different config files, different glob conventions.
 - `playwright.a11y.config.ts` (repo root) — Playwright drives the `yarn test:a11y*` accessibility suite over the built Storybook. Separate from `vitest`.
 - `test-storybook` (referenced in `swc/package.json` as `test:a11y`) — the Storybook test runner, distinct from Vitest's `storybookTest` plugin.
 

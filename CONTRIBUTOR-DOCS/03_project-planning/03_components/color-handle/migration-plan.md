@@ -95,7 +95,7 @@
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/color-handle/src/ColorHandle.ts`](../../../../1st-gen/packages/color-handle/src/ColorHandle.ts)
+**Source:** [`gen1/packages/color-handle/src/ColorHandle.ts`](../../../../gen1/packages/color-handle/src/ColorHandle.ts)
 **Custom element tag:** `sp-color-handle`
 
 ### Properties / attributes
@@ -457,9 +457,9 @@ During drafting, this section tracks active blockers and open questions. In the 
 - [Sibling reference: color-loupe accessibility migration analysis](../color-loupe/accessibility-migration-analysis.md)
 - [Sibling reference: color-loupe rendering and styling migration analysis](../color-loupe/rendering-and-styling-migration-analysis.md)
 - [CSS style guide: Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
-- [1st-gen source](../../../../1st-gen/packages/color-handle/src/ColorHandle.ts)
-- [1st-gen tests](../../../../1st-gen/packages/color-handle/test/color-handle.test.ts)
-- [1st-gen README](../../../../1st-gen/packages/color-handle/README.md)
+- [1st-gen source](../../../../gen1/packages/color-handle/src/ColorHandle.ts)
+- [1st-gen tests](../../../../gen1/packages/color-handle/test/color-handle.test.ts)
+- [1st-gen README](../../../../gen1/packages/color-handle/README.md)
 - [2nd-gen color-loupe core base (pattern reference)](../../../../2nd-gen/packages/core/components/color-loupe/ColorLoupe.base.ts)
 - [React Spectrum S2 ColorHandle](https://react-spectrum.adobe.com/): confirm whether a distinct ColorHandle primitive page exists; it is typically internal to ColorArea/ColorSlider/ColorWheel.
 - [Spectrum CSS `colorhandle` on `spectrum-two`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/colorhandle/index.css): S2 styling source of truth (sibling checkout at `../spectrum-css`, not `/dist`).

@@ -79,7 +79,7 @@ This doc tells you how **`swc-radio-group`** should work for **accessibility**, 
 
 1st-gen `sp-radio-group` already implements the full APG model above using `RovingTabindexController` from `@spectrum-web-components/reactive-controllers`, confirmed directly against its test suite:
 
-```46:59:1st-gen/packages/radio/src/RadioGroup.ts
+```46:59:gen1/packages/radio/src/RadioGroup.ts
   rovingTabindexController = new RovingTabindexController<Radio>(this, {
     focusInIndex: (elements: Radio[]) => {
       return elements.findIndex((el) => {
@@ -97,7 +97,7 @@ This doc tells you how **`swc-radio-group`** should work for **accessibility**, 
 ```
 
 - **All four arrow keys move focus in one linear sequence**, not just the two matching the group's visual axis: the test suite dispatches `arrowRightEvent`, `arrowDownEvent`, `arrowLeftEvent`, and `arrowUpEvent` on the same group and expects each to move focus one step through the same `buttons` order. This maps to `FocusgroupNavigationController`'s `direction: 'both'` mode, not `'vertical'` or `'horizontal'`.
-- **Wraps at both ends**: a test focuses the last radio in a five-item group and dispatches `ArrowRight`, landing on the first radio (`accepts keyboard interactions where checked and calculateFocusInIndex might conflict`, `1st-gen/packages/radio/test/radio-group.test.ts`). Maps to `wrap: true`.
+- **Wraps at both ends**: a test focuses the last radio in a five-item group and dispatches `ArrowRight`, landing on the first radio (`accepts keyboard interactions where checked and calculateFocusInIndex might conflict`, `gen1/packages/radio/test/radio-group.test.ts`). Maps to `wrap: true`.
 - **Disabled radios are fully skipped**, not just unselectable: a test with radios 1 and 5 disabled shows `Home`/`End`/arrow movement landing on 2 and 4 respectively, never touching the disabled ends (`acknowledges disabled and accepts keyboard events while focused`). Maps to `skipDisabled: true`.
 - **Arrow-driven focus movement also selects**; landing focus by any other means does not. `elementEnterAction` calls `_setSelected(el.value)`, which the test suite confirms fires a `change` event and updates `selected` on every arrow-key move (`emits change events on arrow key events`), while a separate test confirms that calling `.focus()` directly, or Tab-entry via `focusInIndex`, does not by itself select anything (`does not select on focus`).
 - **`Space` on the focused item is the escape hatch that does not depend on `RovingTabindexController` at all**: it is handled inside `Radio.ts`'s own `handleKeyup`, independent of the group. This is what lets a user Tab into a group with no selection, land on the first (unchecked) radio, and press `Space` to check it, without having to move focus first.
@@ -234,7 +234,7 @@ Use [`FocusgroupNavigationController`](../../../../2nd-gen/packages/core/control
 - [`LiveSelectionController` (this repo)](../../../../2nd-gen/packages/core/controllers/live-selection-controller/live-selection-controller.mdx): documents why it is the wrong fit for radio groups
 - [`FocusgroupNavigationController` (this repo)](../../../../2nd-gen/packages/core/controllers/focusgroup-navigation-controller/focusgroup-navigation-controller.mdx)
 - [`SlotAttributePropagationController` (this repo)](../../../../2nd-gen/packages/core/controllers/slot-attribute-propagation-controller/slot-attribute-propagation-controller.mdx)
-- 1st-gen: [`sp-radio`/`sp-radio-group`](../../../../1st-gen/packages/radio/README.md), [`sp-field-group`](../../../../1st-gen/packages/field-group/README.md), [`sp-help-text`](../../../../1st-gen/packages/help-text/README.md)
+- 1st-gen: [`sp-radio`/`sp-radio-group`](../../../../gen1/packages/radio/README.md), [`sp-field-group`](../../../../gen1/packages/field-group/README.md), [`sp-help-text`](../../../../gen1/packages/help-text/README.md)
 - [Radio group migration roadmap (this repo)](./rendering-and-styling-migration-analysis.md) (not yet written)
 - [Radio accessibility migration analysis (this repo)](../radio/accessibility-migration-analysis.md)
 - Jira: [SWC-2348](https://jira.corp.adobe.com/browse/SWC-2348) (epic), [SWC-2349](https://jira.corp.adobe.com/browse/SWC-2349) (this research ticket), [SWC-2470](https://jira.corp.adobe.com/browse/SWC-2470) (`RadioGroupController` research spike), [SWC-2466](https://jira.corp.adobe.com/browse/SWC-2466) (`LabellingController`), [SWC-2467](https://jira.corp.adobe.com/browse/SWC-2467) (`FieldAssociationController`), [SWC-1888](https://jira.corp.adobe.com/browse/SWC-1888) (RFC: form field strategy for 2nd-gen migration)

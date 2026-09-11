@@ -6,7 +6,7 @@
   "storybookBaseDir": "2nd-gen/packages/swc",
   "traceChanged": true,
   "untraced": [
-    "1st-gen/**",
+    "gen1/**",
     "packages/**",
     "projects/**",
     "tools/**",

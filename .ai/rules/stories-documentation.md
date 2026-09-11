@@ -677,7 +677,7 @@ All stories must demonstrate accessible usage:
 
 ## 1st-gen to 2nd-gen comparison
 
-When creating 2nd-gen documentation, check 1st-gen (`1st-gen/packages/*/README.md`) for content to preserve or differences to highlight.
+When creating 2nd-gen documentation, check 1st-gen (`gen1/packages/*/README.md`) for content to preserve or differences to highlight.
 
 ### Where to document differences
 
@@ -747,7 +747,7 @@ Compare 2nd-gen against 1st-gen for:
 
 Use the Custom Elements Manifest (CEM) to verify differences:
 
-1. **Check 1st-gen CEM**: `1st-gen/packages/component-name/custom-elements.json`
+1. **Check 1st-gen CEM**: `gen1/packages/component-name/custom-elements.json`
 2. **Check 2nd-gen types**: `2nd-gen/packages/core/components/component-name/*.types.ts`
 3. **Compare**:
    - Properties and their types
@@ -759,7 +759,7 @@ Use the Custom Elements Manifest (CEM) to verify differences:
 
 ```bash
 # Check 1st-gen properties
-grep -A 5 '"name": "size"' 1st-gen/packages/badge/custom-elements.json
+grep -A 5 '"name": "size"' gen1/packages/badge/custom-elements.json
 
 # Check 2nd-gen types
 grep "VALID_SIZES" 2nd-gen/packages/core/components/badge/Badge.types.ts
@@ -884,7 +884,7 @@ grep -n "aria-" 2nd-gen/packages/swc/components/component-name/Component.ts
 grep -n "dispatchEvent\|new CustomEvent" 2nd-gen/packages/swc/components/component-name/Component.ts
 
 # Compare with 1st-gen
-diff <(grep "@property" 1st-gen/packages/component-name/*.ts) \
+diff <(grep "@property" gen1/packages/component-name/*.ts) \
      <(grep "@property" 2nd-gen/packages/swc/components/component-name/*.ts)
 ```
 

@@ -96,8 +96,8 @@
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/menu/src/Menu.ts`](../../../../1st-gen/packages/menu/src/Menu.ts), [`MenuItem.ts`](../../../../1st-gen/packages/menu/src/MenuItem.ts), [`MenuGroup.ts`](../../../../1st-gen/packages/menu/src/MenuGroup.ts), [`MenuDivider.ts`](../../../../1st-gen/packages/menu/src/MenuDivider.ts)
-**Version:** `@spectrum-web-components/menu` (see [package.json](../../../../1st-gen/packages/menu/package.json))
+**Source:** [`gen1/packages/menu/src/Menu.ts`](../../../../gen1/packages/menu/src/Menu.ts), [`MenuItem.ts`](../../../../gen1/packages/menu/src/MenuItem.ts), [`MenuGroup.ts`](../../../../gen1/packages/menu/src/MenuGroup.ts), [`MenuDivider.ts`](../../../../gen1/packages/menu/src/MenuDivider.ts)
+**Version:** `@spectrum-web-components/menu` (see [package.json](../../../../gen1/packages/menu/package.json))
 **Custom element tags:** `sp-menu`, `sp-menu-item`, `sp-menu-group`, `sp-menu-divider`
 
 ### Properties / attributes
@@ -160,7 +160,7 @@
 | `close` | yes / no | no | `Menu` | Fires when a non-submenu, non-selects item is activated, signaling ancestors (overlay/picker) to close. |
 | `sp-menu-submenu-opened` | yes / yes | no | overlay target (via `Menu.handleSubmenuOpened`) | Internal to the 1st-gen overlay-based submenu wiring. |
 | `sp-menu-submenu-closed` | yes / yes | no | overlay target (via `Menu.handleSubmenuClosed`) | Internal to the 1st-gen overlay-based submenu wiring. |
-| `sp-menu-item-added-or-updated` (`MenuItemAddedOrUpdatedEvent`) | — | — | `MenuItem` | Announces item registration to the owning menu. The `@fires sp-menu-item-added` JSDoc tag on `MenuItem` is stale (rise-erpelding review); the event actually constructed and dispatched is `sp-menu-item-added-or-updated` ([`MenuItem.ts:62`](../../../../1st-gen/packages/menu/src/MenuItem.ts)). |
+| `sp-menu-item-added-or-updated` (`MenuItemAddedOrUpdatedEvent`) | — | — | `MenuItem` | Announces item registration to the owning menu. The `@fires sp-menu-item-added` JSDoc tag on `MenuItem` is stale (rise-erpelding review); the event actually constructed and dispatched is `sp-menu-item-added-or-updated` ([`MenuItem.ts:62`](../../../../gen1/packages/menu/src/MenuItem.ts)). |
 | `focus` / `blur` (`FocusEvent`) | — | — | `MenuItem` | Re-dispatched native focus events. |
 
 ### Slots
@@ -257,7 +257,7 @@ Representative simplified shape (not exhaustive; mobile-drilldown branches omitt
 | --- | --- | --- |
 | `id` | `Key` | Unique identifier. |
 | `textValue` | `string` | Text representation for typeahead/a11y when content isn't plain text. |
-| `isDisabled` | `boolean` | Maps to 1st-gen/2nd-gen `disabled`. |
+| `isDisabled` | `boolean` | Maps to gen1/2nd-gen `disabled`. |
 | `onAction` | `() => void` | Per-item activation callback. |
 | `href`, `download`, `target`, `rel`, `referrerPolicy`, `ping`, `hrefLang` | various | Same link-item surface as 1st-gen's `LikeAnchor` mixin, plus `ping`/`hrefLang` which 1st-gen `MenuItem` does not have. |
 | `shouldCloseOnSelect` | `boolean` | Per-item override of the Menu-level setting. |
@@ -305,7 +305,7 @@ Two prose constraints from the React Spectrum docs, not yet in the [Menu accessi
 | Package | Version | Role |
 | --- | --- | --- |
 | `@spectrum-web-components/base` | workspace | `SpectrumElement`, `SizedMixin`, decorators. |
-| `@spectrum-web-components/shared` (`1st-gen/tools/shared`) | workspace | `LikeAnchor` mixin (href/target/download/rel/referrerpolicy on `MenuItem`), `randomID`. |
+| `@spectrum-web-components/shared` (`gen1/tools/shared`) | workspace | `LikeAnchor` mixin (href/target/download/rel/referrerpolicy on `MenuItem`), `randomID`. |
 | `@spectrum-web-components/overlay` | workspace | 1st-gen submenu presentation (`sp-overlay` inside `MenuItem`); superseded by direct `PlacementController` use in 2nd-gen, **not** `swc-popover` (see [Architecture](#architecture-core-vs-swc-split)). |
 | `@spectrum-web-components/divider` | workspace | `MenuDivider` reuses `divider.css`. |
 | `@spectrum-web-components/reactive-controllers` (roving tabindex) | workspace | `RovingTabindexController`; superseded by `FocusgroupNavigationController` ([PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129), already shipped) in 2nd-gen. |
@@ -643,10 +643,10 @@ Planned rendering shape:
 
 ### Testing
 
-- [ ] Port applicable coverage from [`1st-gen/packages/menu/test/menu.test.ts`](../../../../1st-gen/packages/menu/test/menu.test.ts) (core `Menu` behavior — child registration, focus management, close-on-select for non-selects items)
-- [ ] *(Phase C, not this pass)* [`menu-selects.test.ts`](../../../../1st-gen/packages/menu/test/menu-selects.test.ts) coverage ports when selection ships; track as a follow-up ticket alongside the deferred selection work (decided to stay Additive, [Q5](#blockers-and-open-questions))
-- [ ] *(Phase B, not this pass)* [`submenu.test.ts`](../../../../1st-gen/packages/menu/test/submenu.test.ts) coverage (open/close, deep-tree focus) ports when submenus ship; drop the `mobile view` and `touch interactions` describe blocks regardless, or track them against [A8](#deferred-to-later-phases)
-- [ ] Do **not** port [`menu-memory.test.ts`](../../../../1st-gen/packages/menu/test/menu-memory.test.ts) coverage as-is if it exercises the mobile drilldown/projection paths being dropped; re-scope to whatever memory-leak surface remains
+- [ ] Port applicable coverage from [`gen1/packages/menu/test/menu.test.ts`](../../../../gen1/packages/menu/test/menu.test.ts) (core `Menu` behavior — child registration, focus management, close-on-select for non-selects items)
+- [ ] *(Phase C, not this pass)* [`menu-selects.test.ts`](../../../../gen1/packages/menu/test/menu-selects.test.ts) coverage ports when selection ships; track as a follow-up ticket alongside the deferred selection work (decided to stay Additive, [Q5](#blockers-and-open-questions))
+- [ ] *(Phase B, not this pass)* [`submenu.test.ts`](../../../../gen1/packages/menu/test/submenu.test.ts) coverage (open/close, deep-tree focus) ports when submenus ship; drop the `mobile view` and `touch interactions` describe blocks regardless, or track them against [A8](#deferred-to-later-phases)
+- [ ] Do **not** port [`menu-memory.test.ts`](../../../../gen1/packages/menu/test/menu-memory.test.ts) coverage as-is if it exercises the mobile drilldown/projection paths being dropped; re-scope to whatever memory-leak surface remains
 - [ ] Add Playwright `menu.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Behavior
@@ -739,7 +739,7 @@ The tables above state each resolved question's current answer. This section kee
 
 Ruben's original concern: carrying the `label` property forward unchanged as "accessible name for the trigger" leaves no way to put visible content on the trigger, since 1st-gen `sp-menu` never had a built-in trigger to put content on in the first place.
 
-**First resolution (superseded):** add a `label` slot for a shadow-rendered trigger, modeled on [1st-gen `sp-action-menu`'s `label` slot](../../../../1st-gen/packages/action-menu/src/ActionMenu.ts).
+**First resolution (superseded):** add a `label` slot for a shadow-rendered trigger, modeled on [1st-gen `sp-action-menu`'s `label` slot](../../../../gen1/packages/action-menu/src/ActionMenu.ts).
 
 5t3ph pushed back on two fronts:
 
@@ -772,9 +772,9 @@ Ruben's original concern: carrying the `label` property forward unchanged as "ac
 - [`PlacementController` source](../../../../2nd-gen/packages/core/controllers/placement-controller/src/placement-controller.ts) and [docs](../../../../2nd-gen/packages/core/controllers/placement-controller/placement-controller.mdx)
 - [Tabs 2nd-gen source: `Tabs.base.ts`](../../../../2nd-gen/packages/core/components/tabs/Tabs.base.ts) — confirms `FocusgroupNavigationController` is already shipped and in production use, not prospective
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
-- [1st-gen source: `Menu.ts`](../../../../1st-gen/packages/menu/src/Menu.ts), [`MenuItem.ts`](../../../../1st-gen/packages/menu/src/MenuItem.ts), [`MenuGroup.ts`](../../../../1st-gen/packages/menu/src/MenuGroup.ts), [`MenuDivider.ts`](../../../../1st-gen/packages/menu/src/MenuDivider.ts)
-- [1st-gen tests](../../../../1st-gen/packages/menu/test/menu.test.ts) — plus `menu-selects.test.ts`, `submenu.test.ts`, `menu-group.test.ts`, `menu-item.test.ts`, `menu-memory.test.ts`
-- [1st-gen README](../../../../1st-gen/packages/menu/README.md)
+- [1st-gen source: `Menu.ts`](../../../../gen1/packages/menu/src/Menu.ts), [`MenuItem.ts`](../../../../gen1/packages/menu/src/MenuItem.ts), [`MenuGroup.ts`](../../../../gen1/packages/menu/src/MenuGroup.ts), [`MenuDivider.ts`](../../../../gen1/packages/menu/src/MenuDivider.ts)
+- [1st-gen tests](../../../../gen1/packages/menu/test/menu.test.ts) — plus `menu-selects.test.ts`, `submenu.test.ts`, `menu-group.test.ts`, `menu-item.test.ts`, `menu-memory.test.ts`
+- [1st-gen README](../../../../gen1/packages/menu/README.md)
 - [React Spectrum Menu](https://react-spectrum.adobe.com/Menu) — product alignment reference; confirmed to document `@react-spectrum/s2`, not the classic v3 package
 - [React Spectrum S2 `Menu.tsx` source](https://github.com/adobe/react-spectrum/blob/main/packages/%40react-spectrum/s2/src/Menu.tsx) — `MenuItem`, `MenuSection`, `MenuTrigger`, `SubmenuTrigger`, `UnavailableMenuItemTrigger`, `Divider` exports
 - [React Spectrum Menu — Content](https://react-spectrum.adobe.com/Menu#content) and [Slots](https://react-spectrum.adobe.com/Menu#slots) — basic `MenuItem` anatomy (icon/image, label, description, keyboard shortcut); source for the Phase A content-scope cross-check above

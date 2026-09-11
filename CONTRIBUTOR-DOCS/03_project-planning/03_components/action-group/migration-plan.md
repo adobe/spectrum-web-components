@@ -72,7 +72,7 @@
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/action-group/src/ActionGroup.ts`](../../../../1st-gen/packages/action-group/src/ActionGroup.ts)
+**Source:** [`gen1/packages/action-group/src/ActionGroup.ts`](../../../../gen1/packages/action-group/src/ActionGroup.ts)
 **Version:** `@spectrum-web-components/action-group@1.12.1`
 **Custom element tag:** `sp-action-group`
 
@@ -447,7 +447,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 
 ### Testing
 
-- [x] Port applicable coverage from [`1st-gen/packages/action-group/test/action-group.test.ts`](../../../../1st-gen/packages/action-group/test/action-group.test.ts) — `selects`/`selected`-specific 1st-gen tests were not ported; that API is dropped (see B7)
+- [x] Port applicable coverage from [`gen1/packages/action-group/test/action-group.test.ts`](../../../../gen1/packages/action-group/test/action-group.test.ts) — `selects`/`selected`-specific 1st-gen tests were not ported; that API is dropped (see B7)
 - [x] Add Playwright `action-group.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Behavior
@@ -526,9 +526,9 @@ Create these tickets before this migration PR closes. Link each to Epic SWC-2212
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
-- [1st-gen source](../../../../1st-gen/packages/action-group/src/ActionGroup.ts)
-- [1st-gen tests](../../../../1st-gen/packages/action-group/test/action-group.test.ts)
-- [1st-gen README](../../../../1st-gen/packages/action-group/README.md)
+- [1st-gen source](../../../../gen1/packages/action-group/src/ActionGroup.ts)
+- [1st-gen tests](../../../../gen1/packages/action-group/test/action-group.test.ts)
+- [1st-gen README](../../../../gen1/packages/action-group/README.md)
 - [Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md)
 - [FocusgroupNavigationController source](../../../../2nd-gen/packages/core/controllers/focusgroup-navigation-controller/src/)
 - [Action button accessibility migration analysis](../action-button/accessibility-migration-analysis.md)

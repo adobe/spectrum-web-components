@@ -16,10 +16,10 @@
  * aligning with https://react-spectrum.adobe.com/llms.txt.
  *
  * Data sources:
- *   - 1st-gen/projects/documentation/custom-elements.json  (1st-gen APIs)
+ *   - gen1/projects/documentation/custom-elements.json  (1st-gen APIs)
  *   - 2nd-gen/packages/swc/dist/custom-elements.json  (2nd-gen APIs)
- *   - 1st-gen/packages/[name]/README.md  (1st-gen descriptions)
- *   - 1st-gen/projects/documentation/content/*.md  (1st-gen guide pages, Eleventy frontmatter)
+ *   - gen1/packages/[name]/README.md  (1st-gen descriptions)
+ *   - gen1/projects/documentation/content/*.md  (1st-gen guide pages, Eleventy frontmatter)
  *   - 2nd-gen/packages/swc/.storybook/{guides,learn-about-swc}/**\/*.mdx  (2nd-gen guides)
  *
  * Output per generation:
@@ -86,7 +86,7 @@ const ROOT = join(__dirname, '..');
  * 2nd-gen: public/ is Storybook's staticDirs root (see .storybook/main.ts),
  *          copied verbatim into storybook-static/ at build time.
  */
-const FIRST_GEN_OUT = join(ROOT, '1st-gen/projects/documentation/content');
+const FIRST_GEN_OUT = join(ROOT, 'gen1/projects/documentation/content');
 const SECOND_GEN_OUT = join(ROOT, '2nd-gen/packages/swc/public');
 const SECOND_GEN_CEM = join(
   ROOT,
@@ -134,7 +134,7 @@ function readCem(cemPath) {
  * section to use as the component description.
  */
 function readmeDescription(packageName) {
-  const readmePath = join(ROOT, '1st-gen/packages', packageName, 'README.md');
+  const readmePath = join(ROOT, 'gen1/packages', packageName, 'README.md');
   if (!existsSync(readmePath)) {
     return '';
   }
@@ -706,7 +706,7 @@ function main() {
   console.log('Reading Custom Elements Manifests...');
 
   const firstGenCem = readCem(
-    join(ROOT, '1st-gen/projects/documentation/custom-elements.json')
+    join(ROOT, 'gen1/projects/documentation/custom-elements.json')
   );
   const secondGenCem = readCem(SECOND_GEN_CEM);
 

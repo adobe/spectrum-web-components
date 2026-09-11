@@ -66,11 +66,11 @@ This document sets accessibility expectations for 2nd-gen **Popover** in Spectru
 
 - **Not** a menu, listbox, tooltip, or other APG widget in one tag—`swc-popover` is only a **container** and positioning **shell**; the components or author markup **inside** provide semantics and interaction.
 - **Not** a full “accessible overlay in one import”: inert backdrops, open state, and focus orchestration are separate (app or higher-level primitives) unless a future doc specifies otherwise.
-- **Not** a wholesale drop-in for every 1st-gen [overlay](../../../../1st-gen/packages/overlay/README.md) use. **Tooltips** are expected to adopt `swc-popover`-style anchoring instead of overlay-driven tooltip placement. **Action menu** (dropdown) and **combobox** (listbox popup) are planned **`swc-popover` host** call sites. **Modals** and **dialogs** use **shared** **popover** **styles** on the dialog surface, **not** the **`swc-popover` host** (see [roadmap — Planned consumers](./rendering-and-styling-migration-analysis.md#planned-consumers-2nd-gen) and [Overview](./rendering-and-styling-migration-analysis.md#overview)).
+- **Not** a wholesale drop-in for every 1st-gen [overlay](../../../../gen1/packages/overlay/README.md) use. **Tooltips** are expected to adopt `swc-popover`-style anchoring instead of overlay-driven tooltip placement. **Action menu** (dropdown) and **combobox** (listbox popup) are planned **`swc-popover` host** call sites. **Modals** and **dialogs** use **shared** **popover** **styles** on the dialog surface, **not** the **`swc-popover` host** (see [roadmap — Planned consumers](./rendering-and-styling-migration-analysis.md#planned-consumers-2nd-gen) and [Overview](./rendering-and-styling-migration-analysis.md#overview)).
 
 ### Related
 
-- 1st-gen [`sp-popover`](../../../../1st-gen/packages/popover/README.md) is primarily styling. Many call sites (for example Picker) set `role="presentation"` on the host and place ARIA on child content.
+- 1st-gen [`sp-popover`](../../../../gen1/packages/popover/README.md) is primarily styling. Many call sites (for example Picker) set `role="presentation"` on the host and place ARIA on child content.
 - 2nd-gen (planned, [roadmap — Planned consumers](./rendering-and-styling-migration-analysis.md#planned-consumers-2nd-gen)): **action menu** (dropdown), **combobox** (listbox), **tooltip** (replacing overlay-based positioning for that pattern). **Modal** / **dialog**: **shared** **popover** **styles** on the surface, **not** the **`swc-popover` host** (see [roadmap — Overview](./rendering-and-styling-migration-analysis.md#overview)).
 
 ---
@@ -218,7 +218,7 @@ The template one-sentence *“Not focusable. Keyboard navigation should skip thi
 
 ## References
 
-- 1st-gen: [`sp-popover`](../../../../1st-gen/packages/popover/README.md), [overlay](../../../../1st-gen/packages/overlay/README.md)
+- 1st-gen: [`sp-popover`](../../../../gen1/packages/popover/README.md), [overlay](../../../../gen1/packages/overlay/README.md)
 - [APG: read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [APG: dialog (modal)](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/), [menubutton](https://www.w3.org/WAI/ARIA/apg/patterns/menubutton/), [combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/)
 - 2nd-gen: [Semantic HTML and ARIA](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx), [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx), [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)

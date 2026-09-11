@@ -83,7 +83,7 @@ _None currently — all resolved; see [Decision log](#decision-log)._
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/radio/src/RadioGroup.ts`](../../../../1st-gen/packages/radio/src/RadioGroup.ts), extending [`1st-gen/packages/field-group/src/FieldGroup.ts`](../../../../1st-gen/packages/field-group/src/FieldGroup.ts)
+**Source:** [`gen1/packages/radio/src/RadioGroup.ts`](../../../../gen1/packages/radio/src/RadioGroup.ts), extending [`gen1/packages/field-group/src/FieldGroup.ts`](../../../../gen1/packages/field-group/src/FieldGroup.ts)
 **Version:** `@spectrum-web-components/radio@1.12.2` (`RadioGroup`); `@spectrum-web-components/field-group@1.12.2` (`FieldGroup`, the shared base)
 **Custom element tag:** `sp-radio-group`
 
@@ -429,7 +429,7 @@ Planned rendering shape:
 
 <!-- Fill in comprehensive test cases -->
 
-- [ ] Port `1st-gen/packages/radio/test/radio-group.test.ts` coverage that still applies
+- [ ] Port `gen1/packages/radio/test/radio-group.test.ts` coverage that still applies
 - [ ] Add Playwright `radio-group.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Behavior
@@ -530,10 +530,10 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 - [`SlotAttributePropagationController`](../../../../2nd-gen/packages/core/controllers/slot-attribute-propagation-controller/slot-attribute-propagation-controller.mdx) — already-built controller this plan uses to propagate `disabled`/`size`/`emphasized` onto items (not `name`, see [Decision log](#decision-log))
 - [Forms strategy RFC (SWC-1888)](../../05_strategies/forms-strategy-rfc.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
-- [1st-gen source: RadioGroup](../../../../1st-gen/packages/radio/src/RadioGroup.ts)
-- [1st-gen source: FieldGroup](../../../../1st-gen/packages/field-group/src/FieldGroup.ts)
-- [1st-gen tests](../../../../1st-gen/packages/radio/test/radio-group.test.ts)
-- [1st-gen README](../../../../1st-gen/packages/radio/README.md)
+- [1st-gen source: RadioGroup](../../../../gen1/packages/radio/src/RadioGroup.ts)
+- [1st-gen source: FieldGroup](../../../../gen1/packages/field-group/src/FieldGroup.ts)
+- [1st-gen tests](../../../../gen1/packages/radio/test/radio-group.test.ts)
+- [1st-gen README](../../../../gen1/packages/radio/README.md)
 - [React Spectrum RadioGroup](https://react-spectrum.adobe.com/RadioGroup)
 - [Spectrum CSS — `spectrum-two` branch, `components/fieldgroup/index.css`](https://github.com/adobe/spectrum-css/tree/spectrum-two/components/fieldgroup): reviewed via a sibling checkout; no distinct `radio-group` CSS component exists
 - [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)

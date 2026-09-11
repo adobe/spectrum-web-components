@@ -120,7 +120,7 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 
 **`sp-infield-button`** extends 1st-gen **`ButtonBase`** with **`block`**, **`inline`**, **`quiet`**, and **`label`** (maps to **`aria-label`**); public docs may list **`pending`** from **`ButtonBase`**. 1st-gen **`block`** / **`inline`** chiefly adjusted **corner radius** and edge padding for **stacked** and **inline** groups. 2nd-gen should **drop** **`block`**, **`inline`**, and **`pending`** on **`swc-infield-button`** (let the **field** host own **`pending`** and **layout**), standardize on **`accessible-label`**, and **not** ship **`href`** / link APIs inherited from older **button** stacks.
 
-```39:51:1st-gen/packages/infield-button/src/InfieldButton.ts
+```39:51:gen1/packages/infield-button/src/InfieldButton.ts
   @property()
   block?: 'start' | 'end';
 
@@ -240,5 +240,5 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 - [Button accessibility migration analysis](../button/accessibility-migration-analysis.md)
 - [Button migration plan](../button/migration-plan.md)
 - [`Button.base.ts` (2nd-gen core)](../../../../2nd-gen/packages/core/components/button/Button.base.ts)
-- [`InfieldButton.ts` (1st-gen)](../../../../1st-gen/packages/infield-button/src/InfieldButton.ts)
+- [`InfieldButton.ts` (1st-gen)](../../../../gen1/packages/infield-button/src/InfieldButton.ts)
 - [Keyboard testing (2nd-gen Storybook accessibility guide)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)

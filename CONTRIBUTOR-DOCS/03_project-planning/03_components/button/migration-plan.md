@@ -73,7 +73,7 @@ None currently.
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/packages/button/src/Button.ts`](../../../../1st-gen/packages/button/src/Button.ts)
+**Source:** [`gen1/packages/button/src/Button.ts`](../../../../gen1/packages/button/src/Button.ts)
 **Version:** `@spectrum-web-components/button@1.11.2`
 **Custom element tag:** `sp-button`
 
@@ -121,7 +121,7 @@ No custom events. Consumers rely on native `click`.
 
 ### CSS custom properties
 
-The 1st-gen implementation exposes a large legacy customization surface through imported [`button-base.css`](../../../../1st-gen/packages/button/src/button-base.css), [`spectrum-button.css`](../../../../1st-gen/packages/button/src/spectrum-button.css), and [`button-overrides.css`](../../../../1st-gen/packages/button/src/button-overrides.css). In practice this includes:
+The 1st-gen implementation exposes a large legacy customization surface through imported [`button-base.css`](../../../../gen1/packages/button/src/button-base.css), [`spectrum-button.css`](../../../../gen1/packages/button/src/spectrum-button.css), and [`button-overrides.css`](../../../../gen1/packages/button/src/button-overrides.css). In practice this includes:
 
 - Many `--mod-button-*` variables for sizing, spacing, color, border, and focus ring
 - Legacy `--spectrum-button-*` token fallback chains
@@ -516,7 +516,7 @@ Allowed differences:
 
 ### Testing
 
-- [x] Port `1st-gen/packages/button/test/button.test.ts` coverage that still applies — 16 Storybook play-function test stories covering defaults, property mutations, slots, states, pending behavior, accessible naming, and dev-mode warnings
+- [x] Port `gen1/packages/button/test/button.test.ts` coverage that still applies — 16 Storybook play-function test stories covering defaults, property mutations, slots, states, pending behavior, accessible naming, and dev-mode warnings
 - [x] Add Playwright `button.a11y.spec.ts` with `toMatchAriaSnapshot` — 7 ARIA snapshot tests covering overview, anatomy, states, sizes, variants, outline, and accessibility story
 
 #### Behavior
@@ -622,10 +622,10 @@ These items require manual assistive-technology (AT) verification and cannot be 
 - [PR #6120 — core/shared migration and LikeAnchor removal](https://github.com/adobe/spectrum-web-components/pull/6120)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
-- [1st-gen source](../../../../1st-gen/packages/button/src/Button.ts)
-- [1st-gen button base](../../../../1st-gen/packages/button/src/ButtonBase.ts)
-- [1st-gen tests](../../../../1st-gen/packages/button/test/button.test.ts)
-- [1st-gen README](../../../../1st-gen/packages/button/README.md)
+- [1st-gen source](../../../../gen1/packages/button/src/Button.ts)
+- [1st-gen button base](../../../../gen1/packages/button/src/ButtonBase.ts)
+- [1st-gen tests](../../../../gen1/packages/button/test/button.test.ts)
+- [1st-gen README](../../../../gen1/packages/button/README.md)
 - [2nd-gen global button stylesheet](../../../../2nd-gen/packages/swc/stylesheets/global/global-button.css)
 - [2nd-gen global elements stylesheet](../../../../2nd-gen/packages/swc/stylesheets/global/global-elements.css)
 - [React Spectrum S2 Button](https://react-spectrum.adobe.com/Button)

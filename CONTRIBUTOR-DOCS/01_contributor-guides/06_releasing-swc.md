@@ -34,7 +34,7 @@
 >
 > | | Workflow | Changesets | Real-release branch | Ships to |
 > |---|---|---|---|---|
-> | 1st-gen | `.github/workflows/publish.yml` | `1st-gen/.changeset/` | `changeset-release/1st-gen` → PR to `main` | `latest` |
+> | 1st-gen | `.github/workflows/publish.yml` | `gen1/.changeset/` | `changeset-release/1st-gen` → PR to `main` | `latest` |
 > | 2nd-gen | `.github/workflows/publish-gen2.yml` | `2nd-gen/.changeset/` | `changeset-release/2nd-gen` → PR to `main` | `latest` (persistent pre-release, versioned `2.0.0-beta.N`) |
 >
 > The sections below still describe the old branch-lock/direct-push model in places and should not be relied on until this page is rewritten to match.
@@ -62,7 +62,7 @@ The workflow publishes four package groups:
 
 > For the 2nd-gen changeset format and how entries flow into the CHANGELOG, see the [Changelog strategy](15_changelog-strategy.md).
 
-Each workflow only publishes if there are pending changesets in its own folder — `1st-gen/.changeset/*.md` for `publish.yml`, `2nd-gen/.changeset/*.md` for `publish-gen2.yml`. If no changesets exist for that generation, its publish job is skipped automatically.
+Each workflow only publishes if there are pending changesets in its own folder — `gen1/.changeset/*.md` for `publish.yml`, `2nd-gen/.changeset/*.md` for `publish-gen2.yml`. If no changesets exist for that generation, its publish job is skipped automatically.
 
 To check what's pending, look at the relevant `.changeset/` directory (exclude `README.md`). Each changeset file lists the packages it affects and the bump type (`patch`, `minor`, or `major`).
 
@@ -79,7 +79,7 @@ Follow the prompts to select packages and bump type.
 
 ### Understand the versioning strategy
 
-Each generation has its own `config.json` (`1st-gen/.changeset/config.json`, `2nd-gen/.changeset/config.json`) defining how its own packages version together:
+Each generation has its own `config.json` (`gen1/.changeset/config.json`, `2nd-gen/.changeset/config.json`) defining how its own packages version together:
 
 - **Fixed group** (1st-gen) – All `@spectrum-web-components/*` packages always version together at the same number.
 - **Linked group** (2nd-gen) – `@adobe/spectrum-wc` and `@adobe/spectrum-wc-core` receive the same bump type when either changes.
@@ -112,7 +112,7 @@ Both generations run `yarn changeset version` directly and open/update a dedicat
 
 **How it works:**
 
-1. Every push to `main` that has pending changesets (in `1st-gen/.changeset/` or `2nd-gen/.changeset/`) opens or updates a bot-authored pull request against `main`. The PR title is `chore: release 1st-gen packages` for 1st-gen or `chore: release 2nd-gen packages (beta)` for 2nd-gen (the `(beta)` suffix refers to the `2.0.0-beta.N` version format, not the npm tag it publishes under). The PR contains the version bumps and changelog entries `yarn changeset version` would produce.
+1. Every push to `main` that has pending changesets (in `gen1/.changeset/` or `2nd-gen/.changeset/`) opens or updates a bot-authored pull request against `main`. The PR title is `chore: release 1st-gen packages` for 1st-gen or `chore: release 2nd-gen packages (beta)` for 2nd-gen (the `(beta)` suffix refers to the `2.0.0-beta.N` version format, not the npm tag it publishes under). The PR contains the version bumps and changelog entries `yarn changeset version` would produce.
 2. A reviewer reviews and merges that pull request like any other PR — this is the audit trail: the exact diff that will ship is visible and approved before anything is published.
 3. Merging the Version PR is itself a push to `main`. That push has no pending changesets left (the merged PR consumed them), so the same workflow instead runs the generation's publish script: builds, `yarn changeset publish`, and (1st-gen only) builds and publishes the React wrappers and creates a git tag.
 
@@ -213,6 +213,6 @@ gh workflow run publish-gen2-docs.yml --ref main
 
 - **The workflow ran but versions weren't bumped on `main`** — Version commits and git tags are only created for real releases. Gen1's throwaway snapshot tags (`next`, `snapshot-test`) intentionally skip the commit and tag steps.
 
-- **A Version PR opened but nothing happens after I merge it** — Confirm the merge actually landed on `main` (not squashed into a differently-named branch) and that `1st-gen/.changeset/*.md` / `2nd-gen/.changeset/*.md` are empty afterward (the merge should have deleted them). If changesets remain, the next push will just update the Version PR again instead of publishing.
+- **A Version PR opened but nothing happens after I merge it** — Confirm the merge actually landed on `main` (not squashed into a differently-named branch) and that `gen1/.changeset/*.md` / `2nd-gen/.changeset/*.md` are empty afterward (the merge should have deleted them). If changesets remain, the next push will just update the Version PR again instead of publishing.
 
 - **The publish step ran again on an unrelated push and did nothing** — Expected. The `release` job's `if: needs.check-changesets.outputs.has_changesets == 'false'` branch runs the publish steps on every push to `main` where no changesets are pending, not only immediately after a Version PR merge. `yarn changeset publish` and the git-tag check in `publish.yml`'s publish step are both designed to no-op safely when there's nothing new to release.

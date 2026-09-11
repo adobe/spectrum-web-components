@@ -49,7 +49,7 @@ cp -r spectrum-css/components/<component-name>/dist/index.css spectrum-web-compo
 
 ## Update styles in the 2nd-generation component
 
-Now that we have the base styles in place, we need to check the 1st-gen implementation for any unique web component-specific styles that would not exist in the vanilla CSS implementation. This information will most likely be found in the `1st-gen/packages/components/<component-name>/<component-name>.css` file.
+Now that we have the base styles in place, we need to check the 1st-gen implementation for any unique web component-specific styles that would not exist in the vanilla CSS implementation. This information will most likely be found in the `gen1/packages/components/<component-name>/<component-name>.css` file.
 
 For example, look for styles specific to slots, such as `::slotted([name="icon"]) {}`.
 

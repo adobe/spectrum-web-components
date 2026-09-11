@@ -133,11 +133,11 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 
 **`hold-affordance`** wires a **300 ms** pointer timer and dispatches a **`longpress`** custom event; keyboard path holds **Space** or **Alt** + **Down arrow** then releases:
 
-```37:37:1st-gen/packages/action-button/src/ActionButton.ts
+```37:37:gen1/packages/action-button/src/ActionButton.ts
 export const LONGPRESS_DURATION = 300;
 ```
 
-```141:157:1st-gen/packages/action-button/src/ActionButton.ts
+```141:157:gen1/packages/action-button/src/ActionButton.ts
   private handlePointerdownHoldAffordance(event: PointerEvent): void {
     if (event.button !== 0) {
       return;

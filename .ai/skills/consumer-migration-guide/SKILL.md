@@ -66,7 +66,7 @@ Use the badge guide at `2nd-gen/packages/swc/components/badge/migration-guide.md
 Verify claims against the real implementation and docs before writing:
 
 - **Migration plan:** `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` — primary source for what breaking changes to cover (see Step 0 above)
-- **Spectrum 1 docs and source:** `1st-gen/packages/[component-name]/README.md`, public element files such as `sp-*.ts`, stories, and tests when needed
+- **Spectrum 1 docs and source:** `gen1/packages/[component-name]/README.md`, public element files such as `sp-*.ts`, stories, and tests when needed
 - **Spectrum 2 docs and source:** `2nd-gen/packages/swc/components/[component-name]/`, stories, tests, and any package README or docs that describe the public API
 - **Related migration docs:** the component's `rendering-and-styling-migration-analysis.md` and `accessibility-migration-analysis.md` when present
 

@@ -60,7 +60,7 @@ All three are **`role="button"`** surfaces in Spectrum: **native** **`<button ty
 | **`href` / link** | **No** **`href`** on **`swc-button`** (navigation on **`swc-link`** / **`<a>`**). | **No** **`href`**. | **No** **`href`**. |
 | **2nd-gen a11y doc** | [Button accessibility migration analysis](../button/accessibility-migration-analysis.md) | This doc. | **Dedicated** **`swc-clear-button`** accessibility migration analysis **when** that component is migrated—until then, apply the same **name** / **keyboard** / **delegation** rules here and in field composite docs. |
 
-```69:75:1st-gen/packages/button/src/ClearButton.ts
+```69:75:gen1/packages/button/src/ClearButton.ts
   /**
    * An accessible label that describes the component.
    * It will be applied to aria-label, but not visually rendered.
@@ -70,7 +70,7 @@ All three are **`role="button"`** surfaces in Spectrum: **native** **`<button ty
   public override label!: string;
 ```
 
-**`sp-close-button`** documents a default **slot** for visually hidden text alongside the cross ([`CloseButton.ts`](../../../../1st-gen/packages/button/src/CloseButton.ts)); **`sp-clear-button`** treats **`label`** as **mandatory** in JSDoc because the control is **icon-first** without that slot pattern. **2nd-gen** should keep the **semantic** distinction: **close** = leave / dismiss **surface**; **clear** = remove **field value**—never swap strings between the two patterns in Storybook or product.
+**`sp-close-button`** documents a default **slot** for visually hidden text alongside the cross ([`CloseButton.ts`](../../../../gen1/packages/button/src/CloseButton.ts)); **`sp-clear-button`** treats **`label`** as **mandatory** in JSDoc because the control is **icon-first** without that slot pattern. **2nd-gen** should keep the **semantic** distinction: **close** = leave / dismiss **surface**; **clear** = remove **field value**—never swap strings between the two patterns in Storybook or product.
 
 ### What it is
 
@@ -131,7 +131,7 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 
 **`sp-close-button`** lives in the **`button`** package and extends **`StyledButton`** → **`ButtonBase`** (same **`focusElement`** / anchor concerns as [Button accessibility migration analysis](../button/accessibility-migration-analysis.md) until 2nd-gen converges on **inner** **`<button>`** + **delegation**). **2nd-gen** implementation order and shared **core** decisions should follow [Button migration plan](../button/migration-plan.md). Default content is wrapped in a **visually hidden** span so the **cross** icon remains the visible affordance—authors still owe a **real** **name** via **`label`**, slot text, or reflected **`aria-*`** on the focus target.
 
-```79:87:1st-gen/packages/button/src/CloseButton.ts
+```79:87:gen1/packages/button/src/CloseButton.ts
   protected override get buttonContent(): TemplateResult[] {
     return [
       crossIcon[this.size](),

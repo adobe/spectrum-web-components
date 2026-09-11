@@ -111,7 +111,7 @@ export default {
       },
     },
     {
-      files: ['1st-gen/**/*.css'],
+      files: ['gen1/**/*.css'],
       rules: {
         'property-no-vendor-prefix': null,
         'no-descending-specificity': null,

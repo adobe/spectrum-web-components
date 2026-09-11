@@ -46,7 +46,7 @@ This doc explains how the **opacity checkerboard shared style** should work for 
 - [Opacity Checkerboard migration plan](./migration-plan.md) for deliverable form, token mapping, and deprecation of the 1st-gen npm package.
 - [Opacity Checkerboard migration roadmap](./rendering-and-styling-migration-analysis.md) for CSS structure and token names.
 - [Color loupe accessibility migration analysis](../color-loupe/accessibility-migration-analysis.md) for a consumer that inlines the same pattern today.
-- [1st-gen README](../../../../1st-gen/tools/opacity-checkerboard/README.md) for existing consumer-facing examples (to be aligned with this doc in 2nd-gen).
+- [1st-gen README](../../../../gen1/tools/opacity-checkerboard/README.md) for existing consumer-facing examples (to be aligned with this doc in 2nd-gen).
 
 ### What the shared style is
 
@@ -199,6 +199,6 @@ The checkerboard is **not** in the **Tab** order, so you will not reach it the s
 - [WCAG 2.2 Success Criterion 1.4.1: Use of color](https://www.w3.org/TR/WCAG22/#use-of-color)
 - [Opacity Checkerboard migration plan](./migration-plan.md)
 - [Opacity Checkerboard migration roadmap](./rendering-and-styling-migration-analysis.md)
-- [1st-gen opacity-checkerboard README](../../../../1st-gen/tools/opacity-checkerboard/README.md)
+- [1st-gen opacity-checkerboard README](../../../../gen1/tools/opacity-checkerboard/README.md)
 - [Tools vs packages: where code lives](../../../../CONTRIBUTOR-DOCS/01_contributor-guides/12_tools-vs-packages.md)
 - 2nd-gen Storybook: [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)

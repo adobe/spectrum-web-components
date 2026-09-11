@@ -23,7 +23,7 @@ const root = join(__dirname, '..');
 // Package whose version defines the release tag for each generation - both are
 // members of that generation's fixed/linked group, so any package there would do.
 const GENERATIONS = {
-  gen1: '1st-gen/packages/button/package.json',
+  gen1: 'gen1/packages/button/package.json',
   gen2: '2nd-gen/packages/swc/package.json',
 };
 

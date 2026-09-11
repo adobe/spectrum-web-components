@@ -37,7 +37,7 @@
 
 ## Overview
 
-This doc tells you how **`swc-thumbnail`** should work for **accessibility**. It targets **WCAG 2.2 Level AA**. Until `swc-thumbnail` exists under `2nd-gen/`, use `1st-gen/packages/thumbnail/src/Thumbnail.ts` (`<sp-thumbnail>`) to validate behavior, and update this spec against the real 2nd-gen source when it ships.
+This doc tells you how **`swc-thumbnail`** should work for **accessibility**. It targets **WCAG 2.2 Level AA**. Until `swc-thumbnail` exists under `2nd-gen/`, use `gen1/packages/thumbnail/src/Thumbnail.ts` (`<sp-thumbnail>`) to validate behavior, and update this spec against the real 2nd-gen source when it ships.
 
 ### Also read
 

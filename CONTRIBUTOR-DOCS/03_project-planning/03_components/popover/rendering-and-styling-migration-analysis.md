@@ -22,7 +22,7 @@
 
 ## Overview
 
-In 1st-gen, **`<sp-popover>`** supplies **Spectrum** look (stroke, shadow, optional tip) and attributes such as `placement` for the tip, but overlay behavior (open/close, stacking, focus) is composed with the [1st-gen overlay system](../../../../1st-gen/packages/overlay/README.md) and app code. Call sites often position the host with inline `style` or an overlay layer. That split is visual surface vs. orchestration.
+In 1st-gen, **`<sp-popover>`** supplies **Spectrum** look (stroke, shadow, optional tip) and attributes such as `placement` for the tip, but overlay behavior (open/close, stacking, focus) is composed with the [1st-gen overlay system](../../../../gen1/packages/overlay/README.md) and app code. Call sites often position the host with inline `style` or an overlay layer. That split is visual surface vs. orchestration.
 
 2nd-gen is planned to separate concerns clearly:
 
@@ -31,7 +31,7 @@ In 1st-gen, **`<sp-popover>`** supplies **Spectrum** look (stroke, shadow, optio
 
 ### Planned consumers (2nd-gen)
 
-The new **`swc-popover` host** is the common **anchored** surface for **dropdown menus** in **action menu**, for **listbox** popups in **combobox**, and for **tooltip** UI. **Modals and dialogs** are **out of scope** for that **host**; they do not use **anchor**-relative positioning. They may still use **shared** **popover** **styles** on the **dialog** **surface** (see **Overview** **above**). **Tooltips** are intended to move off 1st-gen [Overlay](../../../../1st-gen/packages/overlay/README.md) orchestration toward this **popover**-based **positioning**; see [Tooltip migration roadmap](../tooltip/rendering-and-styling-migration-analysis.md). ARIA, focus, and keyboard stay the responsibility of action menu, combobox, tooltip, and (separately) modal or dialog. This roadmap and the [a11y analysis](./accessibility-migration-analysis.md) cover the shared **chrome** and **geometry** for `swc-popover` and **styles** only.
+The new **`swc-popover` host** is the common **anchored** surface for **dropdown menus** in **action menu**, for **listbox** popups in **combobox**, and for **tooltip** UI. **Modals and dialogs** are **out of scope** for that **host**; they do not use **anchor**-relative positioning. They may still use **shared** **popover** **styles** on the **dialog** **surface** (see **Overview** **above**). **Tooltips** are intended to move off 1st-gen [Overlay](../../../../gen1/packages/overlay/README.md) orchestration toward this **popover**-based **positioning**; see [Tooltip migration roadmap](../tooltip/rendering-and-styling-migration-analysis.md). ARIA, focus, and keyboard stay the responsibility of action menu, combobox, tooltip, and (separately) modal or dialog. This roadmap and the [a11y analysis](./accessibility-migration-analysis.md) cover the shared **chrome** and **geometry** for `swc-popover` and **styles** only.
 
 [Popover accessibility migration analysis](./accessibility-migration-analysis.md) describes accessibility expectations for the 2nd-gen positioning host and the style layer.
 
@@ -46,5 +46,5 @@ Program work is tracked in Jira (for example [SWC-1993](https://jira.corp.adobe.
 
 ## References
 
-- [1st-gen: `sp-popover` **README**](../../../../1st-gen/packages/popover/README.md) — relationship to the **Overlay** system.
+- [1st-gen: `sp-popover` **README**](../../../../gen1/packages/popover/README.md) — relationship to the **Overlay** system.
 - [React Spectrum: **Popover**](https://react-spectrum.adobe.com/Popover) — product alignment for a **positioning** + **styles** **split** without ARIA on the **popover** **chrome** alone.

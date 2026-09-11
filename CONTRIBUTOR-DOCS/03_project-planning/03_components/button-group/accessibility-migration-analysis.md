@@ -142,7 +142,7 @@ None
 - **`swc-button-group` host:** **Not** a **Tab** stop; **do not** put **`tabindex="0"`** on the **group** host. **Do not** wire **`FocusgroupNavigationController`** on **`swc-button-group`**.
 - **`swc-button` children:** **Tab** / **Shift+Tab** move among **buttons** in **DOM** order by default. **Enter** / **Return** or **Space** activate each **button** ([Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)).
 - **Consumer docs — composites and toolbars:** When product needs **keyboard navigation inside components** ([APG](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents))—for example **one** **Tab** stop into a bar and **Arrow** keys among **Copy** / **Cut** / **Paste** as in the [Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/)—**recommend** **`FocusgroupNavigationController`** on the **toolbar** or other **composite** **host** (**`role="toolbar"`**, **`swc-action-group`**, or app-owned wrapper), **not** on **`swc-button-group`**. A typical **APG** layering is **`toolbar`** on the **outer** landmark, **`role="group"`** on each **`swc-button-group`** cluster inside it, with **roving** **`tabindex`** owned by the **toolbar** (see [Action group migration roadmap](../action-group/rendering-and-styling-migration-analysis.md), [Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md)).
-- **1st-gen gap:** **`sp-button-group`** does **not** set **`role="group"`** in [`ButtonGroup.ts`](../../../../1st-gen/packages/button-group/src/ButtonGroup.ts); 2nd-gen should **add** **`role="group"`** to match this doc and the **APG** **toolbar** example’s **inner** **group** cluster—not **roving** behavior on the **group** host itself.
+- **1st-gen gap:** **`sp-button-group`** does **not** set **`role="group"`** in [`ButtonGroup.ts`](../../../../gen1/packages/button-group/src/ButtonGroup.ts); 2nd-gen should **add** **`role="group"`** to match this doc and the **APG** **toolbar** example’s **inner** **group** cluster—not **roving** behavior on the **group** host itself.
 
 ---
 
@@ -192,4 +192,4 @@ None
 - [Action group migration roadmap](../action-group/rendering-and-styling-migration-analysis.md)
 - [Action button migration roadmap](../action-button/rendering-and-styling-migration-analysis.md)
 - [Keyboard testing (2nd-gen Storybook accessibility guide)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
-- [`ButtonGroup.ts` (1st-gen)](../../../../1st-gen/packages/button-group/src/ButtonGroup.ts)
+- [`ButtonGroup.ts` (1st-gen)](../../../../gen1/packages/button-group/src/ButtonGroup.ts)

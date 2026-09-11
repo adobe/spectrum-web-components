@@ -60,7 +60,7 @@
 
 ## TL;DR
 
-Opacity Checkerboard is **not a component migration**. It is a **reclassification** of a 1st-gen CSS-only tool (`1st-gen/tools/opacity-checkerboard/`, no custom element) into a 2nd-gen shared CSS utility, per [Tools vs packages](../../../../CONTRIBUTOR-DOCS/01_contributor-guides/12_tools-vs-packages.md#abstraction-targets-2nd-gen). There is no web component, no base class, no ARIA/events/slots, and no `core/`/`swc/` component split to plan.
+Opacity Checkerboard is **not a component migration**. It is a **reclassification** of a 1st-gen CSS-only tool (`gen1/tools/opacity-checkerboard/`, no custom element) into a 2nd-gen shared CSS utility, per [Tools vs packages](../../../../CONTRIBUTOR-DOCS/01_contributor-guides/12_tools-vs-packages.md#abstraction-targets-2nd-gen). There is no web component, no base class, no ARIA/events/slots, and no `core/`/`swc/` component split to plan.
 
 Must-ship work is small and almost entirely structural:
 
@@ -81,7 +81,7 @@ None block implementation. The deliverable form (importable `css` fragment under
 
 ## 1st-gen API surface
 
-**Source:** [`1st-gen/tools/opacity-checkerboard/src/opacity-checkerboard.css`](../../../../1st-gen/tools/opacity-checkerboard/src/opacity-checkerboard.css)
+**Source:** [`gen1/tools/opacity-checkerboard/src/opacity-checkerboard.css`](../../../../gen1/tools/opacity-checkerboard/src/opacity-checkerboard.css)
 **Version:** `@spectrum-web-components/opacity-checkerboard@1.12.1`
 **Custom element tag:** N/A — this is a CSS-only tool, not a custom element. There is no `sp-opacity-checkerboard`.
 
@@ -381,9 +381,9 @@ None.
 - Accessibility migration analysis — **TODO / not present** for this unit (see Scope and prerequisites)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
-- [1st-gen source (CSS)](../../../../1st-gen/tools/opacity-checkerboard/src/opacity-checkerboard.css)
-- [1st-gen underlying pattern CSS](../../../../1st-gen/tools/opacity-checkerboard/src/spectrum-opacity-checkerboard.css)
-- [1st-gen README](../../../../1st-gen/tools/opacity-checkerboard/README.md)
+- [1st-gen source (CSS)](../../../../gen1/tools/opacity-checkerboard/src/opacity-checkerboard.css)
+- [1st-gen underlying pattern CSS](../../../../gen1/tools/opacity-checkerboard/src/spectrum-opacity-checkerboard.css)
+- [1st-gen README](../../../../gen1/tools/opacity-checkerboard/README.md)
 - 2nd-gen `color-loupe` inline precedent: `2nd-gen/packages/swc/components/color-loupe/color-loupe.css` (`.swc-ColorLoupe-checkerboard`)
 - 2nd-gen tokens: `2nd-gen/packages/swc/stylesheets/tokens.css` (`--swc-opacity-checkerboard-square-*`)
 - Spectrum CSS `spectrum-two` source: `spectrum-css/components/opacitycheckerboard/index.css`

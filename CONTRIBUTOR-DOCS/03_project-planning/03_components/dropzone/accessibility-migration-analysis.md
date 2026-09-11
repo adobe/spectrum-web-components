@@ -41,7 +41,7 @@
 
 ## Overview
 
-This doc covers how **`swc-dropzone`** should work for **accessibility** and targets **WCAG 2.2 Level AA**. Until a `2nd-gen` implementation exists, use `1st-gen/packages/dropzone/src/Dropzone.ts` (`<sp-dropzone>`) to validate 1st-gen behavior, and update this spec against the real 2nd-gen source when it ships.
+This doc covers how **`swc-dropzone`** should work for **accessibility** and targets **WCAG 2.2 Level AA**. Until a `2nd-gen` implementation exists, use `gen1/packages/dropzone/src/Dropzone.ts` (`<sp-dropzone>`) to validate 1st-gen behavior, and update this spec against the real 2nd-gen source when it ships.
 
 ### Also read
 

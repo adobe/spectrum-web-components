@@ -41,7 +41,7 @@
 
 ## Overview
 
-This doc explains how **`swc-color-loupe`** should work for **accessibility**. It targets **WCAG 2.2 Level AA**, including full conformance for non-text contrast on loupe chrome via the adaptive dual-border approach specified in RSP-2021 and SDS-16402. Until **`swc-color-loupe`** ships, use **`1st-gen/packages/color-loupe/src/ColorLoupe.ts`** (`<sp-color-loupe>`) as the behavioral reference.
+This doc explains how **`swc-color-loupe`** should work for **accessibility**. It targets **WCAG 2.2 Level AA**, including full conformance for non-text contrast on loupe chrome via the adaptive dual-border approach specified in RSP-2021 and SDS-16402. Until **`swc-color-loupe`** ships, use **`gen1/packages/color-loupe/src/ColorLoupe.ts`** (`<sp-color-loupe>`) as the behavioral reference.
 
 ### Also read
 

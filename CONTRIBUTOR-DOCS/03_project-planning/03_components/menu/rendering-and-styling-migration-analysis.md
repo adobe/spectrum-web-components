@@ -34,4 +34,4 @@ Planned work is **tracked under the menu migration epic** [SWC-1980](https://jir
 ## References
 
 - [React Spectrum `Menu`](https://react-spectrum.adobe.com/Menu) — product alignment for **`swc-menu`**; 2nd-gen maps **`swc-menu`** to a **full** **host**, **not** a **detached** **list** **only** **primitive**.
-- 1st-gen: [`sp-menu`](../../../../1st-gen/packages/menu/README.md) — list or listbox container used inside overlay, **`sp-popover`**, picker, or **`<sp-action-menu>`**, with **varying** wiring per host; 2nd-gen **`swc-menu`** and **`swc-action-menu`** each ship a cohesive [menu-button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) on the import (see the a11y doc).
+- 1st-gen: [`sp-menu`](../../../../gen1/packages/menu/README.md) — list or listbox container used inside overlay, **`sp-popover`**, picker, or **`<sp-action-menu>`**, with **varying** wiring per host; 2nd-gen **`swc-menu`** and **`swc-action-menu`** each ship a cohesive [menu-button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) on the import (see the a11y doc).

@@ -134,8 +134,8 @@ commands:
       - run:
           name: Count baseline images
           command: |
-            mkdir -p 1st-gen/test/visual/screenshots-baseline
-            baseline_count=$(find 1st-gen/test/visual/screenshots-baseline -type f | wc -l)
+            mkdir -p gen1/test/visual/screenshots-baseline
+            baseline_count=$(find gen1/test/visual/screenshots-baseline -type f | wc -l)
             echo "Found $baseline_count baseline images"
             echo $baseline_count > count_start.txt
           #   if [ $baseline_count -eq 0 ]; then
@@ -149,11 +149,11 @@ commands:
             yarn workspace @spectrum-web-components/1st-gen test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
       # store results and artifacts before rearranging things for the new cache.
       - store_test_results:
-          path: /root/project/1st-gen/results/
+          path: /root/project/gen1/results/
       - run:
           when: on_success
           name: Count current images
-          command: find 1st-gen/test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
+          command: find gen1/test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
       # prevent removing regression tests without requiring a new golden cache
       - run:
           when: on_success
@@ -215,11 +215,11 @@ commands:
             combination="<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>"
 
             # Prepare files for deployment
-            cp 1st-gen/projects/documentation/content/favicon.ico 1st-gen/test/visual/ || echo "Failed to copy favicon"
+            cp gen1/projects/documentation/content/favicon.ico gen1/test/visual/ || echo "Failed to copy favicon"
 
             # Upload VRT results to Azure Blob Storage
             echo "Uploading VRT results to ${PR_HASH}/${combination}/"
-            azcopy copy "1st-gen/test/visual/*" \
+            azcopy copy "gen1/test/visual/*" \
               "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/${combination}/" \
               --recursive \
               --from-to LocalBlob
@@ -233,18 +233,18 @@ commands:
       - run:
           when: always
           command: |
-            rm -rf 1st-gen/test/visual/screenshots-baseline
-            cp -R 1st-gen/test/visual/screenshots-actual/updates 1st-gen/test/visual/screenshots-baseline
+            rm -rf gen1/test/visual/screenshots-baseline
+            cp -R gen1/test/visual/screenshots-actual/updates gen1/test/visual/screenshots-baseline
       - save_cache:
           when: always
           name: Build Golden Images Revision Cache
           paths:
-            - 1st-gen/test/visual/screenshots-baseline
+            - gen1/test/visual/screenshots-baseline
           key: v2-golden-images-{{ .Revision }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ .Branch }}
       - save_cache:
           name: Build Golden Images Branch Cache
           paths:
-            - 1st-gen/test/visual/screenshots-baseline
+            - gen1/test/visual/screenshots-baseline
           key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ .Revision }}
 
 jobs:
@@ -262,12 +262,12 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - 1st-gen/packages
-            - 1st-gen/tools
-            - 1st-gen/test
-            - 1st-gen/scripts
-            - 1st-gen/storybook
-            - 1st-gen/projects
+            - gen1/packages
+            - gen1/tools
+            - gen1/test
+            - gen1/scripts
+            - gen1/storybook
+            - gen1/projects
 
   # Build gen2 packages + CEM once; the browser and coverage jobs attach this
   # workspace instead of each rebuilding.
@@ -314,10 +314,10 @@ jobs:
       - run:
           name: Run chromium tests
           command: |
-            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
+            TEST=$(circleci tests glob "gen1/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
             yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config ./web-test-runner.config.ci-chromium.js --group unit-ci
       - store_test_results:
-          path: /root/project/1st-gen/results/
+          path: /root/project/gen1/results/
 
   test-chromium-coverage:
     executor: node
@@ -327,10 +327,10 @@ jobs:
           name: Run chromium tests with coverage
           command: yarn workspace @spectrum-web-components/1st-gen test:focus unit --config web-test-runner.config.ci-chromium.js --coverage
       - store_test_results:
-          path: /root/project/1st-gen/results/
+          path: /root/project/gen1/results/
       # Coverage artifact lives on the job that actually runs `--coverage`.
       - store_artifacts:
-          path: 1st-gen/coverage
+          path: gen1/coverage
 
   test-chromium-memory:
     executor: node-large
@@ -340,11 +340,11 @@ jobs:
       - run:
           name: Run memory tests
           command: |
-            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*-memory.test.js" | grep -v "packages/color-.*/test/.*-memory\.test\.js" | grep -v "tools/grid/test/.*-memory\.test\.js" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
+            TEST=$(circleci tests glob "gen1/{packages,tools}/*/test/*-memory.test.js" | grep -v "packages/color-.*/test/.*-memory\.test\.js" | grep -v "tools/grid/test/.*-memory\.test\.js" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
             echo $TEST
             yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-chromium-memory.js --group unit-ci
       - store_test_results:
-          path: /root/project/1st-gen/results/
+          path: /root/project/gen1/results/
 
   test-firefox:
     executor: node-large
@@ -354,10 +354,10 @@ jobs:
       - run:
           name: Run firefox tests
           command: |
-            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
+            TEST=$(circleci tests glob "gen1/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
             yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
       - store_test_results:
-          path: /root/project/1st-gen/results/
+          path: /root/project/gen1/results/
 
   test-webkit:
     executor: node-large
@@ -367,10 +367,10 @@ jobs:
       - run:
           name: Run webkit tests
           command: |
-            TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
+            TEST=$(circleci tests glob "gen1/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
             yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
       - store_test_results:
-          path: /root/project/1st-gen/results/
+          path: /root/project/gen1/results/
 
   # ---------------------------------------------------------------------------
   # gen2 integration tests (Vitest browser mode)
@@ -464,7 +464,7 @@ jobs:
           command: yarn workspace @spectrum-web-components/1st-gen docs:analyze
       - run:
           name: Move CEM to Storybook directory
-          command: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
+          command: cp gen1/projects/documentation/custom-elements.json gen1/storybook/
       - run:
           name: Build documentation with path prefix
           command: |
@@ -482,14 +482,14 @@ jobs:
           command: |
             # Upload documentation to beta path
             echo "Uploading documentation to beta/docs/"
-            azcopy copy "1st-gen/projects/documentation/dist/*" \
+            azcopy copy "gen1/projects/documentation/dist/*" \
               "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/" \
               --recursive \
               --from-to LocalBlob
 
             # Upload Storybook to beta path
             echo "Uploading Storybook to beta/docs/storybook/"
-            azcopy copy "1st-gen/storybook-static/*" \
+            azcopy copy "gen1/storybook-static/*" \
               "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/storybook/" \
               --recursive \
               --from-to LocalBlob
@@ -512,8 +512,8 @@ jobs:
       - run:
           name: Count baseline images
           command: |
-            mkdir -p 1st-gen/test/visual/screenshots-baseline
-            baseline_count=$(find 1st-gen/test/visual/screenshots-baseline -type f | wc -l)
+            mkdir -p gen1/test/visual/screenshots-baseline
+            baseline_count=$(find gen1/test/visual/screenshots-baseline -type f | wc -l)
             echo "Found $baseline_count baseline images"
             echo $baseline_count > count_start.txt
           #   if [ $baseline_count -eq 0 ]; then
@@ -527,11 +527,11 @@ jobs:
             yarn workspace @spectrum-web-components/1st-gen test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
       # store results and artifacts before rearranging things for the new cache.
       - store_test_results:
-          path: /root/project/1st-gen/results/
+          path: /root/project/gen1/results/
       - run:
           when: on_success
           name: Count current images
-          command: find 1st-gen/test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
+          command: find gen1/test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
       # prevent removing regression tests without requiring a new golden cache
       - run:
           when: on_success
@@ -590,11 +590,11 @@ jobs:
             fi
 
             # Prepare files for deployment
-            cp 1st-gen/projects/documentation/content/favicon.ico 1st-gen/test/visual/
+            cp gen1/projects/documentation/content/favicon.ico gen1/test/visual/
 
             # Upload HCM VRT results to Azure Blob Storage
             echo "Uploading HCM VRT to ${PR_HASH}/hcm/"
-            azcopy copy "1st-gen/test/visual/*" \
+            azcopy copy "gen1/test/visual/*" \
               "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/hcm/" \
               --recursive \
               --from-to LocalBlob
@@ -608,18 +608,18 @@ jobs:
       - run:
           when: always
           command: |
-            rm -rf 1st-gen/test/visual/screenshots-baseline
-            cp -R 1st-gen/test/visual/screenshots-actual/updates 1st-gen/test/visual/screenshots-baseline
+            rm -rf gen1/test/visual/screenshots-baseline
+            cp -R gen1/test/visual/screenshots-actual/updates gen1/test/visual/screenshots-baseline
       - save_cache:
           when: always
           name: Build Golden Images Revision Cache
           paths:
-            - 1st-gen/test/visual/screenshots-baseline
+            - gen1/test/visual/screenshots-baseline
           key: v2-golden-images-{{ .Revision }}-hcm-{{ .Branch }}
       - save_cache:
           name: Build Golden Images Branch Cache
           paths:
-            - 1st-gen/test/visual/screenshots-baseline
+            - gen1/test/visual/screenshots-baseline
           key: v2-golden-images-{{ .Branch }}-hcm-{{ .Revision }}
 
   visual:

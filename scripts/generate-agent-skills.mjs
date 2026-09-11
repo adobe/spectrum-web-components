@@ -51,8 +51,8 @@ const ROOT = join(__dirname, '..');
 // Paths
 // ---------------------------------------------------------------------------
 
-const FIRST_GEN_PACKAGES = join(ROOT, '1st-gen/packages');
-const FIRST_GEN_CONTENT = join(ROOT, '1st-gen/projects/documentation/content');
+const FIRST_GEN_PACKAGES = join(ROOT, 'gen1/packages');
+const FIRST_GEN_CONTENT = join(ROOT, 'gen1/projects/documentation/content');
 const FIRST_GEN_REF_DIR = join(FIRST_GEN_CONTENT, 'reference');
 const SECOND_GEN_COMPONENTS = join(ROOT, '2nd-gen/packages/swc/components');
 const SKILL_SOURCE_DIR = join(ROOT, '2nd-gen/packages/ai/skills');
@@ -73,7 +73,7 @@ const OUTPUT_DIR = join(ROOT, '2nd-gen/packages/swc/public');
  */
 const GEN1_GUIDES = [
   {
-    sourcePath: '1st-gen/projects/documentation/content/getting-started.md',
+    sourcePath: 'gen1/projects/documentation/content/getting-started.md',
     refPath: 'guides/getting-started.md',
     title: 'Getting started',
     description:
@@ -81,7 +81,7 @@ const GEN1_GUIDES = [
     stripFn: 'eleventy',
   },
   {
-    sourcePath: '1st-gen/projects/documentation/content/what-is-a-theme.md',
+    sourcePath: 'gen1/projects/documentation/content/what-is-a-theme.md',
     refPath: 'guides/what-is-a-theme.md',
     title: 'What is a theme?',
     description:
@@ -89,7 +89,7 @@ const GEN1_GUIDES = [
     stripFn: 'eleventy',
   },
   {
-    sourcePath: '1st-gen/projects/documentation/content/using-swc-react.md',
+    sourcePath: 'gen1/projects/documentation/content/using-swc-react.md',
     refPath: 'guides/using-swc-react.md',
     title: 'Using SWC with React',
     description:
@@ -98,7 +98,7 @@ const GEN1_GUIDES = [
   },
   {
     sourcePath:
-      '1st-gen/projects/documentation/content/support-and-compatibility.md',
+      'gen1/projects/documentation/content/support-and-compatibility.md',
     refPath: 'guides/support-and-compatibility.md',
     title: 'Support and compatibility',
     description:
@@ -106,14 +106,14 @@ const GEN1_GUIDES = [
     stripFn: 'eleventy',
   },
   {
-    sourcePath: '1st-gen/projects/documentation/content/registry-conflicts.md',
+    sourcePath: 'gen1/projects/documentation/content/registry-conflicts.md',
     refPath: 'guides/registry-conflicts.md',
     title: 'Registry conflicts',
     description: 'Diagnose and resolve custom element registry conflicts.',
     stripFn: 'eleventy',
   },
   {
-    sourcePath: '1st-gen/projects/documentation/content/dev-mode.md',
+    sourcePath: 'gen1/projects/documentation/content/dev-mode.md',
     refPath: 'guides/dev-mode.md',
     title: 'Dev mode',
     description:
@@ -121,7 +121,7 @@ const GEN1_GUIDES = [
     stripFn: 'eleventy',
   },
   {
-    sourcePath: '1st-gen/projects/documentation/content/deprecation.md',
+    sourcePath: 'gen1/projects/documentation/content/deprecation.md',
     refPath: 'guides/deprecation.md',
     title: 'Deprecation',
     description: 'What is deprecated in Spectrum 1 and what to use instead.',
@@ -129,7 +129,7 @@ const GEN1_GUIDES = [
   },
   {
     sourcePath:
-      '1st-gen/projects/documentation/content/migrating-to-spectrum2.md',
+      'gen1/projects/documentation/content/migrating-to-spectrum2.md',
     refPath: 'guides/migrating-to-spectrum2.md',
     title: 'Migrating to Spectrum 2 (sp-theme bridge)',
     description:

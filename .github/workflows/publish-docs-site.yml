@@ -29,7 +29,7 @@ jobs:
         run: yarn generate:llms
 
       - name: Move CEM to Storybook directory
-        run: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
+        run: cp gen1/projects/documentation/custom-elements.json gen1/storybook/
 
       - name: Build documentation
         run: yarn workspace @spectrum-web-components/1st-gen docs:production
@@ -38,7 +38,7 @@ jobs:
         run: yarn workspace @spectrum-web-components/1st-gen storybook:build
 
       - name: Add redirects to documentation
-        run: echo '/*    /index.html   200' > 1st-gen/projects/documentation/dist/_redirects
+        run: echo '/*    /index.html   200' > gen1/projects/documentation/dist/_redirects
 
       - name: Deploy to GitHub Pages
         run: |

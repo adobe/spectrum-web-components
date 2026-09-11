@@ -21,7 +21,7 @@
 
 ## Overview
 
-This doc will capture **rendering**, **layout**, **virtualization**, and **styling** for **`swc-grid`** (2nd-gen successor to 1st-gen **`sp-grid`** in [`1st-gen/tools/grid`](../../../../1st-gen/tools/grid/)). **`swc-grid`** is a **tooling / layout** host built on **`lit-virtualizer`**, not a Spectrum-visual “component” in the same sense as **`swc-button`**.
+This doc will capture **rendering**, **layout**, **virtualization**, and **styling** for **`swc-grid`** (2nd-gen successor to 1st-gen **`sp-grid`** in [`gen1/tools/grid`](../../../../gen1/tools/grid/)). **`swc-grid`** is a **tooling / layout** host built on **`lit-virtualizer`**, not a Spectrum-visual “component” in the same sense as **`swc-button`**.
 
 **Primary consumer:** planned **`swc-card-view`** (aligned with [React Spectrum CardView](https://react-spectrum.adobe.com/CardView))—a virtualized collection of cards with selection, async loading, and bulk actions.
 

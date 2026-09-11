@@ -88,8 +88,8 @@ generateVersion(secondGenPkgPath, secondGenOutputPath, {
 // Generate 1st-gen version. coreVersion defaults to 1st-gen's own package
 // version, since @spectrum-web-components/base is 1st-gen's own core base
 // package and has no relationship to 2nd-gen's version.
-const firstGenPkgPath = path.join(root, '1st-gen/tools/base/package.json');
-const firstGenOutputPath = path.join(root, '1st-gen/tools/base/src/version.ts');
+const firstGenPkgPath = path.join(root, 'gen1/tools/base/package.json');
+const firstGenOutputPath = path.join(root, 'gen1/tools/base/src/version.ts');
 
 generateVersion(firstGenPkgPath, firstGenOutputPath, {
   generationName: '1st-gen',

@@ -90,26 +90,26 @@
       "when": "$(basename)"
     },
     "**/*.test-vrt.ts": true,
-    "1st-gen/packages/**/*.d.ts": {
+    "gen1/packages/**/*.d.ts": {
       "when": "$(basename).ts"
     },
-    "1st-gen/packages/**/*.dev.js": {
+    "gen1/packages/**/*.dev.js": {
       "when": "$(basename).js"
     },
-    "1st-gen/packages/**/*.js": {
+    "gen1/packages/**/*.js": {
       "when": "$(basename).ts"
     },
-    "1st-gen/packages/**/*.js.map": true,
-    "1st-gen/tools/**/*.d.ts": {
+    "gen1/packages/**/*.js.map": true,
+    "gen1/tools/**/*.d.ts": {
       "when": "$(basename).ts"
     },
-    "1st-gen/tools/**/*.dev.js": {
+    "gen1/tools/**/*.dev.js": {
       "when": "$(basename).js"
     },
-    "1st-gen/tools/**/*.js": {
+    "gen1/tools/**/*.js": {
       "when": "$(basename).ts"
     },
-    "1st-gen/tools/**/*.js.map": true,
+    "gen1/tools/**/*.js.map": true,
     "packages/**": true,
     "projects/**": true,
     "test/**": true,

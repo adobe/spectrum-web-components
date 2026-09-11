@@ -37,7 +37,7 @@ export const a11yUse: PlaywrightTestConfig['use'] = {
 
 export const firstGenA11yProject: PlaywrightTestProject = {
   name: '1st-gen',
-  testDir: './1st-gen/',
+  testDir: './gen1/',
   testMatch: '**/packages/*/test/**/*.a11y.spec.ts',
   use: {
     ...devices['Desktop Chrome'],
