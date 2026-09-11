@@ -19,12 +19,12 @@
  *   - index.json entry has { name, description, files: [...] } — no archives
  *
  * Prose for each skill is authored in dedicated source files:
- *   2nd-gen/packages/ai/skills/swc-skill/SKILL.md
- *   2nd-gen/packages/ai/skills/gen2-migration/SKILL.md
+ *   gen2/packages/ai/skills/swc-skill/SKILL.md
+ *   gen2/packages/ai/skills/gen2-migration/SKILL.md
  *
  * The script resolves {{TOKEN}} placeholders with generated component and
  * guide lists, then writes the skill directories under .well-known/agent-skills/
- * in the 2nd-gen Storybook public dir.
+ * in the gen2 Storybook public dir.
  *
  * Usage:
  *   node scripts/generate-agent-skills.mjs
@@ -54,14 +54,14 @@ const ROOT = join(__dirname, '..');
 const FIRST_GEN_PACKAGES = join(ROOT, '1st-gen/packages');
 const FIRST_GEN_CONTENT = join(ROOT, '1st-gen/projects/documentation/content');
 const FIRST_GEN_REF_DIR = join(FIRST_GEN_CONTENT, 'reference');
-const SECOND_GEN_COMPONENTS = join(ROOT, '2nd-gen/packages/swc/components');
-const SKILL_SOURCE_DIR = join(ROOT, '2nd-gen/packages/ai/skills');
+const SECOND_GEN_COMPONENTS = join(ROOT, 'gen2/packages/swc/components');
+const SKILL_SOURCE_DIR = join(ROOT, 'gen2/packages/ai/skills');
 
 /**
  * Storybook's staticDirs root — files here are served verbatim at the site root.
  * Skills are written under .well-known/agent-skills/ so `npx skills add <domain>` works.
  */
-const OUTPUT_DIR = join(ROOT, '2nd-gen/packages/swc/public');
+const OUTPUT_DIR = join(ROOT, 'gen2/packages/swc/public');
 
 // ---------------------------------------------------------------------------
 // Guide definitions
@@ -143,8 +143,7 @@ const GEN1_GUIDES = [
  */
 const GEN2_MIGRATION_GUIDES = [
   {
-    sourcePath:
-      '2nd-gen/packages/swc/.storybook/resources/migrate-from-gen1.mdx',
+    sourcePath: 'gen2/packages/swc/.storybook/resources/migrate-from-gen1.mdx',
     refPath: 'guides/migrate-from-gen1.md',
     title: 'Migrate from Gen1',
     description:
@@ -152,8 +151,7 @@ const GEN2_MIGRATION_GUIDES = [
     stripFn: 'mdx',
   },
   {
-    sourcePath:
-      '2nd-gen/packages/swc/.storybook/learn-about-swc/gen1-vs-gen2.mdx',
+    sourcePath: 'gen2/packages/swc/.storybook/learn-about-swc/gen1-vs-gen2.mdx',
     refPath: 'guides/gen1-vs-gen2.md',
     title: 'Gen1 vs Gen2',
     description:
@@ -161,8 +159,7 @@ const GEN2_MIGRATION_GUIDES = [
     stripFn: 'mdx',
   },
   {
-    sourcePath:
-      '2nd-gen/packages/swc/.storybook/learn-about-swc/get-started.mdx',
+    sourcePath: 'gen2/packages/swc/.storybook/learn-about-swc/get-started.mdx',
     refPath: 'guides/get-started.md',
     title: 'Get started (Gen2)',
     description:
@@ -171,7 +168,7 @@ const GEN2_MIGRATION_GUIDES = [
   },
   {
     sourcePath:
-      '2nd-gen/packages/swc/.storybook/guides/customization/getting-started.mdx',
+      'gen2/packages/swc/.storybook/guides/customization/getting-started.mdx',
     refPath: 'guides/customization-getting-started.md',
     title: 'Customization: getting started',
     description:
@@ -180,7 +177,7 @@ const GEN2_MIGRATION_GUIDES = [
   },
   {
     sourcePath:
-      '2nd-gen/packages/swc/.storybook/guides/customization/theme-scales.mdx',
+      'gen2/packages/swc/.storybook/guides/customization/theme-scales.mdx',
     refPath: 'guides/customization-theme-scales.md',
     title: 'Customization: theme and scales',
     description:
@@ -188,8 +185,7 @@ const GEN2_MIGRATION_GUIDES = [
     stripFn: 'mdx',
   },
   {
-    sourcePath:
-      '2nd-gen/packages/swc/.storybook/guides/customization/fonts.mdx',
+    sourcePath: 'gen2/packages/swc/.storybook/guides/customization/fonts.mdx',
     refPath: 'guides/customization-fonts.md',
     title: 'Customization: fonts',
     description:
@@ -198,7 +194,7 @@ const GEN2_MIGRATION_GUIDES = [
   },
   {
     sourcePath:
-      '2nd-gen/packages/swc/.storybook/guides/customization/component-styles.mdx',
+      'gen2/packages/swc/.storybook/guides/customization/component-styles.mdx',
     refPath: 'guides/customization-component-styles.md',
     title: 'Customization: component styles',
     description:
@@ -207,7 +203,7 @@ const GEN2_MIGRATION_GUIDES = [
   },
   {
     sourcePath:
-      '2nd-gen/packages/swc/.storybook/resources/support-and-compatibility.mdx',
+      'gen2/packages/swc/.storybook/resources/support-and-compatibility.mdx',
     refPath: 'guides/support-and-compatibility.md',
     title: 'Support and compatibility (Gen2)',
     description:
@@ -430,7 +426,7 @@ function listGen1Components() {
 }
 
 /**
- * List all 2nd-gen components that have a migration-guide.mdx.
+ * List all gen2 components that have a migration-guide.mdx.
  * Returns [{ componentDir, guidePath }] sorted by componentDir.
  */
 function listMigrationComponents() {
