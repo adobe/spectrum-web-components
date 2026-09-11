@@ -1,5 +1,12 @@
 # @adobe/spectrum-wc-icons
 
+## 2.0.0-beta.4
+
+### Patch Changes
+
+- Updated dependencies [[`bef2c80`](https://github.com/adobe/spectrum-web-components/commit/bef2c80335f77c770f8154b9a9a75ddefe28a2c4), [`bef2c80`](https://github.com/adobe/spectrum-web-components/commit/bef2c80335f77c770f8154b9a9a75ddefe28a2c4), [`bef2c80`](https://github.com/adobe/spectrum-web-components/commit/bef2c80335f77c770f8154b9a9a75ddefe28a2c4), [`bef2c80`](https://github.com/adobe/spectrum-web-components/commit/bef2c80335f77c770f8154b9a9a75ddefe28a2c4), [`bef2c80`](https://github.com/adobe/spectrum-web-components/commit/bef2c80335f77c770f8154b9a9a75ddefe28a2c4), [`bef2c80`](https://github.com/adobe/spectrum-web-components/commit/bef2c80335f77c770f8154b9a9a75ddefe28a2c4), [`bef2c80`](https://github.com/adobe/spectrum-web-components/commit/bef2c80335f77c770f8154b9a9a75ddefe28a2c4)]:
+  - @adobe/spectrum-wc-core@2.0.0-beta.4
+
 ## 2.0.0-beta.3
 
 ### Minor Changes
