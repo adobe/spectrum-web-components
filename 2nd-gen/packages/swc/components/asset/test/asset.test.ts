@@ -14,6 +14,10 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Asset } from '@adobe/spectrum-wc/asset';
+import {
+  ASSET_BACKGROUND_VALUES,
+  ASSET_FIT_VALUES,
+} from '@adobe/spectrum-wc-core/components/asset';
 
 import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 
@@ -87,6 +91,28 @@ export const InvalidFitWarningTest: Story = {
   },
 };
 
+export const ValidFitNoWarningTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('does not warn for any valid fit value', () =>
+      withWarningSpy(async (warnCalls) => {
+        for (const fit of ASSET_FIT_VALUES) {
+          asset.fit = fit;
+          await asset.updateComplete;
+        }
+
+        expect(warnCalls.length, 'no warnings for any valid fit').toBe(0);
+      })
+    );
+  },
+};
+
 export const InvalidBackgroundWarningTest: Story = {
   render: () => html`
     <swc-asset>
@@ -114,6 +140,30 @@ export const InvalidBackgroundWarningTest: Story = {
   },
 };
 
+export const ValidBackgroundNoWarningTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('does not warn for any valid background value', () =>
+      withWarningSpy(async (warnCalls) => {
+        for (const background of ASSET_BACKGROUND_VALUES) {
+          asset.background = background;
+          await asset.updateComplete;
+        }
+
+        expect(warnCalls.length, 'no warnings for any valid background').toBe(
+          0
+        );
+      })
+    );
+  },
+};
+
 export const AspectRatioNormalizationTest: Story = {
   render: () => html`
     <swc-asset>
@@ -134,6 +184,26 @@ export const AspectRatioNormalizationTest: Story = {
       await asset.updateComplete;
       expect(asset.aspectRatio, '16:9 normalizes to 16/9').toBe('16/9');
     });
+  },
+};
+
+export const ValidAspectRatioNoWarningTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('does not warn when a valid aspect-ratio is set', () =>
+      withWarningSpy(async (warnCalls) => {
+        asset.aspectRatio = '16/9';
+        await asset.updateComplete;
+
+        expect(warnCalls.length, 'no warnings for a valid ratio').toBe(0);
+      })
+    );
   },
 };
 
@@ -542,6 +612,43 @@ export const AriaHiddenSurvivesDecorativeToggleTest: Story = {
   },
 };
 
+export const DecorativeToggleRemovesOwnAriaHiddenTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'removes its own aria-hidden after toggling decorative off, even across an intervening update',
+      async () => {
+        asset.decorative = true;
+        await asset.updateComplete;
+        expect(
+          asset.getAttribute('aria-hidden'),
+          'Asset applies aria-hidden itself'
+        ).toBe('true');
+
+        // An unrelated property change forces a second `update()` while
+        // `decorative` is still true, re-running `resolveAccessibleName()`
+        // with the attribute already present - the exact scenario that
+        // previously caused Asset to lose track of owning it.
+        asset.background = 'solid';
+        await asset.updateComplete;
+
+        asset.decorative = false;
+        await asset.updateComplete;
+        expect(
+          asset.hasAttribute('aria-hidden'),
+          'Asset removes the aria-hidden it applied itself'
+        ).toBe(false);
+      }
+    );
+  },
+};
+
 export const ConsumerPreserveAspectRatioRespectedTest: Story = {
   render: () => html`
     <swc-asset fit="cover">
@@ -663,6 +770,245 @@ export const AccessibleLabelDoesNotOverrideTitleTest: Story = {
           svg?.getAttribute('role'),
           'role is still self-healed to img'
         ).toBe('img');
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Sizing fallback
+// ──────────────────────────────────────────────────────────────
+
+export const NoConfigurationDoesNotCollapseTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'renders at a non-zero size standalone with no aspectRatio/width/height and no ancestor default',
+      () => {
+        const rect = asset.getBoundingClientRect();
+        expect(rect.width, 'width is non-zero').toBeGreaterThan(0);
+        expect(rect.height, 'height is non-zero').toBeGreaterThan(0);
+      }
+    );
+  },
+};
+
+export const NoConfigurationDoesNotCollapseInSizedContainerTest: Story = {
+  render: () => html`
+    <div style="display: flex; inline-size: 200px; block-size: 150px;">
+      <swc-asset>
+        <img src="./images/avatar-preview.png" alt="Preview" />
+      </swc-asset>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'renders at a non-zero size inside a sized flex container, standing in for an embedding parent (e.g. Card)',
+      () => {
+        const rect = asset.getBoundingClientRect();
+        expect(rect.width, 'width is non-zero').toBeGreaterThan(0);
+        expect(rect.height, 'height is non-zero').toBeGreaterThan(0);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Load state
+// ──────────────────────────────────────────────────────────────
+
+export const LoadStateSvgOrNoChildTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <svg role="img" aria-label="Icon" viewBox="0 0 10 10">
+        <circle cx="5" cy="5" r="4" />
+      </svg>
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'loadState is "loaded" immediately for a slotted svg, nothing to wait for',
+      () => {
+        expect(asset.loadState, 'loadState is loaded').toBe('loaded');
+      }
+    );
+  },
+};
+
+export const LoadStateImgSuccessTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'fires swc-asset-load and resolves loadState to "loaded" on success',
+      async () => {
+        // Attach the listener synchronously, before awaiting anything, so a
+        // fast/already-resolved image can't fire and be missed before this
+        // runs (the same race the timing guarantee protects consumers from).
+        const asset = canvasElement.querySelector('swc-asset') as Asset;
+        const loadEvent = new Promise<Event>((resolve) => {
+          asset.addEventListener('swc-asset-load', resolve, { once: true });
+        });
+
+        await asset.updateComplete;
+        const event = await loadEvent;
+
+        expect(asset.loadState, 'loadState is loaded').toBe('loaded');
+        expect(event.bubbles, 'event bubbles').toBe(true);
+        expect(event.composed, 'event is composed').toBe(true);
+      }
+    );
+  },
+};
+
+export const LoadStateImgErrorTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/does-not-exist.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'fires swc-asset-error with detail.src and resolves loadState to "error" on failure',
+      async () => {
+        const asset = canvasElement.querySelector('swc-asset') as Asset;
+        const errorEvent = new Promise<CustomEvent<{ src: string }>>(
+          (resolve) => {
+            asset.addEventListener(
+              'swc-asset-error',
+              (event) => resolve(event as CustomEvent<{ src: string }>),
+              { once: true }
+            );
+          }
+        );
+
+        await asset.updateComplete;
+        const event = await errorEvent;
+
+        expect(asset.loadState, 'loadState is error').toBe('error');
+        expect(
+          event.detail.src,
+          'detail.src identifies the failed image'
+        ).toContain('does-not-exist.png');
+        expect(event.bubbles, 'event bubbles').toBe(true);
+        expect(event.composed, 'event is composed').toBe(true);
+      }
+    );
+  },
+};
+
+export const LoadStateCachedImageTimingGuaranteeTest: Story = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'still fires swc-asset-load exactly once for an img that is already complete when slotted',
+      async () => {
+        // Pre-load the image outside any <swc-asset>, so it's already
+        // `complete` by the time the component ever sees it - the exact
+        // "served from cache" scenario the timing guarantee covers.
+        const preloaded = document.createElement('img');
+        preloaded.src = './images/card-preview.jpg';
+        preloaded.alt = 'Preview';
+        await new Promise<void>((resolve, reject) => {
+          preloaded.addEventListener('load', () => resolve(), { once: true });
+          preloaded.addEventListener(
+            'error',
+            () => reject(new Error('preload failed')),
+            { once: true }
+          );
+        });
+
+        const asset = document.createElement('swc-asset') as Asset;
+        asset.appendChild(preloaded);
+
+        const loadFired = new Promise<void>((resolve) => {
+          asset.addEventListener('swc-asset-load', () => resolve(), {
+            once: true,
+          });
+        });
+
+        canvasElement.querySelector('div')?.appendChild(asset);
+        await asset.updateComplete;
+        await loadFired;
+
+        expect(
+          asset.loadState,
+          'loadState resolves to loaded for the pre-loaded image'
+        ).toBe('loaded');
+      }
+    );
+  },
+};
+
+export const SlotChangeResetsLoadStateTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Original" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('resolves loadState for the original img first', async () => {
+      if (asset.loadState === 'loading') {
+        await new Promise<void>((resolve) => {
+          asset.addEventListener('swc-asset-load', () => resolve(), {
+            once: true,
+          });
+        });
+      }
+      expect(asset.loadState, 'loadState is loaded for the original img').toBe(
+        'loaded'
+      );
+    });
+
+    await step(
+      're-wires load tracking to a swapped-in img, firing a fresh event for it rather than leaving stale state from the original',
+      async () => {
+        const slot = asset.shadowRoot?.querySelector('slot');
+        const slotChanged = new Promise<void>((resolve) => {
+          slot?.addEventListener('slotchange', () => resolve(), {
+            once: true,
+          });
+        });
+        // A guaranteed-fresh failing path (never cached) so this doesn't
+        // race the same cache-timing concern the timing-guarantee test
+        // exists to handle - this test is only about re-wiring, not timing.
+        const errorFired = new Promise<void>((resolve) => {
+          asset.addEventListener('swc-asset-error', () => resolve(), {
+            once: true,
+          });
+        });
+
+        const original = asset.querySelector('img');
+        const replacement = document.createElement('img');
+        replacement.src = './images/does-not-exist-2.png';
+        replacement.alt = 'Replacement';
+        original?.replaceWith(replacement);
+
+        await slotChanged;
+        await asset.updateComplete;
+        await errorFired;
+
+        expect(
+          asset.loadState,
+          'loadState reflects the replacement img, not stale state from the original'
+        ).toBe('error');
       }
     );
   },

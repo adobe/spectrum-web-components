@@ -23,8 +23,13 @@ import {
 import {
   ASSET_BACKGROUND_VALUES,
   ASSET_FIT_VALUES,
+  ASSET_LOAD_STATE_VALUES,
   type AssetBackground,
+  type AssetErrorEventDetail,
   type AssetFit,
+  type AssetLoadState,
+  SWC_ASSET_ERROR_EVENT,
+  SWC_ASSET_LOAD_EVENT,
 } from './Asset.types.js';
 
 const DOCS_URL =
@@ -135,6 +140,17 @@ export abstract class AssetBase extends SpectrumElement {
   @property({ type: String, reflect: true })
   public background: AssetBackground = 'transparent';
 
+  /**
+   * The load status of the slotted `<img>`: `'loading'` while its request is
+   * in flight, `'loaded'` on success, `'error'` on failure. Immediately
+   * `'loaded'` for a slotted `<svg>` or no slotted content, since there's
+   * nothing asynchronous to wait for. Set internally by Asset; a consumer
+   * influences it only by changing what's slotted, not by setting it
+   * directly.
+   */
+  @property({ type: String, reflect: true, attribute: 'load-state' })
+  public loadState: AssetLoadState = 'loading';
+
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
@@ -142,6 +158,15 @@ export abstract class AssetBase extends SpectrumElement {
   // Only clear `aria-hidden` if this instance set it, so a consumer's own
   // attribute survives.
   private _appliedAriaHidden = false;
+
+  // The `<img>` currently wired up for load tracking, so re-running
+  // `updateLoadState` on unrelated property changes doesn't tear down and
+  // reset state for the same element, and so listeners are removed from the
+  // right element when the slotted content changes. `undefined` specifically
+  // means "not yet determined" (distinct from `null`, "confirmed no `<img>`
+  // child"), so the very first resolution to "no `<img>`" isn't mistaken for
+  // an unchanged steady state and skipped.
+  private _trackedImg: HTMLImageElement | null | undefined = undefined;
 
   // The <svg> this instance owns `preserveAspectRatio` on, so a
   // consumer-set value is left alone until this instance takes over.
@@ -158,6 +183,12 @@ export abstract class AssetBase extends SpectrumElement {
       prop: 'background',
       value: this.background,
       valid: ASSET_BACKGROUND_VALUES,
+      url: DOCS_URL,
+    });
+    validateEnum(this, {
+      prop: 'load-state',
+      value: this.loadState,
+      valid: ASSET_LOAD_STATE_VALUES,
       url: DOCS_URL,
     });
     warnIf(
@@ -182,6 +213,7 @@ export abstract class AssetBase extends SpectrumElement {
     }
     this.resolveAccessibleName(children);
     this.applyFitToSvg(children);
+    this.updateLoadState(children);
     super.update(changes);
   }
 
@@ -216,9 +248,12 @@ export abstract class AssetBase extends SpectrumElement {
    */
   private resolveAccessibleName(children: Element[]): void {
     if (this.decorative) {
-      // Don't claim ownership of a consumer's own `aria-hidden`.
-      this._appliedAriaHidden = !this.hasAttribute('aria-hidden');
-      this.setAttribute('aria-hidden', 'true');
+      // Only claim ownership (and write the attribute) when it isn't
+      // already present, to avoid redundant attribute writes.
+      if (!this.hasAttribute('aria-hidden')) {
+        this._appliedAriaHidden = true;
+        this.setAttribute('aria-hidden', 'true');
+      }
       return;
     }
     if (this._appliedAriaHidden) {
@@ -297,4 +332,83 @@ export abstract class AssetBase extends SpectrumElement {
     }
     this._preserveAspectRatioAppliedTo = child;
   }
+
+  /**
+   * Tracks `loadState` against the slotted `<img>`, re-wiring listeners only
+   * when the tracked element actually changes (a no-op on every other
+   * property update, since re-running this for the same `<img>` would
+   * incorrectly reset an already-resolved `loadState` back to `'loading'`).
+   */
+  private updateLoadState(children: Element[]): void {
+    const [child] = children;
+    const img =
+      child?.tagName.toLowerCase() === 'img'
+        ? (child as HTMLImageElement)
+        : null;
+
+    if (img === this._trackedImg) {
+      return;
+    }
+
+    if (this._trackedImg) {
+      this._trackedImg.removeEventListener('load', this.handleImgLoad);
+      this._trackedImg.removeEventListener('error', this.handleImgError);
+    }
+    this._trackedImg = img;
+
+    if (!img) {
+      // No <img> to wait for: a slotted <svg>, an unsupported child, or
+      // nothing slotted at all.
+      this.loadState = 'loaded';
+      return;
+    }
+
+    this.loadState = 'loading';
+    img.addEventListener('load', this.handleImgLoad);
+    img.addEventListener('error', this.handleImgError);
+
+    // Timing guarantee: an already-complete `<img>` (e.g. served from
+    // cache) has already fired its native `load`/`error` before these
+    // listeners were attached, so schedule the equivalent transition
+    // instead of skipping it. This lets a consumer always just listen for
+    // `swc-asset-load`/`swc-asset-error` and get exactly one fire per
+    // slotted `<img>`, without a separate synchronous check for the cached
+    // case. An `<img>` with no `src` yet is also `complete`, but has
+    // nothing to report; it's left at `'loading'` until a real `src`
+    // resolves via the listeners already attached above.
+    if (img.complete && img.currentSrc) {
+      const succeeded = img.naturalWidth > 0;
+      queueMicrotask(() => {
+        if (this._trackedImg !== img) {
+          return;
+        }
+        if (succeeded) {
+          this.handleImgLoad();
+        } else {
+          this.handleImgError();
+        }
+      });
+    }
+  }
+
+  private readonly handleImgLoad = (): void => {
+    this.loadState = 'loaded';
+    this.dispatchEvent(
+      new CustomEvent(SWC_ASSET_LOAD_EVENT, {
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private readonly handleImgError = (): void => {
+    this.loadState = 'error';
+    this.dispatchEvent(
+      new CustomEvent<AssetErrorEventDetail>(SWC_ASSET_ERROR_EVENT, {
+        bubbles: true,
+        composed: true,
+        detail: { src: this._trackedImg?.currentSrc ?? '' },
+      })
+    );
+  };
 }

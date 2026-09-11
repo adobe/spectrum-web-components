@@ -31,6 +31,9 @@ import styles from './asset.css';
  * @cssprop --swc-asset-background-color - Background color used when
  * `background="solid"`. Defaults to `token("gray-100")`.
  *
+ * @fires swc-asset-load - The slotted `<img>` finished loading successfully.
+ * @fires swc-asset-error - The slotted `<img>` failed to load.
+ *
  * @since 2.0.0-beta.4
  *
  * @example

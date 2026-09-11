@@ -37,11 +37,23 @@
 ::slotted(*) {
   box-sizing: border-box;
   display: block;
+  place-content: center; /* Aligns the message block for a failed load */
   inline-size: 100%;
   block-size: 100%;
+  text-align: center;
   object-fit: cover;
 }
 
 :host([fit="contain"]) ::slotted(*) {
   object-fit: contain;
+}
+
+/* Hide slotted items after the first one */
+::slotted(:nth-child(n + 2)) {
+  display: none;
+}
+
+/* Ensure contrast for failure message */
+:host([background="checkerboard"]) ::slotted(*) {
+  color: token("static-black-text-color");
 }
