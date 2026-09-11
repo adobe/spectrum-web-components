@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-Gen CSS](README.md) / Property order quick reference
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 CSS](README.md) / Property order quick reference
 
 <!-- Document title (editable) -->
 
@@ -55,7 +55,7 @@ This is the expected order as enforced by `stylelint-order`:
 
 ## Example from Badge
 
-From [badge.css](../../../2nd-gen/packages/swc/components/badge/badge.css):
+From [badge.css](../../../gen2/packages/swc/components/badge/badge.css):
 
 ```css
 .swc-Badge {
@@ -91,7 +91,7 @@ From [badge.css](../../../2nd-gen/packages/swc/components/badge/badge.css):
 
 ## Example from Status Light
 
-From [status-light.css](../../../2nd-gen/packages/swc/components/status-light/status-light.css):
+From [status-light.css](../../../gen2/packages/swc/components/status-light/status-light.css):
 
 ```css
 .swc-StatusLight::before {
@@ -115,4 +115,4 @@ From [status-light.css](../../../2nd-gen/packages/swc/components/status-light/st
 
 ---
 
-**Reference implementations**: [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css) · [Status Light](../../../2nd-gen/packages/swc/components/status-light/status-light.css)
+**Reference implementations**: [Badge](../../../gen2/packages/swc/components/badge/badge.css) · [Status Light](../../../gen2/packages/swc/components/status-light/status-light.css)

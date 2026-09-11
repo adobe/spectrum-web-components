@@ -14,7 +14,7 @@
 - [Overview](#overview)
     - [In short](#in-short)
     - [Also read](#also-read)
-    - [What the menu separator is (`swc-menu-separator`, 2nd-gen)](#what-the-menu-separator-is-swc-menu-separator-2nd-gen)
+    - [What the menu separator is (`swc-menu-separator`, gen2)](#what-the-menu-separator-is-swc-menu-separator-gen2)
     - [When to use something else](#when-to-use-something-else)
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
@@ -41,17 +41,17 @@
 
 ## Overview
 
-This page is for 2nd-gen `swc-menu-separator` in Spectrum Web Components. It is a non-active row with `role="separator"` that splits parts of a menu. Goal: [WCAG 2.2](https://www.w3.org/TR/WCAG22/) Level AA.
+This page is for gen2 `swc-menu-separator` in Spectrum Web Components. It is a non-active row with `role="separator"` that splits parts of a menu. Goal: [WCAG 2.2](https://www.w3.org/TR/WCAG22/) Level AA.
 
 ### In short
 
-- The host has **no** slotted children—it is a line only (see 2nd-gen source).
-- Place it as a **direct** list child of `swc-menu`, `swc-action-menu`, or `swc-menu-item` (submenu when the item’s `submenu` slot is in use). **Not** inside `swc-menu-group` ([Menu group](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-2nd-gen)).
+- The host has **no** slotted children—it is a line only (see gen2 source).
+- Place it as a **direct** list child of `swc-menu`, `swc-action-menu`, or `swc-menu-item` (submenu when the item’s `submenu` slot is in use). **Not** inside `swc-menu-group` ([Menu group](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-gen2)).
 - It is not a `menuitem`. [FocusgroupNavigationController](https://github.com/adobe/spectrum-web-components/pull/6129) should skip it for roving focus, like 1st-gen `sp-menu-separator` tests.
 
-1st-gen used [`sp-menu-separator` / `MenuDivider`](https://github.com/adobe/spectrum-web-components/blob/main/1st-gen/packages/menu/src/MenuDivider.ts) with `role="separator"` on the host. 2nd-gen should match; confirm attribute timing in source before you lock this copy.
+1st-gen used [`sp-menu-separator` / `MenuDivider`](https://github.com/adobe/spectrum-web-components/blob/main/1st-gen/packages/menu/src/MenuDivider.ts) with `role="separator"` on the host. gen2 should match; confirm attribute timing in source before you lock this copy.
 
-**Docs and examples:** avoid separators unless they sit next to [labelled `swc-menu-group`](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-2nd-gen) blocks. Random lines between loose items can add screen reader noise; prefer real groups for structure.
+**Docs and examples:** avoid separators unless they sit next to [labelled `swc-menu-group`](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-gen2) blocks. Random lines between loose items can add screen reader noise; prefer real groups for structure.
 
 ### Also read
 
@@ -61,7 +61,7 @@ This page is for 2nd-gen `swc-menu-separator` in Spectrum Web Components. It is 
 - [Action menu a11y doc](../action-menu/accessibility-migration-analysis.md) — `swc-action-menu` host next to `swc-menu`.
 - [Divider a11y doc](../divider/accessibility-migration-analysis.md) — `swc-separator` **outside** menus (not a splitter).
 
-### What the menu separator is (`swc-menu-separator`, 2nd-gen)
+### What the menu separator is (`swc-menu-separator`, gen2)
 
 - A non-active row, no slotted content, as a direct child of `swc-menu`, `swc-action-menu`, or `swc-menu-item` in the parent’s internal `role="menu"` list. Uses [`role="separator"`](https://www.w3.org/TR/wai-aria/#separator) with the [menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) pattern.
 - Not a `menuitem`. [FocusgroupNavigationController](https://github.com/adobe/spectrum-web-components/pull/6129) should move between items **past** the line, not **onto** it as a command, like `sp-menu-separator` menu tests.
@@ -110,11 +110,11 @@ Treat **menu-wide** defects as authoritative in [Menu — Related 1st-gen access
 | Topic | What to do |
 | --- | --- |
 | **`role="separator"`** | **Prescribed** on the **`swc-menu-separator`** host (analogous to **`sp-menu-separator`**)—**fixed**, not overridden with **`presentation`** / **`none`** on the shipped default; authors who need content omitted from the accessibility tree should change **structure or content**, not override **`role`** on this primitive without a deliberate pattern change elsewhere. **`swc-menu-separator`** maps to **one** semantic meaning: **separator** inside a **`menu`**—verify final attribute timing in source. |
-| Slotted content | **None.** The host must not use a default (or other) slot for author content; it is a line **primitive** only (verify in 2nd-gen source). |
-| Parent (placement) | **Slotted** only as a direct row of **`swc-menu`**, **`swc-action-menu`**, or **`swc-menu-item`** in the open menu or submenu list—**not** inside **`swc-menu-group`’s** default slot ([Menu group — What `swc-menu-group` is (2nd-gen)](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-2nd-gen): default slot is **`swc-menu-item` only** for the current scope). **Light**-DOM list composition is fine; the row need not be in the internal `role="menu"` shadow subtree ([Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues)). |
+| Slotted content | **None.** The host must not use a default (or other) slot for author content; it is a line **primitive** only (verify in gen2 source). |
+| Parent (placement) | **Slotted** only as a direct row of **`swc-menu`**, **`swc-action-menu`**, or **`swc-menu-item`** in the open menu or submenu list—**not** inside **`swc-menu-group`’s** default slot ([Menu group — What `swc-menu-group` is (gen2)](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-gen2): default slot is **`swc-menu-item` only** for the current scope). **Light**-DOM list composition is fine; the row need not be in the internal `role="menu"` shadow subtree ([Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues)). |
 | Naming | Omit **accessible name** by default (no **`aria-labelledby`**). |
 | Docs / examples | **Favor** a separator when flanking siblings are **`swc-menu-group`** with visible / exposed section names; see the **Documentation and examples** paragraph in [Overview](#overview). |
-| A11y tree placement | The separator is a `role="separator"` sibling between rows under the same `role="menu"` (verify in 2nd-gen source). |
+| A11y tree placement | The separator is a `role="separator"` sibling between rows under the same `role="menu"` (verify in gen2 source). |
 
 ### Shadow DOM and cross-root ARIA Issues
 
@@ -154,18 +154,18 @@ Intentionally omitted. Separator lines follow **menu** / **popover** motion guid
 
 ### Keyboard testing
 
-Follow the 2nd-gen Storybook [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) guide on a full menu path: either **`swc-menu`** or **`swc-action-menu`** (each a menu-button **host** with **`swc-popover`** and an **internal** **`role="menu"`** **in** **shadow** **DOM**; see [Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Confirm **ArrowUp**/**ArrowDown** moves between **`menuitem`** entries past separators without focusing the separator row as a selectable command.
+Follow the gen2 Storybook [Keyboard testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) guide on a full menu path: either **`swc-menu`** or **`swc-action-menu`** (each a menu-button **host** with **`swc-popover`** and an **internal** **`role="menu"`** **in** **shadow** **DOM**; see [Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Confirm **ArrowUp**/**ArrowDown** moves between **`menuitem`** entries past separators without focusing the separator row as a selectable command.
 
 ### Manual and screen reader testing
 
-Compose **menu + separator + items** paths; reconcile with [Menu — Manual and screen reader testing](../menu/accessibility-migration-analysis.md#manual-and-screen-reader-testing-mandatory-host-alone) guidance. Optionally compare announcement patterns with **`sp-menu-separator`** before behaviour parity freezes. Follow [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx).
+Compose **menu + separator + items** paths; reconcile with [Menu — Manual and screen reader testing](../menu/accessibility-migration-analysis.md#manual-and-screen-reader-testing-mandatory-host-alone) guidance. Optionally compare announcement patterns with **`sp-menu-separator`** before behaviour parity freezes. Follow [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx).
 
 ---
 
 ## Summary checklist
 
-- [ ] Parent is `swc-menu`, `swc-action-menu`, or `swc-menu-item` (submenu) as a direct list child—[Overview](#overview). No slotted children; not under `swc-menu-group` ([group parent rule](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-2nd-gen)). In docs, only when between labelled `swc-menu-group` blocks when you can ([Overview](#overview)).
-- [ ] Host **`role="separator"`**, **non-focusable**, **no** draggable **value semantics** (**verify timing** versus **`sp-menu-separator`** in 2nd-gen source).
+- [ ] Parent is `swc-menu`, `swc-action-menu`, or `swc-menu-item` (submenu) as a direct list child—[Overview](#overview). No slotted children; not under `swc-menu-group` ([group parent rule](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-gen2)). In docs, only when between labelled `swc-menu-group` blocks when you can ([Overview](#overview)).
+- [ ] Host **`role="separator"`**, **non-focusable**, **no** draggable **value semantics** (**verify timing** versus **`sp-menu-separator`** in gen2 source).
 - [ ] **`FocusgroupNavigationController`** skips separator for **menuitem** traversal; **manual** sanity on **Escape** returning to trigger or **submenu** **parent** follows the **`swc-menu`** / **`swc-action-menu`** / **`swc-menu-item`** docs.
 - [ ] Visual **contrast** for line versus menu background aligns with **`swc-menu`** tokens.
 - [ ] **`menuitemcheckbox`** / **`menuitemradio`** rows and selection separators **defer** per [menu migration scope](../menu/accessibility-migration-analysis.md#migration-scope-current)—do not document selectable-separator UX here prematurely.
@@ -184,5 +184,5 @@ Compose **menu + separator + items** paths; reconcile with [Menu — Manual and 
 - [WAI-ARIA APG: Editor Menubar example (includes menu **separators**)](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/)
 - [spectrum-web-components PR #6129 — Focusgroup navigation controller](https://github.com/adobe/spectrum-web-components/pull/6129)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
-- [2nd-gen Storybook: Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
-- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- [gen2 Storybook: Keyboard testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
+- [gen2 Storybook: Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)

@@ -1,14 +1,14 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../../README.md) / [Project planning](../../../README.md) / [Workstreams](../../README.md) / [2nd-gen Component Migration](../README.md) / Step By Step / Add 2nd-gen SWC component
+[CONTRIBUTOR-DOCS](../../../../README.md) / [Project planning](../../../README.md) / [Workstreams](../../README.md) / [gen2 Component Migration](../README.md) / Step By Step / Add gen2 SWC component
 
 <!-- Document title (editable) -->
 
-# Add 2nd-gen SWC component
+# Add gen2 SWC component
 
 <!-- Document content (editable) -->
 
-- Create directory structure: `2nd-gen/packages/swc/components/[component]/`
+- Create directory structure: `gen2/packages/swc/components/[component]/`
 - Create `[Component].ts` file extending from `[Component]Base`
 - Import S2-specific types and constants from `[Component].types.ts`
 - Add section headers: API OVERRIDES, API ADDITIONS (if needed), RENDERING & STYLING

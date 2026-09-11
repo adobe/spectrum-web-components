@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Workstreams](../README.md) / [2nd-gen Component Migration](README.md) / Status
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Workstreams](../README.md) / [gen2 Component Migration](README.md) / Status
 
 <!-- Document title (editable) -->
 
@@ -18,7 +18,7 @@
 
 <!-- Document content (editable) -->
 
-| Component           | [Analyze](02_step-by-step/01_analyze-rendering-and-styling/README.md) | [Factor Component](02_step-by-step/02_factor-rendering-out-of-1st-gen-component.md) | [Move to Core](02_step-by-step/03_move-base-class-to-2nd-gen-core.md) | [Add Data Model](02_step-by-step/04_formalize-spectrum-data-model.md) | [Add 2nd-Gen](02_step-by-step/05_implement-2nd-gen-component.md) | [Render & Style](02_step-by-step/06_migrate-rendering-and-styles.md) | [Add Stories](02_step-by-step/07_add-stories-for-2nd-gen-component.md) |
+| Component           | [Analyze](02_step-by-step/01_analyze-rendering-and-styling/README.md) | [Factor Component](02_step-by-step/02_factor-rendering-out-of-1st-gen-component.md) | [Move to Core](02_step-by-step/03_move-base-class-to-gen2-core.md) | [Add Data Model](02_step-by-step/04_formalize-spectrum-data-model.md) | [Add gen2](02_step-by-step/05_implement-gen2-component.md) | [Render & Style](02_step-by-step/06_migrate-rendering-and-styles.md) | [Add Stories](02_step-by-step/07_add-stories-for-gen2-component.md) |
 | ------------------- | ------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------- |
 | Accordion           | ✓ |                                                                                     |                                                                       |                                                                       |                                                                  |                                                                      | ✓                                                                      |
 | Action Bar          | |                                                                                     |                                                                       |                                                                       |                                                                  |                                                                      |                                                                        |
@@ -95,7 +95,7 @@
 
 Components that have Spectrum CSS and migration analysis but are not standalone SWC components; they are used by other components (e.g. thumbnail, color picker).
 
-| Component            | [Analyze](02_step-by-step/01_analyze-rendering-and-styling/README.md) | [Factor Component](02_step-by-step/02_factor-rendering-out-of-1st-gen-component.md) | [Move to Core](02_step-by-step/03_move-base-class-to-2nd-gen-core.md) | [Add Data Model](02_step-by-step/04_formalize-spectrum-data-model.md) | [Add 2nd-Gen](02_step-by-step/05_implement-2nd-gen-component.md) | [Render & Style](02_step-by-step/06_migrate-rendering-and-styles.md) | [Add Stories](02_step-by-step/07_add-stories-for-2nd-gen-component.md) |
+| Component            | [Analyze](02_step-by-step/01_analyze-rendering-and-styling/README.md) | [Factor Component](02_step-by-step/02_factor-rendering-out-of-1st-gen-component.md) | [Move to Core](02_step-by-step/03_move-base-class-to-gen2-core.md) | [Add Data Model](02_step-by-step/04_formalize-spectrum-data-model.md) | [Add gen2](02_step-by-step/05_implement-gen2-component.md) | [Render & Style](02_step-by-step/06_migrate-rendering-and-styles.md) | [Add Stories](02_step-by-step/07_add-stories-for-gen2-component.md) |
 | -------------------- | ------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------- |
 | Opacity Checkerboard | ✓ | NA | NA | NA | NA | ✓ | |
 
@@ -103,7 +103,7 @@ Components that have Spectrum CSS and migration analysis but are not standalone 
 
 Components that exist in Spectrum 2 CSS but do not yet have a dedicated SWC (net-new).
 
-| Component             | [Analyze](02_step-by-step/01_analyze-rendering-and-styling/README.md) | [Factor Component](02_step-by-step/02_factor-rendering-out-of-1st-gen-component.md) | [Move to Core](02_step-by-step/03_move-base-class-to-2nd-gen-core.md) | [Add Data Model](02_step-by-step/04_formalize-spectrum-data-model.md) | [Add 2nd-Gen](02_step-by-step/05_implement-2nd-gen-component.md) | [Render & Style](02_step-by-step/06_migrate-rendering-and-styles.md) | [Add Stories](02_step-by-step/07_add-stories-for-2nd-gen-component.md) |
+| Component             | [Analyze](02_step-by-step/01_analyze-rendering-and-styling/README.md) | [Factor Component](02_step-by-step/02_factor-rendering-out-of-1st-gen-component.md) | [Move to Core](02_step-by-step/03_move-base-class-to-gen2-core.md) | [Add Data Model](02_step-by-step/04_formalize-spectrum-data-model.md) | [Add gen2](02_step-by-step/05_implement-gen2-component.md) | [Render & Style](02_step-by-step/06_migrate-rendering-and-styles.md) | [Add Stories](02_step-by-step/07_add-stories-for-gen2-component.md) |
 | --------------------- | ------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------- |
 | Infield Progress Circle | ✓ | | | | | | |
 

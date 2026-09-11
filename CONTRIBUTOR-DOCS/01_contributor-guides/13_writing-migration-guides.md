@@ -25,11 +25,11 @@
 
 ## About this guide
 
-This guide explains when and how to write a consumer-facing migration guide for a 2nd-gen component. Migration guides help consumers move from the 1st-gen `sp-*` components to 2nd-gen `swc-*` components with confidence.
+This guide explains when and how to write a consumer-facing migration guide for a gen2 component. Migration guides help consumers move from the 1st-gen `sp-*` components to gen2 `swc-*` components with confidence.
 
 ## When to write a migration guide
 
-Write a migration guide when a 2nd-gen component is approaching production readiness and consumers will need to migrate from the equivalent 1st-gen component. A migration guide is required before a component is considered fully production-ready.
+Write a migration guide when a gen2 component is approaching production readiness and consumers will need to migrate from the equivalent 1st-gen component. A migration guide is required before a component is considered fully production-ready.
 
 You do not need to wait until the component is feature-complete — guides can be updated as the API stabilizes.
 
@@ -38,7 +38,7 @@ You do not need to wait until the component is feature-complete — guides can b
 Each migration guide lives alongside the component it documents:
 
 ```
-2nd-gen/packages/swc/components/[component-name]/migration-guide.mdx
+gen2/packages/swc/components/[component-name]/migration-guide.mdx
 ```
 
 The file is MDX. Storybook's config picks it up automatically and renders it at `Components / [Component name] / Migration guide`.
@@ -72,7 +72,7 @@ Use the `consumer-migration-guide` skill in Claude Code:
 
 The agent will:
 
-- Read the 1st-gen and 2nd-gen component source to identify real API changes
+- Read the 1st-gen and gen2 component source to identify real API changes
 - Generate before/after examples for each change
 - Build the What changed tables
 - Write component-specific accessibility and styling notes
@@ -81,19 +81,19 @@ The agent will:
 
 ## Checklist
 
-- [ ] File is at `2nd-gen/packages/swc/components/[component]/migration-guide.mdx`
+- [ ] File is at `gen2/packages/swc/components/[component]/migration-guide.mdx`
 - [ ] Starts with the correct MDX header (`import { Meta }` + `<Meta title="...">`)
 - [ ] All required sections are present (What changed, Update your code, Checklist)
 - [ ] Every step in Update your code has a before/after code block
 - [ ] Accessibility section does not duplicate snippets already in Update your code
 - [ ] Styling section lists only public `--swc-*` custom properties verified against the Spectrum 2 source
-- [ ] All claims verified against `1st-gen/packages/[component]/` and `2nd-gen/packages/swc/components/[component]/`
+- [ ] All claims verified against `1st-gen/packages/[component]/` and `gen2/packages/swc/components/[component]/`
 - [ ] All code examples are accessible and use meaningful content
 
 ## Examples
 
 The following migration guides are good references:
 
-- `2nd-gen/packages/swc/components/badge/migration-guide.mdx` — default variant change, new attributes, CSS custom properties
-- `2nd-gen/packages/swc/components/avatar/migration-guide.mdx` — attribute renames, removed feature, CSS custom properties
-- `2nd-gen/packages/swc/components/status-light/migration-guide.mdx` — removed attribute, new color variants
+- `gen2/packages/swc/components/badge/migration-guide.mdx` — default variant change, new attributes, CSS custom properties
+- `gen2/packages/swc/components/avatar/migration-guide.mdx` — attribute renames, removed feature, CSS custom properties
+- `gen2/packages/swc/components/status-light/migration-guide.mdx` — removed attribute, new color variants

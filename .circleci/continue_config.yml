@@ -277,7 +277,7 @@ jobs:
       - setup-node-dependencies
       - run:
           name: Build gen2 project
-          command: yarn build:2nd-gen
+          command: yarn build:gen2
       - run:
           name: Generate Custom Elements Manifest
           command: yarn workspace @adobe/spectrum-wc analyze
@@ -285,8 +285,8 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - 2nd-gen/packages/core/dist
-            - 2nd-gen/packages/swc/dist
+            - gen2/packages/core/dist
+            - gen2/packages/swc/dist
 
   # Build the ci-a11y Storybook once; the a11y and axe jobs attach it. Uses
   # `downstream` because the Storybook build still pulls in gen1 refs.
@@ -301,7 +301,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - 2nd-gen/packages/swc/storybook-static
+            - gen2/packages/swc/storybook-static
 
   # ---------------------------------------------------------------------------
   # gen1 unit tests (sharded across 5 containers, split by timings)
@@ -391,10 +391,10 @@ jobs:
           name: Run gen2 << parameters.browser >> tests (shard $CIRCLE_NODE_INDEX/$CIRCLE_NODE_TOTAL)
           command: |
             VITEST_BROWSER_INSTANCES=<< parameters.browser >> \
-              yarn workspace @spectrum-web-components/2nd-gen run test \
+              yarn workspace @spectrum-web-components/gen2 run test \
               --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL
       - store_test_results:
-          path: /root/project/2nd-gen/packages/swc/test-results
+          path: /root/project/gen2/packages/swc/test-results
 
   # gen2 coverage — Chromium only, base=main only. It stays in the gen2 workflow
   # (not a separate is_base_main-gated one) so it can attach the shared
@@ -416,11 +416,11 @@ jobs:
           at: .
       - run:
           name: Run gen2 Chromium coverage
-          command: VITEST_BROWSER_INSTANCES=chromium yarn workspace @spectrum-web-components/2nd-gen test:coverage
+          command: VITEST_BROWSER_INSTANCES=chromium yarn workspace @spectrum-web-components/gen2 test:coverage
       - store_test_results:
-          path: /root/project/2nd-gen/packages/swc/test-results
+          path: /root/project/gen2/packages/swc/test-results
       - store_artifacts:
-          path: 2nd-gen/packages/swc/coverage
+          path: gen2/packages/swc/coverage
 
   # gen2 ARIA snapshot tests (Playwright), against the prebuilt Storybook.
   test-gen2-a11y:
@@ -433,9 +433,9 @@ jobs:
           name: Run gen2 ARIA snapshot tests
           command: yarn test:a11y:2nd
       - store_test_results:
-          path: /root/project/2nd-gen/test/playwright-a11y/results
+          path: /root/project/gen2/test/playwright-a11y/results
       - store_artifacts:
-          path: 2nd-gen/test/playwright-a11y/report
+          path: gen2/test/playwright-a11y/report
 
   # gen2 axe-core WCAG tests (Storybook test-runner), against the prebuilt Storybook.
   test-gen2-axe:
@@ -447,10 +447,10 @@ jobs:
       - run:
           name: Run axe-core WCAG tests
           command: |
-            mkdir -p 2nd-gen/packages/swc/test-results
-            yarn start-server-and-test "npx http-server 2nd-gen/packages/swc/storybook-static -p 6006 --silent" http://127.0.0.1:6006 "JEST_JUNIT_OUTPUT_DIR=./test-results JEST_JUNIT_OUTPUT_NAME=junit.xml yarn workspace @adobe/spectrum-wc test:storybook --url http://127.0.0.1:6006 --index-json --ci --junit --maxWorkers=2 --testTimeout=30000"
+            mkdir -p gen2/packages/swc/test-results
+            yarn start-server-and-test "npx http-server gen2/packages/swc/storybook-static -p 6006 --silent" http://127.0.0.1:6006 "JEST_JUNIT_OUTPUT_DIR=./test-results JEST_JUNIT_OUTPUT_NAME=junit.xml yarn workspace @adobe/spectrum-wc test:storybook --url http://127.0.0.1:6006 --index-json --ci --junit --maxWorkers=2 --testTimeout=30000"
       - store_test_results:
-          path: /root/project/2nd-gen/packages/swc/test-results
+          path: /root/project/gen2/packages/swc/test-results
 
   # ---------------------------------------------------------------------------
   # Docs + visual regression (gen1)

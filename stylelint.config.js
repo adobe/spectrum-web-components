@@ -60,7 +60,7 @@ export default {
   },
   overrides: [
     {
-      files: ['2nd-gen/**/*.css'],
+      files: ['gen2/**/*.css'],
       rules: {
         'scale-unlimited/declaration-strict-value': [
           [

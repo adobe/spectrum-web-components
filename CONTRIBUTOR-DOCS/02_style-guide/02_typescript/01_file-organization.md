@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-gen TypeScript](README.md) / File organization
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 TypeScript](README.md) / File organization
 
 <!-- Document title (editable) -->
 
@@ -30,7 +30,7 @@
 
 <!-- Document content (editable) -->
 
-This guide explains how to organize files in 2nd-gen components. It covers the copyright header, how to order imports, what files each component needs, and how to set up exports.
+This guide explains how to organize files in gen2 components. It covers the copyright header, how to order imports, what files each component needs, and how to set up exports.
 
 ## Copyright header
 
@@ -185,7 +185,7 @@ Each component has files in two packages: **core** and **swc**.
 | swc | `component.css` | Component stylesheet |
 | swc | `index.ts` | Registers the custom element and re-exports |
 
-The core package also lives at `2nd-gen/packages/core/components/<name>/` and the swc package at `2nd-gen/packages/swc/components/<name>/`.
+The core package also lives at `gen2/packages/core/components/<name>/` and the swc package at `gen2/packages/swc/components/<name>/`.
 
 **Example for Badge:**
 
@@ -203,8 +203,8 @@ The core package also lives at `2nd-gen/packages/core/components/<name>/` and th
 Types files always live in the **core** package, not in swc. This keeps the behavior layer (core) and the rendering layer (swc) cleanly separated.
 
 ```text
-2nd-gen/packages/core/components/badge/Badge.types.ts     ✅ Correct
-2nd-gen/packages/swc/components/badge/Badge.types.ts      ❌ Wrong location
+gen2/packages/core/components/badge/Badge.types.ts     ✅ Correct
+gen2/packages/swc/components/badge/Badge.types.ts      ❌ Wrong location
 ```
 
 The concrete class in swc imports types from core through the package path:

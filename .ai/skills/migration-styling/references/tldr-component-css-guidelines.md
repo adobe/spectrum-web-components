@@ -2,7 +2,7 @@
 
 ## Reference Documents
 
-- **Working examples:** [badge.css](../../../../2nd-gen/packages/swc/components/badge/badge.css), [status-light.css](../../../../2nd-gen/packages/swc/components/status-light)
+- **Working examples:** [badge.css](../../../../gen2/packages/swc/components/badge/badge.css), [status-light.css](../../../../gen2/packages/swc/components/status-light)
 - **Main rules:** [01_component-css](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md)
 - **Custom property decisions:** [02_custom-properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md)
 - **PR self-check:** [03_component-css-pr-checklist](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/03_component-css-pr-checklist.md)
@@ -146,7 +146,7 @@ Keep selector specificity at or below `(0,1,0)`. If you need a compounded select
 
 Only add `@media (forced-colors: active)` if browser defaults are not conveying correct semantic intent, and always put it at the end of the component stylesheet.
 
-Semantic HTML elements (`<button>`, `<input>`, `<a>`) get correct forced-colors treatment automatically — `ButtonText`, focus `Highlight`, disabled `GrayText` — without any CSS override. Only non-semantic elements (a decorative `<div>` or a `<span>` using `background-color` as a visual indicator) need explicit overrides. Do not carry over forced-colors rules from 1st-gen Spectrum CSS without first verifying the 2nd-gen component uses non-semantic markup that requires them.
+Semantic HTML elements (`<button>`, `<input>`, `<a>`) get correct forced-colors treatment automatically — `ButtonText`, focus `Highlight`, disabled `GrayText` — without any CSS override. Only non-semantic elements (a decorative `<div>` or a `<span>` using `background-color` as a visual indicator) need explicit overrides. Do not carry over forced-colors rules from 1st-gen Spectrum CSS without first verifying the gen2 component uses non-semantic markup that requires them.
 
 → See [01_component-css#forced-colors-requirements](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#forced-colors-requirements)
 

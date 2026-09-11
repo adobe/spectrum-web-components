@@ -19,4 +19,4 @@
 - [Red Hat Design System testing conventions](https://github.com/RedHat-UX/red-hat-design-system/wiki/Testing)
 - [WCAG 2.1 quick reference](https://www.w3.org/WAI/WCAG21/quickref/)
 - [Accessibility testing guide](../../01_contributor-guides/09_accessibility-testing.md) (project-specific)
-- [2nd gen testing guide](../../01_contributor-guides/11_2ndgen_testing.md) (project-specific)
+- [gen2 testing guide](../../01_contributor-guides/11_2ndgen_testing.md) (project-specific)

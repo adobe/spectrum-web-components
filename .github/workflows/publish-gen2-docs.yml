@@ -1,4 +1,4 @@
-name: Publish 2nd-Gen Documentation
+name: Publish gen2 Documentation
 
 on:
   workflow_dispatch:
@@ -7,11 +7,11 @@ on:
       - main
     # Skip the publish when a main push only touches 1st-gen files. Root-level
     # changes (anything outside `1st-gen/`) still trigger the workflow so shared
-    # config / scripts / 2nd-gen edits keep deploying the 2nd-gen docs.
+    # config / scripts / gen2 edits keep deploying the gen2 docs.
     paths-ignore:
       - '1st-gen/**'
   # Production deploy is driven by this, not by the push above - the push that
-  # merges the 2nd-gen Version PR only starts Publish Packages (gen2), whose
+  # merges the gen2 Version PR only starts Publish Packages (gen2), whose
   # real npm-publish step can sit behind a required manual approval for a long
   # time. Waiting for that workflow to conclude means production docs can't go
   # live before the release they're documenting actually ships (or ships stale
@@ -34,7 +34,7 @@ concurrency:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    name: Build and Deploy 2nd-Gen Docs
+    name: Build and Deploy gen2 Docs
     timeout-minutes: 30
     # Publish Packages (gen2) only triggers on push or workflow_dispatch, never
     # pull_request - so every workflow_run completion here already ran against a
@@ -88,14 +88,14 @@ jobs:
       - name: Generate Agent Skills
         run: yarn generate:skills
 
-      - name: Build 2nd-gen Storybook
-        run: yarn workspace @spectrum-web-components/2nd-gen storybook:build
+      - name: Build gen2 Storybook
+        run: yarn workspace @spectrum-web-components/gen2 storybook:build
 
       - name: Setup AzCopy
         uses: ./.github/actions/setup-azcopy
 
       # Every trigger of this workflow refreshes the staging path (docs-staging/) -
-      # push, workflow_dispatch, and the workflow_run that follows a real 2nd-gen
+      # push, workflow_dispatch, and the workflow_run that follows a real gen2
       # release. It's cheap to re-sync and always safe to keep it tracking main.
       #
       # AZCOPY_* creds are scoped to just this step and "Deploy to production"
@@ -108,8 +108,8 @@ jobs:
           AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
           AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         run: |
-          echo "Deploying 2nd-gen docs to docs-staging/"
-          azcopy sync "2nd-gen/packages/swc/storybook-static/" \
+          echo "Deploying gen2 docs to docs-staging/"
+          azcopy sync "gen2/packages/swc/storybook-static/" \
             "https://swcpreviews.blob.core.windows.net/\$web/docs-staging/" \
             --recursive \
             --delete-destination=true \
@@ -136,8 +136,8 @@ jobs:
           AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
           AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         run: |
-          echo "Deploying 2nd-gen docs to docs/"
-          azcopy sync "2nd-gen/packages/swc/storybook-static/" \
+          echo "Deploying gen2 docs to docs/"
+          azcopy sync "gen2/packages/swc/storybook-static/" \
             "https://swcpreviews.blob.core.windows.net/\$web/docs/" \
             --recursive \
             --delete-destination=true \

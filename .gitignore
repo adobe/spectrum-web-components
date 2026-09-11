@@ -118,7 +118,7 @@ test-results.xml
 !1st-gen/test/visual/**/*.js
 1st-gen/test/visual/test.js
 test-results
-2nd-gen/packages/swc/playwright-report
+gen2/packages/swc/playwright-report
 
 # lingering directories from before monorepo
 packages/*
@@ -130,15 +130,15 @@ test/*
 **/__screenshots__/
 
 # second gen build artifacts
-2nd-gen/packages/*/dist/
-2nd-gen/packages/*/custom-elements.json
-2nd-gen/packages/*/storybook-static*
-2nd-gen/packages/swc/.storybook/contributor-docs/
-2nd-gen/packages/swc/public/llms.txt
-2nd-gen/packages/swc/public/llms-full.txt
-2nd-gen/packages/swc/public/sitemap.xml
-2nd-gen/packages/swc/public/.well-known/agent-skills
-2nd-gen/packages/swc/public/reference
+gen2/packages/*/dist/
+gen2/packages/*/custom-elements.json
+gen2/packages/*/storybook-static*
+gen2/packages/swc/.storybook/contributor-docs/
+gen2/packages/swc/public/llms.txt
+gen2/packages/swc/public/llms-full.txt
+gen2/packages/swc/public/sitemap.xml
+gen2/packages/swc/public/.well-known/agent-skills
+gen2/packages/swc/public/reference
 
 # npm assets
 node_modules
@@ -152,12 +152,12 @@ chromatic-diagnostics*.json
 
 # Playwright test reports (generated)
 1st-gen/test/playwright-a11y/report/
-2nd-gen/test/playwright-a11y/report/
+gen2/test/playwright-a11y/report/
 
 # Playwright test results (generated)
 playwright-report/
 test-results/
-2nd-gen/test/playwright-a11y/results/
+gen2/test/playwright-a11y/results/
 
 # local debug logs
 debug-storybook.log
@@ -175,6 +175,6 @@ debug-storybook.log
 # generator, and not persisted after the generated art is committed. The family
 # folders stay tracked (via their README) so teammates can find where to add icons;
 # only the raw .svg assets are ignored. See
-# 2nd-gen/packages/swc/icon-source/README.md
-2nd-gen/packages/swc/icon-source/ui/*.svg
-2nd-gen/packages/swc/icon-source/workflow/*.svg
+# gen2/packages/swc/icon-source/README.md
+gen2/packages/swc/icon-source/ui/*.svg
+gen2/packages/swc/icon-source/workflow/*.svg

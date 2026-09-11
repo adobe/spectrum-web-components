@@ -3,7 +3,7 @@
 '@adobe/spectrum-wc-core': minor
 ---
 
-Add the internal 2nd-gen UI icon system: the `<swc-ui-icon>` element plus a build-time generator for the S2 UI icon set.
+Add the internal gen2 UI icon system: the `<swc-ui-icon>` element plus a build-time generator for the S2 UI icon set.
 
 - **`<swc-ui-icon>`** (internal): `icon` selects the icon-set, `size` selects the matching optical step, and `accessible-label` drives host-owned accessibility; renders generated Lit templates with no `unsafeSVG` in consuming components.
 - **Generator** (`yarn generate:ui-icons`): converts downloaded A4U source SVGs into per-logical-icon template bundles under `components/ui-icons/icon-set/`, rewriting fills to `var(--swc-icon-color, currentColor)`.

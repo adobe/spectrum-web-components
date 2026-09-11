@@ -13,7 +13,7 @@ Accumulated lessons from working sessions on this project. Grouped by category. 
 
 ## Path resolution
 
-- **`2nd-gen/packages/swc/AGENTS.md` is 3 levels deep**: Relative paths from this file need `../../../` to reach the repo root — not `../../`. Wrong: `../../linters/foo.js`. Correct: `../../../linters/foo.js`.
+- **`gen2/packages/swc/AGENTS.md` is 3 levels deep**: Relative paths from this file need `../../../` to reach the repo root — not `../../`. Wrong: `../../linters/foo.js`. Correct: `../../../linters/foo.js`.
 - **Symlink removal with `rm`**: `rm` on a symlink removes only the pointer, not the target directory or files. Safe to use when cleaning up a symlink.
 - **Git stores symlinks as text blobs**: Staged symlinks appear as the raw target path string in the index, not the resolved content. This is why Cursor shows "Apply Manually" on staged symlink files — it reads the index, not the filesystem.
 
@@ -22,7 +22,7 @@ Accumulated lessons from working sessions on this project. Grouped by category. 
 ## Project structure
 
 - **Root `package.json` has `"type": "module"`**: All `.js` scripts in this repo use ESM `import`/`export` syntax. Write new scripts with `import`, not `require`.
-- **`linters/` is at the repo root**: The `stylelint-property-order.js` and ESLint plugin live at `linters/`, not inside `2nd-gen/` or `1st-gen/`.
+- **`linters/` is at the repo root**: The `stylelint-property-order.js` and ESLint plugin live at `linters/`, not inside `gen2/` or `1st-gen/`.
 - **`.ai/memory/` is the persistent lessons store**: Lessons and cross-session notes belong here, not in session-handoff documents or code comments.
 
 ---
@@ -51,4 +51,4 @@ Accumulated lessons from working sessions on this project. Grouped by category. 
 ## CI / build
 
 - **`yarn lint:ai` runs the AI tooling validator**: `node .ai/scripts/validate.js` checks story tags, AGENTS.md paths, and config schema. Run it locally before pushing with `yarn lint:ai`.
-- **Validator found a real broken link on first run**: The `2nd-gen/packages/swc/AGENTS.md` path to `stylelint-property-order.js` was genuinely wrong — the CI check is worth running even on mature files.
+- **Validator found a real broken link on first run**: The `gen2/packages/swc/AGENTS.md` path to `stylelint-property-order.js` was genuinely wrong — the CI check is worth running even on mature files.

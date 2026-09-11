@@ -63,7 +63,7 @@ Current behavior and structure:
 
 ### DOM structure changes
 
-| Area | 1st-gen | 2nd-gen target |
+| Area | 1st-gen | gen2 target |
 | --- | --- | --- |
 | Host tag | `<sp-close-button>` | `<swc-close-button>` |
 | Interactive element | Host-level button-like behavior via `ButtonBase` | Real inner `<button type="button">` with delegated focus |
@@ -84,7 +84,7 @@ Current behavior and structure:
 
 ### CSS => SWC implementation gaps
 
-- No 2nd-gen close-button component exists yet in `2nd-gen/packages/core` or `2nd-gen/packages/swc`.
+- No gen2 close-button component exists yet in `gen2/packages/core` or `gen2/packages/swc`.
 - No SWC close-button CSS exists yet, so no verified `--swc-close-button-*` public property list exists.
 - Migration guide content for close-button styling must remain provisional until SWC CSS and `@cssprop` JSDoc land.
 

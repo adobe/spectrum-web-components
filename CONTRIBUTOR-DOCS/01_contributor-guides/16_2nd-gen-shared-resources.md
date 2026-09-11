@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../README.md) / [Contributor guides](README.md) / 2nd-gen shared resources quick reference
+[CONTRIBUTOR-DOCS](../README.md) / [Contributor guides](README.md) / gen2 shared resources quick reference
 
 <!-- Document title (editable) -->
 
-# 2nd-gen shared resources quick reference
+# gen2 shared resources quick reference
 
 <!-- Generated TOC - DO NOT EDIT -->
 
@@ -28,9 +28,9 @@
 
 ## Overview
 
-Index of shared, reusable resources in 2nd-gen: controllers, mixins, utilities, and directives in `@adobe/spectrum-wc-core`, plus a few sibling-package helpers. For each one: what it does and who currently uses it. Check here before writing new logic that a controller, mixin, or utility may already cover.
+Index of shared, reusable resources in gen2: controllers, mixins, utilities, and directives in `@adobe/spectrum-wc-core`, plus a few sibling-package helpers. For each one: what it does and who currently uses it. Check here before writing new logic that a controller, mixin, or utility may already cover.
 
-> **Scope:** `2nd-gen/packages/core` (controllers, mixins, utils, directives, element) and its consumers: components in `2nd-gen/packages/swc/components`, and patterns in `2nd-gen/packages/swc/patterns/ai-toolkit`. Test-only tooling is out of scope; see [2nd gen testing](11_2ndgen_testing.md). Update "used by" as adoption changes.
+> **Scope:** `gen2/packages/core` (controllers, mixins, utils, directives, element) and its consumers: components in `gen2/packages/swc/components`, and patterns in `gen2/packages/swc/patterns/ai-toolkit`. Test-only tooling is out of scope; see [gen2 testing](11_2ndgen_testing.md). Update "used by" as adoption changes.
 >
 > ⚠️ **Important:** Composition happens at two layers. Most controllers/mixins are applied on the shared abstract `*Base` class in `core/components/*` and inherited by every concrete element. A few (`PendingMixin`) are applied one layer up, directly on the concrete element in `swc/components/*` (e.g. `Button extends PendingMixin(ButtonBase)`). Check both layers before concluding something isn't in use.
 
@@ -146,4 +146,4 @@ Patterns build directly on core resources and on components, not on their own `*
 - [Mixin composition](../02_style-guide/02_typescript/13_mixin-composition.md), [Controller composition](../02_style-guide/02_typescript/14_controller-composition.md), [Directive composition](../02_style-guide/02_typescript/15_directive-composition.md): how to write and compose these, not just what exists
 - [Debug and validation](../02_style-guide/02_typescript/17_debug-validation.md): full API for `warnIf()`, `validateEnum()`, and the deprecation-warning system
 - [Component migration plans](../03_project-planning/03_components/README.md): per-component rationale
-- `2nd-gen/packages/core`: source of truth for everything above
+- `gen2/packages/core`: source of truth for everything above

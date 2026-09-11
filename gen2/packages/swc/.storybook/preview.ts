@@ -1,0 +1,397 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+/** @type { import('@storybook/web-components').Preview } */
+import { setCustomElementsManifest } from '@storybook/web-components';
+import {
+  type Options,
+  setStorybookHelpersConfig,
+} from '@wc-toolkit/storybook-helpers';
+import isChromatic from 'chromatic/isChromatic';
+
+import customElements from '../dist/custom-elements.json';
+import { withContext } from './decorators/contexts.js';
+import { withFlexLayout, withStaticColorsDemo } from './decorators/index.js';
+import { withLanguageWrapper } from './decorators/language.js';
+import { withStaticColorPlayground } from './decorators/static-color-playground.js';
+import DocumentTemplate from './DocumentTemplate.mdx';
+import { FontLoader } from './loaders/font-loader.js';
+import { transformDocsSource } from './utils/docs-source-transform.js';
+
+import '../stylesheets/swc.css';
+import '../stylesheets/typography.css';
+import '../stylesheets/link.css';
+import '../stylesheets/global/global-elements.css';
+import './assets/preview.css';
+
+const storybookHelperOptions: Options = {
+  categoryOrder: [
+    'attributes',
+    'properties',
+    'slots',
+    'cssProps',
+    'cssParts',
+    'events',
+    'methods',
+  ],
+  hideArgRef: true,
+  renderDefaultValues: true,
+};
+
+setStorybookHelpersConfig(storybookHelperOptions);
+
+// Set the Custom Elements Manifest for automatic controls generation
+setCustomElementsManifest(customElements);
+
+const preview = {
+  globalTypes: {
+    theme: {
+      name: 'Theme',
+      description: 'Global theme for components',
+      defaultValue: 'light',
+      type: 'string',
+      toolbar: {
+        title: 'Theme',
+        icon: 'paintbrush',
+        items: [
+          { value: 'light', title: 'Light' },
+          { value: 'dark', title: 'Dark' },
+          { value: 'adaptive', title: 'Adaptive' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+    lang: {
+      name: 'Language',
+      description:
+        'Locale for typography (loads the corresponding Adobe Fonts kit on demand)',
+      defaultValue: 'en-US',
+      type: 'string',
+      toolbar: {
+        title: 'Language',
+        icon: 'globe',
+        items: [
+          { value: 'en-US', title: 'English', right: 'English (US)' },
+          { value: 'he', title: 'Hebrew', right: 'עִברִית' },
+          { value: 'ja', title: 'Japanese', right: '日本語' },
+          { value: 'ko', title: 'Korean', right: '한국어' },
+          { value: 'ar', title: 'Arabic', right: 'عربي' },
+          // { value: "fa", title: "Persian", right: "فارسی" },
+          {
+            value: 'zh-Hans',
+            title: 'Chinese (Simplified)',
+            right: '简体中文',
+          },
+          {
+            value: 'zh-Hant',
+            title: 'Chinese (Traditional)',
+            right: '繁體中文',
+          },
+          {
+            value: 'zh-HK',
+            title: 'Chinese (Hong Kong)',
+            right: '中文（香港）',
+          },
+          // { value: "th", title: "Thai", right: "ไทย" },
+        ],
+        dynamicTitle: true,
+      },
+    },
+    textDirection: {
+      name: 'Direction',
+      description:
+        'Text direction for stories. Auto follows language; LTR/RTL overrides it.',
+      defaultValue: 'auto',
+      type: 'string',
+      toolbar: {
+        title: 'Direction',
+        icon: 'transfer',
+        items: [
+          { value: 'auto', title: 'Auto' },
+          { value: 'ltr', title: 'LTR' },
+          { value: 'rtl', title: 'RTL' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
+  initialGlobals: {
+    theme: 'light',
+    lang: 'en-US',
+    textDirection: 'auto',
+  },
+  decorators: [
+    withContext,
+    withLanguageWrapper,
+    withStaticColorPlayground,
+    withStaticColorsDemo,
+    withFlexLayout,
+  ],
+  parameters: {
+    layout: 'centered',
+    // The Storybook patch (.yarn/patches/storybook-npm-10.4.1.patch) gates play
+    // functions on initial render behind `parameters.autoplay` so they do not run
+    // automatically while browsing the dev UI. Chromatic renders each story via that
+    // same initial path, so without this it would snapshot the pre-play state. Enable
+    // autoplay only under Chromatic to restore correct visual regression snapshots.
+    autoplay: isChromatic(),
+    backgrounds: { disable: true }, // Use custom context switches
+    controls: {
+      expanded: true,
+      hideNoControlsWarning: true,
+      sort: 'requiredFirst',
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/i,
+      },
+    },
+    a11y: {
+      // CI enforces a11y via the custom Storybook test-runner; keep addon-a11y non-blocking here.
+      test: 'todo',
+      config: {
+        rules: [
+          // Customize axe-core rules if needed
+        ],
+      },
+    },
+    html: {
+      root: '[data-html-preview]:first-of-type > *',
+      removeComments: true,
+      prettier: {
+        tabWidth: 2,
+        useTabs: false,
+      },
+      highlighter: {
+        showLineNumbers: false,
+        wrapLines: true,
+      },
+    },
+    docs: {
+      codePanel: true,
+      page: DocumentTemplate,
+      toc: {
+        contentsSelector: '.sbdocs-content',
+        headingSelector: 'h2, h3, h4',
+        ignoreSelector:
+          '.sbdocs-subtitle, .sbdocs-preview *, #root-inner, #feedback',
+        disable: false,
+      },
+      canvas: {
+        withToolbar: true,
+        layout: 'centered',
+        // Individual stories can override this with parameters.docs.canvas.sourceState.
+        sourceState: 'hidden',
+      },
+      source: {
+        excludeDecorators: true,
+        // Prefer serialized DOM so docs code panels show HTML for stories that use
+        // custom render functions; type "auto" often surfaces raw source instead.
+        type: 'dynamic',
+        language: 'html',
+        transform: transformDocsSource,
+      },
+    },
+    options: {
+      storySort: {
+        method: 'alphabetical-by-kind',
+        includeNames: true,
+        order: [
+          'Learn about SWC',
+          ['Overview', 'Get started', 'Gen1 vs Gen2'],
+          'Resources',
+          [
+            'Support and compatibility',
+            'Migrate from Gen1',
+            'Build with AI',
+            'Changelog',
+          ],
+          'Core',
+          ['Overview', 'Controllers'],
+          'Components',
+          [
+            '*',
+            [
+              'Docs',
+              'Playground',
+              'Migration guide',
+              'Tests',
+              '*',
+              'VRT',
+              [
+                'Permutations',
+                'Forced Colors',
+                'Global Styles',
+                'Custom Properties',
+                '*',
+              ],
+            ],
+          ],
+          'Patterns',
+          [
+            'AI Toolkit',
+            [
+              'Conversational pattern overview',
+              '*',
+              [
+                'Docs',
+                'Playground',
+                'Tests',
+                '*',
+                'VRT',
+                [
+                  'Permutations',
+                  'Forced Colors',
+                  'Global Styles',
+                  'Custom Properties',
+                  '*',
+                ],
+              ],
+            ],
+          ],
+          'Guides',
+          [
+            'Accessibility',
+            [
+              'Overview',
+              'Semantic HTML and ARIA',
+              'Headings and landmarks',
+              'Accessible pattern libraries',
+              'Keyboard testing',
+              'Screen reader testing',
+              'WAVE toolbar testing',
+              'Accessibility resources',
+            ],
+            'Customization',
+            [
+              'Getting started',
+              'Theme and scales',
+              'Fonts',
+              'Component styles',
+              'Global element styling',
+            ],
+          ],
+          'Contributor docs',
+          // GENERATED:CONTRIBUTOR-DOCS-SORT - Do not edit manually. Run `yarn generate:contributor-docs` to update.
+          [
+            'Contributor documentation',
+            'Contributor guides',
+            [
+              'Getting involved',
+              'Using the issue tracker',
+              'Working in the SWC repo',
+              'Making a pull request',
+              'Participating in PR reviews',
+              'Releasing SWC',
+              'Authoring contributor docs',
+              'Patching dependencies',
+              'Accessibility testing',
+              'Using stackblitz',
+              'gen2 testing',
+              'Tools vs packages',
+              'Writing migration guides',
+              'Focus management',
+              'Changelog strategy',
+              'gen2 shared resources',
+            ],
+            'Style guide',
+            [
+              'CSS',
+              [
+                'Component CSS',
+                'Custom properties',
+                'Component CSS PR checklist',
+                'Spectrum SWC migration',
+                'Anti patterns',
+                'Property order quick reference',
+                'Stylesheets',
+              ],
+              'TypeScript',
+              [
+                'File organization',
+                'Class structure',
+                'TypeScript modifiers',
+                'Lit decorators',
+                'Property patterns',
+                'Method patterns',
+                'JSDoc standards',
+                'Component types',
+                'Rendering patterns',
+                'Naming conventions',
+                'Base vs concrete',
+                'Composition patterns',
+                'Mixin composition',
+                'Controller composition',
+                'Directive composition',
+                'Interface composition',
+                'Debug validation',
+              ],
+              'Linting tools',
+              'Testing',
+              [
+                'Testing overview',
+                'Storybook testing',
+                'Playwright accessbility testing',
+                'Visual regresssion testing',
+                'Testing utilities',
+                'Code coverage',
+                'Avoiding flaky tests',
+                'Running tests.',
+                'PR review checklist',
+                'Resources',
+              ],
+            ],
+            'Project planning',
+            [
+              'Objectives and strategy',
+              'Workstreams',
+              [
+                'gen2 definition and development',
+                'gen2 component migration',
+                [
+                  'Status',
+                  'Step by step',
+                  [
+                    'Analyze rendering and styling',
+                    'Washing machine workflow',
+                    'Factor rendering out of 1st gen component',
+                    'Move base class to gen2 core',
+                    'Formalize spectrum data model',
+                    'Implement gen2 component',
+                    'Migrate rendering and styles',
+                    'Add stories for gen2 component',
+                  ],
+                  'Migration project planning',
+                ],
+                'Accessibility improvements',
+                'Component improvements',
+                '1st gen spectrum 2 enhancements',
+              ],
+              'Components',
+              'Milestones',
+              'Strategies',
+            ],
+          ],
+          // GENERATED:CONTRIBUTOR-DOCS-SORT-END
+        ],
+      },
+    },
+  },
+  // Hide SpectrumElement infrastructure members from every component's API table.
+  // These are internal properties that consumers should not configure directly.
+  argTypes: {
+    VERSION: { table: { disable: true } },
+    CORE_VERSION: { table: { disable: true } },
+  },
+  tags: ['!autodocs', '!dev'], // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
+  loaders: [FontLoader],
+};
+
+export default preview;

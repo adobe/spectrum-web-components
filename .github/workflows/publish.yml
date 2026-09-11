@@ -42,8 +42,8 @@ jobs:
       - name: Check for changesets
         id: check
         run: |
-          # This workflow is 1st-gen only, always - independent of 2nd-gen in every
-          # trigger. 2nd-gen has its own changesets setup in 2nd-gen/.changeset/ and
+          # This workflow is 1st-gen only, always - independent of gen2 in every
+          # trigger. gen2 has its own changesets setup in gen2/.changeset/ and
           # its own workflow, publish-gen2.yml.
           GEN1_COUNT=$(find 1st-gen/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
 

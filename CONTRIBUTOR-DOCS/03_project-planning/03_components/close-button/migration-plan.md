@@ -24,11 +24,11 @@
 - [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites)
 - [Changes overview](#changes-overview)
     - [Must ship — breaking or a11y-required](#must-ship--breaking-or-a11y-required)
-    - [Additive — ships when ready, zero breakage for consumers already on 2nd-gen](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)
-- [2nd-gen API decisions](#2nd-gen-api-decisions)
+    - [Additive — ships when ready, zero breakage for consumers already on gen2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-gen2)
+- [gen2 API decisions](#gen2-api-decisions)
     - [Public API](#public-api)
     - [Behavioral semantics](#behavioral-semantics)
-    - [Accessibility semantics notes (2nd-gen)](#accessibility-semantics-notes-2nd-gen)
+    - [Accessibility semantics notes (gen2)](#accessibility-semantics-notes-gen2)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
 - [Migration checklist](#migration-checklist)
     - [Preparation (this ticket)](#preparation-this-ticket)
@@ -55,10 +55,10 @@
 
 ## TL;DR
 
-- `swc-close-button` should ship as a dedicated 2nd-gen SWC component extending `ButtonBase`, not as an extension point buried inside `swc-button`.
+- `swc-close-button` should ship as a dedicated gen2 SWC component extending `ButtonBase`, not as an extension point buried inside `swc-button`.
 - API should align with modern button conventions: `accessible-label` (consumer-facing), `static-color`, and `size` (`s|m|l|xl`).
-- 2nd-gen does not ship the 1st-gen `variant="white|black"` alias; use `static-color` only. Deprecation of `variant` is a 1st-gen (`sp-close-button`) concern.
-- Styling source of truth is Spectrum CSS `spectrum-two` `components/closebutton`; 2nd-gen should not re-expose the 1st-gen `--mod-closebutton-*` surface.
+- gen2 does not ship the 1st-gen `variant="white|black"` alias; use `static-color` only. Deprecation of `variant` is a 1st-gen (`sp-close-button`) concern.
+- Styling source of truth is Spectrum CSS `spectrum-two` `components/closebutton`; gen2 should not re-expose the 1st-gen `--mod-closebutton-*` surface.
 - Accessibility is must-ship: real inner `<button type="button">`, delegated focus, mandatory discernible name, and keyboard parity for Enter/Space.
 
 ### Most blocking open questions
@@ -100,7 +100,7 @@ No close-button-specific custom events.
 
 ### CSS custom properties
 
-1st-gen styling depends on `--mod-closebutton-*` and related inherited `--mod-button-*` pass-throughs. This surface is not carried forward to 2nd-gen.
+1st-gen styling depends on `--mod-closebutton-*` and related inherited `--mod-button-*` pass-throughs. This surface is not carried forward to gen2.
 
 ### Shadow DOM output (rendered HTML)
 
@@ -135,7 +135,7 @@ No close-button-specific custom events.
 
 Prerequisite dependency:
 
-- `ButtonBase` behavior in 2nd-gen button stack should be treated as the contract baseline for focus, naming, and disabled semantics.
+- `ButtonBase` behavior in gen2 button stack should be treated as the contract baseline for focus, naming, and disabled semantics.
 
 ---
 
@@ -145,27 +145,27 @@ Prerequisite dependency:
 
 #### API and naming
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | --- | --- | --- | --- |
 | B1 | Tag rename | `<sp-close-button>` | `<swc-close-button>` | Rename markup and import path. |
 | B2 | Accessible name channel rename | `label` | `accessible-label` | Rename attribute/property and keep semantics identical. |
-| B3 | Static color API cleanup | `variant="white|black"` and `static-color` both allowed on `sp-close-button` | `static-color` only on `swc-close-button`; `variant` attribute is not supported | Replace `variant` with `static-color` when migrating to 2nd-gen. |
+| B3 | Static color API cleanup | `variant="white|black"` and `static-color` both allowed on `sp-close-button` | `static-color` only on `swc-close-button`; `variant` attribute is not supported | Replace `variant` with `static-color` when migrating to gen2. |
 
 #### Styling and visuals
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | --- | --- | --- | --- |
-| B4 | Remove legacy modifier surface | `--mod-closebutton-*` overrides | Reviewed `--swc-close-button-*` only | Migrate to published 2nd-gen custom props. |
+| B4 | Remove legacy modifier surface | `--mod-closebutton-*` overrides | Reviewed `--swc-close-button-*` only | Migrate to published gen2 custom props. |
 | B5 | S2 token parity | Legacy token references and class stack | S2 token mapping from `spectrum-two` closebutton CSS | Visual diff review against S2 resources. |
 
 #### Accessibility and behavior
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | --- | --- | --- | --- |
 | B6 | Semantic button implementation | Host-level semantics from legacy stack | Real inner `<button type="button">` + delegated focus | No API change; update tests asserting internals. |
 | B7 | Required discernible name | Can rely on hidden slot or label | Must always expose accessible name (`accessible-label` or slot text) | Ensure every usage has clear name text. |
 
-### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
+### Additive — ships when ready, zero breakage for consumers already on gen2
 
 | # | What is added | Notes |
 | --- | --- | --- |
@@ -174,7 +174,7 @@ Prerequisite dependency:
 
 ---
 
-## 2nd-gen API decisions
+## gen2 API decisions
 
 ### Public API
 
@@ -184,7 +184,7 @@ Prerequisite dependency:
 | `staticColor` | `'white' \| 'black' \| undefined` | `undefined` | `static-color` | Confirmed |
 | `accessibleLabel` | `string \| undefined` | `undefined` | `accessible-label` | Confirmed |
 | `disabled` | `boolean` | `false` | `disabled` | Confirmed |
-| — | — | — | `variant` | **Removed in 2nd-gen.** Use `static-color` only. Deprecation and alias mapping belong on 1st-gen (`sp-close-button`) until that generation is retired. |
+| — | — | — | `variant` | **Removed in gen2.** Use `static-color` only. Deprecation and alias mapping belong on 1st-gen (`sp-close-button`) until that generation is retired. |
 
 ### Behavioral semantics
 
@@ -193,7 +193,7 @@ Prerequisite dependency:
 - Focus-visible ring behavior must match S2 closebutton semantics including forced-colors compatibility.
 - `pending` and `pending-label` are inherited from `ButtonBase` for now; the close-button SWC template does not implement pending visuals. When pending moves off `ButtonBase` (button pending-controller work), close-button should not need follow-up changes.
 
-### Accessibility semantics notes (2nd-gen)
+### Accessibility semantics notes (gen2)
 
 - Apply recommendations in `accessibility-migration-analysis.md` for role/name/keyboard/focus.
 - Do not duplicate host `role="button"` if inner button is the real focus target.
@@ -217,12 +217,12 @@ Prerequisite dependency:
 
 ### Setup
 - [x] Reuse `ButtonBase` from core (no separate close-button core package).
-- [x] Create `2nd-gen/packages/swc/components/close-button/`.
+- [x] Create `gen2/packages/swc/components/close-button/`.
 - [x] Wire exports and package entrypoints.
 
 ### API
 - [x] Define `size`, `static-color`, `accessible-label`, `disabled`.
-- [x] Omit `variant` from 2nd-gen public API (breaking change; use `static-color` only).
+- [x] Omit `variant` from gen2 public API (breaking change; use `static-color` only).
 
 ### Styling
 - [x] Implement S2 closebutton selectors/tokens in SWC CSS.

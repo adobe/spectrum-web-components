@@ -16,8 +16,8 @@ import {
   type PlaywrightTestConfig,
 } from '@playwright/test';
 
-const reportOutputFolder = '2nd-gen/test/playwright-a11y/report';
-const junitOutputFile = '2nd-gen/test/playwright-a11y/results/junit.xml';
+const reportOutputFolder = 'gen2/test/playwright-a11y/report';
+const junitOutputFile = 'gen2/test/playwright-a11y/results/junit.xml';
 
 export const a11yReporter = (
   isCI: boolean
@@ -46,8 +46,8 @@ export const firstGenA11yProject: PlaywrightTestProject = {
 };
 
 export const secondGenA11yProject: PlaywrightTestProject = {
-  name: '2nd-gen',
-  testDir: './2nd-gen/',
+  name: 'gen2',
+  testDir: './gen2/',
   testMatch: [
     '**/packages/swc/components/*/test/**/*.a11y.spec.ts',
     '**/packages/swc/patterns/ai-toolkit/*/test/**/*.a11y.spec.ts',
@@ -75,8 +75,8 @@ export const firstGenStorybookServer: PlaywrightTestConfig['webServer'] = {
 export const secondGenComponentsOnlyStorybookServer: PlaywrightTestConfig['webServer'] =
   {
     command: process.env.CI
-      ? 'npx http-server 2nd-gen/packages/swc/storybook-static -p 6006 --silent'
-      : 'cd 2nd-gen/packages/swc && SWC_STORYBOOK_MODE=ci-a11y yarn storybook',
+      ? 'npx http-server gen2/packages/swc/storybook-static -p 6006 --silent'
+      : 'cd gen2/packages/swc && SWC_STORYBOOK_MODE=ci-a11y yarn storybook',
     port: 6006,
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,

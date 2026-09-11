@@ -19,7 +19,7 @@
     - [2. aXe-core validation](#2-axe-core-validation)
 - [Adding tests to a component](#adding-tests-to-a-component)
     - [1st generation components](#1st-generation-components)
-    - [2nd generation components](#2nd-generation-components)
+    - [gen2eration components](#gen2eration-components)
 - [Test helper reference](#test-helper-reference)
     - [`gotoStory(page, storyId, elementSelector)`](#gotostorypage-storyid-elementselector)
     - [`waitForCustomElement(page, tagName)`](#waitforcustomelementpage-tagname)
@@ -51,7 +51,7 @@
 
 ## About this guide
 
-This guide covers automated accessibility testing for Spectrum Web Components using Playwright. You'll learn how to write, run, and maintain accessibility tests for both 1st-gen and 2nd-gen components.
+This guide covers automated accessibility testing for Spectrum Web Components using Playwright. You'll learn how to write, run, and maintain accessibility tests for both 1st-gen and gen2 components.
 
 ## Why manual testing is necessary
 
@@ -66,15 +66,15 @@ For every PR that affects interactive components, you must perform **manual keyb
 ## Quick start
 
 ```bash
-# From project root, 1st-gen, or 2nd-gen directory
+# From project root, 1st-gen, or gen2 directory
 yarn test:a11y              # Run all tests (both generations)
 yarn test:a11y:1st          # Run only 1st generation tests
-yarn test:a11y:2nd          # Run only 2nd generation tests
+yarn test:a11y:2nd          # Run only gen2eration tests
 yarn test:a11y:ui           # Interactive UI mode (great for debugging)
 ```
 
 Tests automatically start the required Storybook instances and run in Chromium.
-`yarn test:a11y:2nd` starts only the 2nd-gen Storybook server.
+`yarn test:a11y:2nd` starts only the gen2 Storybook server.
 
 ## What we test
 
@@ -144,12 +144,12 @@ test.describe('Badge - aXe Validation', () => {
 - Element name: `'sp-badge'` (the custom element tag name)
 - Helper import: `'../../../test/a11y-helpers.js'` (1st-gen test helpers)
 
-### 2nd generation components
+### gen2eration components
 
 Same pattern, different details:
 
 ```typescript
-// 2nd-gen/packages/swc/components/badge/test/badge.a11y.spec.ts
+// gen2/packages/swc/components/badge/test/badge.a11y.spec.ts
 
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
@@ -159,8 +159,8 @@ test.describe('Badge - ARIA Snapshots', () => {
     test('should have correct accessibility tree', async ({ page }) => {
         const badge = await gotoStory(
             page,
-            'components-badge--default', // 2nd gen story ID format
-            'swc-badge' // 2nd gen element name
+            'components-badge--default', // gen2 story ID format
+            'swc-badge' // gen2 element name
         );
         await expect(badge).toMatchAriaSnapshot();
     });
@@ -190,7 +190,7 @@ test.describe('Badge - aXe Validation', () => {
 
 Test helpers are available in each generation:
 - 1st gen: `1st-gen/test/a11y-helpers.ts`
-- 2nd gen: `2nd-gen/packages/swc/utils/a11y-helpers.ts`
+- gen2: `gen2/packages/swc/utils/a11y-helpers.ts`
 
 ### `gotoStory(page, storyId, elementSelector)`
 
@@ -243,7 +243,7 @@ http://localhost:8080/?path=/story/badge--default
                                      Story ID
 ```
 
-**2nd gen** (`localhost:6006`):
+**gen2** (`localhost:6006`):
 
 ```
 http://localhost:6006/?path=/story/components-badge--default
@@ -258,7 +258,7 @@ http://localhost:6006/?path=/story/components-badge--default
 ```bash
 yarn test:a11y              # All tests (both generations)
 yarn test:a11y:1st          # Only 1st generation
-yarn test:a11y:2nd          # Only 2nd generation
+yarn test:a11y:2nd          # Only gen2eration
 yarn test:a11y:ui           # Interactive UI mode
 ```
 
@@ -270,15 +270,15 @@ cd 1st-gen
 yarn test:a11y                           # All tests (both generations)
 yarn test:a11y badge                     # Specific component
 yarn test:a11y:1st                       # Only 1st gen
-yarn test:a11y:2nd                       # Only 2nd gen
+yarn test:a11y:2nd                       # Only gen2
 yarn test:a11y badge --update-snapshots  # Update ARIA baselines
 yarn test:a11y:ui                        # UI mode
 
-# From 2nd-gen (new home for shared infrastructure)
-cd 2nd-gen
+# From gen2 (new home for shared infrastructure)
+cd gen2
 yarn test:a11y                           # All tests (both generations)
 yarn test:a11y:1st                       # Only 1st gen
-yarn test:a11y:2nd                       # Only 2nd gen
+yarn test:a11y:2nd                       # Only gen2
 yarn test:a11y:ui                        # UI mode
 ```
 
@@ -399,7 +399,7 @@ projects: [
         use: { baseURL: 'http://localhost:8080' },
     },
     {
-        name: '2nd-gen',
+        name: 'gen2',
         testMatch: '**/packages/swc/components/*/test/**/*.a11y.spec.ts',
         use: { baseURL: 'http://localhost:6006' },
     },
@@ -407,7 +407,7 @@ projects: [
 ```
 
 This allows both generations to run against their respective Storybook instances.
-For 2nd-gen-only runs, `playwright.a11y.2ndgen.config.ts` is used by
+For gen2-only runs, `playwright.a11y.2ndgen.config.ts` is used by
 `yarn test:a11y:2nd`.
 
 ### Auto-starting Storybook
@@ -429,11 +429,11 @@ webServer: [
 ];
 ```
 
-The 2nd-gen-only config starts only the 2nd-gen Storybook server:
+The gen2-only config starts only the gen2 Storybook server:
 
 ```typescript
 webServer: {
-        command: 'cd 2nd-gen/packages/swc && SWC_STORYBOOK_MODE=ci-a11y yarn storybook',
+        command: 'cd gen2/packages/swc && SWC_STORYBOOK_MODE=ci-a11y yarn storybook',
     port: 6006,
     reuseExistingServer: !process.env.CI,
 };
@@ -444,7 +444,7 @@ webServer: {
 ```
 spectrum-web-components/
 ├── playwright.a11y.config.ts              # Playwright config (both gens)
-├── playwright.a11y.2ndgen.config.ts       # Playwright config (2nd-gen only)
+├── playwright.a11y.2ndgen.config.ts       # Playwright config (gen2 only)
 ├── CONTRIBUTOR-DOCS/
 │   └── 01_contributor-guides/
 │       └── 09_accessibility-testing.md    # This guide
@@ -459,11 +459,11 @@ spectrum-web-components/
 │       └── status-light/test/
 │           ├── status-light.a11y.spec.ts
 │           └── status-light.a11y.spec.ts-snapshots/
-└── 2nd-gen/
+└── gen2/
     ├── package.json                       # Test scripts (points to root config)
     └── packages/swc/
         ├── utils/
-        │   └── a11y-helpers.ts            # 2nd gen test helpers
+        │   └── a11y-helpers.ts            # gen2 test helpers
         └── components/
             ├── badge/test/
             │   ├── badge.a11y.spec.ts
