@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["toast-overrides.css.ts"],
+  "sourcesContent": ["import { css } from '@spectrum-web-components/base';\nconst styles = css`\n    :host{--spectrum-toast-background-color-default:var(--system-toast-background-color-default);--spectrum-toast-divider-color:var(--system-toast-divider-color)}\n`;\nexport default styles;"],
+  "mappings": ";AAAA,SAAS,WAAW;AACpB,MAAM,SAAS;AAAA;AAAA;AAGf,eAAe;",
+  "names": []
+}

@@ -1,0 +1,109 @@
+"use strict";
+import {
+  elementUpdated,
+  expect,
+  nextFrame,
+  oneEvent,
+  waitUntil
+} from "@open-wc/testing";
+import { html } from "@spectrum-web-components/base";
+import { sendMouse } from "../../../test/plugins/browser.js";
+import {
+  fixture,
+  mouseClickAway,
+  mouseClickOn,
+  mouseMoveOver
+} from "../../../test/testing-helpers.js";
+import {
+  Default,
+  insertionOptions
+} from "../stories/overlay-directive.stories.js";
+describe("Overlay Directive", () => {
+  it("opens declaratively", async function() {
+    const test = await fixture(Default({ open: true }));
+    await oneEvent(test, "sp-opened");
+    const el = test.nextElementSibling;
+    expect(el.open).to.be.true;
+  });
+  it("opens without options", async function() {
+    const test = await fixture(Default());
+    const opened = oneEvent(test, "sp-opened");
+    test.click();
+    await opened;
+    const el = test.nextElementSibling;
+    expect(el.open).to.be.true;
+  });
+  it("opens an Overlay after the trigger", async function() {
+    const test = await fixture(html`
+      <div
+        style="width: 100%; height: 100vh; display: grid; place-content: center;"
+      >
+        ${insertionOptions()}
+      </div>
+    `);
+    const el = test.querySelector("sp-button");
+    await elementUpdated(el);
+    let overlays = document.querySelectorAll("sp-overlay");
+    expect(overlays.length).to.equal(0);
+    const rect = el.getBoundingClientRect();
+    let opened = oneEvent(el, "sp-opened");
+    await mouseMoveOver(el);
+    await opened;
+    opened = oneEvent(el, "sp-opened");
+    await sendMouse([
+      {
+        type: "click",
+        position: [rect.left + rect.width / 2, rect.top + rect.height / 2]
+      },
+      {
+        type: "move",
+        position: [rect.left - rect.width / 2, rect.top - rect.height / 2]
+      }
+    ]);
+    await opened;
+    overlays = document.querySelectorAll("sp-overlay");
+    expect(overlays.length).to.be.gt(0);
+    expect(overlays[0].previousElementSibling).to.equal(el);
+    const closed = oneEvent(overlays[0], "slottable-request");
+    await sendMouse({
+      type: "click",
+      position: [rect.left - rect.width / 2, rect.top - rect.height / 2]
+    });
+    await closed;
+    await waitUntil(() => {
+      overlays = document.querySelectorAll("sp-overlay");
+      return overlays.length === 0;
+    }, "not all overlays were cleaned up");
+    expect(overlays.length).to.equal(0);
+  });
+  it("opens an Overlay in a specific part of the DOM", async function() {
+    const test = await fixture(html`
+      <div
+        style="width: 100%; height: 100vh; display: grid; place-content: center;"
+      >
+        ${insertionOptions(insertionOptions.args)}
+      </div>
+    `);
+    const el = test.querySelector("sp-button");
+    await elementUpdated(el);
+    const otherElement = test.querySelector("#other-element");
+    let overlays = otherElement.querySelectorAll("sp-overlay");
+    expect(overlays.length).to.equal(0);
+    let opened = oneEvent(el, "sp-opened");
+    await mouseMoveOver(el);
+    await opened;
+    opened = oneEvent(el, "sp-opened");
+    await mouseClickOn(el);
+    await opened;
+    overlays = otherElement.querySelectorAll("sp-overlay");
+    expect(overlays.length).to.equal(1);
+    const closed = oneEvent(overlays[0], "slottable-request");
+    await mouseClickAway(el);
+    await closed;
+    await nextFrame();
+    await nextFrame();
+    overlays = otherElement.querySelectorAll("sp-overlay");
+    expect(overlays.length).to.equal(0);
+  });
+});
+//# sourceMappingURL=overlay-directive.test.js.map

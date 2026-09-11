@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["spectrum-tags.css.ts"],
+  "sourcesContent": ["import { css } from '@spectrum-web-components/base';\nconst styles = css`\n    :host{--spectrum-tag-group-item-margin-block:var(--spectrum-spacing-75);--spectrum-tag-group-item-margin-inline:var(--spectrum-spacing-75);flex-wrap:wrap;margin:0;padding:0;list-style:none;display:inline-flex}::slotted(*){margin-block:var(--mod-tag-group-item-margin-block,var(--spectrum-tag-group-item-margin-block));margin-inline:var(--mod-tag-group-item-margin-inline,var(--spectrum-tag-group-item-margin-inline))}\n`;\nexport default styles;"],
+  "mappings": "aAAA,OAAS,OAAAA,MAAW,gCACpB,MAAMC,EAASD;AAAA;AAAA,EAGf,eAAeC",
+  "names": ["css", "styles"]
+}

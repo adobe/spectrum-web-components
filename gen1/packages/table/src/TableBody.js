@@ -1,0 +1,4 @@
+"use strict";var a=Object.defineProperty;var m=Object.getOwnPropertyDescriptor;var u=(o,t,s,r)=>{for(var e=r>1?void 0:r?m(t,s):t,i=o.length-1,l;i>=0;i--)(l=o[i])&&(e=(r?l(t,s,e):l(e))||e);return r&&e&&a(t,s,e),e};import{MutationController as n}from"@lit-labs/observers/mutation-controller.js";import{html as p,SpectrumElement as c}from"@spectrum-web-components/base";import{property as d}from"@spectrum-web-components/base/src/decorators.js";import h from"./table-body.css.js";export class TableBody extends c{constructor(){super();this.role="rowgroup";new n(this,{config:{childList:!0,subtree:!0},callback:()=>{requestAnimationFrame(()=>{this.shouldHaveTabIndex()})}})}static get styles(){return[h]}shouldHaveTabIndex(){this.offsetHeight<this.scrollHeight?this.tabIndex=0:this.removeAttribute("tabindex")}render(){return p`
+      <slot></slot>
+    `}}u([d({reflect:!0})],TableBody.prototype,"role",2);
+//# sourceMappingURL=TableBody.js.map

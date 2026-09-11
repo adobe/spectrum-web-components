@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["accordion-overrides.css.ts"],
+  "sourcesContent": ["import { css } from '@spectrum-web-components/base';\nconst styles = css`\n    :host{--spectrum-accordion-divider-color:var(--system-accordion-divider-color);--spectrum-accordion-item-content-disabled-color:var(--system-accordion-item-content-disabled-color);--spectrum-accordion-item-content-color:var(--system-accordion-item-content-color)}\n`;\nexport default styles;"],
+  "mappings": ";AAAA,SAAS,WAAW;AACpB,MAAM,SAAS;AAAA;AAAA;AAGf,eAAe;",
+  "names": []
+}

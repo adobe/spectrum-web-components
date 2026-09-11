@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["menu-overrides.css.ts"],
+  "sourcesContent": ["import { css } from '@spectrum-web-components/base';\nconst styles = css`\n    :host{--spectrum-menu-item-background-color-hover:var(--system-menu-item-background-color-hover);--spectrum-menu-item-background-color-down:var(--system-menu-item-background-color-down);--spectrum-menu-item-background-color-key-focus:var(--system-menu-item-background-color-key-focus);--spectrum-menu-item-corner-radius:var(--system-menu-item-corner-radius);--spectrum-menu-item-focus-indicator-shadow:var(--system-menu-item-focus-indicator-shadow);--spectrum-menu-item-focus-indicator-offset:var(--system-menu-item-focus-indicator-offset);--spectrum-menu-item-spacing-multiplier:var(--system-menu-item-spacing-multiplier);--spectrum-menu-item-focus-indicator-outline-style:var(--system-menu-item-focus-indicator-outline-style)}\n`;\nexport default styles;"],
+  "mappings": ";AAAA,SAAS,WAAW;AACpB,MAAM,SAAS;AAAA;AAAA;AAGf,eAAe;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["ProgressCircle.types.ts"],
+  "sourcesContent": ["/**\n * Copyright 2026 Adobe. All rights reserved.\n * This file is licensed to you under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License. You may obtain a copy\n * of the License at http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software distributed under\n * the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS\n * OF ANY KIND, either express or implied. See the License for the specific language\n * governing permissions and limitations under the License.\n */\n\nimport type { ElementSize } from '@spectrum-web-components/base/src/sizedMixin.js';\n\nexport const PROGRESS_CIRCLE_VALID_SIZES = [\n  's',\n  'm',\n  'l',\n] as const satisfies ElementSize[];\nexport const PROGRESS_CIRCLE_STATIC_COLORS_S1 = ['white'] as const;\nexport const PROGRESS_CIRCLE_STATIC_COLORS_S2 = [\n  ...PROGRESS_CIRCLE_STATIC_COLORS_S1,\n  'black',\n] as const;\n\nexport type ProgressCircleStaticColorS1 =\n  (typeof PROGRESS_CIRCLE_STATIC_COLORS_S1)[number];\nexport type ProgressCircleStaticColorS2 =\n  (typeof PROGRESS_CIRCLE_STATIC_COLORS_S2)[number];\nexport type ProgressCircleStaticColor =\n  | ProgressCircleStaticColorS1\n  | ProgressCircleStaticColorS2;\n"],
+  "mappings": "aAcO,aAAM,4BAA8B,CACzC,IACA,IACA,GACF,EACa,iCAAmC,CAAC,OAAO,EAC3C,iCAAmC,CAC9C,GAAG,iCACH,OACF",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["spectrum-icon-corner-triangle.css.ts"],
+  "sourcesContent": ["import { css } from '@spectrum-web-components/base';\nconst styles = css`\n    .spectrum-UIIcon-CornerTriangle75{--spectrum-icon-size:var(--spectrum-corner-triangle-icon-size-75)}.spectrum-UIIcon-CornerTriangle100{--spectrum-icon-size:var(--spectrum-corner-triangle-icon-size-100)}.spectrum-UIIcon-CornerTriangle200{--spectrum-icon-size:var(--spectrum-corner-triangle-icon-size-200)}.spectrum-UIIcon-CornerTriangle300{--spectrum-icon-size:var(--spectrum-corner-triangle-icon-size-300)}\n`;\nexport default styles;"],
+  "mappings": ";AAAA,SAAS,WAAW;AACpB,MAAM,SAAS;AAAA;AAAA;AAGf,eAAe;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["divider-overrides.css.ts"],
+  "sourcesContent": ["import { css } from '@spectrum-web-components/base';\nconst styles = css`\n    :host{--spectrum-divider-background-color:var(--system-divider-background-color);--spectrum-divider-background-color-static-white:var(--system-divider-background-color-static-white);--spectrum-divider-background-color-static-black:var(--system-divider-background-color-static-black)}\n`;\nexport default styles;"],
+  "mappings": "aAAA,OAAS,OAAAA,MAAW,gCACpB,MAAMC,EAASD;AAAA;AAAA,EAGf,eAAeC",
+  "names": ["css", "styles"]
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["tags-overrides.css.ts"],
+  "sourcesContent": ["import { css } from '@spectrum-web-components/base';\nconst styles = css`\n    \n`;\nexport default styles;"],
+  "mappings": ";AAAA,SAAS,WAAW;AACpB,MAAM,SAAS;AAAA;AAAA;AAGf,eAAe;",
+  "names": []
+}

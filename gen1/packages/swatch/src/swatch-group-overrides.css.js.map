@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["swatch-group-overrides.css.ts"],
+  "sourcesContent": ["import { css } from '@spectrum-web-components/base';\nconst styles = css`\n    :host{--spectrum-swatchgroup-spacing-compact:var(--system-swatch-group-spacing-compact);--spectrum-swatchgroup-spacing-regular:var(--system-swatch-group-spacing-regular);--spectrum-swatchgroup-spacing-spacious:var(--system-swatch-group-spacing-spacious)}\n`;\nexport default styles;"],
+  "mappings": "aAAA,OAAS,OAAAA,MAAW,gCACpB,MAAMC,EAASD;AAAA;AAAA,EAGf,eAAeC",
+  "names": ["css", "styles"]
+}

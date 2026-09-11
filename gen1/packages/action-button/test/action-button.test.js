@@ -1,0 +1,357 @@
+"use strict";
+import {
+  aTimeout,
+  elementUpdated,
+  expect,
+  fixture,
+  html,
+  waitUntil
+} from "@open-wc/testing";
+import { sendKeys } from "@web/test-runner-commands";
+import { spy, stub } from "sinon";
+import {
+  LONGPRESS_DURATION
+} from "@spectrum-web-components/action-button";
+import "@spectrum-web-components/action-button/sp-action-button.js";
+import {
+  mouseClickOn,
+  testForLitDevWarnings
+} from "../../../test/testing-helpers.js";
+import { m as BlackActionButton } from "../stories/action-button-black.stories.js";
+describe("ActionButton", () => {
+  testForLitDevWarnings(
+    async () => await fixture(BlackActionButton(BlackActionButton.args))
+  );
+  describe("dev mode", () => {
+    let consoleWarnStub;
+    before(() => {
+      window.__swc.verbose = true;
+      consoleWarnStub = stub(console, "warn");
+    });
+    afterEach(() => {
+      consoleWarnStub.resetHistory();
+    });
+    after(() => {
+      window.__swc.verbose = false;
+      consoleWarnStub.restore();
+    });
+    it("warns in devMode when href is provided", async () => {
+      const el = await fixture(html`
+        <sp-action-button href="https://example.com">
+          Link Button
+        </sp-action-button>
+      `);
+      await elementUpdated(el);
+      expect(consoleWarnStub.called).to.be.true;
+      const spyCall = consoleWarnStub.getCall(0);
+      expect(
+        spyCall.args[0].includes("deprecated"),
+        "confirm deprecated href warning"
+      ).to.be.true;
+      expect(
+        spyCall.args[0].includes("href"),
+        "warning mentions href attribute"
+      ).to.be.true;
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        "confirm `data` shape"
+      ).to.deep.equal({
+        data: {
+          localName: "sp-action-button",
+          type: "api",
+          level: "deprecation"
+        }
+      });
+    });
+    it("does not warn when href is not provided", async () => {
+      await fixture(html`
+        <sp-action-button>Button</sp-action-button>
+      `);
+      const hrefWarnings = Array.from(
+        { length: consoleWarnStub.callCount },
+        (_, i) => consoleWarnStub.getCall(i)
+      ).filter((call) => call.args[0].includes("href"));
+      expect(hrefWarnings.length).to.equal(0);
+    });
+    it("warns when selected attribute is used", async () => {
+      const el = await fixture(html`
+        <sp-action-button selected>Button</sp-action-button>
+      `);
+      await elementUpdated(el);
+      const selectedWarnings = Array.from(
+        { length: consoleWarnStub.callCount },
+        (_, i) => consoleWarnStub.getCall(i)
+      ).filter((call) => call.args[0].includes('"selected"'));
+      expect(selectedWarnings.length).to.be.greaterThan(0);
+    });
+    it("warns when toggles attribute is used", async () => {
+      const el = await fixture(html`
+        <sp-action-button toggles>Button</sp-action-button>
+      `);
+      await elementUpdated(el);
+      const togglesWarnings = Array.from(
+        { length: consoleWarnStub.callCount },
+        (_, i) => consoleWarnStub.getCall(i)
+      ).filter((call) => call.args[0].includes('"toggles"'));
+      expect(togglesWarnings.length).to.be.greaterThan(0);
+    });
+    it("warns when emphasized attribute is used", async () => {
+      const el = await fixture(html`
+        <sp-action-button emphasized>Button</sp-action-button>
+      `);
+      await elementUpdated(el);
+      const emphasizedWarnings = Array.from(
+        { length: consoleWarnStub.callCount },
+        (_, i) => consoleWarnStub.getCall(i)
+      ).filter((call) => call.args[0].includes('"emphasized"'));
+      expect(emphasizedWarnings.length).to.be.greaterThan(0);
+    });
+    it("warns when selected is toggled from false to true", async () => {
+      const el = await fixture(html`
+        <sp-action-button>Button</sp-action-button>
+      `);
+      await elementUpdated(el);
+      consoleWarnStub.resetHistory();
+      el.selected = true;
+      await elementUpdated(el);
+      const selectedWarnings = Array.from(
+        { length: consoleWarnStub.callCount },
+        (_, i) => consoleWarnStub.getCall(i)
+      ).filter((call) => call.args[0].includes('"selected"'));
+      expect(selectedWarnings.length).to.be.greaterThan(0);
+    });
+    it("warns when selected is toggled from true to false", async () => {
+      const el = await fixture(html`
+        <sp-action-button selected>Button</sp-action-button>
+      `);
+      await elementUpdated(el);
+      consoleWarnStub.resetHistory();
+      el.selected = false;
+      await elementUpdated(el);
+      const selectedWarnings = Array.from(
+        { length: consoleWarnStub.callCount },
+        (_, i) => consoleWarnStub.getCall(i)
+      ).filter((call) => call.args[0].includes('"selected"'));
+      expect(selectedWarnings.length).to.be.greaterThan(0);
+    });
+  });
+  it("loads default", async () => {
+    const el = await fixture(html`
+      <sp-action-button>Button</sp-action-button>
+    `);
+    await elementUpdated(el);
+    expect(el).to.not.be.undefined;
+    expect(el.textContent).to.include("Button");
+    await expect(el).to.be.accessible();
+  });
+  it('gardens "value" as a property', async () => {
+    const el = await fixture(html`
+      <sp-action-button>Button</sp-action-button>
+    `);
+    await elementUpdated(el);
+    expect(el.hasAttribute("value")).to.be.false;
+    el.value = "Value";
+    await elementUpdated(el);
+    expect(el.hasAttribute("value")).to.be.true;
+    el.value = "";
+    await elementUpdated(el);
+    expect(el.hasAttribute("value")).to.be.false;
+  });
+  it("loads [hold-affordance]", async () => {
+    const el = await fixture(html`
+      <sp-action-button hold-affordance>Button</sp-action-button>
+    `);
+    await elementUpdated(el);
+    expect(el).to.not.be.undefined;
+    expect(el.textContent).to.include("Button");
+    await expect(el).to.be.accessible();
+  });
+  it("manages a `tabindex`", async () => {
+    const el = await fixture(html`
+      <sp-action-button>Button</sp-action-button>
+    `);
+    expect(el.tabIndex).to.equal(0);
+    expect(el.disabled).to.be.false;
+    el.setAttribute("tabindex", "-1");
+    await elementUpdated(el);
+    expect(el.tabIndex).to.equal(-1);
+    expect(el.disabled).to.be.false;
+    el.disabled = true;
+    await elementUpdated(el);
+    expect(el.tabIndex).to.equal(-1);
+    expect(el.disabled).to.be.true;
+    el.disabled = false;
+    await elementUpdated(el);
+    expect(el.tabIndex).to.equal(-1);
+    expect(el.disabled).to.be.false;
+  });
+  it("manages a `size` attribute", async () => {
+    const el = await fixture(html`
+      <sp-action-button size="xl">Button</sp-action-button>
+    `);
+    await elementUpdated(el);
+    expect(el.size).to.equal("xl");
+    expect(el.getAttribute("size")).to.equal("xl");
+    el.removeAttribute("size");
+    await elementUpdated(el);
+    expect(el.size).to.equal("m");
+    expect(el.hasAttribute("size")).to.be.false;
+  });
+  it("does not apply a default `size` attribute", async () => {
+    const el = await fixture(html`
+      <sp-action-button>Button</sp-action-button>
+    `);
+    await elementUpdated(el);
+    expect(el.size).to.equal("m");
+    expect(el.hasAttribute("size")).to.be.false;
+  });
+  it("dispatches `longpress` events when [hold-affordance]", async () => {
+    const longpressSpy = spy();
+    const el = await fixture(html`
+      <sp-action-button hold-affordance @longpress=${() => longpressSpy()}>
+        Button
+      </sp-action-button>
+    `);
+    await elementUpdated(el);
+    el.focus();
+    await sendKeys({ press: "Space" });
+    expect(longpressSpy.callCount).to.equal(1);
+    await sendKeys({ press: "Alt+ArrowDown" });
+    expect(longpressSpy.callCount).to.equal(2);
+    el.dispatchEvent(new PointerEvent("pointerdown", { button: 0 }));
+    el.dispatchEvent(new PointerEvent("pointerup"));
+    el.dispatchEvent(new PointerEvent("pointerdown", { button: 0 }));
+    await waitUntil(() => longpressSpy.callCount === 3);
+  });
+  it('does not dispatch `longpress` events when "right click"ed', async () => {
+    const longpressSpy = spy();
+    const el = await fixture(html`
+      <sp-action-button hold-affordance @longpress=${() => longpressSpy()}>
+        Button
+      </sp-action-button>
+    `);
+    await elementUpdated(el);
+    expect(longpressSpy.callCount).to.equal(0);
+    el.focus();
+    el.dispatchEvent(new PointerEvent("pointerdown", { button: 1 }));
+    await aTimeout(2 * LONGPRESS_DURATION);
+    expect(longpressSpy.callCount).to.equal(0);
+  });
+  it(":not([toggles])", async () => {
+    const el = await fixture(html`
+      <sp-action-button>Button</sp-action-button>
+    `);
+    await elementUpdated(el);
+    const button = el.focusElement;
+    expect(el.toggles).to.be.false;
+    expect(el.selected).to.be.false;
+    expect(button.hasAttribute("aria-pressed")).to.be.false;
+    el.click();
+    await elementUpdated(el);
+    expect(el.toggles).to.be.false;
+    expect(el.selected).to.be.false;
+    expect(button.hasAttribute("aria-pressed")).to.be.false;
+  });
+  it("responds to [selected]", async () => {
+    const el = await fixture(html`
+      <sp-action-button>Button</sp-action-button>
+    `);
+    await elementUpdated(el);
+    const button = el.focusElement;
+    expect(el.toggles).to.be.false;
+    expect(el.selected).to.be.false;
+    expect(button.hasAttribute("aria-pressed")).to.be.false;
+    el.selected = true;
+    await elementUpdated(el);
+    expect(el.toggles).to.be.false;
+    expect(el.selected).to.be.true;
+    expect(button.getAttribute("aria-pressed")).to.equal("true");
+    el.selected = false;
+    await elementUpdated(el);
+    expect(el.toggles).to.be.false;
+    expect(el.selected).to.be.false;
+    expect(button.hasAttribute("aria-pressed")).to.be.false;
+  });
+  it("toggles", async () => {
+    const el = await fixture(html`
+      <sp-action-button toggles>Button</sp-action-button>
+    `);
+    await elementUpdated(el);
+    const button = el.focusElement;
+    expect(el.toggles).to.be.true;
+    expect(el.selected).to.be.false;
+    expect(button.getAttribute("aria-pressed")).to.equal("false");
+    el.focus();
+    await sendKeys({ press: "Space" });
+    await elementUpdated(el);
+    expect(el.toggles).to.be.true;
+    expect(el.selected).to.be.true;
+    expect(button.getAttribute("aria-pressed")).to.equal("true");
+    el.addEventListener("change", (event) => event.preventDefault());
+    el.click();
+    await elementUpdated(el);
+    expect(el.toggles).to.be.true;
+    expect(el.selected).to.be.true;
+    expect(button.getAttribute("aria-pressed")).to.equal("true");
+  });
+  it("toggles [aria-haspopup][aria-expanded]", async () => {
+    const el = await fixture(html`
+      <sp-action-button toggles aria-haspopup="true" aria-expanded="false">
+        Button
+      </sp-action-button>
+    `);
+    await elementUpdated(el);
+    const button = el.focusElement;
+    expect(el.toggles).to.be.true;
+    expect(el.selected).to.be.false;
+    expect(button).not.to.have.attribute("aria-pressed");
+    expect(button).to.have.attribute("aria-haspopup", "true");
+    expect(button).to.have.attribute("aria-expanded", "false");
+    el.focus();
+    await sendKeys({ press: "Space" });
+    await elementUpdated(el);
+    expect(el.toggles).to.be.true;
+    expect(el.selected).to.be.true;
+    expect(button).not.to.have.attribute("aria-pressed");
+    expect(button).to.have.attribute("aria-haspopup", "true");
+    expect(button).to.have.attribute("aria-expanded", "true");
+    el.addEventListener("change", (event) => event.preventDefault());
+    el.click();
+    await elementUpdated(el);
+    expect(el.toggles).to.be.true;
+    expect(el.selected).to.be.true;
+    expect(button).not.to.have.attribute("aria-pressed");
+    expect(button).to.have.attribute("aria-haspopup", "true");
+    expect(button).to.have.attribute("aria-expanded", "true");
+  });
+  it("manages a `static-color` attribute", async () => {
+    const el = await fixture(html`
+      <sp-action-button static-color="black">Button</sp-action-button>
+    `);
+    await elementUpdated(el);
+    expect(el.staticColor).to.equal("black");
+    expect(el.getAttribute("static-color")).to.equal("black");
+    el.removeAttribute("static-color");
+    await elementUpdated(el);
+    expect(el.staticColor).to.be.null;
+    expect(el.hasAttribute("static-color")).to.be.false;
+  });
+  it("allows link click", async () => {
+    var _a, _b;
+    let clicked = false;
+    const el = await fixture(html`
+      <sp-action-button href="#top" target="_blank">
+        With Target
+      </sp-action-button>
+    `);
+    await elementUpdated(el);
+    (_b = (_a = el.shadowRoot) == null ? void 0 : _a.querySelector(".anchor")) == null ? void 0 : _b.addEventListener("click", (event) => {
+      event.preventDefault();
+      clicked = true;
+    });
+    await mouseClickOn(el);
+    await elementUpdated(el);
+    expect(clicked).to.be.true;
+  });
+});
+//# sourceMappingURL=action-button.test.js.map

@@ -1,0 +1,11 @@
+"use strict";var d=Object.defineProperty;var o=Object.getOwnPropertyDescriptor;var i=(a,p,e,t)=>{for(var s=t>1?void 0:t?o(p,e):p,l=a.length-1,c;l>=0;l--)(c=a[l])&&(s=(t?c(p,e,s):c(s))||s);return t&&s&&d(p,e,s),s};import{html as u,SpectrumElement as n}from"@spectrum-web-components/base";import{property as r,query as h}from"@spectrum-web-components/base/src/decorators.js";import{ifDefined as m}from"@spectrum-web-components/base/src/directives.js";import"@spectrum-web-components/checkbox/sp-checkbox.js";import f from"./table-checkbox-cell.css.js";export class TableCheckboxCell extends n{constructor(){super(...arguments);this.headCell=!1;this.role="gridcell";this.indeterminate=!1;this.checked=!1;this.disabled=!1;this.selectsSingle=!1;this.emphasized=!1;this.label=""}static get styles(){return[f]}click(){this.checkbox.click()}updateInputAriaLabel(){var e;(e=this.checkbox)!=null&&e.inputElement&&this.label&&this.checkbox.inputElement.setAttribute("aria-label",this.label)}async updated(e){var t;super.updated(e),e.has("label")&&(await((t=this.checkbox)==null?void 0:t.updateComplete),this.updateInputAriaLabel())}async firstUpdated(e){var t;super.firstUpdated(e),await((t=this.checkbox)==null?void 0:t.updateComplete),this.updateInputAriaLabel()}render(){return u`
+      <sp-checkbox
+        ?checked=${this.checked}
+        ?indeterminate=${this.indeterminate}
+        ?disabled=${this.disabled}
+        ?emphasized=${this.emphasized}
+        aria-hidden=${m(this.selectsSingle?!0:void 0)}
+        class="checkbox"
+      ></sp-checkbox>
+    `}}i([r({type:Boolean,reflect:!0,attribute:"head-cell"})],TableCheckboxCell.prototype,"headCell",2),i([r({reflect:!0})],TableCheckboxCell.prototype,"role",2),i([h(".checkbox")],TableCheckboxCell.prototype,"checkbox",2),i([r({type:Boolean})],TableCheckboxCell.prototype,"indeterminate",2),i([r({type:Boolean})],TableCheckboxCell.prototype,"checked",2),i([r({type:Boolean})],TableCheckboxCell.prototype,"disabled",2),i([r({type:Boolean,reflect:!0,attribute:"selects-single"})],TableCheckboxCell.prototype,"selectsSingle",2),i([r({type:Boolean,reflect:!0})],TableCheckboxCell.prototype,"emphasized",2),i([r({type:String})],TableCheckboxCell.prototype,"label",2);
+//# sourceMappingURL=TableCheckboxCell.js.map

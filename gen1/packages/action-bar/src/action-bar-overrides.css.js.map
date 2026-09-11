@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["action-bar-overrides.css.ts"],
+  "sourcesContent": ["import { css } from '@spectrum-web-components/base';\nconst styles = css`\n    :host{--spectrum-actionbar-popover-background-color:var(--system-action-bar-popover-background-color);--spectrum-actionbar-popover-border-color:var(--system-action-bar-popover-border-color)}\n`;\nexport default styles;"],
+  "mappings": "aAAA,OAAS,OAAAA,MAAW,gCACpB,MAAMC,EAASD;AAAA;AAAA,EAGf,eAAeC",
+  "names": ["css", "styles"]
+}

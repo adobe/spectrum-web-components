@@ -1,0 +1,112 @@
+"use strict";
+import { elementUpdated, expect, fixture, html } from "@open-wc/testing";
+import { stub } from "sinon";
+import "@spectrum-web-components/illustrated-message/sp-illustrated-message.js";
+describe("Illustrated Message", () => {
+  describe("dev mode", () => {
+    let consoleWarnStub;
+    before(() => {
+      window.__swc.verbose = true;
+      consoleWarnStub = stub(console, "warn");
+    });
+    afterEach(() => {
+      consoleWarnStub.resetHistory();
+    });
+    after(() => {
+      window.__swc.verbose = false;
+      consoleWarnStub.restore();
+    });
+    it('warns when deprecated "heading" property is used', async () => {
+      const el = await fixture(html`
+        <sp-illustrated-message
+          heading="Drag and Drop Your File"
+        ></sp-illustrated-message>
+      `);
+      await elementUpdated(el);
+      expect(consoleWarnStub.called).to.be.true;
+      const spyCall = consoleWarnStub.getCall(0);
+      expect(
+        spyCall.args[0].includes("deprecated"),
+        "confirm deprecation message"
+      ).to.be.true;
+      expect(
+        spyCall.args[0].includes("heading"),
+        "confirm message references heading property"
+      ).to.be.true;
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        "confirm `data` shape"
+      ).to.deep.equal({
+        data: {
+          localName: "sp-illustrated-message",
+          type: "api",
+          level: "deprecation"
+        }
+      });
+    });
+    it('warns when deprecated "description" property is used', async () => {
+      const el = await fixture(html`
+        <sp-illustrated-message
+          description="Additional descriptive text"
+        ></sp-illustrated-message>
+      `);
+      await elementUpdated(el);
+      expect(consoleWarnStub.called).to.be.true;
+      const spyCall = consoleWarnStub.getCall(0);
+      expect(
+        spyCall.args[0].includes("deprecated"),
+        "confirm deprecation message"
+      ).to.be.true;
+      expect(
+        spyCall.args[0].includes("description"),
+        "confirm message references description property"
+      ).to.be.true;
+      expect(
+        spyCall.args[spyCall.args.length - 1],
+        "confirm `data` shape"
+      ).to.deep.equal({
+        data: {
+          localName: "sp-illustrated-message",
+          type: "api",
+          level: "deprecation"
+        }
+      });
+    });
+    it("does not warn when slot-based API is used", async () => {
+      await fixture(html`
+        <sp-illustrated-message>
+          <h2 slot="heading">Drag and Drop Your File</h2>
+          <span slot="description">Additional descriptive text</span>
+        </sp-illustrated-message>
+      `);
+      expect(consoleWarnStub.called).to.be.false;
+    });
+  });
+  it("loads", async () => {
+    const el = await fixture(html`
+      <sp-illustrated-message
+        heading="Drag and Drop Your File"
+        description="Additional descriptive text"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 150 103"
+          width="150"
+          height="103"
+        >
+          <path
+            d="M133.7,8.5h-118c-1.9,0-3.5,1.6-3.5,3.5v27c0,0.8,0.7,1.5,1.5,1.5s1.5-0.7,1.5-1.5V23.5h119V92c0,0.3-0.2,0.5-0.5,0.5h-118c-0.3,0-0.5-0.2-0.5-0.5V69c0-0.8-0.7-1.5-1.5-1.5s-1.5,0.7-1.5,1.5v23c0,1.9,1.6,3.5,3.5,3.5h118c1.9,0,3.5-1.6,3.5-3.5V12C137.2,10.1,135.6,8.5,133.7,8.5z M15.2,21.5V12c0-0.3,0.2-0.5,0.5-0.5h118c0.3,0,0.5,0.2,0.5,0.5v9.5H15.2z M32.6,16.5c0,0.6-0.4,1-1,1h-10c-0.6,0-1-0.4-1-1s0.4-1,1-1h10C32.2,15.5,32.6,15.9,32.6,16.5z M13.6,56.1l-8.6,8.5C4.8,65,4.4,65.1,4,65.1c-0.4,0-0.8-0.1-1.1-0.4c-0.6-0.6-0.6-1.5,0-2.1l8.6-8.5l-8.6-8.5c-0.6-0.6-0.6-1.5,0-2.1c0.6-0.6,1.5-0.6,2.1,0l8.6,8.5l8.6-8.5c0.6-0.6,1.5-0.6,2.1,0c0.6,0.6,0.6,1.5,0,2.1L15.8,54l8.6,8.5c0.6,0.6,0.6,1.5,0,2.1c-0.3,0.3-0.7,0.4-1.1,0.4c-0.4,0-0.8-0.1-1.1-0.4L13.6,56.1z"
+          ></path>
+        </svg>
+      </sp-illustrated-message>
+    `);
+    expect(el).to.not.equal(void 0);
+    if (!el.shadowRoot) {
+      throw new Error("No shadowRoot");
+    }
+    const slot = el.shadowRoot.querySelector("slot");
+    expect(slot).to.not.equal(void 0);
+    return true;
+  });
+});
+//# sourceMappingURL=illustrated-message.test.js.map

@@ -1,0 +1,2 @@
+"use strict";import"../src/spectrum-two/core.js";import r from"../src/spectrum-two/theme-dark.css.js";import{Theme as e}from"../src/Theme.js";e.registerThemeFragment("darkest-spectrum-two","color",r);
+//# sourceMappingURL=theme-darkest.js.map

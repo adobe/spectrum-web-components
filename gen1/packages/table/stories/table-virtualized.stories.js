@@ -1,0 +1,255 @@
+"use strict";
+import { ifDefined } from "lit/directives/if-defined.js";
+import {
+  html,
+  SpectrumElement
+} from "@spectrum-web-components/base";
+import "@spectrum-web-components/table/sp-table.js";
+import "@spectrum-web-components/table/sp-table-checkbox-cell.js";
+import "@spectrum-web-components/table/sp-table-head.js";
+import "@spectrum-web-components/table/sp-table-head-cell.js";
+import "@spectrum-web-components/table/sp-table-body.js";
+import "@spectrum-web-components/table/sp-table-row.js";
+import "@spectrum-web-components/table/sp-table-cell.js";
+import { makeItems, renderItem } from "./index.js";
+export default {
+  title: "Table/Virtualized",
+  component: "sp-table",
+  argTypes: {
+    onChange: { action: "change" },
+    selected: {
+      name: "selected",
+      description: "The array of item values selected by the Table.",
+      type: { name: "", required: false },
+      control: "text"
+    },
+    selects: {
+      name: "selects",
+      description: 'If the Table accepts a "single" or "multiple" selection.',
+      control: {
+        type: "inline-radio",
+        options: ["", "single", "multiple"]
+      }
+    }
+  },
+  args: {
+    selects: "",
+    selected: []
+  }
+};
+class VirtualTable extends SpectrumElement {
+  constructor() {
+    super();
+    this.items = makeItems(50);
+    this.compareItems = (sortKey, sortDirection) => (a, b) => {
+      const doSortKey = sortKey;
+      if (!isNaN(Number(a[doSortKey]))) {
+        const first = Number(a[doSortKey]);
+        const second = Number(b[doSortKey]);
+        return sortDirection === "asc" ? first - second : second - first;
+      } else {
+        const first = String(a[doSortKey]);
+        const second = String(b[doSortKey]);
+        return sortDirection === "asc" ? first.localeCompare(second) : second.localeCompare(first);
+      }
+    };
+    this.onSorted = (event) => {
+      const { sortKey, sortDirection } = event.detail;
+      const items = [...this.items];
+      items.sort(this.compareItems(sortKey, sortDirection));
+      this.items = items;
+    };
+    this.items.sort(this.compareItems("name", "desc"));
+  }
+  render() {
+    return html`
+      <sp-table
+        .items=${this.items}
+        .renderItem=${renderItem}
+        .size=${"m"}
+        scroller
+        style="height: 200px"
+        @sorted=${this.onSorted}
+      >
+        <sp-table-head>
+          <sp-table-head-cell sortable sort-key="name" sort-direction="desc">
+            Column Title
+          </sp-table-head-cell>
+          <sp-table-head-cell sortable sort-key="date">
+            Column Title
+          </sp-table-head-cell>
+          <sp-table-head-cell>Column Title</sp-table-head-cell>
+        </sp-table-head>
+      </sp-table>
+    `;
+  }
+}
+customElements.define("virtual-table", VirtualTable);
+const virtualItems = makeItems(50);
+export const virtualized = () => {
+  return html`
+    <virtual-table></virtual-table>
+  `;
+};
+export const virtualizedSingle = (args) => {
+  const onChange = args.onChange || (() => {
+    return;
+  });
+  return html`
+    <sp-table
+      .size=${"m"}
+      scroller
+      style="height: 300px"
+      selects=${ifDefined(args.selects)}
+      .selected=${args.selected}
+      @change=${({ target }) => {
+    const next = target.nextElementSibling;
+    next.textContent = `Selected: ${JSON.stringify(target.selected)}`;
+  }}
+      .items=${virtualItems}
+      .renderItem=${renderItem}
+      @visibilityChanged=${(event) => onChange({
+    first: event.first,
+    last: event.last,
+    type: "visibility"
+  })}
+      @rangeChanged=${(event) => onChange({
+    first: event.first,
+    last: event.last,
+    type: "range"
+  })}
+    >
+      <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+      </sp-table-head>
+    </sp-table>
+    <div>Selected: ["49"]</div>
+  `;
+};
+virtualizedSingle.args = {
+  selects: "single",
+  selected: ["49"]
+};
+export const virtualizedMultiple = (args) => {
+  return html`
+    <sp-table
+      .size=${"m"}
+      scroller
+      style="height: 200px"
+      selects=${ifDefined(args.selects)}
+      .selected=${args.selected}
+      @change=${({ target }) => {
+    const next = target.nextElementSibling;
+    next.textContent = `Selected: ${JSON.stringify(
+      target.selected,
+      null,
+      " "
+    )}`;
+    const nextNext = next.nextElementSibling;
+    nextNext.textContent = `Selected Count: ${target.selected.length}`;
+  }}
+      .items=${virtualItems}
+      .renderItem=${renderItem}
+    >
+      <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+      </sp-table-head>
+    </sp-table>
+    <div>Selected: ["0", "48"]</div>
+    <div>Selected Count: 2</div>
+  `;
+};
+virtualizedMultiple.args = {
+  selects: "multiple",
+  selected: ["0", "48"]
+};
+export const virtualizedCustomValue = (args) => {
+  return html`
+    <sp-table
+      .size=${"m"}
+      scroller
+      style="height: 200px"
+      selects=${ifDefined(args.selects)}
+      .selected=${args.selected}
+      @change=${args.onChange}
+      .items=${virtualItems}
+      .itemValue=${(item, _index) => "applied-" + item.date}
+      .renderItem=${renderItem}
+    >
+      <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+      </sp-table-head>
+      <sp-table-body></sp-table-body>
+    </sp-table>
+    <div>Selected: ["0", "48", "applied-47"]</div>
+    <div>Selected Count: 2</div>
+  `;
+};
+virtualizedCustomValue.args = {
+  selected: ["0", "48", "applied-47"],
+  selects: "multiple",
+  onChange: ({ target }) => {
+    const next = target.nextElementSibling;
+    next.textContent = `Selected: ${JSON.stringify(
+      target.selected,
+      null,
+      " "
+    )}`;
+    const nextNext = next.nextElementSibling;
+    nextNext.textContent = `Selected Count: ${target.selected.length}`;
+  }
+};
+export const virtualizedCustomRow = (args) => {
+  virtualItems.splice(3, 1, { name: "Scoobert", date: 2, _$rowType$: 1 });
+  return html`
+    <sp-table
+      .size=${"m"}
+      scroller
+      style="height: 200px"
+      selects=${ifDefined(args.selects)}
+      .selected=${args.selected}
+      @change=${({ target }) => {
+    const next = target.nextElementSibling;
+    next.textContent = `Selected: ${JSON.stringify(
+      target.selected,
+      null,
+      " "
+    )}`;
+    const nextNext = next.nextElementSibling;
+    nextNext.textContent = `Selected Count: ${target.selected.length}`;
+  }}
+      .items=${virtualItems}
+      .renderItem=${renderItem}
+    >
+      <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+      </sp-table-head>
+    </sp-table>
+    <div>Selected: ["0", "48"]</div>
+    <div>Selected Count: 2</div>
+  `;
+};
+virtualizedCustomRow.args = {
+  selects: "multiple",
+  selected: ["0", "48"]
+};
+export const virtualizedNoScroller = () => {
+  return html`
+    <sp-table size="m" .items=${virtualItems} .renderItem=${renderItem}>
+      <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+      </sp-table-head>
+    </sp-table>
+  `;
+};
+//# sourceMappingURL=table-virtualized.stories.js.map

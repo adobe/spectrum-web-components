@@ -1,0 +1,126 @@
+"use strict";
+import { classMap } from "lit/directives/class-map.js";
+import { html, nothing } from "@spectrum-web-components/base";
+import {
+  ifDefined,
+  unsafeHTML
+} from "@spectrum-web-components/base/src/directives.js";
+import "@spectrum-web-components/action-group/sp-action-group.js";
+import "@spectrum-web-components/icon/sp-icon.js";
+import "@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js";
+import "@spectrum-web-components/action-button/sp-action-button.js";
+export function renderButton({
+  icon,
+  label,
+  ...properties
+}) {
+  var _a;
+  if (properties.href) {
+    if (properties.disabled || properties.selected || properties.holdAffordance) {
+      return html``;
+    }
+    const staticColor = properties.staticColor && properties.staticColor.charAt(0).toUpperCase() + properties.staticColor.slice(1);
+    return html`
+      <a
+        class=${classMap({
+      ["spectrum-ActionButton"]: true,
+      [`spectrum-ActionButton--size${(_a = properties.size) == null ? void 0 : _a.toUpperCase()}`]: typeof properties.size !== "undefined",
+      [`spectrum-ActionButton--static${staticColor}`]: typeof properties.staticColor !== "undefined",
+      ["spectrum-ActionButton--iconOnly"]: ifDefined(icon) && typeof label === "undefined",
+      ["spectrum-ActionButton--quiet"]: typeof properties.quiet !== "undefined",
+      ["spectrum-ActionButton--emphasized"]: typeof properties.emphasized !== "undefined"
+    })}
+        href=${properties.href}
+        target=${ifDefined(properties.target)}
+      >
+        ${icon ? unsafeHTML(icon) : nothing}
+        ${typeof label !== "undefined" ? unsafeHTML(`<span class="spectrum-ActionButton-label">
+          ${label}
+        </span>`) : nothing}
+      </a>
+    `;
+  }
+  return html`
+    <sp-action-button
+      ?quiet=${!!properties.quiet}
+      ?emphasized=${!!properties.emphasized}
+      static-color=${ifDefined(properties.staticColor)}
+      ?disabled=${!!properties.disabled}
+      ?selected=${!!properties.selected}
+      ?toggles=${!!properties.toggles}
+      size=${properties.size || "m"}
+      ?hold-affordance=${!!properties.holdAffordance}
+      ?active=${!!properties.active}
+    >
+      ${icon ? unsafeHTML(icon) : nothing}${label}
+    </sp-action-button>
+  `;
+}
+function renderGroup(properties) {
+  const label = "Edit";
+  const holdAffordance = true;
+  const icon = `<sp-icon-edit slot="icon"></sp-icon-edit>`;
+  return html`
+    <sp-action-group
+      ?quiet=${!!properties.quiet}
+      ?emphasized=${!!properties.emphasized}
+      size=${properties.size || "m"}
+      static-color=${ifDefined(properties.staticColor)}
+    >
+      ${renderButton({
+    ...properties,
+    label
+  })}
+      ${renderButton({
+    ...properties,
+    label,
+    icon
+  })}
+      ${renderButton({
+    ...properties,
+    icon
+  })}
+      ${renderButton({
+    ...properties,
+    icon,
+    holdAffordance
+  })}
+    </sp-action-group>
+  `;
+}
+export const argTypes = {
+  href: {
+    name: "href",
+    type: { name: "string", required: false },
+    description: "**Deprecated.** Use a native HTML anchor (`<a>`) with the `spectrum-ActionButton` class and import `@spectrum-web-components/styles/global-elements.css` instead.",
+    table: {
+      type: { summary: "string" }
+    },
+    control: {
+      type: "text"
+    }
+  }
+};
+export function renderButtons(properties) {
+  return html`
+    <div
+      style="display: flex; flex-direction: column; gap: calc(var(--spectrum-spacing-100) * var(--swc-scale-factor));"
+    >
+      ${renderGroup(properties)}
+      ${renderGroup({
+    ...properties,
+    selected: true
+  })}
+      ${renderGroup({
+    ...properties,
+    disabled: true
+  })}
+      ${renderGroup({
+    ...properties,
+    disabled: true,
+    selected: true
+  })}
+    </div>
+  `;
+}
+//# sourceMappingURL=index.js.map

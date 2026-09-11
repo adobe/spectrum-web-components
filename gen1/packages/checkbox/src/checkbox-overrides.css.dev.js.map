@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["checkbox-overrides.css.ts"],
+  "sourcesContent": ["import { css } from '@spectrum-web-components/base';\nconst styles = css`\n    :host{--spectrum-checkbox-control-color-default:var(--system-checkbox-control-color-default);--spectrum-checkbox-control-color-hover:var(--system-checkbox-control-color-hover);--spectrum-checkbox-control-color-down:var(--system-checkbox-control-color-down);--spectrum-checkbox-control-color-focus:var(--system-checkbox-control-color-focus);--spectrum-checkbox-checkmark-color:var(--system-checkbox-checkmark-color);--spectrum-checkbox-control-corner-radius:var(--system-checkbox-control-corner-radius)}\n`;\nexport default styles;"],
+  "mappings": ";AAAA,SAAS,WAAW;AACpB,MAAM,SAAS;AAAA;AAAA;AAGf,eAAe;",
+  "names": []
+}

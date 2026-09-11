@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["alert-dialog-overrides.css.ts"],
+  "sourcesContent": ["import { css } from '@spectrum-web-components/base';\nconst styles = css`\n    .divider{--spectrum-divider-background-color:var(--system-alert-dialog-divider-background-color);--spectrum-divider-background-color-static-white:var(--spectrum-alert-dialog-divider-background-color-static-white);--spectrum-divider-background-color-static-black:var(--spectrum-alert-dialog-divider-background-color-static-black)}\n`;\nexport default styles;"],
+  "mappings": ";AAAA,SAAS,WAAW;AACpB,MAAM,SAAS;AAAA;AAAA;AAGf,eAAe;",
+  "names": []
+}

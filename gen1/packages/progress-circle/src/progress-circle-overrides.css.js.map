@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["progress-circle-overrides.css.ts"],
+  "sourcesContent": ["import { css } from '@spectrum-web-components/base';\nconst styles = css`\n    :host{--spectrum-progress-circle-track-border-color:var(--system-progress-circle-track-border-color);--spectrum-progress-circle-track-border-color-over-background:var(--system-progress-circle-track-border-color-over-background);--spectrum-progress-circle-fill-border-color-over-background:var(--system-progress-circle-fill-border-color-over-background)}\n`;\nexport default styles;"],
+  "mappings": "aAAA,OAAS,OAAAA,MAAW,gCACpB,MAAMC,EAASD;AAAA;AAAA,EAGf,eAAeC",
+  "names": ["css", "styles"]
+}

@@ -1,0 +1,9 @@
+"use strict";var h=Object.defineProperty;var u=Object.getOwnPropertyDescriptor;var r=(o,s,e,i)=>{for(var t=i>1?void 0:i?u(s,e):s,a=o.length-1,n;a>=0;a--)(n=o[a])&&(t=(i?n(s,e,t):n(t))||t);return i&&t&&h(s,e,t),t};import{html as p}from"@spectrum-web-components/base";import{property as c,query as m}from"@spectrum-web-components/base/src/decorators.js";import{ifDefined as b}from"@spectrum-web-components/base/src/directives.js";import{Focusable as v}from"@spectrum-web-components/shared/src/focusable.js";import{LikeAnchor as f}from"@spectrum-web-components/shared/src/like-anchor.js";import w from"./avatar.css.js";const l=[50,75,100,200,300,400,500,600,700],d=l[2];export class Avatar extends f(v){constructor(){super(...arguments);this.src="";this.isDecorative=!1;this._size=d}static get styles(){return[w]}get focusElement(){return this.anchorElement||this}get size(){return this._size}set size(e){const i=e,t=l.includes(i)?i:d;if(t&&this.setAttribute("size",`${t}`),this._size===t)return;const a=this._size;this._size=t,this.requestUpdate("size",a)}render(){let e="",i;this.label?(e=this.label,i=void 0):this.isDecorative?(e="",i=this.href?void 0:"true"):(e="",i=void 0);const t=p`
+      <img
+        class="image"
+        alt=${e}
+        aria-hidden=${b(i)}
+        src=${this.src}
+      />
+    `;return this.href?this.renderAnchor({id:"link",className:"link",anchorContent:t}):t}firstUpdated(e){super.firstUpdated(e),this.hasAttribute("size")||this.setAttribute("size",`${this.size}`),this.warnMissingAlt()}updated(e){super.updated(e),(e.has("label")||e.has("isDecorative")||e.has("href"))&&this.warnMissingAlt()}warnMissingAlt(){}}r([m("#link")],Avatar.prototype,"anchorElement",2),r([c()],Avatar.prototype,"src",2),r([c({type:Boolean,reflect:!0,attribute:"is-decorative"})],Avatar.prototype,"isDecorative",2),r([c({type:Number,reflect:!0})],Avatar.prototype,"size",1);
+//# sourceMappingURL=Avatar.js.map

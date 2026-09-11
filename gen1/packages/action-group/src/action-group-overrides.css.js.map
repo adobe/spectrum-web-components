@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["action-group-overrides.css.ts"],
+  "sourcesContent": ["import { css } from '@spectrum-web-components/base';\nconst styles = css`\n    :host{--spectrum-actiongroup-gap-size-compact:var(--system-action-group-gap-size-compact);--spectrum-actiongroup-horizontal-spacing-compact:var(--system-action-group-horizontal-spacing-compact);--spectrum-actiongroup-vertical-spacing-compact:var(--system-action-group-vertical-spacing-compact)}\n`;\nexport default styles;"],
+  "mappings": "aAAA,OAAS,OAAAA,MAAW,gCACpB,MAAMC,EAASD;AAAA;AAAA,EAGf,eAAeC",
+  "names": ["css", "styles"]
+}

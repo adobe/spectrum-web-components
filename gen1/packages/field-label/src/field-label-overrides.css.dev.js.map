@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["field-label-overrides.css.ts"],
+  "sourcesContent": ["import { css } from '@spectrum-web-components/base';\nconst styles = css`\n    :host{--spectrum-field-label-top-to-text:var(--system-field-label-top-to-text);--spectrum-field-label-bottom-to-text:var(--system-field-label-bottom-to-text)}:host([size=s]){--spectrum-field-label-top-to-text:var(--system-field-label-top-to-text-small);--spectrum-field-label-bottom-to-text:var(--system-field-label-bottom-to-text-small)}:host([size=l]){--spectrum-field-label-top-to-text:var(--system-field-label-top-to-text-large);--spectrum-field-label-bottom-to-text:var(--system-field-label-bottom-to-text-large)}:host([size=xl]){--spectrum-field-label-top-to-text:var(--system-field-label-top-to-text-extra-large);--spectrum-field-label-bottom-to-text:var(--system-field-label-bottom-to-text-extra-large)}\n`;\nexport default styles;"],
+  "mappings": ";AAAA,SAAS,WAAW;AACpB,MAAM,SAAS;AAAA;AAAA;AAGf,eAAe;",
+  "names": []
+}

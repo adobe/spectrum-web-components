@@ -1,0 +1,2 @@
+"use strict";const t=["input:not([inert])","select:not([inert])","textarea:not([inert])","a[href]:not([inert])","button:not([inert])","label:not([inert])","[tabindex]:not([inert])","audio[controls]:not([inert])","video[controls]:not([inert])",'[contenteditable]:not([contenteditable="false"]):not([inert])',"details>summary:first-of-type:not([inert])","details:not([inert])",'[focusable]:not([focusable="false"])'],e=':not([tabindex="-1"])';export const userFocusableSelector=t.join(`${e}, `)+e,focusableSelector=t.join(", ");
+//# sourceMappingURL=focusable-selectors.js.map
