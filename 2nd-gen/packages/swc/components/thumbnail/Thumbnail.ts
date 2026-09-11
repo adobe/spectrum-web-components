@@ -25,6 +25,8 @@ import styles from './thumbnail.css';
  *
  * @slot - Image element to present in the thumbnail.
  *
+ * @cssprop --swc-thumbnail-size - Size (inline and block) of the thumbnail. Defaults to the token matching the `size` attribute.
+ *
  * @example
  * <swc-thumbnail>
  *   <img src="/preview.png" alt="Preview" />
@@ -50,11 +52,26 @@ export class Thumbnail extends ThumbnailBase {
     this._syncSlottedImageAlt();
   };
 
+  // Tracks the last (image, decorative) pair already synced so the
+  // `updated()` and `slotchange` triggers, which can both fire for the same
+  // state on first render, don't double up on the alt-fallback or warning.
+  private _lastSyncedImg: HTMLImageElement | null = null;
+  private _lastSyncedDecorative: boolean | null = null;
+
   private _syncSlottedImageAlt(): void {
     const img = this.querySelector('img');
     if (!img) {
       return;
     }
+
+    if (
+      img === this._lastSyncedImg &&
+      this.decorative === this._lastSyncedDecorative
+    ) {
+      return;
+    }
+    this._lastSyncedImg = img;
+    this._lastSyncedDecorative = this.decorative;
 
     if (this.decorative) {
       if (!img.hasAttribute('alt')) {
