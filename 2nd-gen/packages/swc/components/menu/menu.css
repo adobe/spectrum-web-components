@@ -14,19 +14,43 @@
   display: block;
 }
 
-/* Unstyled positioning and layout only: `position: absolute` is what
- * `PlacementController` needs to place the surface (writes top/left/translate
- * inline), and `display: flex` / `flex-direction: column` stacks slotted rows
- * vertically regardless of their own default display (an unregistered custom
- * element, like the current placeholder story rows, defaults to `inline`).
- * Visual styling (background, border, radius, elevation) is deferred until
- * `swc-menu-item` exists to style and size against for real; see the
- * migration plan's Architecture section for why this single class will carry
- * both the `spectrum-css` popover-chrome and menu-list roles once it lands. */
+* {
+  box-sizing: border-box;
+}
+
+/* `position: absolute` is what `PlacementController` needs to place the
+ * surface (writes top/left/translate inline); `display: flex` /
+ * `flex-direction: column` stacks slotted rows vertically regardless of
+ * their own default display (an unregistered custom element, like the
+ * current placeholder story rows, defaults to `inline`). `max-block-size`
+ * caps the surface to the placement-aware usable height (falling back to
+ * 90% of the block viewport before the first position lands) and scrolls
+ * internally past that, matching `spectrum-css`'s own `.spectrum-Menu`.
+ *
+ * Background, border, radius, and shadow mirror `swc-popover`'s own tokens,
+ * not `spectrum-css`'s `.spectrum-Menu` (which carries none of this chrome
+ * itself): in real Spectrum this chrome comes from a wrapping
+ * `.spectrum-Popover`, and no menu-specific override of those popover
+ * tokens exists anywhere in that repo, so the values are shared rather than
+ * guessed. `swc-menu` does not wrap `<swc-popover>` as a component (see the
+ * migration plan's Architecture section for why), but nothing about that
+ * decision applies to reusing the same design tokens for the same visual
+ * role. Row-level styling (colors, icons, hover/selection states, item
+ * padding) is `swc-menu-item`'s own scope, not yet implemented. */
 .swc-Menu {
+  --swc-menu-background-color: token("background-layer-2-color");
+  --swc-menu-border-color: token("popover-border-color");
+  --swc-menu-corner-radius: token("corner-radius-700");
+
   display: flex;
   position: absolute;
   flex-direction: column;
+  max-block-size: min(var(--swc-placement-available-height, 90vb), 90vb);
+  background-color: var(--swc-menu-background-color);
+  border: token("border-width-100") solid var(--swc-menu-border-color);
+  border-radius: var(--swc-menu-corner-radius);
+  box-shadow: token("drop-shadow-elevated");
+  overflow: auto;
 }
 
 /* `[hidden]` and `.swc-Menu` are both single-selector specificity (0,1,0),
@@ -43,4 +67,10 @@
  * owns its own padding once it exists, superseding this. */
 ::slotted(*) {
   padding: token("spacing-100");
+}
+
+@media (forced-colors: active) {
+  .swc-Menu {
+    border-color: CanvasText;
+  }
 }

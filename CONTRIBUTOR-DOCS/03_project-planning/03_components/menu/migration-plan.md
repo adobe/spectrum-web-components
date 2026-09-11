@@ -582,7 +582,7 @@ Planned rendering shape:
 - [x] Create `2nd-gen/packages/core/components/menu/` ([PR #6596](https://github.com/adobe/spectrum-web-components/pull/6596))
 - [x] Create `2nd-gen/packages/swc/components/menu/` ([PR #6596](https://github.com/adobe/spectrum-web-components/pull/6596))
 - [x] Wire exports in both `package.json` files ([PR #6596](https://github.com/adobe/spectrum-web-components/pull/6596)) — `core`'s got a new `./components/menu` entry; `swc`'s doesn't need one, matching every other already-migrated component
-- [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
+- [x] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
 - [x] Wire up `PlacementController` for the trigger surface, following the `Tooltip.base.ts` precedent — already unblocked, no dependency on `swc-popover` (see [Architecture](#architecture-core-vs-swc-split)). Done in the API migration ticket: `Menu.base.ts` instantiates the controller and calls `start()`/`stop()` off `open`, but positioning is a no-op until Phase 5 (rendering) supplies the shadow-internal surface element through the `surfaceElement` hook the base class already reads from.
 - [x] Wire up `for`/`triggerElement` resolution via the shared `resolveTrigger` utility, following the `Tooltip.base.ts`/`Popover.base.ts` precedent exactly — no trigger rendering to build (decided, [Q16](#blockers-and-open-questions)). Done in the API migration ticket, including `aria-haspopup`/`aria-expanded` wiring and click-to-toggle on the resolved trigger.
 
@@ -615,13 +615,13 @@ Planned rendering shape:
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
 - [x] Add `.swc-Menu` to the internal semantic element in `render()`; keep styling off `:host` — the class landed in the API migration ticket; the a11y ticket added the minimal unstyled `position: absolute` it needs for `PlacementController` and a `?hidden` binding keyed off `open`, so `surfaceElement` is no longer a no-op (see [Q24](#blockers-and-open-questions)). Full Spectrum visual styling is still this bullet's remaining, deferred half.
-- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `menu.css` as baseline
+- [x] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `menu.css` as baseline — **finding, not a straight copy:** `.spectrum-Menu` itself carries no chrome at all (`display: inline-block`, `margin: 0`, `padding: 0`, `overflow: auto`; no background, border, radius, or shadow). Every visual property in that file (colors, icons, checkmarks, hover/selection states, item padding) is scoped under `.spectrum-Menu-item` and its descendants — `swc-menu-item`'s own territory, not implemented yet (see [Q15](#cross-component-follow-ups-not-blocking-swc-menu)). The floating "popup" look (background, border, radius, elevated drop shadow) comes from a wrapping `.spectrum-Popover` in real Spectrum (confirmed via `actionmenu`'s markup comment), and no menu-specific override of those popover tokens exists anywhere in `spectrum-css`. `menu.css` mirrors `swc-popover`'s own `--swc-popover-*` chrome tokens on `.swc-Menu` for this reason — `swc-menu` still does not wrap `<swc-popover>` as a component ([Q3](#blockers-and-open-questions) stands; this is a token-sharing choice, not an architecture change) — plus the placement-aware `max-block-size` scroll clamp already used by `Tooltip`/`Popover.base.ts`. Row-level styling stays deferred until `swc-menu-item` exists.
 
 #### Visual model and regressions
 
-- [ ] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source
-- [ ] Add `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-*` property
-- [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
+- [x] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source — present, but scoped to `--spectrum-menu-item-*` line-height properties, not anything `.swc-Menu` itself owns; deferred with the rest of row-level styling
+- [x] Add `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-*` property — `--swc-menu-background-color`, `--swc-menu-border-color`, `--swc-menu-corner-radius`
+- [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility
 
