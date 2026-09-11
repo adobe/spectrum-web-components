@@ -19,7 +19,15 @@
       "types": "./dist/components/accordion/index.d.ts",
       "import": "./dist/components/accordion/index.js"
     },
+    "./components/accordion/index.js": {
+      "types": "./dist/components/accordion/index.d.ts",
+      "import": "./dist/components/accordion/index.js"
+    },
     "./components/action-button": {
+      "types": "./dist/components/action-button/index.d.ts",
+      "import": "./dist/components/action-button/index.js"
+    },
+    "./components/action-button/index.js": {
       "types": "./dist/components/action-button/index.d.ts",
       "import": "./dist/components/action-button/index.js"
     },
@@ -27,11 +35,23 @@
       "types": "./dist/components/action-group/index.d.ts",
       "import": "./dist/components/action-group/index.js"
     },
+    "./components/action-group/index.js": {
+      "types": "./dist/components/action-group/index.d.ts",
+      "import": "./dist/components/action-group/index.js"
+    },
     "./components/alert-banner": {
       "types": "./dist/components/alert-banner/index.d.ts",
       "import": "./dist/components/alert-banner/index.js"
     },
+    "./components/alert-banner/index.js": {
+      "types": "./dist/components/alert-banner/index.d.ts",
+      "import": "./dist/components/alert-banner/index.js"
+    },
     "./components/asset": {
+      "types": "./dist/components/asset/index.d.ts",
+      "import": "./dist/components/asset/index.js"
+    },
+    "./components/asset/index.js": {
       "types": "./dist/components/asset/index.d.ts",
       "import": "./dist/components/asset/index.js"
     },
@@ -55,11 +75,23 @@
       "types": "./dist/components/button/index.d.ts",
       "import": "./dist/components/button/index.js"
     },
+    "./components/button/index.js": {
+      "types": "./dist/components/button/index.d.ts",
+      "import": "./dist/components/button/index.js"
+    },
     "./components/button-group": {
       "types": "./dist/components/button-group/index.d.ts",
       "import": "./dist/components/button-group/index.js"
     },
+    "./components/button-group/index.js": {
+      "types": "./dist/components/button-group/index.d.ts",
+      "import": "./dist/components/button-group/index.js"
+    },
     "./components/card": {
+      "types": "./dist/components/card/index.d.ts",
+      "import": "./dist/components/card/index.js"
+    },
+    "./components/card/index.js": {
       "types": "./dist/components/card/index.d.ts",
       "import": "./dist/components/card/index.js"
     },
@@ -70,6 +102,14 @@
     "./components/color-handle/index.js": {
       "types": "./dist/components/color-handle/index.d.ts",
       "import": "./dist/components/color-handle/index.js"
+    },
+    "./components/color-loupe": {
+      "types": "./dist/components/color-loupe/index.d.ts",
+      "import": "./dist/components/color-loupe/index.js"
+    },
+    "./components/color-loupe/index.js": {
+      "types": "./dist/components/color-loupe/index.d.ts",
+      "import": "./dist/components/color-loupe/index.js"
     },
     "./components/divider": {
       "types": "./dist/components/divider/index.d.ts",
@@ -91,7 +131,15 @@
       "types": "./dist/components/icon/index.d.ts",
       "import": "./dist/components/icon/index.js"
     },
+    "./components/icon/index.js": {
+      "types": "./dist/components/icon/index.d.ts",
+      "import": "./dist/components/icon/index.js"
+    },
     "./components/infield-button": {
+      "types": "./dist/components/infield-button/index.d.ts",
+      "import": "./dist/components/infield-button/index.js"
+    },
+    "./components/infield-button/index.js": {
       "types": "./dist/components/infield-button/index.d.ts",
       "import": "./dist/components/infield-button/index.js"
     },
@@ -99,7 +147,15 @@
       "types": "./dist/components/illustrated-message/index.d.ts",
       "import": "./dist/components/illustrated-message/index.js"
     },
+    "./components/illustrated-message/index.js": {
+      "types": "./dist/components/illustrated-message/index.d.ts",
+      "import": "./dist/components/illustrated-message/index.js"
+    },
     "./components/meter": {
+      "types": "./dist/components/meter/index.d.ts",
+      "import": "./dist/components/meter/index.js"
+    },
+    "./components/meter/index.js": {
       "types": "./dist/components/meter/index.d.ts",
       "import": "./dist/components/meter/index.js"
     },
@@ -115,7 +171,15 @@
       "types": "./dist/components/progress-bar/index.d.ts",
       "import": "./dist/components/progress-bar/index.js"
     },
+    "./components/progress-bar/index.js": {
+      "types": "./dist/components/progress-bar/index.d.ts",
+      "import": "./dist/components/progress-bar/index.js"
+    },
     "./components/progress-circle": {
+      "types": "./dist/components/progress-circle/index.d.ts",
+      "import": "./dist/components/progress-circle/index.js"
+    },
+    "./components/progress-circle/index.js": {
       "types": "./dist/components/progress-circle/index.d.ts",
       "import": "./dist/components/progress-circle/index.js"
     },
@@ -136,6 +200,10 @@
       "import": "./dist/components/tabs/index.js"
     },
     "./components/tooltip": {
+      "types": "./dist/components/tooltip/index.d.ts",
+      "import": "./dist/components/tooltip/index.js"
+    },
+    "./components/tooltip/index.js": {
       "types": "./dist/components/tooltip/index.d.ts",
       "import": "./dist/components/tooltip/index.js"
     },
@@ -300,13 +368,31 @@
       "components/accordion": [
         "dist/components/accordion/index.d.ts"
       ],
+      "components/accordion/index.js": [
+        "dist/components/accordion/index.d.ts"
+      ],
       "components/action-button": [
         "dist/components/action-button/index.d.ts"
+      ],
+      "components/action-button/index.js": [
+        "dist/components/action-button/index.d.ts"
+      ],
+      "components/action-group": [
+        "dist/components/action-group/index.d.ts"
+      ],
+      "components/action-group/index.js": [
+        "dist/components/action-group/index.d.ts"
       ],
       "components/alert-banner": [
         "dist/components/alert-banner/index.d.ts"
       ],
+      "components/alert-banner/index.js": [
+        "dist/components/alert-banner/index.d.ts"
+      ],
       "components/asset": [
+        "dist/components/asset/index.d.ts"
+      ],
+      "components/asset/index.js": [
         "dist/components/asset/index.d.ts"
       ],
       "components/avatar": [
@@ -324,10 +410,19 @@
       "components/button": [
         "dist/components/button/index.d.ts"
       ],
+      "components/button/index.js": [
+        "dist/components/button/index.d.ts"
+      ],
       "components/button-group": [
         "dist/components/button-group/index.d.ts"
       ],
+      "components/button-group/index.js": [
+        "dist/components/button-group/index.d.ts"
+      ],
       "components/card": [
+        "dist/components/card/index.d.ts"
+      ],
+      "components/card/index.js": [
         "dist/components/card/index.d.ts"
       ],
       "components/color-handle": [
@@ -335,6 +430,12 @@
       ],
       "components/color-handle/index.js": [
         "dist/components/color-handle/index.d.ts"
+      ],
+      "components/color-loupe": [
+        "dist/components/color-loupe/index.d.ts"
+      ],
+      "components/color-loupe/index.js": [
+        "dist/components/color-loupe/index.d.ts"
       ],
       "components/divider": [
         "dist/components/divider/index.d.ts"
@@ -351,19 +452,43 @@
       "components/icon": [
         "dist/components/icon/index.d.ts"
       ],
+      "components/icon/index.js": [
+        "dist/components/icon/index.d.ts"
+      ],
       "components/infield-button": [
+        "dist/components/infield-button/index.d.ts"
+      ],
+      "components/infield-button/index.js": [
         "dist/components/infield-button/index.d.ts"
       ],
       "components/illustrated-message": [
         "dist/components/illustrated-message/index.d.ts"
       ],
+      "components/illustrated-message/index.js": [
+        "dist/components/illustrated-message/index.d.ts"
+      ],
       "components/meter": [
         "dist/components/meter/index.d.ts"
+      ],
+      "components/meter/index.js": [
+        "dist/components/meter/index.d.ts"
+      ],
+      "components/popover": [
+        "dist/components/popover/index.d.ts"
+      ],
+      "components/popover/index.js": [
+        "dist/components/popover/index.d.ts"
       ],
       "components/progress-bar": [
         "dist/components/progress-bar/index.d.ts"
       ],
+      "components/progress-bar/index.js": [
+        "dist/components/progress-bar/index.d.ts"
+      ],
       "components/progress-circle": [
+        "dist/components/progress-circle/index.d.ts"
+      ],
+      "components/progress-circle/index.js": [
         "dist/components/progress-circle/index.d.ts"
       ],
       "components/status-light": [
@@ -379,6 +504,9 @@
         "dist/components/tabs/index.d.ts"
       ],
       "components/tooltip": [
+        "dist/components/tooltip/index.d.ts"
+      ],
+      "components/tooltip/index.js": [
         "dist/components/tooltip/index.d.ts"
       ],
       "controllers": [
