@@ -41,7 +41,7 @@ const AVATAR_SIZE_BY_CARD_SIZE = {
 
 /**
  * @element swc-user-card
- * @since 2.0.0-beta.1
+ * @since 2.0.0-beta.4
  *
  * @example
  * <swc-user-card>
@@ -58,11 +58,7 @@ const AVATAR_SIZE_BY_CARD_SIZE = {
  *   <span slot="description">Product designer</span>
  * </swc-user-card>
  *
- * @slot avatar - The person's avatar. Expects a `swc-avatar` (or equivalent);
- * see [Avatar](../?path=/docs/components-avatar--docs) for its labeling
- * contract. The card manages the avatar's `size` (matching the card's own
- * `size`) and `outline` attributes, overwriting any values the consumer
- * sets directly.
+ * @slot avatar - Expects a `swc-avatar` (or equivalent).
  */
 export class UserCard extends CardBase {
   // ─────────────────────────

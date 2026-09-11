@@ -9,9 +9,11 @@ import * as Stories from './stories/user-card.stories';
 
 ## Anatomy
 
-A user card shares `preview`, `title`, `description`, the default slot, and `footer` with [Card](../?path=/docs/components-card--docs). It adds one part:
+A user card shares `preview`, `title`, `description`, the default slot, and `footer` with [Card](../?path=/docs/components-card--docs). It adds one slot:
 
 - **`avatar`**: the person's avatar, shown between the preview and the content. Expects an [Avatar](../?path=/docs/components-avatar--docs) element
+
+The card manages the avatar's size (matching the card's own size) and outline attributes, overwriting any other set values.
 
 <Canvas of={Stories.Anatomy} />
 
@@ -19,7 +21,7 @@ A user card shares `preview`, `title`, `description`, the default slot, and `foo
 
 ### Sizes
 
-Sizes match [Card](../?path=/docs/components-card--docs): five sizes (`xs`–`xl`, medium default) scale typography, padding, and maximum inline size. The one addition: size also sets the slotted avatar's own `size` attribute from a fixed scale (`xs`/`s`: `300`, `m`: `500`, `l`: `700`, `xl`: `900`), overwriting any `size` the consumer sets directly.
+Sizes match [Card](../?path=/docs/components-card--docs): five sizes (`xs`–`xl`, medium default) scale typography, padding, and maximum inline size. The one addition: size also sets the slotted avatar's own `size` attribute from a fixed scale (`xs`: `100`, `s`: `300`, `m`: `500`, `l`: `700`, `xl`: `900`), overwriting any `size` the consumer sets directly.
 
 <Canvas of={Stories.Sizes} />
 
