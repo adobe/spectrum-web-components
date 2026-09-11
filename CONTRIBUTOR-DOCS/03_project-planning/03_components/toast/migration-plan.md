@@ -78,7 +78,7 @@
 ## 1st-gen API surface
 
 **Source:** [`1st-gen/packages/toast/src/Toast.ts`](../../../../1st-gen/packages/toast/src/Toast.ts)
-**Version:** `@spectrum-web-components/toast@1.12.2`
+**Version:** `@spectrum-web-components/toast@1.12.3`
 **Custom element tag:** `sp-toast`
 
 ### Properties / attributes
@@ -111,7 +111,7 @@
 
 ### CSS custom properties
 
-No dedicated rendering-and-styling analysis doc exists for Toast (out of scope this cycle); this is pulled directly from `1st-gen/packages/toast/src/toast.css.js`.
+No dedicated rendering-and-styling analysis doc exists for Toast (out of scope this cycle); this is pulled directly from `1st-gen/packages/toast/src/toast.css`.
 
 1st-gen exposes roughly two dozen `--mod-toast-*` passthrough properties over spectrum-css tokens:
 
@@ -143,11 +143,11 @@ This full modifier surface will not be carried forward to 2nd-gen.
 
 | Package | Version | Role |
 | ------- | ------- | ---- |
-| `@spectrum-web-components/base` | 1.12.2 | Lit base class |
-| `@spectrum-web-components/button` | 1.12.2 | `sp-close-button` |
-| `@spectrum-web-components/icon` | 1.12.2 | Declared in `package.json` but not directly imported anywhere in the toast package; likely a transitive requirement of `icons-workflow` |
-| `@spectrum-web-components/icons-workflow` | 1.12.2 | `sp-icon-info`, `sp-icon-alert`, `sp-icon-checkmark-circle` |
-| `@spectrum-web-components/shared` | 1.12.2 | `FocusVisiblePolyfillMixin` |
+| `@spectrum-web-components/base` | 1.12.3 | Lit base class |
+| `@spectrum-web-components/button` | 1.12.3 | `sp-close-button` |
+| `@spectrum-web-components/icon` | 1.12.3 | Declared in `package.json` but not directly imported anywhere in the toast package; likely a transitive requirement of `icons-workflow` |
+| `@spectrum-web-components/icons-workflow` | 1.12.3 | `sp-icon-info`, `sp-icon-alert`, `sp-icon-checkmark-circle` |
+| `@spectrum-web-components/shared` | 1.12.3 | `FocusVisiblePolyfillMixin` |
 | `SlotPresenceController` | already built | Gates whether the `action` slot has content, for the timeout-plus-action dev warning (Q2) and whether the action button participates in the Tab order. See [`2nd-gen/packages/core/controllers/slot-presence-controller/`](../../../../2nd-gen/packages/core/controllers/slot-presence-controller/slot-presence-controller.mdx). |
 | `SlotAttributePropagationController` | already built | Propagates the host's `size`/`variant` onto the slotted `action` button, so it styles as expected without the consumer setting those attributes twice. See [`2nd-gen/packages/core/controllers/slot-attribute-propagation-controller/`](../../../../2nd-gen/packages/core/controllers/slot-attribute-propagation-controller/slot-attribute-propagation-controller.mdx). |
 | `swc-popover`'s `modal` mode (native `<dialog>.showModal()`, `2nd-gen/packages/core/components/popover/Popover.base.ts`) | already built | Precedent for the expanded view's focus containment: opting into native `<dialog>.showModal()` gives a native focus trap, native background inert, and a native `::backdrop` scrim, in place of a hand-rolled focus-trap implementation. Already paired below with `PageScrollLockController` and `dismissibleStack` for the same kind of blocking surface. |
@@ -241,7 +241,7 @@ Whether the queue's countdown construct belongs in a shared, cross-component loc
 
 | # | What is added | Notes |
 | --- | ------------- | ----- |
-| A1 | `--swc-*` custom properties | None in the initial set; add a property only once a concrete override need surfaces, see [CSS custom properties (2nd-gen)](#css-custom-properties-2nd-gen) |
+| P1 | `--swc-*` custom properties | None in the initial set; add a property only once a concrete override need surfaces, see [CSS custom properties (2nd-gen)](#css-custom-properties-2nd-gen) |
 
 ---
 
