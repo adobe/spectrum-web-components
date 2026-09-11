@@ -294,12 +294,12 @@ const preview = {
               'Patching dependencies',
               'Accessibility testing',
               'Using stackblitz',
-              'gen2 testing',
+              'Gen2 testing',
               'Tools vs packages',
               'Writing migration guides',
               'Focus management',
               'Changelog strategy',
-              'gen2 shared resources',
+              'Gen2 shared resources',
             ],
             'Style guide',
             [
@@ -353,8 +353,8 @@ const preview = {
               'Objectives and strategy',
               'Workstreams',
               [
-                'gen2 definition and development',
-                'gen2 component migration',
+                'Gen2 definition and development',
+                'Gen2 component migration',
                 [
                   'Status',
                   'Step by step',
@@ -372,7 +372,6 @@ const preview = {
                 ],
                 'Accessibility improvements',
                 'Component improvements',
-                '1st gen spectrum 2 enhancements',
               ],
               'Components',
               'Milestones',
