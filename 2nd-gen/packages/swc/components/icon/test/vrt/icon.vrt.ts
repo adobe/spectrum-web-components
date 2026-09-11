@@ -10,13 +10,16 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, nothing } from 'lit';
+import { html } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import {
   ICON_VALID_SIZES,
   type IconSize,
 } from '@adobe/spectrum-wc-core/components/icon';
+import { Icon_ChevronDown } from '@adobe/spectrum-wc-icons/ChevronDown.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
@@ -27,7 +30,6 @@ import {
   theme,
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
-import { Chevron100Icon } from '../../elements/Chevron100Icon.js';
 
 // Metadata
 
@@ -41,7 +43,7 @@ export default meta;
 
 // Helpers
 
-const iconSvg = Chevron100Icon();
+const iconSvg = unsafeSVG(Icon_ChevronDown());
 
 const icon = ({
   size,
@@ -50,7 +52,7 @@ const icon = ({
   size: IconSize;
   accessibleLabel?: string;
 }) => html`
-  <swc-icon size=${size} accessible-label=${accessibleLabel ?? nothing}>
+  <swc-icon size=${size} accessible-label=${ifDefined(accessibleLabel)}>
     ${iconSvg}
   </swc-icon>
 `;
@@ -78,13 +80,6 @@ const permutationContent = () => html`
 
 // VRT stories
 
-// Every size, labeled (role="img") vs. decorative (aria-hidden, the
-// default with no accessible-label) host semantics, and the `color:
-// var(--swc-icon-color, currentColor)` fallback that inherits an ancestor's
-// `color` when the custom property is unset (see icon-custom-properties.vrt.ts
-// for the property override itself). Rendered once in light/ltr and once in
-// dark/rtl, since that fallback tracks the surrounding theme's content color
-// rather than a fixed token.
 export const Permutations: Story = {
   render: () => html`
     ${theme(permutationContent(), 'light', 'ltr')}
@@ -93,10 +88,6 @@ export const Permutations: Story = {
   parameters: vrtParameters,
 };
 
-// `forced-colors` replaces the page palette wholesale, and the icon's fill
-// resolves through `currentColor`, so it's worth confirming size and
-// labeled/decorative permutations still render legibly under the system
-// palette.
 export const ForcedColors: Story = {
   render: () => theme(permutationContent(), 'light', 'ltr'),
   parameters: forcedColorsVrtParameters,
