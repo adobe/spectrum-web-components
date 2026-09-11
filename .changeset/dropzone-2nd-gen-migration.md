@@ -4,7 +4,7 @@
 '@spectrum-web-components/dropzone': patch
 ---
 
-Add the 2nd-gen `<swc-dropzone>`, migrated from the Spectrum 1 `<sp-dropzone>`.
+Add the gen2 `<swc-dropzone>`, migrated from the Spectrum 1 `<sp-dropzone>`.
 
 - **API**: `dropEffect`, `dragged`, `filled`, `size` (new), and localizable `dragged-message`/`filled-message`/`replace-message` status text. Renames `isDragged`/`isFilled` to `dragged`/`filled` and events to the `swc-dropzone-*` prefix; adds a dedicated `filled-content` slot instead of restyling the default slot in place.
 - **Accessibility**: fixed `role="group"` host requiring an accessible name, a visually-hidden `role="status"` region announcing drag and drop state changes, and no host `tabindex` (the slotted browse control owns the tab stop).

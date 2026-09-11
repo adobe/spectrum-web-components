@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Project planning](../README.md) / Strategies / Forms Strategy: 2nd-Gen Proposal
+[CONTRIBUTOR-DOCS](../../README.md) / [Project planning](../README.md) / Strategies / Forms Strategy: gen2 Proposal
 
 <!-- Document title (editable) -->
 
-# Forms Strategy: 2nd-Gen Proposal
+# Forms Strategy: gen2 Proposal
 
 <!-- Generated TOC - DO NOT EDIT -->
 
@@ -34,7 +34,7 @@
 
 ## Summary
 
-This proposal records the team's recommended direction for **2nd-gen form fields** (text field, checkbox, radio, picker, combobox) before scaling migration. It synthesizes the proof-of-concept findings for text field and combobox as form-associated custom elements, plus the cross-root ARIA `referenceTarget` shim research. The core decisions are: form fields participate in forms through the **ElementInternals / form-associated custom element (FACE)** API; ARIA roles default to the **shadow DOM**, with an explicit host-role exception for button-like and radio-like controls (see [§3.2](#32-where-aria-roles-live)); label, help text, and error text associate through **IDREF relationships** that use a cross-root-safe pattern; and **axe-core** exclusions are documented, not silent.
+This proposal records the team's recommended direction for **gen2 form fields** (text field, checkbox, radio, picker, combobox) before scaling migration. It synthesizes the proof-of-concept findings for text field and combobox as form-associated custom elements, plus the cross-root ARIA `referenceTarget` shim research. The core decisions are: form fields participate in forms through the **ElementInternals / form-associated custom element (FACE)** API; ARIA roles default to the **shadow DOM**, with an explicit host-role exception for button-like and radio-like controls (see [§3.2](#32-where-aria-roles-live)); label, help text, and error text associate through **IDREF relationships** that use a cross-root-safe pattern; and **axe-core** exclusions are documented, not silent.
 
 
 > **Scope:** Form-field API and accessibility direction only. This proposal does **not** implement the shared controllers or migrate a production component; those are follow-up work.
@@ -65,7 +65,7 @@ This proposal records the team's recommended direction for **2nd-gen form fields
 
 ## 1. Why Change?
 
-1st-gen form controls vary in how they participate in forms, where roles live, and how label/help/error text is associated. Some rely on a nested light-DOM `<input>`; some manage validity by hand; cross-root ARIA relationships are inconsistent. Scaling 2nd-gen migration without a single agreed direction would multiply that inconsistency across every field. This proposal fixes the direction once so contributors do not re-litigate it per component.
+1st-gen form controls vary in how they participate in forms, where roles live, and how label/help/error text is associated. Some rely on a nested light-DOM `<input>`; some manage validity by hand; cross-root ARIA relationships are inconsistent. Scaling gen2 migration without a single agreed direction would multiply that inconsistency across every field. This proposal fixes the direction once so contributors do not re-litigate it per component.
 
 ---
 
@@ -81,7 +81,7 @@ This proposal records the team's recommended direction for **2nd-gen form fields
 
 ### 3.1 Form participation: ElementInternals / FACE
 
-2nd-gen form fields are **form-associated custom elements**: set `static formAssociated = true`, attach internals with `this.attachInternals()`, and mirror value through `setFormValue()`. Do not nest a hidden light-DOM `<input>` to participate in forms. A `setValidity()` pass-through on `FieldAssociationController` is proposed but not yet implemented (*pending research*); see [§6](#6-open-questions) before hand-rolling validity per component.
+gen2 form fields are **form-associated custom elements**: set `static formAssociated = true`, attach internals with `this.attachInternals()`, and mirror value through `setFormValue()`. Do not nest a hidden light-DOM `<input>` to participate in forms. A `setValidity()` pass-through on `FieldAssociationController` is proposed but not yet implemented (*pending research*); see [§6](#6-open-questions) before hand-rolling validity per component.
 
 - **Decision:** yes, adopt ElementInternals/FACE for form fields. The value is submitted via `internals.setFormValue(value)` on change, and the `formDisabledCallback(disabled)` lifecycle hook receives cascades from an ancestor `<fieldset disabled>` or an owning form.
 - **Shared controller:** a **`FieldAssociationController`** wraps `ElementInternals` to handle value submission, the disabled cascade, and form reset once, so text field, checkbox, and combobox do not each reimplement it.
@@ -113,7 +113,7 @@ Two complementary sources feed the accessible name and description:
 
 When both sources exist, the shadow-internal label appears first in the merged element-reference list. Error text associates the same way through `aria-errormessage`.
 
-- **Reference:** [semantic HTML and ARIA guide](../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx).
+- **Reference:** [semantic HTML and ARIA guide](../../../gen2/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx).
 
 ### 3.4 axe-core policy
 
@@ -132,7 +132,7 @@ Browsers currently lack a standardized path for axe-core to read ARIA relationsh
 - Add a **story-level or test-level exclusion with a written rationale**, not a silent global disable.
 - Include a `// reason:` comment linking the relevant upstream Deque / axe-core issue, and remove the exclusion once that issue ships a fix (review on a quarterly cadence).
 - Verify exposure with manual AT testing, particularly in **Firefox**, which handles `ElementInternals` ARIA less consistently than Chromium and Safari.
-- Align with the [Storybook test-runner axe usage](https://github.com/adobe/spectrum-web-components/blob/main/2nd-gen/packages/swc/.storybook/test-runner.ts). The [ElementInternals and axe-core guide](../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/element_internals_axe_core.mdx) in the [accessibility guides](../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/) is the detailed reference for axe-core's current `ElementInternals` support and known gaps.
+- Align with the [Storybook test-runner axe usage](https://github.com/adobe/spectrum-web-components/blob/main/gen2/packages/swc/.storybook/test-runner.ts). The [ElementInternals and axe-core guide](../../../gen2/packages/swc/.storybook/guides/accessibility-guides/element_internals_axe_core.mdx) in the [accessibility guides](../../../gen2/packages/swc/.storybook/guides/accessibility-guides/) is the detailed reference for axe-core's current `ElementInternals` support and known gaps.
 
 ---
 
@@ -165,8 +165,8 @@ The canonical surface for form fields. Contributors align Phase 3 (API) and Phas
 
 Contributors migrating a form field follow the washing machine workflow with these additions:
 
-- **Phase 3 (API):** wire form participation and name the API from the [naming table](#4-naming-table). See [Washing machine workflow, Phase 3](../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-3-api-migration).
-- **Phase 4 (accessibility):** wire label, help text, and errors per [§3.3](#33-idref-strategy-label-help-text-and-errors), and satisfy the axe policy in [§3.4](#34-axe-core-policy). See [Washing machine workflow, Phase 4](../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-4-accessibility).
+- **Phase 3 (API):** wire form participation and name the API from the [naming table](#4-naming-table). See [Washing machine workflow, Phase 3](../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-3-api-migration).
+- **Phase 4 (accessibility):** wire label, help text, and errors per [§3.3](#33-idref-strategy-label-help-text-and-errors), and satisfy the axe policy in [§3.4](#34-axe-core-policy). See [Washing machine workflow, Phase 4](../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-4-accessibility).
 
 ---
 

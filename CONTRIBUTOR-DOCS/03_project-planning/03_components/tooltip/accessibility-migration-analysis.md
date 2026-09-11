@@ -12,31 +12,31 @@
 <summary><strong>In this doc</strong></summary>
 
 - [Overview](#overview)
-    - [Quick scan](#quick-scan)
-    - [Verified gap in today’s Tooltip (`sp-tooltip`)](#verified-gap-in-todays-tooltip-sp-tooltip)
-    - [Also read](#also-read)
-    - [What a tooltip is](#what-a-tooltip-is)
-    - [When to use something else](#when-to-use-something-else)
-    - [What it is not](#what-it-is-not)
-    - [Related](#related)
+  - [Quick scan](#quick-scan)
+  - [Verified gap in today’s Tooltip (`sp-tooltip`)](#verified-gap-in-todays-tooltip-sp-tooltip)
+  - [Also read](#also-read)
+  - [What a tooltip is](#what-a-tooltip-is)
+  - [When to use something else](#when-to-use-something-else)
+  - [What it is not](#what-it-is-not)
+  - [Related](#related)
 - [ARIA and WCAG context](#aria-and-wcag-context)
-    - [Pattern in the APG](#pattern-in-the-apg)
-    - [Guidelines that apply](#guidelines-that-apply)
+  - [Pattern in the APG](#pattern-in-the-apg)
+  - [Guidelines that apply](#guidelines-that-apply)
 - [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
 - [Recommendations: `<swc-tooltip>`](#recommendations-swc-tooltip)
-    - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
-    - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
-    - [Accessibility tree expectations](#accessibility-tree-expectations)
-    - [Form-associated custom properties (labels, `ElementInternals`)](#form-associated-custom-properties-labels-elementinternals)
-    - [Live regions, loading, and announcements](#live-regions-loading-and-announcements)
-    - [Motion (dedicated recommendations subsection)](#motion-dedicated-recommendations-subsection)
-    - [Positioning: CSS anchor and JavaScript fallbacks](#positioning-css-anchor-and-javascript-fallbacks)
-    - [Interaction: pointer, keyboard, and touch](#interaction-pointer-keyboard-and-touch)
-    - [Keyboard and focus](#keyboard-and-focus)
+  - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
+  - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
+  - [Accessibility tree expectations](#accessibility-tree-expectations)
+  - [Form-associated custom properties (labels, `ElementInternals`)](#form-associated-custom-properties-labels-elementinternals)
+  - [Live regions, loading, and announcements](#live-regions-loading-and-announcements)
+  - [Motion (dedicated recommendations subsection)](#motion-dedicated-recommendations-subsection)
+  - [Positioning: CSS anchor and JavaScript fallbacks](#positioning-css-anchor-and-javascript-fallbacks)
+  - [Interaction: pointer, keyboard, and touch](#interaction-pointer-keyboard-and-touch)
+  - [Keyboard and focus](#keyboard-and-focus)
 - [Testing](#testing)
-    - [Automated tests](#automated-tests)
-    - [Playwright-only or host-only accessibility gates](#playwright-only-or-host-only-accessibility-gates)
-    - [Manual and screen reader testing](#manual-and-screen-reader-testing)
+  - [Automated tests](#automated-tests)
+  - [Playwright-only or host-only accessibility gates](#playwright-only-or-host-only-accessibility-gates)
+  - [Manual and screen reader testing](#manual-and-screen-reader-testing)
 - [Summary checklist](#summary-checklist)
 - [References](#references)
 
@@ -46,7 +46,7 @@
 
 ## Overview
 
-This guide explains accessibility for the planned 2nd gen Tooltip (`swc-tooltip`, final tag name may change). The target standard is WCAG **2.2 Level AA**.
+This guide explains accessibility for the planned gen2 Tooltip (`swc-tooltip`, final tag name may change). The target standard is WCAG **2.2 Level AA**.
 
 ### Quick scan
 
@@ -119,7 +119,7 @@ Pick **contextual help** when the UX is “user opens explicit help”—not “
 ### Related
 
 - 1st-gen: [`sp-overlay`](../../../../1st-gen/packages/overlay/README.md) **`type="hint"`** plus [`overlay-trigger`](../../../../1st-gen/packages/overlay/overlay-trigger.md) handle stacking plus **`aria-describedby`** heuristics today.
-- 2nd-gen: keep placement implementation aligned with **[Tooltip rendering and styling](./rendering-and-styling-migration-analysis.md)** (overlay/Floating UI roadmap today); revisit **CSS anchor positioning** when browser support and caret/collision behavior meet product bars.
+- gen2: keep placement implementation aligned with **[Tooltip rendering and styling](./rendering-and-styling-migration-analysis.md)** (overlay/Floating UI roadmap today); revisit **CSS anchor positioning** when browser support and caret/collision behavior meet product bars.
 
 ---
 
@@ -169,7 +169,7 @@ More demos and patterns:
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary | Notes |
 | --- | --- | --- | --- | --- | --- |
-| [SWC-1558](https://jira.corp.adobe.com/browse/SWC-1558) | Bug | To Do | Unresolved | Tooltip is missing **`role="tooltip"`** | Confirms gap vs APG—2nd-gen must fix on surfaced node. Implementation must **not** smuggle **`dialog`** semantics or focusable panels into **`role="tooltip"`**; that UX is **`sp-contextual-help`** / popover/dialog (**[When to use something else](#when-to-use-something-else)**). |
+| [SWC-1558](https://jira.corp.adobe.com/browse/SWC-1558) | Bug | To Do | Unresolved | Tooltip is missing **`role="tooltip"`** | Confirms gap vs APG—gen2 must fix on surfaced node. Implementation must **not** smuggle **`dialog`** semantics or focusable panels into **`role="tooltip"`**; that UX is **`sp-contextual-help`** / popover/dialog (**[When to use something else](#when-to-use-something-else)**). |
 | [SWC-1465](https://jira.corp.adobe.com/browse/SWC-1465) | Story | To Do | Unresolved | Docs: **`aria-describedby`** guidance for Tooltip | Tie to **`describeTrigger`/`none`** and cross-root **`HoverController`** behavior. Document Tooltip vs **`sp-contextual-help`**: **no focusable-tooltip / tooltip-as-dialog pattern**. For touch: **prefer toggletip (`aria-expanded`/`aria-controls`)** over **`longpress`** / **`triggerInteraction='longpress'`** for supplementary hints; align overlay + directive docs (**[Interaction](#interaction-pointer-keyboard-and-touch)**). |
 | [SWC-2022](https://jira.corp.adobe.com/browse/SWC-2022) | Story | To Do | Unresolved | Tooltip: implement accessibility features | **Cross-program ticket** (typically **`gen2`**-labelled migration work). Tracks shipping toggletip-first touch and shrinking reliance on **`longpress`**/`overlay-trigger` for Tooltip-class hints (**[Quick scan](#quick-scan)**). See **SWC-1465** for doc-side guidance. |
 | [SWC-321](https://jira.corp.adobe.com/browse/SWC-321) | Bug | To Do | Unresolved | Clicking **open**, **self-managed** tooltip on **action-button** triggers underlying button ([#3969](https://github.com/adobe/spectrum-web-components/issues/3969)) | Regression-test **hit-target layering** (**`pointer-events`**, stacking order, dismiss-on-press). Align dismiss-on-pointer behavior with React Spectrum **`shouldCloseOnPress`** ([React Spectrum Tooltip](https://react-spectrum.adobe.com/Tooltip)). |
@@ -295,7 +295,7 @@ Gates matter when Tooltip nests beside real widgets—thin demo frames skip hard
 
 ### Manual and screen reader testing
 
-Manual flow (paired with **[Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)** Browse vs Focus notes):
+Manual flow (paired with **[Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)** Browse vs Focus notes):
 
 1. Trigger speech first, Tooltip second (**[USWDS SR list](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)**, [Guidelines](#guidelines-that-apply)).
 2. Keyboard users hear hints on **`Tab`** focus—not only hover; **toggletip/toggle** flows cover handheld (test **`longpress`** only where product still exposes it (**[SWC-2022](https://jira.corp.adobe.com/browse/SWC-2022)**)).
@@ -312,7 +312,7 @@ Manual flow (paired with **[Screen reader testing](../../../../2nd-gen/packages/
 - [ ] Split toggletip **`aria-expanded`/`aria-controls`** plans from **`aria-describedby`-only** hints.
 - [ ] Confirm **`Escape`** closes hints without trapping focus.
 - [ ] Automated suites exercise shadow/light **`aria-describedby`**, stacking/hit-testing (**[SWC-321](https://jira.corp.adobe.com/browse/SWC-321)**, **[SWC-890](https://jira.corp.adobe.com/browse/SWC-890)**), overlay re-anchor (**[SWC-324](https://jira.corp.adobe.com/browse/SWC-324)**) under **[SWC-2025](https://jira.corp.adobe.com/browse/SWC-2025)** umbrellas.
-- [ ] Manual **[screen reader](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)** plus keyboard + USWDS buckets (**general / zoom / keyboard / SR**) inside **live product chrome**, not story shells alone (**[USWDS tests](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)**).
+- [ ] Manual **[screen reader](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)** plus keyboard + USWDS buckets (**general / zoom / keyboard / SR**) inside **live product chrome**, not story shells alone (**[USWDS tests](https://designsystem.digital.gov/components/tooltip/accessibility-tests/)**).
 - [ ] Keep **[Related 1st-gen accessibility](#related-1st-gen-accessibility-jira)** table fresh as Jira changes (default: skip standalone **`gen2`**-only mirrors—keep **[SWC-2022](https://jira.corp.adobe.com/browse/SWC-2022)** here as the Tooltip a11y program anchor for toggle vs **`longpress`** work).
 
 ---
@@ -335,5 +335,5 @@ Manual flow (paired with **[Screen reader testing](../../../../2nd-gen/packages/
 - WCAG **2.2**: [Understanding](https://www.w3.org/WAI/WCAG22/Understanding/) (topics cited above)
 - 1st-gen: [`Tooltip.ts`](../../../../1st-gen/packages/tooltip/src/Tooltip.ts), [`HoverController.ts`](../../../../1st-gen/packages/overlay/src/HoverController.ts) (description wiring), [`OverlayStack.ts`](../../../../1st-gen/packages/overlay/src/OverlayStack.ts) (Escape closes `hint` overlays)
 - Tooltip [rendering-and-styling migration](./rendering-and-styling-migration-analysis.md); Popover [accessibility migration analysis](../popover/accessibility-migration-analysis.md)
-- 2nd-gen guides: [Semantic HTML and ARIA](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx), [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx), [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- gen2 guides: [Semantic HTML and ARIA](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx), [Keyboard testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx), [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
 - Adobe Jira (**1st-gen** snapshot table + Tooltip a11y program cross-ref): [Related 1st-gen accessibility](#related-1st-gen-accessibility-jira)

@@ -30,8 +30,8 @@ export default {
       : []),
     // https://geometricpanda.github.io/storybook-addon-badges/
     '@geometricpanda/storybook-addon-badges',
-    // Screen reader addon (shared from 2nd-gen).
-    '../../2nd-gen/packages/swc/.storybook/addons/screen-reader-addon',
+    // Screen reader addon (shared from gen2).
+    '../../gen2/packages/swc/.storybook/addons/screen-reader-addon',
   ],
   framework: {
     name: '@storybook/web-components-webpack5',
@@ -50,11 +50,11 @@ export default {
           'packages',
           'projects',
           'tools',
-          '../2nd-gen/packages',
+          '../gen2/packages',
         ],
         alias: {
-          '@adobe/spectrum-wc-core': resolve('../2nd-gen/packages/core/dist'),
-          '@adobe/spectrum-wc': resolve('../2nd-gen/packages/swc/dist'),
+          '@adobe/spectrum-wc-core': resolve('../gen2/packages/core/dist'),
+          '@adobe/spectrum-wc': resolve('../gen2/packages/swc/dist'),
         },
       },
     });
@@ -69,9 +69,9 @@ export default {
           },
         }
       : {}),
-    // Cross-link to the 2nd-gen Storybook. Defaults to production; CI overrides
+    // Cross-link to the gen2 Storybook. Defaults to production; CI overrides
     // this to the matching PR-preview URL when building a per-PR preview.
-    '2nd-gen': {
+    gen2: {
       title: 'SWC Gen2',
       url:
         process.env.SWC_GEN2_STORYBOOK_URL ||

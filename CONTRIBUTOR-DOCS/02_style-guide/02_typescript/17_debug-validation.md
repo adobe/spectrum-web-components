@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-gen TypeScript](README.md) / Debug and validation
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 TypeScript](README.md) / Debug and validation
 
 <!-- Document title (editable) -->
 
@@ -35,7 +35,7 @@
 
 <!-- Document content (editable) -->
 
-This guide covers debug-mode validation patterns for 2nd-gen components. Debug validation helps developers catch configuration errors during development without impacting production performance.
+This guide covers debug-mode validation patterns for gen2 components. Debug validation helps developers catch configuration errors during development without impacting production performance.
 
 ## Debug mode API
 
@@ -526,4 +526,4 @@ Use the full documentation URL for the component:
 - **Call-site cost.** The `validateEnum(...)`/`warnIf(...)` arguments (message strings, `options` objects) are constructed on every `update()`/`updated()` pass even when the helper immediately no-ops.
 - **No-bundler use.** A raw `<script type="module">` import throws a `ReferenceError` on `process`.
 
-A complete fix (separate dev/prod builds, as React ships) is tracked as a follow-up. For per-bundler stripping recipes, see the ["Only in development"](https://github.com/adobe/spectrum-web-components/blob/main/2nd-gen/packages/swc/.storybook/guides/dev-mode/dev-mode-warnings.mdx) section of the consumer guide.
+A complete fix (separate dev/prod builds, as React ships) is tracked as a follow-up. For per-bundler stripping recipes, see the ["Only in development"](https://github.com/adobe/spectrum-web-components/blob/main/gen2/packages/swc/.storybook/guides/dev-mode/dev-mode-warnings.mdx) section of the consumer guide.

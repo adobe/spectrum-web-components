@@ -7,4 +7,4 @@ README.md merge=ours
 # Generated workflow icon art (per-icon functions/elements + barrels). Emitted by
 # `yarn generate:workflow-icons`; collapse in GitHub diffs and exclude from language
 # stats. GitHub-only: local git diff/blame are unaffected.
-2nd-gen/packages/icons/src/*.ts linguist-generated=true
+gen2/packages/icons/src/*.ts linguist-generated=true

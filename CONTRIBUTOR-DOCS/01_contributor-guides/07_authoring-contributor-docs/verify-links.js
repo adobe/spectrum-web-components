@@ -218,7 +218,7 @@ function validateLink(sourceFile, link, metadata, docsRoot) {
   }
 
   if (!targetFileMeta) {
-    // Target may be outside CONTRIBUTOR-DOCS (e.g. 2nd-gen component files)
+    // Target may be outside CONTRIBUTOR-DOCS (e.g. gen2 component files)
     if (docsRoot) {
       const fullPath = path.isAbsolute(resolvedPath)
         ? path.resolve(resolvedPath)

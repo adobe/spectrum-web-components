@@ -140,7 +140,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
    * @deprecated The `selects` property is deprecated and will be removed in
    * a future release. Selection UX will be available via `swc-toggle-button-group`
    * (toggle and multi-select) and `swc-segmented-control` (exclusive choice)
-   * in the 2nd-gen library.
+   * in the gen2 library.
    */
   @property({ type: String })
   public set selects(value: undefined | 'single' | 'multiple') {
@@ -150,7 +150,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     if (window.__swc?.DEBUG) {
       window.__swc.warn(
         this,
-        `The "selects" attribute on <${this.localName}> is deprecated and will be removed in a future release. Selection UX is available via \`swc-toggle-button-group\` (toggle and multi-select) and \`swc-segmented-control\` (exclusive choice) in the 2nd-gen library.`,
+        `The "selects" attribute on <${this.localName}> is deprecated and will be removed in a future release. Selection UX is available via \`swc-toggle-button-group\` (toggle and multi-select) and \`swc-segmented-control\` (exclusive choice) in the gen2 library.`,
         'https://opensource.adobe.com/spectrum-web-components/components/action-group/',
         { level: 'deprecation' }
       );
@@ -198,7 +198,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
    * @deprecated The `selected` property is deprecated and will be removed in
    * a future release. Selection UX is available via `swc-toggle-button-group`
    * (toggle and multi-select) and `swc-segmented-control` (exclusive choice)
-   * in the 2nd-gen library.
+   * in the gen2 library.
    */
   set selected(selected: string[]) {
     this.requestUpdate('selected', this._selected);

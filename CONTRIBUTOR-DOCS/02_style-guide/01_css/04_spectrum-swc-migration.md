@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-Gen CSS](README.md) / Spectrum CSS to SWC Migration
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 CSS](README.md) / Spectrum CSS to SWC Migration
 
 <!-- Document title (editable) -->
 
@@ -24,7 +24,7 @@
 
 <!-- Document content (editable) -->
 
-This guide outlines the high-level mechanical steps for migrating existing Spectrum CSS components from `spectrum-two` into the 2nd-gen SWC styling model. Detailed rules and rationale are covered in the linked style guides.
+This guide outlines the high-level mechanical steps for migrating existing Spectrum CSS components from `spectrum-two` into the gen2 SWC styling model. Detailed rules and rationale are covered in the linked style guides.
 
 ## Core Migration Steps
 
@@ -124,7 +124,7 @@ Badge clearly distinguishes between **exposed customization** and **internal imp
 }
 ```
 
-Several variants set label color on `:host` (see [badge.css](../../../2nd-gen/packages/swc/components/badge/badge.css)); class-based palette entries such as `.swc-Badge--magenta` set `--swc-badge-background-color` as above.
+Several variants set label color on `:host` (see [badge.css](../../../gen2/packages/swc/components/badge/badge.css)); class-based palette entries such as `.swc-Badge--magenta` set `--swc-badge-background-color` as above.
 
 **What Changed**
 

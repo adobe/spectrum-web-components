@@ -16,11 +16,11 @@
  * Entry point for AI tooling CI validation.
  *
  * Runs five checks:
- *   1. Story tags — valid tags in 2nd-gen *.stories.ts files
+ *   1. Story tags — valid tags in gen2 *.stories.ts files
  *   2. AGENTS.md paths — relative links in AGENTS.md files resolve to real files
  *   3. Config schema — .ai/config.json structure and regex validity
  *   4. Symlinks — .cursor/ and .claude/ adapter symlinks point to .ai/ sources
- *   5. Docs pages — per-unit MDX docs pages for 2nd-gen components, internal
+ *   5. Docs pages — per-unit MDX docs pages for gen2 components, internal
  *      components, patterns, and controllers conform to the per-unit MDX
  *      authoring standards in `.ai/rules/stories-documentation.md`
  *

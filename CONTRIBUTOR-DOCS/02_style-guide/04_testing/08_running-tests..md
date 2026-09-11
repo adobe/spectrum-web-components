@@ -12,11 +12,11 @@
 <summary><strong>In this doc</strong></summary>
 
 - [Troubleshooting](#troubleshooting)
-    - [Test times out](#test-times-out)
-    - [ARIA snapshot fails](#aria-snapshot-fails)
-    - [aXe reports violations](#axe-reports-violations)
-    - [Coverage below threshold](#coverage-below-threshold)
-    - [Warning tests not capturing calls](#warning-tests-not-capturing-calls)
+  - [Test times out](#test-times-out)
+  - [ARIA snapshot fails](#aria-snapshot-fails)
+  - [aXe reports violations](#axe-reports-violations)
+  - [Coverage below threshold](#coverage-below-threshold)
+  - [Warning tests not capturing calls](#warning-tests-not-capturing-calls)
 
 </details>
 
@@ -28,8 +28,8 @@
 | Run tests in UI mode | `yarn workspace @adobe/swc test:ui` | Interactive Vitest UI for debugging |
 | Run tests in visible browser | `yarn workspace @adobe/swc test:browser` | Browser window for live debugging |
 | Run tests with coverage | `yarn workspace @adobe/swc test:coverage` | Generates V8 coverage report |
-| Run all a11y tests | `yarn test:a11y` | Both 1st-gen and 2nd-gen |
-| Run 2nd-gen a11y tests | `yarn test:a11y:2nd` | 2nd-gen only |
+| Run all a11y tests | `yarn test:a11y` | Both 1st-gen and gen2 |
+| Run gen2 a11y tests | `yarn test:a11y:gen2` | gen2 only |
 | Run a11y tests with UI | `yarn test:a11y:ui` | Interactive Playwright UI |
 | Update ARIA snapshots | `yarn test:a11y <component> --update-snapshots` | After intentional a11y tree changes |
 

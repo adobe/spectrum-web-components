@@ -44,7 +44,7 @@
 
 ## Overview
 
-This doc covers how `swc-toast` should work for accessibility. It targets WCAG 2.2 Level AA. Until `swc-toast` exists under `2nd-gen/`, use `1st-gen/packages/toast/src/Toast.ts` (`<sp-toast>`) to validate behavior, and update this spec against the real 2nd-gen source when it ships.
+This doc covers how `swc-toast` should work for accessibility. It targets WCAG 2.2 Level AA. Until `swc-toast` exists under `gen2/`, use `1st-gen/packages/toast/src/Toast.ts` (`<sp-toast>`) to validate behavior, and update this spec against the real gen2 source when it ships.
 
 ### Also read
 
@@ -115,7 +115,7 @@ Not a replacement for critical error messaging or decisions requiring mandatory 
 | **`aria-hidden` when closed** | When the toast is not open, set `aria-hidden="true"` on the host to suppress the alertdialog and its inner live region from the accessibility tree. Remove `aria-hidden` (or set `aria-hidden="false"`) when the toast opens. This is more reliable across browsers than relying on CSS `visibility: hidden` to suppress live region announcements, and prevents unexpected announcements when DOM content changes while the toast is hidden. |
 | **Timer pause (hover and focus-within)** | The auto-dismiss timer must pause both when the pointer is over the component (`pointerenter`) and when focus is within the component (`focusin`). Resume the timer only when both conditions have ended (`pointerleave` and `focusout`). These two conditions are independent: if both are active simultaneously, the timer must not resume until both have cleared. Pausing on pointer hover satisfies WCAG 1.4.13; pausing on focus-within ensures keyboard and screen reader users have sufficient time to read and interact with the toast before it dismisses. |
 | **Variant icon labels** | Variant icons carry accessible labels as part of the live region content. Align with the React Spectrum structure: render the icon with `role="img"` and `aria-label` set to the icon label ("Information", "Error", "Success" by default). Authors can override via the `icon-label` attribute. Document that the icon label may produce redundant announcements if the message already states the type (for example, "Error: Your upload failed"). Authors can set `icon-label=""` to suppress it when the message text conveys the type fully. |
-| **Close button** | Must have an accessible name ("Close"). 1st-gen uses `label="Close"` on `sp-close-button`. 2nd-gen should use `swc-close-button` with the same label. The close button's label is on the button element itself; no cross-root ARIA concern. |
+| **Close button** | Must have an accessible name ("Close"). 1st-gen uses `label="Close"` on `sp-close-button`. gen2 should use `swc-close-button` with the same label. The close button's label is on the button element itself; no cross-root ARIA concern. |
 | **Action button slot** | Design allows a maximum of one action button per toast. The `action` slot is light DOM; authors must provide a descriptive label (for example, "Undo file deletion" rather than just "Undo"). Docs must state the one-action limit explicitly. |
 | **`variant` and color** | `variant` is visual-only. Do not auto-map `variant` to `aria-invalid`, `aria-relevant`, or other ARIA properties. The icon label and message text carry semantic meaning; color is supplementary and must not be the only differentiator. |
 | **Docs** | Document the `role="alertdialog"` + inner `role="alert"` pattern and why it is used. Document the 6-second minimum, the hover-and-focus pause behavior, and the one-action limit. Do not claim `variant` sets ARIA states. |
@@ -180,7 +180,7 @@ Screen reader announces the full alert content when the toast opens. Focus is on
 
 ### Assistive technology, live regions
 
-**Open design question — toast container ownership:** PR review feedback and the React Spectrum implementation surface an important unresolved design question: should `swc-toast` ship alongside a first-party `swc-toast-queue` (or equivalent) container component, or should authors compose their own container? The React Spectrum approach provides a `ToastQueue` that manages a `role="region"` wrapper labeled with the live notification count (for example, `aria-label="2 notifications."`), renders toasts in an ordered list, manages focus across toasts on dismiss, and handles live region coordination for the group. The individual `swc-toast` component alone cannot fully replicate this behavior. This question should be raised at a team sync before finalizing the 2nd-gen API.
+**Open design question — toast container ownership:** PR review feedback and the React Spectrum implementation surface an important unresolved design question: should `swc-toast` ship alongside a first-party `swc-toast-queue` (or equivalent) container component, or should authors compose their own container? The React Spectrum approach provides a `ToastQueue` that manages a `role="region"` wrapper labeled with the live notification count (for example, `aria-label="2 notifications."`), renders toasts in an ordered list, manages focus across toasts on dismiss, and handles live region coordination for the group. The individual `swc-toast` component alone cannot fully replicate this behavior. This question should be raised at a team sync before finalizing the gen2 API.
 
 The React Spectrum container structure for reference:
 
@@ -199,7 +199,7 @@ The React Spectrum container structure for reference:
 
 **Assertive inner alert:** The inner `role="alert"` element uses assertive semantics by definition. This is appropriate because each toast is already scoped as an `alertdialog` — the announcement is bounded to a single dialog unit, reducing the interruption risk compared to a page-level assertive live region. Docs should still warn against stacking many toasts simultaneously and recommend batching updates (a single summary toast, or a progress bar) for bulk operations.
 
-**Container region and landmark navigation:** When a container is used, the `role="region"` wrapper with a dynamic `aria-label` (for example, `"2 notifications."`) makes the toast area discoverable via landmark navigation (F6/Shift+F6 in JAWS and NVDA). Without a container, this landmark is absent and screen reader users must rely solely on the live region announcements. If no first-party container ships with 2nd-gen, the docs must show the manual container pattern and note this limitation.
+**Container region and landmark navigation:** When a container is used, the `role="region"` wrapper with a dynamic `aria-label` (for example, `"2 notifications."`) makes the toast area discoverable via landmark navigation (F6/Shift+F6 in JAWS and NVDA). Without a container, this landmark is absent and screen reader users must rely solely on the live region announcements. If no first-party container ships with gen2, the docs must show the manual container pattern and note this limitation.
 
 **Actionable toasts and timing:** When an action button is present, auto-dismiss should generally be disabled or set to a much longer timeout. A screen reader user who hears the alert announcement and moves focus to the toast (via Tab or the live region) needs sufficient time to activate the action. The docs must warn against combining `timeout` with the `action` slot.
 
@@ -219,7 +219,7 @@ Focus management on dismiss:
 - When the user activates the close button or action button, the `close` event fires. The calling application is responsible for returning focus to a logical location.
 - When a toast auto-dismisses and focus is on the toast at the time, focus is lost. If a container (`swc-toast-queue` or author-composed) manages the list, it should move focus to the next toast in the list, or return focus to the triggering element when the last toast dismisses. Without a container, `swc-toast` fires the `close` event and the application must handle focus return.
 
-Timer pause (hover and focus-within): The auto-dismiss timer must pause both when the pointer enters the toast (`pointerenter`) and when focus moves inside the toast (`focusin`). The timer resumes only when both conditions have ended — `pointerleave` and `focusout`. If a user is both hovering and has focus inside simultaneously, the timer must not resume until both have cleared. The 1st-gen already pauses on `focusin`; 2nd-gen must additionally pause on `pointerenter` to satisfy WCAG 1.4.13 for pointing-device users.
+Timer pause (hover and focus-within): The auto-dismiss timer must pause both when the pointer enters the toast (`pointerenter`) and when focus moves inside the toast (`focusin`). The timer resumes only when both conditions have ended — `pointerleave` and `focusout`. If a user is both hovering and has focus inside simultaneously, the timer must not resume until both have cleared. The 1st-gen already pauses on `focusin`; gen2 must additionally pause on `pointerenter` to satisfy WCAG 1.4.13 for pointing-device users.
 
 ---
 
@@ -229,21 +229,21 @@ Gaps in `sp-toast` that `swc-toast` should fix and cover with tests.
 
 ### Role placement and type
 
-The 1st-gen places `role="alert"` directly on the inner shadow DOM `.body` div with no outer dialog semantics. This exposes a flat live region with no interactive dialog identity — the toast announces its content but does not signal to AT that it is a dismissible, potentially actionable notification. The 2nd-gen should use `role="alertdialog"` (with `aria-modal="false"` and `tabindex="0"`) on the host for the dialog semantics, and retain `role="alert"` with `aria-atomic="true"` on an inner shadow DOM element for the live region announcement. This aligns with the React Spectrum implementation and properly represents the component's interactive nature. The migration guide should document both the structural change and the rationale.
+The 1st-gen places `role="alert"` directly on the inner shadow DOM `.body` div with no outer dialog semantics. This exposes a flat live region with no interactive dialog identity — the toast announces its content but does not signal to AT that it is a dismissible, potentially actionable notification. The gen2 should use `role="alertdialog"` (with `aria-modal="false"` and `tabindex="0"`) on the host for the dialog semantics, and retain `role="alert"` with `aria-atomic="true"` on an inner shadow DOM element for the live region announcement. This aligns with the React Spectrum implementation and properly represents the component's interactive nature. The migration guide should document both the structural change and the rationale.
 
 ### Timer pause incomplete
 
 The 1st-gen pauses the countdown timer on `focusin` and resumes on `focusout`, but does not pause on hover. WCAG 1.4.13 requires that content appearing on pointer hover can be kept visible while the pointer is over it. For auto-dismissing toasts, pausing on hover lets sighted users with pointing devices read the content without racing the timer.
 
-The 2nd-gen must pause the timer on both `pointerenter` and `focusin`, and resume only when both conditions have cleared (`pointerleave` and `focusout`). If the pointer is over the toast while focus is also inside it, the timer must not resume until both have ended.
+The gen2 must pause the timer on both `pointerenter` and `focusin`, and resume only when both conditions have cleared (`pointerleave` and `focusout`). If the pointer is over the toast while focus is also inside it, the timer must not resume until both have ended.
 
 ### `aria-hidden` when closed
 
-The 1st-gen controls visibility via CSS (`visibility: hidden; opacity: 0` when not open) but does not set `aria-hidden` on the host. The inner `role="alert"` div remains in the accessibility tree when the toast is closed, which can cause unexpected announcements in some browsers when DOM content changes while the toast is hidden. The 2nd-gen should set `aria-hidden="true"` on the host when `open` is false.
+The 1st-gen controls visibility via CSS (`visibility: hidden; opacity: 0` when not open) but does not set `aria-hidden` on the host. The inner `role="alert"` div remains in the accessibility tree when the toast is closed, which can cause unexpected announcements in some browsers when DOM content changes while the toast is hidden. The gen2 should set `aria-hidden="true"` on the host when `open` is false.
 
 ### Action button and auto-dismiss
 
-The 1st-gen has no documentation or guardrails preventing auto-dismiss from triggering when an action button is in the slot. A user relying on a screen reader may hear the toast announcement and then try to Tab to the action button, only to have the toast dismiss before they get there. The 2nd-gen docs should strongly advise against combining `timeout` with the `action` slot, and a dev warning should fire when both are set simultaneously.
+The 1st-gen has no documentation or guardrails preventing auto-dismiss from triggering when an action button is in the slot. A user relying on a screen reader may hear the toast announcement and then try to Tab to the action button, only to have the toast dismiss before they get there. The gen2 docs should strongly advise against combining `timeout` with the `action` slot, and a dev warning should fire when both are set simultaneously.
 
 ### Documentation
 
@@ -271,7 +271,7 @@ Automated tests can verify ARIA attributes but cannot verify that the live regio
 3. **Dismiss and focus return:** Activate the close button from keyboard focus and verify the toast closes; confirm where focus goes and whether the application returns it to an appropriate location.
 4. **Auto-dismiss:** Verify that the auto-dismiss timer fires and that no announcement repeats after the toast closes.
 
-See the 2nd-gen Storybook [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide for browser and screen reader combinations to use.
+See the gen2 Storybook [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide for browser and screen reader combinations to use.
 
 ---
 
@@ -290,12 +290,12 @@ See the 2nd-gen Storybook [Screen reader testing](../../../../2nd-gen/packages/s
 - [ ] Action button slot is limited to one action; docs state this limit explicitly.
 - [ ] Docs warn against using `timeout` when the `action` slot is populated.
 - [ ] Docs include the `role="region"` container pattern (with `aria-label` and notification count) for applications showing multiple toasts.
-- [ ] Open design question — container ownership — is raised at team sync before the 2nd-gen API is finalized.
+- [ ] Open design question — container ownership — is raised at team sync before the gen2 API is finalized.
 - [ ] Docs do not claim `variant` sets ARIA states; color alone does not convey variant meaning.
 - [ ] Dev warning fires when `timeout` and the `action` slot are both set.
 - [ ] aXe (WCAG 2.x) runs on all toast stories.
 - [ ] ARIA snapshot tests cover: closed state, text-only, icon + text, and with action button; verify `role="alertdialog"` on host and `role="alert"` on inner element.
-- [ ] Manual screen reader testing verifies the live region announcement fires, focus lands on the alertdialog host, and interactive elements are reachable per the [Storybook screen reader testing guide](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx).
+- [ ] Manual screen reader testing verifies the live region announcement fires, focus lands on the alertdialog host, and interactive elements are reachable per the [Storybook screen reader testing guide](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx).
 
 ---
 
@@ -317,4 +317,4 @@ See the 2nd-gen Storybook [Screen reader testing](../../../../2nd-gen/packages/s
 - [USWDS: Accessible notifications discussion](https://github.com/uswds/uswds/discussions/5770)
 - [React Spectrum: Toast](https://react-spectrum.adobe.com/react-spectrum/Toast.html)
 - [Toast migration roadmap](./rendering-and-styling-migration-analysis.md)
-- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- [gen2 Storybook: Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)

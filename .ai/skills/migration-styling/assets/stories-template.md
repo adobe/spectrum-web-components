@@ -1,6 +1,6 @@
 # Phase 5 stories template
 
-A minimal `[component].stories.ts` file for visual verification of 2nd-gen CSS during Phase 5. The per-component MDX file (`[component].mdx`) and the Accessibility story body are deferred to Phase 7 (Documentation). No story-level JSDoc is authored in 2nd-gen — prose lives in the per-component MDX.
+A minimal `[component].stories.ts` file for visual verification of gen2 CSS during Phase 5. The per-component MDX file (`[component].mdx`) and the Accessibility story body are deferred to Phase 7 (Documentation). No story-level JSDoc is authored in gen2 — prose lives in the per-component MDX.
 
 ## What to replace
 
@@ -247,7 +247,7 @@ export const States: Story = {
 
 ## Checklist before moving to CSS work
 
-- [ ] File exists at `2nd-gen/packages/swc/components/[component]/stories/[component].stories.ts`
+- [ ] File exists at `gen2/packages/swc/components/[component]/stories/[component].stories.ts`
 - [ ] `Playground` renders with correct defaults
 - [ ] `Anatomy` shows all meaningful slot combinations
 - [ ] Every constant array in the types file has a corresponding Options story

@@ -156,9 +156,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/postcss-token@workspace:*, @adobe/postcss-token@workspace:2nd-gen/packages/tools/postcss-token":
+"@adobe/postcss-token@workspace:*, @adobe/postcss-token@workspace:gen2/packages/tools/postcss-token":
   version: 0.0.0-use.local
-  resolution: "@adobe/postcss-token@workspace:2nd-gen/packages/tools/postcss-token"
+  resolution: "@adobe/postcss-token@workspace:gen2/packages/tools/postcss-token"
   dependencies:
     "@adobe/swc-tokens": "workspace:*"
     postcss: "npm:8.5.9"
@@ -189,9 +189,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/spectrum-wc-core@npm:2.0.0-beta.3, @adobe/spectrum-wc-core@workspace:2nd-gen/packages/core":
+"@adobe/spectrum-wc-core@npm:2.0.0-beta.3, @adobe/spectrum-wc-core@workspace:gen2/packages/core":
   version: 0.0.0-use.local
-  resolution: "@adobe/spectrum-wc-core@workspace:2nd-gen/packages/core"
+  resolution: "@adobe/spectrum-wc-core@workspace:gen2/packages/core"
   dependencies:
     "@floating-ui/dom": "npm:1.7.6"
     "@lit-labs/observers": "npm:2.0.2"
@@ -205,9 +205,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@adobe/spectrum-wc-icons@workspace:*, @adobe/spectrum-wc-icons@workspace:2nd-gen/packages/icons":
+"@adobe/spectrum-wc-icons@workspace:*, @adobe/spectrum-wc-icons@workspace:gen2/packages/icons":
   version: 0.0.0-use.local
-  resolution: "@adobe/spectrum-wc-icons@workspace:2nd-gen/packages/icons"
+  resolution: "@adobe/spectrum-wc-icons@workspace:gen2/packages/icons"
   dependencies:
     "@adobe/postcss-token": "workspace:*"
     "@adobe/spectrum-wc-core": "npm:2.0.0-beta.3"
@@ -231,9 +231,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@adobe/spectrum-wc@workspace:2nd-gen/packages/swc":
+"@adobe/spectrum-wc@workspace:gen2/packages/swc":
   version: 0.0.0-use.local
-  resolution: "@adobe/spectrum-wc@workspace:2nd-gen/packages/swc"
+  resolution: "@adobe/spectrum-wc@workspace:gen2/packages/swc"
   dependencies:
     "@adobe/postcss-token": "workspace:*"
     "@adobe/spectrum-wc-core": "npm:2.0.0-beta.3"
@@ -284,9 +284,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@adobe/swc-tokens@workspace:*, @adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens":
+"@adobe/swc-tokens@workspace:*, @adobe/swc-tokens@workspace:gen2/packages/tools/swc-tokens":
   version: 0.0.0-use.local
-  resolution: "@adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens"
+  resolution: "@adobe/swc-tokens@workspace:gen2/packages/tools/swc-tokens"
   dependencies:
     "@adobe/spectrum-tokens": "npm:15.2.0"
     prettier: "npm:3.8.1"
@@ -297,9 +297,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@adobe/vite-global-elements-css@workspace:*, @adobe/vite-global-elements-css@workspace:2nd-gen/packages/tools/vite-global-elements-css":
+"@adobe/vite-global-elements-css@workspace:*, @adobe/vite-global-elements-css@workspace:gen2/packages/tools/vite-global-elements-css":
   version: 0.0.0-use.local
-  resolution: "@adobe/vite-global-elements-css@workspace:2nd-gen/packages/tools/vite-global-elements-css"
+  resolution: "@adobe/vite-global-elements-css@workspace:gen2/packages/tools/vite-global-elements-css"
   dependencies:
     postcss: "npm:8.5.9"
     vite: "npm:8.0.8"
@@ -6799,19 +6799,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/2nd-gen@workspace:2nd-gen":
-  version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/2nd-gen@workspace:2nd-gen"
-  dependencies:
-    "@changesets/changelog-github": "npm:0.5.1"
-    "@changesets/cli": "npm:2.29.7"
-    "@storybook/addon-vitest": "npm:10.3.5"
-    eslint: "npm:9.39.2"
-    eslint-plugin-simple-import-sort: "npm:12.1.1"
-    npm-run-all2: "npm:8.0.4"
-  languageName: unknown
-  linkType: soft
-
 "@spectrum-web-components/accordion@npm:1.12.3, @spectrum-web-components/accordion@workspace:1st-gen/packages/accordion":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/accordion@workspace:1st-gen/packages/accordion"
@@ -7311,6 +7298,19 @@ __metadata:
     "@spectrum-web-components/icons-ui": "npm:1.12.3"
     "@spectrum-web-components/reactive-controllers": "npm:1.12.3"
     "@spectrum-web-components/shared": "npm:1.12.3"
+  languageName: unknown
+  linkType: soft
+
+"@spectrum-web-components/gen2@workspace:gen2":
+  version: 0.0.0-use.local
+  resolution: "@spectrum-web-components/gen2@workspace:gen2"
+  dependencies:
+    "@changesets/changelog-github": "npm:0.5.1"
+    "@changesets/cli": "npm:2.29.7"
+    "@storybook/addon-vitest": "npm:10.3.5"
+    eslint: "npm:9.39.2"
+    eslint-plugin-simple-import-sort: "npm:12.1.1"
+    npm-run-all2: "npm:8.0.4"
   languageName: unknown
   linkType: soft
 
@@ -31356,9 +31356,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"swc-vscode-token@workspace:2nd-gen/packages/tools/swc-vscode-token":
+"swc-vscode-token@workspace:gen2/packages/tools/swc-vscode-token":
   version: 0.0.0-use.local
-  resolution: "swc-vscode-token@workspace:2nd-gen/packages/tools/swc-vscode-token"
+  resolution: "swc-vscode-token@workspace:gen2/packages/tools/swc-vscode-token"
   dependencies:
     "@adobe/swc-tokens": "workspace:*"
     "@types/node": "npm:25.2.3"

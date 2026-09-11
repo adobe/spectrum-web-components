@@ -8,7 +8,7 @@
 <summary><strong>In this doc</strong></summary>
 
 - [About Spectrum Web Components](#about-spectrum-web-components)
-- [About the 1st-gen-to-2nd-gen transition](#about-the-1st-gen-to-2nd-gen-transition)
+- [About the 1st-gen-to-gen2 transition](#about-the-1st-gen-to-gen2-transition)
 - [About these docs](#about-these-docs)
 
 </details>
@@ -17,33 +17,33 @@
 <summary><strong>Beneath this doc</strong></summary>
 
 - [Contributor guides](01_contributor-guides/README.md)
-    - [Getting involved](01_contributor-guides/01_getting-involved.md)
-    - [Using the issue tracker](01_contributor-guides/02_using-the-issue-tracker.md)
-    - [Working in the SWC repo](01_contributor-guides/03_working-in-the-swc-repo.md)
-    - [Making a pull request](01_contributor-guides/04_making-a-pull-request.md)
-    - [Participating in PR reviews](01_contributor-guides/05_participating-in-pr-reviews.md)
-    - [Releasing SWC](01_contributor-guides/06_releasing-swc.md)
-    - [Authoring contributor docs](01_contributor-guides/07_authoring-contributor-docs/README.md)
-    - [Patching dependencies](01_contributor-guides/08_patching-dependencies.md)
-    - [Accessibility testing](01_contributor-guides/09_accessibility-testing.md)
-    - [Maintaining StackBlitz examples for Spectrum Web Components](01_contributor-guides/10_using-stackblitz.md)
-    - [2nd gen testing](01_contributor-guides/11_2ndgen_testing.md)
-    - [Tools vs packages: where code lives](01_contributor-guides/12_tools-vs-packages.md)
-    - [Writing migration guides](01_contributor-guides/13_writing-migration-guides.md)
-    - [Focus management](01_contributor-guides/14_focus-management.md)
-    - [Changelog strategy](01_contributor-guides/15_changelog-strategy.md)
-    - [2nd-gen shared resources quick reference](01_contributor-guides/16_2nd-gen-shared-resources.md)
+  - [Getting involved](01_contributor-guides/01_getting-involved.md)
+  - [Using the issue tracker](01_contributor-guides/02_using-the-issue-tracker.md)
+  - [Working in the SWC repo](01_contributor-guides/03_working-in-the-swc-repo.md)
+  - [Making a pull request](01_contributor-guides/04_making-a-pull-request.md)
+  - [Participating in PR reviews](01_contributor-guides/05_participating-in-pr-reviews.md)
+  - [Releasing SWC](01_contributor-guides/06_releasing-swc.md)
+  - [Authoring contributor docs](01_contributor-guides/07_authoring-contributor-docs/README.md)
+  - [Patching dependencies](01_contributor-guides/08_patching-dependencies.md)
+  - [Accessibility testing](01_contributor-guides/09_accessibility-testing.md)
+  - [Maintaining StackBlitz examples for Spectrum Web Components](01_contributor-guides/10_using-stackblitz.md)
+  - [gen2 testing](01_contributor-guides/11_2ndgen_testing.md)
+  - [Tools vs packages: where code lives](01_contributor-guides/12_tools-vs-packages.md)
+  - [Writing migration guides](01_contributor-guides/13_writing-migration-guides.md)
+  - [Focus management](01_contributor-guides/14_focus-management.md)
+  - [Changelog strategy](01_contributor-guides/15_changelog-strategy.md)
+  - [gen2 shared resources quick reference](01_contributor-guides/16_gen2-shared-resources.md)
 - [Style guide](02_style-guide/README.md)
-    - [2nd-Gen CSS](02_style-guide/01_css/README.md)
-    - [2nd-gen TypeScript](02_style-guide/02_typescript/README.md)
-    - [Linting tools](02_style-guide/03_linting-tools.md)
-    - [Testing guide](02_style-guide/04_testing/README.md)
+  - [gen2 CSS](02_style-guide/01_css/README.md)
+  - [gen2 TypeScript](02_style-guide/02_typescript/README.md)
+  - [Linting tools](02_style-guide/03_linting-tools.md)
+  - [Testing guide](02_style-guide/04_testing/README.md)
 - [Project planning](03_project-planning/README.md)
-    - [Objectives and strategy](03_project-planning/01_objectives-and-strategy.md)
-    - [Workstreams](03_project-planning/02_workstreams/README.md)
-    - [Components](03_project-planning/03_components/README.md)
-    - [Milestones](03_project-planning/04_milestones/README.md)
-    - Strategies
+  - [Objectives and strategy](03_project-planning/01_objectives-and-strategy.md)
+  - [Workstreams](03_project-planning/02_workstreams/README.md)
+  - [Components](03_project-planning/03_components/README.md)
+  - [Milestones](03_project-planning/04_milestones/README.md)
+  - Strategies
 
 </details>
 
@@ -57,9 +57,9 @@ While SWC is used primarily by Adobe product teams, it is open-sourced and avail
 
 SWC is developed by a core team in Adobe Design Engineering, but we welcome contributions from inside and outside Adobe.
 
-## About the 1st-gen-to-2nd-gen transition
+## About the 1st-gen-to-gen2 transition
 
-Spectrum Web Components is currently in transition from its first generation (1st-gen) to its second generation (2nd-gen).
+Spectrum Web Components is currently in transition from its first generation (1st-gen) to its second generation (gen2).
 
 - To understand how this transition affects the SWC code base, see [Repository Structure](./01_contributor-guides/03_working-in-the-swc-repo.md#repository-structure).
 - To understand the motivation for this transition, see [Objectives and Strategy](./03_project-planning/01_objectives-and-strategy.md).
@@ -78,7 +78,7 @@ The docs are organized into sections to help you find the information you need:
 
 **[Project Planning](./03_project-planning/README.md)** - Strategic planning documentation including objectives, workstreams, component roadmaps, and milestones. This section contains:
 
-- **[Objectives and Strategy](./03_project-planning/01_objectives-and-strategy.md)** - Strategic context for the 1st-gen-to-2nd-gen transition, including our goals and approach.
+- **[Objectives and Strategy](./03_project-planning/01_objectives-and-strategy.md)** - Strategic context for the 1st-gen-to-gen2 transition, including our goals and approach.
 
 - **[Workstreams](./03_project-planning/02_workstreams/README.md)** - Workstream-centric view of cross-cutting work affecting many or all components, helping us work toward specific objectives and coordinate efforts.
 
