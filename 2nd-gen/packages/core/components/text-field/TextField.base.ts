@@ -38,7 +38,7 @@ const DOCS_URL =
  *
  * @attribute {ElementSize} size - The size of the text field.
  *
- * @slot label - Visible label content, rendered in-shadow as a real `<label for>`.
+ * @slot label - Visible label content, rendered as a same-root `<label for>` by `LabellingMixin`.
  * @slot description - Guidance / non-error help text, associated via `aria-describedby`.
  * @slot error-text - Error message shown when `invalid`, folded into `aria-describedby`.
  */

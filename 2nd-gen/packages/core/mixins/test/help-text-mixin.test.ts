@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
@@ -20,6 +21,31 @@ import helpTextMeta, {
   CombinedDescription,
   ErrorTextGating,
 } from '../stories/help-text-mixin.stories.js';
+
+// Enables DEBUG mode and captures window.__swc.warn calls for the duration of `fn`.
+async function withWarningSpy(
+  fn: (warnCalls: unknown[][]) => void | Promise<void>
+): Promise<void> {
+  const originalDebug = window.__swc?.DEBUG;
+  const originalWarn = window.__swc?.warn;
+  const warnCalls: unknown[][] = [];
+  window.__swc = {
+    ...window.__swc,
+    DEBUG: true,
+    warn: (...args: unknown[]) => {
+      warnCalls.push(args);
+    },
+  } as Window['__swc'];
+  try {
+    await fn(warnCalls);
+  } finally {
+    window.__swc = {
+      ...window.__swc,
+      DEBUG: originalDebug,
+      warn: originalWarn,
+    } as Window['__swc'];
+  }
+}
 
 export default {
   ...helpTextMeta,
@@ -100,6 +126,89 @@ export const ErrorTextGatingTest: Story = {
         await invalid.updateComplete;
         expect(invalid.roleElement?.ariaDescribedByElements).toHaveLength(1);
       }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Unresolved accessible-describedby DEBUG warning
+// ──────────────────────────────────────────────────────────────
+
+const UNRESOLVED_PHRASE = '"accessible-describedby" references';
+
+function appendExternalDescribedbyTarget(): HTMLElement {
+  const el = document.createElement('p');
+  el.id = 'help-text-unresolved-external';
+  el.textContent = 'External description';
+  document.body.append(el);
+  return el;
+}
+
+export const UnresolvedDescribedbyTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ step }) => {
+    await step(
+      'warns and names the id when accessible-describedby resolves to nothing',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const host = document.createElement('demo-help-text-host');
+          host.setAttribute('accessible-describedby', 'does-not-exist');
+          document.body.append(host);
+          await (host as DemoHelpTextHost).updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          expect(
+            messages.some(
+              (m) =>
+                m.includes(UNRESOLVED_PHRASE) && m.includes('"does-not-exist"')
+            )
+          ).toBe(true);
+          host.remove();
+        })
+    );
+
+    await step('does not warn when the referenced id resolves', () =>
+      withWarningSpy(async (warnCalls) => {
+        const external = appendExternalDescribedbyTarget();
+        const host = document.createElement('demo-help-text-host');
+        host.setAttribute(
+          'accessible-describedby',
+          'help-text-unresolved-external'
+        );
+        document.body.append(host);
+        await (host as DemoHelpTextHost).updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(messages.some((m) => m.includes(UNRESOLVED_PHRASE))).toBe(false);
+        external.remove();
+        host.remove();
+      })
+    );
+
+    await step(
+      'names only the unresolved id when some resolve and some do not',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const external = appendExternalDescribedbyTarget();
+          const host = document.createElement('demo-help-text-host');
+          host.setAttribute(
+            'accessible-describedby',
+            'help-text-unresolved-external missing-one'
+          );
+          document.body.append(host);
+          await (host as DemoHelpTextHost).updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          const unresolvedMsg = messages.find((m) =>
+            m.includes(UNRESOLVED_PHRASE)
+          );
+          expect(unresolvedMsg).toBeTruthy();
+          expect(unresolvedMsg).toContain('"missing-one"');
+          expect(unresolvedMsg).not.toContain(
+            '"help-text-unresolved-external"'
+          );
+          external.remove();
+          host.remove();
+        })
     );
   },
 };
