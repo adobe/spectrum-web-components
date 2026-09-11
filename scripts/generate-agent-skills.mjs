@@ -21,6 +21,14 @@
  * Prose for each skill is authored in dedicated source files:
  *   2nd-gen/packages/ai/skills/swc-skill/SKILL.md
  *   2nd-gen/packages/ai/skills/gen2-migration/SKILL.md
+ *   2nd-gen/packages/ai/skills/spectrum-wc-skill/SKILL.md
+ *
+ * The spectrum-wc skill's component/pattern references end with an API section
+ * (Properties, Slots, Events, CSS Custom Properties, CSS Parts) rendered as
+ * Markdown tables from 2nd-gen/packages/swc/dist/custom-elements.json — the
+ * same manifest the live Storybook `<ApiTable />` block reads at runtime. Run
+ * `yarn build` (or `yarn workspace @adobe/spectrum-wc build`) before this
+ * script so that manifest exists.
  *
  * The script resolves {{TOKEN}} placeholders with generated component and
  * guide lists, then writes the skill directories under .well-known/agent-skills/
@@ -55,6 +63,22 @@ const FIRST_GEN_PACKAGES = join(ROOT, '1st-gen/packages');
 const FIRST_GEN_CONTENT = join(ROOT, '1st-gen/projects/documentation/content');
 const FIRST_GEN_REF_DIR = join(FIRST_GEN_CONTENT, 'reference');
 const SECOND_GEN_COMPONENTS = join(ROOT, '2nd-gen/packages/swc/components');
+const SECOND_GEN_PATTERNS = join(ROOT, '2nd-gen/packages/swc/patterns');
+const SECOND_GEN_CORE_CONTROLLERS = join(
+  ROOT,
+  '2nd-gen/packages/core/controllers'
+);
+
+/**
+ * Custom Elements Manifest emitted by `cem analyze` (`yarn workspace
+ * @adobe/spectrum-wc analyze`), which runs as part of that package's `build`
+ * script. Not checked in — generate:skills must run after a full `yarn build`
+ * (see .github/workflows/publish-2ndgen-docs.yml).
+ */
+const SECOND_GEN_CEM_PATH = join(
+  ROOT,
+  '2nd-gen/packages/swc/dist/custom-elements.json'
+);
 const SKILL_SOURCE_DIR = join(ROOT, '2nd-gen/packages/ai/skills');
 
 /**
@@ -216,6 +240,20 @@ const GEN2_MIGRATION_GUIDES = [
   },
 ];
 
+/**
+ * Guides bundled into the spectrum-wc skill.
+ */
+const GEN2_DOCS_GUIDES = [
+  {
+    sourcePath: '2nd-gen/packages/core/overview.mdx',
+    refPath: 'guides/core-overview.md',
+    title: 'Core overview',
+    description:
+      'What @adobe/spectrum-wc-core provides: shared primitives, mixins, utilities, and controllers used to build Gen 2 components.',
+    stripFn: 'mdx',
+  },
+];
+
 // ---------------------------------------------------------------------------
 // Content strippers
 // ---------------------------------------------------------------------------
@@ -263,14 +301,31 @@ function stripEleventy(content) {
  * to handle one level of brace nesting (covers {{...}} double-brace JSX
  * expressions). This avoids the greedy-match bug where [^>]* inside {} would
  * stop at the first > in an expression such as style={{ padding: 4 > 0 }}.
+ *
+ * Fenced ```code blocks``` are swapped for placeholders before any of the
+ * above run, and restored verbatim afterward, so an example snippet's own
+ * `import ...` line (or any other MDX-looking text inside a fence) survives
+ * intact instead of being mistaken for real MDX syntax.
  */
 function stripMdx(content) {
-  return (
-    content
+  const codeBlocks = [];
+  const withPlaceholders = content.replace(/```[\s\S]*?```/g, (match) => {
+    codeBlocks.push(match);
+    return `CODE_BLOCK_${codeBlocks.length - 1}`;
+  });
+
+  const stripped =
+    withPlaceholders
       // Remove import statements
       .replace(/^import\s+.*?from\s+['"][^'"]+['"]\s*;?\s*\n/gm, '')
       // Remove <Meta .../> (single-line self-closing)
       .replace(/^<Meta\s[^>]*\/>\s*\n/gm, '')
+      // Remove <DocsHeader /> / <DocsFooter /> — Storybook chrome rendered
+      // from the unit's stories.ts meta and a live CEM-backed API table
+      // (the former is rebuilt as Markdown by buildDocsHeader, the latter
+      // by buildApiSection, both from the same stories.ts / CEM sources).
+      .replace(/^<DocsHeader\s*\/>\s*\n?/gm, '')
+      .replace(/^<DocsFooter\s*\/>\s*\n?/gm, '')
       // Replace Storybook-only Canvas examples with a plain Markdown note
       .replace(/^<Canvas\b[^>]*\/>\s*\n?/gm, '_Storybook example omitted._\n')
       // Remove <img> tags with a JS expression source (can't resolve at build time)
@@ -294,7 +349,11 @@ function stripMdx(content) {
       // Collapse runs of 3+ blank lines introduced by removals
       .replace(/\n{3,}/g, '\n\n')
       .replace(/^\n+/, '')
-      .trimEnd() + '\n'
+      .trimEnd() + '\n';
+
+  return stripped.replace(
+    /CODE_BLOCK_(\d+)/g,
+    (_, i) => codeBlocks[Number(i)]
   );
 }
 
@@ -443,6 +502,434 @@ function listMigrationComponents() {
     .sort((a, b) => a.componentDir.localeCompare(b.componentDir));
 }
 
+/**
+ * List all 2nd-gen units (components or patterns) in `dir` that have a
+ * `<unitName>.mdx` doc page, tagged `swc-<unitName>` by convention.
+ * Returns [{ dir, mdxPath, tagName }] sorted by dir.
+ */
+function listGen2Units(dir) {
+  return readdirSync(dir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => ({
+      dir: entry.name,
+      mdxPath: join(dir, entry.name, `${entry.name}.mdx`),
+      tagName: `swc-${entry.name}`,
+    }))
+    .filter((u) => existsSync(u.mdxPath))
+    .sort((a, b) => a.dir.localeCompare(b.dir));
+}
+
+/**
+ * Patterns nest one level deeper than components: patterns/<group>/<unit>/<unit>.mdx.
+ * `group` is kept alongside the unit (rather than folded into `dir`, which stays
+ * the leaf name used to resolve stories.ts paths) so two groups can each contain
+ * a same-named unit without one's generated reference overwriting the other's;
+ * see `unitSlug`.
+ */
+function listGen2Patterns() {
+  const units = [];
+  for (const group of readdirSync(SECOND_GEN_PATTERNS, {
+    withFileTypes: true,
+  })) {
+    if (!group.isDirectory()) {
+      continue;
+    }
+    for (const unit of listGen2Units(join(SECOND_GEN_PATTERNS, group.name))) {
+      units.push({ ...unit, group: group.name });
+    }
+  }
+  return units.sort((a, b) => unitSlug(a).localeCompare(unitSlug(b)));
+}
+
+/**
+ * The path/filename segment for a unit's generated reference: namespaced under
+ * its pattern group when it has one, otherwise just the leaf dir name.
+ */
+function unitSlug(unit) {
+  return unit.group ? `${unit.group}/${unit.dir}` : unit.dir;
+}
+
+/**
+ * Controllers have a `<name>.mdx` doc page but no custom element tag — their
+ * API is hand-authored in the mdx itself, not sourced from the CEM.
+ * Returns [{ dir, mdxPath }] sorted by dir.
+ */
+function listGen2Controllers() {
+  return readdirSync(SECOND_GEN_CORE_CONTROLLERS, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => ({
+      dir: entry.name,
+      mdxPath: join(
+        SECOND_GEN_CORE_CONTROLLERS,
+        entry.name,
+        `${entry.name}.mdx`
+      ),
+    }))
+    .filter((u) => existsSync(u.mdxPath))
+    .sort((a, b) => a.dir.localeCompare(b.dir));
+}
+
+// ---------------------------------------------------------------------------
+// Custom Elements Manifest → Markdown API tables
+// ---------------------------------------------------------------------------
+
+function loadCem() {
+  if (!existsSync(SECOND_GEN_CEM_PATH)) {
+    return null;
+  }
+  try {
+    return JSON.parse(readFileSync(SECOND_GEN_CEM_PATH, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+function findCemDeclaration(cem, tagName) {
+  for (const mod of cem.modules ?? []) {
+    for (const decl of mod.declarations ?? []) {
+      if (decl.tagName === tagName) {
+        return decl;
+      }
+    }
+  }
+  return null;
+}
+
+function escapeCell(value) {
+  return String(value ?? '')
+    .replace(/\|/g, '\\|')
+    .replace(/\s*\n+\s*/g, ' ')
+    .trim();
+}
+
+function mdTable(headers, rows) {
+  if (rows.length === 0) {
+    return null;
+  }
+  return [
+    `| ${headers.join(' | ')} |`,
+    `| ${headers.map(() => '---').join(' | ')} |`,
+    ...rows.map((row) => `| ${row.map(escapeCell).join(' | ')} |`),
+  ].join('\n');
+}
+
+const code = (text) => (text ? `\`${text}\`` : '');
+
+/**
+ * Build the Properties/Slots/Events/CSS Custom Properties/CSS Parts tables
+ * for a single custom element tag, mirroring the categories rendered by the
+ * live `<ApiTable />` Storybook block. Returns null if the tag isn't a
+ * declared custom element in the manifest, or has no documentable members.
+ */
+function buildApiTables(tagName, cem, headingLevel) {
+  const component = findCemDeclaration(cem, tagName);
+  if (!component) {
+    return null;
+  }
+
+  const attrByField = new Map(
+    (component.attributes ?? [])
+      .filter((attr) => attr.fieldName)
+      .map((attr) => [attr.fieldName, attr])
+  );
+
+  const props = (component.members ?? []).filter(
+    (m) =>
+      m.kind === 'field' &&
+      m.privacy !== 'private' &&
+      m.privacy !== 'protected' &&
+      !m.static
+  );
+
+  const sections = [
+    [
+      'Properties',
+      mdTable(
+        ['Property', 'Attribute', 'Type', 'Default', 'Description'],
+        props.map((prop) => {
+          const attr = attrByField.get(prop.name);
+          return [
+            code(prop.name),
+            attr ? code(attr.name) + (prop.reflects ? ' (reflects)' : '') : '-',
+            code(prop.type?.text),
+            prop.default != null ? code(prop.default) : '-',
+            prop.description,
+          ];
+        })
+      ),
+    ],
+    [
+      'Slots',
+      mdTable(
+        ['Name', 'Description'],
+        (component.slots ?? []).map((slot) => [
+          code(slot.name || '(default)'),
+          slot.description,
+        ])
+      ),
+    ],
+    [
+      'Events',
+      mdTable(
+        ['Name', 'Description'],
+        (component.events ?? []).map((event) => [
+          code(event.name),
+          event.description,
+        ])
+      ),
+    ],
+    [
+      'CSS custom properties',
+      mdTable(
+        ['Name', 'Default', 'Description'],
+        (component.cssProperties ?? []).map((prop) => [
+          code(prop.name),
+          prop.default != null ? code(prop.default) : '-',
+          prop.description,
+        ])
+      ),
+    ],
+    [
+      'CSS parts',
+      mdTable(
+        ['Name', 'Description'],
+        (component.cssParts ?? []).map((part) => [
+          code(part.name),
+          part.description,
+        ])
+      ),
+    ],
+  ].filter(([, table]) => table);
+
+  if (sections.length === 0) {
+    return null;
+  }
+
+  return sections
+    .map(([title, table]) => `${headingLevel} ${title}\n\n${table}`)
+    .join('\n\n');
+}
+
+/**
+ * Multi-element units (e.g. accordion, tabs) declare sibling element tags via
+ * `parameters.additionalApiTables` in their stories.ts meta, so DocsFooter
+ * renders one API table per tag instead of just the unit's own tag. Extract
+ * that array with a regex rather than a full TS parse — the value is always
+ * a static string-literal array.
+ */
+const storiesSourceCache = new Map();
+
+function readStoriesSource(storiesPath) {
+  if (!existsSync(storiesPath)) {
+    return null;
+  }
+  if (!storiesSourceCache.has(storiesPath)) {
+    storiesSourceCache.set(storiesPath, readFileSync(storiesPath, 'utf8'));
+  }
+  return storiesSourceCache.get(storiesPath);
+}
+
+function readAdditionalApiTags(unit) {
+  const storiesPath = join(
+    dirname(unit.mdxPath),
+    'stories',
+    `${unit.dir}.stories.ts`
+  );
+  const source = readStoriesSource(storiesPath);
+  if (source === null) {
+    return [];
+  }
+  const match = source.match(/additionalApiTables:\s*\[([^\]]*)\]/);
+  if (!match) {
+    return [];
+  }
+  return [...match[1].matchAll(/['"`]([^'"`]+)['"`]/g)].map((m) => m[1]);
+}
+
+/**
+ * Build a Markdown `## API` section for a unit, covering its own tag plus any
+ * `additionalApiTables` siblings declared in its stories.ts (see
+ * `readAdditionalApiTags`). Returns null when the CEM is unavailable or the
+ * tag isn't a declared custom element (e.g. controllers, which hand-author
+ * their own API section).
+ */
+function buildApiSection(unit, cem) {
+  if (!cem) {
+    return null;
+  }
+  const additionalTags = readAdditionalApiTags(unit);
+  const isMultiElement = additionalTags.length > 0;
+  const headingLevel = isMultiElement ? '####' : '###';
+
+  const blocks = [unit.tagName, ...additionalTags]
+    .map((tag) => {
+      const tables = buildApiTables(tag, cem, headingLevel);
+      if (!tables) {
+        return null;
+      }
+      return isMultiElement ? `### ${tag}\n\n${tables}` : tables;
+    })
+    .filter(Boolean);
+
+  if (blocks.length === 0) {
+    return null;
+  }
+
+  return '## API\n\n' + blocks.join('\n\n');
+}
+
+/**
+ * Read the fields off a unit's stories.ts meta object that `<DocsHeader />`
+ * renders: `title`, `parameters.docs.subtitle`, `parameters.docs.packagePath`,
+ * `tags`, and the meta-level JSDoc description (the block comment immediately
+ * above `const meta`). Extracted with regexes rather than a full TS parse,
+ * scoped to the text between `const meta` and the first `export const` so
+ * story-level `tags`/`title`-like text further down the file can't match.
+ */
+function readStoriesMeta(unit) {
+  const storiesPath = join(
+    dirname(unit.mdxPath),
+    'stories',
+    `${unit.dir}.stories.ts`
+  );
+  const source = readStoriesSource(storiesPath);
+  if (source === null) {
+    return null;
+  }
+
+  const metaStart = source.indexOf('const meta');
+  if (metaStart === -1) {
+    return null;
+  }
+  const nextExport = source.slice(metaStart).match(/\nexport const /);
+  const metaBlock = nextExport
+    ? source.slice(metaStart, metaStart + nextExport.index)
+    : source.slice(metaStart);
+
+  const titleMatch = metaBlock.match(/title:\s*['"`]([^'"`]+)['"`]/);
+  const subtitleMatch = metaBlock.match(/subtitle:\s*['"`]([^'"`]*)['"`]/);
+  const packagePathMatch = metaBlock.match(
+    /packagePath:\s*['"`]([^'"`]*)['"`]/
+  );
+  const tagsMatch = metaBlock.match(/tags:\s*\[([^\]]*)\]/);
+  const tags = tagsMatch
+    ? [...tagsMatch[1].matchAll(/['"`]([^'"`]+)['"`]/g)].map((m) => m[1])
+    : [];
+
+  // Meta-level JSDoc: the block comment immediately preceding `const meta`,
+  // guarded against matching an earlier comment (e.g. the copyright header)
+  // by disallowing `*/` inside the captured content.
+  const jsdocMatch = source
+    .slice(0, metaStart)
+    .match(/\/\*\*((?:(?!\*\/)[\s\S])*)\*\/\s*$/);
+  const description = jsdocMatch
+    ? jsdocMatch[1]
+        .split('\n')
+        .map((line) => line.replace(/^\s*\*\s?/, ''))
+        .join('\n')
+        .trim()
+    : null;
+
+  return {
+    title: titleMatch ? titleMatch[1] : null,
+    subtitle: subtitleMatch ? subtitleMatch[1].trim() : null,
+    packagePath: packagePathMatch ? packagePathMatch[1] : null,
+    tags,
+    description,
+  };
+}
+
+const toPascalCase = (kebab) =>
+  kebab
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join('');
+
+/**
+ * Rebuild the `## Getting started` block that `<GettingStarted />` renders,
+ * mirroring its three branches (utility / controller / migrated) exactly:
+ * .storybook/blocks/GettingStarted.tsx.
+ */
+function buildGettingStarted(unit, meta) {
+  if (meta.tags.includes('utility')) {
+    return null;
+  }
+
+  const packageName = unit.dir;
+  const baseClassName = toPascalCase(packageName);
+
+  if (meta.tags.includes('controller')) {
+    return `## Getting started
+
+Controllers are not published as packages. Instead, they are imported directly from the core package.
+
+Import the controller directly from the core package:
+
+\`\`\`typescript
+import { ${baseClassName} } from '@adobe/spectrum-wc-core/controllers/${packageName}.js';
+\`\`\`
+`;
+  }
+
+  if (meta.tags.includes('migrated')) {
+    const tagName = unit.tagName ?? `swc-${packageName}`;
+    const resolvedPackagePath = meta.packagePath || `components/${packageName}`;
+
+    return `## Getting started
+
+Add the package to your project:
+
+\`\`\`zsh
+yarn add @adobe/spectrum-wc
+\`\`\`
+
+Import the side effectful registration of \`<${tagName}>\` via:
+
+\`\`\`typescript
+import '@adobe/spectrum-wc/${resolvedPackagePath}/${tagName}.js';
+\`\`\`
+
+To reference the \`${baseClassName}\` type, import it as a type-only import:
+
+\`\`\`typescript
+import type { ${baseClassName} } from '@adobe/spectrum-wc/${resolvedPackagePath}';
+\`\`\`
+
+> The class is exposed primarily for type purposes. Extending it is possible, but the internal shape is not part of the public API — if you choose to subclass, you do so at your own risk and may need to adjust your code between releases.
+`;
+  }
+
+  return null;
+}
+
+/**
+ * Rebuild the top-of-page Markdown that `<DocsHeader />` renders: title,
+ * subtitle, description, and getting-started instructions. `<StatusBadge />`
+ * and `<OverviewStory />` are visual-only (a badge, a live canvas) with no
+ * textual equivalent, so they're skipped. Returns null when the unit's
+ * stories.ts meta can't be read (readStoriesMeta already warned).
+ */
+function buildDocsHeader(unit, meta) {
+  if (!meta) {
+    return null;
+  }
+
+  const title = meta.title?.split('/').pop() ?? unit.dir;
+  const blocks = [`# ${title}`];
+  if (meta.subtitle) {
+    blocks.push(meta.subtitle);
+  }
+  if (meta.description) {
+    blocks.push(meta.description);
+  }
+  const gettingStarted = buildGettingStarted(unit, meta);
+  if (gettingStarted) {
+    blocks.push(gettingStarted);
+  }
+
+  return blocks.join('\n\n');
+}
+
 // ---------------------------------------------------------------------------
 // Token resolution
 // ---------------------------------------------------------------------------
@@ -481,6 +968,14 @@ function buildMigrationComponentList(components) {
   return components
     .map(
       (c) => `- [${c.componentDir}](references/components/${c.componentDir}.md)`
+    )
+    .join('\n');
+}
+
+function buildGen2UnitList(units, subdir) {
+  return units
+    .map(
+      (u) => `- [${u.tagName ?? u.dir}](references/${subdir}/${unitSlug(u)}.md)`
     )
     .join('\n');
 }
@@ -585,6 +1080,84 @@ function buildMigrationSkill(skillDir) {
   );
 }
 
+function buildGen2DocsSkill(skillDir) {
+  const refsDir = join(skillDir, 'references');
+  mkdirSync(join(refsDir, 'guides'), { recursive: true });
+  mkdirSync(join(refsDir, 'components'), { recursive: true });
+  mkdirSync(join(refsDir, 'patterns'), { recursive: true });
+  mkdirSync(join(refsDir, 'controllers'), { recursive: true });
+
+  const cem = loadCem();
+  if (!cem) {
+    console.warn(
+      '  ⚠ dist/custom-elements.json not found — run `yarn workspace @adobe/spectrum-wc build` first. API tables will be omitted.'
+    );
+  }
+
+  const components = listGen2Units(SECOND_GEN_COMPONENTS);
+  const patterns = listGen2Patterns();
+  const controllers = listGen2Controllers();
+
+  const sourceMd = readFileSync(
+    join(SKILL_SOURCE_DIR, 'spectrum-wc-skill', 'SKILL.md'),
+    'utf8'
+  );
+  writeFileSync(
+    join(skillDir, 'SKILL.md'),
+    resolveTokens(sourceMd, {
+      GEN2_GUIDE_LIST: buildGuideList(GEN2_DOCS_GUIDES),
+      GEN2_COMPONENT_NAMES: components
+        .map((c) => `\`${c.tagName}\``)
+        .join(', '),
+      GEN2_COMPONENT_LIST: buildGen2UnitList(components, 'components'),
+      GEN2_PATTERN_NAMES: patterns.map((c) => `\`${c.tagName}\``).join(', '),
+      GEN2_PATTERN_LIST: buildGen2UnitList(patterns, 'patterns'),
+      GEN2_CONTROLLER_LIST: buildGen2UnitList(controllers, 'controllers'),
+    })
+  );
+
+  let guideCount = 0;
+  for (const guide of GEN2_DOCS_GUIDES) {
+    const src = join(ROOT, guide.sourcePath);
+    if (!existsSync(src)) {
+      console.warn(`  ⚠ guide not found: ${guide.sourcePath}`);
+      continue;
+    }
+    writeFileSync(
+      join(refsDir, guide.refPath),
+      stripContent(readFileSync(src, 'utf8'), guide.stripFn)
+    );
+    guideCount++;
+  }
+
+  function writeUnitDocs(units, subdir) {
+    for (const unit of units) {
+      const meta = readStoriesMeta(unit);
+      let content = stripMdx(readFileSync(unit.mdxPath, 'utf8'));
+      const header = buildDocsHeader(unit, meta);
+      if (header) {
+        content = header + '\n\n' + content;
+      }
+      const api = unit.tagName ? buildApiSection(unit, cem) : null;
+      if (api) {
+        content = content.trimEnd() + '\n\n' + api + '\n';
+      }
+      const outPath = join(refsDir, subdir, `${unitSlug(unit)}.md`);
+      mkdirSync(dirname(outPath), { recursive: true });
+      writeFileSync(outPath, content);
+    }
+    return units.length;
+  }
+
+  const componentCount = writeUnitDocs(components, 'components');
+  const patternCount = writeUnitDocs(patterns, 'patterns');
+  const controllerCount = writeUnitDocs(controllers, 'controllers');
+
+  console.log(
+    `  spectrum-wc: ${guideCount} guides + ${componentCount} components + ${patternCount} patterns + ${controllerCount} controllers`
+  );
+}
+
 // ---------------------------------------------------------------------------
 // Skill dispatch
 // ---------------------------------------------------------------------------
@@ -606,6 +1179,15 @@ const SKILL_CONFIGS = [
       'Spectrum 1 to Spectrum 2 web components.',
     kind: 'migration',
     buildFn: buildMigrationSkill,
+  },
+  {
+    name: 'spectrum-wc',
+    description:
+      'Build UIs with Spectrum 2 Web Components (swc-* elements, @adobe/spectrum-wc, ' +
+      '@adobe/spectrum-wc-core). Use when developers are working with @adobe/spectrum-wc ' +
+      'or @adobe/spectrum-wc-core packages or swc-* custom elements. Includes component, ' +
+      'pattern, and controller API references and usage guidance.',
+    buildFn: buildGen2DocsSkill,
   },
 ];
 
