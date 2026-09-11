@@ -351,13 +351,13 @@ Rendering shape (implemented in the API/accessibility phases):
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
 - [x] Render a single `.swc-Thumbnail` wrapper (`<div class="swc-Thumbnail"><slot></slot></div>`) with no per-property variant markup; drive all style changes via `:host()` attribute selectors; keep styling off `:host` itself
-- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `thumbnail.css` as baseline
-- [ ] Import the shared `_lit-styles/opacity-checkerboard.css` fragment instead of a component-package import
+- [x] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `thumbnail.css` as baseline
+- [x] Import the shared `_lit-styles/opacity-checkerboard.css` fragment instead of a component-package import
 
 #### Visual model and regressions
 
-- [ ] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source
-- [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
+- [x] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source — none present in the S2 source for this component
+- [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility
 
