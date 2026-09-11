@@ -10,16 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-/**
- * Public exports for render-only Lit template directives shared across 2nd-gen packages.
- */
-
-export {
-  renderPendingSpinner,
-  type PendingSpinnerResult,
-} from './pending-spinner/index.js';
 export {
   renderFieldLabel,
   type RenderFieldLabelOptions,
   type RenderFieldLabelResult,
-} from './render-label/index.js';
+} from './src/render-label.js';

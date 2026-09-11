@@ -14,7 +14,10 @@ import { property } from 'lit/decorators.js';
 
 import { FieldAssociationController } from '@adobe/spectrum-wc-core/controllers/field-association-controller/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import {
+  LabellingMixin,
+  SizedMixin,
+} from '@adobe/spectrum-wc-core/mixins/index.js';
 import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
@@ -39,10 +42,13 @@ const DOCS_URL =
  * @slot description - Guidance / non-error help text, associated via `aria-describedby`.
  * @slot error-text - Error message shown when `invalid`, targeted by `aria-errormessage`.
  */
-export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
-  validSizes: TEXT_FIELD_VALID_SIZES,
-  defaultSize: 'm',
-}) {
+export abstract class TextFieldBase extends SizedMixin(
+  LabellingMixin(SpectrumElement),
+  {
+    validSizes: TEXT_FIELD_VALID_SIZES,
+    defaultSize: 'm',
+  }
+) {
   /**
    * Route host focus to the internal native `<input>` so the field is a single
    * tab stop with focus landing on the real control.
@@ -63,23 +69,7 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
   declare public size: TextFieldSize;
 
   /**
-   * Accessible name for the input, applied as `aria-label`. Use when there is no
-   * visible label slotted.
-   */
-  @property({ type: String, attribute: 'accessible-label' })
-  public accessibleLabel = '';
-
-  /**
-   * Light-DOM element IDs that name the field. Takes precedence over
-   * `accessibleLabel` and a slotted label.
-   *
-   * @todo (SWC-2466): resolved to cross-root element refs by the `LabellingController`.
-   */
-  @property({ attribute: 'accessible-labelledby' })
-  public accessibleLabelledby?: string;
-
-  /**
-   * Light-DOM element IDs that describe the field.
+   * Element IDs, from the light DOM, that describe the field.
    *
    * @todo (SWC-2466): resolved to cross-root element refs by the `LabellingController`.
    */
@@ -183,8 +173,10 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────
 
-  // @todo (SWC-2466): the LabellingController resolves the labelledby/describedby
-  // IDREF stubs and adds the "unlabeled field" dev-warning.
+  // @todo (SWC-2466): resolve the accessible-describedby IDREF stub to a
+  // cross-root `ariaDescribedByElements` element reference, via a future
+  // help-text mixin (accessible-labelledby resolution now lives in
+  // LabellingMixin).
 
   // Form association: `formAssociated` (static, above) and `attachInternals` stay
   // on the element; the controller wraps the rest. Constraint validity
@@ -201,6 +193,11 @@ export abstract class TextFieldBase extends SizedMixin(SpectrumElement, {
    */
   protected get effectiveDisabled(): boolean {
     return this.disabled || this.fieldAssoc.formDisabled;
+  }
+
+  /** Exposes the placeholder to `LabellingMixin`'s placeholder-only-name warning. */
+  public override get placeholderText(): string | undefined {
+    return this.placeholder || undefined;
   }
 
   /** The form the field participates in, or `null`. */
