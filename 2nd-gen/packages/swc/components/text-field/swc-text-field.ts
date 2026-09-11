@@ -9,17 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
 
-/**
- * Public exports for render-only Lit template directives shared across 2nd-gen packages.
- */
+import { TextField } from './TextField.js';
 
-export {
-  renderPendingSpinner,
-  type PendingSpinnerResult,
-} from './pending-spinner/index.js';
-export {
-  renderFieldLabel,
-  type RenderFieldLabelOptions,
-  type RenderFieldLabelResult,
-} from './render-label/index.js';
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-text-field': TextField;
+  }
+}
+
+defineElement('swc-text-field', TextField);

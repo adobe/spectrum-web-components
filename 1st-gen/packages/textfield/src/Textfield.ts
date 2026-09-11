@@ -93,6 +93,8 @@ export class TextfieldBase extends ManageHelpText(
 
   /**
    * A string applied via `aria-label` to the form control when a user visible label is not provided.
+   *
+   * @deprecated Renamed to `accessible-label` in Spectrum 2.
    */
   @property()
   public label = '';
@@ -136,6 +138,8 @@ export class TextfieldBase extends ManageHelpText(
   /**
    * Whether a form control delivered with the `multiline` attribute will change size
    * vertically to accomodate longer input
+   *
+   * @deprecated Multiline moves to `<swc-text-area>` in Spectrum 2.
    */
   @property({ type: Boolean, reflect: true })
   public grows = false;
@@ -154,6 +158,8 @@ export class TextfieldBase extends ManageHelpText(
 
   /**
    * Whether the form control should accept a value longer than one line
+   *
+   * @deprecated Multiline moves to `<swc-text-area>` in Spectrum 2.
    */
   @property({ type: Boolean, reflect: true })
   public multiline = false;
@@ -167,12 +173,16 @@ export class TextfieldBase extends ManageHelpText(
   /**
    * Placement of the tooltip shown when the value is truncated (e.g. 'bottom', 'top').
    * Defaults to 'bottom' per Spectrum design.
+   *
+   * @deprecated The truncated-value tooltip is removed in Spectrum 2.
    */
   @property({ attribute: 'tooltip-placement' })
   public truncatedValueTooltipPlacement: Placement = 'bottom';
 
   /**
    * The specific number of rows the form control should provide in the user interface
+   *
+   * @deprecated Multiline moves to `<swc-text-area>` in Spectrum 2.
    */
   @property({ type: Number })
   public rows = -1;
@@ -204,6 +214,8 @@ export class TextfieldBase extends ManageHelpText(
 
   /**
    * Whether to display the form control with no visible background
+   *
+   * @deprecated The `quiet` style is removed in Spectrum 2.
    */
   @property({ type: Boolean, reflect: true })
   public quiet = false;
@@ -220,6 +232,8 @@ export class TextfieldBase extends ManageHelpText(
    * Note: combobox overrides `autocomplete` intentionally with `aria-autocomplete` values, which is
    * why those values (although invalid for native `autocomplete`) are included here to support the
    * combobox accessibility pattern.
+   *
+   * @deprecated The `list`/`none` values are removed in Spectrum 2; use `<sp-combobox>`.
    */
   @property({ type: String, reflect: true })
   public autocomplete?:
@@ -427,6 +441,78 @@ export class TextfieldBase extends ManageHelpText(
     }
   }
 
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+    const url =
+      'https://opensource.adobe.com/spectrum-web-components/components/textfield/';
+    // Scope to sp-textfield: subclasses (number-field, color-field, combobox,
+    // search) use these properties legitimately and migrate on their own schedule.
+    if (window.__swc?.DEBUG && this.localName === 'sp-textfield') {
+      if (changedProperties.has('label') && this.label.length > 0) {
+        window.__swc.warn(
+          this,
+          `The "label" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Set "aria-label" or "aria-labelledby" on the element instead.`,
+          url,
+          { level: 'deprecation' }
+        );
+      }
+      if (changedProperties.has('quiet') && this.quiet) {
+        window.__swc.warn(
+          this,
+          `The "quiet" attribute on <${this.localName}> has been deprecated and will be removed in a future release.`,
+          url,
+          { level: 'deprecation' }
+        );
+      }
+      if (changedProperties.has('multiline') && this.multiline) {
+        window.__swc.warn(
+          this,
+          `The "multiline" attribute on <${this.localName}> has been deprecated and will be removed in a future release.`,
+          url,
+          { level: 'deprecation' }
+        );
+      }
+      if (changedProperties.has('grows') && this.grows) {
+        window.__swc.warn(
+          this,
+          `The "grows" attribute on <${this.localName}> has been deprecated and will be removed in a future release.`,
+          url,
+          { level: 'deprecation' }
+        );
+      }
+      if (changedProperties.has('rows') && this.rows !== -1) {
+        window.__swc.warn(
+          this,
+          `The "rows" attribute on <${this.localName}> has been deprecated and will be removed in a future release.`,
+          url,
+          { level: 'deprecation' }
+        );
+      }
+      if (
+        changedProperties.has('truncatedValueTooltipPlacement') &&
+        this.truncatedValueTooltipPlacement !== 'bottom'
+      ) {
+        window.__swc.warn(
+          this,
+          `The "tooltip-placement" attribute on <${this.localName}> has been deprecated and will be removed in a future release.`,
+          url,
+          { level: 'deprecation' }
+        );
+      }
+      if (
+        changedProperties.has('autocomplete') &&
+        (this.autocomplete === 'list' || this.autocomplete === 'none')
+      ) {
+        window.__swc.warn(
+          this,
+          `The "list" and "none" values for the "autocomplete" attribute on <${this.localName}> have been deprecated and will be removed in a future release. Use <sp-combobox> for the combobox autocomplete pattern instead.`,
+          url,
+          { level: 'deprecation' }
+        );
+      }
+    }
+  }
+
   public checkValidity(): boolean {
     let validity = this.inputElement.checkValidity();
     if (this.required || (this.value && this.pattern)) {
@@ -446,8 +532,8 @@ export class TextfieldBase extends ManageHelpText(
 
 /**
  * @element sp-textfield
- * @slot help-text - default or non-negative help text to associate to your form element
- * @slot negative-help-text - negative help text to associate to your form element when `invalid`
+ * @slot help-text - default or non-negative help text to associate to your form element (deprecated: renamed to `description` in Spectrum 2)
+ * @slot negative-help-text - negative help text to associate to your form element when `invalid` (deprecated: renamed to `error-text` in Spectrum 2)
  */
 export class Textfield extends TextfieldBase {
   @property({ type: String })

@@ -9,17 +9,4 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
-/**
- * Public exports for render-only Lit template directives shared across 2nd-gen packages.
- */
-
-export {
-  renderPendingSpinner,
-  type PendingSpinnerResult,
-} from './pending-spinner/index.js';
-export {
-  renderFieldLabel,
-  type RenderFieldLabelOptions,
-  type RenderFieldLabelResult,
-} from './render-label/index.js';
+export * from './TextField.js';
