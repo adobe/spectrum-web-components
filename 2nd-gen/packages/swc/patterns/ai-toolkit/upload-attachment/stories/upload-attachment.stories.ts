@@ -20,16 +20,6 @@ const { args, argTypes, template } = getStorybookHelpers(
   'swc-upload-attachment'
 );
 
-argTypes.type = {
-  ...argTypes.type,
-  control: { type: 'select' },
-  options: ['card', 'media'],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'card' },
-  },
-};
-
 /**
  * Shared upload attachment primitive used across AI surfaces such as prompt field and user message.
  * Supports **`card`** and **`media`** types with a unified slot model.

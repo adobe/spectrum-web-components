@@ -34,12 +34,6 @@ import '@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-messag
 
 const { args, argTypes, template } = getStorybookHelpers('swc-dropzone');
 
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: DROPZONE_VALID_SIZES,
-};
-
 // Playground renders real illustrated-message/browse/file-input markup so drag-and-drop and
 // browse-to-upload actually swap the zone into its filled state; the generic slot controls
 // have no effect on that markup, so hide them rather than leave dead controls in the sidebar.

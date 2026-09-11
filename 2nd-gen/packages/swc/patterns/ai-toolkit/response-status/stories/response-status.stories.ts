@@ -20,7 +20,6 @@ import '../swc-response-status.js';
 import {
   PIXEL_LOADER_ICON_NAMES,
   PIXEL_LOADER_PRESET_NAMES,
-  RESPONSE_STATUSES,
 } from '../ResponseStatus.js';
 
 // ────────────────
@@ -33,17 +32,6 @@ const activeStepsSlot = `<swc-response-status-step status="complete"><span slot=
 
 delete (args as Record<string, unknown>)['summary-slot'];
 delete (argTypes as Record<string, unknown>)['summary-slot'];
-
-argTypes.status = {
-  ...argTypes.status,
-  control: { type: 'select' },
-  options: RESPONSE_STATUSES,
-  table: {
-    ...argTypes.status?.table,
-    category: 'attributes',
-    defaultValue: { summary: 'active' },
-  },
-};
 
 argTypes.open = {
   ...argTypes.open,

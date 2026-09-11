@@ -69,6 +69,13 @@ import {
 export abstract class CardBase extends SizedMixin(SpectrumElement, {
   validSizes: CARD_VALID_SIZES,
 }) {
+  /**
+   * The size of the card.
+   *
+   * @default m
+   */
+  declare public size: CardSize;
+
   // ─────────────────────────
   //     API TO OVERRIDE
   // ─────────────────────────

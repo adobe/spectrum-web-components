@@ -14,7 +14,6 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { StatusLight } from '@adobe/spectrum-wc/status-light';
 import {
   STATUS_LIGHT_VALID_SIZES,
   STATUS_LIGHT_VARIANTS_COLOR,
@@ -36,22 +35,8 @@ type TranslationKey = keyof typeof translations;
 
 const { args, argTypes, template } = getStorybookHelpers('swc-status-light');
 
-argTypes.variant = {
-  ...argTypes.variant,
-  control: { type: 'select' },
-  options: StatusLight.VARIANTS,
-  table: {
-    category: 'attributes',
-    defaultValue: {
-      summary: 'neutral',
-    },
-  },
-};
-
 argTypes.size = {
   ...argTypes.size,
-  control: { type: 'select' },
-  options: StatusLight.VALID_SIZES,
   table: {
     category: 'attributes',
     defaultValue: {
