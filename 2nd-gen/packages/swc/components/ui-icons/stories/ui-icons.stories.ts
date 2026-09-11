@@ -52,7 +52,7 @@ argTypes.size = {
  * drawing, use the [Icon](../?path=/docs/components-icon--docs) frame instead.
  */
 const meta: Meta = {
-  title: 'Icons/UI icons',
+  title: 'UI icons',
   component: 'swc-ui-icon',
   args,
   argTypes,

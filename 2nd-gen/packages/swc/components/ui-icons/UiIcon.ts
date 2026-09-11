@@ -37,8 +37,6 @@ import uiIconSizeStyles from './ui-icon-sizes.css';
  * <swc-ui-icon icon="chevron" size="m" accessible-label="Expand"></swc-ui-icon>
  *
  * @cssprop --swc-icon-color - Color of the icon.
- * @cssprop --swc-icon-inline-size - Inline size of the icon box.
- * @cssprop --swc-icon-block-size - Block size of the icon box.
  */
 export class UiIcon extends IconBase {
   /**
