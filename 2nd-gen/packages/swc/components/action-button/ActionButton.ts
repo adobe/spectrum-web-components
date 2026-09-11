@@ -148,7 +148,8 @@ export class ActionButton extends PendingMixin(ButtonBase) {
       return;
     }
     if (name === 'aria-disabled') {
-      this._ariaDisabled = value ?? undefined;
+      this._ariaDisabled = (value ??
+        undefined) as ActionButton['_ariaDisabled'];
     }
     super.attributeChangedCallback(name, old, value);
   }
@@ -185,7 +186,7 @@ export class ActionButton extends PendingMixin(ButtonBase) {
   private _ariaExpanded?: 'true' | 'false';
 
   @state()
-  private _ariaDisabled?: string;
+  private _ariaDisabled?: 'true' | 'false';
 
   // Guard against re-entrant attributeChangedCallback: removeAttribute fires a
   // second callback with value=null; the guard prevents that from clearing the
