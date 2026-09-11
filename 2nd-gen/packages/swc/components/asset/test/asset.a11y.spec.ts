@@ -46,18 +46,8 @@ test.describe('Asset - ARIA Snapshots', () => {
       'swc-asset'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - img "README.md"
-    `);
-  });
-
-  test('should handle variants', async ({ page }) => {
-    const root = await gotoStory(
-      page,
-      'components-asset--variants',
-      'swc-asset'
-    );
-    await expect(root).toMatchAriaSnapshot(`
-      - img "README.md"
+      - img "preview of background"
+      - img "Download icon"
     `);
   });
 
@@ -68,7 +58,38 @@ test.describe('Asset - ARIA Snapshots', () => {
       'swc-asset'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - img "Project proposal document"
+      - img "preview of background"
+      - img "Spectrum logo"
+    `);
+  });
+
+  test('should handle fit story', async ({ page }) => {
+    const root = await gotoStory(page, 'components-asset--fit', 'swc-asset');
+    await expect(root).toMatchAriaSnapshot(`
+      - img "Fit cover"
+      - img "Fit contain"
+      - img "Fit contain, landscape"
+    `);
+  });
+
+  test('should handle background story', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'components-asset--background',
+      'swc-asset'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - img "Background transparent"
+      - img "Background solid"
+      - img "Background checkerboard"
+    `);
+  });
+
+  test('should handle sizing story', async ({ page }) => {
+    const root = await gotoStory(page, 'components-asset--sizing', 'swc-asset');
+    await expect(root).toMatchAriaSnapshot(`
+      - img "16/9 aspect ratio"
+      - img "Explicit width and height"
     `);
   });
 });

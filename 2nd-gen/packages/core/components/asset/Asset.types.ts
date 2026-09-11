@@ -10,9 +10,47 @@
  * governing permissions and limitations under the License.
  */
 
-export const ASSET_VARIANTS = [
-  'file',
-  'folder',
+export const ASSET_FIT_VALUES = [
+  'cover',
+  'contain',
 ] as const satisfies readonly string[];
 
-export type AssetVariant = (typeof ASSET_VARIANTS)[number];
+export type AssetFit = (typeof ASSET_FIT_VALUES)[number];
+
+export const ASSET_BACKGROUND_VALUES = [
+  'transparent',
+  'solid',
+  'checkerboard',
+] as const satisfies readonly string[];
+
+export type AssetBackground = (typeof ASSET_BACKGROUND_VALUES)[number];
+
+export const ASSET_LOAD_STATE_VALUES = [
+  'loading',
+  'loaded',
+  'error',
+] as const satisfies readonly string[];
+
+export type AssetLoadState = (typeof ASSET_LOAD_STATE_VALUES)[number];
+
+// ──────────────────
+//     EVENTS
+// ──────────────────
+
+/** Fired when the slotted `<img>` finishes loading successfully. */
+export const SWC_ASSET_LOAD_EVENT = 'swc-asset-load';
+
+/** Fired when the slotted `<img>` fails to load. */
+export const SWC_ASSET_ERROR_EVENT = 'swc-asset-error';
+
+/** Detail emitted with `swc-asset-error`. */
+export interface AssetErrorEventDetail {
+  src: string;
+}
+
+declare global {
+  interface GlobalEventHandlersEventMap {
+    [SWC_ASSET_LOAD_EVENT]: CustomEvent<undefined>;
+    [SWC_ASSET_ERROR_EVENT]: CustomEvent<AssetErrorEventDetail>;
+  }
+}

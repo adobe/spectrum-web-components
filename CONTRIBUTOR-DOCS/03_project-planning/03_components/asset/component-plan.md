@@ -12,7 +12,6 @@
 <summary><strong>In this doc</strong></summary>
 
 - [TL;DR](#tldr)
-    - [Most blocking open questions](#most-blocking-open-questions)
 - [Current API surface](#current-api-surface)
     - [1st-gen (`sp-asset`, published — out of scope)](#1st-gen-sp-asset-published--out-of-scope)
     - [2nd-gen (`swc-asset`, internal genre — the starting point for this plan)](#2nd-gen-swc-asset-internal-genre--the-starting-point-for-this-plan)
@@ -36,8 +35,9 @@
     - [Documentation (SWC-2321)](#documentation-swc-2321)
     - [Review (SWC-2322)](#review-swc-2322)
 - [Blockers and open questions](#blockers-and-open-questions)
-    - [Design](#design)
-    - [Architecture and behavior](#architecture-and-behavior)
+- [Decision log](#decision-log)
+    - [Q1–Q3: Loading state event names, payload, and default treatment](#q1q3-loading-state-event-names-payload-and-default-treatment)
+    - [Q4: SVG accessible-name detection algorithm](#q4-svg-accessible-name-detection-algorithm)
 - [References](#references)
 
 </details>
@@ -70,15 +70,7 @@ aspect-ratio custom property, independent of Asset's timeline. The only coordina
 weak-sync mechanism for `aspect-ratio` (see [Behavioral semantics](#behavioral-semantics)),
 which has already been tested and requires no changes to Card's existing CSS.
 
-### Most blocking open questions
-
-- **Q1–Q3** in [Design](#design): the loading/pending state's event names, payload, default
-  visual (if any) for standalone use, and whether a failed-load state is part of the same
-  scheme. Explicitly unresolved; may end up deferred out of v1 entirely if not settled in time.
-- **Q4** in [Architecture and behavior](#architecture-and-behavior): the exact SVG
-  accessible-name detection algorithm (which of `aria-label` / `aria-labelledby` / child
-  `<title>` / existing `role="img"` count as "already labeled") needs sign-off from the team's
-  a11y SME before it's final.
+No open blockers remain; Q1–Q4 are resolved and documented in the [Decision log](#decision-log).
 
 ---
 
@@ -123,7 +115,8 @@ against [React Spectrum Image](https://react-spectrum.adobe.com/Image) for parit
 1. Aspect-ratio and/or width/height sizing (stretch-and-fill model)
 2. `fit`: cover / contain
 3. Accept images and SVG generically (file/folder variants retired)
-4. Loading/pending state — **open, see Q1–Q3**
+4. Loading state (`loadState` property + `swc-asset-load`/`swc-asset-error` events — resolved,
+   see [Decision log](#decision-log))
 5. `background`: transparent, solid color, or opacity checkerboard
 6. `decorative` property and generalized accessible-name fallback
 7. Genre promotion (internal → public)
@@ -140,7 +133,7 @@ Out of scope for v1: responsive/adaptive sizing (`srcset`/`sizes`-equivalent, in
 | `2nd-gen/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css` | Shared `.swc-OpacityCheckerboard` fragment; import directly for the checkerboard background option | No — already exists |
 | `swc-card` (`seckles/swc-card` branch, unmerged) | Primary intended **consumer** once Asset ships; not a build dependency of Asset itself | No — independent timelines, only the aspect-ratio weak-sync contract needs to line up |
 | `swc-thumbnail` (migration not started)   | Sibling visual primitive; a11y model reference only (see [accessibility-migration-analysis.md](../thumbnail/accessibility-migration-analysis.md)) | No |
-| `2nd-gen/packages/core/controllers/pending-controller` | Considered and likely **not** reused as-is for the loading state (see Q1) — scope mismatch between a whole-control busy state and a per-image loading state | No |
+| `2nd-gen/packages/core/controllers/pending-controller` | Considered and **not** reused as-is for the loading state (see [Decision log](#decision-log)) — scope mismatch between a whole-control busy state and a per-image loading state. Its readable-property-plus-transition pattern (`pendingActive`) informed the `loadState` design, though. | No |
 
 No prerequisite migration or shared-base relationship blocks this work. Asset does not need to
 wait on Card, Thumbnail, or any other component's migration.
@@ -173,13 +166,14 @@ docs (SWC-2321) should also reference Asset directly as an example consumer.
 | **B3** | Add `width`/`height` properties as an alternative sizing input | N/A today | Accepts any valid CSS `<length-percentage>` (e.g. `"100px"`, `"90%"`); default unset (`auto`) | Simpler than `aspectRatio` — private-only, no exposed ancestor-default channel, since Card's v1 has no width/height default to hand down |
 | **B4** | Add `fit` property (`'cover' \| 'contain'`, default `'cover'`) | Blanket `::slotted(*) { object-fit: contain }` | Conditional, attribute-selector-driven; `cover` is the new default | Entirely Asset's own concern — no ancestor hand-off (see [Behavioral semantics](#behavioral-semantics)); DEBUG warning on an invalid value |
 | **B5** | Genre promotion: drop `.internal.*` naming and `@status internal` | Internal genre, excluded from production docs/build | Public component | Consumers should be able to slot Asset directly and control its features themselves |
+| **B12** | Add a readable `loadState` property (`'loading' \| 'loaded' \| 'error'`) and `swc-asset-load`/`swc-asset-error` events | N/A today | Asset tracks the slotted `<img>`'s native `load`/`error` events internally and reflects the result; see [Behavioral semantics](#behavioral-semantics) for the full mechanism | Resolves [Q1–Q3](#decision-log) (see [Decision log](#decision-log)) |
 
 #### Accessibility
 
 | #      | What changes | Current behavior | v1 behavior | Notes |
 | ------ | ------------- | ------------------ | ----------- | ----- |
 | **B6** | Add `decorative` property | N/A today | Mirrors Thumbnail: host `aria-hidden="true"` when set; suppresses any auto-applied labeling | — |
-| **B7** | Rename `label` → `accessibleLabel` (`accessible-label` attribute) and generalize it into a fallback accessible name | `label` only feeds the (retired) file/folder icon's `aria-label` | Follows the existing `accessible-label` convention (Button, Tabs, ActionButton, etc.); applied to slotted `<img>`/`<svg>` only when it has no accessible name of its own; DEBUG warning when neither `decorative`, existing labeling, nor `accessible-label` is present | SVG detection algorithm needs a11y SME sign-off — see [Q4](#architecture-and-behavior) |
+| **B7** | Rename `label` → `accessibleLabel` (`accessible-label` attribute) and generalize it into a fallback accessible name | `label` only feeds the (retired) file/folder icon's `aria-label` | Follows the existing `accessible-label` convention (Button, Tabs, ActionButton, etc.); applied to slotted `<img>`/`<svg>` only when it has no accessible name of its own; DEBUG warning when neither `decorative`, existing labeling, nor `accessible-label` is present | SVG detection algorithm resolved and signed off — see [Q4](#decision-log) |
 | **B8** | Asset never exposes `disabled`/`focused`/`selected` | N/A today (not present) | Explicitly excluded, matching Thumbnail's "parent owns interactive state" model | — |
 | **B9** | DEBUG-warn when more than one child, or an unsupported child type, is slotted into the default slot | N/A today | Only a single `<img>` or `<svg>` is a supported child; anything else (multiple children, or an unrecognized element) triggers a DEBUG warning | Behavior for the extra/invalid content itself (hide vs. render as-is) is an implementation detail for SWC-2319, not specified here |
 
@@ -212,8 +206,9 @@ docs (SWC-2321) should also reference Asset directly as an example consumer.
 | `height`          | `string \| undefined` (CSS `<length-percentage>`)           | `undefined` (`auto`) | `height`   | DEBUG warning on an invalid value |
 | `fit`             | `'cover' \| 'contain'`                                       | `'cover'`   | `fit`               | Asset-owned only, no ancestor sync. DEBUG warning on an invalid value |
 | `decorative`      | `boolean`                                                    | `false`     | reflected           | — |
-| `accessibleLabel` | `string \| undefined`                                       | `undefined` | `accessible-label`  | Renamed from `label`, generalized fallback accessible name; matches the existing `accessible-label` convention used by Button/Tabs/ActionButton/etc. Exact SVG detection algorithm is [Q4](#architecture-and-behavior) |
+| `accessibleLabel` | `string \| undefined`                                       | `undefined` | `accessible-label`  | Renamed from `label`, generalized fallback accessible name; matches the existing `accessible-label` convention used by Button/Tabs/ActionButton/etc. SVG detection algorithm resolved, see [Q4](#decision-log) |
 | `background`      | `'transparent' \| 'solid' \| 'checkerboard'`                 | `'transparent'` | `background`    | `'transparent'` matches today's behavior; `'solid'` uses `--swc-asset-background-color` (default `token("gray-100")`); `'checkerboard'` reuses the shared opacity-checkerboard fragment. DEBUG warning on an invalid value |
+| `loadState`       | `'loading' \| 'loaded' \| 'error'` (readonly)                | `'loading'` (`'loaded'` immediately for a slotted `<svg>` or no child) | `load-state` (reflected) | Set internally by Asset from the slotted `<img>`'s `load`/`error` events; a consumer sets this only by changing what's slotted, not directly. See [Behavioral semantics](#behavioral-semantics) |
 | `variant`         | _(removed)_                                                  | —           | —                   | See B1 |
 
 **Slots (2nd-gen):**
@@ -221,6 +216,13 @@ docs (SWC-2321) should also reference Asset directly as an example consumer.
 | Slot    | Content                          |
 | ------- | ---------------------------------- |
 | default | A single `<img>` or `<svg>` element. More than one child, or an unsupported child type, triggers a DEBUG warning |
+
+**Events (2nd-gen):**
+
+| Event | `detail` | Fired when |
+| ----- | -------- | ---------- |
+| `swc-asset-load` | none | The slotted `<img>` finishes loading successfully. Fires exactly once per slotted `<img>` instance, even if it was already loaded/cached at connect time (see [Behavioral semantics](#behavioral-semantics) for the timing guarantee) |
+| `swc-asset-error` | `{ src: string }` | The slotted `<img>` fails to load. `src` is the failed image's resolved URL, for diagnostics/logging |
 
 ### CSS custom properties
 
@@ -345,10 +347,10 @@ no such requirement and should instead yield to the browser's default forced-col
 any other custom background color.
 
 Whatever `background` is set to shows around the edges when `fit="contain"` letterboxes the
-slotted content, and is also what's visible behind the slot before the image resolves (i.e.
-during the still-unresolved loading state, [Q1–Q3](#design)) — worth calling out explicitly in
-documentation, since pairing `fit="contain"` with a non-transparent `background` is the natural
-way to get a polished letterboxed look.
+slotted content, and is also what's visible behind the slot while `loadState` is `'loading'`
+(see [Behavioral semantics](#behavioral-semantics)) — worth calling out
+explicitly in documentation, since pairing `fit="contain"` with a non-transparent `background`
+is the natural way to get a polished letterboxed look.
 
 Explicitly not pursued: deriving a background color or gradient from the slotted image itself
 (dominant edge color, or opposing-corner colors for a gradient) — see
@@ -381,17 +383,50 @@ grid of many Cards, each with one or more Asset instances — even though (per e
 `loading="lazy"` itself carries no accessibility semantics; it's a pure resource-timing
 recommendation.
 
-#### Loading/pending state — open, see Q1–Q3
+#### Loading state — resolved, see [Decision log](#decision-log)
 
-Current leaning: Asset emits lifecycle events (working names: "loading" / "ready") for its own
-slotted content, rather than folding a busy announcement into its own accessible name the way
-`PendingController` does for whole controls. This fits the Card Figma reference, where a loading
-treatment applies only to the `preview` image, not to the whole card — i.e. loading is a
-per-`swc-asset`-instance concern that the embedding parent should be free to represent however
-fits its own content (a full `ProgressCircle`, a lighter visual-only spinner, or nothing at all).
-Exact event names, payload, whether Asset renders any default visual/accessible treatment for
-standalone (non-Card) use, and whether a failed-load state shares the same event scheme are all
-unresolved — see [Q1–Q3](#design).
+Asset exposes loading progress as both a readable property and a pair of events, rather than
+folding a busy announcement into its own accessible name the way `PendingController` does for
+whole controls. This fits the Card Figma reference, where a loading treatment applies only to the
+`preview` image, not to the whole card — i.e. loading is a per-`swc-asset`-instance concern that
+the embedding parent (Card or any other consumer) is free to represent however fits its own
+content (a full `ProgressCircle`, a lighter visual-only spinner, or nothing at all). Asset itself
+renders no default visual or accessible loading treatment in v1, for standalone or embedded use.
+
+**Mechanism:**
+
+- `loadState` starts at `'loading'` whenever the slotted content is an `<img>`. Asset attaches
+  `load`/`error` listeners to it (on slot assignment, i.e. in the `slotchange` handler already
+  wired for accessible-name resolution) and sets `loadState` to `'loaded'` or `'error'` when one
+  fires.
+- A slotted `<svg>`, or no slotted content at all, has nothing asynchronous to wait for:
+  `loadState` is `'loaded'` immediately.
+- **Timing guarantee:** if the `<img>` is already `complete` (e.g. served from cache) by the time
+  Asset checks, `loadState` reflects `'loaded'`/`'error'` synchronously, but the corresponding
+  `swc-asset-load`/`swc-asset-error` event is still scheduled (microtask) rather than skipped.
+  This means a consumer can always just listen for the event and get exactly one fire per
+  slotted-`<img>` instance, without a separate synchronous check to handle the cached case. The
+  property exists for consumers that want to read current state directly (e.g. on their own first
+  render) rather than only reacting to the transition.
+- `swc-asset-error`'s `detail.src` is read from the `<img>` at error time, mirroring the
+  `DropzoneDragLeaveDetail` pattern of capturing fields synchronously rather than exposing the
+  raw native event, since nothing else about the native `error` event is useful to a consumer here.
+- Swapping the slotted `<img>` after the initial load (already covered by the existing
+  `slotchange`-triggered re-resolution) resets `loadState` to `'loading'` and re-attaches
+  listeners to the new element, the same way accessible-name resolution already re-runs.
+- `loadState` transitions on the native `load`/`error` events only; it does not additionally wait
+  on `HTMLImageElement.decode()`. `load` confirms the fetch succeeded, not that the image has been
+  decoded and is paint-ready — browsers are free to decode independently, and for very large
+  images can end up doing so synchronously at paint time. This gap is normally imperceptible and
+  matches how every major framework's image-load signal works; the plan's own performance guidance
+  (`decoding="async"` on the slotted `<img>`) already pushes decode scheduling to the browser's own
+  idle scheduler rather than Asset trying to strictly guarantee paint-readiness itself. Revisit only
+  if a real, reproducible decode-jank complaint shows up in practice.
+- `loading="lazy"` on the slotted `<img>` needs no special handling: it only defers when the
+  browser starts the fetch (until the element nears the viewport), not the `load`/`error`
+  semantics. `img.complete` correctly stays `false` for a not-yet-started lazy fetch, so the
+  already-complete fast path above doesn't misfire; `loadState` simply stays `'loading'` until the
+  browser actually fetches, however long that takes.
 
 ### Accessibility semantics notes
 
@@ -406,14 +441,19 @@ unresolved — see [Q1–Q3](#design).
   accessible name applied only when slotted content doesn't already carry its own. Detection
   order:
   1. `decorative` is set → suppress from AT entirely, regardless of content type.
-  2. Content already has its own accessible name (`img[alt]`, or `svg` with `role="img"` +
-     `aria-label`/`aria-labelledby` or a direct child `<title>`) → leave it alone.
+  2. Content already has its own accessible name (`img[alt]`, or `svg` with
+     `aria-label`/`aria-labelledby` or a direct child `<title>`, `role="img"` not required) →
+     leave the name alone; self-heal a missing `role="img"` on the `<svg>` in this case, since
+     `<svg>` has no reliable implicit role the way `<img>` does.
   3. Neither of the above, but `accessible-label` is provided → apply it to the slotted node
      (`aria-label` on an `<svg>` root, since SVG has no native `alt`).
   4. None of the above → DEBUG warning, mirroring Thumbnail's "neither alt nor decorative" case.
 
-  Exact SVG detection algorithm pending a11y SME sign-off — see [Q4](#architecture-and-behavior).
-- **Open**: loading-state AT exposure (see Q1–Q3).
+  SVG detection algorithm resolved and signed off — see [Q4](#decision-log).
+- Loading state has no AT exposure of its own (no `aria-busy`, no default accessible name change):
+  the embedding parent owns any busy announcement, matching the "parent owns interactive/visual
+  state" model already used for `disabled`/`focused`/`selected`. See
+  [Decision log](#decision-log).
 
 ---
 
@@ -460,113 +500,185 @@ plan contract pattern this document follows).
 - [x] Dependencies identified
 - [x] Changes overview documented (Must ship / Additive)
 - [x] 2nd-gen API decisions drafted
-- [ ] Plan reviewed by at least one other engineer
-- [ ] Loading/pending state design resolved (Q1–Q3)
-- [ ] SVG accessible-name detection algorithm signed off by the team's a11y SME (Q4)
+- [x] Plan reviewed by at least one other engineer
+- [x] Loading state design resolved (Q1–Q3) — see [Decision log](#decision-log)
+- [x] SVG accessible-name detection algorithm signed off by the team's a11y SME (Q4)
 
 ### API (SWC-2319)
 
-- [ ] `Asset.types.ts`: define `AssetFit` (`'cover' | 'contain'`) and `AssetBackground`
+- [x] `Asset.types.ts`: define `AssetFit` (`'cover' | 'contain'`) and `AssetBackground`
       (`'transparent' | 'solid' | 'checkerboard'`); remove `ASSET_VARIANTS`/`AssetVariant`
-- [ ] `Asset.base.ts`: add `aspectRatio`, `width`, `height`, `fit`, `decorative`,
+- [x] `Asset.base.ts`: add `aspectRatio`, `width`, `height`, `fit`, `decorative`,
       `accessibleLabel` (renamed from `label`), `background`; remove `variant`
-- [ ] Implement the `square` aspect-ratio keyword and `:`-to-`/` separator normalization
-- [ ] Implement slotted-content inspection for accessible-name detection (`img[alt]`; `svg` with
+- [x] Implement the `square` aspect-ratio keyword and `:`-to-`/` separator normalization
+- [x] Implement slotted-content inspection for accessible-name detection (`img[alt]`; `svg` with
       `role="img"` + `aria-label`/`aria-labelledby`/child `<title>`) and the DEBUG warning path
-- [ ] Implement DEBUG warnings: invalid `fit`/`background` values; `aspectRatio` set together
+- [x] Implement DEBUG warnings: invalid `fit`/`background` values; `aspectRatio` set together
       with both `width` and `height`; more than one slotted child or an unsupported child type
 - [ ] Update Card to slot `<swc-asset>` in its `preview` slot, as a live validation target for
-      this API while it's being built
-- [ ] Split Card's `card-template.css` preview-slot rule and `card.css` collection-slot rule — see [Behavioral semantics](#behavioral-semantics)
+      this API while it's being built — spun out to SWC-2566, tracked separately from Asset's own
+      finalization
+- [ ] Split Card's `card-template.css` preview-slot rule and `card.css` collection-slot rule — see [Behavioral semantics](#behavioral-semantics); part of SWC-2566
+- [x] `Asset.types.ts`: define `ASSET_LOAD_STATE_VALUES`/`AssetLoadState`
+      (`'loading' | 'loaded' | 'error'`); `Asset.types.ts` or `Asset.base.ts`: define
+      `SWC_ASSET_LOAD_EVENT`/`SWC_ASSET_ERROR_EVENT` constants
+- [x] `Asset.base.ts`: add the readable `loadState` property; attach `load`/`error` listeners to
+      the slotted `<img>` (tracked in `update()`, alongside the existing accessible-name/fit
+      resolution that already re-runs on `slotchange`); dispatch
+      `swc-asset-load`/`swc-asset-error` (with `detail.src` on error) on transition, per the
+      timing guarantee in [Behavioral semantics](#behavioral-semantics)
 
 #### Alignment checks
 
-- [ ] Confirm the exact SVG detection algorithm with the a11y SME before finalizing (Q4)
+- [x] Confirm the exact SVG detection algorithm with the a11y SME before finalizing (Q4)
 
 ### Styling (SWC-2319)
 
-- [ ] Remove `.swc-Asset-file`/`-folder` icon CSS and the inline SVG icon templates
-- [ ] Implement the aspect-ratio weak-sync chain on `.swc-Asset` (`--_swc-asset-aspect-ratio` /
+- [x] Remove `.swc-Asset-file`/`-folder` icon CSS and the inline SVG icon templates (templates
+      removed in Phase 3; CSS removed here)
+- [x] Implement the aspect-ratio weak-sync chain on `.swc-Asset` (`--_swc-asset-aspect-ratio` /
       `--swc-asset-aspect-ratio`)
-- [ ] Implement `width`/`height` private custom properties (`--_swc-asset-width`/`-height`)
-- [ ] Implement `fit` attribute selectors (`cover` default, `contain` override)
-- [ ] Implement `background` treatment (`solid` via `--swc-asset-background-color`;
-      `checkerboard` via the shared fragment; `transparent` as the no-op default)
-- [ ] Add `border-radius: inherit` and `overflow: hidden` to `.swc-Asset` (not `:host`)
-- [ ] Import `2nd-gen/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css`
-- [ ] Add `@cssprop` JSDoc tags for `--swc-asset-aspect-ratio` and `--swc-asset-background-color`
-- [ ] Pass stylelint
+- [x] Implement `width`/`height` private custom properties (`--_swc-asset-width`/`-height`)
+- [x] Implement `fit` attribute selectors (`cover` default, `contain` override); added
+      `reflect: true` to `fit` so the attribute selector responds to JS property sets, not just
+      the HTML attribute (matches the existing `Button.variant`/`fillStyle` convention)
+- [x] Implement `background` treatment (`solid` via `--swc-asset-background-color`;
+      `checkerboard` via the shared fragment; `transparent` as the no-op default); added
+      `reflect: true` to `background` for the same reason as `fit`
+- [x] Add `border-radius: inherit` and `overflow: hidden` to `.swc-Asset` (not `:host`)
+- [x] Import `2nd-gen/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css`
+- [x] Add `@cssprop` JSDoc tags for `--swc-asset-aspect-ratio` and `--swc-asset-background-color`
+- [x] Pass stylelint
 
 ### Accessibility (SWC-2319 implementation, SWC-2320 testing)
 
-- [ ] `decorative` sets `aria-hidden="true"` on the host
-- [ ] `accessibleLabel` fallback applied per the detection order in
-      [Accessibility semantics notes](#accessibility-semantics-notes) (pending Q4)
-- [ ] DEBUG warning fires when neither `decorative`, existing labeling, nor `accessibleLabel` is
+- [x] `decorative` sets `aria-hidden="true"` on the host
+- [x] `accessibleLabel` fallback applied per the detection order in
+      [Accessibility semantics notes](#accessibility-semantics-notes), including the SVG branch
+      (Q4, signed off)
+- [x] DEBUG warning fires when neither `decorative`, existing labeling, nor `accessibleLabel` is
       present
-- [ ] Confirm Asset exposes no `disabled`/`focused`/`selected`
+- [x] Confirm Asset exposes no `disabled`/`focused`/`selected`
 
 ### Testing (SWC-2320)
 
-- [ ] Unit tests for `aspectRatio`/`width`/`height`/`fit`/`background` behavior, including the
+- [x] Unit tests for `aspectRatio`/`width`/`height`/`fit`/`background` behavior, including the
       `square` keyword and `:`-to-`/` normalization
-- [ ] Unit tests for each accessible-name detection branch (labeled `img`, labeled `svg`,
+- [x] Unit tests for each accessible-name detection branch (labeled `img`, labeled `svg`,
       `decorative`, DEBUG-warning case)
-- [ ] Unit tests for each new DEBUG-warning path: invalid `fit`/`background`, `aspectRatio` +
+- [x] Unit tests for each new DEBUG-warning path: invalid `fit`/`background`, `aspectRatio` +
       `width` + `height` combined, multiple/unsupported slotted children
-- [ ] Confirm an unconfigured `<swc-asset>` (no `aspectRatio`/`width`/`height`, no ancestor
-      default) doesn't collapse to zero size, across the layout contexts it's expected to be used
-      in (standalone, inside Card's `preview` slot)
-- [ ] Playwright `asset.a11y.spec.ts` with `toMatchAriaSnapshot`
-- [ ] VRT coverage for `background` treatments (transparent/solid/checkerboard) and `fit`
+- [x] Confirm an unconfigured `<swc-asset>` (no `aspectRatio`/`width`/`height`, no ancestor
+      default) doesn't collapse to zero size, standalone and inside a sized flex container. Not
+      literally tested inside Card's `preview` slot, since Card's own Asset integration
+      (`seckles/swc-card` branch) isn't merged into this repo yet; the sized-container case stands
+      in for that embedding context
+- [x] Playwright `asset.a11y.spec.ts` with `toMatchAriaSnapshot`
+- [x] VRT coverage for `background` treatments (transparent/solid/checkerboard) and `fit`
       (cover/contain), including `fit="contain"` with a non-transparent `background`
-- [ ] VRT coverage for `border-radius` inheritance
-- [ ] VRT coverage for `aspect-ratio` including in combination with either `width`, or `height`, or both
+- [x] VRT coverage for `border-radius` inheritance
+- [x] VRT coverage for `aspect-ratio` including in combination with either `width`, or `height`, or both
+- [x] Unit tests for `loadState` transitions: `<svg>`/no-child immediately `'loaded'`, `<img>`
+      success → `'loaded'` + `swc-asset-load`, `<img>` failure → `'error'` + `swc-asset-error`
+      with `detail.src`
+- [x] Unit test confirming the timing guarantee: an already-`complete` (cached) `<img>` still
+      fires `swc-asset-load` exactly once for a listener attached after connection
 
 ### Documentation (SWC-2321)
 
-- [ ] Drop `.internal.*` naming and `@status internal`; promote docs/stories to public
-- [ ] JSDoc on all public properties, slots, and CSS custom properties
-- [ ] Storybook stories for sizing, `fit`, `background`, and `decorative`/`accessibleLabel`
-- [ ] Consumer migration guide covers the `variant` removal and the `label` →
+- [x] Drop `.internal.*` naming and `@status internal`; promote docs/stories to public
+- [x] JSDoc on all public properties, slots, and CSS custom properties
+- [x] Storybook stories for sizing, `fit`, `background`, and `decorative`/`accessibleLabel`
+- [x] Consumer migration guide covers the `variant` removal and the `label` →
       `accessibleLabel` rename
 - [ ] Reference Card directly as an example consumer (Storybook docs and/or the consumer
-      migration guide), pointing at its `preview` and `collection` slot usage
-- [ ] Document v1 support for a single `img` or `svg` child only
-- [ ] Document `loading="lazy"`/`decoding="async"` performance guidance
-- [ ] Document the resulting CSS behavior when combining `aspectRatio` with only one of
+      migration guide), pointing at its `preview` and `collection` slot usage — deferred until
+      Card's own Asset integration merges (SWC-2566)
+- [x] Document v1 support for a single `img` or `svg` child only
+- [x] Document `loading="lazy"`/`decoding="async"` performance guidance
+- [x] Document the resulting CSS behavior when combining `aspectRatio` with only one of
       `width`/`height` (the supported pattern — one dimension fixed, the other derived)
-- [ ] Document that `background` shows around the edges under `fit="contain"` and behind the
+- [x] Document that `background` shows around the edges under `fit="contain"` and behind the
       slot before the image resolves, and that pairing a non-transparent `background` with
       `fit="contain"` is the recommended way to get a polished letterboxed/loading look
+- [x] Document `loadState` and the `swc-asset-load`/`swc-asset-error` events, with a
+      consumer example showing a spinner shown while `loadState === 'loading'` and hidden on
+      `swc-asset-load`/`swc-asset-error`
 
 ### Review (SWC-2322)
 
-- [ ] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
-- [ ] 2nd-gen migration status table updated, if applicable
-- [ ] PR created referencing Epic SWC-2317
-- [ ] Peer engineer sign-off
+- [x] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
+- [x] 2nd-gen migration status table updated
+- [x] PR created referencing Epic SWC-2317 (#6716, #6723, #6729, all merged)
+- [x] Peer engineer sign-off (rubencarvalho, aramos-adobe, rise-erpelding)
 
 ---
 
 ## Blockers and open questions
 
-Only genuinely unresolved items remain here. Everything else has been folded into the section it
-affects.
+No genuinely unresolved items remain. Q1–Q4 are resolved; see the [Decision log](#decision-log).
 
-### Design
+---
 
-| #      | Item | Blocking? | Status | Owner |
-| ------ | ---- | --------- | ------ | ----- |
-| **Q1** | Loading/pending state: exact event name(s) and payload shape | Yes — blocks B-item classification for loading in [Changes overview](#changes-overview) | Open; leaning toward events over an ARIA-busy pattern, not confirmed | Design + implementation |
-| **Q2** | Whether Asset renders any default visual/accessible loading indicator for standalone (non-Card) use | Yes, for standalone use cases | Open | Design + accessibility reviewer |
-| **Q3** | Whether a failed-load (error) state shares the loading event scheme or is a separate concern | No — can resolve after Q1/Q2 | Open | Implementation |
+## Decision log
 
-### Architecture and behavior
+### Q1–Q3: Loading state event names, payload, and default treatment
 
-| #      | Item | Blocking? | Status | Owner |
-| ------ | ---- | --------- | ------ | ----- |
-| **Q4** | Exact SVG accessible-name detection algorithm (which of `aria-label`/`aria-labelledby`/child `<title>`/existing `role="img"` count as "already labeled") | Yes — blocks finalizing B7 | Author accepts the proposed direction; pending sign-off from the team's a11y SME | Accessibility reviewer |
+**Decided:** Asset exposes a readable `loadState` property (`'loading' | 'loaded' | 'error'`,
+reflected as `load-state`) plus two events, `swc-asset-load` and `swc-asset-error`
+(`detail: { src: string }` on error only). Asset renders no default visual or accessible loading
+treatment of its own in v1, standalone or embedded (resolves Q2). A failed load is a third
+`loadState` value sharing the same mechanism, not a separate scheme (resolves Q3).
+
+**Why:**
+
+- `PendingController` (`2nd-gen/packages/core/controllers/pending-controller`) was considered and
+  rejected as a direct fit: it manages a whole control's busy state folded into its accessible
+  name, whereas loading here is a per-`swc-asset`-instance visual concern the embedding parent
+  (Card or otherwise) should represent however fits its own content. Its readable-property pattern
+  (`pendingActive`) did inform the decision to expose `loadState` as a property, not only events.
+- Dropzone (`2nd-gen/packages/core/components/dropzone/Dropzone.types.ts`) is the only existing
+  precedent for custom lifecycle events in 2nd-gen: exported `SWC_<COMPONENT>_<EVENT>_EVENT`
+  constants, a `declare global` `GlobalEventHandlersEventMap` augmentation, and a custom `detail`
+  interface only when specific fields need to survive past the native event (its
+  `DropzoneDragLeaveDetail`). The `swc-asset-*` naming and `detail.src` shape follow that pattern.
+- An events-only design (no property) has a real correctness gap: if the slotted `<img>` is
+  already cached, the native `load` fires before a consumer's listener can attach, and a
+  spinner driven only by "wait for the event" would never hide. `loadState` gives a consumer a
+  synchronous way to check current status; the **timing guarantee** that
+  `swc-asset-load`/`swc-asset-error` still fires exactly once even for an already-`complete` image
+  (scheduled via microtask rather than skipped) means a consumer can also just always listen for
+  the event, without special-casing the cached case.
+- No `aria-busy` or other AT signal was added for the loading state itself: it stays purely
+  visual/behavioral, matching the "parent owns interactive/visual state" model already used for
+  `disabled`/`focused`/`selected` (see [Accessibility semantics notes](#accessibility-semantics-notes)).
+
+**Affects:** [Changes overview](#changes-overview) (B12), [Public API](#public-api) and the new
+Events table, [Behavioral semantics](#behavioral-semantics), [Accessibility semantics
+notes](#accessibility-semantics-notes), [Implementation checklist](#implementation-checklist).
+
+### Q4: SVG accessible-name detection algorithm
+
+**Decided:** A slotted `<svg>` counts as already having its own accessible name when it has
+`aria-label`, `aria-labelledby`, or a direct child `<title>` element; `role="img"` is not a
+prerequisite. When one of those name sources is present but `role="img"` is missing, Asset adds
+`role="img"` itself, since `<svg>` has no reliable implicit role the way `<img>` does and the name
+alone isn't otherwise exposed as an image to assistive tech. A consumer's own different role
+(e.g. deliberately `role="presentation"`) is never overridden. Signed off by the team's a11y SME.
+
+**Why:**
+
+- Requiring `role="img"` up front (the originally-proposed direction) meant a widely-used,
+  otherwise-valid pattern like `<svg><title>Chart</title></svg>` would still trigger the
+  "missing accessible name" DEBUG warning purely for lacking a role the consumer had no reason to
+  know to add. Self-healing the role removes that false positive without loosening what counts as
+  a real name source.
+- Self-healing only fires when a name source is already present, so it can't accidentally give a
+  role to genuinely unnamed or intentionally-`decorative`-adjacent SVG content.
+
+**Affects:** [Accessibility semantics notes](#accessibility-semantics-notes), [Changes
+overview](#changes-overview) (B7), [Public API](#public-api), [Implementation
+checklist](#implementation-checklist).
 
 ---
 

@@ -73,7 +73,7 @@ Index of shared, reusable resources in 2nd-gen: controllers, mixins, utilities, 
 | `isFocusVisibleInTree()` | `:focus-visible` check across shadow roots | none |
 | `getLabelFromSlot()` | Derives a text label from slotted content | `upload-artifact` |
 | `validateRequiredSlot()`, `validateAllowedChildren()` | Dev-mode structural validation | `validateAllowedChildren`: `illustrated-message` |
-| `isDebug()` | Whether dev mode is active (the gate `warnIf`/`validateEnum` build on) | `progress-circle`, `card`, `dropzone`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
+| `isDebug()` | Whether dev mode is active (the gate `warnIf`/`validateEnum` build on) | `progress-circle`, `card`, `dropzone`, `asset`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
 | `capitalize()` | Capitalizes first character of a string | `progress-circle`, `divider` |
 | `physicalSide()` | Drops alignment suffix from a placement (`bottom-start` to `bottom`) | `popover` |
 | `runAfterTransition()` | Runs a callback once an element's CSS transition settles (or synchronously if none will run); built on `hasActiveTransition()`/`maxTransitionDurationMs()` in the same file | `popover` |
