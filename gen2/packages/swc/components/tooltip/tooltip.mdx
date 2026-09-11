@@ -112,7 +112,7 @@ Setting `triggerElement` to `null` reverts to `for`-based resolution.
 
 When a trigger has no visible text label and the tooltip text is its sole accessible name, set the `labeling` attribute on the tooltip. This switches the ARIA wiring from `ariaDescribedByElements` (supplementary description) to `ariaLabelledByElements` (accessible name) on the trigger's inner interactive element.
 
-Prefer adding an accessible name directly to the trigger when possible: `aria-label` on native elements, or the `accessible-label` attribute on 2nd-gen SWC components. Use `labeling` only when the trigger host cannot be modified.
+Prefer adding an accessible name directly to the trigger when possible: `aria-label` on native elements, or the `accessible-label` attribute on gen2 SWC components. Use `labeling` only when the trigger host cannot be modified.
 
 <Canvas of={TooltipStories.Labeling} />
 
@@ -123,7 +123,7 @@ Prefer adding an accessible name directly to the trigger when possible: `aria-la
 #### ARIA role and relationship
 
 1. **`role="tooltip"`**: set on the host element via `connectedCallback`.
-2. **`ariaDescribedByElements`**: when the tooltip opens, the SWC layer resolves the trigger via `for` or `triggerElement` and sets `Element.ariaDescribedByElements = [tooltipHost]` on the trigger's interactive surface. For 2nd-gen SWC components with an open shadow root, the inner `<button>` is targeted; for native elements, the trigger host is used directly. The association is removed when the tooltip closes.
+2. **`ariaDescribedByElements`**: when the tooltip opens, the SWC layer resolves the trigger via `for` or `triggerElement` and sets `Element.ariaDescribedByElements = [tooltipHost]` on the trigger's interactive surface. For gen2 SWC components with an open shadow root, the inner `<button>` is targeted; for native elements, the trigger host is used directly. The association is removed when the tooltip closes.
 3. **`labeling` attribute**: when set, the SWC layer wires `ariaLabelledByElements` instead of `ariaDescribedByElements` on the trigger's inner interactive element. For icon-only triggers where the tooltip text is the sole accessible name and a name cannot be added to the trigger directly.
 
 #### Keyboard behavior
@@ -149,7 +149,7 @@ Variant colors supplement the tooltip text and are never the sole conveyance of 
 - **Use focusable triggers only.** Place `<swc-tooltip>` only on elements that can receive keyboard focus. Non-interactive elements require a focusable wrapper or a different pattern such as contextual help.
 - **Use plain text.** Do not include interactive elements or rich formatting inside a tooltip. `role="tooltip"` is not focusable; use `<swc-popover>` or contextual help for disclosures that require interactive content.
 - **Supplement, do not duplicate.** Tooltip text supplements the trigger's accessible name. Do not repeat what `aria-label` or `aria-labelledby` already conveys.
-- **Icon-only triggers.** Prefer adding an accessible name directly to the trigger: `aria-label` on native elements; `accessible-label` on 2nd-gen SWC components. Use the `labeling` attribute when the trigger host cannot be modified.
+- **Icon-only triggers.** Prefer adding an accessible name directly to the trigger: `aria-label` on native elements; `accessible-label` on gen2 SWC components. Use the `labeling` attribute when the trigger host cannot be modified.
 - **No auto-dismiss timer.** The tooltip must remain visible until the user dismisses it or the triggering state ends ([WCAG 1.4.13](https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html)).
 - **Touch devices.** Hover-triggered tooltips are not accessible on touch-only devices, even with `delay="0"` since interacting with a trigger will activate the trigger's function rather than show the tooltip due to lack of hover support. Use `<swc-popover>` or contextual help for touch disclosure.
 

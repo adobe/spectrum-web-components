@@ -30,4 +30,4 @@ Use [Badge](./components/badge/) as the reference implementation.
 ## Where to look next
 
 - [`../core/AGENTS.md`](../core/AGENTS.md) — base classes and types
-- [`../../AGENTS.md`](../../AGENTS.md) — 2nd-gen overview
+- [`../../AGENTS.md`](../../AGENTS.md) — gen2 overview

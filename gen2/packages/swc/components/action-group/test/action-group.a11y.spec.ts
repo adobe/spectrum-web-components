@@ -16,7 +16,7 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for ActionGroup component (2nd Generation)
+ * Accessibility tests for ActionGroup component (gen2eration)
  *
  * ARIA snapshot tests validate the accessibility tree structure.
  * Keyboard interaction tests verify the composite Tab-stop model (one Tab

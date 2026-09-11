@@ -15,7 +15,7 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for Infield Button component (2nd generation).
+ * Accessibility tests for Infield Button component (gen2eration).
  *
  * ARIA snapshot tests validate the accessibility tree structure.
  * aXe WCAG compliance and color contrast validation are run via

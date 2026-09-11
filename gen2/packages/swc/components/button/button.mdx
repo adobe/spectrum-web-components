@@ -127,11 +127,11 @@ The `<swc-button>` host dispatches or forwards the following events:
 - **`click`**: bubbles from the internal `<button>`. Suppressed while `pending`.
 - **`focusin` / `focusout`**: bubble naturally from the internal `<button>` through the shadow boundary. Attach listeners to the host to observe focus changes.
 
-Host-level `focus` and `blur` compatibility events are not part of the initial 2nd-gen Button scope.
+Host-level `focus` and `blur` compatibility events are not part of the initial gen2 Button scope.
 
 ### Deferred support
 
-The following features are outside the initial 2nd-gen Button scope:
+The following features are outside the initial gen2 Button scope:
 
 - **Cross-root ARIA** (`aria-labelledby` / `aria-describedby` from outside the shadow root).
 - **Form-associated `submit` / `reset` types**: the button currently behaves as `type="button"` only. Use native `<button type="submit">` or [global button styles](/docs/guides-customization-global-element-styling--docs) for form submission until this lands.

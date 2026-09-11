@@ -43,7 +43,7 @@ Tabs can exist in various states:
 
 - **Default**: normal, interactive state.
 - **Selected**: the currently active tab (shown with selection indicator).
-- **Disabled (individual)**: tab exists but cannot be activated. In 2nd-gen, disabled tabs remain focusable via arrow keys per the [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) and use `aria-disabled="true"` instead of the native `disabled` attribute.
+- **Disabled (individual)**: tab exists but cannot be activated. In gen2, disabled tabs remain focusable via arrow keys per the [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) and use `aria-disabled="true"` instead of the native `disabled` attribute.
 - **Disabled (container)**: the entire tab list is disabled. All interaction is suppressed and `aria-disabled="true"` is set on the tablist element.
 
 Disabled tabs remain focusable via arrow keys but cannot be activated; see the [migration guide](?path=/docs/components-tabs-migration-guide--docs).

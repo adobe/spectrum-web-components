@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - '2nd-gen/**'
+      - 'gen2/**'
 
 # Scoped to this workflow so a gen1 run and a gen2 run never block on each other -
 # both used to share the same `publish-${{ github.ref }}` group string.
@@ -35,12 +35,12 @@ jobs:
         run: |
           # Independent of 1st-gen in every trigger - this workflow never reads
           # 1st-gen/.changeset/.
-          COUNT=$(find 2nd-gen/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
+          COUNT=$(find gen2/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
 
           if [ "$COUNT" -ne 0 ]; then
             echo "has_changesets=true" >> $GITHUB_OUTPUT
             echo "needs_publish=false" >> $GITHUB_OUTPUT
-            echo "Found $COUNT 2nd-gen changeset(s)"
+            echo "Found $COUNT gen2 changeset(s)"
             exit 0
           fi
 
@@ -50,8 +50,8 @@ jobs:
           # only parks for reviewer approval when there's genuinely a new release to
           # ship. The environment gate fires before the publish job's first step runs,
           # so an in-step guard can't stop the approval prompt - any changeset-less push
-          # to 2nd-gen/** would otherwise ping reviewers for a "release" that just no-ops.
-          RELEASED_VERSION=$(node -p "require('./2nd-gen/packages/swc/package.json').version")
+          # to gen2/** would otherwise ping reviewers for a "release" that just no-ops.
+          RELEASED_VERSION=$(node -p "require('./gen2/packages/swc/package.json').version")
           if git rev-parse "gen2-$RELEASED_VERSION" >/dev/null 2>&1; then
             echo "needs_publish=false" >> $GITHUB_OUTPUT
             echo "gen2-$RELEASED_VERSION already released - no publish approval needed"
@@ -95,10 +95,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ ! -f 2nd-gen/.changeset/pre.json ]; then
-            (cd 2nd-gen && yarn changeset pre enter beta)
+          if [ ! -f gen2/.changeset/pre.json ]; then
+            (cd gen2 && yarn changeset pre enter beta)
           fi
-          (cd 2nd-gen && yarn changeset version)
+          (cd gen2 && yarn changeset version)
           yarn install --refresh-lockfile
 
       - name: Open or update the gen2 Version PR
@@ -106,17 +106,17 @@ jobs:
         with:
           commit-message: 'chore: release gen2 packages #gen2-publish'
           title: 'chore: release gen2 packages (beta) #gen2-publish'
-          branch: changeset-release/2nd-gen
+          branch: changeset-release/gen2
           base: main
           delete-branch: true
           add-paths: |
-            2nd-gen
+            gen2
             yarn.lock
 
       - name: Version PR summary
         run: |
           echo "## Publish summary (gen2)" >> $GITHUB_STEP_SUMMARY
-          echo "📝 Version PR opened/updated at \`changeset-release/2nd-gen\` - nothing published yet" >> $GITHUB_STEP_SUMMARY
+          echo "📝 Version PR opened/updated at \`changeset-release/gen2\` - nothing published yet" >> $GITHUB_STEP_SUMMARY
 
   # Real publish, once the Version PR above has merged (no pending changesets left).
   # Only this job sits behind the npm-publish environment's required-reviewer approval,
@@ -157,7 +157,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
         run: |
-          RELEASED_VERSION=$(node -p "require('./2nd-gen/packages/swc/package.json').version")
+          RELEASED_VERSION=$(node -p "require('./gen2/packages/swc/package.json').version")
           if git rev-parse "gen2-$RELEASED_VERSION" >/dev/null 2>&1; then
             echo "gen2-$RELEASED_VERSION already released - nothing to do."
             echo "published=false" >> $GITHUB_OUTPUT
@@ -168,7 +168,7 @@ jobs:
           # No --tag here: changesets forbids a custom dist-tag while in pre mode
           # (throws "Releasing under custom tag is not allowed in pre mode", exit 1),
           # so `changeset publish` ships to the pre tag (beta).
-          (cd 2nd-gen && yarn changeset publish --no-git-tag)
+          (cd gen2 && yarn changeset publish --no-git-tag)
           # Then move npm's `latest` dist-tag onto the just-published version for each
           # public gen2 package, with npm directly - the supported way to reach `latest`
           # from pre mode without editing changesets' internal pre.json state.
@@ -179,7 +179,7 @@ jobs:
             version=$(node -p "require('./$pkg_json').version")
             echo "Pointing latest -> $name@$version"
             npm dist-tag add "$name@$version" latest
-          done < <(find 2nd-gen/packages -maxdepth 2 -name package.json -not -path '*/node_modules/*')
+          done < <(find gen2/packages -maxdepth 2 -name package.json -not -path '*/node_modules/*')
           git config user.name "github-actions-bot"
           git config user.email "support+actions@github.com"
           node ./scripts/create-git-tag.js gen2

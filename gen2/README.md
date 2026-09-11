@@ -4,7 +4,7 @@ This workspace contains the second generation of Spectrum Web Components, built 
 
 ## Packages
 
-- **[@adobe/spectrum-wc-core](./packages/core)** - Abstract base classes providing behavior and API for 2nd-gen components
+- **[@adobe/spectrum-wc-core](./packages/core)** - Abstract base classes providing behavior and API for gen2 components
 - **[@adobe/spectrum-wc](./packages/swc)** - Concrete component implementations with styling
 
 ## About SWC
@@ -13,7 +13,7 @@ This workspace contains the second generation of Spectrum Web Components, built 
 # Install dependencies from repository root
 yarn install
 
-# Build 2nd-gen packages
+# Build gen2 packages
 yarn build
 
 # Start Storybook

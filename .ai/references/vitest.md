@@ -4,30 +4,30 @@ Pointer file. Not auto-loaded; read when working on Vitest config, tests, or tes
 
 ## Where Vitest is used in this repo
 
-There are **five** Vitest configs in `2nd-gen/`. Nothing in `1st-gen/` uses Vitest.
+There are **five** Vitest configs in `gen2/`. Nothing in `1st-gen/` uses Vitest.
 
-### Browser-mode (Storybook-driven) — `2nd-gen/packages/swc/vitest.config.js`
+### Browser-mode (Storybook-driven) — `gen2/packages/swc/vitest.config.js`
 
-This is the config most contributors mean when they say "the Vitest config." Runs tests in Chromium via the Playwright provider, with discovery handled by the `storybookTest` plugin reading `2nd-gen/packages/swc/.storybook/main.ts`.
+This is the config most contributors mean when they say "the Vitest config." Runs tests in Chromium via the Playwright provider, with discovery handled by the `storybookTest` plugin reading `gen2/packages/swc/.storybook/main.ts`.
 
 Test files it executes:
 
 | Glob                                                       | What lives here                                                     |
 | ---------------------------------------------------------- | ------------------------------------------------------------------- |
-| `2nd-gen/packages/swc/components/*/test/*.test.ts`         | 2nd-gen component unit/integration tests (Lit elements, DOM events) |
-| `2nd-gen/packages/swc/components/*/stories/*.stories.ts`   | Storybook stories with a `play` function tagged for testing         |
-| `2nd-gen/packages/swc/patterns/*/*/test/*.test.ts`         | Pattern tests (e.g. ai-toolkit)                                     |
-| `2nd-gen/packages/swc/patterns/*/*/stories/*.stories.ts`   | Pattern stories tagged for testing                                  |
-| `2nd-gen/packages/core/controllers/*/test/*.test.ts`       | Controller tests (rendered via demo hosts in the browser)           |
-| `2nd-gen/packages/core/controllers/*/stories/*.stories.ts` | Controller stories tagged for testing                               |
+| `gen2/packages/swc/components/*/test/*.test.ts`         | gen2 component unit/integration tests (Lit elements, DOM events) |
+| `gen2/packages/swc/components/*/stories/*.stories.ts`   | Storybook stories with a `play` function tagged for testing         |
+| `gen2/packages/swc/patterns/*/*/test/*.test.ts`         | Pattern tests (e.g. ai-toolkit)                                     |
+| `gen2/packages/swc/patterns/*/*/stories/*.stories.ts`   | Pattern stories tagged for testing                                  |
+| `gen2/packages/core/controllers/*/test/*.test.ts`       | Controller tests (rendered via demo hosts in the browser)           |
+| `gen2/packages/core/controllers/*/stories/*.stories.ts` | Controller stories tagged for testing                               |
 
-Run from repo root: `yarn test:2nd-gen` → delegates to `vitest --run --project storybook` in `swc/`.
+Run from repo root: `yarn test:gen2` → delegates to `vitest --run --project storybook` in `swc/`.
 
 A second project slot (`core-unit`, Node environment, scoped to `packages/core/**/test/__unit__/*.test.ts`) is reserved and commented in the config for future pure-logic tests that don't need a browser.
 
-### Node-mode (standalone) — `2nd-gen/packages/tools/*/vitest.config.ts`
+### Node-mode (standalone) — `gen2/packages/tools/*/vitest.config.ts`
 
-Four small package-local configs, all `environment: 'node'`, all run via their own `yarn test` (`vitest --run`). They are **not** part of `yarn test:2nd-gen`.
+Four small package-local configs, all `environment: 'node'`, all run via their own `yarn test` (`vitest --run`). They are **not** part of `yarn test:gen2`.
 
 | Config                                            | Test files                                          |
 | ------------------------------------------------- | --------------------------------------------------- |
@@ -76,8 +76,8 @@ For common Vitest questions, jump straight to:
 
 ## Project-specific notes
 
-- The Vitest entry point in this repo is `2nd-gen/packages/swc/vitest.config.js`.
-- Test discovery happens via the `storybookTest` plugin reading `2nd-gen/packages/swc/.storybook/main.ts`, which globs stories and `*.test.ts` files across `swc/components`, `swc/patterns`, and `core/`.
+- The Vitest entry point in this repo is `gen2/packages/swc/vitest.config.js`.
+- Test discovery happens via the `storybookTest` plugin reading `gen2/packages/swc/.storybook/main.ts`, which globs stories and `*.test.ts` files across `swc/components`, `swc/patterns`, and `core/`.
 - Coverage thresholds and reporters are root-only in Vitest and must stay at the top level of `vitest.config.js`, not inside a project entry.
 - The `core-unit` project slot is reserved for future pure-logic Node tests in `packages/core/**/__unit__/*.test.ts`; see comment in `vitest.config.js`.
 - No official Vitest MCP server exists. Third-party options (`djankies/vitest-mcp`, `madrus/vitest-mcp-server`) wrap `vitest run` for structured AI output but aren't installed here.

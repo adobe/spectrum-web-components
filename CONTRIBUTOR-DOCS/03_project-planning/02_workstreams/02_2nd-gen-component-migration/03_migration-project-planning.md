@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Workstreams](../README.md) / [2nd-gen Component Migration](README.md) / Migration project planning (Epics and tickets)
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Workstreams](../README.md) / [gen2 Component Migration](README.md) / Migration project planning (Epics and tickets)
 
 <!-- Document title (editable) -->
 
@@ -11,7 +11,7 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [TODO: Greenfield 2nd-gen contributor guide](#todo-greenfield-2nd-gen-contributor-guide)
+- [TODO: Greenfield gen2 contributor guide](#todo-greenfield-gen2-contributor-guide)
 - [Epics and tickets](#epics-and-tickets)
     - [Rationale](#rationale)
     - [Epic template](#epic-template)
@@ -28,9 +28,9 @@
 
 This doc is **project-management guidance** for tracking a component migration in Jira (or similar). For the technical sequence, quality gates, and phase checklists, use the [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md).
 
-## TODO: Greenfield 2nd-gen contributor guide
+## TODO: Greenfield gen2 contributor guide
 
-> **Planned:** A separate contributor guide for **new** 2nd-gen components **without** a 1st-gen counterpart is not written yet (Rise outlined this track). The [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md) applies only when a 1st-gen package exists or is the migration target. **Add the Jira epic or ticket link here** when it is filed.
+> **Planned:** A separate contributor guide for **new** gen2 components **without** a 1st-gen counterpart is not written yet (Rise outlined this track). The [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md) applies only when a 1st-gen package exists or is the migration target. **Add the Jira epic or ticket link here** when it is filed.
 
 ---
 
@@ -38,7 +38,7 @@ This doc is **project-management guidance** for tracking a component migration i
 
 Use one **Epic** per component migration and create **standard tickets** aligned to the 8 washing machine phases. This keeps scope clear, makes progress visible, and gives a consistent structure for planning and review.
 
-- **One feature branch per Epic** (e.g. `2nd-gen/migrate-<component>`). All migration work lands there first—not on `main` until the Epic is finished.
+- **One feature branch per Epic** (e.g. `gen2/migrate-<component>`). All migration work lands there first—not on `main` until the Epic is finished.
 - **Tickets 1–5:** Each ticket is delivered as a **PR merged into that feature branch**. Close the ticket when the PR is merged; the branch should always carry the integrated result of completed phases.
 - **Ticket 6 (Phase 8: Review):** After **all seven** prior phase PRs are merged into the feature branch, run **final Q&A** on the full integration (lint, tests, Storybook, checklist, status table—see the [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md) Phase 8). Then **merge the feature branch to `main`** (or your repo’s default integration branch). Phase 8 is the last gate before that merge.
 
@@ -50,14 +50,14 @@ Use one **Epic** per component migration and create **standard tickets** aligned
 
 ### Epic template
 
-**Title:** `[Migration] 2nd-gen [Component]`
+**Title:** `[Migration] gen2 [Component]`
 
 - Branching: use a **dedicated feature branch** for this Epic; **tickets 1–5** merge via PR into that branch; **ticket 6** is final QA on the integrated branch, then **merge the feature branch to `main`**.
 
-- Migrate [Component] from 1st-gen to 2nd-gen following the [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md).
+- Migrate [Component] from 1st-gen to gen2 following the [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md).
 - Scope: core base + types, SWC component, styles, a11y, tests, stories, and PR.
 - Branching: use a **dedicated feature branch** for this Epic; **tickets 1–5** merge via PR into that branch; **ticket 6** is final Q&A on the integrated branch, then **merge the feature branch to `main`**.
-- Reference: 2nd-gen Badge (`2nd-gen/packages/core/components/badge/`, `2nd-gen/packages/swc/components/badge/`).
+- Reference: gen2 Badge (`gen2/packages/core/components/badge/`, `gen2/packages/swc/components/badge/`).
 
 **Child issues:** Link the phase tickets (or combined tickets) as subtasks or “is blocked by” / “blocks” as appropriate. The last ticket should depend on all previous tickets being merged into the feature branch.
 
@@ -95,7 +95,7 @@ Copy the corresponding phase’s “What to do,” “What to check,” and “Q
 
 ### Badge example
 
-- **Epic:** `[Migration] 2nd-gen Badge`
+- **Epic:** `[Migration] gen2 Badge`
 - **Tickets:** “Migrate Badge — Preparation,” “Migrate Badge — Setup,” … “Migrate Badge — Review & PR.”
 - Link each ticket to the [washing machine workflow](02_step-by-step/01_washing-machine-workflow.md) and to the Badge paths (core and SWC). Use the [Reference: Badge migration](02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) table in that guide as an acceptance-criteria reference.
 

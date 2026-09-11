@@ -15,7 +15,7 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../swc/utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for the public workflow icons (2nd Generation).
+ * Accessibility tests for the public workflow icons (gen2eration).
  *
  * These validate the host-owned accessibility contract inherited from `IconBase`: a
  * labeled icon is exposed as an image, an unlabeled icon is decorative and hidden from

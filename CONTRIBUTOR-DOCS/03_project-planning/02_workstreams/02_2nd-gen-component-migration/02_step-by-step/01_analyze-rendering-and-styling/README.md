@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../../../README.md) / [Project planning](../../../../README.md) / [Workstreams](../../../README.md) / [2nd-gen Component Migration](../../README.md) / Step By Step / Analyze rendering and styling
+[CONTRIBUTOR-DOCS](../../../../../README.md) / [Project planning](../../../../README.md) / [Workstreams](../../../README.md) / [gen2 Component Migration](../../README.md) / Step By Step / Analyze rendering and styling
 
 <!-- Document title (editable) -->
 
@@ -34,13 +34,13 @@
 
 <!-- Document content (editable) -->
 
-This step contains comprehensive migration documentation for 2nd generation Spectrum Web Components based on the implementation of Spectrum 2 components that were previously migrated in [Spectrum CSS](https://github.com/adobe/spectrum-css/tree/spectrum-two). It helps engineers understand what needs to be implemented, updated, or aligned between the two systems to guide development of 2nd generation web components.
+This step contains comprehensive migration documentation for gen2eration Spectrum Web Components based on the implementation of Spectrum 2 components that were previously migrated in [Spectrum CSS](https://github.com/adobe/spectrum-css/tree/spectrum-two). It helps engineers understand what needs to be implemented, updated, or aligned between the two systems to guide development of gen2eration web components.
 
 ## Purpose
 
 ### Why we do this analysis
 
-The migration roadmap facilitates development of 2nd generation, full-fidelity Spectrum 2 web components by providing:
+The migration roadmap facilitates development of gen2eration, full-fidelity Spectrum 2 web components by providing:
 
 - **Feature gap analysis**: Identifies new features and capabilities needed to match Spectrum 2 design specifications
 - **Implementation comparison**: Maps CSS selectors to existing SWC properties and notes markup differences between systems
@@ -49,7 +49,7 @@ The migration roadmap facilitates development of 2nd generation, full-fidelity S
 
 ### The bigger picture
 
-When engineers begin 2nd generation Spectrum 2 implementation work, this documentation provides:
+When engineers begin gen2eration Spectrum 2 implementation work, this documentation provides:
 
 - **Clear starting point**: Entry point for development work that identifies specific areas needing adjustment
 - **Gap analysis**: Differences that would prevent Spectrum 2 CSS from working in SWC
@@ -63,7 +63,7 @@ We extract and document:
 
 - **CSS selectors**: All selectors from `metadata.json` in the spectrum-css `spectrum-two` branch
 - **Passthroughs**: CSS passthrough custom properties
-- **Modifiers**: CSS modifier custom properties (note that `--mod` properties will be deprecated in the 2nd-gen implementation)
+- **Modifiers**: CSS modifier custom properties (note that `--mod` properties will be deprecated in the gen2 implementation)
 - **SWC attributes**: Properties with `@property` decorators (which use getter/setter patterns) in TypeScript
 - **SWC slots**: Slot patterns from render methods
 - **Nested components**: Child components used within the component
@@ -97,7 +97,7 @@ The analysis surfaces:
 
 - **Missing from SWC**: CSS features without web component equivalents
 - **Missing from CSS**: Web component features without CSS support
-- **New for Spectrum 2**: Features that need to be added for 2nd generation
+- **New for Spectrum 2**: Features that need to be added for gen2eration
 - **Deprecated**: Features being removed in Spectrum 2
 
 ## Documentation structure

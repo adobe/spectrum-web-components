@@ -20,8 +20,8 @@
 
 - [Objectives and strategy](01_objectives-and-strategy.md)
 - [Workstreams](02_workstreams/README.md)
-    - [2nd-gen Definition and Development](02_workstreams/01_2nd-gen-definition-and-development/README.md)
-    - [2nd-gen Component Migration](02_workstreams/02_2nd-gen-component-migration/README.md)
+    - [gen2 Definition and Development](02_workstreams/01_gen2-definition-and-development/README.md)
+    - [gen2 Component Migration](02_workstreams/02_gen2-component-migration/README.md)
     - [Accessibility Improvements](02_workstreams/03_accessibility-improvements/README.md)
     - [Component Improvements](02_workstreams/04_component-improvements/README.md)
     - [1st-gen Spectrum 2 Enhancements](02_workstreams/05_1st-gen-spectrum-2-enhancements/README.md)
@@ -88,9 +88,9 @@
     - Tooltip
 - [Milestones](04_milestones/README.md)
 - Strategies
-    - [Focus Management Strategy: 2nd-Gen Proposal](05_strategies/focus-management-strategy-rfc.md)
-    - [Forms Strategy: 2nd-Gen Proposal](05_strategies/forms-strategy-rfc.md)
-    - [RFC: 2nd-gen icon strategy (Spectrum 2)](05_strategies/icon-rfc.md)
+    - [Focus Management Strategy: gen2 Proposal](05_strategies/focus-management-strategy-rfc.md)
+    - [Forms Strategy: gen2 Proposal](05_strategies/forms-strategy-rfc.md)
+    - [RFC: gen2 icon strategy (Spectrum 2)](05_strategies/icon-rfc.md)
 
 </details>
 
@@ -108,7 +108,7 @@ The documentation here helps us:
 
 ## Contents
 
-- **[Objectives and Strategy](./01_objectives-and-strategy.md)** - Strategic context for the 1st-gen-to-2nd-gen transition, including our goals and approach.
+- **[Objectives and Strategy](./01_objectives-and-strategy.md)** - Strategic context for the 1st-gen-to-gen2 transition, including our goals and approach.
 
 - **[Workstreams](./02_workstreams/README.md)** - Detailed information about our active workstreams, offering a workstream-centric view of cross-cutting work affecting many or all components.
 

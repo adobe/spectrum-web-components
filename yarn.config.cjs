@@ -28,7 +28,7 @@ module.exports = defineConfig({
      * @type {string[]} components
      */
     const components = fg.sync(
-      '{1st-gen/{packages,tools},2nd-gen/packages}/*',
+      '{1st-gen/{packages,tools},gen2/packages}/*',
       {
         cwd: __dirname,
         onlyDirectories: true,
@@ -124,9 +124,9 @@ module.exports = defineConfig({
       workspace.set('publishConfig.access', 'public');
       workspace.set('keywords', keywords(['component', 'css']));
 
-      // 2nd-gen packages use different entry points
+      // gen2 packages use different entry points
       if (is2ndGen) {
-        // 2nd-gen uses dist folder for builds
+        // gen2 uses dist folder for builds
         workspace.set('main', './dist/index.js');
         workspace.set('module', './dist/index.js');
       } else {
@@ -156,12 +156,12 @@ module.exports = defineConfig({
       // Enforce consistency within 1st-gen only
       enforceConsistencyForWorkspaceGroup(
         { Yarn },
-        (workspace) => !workspace.cwd.startsWith('2nd-gen/')
+        (workspace) => !workspace.cwd.startsWith('gen2/')
       );
 
-      // Enforce consistency within 2nd-gen only
+      // Enforce consistency within gen2 only
       enforceConsistencyForWorkspaceGroup({ Yarn }, (workspace) =>
-        workspace.cwd.startsWith('2nd-gen/')
+        workspace.cwd.startsWith('gen2/')
       );
     }
 
@@ -252,7 +252,7 @@ module.exports = defineConfig({
       if (isComponent) {
         // Get the last part of the path (e.g., 'button' from '1st-gen/packages/button')
         const folderName = workspace.cwd?.split('/').pop();
-        const is2ndGen = workspace.cwd.startsWith('2nd-gen/');
+        const is2ndGen = workspace.cwd.startsWith('gen2/');
         validateComponentPackageJson(workspace, folderName, is2ndGen);
         validateLocalPackages(workspace);
       } else {

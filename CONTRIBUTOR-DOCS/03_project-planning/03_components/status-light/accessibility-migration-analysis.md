@@ -88,7 +88,7 @@ None of the rows above target **`sp-status-light` / `swc-status-light`** specifi
 | **One semantic role** | Keep **one** clear semantics: static status text with an **accessible name**. **Do not** use the host to pretend this is a **different** widget (for example **`role="button"`**). If you need interaction, use [Action Button](../action-button/rendering-and-styling-migration-analysis.md) or [Tag](../tag/rendering-and-styling-migration-analysis.md)—not a role override on **`swc-status-light`**. |
 | **Role** | You **do not** need a special default role. **Do not** add `role="status"`, `role="img"`, or `aria-live` unless a **separate** spec says content **updates live** and you document that. |
 | **Name (required)** | There **must** be text in the **default slot** (or **`aria-label`** / **`aria-labelledby`**). **Empty** with no name breaks [WCAG 4.1.2](https://www.w3.org/TR/WCAG22/#name-role-value). |
-| **The dot** | Built as a **`::before`** shape in 2nd-gen CSS. It is **decoration** if the text already explains the status—no extra ARIA node for the dot. |
+| **The dot** | Built as a **`::before`** shape in gen2 CSS. It is **decoration** if the text already explains the status—no extra ARIA node for the dot. |
 | **`variant` / `size`** | **Looks only.** Do **not** map **`variant`** to ARIA states (for example, do not auto-set `aria-invalid` from `negative`). Meaning comes from **your words**, not the token name (“celery,” “positive,” …). |
 | **`disabled` / `aria-disabled`** | **Not** part of Spectrum 2 **`swc-status-light`**. Say “unavailable” in the **label text** (and style if needed), not with `disabled` on a non-control. |
 | **Docs** | Say it is **not interactive**. **Do not** list **Tab / Space / Enter** as normal behavior. **Do not** say **`variant`** sets ARIA by itself. |
@@ -124,7 +124,7 @@ None
 
 | Kind of test | What to check |
 |--------------|----------------|
-| **Unit** | Host is **not** focusable. Fixture has **text** or another **accessible name**. **`disabled` / `aria-disabled`** are **not** set by 2nd-gen code. |
+| **Unit** | Host is **not** focusable. Fixture has **text** or another **accessible name**. **`disabled` / `aria-disabled`** are **not** set by gen2 code. |
 | **aXe + Storybook** | **WCAG 2.x** rules on status-light stories. |
 | **Playwright ARIA snapshots** | Keep **`status-light.a11y.spec.ts`** (overview, semantic + non-semantic variants, sizes). |
 | **Contrast** | Checks on variant stories with **realistic** backgrounds. |
@@ -135,7 +135,7 @@ None
 
 - [ ] Stories use **real status words** (“Approved,” “Sync failed,” “On hold”), not **token names** (“positive,” “celery,” “fuchsia”) as the only label.
 - [ ] Part stays **non-interactive** (no Tab focus).
-- [ ] Docs say **`disabled` / `aria-disabled`** are **out** for 2nd-gen; “unavailable” is shown in **copy** instead.
+- [ ] Docs say **`disabled` / `aria-disabled`** are **out** for gen2; “unavailable” is shown in **copy** instead.
 - [ ] Docs do **not** say **`variant`** adds ARIA or live regions by itself.
 - [ ] Tree shows **slot text** or **`aria-label`**; snapshots or tools confirm.
 - [ ] Optional: **dev warning** when slot is empty **and** there is still **no** name ([WCAG 4.1.2](https://www.w3.org/TR/WCAG22/#name-role-value)).

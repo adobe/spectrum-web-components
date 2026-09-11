@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../../README.md) / [Project planning](../../../README.md) / [Workstreams](../../README.md) / [2nd-gen Component Migration](../README.md) / Step By Step / Add stories for 2nd-gen component
+[CONTRIBUTOR-DOCS](../../../../README.md) / [Project planning](../../../README.md) / [Workstreams](../../README.md) / [gen2 Component Migration](../README.md) / Step By Step / Add stories for gen2 component
 
 <!-- Document title (editable) -->
 
-# Add stories for 2nd-gen component
+# Add stories for gen2 component
 
 <!-- Generated TOC - DO NOT EDIT -->
 

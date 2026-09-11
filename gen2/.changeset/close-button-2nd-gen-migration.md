@@ -3,7 +3,7 @@
 '@adobe/spectrum-wc-core': minor
 ---
 
-Add the 2nd-gen `<swc-close-button>`, migrated from the Spectrum 1 `<sp-close-button>`.
+Add the gen2 `<swc-close-button>`, migrated from the Spectrum 1 `<sp-close-button>`.
 
 - **API**: `size`, `disabled`, `accessible-label`, and `static-color`; omits the legacy `variant` surface in favor of `static-color`.
 - **Accessibility**: renders a real inner `<button type="button">` with delegated focus; requires `accessible-label` for its icon-only name; the cross icon remains decorative.

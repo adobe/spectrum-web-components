@@ -15,7 +15,7 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for the Drop Zone component (2nd generation).
+ * Accessibility tests for the Drop Zone component (gen2eration).
  *
  * ARIA snapshot tests validate accessibility tree structure for each significant
  * state. aXe WCAG compliance and color contrast checks are run separately via

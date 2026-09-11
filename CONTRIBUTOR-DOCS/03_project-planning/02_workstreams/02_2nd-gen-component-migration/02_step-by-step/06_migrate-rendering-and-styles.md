@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../../README.md) / [Project planning](../../../README.md) / [Workstreams](../../README.md) / [2nd-gen Component Migration](../README.md) / Step By Step / Migrate rendering & styles from Spectrum CSS
+[CONTRIBUTOR-DOCS](../../../../README.md) / [Project planning](../../../README.md) / [Workstreams](../../README.md) / [gen2 Component Migration](../README.md) / Step By Step / Migrate rendering & styles from Spectrum CSS
 
 <!-- Document title (editable) -->
 
@@ -13,7 +13,7 @@
 
 - [[ TODO: Integrate this content ]](#-todo-integrate-this-content-)
 - [Bring over styles from Spectrum CSS](#bring-over-styles-from-spectrum-css)
-- [Update styles in the 2nd-generation component](#update-styles-in-the-2nd-generation-component)
+- [Update styles in the gen2eration component](#update-styles-in-the-gen2eration-component)
 
 </details>
 
@@ -37,25 +37,25 @@ Identify the component you need to migrate by searching the `components` directo
 Inside the CSS directory, you can expect to find the following files:
 
 - `index.css` - This is the source of truth for the component Styles
-- `dist/index.css` - This is the processed version of the component styles; for now, this is the best place to source styles for SWC. When copying files from Spectrum CSS into the 2nd-generation component, using this file will ensure you get the benefits of the CSS build tooling.
+- `dist/index.css` - This is the processed version of the component styles; for now, this is the best place to source styles for SWC. When copying files from Spectrum CSS into the gen2eration component, using this file will ensure you get the benefits of the CSS build tooling.
 - `stories/<component-name>.stories.js` - This is a great source-of-truth for the SWC storybook. These stories are organized into logic groups with API defined in a customer-friendly fashion with typing and human-readable labels. These files also include migration notes and guidance specific to the S2-specific implementation of the component.
 - `stories/template.js` - This is a great source-of-truth for the SWC render function; these templates already include property and class mappings. When bringing this file over to SWC, be sure to remove the `id` and `customStyles` attributes as they do not translate to the web component APIs.
 
-Next, we need to copy the styles from the Spectrum CSS component to the 2nd-generation component.
+Next, we need to copy the styles from the Spectrum CSS component to the gen2eration component.
 
 ```bash
-cp -r spectrum-css/components/<component-name>/dist/index.css spectrum-web-components/2nd-gen/packages/swc/components/<component-name>/<component-name>.css
+cp -r spectrum-css/components/<component-name>/dist/index.css spectrum-web-components/gen2/packages/swc/components/<component-name>/<component-name>.css
 ```
 
-## Update styles in the 2nd-generation component
+## Update styles in the gen2eration component
 
 Now that we have the base styles in place, we need to check the 1st-gen implementation for any unique web component-specific styles that would not exist in the vanilla CSS implementation. This information will most likely be found in the `1st-gen/packages/components/<component-name>/<component-name>.css` file.
 
 For example, look for styles specific to slots, such as `::slotted([name="icon"]) {}`.
 
-If these styles are found, we need to confirm if they are needed in the 2nd-generation component. Not all 1st-gen overrides or component-specific styles are needed in the 2nd-generation components and sometimes there are other ways to source those styles using the original classes provided by the Spectrum CSS asset.
+If these styles are found, we need to confirm if they are needed in the gen2eration component. Not all 1st-gen overrides or component-specific styles are needed in the gen2eration components and sometimes there are other ways to source those styles using the original classes provided by the Spectrum CSS asset.
 
-It might be helpful, at this point, to define the render function for the 2nd-gen component so you can spin up Storybook and start seeing these new styles in action. A quick way to kick this off is to copy the `spectrum-css/components/<component-name>/stories/template.js` file into a render function on your new 2nd-generation component.
+It might be helpful, at this point, to define the render function for the gen2 component so you can spin up Storybook and start seeing these new styles in action. A quick way to kick this off is to copy the `spectrum-css/components/<component-name>/stories/template.js` file into a render function on your new gen2eration component.
 
 Let's use the `Badge` component as an example. First, we need to add the styles to the component.
 
@@ -130,10 +130,10 @@ protected override render(): TemplateResult {
 }
 ```
 
-As you can see, the 2nd-generation implementation leverages the `classMap` function to conditionally apply classes to the component based on the component's properties. This is a common pattern in the 2nd-generation components. This approach has several benefits:
+As you can see, the gen2eration implementation leverages the `classMap` function to conditionally apply classes to the component based on the component's properties. This is a common pattern in the gen2eration components. This approach has several benefits:
 
 - It separates the styling application from the properties and states of the component
 - It creates a container inside the Shadow DOM which provides stronger encapsulation
 - It allows for more efficient rendering by only applying the necessary classes to the component
 
-In our 2nd-generation version, we will likely want to maintain any slots available in the 1st-generation component unless design changes from S2 provide a compelling reason to change or remove them.
+In our gen2eration version, we will likely want to maintain any slots available in the 1st-generation component unless design changes from S2 provide a compelling reason to change or remove them.

@@ -1,12 +1,12 @@
 {
   "name": "@adobe/spectrum-wc",
   "version": "2.0.0-beta.3",
-  "description": "Spectrum Web Components 2nd generation - rendering implementations",
+  "description": "Spectrum Web Components gen2eration - rendering implementations",
   "license": "Apache-2.0",
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/",
   "repository": {
-    "directory": "2nd-gen/packages/swc",
+    "directory": "gen2/packages/swc",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },

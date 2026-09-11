@@ -15,7 +15,7 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for Link styles (2nd Generation)
+ * Accessibility tests for Link styles (gen2eration)
  *
  * Link is a CSS-only utility; there is no `<swc-link>` custom element.
  * Stories render native `<a href>` elements with optional BEM classes from

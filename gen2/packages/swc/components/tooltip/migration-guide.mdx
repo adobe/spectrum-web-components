@@ -208,7 +208,7 @@ With `manual`, ARIA relationship wiring via `for` still fires on every `open` ch
 ## Accessibility
 
 - **Trigger relationship:** Set `for="[trigger-id]"` on every `<swc-tooltip>`. Without it, the ARIA relationship between the tooltip and its trigger is not established, and screen readers will not associate the tooltip text with the trigger. See [step 5](#5-change-the-authoring-pattern).
-- **Icon-only triggers:** Add `accessible-label` to the trigger (2nd-gen SWC components) or `aria-label` (native elements) so the trigger has an accessible name independent of the tooltip. The tooltip describes; it does not name. See [step 5](#5-change-the-authoring-pattern).
+- **Icon-only triggers:** Add `accessible-label` to the trigger (gen2 SWC components) or `aria-label` (native elements) so the trigger has an accessible name independent of the tooltip. The tooltip describes; it does not name. See [step 5](#5-change-the-authoring-pattern).
 - **No interactive content in tooltips:** `role="tooltip"` prohibits interactive elements (links, buttons, inputs) inside the tooltip. Refactor those patterns to `<swc-popover>` or a dialog component.
 - **Non-interactive triggers:** Tooltips must be attached to focusable elements. Static text, decorative icons, and non-interactive elements are not valid tooltip triggers; use contextual help instead.
 - **Touch and mobile:** `<swc-tooltip>` is hover/focus only. For touch-accessible disclosure, use `<swc-popover>` or contextual help.

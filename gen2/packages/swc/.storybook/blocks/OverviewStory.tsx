@@ -16,7 +16,7 @@ export const OverviewStory = () => {
   // Extract component name and create GitHub link
   const componentName = formatTitle(resolvedOf.preparedMeta?.title);
   const githubBaseUrl =
-    'https://github.com/adobe/spectrum-web-components/tree/main/2nd-gen/packages/swc/components';
+    'https://github.com/adobe/spectrum-web-components/tree/main/gen2/packages/swc/components';
 
   // Build additional actions dynamically based on available metadata
   const additionalActions: ActionItem[] = [];

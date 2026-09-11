@@ -1,5 +1,5 @@
 {
-  "name": "@spectrum-web-components/2nd-gen",
+  "name": "@spectrum-web-components/gen2",
   "version": "0.0.1",
   "private": true,
   "description": "Second generation Spectrum Web Components with modern tooling and architecture",
@@ -7,7 +7,7 @@
   "author": "Adobe",
   "homepage": "https://opensource.adobe.com/spectrum-web-components/",
   "repository": {
-    "directory": "2nd-gen",
+    "directory": "gen2",
     "type": "git",
     "url": "https://github.com/adobe/spectrum-web-components.git"
   },
@@ -20,7 +20,7 @@
     "clean": "yarn workspaces foreach --from '{@adobe/spectrum-wc-core,@adobe/spectrum-wc-icons,@adobe/spectrum-wc}' --recursive run clean",
     "dev:analyze": "yarn workspace @adobe/spectrum-wc analyze:watch",
     "dev:core": "yarn workspace @adobe/spectrum-wc-core dev",
-    "lint": "cd .. && eslint 2nd-gen --ext .ts,.js,.json",
+    "lint": "cd .. && eslint gen2 --ext .ts,.js,.json",
     "start": "run-p dev:core dev:analyze storybook",
     "storybook": "yarn workspace @adobe/spectrum-wc storybook",
     "storybook:build": "yarn workspace @adobe/spectrum-wc storybook:build",
@@ -55,7 +55,7 @@
     "web-components",
     "lit-element",
     "lit-html",
-    "2nd-gen"
+    "gen2"
   ],
   "packageManager": "yarn@4.9.2"
 }

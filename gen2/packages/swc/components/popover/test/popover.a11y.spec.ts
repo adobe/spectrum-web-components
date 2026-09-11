@@ -15,7 +15,7 @@ import { expect, type Page, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Playwright tests for Popover (2nd Generation): ARIA-tree snapshots of the open states,
+ * Playwright tests for Popover (gen2eration): ARIA-tree snapshots of the open states,
  * plus native light-dismiss behavior (see the second describe block below).
  *
  * Native light-dismiss needs trusted browser input, which the Storybook play functions in

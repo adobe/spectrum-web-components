@@ -15,7 +15,7 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for ColorLoupe component (2nd generation)
+ * Accessibility tests for ColorLoupe component (gen2eration)
  *
  * The color loupe is a purely visual, non-interactive component.
  * Its SVG carries aria-hidden="true" so the loupe graphic is fully

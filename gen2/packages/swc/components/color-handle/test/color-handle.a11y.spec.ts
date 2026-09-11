@@ -15,7 +15,7 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for the ColorHandle component (2nd generation).
+ * Accessibility tests for the ColorHandle component (gen2eration).
  *
  * The color handle is a non-interactive visual primitive. Name, role, value,
  * and keyboard semantics belong to the parent color picker, so the handle host

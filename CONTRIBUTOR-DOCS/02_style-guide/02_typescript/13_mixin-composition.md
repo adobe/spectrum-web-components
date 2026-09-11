@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-gen TypeScript](README.md) / Mixin composition
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 TypeScript](README.md) / Mixin composition
 
 <!-- Document title (editable) -->
 
@@ -27,11 +27,11 @@
 
 <!-- Document content (editable) -->
 
-This guide explains how mixins work in 2nd-gen and how to compose them correctly.
+This guide explains how mixins work in gen2 and how to compose them correctly.
 
 ## Mixin pattern
 
-A mixin is a function that takes a class and returns a new class with added behavior. In 2nd-gen, mixins follow this pattern:
+A mixin is a function that takes a class and returns a new class with added behavior. In gen2, mixins follow this pattern:
 
 ```ts
 function MyMixin<T extends Constructor<ReactiveElement>>(
@@ -174,7 +174,7 @@ SizedMixin(SpectrumElement, {
 
 ## Available mixins
 
-For the full inventory (what each one does and which components use it), see [2nd-gen shared resources](../../01_contributor-guides/16_2nd-gen-shared-resources.md#mixins). Composition specifics:
+For the full inventory (what each one does and which components use it), see [gen2 shared resources](../../01_contributor-guides/16_gen2-shared-resources.md#mixins). Composition specifics:
 
 ### SizedMixin
 

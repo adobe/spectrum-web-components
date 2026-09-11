@@ -49,7 +49,7 @@ An avatar is a **circular profile image** that identifies a person or entity. On
 
 ### The linked variant ("avatar-link")
 
-**The linked variant is not part of the 2nd-gen migration.** The Spectrum 2 spec does not include
+**The linked variant is not part of the gen2 migration.** The Spectrum 2 spec does not include
 a linked avatar variant — the `href` attribute and all `LikeAnchor` mixin properties (`target`,
 `rel`, `download`, `referrerpolicy`, `type`) have been dropped.
 

@@ -98,7 +98,7 @@ This runs tests, regenerates `tokens.json` for the VS Code extension (now includ
 
 The previous step updated the tokens _data_ for the extension, but it will not reflect in the extension without running the extensions deploy script which will re-package it with the updated tokens.
 
-Run the following in the `2nd-gen/packages/tools/swc-vscode-token` directory:
+Run the following in the `gen2/packages/tools/swc-vscode-token` directory:
 
 ```bash
 yarn deploy
@@ -111,7 +111,7 @@ Post-build, will require uninstalling and re-installing the extension to see cha
 Run the fix script to automatically replace all known broken `token()` references across migrated component CSS:
 
 ```bash
-# From 2nd-gen/packages/tools/swc-tokens/:
+# From gen2/packages/tools/swc-tokens/:
 node scripts/fix-token-refs.js --dry-run   # preview first
 node scripts/fix-token-refs.js             # apply
 ```

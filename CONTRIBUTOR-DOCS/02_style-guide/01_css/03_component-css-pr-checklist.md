@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-Gen CSS](README.md) / Component CSS PR Checklist
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 CSS](README.md) / Component CSS PR Checklist
 
 <!-- Document title (editable) -->
 

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "allowImportingTsExtensions": true,
 
-    // 2nd-gen specific: Build configuration
+    // gen2 specific: Build configuration
     "noEmit": true,
 
     // Additional strictness

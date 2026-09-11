@@ -15,7 +15,7 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for Meter component (2nd Generation)
+ * Accessibility tests for Meter component (gen2eration)
  *
  * ARIA snapshot tests validate the accessibility tree structure. The WAI-ARIA
  * `meter` role lives on the shadow `.swc-LinearProgress` wrapper; the host

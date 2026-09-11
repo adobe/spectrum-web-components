@@ -37,7 +37,7 @@
 
 <!-- Document content (editable) -->
 
-Play function tests are the primary test layer for 2nd-gen components. They run inside the browser as part of Storybook, powered by Vitest.
+Play function tests are the primary test layer for gen2 components. They run inside the browser as part of Storybook, powered by Vitest.
 
 ## When to use
 

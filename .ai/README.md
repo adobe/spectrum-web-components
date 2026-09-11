@@ -84,18 +84,18 @@ Two rules are always-active (`alwaysApply: true`, no `paths:`). Everything else 
 
 ##### Storybook stories (documentation + format)
 
-These two rules share the same glob/path set (`2nd-gen/**/stories/**` and `2nd-gen/**/*.mdx` respectively) and work as a pair: `stories-documentation` defines _what_ to document, `stories-format` defines _how_ to structure the file.
+These two rules share the same glob/path set (`gen2/**/stories/**` and `gen2/**/*.mdx` respectively) and work as a pair: `stories-documentation` defines _what_ to document, `stories-format` defines _how_ to structure the file.
 
 - **stories-documentation**: Content patterns for each documentation section
   - Sections: overview, anatomy, options, states, behaviors, accessibility
-  - 1st-gen to 2nd-gen comparison guidance
+  - 1st-gen to gen2 comparison guidance
   - Verification process to prevent hallucinated attributes, slots, or ARIA claims
-  - Applies to: `2nd-gen/packages/swc/components/*/*.mdx`, `2nd-gen/packages/swc/patterns/*/*/*.mdx`, `2nd-gen/packages/core/controllers/*/*.mdx`
+  - Applies to: `gen2/packages/swc/components/*/*.mdx`, `gen2/packages/swc/patterns/*/*/*.mdx`, `gen2/packages/core/controllers/*/*.mdx`
 - **stories-format**: File structure and technical conventions
   - Visual separators, meta configuration, required tags, layout parameters
   - `render` vs `args` patterns, `flexLayout` usage
   - Static color single-story pattern, image asset conventions
-  - Applies to: `2nd-gen/packages/swc/components/*/stories/**`, `2nd-gen/packages/swc/patterns/*/*/stories/**`, `2nd-gen/packages/core/controllers/*/stories/**`
+  - Applies to: `gen2/packages/swc/components/*/stories/**`, `gen2/packages/swc/patterns/*/*/stories/**`, `gen2/packages/core/controllers/*/stories/**`
 
 ##### Component README
 
@@ -146,8 +146,8 @@ These two rules share the same glob/path set (`2nd-gen/**/stories/**` and `2nd-g
 | branch-naming                  |       x       |                  |                   |              | —                                 |
 | styles                         |       x       |                  |                   |              | `*.css`                           |
 | text-formatting                |               |        x         |                   |              | `**/*.md`, `**/*.txt`, `**/*.mdx` |
-| stories-documentation          |               |        x         |                   |              | `2nd-gen/**/*.mdx`                |
-| stories-format                 |               |        x         |                   |              | `2nd-gen/**/stories/**`           |
+| stories-documentation          |               |        x         |                   |              | `gen2/**/*.mdx`                |
+| stories-format                 |               |        x         |                   |              | `gen2/**/stories/**`           |
 | component-readme               |               |        x         |                   |              | `1st-gen/packages/*/README.md`    |
 | contributor-doc-update         |               |        x         |                   |              | `CONTRIBUTOR-DOCS/**`             |
 | storybook-mdx-conversion       |               |        x         |                   |              | `**/*.md`, `**/*.mdx`             |
@@ -195,8 +195,8 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 #### Accessibility migration analysis
 
-- **purpose**: Create accessibility migration analysis docs for the "analyze accessibility" step of 2nd-gen component migration
-- **How to invoke**: Say "create accessibility analysis for [component]", "analyze accessibility for [component]", or "accessibility migration for [component]". Also invoked when you refer to the "analyze accessibility" step in the 2nd-gen component migration workstream.
+- **purpose**: Create accessibility migration analysis docs for the "analyze accessibility" step of gen2 component migration
+- **How to invoke**: Say "create accessibility analysis for [component]", "analyze accessibility for [component]", or "accessibility migration for [component]". Also invoked when you refer to the "analyze accessibility" step in the gen2 component migration workstream.
 - Use when: On the analyze-accessibility step for one or more components; creating one markdown file per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/accessibility-migration-analysis.md`
 - Applies to: `CONTRIBUTOR-DOCS/**/accessibility-migration-analysis.md`
 - Provides: Required section order, ARIA recommendations structure, Shadow DOM guidance, keyboard and focus conventions, testing table format, reference examples
@@ -238,9 +238,9 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 #### Code conformance
 
-- **purpose**: Review 2nd-gen component files against project style guides, run linters, and surface guideline gaps
+- **purpose**: Review gen2 component files against project style guides, run linters, and surface guideline gaps
 - **How to invoke**: Say "check code conformance", "audit this component's style", or as part of the `migration-conformance` sub-task
-- Use when: Reviewing or auditing 2nd-gen TypeScript, CSS, test, or Storybook story files for style conformance
+- Use when: Reviewing or auditing gen2 TypeScript, CSS, test, or Storybook story files for style conformance
 - Provides: Per-domain review checklists (TypeScript, CSS, tests, stories) with style-guide links, lint commands to run first, guideline-gap reporting format
 
 #### Consistency pass
@@ -259,16 +259,16 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 #### Component migration (rendering and styling)
 
-- **purpose**: Create rendering-and-styling migration analysis docs for the “analyze rendering and styling” step of 2nd-gen component migration
-- **How to invoke**: Say “create migration analysis for [component]”, “analyze rendering and styling for [component]”, or “rendering and styling migration for [component]”. Also invoked when you refer to the “analyze rendering and styling” step in the 2nd-gen component migration workstream.
+- **purpose**: Create rendering-and-styling migration analysis docs for the “analyze rendering and styling” step of gen2 component migration
+- **How to invoke**: Say “create migration analysis for [component]”, “analyze rendering and styling for [component]”, or “rendering and styling migration for [component]”. Also invoked when you refer to the “analyze rendering and styling” step in the gen2 component migration workstream.
 - Use when: On the analyze-rendering-and-styling step for one or more components; creating one markdown file per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`
-- Provides: Workflow summary (specs from CSS + SWC, three-way DOM comparison, CSS⇒SWC mapping table, summary). Full instructions in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/cursor_prompt.md`
+- Provides: Workflow summary (specs from CSS + SWC, three-way DOM comparison, CSS⇒SWC mapping table, summary). Full instructions in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/02_step-by-step/01_analyze-rendering-and-styling/cursor_prompt.md`
 
 #### Consumer migration guide
 
-- **purpose**: Create per-component migration guides for application developers upgrading from 1st-gen Spectrum Web Components to 2nd-gen components
-- **How to invoke**: Say “create a consumer migration guide for [component]”, “write an upgrade guide for [component]”, or “document how consumers migrate [component] from 1st-gen to 2nd-gen”.
-- Use when: Writing one Storybook-renderable MDX file per component at `2nd-gen/packages/swc/components/[component-name]/migration-guide.mdx` with code updates, styling guidance, accessibility notes, and rollout advice
+- **purpose**: Create per-component migration guides for application developers upgrading from 1st-gen Spectrum Web Components to gen2 components
+- **How to invoke**: Say “create a consumer migration guide for [component]”, “write an upgrade guide for [component]”, or “document how consumers migrate [component] from 1st-gen to gen2”.
+- Use when: Writing one Storybook-renderable MDX file per component at `gen2/packages/swc/components/[component-name]/migration-guide.mdx` with code updates, styling guidance, accessibility notes, and rollout advice
 - Provides: Workflow summary (verified source inputs, required section order, before/after examples, migration checklist, rollout guidance). Full instructions in `.ai/skills/consumer-migration-guide/references/consumer-migration-guide-prompt.md`
 
 #### Washing machine migration workflow
@@ -277,21 +277,21 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 - **purpose**: Understand the component, critically assess the current API and behavior, plan breaking changes, and define migration scope before any refactoring begins
 - **How to invoke**: Say "start migration prep for [component]", "plan the migration for [component]", "create a migration plan for [component]", "draft the Phase 1 plan for [component]", or "phase 1 migration for [component]"
-- Use when: Beginning a 1st-gen → 2nd-gen component migration; before any files are created or code is moved
+- Use when: Beginning a 1st-gen → gen2 component migration; before any files are created or code is moved
 - Provides: Template-backed migration plan workflow, research checklist (1st-gen API, usage, tests, analyses, React/Figma references), breaking-change analysis, source-confidence and contradiction checks, path/link verification, and staff-level API/naming review with explicit escalation for inconsistencies
 
 #### Migration — phase 2: setup (`migration-setup`)
 
-- **purpose**: Create the 2nd-gen file and folder structure, wire up exports, and confirm the build passes before implementation begins
-- **How to invoke**: Say "set up 2nd-gen structure for [component]", "create the file structure for [component]", or "phase 2 migration for [component]"
+- **purpose**: Create the gen2 file and folder structure, wire up exports, and confirm the build passes before implementation begins
+- **How to invoke**: Say "set up gen2 structure for [component]", "create the file structure for [component]", or "phase 2 migration for [component]"
 - Use when: After prep is complete and the approved `migration-plan.md` is available; creating the scaffolding a component needs before any logic is ported
 - Provides: File/folder creation checklist, export wiring steps, build-passes verification, and plan-aligned naming/structure setup
 
 #### Migration — phase 3: API (`migration-api`)
 
-- **purpose**: Move properties, methods, and types from 1st-gen to 2nd-gen while maintaining a clear public API
+- **purpose**: Move properties, methods, and types from 1st-gen to gen2 while maintaining a clear public API
 - **How to invoke**: Say "migrate the API for [component]", "port properties and methods for [component]", or "phase 3 migration for [component]"
-- Use when: Scaffolding is in place and the approved `migration-plan.md` defines the intended public contract for 2nd-gen
+- Use when: Scaffolding is in place and the approved `migration-plan.md` defines the intended public contract for gen2
 - Provides: Property/method porting workflow, type definition guidance, API contract review, and drift detection against the approved migration plan
 
 #### Migration — phase 4: accessibility (`migration-a11y`)
@@ -303,9 +303,9 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 #### Migration — phase 5: styling (`migration-styling`)
 
-- **purpose**: Migrate CSS to the 2nd-gen structure, apply Spectrum 2 tokens, and ensure stylelint passes
+- **purpose**: Migrate CSS to the gen2 structure, apply Spectrum 2 tokens, and ensure stylelint passes
 - **How to invoke**: Say "migrate styling for [component]", "port CSS for [component]", or "phase 5 migration for [component]"
-- Use when: Accessibility is complete and the approved `migration-plan.md` defines the intended visual scope; translating 1st-gen CSS to 2nd-gen with Spectrum 2 design tokens
+- Use when: Accessibility is complete and the approved `migration-plan.md` defines the intended visual scope; translating 1st-gen CSS to gen2 with Spectrum 2 design tokens
 - Provides: CSS migration checklist, token mapping guidance, stylelint validation steps, and checks against approved visual scope and custom-property decisions
 
 #### Migration — phase 6: testing (`migration-testing`)
@@ -317,7 +317,7 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 #### VRT authoring (`vrt-authoring`)
 
-- **purpose**: Author dedicated Storybook visual regression stories for 2nd-gen components
+- **purpose**: Author dedicated Storybook visual regression stories for gen2 components
 - **How to invoke**: Say "add VRT for [component]", "write visual regression stories", or mention `.vrt.ts`, Chromatic, forced-colors VRT, global styles VRT, or custom-property VRT
 - Use when: Adding or reviewing `test/vrt/*.vrt.ts` files during migration or test cleanup
 - Provides: Dedicated VRT file shape, shared helper usage, pseudo-state/forced-colors patterns, and custom-property coverage checks against the generated API metadata
@@ -332,7 +332,7 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 #### Migration — phase 7: documentation (`migration-documentation`)
 
 - **purpose**: Author the per-component MDX docs page and finalize Storybook stories + public-API JSDoc so the component is usable and understandable by others
-- **How to invoke**: Say "write docs for [component] migration", "document [component] for 2nd-gen", or "phase 7 migration for [component]"
+- **How to invoke**: Say "write docs for [component] migration", "document [component] for gen2", or "phase 7 migration for [component]"
 - Use when: Tests pass and the approved `migration-plan.md` can be used as the source of truth for migration notes and rationale
 - Provides: per-component MDX authoring (`<component>.mdx`), public-API JSDoc guidelines on `Component.ts`, stories file finalization (drop `'autodocs'` from Playground, complete Accessibility story), documentation checklist, and plan-aligned migration-note guidance
 
@@ -361,7 +361,7 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 - **purpose**: Follow Adobe content writing standards when writing documentation
 - **How to invoke**: Use when writing or editing docs — e.g. per-unit MDX docs pages (`<unit>.mdx`), public-API JSDoc in `Component.ts`, the meta-level JSDoc in `.stories.ts`, README/changeset/Jira/PR (`.md`, `.mdx`), or when you say “write the PR description”, “draft the Jira ticket”, “write the docs for this component”.
-- Use when: Authoring 2nd-gen docs pages, writing 1st-gen docs, changesets, Jira tickets, or PR descriptions
+- Use when: Authoring gen2 docs pages, writing 1st-gen docs, changesets, Jira tickets, or PR descriptions
 - Provides: Voice and tone, grammar and mechanics, markdown/JSDoc reference, links to Spectrum design system content guidelines
 
 #### Explain code

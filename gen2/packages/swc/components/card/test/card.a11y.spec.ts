@@ -15,7 +15,7 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for the Card component (2nd generation).
+ * Accessibility tests for the Card component (gen2eration).
  *
  * aXe WCAG compliance and color-contrast validation run separately via
  * test-storybook (see .storybook/test-runner.ts) across every story; both are

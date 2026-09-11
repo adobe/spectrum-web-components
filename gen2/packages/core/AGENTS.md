@@ -1,6 +1,6 @@
 # core
 
-`@adobe/spectrum-wc-core` — abstract base classes, mixins, types, and utilities shared by both 1st-gen and 2nd-gen. No rendering, no CSS, no element registration.
+`@adobe/spectrum-wc-core` — abstract base classes, mixins, types, and utilities shared by both 1st-gen and gen2. No rendering, no CSS, no element registration.
 
 ## Structure
 
@@ -29,4 +29,4 @@ Use [Badge](./components/badge/) as the reference implementation.
 ## Where to look next
 
 - [`../swc/AGENTS.md`](../swc/AGENTS.md) — rendering layer
-- [`../../AGENTS.md`](../../AGENTS.md) — 2nd-gen overview
+- [`../../AGENTS.md`](../../AGENTS.md) — gen2 overview

@@ -15,7 +15,7 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for Typography styles (2nd Generation)
+ * Accessibility tests for Typography styles (gen2eration)
  *
  * Typography is a CSS-only utility; there is no `<swc-typography>` custom element.
  * `gotoStory` waits for the readiness selector to become visible; since there

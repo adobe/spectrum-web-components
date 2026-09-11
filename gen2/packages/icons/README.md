@@ -77,7 +77,7 @@ For an A4U logical name `<Name>` (PascalCase, e.g. `Star`, `AddCircle`, `3DAsset
 
 ## Regenerating
 
-Icon art is generated, not hand-authored. To refresh (Adobe-internal, VPN required): download the S2 Icon Global Set (Open Source) SVGs into `2nd-gen/packages/swc/icon-source/workflow/`, then from the `swc` package run:
+Icon art is generated, not hand-authored. To refresh (Adobe-internal, VPN required): download the S2 Icon Global Set (Open Source) SVGs into `gen2/packages/swc/icon-source/workflow/`, then from the `swc` package run:
 
 ```bash
 yarn generate:workflow-icons

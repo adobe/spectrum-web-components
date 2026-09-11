@@ -15,7 +15,7 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for Accordion component (2nd Generation)
+ * Accessibility tests for Accordion component (gen2eration)
  *
  * ARIA snapshot tests validate the accessibility tree structure for
  * disclosure buttons, heading levels, region panels, aria-expanded,

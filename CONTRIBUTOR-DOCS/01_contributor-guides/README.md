@@ -21,12 +21,12 @@
 - [Patching dependencies](08_patching-dependencies.md)
 - [Accessibility testing](09_accessibility-testing.md)
 - [Maintaining StackBlitz examples for Spectrum Web Components](10_using-stackblitz.md)
-- [2nd gen testing](11_2ndgen_testing.md)
+- [gen2 testing](11_2ndgen_testing.md)
 - [Tools vs packages: where code lives](12_tools-vs-packages.md)
 - [Writing migration guides](13_writing-migration-guides.md)
 - [Focus management](14_focus-management.md)
 - [Changelog strategy](15_changelog-strategy.md)
-- [2nd-gen shared resources quick reference](16_2nd-gen-shared-resources.md)
+- [gen2 shared resources quick reference](16_gen2-shared-resources.md)
 
 </details>
 
