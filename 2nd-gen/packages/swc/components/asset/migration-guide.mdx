@@ -37,7 +37,7 @@ import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 | Tag              | `sp-asset`                                            | `swc-asset`                                                                                                                                                           |
 | Import path      | `@spectrum-web-components/asset`                      | `@adobe/spectrum-wc/components/asset/swc-asset.js`                                                                                                                    |
 | CSS custom props | `--mod-asset-*`                                       | `--swc-asset-*` (see [Styling](#styling))                                                                                                                             |
-| `label`          | Accessible label for the `file`/`folder` variant only | `accessible-label` (property `accessibleLabel`); a fallback accessible name for any slotted `<img>`/`<svg>` (see [step 3](#3-fix-consumer-facing-accessibility-gaps)) |
+| `label`          | Accessible label for the `file`/`folder` variant only | `accessible-label` (property `accessibleLabel`); a fallback accessible name for any slotted `<img>`/`<svg>` (see [step 3](#3-ensure-an-accessible-label-is-provided)) |
 
 ### Added in Spectrum 2
 
@@ -102,15 +102,29 @@ Slotted content also now defaults to `fit="cover"` instead of always fitting via
 </swc-asset>
 ```
 
-### 3. Fix consumer-facing accessibility gaps
+### 3. Ensure an accessible label is provided
 
-Rename `label` to `accessible-label`. Unlike Spectrum 1's `label`, which only applied to the built-in `file`/`folder` icon, `accessible-label` is a fallback that applies to any slotted `<img>`/`<svg>`, but only when the slotted content doesn't already carry its own accessible name. Prefer naming the slotted element directly:
+Rename `label` to `accessible-label`. Unlike Spectrum 1's `label`, which only applied to the built-in `file`/`folder` icon, `accessible-label` is a fallback that applies to any slotted `<img>`/`<svg>`, but only when the slotted content doesn't already carry its own accessible name:
 
 ```html
 <!-- Before -->
-<sp-asset>
-  <img src="demo.jpg" alt="Demo image" />
+<sp-asset label="Demo image">
+  <img src="demo.jpg" />
 </sp-asset>
+
+<!-- After -->
+<swc-asset accessible-label="Demo image">
+  <img src="demo.jpg" />
+</swc-asset>
+```
+
+Prefer naming the slotted element directly over relying on the fallback:
+
+```html
+<!-- Before -->
+<swc-asset accessible-label="Demo image">
+  <img src="demo.jpg" />
+</swc-asset>
 
 <!-- After: name the image directly -->
 <swc-asset>
@@ -163,7 +177,7 @@ asset.addEventListener('swc-asset-error', () => (spinner.hidden = true));
 
 ## Accessibility
 
-- Every visible asset needs an accessible name: `alt` on a slotted `<img>` (or `aria-label`/`aria-labelledby`/a child `<title>` on a slotted `<svg>`), `accessible-label` on `<swc-asset>`, or `decorative`. See [step 3](#3-fix-consumer-facing-accessibility-gaps).
+- Every visible asset needs an accessible name: `alt` on a slotted `<img>` (or `aria-label`/`aria-labelledby`/a child `<title>` on a slotted `<svg>`), `accessible-label` on `<swc-asset>`, or `decorative`. See [step 3](#3-ensure-an-accessible-label-is-provided).
 - Don't manually add `role="img"` to a named `<svg>`; `<swc-asset>` adds it automatically when needed.
 
 ## Styling

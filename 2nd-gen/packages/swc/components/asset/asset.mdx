@@ -36,6 +36,8 @@ attribute instead (`xMidYMid slice` for `cover`, `xMidYMid meet` for `contain`).
 `background` controls what shows behind slotted content and around its edges when `fit="contain"`
 letterboxes it: `transparent` (default), a `solid` color, or an opacity `checkerboard`.
 
+To modify the color used for `solid`, set the `--swc-asset-background-color` custom property on the asset.
+
 `background` is also what's visible behind the slot while the asset is loading (see
 [Loading state](#loading-state)). Pairing a non-transparent `background` with `fit="contain"` is
 the recommended way to get a polished letterboxed look that also reads well during loading,
@@ -53,6 +55,10 @@ Set `aspect-ratio`, or `width`/`height`, to size the asset. `aspect-ratio` accep
 syntax (including the `square` keyword). Pairing `aspect-ratio` with only one of `width` or
 `height` derives the other dimension from the ratio; setting both `width` and `height` leaves
 `aspect-ratio` with no effect, since both dimensions are already fixed.
+
+If none of `aspect-ratio`, `width`, or `height` are set, the asset falls back to plain CSS sizing:
+it takes on the slotted content's natural dimensions, or whatever size an ancestor layout (e.g. a
+flex or grid container) provides. It never collapses to zero size.
 
 <Canvas of={AssetStories.Sizing} />
 
@@ -90,7 +96,7 @@ asset.addEventListener('swc-asset-load', () => (spinner.hidden = true));
 asset.addEventListener('swc-asset-error', () => (spinner.hidden = true));
 ```
 
-Open the **Actions** panel in Storybook to observe the events as the images below load.
+Open the **Actions** panel to observe the event as the image completes the load.
 
 <Canvas of={AssetStories.LoadingState} />
 
