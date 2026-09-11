@@ -251,6 +251,14 @@
       "types": "./dist/directives/render-help-text/index.d.ts",
       "import": "./dist/directives/render-help-text/index.js"
     },
+    "./directives/render-label": {
+      "types": "./dist/directives/render-label/index.d.ts",
+      "import": "./dist/directives/render-label/index.js"
+    },
+    "./directives/render-label/index.js": {
+      "types": "./dist/directives/render-label/index.d.ts",
+      "import": "./dist/directives/render-label/index.js"
+    },
     "./element": {
       "types": "./dist/element/index.d.ts",
       "import": "./dist/element/index.js"

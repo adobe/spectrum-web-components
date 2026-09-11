@@ -14,11 +14,12 @@ import { css, html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { HelpTextMixin } from '../index.js';
+import { HelpTextMixin, LabellingMixin } from '../index.js';
 
 declare global {
   interface HTMLElementTagNameMap {
     'demo-help-text-host': DemoHelpTextHost;
+    'demo-labelling-host': DemoLabellingHost;
   }
 }
 
@@ -66,6 +67,33 @@ export class DemoHelpTextHost extends HelpTextMixin(LitElement) {
     return html`
       <input aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)} />
       ${this.renderHelpText()}
+    `;
+  }
+}
+
+/**
+ * @internal
+ *
+ * Storybook-only host that consumes {@link LabellingMixin} directly, the way
+ * a non-text-field component would: it renders a bare `<input>` as its role
+ * element and calls `renderLabel()` in its own template.
+ */
+@customElement('demo-labelling-host')
+export class DemoLabellingHost extends LabellingMixin(LitElement) {
+  static override styles = DEMO_STYLES;
+
+  private get _inputId(): string {
+    return 'demo-labelling-host-input';
+  }
+
+  public override get roleElement(): HTMLInputElement | null {
+    return this.renderRoot.querySelector('input');
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      ${this.renderLabel(this._inputId)}
+      <input id=${this._inputId} />
     `;
   }
 }

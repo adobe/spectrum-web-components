@@ -18,6 +18,13 @@ import { TextFieldBase } from '@adobe/spectrum-wc-core/components/text-field';
 import styles from './text-field.css';
 
 /**
+ * The `<input>`'s `id`, referenced by the rendered `<label for>`. A fixed
+ * string (not a per-instance counter) stays stable across SSR/hydration; it
+ * only needs to be unique within this component's own shadow root.
+ */
+const INPUT_ID = 'input';
+
+/**
  * A single-line text field for entering and editing text.
  *
  * @element swc-text-field
@@ -36,12 +43,12 @@ export class TextField extends TextFieldBase {
   }
 
   /**
-   * The `<input>` that `HelpTextMixin` wires the resolved description onto.
-   * Queried by class (no visible label here); the companion labelling mixin
-   * adds a `<label for>`/`id` to the same input.
+   * The `<input>` that both `LabellingMixin` (accessible name / `<label for>`)
+   * and `HelpTextMixin` (resolved description) wire their ARIA relationships
+   * onto. Queried by its stable `id` (referenced by the rendered `<label for>`).
    */
   public override get roleElement(): HTMLInputElement | null {
-    return this.renderRoot.querySelector('input.input');
+    return this.renderRoot.querySelector('input#input');
   }
 
   private handleInput(event: Event): void {
@@ -58,12 +65,13 @@ export class TextField extends TextFieldBase {
   }
 
   protected override render(): TemplateResult {
-    // @todo (SWC-2466 / Phase 4–5): render the visible label and required
-    // indicator via a future labelling mixin. Until then the input takes its
-    // accessible name from `accessible-label`.
+    // @todo (SWC-2466 / Phase 4–5): render the required indicator and
+    // validation icon.
     return html`
       <div class="swc-TextField">
+        ${this.renderLabel(INPUT_ID)}
         <input
+          id=${INPUT_ID}
           class="input"
           type=${this.type}
           .value=${this.value}
@@ -76,7 +84,6 @@ export class TextField extends TextFieldBase {
           ?readonly=${this.readonly}
           ?required=${this.required}
           ?disabled=${this.effectiveDisabled}
-          aria-label=${ifDefined(this.accessibleLabel || undefined)}
           aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
           @input=${this.handleInput}
           @change=${this.handleChange}

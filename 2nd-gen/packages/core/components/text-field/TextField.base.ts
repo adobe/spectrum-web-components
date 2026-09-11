@@ -16,6 +16,7 @@ import { FieldAssociationController } from '@adobe/spectrum-wc-core/controllers/
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   HelpTextMixin,
+  LabellingMixin,
   SizedMixin,
 } from '@adobe/spectrum-wc-core/mixins/index.js';
 import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
@@ -43,7 +44,7 @@ const DOCS_URL =
  * @slot error-text - Error message shown when `invalid`, folded into `aria-describedby`.
  */
 export abstract class TextFieldBase extends SizedMixin(
-  HelpTextMixin(SpectrumElement),
+  HelpTextMixin(LabellingMixin(SpectrumElement)),
   {
     validSizes: TEXT_FIELD_VALID_SIZES,
     defaultSize: 'm',
@@ -67,22 +68,6 @@ export abstract class TextFieldBase extends SizedMixin(
    * @default m
    */
   declare public size: TextFieldSize;
-
-  /**
-   * Accessible name for the input, applied as `aria-label`. Use when there is no
-   * visible label slotted.
-   */
-  @property({ type: String, attribute: 'accessible-label' })
-  public accessibleLabel = '';
-
-  /**
-   * Light-DOM element IDs that name the field. Takes precedence over
-   * `accessibleLabel` and a slotted label.
-   *
-   * @todo (SWC-2466): resolved to cross-root element refs by the `LabellingController`.
-   */
-  @property({ attribute: 'accessible-labelledby' })
-  public accessibleLabelledby?: string;
 
   /**
    * The value of the input.
@@ -181,11 +166,6 @@ export abstract class TextFieldBase extends SizedMixin(
   //     IMPLEMENTATION
   // ──────────────────────
 
-  // @todo (SWC-2466): resolve the accessible-labelledby IDREF stub to a
-  // cross-root `ariaLabelledByElements` element reference, and add the
-  // "unlabeled field" dev-warning, via a future labelling mixin
-  // (accessible-describedby resolution now lives in HelpTextMixin).
-
   // Form association: `formAssociated` (static, above) and `attachInternals` stay
   // on the element; the controller wraps the rest. Constraint validity
   // (required/pattern/…) is populated with the render work.
@@ -201,6 +181,11 @@ export abstract class TextFieldBase extends SizedMixin(
    */
   protected get effectiveDisabled(): boolean {
     return this.disabled || this.fieldAssoc.formDisabled;
+  }
+
+  /** Exposes the placeholder to `LabellingMixin`'s placeholder-only-name warning. */
+  public override get placeholderText(): string | undefined {
+    return this.placeholder || undefined;
   }
 
   /** The form the field participates in, or `null`. */

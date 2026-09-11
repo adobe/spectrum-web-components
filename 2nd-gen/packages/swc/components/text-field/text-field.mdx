@@ -12,10 +12,23 @@ import * as TextFieldStories from './stories/text-field.stories';
 A text field consists of:
 
 - **Input**: the real, focusable `<input>` that carries the value and native `textbox` role
+- **Label** (optional), provided through the `label` slot: visible text rendered as a real, same-root `<label for>`
 - **Description** (optional), provided through the `description` slot: guidance text associated via `aria-describedby`
 - **Error text** (optional), provided through the `error-text` slot: shown and folded into `aria-describedby` only while `invalid`
 
 <Canvas of={TextFieldStories.Anatomy} />
+
+## Options
+
+### Labelling
+
+Three sources can provide the field's accessible name. When more than one is set, the browser's [accessible-name computation](https://www.w3.org/TR/accname-1.2/) decides which one is announced, in this order:
+
+1. **`accessible-labelledby`** (highest precedence): space-separated element `id`s, resolved against the field's root node, for composing a name from elements the field does not own (for example, a grid cell named by its row and column headers).
+2. **`accessible-label`**: a string accessible name for a field with no visible label of its own.
+3. **A slotted `label`** (lowest precedence): the default, recommended path for an ordinary standalone field. Renders as a real, same-root `<label for>`, giving native click-to-focus.
+
+<Canvas of={TextFieldStories.Labelling} />
 
 ## States
 
@@ -29,15 +42,30 @@ Text fields can exist in various states:
 
 <Canvas of={TextFieldStories.States} />
 
+## Behaviors
+
+### Conflicting label sources
+
+Setting both `accessible-labelledby` and `accessible-label` triggers a dev-mode console warning: they are two ways to name the same field, so one is always ignored. The warning names `accessible-labelledby` as the source that is used. Pairing a visible label with either one does not warn; that is the recommended way to satisfy [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html). Open the browser console to see the warning for the examples below.
+
+<Canvas of={TextFieldStories.ConflictingLabelSources} />
+
 ## Accessibility
 
 ### Features
 
+- **Native role**: the host sets no ARIA role; the real `<input>` supplies the implicit `textbox` role.
+- **Browser-resolved name**: each source is wired independently, and the browser's accessible-name computation picks the one that is announced, in the order `accessible-labelledby` &gt; `accessible-label` &gt; slotted label. A slotted visible label always renders as a real `<label for>`, keeping native click-to-focus.
 - **Combining descriptions**: a slotted `description` and an external `accessible-describedby` reference combine rather than override each other; the in-shadow description comes first.
 - **Error text folded into `aria-describedby`**: following React Spectrum's [TextField](https://react-spectrum.adobe.com/TextField) strategy, the slotted `error-text` is added to `aria-describedby` (after the description) only while `invalid` is `true`, rather than pointed at separately via `aria-errormessage`, since AT support for that attribute is still inconsistent.
+- **Dev-mode warnings**: a field with no visible label, no `accessible-label`, and no `accessible-labelledby` triggers a console warning, and so does a field that sets both `accessible-labelledby` and `accessible-label`.
+
+> **Known axe-core false positive.** A field named only via `accessible-labelledby` fails automated axe-core scans with a "Form element does not have a label" (`label` rule) violation, even though the name resolves correctly in real browsers and assistive technology. axe-core inspects DOM attributes and has no standardized way to read `ariaLabelledByElements`, the ARIA element-reflection API in use.
 
 ### Best practices
 
+- Prefer a slotted `label` for ordinary fields; reserve `accessible-label`/`accessible-labelledby` for fields with no visible label of their own or a name composed from elements the field doesn't own.
+- When a field has both a visible label and a programmatic name, make sure the programmatic name contains the visible text, per [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html). Do not set both `accessible-label` and `accessible-labelledby`; a dev-mode warning flags that combination.
 - Always pair `invalid` with slotted `error-text` so the invalid state is not conveyed by color or the validation icon alone.
 - Use `accessible-describedby` for a description composed from light-DOM content the field doesn't own; it combines with, rather than replaces, a slotted `description`.
 
