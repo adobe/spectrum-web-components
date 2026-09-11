@@ -31,19 +31,15 @@ export interface RenderFieldHelpTextOptions {
 }
 
 /**
- * Renders the shared description/error-text markup used by
- * help-text-capable components. Returns `nothing` when neither the
- * description nor an active (`invalid`) error message has content, so callers
- * can interpolate unconditionally.
+ * Renders the shared description/error-text markup for help-text-capable
+ * components. Returns `nothing` when there is no description and no active
+ * (`invalid`) error message, so callers can interpolate unconditionally.
  *
- * Most consumers do not call this directly: `HelpTextMixin` exposes
- * `renderHelpText()`, which calls this with the mixin's own resolved state and
- * uses the element callbacks to build `ariaDescribedByElements`. Use this
- * directive directly only for stateless rendering without the mixin.
- *
- * This is render-only and carries no design-token dependency. Pair it with a
- * shared style fragment that themes the `swc-FieldDescription` /
- * `swc-FieldErrorText` classes this emits.
+ * Most consumers use `HelpTextMixin`'s `renderHelpText()` instead, which calls
+ * this with its resolved state and the element callbacks that build
+ * `ariaDescribedByElements`. Render-only, no design tokens: pair it with a
+ * style fragment theming the `swc-FieldDescription` / `swc-FieldErrorText`
+ * classes it emits.
  */
 export function renderFieldHelpText({
   hasDescriptionSlotContent,

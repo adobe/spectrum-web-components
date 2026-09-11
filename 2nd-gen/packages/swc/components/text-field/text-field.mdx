@@ -33,8 +33,8 @@ Text fields can exist in various states:
 
 ### Features
 
-- **Combining descriptions** — a slotted `description` and an external `accessible-describedby` reference combine rather than override each other; the in-shadow description comes first.
-- **Error text folded into `aria-describedby`** — following React Spectrum's [TextField](https://react-spectrum.adobe.com/TextField) strategy, the slotted `error-text` is added to `aria-describedby` (after the description) only while `invalid` is `true`, rather than pointed at separately via `aria-errormessage`, since AT support for that attribute is still inconsistent.
+- **Combining descriptions**: a slotted `description` and an external `accessible-describedby` reference combine rather than override each other; the in-shadow description comes first.
+- **Error text folded into `aria-describedby`**: following React Spectrum's [TextField](https://react-spectrum.adobe.com/TextField) strategy, the slotted `error-text` is added to `aria-describedby` (after the description) only while `invalid` is `true`, rather than pointed at separately via `aria-errormessage`, since AT support for that attribute is still inconsistent.
 
 ### Best practices
 

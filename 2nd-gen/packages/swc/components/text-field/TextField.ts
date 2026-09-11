@@ -36,8 +36,9 @@ export class TextField extends TextFieldBase {
   }
 
   /**
-   * The real role element `HelpTextMixin` wires the resolved description
-   * (including any active error message) onto.
+   * The `<input>` that `HelpTextMixin` wires the resolved description onto.
+   * Queried by class (no visible label here); the companion labelling mixin
+   * adds a `<label for>`/`id` to the same input.
    */
   public override get roleElement(): HTMLInputElement | null {
     return this.renderRoot.querySelector('input.input');

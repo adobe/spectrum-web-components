@@ -11,16 +11,16 @@ import * as Stories from './stories/help-text-mixin.stories';
 
 `HelpTextMixin` adds description/error-text rendering and accessible description wiring to a host so components do not hand-roll it. It is one of two decoupled primitives for form-field labelling:
 
-- **`HelpTextMixin`** (`@adobe/spectrum-wc-core/mixins`) — the `accessible-describedby` property, `description` / `error-text` slot presence tracking, and `renderHelpText()`.
-- **`renderFieldHelpText`** (`@adobe/spectrum-wc-core/directives/render-help-text`) — the underlying render-only directive. The mixin owns and exposes it; use it directly only for stateless rendering without the mixin.
+- **`HelpTextMixin`** (`@adobe/spectrum-wc-core/mixins`): the `accessible-describedby` property, `description` / `error-text` slot presence tracking, and `renderHelpText()`.
+- **`renderFieldHelpText`** (`@adobe/spectrum-wc-core/directives/render-help-text`): the underlying render-only directive. The mixin owns and exposes it; use it directly only for stateless rendering without the mixin.
 
 `LabellingMixin` (`@adobe/spectrum-wc-core/mixins`) is the companion mixin for accessible-name association; `swc-text-field` composes both.
 
 ### What it does
 
-- **Combined description sources** — unlike accessible-name sources, a slotted `description` and an external `accessibleDescribedby` reference combine rather than override each other: the role element's `ariaDescribedByElements` lists the in-shadow description first, then the resolved external elements.
-- **Invalid-gated error message** — following React Spectrum's [TextField](https://react-spectrum.adobe.com/TextField) strategy, the in-shadow error-text element is folded into that same `ariaDescribedByElements` list (after the description, before any external elements) only while the host reads as `invalid` (read structurally, so a host that doesn't declare `invalid` at all simply never surfaces an error message). It is not exposed via `aria-errormessage`, since AT support for that attribute is still inconsistent.
-- **Conditional rendering** — `renderHelpText()` renders nothing when there is no description content and no active error message.
+- **Combined description sources**: unlike accessible-name sources, a slotted `description` and an external `accessibleDescribedby` reference combine rather than override each other. The role element's `ariaDescribedByElements` lists the in-shadow description first, then the resolved external elements.
+- **Invalid-gated error message**: following React Spectrum's [TextField](https://react-spectrum.adobe.com/TextField) strategy, the in-shadow error-text element is folded into that same `ariaDescribedByElements` list (after the description, before any external elements) only while the host reads as `invalid` (read structurally, so a host that doesn't declare `invalid` at all simply never surfaces an error message). It is not exposed via `aria-errormessage`, since AT support for that attribute is still inconsistent.
+- **Conditional rendering**: `renderHelpText()` renders nothing when there is no description content and no active error message.
 
 ### Basic usage
 
@@ -64,8 +64,8 @@ The error-text element is folded into `ariaDescribedByElements` only while the h
 
 ### Features
 
-- **Error message folded into `aria-describedby`** — following React Spectrum's [TextField](https://react-spectrum.adobe.com/TextField) strategy, the error message is never the sole description source; it supplements the combined `ariaDescribedByElements` set while `invalid` is `true`, rather than being pointed at separately via `aria-errormessage`.
-- **No default live region** — help/error content is wired through `ariaDescribedByElements`, not an `aria-live` region, so a screen reader announces it when focus lands on the field.
+- **Error message folded into `aria-describedby`**: following React Spectrum's [TextField](https://react-spectrum.adobe.com/TextField) strategy, the error message is never the sole description source; it supplements the combined `ariaDescribedByElements` set while `invalid` is `true`, rather than being pointed at separately via `aria-errormessage`.
+- **No default live region**: help/error content is wired through `ariaDescribedByElements`, not an `aria-live` region, so a screen reader announces it when focus lands on the field.
 
 ### Best practices
 
@@ -78,7 +78,7 @@ The error-text element is folded into `ariaDescribedByElements` only while the h
 
 ### Constructor
 
-`HelpTextMixin(BaseClass)` — returns `BaseClass` extended with the help-text API.
+`HelpTextMixin(BaseClass)` returns `BaseClass` extended with the help-text API.
 
 ### Members
 
