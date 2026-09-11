@@ -33,7 +33,7 @@ test.describe('Action Button - ARIA Snapshots', () => {
       'swc-action-button'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - button "Edit"
+      - button "Settings"
     `);
   });
 
