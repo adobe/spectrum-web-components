@@ -27,7 +27,11 @@ import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 //    METADATA
 // ────────────────
 
-const { args, argTypes, template } = getStorybookHelpers('swc-asset');
+const {
+  args,
+  argTypes,
+  template: templateWithLoadState,
+} = getStorybookHelpers('swc-asset');
 
 argTypes.fit = {
   ...argTypes.fit,
@@ -41,6 +45,22 @@ argTypes.background = {
   options: ASSET_BACKGROUND_VALUES,
 };
 
+// Set internally from the slotted <img>'s load/error events; not a consumer input. Hidden
+// from the Controls table, and stripped below before every template() call so it never
+// appears in generated code snippets, which would misleadingly suggest a consumer sets it.
+argTypes['load-state'] = {
+  table: { disable: true },
+  control: false,
+};
+
+const template = (storyArgs: Record<string, unknown>) => {
+  const rest = { ...storyArgs };
+  delete rest['load-state'];
+  return templateWithLoadState(rest);
+};
+
+const events = ['swc-asset-load', 'swc-asset-error'];
+
 /**
  * A general image/media primitive that displays a single slotted `<img>` or
  * `<svg>` element, sized and fit to the space provided.
@@ -51,6 +71,7 @@ const meta: Meta = {
   args,
   argTypes,
   parameters: {
+    actions: { handles: events },
     docs: {
       subtitle: `Visually represent an image or media asset in your application`,
     },
@@ -187,6 +208,28 @@ export const Sizing: Story = {
   parameters: { flexLayout: 'row-wrap' },
 };
 
+export const LoadingState: Story = {
+  render: (args) => html`
+    ${template({
+      ...args,
+      width: '160px',
+      height: '160px',
+      background: 'checkerboard',
+      'default-slot': `<img src="./images/card-preview.jpg" alt="Loads successfully" />`,
+    })}
+    ${template({
+      ...args,
+      width: '160px',
+      height: '160px',
+      background: 'checkerboard',
+      'default-slot': `<img src="./images/does-not-exist.jpg" alt="Fails to load" />`,
+    })}
+  `,
+  tags: ['behaviors'],
+  parameters: { flexLayout: 'row-wrap' },
+};
+LoadingState.storyName = 'Loading state';
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
@@ -196,14 +239,21 @@ export const Accessibility: Story = {
     ${template({
       ...args,
       width: '160px',
-      'default-slot': `<img src="./images/card-preview.jpg" alt="preview of background" />`,
+      'accessible-label': 'preview of background',
+      'default-slot': `<img src="./images/card-preview.jpg" />`,
+    })}
+    ${template({
+      ...args,
+      width: '160px',
+      decorative: true,
+      'default-slot': `<img src="./images/landscape-asset.jpg" />`,
     })}
     ${template({
       ...args,
       width: '160px',
       'aspect-ratio': '4/3',
       background: 'checkerboard',
-      'default-slot': `<svg role="img" aria-label="Spectrum logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" fill="none">
+      'default-slot': `<svg aria-label="Spectrum logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" fill="none">
   <g clip-path="url(#clip0_10659_40433)">
     <path d="M50.0058 33.7987C50.6615 34.2078 50.6604 35.1631 50.0036 35.5706L31.1003 47.3001C30.4264 47.7183 29.5736 47.7183 28.8997 47.3001L9.99643 35.5706C9.33964 35.1631 9.33846 34.2078 9.99424 33.7987L15.1071 30.6086L28.9058 39.1051C29.5767 39.5183 30.4232 39.5183 31.0942 39.1051L44.8929 30.6086L50.0058 33.7987Z" fill="#DADADA"/>
     <path d="M39.2427 22.2825L31.1018 27.3221C30.429 27.7386 29.5785 27.7387 28.9055 27.3225L20.7573 22.2825L16.5548 24.8686C15.8927 25.276 15.8926 26.2384 16.5546 26.6459L28.9068 34.25C29.5792 34.664 30.4277 34.663 31.0991 34.2474L43.3911 26.6397C44.0492 26.2324 44.0505 25.2756 43.3935 24.8666L39.2427 22.2825Z" fill="#8F8F8F"/>
