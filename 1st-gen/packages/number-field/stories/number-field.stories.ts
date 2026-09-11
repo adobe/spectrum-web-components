@@ -216,6 +216,91 @@ Default.args = {
   value: 100,
 };
 
+const webHapticsStyles = `
+  .web-haptics-story { display: flex; flex-direction: column; gap: 1.5rem; max-inline-size: 32rem; }
+  .web-haptics-story__instructions { padding: 1rem; background: var(--spectrum-gray-100, #f5f5f5); border-radius: 0.5rem; }
+  .web-haptics-story__instructions h3 { margin: 0 0 0.5rem 0; font-size: 1.125rem; }
+  .web-haptics-story__instructions p, .web-haptics-story__instructions ul { margin: 0.5rem 0 0 0; font-size: 0.875rem; }
+  .web-haptics-story__instructions code { font-size: 0.8125rem; padding: 0.125rem 0.25rem; background: var(--spectrum-gray-200, #e5e5e5); border-radius: 0.25rem; }
+  .web-haptics-story__instructions a { color: var(--spectrum-blue-600, #0d66d0); }
+  .web-haptics-story__demos { display: flex; flex-direction: column; gap: 1rem; }
+  .web-haptics-story__demo { display: flex; flex-direction: column; gap: 0.25rem; }
+`;
+
+export const WebHaptics = (): TemplateResult => html`
+  <div class="web-haptics-story">
+    <div class="web-haptics-story__instructions">
+      <h3>Web Haptics (accessibility)</h3>
+      <p>
+        Test on
+        <strong>iOS 18+ Safari</strong>
+        or Android. Haptic fires when you
+        <strong>commit a value</strong>
+        (stepper release, input change, or keyboard step) — same pattern as
+        combobox/slider.
+      </p>
+      <ul>
+        <li>
+          <strong>With haptics:</strong>
+          use the stepper or type and blur; feel a tap on commit.
+        </li>
+        <li>
+          <strong>Without haptics:</strong>
+          second field for comparison.
+        </li>
+      </ul>
+      <p>
+        <a
+          href="https://webkit.org/blog/15865/webkit-features-in-safari-18-0/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          WebKit blog
+        </a>
+        .
+      </p>
+    </div>
+    <div class="web-haptics-story__demos">
+      <div class="web-haptics-story__demo">
+        <sp-field-label for="number-haptic-on">
+          With haptic feedback
+        </sp-field-label>
+        <sp-number-field
+          id="number-haptic-on"
+          label="Quantity"
+          value="50"
+          min="0"
+          max="100"
+          haptic-feedback
+        ></sp-number-field>
+      </div>
+      <div class="web-haptics-story__demo">
+        <sp-field-label for="number-haptic-off">
+          Without haptic feedback
+        </sp-field-label>
+        <sp-number-field
+          id="number-haptic-off"
+          label="Quantity"
+          value="50"
+          min="0"
+          max="100"
+        ></sp-number-field>
+      </div>
+    </div>
+  </div>
+  <style>
+    ${webHapticsStyles}
+  </style>
+`;
+WebHaptics.parameters = {
+  docs: {
+    description: {
+      story:
+        'Side-by-side number fields to test haptic feedback on value commit (stepper release, input change, keyboard step).',
+    },
+  },
+};
+
 export const quiet = (args: StoryArgs = {}): TemplateResult => Default(args);
 
 quiet.args = {
