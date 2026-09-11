@@ -16,7 +16,7 @@
     - [What it is](#what-it-is)
     - [When to use something else](#when-to-use-something-else)
     - [What it is not](#what-it-is-not)
-    - [Program (2nd-gen, Jira snapshot)](#program-2nd-gen-jira-snapshot)
+    - [Program (gen2, Jira snapshot)](#program-gen2-jira-snapshot)
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
@@ -39,7 +39,7 @@
 
 ## Overview
 
-This doc describes how **`swc-button-group`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. It pairs with [Button group migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, tokens, and DOM. **`swc-button-group`** is a **layout and semantics wrapper** for **related** **`swc-button`** actions (for example dialog or form footers). The host **must** expose **`role="group"`**, **must not** ship **`FocusgroupNavigationController`** or other **roving** **`tabindex`** on the **group** itself (see [Keyboard and focus](#keyboard-and-focus)), **must not** be used as **`role="radiogroup"`**, **must not** implement **toggle-group** behavior (mutually or collectively **pressed** / **toolbar**-style **toggle** clusters belong on **`swc-toggle-group`**), and **slotted** children **should** be **`swc-button`** instances so every focusable control remains a **standard** **button** with a **discernible name** ([Button accessibility migration analysis](../button/accessibility-migration-analysis.md)). Align shared **button** / **`ButtonBase`** sequencing with [Button migration plan](../button/migration-plan.md).
+This doc describes how **`swc-button-group`** should behave for **accessibility** in gen2, targeting **WCAG 2.2 Level AA**. It pairs with [Button group migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, tokens, and DOM. **`swc-button-group`** is a **layout and semantics wrapper** for **related** **`swc-button`** actions (for example dialog or form footers). The host **must** expose **`role="group"`**, **must not** ship **`FocusgroupNavigationController`** or other **roving** **`tabindex`** on the **group** itself (see [Keyboard and focus](#keyboard-and-focus)), **must not** be used as **`role="radiogroup"`**, **must not** implement **toggle-group** behavior (mutually or collectively **pressed** / **toolbar**-style **toggle** clusters belong on **`swc-toggle-group`**), and **slotted** children **should** be **`swc-button`** instances so every focusable control remains a **standard** **button** with a **discernible name** ([Button accessibility migration analysis](../button/accessibility-migration-analysis.md)). Align shared **button** / **`ButtonBase`** sequencing with [Button migration plan](../button/migration-plan.md).
 
 ### Also read
 
@@ -62,7 +62,7 @@ This doc describes how **`swc-button-group`** should behave for **accessibility*
 - **Toggle group:** **`swc-button-group`** **must not** own **`aria-pressed`** coordination, **single-selection** among **toggles**, or **`toolbar`**-style **toggle** clusters. Use **`swc-toggle-group`** when the UX is **toggle**-based at the **group** level; **`swc-button-group`** stays **plain** **`button`** actions only.
 - **Not a roving-focus composite:** **`swc-button-group`** does **not** own **roving** **`tabindex`**, **Arrow** navigation, or **`FocusgroupNavigationController`**. When authors need **one** **Tab** stop with **arrow** keys among controls (as in the [APG Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/)), **consumer** docs should recommend **`FocusgroupNavigationController`** on the **toolbar** or other **composite** **ancestor**—not on **`swc-button-group`** itself.
 
-### Program (2nd-gen, Jira snapshot)
+### Program (gen2, Jira snapshot)
 
 Planning and migration work is tracked in Adobe Jira with **`gen2`** labels (for example [SWC-2071](https://jira.corp.adobe.com/browse/SWC-2071) **epic**, [SWC-2072](https://jira.corp.adobe.com/browse/SWC-2072) accessibility recommendations, [SWC-2073](https://jira.corp.adobe.com/browse/SWC-2073) migration plan analysis, [SWC-2074](https://jira.corp.adobe.com/browse/SWC-2074) implementation). Cross-cutting **focusgroup** / **roving tabindex** direction lives in [SWC-1676](https://jira.corp.adobe.com/browse/SWC-1676) (RFC; **Done** snapshot—see [Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md)). Those **`gen2`** items are **out of scope** for the **Related 1st-gen** table below, which lists **1st-gen** documentation snapshots only.
 
@@ -73,7 +73,7 @@ Planning and migration work is tracked in Adobe Jira with **`gen2`** labels (for
 ### Pattern in the APG
 
 - [Toolbar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/) and [Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/) — the **Copy**, **Cut**, **Paste** cluster is a **`role="group"`** with a **name** (**“edit”**), containing plain **`button`** elements. **`swc-button-group`** should match that **inner-group** shape: **`role="group"`** on the wrapper, **named** when useful, **buttons** inside—not **`radiogroup`**.
-- [ARIA17: Using grouping roles to identify related form controls](https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA17) — **`role="group"`** for **related** controls; **`radiogroup`** is for **mutually exclusive** selection (use **`swc-segmented-control`** in **2nd-gen**, not **button-group**).
+- [ARIA17: Using grouping roles to identify related form controls](https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA17) — **`role="group"`** for **related** controls; **`radiogroup`** is for **mutually exclusive** selection (use **`swc-segmented-control`** in **gen2**, not **button-group**).
 
 ### Guidelines that apply
 
@@ -92,7 +92,7 @@ Planning and migration work is tracked in Adobe Jira with **`gen2`** labels (for
 
 ## Related 1st-gen accessibility (Jira)
 
-Adobe Jira is authoritative for current status and resolution; refresh cells when you triage. **gen2**-labeled program tickets are omitted here (see **Program (2nd-gen)** above). Audit epic **[SWC-872](https://jira.corp.adobe.com/browse/SWC-872)** is omitted per contributor-doc rules for cross-cutting audits.
+Adobe Jira is authoritative for current status and resolution; refresh cells when you triage. **gen2**-labeled program tickets are omitted here (see **Program (gen2)** above). Audit epic **[SWC-872](https://jira.corp.adobe.com/browse/SWC-872)** is omitted per contributor-doc rules for cross-cutting audits.
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 | --- | --- | --- | --- | --- |
@@ -112,7 +112,7 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 | **`aria-orientation`** | When **`vertical`** is **true**, set **`aria-orientation="vertical"`** on the **group**; when **horizontal**, **`aria-orientation="horizontal"`** (or omit if default **horizontal** is clear for the AT). |
 | **Focus navigation** | **`swc-button-group`** **must not** embed **`FocusgroupNavigationController`** or implement **roving** **`tabindex`**. **Consumer** / **Storybook** docs **should** recommend **`FocusgroupNavigationController`** on **toolbars** and other **composite** components when authors need **keyboard navigation inside components** ([APG](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents), [Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/))—for example **`role="toolbar"`** on an **ancestor** wrapping one or more **`swc-button-group`** clusters ([Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md)). |
 | **Child elements** | **Default** slotted controls **should** be **`swc-button`** so semantics stay **`role="button"`** with **`swc-button`** **delegation** and **pending** / **disabled** rules from [Button accessibility migration analysis](../button/accessibility-migration-analysis.md). **Do not** document **`swc-button-group`** as the home for **radio** semantics or **toggle-group** coordination. |
-| **Disable all (optional API)** | If 2nd-gen adds **group-level** **disable** (compare [React Spectrum `ButtonGroup` `isDisabled`](https://react-spectrum.adobe.com/ButtonGroup)), propagate **disabled** or **`aria-disabled`** to each **`swc-button`** per **`swc-button`** patterns—**never** rely on **inactive** appearance alone. |
+| **Disable all (optional API)** | If gen2 adds **group-level** **disable** (compare [React Spectrum `ButtonGroup` `isDisabled`](https://react-spectrum.adobe.com/ButtonGroup)), propagate **disabled** or **`aria-disabled`** to each **`swc-button`** per **`swc-button`** patterns—**never** rely on **inactive** appearance alone. |
 | **`size` / `vertical`** | **Visual** layout props; **do not** map to **radio**, **pressed**, or **toggle-selection** state. **`vertical`** must pair with **`aria-orientation`** as above. |
 | **Docs** | Storybook and migration guides **must** state **no** **`radiogroup`** on **`swc-button-group`**, **no** **roving** **`tabindex`** on **`swc-button-group`**, and point authors to **`swc-segmented-control`** / **`swc-toggle-group`** for those patterns. **Should** link [keyboard navigation inside components](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents) and the [Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/) and recommend **`FocusgroupNavigationController`** on **toolbars** (or other **composites**) when **arrow** / **single-tab-stop** behavior is required—not on **`swc-button-group`**. |
 
@@ -140,9 +140,9 @@ None
 ### Keyboard and focus
 
 - **`swc-button-group` host:** **Not** a **Tab** stop; **do not** put **`tabindex="0"`** on the **group** host. **Do not** wire **`FocusgroupNavigationController`** on **`swc-button-group`**.
-- **`swc-button` children:** **Tab** / **Shift+Tab** move among **buttons** in **DOM** order by default. **Enter** / **Return** or **Space** activate each **button** ([Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)).
+- **`swc-button` children:** **Tab** / **Shift+Tab** move among **buttons** in **DOM** order by default. **Enter** / **Return** or **Space** activate each **button** ([Keyboard testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)).
 - **Consumer docs — composites and toolbars:** When product needs **keyboard navigation inside components** ([APG](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents))—for example **one** **Tab** stop into a bar and **Arrow** keys among **Copy** / **Cut** / **Paste** as in the [Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/)—**recommend** **`FocusgroupNavigationController`** on the **toolbar** or other **composite** **host** (**`role="toolbar"`**, **`swc-action-group`**, or app-owned wrapper), **not** on **`swc-button-group`**. A typical **APG** layering is **`toolbar`** on the **outer** landmark, **`role="group"`** on each **`swc-button-group`** cluster inside it, with **roving** **`tabindex`** owned by the **toolbar** (see [Action group migration roadmap](../action-group/rendering-and-styling-migration-analysis.md), [Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md)).
-- **1st-gen gap:** **`sp-button-group`** does **not** set **`role="group"`** in [`ButtonGroup.ts`](../../../../1st-gen/packages/button-group/src/ButtonGroup.ts); 2nd-gen should **add** **`role="group"`** to match this doc and the **APG** **toolbar** example’s **inner** **group** cluster—not **roving** behavior on the **group** host itself.
+- **1st-gen gap:** **`sp-button-group`** does **not** set **`role="group"`** in [`ButtonGroup.ts`](../../../../1st-gen/packages/button-group/src/ButtonGroup.ts); gen2 should **add** **`role="group"`** to match this doc and the **APG** **toolbar** example’s **inner** **group** cluster—not **roving** behavior on the **group** host itself.
 
 ---
 
@@ -180,7 +180,7 @@ None
 - [WAI-ARIA APG: Keyboard interface — roving tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex) (for **toolbar** / **composite** hosts—not **`swc-button-group`**)
 - [Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md) (**`FocusgroupNavigationController`**)
 - [Focus management contributor guide](../../../01_contributor-guides/14_focus-management.md)
-- [`focusgroup-navigation-controller.ts` (2nd-gen core)](../../../../2nd-gen/packages/core/controllers/focusgroup-navigation-controller/src/focusgroup-navigation-controller.ts)
+- [`focusgroup-navigation-controller.ts` (gen2 core)](../../../../gen2/packages/core/controllers/focusgroup-navigation-controller/src/focusgroup-navigation-controller.ts)
 - [WAI-ARIA APG: Read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
 - [React Spectrum: ButtonGroup](https://react-spectrum.adobe.com/ButtonGroup)
@@ -191,5 +191,5 @@ None
 - [Button migration plan](../button/migration-plan.md)
 - [Action group migration roadmap](../action-group/rendering-and-styling-migration-analysis.md)
 - [Action button migration roadmap](../action-button/rendering-and-styling-migration-analysis.md)
-- [Keyboard testing (2nd-gen Storybook accessibility guide)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
+- [Keyboard testing (gen2 Storybook accessibility guide)](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
 - [`ButtonGroup.ts` (1st-gen)](../../../../1st-gen/packages/button-group/src/ButtonGroup.ts)

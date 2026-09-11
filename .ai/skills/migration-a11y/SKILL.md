@@ -1,11 +1,11 @@
 ---
 name: migration-a11y
-description: Phase 4 of 1st-gen to 2nd-gen component migration. Use to implement WCAG-aligned semantics, ARIA, keyboard support, and focus management, and document accessibility behavior.
+description: Phase 4 of 1st-gen to gen2 component migration. Use to implement WCAG-aligned semantics, ARIA, keyboard support, and focus management, and document accessibility behavior.
 ---
 
-# Migration a11y ([Phase 4](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md))
+# Migration a11y ([Phase 4](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/README.md))
 
-[Phase 4](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is to implement WCAG-aligned behavior — semantics, ARIA, keyboard support, and focus management — and verify it with assistive technology and automated tests.
+[Phase 4](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/README.md) of the 1st-gen → gen2 component migration. The goal is to implement WCAG-aligned behavior — semantics, ARIA, keyboard support, and focus management — and verify it with assistive technology and automated tests.
 
 See also: [`accessibility-compliance`](../accessibility-compliance/SKILL.md) for general WCAG 2.2 patterns, ARIA reference, and testing tools.
 
@@ -20,7 +20,7 @@ Also read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_compone
 - Phase 3 (migration-api) is complete
 - The user asks to "implement accessibility" or "add a11y" for a component
 - The user asks to add keyboard support, ARIA, or screen reader behavior
-- The user refers to "Phase 4" of the 2nd-gen component migration workstream
+- The user refers to "Phase 4" of the gen2 component migration workstream
 
 ## When NOT to use
 
@@ -37,7 +37,7 @@ Also read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_compone
 
 ## Workflow
 
-Follow **[Phase 4: Accessibility](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-4-accessibility)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+Follow **[Phase 4: Accessibility](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-4-accessibility)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
 
 **Phase 4 often requires TypeScript changes, not only documentation.** Common examples:
 

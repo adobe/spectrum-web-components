@@ -1,13 +1,13 @@
 ---
 name: code-conformance
-description: Review 2nd-gen component files against project style guides, run linters, and surface guideline gaps. Apply whenever reviewing or auditing 2nd-gen component code for style conformance.
+description: Review gen2 component files against project style guides, run linters, and surface guideline gaps. Apply whenever reviewing or auditing gen2 component code for style conformance.
 ---
 
 # Code conformance
 
 ## When to use this skill
 
-- Reviewing or auditing 2nd-gen component TypeScript, CSS, test, or Storybook story files for style-guide conformance
+- Reviewing or auditing gen2 component TypeScript, CSS, test, or Storybook story files for style-guide conformance
 - As part of the `migration-conformance` sub-task, after Phase 6 (testing) and before Phase 7 (documentation) of a component migration
 - Before a consistency pass (see `consistency-pass`), which delegates its code-conformance check to this skill
 
@@ -15,7 +15,7 @@ description: Review 2nd-gen component files against project style guides, run li
 
 - Say "check code conformance", "audit this component's style", "review this against the style guide", or "run conformance checks for [component]"
 
-Use this skill when auditing 2nd-gen component files for alignment with project style guides. It covers four domains: TypeScript, CSS, test files, and Storybook stories. Always run automated linters first, then perform the manual review for each domain.
+Use this skill when auditing gen2 component files for alignment with project style guides. It covers four domains: TypeScript, CSS, test files, and Storybook stories. Always run automated linters first, then perform the manual review for each domain.
 
 ## Linting commands
 

@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## Patch Changes
 
-**sp-accordion**: **feat(accordion):** Add 2nd-gen `<swc-accordion>` and `<swc-accordion-item>` with Spectrum 2-oriented behavior. Key changes from 1st-gen `<sp-accordion>` / `<sp-accordion-item>`:
+**sp-accordion**: **feat(accordion):** Add gen2 `<swc-accordion>` and `<swc-accordion-item>` with Spectrum 2-oriented behavior. Key changes from 1st-gen `<sp-accordion>` / `<sp-accordion-item>`:
 
 - Core `AccordionBase` / `AccordionItemBase` with public API: `allow-multiple`, `level`, `size`, `density`, `quiet`, host `disabled`, item `open` / `disabled`, slotted heading (`slot="label"`), optional `slot="actions"`, and cancellable `swc-accordion-item-toggle`
 - APG-aligned accessibility: `<h*>` wrapping a native header `<button>`, `aria-expanded` / `aria-controls`, `role="region"` + `aria-labelledby`, closed panels use `aria-hidden="true"` plus CSS collapse (not HTML `hidden`; supports `calc-size()` height animation), disabled items use `aria-disabled` on the header and `inert` on the panel (no roving `tabindex` or arrow-key header navigation)
@@ -75,7 +75,7 @@ In build systems that alias `@spectrum-web-components/*` packages (for example U
 - **Added**: New exports `ELEMENT_SIZES` and `DEFAULT_ELEMENT_SIZES` for typed size arrays
 - **Deprecated**: `ElementSizes` record is now deprecated in favor of `ELEMENT_SIZES`. The export is preserved for backward compatibility but will be removed in a future major release.
 
-**@spectrum-web-components/core (2nd-gen)**
+**@spectrum-web-components/core (gen2)**
 
 - **Changed**: Replaced `ElementSizes` record with `ELEMENT_SIZES` const array and `DEFAULT_ELEMENT_SIZES`
 - **Changed**: `VALID_SIZES` arrays are now typed as `readonly ElementSize[]` for better type safety
@@ -92,7 +92,7 @@ In build systems that alias `@spectrum-web-components/*` packages (for example U
 - **Added**: New exports `ELEMENT_SIZES` and `DEFAULT_ELEMENT_SIZES` for typed size arrays
 - **Deprecated**: `ElementSizes` record is now deprecated in favor of `ELEMENT_SIZES`. The export is preserved for backward compatibility but will be removed in a future major release.
 
-**@spectrum-web-components/core (2nd-gen)**
+**@spectrum-web-components/core (gen2)**
 
 - **Changed**: Replaced `ElementSizes` record with `ELEMENT_SIZES` const array and `DEFAULT_ELEMENT_SIZES`
 - **Changed**: `VALID_SIZES` arrays are now typed as `readonly ElementSize[]` for better type safety
@@ -154,11 +154,11 @@ In build systems that alias `@spectrum-web-components/*` packages (for example U
 
 **Breaking**: `<swc-status-light>` migration removes the deprecated `disabled` attribute, removes the `accent` variant, and updates default behavior (`variant="neutral"` when omitted). `--mod-status-light-*` hooks are removed, and `--swc-status-light-*` hooks are **not** a strict 1:1 replacement for every previous override pattern. `StatusLightSize` is exported from core for typed usage. See the status light consumer migration guide.
 
-**sp-core**: **feat(tabs):** Add 2nd-gen tabs (`swc-tabs`, `swc-tab`, `swc-tab-panel`) with Spectrum 2 styling, selection indicator, and WAI-ARIA tabs keyboard behavior. A single side-effect import `@adobe/spectrum-wc/components/tabs/swc-tabs.js` registers all three elements. See `components/tabs/migration.md` for migration from 1st-gen `sp-tabs`.
+**sp-core**: **feat(tabs):** Add gen2 tabs (`swc-tabs`, `swc-tab`, `swc-tab-panel`) with Spectrum 2 styling, selection indicator, and WAI-ARIA tabs keyboard behavior. A single side-effect import `@adobe/spectrum-wc/components/tabs/swc-tabs.js` registers all three elements. See `components/tabs/migration.md` for migration from 1st-gen `sp-tabs`.
 
-**sp-illustrated-message**: Migrated `<sp-illustrated-message>` to Spectrum 2 (2nd-gen) architecture.
+**sp-illustrated-message**: Migrated `<sp-illustrated-message>` to Spectrum 2 (gen2) architecture.
 
-- **Added**: 2nd-gen `<swc-illustrated-message>` component with Spectrum 2 design tokens and styling
+- **Added**: gen2 `<swc-illustrated-message>` component with Spectrum 2 design tokens and styling
 - **Added**: `size` attribute (`s`, `m`, `l`) for controlling component size
 - **Added**: `orientation` attribute (`vertical`, `horizontal`) for layout control
 - **Added**: `heading` slot as the preferred API for providing heading content
@@ -374,11 +374,11 @@ The fix checks if the anchor element is already in the click event's composed pa
 
 - Added internal property `describeTrigger` (`'auto' | 'none'`, default `'auto'`). When set to `'none'`, the overlay does not set `aria-describedby` on the trigger when open (handled in `HoverController` and `LongpressController`), avoiding double announcement for screen readers when the overlay content duplicates the trigger (e.g. truncated-value tooltips). Textfield’s truncated-value tooltip uses this so the tooltip is visual-only for a11y.
 
-**sp-button**: **deprecate(button):** Mark 1st-gen `sp-button` properties and exports as deprecated ahead of 2nd-gen migration.
+**sp-button**: **deprecate(button):** Mark 1st-gen `sp-button` properties and exports as deprecated ahead of gen2 migration.
 
 - `quiet` property: deprecated with `@deprecated` JSDoc and runtime `window.__swc.warn()`; use `treatment="outline"` instead
-- `treatment` property: deprecated with `@deprecated` JSDoc; use `fill-style` in 2nd-gen
-- `no-wrap` property: deprecated with `@deprecated` JSDoc; use `truncate` in 2nd-gen
+- `treatment` property: deprecated with `@deprecated` JSDoc; use `fill-style` in gen2
+- `no-wrap` property: deprecated with `@deprecated` JSDoc; use `truncate` in gen2
 - Type and const exports deprecated: `ButtonVariants`, `ButtonTreatments`, `ButtonStaticColors`, `DeprecatedButtonVariants`, `VALID_VARIANTS`, `VALID_STATIC_COLORS`
 
 **sp-switch**: **Added**: New switch component tokens and styles were mapped to bring more fidelity for Spectrum 2 foundations theme. Switch now uses system theme tokens for track and handle border colors, handle background, and themed border width; S1 and Express handle border colors are preserved. Users can hook into `--mod-switch-border-width-themed` to adjust the switch input border; `--mod-switch-border-color-*` to modify the switch input border color; `--mod-switch-handle-border-color-*` to change the handle/thumb border color.
@@ -630,7 +630,7 @@ Adds required ARIA attributes to associate the trigger button with popover conte
 
 **sp-base**: No customer-facing changes.
 
-Introduced architectural changes to support side-by-side development of 1st-gen and 2nd-gen components.
+Introduced architectural changes to support side-by-side development of 1st-gen and gen2 components.
 
 # [1.9.1](https://github.com/adobe/spectrum-web-components/compare/v1.9.0...v1.9.1) (2025-11-05)
 

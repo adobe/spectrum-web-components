@@ -19,11 +19,11 @@
 <details open>
 <summary><strong>Beneath this doc</strong></summary>
 
-- [2nd-gen Definition and Development](01_2nd-gen-definition-and-development/README.md)
-- [2nd-gen Component Migration](02_2nd-gen-component-migration/README.md)
-    - [Status](02_2nd-gen-component-migration/01_status.md)
+- [gen2 Definition and Development](01_gen2-definition-and-development/README.md)
+- [gen2 Component Migration](02_gen2-component-migration/README.md)
+    - [Status](02_gen2-component-migration/01_status.md)
     - Step By Step
-    - [Migration project planning (Epics and tickets)](02_2nd-gen-component-migration/03_migration-project-planning.md)
+    - [Migration project planning (Epics and tickets)](02_gen2-component-migration/03_migration-project-planning.md)
 - [Accessibility Improvements](03_accessibility-improvements/README.md)
 - [Component Improvements](04_component-improvements/README.md)
 - [1st-gen Spectrum 2 Enhancements](05_1st-gen-spectrum-2-enhancements/README.md)
@@ -42,9 +42,9 @@ For more on how Workstreams (this section) and [Components](../03_components/REA
 
 ## Active workstreams
 
-- **[2nd-gen Definition and Development](./01_2nd-gen-definition-and-development/README.md)** - Building the 2nd-gen project from the ground up, including rendering layer, tooling, infrastructure, tests, Storybook, and documentation.
+- **[gen2 Definition and Development](./01_gen2-definition-and-development/README.md)** - Building the gen2 project from the ground up, including rendering layer, tooling, infrastructure, tests, Storybook, and documentation.
 
-- **[2nd-gen Component Migration](./02_2nd-gen-component-migration/README.md)** - Tactical process of building 2nd-gen components, using 1st-gen as a reference implementation.
+- **[gen2 Component Migration](./02_gen2-component-migration/README.md)** - Tactical process of building gen2 components, using 1st-gen as a reference implementation.
 
 - **[Accessibility Improvements](./03_accessibility-improvements/README.md)** - Systematic work to maximize accessibility through expanded documentation, comprehensive audits, and issue remediation.
 

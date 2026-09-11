@@ -1,11 +1,11 @@
 ---
 name: migration-review
-description: Phase 8 of 1st-gen to 2nd-gen component migration. Use to run final checks, verify lint/tests/build/Storybook, update the workstream status table, and open a PR.
+description: Phase 8 of 1st-gen to gen2 component migration. Use to run final checks, verify lint/tests/build/Storybook, update the workstream status table, and open a PR.
 ---
 
-# Migration review ([Phase 8](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md))
+# Migration review ([Phase 8](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/README.md))
 
-[Phase 8](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is final checks — lint, tests, build, and Storybook — then updating the workstream status table and opening a PR.
+[Phase 8](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/README.md) of the 1st-gen → gen2 component migration. The goal is final checks — lint, tests, build, and Storybook — then updating the workstream status table and opening a PR.
 
 ## Mindset
 
@@ -17,7 +17,7 @@ Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[
 
 - All previous phases are complete
 - The user asks to "review [component]", "finalize [component]", or "open a PR for [component]"
-- The user refers to "Phase 8" of the 2nd-gen component migration workstream
+- The user refers to "Phase 8" of the gen2 component migration workstream
 
 ## When NOT to use
 
@@ -34,7 +34,7 @@ Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[
 
 ## Workflow
 
-Follow **[Phase 8: Review](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-8-review)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+Follow **[Phase 8: Review](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-8-review)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
 
 In addition to the workflow doc and [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md), explicitly verify that:
 
@@ -42,4 +42,4 @@ In addition to the workflow doc and [`migration-plan-contract`](../migration-pre
 - Breaking changes in code are documented in the plan and reflected in docs
 - Any drift from the plan is either corrected or clearly called out for review
 - Unresolved open questions were not silently decided in code without alignment
-- Any new or newly-consumed shared core resource (controller, mixin, utility, directive) is reflected in [`16_2nd-gen-shared-resources.md`](../../../CONTRIBUTOR-DOCS/01_contributor-guides/16_2nd-gen-shared-resources.md) — this is the last gate before merge, so treat it as blocking, not advisory
+- Any new or newly-consumed shared core resource (controller, mixin, utility, directive) is reflected in [`16_gen2-shared-resources.md`](../../../CONTRIBUTOR-DOCS/01_contributor-guides/16_gen2-shared-resources.md) — this is the last gate before merge, so treat it as blocking, not advisory

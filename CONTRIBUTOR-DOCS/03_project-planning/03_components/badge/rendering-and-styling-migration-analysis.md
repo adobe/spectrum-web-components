@@ -12,15 +12,15 @@
 <summary><strong>In this doc</strong></summary>
 
 - [Component specifications](#component-specifications)
-    - [CSS](#css)
-    - [SWC](#swc)
+  - [CSS](#css)
+  - [SWC](#swc)
 - [Comparison](#comparison)
-    - [DOM structure changes](#dom-structure-changes)
-    - [CSS => SWC mapping](#css--swc-mapping)
+  - [DOM structure changes](#dom-structure-changes)
+  - [CSS => SWC mapping](#css--swc-mapping)
 - [Summary of changes](#summary-of-changes)
-    - [CSS => SWC implementation gaps](#css--swc-implementation-gaps)
-    - [TODOs](#todos)
-    - [CSS Spectrum 2 changes](#css-spectrum-2-changes)
+  - [CSS => SWC implementation gaps](#css--swc-implementation-gaps)
+  - [TODOs](#todos)
+  - [CSS Spectrum 2 changes](#css-spectrum-2-changes)
 - [Resources](#resources)
 
 </details>
@@ -342,7 +342,7 @@ No significant structural changes.
 - **New color variants**: `brown`, `cinnamon`, `pink`, `silver`, `turquoise`
 - **Style variants**: `outline` and `subtle` styles
 
-**Note**: Fixed positioning exists in both SWC and Spectrum 2 CSS but is not in the design spec. Consider whether to keep this for 2nd gen.
+**Note**: Fixed positioning exists in both SWC and Spectrum 2 CSS but is not in the design spec. Consider whether to keep this for gen2.
 
 ### TODOs
 

@@ -134,7 +134,7 @@ Each doc file has the following structure, with markers clearly separating auto-
     - File and folder names determine the order of TOC entries (see **Ordering**, below).
     - In breadcrumbs and TOCs, the display name of a folder without a `README.md` file is derived from the folder's name.
 - By convention:
-    - Use lowercase kebab-case for all file and folder names: `2nd-gen-component-migration`.
+    - Use lowercase kebab-case for all file and folder names: `gen2-component-migration`.
     - Exception: `README.md` files use conventional capitalization
     - See **Ordering** for numbering conventions.
 

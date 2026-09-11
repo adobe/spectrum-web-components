@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Avatar / Avatar — 2nd-Gen Migration Plan
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Avatar / Avatar — gen2 Migration Plan
 
 <!-- Document title (editable) -->
 
-# Avatar — 2nd-Gen Migration Plan
+# Avatar — gen2 Migration Plan
 
 <!-- Generated TOC - DO NOT EDIT -->
 
@@ -13,7 +13,7 @@
 
 - [1. 1st-Gen API Surface](#1-1st-gen-api-surface)
     - [Properties](#properties)
-- [2. 2nd-Gen API Surface (implemented)](#2-2nd-gen-api-surface-implemented)
+- [2. gen2 API Surface (implemented)](#2-gen2-api-surface-implemented)
     - [Properties](#properties)
     - [Dropped from 1st-gen](#dropped-from-1st-gen)
 - [3. Dependencies](#3-dependencies)
@@ -41,7 +41,7 @@
 
 > **Input documents**
 > - [Rendering & Styling Migration Analysis](./rendering-and-styling-migration-analysis.md)
-> - [Washing Machine Workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
+> - [Washing Machine Workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 > - 1st-gen source: `1st-gen/packages/avatar/src/Avatar.ts`
 > - 1st-gen tests: `1st-gen/packages/avatar/test/`
 
@@ -67,7 +67,7 @@
 
 ---
 
-## 2. 2nd-Gen API Surface (implemented)
+## 2. gen2 API Surface (implemented)
 
 ### Properties
 
@@ -90,12 +90,12 @@
 
 ## 3. Dependencies
 
-| Dependency | 1st-Gen Source | 2nd-Gen Equivalent | Status |
+| Dependency | 1st-Gen Source | gen2 Equivalent | Status |
 |---|---|---|---|
 | `Focusable` mixin | `@spectrum-web-components/shared` | Not needed | **Closed — linked variant dropped** |
 | `LikeAnchor` mixin | `@spectrum-web-components/shared` | Not needed | **Closed — linked variant dropped** |
 | `SizedMixin` | N/A | Not used | **Closed — bespoke numeric getter/setter in `AvatarBase`** |
-| `SpectrumElement` | `@spectrum-web-components/base` | `2nd-gen/packages/core/element/spectrum-element.ts` | Done |
+| `SpectrumElement` | `@spectrum-web-components/base` | `gen2/packages/core/element/spectrum-element.ts` | Done |
 
 ---
 
@@ -123,15 +123,15 @@ All `--mod-avatar-*` customization properties removed. Consumers must migrate to
 
 ### 4.6 CSS Class Wrapper
 
-2nd-gen components use a `<div class="swc-Avatar">` wrapper. 1st-gen renders `<img>` directly into the shadow root. Consumers targeting shadow internals will need to update.
+gen2 components use a `<div class="swc-Avatar">` wrapper. 1st-gen renders `<img>` directly into the shadow root. Consumers targeting shadow internals will need to update.
 
 ---
 
 ## 5. Migration Checklist
 
 ### Phase 2 — Setup
-- [x] Create `2nd-gen/packages/core/components/avatar/` directory
-- [x] Create `2nd-gen/packages/swc/components/avatar/` directory
+- [x] Create `gen2/packages/core/components/avatar/` directory
+- [x] Create `gen2/packages/swc/components/avatar/` directory
 - [x] Stub `Avatar.base.ts`, `Avatar.types.ts`, `index.ts` in core
 - [x] Stub `Avatar.ts`, `Avatar.css`, `index.ts` in swc
 - [x] Add packages to workspace; verify build passes
@@ -159,7 +159,7 @@ All `--mod-avatar-*` customization properties removed. Consumers must migrate to
 - [x] Playwright ARIA snapshot tests
 
 ### Phase 6 — Testing
-- [x] Port `avatar.test.ts` → `2nd-gen/packages/swc/components/avatar/test/avatar.test.ts`
+- [x] Port `avatar.test.ts` → `gen2/packages/swc/components/avatar/test/avatar.test.ts`
 - [x] Add Playwright `.a11y.spec.ts` file
 
 ### Phase 7 — Documentation
@@ -190,7 +190,7 @@ All `--mod-avatar-*` customization properties removed. Consumers must migrate to
 
 ## 7. Reference
 
-- Reference implementation: `2nd-gen/packages/core/components/badge/Badge.base.ts`
+- Reference implementation: `gen2/packages/core/components/badge/Badge.base.ts`
 - CSS migration guide: `CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md`
-- 2nd-gen testing guide: `CONTRIBUTOR-DOCS/01_contributor-guides/11_2ndgen_testing.md`
-- 2nd-gen core mixins: `2nd-gen/packages/core/mixins/`
+- gen2 testing guide: `CONTRIBUTOR-DOCS/01_contributor-guides/11_2ndgen_testing.md`
+- gen2 core mixins: `gen2/packages/core/mixins/`

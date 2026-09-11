@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-gen TypeScript](README.md) / Rendering patterns
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 TypeScript](README.md) / Rendering patterns
 
 <!-- Document title (editable) -->
 
@@ -27,7 +27,7 @@
 
 <!-- Document content (editable) -->
 
-This guide covers rendering-specific patterns for 2nd-gen component templates, including helper functions, size transformations, inline SVG accessibility, classMap usage, and shadow root customization.
+This guide covers rendering-specific patterns for gen2 component templates, including helper functions, size transformations, inline SVG accessibility, classMap usage, and shadow root customization.
 
 ## Helper functions
 

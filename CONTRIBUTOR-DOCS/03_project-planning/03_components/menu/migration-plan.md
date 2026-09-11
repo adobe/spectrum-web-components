@@ -42,10 +42,10 @@
     - [Additive](#additive)
     - [Deferred to later phases](#deferred-to-later-phases)
     - [Disposition of remaining 1st-gen members](#disposition-of-remaining-1st-gen-members)
-- [2nd-gen API decisions](#2nd-gen-api-decisions)
+- [gen2 API decisions](#gen2-api-decisions)
     - [Public API](#public-api)
     - [Behavioral semantics](#behavioral-semantics)
-    - [Accessibility semantics notes (2nd-gen)](#accessibility-semantics-notes-2nd-gen)
+    - [Accessibility semantics notes (gen2)](#accessibility-semantics-notes-gen2)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
 - [Migration checklist](#migration-checklist)
     - [Preparation (this ticket)](#preparation-this-ticket)
@@ -78,7 +78,7 @@
 - **First-pass scope (Phase A) is deliberately narrow:** a bare menu-button host with plain `swc-menu-item` children — label plus one leading visual (icon *or* image, not both). No submenus, no `swc-menu-group`, no divider/separator, no selection. Everything else in this plan (submenus, groups, dividers, richer item content, selection) is real and documented, but explicitly Phase B/C — not this pass. See [Implementation phasing](#implementation-phasing).
 - `swc-menu` becomes a full [menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) host — trigger, a `PlacementController`-anchored surface, and a shadow-internal `role="menu"` surface — replacing 1st-gen `sp-menu`, which was most often just the list under an externally-composed trigger and overlay. This mirrors React Spectrum [Menu](https://react-spectrum.adobe.com/Menu) and is structurally parallel to `swc-action-menu`.
 - **`swc-menu` anchors directly via `PlacementController`, not `<swc-popover>`** (decided, [Q3](#blockers-and-open-questions)). `<swc-popover>` is a self-contained `role="dialog"` component; wrapping it would put a dialog around a menu and `aria-haspopup="dialog"` on a menu-button trigger. Build the trigger surface and `swc-menu-item`'s submenus on `PlacementController` directly — the same pattern `Tooltip.base.ts` already ships. Nothing about Popover blocks this work: `PlacementController` is already in production use. See [Architecture](#architecture-core-vs-swc-split).
-- **`swc-menu` references an externally-authored trigger via `for`/`triggerElement`; it does not render its own trigger** (revised, [Q16](#blockers-and-open-questions)). Matches `Tooltip`/`Popover` exactly, both of which resolve their trigger through the shared [`resolveTrigger` utility](../../../../2nd-gen/packages/core/utils/resolve-trigger.ts) rather than rendering one internally. The consumer authors a real, independent trigger element (for example `<swc-action-button>`) anywhere in the same tree root and references it by ID (`for`) or direct reference (`triggerElement`); `swc-menu` wires `aria-haspopup="menu"`/`aria-expanded`/click handling onto whatever `resolveTrigger` returns as the `interactiveElement`. This supersedes an earlier draft of this plan that added a `label` slot for a shadow-rendered trigger, modeled on 1st-gen `sp-action-menu` — the wrong precedent, since `sp-action-menu` has always owned its own trigger and `swc-tooltip`/`swc-popover` (the actual 2nd-gen siblings) do not.
+- **`swc-menu` references an externally-authored trigger via `for`/`triggerElement`; it does not render its own trigger** (revised, [Q16](#blockers-and-open-questions)). Matches `Tooltip`/`Popover` exactly, both of which resolve their trigger through the shared [`resolveTrigger` utility](../../../../gen2/packages/core/utils/resolve-trigger.ts) rather than rendering one internally. The consumer authors a real, independent trigger element (for example `<swc-action-button>`) anywhere in the same tree root and references it by ID (`for`) or direct reference (`triggerElement`); `swc-menu` wires `aria-haspopup="menu"`/`aria-expanded`/click handling onto whatever `resolveTrigger` returns as the `interactiveElement`. This supersedes an earlier draft of this plan that added a `label` slot for a shadow-rendered trigger, modeled on 1st-gen `sp-action-menu` — the wrong precedent, since `sp-action-menu` has always owned its own trigger and `swc-tooltip`/`swc-popover` (the actual gen2 siblings) do not.
 - **Placement is public, but narrowed to `direction`/`align`, not `Tooltip`/`Popover`'s raw `placement` string** (decided, [Q20](#blockers-and-open-questions)). Neither shipped precedent exposes `PlacementController`'s full `Placement` union either; both narrow it for their own product shape. `swc-menu` narrows to match React Spectrum S2's `MenuTrigger.direction`/`MenuTrigger.align` exactly, translated internally to one `Placement` value. `shouldFlip` carries straight over from all three precedents; `offset`/`cross-offset` are not exposed, since a menu's trigger-to-surface gap is a fixed visual-spec value with no consumer request to tune it, in either generation.
 - **Architecture break:** 1st-gen `MenuGroup extends Menu` (it inherits the entire menu/selection/roving-tabindex implementation and overrides `ownRole` to `'group'`). The a11y analysis describes `swc-menu-group` as a plain grouping/labeling primitive, not a menu-button host. Carrying the 1st-gen inheritance model forward would contradict that design and re-introduce unwanted API surface (selection, `value`, roving tabindex) on a component that should not have it.
 - **Selection is real, not hypothetical — the a11y doc is stale here.** Beyond the Menu group/Menu item property tables (`Selection: None | Single | Multi-select (checkbox) | Multi-select (switch)`, `Unavailable`, `Show thumbnail`, `Show highlight badge`), a dedicated "Changes in S2 Menu" frame in the same Figma file states design will "continue to support checkboxes in menu items" and is "evaluating optimal use cases for multi-select checkboxes in picker menus," and a live "Examples" frame shows a working multi-select checkbox menu. This directly contradicts the [a11y analysis's Migration scope](./accessibility-migration-analysis.md#migration-scope-current), which defers all selection pending a product decision that, per this evidence, appears to have already been made. See [Q2](#blockers-and-open-questions).
@@ -108,8 +108,8 @@
 | --- | --- | --- | --- | --- |
 | `label` | `string` | `''` | `label` | Accessible name for the menu surface. |
 | `ignore` | `boolean` | `false` | `ignore` | Reflects; excludes the menu from selection/roving management by an ancestor. |
-| `mobileView` | `boolean` | `false` | `mobile-view` | Enables the mobile drilldown submenu presentation. Out of scope for 2nd-gen (see [TL;DR](#tldr)). |
-| `mobileBackLabel` | `string` | `'Back'` | `mobile-back-label` | Label for the mobile drilldown back row. Out of scope for 2nd-gen. |
+| `mobileView` | `boolean` | `false` | `mobile-view` | Enables the mobile drilldown submenu presentation. Out of scope for gen2 (see [TL;DR](#tldr)). |
+| `mobileBackLabel` | `string` | `'Back'` | `mobile-back-label` | Label for the mobile drilldown back row. Out of scope for gen2. |
 | `selects` | `'inherit' \| 'single' \| 'multiple' \| undefined` | `undefined` | `selects` | Selection algorithm applied to descendant `MenuItem`s. When absent, no `value`/`selected` management occurs. |
 | `value` | `string` | `''` | `value` | Joined string of `selected` values (see `valueSeparator`). |
 | `valueSeparator` | `string` | `','` | `value-separator` | Delimiter used to join/split `value` from `selected`. |
@@ -149,7 +149,7 @@
 | `Menu.focus` (override) | `({ preventScroll }?: FocusOptions) => void` | Public. |
 | `Menu.selectOrToggleItem` | `(targetItem: MenuItem) => Promise<void>` | Public; applies `selects` semantics, fires `change` (cancelable). |
 | `Menu.getNeighboringFocusableElement` | `(menuItem?: MenuItem, before?: boolean) => MenuItem` | Public. |
-| `Menu.openMobileSubmenu` / `closeMobileSubmenu` / `resetMobileSubmenus` | various | Public; mobile drilldown only, out of scope for 2nd-gen. |
+| `Menu.openMobileSubmenu` / `closeMobileSubmenu` / `resetMobileSubmenus` | various | Public; mobile drilldown only, out of scope for gen2. |
 | `Menu.handleSubmenuOpened` / `handleSubmenuClosed` | `(event: Event) => void` | Public; re-dispatches `sp-menu-submenu-opened` / `sp-menu-submenu-closed` from the overlay target. Tied to the 1st-gen overlay-based submenu implementation. |
 
 ### Events
@@ -168,7 +168,7 @@
 | Slot | Content | Notes |
 | --- | --- | --- |
 | default (`Menu`) | Menu items to be listed | JSDoc: `@slot - menu items to be listed in the menu`. |
-| `mobile-submenu` (`Menu`) | Projected submenu content during mobile drilldown | Out of scope for 2nd-gen. |
+| `mobile-submenu` (`Menu`) | Projected submenu content during mobile drilldown | Out of scope for gen2. |
 | default (`MenuItem`) | Text content of the item | |
 | `description` (`MenuItem`) | Description placed below the label | |
 | `icon` (`MenuItem`) | Leading icon | |
@@ -181,7 +181,7 @@
 
 The associated [rendering and styling migration roadmap](./rendering-and-styling-migration-analysis.md) for Menu is a high-level roadmap document, not a full `--mod-*` mapping table (unlike some other components' analyses), so this section is necessarily a thin, surface-level pass rather than a systematic inventory. A direct scan of `menu.css` and `menu-item.css` in 1st-gen found minimal `--mod-*` usage (for example `--mod-menu-item-label-icon-color-disabled`); most sizing and color comes from shared `--spectrum-*` tokens and the divider/checkmark/chevron partials (`spectrum-checkmark.css`, `spectrum-chevron.css`, `spectrum-menu-divider.css`, `spectrum-menu-sectionHeading.css`) rather than a large component-specific modifier surface.
 
-This full modifier surface will not be carried forward to 2nd-gen.
+This full modifier surface will not be carried forward to gen2.
 
 ### Shadow DOM output (rendered HTML)
 
@@ -257,7 +257,7 @@ Representative simplified shape (not exhaustive; mobile-drilldown branches omitt
 | --- | --- | --- |
 | `id` | `Key` | Unique identifier. |
 | `textValue` | `string` | Text representation for typeahead/a11y when content isn't plain text. |
-| `isDisabled` | `boolean` | Maps to 1st-gen/2nd-gen `disabled`. |
+| `isDisabled` | `boolean` | Maps to 1st-gen/gen2 `disabled`. |
 | `onAction` | `() => void` | Per-item activation callback. |
 | `href`, `download`, `target`, `rel`, `referrerPolicy`, `ping`, `hrefLang` | various | Same link-item surface as 1st-gen's `LikeAnchor` mixin, plus `ping`/`hrefLang` which 1st-gen `MenuItem` does not have. |
 | `shouldCloseOnSelect` | `boolean` | Per-item override of the Menu-level setting. |
@@ -306,14 +306,14 @@ Two prose constraints from the React Spectrum docs, not yet in the [Menu accessi
 | --- | --- | --- |
 | `@spectrum-web-components/base` | workspace | `SpectrumElement`, `SizedMixin`, decorators. |
 | `@spectrum-web-components/shared` (`1st-gen/tools/shared`) | workspace | `LikeAnchor` mixin (href/target/download/rel/referrerpolicy on `MenuItem`), `randomID`. |
-| `@spectrum-web-components/overlay` | workspace | 1st-gen submenu presentation (`sp-overlay` inside `MenuItem`); superseded by direct `PlacementController` use in 2nd-gen, **not** `swc-popover` (see [Architecture](#architecture-core-vs-swc-split)). |
+| `@spectrum-web-components/overlay` | workspace | 1st-gen submenu presentation (`sp-overlay` inside `MenuItem`); superseded by direct `PlacementController` use in gen2, **not** `swc-popover` (see [Architecture](#architecture-core-vs-swc-split)). |
 | `@spectrum-web-components/divider` | workspace | `MenuDivider` reuses `divider.css`. |
-| `@spectrum-web-components/reactive-controllers` (roving tabindex) | workspace | `RovingTabindexController`; superseded by `FocusgroupNavigationController` ([PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129), already shipped) in 2nd-gen. |
-| **Consumers of `sp-menu` today:** `action-menu`, `picker`, `combobox`, `breadcrumbs` | workspace | These packages import or compose `sp-menu`/`MenuItem` directly. Their own future 2nd-gen migrations will need `swc-menu`/`swc-menu-item` to exist first; none has a concrete migration scheduled yet, so this isn't pulling selection into Phase A ([Q5](#blockers-and-open-questions)). |
-| `@react-spectrum/s2` `Menu`/`MenuItem`/`MenuSection`/`MenuTrigger`/`SubmenuTrigger`/`UnavailableMenuItemTrigger`/`Divider` | n/a (reference only) | Product/API alignment reference; not an implementation dependency (2nd-gen is built independently — see [Architecture](#architecture-core-vs-swc-split)). |
-| `PlacementController` (2nd-gen, **shipped**) | `2nd-gen/packages/core/controllers/placement-controller` | Positions the trigger surface and, via `swc-menu-item`, submenus. Already in production use by `Tooltip.base.ts`; not a sequencing blocker. Use directly — do not wrap `<swc-popover>` (decided, [Q3](#blockers-and-open-questions)). See [Architecture](#architecture-core-vs-swc-split). |
-| `resolveTrigger` utility (2nd-gen, **shipped**) | `2nd-gen/packages/core/utils/resolve-trigger.ts` | Resolves `for`/`triggerElement` to the trigger and its AT-facing `interactiveElement` (unwrapping into an open-shadow SWC component's inner `<button>` automatically). Already in production use by `Tooltip.base.ts` and `Popover.base.ts`; `swc-menu` references its trigger the same way rather than rendering one (decided, [Q16](#blockers-and-open-questions)). |
-| `swc-popover` (2nd-gen, shipped in [PR #6356](https://github.com/adobe/spectrum-web-components/pull/6356)) | `2nd-gen/packages/swc/components/popover` | **Not a dependency of `swc-menu`.** It's a self-contained `role="dialog"` component; menu/listbox/combobox content is explicitly excluded from its intended use per the [popover a11y doc's 2nd-gen design update](../popover/accessibility-migration-analysis.md#2nd-gen-design-update-amends-this-analysis--q4). |
+| `@spectrum-web-components/reactive-controllers` (roving tabindex) | workspace | `RovingTabindexController`; superseded by `FocusgroupNavigationController` ([PR #6129](https://github.com/adobe/spectrum-web-components/pull/6129), already shipped) in gen2. |
+| **Consumers of `sp-menu` today:** `action-menu`, `picker`, `combobox`, `breadcrumbs` | workspace | These packages import or compose `sp-menu`/`MenuItem` directly. Their own future gen2 migrations will need `swc-menu`/`swc-menu-item` to exist first; none has a concrete migration scheduled yet, so this isn't pulling selection into Phase A ([Q5](#blockers-and-open-questions)). |
+| `@react-spectrum/s2` `Menu`/`MenuItem`/`MenuSection`/`MenuTrigger`/`SubmenuTrigger`/`UnavailableMenuItemTrigger`/`Divider` | n/a (reference only) | Product/API alignment reference; not an implementation dependency (gen2 is built independently — see [Architecture](#architecture-core-vs-swc-split)). |
+| `PlacementController` (gen2, **shipped**) | `gen2/packages/core/controllers/placement-controller` | Positions the trigger surface and, via `swc-menu-item`, submenus. Already in production use by `Tooltip.base.ts`; not a sequencing blocker. Use directly — do not wrap `<swc-popover>` (decided, [Q3](#blockers-and-open-questions)). See [Architecture](#architecture-core-vs-swc-split). |
+| `resolveTrigger` utility (gen2, **shipped**) | `gen2/packages/core/utils/resolve-trigger.ts` | Resolves `for`/`triggerElement` to the trigger and its AT-facing `interactiveElement` (unwrapping into an open-shadow SWC component's inner `<button>` automatically). Already in production use by `Tooltip.base.ts` and `Popover.base.ts`; `swc-menu` references its trigger the same way rather than rendering one (decided, [Q16](#blockers-and-open-questions)). |
+| `swc-popover` (gen2, shipped in [PR #6356](https://github.com/adobe/spectrum-web-components/pull/6356)) | `gen2/packages/swc/components/popover` | **Not a dependency of `swc-menu`.** It's a self-contained `role="dialog"` component; menu/listbox/combobox content is explicitly excluded from its intended use per the [popover a11y doc's gen2 design update](../popover/accessibility-migration-analysis.md#gen2-design-update-amends-this-analysis--q4). |
 
 ---
 
@@ -332,7 +332,7 @@ Two prose constraints from the React Spectrum docs, not yet in the [Menu accessi
 
 `swc-menu` has no anchoring-related sequencing blocker. It positions its trigger surface, and (via `swc-menu-item`) its submenus, directly with the shared `PlacementController` — the same pattern `Tooltip.base.ts` already ships. `PlacementController` is already in production use, so Phase A (see [Implementation phasing](#implementation-phasing)) starts immediately, anchored-trigger and submenu parts included.
 
-`swc-popover` shipped in [PR #6356](https://github.com/adobe/spectrum-web-components/pull/6356) but is not a dependency of `swc-menu` either way: menu/listbox/combobox content builds on `PlacementController` directly rather than wrapping `<swc-popover>`, per the [popover a11y doc's 2nd-gen design update](../popover/accessibility-migration-analysis.md#2nd-gen-design-update-amends-this-analysis--q4) — `<swc-popover>` is a self-contained `role="dialog"` component, and wrapping it would put a dialog around a menu. See [Architecture](#architecture-core-vs-swc-split) for the decided model ([Q3](#blockers-and-open-questions)). The [status table](../../02_workstreams/02_2nd-gen-component-migration/01_status.md) row for Popover is blank despite Popover having shipped; fix that separately (see [Review](#review)).
+`swc-popover` shipped in [PR #6356](https://github.com/adobe/spectrum-web-components/pull/6356) but is not a dependency of `swc-menu` either way: menu/listbox/combobox content builds on `PlacementController` directly rather than wrapping `<swc-popover>`, per the [popover a11y doc's gen2 design update](../popover/accessibility-migration-analysis.md#gen2-design-update-amends-this-analysis--q4) — `<swc-popover>` is a self-contained `role="dialog"` component, and wrapping it would put a dialog around a menu. See [Architecture](#architecture-core-vs-swc-split) for the decided model ([Q3](#blockers-and-open-questions)). The [status table](../../02_workstreams/02_gen2-component-migration/01_status.md) row for Popover is blank despite Popover having shipped; fix that separately (see [Review](#review)).
 
 The `swc-action-menu` and `swc-menu-item` plans should each use `PlacementController` the same way — see [Q13](#cross-component-follow-ups-not-blocking-swc-menu) for the a11y-doc updates that follow from this.
 
@@ -356,7 +356,7 @@ Per [Q5](#blockers-and-open-questions), `picker`/`combobox`/`action-menu`'s depe
 - **`swc-menu-item`, `swc-menu-group`** — out of scope for this plan (see the epic-level note at the top of this document) but are direct composition dependencies of `swc-menu`. `swc-menu`'s own testing and Storybook work cannot be completed until at least a minimal `swc-menu-item` exists. `swc-menu-item`'s a11y doc's submenu-anchoring section needs the same `PlacementController` update ([Q13](#cross-component-follow-ups-not-blocking-swc-menu)).
 - **`swc-menu-link`** — new, not yet planned. Decided (nikkimk, [Q17](#cross-component-follow-ups-not-blocking-swc-menu)): link rows are a dedicated component, not a `swc-menu-item` mode, shipping as a fast-follow with its own accessibility migration analysis. Not a dependency `swc-menu`'s own Phase A needs; `swc-menu-item`'s Phase A surface has no `href`/link behavior to wait on.
 - **`swc-divider`** — composed directly as the menu separator, confirmed (nikkimk, [Q14](#blockers-and-open-questions)); no separate `swc-menu-separator` element.
-- **`picker`, `combobox`, `action-menu`** (as consumers) — their 2nd-gen migrations will depend on `swc-menu`/`swc-menu-item` existing. Decided ([Q5](#blockers-and-open-questions)): not pulling baseline single-select into Phase A for their sake, since none has a scheduled migration yet.
+- **`picker`, `combobox`, `action-menu`** (as consumers) — their gen2 migrations will depend on `swc-menu`/`swc-menu-item` existing. Decided ([Q5](#blockers-and-open-questions)): not pulling baseline single-select into Phase A for their sake, since none has a scheduled migration yet.
 
 ### Phase A minimal `swc-menu-item` surface
 
@@ -395,9 +395,9 @@ This pass ships a simple menu: trigger, `role="menu"` list, plain items (label +
 
 ### Must ship
 
-| # | What changes | 1st-gen → 2nd-gen |
+| # | What changes | 1st-gen → gen2 |
 | --- | --- | --- |
-| **B2** | Link items | Proxy `change` on `href` items removed; real `<a>` is the only activation path ([SWC-923](https://jira.corp.adobe.com/browse/SWC-923)). 2nd-gen moves link rows out of `swc-menu-item` entirely, into a dedicated `swc-menu-link` component (decided, [Q17](#cross-component-follow-ups-not-blocking-swc-menu)) — not this plan's or `swc-menu-item`'s implementation, and not yet scheduled. Still a real breaking change worth recording here for the consumer migration guide, even though the 2nd-gen replacement is a fast-follow rather than something shipping alongside `swc-menu` Phase A. |
+| **B2** | Link items | Proxy `change` on `href` items removed; real `<a>` is the only activation path ([SWC-923](https://jira.corp.adobe.com/browse/SWC-923)). gen2 moves link rows out of `swc-menu-item` entirely, into a dedicated `swc-menu-link` component (decided, [Q17](#cross-component-follow-ups-not-blocking-swc-menu)) — not this plan's or `swc-menu-item`'s implementation, and not yet scheduled. Still a real breaking change worth recording here for the consumer migration guide, even though the gen2 replacement is a fast-follow rather than something shipping alongside `swc-menu` Phase A. |
 | **B4** | Keyboard controller | `RovingTabindexController` → `FocusgroupNavigationController` (already shipped, used by `Tabs`) |
 | **B5** | CSS custom properties | `--mod-*` removed; `--swc-*` only where needed |
 | **B6** | `role="menu"` | Moves from the host element into shadow DOM |
@@ -411,7 +411,7 @@ This pass ships a simple menu: trigger, `role="menu"` list, plain items (label +
 | # | What's added | Note |
 | --- | --- | --- |
 | **A1** | `xl` size | Figma adds `xl` to 1st-gen's `s`/`m`/`l`; default confirmed `m`, matching React Spectrum S2's `Menu.size` default |
-| **A4** | `visual` slot: icon **or** `swc-thumbnail`, not both | Recommended naming (5t3ph review) over a bare "icon or image" split, so the slot can hold either an icon or a future `swc-thumbnail` without a rename later. `swc-thumbnail` has not started 2nd-gen implementation yet (Analyze phase only) — Phase A ships the icon case; the slot accepts thumbnail content once that component exists, no `swc-menu-item` API change needed. |
+| **A4** | `visual` slot: icon **or** `swc-thumbnail`, not both | Recommended naming (5t3ph review) over a bare "icon or image" split, so the slot can hold either an icon or a future `swc-thumbnail` without a rename later. `swc-thumbnail` has not started gen2 implementation yet (Analyze phase only) — Phase A ships the icon case; the slot accepts thumbnail content once that component exists, no `swc-menu-item` API change needed. |
 
 ### Deferred to later phases
 
@@ -447,7 +447,7 @@ This pass ships a simple menu: trigger, `role="menu"` list, plain items (label +
 
 ---
 
-## 2nd-gen API decisions
+## gen2 API decisions
 
 These are derived from the 1st-gen implementation, the accessibility migration analysis, the Figma source reviewed for this plan, and the React Spectrum S2 implementation. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
 
@@ -457,12 +457,12 @@ These are derived from the 1st-gen implementation, the accessibility migration a
 
 ### Public API
 
-#### Properties / attributes (2nd-gen)
+#### Properties / attributes (gen2)
 
 | Property | Type | Default | Attribute | Notes |
 | --- | --- | --- | --- | --- |
 | `label` | — | — | — | **Decided: dropped** ([Q16](#blockers-and-open-questions), revised). 1st-gen's `label` was the accessible name for the menu surface itself; with the trigger externally referenced (`for`/`triggerElement`, below) rather than shadow-rendered, the accessible name comes from the trigger's own content or `aria-label`, matching how `Tooltip`/`Popover` don't expose a separate label property for this either. No fallback-text chain to own. |
-| `for` | `string \| undefined` | `undefined` | `for` | **Decided** ([Q16](#blockers-and-open-questions)) — ID of the trigger element in the same tree root, resolved via the shared [`resolveTrigger` utility](../../../../2nd-gen/packages/core/utils/resolve-trigger.ts). Matches `Tooltip.base.ts`/`Popover.base.ts` exactly. |
+| `for` | `string \| undefined` | `undefined` | `for` | **Decided** ([Q16](#blockers-and-open-questions)) — ID of the trigger element in the same tree root, resolved via the shared [`resolveTrigger` utility](../../../../gen2/packages/core/utils/resolve-trigger.ts). Matches `Tooltip.base.ts`/`Popover.base.ts` exactly. |
 | `triggerElement` | `HTMLElement \| null` | `null` | — (`attribute: false`) | **Decided** ([Q16](#blockers-and-open-questions)) — direct trigger reference; overrides `for` when set. Use for cross-shadow-root triggers or programmatic wiring, matching `Tooltip`/`Popover`. |
 | `direction` | `'bottom' \| 'top' \| 'left' \| 'right' \| 'start' \| 'end'` | `'bottom'` | `direction` | **Decided** ([Q20](#blockers-and-open-questions)) — matches React Spectrum S2's `MenuTrigger.direction` exactly, translated internally to a `PlacementController` `Placement` value in `Menu.base.ts`. |
 | `align` | `'start' \| 'end'` | `'start'` | `align` | **Decided** ([Q20](#blockers-and-open-questions)) — matches React Spectrum S2's `MenuTrigger.align` exactly; combines with `direction` into the internal `Placement` value. |
@@ -477,7 +477,7 @@ These are derived from the 1st-gen implementation, the accessibility migration a
 
 Full property list is intentionally left partial until Phase C (the selection surface, [Q2](#blockers-and-open-questions)) is scheduled and designed — filling in a complete table now would present an undesigned surface as settled.
 
-#### Visual matrix (2nd-gen)
+#### Visual matrix (gen2)
 
 | Visual family | S | M | L | XL |
 | --- | --- | --- | --- | --- |
@@ -492,15 +492,15 @@ Additional Figma-confirmed presentation modes for `swc-menu-item` (documented he
 
 Even for Phase A's basic-only content, slot names and the internal grid layout for this row should be chosen with the fuller set above in mind rather than locked in isolation (5t3ph review) — coordinate with her prototype during the Styling phase before finalizing `swc-menu-item`'s markup.
 
-#### Slots (2nd-gen)
+#### Slots (gen2)
 
 | Slot | Content | Notes |
 | --- | --- | --- |
-| default | End state: `swc-menu-item`, `swc-menu-group`, and `swc-divider` (as a separator, [Q14](#blockers-and-open-questions)). **This pass (Phase A): `swc-menu-item` only** — no group, no divider, see [Implementation phasing](#implementation-phasing). | **Confirmed** per a11y analysis for item/group; verify enforcement in 2nd-gen source once implemented. |
+| default | End state: `swc-menu-item`, `swc-menu-group`, and `swc-divider` (as a separator, [Q14](#blockers-and-open-questions)). **This pass (Phase A): `swc-menu-item` only** — no group, no divider, see [Implementation phasing](#implementation-phasing). | **Confirmed** per a11y analysis for item/group; verify enforcement in gen2 source once implemented. |
 
 No trigger-content slot: the trigger is an externally-referenced element (`for`/`triggerElement`, [Q16](#blockers-and-open-questions)), not shadow-rendered by `swc-menu`, so there is no slot for it to fill.
 
-#### Events (2nd-gen)
+#### Events (gen2)
 
 Phase A (no selection):
 
@@ -515,7 +515,7 @@ Phase C (selection) will add a `change`-equivalent event whenever it's scheduled
 
 Submenu open/close events (on `swc-menu-item`) are owned jointly with the `swc-menu-item` plan; this plan only asserts that 1st-gen's `sp-menu-submenu-opened`/`sp-menu-submenu-closed` are superseded by the new anchoring model ([B3](#deferred-to-later-phases)).
 
-#### CSS custom properties (2nd-gen)
+#### CSS custom properties (gen2)
 
 No `--mod-*` properties will be exposed. New `--swc-*` component-level properties may be introduced where needed — these are additive and not breaking. See [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure) for what to expose and how.
 
@@ -526,7 +526,7 @@ Initial expectation for Menu is a small reviewed set; the thin 1st-gen `--mod-*`
 ### Behavioral semantics
 
 - **Open/close and focus return** follow the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/): opening moves focus into the menu; closing returns focus to the trigger (or the parent menu item, for submenus). **Confirmed** per a11y analysis.
-- **In-menu movement (Phase A, concrete config).** `swc-menu` constructs `FocusgroupNavigationController` with `direction: 'vertical'` — this is the controller's own documented "Vertical menu" use case, not a novel application. Specific option decisions, grounded in the [controller's own docs](../../../../2nd-gen/packages/core/controllers/focusgroup-navigation-controller/focusgroup-navigation-controller.mdx):
+- **In-menu movement (Phase A, concrete config).** `swc-menu` constructs `FocusgroupNavigationController` with `direction: 'vertical'` — this is the controller's own documented "Vertical menu" use case, not a novel application. Specific option decisions, grounded in the [controller's own docs](../../../../gen2/packages/core/controllers/focusgroup-navigation-controller/focusgroup-navigation-controller.mdx):
   - **`wrap: true`** (decided — controller default is `false`). Matches menu-button convention (<kbd>ArrowDown</kbd> from the last item goes to the first, and vice versa); the controller default is toolbar-oriented, not menu-oriented, so this needs an explicit override.
   - **`skipDisabled: false`** (the controller's own default — no override needed). This is the concrete mechanism behind [B7](#must-ship): disabled items stay in the roving set and reachable by arrow keys, matching the controller's stated best practice to "use `aria-disabled=\"true\"` instead of native `disabled` when items should remain focusable for discoverability." B7 is not a preference layered on top of the controller — it's what happens if `swc-menu` does nothing.
   - **`memory: true`** (controller default). Governs <kbd>Tab</kbd>-out-and-back-in re-entry point; likely a non-issue for a menu that closes on blur rather than staying open while focus leaves it, but worth confirming once Phase A's open/close model is implemented rather than assumed.
@@ -540,7 +540,7 @@ Initial expectation for Menu is a small reviewed set; the thin 1st-gen `--mod-*`
 - **Mixed menus — decided: `selectionMode` (or equivalent naming) exists at both levels.** `swc-menu` owns a selection mode for its own top-level, ungrouped items plus the aggregate `value`/`selectedItems` across the whole menu (all groups included); `swc-menu-group` independently owns its own selection mode for the items inside it. This matches React Spectrum's `Menu.selectionMode` + `MenuSection.selectionMode` split exactly, and it structurally enables mixed menus — a plain command section, a single-select section, and a multi-select section can coexist because each group sets its own mode independently of the menu's default. 1st-gen got this for free via `MenuGroup extends Menu` (each group inherited the full `selects` API); that inheritance is gone by design ([Q11](#blockers-and-open-questions), [B1](#deferred-to-later-phases)), so Phase B adds a purpose-built, smaller selection-mode property to `swc-menu-group` rather than reintroducing inheritance — this is a Phase B addition to the `swc-menu-group` plan, not something this plan implements. **Still open, and separate from the mechanism above:** the Figma "Changes in S2 Menu" note quoted in [Q2](#blockers-and-open-questions) recommends *against* mixing checkbox sections with other menu types "for a better user experience." That's UX guidance, not necessarily a hard API restriction — the API permits mixing either way once both levels exist; whether authors *should* is a Design question to resolve as part of [Q2](#blockers-and-open-questions). Not a Phase A concern; Phase A ships no selection at all.
 - **Mobile tray/drilldown** is out of scope for this migration. **Confirmed** exclusion; timeline for a future implementation is an **open question** ([Q8](#blockers-and-open-questions)).
 
-### Accessibility semantics notes (2nd-gen)
+### Accessibility semantics notes (gen2)
 
 See the [Menu accessibility migration analysis](./accessibility-migration-analysis.md) in full; it is the authoritative source for this section and is not restated here beyond the summary checklist items already reflected in [Migration checklist — Accessibility](#accessibility) below.
 
@@ -548,16 +548,16 @@ See the [Menu accessibility migration analysis](./accessibility-migration-analys
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
+> The 1st-gen component is a **reference only** — gen2 is built independently. Neither generation imports from the other.
 
-> **`swc-menu` positions its trigger surface and `swc-menu-item`'s submenus directly with `PlacementController` — it does not wrap `<swc-popover>`.** Menu/listbox/combobox content builds on the shared controller, not the popover host, per the [popover a11y doc's 2nd-gen design update](../popover/accessibility-migration-analysis.md#2nd-gen-design-update-amends-this-analysis--q4). Wrapping `<swc-popover>` would be actively broken here: it renders `role="dialog"` ([`Popover.ts:117`](../../../../2nd-gen/packages/swc/components/popover/Popover.ts)), sets `aria-haspopup="dialog"` on the trigger unconditionally ([`Popover.base.ts:457`](../../../../2nd-gen/packages/core/components/popover/Popover.base.ts)), and seats focus on itself on open ([`Popover.base.ts:722`](../../../../2nd-gen/packages/core/components/popover/Popover.base.ts)) — a dialog wrapping a menu, `aria-haspopup="dialog"` on a button that needs `aria-haspopup="menu"`, and focus stolen from the first menu item. `Tooltip.base.ts` is the reference implementation: `new PlacementController(this)` directly, no `<swc-popover>` wrapper ([`Tooltip.base.ts:191`](../../../../2nd-gen/packages/core/components/tooltip/Tooltip.base.ts)). Follow that pattern for both the trigger surface and, via `swc-menu-item`, submenus. `PlacementController` already ships, so this is not a sequencing blocker. Decided, [Q3](#blockers-and-open-questions); see [Q13](#cross-component-follow-ups-not-blocking-swc-menu) for the matching a11y-doc updates still needed on `swc-action-menu`/`swc-menu-item`.
+> **`swc-menu` positions its trigger surface and `swc-menu-item`'s submenus directly with `PlacementController` — it does not wrap `<swc-popover>`.** Menu/listbox/combobox content builds on the shared controller, not the popover host, per the [popover a11y doc's gen2 design update](../popover/accessibility-migration-analysis.md#gen2-design-update-amends-this-analysis--q4). Wrapping `<swc-popover>` would be actively broken here: it renders `role="dialog"` ([`Popover.ts:117`](../../../../gen2/packages/swc/components/popover/Popover.ts)), sets `aria-haspopup="dialog"` on the trigger unconditionally ([`Popover.base.ts:457`](../../../../gen2/packages/core/components/popover/Popover.base.ts)), and seats focus on itself on open ([`Popover.base.ts:722`](../../../../gen2/packages/core/components/popover/Popover.base.ts)) — a dialog wrapping a menu, `aria-haspopup="dialog"` on a button that needs `aria-haspopup="menu"`, and focus stolen from the first menu item. `Tooltip.base.ts` is the reference implementation: `new PlacementController(this)` directly, no `<swc-popover>` wrapper ([`Tooltip.base.ts:191`](../../../../gen2/packages/core/components/tooltip/Tooltip.base.ts)). Follow that pattern for both the trigger surface and, via `swc-menu-item`, submenus. `PlacementController` already ships, so this is not a sequencing blocker. Decided, [Q3](#blockers-and-open-questions); see [Q13](#cross-component-follow-ups-not-blocking-swc-menu) for the matching a11y-doc updates still needed on `swc-action-menu`/`swc-menu-item`.
 
-Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
+Follow the [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
 
 | Layer | Path | Contains |
 | --- | --- | --- |
-| **Core** | `2nd-gen/packages/core/components/menu/` | `Menu.base.ts`, `Menu.types.ts`, open/close state, `for`/`triggerElement` resolution via [`resolveTrigger`](../../../../2nd-gen/packages/core/utils/resolve-trigger.ts), ARIA wiring onto the resolved `interactiveElement`, `PlacementController` wiring for the trigger surface, and other reusable semantic rules. No rendering. |
-| **SWC** | `2nd-gen/packages/swc/components/menu/` | `Menu.ts`, `menu.css`, element registration, stories, tests, and the specific S2 rendering/styling for `swc-menu`. |
+| **Core** | `gen2/packages/core/components/menu/` | `Menu.base.ts`, `Menu.types.ts`, open/close state, `for`/`triggerElement` resolution via [`resolveTrigger`](../../../../gen2/packages/core/utils/resolve-trigger.ts), ARIA wiring onto the resolved `interactiveElement`, `PlacementController` wiring for the trigger surface, and other reusable semantic rules. No rendering. |
+| **SWC** | `gen2/packages/swc/components/menu/` | `Menu.ts`, `menu.css`, element registration, stories, tests, and the specific S2 rendering/styling for `swc-menu`. |
 
 Planned rendering shape:
 
@@ -575,13 +575,13 @@ Planned rendering shape:
 - [x] 1st-gen API surface documented
 - [x] Dependencies identified
 - [x] Breaking changes documented
-- [x] 2nd-gen API decisions drafted
+- [x] gen2 API decisions drafted
 - [ ] Plan reviewed by at least one other engineer
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/components/menu/`
-- [ ] Create `2nd-gen/packages/swc/components/menu/`
+- [ ] Create `gen2/packages/core/components/menu/`
+- [ ] Create `gen2/packages/swc/components/menu/`
 - [ ] Wire exports in both `package.json` files
 - [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
 - [ ] Wire up `PlacementController` for the trigger surface, following the `Tooltip.base.ts` precedent — already unblocked, no dependency on `swc-popover` (see [Architecture](#architecture-core-vs-swc-split))
@@ -606,7 +606,7 @@ Planned rendering shape:
 
 #### Alignment checks
 
-- [ ] Verify final shadow-tree structure (trigger + `role="menu"` co-location) against 2nd-gen source once implemented, per the a11y analysis's repeated "verify in 2nd-gen source" callouts
+- [ ] Verify final shadow-tree structure (trigger + `role="menu"` co-location) against gen2 source once implemented, per the a11y analysis's repeated "verify in gen2 source" callouts
 - [ ] *(Not this pass — Phase B/C items)* Selection (single/multi-checkbox/multi-switch), `Unavailable`, and highlight badge stay deferred per the phasing above ([Q2](#blockers-and-open-questions) — decided, not blocking); thumbnail is in scope for this pass (Phase A, [A4](#additive))
 
 ### Styling
@@ -677,11 +677,11 @@ Planned rendering shape:
 
 ### Review
 
-- [ ] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
+- [ ] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
 - [ ] Status table in workstream doc updated
 - [ ] PR created with description referencing Epic [SWC-1980](https://jira.corp.adobe.com/browse/SWC-1980)
 - [ ] Peer engineer sign-off
-- [ ] File (or confirm someone has filed) a fix for the stale Popover row in the [2nd-gen migration status table](../../02_workstreams/02_2nd-gen-component-migration/01_status.md) — discovered during this plan's drafting, not otherwise related to Menu
+- [ ] File (or confirm someone has filed) a fix for the stale Popover row in the [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md) — discovered during this plan's drafting, not otherwise related to Menu
 
 ---
 
@@ -696,12 +696,12 @@ Grouped by whether the question is about `swc-menu` itself or about a sibling co
 | # | Item | Resolution |
 | --- | --- | --- |
 | Q1 | Whether the reviewed Figma file (`Mngz9H7WZLbrCvGQf3GnsY`, titled "🚫 S2 / Web (Deprecated)", Beta v1.27.1) is the right source, given it matches the ticket's `S2/Web (Desktop scale)` link by file key and cover description. | Confirmed with Design: this is the only file, no newer replacement exists. |
-| Q3 | Whether `swc-menu`'s trigger surface and `swc-menu-item`'s submenus anchor via `PlacementController` directly or wrap `<swc-popover>`. | **Decided: `PlacementController` directly.** `Tooltip.base.ts` already ships this exact pattern, and the popover a11y doc's own [2nd-gen design update](../popover/accessibility-migration-analysis.md#2nd-gen-design-update-amends-this-analysis--q4) rules out wrapping (`<swc-popover>` is a `role="dialog"` component; menu/listbox/combobox are explicitly PlacementController consumers, not host consumers). No credible alternative — settled, not reopened for review. |
+| Q3 | Whether `swc-menu`'s trigger surface and `swc-menu-item`'s submenus anchor via `PlacementController` directly or wrap `<swc-popover>`. | **Decided: `PlacementController` directly.** `Tooltip.base.ts` already ships this exact pattern, and the popover a11y doc's own [gen2 design update](../popover/accessibility-migration-analysis.md#gen2-design-update-amends-this-analysis--q4) rules out wrapping (`<swc-popover>` is a `role="dialog"` component; menu/listbox/combobox are explicitly PlacementController consumers, not host consumers). No credible alternative — settled, not reopened for review. |
 | Q5 | Whether `picker`/`combobox`/`action-menu`'s dependency on `sp-menu`'s selection engine means `swc-menu` needs baseline single-select in Phase A. | **Decided: Additive, stays in Phase B.** No concrete migration for any of those three consumers is scheduled yet, so there's no live deadline forcing selection earlier. Shipping Phase A without it keeps the first PR reviewable against the menu-button pattern alone; if a real deadline emerges later, pull a minimal single-select into scope then — cheaper than carrying unused selection code through review now on a hypothetical. |
 | Q6 | Whether `swc-menu` should own trigger-invocation semantics (`press`/`longPress`/`contextMenu`) via a `trigger` property. | **Decided: no `trigger` property in Phase A.** 1st-gen never had one — the consumer composes the trigger externally and wires its own click/keydown handling. Adding speculative API surface with no current consumer request works against a smaller, simpler API; the property can be added additively later without a breaking change if a concrete need shows up (e.g. `contextMenu` support). |
-| Q11 | Whether `swc-menu-group` breaks from 1st-gen's `MenuGroup extends Menu` inheritance. | **Decided: yes, ship the break** ([B1](#deferred-to-later-phases)). Keeping the inheritance ties `swc-menu-group`'s public surface to everything `Menu` grows into over time (selection, printable-character nav, whatever comes next) — unbounded scope creep for a component whose entire job is grouping and labeling. 2nd-gen is greenfield with no consumers yet, so breaking it now is free; breaking it later would be a real migration. |
+| Q11 | Whether `swc-menu-group` breaks from 1st-gen's `MenuGroup extends Menu` inheritance. | **Decided: yes, ship the break** ([B1](#deferred-to-later-phases)). Keeping the inheritance ties `swc-menu-group`'s public surface to everything `Menu` grows into over time (selection, printable-character nav, whatever comes next) — unbounded scope creep for a component whose entire job is grouping and labeling. gen2 is greenfield with no consumers yet, so breaking it now is free; breaking it later would be a real migration. |
 | Q12 | Whether `swc-menu` and `swc-action-menu` should share a base class/controller. | **Decided: no shared base for now.** `swc-action-menu` doesn't exist yet — designing a shared abstraction against one real implementation and one hypothetical one risks extracting the wrong thing. Ship `swc-menu`'s own base class; once `swc-action-menu` is built, diff the two and extract only what's proven identical (most likely: open/close event contract, `PlacementController` setup). Revisit then, not now. |
-| Q14 | Whether `swc-menu-separator` should exist as its own custom element or `swc-menu` should compose `swc-divider` directly. | **Decided and confirmed by nikkimk: reuse `swc-divider`, no `swc-menu-separator` element.** "Using `swc-divider` is acceptable." 1st-gen's `MenuDivider` already does nothing but wrap `divider.css` and set `role="separator"` — 2nd-gen's `Divider.base.ts` already sets that same role. A whole second custom element with zero behavioral delta is pure duplication (two Storybook entries, two test suites, two docs pages, for the same output). Any menu-specific spacing goes in `swc-menu`'s own stylesheet targeting a slotted `swc-divider`, not a new element. This removes `swc-menu-separator` as a deliverable and conflicts with the existing [menu-separator accessibility migration analysis](../menu-separator/accessibility-migration-analysis.md), which documents `swc-menu-separator` as a real, intended component; that doc needs updating to match. Follow-up: nikkimk recommends the divider a11y doc's accessibility section note that `swc-divider` is valid inside menus but not inside pickers or comboboxes ([Q21](#cross-component-follow-ups-not-blocking-swc-menu)). |
+| Q14 | Whether `swc-menu-separator` should exist as its own custom element or `swc-menu` should compose `swc-divider` directly. | **Decided and confirmed by nikkimk: reuse `swc-divider`, no `swc-menu-separator` element.** "Using `swc-divider` is acceptable." 1st-gen's `MenuDivider` already does nothing but wrap `divider.css` and set `role="separator"` — gen2's `Divider.base.ts` already sets that same role. A whole second custom element with zero behavioral delta is pure duplication (two Storybook entries, two test suites, two docs pages, for the same output). Any menu-specific spacing goes in `swc-menu`'s own stylesheet targeting a slotted `swc-divider`, not a new element. This removes `swc-menu-separator` as a deliverable and conflicts with the existing [menu-separator accessibility migration analysis](../menu-separator/accessibility-migration-analysis.md), which documents `swc-menu-separator` as a real, intended component; that doc needs updating to match. Follow-up: nikkimk recommends the divider a11y doc's accessibility section note that `swc-divider` is valid inside menus but not inside pickers or comboboxes ([Q21](#cross-component-follow-ups-not-blocking-swc-menu)). |
 | Q2 | Whether the Figma-vs-a11y-doc conflict on selection scope (Design's "Changes in S2 Menu"/"Examples" frames show real intent; the a11y doc still defers all selection) needs resolving before this plan is complete. | **Decided: not blocking.** Selection ships as Additive (Phase C) regardless of how that conflict resolves — the classification doesn't change whether it's "real" or "hypothetical." Correcting the a11y doc's "Migration scope" section is still worth doing, and the should-authors-mix-sections UX question (raised by Ruben) is still real, but neither gates this plan; pick both up whenever Phase C is actually scheduled. |
 | Q8 | Whether 1st-gen's mobile drilldown/tray implementation is dropped with a committed future-epic replacement, or dropped with no replacement plan. | **Decided: out of scope.** No replacement is being committed to as part of this epic. [A8](#deferred-to-later-phases) stands as the record of what's dropped and why; revisit only if a future product need brings mobile tray back into scope somewhere. |
 | Q16 | Whether `swc-menu` renders its own trigger (with a visible-content slot) or references an externally-authored one. | **Decided: reference the trigger externally via `for`/`triggerElement`**, matching `Tooltip`/`Popover` exactly — no `label` slot, no shadow-rendered trigger, no accessible-name fallback chain to own. Full back-and-forth in the [Q16 decision log entry](#q16-trigger-shadow-rendered-vs-externally-referenced). |
@@ -743,17 +743,17 @@ Ruben's original concern: carrying the `label` property forward unchanged as "ac
 
 5t3ph pushed back on two fronts:
 
-1. The accessible-name fallback chain that came with it is complication this plan doesn't need to own, now that `accessible-label` is the standard escape hatch elsewhere in 2nd-gen.
+1. The accessible-name fallback chain that came with it is complication this plan doesn't need to own, now that `accessible-label` is the standard escape hatch elsewhere in gen2.
 2. More fundamentally: does `swc-menu` need to render its own trigger at all, or can it reference one externally, "borrow Tooltip's `for` pattern"?
 
-**Final decision: reference the trigger externally via `for`/`triggerElement`, matching `Tooltip`/`Popover` exactly.** Checked both shipped 2nd-gen trigger-anchored components: `Tooltip.base.ts` and `Popover.base.ts` both resolve their trigger through the shared [`resolveTrigger` utility](../../../../2nd-gen/packages/core/utils/resolve-trigger.ts) (`for` ID reference or direct `triggerElement`) rather than rendering one internally — `resolveTrigger` even unwraps into an open-shadow SWC component's inner `<button>` automatically, so the consumer's trigger keeps its full existing API (icon-only, pending, disabled, whatever `<swc-action-button>` already supports) for free. `sp-action-menu` was the wrong precedent: it's a 1st-gen component that has always owned its own trigger, unlike `swc-tooltip`/`swc-popover` (the actual 2nd-gen siblings) or 1st-gen `sp-menu` itself, which this plan's own TL;DR already notes "was most often just the list under an externally-composed trigger." This removes the `label` slot, the `label` property's fallback-text role (5t3ph's first objection dissolves too: there's no separate accessible-name chain to own since the name comes from whichever trigger the consumer authored), and the deferred `icon`/`label-only` slot split that would have applied to it (there's no trigger content slot to split anymore).
+**Final decision: reference the trigger externally via `for`/`triggerElement`, matching `Tooltip`/`Popover` exactly.** Checked both shipped gen2 trigger-anchored components: `Tooltip.base.ts` and `Popover.base.ts` both resolve their trigger through the shared [`resolveTrigger` utility](../../../../gen2/packages/core/utils/resolve-trigger.ts) (`for` ID reference or direct `triggerElement`) rather than rendering one internally — `resolveTrigger` even unwraps into an open-shadow SWC component's inner `<button>` automatically, so the consumer's trigger keeps its full existing API (icon-only, pending, disabled, whatever `<swc-action-button>` already supports) for free. `sp-action-menu` was the wrong precedent: it's a 1st-gen component that has always owned its own trigger, unlike `swc-tooltip`/`swc-popover` (the actual gen2 siblings) or 1st-gen `sp-menu` itself, which this plan's own TL;DR already notes "was most often just the list under an externally-composed trigger." This removes the `label` slot, the `label` property's fallback-text role (5t3ph's first objection dissolves too: there's no separate accessible-name chain to own since the name comes from whichever trigger the consumer authored), and the deferred `icon`/`label-only` slot split that would have applied to it (there's no trigger content slot to split anymore).
 
 ---
 
 ## References
 
-- [Washing machine workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
-- [2nd-gen migration status table](../../02_workstreams/02_2nd-gen-component-migration/01_status.md) — the Popover row reads blank despite Popover having shipped ([PR #6356](https://github.com/adobe/spectrum-web-components/pull/6356)); this appears to be a stale-table bug independent of Menu (see [Review](#review))
+- [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
+- [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md) — the Popover row reads blank despite Popover having shipped ([PR #6356](https://github.com/adobe/spectrum-web-components/pull/6356)); this appears to be a stale-table bug independent of Menu (see [Review](#review))
 - [Menu accessibility migration analysis](./accessibility-migration-analysis.md)
 - [Menu migration roadmap (rendering and styling)](./rendering-and-styling-migration-analysis.md)
 - [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md)
@@ -762,15 +762,15 @@ Ruben's original concern: carrying the `label` property forward unchanged as "ac
 - [Menu item accessibility migration analysis](../menu-item/accessibility-migration-analysis.md)
 - [Menu separator accessibility migration analysis](../menu-separator/accessibility-migration-analysis.md)
 - [Divider accessibility migration analysis](../divider/accessibility-migration-analysis.md) — needs a note that `swc-divider` is valid inside menus but not pickers/comboboxes, per nikkimk ([Q21](#cross-component-follow-ups-not-blocking-swc-menu))
-- [Popover accessibility migration analysis — 2nd-gen design update (Q4)](../popover/accessibility-migration-analysis.md#2nd-gen-design-update-amends-this-analysis--q4) — the amendment establishing that menu/listbox/combobox build on `PlacementController` directly and do not wrap `<swc-popover>`; the section this plan's corrected architecture is built on
+- [Popover accessibility migration analysis — gen2 design update (Q4)](../popover/accessibility-migration-analysis.md#gen2-design-update-amends-this-analysis--q4) — the amendment establishing that menu/listbox/combobox build on `PlacementController` directly and do not wrap `<swc-popover>`; the section this plan's corrected architecture is built on
 - [Popover rendering and styling migration roadmap](../popover/rendering-and-styling-migration-analysis.md)
 - [Popover migration plan](../popover/migration-plan.md) — confirms Popover shipped; not a dependency of `swc-menu` regardless
-- [Popover 2nd-gen source: `Popover.ts`](../../../../2nd-gen/packages/swc/components/popover/Popover.ts), [`Popover.base.ts`](../../../../2nd-gen/packages/core/components/popover/Popover.base.ts) — `role="dialog"`, `aria-haspopup="dialog"`, and focus-seating behavior that makes wrapping this component incompatible with the menu-button pattern
-- [Tooltip 2nd-gen source: `Tooltip.base.ts`](../../../../2nd-gen/packages/core/components/tooltip/Tooltip.base.ts) — precedent for using `PlacementController` directly without wrapping `<swc-popover>`, and for referencing an externally-authored trigger via `for`/`triggerElement` rather than rendering one
-- [`resolveTrigger` utility source](../../../../2nd-gen/packages/core/utils/resolve-trigger.ts) — shared `for`/`triggerElement` resolution and `interactiveElement` (AT-facing element) discovery used by both `Tooltip.base.ts` and `Popover.base.ts`; the model `swc-menu` adopts for its own trigger ([Q16](#blockers-and-open-questions))
-- [`Tooltip.types.ts`](../../../../2nd-gen/packages/core/components/tooltip/Tooltip.types.ts) and [`Popover.types.ts`](../../../../2nd-gen/packages/core/components/popover/Popover.types.ts) — both narrow `PlacementController`'s full `Placement` union to a smaller public subset rather than exposing it raw; the precedent `swc-menu`'s `direction`/`align` properties follow ([Q20](#blockers-and-open-questions))
-- [`PlacementController` source](../../../../2nd-gen/packages/core/controllers/placement-controller/src/placement-controller.ts) and [docs](../../../../2nd-gen/packages/core/controllers/placement-controller/placement-controller.mdx)
-- [Tabs 2nd-gen source: `Tabs.base.ts`](../../../../2nd-gen/packages/core/components/tabs/Tabs.base.ts) — confirms `FocusgroupNavigationController` is already shipped and in production use, not prospective
+- [Popover gen2 source: `Popover.ts`](../../../../gen2/packages/swc/components/popover/Popover.ts), [`Popover.base.ts`](../../../../gen2/packages/core/components/popover/Popover.base.ts) — `role="dialog"`, `aria-haspopup="dialog"`, and focus-seating behavior that makes wrapping this component incompatible with the menu-button pattern
+- [Tooltip gen2 source: `Tooltip.base.ts`](../../../../gen2/packages/core/components/tooltip/Tooltip.base.ts) — precedent for using `PlacementController` directly without wrapping `<swc-popover>`, and for referencing an externally-authored trigger via `for`/`triggerElement` rather than rendering one
+- [`resolveTrigger` utility source](../../../../gen2/packages/core/utils/resolve-trigger.ts) — shared `for`/`triggerElement` resolution and `interactiveElement` (AT-facing element) discovery used by both `Tooltip.base.ts` and `Popover.base.ts`; the model `swc-menu` adopts for its own trigger ([Q16](#blockers-and-open-questions))
+- [`Tooltip.types.ts`](../../../../gen2/packages/core/components/tooltip/Tooltip.types.ts) and [`Popover.types.ts`](../../../../gen2/packages/core/components/popover/Popover.types.ts) — both narrow `PlacementController`'s full `Placement` union to a smaller public subset rather than exposing it raw; the precedent `swc-menu`'s `direction`/`align` properties follow ([Q20](#blockers-and-open-questions))
+- [`PlacementController` source](../../../../gen2/packages/core/controllers/placement-controller/src/placement-controller.ts) and [docs](../../../../gen2/packages/core/controllers/placement-controller/placement-controller.mdx)
+- [Tabs gen2 source: `Tabs.base.ts`](../../../../gen2/packages/core/components/tabs/Tabs.base.ts) — confirms `FocusgroupNavigationController` is already shipped and in production use, not prospective
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [1st-gen source: `Menu.ts`](../../../../1st-gen/packages/menu/src/Menu.ts), [`MenuItem.ts`](../../../../1st-gen/packages/menu/src/MenuItem.ts), [`MenuGroup.ts`](../../../../1st-gen/packages/menu/src/MenuGroup.ts), [`MenuDivider.ts`](../../../../1st-gen/packages/menu/src/MenuDivider.ts)
 - [1st-gen tests](../../../../1st-gen/packages/menu/test/menu.test.ts) — plus `menu-selects.test.ts`, `submenu.test.ts`, `menu-group.test.ts`, `menu-item.test.ts`, `menu-memory.test.ts`
@@ -778,9 +778,9 @@ Ruben's original concern: carrying the `label` property forward unchanged as "ac
 - [React Spectrum Menu](https://react-spectrum.adobe.com/Menu) — product alignment reference; confirmed to document `@react-spectrum/s2`, not the classic v3 package
 - [React Spectrum S2 `Menu.tsx` source](https://github.com/adobe/react-spectrum/blob/main/packages/%40react-spectrum/s2/src/Menu.tsx) — `MenuItem`, `MenuSection`, `MenuTrigger`, `SubmenuTrigger`, `UnavailableMenuItemTrigger`, `Divider` exports
 - [React Spectrum Menu — Content](https://react-spectrum.adobe.com/Menu#content) and [Slots](https://react-spectrum.adobe.com/Menu#slots) — basic `MenuItem` anatomy (icon/image, label, description, keyboard shortcut); source for the Phase A content-scope cross-check above
-- [`FocusgroupNavigationController` docs](../../../../2nd-gen/packages/core/controllers/focusgroup-navigation-controller/focusgroup-navigation-controller.mdx) — roving-tabindex mechanics, options (`direction`, `wrap`, `memory`, `skipDisabled`, `pageStep`), and the `focusFirstItemByTextPrefix`/`setActiveItem` API; source for the concrete Phase A keyboard-navigation config in [Behavioral semantics](#behavioral-semantics)
+- [`FocusgroupNavigationController` docs](../../../../gen2/packages/core/controllers/focusgroup-navigation-controller/focusgroup-navigation-controller.mdx) — roving-tabindex mechanics, options (`direction`, `wrap`, `memory`, `skipDisabled`, `pageStep`), and the `focusFirstItemByTextPrefix`/`setActiveItem` API; source for the concrete Phase A keyboard-navigation config in [Behavioral semantics](#behavioral-semantics)
 - [Spectrum CSS — `spectrum-two` branch](https://github.com/adobe/spectrum-css/tree/spectrum-two) — S2 styling source of truth; **not yet reviewed against a sibling checkout for this plan** — component-specific path to confirm once available (see [Setup](#setup)); this is a known gap given spectrum-css is Source Priority #3 for both API and visual decisions
-- [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
+- [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - [WAI-ARIA APG: Menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)
 - [spectrum-web-components PR #6129 — Focusgroup navigation controller](https://github.com/adobe/spectrum-web-components/pull/6129) (merged 2026-04-16; already shipped)
 - [spectrum-web-components PR #6356 — gen2 Popover migration](https://github.com/adobe/spectrum-web-components/pull/6356) (merged 2026-07-14)
