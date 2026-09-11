@@ -70,7 +70,7 @@
   inline-size: 8px;
   block-size: 8px;
   margin: token("spacing-75");
-  margin-block: 6px;
+  margin-block: token("spacing-85");
   color: token("gray-500");
   transition: color token("animation-duration-200") token("animation-ease-in-out");
 }
@@ -81,9 +81,13 @@
     opacity token("animation-duration-200") token("animation-ease-in-out");
 }
 
+:host(:first-of-type) .swc-ResponseStatusStep-icon {
+  margin-block-start: 14px;
+}
+
 .swc-ResponseStatusStep-line {
   flex: 1 1 auto;
-  inline-size: 1px;
+  inline-size: token("border-width-100");
   min-block-size: token("spacing-100");
   margin-block-start: token("spacing-50");
   background: token("gray-300");
@@ -112,6 +116,10 @@
 
 :host(:not(:last-of-type)) .swc-ResponseStatusStep-body {
   padding-block-end: token("spacing-200");
+}
+
+:host(:first-of-type) .swc-ResponseStatusStep-body:not(:has(> .swc-ResponseStatusStep-toggle)) {
+  margin-block-start: token("spacing-100");
 }
 
 /* Typography utilities (shadow-local; mirrors typography.css) */
@@ -178,20 +186,15 @@
   padding: token("spacing-50") token("spacing-100");
   margin: 0;
   color: token("gray-600");
-  border-radius: token("corner-radius-300");
   transition:
     background token("animation-duration-100") token("animation-ease-in-out"),
     color 100ms token("animation-ease-in-out");
 }
 
-.swc-ResponseStatusStep-toggle:hover .swc-ResponseStatusStep-title {
-  background: token("gray-75");
-}
-
 /* Masked, `translate`-animated overlay clone of the label: cheaper to
    animate on the compositor than sweeping `background-position` on the text. */
 .swc-ResponseStatusStep-titleShimmer {
-  --swc-response-status-step-shimmer-spread: 4ch;
+  --_swc-response-status-step-shimmer-spread: 4ch;
 
   position: absolute;
   inset: 0;
@@ -214,7 +217,7 @@
 :host([status="active"]) .swc-ResponseStatusStep-titleShimmer::after {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent calc(50% - var(--swc-response-status-step-shimmer-spread)), token("gray-900") 50%, transparent calc(50% + var(--swc-response-status-step-shimmer-spread)));
+  background: linear-gradient(90deg, transparent calc(50% - var(--_swc-response-status-step-shimmer-spread)), token("gray-900") 50%, transparent calc(50% + var(--_swc-response-status-step-shimmer-spread)));
   content: "";
   animation: swc-response-status-step-shimmer 1800ms infinite;
   will-change: transform;
@@ -242,13 +245,28 @@
   display: flex;
   gap: token("spacing-100");
   align-items: center;
-  inline-size: 100%;
+  inline-size: fit-content;
   padding: 0;
-  padding-block-end: token("spacing-75");
+  margin-block-end: token("spacing-75");
   color: inherit;
   text-align: start;
   background: transparent;
   border: none;
+  border-radius: token("corner-radius-300");
+}
+
+.swc-ResponseStatusStep-toggle:hover,
+.swc-ResponseStatusStep-toggle:focus-visible {
+  background: token("gray-75");
+}
+
+.swc-ResponseStatusStep-toggle:focus-visible {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
+}
+
+:host(:first-of-type) .swc-ResponseStatusStep-toggle {
+  margin-block-start: token("spacing-100");
 }
 
 /* Shared collapse mechanics with `response-status.css`'s
@@ -274,6 +292,7 @@
   grid-template-rows: 1fr;
   padding: token("spacing-100");
   background-color: var(--swc-background-layer-1-color);
+  border: 1px solid transparent;
 }
 
 /* Clip wrapper: overflow:hidden here is what lets 0fr become a true zero. */
@@ -317,6 +336,21 @@
 .swc-ResponseStatusStep-detailScroll::-webkit-scrollbar-thumb {
   background: token("gray-500");
   border-radius: 9999px;
+}
+
+/* The scroll region sits inside an overflow:hidden clip wrapper, so the
+   ring is painted on the open panel (the visible card) instead of being
+   clipped. `outline: none` here suppresses the UA ring on the focused
+   scroll box itself. */
+.swc-ResponseStatusStep-detailScroll:focus-visible {
+  outline: none;
+}
+
+.swc-ResponseStatusStep-detailPanel:has(.swc-ResponseStatusStep-detailScroll:focus-visible) {
+  margin-block-end: token("spacing-75");
+  margin-inline-end: token("spacing-75");
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
 }
 
 /* Fade cues while the description overflows. Scroll-driven: with no overflow
@@ -377,6 +411,11 @@
   .swc-ResponseStatusStep-detailScroll {
     mask-image: none;
     animation: none;
+  }
+
+  .swc-ResponseStatusStep-toggle:focus-visible,
+  .swc-ResponseStatusStep-detailPanel:has(.swc-ResponseStatusStep-detailScroll:focus-visible) {
+    outline-color: CanvasText;
   }
 
   /* The masked shimmer overlay is unreliable under forced colors; fall back
