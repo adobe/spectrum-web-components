@@ -12,7 +12,6 @@
 <summary><strong>In this doc</strong></summary>
 
 - [TL;DR](#tldr)
-    - [Most blocking open questions](#most-blocking-open-questions)
 - [Current API surface](#current-api-surface)
     - [1st-gen (`sp-asset`, published — out of scope)](#1st-gen-sp-asset-published--out-of-scope)
     - [2nd-gen (`swc-asset`, internal genre — the starting point for this plan)](#2nd-gen-swc-asset-internal-genre--the-starting-point-for-this-plan)
@@ -36,9 +35,9 @@
     - [Documentation (SWC-2321)](#documentation-swc-2321)
     - [Review (SWC-2322)](#review-swc-2322)
 - [Blockers and open questions](#blockers-and-open-questions)
-    - [Architecture and behavior](#architecture-and-behavior)
 - [Decision log](#decision-log)
     - [Q1–Q3: Loading state event names, payload, and default treatment](#q1q3-loading-state-event-names-payload-and-default-treatment)
+    - [Q4: SVG accessible-name detection algorithm](#q4-svg-accessible-name-detection-algorithm)
 - [References](#references)
 
 </details>
@@ -71,12 +70,7 @@ aspect-ratio custom property, independent of Asset's timeline. The only coordina
 weak-sync mechanism for `aspect-ratio` (see [Behavioral semantics](#behavioral-semantics)),
 which has already been tested and requires no changes to Card's existing CSS.
 
-### Most blocking open questions
-
-- **Q4** in [Architecture and behavior](#architecture-and-behavior): the exact SVG
-  accessible-name detection algorithm (which of `aria-label` / `aria-labelledby` / child
-  `<title>` / existing `role="img"` count as "already labeled") needs sign-off from the team's
-  a11y SME before it's final.
+No open blockers remain; Q1–Q4 are resolved and documented in the [Decision log](#decision-log).
 
 ---
 
@@ -179,7 +173,7 @@ docs (SWC-2321) should also reference Asset directly as an example consumer.
 | #      | What changes | Current behavior | v1 behavior | Notes |
 | ------ | ------------- | ------------------ | ----------- | ----- |
 | **B6** | Add `decorative` property | N/A today | Mirrors Thumbnail: host `aria-hidden="true"` when set; suppresses any auto-applied labeling | — |
-| **B7** | Rename `label` → `accessibleLabel` (`accessible-label` attribute) and generalize it into a fallback accessible name | `label` only feeds the (retired) file/folder icon's `aria-label` | Follows the existing `accessible-label` convention (Button, Tabs, ActionButton, etc.); applied to slotted `<img>`/`<svg>` only when it has no accessible name of its own; DEBUG warning when neither `decorative`, existing labeling, nor `accessible-label` is present | SVG detection algorithm needs a11y SME sign-off — see [Q4](#architecture-and-behavior) |
+| **B7** | Rename `label` → `accessibleLabel` (`accessible-label` attribute) and generalize it into a fallback accessible name | `label` only feeds the (retired) file/folder icon's `aria-label` | Follows the existing `accessible-label` convention (Button, Tabs, ActionButton, etc.); applied to slotted `<img>`/`<svg>` only when it has no accessible name of its own; DEBUG warning when neither `decorative`, existing labeling, nor `accessible-label` is present | SVG detection algorithm resolved and signed off — see [Q4](#decision-log) |
 | **B8** | Asset never exposes `disabled`/`focused`/`selected` | N/A today (not present) | Explicitly excluded, matching Thumbnail's "parent owns interactive state" model | — |
 | **B9** | DEBUG-warn when more than one child, or an unsupported child type, is slotted into the default slot | N/A today | Only a single `<img>` or `<svg>` is a supported child; anything else (multiple children, or an unrecognized element) triggers a DEBUG warning | Behavior for the extra/invalid content itself (hide vs. render as-is) is an implementation detail for SWC-2319, not specified here |
 
@@ -212,7 +206,7 @@ docs (SWC-2321) should also reference Asset directly as an example consumer.
 | `height`          | `string \| undefined` (CSS `<length-percentage>`)           | `undefined` (`auto`) | `height`   | DEBUG warning on an invalid value |
 | `fit`             | `'cover' \| 'contain'`                                       | `'cover'`   | `fit`               | Asset-owned only, no ancestor sync. DEBUG warning on an invalid value |
 | `decorative`      | `boolean`                                                    | `false`     | reflected           | — |
-| `accessibleLabel` | `string \| undefined`                                       | `undefined` | `accessible-label`  | Renamed from `label`, generalized fallback accessible name; matches the existing `accessible-label` convention used by Button/Tabs/ActionButton/etc. Exact SVG detection algorithm is [Q4](#architecture-and-behavior) |
+| `accessibleLabel` | `string \| undefined`                                       | `undefined` | `accessible-label`  | Renamed from `label`, generalized fallback accessible name; matches the existing `accessible-label` convention used by Button/Tabs/ActionButton/etc. SVG detection algorithm resolved, see [Q4](#decision-log) |
 | `background`      | `'transparent' \| 'solid' \| 'checkerboard'`                 | `'transparent'` | `background`    | `'transparent'` matches today's behavior; `'solid'` uses `--swc-asset-background-color` (default `token("gray-100")`); `'checkerboard'` reuses the shared opacity-checkerboard fragment. DEBUG warning on an invalid value |
 | `loadState`       | `'loading' \| 'loaded' \| 'error'` (readonly)                | `'loading'` (`'loaded'` immediately for a slotted `<svg>` or no child) | `load-state` (reflected) | Set internally by Asset from the slotted `<img>`'s `load`/`error` events; a consumer sets this only by changing what's slotted, not directly. See [Behavioral semantics](#behavioral-semantics) |
 | `variant`         | _(removed)_                                                  | —           | —                   | See B1 |
@@ -447,13 +441,15 @@ renders no default visual or accessible loading treatment in v1, for standalone 
   accessible name applied only when slotted content doesn't already carry its own. Detection
   order:
   1. `decorative` is set → suppress from AT entirely, regardless of content type.
-  2. Content already has its own accessible name (`img[alt]`, or `svg` with `role="img"` +
-     `aria-label`/`aria-labelledby` or a direct child `<title>`) → leave it alone.
+  2. Content already has its own accessible name (`img[alt]`, or `svg` with
+     `aria-label`/`aria-labelledby` or a direct child `<title>`, `role="img"` not required) →
+     leave the name alone; self-heal a missing `role="img"` on the `<svg>` in this case, since
+     `<svg>` has no reliable implicit role the way `<img>` does.
   3. Neither of the above, but `accessible-label` is provided → apply it to the slotted node
      (`aria-label` on an `<svg>` root, since SVG has no native `alt`).
   4. None of the above → DEBUG warning, mirroring Thumbnail's "neither alt nor decorative" case.
 
-  Exact SVG detection algorithm pending a11y SME sign-off — see [Q4](#architecture-and-behavior).
+  SVG detection algorithm resolved and signed off — see [Q4](#decision-log).
 - Loading state has no AT exposure of its own (no `aria-busy`, no default accessible name change):
   the embedding parent owns any busy announcement, matching the "parent owns interactive/visual
   state" model already used for `disabled`/`focused`/`selected`. See
@@ -520,8 +516,9 @@ plan contract pattern this document follows).
 - [x] Implement DEBUG warnings: invalid `fit`/`background` values; `aspectRatio` set together
       with both `width` and `height`; more than one slotted child or an unsupported child type
 - [ ] Update Card to slot `<swc-asset>` in its `preview` slot, as a live validation target for
-      this API while it's being built
-- [ ] Split Card's `card-template.css` preview-slot rule and `card.css` collection-slot rule — see [Behavioral semantics](#behavioral-semantics)
+      this API while it's being built — spun out to SWC-2566, tracked separately from Asset's own
+      finalization
+- [ ] Split Card's `card-template.css` preview-slot rule and `card.css` collection-slot rule — see [Behavioral semantics](#behavioral-semantics); part of SWC-2566
 - [x] `Asset.types.ts`: define `ASSET_LOAD_STATE_VALUES`/`AssetLoadState`
       (`'loading' | 'loaded' | 'error'`); `Asset.types.ts` or `Asset.base.ts`: define
       `SWC_ASSET_LOAD_EVENT`/`SWC_ASSET_ERROR_EVENT` constants
@@ -557,8 +554,8 @@ plan contract pattern this document follows).
 
 - [x] `decorative` sets `aria-hidden="true"` on the host
 - [x] `accessibleLabel` fallback applied per the detection order in
-      [Accessibility semantics notes](#accessibility-semantics-notes) (implemented as proposed;
-      still pending final a11y SME sign-off on the SVG branch, Q4)
+      [Accessibility semantics notes](#accessibility-semantics-notes), including the SVG branch
+      (Q4, signed off)
 - [x] DEBUG warning fires when neither `decorative`, existing labeling, nor `accessibleLabel` is
       present
 - [x] Confirm Asset exposes no `disabled`/`focused`/`selected`
@@ -596,7 +593,7 @@ plan contract pattern this document follows).
       `accessibleLabel` rename
 - [ ] Reference Card directly as an example consumer (Storybook docs and/or the consumer
       migration guide), pointing at its `preview` and `collection` slot usage — deferred until
-      Card's own Asset integration merges
+      Card's own Asset integration merges (SWC-2566)
 - [x] Document v1 support for a single `img` or `svg` child only
 - [x] Document `loading="lazy"`/`decoding="async"` performance guidance
 - [x] Document the resulting CSS behavior when combining `aspectRatio` with only one of
@@ -610,23 +607,16 @@ plan contract pattern this document follows).
 
 ### Review (SWC-2322)
 
-- [ ] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
-- [ ] 2nd-gen migration status table updated, if applicable
-- [ ] PR created referencing Epic SWC-2317
-- [ ] Peer engineer sign-off
+- [x] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
+- [x] 2nd-gen migration status table updated
+- [x] PR created referencing Epic SWC-2317 (#6716, #6723, #6729, all merged)
+- [x] Peer engineer sign-off (rubencarvalho, aramos-adobe, rise-erpelding)
 
 ---
 
 ## Blockers and open questions
 
-Only genuinely unresolved items remain here. Everything else has been folded into the section it
-affects.
-
-### Architecture and behavior
-
-| #      | Item | Blocking? | Status | Owner |
-| ------ | ---- | --------- | ------ | ----- |
-| **Q4** | Exact SVG accessible-name detection algorithm (which of `aria-label`/`aria-labelledby`/child `<title>`/existing `role="img"` count as "already labeled") | Yes — blocks finalizing B7 | Author accepts the proposed direction; pending sign-off from the team's a11y SME | Accessibility reviewer |
+No genuinely unresolved items remain. Q1–Q4 are resolved; see the [Decision log](#decision-log).
 
 ---
 
@@ -666,6 +656,29 @@ treatment of its own in v1, standalone or embedded (resolves Q2). A failed load 
 **Affects:** [Changes overview](#changes-overview) (B12), [Public API](#public-api) and the new
 Events table, [Behavioral semantics](#behavioral-semantics), [Accessibility semantics
 notes](#accessibility-semantics-notes), [Implementation checklist](#implementation-checklist).
+
+### Q4: SVG accessible-name detection algorithm
+
+**Decided:** A slotted `<svg>` counts as already having its own accessible name when it has
+`aria-label`, `aria-labelledby`, or a direct child `<title>` element; `role="img"` is not a
+prerequisite. When one of those name sources is present but `role="img"` is missing, Asset adds
+`role="img"` itself, since `<svg>` has no reliable implicit role the way `<img>` does and the name
+alone isn't otherwise exposed as an image to assistive tech. A consumer's own different role
+(e.g. deliberately `role="presentation"`) is never overridden. Signed off by the team's a11y SME.
+
+**Why:**
+
+- Requiring `role="img"` up front (the originally-proposed direction) meant a widely-used,
+  otherwise-valid pattern like `<svg><title>Chart</title></svg>` would still trigger the
+  "missing accessible name" DEBUG warning purely for lacking a role the consumer had no reason to
+  know to add. Self-healing the role removes that false positive without loosening what counts as
+  a real name source.
+- Self-healing only fires when a name source is already present, so it can't accidentally give a
+  role to genuinely unnamed or intentionally-`decorative`-adjacent SVG content.
+
+**Affects:** [Accessibility semantics notes](#accessibility-semantics-notes), [Changes
+overview](#changes-overview) (B7), [Public API](#public-api), [Implementation
+checklist](#implementation-checklist).
 
 ---
 

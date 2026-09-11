@@ -65,10 +65,15 @@ function normalizeAspectRatio(value: string | undefined): string | undefined {
   return value.replace(':', '/');
 }
 
+/**
+ * Base class for the `<swc-asset>` general image/media primitive.
+ *
+ * @slot - a single `<img>` or `<svg>` element to display
+ */
 export abstract class AssetBase extends SpectrumElement {
-  // ─────────────────
+  // ──────────────────
   //     SHARED API
-  // ─────────────────
+  // ──────────────────
 
   private _aspectRatio: string | undefined;
 
@@ -159,13 +164,9 @@ export abstract class AssetBase extends SpectrumElement {
   // attribute survives.
   private _appliedAriaHidden = false;
 
-  // The `<img>` currently wired up for load tracking, so re-running
-  // `updateLoadState` on unrelated property changes doesn't tear down and
-  // reset state for the same element, and so listeners are removed from the
-  // right element when the slotted content changes. `undefined` specifically
-  // means "not yet determined" (distinct from `null`, "confirmed no `<img>`
-  // child"), so the very first resolution to "no `<img>`" isn't mistaken for
-  // an unchanged steady state and skipped.
+  // `undefined` means "not yet determined" (distinct from `null`, "confirmed
+  // no `<img>` child"), so the first resolution to "no `<img>`" isn't
+  // mistaken for an already-processed steady state. See `updateLoadState`.
   private _trackedImg: HTMLImageElement | null | undefined = undefined;
 
   // The <svg> this instance owns `preserveAspectRatio` on, so a

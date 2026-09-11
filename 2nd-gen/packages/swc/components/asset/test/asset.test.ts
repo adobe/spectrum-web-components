@@ -61,226 +61,6 @@ export const OverviewTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Dev mode warnings
-// ──────────────────────────────────────────────────────────────
-
-export const InvalidFitWarningTest: Story = {
-  render: () => html`
-    <swc-asset>
-      <img src="./images/avatar-preview.png" alt="Preview" />
-    </swc-asset>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
-
-    await step('warns when an invalid fit is set in DEBUG mode', () =>
-      withWarningSpy(async (warnCalls) => {
-        asset.fit = 'stretch' as Asset['fit'];
-        await asset.updateComplete;
-
-        expect(
-          warnCalls.length,
-          'at least one warning is emitted for invalid fit'
-        ).toBeGreaterThan(0);
-        expect(
-          String(warnCalls[0]?.[1] || ''),
-          'warning message references fit'
-        ).toContain('fit');
-      })
-    );
-  },
-};
-
-export const ValidFitNoWarningTest: Story = {
-  render: () => html`
-    <swc-asset>
-      <img src="./images/avatar-preview.png" alt="Preview" />
-    </swc-asset>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
-
-    await step('does not warn for any valid fit value', () =>
-      withWarningSpy(async (warnCalls) => {
-        for (const fit of ASSET_FIT_VALUES) {
-          asset.fit = fit;
-          await asset.updateComplete;
-        }
-
-        expect(warnCalls.length, 'no warnings for any valid fit').toBe(0);
-      })
-    );
-  },
-};
-
-export const InvalidBackgroundWarningTest: Story = {
-  render: () => html`
-    <swc-asset>
-      <img src="./images/avatar-preview.png" alt="Preview" />
-    </swc-asset>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
-
-    await step('warns when an invalid background is set in DEBUG mode', () =>
-      withWarningSpy(async (warnCalls) => {
-        asset.background = 'gradient' as Asset['background'];
-        await asset.updateComplete;
-
-        expect(
-          warnCalls.length,
-          'at least one warning is emitted for invalid background'
-        ).toBeGreaterThan(0);
-        expect(
-          String(warnCalls[0]?.[1] || ''),
-          'warning message references background'
-        ).toContain('background');
-      })
-    );
-  },
-};
-
-export const ValidBackgroundNoWarningTest: Story = {
-  render: () => html`
-    <swc-asset>
-      <img src="./images/avatar-preview.png" alt="Preview" />
-    </swc-asset>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
-
-    await step('does not warn for any valid background value', () =>
-      withWarningSpy(async (warnCalls) => {
-        for (const background of ASSET_BACKGROUND_VALUES) {
-          asset.background = background;
-          await asset.updateComplete;
-        }
-
-        expect(warnCalls.length, 'no warnings for any valid background').toBe(
-          0
-        );
-      })
-    );
-  },
-};
-
-export const AspectRatioNormalizationTest: Story = {
-  render: () => html`
-    <swc-asset>
-      <img src="./images/avatar-preview.png" alt="Preview" />
-    </swc-asset>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
-
-    await step('normalizes the "square" keyword to "1/1"', async () => {
-      asset.aspectRatio = 'square';
-      await asset.updateComplete;
-      expect(asset.aspectRatio, 'square normalizes to 1/1').toBe('1/1');
-    });
-
-    await step('normalizes ":"-separated ratios to "/"', async () => {
-      asset.aspectRatio = '16:9';
-      await asset.updateComplete;
-      expect(asset.aspectRatio, '16:9 normalizes to 16/9').toBe('16/9');
-    });
-  },
-};
-
-export const ValidAspectRatioNoWarningTest: Story = {
-  render: () => html`
-    <swc-asset>
-      <img src="./images/avatar-preview.png" alt="Preview" />
-    </swc-asset>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
-
-    await step('does not warn when a valid aspect-ratio is set', () =>
-      withWarningSpy(async (warnCalls) => {
-        asset.aspectRatio = '16/9';
-        await asset.updateComplete;
-
-        expect(warnCalls.length, 'no warnings for a valid ratio').toBe(0);
-      })
-    );
-  },
-};
-
-export const AspectRatioWidthHeightCombinationWarningTest: Story = {
-  render: () => html`
-    <swc-asset>
-      <img src="./images/avatar-preview.png" alt="Preview" />
-    </swc-asset>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
-
-    await step(
-      'warns when aspectRatio is combined with both width and height',
-      () =>
-        withWarningSpy(async (warnCalls) => {
-          asset.aspectRatio = '16/9';
-          asset.width = '100px';
-          asset.height = '100px';
-          await asset.updateComplete;
-
-          expect(
-            warnCalls.length,
-            'at least one warning is emitted for the combination'
-          ).toBeGreaterThan(0);
-        })
-    );
-  },
-};
-
-export const MultipleChildrenWarningTest: Story = {
-  render: () => html`
-    <swc-asset>
-      <img src="./images/avatar-preview.png" alt="First" />
-      <img src="./images/avatar-preview.png" alt="Second" />
-    </swc-asset>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
-
-    await step('warns when more than one child is slotted', () =>
-      withWarningSpy(async (warnCalls) => {
-        // Re-trigger validation, which runs on every update.
-        asset.requestUpdate();
-        await asset.updateComplete;
-
-        expect(
-          warnCalls.length,
-          'at least one warning is emitted for multiple children'
-        ).toBeGreaterThan(0);
-      })
-    );
-  },
-};
-
-export const UnsupportedChildTypeWarningTest: Story = {
-  render: () => html`
-    <swc-asset><span>Not an image</span></swc-asset>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
-
-    await step('warns when the slotted child is not img or svg', () =>
-      withWarningSpy(async (warnCalls) => {
-        asset.requestUpdate();
-        await asset.updateComplete;
-
-        expect(
-          warnCalls.length,
-          'at least one warning is emitted for an unsupported child type'
-        ).toBeGreaterThan(0);
-      })
-    );
-  },
-};
-
-// ──────────────────────────────────────────────────────────────
 // TEST: Accessible name resolution
 // ──────────────────────────────────────────────────────────────
 
@@ -401,7 +181,7 @@ export const MissingAccessibleNameWarningTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: PR feedback regressions
+// TEST: Accessible-name, aria-hidden, and preserveAspectRatio edge cases
 // ──────────────────────────────────────────────────────────────
 
 export const SlotChangeReResolvesTest: Story = {
@@ -505,7 +285,10 @@ export const SvgFitPreserveAspectRatioTest: Story = {
       '"cover" sets preserveAspectRatio to xMidYMid slice on a slotted svg',
       async () => {
         const svg = asset.querySelector('svg');
-        expect(svg?.getAttribute('preserveAspectRatio')).toBe('xMidYMid slice');
+        expect(
+          svg?.getAttribute('preserveAspectRatio'),
+          'preserveAspectRatio is xMidYMid slice for cover'
+        ).toBe('xMidYMid slice');
       }
     );
 
@@ -515,7 +298,10 @@ export const SvgFitPreserveAspectRatioTest: Story = {
         asset.fit = 'contain';
         await asset.updateComplete;
         const svg = asset.querySelector('svg');
-        expect(svg?.getAttribute('preserveAspectRatio')).toBe('xMidYMid meet');
+        expect(
+          svg?.getAttribute('preserveAspectRatio'),
+          'preserveAspectRatio is xMidYMid meet for contain'
+        ).toBe('xMidYMid meet');
       }
     );
   },
@@ -633,8 +419,7 @@ export const DecorativeToggleRemovesOwnAriaHiddenTest: Story = {
 
         // An unrelated property change forces a second `update()` while
         // `decorative` is still true, re-running `resolveAccessibleName()`
-        // with the attribute already present - the exact scenario that
-        // previously caused Asset to lose track of owning it.
+        // with the attribute already present.
         asset.background = 'solid';
         await asset.updateComplete;
 
@@ -1010,6 +795,226 @@ export const SlotChangeResetsLoadStateTest: Story = {
           'loadState reflects the replacement img, not stale state from the original'
         ).toBe('error');
       }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Dev mode warnings
+// ──────────────────────────────────────────────────────────────
+
+export const InvalidFitWarningTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('warns when an invalid fit is set in DEBUG mode', () =>
+      withWarningSpy(async (warnCalls) => {
+        asset.fit = 'stretch' as Asset['fit'];
+        await asset.updateComplete;
+
+        expect(
+          warnCalls.length,
+          'at least one warning is emitted for invalid fit'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0]?.[1] || ''),
+          'warning message references fit'
+        ).toContain('fit');
+      })
+    );
+  },
+};
+
+export const ValidFitNoWarningTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('does not warn for any valid fit value', () =>
+      withWarningSpy(async (warnCalls) => {
+        for (const fit of ASSET_FIT_VALUES) {
+          asset.fit = fit;
+          await asset.updateComplete;
+        }
+
+        expect(warnCalls.length, 'no warnings for any valid fit').toBe(0);
+      })
+    );
+  },
+};
+
+export const InvalidBackgroundWarningTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('warns when an invalid background is set in DEBUG mode', () =>
+      withWarningSpy(async (warnCalls) => {
+        asset.background = 'gradient' as Asset['background'];
+        await asset.updateComplete;
+
+        expect(
+          warnCalls.length,
+          'at least one warning is emitted for invalid background'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0]?.[1] || ''),
+          'warning message references background'
+        ).toContain('background');
+      })
+    );
+  },
+};
+
+export const ValidBackgroundNoWarningTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('does not warn for any valid background value', () =>
+      withWarningSpy(async (warnCalls) => {
+        for (const background of ASSET_BACKGROUND_VALUES) {
+          asset.background = background;
+          await asset.updateComplete;
+        }
+
+        expect(warnCalls.length, 'no warnings for any valid background').toBe(
+          0
+        );
+      })
+    );
+  },
+};
+
+export const AspectRatioNormalizationTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('normalizes the "square" keyword to "1/1"', async () => {
+      asset.aspectRatio = 'square';
+      await asset.updateComplete;
+      expect(asset.aspectRatio, 'square normalizes to 1/1').toBe('1/1');
+    });
+
+    await step('normalizes ":"-separated ratios to "/"', async () => {
+      asset.aspectRatio = '16:9';
+      await asset.updateComplete;
+      expect(asset.aspectRatio, '16:9 normalizes to 16/9').toBe('16/9');
+    });
+  },
+};
+
+export const ValidAspectRatioNoWarningTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('does not warn when a valid aspect-ratio is set', () =>
+      withWarningSpy(async (warnCalls) => {
+        asset.aspectRatio = '16/9';
+        await asset.updateComplete;
+
+        expect(warnCalls.length, 'no warnings for a valid ratio').toBe(0);
+      })
+    );
+  },
+};
+
+export const AspectRatioWidthHeightCombinationWarningTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="Preview" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'warns when aspectRatio is combined with both width and height',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          asset.aspectRatio = '16/9';
+          asset.width = '100px';
+          asset.height = '100px';
+          await asset.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'at least one warning is emitted for the combination'
+          ).toBeGreaterThan(0);
+        })
+    );
+  },
+};
+
+export const MultipleChildrenWarningTest: Story = {
+  render: () => html`
+    <swc-asset>
+      <img src="./images/avatar-preview.png" alt="First" />
+      <img src="./images/avatar-preview.png" alt="Second" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('warns when more than one child is slotted', () =>
+      withWarningSpy(async (warnCalls) => {
+        // Re-trigger validation, which runs on every update.
+        asset.requestUpdate();
+        await asset.updateComplete;
+
+        expect(
+          warnCalls.length,
+          'at least one warning is emitted for multiple children'
+        ).toBeGreaterThan(0);
+      })
+    );
+  },
+};
+
+export const UnsupportedChildTypeWarningTest: Story = {
+  render: () => html`
+    <swc-asset><span>Not an image</span></swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step('warns when the slotted child is not img or svg', () =>
+      withWarningSpy(async (warnCalls) => {
+        asset.requestUpdate();
+        await asset.updateComplete;
+
+        expect(
+          warnCalls.length,
+          'at least one warning is emitted for an unsupported child type'
+        ).toBeGreaterThan(0);
+      })
     );
   },
 };

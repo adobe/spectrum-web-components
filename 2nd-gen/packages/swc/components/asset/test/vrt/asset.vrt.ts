@@ -305,8 +305,8 @@ export const Permutations: Story = {
 // `forced-colors` replaces the whole page palette. asset.css has no
 // component-level forced-colors override of its own (the shared
 // opacity-checkerboard fragment already handles its own pattern visibility),
-// so this verifies the solid-background letterbox
-// still render sensibly under the browser's forced-colors palette.
+// so this verifies the solid background and letterboxing still render
+// sensibly under the browser's forced-colors palette.
 export const ForcedColors: Story = {
   render: () => theme(forcedColorsContent(), 'light', 'ltr'),
   parameters: forcedColorsVrtParameters,
