@@ -48,7 +48,3 @@
   flex-wrap: wrap;
   gap: token("spacing-100");
 }
-
-.swc-SuggestionGroup-items ::slotted(*) {
-  flex: 0 0 auto;
-}
