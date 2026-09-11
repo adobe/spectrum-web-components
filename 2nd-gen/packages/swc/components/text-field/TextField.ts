@@ -19,13 +19,8 @@ import styles from './text-field.css';
 
 /**
  * The `<input>`'s `id`, referenced by the rendered `<label for>`. A fixed
- * string (not a per-instance counter) is safe here: the `id` only has to be
- * unique within this component's own shadow root, where exactly one `<input>`
- * ever exists, and shadow roots are their own `id` scope (same-named `id`s in
- * other instances' shadow roots never collide). A per-instance counter would
- * instead depend on module-level mutable state and instantiation order,
- * which a server render and a client hydration pass are not guaranteed to
- * agree on.
+ * string (not a per-instance counter) stays stable across SSR/hydration; it
+ * only needs to be unique within this component's own shadow root.
  */
 const INPUT_ID = 'input';
 

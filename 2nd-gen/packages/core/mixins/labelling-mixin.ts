@@ -27,11 +27,7 @@ type Constructor<T = Record<string, unknown>> = {
 
 const LABEL_SLOT_SELECTOR = '[slot="label"]';
 
-/**
- * An element carrying the ARIA element-reflection properties `LabellingMixin`
- * writes the resolved accessible name onto (for example, the `<input>` inside
- * a text field's own shadow root).
- */
+/** An element carrying the `ariaLabelledByElements` reflection property the resolved accessible name is written onto (e.g. the field's `<input>`). */
 type LabelledByTarget = Element & {
   ariaLabelledByElements: Element[] | null;
 };
@@ -43,11 +39,8 @@ export interface LabellingInterface {
   readonly hasLabelSlotContent: boolean;
 
   /**
-   * @internal
-   *
-   * The element `LabellingMixin` wires the resolved accessible-name ARIA
-   * relationship onto. Defaults to `null`; a rendering subclass overrides this
-   * to return its real role element (e.g. the `<input>`).
+   * @internal Element the resolved accessible name is wired onto. Defaults to
+   * `null`; a rendering subclass overrides it to return the real role element.
    */
   readonly roleElement: Element | null;
 
@@ -70,10 +63,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
   constructor: T
 ): T & Constructor<LabellingInterface> {
   class LabellingElement extends constructor implements LabellingInterface {
-    /**
-     * Observes the light-DOM `label` slot so the shadow-DOM label element can
-     * be fully conditional.
-     */
+    /** Tracks the `label` slot so the shadow-DOM label element stays conditional. */
     private readonly _labelSlotPresence = new SlotPresenceController(
       this,
       LABEL_SLOT_SELECTOR
@@ -81,51 +71,35 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
 
     /**
      * Accessible name for the role element, applied as `aria-label`. Lowest
-     * precedence after `accessibleLabelledby`; use when there is no visible
-     * label slotted and no external labelling element to reference.
+     * precedence; use when no visible label is slotted.
      */
     @property({ type: String, attribute: 'accessible-label' })
     public accessibleLabel = '';
 
     /**
      * Space-separated element `id`s, resolved against the host's root node,
-     * that provide the role element's accessible name. Highest precedence:
-     * overrides both `accessibleLabel` and a slotted label.
+     * that provide the role element's accessible name. Highest precedence.
      */
     @property({ attribute: 'accessible-labelledby' })
     public accessibleLabelledby?: string;
 
-    /**
-     * @internal
-     */
+    /** @internal */
     public get hasLabelSlotContent(): boolean {
       return this._labelSlotPresence.isPresent;
     }
 
-    /**
-     * @internal
-     */
+    /** @internal */
     public get roleElement(): Element | null {
       return null;
     }
 
-    /**
-     * @internal
-     *
-     * Docs URL for the dev warnings, derived from the element's tag name.
-     */
+    /** @internal Docs URL for dev warnings, derived from the tag name. */
     protected get docsHref(): string {
       const name = this.localName.replace(/^swc-/, '');
       return `https://spectrum-web-components.adobe.com/?path=/docs/components-${name}--docs`;
     }
 
-    /**
-     * @internal
-     *
-     * Resolves `accessibleLabelledby`'s `id`s against the host's root node.
-     * Unresolved `id`s are dropped here and surfaced by
-     * {@link _warnUnresolvedLabelledby} in dev mode.
-     */
+    /** @internal Resolves `accessibleLabelledby` ids against the host's root; unresolved ids are dropped (and warned in dev). */
     private get _resolvedLabelledbyElements(): Element[] {
       if (!this.accessibleLabelledby) {
         return [];
@@ -141,12 +115,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
       return (this.accessibleLabelledby ?? '').split(/\s+/).filter(Boolean);
     }
 
-    /**
-     * @internal
-     *
-     * Whether any accessible-name source is set: a resolved
-     * `accessibleLabelledby`, `accessibleLabel`, or a slotted `label`.
-     */
+    /** @internal Whether any name source is set (resolved labelledby, `accessibleLabel`, or a slotted label). */
     private get _hasAccessibleName(): boolean {
       return (
         this._resolvedLabelledbyElements.length > 0 ||
@@ -214,10 +183,8 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
     }
 
     /**
-     * @internal
-     *
-     * Warns when `accessibleLabelledby` references an `id` that resolves to no
-     * element. This is a silent failure otherwise.
+     * @internal Warns when `accessibleLabelledby` references an `id` that
+     * resolves to no element (a silent failure otherwise).
      */
     private _warnUnresolvedLabelledby(): void {
       const root = this.getRootNode() as Document | ShadowRoot;
@@ -238,7 +205,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
         {
           type: 'accessibility',
           issues: [
-            'reference elements that share the field\'s root (document or shadow root), and',
+            "reference elements that share the field's root (document or shadow root), and",
             'ensure they exist before the field renders (ids are resolved once per render).',
           ],
         }
@@ -246,13 +213,8 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
     }
 
     /**
-     * @internal
-     *
-     * Warns when both `accessibleLabelledby` and `accessibleLabel` are set:
-     * two competing programmatic names. Per the accessible-name computation,
-     * `accessibleLabelledby` is used and `accessibleLabel` is silently ignored.
-     * A visible slotted label paired with either one is the recommended
-     * WCAG 2.5.3 (Label in Name) pattern and does not warn.
+     * @internal Warns when both `accessibleLabelledby` and `accessibleLabel`
+     * are set (two competing programmatic names; `accessibleLabelledby` wins).
      */
     private _warnLabelConflict(): void {
       // Only two programmatic name sources conflict; a visible label never does.

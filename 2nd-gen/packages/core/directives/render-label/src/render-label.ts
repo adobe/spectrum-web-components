@@ -28,17 +28,13 @@ export interface RenderFieldLabelOptions {
 }
 
 /**
- * Renders the shared field-label markup used by labelling-capable components.
+ * Renders the shared field-label markup for labelling-capable components.
  * Returns `nothing` when there is no slotted `label` content, so callers can
- * interpolate unconditionally: `${renderFieldLabel({ hasLabelSlotContent, forId })}`.
+ * interpolate unconditionally.
  *
- * Most consumers do not call this directly: `LabellingMixin` exposes
- * `renderLabel()`, which calls this with the mixin's own resolved state. Use
- * this directive directly only for stateless label rendering without the mixin.
- *
- * This is render-only and carries no design-token dependency. Pair it with a
- * shared field-label style fragment that themes the `swc-FieldLabel` class
- * this emits.
+ * Most consumers use `LabellingMixin`'s `renderLabel()` instead, which calls
+ * this with its resolved state. Render-only, no design tokens: pair it with a
+ * style fragment theming the `swc-FieldLabel` class it emits.
  */
 export function renderFieldLabel({
   hasLabelSlotContent,
