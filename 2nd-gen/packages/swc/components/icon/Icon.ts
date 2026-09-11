@@ -16,11 +16,12 @@ import { IconBase } from '@adobe/spectrum-wc-core/components/icon';
 import styles from '../../stylesheets/_lit-styles/icon-base.css';
 
 /**
- * Minimal icon renderer that accepts slotted SVG markup.
+ * The frame for a custom, non-Spectrum SVG: slot an `<svg>` and it gets a
+ * Spectrum size box, color, and host-owned accessibility. For Spectrum's own
+ * art, use a workflow icon or a UI icon instead.
  *
  * @element swc-icon
- * @status internal
- * @since 2.0.0-beta.1
+ * @since 2.0.0-beta.4
  *
  * @example
  * <swc-icon accessible-label="Search">
@@ -28,11 +29,6 @@ import styles from '../../stylesheets/_lit-styles/icon-base.css';
  *     <path d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"/>
  *   </svg>
  * </swc-icon>
- *
- * @example
- * import { Chevron100Icon } from './elements/Chevron100Icon.js';
- *
- * html`<swc-icon accessible-label="Expand">${Chevron100Icon()}</swc-icon>`;
  *
  * @cssprop --swc-icon-color - Color of the icon.
  * @cssprop --swc-icon-inline-size - Inline size of the icon.

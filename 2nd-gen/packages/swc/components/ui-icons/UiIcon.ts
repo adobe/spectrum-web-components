@@ -22,17 +22,16 @@ import uiIconDirectionStyles from './ui-icon-direction.css';
 import uiIconSizeStyles from './ui-icon-sizes.css';
 
 /**
- * An internal icon renderer for Spectrum UI icons (chevrons, checkmarks, arrows, and
- * other control internals). The `icon` attribute selects the icon-set, and the
+ * Renders a Spectrum UI icon (chevrons, checkmarks, arrows, and other control
+ * internals) selected by name. The `icon` attribute selects the icon-set, and the
  * element renders the optically-tuned step that matches its `size`. Extends
  * `IconBase` for size and host-owned accessibility. A curated set of directional
- * icons (chevrons, arrows,corner-triangle) mirror automatically in RTL; consuming components do not
- * need their own mirror rule for these icons. Not published for consumers; used by
- * other swc components.
+ * icons (chevrons, arrows, corner-triangle) mirror automatically in RTL; consuming
+ * components do not need their own mirror rule for these icons. Rendered by Spectrum
+ * controls and available directly from `@adobe/spectrum-wc`.
  *
  * @element swc-ui-icon
- * @status internal
- * @since 2.0.0-beta.1
+ * @since 2.0.0-beta.4
  *
  * @example
  * <swc-ui-icon icon="chevron" size="m" accessible-label="Expand"></swc-ui-icon>

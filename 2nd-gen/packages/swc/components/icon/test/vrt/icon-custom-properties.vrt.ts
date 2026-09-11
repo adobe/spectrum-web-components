@@ -11,7 +11,10 @@
  */
 
 import { html, nothing } from 'lit';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+
+import { Icon_ChevronDown } from '@adobe/spectrum-wc-icons/ChevronDown.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
@@ -24,7 +27,6 @@ import {
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
 import customElementsManifest from '../../../../dist/custom-elements.json';
-import { Chevron100Icon } from '../../elements/Chevron100Icon.js';
 
 // Metadata
 
@@ -38,7 +40,7 @@ export default meta;
 
 // Helpers
 
-const iconSvg = Chevron100Icon();
+const iconSvg = unsafeSVG(Icon_ChevronDown());
 
 // Every `--swc-icon-*` property documented via `@cssprop` in Icon.ts is a
 // public contract: one row per property, a reference icon next to the same
