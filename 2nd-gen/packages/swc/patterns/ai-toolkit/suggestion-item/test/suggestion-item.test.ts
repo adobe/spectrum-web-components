@@ -83,7 +83,7 @@ export const EventTest: Story = {
           { once: true }
         );
 
-        const button = el.shadowRoot?.querySelector<HTMLButtonElement>(
+        const button = el.shadowRoot?.querySelector<HTMLElement>(
           '.swc-SuggestionItem'
         );
         button?.click();
@@ -95,7 +95,7 @@ export const EventTest: Story = {
     await step(
       'keyboard activation (Enter and Space) emits swc-suggestion',
       async () => {
-        const button = el.shadowRoot?.querySelector<HTMLButtonElement>(
+        const button = el.shadowRoot?.querySelector<HTMLElement>(
           '.swc-SuggestionItem'
         );
         expect(button).toBeTruthy();
@@ -198,9 +198,7 @@ export const InsideSuggestionGroupTest: Story = {
         },
         { once: true }
       );
-      el.shadowRoot
-        ?.querySelector<HTMLButtonElement>('.swc-SuggestionItem')
-        ?.click();
+      el.shadowRoot?.querySelector<HTMLElement>('.swc-SuggestionItem')?.click();
       expect(detail?.label).toBe('Create a slide deck from this');
     });
   },
