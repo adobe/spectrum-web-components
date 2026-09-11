@@ -18,7 +18,7 @@ import { glob } from 'glob';
 import { basename, resolve } from 'path';
 import postcss from 'postcss';
 import postcssPresetEnv from 'postcss-preset-env';
-import type { Plugin } from 'vite';
+import type { CSSOptions, Plugin } from 'vite';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import litCss from 'vite-plugin-lit-css';
@@ -119,7 +119,9 @@ export default defineConfig({
   css: {
     transformer: 'postcss',
     postcss: {
-      plugins: postcssPlugins,
+      plugins: postcssPlugins as NonNullable<
+        Exclude<CSSOptions['postcss'], string>
+      >['plugins'],
     },
   },
   build: {

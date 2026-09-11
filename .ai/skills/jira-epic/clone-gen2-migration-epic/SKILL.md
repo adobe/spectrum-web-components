@@ -36,7 +36,7 @@ descriptions and overview text.
 | Key      | Issue Type | Summary                                                                        |
 | -------- | ---------- | ------------------------------------------------------------------------------ |
 | SWC-1727 | Epic       | Migration of the [COMPONENT]                                                   |
-| SWC-1757 | Story      | [A11y([COMPONENT])] Accessibility recommendations for gen2 migration        |
+| SWC-1757 | Story      | [A11y([COMPONENT])] Accessibility recommendations for gen2 migration           |
 | SWC-1758 | Story      | [[COMPONENT]] Analyze component and create migration plan                      |
 | SWC-1759 | Story      | [[COMPONENT]] Foundations — file structure, API, TypeScript, and accessibility |
 | SWC-1762 | Story      | [[COMPONENT]] Full S2 visual fidelity                                          |

@@ -1,7 +1,6 @@
 ---
 name: migration-documentation
-description:
-  Phase 7 of 1st-gen to gen2 component migration. Use to author the
+description: Phase 7 of 1st-gen to gen2 component migration. Use to author the
   per-component MDX docs page and finalize Storybook stories so the
   component is usable and understandable by others.
 ---

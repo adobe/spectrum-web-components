@@ -12,14 +12,14 @@ This is the config most contributors mean when they say "the Vitest config." Run
 
 Test files it executes:
 
-| Glob                                                       | What lives here                                                     |
-| ---------------------------------------------------------- | ------------------------------------------------------------------- |
+| Glob                                                    | What lives here                                                  |
+| ------------------------------------------------------- | ---------------------------------------------------------------- |
 | `gen2/packages/swc/components/*/test/*.test.ts`         | gen2 component unit/integration tests (Lit elements, DOM events) |
-| `gen2/packages/swc/components/*/stories/*.stories.ts`   | Storybook stories with a `play` function tagged for testing         |
-| `gen2/packages/swc/patterns/*/*/test/*.test.ts`         | Pattern tests (e.g. ai-toolkit)                                     |
-| `gen2/packages/swc/patterns/*/*/stories/*.stories.ts`   | Pattern stories tagged for testing                                  |
-| `gen2/packages/core/controllers/*/test/*.test.ts`       | Controller tests (rendered via demo hosts in the browser)           |
-| `gen2/packages/core/controllers/*/stories/*.stories.ts` | Controller stories tagged for testing                               |
+| `gen2/packages/swc/components/*/stories/*.stories.ts`   | Storybook stories with a `play` function tagged for testing      |
+| `gen2/packages/swc/patterns/*/*/test/*.test.ts`         | Pattern tests (e.g. ai-toolkit)                                  |
+| `gen2/packages/swc/patterns/*/*/stories/*.stories.ts`   | Pattern stories tagged for testing                               |
+| `gen2/packages/core/controllers/*/test/*.test.ts`       | Controller tests (rendered via demo hosts in the browser)        |
+| `gen2/packages/core/controllers/*/stories/*.stories.ts` | Controller stories tagged for testing                            |
 
 Run from repo root: `yarn test:gen2` → delegates to `vitest --run --project storybook` in `swc/`.
 

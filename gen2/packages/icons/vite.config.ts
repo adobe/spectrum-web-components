@@ -14,7 +14,7 @@ import autoprefixer from 'autoprefixer';
 import { glob } from 'glob';
 import { resolve } from 'path';
 import postcssPresetEnv from 'postcss-preset-env';
-import { defineConfig } from 'vite';
+import { defineConfig, type CSSOptions } from 'vite';
 import dts from 'vite-plugin-dts';
 import litCss from 'vite-plugin-lit-css';
 
@@ -67,7 +67,9 @@ export default defineConfig({
   css: {
     transformer: 'postcss',
     postcss: {
-      plugins: postcssPlugins,
+      plugins: postcssPlugins as NonNullable<
+        Exclude<CSSOptions['postcss'], string>
+      >['plugins'],
     },
   },
   build: {

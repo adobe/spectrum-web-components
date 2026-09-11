@@ -22,4 +22,4 @@ If a change belongs in both generations, make it in `gen2/packages/core/` so bot
 - [`tools/AGENTS.md`](./tools/AGENTS.md) — shared tooling
 - [`projects/AGENTS.md`](./projects/AGENTS.md) — non-component workspaces
 - [`gen2/AGENTS.md`](../gen2/AGENTS.md) — the future direction
-- [Migration workstream docs](../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/README.md)
+- [Migration workstream docs](../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md)

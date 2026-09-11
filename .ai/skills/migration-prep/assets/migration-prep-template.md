@@ -191,17 +191,17 @@ Summarize must-ship aspects across the following categories.
 <!-- Prefer a short source note in the "What changes" or "Notes" text when a breaking change is recommended, especially for renames or deprecations. -->
 
 | #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
-| --- | ------------ | ---------------- | ---------------- | ----------------------- |
+| --- | ------------ | ---------------- | ------------- | ----------------------- |
 
 #### Styling and visuals
 
 | #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
-| --- | ------------ | ---------------- | ---------------- | ----------------------- |
+| --- | ------------ | ---------------- | ------------- | ----------------------- |
 
 #### Accessibility and behavior
 
 | #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
-| --- | ------------ | ---------------- | ---------------- | ----------------------- |
+| --- | ------------ | ---------------- | ------------- | ----------------------- |
 
 ### Additive — ships when ready, zero breakage for consumers already on gen2
 
@@ -298,8 +298,8 @@ Follow the [Badge migration reference](../../02_workstreams/02_gen2-component-mi
 
 <!-- Use the prescribed table format below; do not convert this section to bullets or another schema. -->
 
-| Layer    | Path                                            | Contains                                                                                                                                                                                                                                          |
-| -------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Layer    | Path                                         | Contains                                                                                                                                                                                                                                          |
+| -------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Core** | `gen2/packages/core/components/[component]/` | `[Component].base.ts`, `[Component].types.ts`, validation, state, accessible-name logic, attribute forwarding, pending-label behavior, and other reusable semantic rules. No rendering. Add component-specific reusable behaviors here as needed. |
 | **SWC**  | `gen2/packages/swc/components/[component]/`  | `[Component].ts`, `[component].css`, element registration, stories, tests, and the specific S2 rendering/styling for `sp-[component]`.                                                                                                            |
 

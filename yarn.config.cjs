@@ -27,13 +27,10 @@ module.exports = defineConfig({
      * Fetch a list of all the component workspaces using a glob pattern
      * @type {string[]} components
      */
-    const components = fg.sync(
-      '{1st-gen/{packages,tools},gen2/packages}/*',
-      {
-        cwd: __dirname,
-        onlyDirectories: true,
-      }
-    );
+    const components = fg.sync('{1st-gen/{packages,tools},gen2/packages}/*', {
+      cwd: __dirname,
+      onlyDirectories: true,
+    });
 
     /**
      * This function checks the workspace for any local package references

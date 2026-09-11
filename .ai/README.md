@@ -146,8 +146,8 @@ These two rules share the same glob/path set (`gen2/**/stories/**` and `gen2/**/
 | branch-naming                  |       x       |                  |                   |              | —                                 |
 | styles                         |       x       |                  |                   |              | `*.css`                           |
 | text-formatting                |               |        x         |                   |              | `**/*.md`, `**/*.txt`, `**/*.mdx` |
-| stories-documentation          |               |        x         |                   |              | `gen2/**/*.mdx`                |
-| stories-format                 |               |        x         |                   |              | `gen2/**/stories/**`           |
+| stories-documentation          |               |        x         |                   |              | `gen2/**/*.mdx`                   |
+| stories-format                 |               |        x         |                   |              | `gen2/**/stories/**`              |
 | component-readme               |               |        x         |                   |              | `1st-gen/packages/*/README.md`    |
 | contributor-doc-update         |               |        x         |                   |              | `CONTRIBUTOR-DOCS/**`             |
 | storybook-mdx-conversion       |               |        x         |                   |              | `**/*.md`, `**/*.mdx`             |

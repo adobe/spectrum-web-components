@@ -63,16 +63,16 @@ That skill is the authoritative source for what to check in each domain and whic
 
 **Files in scope for this component:**
 
-| Domain     | Files                                                                        |
-| ---------- | ---------------------------------------------------------------------------- |
+| Domain     | Files                                                                     |
+| ---------- | ------------------------------------------------------------------------- |
 | TypeScript | `gen2/packages/core/components/[component]/[Component].base.ts`           |
 |            | `gen2/packages/core/components/[component]/[Component].types.ts`          |
 |            | `gen2/packages/swc/components/[component]/[Component].ts`                 |
-|            | Any mixins, controllers, or directives added for this component              |
+|            | Any mixins, controllers, or directives added for this component           |
 | CSS        | `gen2/packages/swc/components/[component]/[component].css`                |
 | Tests      | `gen2/packages/swc/components/[component]/test/[component].test.ts`       |
 |            | `gen2/packages/swc/components/[component]/test/[component].a11y.spec.ts`  |
-|            | Play functions within the stories file                                       |
+|            | Play functions within the stories file                                    |
 | Stories    | `gen2/packages/swc/components/[component]/stories/[component].stories.ts` |
 
 ### Step 3: Surface any guideline gaps
