@@ -199,6 +199,14 @@
       "types": "./dist/components/tabs/index.d.ts",
       "import": "./dist/components/tabs/index.js"
     },
+    "./components/toast": {
+      "types": "./dist/components/toast/index.d.ts",
+      "import": "./dist/components/toast/index.js"
+    },
+    "./components/toast/index.js": {
+      "types": "./dist/components/toast/index.d.ts",
+      "import": "./dist/components/toast/index.js"
+    },
     "./components/tooltip": {
       "types": "./dist/components/tooltip/index.d.ts",
       "import": "./dist/components/tooltip/index.js"
@@ -502,6 +510,12 @@
       ],
       "components/tabs/index.js": [
         "dist/components/tabs/index.d.ts"
+      ],
+      "components/toast": [
+        "dist/components/toast/index.d.ts"
+      ],
+      "components/toast/index.js": [
+        "dist/components/toast/index.d.ts"
       ],
       "components/tooltip": [
         "dist/components/tooltip/index.d.ts"
