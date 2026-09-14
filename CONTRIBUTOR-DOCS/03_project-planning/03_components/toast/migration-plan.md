@@ -57,20 +57,12 @@
 ## TL;DR
 
 - Toast is a small, self-contained component: one host, one message slot, one optional action, a close button, an auto-dismiss timer.
-- Toast ships alongside a first-party container/queue in this migration. The container's shape and API are still being worked out; see Q6 in the [Decision log](#decision-log).
+- Toast ships alongside a first-party container/queue in this migration (Q6). Resolving Q5 (queue construct location/ownership) and Q8 (repositioning animation) is a near-term prerequisite, not a deferred tail-end item: most of the [API](#api) checklist's container-and-queue work, and nearly all of [Accessibility](#accessibility), depend on that architecture existing. Only a narrow single-toast skeleton is independent of it. See [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites).
 - 1st-gen defines 5 variant values (`negative`, `positive`, `info`, `error`, `warning`); `error` and `warning` are already deprecated aliases of `negative` in 1st-gen and do not carry forward. 2nd-gen has 4 variants: `neutral`, `info`, `positive`, `negative`.
-- Points of disagreement, see [Design](#design) for more detail:
-    - **Timeout minimum** (6000ms vs. 5000ms)
-    - **Action+timeout** (soft warning vs. hard block)
-    - **Action API shape** (light-DOM `action` slot vs. `actionLabel`/`onAction` props)
-    - **Timer pause scope** (per-toast vs. region-wide)
+- Q1, Q2, Q3, and Q7 are resolved; see the [Decision log](#decision-log). Q9 is the one remaining blocking item, see below.
 
 ### Most blocking open questions
 
-- **Q1** in [Design](#design): timeout minimum. 6000ms (1st-gen/a11y doc) vs. 5000ms (RSP S2).
-- **Q2** in [Design](#design): action + auto-dismiss. Warn-only vs. hard-disable timeout when an action is present.
-- **Q3** in [Design](#design): action API shape. `action` slot (light DOM) vs. `action-label`/`swc-action` props.
-- **Q7** in [Design](#design): timer pause scope. Per-toast (a11y doc's current recommendation) vs. region-wide (RSP S2 reality).
 - **Q9** in [Design](#design): message content slot. Default slot (current plan, may lack an ID-bearing wrapper) vs. a named slot (guarantees one).
 
 ---
@@ -178,18 +170,22 @@ Already-fixed gen1 bugs whose behavior must not regress in 2nd-gen (not listed a
 
 ### Dependency-aware recommendation
 
-No prerequisites. Toast has no dependents in-tree and depends only on `swc-close-button`, which already exists in 2nd-gen (`2nd-gen/packages/swc/components/close-button/`). Toast's pause-preserving countdown can't live inline in `Toast.base.ts`: once a toast can be demoted to a non-rendered peek layer in the queue, per-instance state doesn't survive that. It needs its own queue-level construct, separate from `Toast.base.ts`, regardless of whether any other component ever needs a similar controller. See Q5 in [Architecture and behavior](#architecture-and-behavior).
+No external prerequisites. Toast has no dependents in-tree and depends only on `swc-close-button`, which already exists in 2nd-gen (`2nd-gen/packages/swc/components/close-button/`). Toast's pause-preserving countdown can't live inline in `Toast.base.ts`: once a toast can be demoted to a non-rendered peek layer in the queue, per-instance state doesn't survive that. It needs its own queue-level construct, separate from `Toast.base.ts`, regardless of whether any other component ever needs a similar controller. See Q5 in [Architecture and behavior](#architecture-and-behavior).
+
+Internally, though, resolving Q5 and Q8 is the near-term prerequisite for most of the remaining work. A narrow single-toast skeleton (variant/icon-label validation, `action`-slot wiring via `SlotPresenceController`/`SlotAttributePropagationController`, the close button, lifecycle events via `runAfterTransition`, and the A1-A3/A7/`tabindex` accessibility items) is independent and can proceed now. Everything else, timeout/pause behavior (Q1/Q2/Q7), the API checklist's container-and-queue bullets, and nearly all of the Accessibility checklist (focus management across toasts, focus-on-queue-empty, collapse-to-region, landmark navigation), depends on the container/queue construct actually existing, so it waits on Q5/Q8.
 
 ### Related components and ordering notes
 
 | Component | Relationship | Notes |
 | --------- | ------------ | ----- |
 | `swc-close-button` | Dependency, already migrated | `accessible-label` confirmed as the real 2nd-gen attribute (verified in `button` family source) |
-| Toast container / queue | In scope, ships alongside `swc-toast` | Shape and API still being finalized across this plan; see Q6 |
+| Toast container / queue | In scope, ships alongside `swc-toast` | Shape and API still being finalized across this plan; see Q6. Resolving Q5/Q8 is sequenced ahead of most remaining implementation work, not after it; see note below. |
 
 ### User confirmation needed
 
 Whether the queue's countdown construct belongs in a shared, cross-component location (`2nd-gen/packages/core/controllers/`), in case another component needs similar queue behavior later, or stays toast-specific under `2nd-gen/packages/core/components/toast/` until a second consumer actually appears. Also unresolved: what owns the container's visual rendering (region wrapper, list, peek-stack layering, expanded view), since the Queue construct as currently scoped is state-only. See Q5 in [Architecture and behavior](#architecture-and-behavior).
+
+**Container/queue ticket (placeholder):** a follow-up ticket tracks resolving Q5 and Q8 and then building the container/queue construct, its styling (peek-stack depth, expand/collapse layout), and the multi-toast portions of Accessibility that depend on it. It is sequenced ahead of the remaining API and Accessibility work, not after it: only the narrow single-toast skeleton described above proceeds independently in the meantime. This does not reopen Q6; the container still ships as part of this migration, the ticket just tracks the order the work happens in.
 
 ---
 
@@ -226,9 +222,9 @@ Whether the queue's countdown construct belongs in a shared, cross-component loc
 | A1 | Host role | `role="alert"` on inner `.body` div only | `role="alertdialog"` + `aria-modal="false"` on host; inner `role="alert"` `aria-atomic="true"` | None |
 | A2 | Host naming | None | `aria-labelledby` referencing a content-element ID, falling back to `aria-label` from default-slot text | None |
 | A3 | `aria-hidden` when closed | Not set (CSS only) | `aria-hidden="true"` on host when `open` is false | None |
-| A4 | Timer pause | `focusin`/`focusout` only; restarts full timeout | Pause on `pointerenter` + `focusin`; preserve remaining time; resume only when both clear. Per-toast vs. region-wide scope is Q7 | None |
-| A5 | Timeout minimum | 6000ms | ❓ Pending Q1: 6000ms or 5000ms | None |
-| A6 | Action + auto-dismiss | Unguarded | ❓ Pending Q2: dev warning vs. hard-disable | Depends on Q2 resolution |
+| A4 | Timer pause | `focusin`/`focusout` only; restarts full timeout | Pause on `pointerenter` + `focusin`; preserve remaining time; resume only when both clear. Region-wide: pausing any visible toast pauses every visible toast together (Q7) | None |
+| A5 | Timeout minimum | 6000ms | 6000ms (Q1) | None |
+| A6 | Action + auto-dismiss | Unguarded | Hard-disabled: if the action slot has content at open time, the timeout has no effect, paired with a `warnIf()` dev warning (Q2) | None |
 | A7 | Close button label | `label="Close"` | `accessible-label="Close"` on `swc-close-button` | None |
 
 #### Container and queue
@@ -261,9 +257,9 @@ Derived from the 1st-gen implementation, the accessibility migration analysis, t
 | -------- | ---- | ------- | --------- | ----- |
 | `open` | `boolean` | `false` | `open` (reflect) | **Confirmed.** |
 | `variant` | `'neutral' \| 'info' \| 'positive' \| 'negative'` | `'neutral'` | `variant` (reflect) | **Confirmed.** Figma and RSP S2 both show 4 variants; 1st-gen's `error`/`warning` are deprecated aliases of `negative`, not carried forward |
-| `timeout` | `number \| null` | `null` | `timeout` | **Open question.** Floor value is Q1 |
+| `timeout` | `number \| null` | `null` | `timeout` | **Confirmed.** Floors to 6000ms; `null`/`0`/negative disables auto-dismiss, matching 1st-gen (Q1). Has no effect when the action slot has content at open time (Q2) |
 | `icon-label` | `string \| undefined` | `undefined` | `icon-label` | **Confirmed.** Carried forward as-is |
-| `action-label` / keep `action` slot | — | — | — | **Open question**, Q3 |
+| `action` slot (kept) | — | — | — | **Confirmed.** Keeps the light-DOM `action` slot from 1st-gen rather than switching to props (Q3) |
 
 #### Visual matrix (2nd-gen)
 
@@ -283,7 +279,7 @@ Action button (when present): secondary, outline, `static-color="white"`. Confir
 | Slot | Content | Notes |
 | ---- | ------- | ----- |
 | default | Toast message text | **Open question**, Q9: staying the default slot means content can be a bare text node with no element to hold the `aria-labelledby` target ID (falls back to `aria-label`, see [Accessibility semantics notes](#accessibility-semantics-notes-2nd-gen)); a named slot would let the component guarantee a light-DOM wrapper instead. |
-| `action` | Optional action button | **Open question**, Q3: may become `action-label`/`swc-action` props instead. If the slot is kept, presence is gated by `SlotPresenceController` and `size`/`variant` are propagated onto the slotted button by `SlotAttributePropagationController`, both already built; see [Dependencies](#dependencies). |
+| `action` | Optional action button | **Confirmed** (Q3): kept as a light-DOM slot rather than `action-label`/`swc-action` props. Presence is gated by `SlotPresenceController` and `size`/`variant` are propagated onto the slotted button by `SlotAttributePropagationController`, both already built; see [Dependencies](#dependencies). |
 
 #### CSS custom properties (2nd-gen)
 
@@ -298,7 +294,7 @@ No properties are exposed in the initial set. Add a `--swc-toast-*` property onl
 
 ### Behavioral semantics
 
-- Auto-dismiss timer pauses on `pointerenter` + `focusin`, preserving remaining time; resumes only once both `pointerleave` and `focusout` have fired. This describes per-toast pause; whether this should instead be region-wide (matching RSP S2, which pauses every visible toast together) is Q7.
+- Auto-dismiss timer pauses on `pointerenter` + `focusin`, preserving remaining time; resumes only once both `pointerleave` and `focusout` have fired. This is region-wide (Q7): pausing any visible toast pauses every visible toast in the region together, matching RSP S2's `pauseAll()`/`resumeAll()`, not just the toast under the pointer or focus.
 - Matches the event set of other visibility-toggling components: `swc-open` before the enter transition plays, `swc-after-open` once it completes, `swc-close` (cancelable) before the exit transition plays, `swc-after-close` once it completes.
 - Text wrapping is automatic, not an option. Content wraps naturally within whatever `max-inline-size` the host is given (directly stylable from outside; no `--swc-*` custom property, see [CSS custom properties (2nd-gen)](#css-custom-properties-2nd-gen)); no `width` property exists on `sp-toast` in 1st-gen or on `Toast` in RSP S2. Long unbroken words specifically need `overflow-wrap`/`word-break` (SWC-475, see [Styling](#styling)) on top of normal wrapping.
 - No `placement` property. Confirmed absent from 1st-gen `sp-toast`'s own API: the 1st-gen story's `placement` values (bottom/left/right/top) belong to `overlay-trigger`, an unrelated demo wrapper, not `sp-toast` itself. RSP's `placement` (`top`/`bottom`/`top end`/`bottom end`) lives on `ToastContainer`, never on individual `Toast`. Placement is a future container-level concern; see Q6.
@@ -371,10 +367,12 @@ Planned rendering shape:
 - [ ] Wire `SlotPresenceController` to gate on whether the `action` slot has content
 - [ ] Wire `SlotAttributePropagationController` to propagate `size`/`variant` onto the slotted `action` button
 - [ ] Gate `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` on the host's own CSS transition completion via the shared `runAfterTransition`
-- [ ] Queue construct (core, exact location pending Q5): timeout floor (resolve Q1 first), pause/resume rules, remaining-time tracking, keyed to each toast's queue record
 
 #### Container and queue
 
+> Blocked on resolving Q5 (queue construct location/ownership) and Q8 (repositioning animation) first. This work, and most of [Accessibility](#accessibility), is sequenced ahead of the rest of the implementation, not deferred behind it; only the single-toast bullets above are independent of it.
+
+- [ ] Queue construct (core, exact location pending Q5): timeout floor (6000ms, Q1), pause/resume rules, remaining-time tracking, keyed to each toast's queue record
 - [ ] Queue construct: `clear()` method, empties every queued toast at once
 - [ ] Queue construct: new toasts join the front, not the back; no cap on how many stay tracked
 - [ ] Peek-stack rendering: only the front toast is a real `alertdialog`; the two behind it render as `role="presentation"` layers; anything further back stays in the DOM at `opacity: 0`
@@ -390,7 +388,6 @@ Planned rendering shape:
 
 #### Alignment checks
 
-- [ ] Confirm action API shape with Design (Q3)
 - [ ] Confirm message slot shape with Design (Q9)
 
 ### Styling
@@ -418,7 +415,7 @@ Planned rendering shape:
 
 ### Accessibility
 
-Checklist items sourced from [accessibility-migration-analysis.md](./accessibility-migration-analysis.md); resolve Q1, Q2, Q7, Q9 before treating this section as final.
+Checklist items sourced from [accessibility-migration-analysis.md](./accessibility-migration-analysis.md); resolve Q9 before treating this section as final. Most of this section also depends on the container/queue construct existing (Q5/Q8): only naming/semantics and the single-toast items in State verification (`tabindex`) are independent. Focus management across toasts, focus-on-queue-empty, collapse-to-region, and landmark navigation all require the container.
 
 #### Naming and semantics
 
@@ -428,8 +425,8 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 
 #### State verification
 
-- [ ] Timer pauses on `pointerenter` + `focusin`, preserves remaining time, resumes only when both clear; scope (per-toast vs. region-wide) resolved per Q7
-- [ ] Dev warning via `warnIf()` (or hard block, pending Q2) when `timeout` and `action` slot both set, gated on slot presence via `SlotPresenceController`
+- [ ] Timer pauses on `pointerenter` + `focusin`, preserves remaining time, resumes only when both clear; region-wide, pausing any visible toast pauses all of them (Q7)
+- [ ] `timeout` hard-disabled when the action slot has content, checked once at open time (not live-reactive to later slot changes), gated on slot presence via `SlotPresenceController`; paired with a `warnIf()` dev warning, matching the "mutually exclusive / no-effect combination" pattern used elsewhere (e.g. Badge's `outline` + non-semantic `variant`) (Q2)
 - [ ] `tabindex="0"` on host always; opening a toast does not move focus there
 - [ ] Focus management on toast-close: nearest remaining toast for keyboard users, out of the region entirely for pointer users
 - [ ] When the last toast closes and the queue empties, focus returns to whatever was focused before the user entered the region, regardless of modality
@@ -488,11 +485,9 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 
 | # | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q1 | Timeout minimum: 6000ms (1st-gen, current a11y doc, SWC-610 unresolved) or 5000ms (spectrum.adobe.com spec, RSP S2 `Toast.tsx`)? | Yes | Open ❓ | Accessibility reviewer |
-| Q2 | Action + auto-dismiss: dev warning only (a11y doc) or hard-disable timeout whenever an action is present (RSP S2: `timeout` forced to `undefined` if `actionLabel` set)? | Yes | Open ❓ | Design + accessibility reviewer |
-| Q3 | Action API shape: keep light-DOM `action` slot (1st-gen) or switch to `action-label`/`swc-action` event props (RSP S2 `actionLabel`/`onAction`/`shouldCloseOnAction`)? Leaning toward keeping the slot: matches 1st-gen with no consumer migration needed, though this is a deviation from RSP's props-based model. | Yes | Open ❓ | Design + implementation |
-| Q7 | Timer pause scope: pause only the toast under the pointer or focus (a11y doc's current recommendation, per-toast) or pause every visible toast in the region together (RSP S2's actual `useToastRegion.ts`: `useHover`/`useFocusWithin` at the region level call `pauseAll()`/`resumeAll()` on the whole queue)? | Yes | Open ❓ | Accessibility reviewer |
 | Q9 | Message content: stay the default slot (current plan), or become a named slot? Default-slot content can be a bare text node with no element to hold the `aria-labelledby` target ID, silently falling back to `aria-label`; a named slot would let the component guarantee a light-DOM wrapper instead. | Yes | Open ❓ | Design + accessibility reviewer |
+
+Q1, Q2, Q3, and Q7 were previously listed here; all four are now resolved, see the [Decision log](#decision-log).
 
 ### Architecture and behavior
 
@@ -513,8 +508,12 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 
 | Ref | Decision | Rationale / context |
 | --- | -------- | -------------------- |
+| Q1 | Timeout floors to 6000ms, matching 1st-gen and the current accessibility migration analysis, not RSP S2's 5000ms. | Team decision going into the API phase. |
+| Q2 | `timeout` is hard-disabled (not just a dev warning) whenever the action slot has content, matching RSP S2's `timeout` forced to `undefined` when `actionLabel` is set. Checked once, at open time, not continuously reactive to later slot changes. | Team decision going into the API phase. The action slot is light DOM, so its presence can change after a toast is already open (unlike RSP's `actionLabel`, a prop fixed at creation); evaluating once at open avoids designing a live pause/resume/restart state machine for that edge case. Paired with a `warnIf()` dev warning, matching the codebase's existing "mutually exclusive / no-effect combination" pattern (e.g. Badge's `outline` + non-semantic `variant`, Progress-circle's `indeterminate` + `value`) rather than staying silent. |
+| Q3 | Keep the light-DOM `action` slot from 1st-gen, rather than switching to `action-label`/`swc-action` props. | Team decision going into the API phase. Matches 1st-gen with no consumer migration needed; `SlotPresenceController` and `SlotAttributePropagationController` (both already built) cover presence-gating and `size`/`variant` propagation. |
 | Q4 | `tabindex="0"` on host always, not conditional on container presence. Opening a toast does not move focus there. | The accessibility migration analysis previously recommended conditional `tabindex` and focus-on-open; both were corrected after checking the real RSP S2 source, which sets `tabIndex: 0` unconditionally but never autofocuses a toast on open. `tabindex="0"` makes the host a normal tab stop, matching RSP. |
 | Q6 | `swc-toast` ships alongside a first-party container/queue in this migration, rather than standalone with the container deferred. | Settled via team sync. Only "whether to build it in this cycle" is resolved; the container's shape and API (peek stack, expand/collapse, focus management, `clear()`, and related accessibility behavior) remain open and are being worked out incrementally across this plan. If built, `placement` (RSP precedent: `top`/`bottom`/`top end`/`bottom end`) belongs on the container, not on `swc-toast` itself. |
+| Q7 | Timer pause is region-wide: pausing any visible toast pauses every visible toast in the region together, matching RSP S2's `pauseAll()`/`resumeAll()`, not the accessibility migration analysis's earlier per-toast recommendation. | Team decision going into the API phase. |
 
 ---
 
