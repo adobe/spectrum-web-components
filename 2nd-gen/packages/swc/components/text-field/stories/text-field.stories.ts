@@ -65,9 +65,11 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   tags: ['overview'],
-  args: {
-    'accessible-label': 'Example text field',
-  },
+  render: () => html`
+    <swc-text-field>
+      <span slot="label">Email address</span>
+    </swc-text-field>
+  `,
 };
 
 // ──────────────────────────
