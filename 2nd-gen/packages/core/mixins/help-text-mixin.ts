@@ -91,6 +91,23 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
     /** @internal */
     private _errorTextElement: Element | undefined;
 
+    /**
+     * @internal Stable `ref` callbacks so Lit does not detach/reattach the
+     * refs on every render (a fresh arrow each render would).
+     */
+    private readonly _captureDescriptionElement = (
+      element: Element | undefined
+    ): void => {
+      this._descriptionElement = element;
+    };
+
+    /** @internal */
+    private readonly _captureErrorTextElement = (
+      element: Element | undefined
+    ): void => {
+      this._errorTextElement = element;
+    };
+
     /** @internal */
     public get hasDescriptionSlotContent(): boolean {
       return this._helpTextSlotPresence.getPresence(DESCRIPTION_SLOT_SELECTOR);
@@ -149,12 +166,8 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
         hasDescriptionSlotContent: this.hasDescriptionSlotContent,
         hasErrorTextSlotContent: this.hasErrorTextSlotContent,
         invalid: this._isInvalid,
-        onDescriptionElement: (element) => {
-          this._descriptionElement = element;
-        },
-        onErrorTextElement: (element) => {
-          this._errorTextElement = element;
-        },
+        onDescriptionElement: this._captureDescriptionElement,
+        onErrorTextElement: this._captureErrorTextElement,
       });
     }
 
