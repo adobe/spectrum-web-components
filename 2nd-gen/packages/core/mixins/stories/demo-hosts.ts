@@ -19,7 +19,6 @@ import { HelpTextMixin, LabellingMixin } from '../index.js';
 declare global {
   interface HTMLElementTagNameMap {
     'demo-help-text-host': DemoHelpTextHost;
-    'demo-help-text-group-host': DemoHelpTextGroupHost;
     'demo-labelling-host': DemoLabellingHost;
   }
 }
@@ -67,34 +66,6 @@ export class DemoHelpTextHost extends HelpTextMixin(LitElement) {
   protected override render(): TemplateResult {
     return html`
       <input aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)} />
-      ${this.renderHelpText()}
-    `;
-  }
-}
-
-/**
- * @internal
- *
- * Storybook-only host that consumes {@link HelpTextMixin} as a group control
- * with no inner role element (like a radio group): it describes the host
- * itself via `ElementInternals` instead of a `roleElement`.
- */
-@customElement('demo-help-text-group-host')
-export class DemoHelpTextGroupHost extends HelpTextMixin(LitElement) {
-  static override styles = DEMO_STYLES;
-
-  private readonly _internals = this.attachInternals();
-
-  /** Whether the demo group is in an invalid state. */
-  @property({ type: Boolean, reflect: true })
-  public invalid = false;
-
-  public override get describedByInternals(): ElementInternals {
-    return this._internals;
-  }
-
-  protected override render(): TemplateResult {
-    return html`
       ${this.renderHelpText()}
     `;
   }
