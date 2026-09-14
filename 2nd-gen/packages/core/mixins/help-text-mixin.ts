@@ -17,7 +17,7 @@ import {
   renderFieldHelpText,
   type RenderFieldHelpTextResult,
 } from '../directives/render-help-text/index.js';
-import { isDebug, warnIf } from '../utils/index.js';
+import { componentDocsHref, isDebug, warnIf } from '../utils/index.js';
 
 type Constructor<T = Record<string, unknown>> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -130,8 +130,7 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
 
     /** @internal Docs URL for dev warnings, derived from the tag name. */
     protected get docsHref(): string {
-      const name = this.localName.replace(/^swc-/, '');
-      return `https://spectrum-web-components.adobe.com/?path=/docs/components-${name}--docs`;
+      return componentDocsHref(this.localName);
     }
 
     /**
