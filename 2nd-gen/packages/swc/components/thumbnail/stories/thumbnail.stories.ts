@@ -163,3 +163,20 @@ export const ConsumerStyledStates: Story = {
   parameters: { flexLayout: 'row-wrap' },
   tags: ['behaviors'],
 };
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+export const Accessibility: Story = {
+  render: () => html`
+    <swc-thumbnail>
+      <img src=${PLACEHOLDER_SRC} alt="Preview" />
+    </swc-thumbnail>
+    <swc-thumbnail decorative>
+      <img src=${PLACEHOLDER_SRC} alt="" />
+    </swc-thumbnail>
+  `,
+  parameters: { flexLayout: 'row-wrap' },
+  tags: ['a11y'],
+};
