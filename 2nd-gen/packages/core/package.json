@@ -139,6 +139,10 @@
       "types": "./dist/components/tooltip/index.d.ts",
       "import": "./dist/components/tooltip/index.js"
     },
+    "./components/user-card": {
+      "types": "./dist/components/user-card/index.d.ts",
+      "import": "./dist/components/user-card/index.js"
+    },
     "./controllers": {
       "types": "./dist/controllers/index.d.ts",
       "import": "./dist/controllers/index.js"
@@ -380,6 +384,9 @@
       ],
       "components/tooltip": [
         "dist/components/tooltip/index.d.ts"
+      ],
+      "components/user-card": [
+        "dist/components/user-card/index.d.ts"
       ],
       "controllers": [
         "dist/controllers/index.d.ts"
