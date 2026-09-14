@@ -357,10 +357,10 @@ Planned rendering shape:
 
 ### Setup
 
-- [ ] Create `gen2/packages/core/components/toast/`
-- [ ] Create `gen2/packages/swc/components/toast/`
-- [ ] Wire exports in both `package.json` files
-- [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
+- [x] Create `gen2/packages/core/components/toast/`
+- [x] Create `gen2/packages/swc/components/toast/`
+- [x] Wire exports in both `package.json` files
+- [x] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
 
 ### API
 
