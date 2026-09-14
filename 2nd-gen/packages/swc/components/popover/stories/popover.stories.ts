@@ -29,13 +29,6 @@ import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 
 const { events, args, argTypes, template } = getStorybookHelpers('swc-popover');
 
-argTypes.placement = {
-  ...argTypes.placement,
-  control: { type: 'select' },
-  options: Popover.VALID_PLACEMENTS,
-  table: { category: 'attributes', defaultValue: { summary: 'bottom' } },
-};
-
 argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },

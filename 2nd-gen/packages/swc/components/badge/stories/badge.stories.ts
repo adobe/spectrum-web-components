@@ -41,18 +41,6 @@ import { SIZE_LABELS } from '../../../.storybook/helpers/index.js';
 const { args, argTypes, template } = getStorybookHelpers('swc-badge');
 
 // @todo: Carry the args table defaultValue pattern to all argTypes in all components. Explore how to get our custom types to properly reflect with this new pattern.
-argTypes.variant = {
-  ...argTypes.variant,
-  control: { type: 'select' },
-  options: Badge.VARIANTS,
-  table: {
-    category: 'attributes',
-    defaultValue: {
-      summary: 'neutral',
-    },
-  },
-};
-
 argTypes.fixed = {
   ...argTypes.fixed,
   control: { type: 'select' },
@@ -61,8 +49,6 @@ argTypes.fixed = {
 
 argTypes.size = {
   ...argTypes.size,
-  control: { type: 'select' },
-  options: Badge.VALID_SIZES,
   table: {
     ...argTypes.size?.table,
     category: 'attributes',

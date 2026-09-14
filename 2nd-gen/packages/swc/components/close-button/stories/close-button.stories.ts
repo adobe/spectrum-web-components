@@ -29,8 +29,6 @@ const { args, argTypes, template } = getStorybookHelpers('swc-close-button');
 
 argTypes.size = {
   ...argTypes.size,
-  control: { type: 'select' },
-  options: BUTTON_VALID_SIZES,
   table: {
     category: 'attributes',
     defaultValue: {

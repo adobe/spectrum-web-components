@@ -14,7 +14,6 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { Avatar } from '@adobe/spectrum-wc/avatar';
 import { AVATAR_VALID_SIZES } from '@adobe/spectrum-wc-core/components/avatar/index.js';
 
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
@@ -25,12 +24,6 @@ import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 // ────────────────
 
 const { args, argTypes, template } = getStorybookHelpers('swc-avatar');
-
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: Avatar.VALID_SIZES.map(String),
-};
 
 argTypes.outline = {
   ...argTypes.outline,

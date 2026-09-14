@@ -27,8 +27,6 @@ const { events, args, argTypes, template } = getStorybookHelpers('swc-divider');
 
 argTypes.size = {
   ...argTypes.size,
-  control: { type: 'select' },
-  options: Divider.VALID_SIZES,
   table: {
     category: 'attributes',
     defaultValue: {
