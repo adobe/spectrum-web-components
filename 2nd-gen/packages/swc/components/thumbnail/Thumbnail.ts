@@ -22,6 +22,7 @@ import styles from './thumbnail.css';
  * panel, in a consistent checkerboard-backed frame.
  *
  * @element swc-thumbnail
+ * @since 2.0.0-beta.1
  *
  * @slot - Image element to present in the thumbnail.
  *
