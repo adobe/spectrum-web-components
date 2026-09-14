@@ -728,7 +728,7 @@ class ConversationFullPatternDemo extends LitElement {
             @swc-prompt-field-drop=${this.handleDrop}
           >
             ${this.renderAttachments()}
-            <p slot="legal" class="swc-PromptField-legal-disclaimer">
+            <p slot="legal" class="swc-Typography--links">
               Responses are generated using AI, and may be inaccurate. Check
               before using.
               <a
@@ -797,7 +797,7 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
       ></div>
       <span slot="badge">PDF</span>
     </swc-upload-attachment>
-    <p slot="legal" class="swc-PromptField-legal-disclaimer">
+    <p slot="legal" class="swc-Typography--links">
       Responses are generated using AI, and may be inaccurate. Check before
       using.
       <a
