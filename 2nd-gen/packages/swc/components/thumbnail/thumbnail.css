@@ -12,6 +12,7 @@
 
 :host {
   display: block;
+  inline-size: fit-content;
 }
 
 * {
@@ -30,10 +31,12 @@
 }
 
 .swc-Thumbnail::before {
+  --_swc-thumbnail-border-color: color-mix(in srgb, token("thumbnail-border-color") calc(token("thumbnail-border-opacity") * 100%), transparent);
+
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  box-shadow: inset 0 0 0 token("border-width-100") color-mix(in srgb, token("thumbnail-border-color") calc(token("thumbnail-border-opacity") * 100%), transparent);
+  box-shadow: inset 0 0 0 token("border-width-100") var(--_swc-thumbnail-border-color);
   content: "";
 }
 
@@ -100,11 +103,10 @@
   inline-size: 100%;
   block-size: 100%;
   object-fit: cover;
-  object-position: center;
 }
 
 @media (forced-colors: active) {
   .swc-Thumbnail::before {
-    box-shadow: inset 0 0 0 token("border-width-100") CanvasText;
+    --_swc-thumbnail-border-color: CanvasText;
   }
 }

@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
@@ -81,7 +81,7 @@ export const DecorativeToggleTest: Story = {
 };
 
 export const MissingAltWarningTest: Story = {
-  render: () => nothing,
+  render: () => html``,
   play: async ({ canvasElement, step }) => {
     await step('warns exactly once for a missing accessible name', async () => {
       let count = 0;
