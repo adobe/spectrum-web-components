@@ -44,6 +44,14 @@ export interface HelpTextInterface {
    * `null`; a rendering subclass overrides it to return the real role element.
    */
   readonly roleElement: Element | null;
+
+  /**
+   * @internal Host `ElementInternals` for a control with no inner role element
+   * (e.g. a radio group); the description wires onto it instead of
+   * {@link roleElement}. Defaults to `null`; a consumer overrides it.
+   */
+  readonly describedByInternals: ElementInternals | null;
+
   /** Renders the description/error-text markup for the current state. */
   renderHelpText(): RenderFieldHelpTextResult;
 }
@@ -95,6 +103,11 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
 
     /** @internal */
     public get roleElement(): Element | null {
+      return null;
+    }
+
+    /** @internal */
+    public get describedByInternals(): ElementInternals | null {
       return null;
     }
 
@@ -184,10 +197,6 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
     }
 
     private _syncHelpText(): void {
-      const target = this.roleElement as DescribedByTarget | null;
-      if (!target) {
-        return;
-      }
       // Mirror the rendered elements: the directive shows either the
       // description or the error (never both), so this references what's shown.
       const describedBy = [
@@ -195,8 +204,21 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
         ...(this._errorTextElement ? [this._errorTextElement] : []),
         ...this._resolvedDescribedbyElements,
       ];
-      target.ariaDescribedByElements =
-        describedBy.length > 0 ? describedBy : null;
+      const nextRefs = describedBy.length > 0 ? describedBy : null;
+
+      // A group host with no inner role element (e.g. a radio group) describes
+      // the host itself via ElementInternals.
+      const internals = this.describedByInternals;
+      if (internals) {
+        internals.ariaDescribedByElements = nextRefs;
+        return;
+      }
+
+      const target = this.roleElement as DescribedByTarget | null;
+      if (!target) {
+        return;
+      }
+      target.ariaDescribedByElements = nextRefs;
     }
   }
   return HelpTextElement as unknown as T & Constructor<HelpTextInterface>;

@@ -116,7 +116,7 @@ export const Accessibility: Story = {
   render: () => html`
     <demo-help-text-host invalid>
       <span slot="description">Helper text</span>
-      <span slot="error-text">Error message shown to assistive technology</span>
+      <span slot="error-text">Enter a valid value</span>
     </demo-help-text-host>
   `,
   tags: ['a11y'],

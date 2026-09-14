@@ -16,7 +16,10 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../stories/demo-hosts.js';
 
-import type { DemoHelpTextHost } from '../stories/demo-hosts.js';
+import type {
+  DemoHelpTextGroupHost,
+  DemoHelpTextHost,
+} from '../stories/demo-hosts.js';
 import helpTextMeta, {
   CombinedDescription,
   ErrorTextGating,
@@ -168,6 +171,35 @@ export const ErrorWithExternalDescribedbyTest: Story = {
         expect(
           host?.shadowRoot?.querySelector('.swc-FieldDescription')
         ).toBeNull();
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Group host describes itself via ElementInternals
+// ──────────────────────────────────────────────────────────────
+
+export const GroupHostInternalsTest: Story = {
+  render: () => html`
+    <demo-help-text-group-host invalid>
+      <span slot="description">Group description</span>
+      <span slot="error-text">Group error</span>
+    </demo-help-text-group-host>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = canvasElement.querySelector<DemoHelpTextGroupHost>(
+      'demo-help-text-group-host'
+    );
+
+    await step(
+      'wires the shown message onto the host ElementInternals, not a role element',
+      () => {
+        expect(host?.roleElement).toBeNull();
+        const resolved =
+          host?.describedByInternals?.ariaDescribedByElements ?? [];
+        expect(resolved).toHaveLength(1);
+        expect(resolved[0]?.className).toContain('swc-FieldErrorText');
       }
     );
   },
