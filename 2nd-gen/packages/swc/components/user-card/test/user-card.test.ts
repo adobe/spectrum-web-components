@@ -425,10 +425,14 @@ export const AvatarOverlapCenteredAcrossSizesTest: Story = {
           const avatarRect = avatar.getBoundingClientRect();
           const avatarCenter = avatarRect.top + avatarRect.height / 2;
 
+          // A tolerance (not an exact 0) because sub-pixel layout rounding
+          // differs slightly across browser engines; asserting the exact
+          // rounded value can also fail on `-0` vs `0` (Object.is semantics)
+          // for a genuinely-centered but negative sub-pixel difference.
           expect(
-            Math.round(avatarCenter - previewBottom),
-            `size="${card.getAttribute('size')}": avatar is centered on the preview's bottom edge`
-          ).toBe(0);
+            Math.abs(avatarCenter - previewBottom),
+            `size="${card.getAttribute('size')}": avatar is centered on the preview's bottom edge (within 1px)`
+          ).toBeLessThanOrEqual(1);
         }
       }
     );
