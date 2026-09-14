@@ -180,6 +180,52 @@ export const MissingAccessibleNameWarningTest: Story = {
   },
 };
 
+export const EmptyNonDecorativeAssetWarningTest: Story = {
+  render: () => html`
+    <swc-asset></swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'warns for a completely empty, non-decorative asset with no accessible-label',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          asset.requestUpdate();
+          await asset.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'at least one warning is emitted for the empty asset'
+          ).toBeGreaterThan(0);
+        })
+    );
+  },
+};
+
+export const EmptyAssetWithAccessibleLabelNoWarningTest: Story = {
+  render: () => html`
+    <swc-asset accessible-label="Nothing to show yet"></swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      'does not warn for an empty asset once accessible-label is set',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          asset.requestUpdate();
+          await asset.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'no warning once accessible-label states the intent'
+          ).toBe(0);
+        })
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Accessible-name, aria-hidden, and preserveAspectRatio edge cases
 // ──────────────────────────────────────────────────────────────

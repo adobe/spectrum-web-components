@@ -174,39 +174,51 @@ export abstract class AssetBase extends SpectrumElement {
   private _preserveAspectRatioAppliedTo: Element | null = null;
 
   protected override update(changes: PropertyValues): void {
-    validateEnum(this, {
-      prop: 'fit',
-      value: this.fit,
-      valid: ASSET_FIT_VALUES,
-      url: DOCS_URL,
-    });
-    validateEnum(this, {
-      prop: 'background',
-      value: this.background,
-      valid: ASSET_BACKGROUND_VALUES,
-      url: DOCS_URL,
-    });
-    validateEnum(this, {
-      prop: 'load-state',
-      value: this.loadState,
-      valid: ASSET_LOAD_STATE_VALUES,
-      url: DOCS_URL,
-    });
-    warnIf(
-      this,
-      typeof this.aspectRatio !== 'undefined' &&
-        !ASPECT_RATIO_PATTERN.test(this.aspectRatio),
-      `<${this.localName}> expects "aspect-ratio" to be a CSS <ratio> (e.g. "16/9"), the "square" keyword, or a ":"-separated ratio (e.g. "16:9"). Received "${this._rawAspectRatio}".`,
-      DOCS_URL
-    );
-    warnIf(
-      this,
-      typeof this.aspectRatio !== 'undefined' &&
-        typeof this.width !== 'undefined' &&
-        typeof this.height !== 'undefined',
-      `<${this.localName}> "aspect-ratio" has no effect when both "width" and "height" are set.`,
-      DOCS_URL
-    );
+    if (changes.has('fit')) {
+      validateEnum(this, {
+        prop: 'fit',
+        value: this.fit,
+        valid: ASSET_FIT_VALUES,
+        url: DOCS_URL,
+      });
+    }
+    if (changes.has('background')) {
+      validateEnum(this, {
+        prop: 'background',
+        value: this.background,
+        valid: ASSET_BACKGROUND_VALUES,
+        url: DOCS_URL,
+      });
+    }
+    if (changes.has('loadState')) {
+      validateEnum(this, {
+        prop: 'load-state',
+        value: this.loadState,
+        valid: ASSET_LOAD_STATE_VALUES,
+        url: DOCS_URL,
+      });
+    }
+    if (
+      changes.has('aspectRatio') ||
+      changes.has('width') ||
+      changes.has('height')
+    ) {
+      warnIf(
+        this,
+        typeof this.aspectRatio !== 'undefined' &&
+          !ASPECT_RATIO_PATTERN.test(this.aspectRatio),
+        `<${this.localName}> expects "aspect-ratio" to be a CSS <ratio> (e.g. "16/9"), the "square" keyword, or a ":"-separated ratio (e.g. "16:9"). Received "${this._rawAspectRatio}".`,
+        DOCS_URL
+      );
+      warnIf(
+        this,
+        typeof this.aspectRatio !== 'undefined' &&
+          typeof this.width !== 'undefined' &&
+          typeof this.height !== 'undefined',
+        `<${this.localName}> "aspect-ratio" has no effect when both "width" and "height" are set.`,
+        DOCS_URL
+      );
+    }
 
     const children = Array.from(this.children);
     if (isDebug()) {
@@ -262,8 +274,14 @@ export abstract class AssetBase extends SpectrumElement {
       this._appliedAriaHidden = false;
     }
 
+    const missingNameWarning = `<${this.localName}> requires an accessible name: set "alt" on the slotted <img> (or role="img" plus "aria-label"/"aria-labelledby"/a child <title> on the slotted <svg>), set "accessible-label" on <${this.localName}>, or set "decorative".`;
+
     const [child] = children;
     if (!child) {
+      // An empty, non-decorative asset conveys nothing and has no slotted
+      // node to name; accessibleLabel still counts as the consumer's stated
+      // intent even with nothing to attach it to.
+      warnIf(this, !this.accessibleLabel, missingNameWarning, DOCS_URL);
       return;
     }
     const tagName = child.tagName.toLowerCase();
@@ -289,7 +307,7 @@ export abstract class AssetBase extends SpectrumElement {
     warnIf(
       this,
       !hasOwnName && !this.accessibleLabel,
-      `<${this.localName}> requires an accessible name: set "alt" on the slotted <img> (or role="img" plus "aria-label"/"aria-labelledby"/a child <title> on the slotted <svg>), set "accessible-label" on <${this.localName}>, or set "decorative".`,
+      missingNameWarning,
       DOCS_URL
     );
   }
