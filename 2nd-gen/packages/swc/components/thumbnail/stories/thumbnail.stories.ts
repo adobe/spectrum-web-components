@@ -144,12 +144,13 @@ export const ConsumerStyledStates: Story = {
   render: () => html`
     <style>
       .disabled-thumbnail {
-        opacity: 0.4;
+        opacity: var(--swc-thumbnail-opacity-disabled);
       }
 
       .selected-thumbnail {
-        outline: 2px solid #1473e6;
-        outline-offset: 2px;
+        outline: var(--swc-focus-indicator-thickness) solid
+          var(--swc-focus-indicator-color);
+        outline-offset: var(--swc-focus-ring-gap);
       }
     </style>
     <swc-thumbnail class="disabled-thumbnail">
