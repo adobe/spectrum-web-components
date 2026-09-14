@@ -21,6 +21,10 @@ import {
   type UserCardVariant,
 } from '@adobe/spectrum-wc-core/components/user-card';
 import { SlotAttributePropagationController } from '@adobe/spectrum-wc-core/controllers/index.js';
+import {
+  isDebug,
+  validateRequiredSlot,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import { renderCardTemplate } from '../card/card-template.js';
 
@@ -58,7 +62,7 @@ const AVATAR_SIZE_BY_CARD_SIZE = {
  *   <span slot="description">Product designer</span>
  * </swc-user-card>
  *
- * @slot avatar - Expects a `swc-avatar` (or equivalent).
+ * @slot avatar - Required. Expects a `swc-avatar` (or equivalent).
  */
 export class UserCard extends CardBase {
   // ─────────────────────────
@@ -105,10 +109,37 @@ export class UserCard extends CardBase {
       ?.addEventListener('slotchange', this._handleAvatarSlotChange);
   }
 
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+    this._checkAvatarSlot();
+  }
+
   private readonly _handleAvatarSlotChange = (): void => {
     this._avatarSizePropagation.propagate();
     this._avatarOutlinePropagation.propagate();
+    this._checkAvatarSlot();
   };
+
+  /**
+   * @internal
+   *
+   * Warns in dev mode when the `avatar` slot has no assigned content. A
+   * user card's whole reason to exist over a plain card is the avatar
+   * glyph; an empty slot means the card is either missing content or
+   * should be a `swc-card` instead.
+   */
+  private _checkAvatarSlot(): void {
+    if (!isDebug()) {
+      return;
+    }
+    validateRequiredSlot(
+      this,
+      this.renderRoot?.querySelector<HTMLSlotElement>('slot[name="avatar"]'),
+      'avatar',
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-card-user-card--docs',
+      { level: 'medium', issues: ['avatar'] }
+    );
+  }
 
   // ──────────────────────────────
   //     RENDERING & STYLING
