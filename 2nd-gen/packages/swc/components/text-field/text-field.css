@@ -24,3 +24,8 @@
 .swc-FieldLabel {
   font: inherit;
 }
+
+.swc-FieldDescription,
+.swc-FieldErrorText {
+  font-size: var(--swc-body-size-s);
+}

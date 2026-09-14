@@ -15,6 +15,7 @@ import { property } from 'lit/decorators.js';
 import { FieldAssociationController } from '@adobe/spectrum-wc-core/controllers/field-association-controller/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
+  HelpTextMixin,
   LabellingMixin,
   SizedMixin,
 } from '@adobe/spectrum-wc-core/mixins/index.js';
@@ -38,12 +39,12 @@ const DOCS_URL =
  *
  * @attribute {ElementSize} size - The size of the text field.
  *
- * @slot label - Visible label content, rendered in-shadow as a real `<label for>`.
+ * @slot label - Visible label content, rendered as a same-root `<label for>` by `LabellingMixin`.
  * @slot description - Guidance / non-error help text, associated via `aria-describedby`.
- * @slot error-text - Error message shown when `invalid`, targeted by `aria-errormessage`.
+ * @slot error-text - Error message shown when `invalid`, folded into `aria-describedby`.
  */
 export abstract class TextFieldBase extends SizedMixin(
-  LabellingMixin(SpectrumElement),
+  HelpTextMixin(LabellingMixin(SpectrumElement)),
   {
     validSizes: TEXT_FIELD_VALID_SIZES,
     defaultSize: 'm',
@@ -67,14 +68,6 @@ export abstract class TextFieldBase extends SizedMixin(
    * @default m
    */
   declare public size: TextFieldSize;
-
-  /**
-   * Element IDs, from the light DOM, that describe the field.
-   *
-   * @todo (SWC-2466): resolved to cross-root element refs by the `LabellingController`.
-   */
-  @property({ attribute: 'accessible-describedby' })
-  public accessibleDescribedby?: string;
 
   /**
    * The value of the input.
@@ -172,11 +165,6 @@ export abstract class TextFieldBase extends SizedMixin(
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
-
-  // @todo (SWC-2466): resolve the accessible-describedby IDREF stub to a
-  // cross-root `ariaDescribedByElements` element reference, via a future
-  // help-text mixin (accessible-labelledby resolution now lives in
-  // LabellingMixin).
 
   // Form association: `formAssociated` (static, above) and `attachInternals` stay
   // on the element; the controller wraps the rest. Constraint validity
