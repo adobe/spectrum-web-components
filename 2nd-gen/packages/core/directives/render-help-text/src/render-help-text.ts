@@ -53,7 +53,7 @@ export function renderFieldHelpText({
     return nothing;
   }
   return html`
-    ${hasDescriptionSlotContent
+    ${hasDescriptionSlotContent && !showError
       ? html`
           <span class="swc-FieldDescription" ${ref(onDescriptionElement)}>
             <slot name="description"></slot>

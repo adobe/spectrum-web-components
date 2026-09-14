@@ -102,12 +102,14 @@ export const StatesTest: Story = {
     });
 
     await step(
-      'error text is folded into ariaDescribedByElements, after the description',
+      'error text replaces the description in ariaDescribedByElements while invalid',
       () => {
         const resolved = input?.ariaDescribedByElements ?? [];
-        expect(resolved).toHaveLength(2);
-        expect(resolved[0]?.className).toContain('swc-FieldDescription');
-        expect(resolved[1]?.className).toContain('swc-FieldErrorText');
+        expect(resolved).toHaveLength(1);
+        expect(resolved[0]?.className).toContain('swc-FieldErrorText');
+        expect(
+          invalidField.shadowRoot?.querySelector('.swc-FieldDescription')
+        ).toBeNull();
       }
     );
 

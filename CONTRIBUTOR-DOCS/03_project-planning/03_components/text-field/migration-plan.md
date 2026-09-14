@@ -276,7 +276,7 @@ Migrate `swc-text-field` **first among the field family**, developing it togethe
 | #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | B8 | In-shadow labelling | `sp-field-label` reaches across shadow roots to set `aria-label`; two-writer hazard | `LabellingController` renders label/required/description/error in one shadow root; single writer by construction | Prefer slotted label or `accessible-label`; external association via `accessible-labelledby`. |
-| B9 | Associate the error via `aria-describedby` | none | Fold the slotted `error-text` into the input's `ariaDescribedByElements` (after the description) while `invalid`; `aria-errormessage` is intentionally not used (see [Decision log](#decision-log)) | None (additive AT improvement). |
+| B9 | Associate the error via `aria-describedby` | none | While `invalid`, replace the description with the slotted `error-text` in the input's `ariaDescribedByElements`; `aria-errormessage` is intentionally not used (see [Decision log](#decision-log)) | None (additive AT improvement). |
 | B10 | Add `inputmode` | none | Author-settable virtual-keyboard hint | None (additive). |
 | B11 | Native form association | Named `<input>` only; no `ElementInternals` | `FieldAssociationController` (`ElementInternals`), incl. `fieldset[disabled]` cascade and form reset | None for basic forms; gains reset/disabled cascade. |
 | B12 | Keyboard-focus differentiation | Same focus styling for pointer and keyboard | `:focus-visible` keyboard ring (fixes [WCAG 2.4.7](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)) | None (visual/a11y fix). |
@@ -334,7 +334,7 @@ These are derived from the 1st-gen implementation, the [accessibility migration 
 | `maxlength` / `minlength` | `number` | `undefined` | `maxlength` / `minlength` | **Inferred.** Prefer `undefined` over the `-1` sentinel. |
 | `readonly` | `boolean` | `false` | `readonly` (reflect) | **Confirmed.** Focusable but non-editable; distinct from `disabled`. No distinct visual treatment (follows React Spectrum); Q3 resolved. |
 | `required` | `boolean` | `false` | `required` (reflect) | **Confirmed.** Native `required`; no `aria-required`. |
-| `invalid` | `boolean` | `false` | `invalid` (reflect) | **Confirmed.** Drives `aria-invalid` and folds the error into `aria-describedby` (see [Decision log](#decision-log)). |
+| `invalid` | `boolean` | `false` | `invalid` (reflect) | **Confirmed.** Drives `aria-invalid` and swaps the description for the error in `aria-describedby` (see [Decision log](#decision-log)). |
 | `valid` | `boolean` | `false` | `valid` (reflect) | **Inferred.** Keep the property: its value is that **consumers can react to a valid state**, independent of the visual checkmark, which is **deferred** (not shown in React or the newer Figma; per Design and RS, tracked as additive A8). |
 | `labelPosition` | `'top' \| 'side'` | `'top'` | `label-position` (reflect) | **Confirmed (core).** Places the visible label above (`top`) or beside (`side`) the input. Owned by the shared render template (`.swc-FormFieldTemplate` grid), mirroring the meter/progress-bar `label-position` in `LinearProgressMixin` (C1). |
 | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | `size` (reflect) | **Inferred.** Give an explicit default `m` (drop `noDefaultSize`). |
@@ -353,7 +353,7 @@ These are derived from the 1st-gen implementation, the [accessibility migration 
 | ---- | ------- | ----- |
 | `label` | Visible label content | **Inferred.** Rendered in-shadow as a real `<label for>` by `LabellingMixin`. Named `label` slot, matching the `LinearProgressMixin` precedent. |
 | `description` | Guidance / non-error help text | **Confirmed (renamed).** Was 1st-gen `help-text`; renamed to `description` to match React Spectrum and the `LinearProgressMixin` precedent, and to disambiguate from contextual-help content. Associated via same-root `aria-describedby` only when present. |
-| `error-text` | Error message shown when `invalid` | **Confirmed (renamed).** Was 1st-gen `negative-help-text`; renamed to `error-text` for simplicity and to match design terminology. Folded into `aria-describedby` (after the description) while invalid; `aria-errormessage` is intentionally not used (see [Decision log](#decision-log)). |
+| `error-text` | Error message shown when `invalid` | **Confirmed (renamed).** Was 1st-gen `negative-help-text`; renamed to `error-text` for simplicity and to match design terminology. Replaces the description in `aria-describedby` while invalid; `aria-errormessage` is intentionally not used (see [Decision log](#decision-log)). |
 
 #### CSS custom properties (2nd-gen)
 
@@ -374,7 +374,7 @@ Initial expectation for Text field is a small reviewed set (likely field width/m
 
 ### Accessibility semantics notes (2nd-gen)
 
-Authoritative source: [accessibility migration analysis](./accessibility-migration-analysis.md). Key points: host sets no `role` (native `<input>` supplies `textbox`); exactly one accessible-name writer via `LabellingMixin` in precedence order `accessible-labelledby` > `accessible-label` > slotted label; `aria-invalid` only when invalid (never explicit `"false"`); the error folds into `aria-describedby` while invalid (not `aria-errormessage`; see [Decision log](#decision-log)); validation icon stays `aria-hidden`; `readonly` and `disabled` stay distinct in tab order; no default `aria-live="assertive"`.
+Authoritative source: [accessibility migration analysis](./accessibility-migration-analysis.md). Key points: host sets no `role` (native `<input>` supplies `textbox`); exactly one accessible-name writer via `LabellingMixin` in precedence order `accessible-labelledby` > `accessible-label` > slotted label; `aria-invalid` only when invalid (never explicit `"false"`); the error replaces the description in `aria-describedby` while invalid (not `aria-errormessage`; see [Decision log](#decision-log)); validation icon stays `aria-hidden`; `readonly` and `disabled` stay distinct in tab order; no default `aria-live="assertive"`.
 
 ---
 
@@ -462,7 +462,7 @@ Planned rendering shape:
 #### State verification
 
 - [ ] `aria-invalid="true"` only when invalid (never explicit `"false"`)
-- [ ] error text folded into `aria-describedby` (after the description) only while `invalid` is `true`; `aria-errormessage` intentionally not used (see [Decision log](#decision-log))
+- [ ] error text replaces the description in `aria-describedby` only while `invalid` is `true`; `aria-errormessage` intentionally not used (see [Decision log](#decision-log))
 - [ ] `FieldAssociationController` wires `formAssociated`, `attachInternals`, `setFormValue`, `formResetCallback`, `formDisabledCallback`
 - [ ] Validation icon stays `aria-hidden="true"`
 - [ ] `readonly` vs `disabled` distinct in tab order (not just visually)
@@ -562,7 +562,7 @@ Settled decisions from planning and PR review, kept here as a historical record 
 | Q16 / A1 | Character count deferred | React Spectrum does not support it yet; deferral confirmed. If added later it needs a dedicated a11y plan (`aria-describedby` alone is insufficient for announcing a live count). |
 | Q22 (naming) | Shared field styles live in a shared `form-fields` stylesheet from the start; classes are `.swc-FormField*` | Text field is the first consumer, but the styles live shared, not authored in text-field. `form-fields`/`FormField` (not `forms`/`Form`) reserves `form`/`Form` for a possible future form-wrapper component or utility. Render-template location/ownership remains open (Q22). |
 | Q27 | `TextFieldType` stays the closed 1st-gen set (`text/url/tel/email/password`); `search` and `number` are excluded | Spectrum models search and number as their own components (`Search` / React Spectrum `SearchField`; `number-field`), so they are not `type` values here. Matches 1st-gen `sp-textfield` and is enforced with `validateEnum`. This intentionally diverges from React Spectrum's TextField, whose `type` is an open `… \| (string & {})` union that also lists `search`; the open escape hatch is incompatible with the closed-enum dev-warning, and search UI belongs to the dedicated component. |
-| B9 | Error text is associated via `aria-describedby` only; `aria-errormessage` is not used | **Reverses the [accessibility migration analysis](./accessibility-migration-analysis.md) recommendation to set both.** `HelpTextMixin` folds the slotted `error-text` into the input's `ariaDescribedByElements` (after the description) while `invalid`, following [React Spectrum's TextField](https://react-spectrum.adobe.com/TextField), which associates errors through `aria-describedby` alone. Rationale: `aria-errormessage` AT support is still inconsistent while `aria-describedby` is universally read, and a single description association avoids duplicate-announcement and ordering ambiguity across AT. WCAG [Error identification (3.3.1)](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html) is still met (the error is visible and programmatically associated). |
+| B9 | Error text is associated via `aria-describedby` only; `aria-errormessage` is not used | **Reverses the [accessibility migration analysis](./accessibility-migration-analysis.md) recommendation to set both.** While `invalid`, `HelpTextMixin` replaces the description with the slotted `error-text` in the input's `ariaDescribedByElements` (the description is hidden and the error takes its place), following [React Spectrum's TextField](https://react-spectrum.adobe.com/TextField), which swaps the description for the error in one referenced container and associates it through `aria-describedby` alone. Rationale: `aria-errormessage` AT support is still inconsistent while `aria-describedby` is universally read, and referencing only the message currently on screen avoids describing the field with hidden text and the duplicate-announcement and ordering ambiguity of pointing at both. WCAG [Error identification (3.3.1)](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html) is still met (the error is visible and programmatically associated). |
 
 ---
 

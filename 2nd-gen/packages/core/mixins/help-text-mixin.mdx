@@ -19,7 +19,7 @@ import * as Stories from './stories/help-text-mixin.stories';
 ### What it does
 
 - **Combined description sources**: unlike accessible-name sources, a slotted `description` and an external `accessibleDescribedby` reference combine rather than override each other. The role element's `ariaDescribedByElements` lists the in-shadow description first, then the resolved external elements.
-- **Invalid-gated error message**: following React Spectrum's [TextField](https://react-spectrum.adobe.com/TextField) strategy, the in-shadow error-text element is folded into that same `ariaDescribedByElements` list (after the description, before any external elements) only while the host reads as `invalid` (read structurally, so a host that doesn't declare `invalid` at all simply never surfaces an error message). It is not exposed via `aria-errormessage`, since AT support for that attribute is still inconsistent.
+- **Invalid-gated error message**: following React Spectrum's [TextField](https://react-spectrum.adobe.com/TextField) strategy, while the host reads as `invalid` the in-shadow error-text element replaces the description in that `ariaDescribedByElements` list (the description is hidden; any external elements remain). `invalid` is read structurally, so a host that doesn't declare it at all simply never surfaces an error message. It is not exposed via `aria-errormessage`, since AT support for that attribute is still inconsistent.
 - **Conditional rendering**: `renderHelpText()` renders nothing when there is no description content and no active error message.
 
 ### Basic usage
@@ -54,9 +54,9 @@ class MyField extends HelpTextMixin(LitElement) {
 
 <Canvas of={Stories.CombinedDescription} />
 
-### Error text gated by invalid
+### Error text replaces the description while invalid
 
-The error-text element is folded into `ariaDescribedByElements` only while the host is `invalid`; the description remains associated regardless.
+While the host is `invalid`, the error message replaces the description: the error-text element is shown and associated via `ariaDescribedByElements` in place of the description, which is hidden. When the host returns to valid, the description is shown and re-associated.
 
 <Canvas of={Stories.ErrorTextGating} />
 
@@ -64,7 +64,7 @@ The error-text element is folded into `ariaDescribedByElements` only while the h
 
 ### Features
 
-- **Error message folded into `aria-describedby`**: following React Spectrum's [TextField](https://react-spectrum.adobe.com/TextField) strategy, the error message is never the sole description source; it supplements the combined `ariaDescribedByElements` set while `invalid` is `true`, rather than being pointed at separately via `aria-errormessage`.
+- **Error message replaces the description while invalid**: following React Spectrum's [TextField](https://react-spectrum.adobe.com/TextField) strategy, an invalid field shows its error message in place of the description rather than alongside it. `ariaDescribedByElements` references only the message currently on screen, so a screen reader never announces hidden description text, and the error is surfaced through `aria-describedby` rather than a separately-pointed `aria-errormessage`.
 - **No default live region**: help/error content is wired through `ariaDescribedByElements`, not an `aria-live` region, so a screen reader announces it when focus lands on the field.
 
 ### Best practices

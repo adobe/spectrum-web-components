@@ -55,8 +55,9 @@ export interface HelpTextInterface {
  * `accessible-describedby` id references.
  *
  * A rendering subclass overrides {@link roleElement} to return the element the
- * description is wired onto (usually the rendered `<input>`). Source combining
- * and the invalid-gated error fold into `aria-describedby` live in the MDX page.
+ * description is wired onto (usually the rendered `<input>`). While `invalid`,
+ * the error message replaces the description in both the rendered output and
+ * `aria-describedby`.
  */
 export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
   constructor: T
@@ -187,12 +188,11 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
       if (!target) {
         return;
       }
-      const showError = this._isInvalid && this.hasErrorTextSlotContent;
+      // Mirror the rendered elements: the directive shows either the
+      // description or the error (never both), so this references what's shown.
       const describedBy = [
         ...(this._descriptionElement ? [this._descriptionElement] : []),
-        ...(showError && this._errorTextElement
-          ? [this._errorTextElement]
-          : []),
+        ...(this._errorTextElement ? [this._errorTextElement] : []),
         ...this._resolvedDescribedbyElements,
       ];
       target.ariaDescribedByElements =

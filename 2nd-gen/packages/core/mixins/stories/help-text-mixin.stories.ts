@@ -96,17 +96,17 @@ CombinedDescription.storyName = 'Combined description sources';
 export const ErrorTextGating: Story = {
   render: () => html`
     <demo-help-text-host>
-      <span slot="description">Not shown while valid</span>
-      <span slot="error-text">Only visible while invalid</span>
+      <span slot="description">Shown while valid</span>
+      <span slot="error-text">Replaces the description while invalid</span>
     </demo-help-text-host>
     <demo-help-text-host invalid>
-      <span slot="description">Still associated while invalid</span>
-      <span slot="error-text">Only visible while invalid</span>
+      <span slot="description">Hidden while invalid</span>
+      <span slot="error-text">Replaces the description while invalid</span>
     </demo-help-text-host>
   `,
   tags: ['behaviors'],
 };
-ErrorTextGating.storyName = 'Error text gated by invalid';
+ErrorTextGating.storyName = 'Error text replaces the description while invalid';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

@@ -106,25 +106,68 @@ export const ErrorTextGatingTest: Story = {
     });
 
     await step(
-      'invalid host folds the error-text element into describedby, after the description',
+      'invalid host replaces the description with the error text in describedby',
       () => {
         const resolved = invalid.roleElement?.ariaDescribedByElements ?? [];
-        expect(resolved).toHaveLength(2);
+        expect(resolved).toHaveLength(1);
+        expect(resolved[0]?.className).toContain('swc-FieldErrorText');
+        // The description is hidden while invalid: it leaves both the shadow
+        // DOM and the describedby set, so no hidden text is announced.
         expect(
           invalid.shadowRoot?.querySelector('.swc-FieldErrorText')
         ).toBeTruthy();
-        // Description remains associated regardless of invalid, and comes first.
-        expect(resolved[0]?.className).toContain('swc-FieldDescription');
-        expect(resolved[1]?.className).toContain('swc-FieldErrorText');
+        expect(
+          invalid.shadowRoot?.querySelector('.swc-FieldDescription')
+        ).toBeNull();
       }
     );
 
     await step(
-      'clearing invalid removes the error-text element from describedby',
+      'clearing invalid restores the description in describedby',
       async () => {
         invalid.invalid = false;
         await invalid.updateComplete;
-        expect(invalid.roleElement?.ariaDescribedByElements).toHaveLength(1);
+        const resolved = invalid.roleElement?.ariaDescribedByElements ?? [];
+        expect(resolved).toHaveLength(1);
+        expect(resolved[0]?.className).toContain('swc-FieldDescription');
+        expect(
+          invalid.shadowRoot?.querySelector('.swc-FieldErrorText')
+        ).toBeNull();
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: External accessible-describedby survives the invalid swap
+// ──────────────────────────────────────────────────────────────
+
+export const ErrorWithExternalDescribedbyTest: Story = {
+  render: () => html`
+    <p id="help-text-mixin-invalid-external">External rules</p>
+    <demo-help-text-host
+      invalid
+      accessible-describedby="help-text-mixin-invalid-external"
+    >
+      <span slot="description">Hidden while invalid</span>
+      <span slot="error-text">Enter a valid value</span>
+    </demo-help-text-host>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = canvasElement.querySelector<DemoHelpTextHost>(
+      'demo-help-text-host'
+    );
+
+    await step(
+      'invalid host references the error and the external element, not the description',
+      () => {
+        const resolved = host?.roleElement?.ariaDescribedByElements ?? [];
+        expect(resolved).toHaveLength(2);
+        expect(resolved[0]?.className).toContain('swc-FieldErrorText');
+        expect(resolved[1]?.id).toBe('help-text-mixin-invalid-external');
+        expect(
+          host?.shadowRoot?.querySelector('.swc-FieldDescription')
+        ).toBeNull();
       }
     );
   },
