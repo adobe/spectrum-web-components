@@ -167,11 +167,24 @@ Component tag may change until API freeze.
 
 ## Testing
 
+Stories and docs must demonstrate the checkbox **inside a form**, since form participation is a defining part of this component. Use a native `<form>` for now, and move to a dedicated form component once one exists; use **native** `<button type="submit">`/`<button type="reset">` for the controls until the clear-button component and the button form-association fast-follow are complete. A minimal shape:
+
+```html
+<form id="signup">
+    <swc-checkbox name="terms" value="accepted" required>
+        I agree to the terms of service
+    </swc-checkbox>
+    <button type="submit">Submit</button>
+    <button type="reset">Reset</button>
+</form>
+```
+
 ### Automated tests
 
 | Kind of test | What to check |
 | --- | --- |
-| **Unit** | `swc-checkbox`'s shadow DOM contains a real `<input type="checkbox">`; the host sets no `role`; `checked` stays in sync with the inner input; `indeterminate` sets the inner input's `indeterminate` property (producing `aria-checked="mixed"`) and is cleared by the next activation; the item mirrors its value to the form via `internals.setFormValue` (checked contributes `name`/`value`, unchecked contributes nothing); `formResetCallback` restores the default checked state; read-only blocks the toggle **without** setting the inner input's `disabled`; `required`/`invalid` map to `aria-required`/`aria-invalid`. |
+| **Unit** | `swc-checkbox`'s shadow DOM contains a real `<input type="checkbox">`; the host sets no `role`; `checked` stays in sync with the inner input; `indeterminate` sets the inner input's `indeterminate` property (producing `aria-checked="mixed"`) and is cleared by the next activation; the item mirrors its value to the form via `internals.setFormValue` (checked contributes `name`/`value`, unchecked contributes nothing); read-only blocks the toggle **without** setting the inner input's `disabled`; `required`/`invalid` map to `aria-required`/`aria-invalid`. |
+| **Form participation (in a `<form>`)** | Rendered inside a native `<form>`: **submit** yields the expected `FormData` (a checked box contributes its `name`/`value`; an unchecked box contributes nothing), so the **value on submit** is correct; **validation** blocks submission and reports validity when a `required` checkbox is unchecked (`:invalid`/`:user-invalid`, `reportValidity()`), and clears once checked; **reset** (`form.reset()`) restores the default checked state via `formResetCallback`. A story demonstrating this in a native `<form>` doubles as the consumer-facing example. |
 | **aXe + Storybook** | WCAG rules on standalone default, checked, indeterminate, disabled, read-only, required, and invalid stories, plus a grouped (multi-select, `role="group"`) story. A story with no visible label and no `accessible-label`/`accessible-labelledby` should dev-warn rather than silently render an unnamed control. Document the expected roleless-host `label` false positive as a story-level exclusion with a `// reason:` comment, per the forms RFC [§3.4](../../05_strategies/forms-strategy-rfc.md#34-axe-core-policy). |
 | **Playwright ARIA snapshots** | `role=checkbox` with the correct accessible name and the correct `checked` value (`true`/`false`/`mixed`), across the `s`/`m`/`l`/`xl` sizes and the default/emphasized styles from the design spec's state matrix; `aria-invalid`/`aria-required`/`aria-readonly` where set. |
 | **Playwright keyboard** | <kbd>Space</kbd> toggles a focused checkbox; a standalone checkbox is a single Tab stop; every checkbox in a group is an independent Tab stop (no roving, no arrow navigation); a disabled checkbox is never reachable; a read-only checkbox is reachable but does not toggle. |
@@ -191,6 +204,7 @@ Component tag may change until API freeze.
 - [ ] `invalid`/`aria-invalid` stay at the item level (a standalone required checkbox can be invalid on its own), paired with an associated error message and not signaled by color alone.
 - [ ] `required`/`aria-required` are supported per item (a single required consent checkbox).
 - [ ] Each `swc-checkbox` is independently form-associated via its own `FieldAssociationController`/`ElementInternals` on the host (`setFormValue`), with `name`/`value` submitted per item; form value is not centralized on a group (the reverse of radio).
+- [ ] Stories and tests demonstrate the checkbox in a native `<form>` and cover the full form lifecycle: value on submit (`FormData`), constraint validation of a `required` checkbox, and `form.reset()` restoring the default checked state.
 - [ ] A standalone checkbox is a single Tab stop and toggles on `Space`; in a group, the group manages a roving tabindex (arrow keys move focus) via `FocusgroupNavigationController`, but arrow movement moves focus only and never toggles (each item toggles on `Space`).
 
 ## References

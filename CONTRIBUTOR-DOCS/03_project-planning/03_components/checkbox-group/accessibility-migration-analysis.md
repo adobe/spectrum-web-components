@@ -205,11 +205,26 @@ Use `FocusgroupNavigationController` (`wrap: true`, `skipDisabled: true`, with `
 
 ## Testing
 
+Stories and docs must demonstrate the group **inside a form**, since coordinating multi-select form submission is the point of the component. Use a native `<form>` for now, and move to a dedicated form component once one exists; use **native** `<button type="submit">`/`<button type="reset">` for the controls until the clear-button component and the button form-association fast-follow are complete. A minimal shape:
+
+```html
+<form id="interests">
+    <swc-checkbox-group label="Interests" required>
+        <swc-checkbox name="interests" value="travel">Travel</swc-checkbox>
+        <swc-checkbox name="interests" value="music">Music</swc-checkbox>
+        <swc-checkbox name="interests" value="shopping">Shopping</swc-checkbox>
+    </swc-checkbox-group>
+    <button type="submit">Submit</button>
+    <button type="reset">Reset</button>
+</form>
+```
+
 ### Automated tests
 
 | Kind of test | What to check |
 | --- | --- |
 | **Unit** | `role="group"` is fixed on the host and not author-overridable; `aria-invalid`, `aria-required`, and `aria-readonly` on the host track their respective properties; `disabled` propagates to every slotted checkbox; the group calls **no** `setFormValue` (each checkbox submits its own value); group-level validity ("select at least one") reports invalid when required and nothing is checked, and clears when an item is checked. |
+| **Form participation (in a `<form>`)** | Rendered inside a native `<form>`: **submit** yields `FormData` containing one entry per checked item under the shared `name` (so the **value on submit** is the full multi-select set), and nothing for unchecked items; group-level **validation** ("select at least one") blocks submission and reports validity when `required` and nothing is checked, and clears once any item is checked; **reset** (`form.reset()`) restores every item to its default checked state. A story demonstrating this in a native `<form>` doubles as the consumer-facing example. |
 | **aXe + Storybook** | A dev-warning story for a group with no accessible name. A required-and-untouched story. An invalid story with a visible, `aria-describedby`/`aria-errormessage`-associated error message. Read-only and disabled stories. Top-label, side-label, vertical, and horizontal layout stories (layout only; same tree shape). Document any roleless-child axe false positives per the forms RFC [§3.4](../../05_strategies/forms-strategy-rfc.md#34-axe-core-policy). |
 | **Playwright ARIA snapshots** | `role=group` with the correct accessible name and the correct independent `aria-checked` on each child, across required/invalid/read-only/disabled states and both label positions and orientations from the design spec's state matrix. |
 | **Playwright keyboard** | One Tab stop enters the group (roving tabindex); all arrow keys move focus with wraparound **without** toggling; Home/End move focus without toggling; <kbd>Space</kbd> toggles the focused item; disabled items are fully skipped; read-only keeps focus movement but blocks every toggle. |
@@ -227,6 +242,7 @@ Use `FocusgroupNavigationController` (`wrap: true`, `skipDisabled: true`, with `
 - [ ] Description/help text and error message render inside the group's own shadow root and associate via host-attached `aria-describedby`/`aria-errormessage`, preserving 1st-gen's already-correct light-DOM-slot association (no cross-root regression).
 - [ ] The help/error container does not default to `aria-live="assertive"`, or to any live region, for the common case.
 - [ ] The group owns **no** form value and calls **no** `setFormValue`; each `swc-checkbox` submits its own `name`/`value` (the reverse of radio group).
+- [ ] Stories and tests demonstrate the group in a native `<form>` and cover the full form lifecycle: value on submit (multi-select `FormData` under the shared `name`), group-level "select at least one" validation, and `form.reset()` restoring the default checked items.
 - [ ] Roving tabindex and arrow navigation use `FocusgroupNavigationController` (one Tab stop, arrow keys move focus with wraparound, disabled skipped), the same as radio group, but arrow movement moves focus only and never toggles (no select-on-move wiring); toggling happens per item on `Space`.
 - [ ] There is no cache-authoritative selection controller and no mutual exclusion (that is separate from focus management, which the group does provide).
 - [ ] Group-level validity ("select at least one", custom `validate`) runs on the group via its own `ElementInternals` for validity only, with the group-validity-plus-per-item-value split confirmed in the migration plan and the `swc-field-group` scoping spike.

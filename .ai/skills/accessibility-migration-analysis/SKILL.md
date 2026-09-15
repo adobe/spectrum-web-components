@@ -209,6 +209,7 @@ Use a **single** `### Keyboard and focus` subsection under `## Recommendations`.
 ### Automated tests
 
 - Table: **Kind of test** | **What to check** (unit, aXe/Storybook, Playwright ARIA snapshots, contrast, etc.—match what the repo actually uses for that component).
+- **Form-associated components:** if the component participates in a `<form>` (text field, checkbox, checkbox group, radio group, picker, combobox, and similar), the Automated tests table **must** include a form-participation row and the doc **must** state that stories demonstrate the component inside a native `<form>` (native `<form>` for now; a dedicated form component later). Cover the full form lifecycle required for every form-associated component by [forms strategy RFC §3.5](../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/forms-strategy-rfc.md#35-testing-form-participation): value on submit (`FormData`), validation of required/constrained state at the level the constraint lives, reset (`formResetCallback`), and getting the value. Add a matching **Summary checklist** item.
 
 ### Manual screen reader testing (non-focusable components)
 
