@@ -191,7 +191,7 @@ Component tag may change until API freeze.
 - [ ] `invalid`/`aria-invalid` stay at the item level (a standalone required checkbox can be invalid on its own), paired with an associated error message and not signaled by color alone.
 - [ ] `required`/`aria-required` are supported per item (a single required consent checkbox).
 - [ ] Each `swc-checkbox` is independently form-associated via its own `FieldAssociationController`/`ElementInternals` on the host (`setFormValue`), with `name`/`value` submitted per item; form value is not centralized on a group (the reverse of radio).
-- [ ] A standalone checkbox is a single Tab stop and toggles on `Space`; checkboxes in a group are each independent Tab stops with no roving tabindex and no arrow-key navigation.
+- [ ] A standalone checkbox is a single Tab stop and toggles on `Space`; in a group, the group manages a roving tabindex (arrow keys move focus) via `FocusgroupNavigationController`, but arrow movement moves focus only and never toggles (each item toggles on `Space`).
 
 ## References
 
