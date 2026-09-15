@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
@@ -444,7 +444,12 @@ export const AvatarOverlapCenteredAcrossSizesTest: Story = {
 // ──────────────────────────────────────────────────────────────
 
 export const RequiredAvatarSlotWarningTest: Story = {
-  render: () => nothing,
+  // This story's canvas is intentionally empty; the play function mounts its
+  // own throwaway element instead. Storybook's `render` return type requires
+  // a `TemplateResult`, and `nothing` is a distinct `symbol` type that fails
+  // type-check here, unlike a plain nested template expression.
+  // eslint-disable-next-line lit/prefer-nothing
+  render: () => html``,
   play: async ({ canvasElement, step }) => {
     await step('warns when the avatar slot has no assigned content', () =>
       withWarningSpy(async (warnCalls) => {
@@ -472,7 +477,8 @@ export const RequiredAvatarSlotWarningTest: Story = {
 };
 
 export const AvatarPresentNoWarningTest: Story = {
-  render: () => nothing,
+  // eslint-disable-next-line lit/prefer-nothing -- see RequiredAvatarSlotWarningTest above.
+  render: () => html``,
   play: async ({ canvasElement, step }) => {
     await step('does not warn when the avatar slot has content', () =>
       withWarningSpy(async (warnCalls) => {
