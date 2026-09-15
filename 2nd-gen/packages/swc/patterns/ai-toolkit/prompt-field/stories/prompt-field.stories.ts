@@ -25,6 +25,15 @@ import '../swc-prompt-field.js';
 // ────────────────
 
 const { args, argTypes } = getStorybookHelpers('swc-prompt-field');
+
+argTypes.size = {
+  ...argTypes.size,
+  control: { type: 'select' },
+  options: ['s', 'm'],
+};
+
+args.size = 'm';
+
 const defaultPlaceholder =
   'Ready to get started? Ask a question, share an idea, or add a task.';
 const defaultLegalDisclaimer = html`
@@ -202,6 +211,38 @@ export const Variant: Story = {
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
           prominent: strongest treatment, adding an outer glow
+        </span>
+      </div>
+    </div>
+  `,
+  tags: ['options'],
+};
+
+export const Sizes: Story = {
+  render: () => html`
+    <div style="display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          size="s"
+          label="Prompt"
+          value="Summarize the API changes in this branch."
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          s: compact spacing and typography
+        </span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field
+          size="m"
+          label="Prompt"
+          value="Summarize the API changes in this branch."
+        >
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">
+          m (default): standard spacing and typography
         </span>
       </div>
     </div>
