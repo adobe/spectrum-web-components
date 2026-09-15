@@ -1,6 +1,6 @@
 # @adobe/spectrum-wc-icons
 
-Spectrum 2 **workflow icons** for [Spectrum Web Components](https://opensource.adobe.com/spectrum-web-components/). Public, framework-agnostic icon art delivered two ways:
+Spectrum 2 **workflow icons** for [Spectrum Web Components](https://spectrum-web-components.adobe.com/). Public, framework-agnostic icon art delivered two ways:
 
 - **Per-icon custom elements** (`<swc-icon-star>`): drop-in tags that render in any framework with zero ceremony, carrying size, color, and accessibility.
 - **Per-icon SVG-string functions** (`Icon_Star()`): the tree-shakeable substrate, usable via `innerHTML`, React `dangerouslySetInnerHTML`, Vue `v-html`, or Lit `unsafeSVG`.

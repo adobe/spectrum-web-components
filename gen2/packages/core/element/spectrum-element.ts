@@ -255,7 +255,7 @@ if (process.env.NODE_ENV !== 'production') {
   window.__swc.warn(
     undefined,
     'Spectrum Web Components is in dev mode. Not recommended for production!',
-    'https://opensource.adobe.com/spectrum-web-components/dev-mode/',
+    'https://spectrum-web-components.adobe.com/dev-mode/',
     { type: 'default' }
   );
 }

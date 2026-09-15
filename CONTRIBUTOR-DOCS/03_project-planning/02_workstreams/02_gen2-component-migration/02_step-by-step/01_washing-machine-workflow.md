@@ -11,61 +11,60 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-    - [Workspace setup](#workspace-setup)
-
+- [Workspace setup](#workspace-setup)
 - [Quick Migration Checklist](#quick-migration-checklist)
 - [Relationship to this workstream](#relationship-to-this-workstream)
 - [Workflow overview](#workflow-overview)
 - [Starting from 1st-gen (reference, not dependency)](#starting-from-1st-gen-reference-not-dependency)
 - [Core vs SWC: where does code go?](#core-vs-swc-where-does-code-go)
 - [Phase 1: Preparation](#phase-1-preparation)
-  - [What to do](#what-to-do)
-  - [What to check](#what-to-check)
-  - [Common problems and solutions](#common-problems-and-solutions)
-  - [Quality gate](#quality-gate)
+    - [What to do](#what-to-do)
+    - [What to check](#what-to-check)
+    - [Common problems and solutions](#common-problems-and-solutions)
+    - [Quality gate](#quality-gate)
 - [Phase 2: Setup](#phase-2-setup)
-  - [What to do](#what-to-do)
-  - [What to check](#what-to-check)
-  - [Common problems and solutions](#common-problems-and-solutions)
-  - [Quality gate](#quality-gate)
+    - [What to do](#what-to-do)
+    - [What to check](#what-to-check)
+    - [Common problems and solutions](#common-problems-and-solutions)
+    - [Quality gate](#quality-gate)
 - [Phase 3: API migration](#phase-3-api-migration)
-  - [What to do](#what-to-do)
-  - [Property migration scenarios](#property-migration-scenarios)
-  - [API patterns (statics and warnings)](#api-patterns-statics-and-warnings)
-  - [Form participation (form fields only)](#form-participation-form-fields-only)
-  - [What to check](#what-to-check)
-  - [Common problems and solutions](#common-problems-and-solutions)
-  - [Quality gate](#quality-gate)
+    - [What to do](#what-to-do)
+    - [Property migration scenarios](#property-migration-scenarios)
+    - [API patterns (statics and warnings)](#api-patterns-statics-and-warnings)
+    - [Form participation (form fields only)](#form-participation-form-fields-only)
+    - [What to check](#what-to-check)
+    - [Common problems and solutions](#common-problems-and-solutions)
+    - [Quality gate](#quality-gate)
 - [Phase 4: Accessibility](#phase-4-accessibility)
-  - [What to do](#what-to-do)
-  - [What to check](#what-to-check)
-  - [Common problems and solutions](#common-problems-and-solutions)
-  - [Quality gate](#quality-gate)
+    - [What to do](#what-to-do)
+    - [What to check](#what-to-check)
+    - [Common problems and solutions](#common-problems-and-solutions)
+    - [Quality gate](#quality-gate)
 - [Phase 5: Styling](#phase-5-styling)
-  - [What to do](#what-to-do)
-  - [What to check](#what-to-check)
-  - [Common problems and solutions](#common-problems-and-solutions)
-  - [Quality gate](#quality-gate)
+    - [What to do](#what-to-do)
+    - [What to check](#what-to-check)
+    - [Common problems and solutions](#common-problems-and-solutions)
+    - [Quality gate](#quality-gate)
 - [Phase 6: Testing](#phase-6-testing)
-  - [What to do](#what-to-do)
-  - [What to check](#what-to-check)
-  - [Common problems and solutions](#common-problems-and-solutions)
-  - [Quality gate](#quality-gate)
+    - [What to do](#what-to-do)
+    - [What to check](#what-to-check)
+    - [Common problems and solutions](#common-problems-and-solutions)
+    - [Quality gate](#quality-gate)
 - [Phase 7: Documentation](#phase-7-documentation)
-  - [What to do](#what-to-do)
-  - [What to check](#what-to-check)
-  - [Common problems and solutions](#common-problems-and-solutions)
-  - [Quality gate](#quality-gate)
+    - [What to do](#what-to-do)
+    - [What to check](#what-to-check)
+    - [Common problems and solutions](#common-problems-and-solutions)
+    - [Quality gate](#quality-gate)
 - [Phase 8: Review](#phase-8-review)
-  - [What to do](#what-to-do)
-  - [Final checklist (copy and use)](#final-checklist-copy-and-use)
-  - [Quality gate](#quality-gate)
+    - [What to do](#what-to-do)
+    - [Final checklist (copy and use)](#final-checklist-copy-and-use)
+    - [Quality gate](#quality-gate)
 - [Decision trees](#decision-trees)
-  - [Should this component be split into multiple components?](#should-this-component-be-split-into-multiple-components)
-  - [Should this component be combined with another?](#should-this-component-be-combined-with-another)
-  - [What shared utilities can be extracted?](#what-shared-utilities-can-be-extracted)
-  - [How should variants be implemented?](#how-should-variants-be-implemented)
-  - [What accessibility pattern applies?](#what-accessibility-pattern-applies)
+    - [Should this component be split into multiple components?](#should-this-component-be-split-into-multiple-components)
+    - [Should this component be combined with another?](#should-this-component-be-combined-with-another)
+    - [What shared utilities can be extracted?](#what-shared-utilities-can-be-extracted)
+    - [How should variants be implemented?](#how-should-variants-be-implemented)
+    - [What accessibility pattern applies?](#what-accessibility-pattern-applies)
 - [Reference: Badge migration](#reference-badge-migration)
 - [Style guides and resources](#style-guides-and-resources)
 
@@ -77,7 +76,7 @@
 
 It **orchestrates** the migration: eight phases with checklists and quality gates, plus links to the step-by-step docs and style guides for implementation detail. It does not duplicate those guides—it sequences **what** to do and **when**.
 
-### Workspace setup
+## Workspace setup
 
 Keep **spectrum-web-components** (this repo) and **[spectrum-css](https://github.com/adobe/spectrum-css)** in the **same workspace**—typically as **sibling folders** under one parent directory (e.g. `~/dev/spectrum-web-components` and `~/dev/spectrum-css`). Step 1 analysis, Phase 5 styling (S2 source from the spectrum-css **`spectrum-two`** branch), and AI-assisted migration prompts all work best when both trees are available locally for comparison, copy-from-source, and editor/IDE context.
 
@@ -533,7 +532,7 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 5. **Coverage:** Main props, variants, user actions, visual states, global styles, and public custom properties when applicable.
 6. **Dev-warning tests:** For every dev-warning check added in Phase 3/4, add a pair of test cases (fires for the invalid/missing case, silent for the valid case) using `withWarningSpy` from `@spectrum-web-components/swc/utils/test-utils`. See the **Testing deprecation warnings** pattern in [Debug and validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#testing-deprecation-warnings), which applies to all warning categories, not just deprecations.
 
-Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.spec.ts`). See the [gen2 testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md) and reference implementations in `link/test/`, `checkbox/test/`, `badge/test/`, etc.
+Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.spec.ts`). See the [gen2 testing conventions](../../../../01_contributor-guides/11_gen2_testing.md) and reference implementations in `link/test/`, `checkbox/test/`, `badge/test/`, etc.
 
 ### What to check
 
@@ -541,7 +540,7 @@ Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.s
 - [ ] `test/vrt/*.vrt.ts` covers the component's important visual matrix without bloating docs stories.
 - [ ] Unit tests pass; a11y tests pass.
 - [ ] Critical paths (render, props, slots, events) are covered.
-- [ ] Tests follow the project [testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md).
+- [ ] Tests follow the project [testing conventions](../../../../01_contributor-guides/11_gen2_testing.md).
 - [ ] Every dev-warning check has a fires/does-not-fire test pair via `withWarningSpy`.
 
 ### Common problems and solutions
@@ -700,7 +699,7 @@ Use Badge as the reference implementation:
 - **Workspace:** [spectrum-css](https://github.com/adobe/spectrum-css) cloned **next to** this repo—see [Workspace setup](#workspace-setup).
 - **TypeScript:** Team conventions; for gen2 API patterns (static `readonly`, `window.__swc.warn`), see Phase 3 [API patterns](#api-patterns-statics-and-warnings) and gen2 Badge (`core` + `swc`).
 - **CSS:** [gen2 CSS style guide (CONTRIBUTOR-DOCS)](../../../../02_style-guide/01_css/README.md) — component CSS, custom properties, Spectrum→SWC migration, anti-patterns, property order
-- **Testing:** [gen2 testing conventions](../../../../01_contributor-guides/11_2ndgen_testing.md)
+- **Testing:** [gen2 testing conventions](../../../../01_contributor-guides/11_gen2_testing.md)
 - **WCAG APG:** [https://www.w3.org/WAI/ARIA/apg/patterns/](https://www.w3.org/WAI/ARIA/apg/patterns/)
 - **Component analysis:** [03_components/](../../../03_components/) — Step 1 [Cursor prompt](01_analyze-rendering-and-styling/README.md); optional **component-migration-analysis** Cursor skill alongside that flow.
 - **gen2 Storybook guides:** [gen2/packages/swc/.storybook/guides/](../../../../../gen2/packages/swc/.storybook/guides/)

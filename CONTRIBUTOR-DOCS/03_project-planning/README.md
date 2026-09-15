@@ -24,7 +24,6 @@
     - [gen2 Component Migration](02_workstreams/02_gen2-component-migration/README.md)
     - [Accessibility Improvements](02_workstreams/03_accessibility-improvements/README.md)
     - [Component Improvements](02_workstreams/04_component-improvements/README.md)
-    - [1st-gen Spectrum 2 Enhancements](02_workstreams/05_1st-gen-spectrum-2-enhancements/README.md)
 - [Components](03_components/README.md)
     - Accordion
     - Action Button

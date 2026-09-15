@@ -996,7 +996,7 @@ export class PromptField extends SpectrumElement {
     window.__swc.warn(
       this,
       'The attachment slot contains both card and media upload attachments. Use one layout type per composer session (all card or all media). When uploads mix images and documents, normalize to media tiles with thumbnails and optional badges.',
-      'https://opensource.adobe.com/spectrum-web-components/patterns/ai-toolkit/prompt-field/'
+      'https://spectrum-web-components.adobe.com/patterns/ai-toolkit/prompt-field/'
     );
   }
 
@@ -1020,7 +1020,7 @@ export class PromptField extends SpectrumElement {
     window.__swc.warn(
       this,
       'The legal slot is empty. Product implementations must provide Legal-approved disclaimer content via the legal slot.',
-      'https://opensource.adobe.com/spectrum-web-components/patterns/ai-toolkit/prompt-field/'
+      'https://spectrum-web-components.adobe.com/patterns/ai-toolkit/prompt-field/'
     );
   }
 

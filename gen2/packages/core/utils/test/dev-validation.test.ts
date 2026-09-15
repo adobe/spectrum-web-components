@@ -22,8 +22,7 @@ import {
   warnIf,
 } from '../index.js';
 
-const URL =
-  'https://opensource.adobe.com/spectrum-web-components/components/test/';
+const URL = 'https://spectrum-web-components.adobe.com/components/test/';
 
 // Enables DEBUG mode and captures window.__swc.warn calls for the duration of `fn`.
 async function withWarningSpy(

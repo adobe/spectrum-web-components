@@ -101,20 +101,27 @@ module.exports = defineConfig({
      * to simplify into a readable set of operations
      * @param {Workspace} workspace
      * @param {string} folderName
-     * @param {boolean} is2ndGen
+     * @param {boolean} isGen2
      * @returns {void}
      */
     function validateComponentPackageJson(
       workspace,
       folderName,
-      is2ndGen = false
+      isGen2 = false
     ) {
       // Only update the homepage if it does not already exist
       if (!workspace.manifest.homepage) {
-        workspace.set(
-          'homepage',
-          `https://opensource.adobe.com/spectrum-web-components/components/${folderName}`
-        );
+        if (isGen2) {
+          workspace.set(
+            'homepage',
+            `https://spectrum-web-components.adobe.com/components/${folderName}`
+          );
+        } else {
+          workspace.set(
+            'homepage',
+            `https://opensource.adobe.com/spectrum-web-components/components/${folderName}`
+          );
+        }
       }
 
       workspace.set('type', 'module');
@@ -122,7 +129,7 @@ module.exports = defineConfig({
       workspace.set('keywords', keywords(['component', 'css']));
 
       // gen2 packages use different entry points
-      if (is2ndGen) {
+      if (isGen2) {
         // gen2 uses dist folder for builds
         workspace.set('main', './dist/index.js');
         workspace.set('module', './dist/index.js');
@@ -242,6 +249,8 @@ module.exports = defineConfig({
         'https://github.com/adobe/spectrum-web-components/issues'
       );
 
+      const isGen2 = workspace.cwd.startsWith('gen2/');
+
       /**
        * -------------- COMPONENTS --------------
        * Process the components workspaces with component-specific configuration
@@ -249,8 +258,7 @@ module.exports = defineConfig({
       if (isComponent) {
         // Get the last part of the path (e.g., 'button' from '1st-gen/packages/button')
         const folderName = workspace.cwd?.split('/').pop();
-        const is2ndGen = workspace.cwd.startsWith('gen2/');
-        validateComponentPackageJson(workspace, folderName, is2ndGen);
+        validateComponentPackageJson(workspace, folderName, isGen2);
         validateLocalPackages(workspace);
       } else {
         /**
@@ -262,10 +270,17 @@ module.exports = defineConfig({
         }
 
         if (!workspace.manifest.homepage) {
-          workspace.set(
-            'homepage',
-            'https://opensource.adobe.com/spectrum-web-components/'
-          );
+          if (isGen2) {
+            workspace.set(
+              'homepage',
+              'https://spectrum-web-components.adobe.com/'
+            );
+          } else {
+            workspace.set(
+              'homepage',
+              'https://opensource.adobe.com/spectrum-web-components/'
+            );
+          }
         }
       }
     }

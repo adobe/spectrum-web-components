@@ -4,7 +4,7 @@
   "description": "Spectrum 2 workflow icons as tree-shakeable custom elements and SVG-string functions",
   "license": "Apache-2.0",
   "author": "Adobe",
-  "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+  "homepage": "https://spectrum-web-components.adobe.com/",
   "repository": {
     "directory": "gen2/packages/icons",
     "type": "git",
@@ -30,12 +30,6 @@
   "files": [
     "dist/"
   ],
-  "sideEffects": [
-    "**/swc-icon-*.js",
-    "**/swc-icon-*.ts",
-    "**/elements.js",
-    "**/elements.ts"
-  ],
   "scripts": {
     "analyze": "cem analyze --config cem.config.js",
     "build": "vite build && yarn analyze && yarn verify:tree-shaking",
@@ -45,6 +39,12 @@
     "test": "node scripts/verify-tree-shaking.mjs",
     "verify:tree-shaking": "node scripts/verify-tree-shaking.mjs"
   },
+  "sideEffects": [
+    "**/swc-icon-*.js",
+    "**/swc-icon-*.ts",
+    "**/elements.js",
+    "**/elements.ts"
+  ],
   "dependencies": {
     "@adobe/spectrum-wc-core": "2.0.0-beta.3",
     "lit": "^2.5.0 || ^3.1.3"

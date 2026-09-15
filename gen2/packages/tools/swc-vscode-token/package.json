@@ -51,7 +51,7 @@
   "engines": {
     "vscode": "^1.100.0"
   },
-  "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+  "homepage": "https://spectrum-web-components.adobe.com/",
   "icon": "resources/icon.png",
   "keywords": [
     "design-system",

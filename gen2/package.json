@@ -5,7 +5,7 @@
   "description": "gen2 Spectrum Web Components with modern tooling and architecture",
   "license": "Apache-2.0",
   "author": "Adobe",
-  "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+  "homepage": "https://spectrum-web-components.adobe.com/",
   "repository": {
     "directory": "gen2",
     "type": "git",

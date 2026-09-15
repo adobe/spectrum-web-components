@@ -8,7 +8,7 @@
   "contributors": [
     "Stephanie Eckles <5t3ph@users.noreply.github.com>"
   ],
-  "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+  "homepage": "https://spectrum-web-components.adobe.com/",
   "repository": {
     "directory": "gen2/packages/tools/swc-tokens",
     "type": "git",

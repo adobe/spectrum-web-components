@@ -9,7 +9,7 @@
     "query-selector-shadow-dom": "^1.0.0"
   },
   "description": "A Screen Reader Storybook addon for accessibility testing",
-  "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+  "homepage": "https://spectrum-web-components.adobe.com/",
   "keywords": [
     "storybook",
     "storybook-addons",

@@ -21,7 +21,7 @@
 - [Patching dependencies](08_patching-dependencies.md)
 - [Accessibility testing](09_accessibility-testing.md)
 - [Maintaining StackBlitz examples for Spectrum Web Components](10_using-stackblitz.md)
-- [gen2 testing](11_2ndgen_testing.md)
+- [gen2 testing](11_gen2_testing.md)
 - [Tools vs packages: where code lives](12_tools-vs-packages.md)
 - [Writing migration guides](13_writing-migration-guides.md)
 - [Focus management](14_focus-management.md)

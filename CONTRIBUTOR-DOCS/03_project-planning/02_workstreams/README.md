@@ -26,7 +26,6 @@
     - [Migration project planning (Epics and tickets)](02_gen2-component-migration/03_migration-project-planning.md)
 - [Accessibility Improvements](03_accessibility-improvements/README.md)
 - [Component Improvements](04_component-improvements/README.md)
-- [1st-gen Spectrum 2 Enhancements](05_1st-gen-spectrum-2-enhancements/README.md)
 
 </details>
 

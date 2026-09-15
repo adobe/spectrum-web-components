@@ -40,6 +40,7 @@
 <!-- Document content (editable) -->
 
 > **Input documents**
+>
 > - [Rendering & Styling Migration Analysis](./rendering-and-styling-migration-analysis.md)
 > - [Washing Machine Workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 > - 1st-gen source: `1st-gen/packages/avatar/src/Avatar.ts`
@@ -52,7 +53,7 @@
 ### Properties
 
 | Property | Type | Default | Reflected | Source |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | `src` | `string` | `''` | No | `Avatar.ts` |
 | `size` | `AvatarSize` (50\|75\|100\|200\|300\|400\|500\|600\|700) | `100` | Yes | `Avatar.ts` |
 | `isDecorative` | `boolean` | `false` | Yes (`is-decorative`) | `Avatar.ts` |
@@ -72,7 +73,7 @@
 ### Properties
 
 | Property | Type | Default | Reflected | Notes |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | `src` | `string` | `''` | No | Unchanged |
 | `alt` | `string \| undefined` | `undefined` | No | Replaces `label`; pass `alt=""` for decorative |
 | `size` | `AvatarSize` (50–1500) | `500` | Yes | Numeric scale extended; invalid values fall back to 500 |
@@ -91,7 +92,7 @@
 ## 3. Dependencies
 
 | Dependency | 1st-Gen Source | gen2 Equivalent | Status |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `Focusable` mixin | `@spectrum-web-components/shared` | Not needed | **Closed — linked variant dropped** |
 | `LikeAnchor` mixin | `@spectrum-web-components/shared` | Not needed | **Closed — linked variant dropped** |
 | `SizedMixin` | N/A | Not used | **Closed — bespoke numeric getter/setter in `AvatarBase`** |
@@ -130,6 +131,7 @@ gen2 components use a `<div class="swc-Avatar">` wrapper. 1st-gen renders `<img>
 ## 5. Migration Checklist
 
 ### Phase 2 — Setup
+
 - [x] Create `gen2/packages/core/components/avatar/` directory
 - [x] Create `gen2/packages/swc/components/avatar/` directory
 - [x] Stub `Avatar.base.ts`, `Avatar.types.ts`, `index.ts` in core
@@ -137,12 +139,14 @@ gen2 components use a `<div class="swc-Avatar">` wrapper. 1st-gen renders `<img>
 - [x] Add packages to workspace; verify build passes
 
 ### Phase 3 — API Migration
+
 - [x] Define `AvatarSize` type in `Avatar.types.ts`
 - [x] Define `AvatarBase` extending `SpectrumElement` with `src`, `alt`, `size`, `overBackground`
 - [x] Add `static readonly VALID_SIZES` array
 - [x] Implement `firstUpdated` to set `size` attribute if missing
 
 ### Phase 4 — Styling
+
 - [x] Add `<div class="swc-Avatar">` wrapper to render output
 - [x] Size token mappings for all sizes (50–1500)
 - [x] `over-background` outline rules (1px for 50–900, 2px for 1000–1500)
@@ -150,6 +154,7 @@ gen2 components use a `<div class="swc-Avatar">` wrapper. 1st-gen renders `<img>
 - [x] Run `stylelint`
 
 ### Phase 5 — Accessibility
+
 - [x] `alt` provided → `alt="[value]"` on `<img>`
 - [x] `alt=""` (decorative) → `alt=""` + `aria-hidden="true"` on `<img>`
 - [x] `alt` omitted → `alt=""` on `<img>` + DEBUG warning
@@ -159,16 +164,19 @@ gen2 components use a `<div class="swc-Avatar">` wrapper. 1st-gen renders `<img>
 - [x] Playwright ARIA snapshot tests
 
 ### Phase 6 — Testing
+
 - [x] Port `avatar.test.ts` → `gen2/packages/swc/components/avatar/test/avatar.test.ts`
 - [x] Add Playwright `.a11y.spec.ts` file
 
 ### Phase 7 — Documentation
+
 - [x] JSDoc on all public properties in `Avatar.base.ts`
 - [x] Storybook stories: Playground, Overview, Anatomy, Sizes, Decorative, OverBackground, InActionButton, Accessibility
 - [x] Add migration notes for `--mod-*` removal and API changes
 - [x] Update migration status doc
 
 ### Phase 8 — Review
+
 - [x] Run full lint suite
 - [ ] QA all story variants visually
 - [ ] At least one engineer review before merging to `main`
@@ -178,7 +186,7 @@ gen2 components use a `<div class="swc-Avatar">` wrapper. 1st-gen renders `<img>
 ## 6. Open Questions
 
 | ID | Question | Resolution |
-|---|---|---|
+| --- | --- | --- |
 | **OQ-1** | Size system: numeric vs T-shirt sizes? | **Closed** — numeric sizes kept and extended to 1500; bespoke getter/setter in `AvatarBase` (no `SizedMixin`) |
 | **OQ-2** | `Focusable` mixin needed? | **Closed** — linked variant dropped; avatar is not focusable |
 | **OQ-3** | `LikeAnchor` mixin needed? | **Closed** — linked variant dropped; `href` and related props not carried forward |
@@ -192,5 +200,5 @@ gen2 components use a `<div class="swc-Avatar">` wrapper. 1st-gen renders `<img>
 
 - Reference implementation: `gen2/packages/core/components/badge/Badge.base.ts`
 - CSS migration guide: `CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md`
-- gen2 testing guide: `CONTRIBUTOR-DOCS/01_contributor-guides/11_2ndgen_testing.md`
+- gen2 testing guide: `CONTRIBUTOR-DOCS/01_contributor-guides/11_gen2_testing.md`
 - gen2 core mixins: `gen2/packages/core/mixins/`

@@ -4,7 +4,7 @@
   "description": "Spectrum Web Components gen2 - rendering implementations",
   "license": "Apache-2.0",
   "author": "Adobe",
-  "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+  "homepage": "https://spectrum-web-components.adobe.com/",
   "repository": {
     "directory": "gen2/packages/swc",
     "type": "git",

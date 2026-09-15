@@ -213,7 +213,7 @@ protected override update(changedProperties: PropertyValues): void {
       window.__swc.warn(
         this,
         `Invalid variant "${this.variant}". Valid variants: ${constructor.VARIANTS.join(', ')}.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/badge/',
+        'https://spectrum-web-components.adobe.com/components/badge/',
         { issues: [`variant="${this.variant}"`] }
       );
     }
@@ -222,7 +222,7 @@ protected override update(changedProperties: PropertyValues): void {
       window.__swc.warn(
         this,
         `Outline styling requires a semantic variant.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/badge/',
+        'https://spectrum-web-components.adobe.com/components/badge/',
         { issues: [`outline + variant="${this.variant}"`] }
       );
     }
@@ -256,7 +256,7 @@ protected override firstUpdated(changed: PropertyValues): void {
       window.__swc.warn(
         this,
         `Missing accessible label. Provide a "label" attribute or "aria-label".`,
-        'https://opensource.adobe.com/spectrum-web-components/components/progress-circle/',
+        'https://spectrum-web-components.adobe.com/components/progress-circle/',
         { issues: ['accessibility'] }
       );
     }
@@ -289,7 +289,7 @@ protected override updated(changed: PropertyValues<this>): void {
       window.__swc.warn(
         this,
         `Indeterminate progress should not have a value. The value will be ignored.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/progress-circle/',
+        'https://spectrum-web-components.adobe.com/components/progress-circle/',
         { issues: ['indeterminate + value'] }
       );
     }
@@ -322,7 +322,7 @@ public override connectedCallback(): void {
       window.__swc.warn(
         this,
         `This component should be used inside a <form> element.`,
-        'https://opensource.adobe.com/spectrum-web-components/components/field/',
+        'https://spectrum-web-components.adobe.com/components/field/',
         { issues: ['missing form ancestor'] }
       );
     }
@@ -433,7 +433,7 @@ The non-default guard (`this.progress !== 0`) is what keeps the warning honest: 
 
 #### Exception: attribute-preserving property renames
 
-The `changes.has()` + non-default-value guard above assumes the *only* way the property's value changes is a consumer setting it directly. That assumption breaks when the rename is JS-property-only and the HTML attribute is unchanged and still valid (for example `isDragged` → `dragged`, where the `dragged` attribute name and behavior stay the same and only the JS property name changes). In that shape:
+The `changes.has()` + non-default-value guard above assumes the _only_ way the property's value changes is a consumer setting it directly. That assumption breaks when the rename is JS-property-only and the HTML attribute is unchanged and still valid (for example `isDragged` → `dragged`, where the `dragged` attribute name and behavior stay the same and only the JS property name changes). In that shape:
 
 - Lit's attribute-to-property sync fires the same property setter a direct JS assignment would, so a consumer who never touches the deprecated JS property (only the still-valid attribute, or a Lit template's `?attr=` binding) still triggers the "warning."
 - If the component also sets the property internally as part of its own normal operation (e.g. a drag-and-drop component setting `dragged` on every native `dragover`), the warning fires continuously during ordinary use, not just when the deprecated JS API is used.
@@ -491,7 +491,7 @@ Warnings should be clear, actionable, and include helpful context. Follow this f
 window.__swc.warn(
   this,
   `Invalid variant "${this.variant}". Valid variants: ${constructor.VARIANTS.join(', ')}.`,
-  'https://opensource.adobe.com/spectrum-web-components/components/badge/',
+  'https://spectrum-web-components.adobe.com/components/badge/',
   { issues: [`variant="${this.variant}"`] }
 );
 ```
@@ -514,7 +514,7 @@ window.__swc.warn(
 Use the full documentation URL for the component:
 
 ```ts
-'https://opensource.adobe.com/spectrum-web-components/components/badge/';
+'https://spectrum-web-components.adobe.com/components/badge/';
 ```
 
 ## Known limitations

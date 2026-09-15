@@ -4,7 +4,7 @@
   "description": "Abstract base classes for Spectrum Web Components",
   "license": "Apache-2.0",
   "author": "Adobe",
-  "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+  "homepage": "https://spectrum-web-components.adobe.com/",
   "repository": {
     "directory": "gen2/packages/core",
     "type": "git",
@@ -75,10 +75,6 @@
       "types": "./dist/components/button/index.d.ts",
       "import": "./dist/components/button/index.js"
     },
-    "./components/button/index.js": {
-      "types": "./dist/components/button/index.d.ts",
-      "import": "./dist/components/button/index.js"
-    },
     "./components/button-group": {
       "types": "./dist/components/button-group/index.d.ts",
       "import": "./dist/components/button-group/index.js"
@@ -86,6 +82,10 @@
     "./components/button-group/index.js": {
       "types": "./dist/components/button-group/index.d.ts",
       "import": "./dist/components/button-group/index.js"
+    },
+    "./components/button/index.js": {
+      "types": "./dist/components/button/index.d.ts",
+      "import": "./dist/components/button/index.js"
     },
     "./components/card": {
       "types": "./dist/components/card/index.d.ts",
@@ -135,14 +135,6 @@
       "types": "./dist/components/icon/index.d.ts",
       "import": "./dist/components/icon/index.js"
     },
-    "./components/infield-button": {
-      "types": "./dist/components/infield-button/index.d.ts",
-      "import": "./dist/components/infield-button/index.js"
-    },
-    "./components/infield-button/index.js": {
-      "types": "./dist/components/infield-button/index.d.ts",
-      "import": "./dist/components/infield-button/index.js"
-    },
     "./components/illustrated-message": {
       "types": "./dist/components/illustrated-message/index.d.ts",
       "import": "./dist/components/illustrated-message/index.js"
@@ -150,6 +142,14 @@
     "./components/illustrated-message/index.js": {
       "types": "./dist/components/illustrated-message/index.d.ts",
       "import": "./dist/components/illustrated-message/index.js"
+    },
+    "./components/infield-button": {
+      "types": "./dist/components/infield-button/index.d.ts",
+      "import": "./dist/components/infield-button/index.js"
+    },
+    "./components/infield-button/index.js": {
+      "types": "./dist/components/infield-button/index.d.ts",
+      "import": "./dist/components/infield-button/index.js"
     },
     "./components/meter": {
       "types": "./dist/components/meter/index.d.ts",
@@ -410,14 +410,14 @@
       "components/button": [
         "dist/components/button/index.d.ts"
       ],
-      "components/button/index.js": [
-        "dist/components/button/index.d.ts"
-      ],
       "components/button-group": [
         "dist/components/button-group/index.d.ts"
       ],
       "components/button-group/index.js": [
         "dist/components/button-group/index.d.ts"
+      ],
+      "components/button/index.js": [
+        "dist/components/button/index.d.ts"
       ],
       "components/card": [
         "dist/components/card/index.d.ts"
@@ -455,17 +455,17 @@
       "components/icon/index.js": [
         "dist/components/icon/index.d.ts"
       ],
-      "components/infield-button": [
-        "dist/components/infield-button/index.d.ts"
-      ],
-      "components/infield-button/index.js": [
-        "dist/components/infield-button/index.d.ts"
-      ],
       "components/illustrated-message": [
         "dist/components/illustrated-message/index.d.ts"
       ],
       "components/illustrated-message/index.js": [
         "dist/components/illustrated-message/index.d.ts"
+      ],
+      "components/infield-button": [
+        "dist/components/infield-button/index.d.ts"
+      ],
+      "components/infield-button/index.js": [
+        "dist/components/infield-button/index.d.ts"
       ],
       "components/meter": [
         "dist/components/meter/index.d.ts"

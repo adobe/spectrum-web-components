@@ -30,7 +30,7 @@
 
 Index of shared, reusable resources in gen2: controllers, mixins, utilities, and directives in `@adobe/spectrum-wc-core`, plus a few sibling-package helpers. For each one: what it does and who currently uses it. Check here before writing new logic that a controller, mixin, or utility may already cover.
 
-> **Scope:** `gen2/packages/core` (controllers, mixins, utils, directives, element) and its consumers: components in `gen2/packages/swc/components`, and patterns in `gen2/packages/swc/patterns/ai-toolkit`. Test-only tooling is out of scope; see [gen2 testing](11_2ndgen_testing.md). Update "used by" as adoption changes.
+> **Scope:** `gen2/packages/core` (controllers, mixins, utils, directives, element) and its consumers: components in `gen2/packages/swc/components`, and patterns in `gen2/packages/swc/patterns/ai-toolkit`. Test-only tooling is out of scope; see [gen2 testing](11_gen2_testing.md). Update "used by" as adoption changes.
 >
 > ⚠️ **Important:** Composition happens at two layers. Most controllers/mixins are applied on the shared abstract `*Base` class in `core/components/*` and inherited by every concrete element. A few (`PendingMixin`) are applied one layer up, directly on the concrete element in `swc/components/*` (e.g. `Button extends PendingMixin(ButtonBase)`). Check both layers before concluding something isn't in use.
 

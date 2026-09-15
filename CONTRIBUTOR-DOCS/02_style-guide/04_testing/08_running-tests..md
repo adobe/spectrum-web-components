@@ -12,11 +12,11 @@
 <summary><strong>In this doc</strong></summary>
 
 - [Troubleshooting](#troubleshooting)
-  - [Test times out](#test-times-out)
-  - [ARIA snapshot fails](#aria-snapshot-fails)
-  - [aXe reports violations](#axe-reports-violations)
-  - [Coverage below threshold](#coverage-below-threshold)
-  - [Warning tests not capturing calls](#warning-tests-not-capturing-calls)
+    - [Test times out](#test-times-out)
+    - [ARIA snapshot fails](#aria-snapshot-fails)
+    - [aXe reports violations](#axe-reports-violations)
+    - [Coverage below threshold](#coverage-below-threshold)
+    - [Warning tests not capturing calls](#warning-tests-not-capturing-calls)
 
 </details>
 

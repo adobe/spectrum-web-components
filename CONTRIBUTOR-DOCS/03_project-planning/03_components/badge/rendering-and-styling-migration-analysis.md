@@ -12,15 +12,15 @@
 <summary><strong>In this doc</strong></summary>
 
 - [Component specifications](#component-specifications)
-  - [CSS](#css)
-  - [SWC](#swc)
+    - [CSS](#css)
+    - [SWC](#swc)
 - [Comparison](#comparison)
-  - [DOM structure changes](#dom-structure-changes)
-  - [CSS => SWC mapping](#css--swc-mapping)
+    - [DOM structure changes](#dom-structure-changes)
+    - [CSS => SWC mapping](#css--swc-mapping)
 - [Summary of changes](#summary-of-changes)
-  - [CSS => SWC implementation gaps](#css--swc-implementation-gaps)
-  - [TODOs](#todos)
-  - [CSS Spectrum 2 changes](#css-spectrum-2-changes)
+    - [CSS => SWC implementation gaps](#css--swc-implementation-gaps)
+    - [TODOs](#todos)
+    - [CSS Spectrum 2 changes](#css-spectrum-2-changes)
 - [Resources](#resources)
 
 </details>

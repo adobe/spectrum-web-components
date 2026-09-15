@@ -13,15 +13,15 @@
 
 - [About this guide](#about-this-guide)
 - [Getting started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Configure git blame ignores (recommended)](#configure-git-blame-ignores-recommended)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+    - [Configure git blame ignores (recommended)](#configure-git-blame-ignores-recommended)
 - [Repository structure](#repository-structure)
 - [Development workflow](#development-workflow)
-  - [Developing](#developing)
-  - [Testing](#testing)
-  - [Linting](#linting)
-  - [Building](#building)
+    - [Developing](#developing)
+    - [Testing](#testing)
+    - [Linting](#linting)
+    - [Building](#building)
 - [Command reference](#command-reference)
 
 </details>
