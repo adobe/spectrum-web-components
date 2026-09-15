@@ -173,6 +173,13 @@ export abstract class AssetBase extends SpectrumElement {
   // consumer-set value is left alone until this instance takes over.
   private _preserveAspectRatioAppliedTo: Element | null = null;
 
+  // The child this instance applied `accessibleLabel` to. A name we wrote
+  // ourselves isn't the child's own; tracking ownership lets a later
+  // `accessibleLabel` change (or clearing it) update or remove what we
+  // applied instead of `hasOwnAccessibleName` mistaking it for a
+  // consumer-set name and leaving it stale.
+  private _appliedAccessibleLabelTo: Element | null = null;
+
   protected override update(changes: PropertyValues): void {
     if (changes.has('fit')) {
       validateEnum(this, {
@@ -274,40 +281,52 @@ export abstract class AssetBase extends SpectrumElement {
       this._appliedAriaHidden = false;
     }
 
-    const missingNameWarning = `<${this.localName}> requires an accessible name: set "alt" on the slotted <img> (or role="img" plus "aria-label"/"aria-labelledby"/a child <title> on the slotted <svg>), set "accessible-label" on <${this.localName}>, or set "decorative".`;
-
     const [child] = children;
-    if (!child) {
-      // An empty, non-decorative asset conveys nothing and has no slotted
-      // node to name; accessibleLabel still counts as the consumer's stated
-      // intent even with nothing to attach it to.
-      warnIf(this, !this.accessibleLabel, missingNameWarning, DOCS_URL);
-      return;
-    }
-    const tagName = child.tagName.toLowerCase();
-    if (tagName !== 'img' && tagName !== 'svg') {
+    const tagName = child?.tagName.toLowerCase();
+    if (child && tagName !== 'img' && tagName !== 'svg') {
       // Already warned about by validateSlottedContent.
       return;
     }
 
-    const hasOwnName = this.hasOwnAccessibleName(child, tagName);
-    if (hasOwnName) {
-      if (tagName === 'svg' && !child.hasAttribute('role')) {
-        child.setAttribute('role', 'img');
-      }
-    } else if (this.accessibleLabel) {
-      if (tagName === 'img') {
-        (child as HTMLImageElement).alt = this.accessibleLabel;
-      } else {
-        child.setAttribute('role', 'img');
-        child.setAttribute('aria-label', this.accessibleLabel);
+    // A name this instance previously applied via accessibleLabel isn't
+    // the child's own; treat it as ours below instead of letting
+    // hasOwnAccessibleName mistake it for a consumer-set name.
+    const ownsAppliedName = !!child && this._appliedAccessibleLabelTo === child;
+    const hasOwnName =
+      !!child &&
+      !ownsAppliedName &&
+      this.hasOwnAccessibleName(child, tagName as 'img' | 'svg');
+
+    if (child) {
+      if (hasOwnName) {
+        if (tagName === 'svg' && !child.hasAttribute('role')) {
+          child.setAttribute('role', 'img');
+        }
+      } else if (this.accessibleLabel) {
+        if (tagName === 'img') {
+          (child as HTMLImageElement).alt = this.accessibleLabel;
+        } else {
+          child.setAttribute('role', 'img');
+          child.setAttribute('aria-label', this.accessibleLabel);
+        }
+        this._appliedAccessibleLabelTo = child;
+      } else if (ownsAppliedName) {
+        // accessibleLabel was cleared; remove the name we applied rather
+        // than leaving a stale one behind.
+        if (tagName === 'img') {
+          (child as HTMLImageElement).removeAttribute('alt');
+        } else {
+          child.removeAttribute('role');
+          child.removeAttribute('aria-label');
+        }
+        this._appliedAccessibleLabelTo = null;
       }
     }
 
     warnIf(
       this,
       !hasOwnName && !this.accessibleLabel,
-      missingNameWarning,
+      `<${this.localName}> requires an accessible name: set "alt" on the slotted <img> (or "aria-label"/"aria-labelledby"/a child <title> on the slotted <svg>), set "accessible-label" on <${this.localName}>, or set "decorative".`,
       DOCS_URL
     );
   }

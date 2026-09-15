@@ -85,7 +85,10 @@ Two events accompany the same transitions, so a consumer doesn't need to poll th
 
 Both events fire exactly once per slotted `<img>` instance, even if the image was already loaded
 from cache by the time a listener is attached. Swapping the slotted `<img>` for a new one resets
-`load-state` and re-attaches listeners to it.
+`load-state` and re-attaches listeners to it. Changing an existing `<img>`'s `src` in place
+(without swapping the element) isn't a slot change, so Asset doesn't reset `load-state` for it;
+the browser's own new `load`/`error` cycle for that request fires the corresponding event again
+on the same listeners.
 
 ```javascript
 const asset = document.querySelector('swc-asset');
@@ -96,7 +99,7 @@ asset.addEventListener('swc-asset-load', () => (spinner.hidden = true));
 asset.addEventListener('swc-asset-error', () => (spinner.hidden = true));
 ```
 
-Open the **Actions** panel to observe the event as the image completes the load.
+When viewing the example in the Playground, select the **Actions** panel to observe the event as the image completes the load.
 
 <Canvas of={AssetStories.LoadingState} />
 

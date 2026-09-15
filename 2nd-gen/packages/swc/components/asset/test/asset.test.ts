@@ -157,6 +157,54 @@ export const AccessibleLabelFallbackSvgTest: Story = {
   },
 };
 
+export const AccessibleLabelUpdatesOwnAppliedNameTest: Story = {
+  render: () => html`
+    <swc-asset accessible-label="First label">
+      <img src="./images/avatar-preview.png" />
+    </swc-asset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+
+    await step(
+      "updates the applied alt when accessibleLabel changes, rather than treating it as the img's own name",
+      async () => {
+        const img = asset.querySelector('img');
+        expect(
+          img?.getAttribute('alt'),
+          'alt is set from the first label'
+        ).toBe('First label');
+
+        asset.accessibleLabel = 'Second label';
+        await asset.updateComplete;
+
+        expect(
+          img?.getAttribute('alt'),
+          'alt updates to the second label instead of staying stale'
+        ).toBe('Second label');
+      }
+    );
+
+    await step('removes the applied alt once accessibleLabel is cleared', () =>
+      withWarningSpy(async (warnCalls) => {
+        asset.accessibleLabel = undefined;
+        asset.requestUpdate();
+        await asset.updateComplete;
+
+        const img = asset.querySelector('img');
+        expect(
+          img?.hasAttribute('alt'),
+          'alt is removed rather than left stale'
+        ).toBe(false);
+        expect(
+          warnCalls.length,
+          'the missing-accessible-name warning fires now that the applied name is gone'
+        ).toBeGreaterThan(0);
+      })
+    );
+  },
+};
+
 export const MissingAccessibleNameWarningTest: Story = {
   render: () => html`
     <swc-asset><img src="./images/avatar-preview.png" /></swc-asset>

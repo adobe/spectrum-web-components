@@ -202,8 +202,8 @@ docs (SWC-2321) should also reference Asset directly as an example consumer.
 | Property         | Type                                                       | Default     | Attribute         | Notes |
 | ---------------- | ------------------------------------------------------------ | ----------- | ------------------- | ----- |
 | `aspectRatio`     | `string \| undefined` (CSS `<ratio>` syntax, e.g. `"16/9"`, plus the `square` keyword) | `undefined` | `aspect-ratio`      | Falls through to an ancestor-supplied default, else `auto`, when unset (see [Behavioral semantics](#behavioral-semantics)). Also accepts `square` and normalizes `:`-separated ratios (e.g. `"16:9"`) to `/`. DEBUG warning when set together with both `width` and `height` |
-| `width`           | `string \| undefined` (CSS `<length-percentage>`, e.g. `"100px"`, `"90%"`) | `undefined` (`auto`) | `width`  | DEBUG warning on an invalid value |
-| `height`          | `string \| undefined` (CSS `<length-percentage>`)           | `undefined` (`auto`) | `height`   | DEBUG warning on an invalid value |
+| `width`           | `string \| undefined` (CSS `<length-percentage>`, e.g. `"100px"`, `"90%"`) | `undefined` (`auto`) | `width`  | Not format-validated (see [Behavioral semantics](#behavioral-semantics)) |
+| `height`          | `string \| undefined` (CSS `<length-percentage>`)           | `undefined` (`auto`) | `height`   | Not format-validated (see [Behavioral semantics](#behavioral-semantics)) |
 | `fit`             | `'cover' \| 'contain'`                                       | `'cover'`   | `fit`               | Asset-owned only, no ancestor sync. DEBUG warning on an invalid value |
 | `decorative`      | `boolean`                                                    | `false`     | reflected           | — |
 | `accessibleLabel` | `string \| undefined`                                       | `undefined` | `accessible-label`  | Renamed from `label`, generalized fallback accessible name; matches the existing `accessible-label` convention used by Button/Tabs/ActionButton/etc. SVG detection algorithm resolved, see [Q4](#decision-log) |
@@ -318,7 +318,11 @@ CSS `width`/`height` properties, even though they resolve internally to logical
 content doesn't mirror with writing-mode direction the way text layout does, so a physical name
 is what a consumer already expects from sizing image content, in or out of RTL contexts.
 
-An invalid (non-length-percentage) value for `width`/`height` triggers a DEBUG warning.
+`width`/`height` are not format-validated the way `aspectRatio` is. CSS `<length-percentage>` is
+an open-ended grammar (many units, plus `calc()`/`clamp()`/`min()`/`max()` expressions); a regex
+narrow enough to catch real mistakes without false-positiving on legitimate values isn't
+practical the way the aspect-ratio pattern is. An invalid value is left to the browser, which
+simply ignores it and falls back to `auto` (the same outcome an unset value already produces).
 
 #### Fit (cover/contain) — no ancestor hand-off
 
@@ -684,9 +688,7 @@ checklist](#implementation-checklist).
 
 ## References
 
-- [Asset research.md](./research.md) — the deep-read artifact this plan is drawn from, including the full reasoning behind the aspect-ratio weak-sync mechanism and the Card Gen2 findings
 - [Thumbnail accessibility migration analysis](../thumbnail/accessibility-migration-analysis.md) — a11y model reference (decorative, no disabled/focused/selected, host has no ARIA role)
-- [Asset rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [1st-gen source](../../../../1st-gen/packages/asset/src/Asset.ts)
 - [2nd-gen source (core)](../../../../2nd-gen/packages/core/components/asset/Asset.base.ts)
 - [2nd-gen source (SWC)](../../../../2nd-gen/packages/swc/components/asset/Asset.ts)
