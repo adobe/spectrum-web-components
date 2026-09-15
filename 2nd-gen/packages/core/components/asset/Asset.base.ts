@@ -173,11 +173,9 @@ export abstract class AssetBase extends SpectrumElement {
   // consumer-set value is left alone until this instance takes over.
   private _preserveAspectRatioAppliedTo: Element | null = null;
 
-  // The child this instance applied `accessibleLabel` to. A name we wrote
-  // ourselves isn't the child's own; tracking ownership lets a later
-  // `accessibleLabel` change (or clearing it) update or remove what we
-  // applied instead of `hasOwnAccessibleName` mistaking it for a
-  // consumer-set name and leaving it stale.
+  // The child this instance applied `accessibleLabel` to, so a later
+  // change or clearing it updates/removes our own value instead of being
+  // mistaken for the child's own name.
   private _appliedAccessibleLabelTo: Element | null = null;
 
   protected override update(changes: PropertyValues): void {
@@ -288,9 +286,8 @@ export abstract class AssetBase extends SpectrumElement {
       return;
     }
 
-    // A name this instance previously applied via accessibleLabel isn't
-    // the child's own; treat it as ours below instead of letting
-    // hasOwnAccessibleName mistake it for a consumer-set name.
+    // Excludes a name this instance applied itself from counting as the
+    // child's own.
     const ownsAppliedName = !!child && this._appliedAccessibleLabelTo === child;
     const hasOwnName =
       !!child &&
@@ -311,8 +308,8 @@ export abstract class AssetBase extends SpectrumElement {
         }
         this._appliedAccessibleLabelTo = child;
       } else if (ownsAppliedName) {
-        // accessibleLabel was cleared; remove the name we applied rather
-        // than leaving a stale one behind.
+        // accessibleLabel cleared; remove the name we applied instead of
+        // leaving it stale.
         if (tagName === 'img') {
           (child as HTMLImageElement).removeAttribute('alt');
         } else {
@@ -405,15 +402,12 @@ export abstract class AssetBase extends SpectrumElement {
     img.addEventListener('load', this.handleImgLoad);
     img.addEventListener('error', this.handleImgError);
 
-    // Timing guarantee: an already-complete `<img>` (e.g. served from
-    // cache) has already fired its native `load`/`error` before these
-    // listeners were attached, so schedule the equivalent transition
-    // instead of skipping it. This lets a consumer always just listen for
-    // `swc-asset-load`/`swc-asset-error` and get exactly one fire per
-    // slotted `<img>`, without a separate synchronous check for the cached
-    // case. An `<img>` with no `src` yet is also `complete`, but has
-    // nothing to report; it's left at `'loading'` until a real `src`
-    // resolves via the listeners already attached above.
+    // An already-complete `<img>` (e.g. cached) already fired its native
+    // `load`/`error` before these listeners attached, so schedule the
+    // equivalent transition instead of skipping it - a consumer can always
+    // just listen for the events without special-casing the cache case.
+    // An `<img>` with no `src` yet is also `complete` but has nothing to
+    // report, hence the `currentSrc` check.
     if (img.complete && img.currentSrc) {
       const succeeded = img.naturalWidth > 0;
       queueMicrotask(() => {
