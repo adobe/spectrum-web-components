@@ -107,10 +107,6 @@ export class UserCard extends CardBase {
     this.renderRoot
       ?.querySelector('slot[name="avatar"]')
       ?.addEventListener('slotchange', this._handleAvatarSlotChange);
-  }
-
-  protected override updated(changedProperties: PropertyValues): void {
-    super.updated(changedProperties);
     this._checkAvatarSlot();
   }
 

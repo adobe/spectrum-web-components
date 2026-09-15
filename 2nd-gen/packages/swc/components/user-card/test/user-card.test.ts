@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
@@ -444,21 +444,16 @@ export const AvatarOverlapCenteredAcrossSizesTest: Story = {
 // ──────────────────────────────────────────────────────────────
 
 export const RequiredAvatarSlotWarningTest: Story = {
-  render: () => html`
-    <swc-user-card>
-      <span slot="title">Jane Doe</span>
-    </swc-user-card>
-  `,
+  render: () => nothing,
   play: async ({ canvasElement, step }) => {
-    const card = await getComponent<UserCard>(canvasElement, 'swc-user-card');
-
     await step('warns when the avatar slot has no assigned content', () =>
       withWarningSpy(async (warnCalls) => {
-        // No slot content changes here; re-triggering `updated()` (via an
-        // unrelated property write) is what re-runs the check while the
-        // spy is listening, the same way TitleAsLinkMissingAnchorWarningTest
-        // (card.test.ts) re-triggers CardBase's own warnIf checks.
-        card.density = 'compact';
+        // The check runs once, in firstUpdated(), so the element has to be
+        // created while the spy is already listening; mutating an unrelated
+        // property on an already-rendered card would not re-trigger it.
+        const card = document.createElement('swc-user-card') as UserCard;
+        card.innerHTML = '<span slot="title">Jane Doe</span>';
+        canvasElement.appendChild(card);
         await card.updateComplete;
 
         expect(
@@ -469,30 +464,32 @@ export const RequiredAvatarSlotWarningTest: Story = {
           String(warnCalls[0]?.[1] || ''),
           'warning message references the avatar slot'
         ).toContain('avatar');
+
+        canvasElement.removeChild(card);
       })
     );
   },
 };
 
 export const AvatarPresentNoWarningTest: Story = {
-  render: () => html`
-    <swc-user-card>
-      ${avatarGlyph()}
-      <span slot="title">Jane Doe</span>
-    </swc-user-card>
-  `,
+  render: () => nothing,
   play: async ({ canvasElement, step }) => {
-    const card = await getComponent<UserCard>(canvasElement, 'swc-user-card');
-
     await step('does not warn when the avatar slot has content', () =>
       withWarningSpy(async (warnCalls) => {
-        card.density = 'compact';
+        const card = document.createElement('swc-user-card') as UserCard;
+        card.innerHTML = `
+          <swc-avatar slot="avatar" src="./images/avatar-preview.png" alt="Jane Doe"></swc-avatar>
+          <span slot="title">Jane Doe</span>
+        `;
+        canvasElement.appendChild(card);
         await card.updateComplete;
 
         expect(
           warnCalls.length,
           'no warnings are emitted when an avatar is present'
         ).toBe(0);
+
+        canvasElement.removeChild(card);
       })
     );
   },
