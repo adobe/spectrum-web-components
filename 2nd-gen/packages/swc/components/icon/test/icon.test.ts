@@ -18,8 +18,8 @@ import { Icon } from '@adobe/spectrum-wc/icon';
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import { getComponent } from '../../../utils/test-utils.js';
-import meta from '../stories/icon.internal.stories.js';
-import { Overview } from '../stories/icon.internal.stories.js';
+import meta from '../stories/icon.stories.js';
+import { Overview } from '../stories/icon.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -42,9 +42,10 @@ export const OverviewTest: Story = {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
 
     await step('renders with expected default properties', async () => {
-      expect(icon.accessibleLabel, 'accessibleLabel property is "Search"').toBe(
-        'Search'
-      );
+      expect(
+        icon.accessibleLabel,
+        'accessibleLabel property is "Favorite"'
+      ).toBe('Favorite');
       expect(icon.shadowRoot, 'shadow root is attached').toBeTruthy();
     });
   },

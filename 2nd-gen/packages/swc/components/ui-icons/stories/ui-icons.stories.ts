@@ -44,21 +44,22 @@ argTypes.size = {
 };
 
 /**
- * **Internal-only.** UI icons are the small glyphs Spectrum controls render
- * internally (chevrons, checkmarks, arrows, and the like). They are not published
- * for consumers. Art is generated from `icon-source/ui/` into
- * `components/ui-icons/icon-set/`, and the `<swc-ui-icon>` element selects the
- * optical step that matches its `size`.
+ * UI icons are the small, functional glyphs Spectrum controls use (chevrons,
+ * checkmarks, arrows, and the like). Spectrum's own components render them for
+ * you, and the set also ships in `@adobe/spectrum-wc` as the `<swc-ui-icon>`
+ * element so you can use the same optically-tuned art in your own layouts. Pick
+ * an icon by name with `icon` and a t-shirt `size`. For a custom, non-Spectrum
+ * drawing, use the [Icon](../?path=/docs/components-icon--docs) frame instead.
  */
 const meta: Meta = {
-  title: 'UI icons',
+  title: 'Icons/UI icons',
   component: 'swc-ui-icon',
   args,
   argTypes,
   render: (args) => template(args),
   parameters: {
     docs: {
-      subtitle: `Internal UI icons available to swc components.`,
+      subtitle: `The Spectrum UI icon set, rendered by the swc-ui-icon element.`,
     },
   },
   tags: ['migrated'],
@@ -158,3 +159,18 @@ export const OpticalSizes: Story = {
   parameters: { flexLayout: 'row-wrap' },
 };
 OpticalSizes.storyName = 'Optical sizes';
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+export const Accessibility: Story = {
+  render: (args) =>
+    template({
+      ...args,
+      icon: 'checkmark',
+      size: 'm',
+      'accessible-label': 'Selected',
+    }),
+  tags: ['a11y'],
+};
