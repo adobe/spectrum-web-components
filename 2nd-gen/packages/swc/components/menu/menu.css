@@ -14,33 +14,65 @@
   display: block;
 }
 
-/* Unstyled positioning and layout only: `position: absolute` is what
- * `PlacementController` needs to place the surface (writes top/left/translate
- * inline), and `display: flex` / `flex-direction: column` stacks slotted rows
- * vertically regardless of their own default display (an unregistered custom
- * element, like the current placeholder story rows, defaults to `inline`).
- * Visual styling (background, border, radius, elevation) is deferred until
- * `swc-menu-item` exists to style and size against for real; see the
- * migration plan's Architecture section for why this single class will carry
- * both the `spectrum-css` popover-chrome and menu-list roles once it lands. */
+* {
+  box-sizing: border-box;
+}
+
+/* `inset: auto` resets the UA popover default of `inset: 0`, which
+ * auto-centers the surface and fights the inline top/left/translate
+ * PlacementController writes -- same reset `swc-popover` applies.
+ * Background/border/radius/shadow mirror `swc-popover`'s own tokens, since
+ * `spectrum-css`'s `.spectrum-Menu` carries no chrome of its own.
+ * `display` is intentionally absent here (see `:popover-open` below); an
+ * unconditional value would override the UA's default-hidden state. */
 .swc-Menu {
-  display: flex;
+  --swc-menu-background-color: token("background-layer-2-color");
+  --swc-menu-border-color: token("popover-border-color");
+  --swc-menu-corner-radius: token("corner-radius-700");
+
   position: absolute;
+  inset: auto;
   flex-direction: column;
+  max-block-size: min(var(--swc-placement-available-height, 90vb), 90vb);
+  background-color: var(--swc-menu-background-color);
+  border: token("border-width-100") solid var(--swc-menu-border-color);
+  border-radius: var(--swc-menu-corner-radius);
+  box-shadow: token("drop-shadow-elevated");
+  overflow: auto;
+  opacity: 0;
+  transition:
+    opacity token("animation-duration-200") token("animation-ease-out"),
+    overlay token("animation-duration-200") allow-discrete,
+    display token("animation-duration-200") allow-discrete;
 }
 
-/* `[hidden]` and `.swc-Menu` are both single-selector specificity (0,1,0),
- * and this stylesheet's `display: flex` above comes after the UA
- * stylesheet's `[hidden] { display: none }` in the cascade, so it was
- * winning the tie and the surface never actually hid despite the attribute
- * being set correctly. The extra specificity here (0,2,0) restores it. */
-.swc-Menu[hidden] {
-  display: none;
+/* `flex-direction` lives on the base rule, not here, since it isn't part of
+ * the discrete transition and would snap to its default mid-fade otherwise. */
+.swc-Menu:popover-open {
+  display: flex;
+  opacity: 1;
 }
 
-/* Minimal padding so slotted rows are visually distinct and roving focus is
- * easy to see moving between them; not a real row treatment. `swc-menu-item`
- * owns its own padding once it exists, superseding this. */
+@starting-style {
+  .swc-Menu:popover-open {
+    opacity: 0;
+  }
+}
+
+/* Minimal padding so rows are visually distinct; not a real row treatment.
+ * `swc-menu-item` owns its own padding once it exists. */
 ::slotted(*) {
   padding: token("spacing-100");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-Menu {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .swc-Menu {
+    border-color: CanvasText;
+  }
 }
