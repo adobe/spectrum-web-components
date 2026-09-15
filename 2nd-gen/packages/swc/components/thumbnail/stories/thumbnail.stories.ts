@@ -151,6 +151,7 @@ export const ConsumerStyledStates: Story = {
         outline: var(--swc-focus-indicator-thickness) solid
           var(--swc-focus-indicator-color);
         outline-offset: var(--swc-focus-ring-gap);
+        border-radius: var(--swc-corner-radius-75);
       }
     </style>
     <swc-thumbnail class="disabled-thumbnail">
