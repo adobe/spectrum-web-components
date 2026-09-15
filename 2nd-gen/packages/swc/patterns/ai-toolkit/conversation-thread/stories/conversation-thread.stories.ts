@@ -559,6 +559,7 @@ class ConversationFullPatternDemo extends LitElement {
   };
 
   private renderTurns() {
+    const lastTurnId = this.turns[this.turns.length - 1]?.id;
     return this.turns.map((turn) => {
       if (turn.role === 'user') {
         return html`
@@ -626,7 +627,7 @@ class ConversationFullPatternDemo extends LitElement {
                     <a href="#">Market research summary</a>
                   </swc-message-sources>
                 `}
-            ${turn.loading
+            ${turn.loading || turn.id !== lastTurnId
               ? ''
               : html`
                   <swc-suggestion-group slot="suggestions">

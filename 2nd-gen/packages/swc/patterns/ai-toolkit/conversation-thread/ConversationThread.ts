@@ -31,6 +31,8 @@ import styles from './conversation-thread.css';
  * @element swc-conversation-thread
  * @slot - Conversation turns, typically `<swc-conversation-turn>` elements.
  *
+ * @cssprop --swc-conversation-thread-gap - Gap between turns. Defaults to spacing-400.
+ *
  * @since 2.0.0-beta.3
  */
 export class ConversationThread extends SpectrumElement {
