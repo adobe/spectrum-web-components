@@ -1129,6 +1129,111 @@ describe('Submenu', () => {
       ) as MenuItem;
       expect(backItem).to.not.be.null;
     });
+    describe('touch', () => {
+      it('does not open submenu on touch pointerdown/pointerup alone', async function () {
+        // Unlike the non-mobile-view "touch interactions" tests, mobile view
+        // opens only via the click that follows a touch tap, not the earlier
+        // pointerup fast-path — see handlePointerdown's `!this.isMobileView`
+        // condition.
+        const menu = this.el as Menu;
+        expect(menu.currentMobileSubmenu).to.be.undefined;
+
+        this.rootItem.dispatchEvent(
+          new PointerEvent('pointerdown', {
+            bubbles: true,
+            pointerType: 'touch',
+          })
+        );
+        this.rootItem.dispatchEvent(
+          new PointerEvent('pointerup', {
+            bubbles: true,
+            pointerType: 'touch',
+          })
+        );
+        await elementUpdated(menu);
+
+        expect(menu.currentMobileSubmenu).to.be.undefined;
+      });
+      it('opens submenu via the click that follows a touch tap', async function () {
+        const menu = this.el as Menu;
+
+        this.rootItem.dispatchEvent(
+          new PointerEvent('pointerdown', {
+            bubbles: true,
+            pointerType: 'touch',
+          })
+        );
+        this.rootItem.dispatchEvent(
+          new PointerEvent('pointerup', {
+            bubbles: true,
+            pointerType: 'touch',
+          })
+        );
+        this.rootItem.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        await elementUpdated(menu);
+
+        expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
+      });
+      it('reliably opens a different submenu via touch after a prior touch-driven open', async function () {
+        // Regression test: opening one submenu via touch used to leave the
+        // menu's internal drill-down bookkeeping corrupted (a touch tap's
+        // compatibility click, arriving after pointerup had already opened
+        // it, used to re-trigger the same open logic a second time), causing
+        // the *next* submenu opened via touch to fail intermittently.
+        const el = await fixture<Menu>(html`
+          <sp-menu mobile-view>
+            <sp-menu-item class="submenu-a">
+              Submenu A
+              <sp-menu slot="submenu">
+                <sp-menu-item>A Item</sp-menu-item>
+              </sp-menu>
+            </sp-menu-item>
+            <sp-menu-item class="submenu-b">
+              Submenu B
+              <sp-menu slot="submenu">
+                <sp-menu-item>B Item</sp-menu-item>
+              </sp-menu>
+            </sp-menu-item>
+          </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        const submenuA = el.querySelector('.submenu-a') as MenuItem;
+        const submenuB = el.querySelector('.submenu-b') as MenuItem;
+        await elementUpdated(submenuA);
+        await elementUpdated(submenuB);
+
+        const touchTap = async (item: MenuItem): Promise<void> => {
+          item.dispatchEvent(
+            new PointerEvent('pointerdown', {
+              bubbles: true,
+              pointerType: 'touch',
+            })
+          );
+          item.dispatchEvent(
+            new PointerEvent('pointerup', {
+              bubbles: true,
+              pointerType: 'touch',
+            })
+          );
+          item.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+          await elementUpdated(el);
+        };
+
+        await touchTap(submenuA);
+        expect(el.currentMobileSubmenu).to.equal(submenuA);
+
+        el.closeMobileSubmenu();
+        await elementUpdated(el);
+        expect(el.currentMobileSubmenu).to.be.undefined;
+
+        await touchTap(submenuB);
+        expect(
+          el.currentMobileSubmenu,
+          'a different submenu should open via touch after a prior touch-driven open'
+        ).to.equal(submenuB);
+      });
+    });
     it('navigates back via back button', async function () {
       const menu = this.el as Menu;
 
