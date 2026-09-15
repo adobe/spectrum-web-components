@@ -58,7 +58,7 @@ A `Container` can further customize the implementation of the `RovingTabindexCon
 - `direction` to customize how and which arrow keys manage what element is to be focused and accepts a either a string of `both`, `vertical`, `horizontal`, or `grid` or a method returning one of those strings
 - `elementEnterAction` enacts actions other than `focus` on the entered element which accepts a method with a signature of `(el: T) => void`
 - `elements` provides the elements that will have their `tabindex` managed via a method with a signature of `() => T[]`
-- `focusInIndex` to control what element will recieve `tabindex=0` while focus is outside of the `Container` and accepts a method with a signature of `(_elements: T[]) => number`
+- `focusInIndex` to control what element will receive `tabindex=0` while focus is outside of the `Container` and accepts a method with a signature of `(_elements: T[]) => number`
 - `isFocusableElement` describes the state an element much be in to receive `focus` via a method with a signature of `(el: T) => boolean`
 - `listenerScope` outlines which parts on a container's DOM when listening for arrow key presses via an element reference or a method returning an element reference with the signature `() => HTMLElement`
 
