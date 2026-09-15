@@ -33,6 +33,7 @@ import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/tray/sp-tray.js';
 
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
@@ -1318,6 +1319,33 @@ describe('Submenu', () => {
       expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
 
       menu.resetMobileSubmenus();
+      await elementUpdated(menu);
+
+      expect(menu.currentMobileSubmenu).to.be.undefined;
+    });
+    it('resets drill-down when the containing tray closes', async function () {
+      const tray = await fixture<HTMLElement>(html`
+        <sp-tray open>
+          <sp-menu mobile-view>
+            <sp-menu-item class="root">
+              Has submenu
+              <sp-menu slot="submenu">
+                <sp-menu-item>One</sp-menu-item>
+              </sp-menu>
+            </sp-menu-item>
+          </sp-menu>
+        </sp-tray>
+      `);
+      const menu = tray.querySelector('sp-menu') as Menu;
+      const rootItem = menu.querySelector('.root') as MenuItem;
+      await elementUpdated(menu);
+
+      menu.openMobileSubmenu(rootItem);
+      await elementUpdated(menu);
+      expect(menu.currentMobileSubmenu).to.equal(rootItem);
+
+      // sp-tray dispatches a bubbling `close` when dismissed.
+      tray.dispatchEvent(new Event('close', { bubbles: true }));
       await elementUpdated(menu);
 
       expect(menu.currentMobileSubmenu).to.be.undefined;
