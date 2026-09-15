@@ -75,7 +75,7 @@ jobs:
       - name: Generate Custom Elements Manifest
         run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
 
-      - name: Analyze 2nd-gen components
+      - name: Analyze gen2 components
         run: yarn workspace @adobe/spectrum-wc analyze
 
       - name: Generate LLM reference files
@@ -149,7 +149,7 @@ jobs:
           PR_HASH: ${{ steps.pr_hash.outputs.hash }}
         run: |
           echo "Uploading Gen2 Storybook (dev) to ${PR_HASH}/docs/gen2-storybook-dev/"
-          azcopy copy "2nd-gen/packages/swc/storybook-static-dev/*" \
+          azcopy copy "gen2/packages/swc/storybook-static-dev/*" \
             "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/gen2-storybook-dev/" \
             --recursive \
             --from-to LocalBlob
@@ -160,7 +160,7 @@ jobs:
           PR_HASH: ${{ steps.pr_hash.outputs.hash }}
         run: |
           echo "Uploading Gen2 Storybook (prod) to ${PR_HASH}/docs/gen2-storybook-prod/"
-          azcopy copy "2nd-gen/packages/swc/storybook-static-prod/*" \
+          azcopy copy "gen2/packages/swc/storybook-static-prod/*" \
             "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/gen2-storybook-prod/" \
             --recursive \
             --from-to LocalBlob

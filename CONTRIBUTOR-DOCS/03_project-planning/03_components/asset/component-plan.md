@@ -15,12 +15,12 @@
     - [Most blocking open questions](#most-blocking-open-questions)
 - [Current API surface](#current-api-surface)
     - [1st-gen (`sp-asset`, published — out of scope)](#1st-gen-sp-asset-published--out-of-scope)
-    - [2nd-gen (`swc-asset`, internal genre — the starting point for this plan)](#2nd-gen-swc-asset-internal-genre--the-starting-point-for-this-plan)
+    - [gen2 (`swc-asset`, internal genre — the starting point for this plan)](#gen2-swc-asset-internal-genre--the-starting-point-for-this-plan)
 - [Dependencies](#dependencies)
 - [Changes overview](#changes-overview)
     - [Must ship — v1 core](#must-ship--v1-core)
     - [Additive — deferred, not required for v1](#additive--deferred-not-required-for-v1)
-- [2nd-gen API decisions](#2nd-gen-api-decisions)
+- [gen2 API decisions](#gen2-api-decisions)
     - [Public API](#public-api)
     - [CSS custom properties](#css-custom-properties)
     - [Behavioral semantics](#behavioral-semantics)
@@ -46,7 +46,7 @@
 
 > **Epic SWC-2317** — [Asset] Expanded feature set.
 >
-> This is not a 1st-gen → 2nd-gen migration. `swc-asset` already exists (internal genre); this
+> This is not a 1st-gen → gen2 migration. `swc-asset` already exists (internal genre); this
 > plan covers **expanding it in place** into a general image/media primitive, then promoting it
 > to a public component.
 
@@ -100,9 +100,9 @@ which has already been tested and requires no changes to Card's existing CSS.
 **No sizing, fit, loading-state, or background-treatment API exists.** This package is real and
 externally published; nothing here changes as part of this plan — out of scope.
 
-### 2nd-gen (`swc-asset`, internal genre — the starting point for this plan)
+### gen2 (`swc-asset`, internal genre — the starting point for this plan)
 
-**Source:** [`2nd-gen/packages/core/components/asset/Asset.base.ts`](../../../../2nd-gen/packages/core/components/asset/Asset.base.ts), [`2nd-gen/packages/swc/components/asset/Asset.ts`](../../../../2nd-gen/packages/swc/components/asset/Asset.ts)
+**Source:** [`gen2/packages/core/components/asset/Asset.base.ts`](../../../../gen2/packages/core/components/asset/Asset.base.ts), [`gen2/packages/swc/components/asset/Asset.ts`](../../../../gen2/packages/swc/components/asset/Asset.ts)
 **Custom element tag:** `swc-asset` — currently `@status internal`, docs/stories named
 `asset.internal.mdx` / `asset.internal.stories.ts` (excluded from production builds today)
 
@@ -137,10 +137,10 @@ Out of scope for v1: responsive/adaptive sizing (`srcset`/`sizes`-equivalent, in
 
 | Package/component                        | Role                                                                                       | Blocking? |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------- | --------- |
-| `2nd-gen/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css` | Shared `.swc-OpacityCheckerboard` fragment; import directly for the checkerboard background option | No — already exists |
+| `gen2/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css` | Shared `.swc-OpacityCheckerboard` fragment; import directly for the checkerboard background option | No — already exists |
 | `swc-card` (`seckles/swc-card` branch, unmerged) | Primary intended **consumer** once Asset ships; not a build dependency of Asset itself | No — independent timelines, only the aspect-ratio weak-sync contract needs to line up |
 | `swc-thumbnail` (migration not started)   | Sibling visual primitive; a11y model reference only (see [accessibility-migration-analysis.md](../thumbnail/accessibility-migration-analysis.md)) | No |
-| `2nd-gen/packages/core/controllers/pending-controller` | Considered and likely **not** reused as-is for the loading state (see Q1) — scope mismatch between a whole-control busy state and a per-image loading state | No |
+| `gen2/packages/core/controllers/pending-controller` | Considered and likely **not** reused as-is for the loading state (see Q1) — scope mismatch between a whole-control busy state and a per-image loading state | No |
 
 No prerequisite migration or shared-base relationship blocks this work. Asset does not need to
 wait on Card, Thumbnail, or any other component's migration.
@@ -201,7 +201,7 @@ docs (SWC-2321) should also reference Asset directly as an example consumer.
 
 ---
 
-## 2nd-gen API decisions
+## gen2 API decisions
 
 ### Public API
 
@@ -216,7 +216,7 @@ docs (SWC-2321) should also reference Asset directly as an example consumer.
 | `background`      | `'transparent' \| 'solid' \| 'checkerboard'`                 | `'transparent'` | `background`    | `'transparent'` matches today's behavior; `'solid'` uses `--swc-asset-background-color` (default `token("gray-100")`); `'checkerboard'` reuses the shared opacity-checkerboard fragment. DEBUG warning on an invalid value |
 | `variant`         | _(removed)_                                                  | —           | —                   | See B1 |
 
-**Slots (2nd-gen):**
+**Slots (gen2):**
 
 | Slot    | Content                          |
 | ------- | ---------------------------------- |
@@ -225,7 +225,7 @@ docs (SWC-2321) should also reference Asset directly as an example consumer.
 ### CSS custom properties
 
 No `--mod-*` properties are exposed, per [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
-and the retirement of that pattern for 2nd-gen (`05_anti-patterns.md` #2).
+and the retirement of that pattern for gen2 (`05_anti-patterns.md` #2).
 
 | Custom property                | Type            | Exposed? | Purpose |
 | --------------------------------- | ----------------- | -------- | ------- |
@@ -423,8 +423,8 @@ The existing split is retained and extended, not restructured:
 
 | Layer    | Path                                             | Contains                                                                                                    |
 | -------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| **Core** | `2nd-gen/packages/core/components/asset/`         | `Asset.base.ts` (shared properties: `aspectRatio`, `width`, `height`, `fit`, `decorative`, `accessibleLabel`, `background`), `Asset.types.ts` (new `AssetFit`/`AssetBackground` types; `AssetVariant`/`ASSET_VARIANTS` removed), validation/DEBUG warnings, accessible-name resolution logic |
-| **SWC**  | `2nd-gen/packages/swc/components/asset/`          | `Asset.ts`, `asset.css` (aspect-ratio/sizing resolution, `fit` attribute selectors, checkerboard import), element registration, stories, tests |
+| **Core** | `gen2/packages/core/components/asset/`         | `Asset.base.ts` (shared properties: `aspectRatio`, `width`, `height`, `fit`, `decorative`, `accessibleLabel`, `background`), `Asset.types.ts` (new `AssetFit`/`AssetBackground` types; `AssetVariant`/`ASSET_VARIANTS` removed), validation/DEBUG warnings, accessible-name resolution logic |
+| **SWC**  | `gen2/packages/swc/components/asset/`          | `Asset.ts`, `asset.css` (aspect-ratio/sizing resolution, `fit` attribute selectors, checkerboard import), element registration, stories, tests |
 
 Planned rendering shape: Core owns API normalization, warnings, and the slotted-content
 inspection logic (accessible-name detection, decorative handling); SWC renders the `.swc-Asset`
@@ -441,7 +441,7 @@ This plan is the shared baseline for the following linked tickets:
 | Ticket       | Title                                                                 | Consumes from this plan                                                                                 |
 | ------------ | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | **SWC-2318** | Define v1 API and accessibility plan **(this document)**              | —                                                                                                        |
-| **SWC-2319** | Implement v1 API: file structure, TypeScript, accessibility, styling  | [2nd-gen API decisions](#2nd-gen-api-decisions), [Architecture](#architecture-core-vs-swc-split)        |
+| **SWC-2319** | Implement v1 API: file structure, TypeScript, accessibility, styling  | [gen2 API decisions](#gen2-api-decisions), [Architecture](#architecture-core-vs-swc-split)        |
 | **SWC-2320** | Code conformance and test coverage for v1 API                         | [Changes overview](#changes-overview), [Accessibility semantics notes](#accessibility-semantics-notes) |
 | **SWC-2321** | Storybook documentation and consumer migration guide for v1 API       | [Public API](#public-api), [Changes overview](#changes-overview)                                        |
 | **SWC-2322** | Review and finalize v1 release                                        | Whole plan, for the final consistency pass                                                              |
@@ -456,10 +456,10 @@ plan contract pattern this document follows).
 
 ### Preparation (SWC-2318, this document)
 
-- [x] Current API surface documented (1st-gen and 2nd-gen)
+- [x] Current API surface documented (1st-gen and gen2)
 - [x] Dependencies identified
 - [x] Changes overview documented (Must ship / Additive)
-- [x] 2nd-gen API decisions drafted
+- [x] gen2 API decisions drafted
 - [ ] Plan reviewed by at least one other engineer
 - [ ] Loading/pending state design resolved (Q1–Q3)
 - [ ] SVG accessible-name detection algorithm signed off by the team's a11y SME (Q4)
@@ -493,7 +493,7 @@ plan contract pattern this document follows).
 - [ ] Implement `background` treatment (`solid` via `--swc-asset-background-color`;
       `checkerboard` via the shared fragment; `transparent` as the no-op default)
 - [ ] Add `border-radius: inherit` and `overflow: hidden` to `.swc-Asset` (not `:host`)
-- [ ] Import `2nd-gen/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css`
+- [ ] Import `gen2/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css`
 - [ ] Add `@cssprop` JSDoc tags for `--swc-asset-aspect-ratio` and `--swc-asset-background-color`
 - [ ] Pass stylelint
 
@@ -542,8 +542,8 @@ plan contract pattern this document follows).
 
 ### Review (SWC-2322)
 
-- [ ] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
-- [ ] 2nd-gen migration status table updated, if applicable
+- [ ] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
+- [ ] gen2 migration status table updated, if applicable
 - [ ] PR created referencing Epic SWC-2317
 - [ ] Peer engineer sign-off
 
@@ -576,10 +576,10 @@ affects.
 - [Thumbnail accessibility migration analysis](../thumbnail/accessibility-migration-analysis.md) — a11y model reference (decorative, no disabled/focused/selected, host has no ARIA role)
 - [Asset rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [1st-gen source](../../../../1st-gen/packages/asset/src/Asset.ts)
-- [2nd-gen source (core)](../../../../2nd-gen/packages/core/components/asset/Asset.base.ts)
-- [2nd-gen source (SWC)](../../../../2nd-gen/packages/swc/components/asset/Asset.ts)
-- [Opacity checkerboard shared style](../../../../2nd-gen/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css)
-- [Pending controller](../../../../2nd-gen/packages/core/controllers/pending-controller/src/pending-controller.ts) — considered and likely not directly reused for the loading state (see Q1)
+- [gen2 source (core)](../../../../gen2/packages/core/components/asset/Asset.base.ts)
+- [gen2 source (SWC)](../../../../gen2/packages/swc/components/asset/Asset.ts)
+- [Opacity checkerboard shared style](../../../../gen2/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css)
+- [Pending controller](../../../../gen2/packages/core/controllers/pending-controller/src/pending-controller.ts) — considered and likely not directly reused for the loading state (see Q1)
 - [React Spectrum Image](https://react-spectrum.adobe.com/Image) — feature-comparison reference from the originating request
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md)

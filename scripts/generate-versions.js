@@ -34,7 +34,7 @@ const COPYRIGHT_HEADER = fs
  * @param {string} packageJsonPath - Path to package.json
  * @param {string} outputPath - Path to output version.ts file
  * @param {object} options - Generation options
- * @param {string} options.generationName - Name of the generation (e.g., '1st-gen', '2nd-gen')
+ * @param {string} options.generationName - Name of the generation (e.g., '1st-gen', 'gen2')
  * @param {string} [options.coreVersion] - Optional core version to include
  */
 function generateVersion(packageJsonPath, outputPath, options = {}) {
@@ -74,20 +74,20 @@ export const coreVersion = '${coreVersion || version}';
   }
 }
 
-// Generate 2nd-gen version first (this is the core)
-const secondGenPkgPath = path.join(root, '2nd-gen/packages/core/package.json');
+// Generate gen2 version first (this is the core)
+const secondGenPkgPath = path.join(root, 'gen2/packages/core/package.json');
 const secondGenOutputPath = path.join(
   root,
-  '2nd-gen/packages/core/element/version.ts'
+  'gen2/packages/core/element/version.ts'
 );
 
 generateVersion(secondGenPkgPath, secondGenOutputPath, {
-  generationName: '2nd-gen',
+  generationName: 'gen2',
 });
 
 // Generate 1st-gen version. coreVersion defaults to 1st-gen's own package
 // version, since @spectrum-web-components/base is 1st-gen's own core base
-// package and has no relationship to 2nd-gen's version.
+// package and has no relationship to gen2's version.
 const firstGenPkgPath = path.join(root, '1st-gen/tools/base/package.json');
 const firstGenOutputPath = path.join(root, '1st-gen/tools/base/src/version.ts');
 
