@@ -17,6 +17,7 @@ import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 import { Overlay, VirtualTrigger } from '@spectrum-web-components/overlay';
 
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
@@ -446,13 +447,16 @@ customRootSubmenu.swc_vrt = {
 
 export const mobileView = (): TemplateResult => {
   return html`
-    <sp-tray
-      open
-      @close=${(event: Event) => {
-        event.preventDefault();
-        (event.target as HTMLElement).toggleAttribute('open', true);
+    <sp-button
+      @click=${(event: Event) => {
+        const tray = (event.target as HTMLElement)
+          .nextElementSibling as HTMLElement;
+        tray.toggleAttribute('open', true);
       }}
     >
+      Open menu
+    </sp-button>
+    <sp-tray open>
       <sp-menu mobile-view>
         <sp-menu-item>Home</sp-menu-item>
         <sp-menu-item>
