@@ -1,5 +1,28 @@
 # Change Log
 
+## 1.12.4
+
+### Patch Changes
+
+- [#6735](https://github.com/adobe/spectrum-web-components/pull/6735) [`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b) Thanks [@blunteshwar](https://github.com/blunteshwar)! - **fix(menu):** Fixed `sp-menu-item` selection toggling on and immediately back off when pressed via <kbd>Space</kbd> or <kbd>Enter</kbd>.
+
+  The keydown handler called `focusElement.click()`, which already dispatches a click that flows through `handleClick` → `handlePointerBasedSelection` → `selectOrToggleItem`, and then called `selectOrToggleItem` a second time explicitly. The redundant second call toggled the item's selection state back off in the same tick, so keyboard users saw two `change` events and no visible selection, most noticeably with `selects="multiple"` where the final selected value reverted to empty.
+
+- [#6657](https://github.com/adobe/spectrum-web-components/pull/6657) [`bc6a084`](https://github.com/adobe/spectrum-web-components/commit/bc6a0847c98bbc50fc8478b21525c562060fbd49) Thanks [@briluu](https://github.com/briluu)! - **fix(menu):** Fixed `sp-menu-item` submenus opening from a touch tap's `pointerup` in mobile view, bypassing the drill-down navigation.
+
+  `handlePointerdown`'s touch fast-path lacked an `!this.isMobileView` guard, so a touch `pointerup` on a menu item with a submenu triggered the desktop-style overlay-opening logic even when `mobile-view` was set. This left `currentMobileSubmenu` unset while the overlay-based submenu was also open, corrupting the drill-down bookkeeping and causing the next touch-driven submenu open to fail intermittently. In mobile view, submenus now open only via the click that follows a touch tap, consistent with the drill-down navigation model.
+
+- Updated dependencies [[`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b), [`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b)]:
+  - @spectrum-web-components/base@1.12.4
+  - @spectrum-web-components/reactive-controllers@1.12.4
+  - @spectrum-web-components/shared@1.12.4
+  - @spectrum-web-components/overlay@1.12.4
+  - @spectrum-web-components/action-button@1.12.4
+  - @spectrum-web-components/divider@1.12.4
+  - @spectrum-web-components/icon@1.12.4
+  - @spectrum-web-components/icons-ui@1.12.4
+  - @spectrum-web-components/popover@1.12.4
+
 ## 1.12.2
 
 ### Patch Changes
