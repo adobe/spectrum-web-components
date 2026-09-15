@@ -59,7 +59,7 @@
 - Toast is a small, self-contained component: one host, one message slot, one optional action, a close button, an auto-dismiss timer.
 - Toast ships alongside a first-party container/queue in this migration (Q6). Resolving Q5 (queue construct location/ownership) and Q8 (repositioning animation) is a near-term prerequisite, not a deferred tail-end item: most of the [API](#api) checklist's container-and-queue work, and nearly all of [Accessibility](#accessibility), depend on that architecture existing. Only a narrow single-toast skeleton is independent of it. See [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites).
 - 1st-gen defines 5 variant values (`negative`, `positive`, `info`, `error`, `warning`); `error` and `warning` are already deprecated aliases of `negative` in 1st-gen and do not carry forward. gen2 has 4 variants: `neutral`, `info`, `positive`, `negative`.
-- Q1, Q2, Q3, and Q7 are resolved; see the [Decision log](#decision-log). Q9 is the one remaining blocking item, see below.
+- Q1, Q2, Q3, Q7, and Q10 are resolved; see the [Decision log](#decision-log). Q9 is the one remaining blocking item, see below.
 
 ### Most blocking open questions
 
@@ -421,6 +421,7 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 
 - [ ] Host: `role="alertdialog"`, `aria-modal="false"`, `aria-labelledby` from slot text (or `aria-label` fallback)
 - [ ] Inner wrapper: `role="alert"`, `aria-atomic="true"`
+- [ ] Inner wrapper's message content is set only after the node already exists, empty, in the accessibility tree; do not populate it in the same step that creates or reveals the node (Q10; still needs verification against slotted content and a toggled `open` lifecycle, see Q11)
 - [ ] `aria-hidden="true"` on host when `open` is false
 
 #### State verification
@@ -495,6 +496,7 @@ Q1, Q2, Q3, and Q7 were previously listed here; all four are now resolved, see t
 | --- | ---- | --------- | ------ | ----- |
 | Q5 | The pause-preserving countdown can't stay inline in `Toast.base.ts` (see [Architecture](#architecture-core-vs-swc-split)); it needs its own queue-level construct regardless. Should that construct be a shared, cross-component controller in `gen2/packages/core/controllers/` now, or stay toast-specific under `gen2/packages/core/components/toast/` until a second consumer actually needs it? Either way, it should follow this codebase's established `ReactiveController` pattern (used by `PageScrollLockController`, `SlotPresenceController`, and others) rather than a plain framework-agnostic singleton service. Separately, the Architecture table's "Queue" row only owns state (timers, pause rules); nothing currently owns the container's visual rendering (the `role="region"` wrapper, the list, peek-stack depth/opacity layering, the expanded full-screen view). Whether that rendering belongs to the same Queue construct, to a distinct container custom element with its own core/SWC split, or somewhere else entirely is unresolved and should be settled alongside the sharing-scope question above. | No | Open | Architecture reviewer |
 | Q8 | Repositioning a toast between peek, front, and expanded-list position (not its own open/close, which reuses `runAfterTransition`, see [Architecture](#architecture-core-vs-swc-split)): should this use the View Transitions API for a smooth cross-position morph (matching RSP S2's queue-level `wrapUpdate` wrapping), with no animation as the fallback where unsupported, or accept an instant swap between positions (no existing gen2 precedent either way)? | No | Open | Architecture reviewer |
+| Q11 | Q10's ordering requirement (the live region's content must be set at least one frame after the node exists, empty, in the accessibility tree) has only been verified against a single toast whose alert node owns its text directly in the shadow tree, freshly created per toast. Still needs verification against: message content delivered through the default slot (light DOM, per Q9) and projected into the alert wrapper; and a persistent host whose `aria-hidden` and content toggle with `open`, rather than the node being created fresh each time. | No | Open | Accessibility reviewer |
 
 ### Scope and prerequisites
 
@@ -514,6 +516,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 | Q4 | `tabindex="0"` on host always, not conditional on container presence. Opening a toast does not move focus there. | The accessibility migration analysis previously recommended conditional `tabindex` and focus-on-open; both were corrected after checking the real RSP S2 source, which sets `tabIndex: 0` unconditionally but never autofocuses a toast on open. `tabindex="0"` makes the host a normal tab stop, matching RSP. |
 | Q6 | `swc-toast` ships alongside a first-party container/queue in this migration, rather than standalone with the container deferred. | Settled via team sync. Only "whether to build it in this cycle" is resolved; the container's shape and API (peek stack, expand/collapse, focus management, `clear()`, and related accessibility behavior) remain open and are being worked out incrementally across this plan. If built, `placement` (RSP precedent: `top`/`bottom`/`top end`/`bottom end`) belongs on the container, not on `swc-toast` itself. |
 | Q7 | Timer pause is region-wide: pausing any visible toast pauses every visible toast in the region together, matching RSP S2's `pauseAll()`/`resumeAll()`, not the accessibility migration analysis's earlier per-toast recommendation. | Team decision going into the API phase. |
+| Q10 | The inner `role="alert"` live region will only announce reliably in Safari and Edge with VoiceOver when its message content is set after the node has already existed, empty, in the accessibility tree for at least one frame. Setting the content in the same step that creates or reveals the node is unreliable and can be silently skipped. | Manual cross-browser VoiceOver testing. This is a construction-order constraint, not a general shadow DOM limitation: shadow DOM live regions otherwise announce correctly in both browsers. |
 
 ---
 
