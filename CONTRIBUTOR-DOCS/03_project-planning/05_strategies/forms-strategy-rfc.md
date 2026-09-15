@@ -23,6 +23,7 @@
     - [3.2 Where ARIA roles live](#32-where-aria-roles-live)
     - [3.3 IDREF strategy: label, help text, and errors](#33-idref-strategy-label-help-text-and-errors)
     - [3.4 axe-core policy](#34-axe-core-policy)
+    - [3.5 Testing form participation](#35-testing-form-participation)
 - [4. Naming table](#4-naming-table)
 - [5. Migration path](#5-migration-path)
 - [6. Open questions](#6-open-questions)
@@ -134,6 +135,19 @@ Browsers currently lack a standardized path for axe-core to read ARIA relationsh
 - Verify exposure with manual AT testing, particularly in **Firefox**, which handles `ElementInternals` ARIA less consistently than Chromium and Safari.
 - Align with the [Storybook test-runner axe usage](https://github.com/adobe/spectrum-web-components/blob/main/2nd-gen/packages/swc/.storybook/test-runner.ts). The [ElementInternals and axe-core guide](../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/element_internals_axe_core.mdx) in the [accessibility guides](../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/) is the detailed reference for axe-core's current `ElementInternals` support and known gaps.
 
+### 3.5 Testing form participation
+
+Every form-associated component (text field, checkbox, checkbox group, radio group, picker, combobox, and any future field) must **prove** its form participation, not just its ARIA. Because the whole point of FACE is behaving like a native control inside a real form, both the stories and the automated tests must exercise the component **inside a native `<form>`** (use a native `<form>` for now; move to a dedicated form component once one exists). This is a requirement for all such components, not a per-component choice.
+
+Every form-associated component's story set and test suite must cover the full form lifecycle:
+
+- **Value on submit:** submitting the form yields the expected `FormData`. A control contributes its `name`/`value` when it has a value and contributes nothing when it does not (an unchecked checkbox, an empty field). Grouped multi-select controls (checkbox group) contribute one entry per selected item under the shared `name`; single-value controls (radio group, picker) contribute one entry.
+- **Validation:** a `required` (or otherwise constrained) control blocks submission and reports validity (`:invalid`/`:user-invalid`, `checkValidity()`/`reportValidity()`), and the invalid state clears once the constraint is satisfied. Validate at the level the constraint lives (per item for a standalone required checkbox; at the group for "select at least one" or "choose exactly one").
+- **Reset:** `form.reset()` restores every control to its default value via `formResetCallback()`.
+- **Getting the value:** the value read on submit matches the value read programmatically, across the checked/selected, unchecked/empty, and post-reset states.
+
+A single story that renders the component in a `<form>` with a submit button and a reset button doubles as the consumer-facing example and the fixture these tests drive. Use **native** `<button type="submit">` and `<button type="reset">` for now: hold off on a Spectrum button for the submit/reset controls until the clear-button component ships and the button form-association fast-follow is complete (the button-activation open question in [§6](#6-open-questions)). The field under test is the form-associated 2nd-gen component; the surrounding submit/reset controls stay native until then.
+
 ---
 
 ## 4. Naming table
@@ -167,6 +181,7 @@ Contributors migrating a form field follow the washing machine workflow with the
 
 - **Phase 3 (API):** wire form participation and name the API from the [naming table](#4-naming-table). See [Washing machine workflow, Phase 3](../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-3-api-migration).
 - **Phase 4 (accessibility):** wire label, help text, and errors per [§3.3](#33-idref-strategy-label-help-text-and-errors), and satisfy the axe policy in [§3.4](#34-axe-core-policy). See [Washing machine workflow, Phase 4](../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-4-accessibility).
+- **Phase 6 (testing):** add stories and tests that exercise the component inside a native `<form>` and cover the full form lifecycle (value on submit, validation, reset, getting the value) per [§3.5](#35-testing-form-participation). See [Washing machine workflow, Phase 6](../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-6-testing).
 
 ---
 

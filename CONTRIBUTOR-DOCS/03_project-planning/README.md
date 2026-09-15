@@ -38,6 +38,7 @@
     - Button Group
     - Card
     - Checkbox
+    - Checkbox Group
     - Close Button
     - Color Field
     - Color Handle
