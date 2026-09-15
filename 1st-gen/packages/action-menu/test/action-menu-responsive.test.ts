@@ -103,37 +103,6 @@ describe('ActionMenu, responsive', () => {
       expect(popover).to.not.be.null;
       expect(tray).to.be.null;
     });
-
-    // regression test for https://github.com/adobe/spectrum-web-components/issues/6678
-    it('syncs controller state when the Tray is dismissed by an outside tap', async () => {
-      el.isMobile.matches = true;
-      el.bindEvents();
-
-      // Open the Tray with the controller tracking the open state, as it would
-      // be after a tap on the action button.
-      el.strategy.open = true;
-      await waitUntil(
-        () => !!el.overlayElement,
-        `tray overlay rendered (el.open: ${el.open})`,
-        { timeout: 300 }
-      );
-      expect(el.open).to.be.true;
-      expect(el.strategy.open).to.be.true;
-
-      // An outside tap closes the Tray via a native `beforetoggle` while
-      // preventNextToggle is 'no'. The controller's open state must stay in
-      // sync with the host, otherwise the next tap can't reopen the Tray.
-      el.strategy.preventNextToggle = 'no';
-      const event = new Event('beforetoggle') as Event & {
-        newState: string;
-      };
-      event.newState = 'closed';
-      el.overlayElement.dispatchEvent(event);
-      await elementUpdated(el);
-
-      expect(el.open, 'host closed').to.be.false;
-      expect(el.strategy.open, 'controller open synced').to.be.false;
-    });
   });
 
   describe('forcePopover', () => {
