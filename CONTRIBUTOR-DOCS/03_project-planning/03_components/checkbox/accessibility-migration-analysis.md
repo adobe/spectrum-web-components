@@ -62,7 +62,7 @@ The defining difference from [`swc-radio`](../radio/accessibility-migration-anal
 
 ### What it is not
 
-- Not a radio. Radios in a group are mutually exclusive and share one value; checkboxes in a group are independent booleans, each with its own value and form participation. This is why form value lives on the item for checkbox but on the group for radio, and why arrow-key movement selects as it moves in a radio group but only moves focus (never toggles) in a checkbox group, even though both groups use a roving tabindex.
+- Not a radio. Radios in a group are mutually exclusive and share one value; checkboxes in a group are independent booleans, each with its own value and form participation. This difference is why form value and keyboard focus live on the item for checkbox but on the group for radio.
 - Not a switch. A switch signals an immediately-applied on/off action and uses `role="switch"`; a checkbox signals selection or consent and uses `role="checkbox"`, including the tri-state `"mixed"` value a switch never has.
 
 ### Related
@@ -154,12 +154,12 @@ Component tag may change until API freeze.
 - **Read-only:** stays focusable and reachable; exposes `aria-readonly="true"`; toggling is blocked. It must **not** be announced as disabled (the 1st-gen behavior this doc fixes).
 - **Invalid (for example a required, unchecked consent box):** `aria-invalid="true"` on the control, with the error text both visible and reachable via `aria-errormessage`/`aria-describedby`. This item-level invalid is legitimate for checkbox (it is not, for radio).
 - **Required:** `aria-required="true"` on the control.
-- **In a group:** each checkbox still exposes its own role, name, and checked state; the group manages a roving tabindex across items (so the group is a single Tab stop that arrow keys move focus within), and the group host supplies the shared `role="group"`, group label, and any group-level required/invalid.
+- **In a group:** each checkbox still exposes its own role, name, and checked state and remains an independent Tab stop; the group host supplies the shared `role="group"`, group label, and any group-level required/invalid.
 
 ### Keyboard and focus
 
 - **Standalone:** `swc-checkbox` has its own Tab stop (host `tabIndex` defaults to `0`, delegating focus to the inner input via `delegatesFocus`). <kbd>Space</kbd> toggles the checked state on the focused checkbox, supplied natively by the inner `<input type="checkbox">`. There are no arrow-key or <kbd>Enter</kbd> activations: a native checkbox toggles on <kbd>Space</kbd> only. This is a deliberate contrast with `swc-radio`, which has no independent Tab stop and is driven by its group's roving tabindex and arrow keys.
-- **In a group:** the enclosing checkbox group manages a **roving tabindex** across its items (one Tab stop enters the group; arrow keys move focus between items), the same `FocusgroupNavigationController` focus model the radio group uses. The essential difference from radio is that arrow movement here **only moves focus and never toggles**: each checkbox is still toggled independently with <kbd>Space</kbd>, and the group owns no selection to change on move. See the [checkbox group doc's keyboard section](../checkbox-group/accessibility-migration-analysis.md#keyboard-and-focus) for the full group model.
+- **In a group:** checkboxes are **each** a Tab stop and are reached with <kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd>; a checkbox group does **not** use roving tabindex or arrow-key navigation (the [APG checkbox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/) has neither). Each is toggled independently with <kbd>Space</kbd>. This is the multi-select counterpart to radio's single-roving-Tab-stop model. See the [checkbox group doc's keyboard section](../checkbox-group/accessibility-migration-analysis.md#keyboard-and-focus) for the full group model.
 - **Disabled:** never receives focus, by Tab or otherwise, because the inner input's native `disabled` removes it from the tab order.
 - **Read-only:** still receives focus and is reachable by Tab; <kbd>Space</kbd> does not change the checked state.
 
@@ -205,7 +205,7 @@ Stories and docs must demonstrate the checkbox **inside a form**, since form par
 - [ ] `required`/`aria-required` are supported per item (a single required consent checkbox).
 - [ ] Each `swc-checkbox` is independently form-associated via its own `FieldAssociationController`/`ElementInternals` on the host (`setFormValue`), with `name`/`value` submitted per item; form value is not centralized on a group (the reverse of radio).
 - [ ] Stories and tests demonstrate the checkbox in a native `<form>` and cover the full form lifecycle: value on submit (`FormData`), constraint validation of a `required` checkbox, and `form.reset()` restoring the default checked state.
-- [ ] A standalone checkbox is a single Tab stop and toggles on `Space`; in a group, the group manages a roving tabindex (arrow keys move focus) via `FocusgroupNavigationController`, but arrow movement moves focus only and never toggles (each item toggles on `Space`).
+- [ ] A standalone checkbox is a single Tab stop and toggles on `Space`; checkboxes in a group are each independent Tab stops with no roving tabindex and no arrow-key navigation.
 
 ## References
 
