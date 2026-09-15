@@ -23,6 +23,7 @@ import {
 import type { UserCardVariant } from '@adobe/spectrum-wc-core/components/user-card';
 import { USER_CARD_VARIANTS } from '@adobe/spectrum-wc-core/components/user-card';
 
+import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc/components/user-card/swc-user-card.js';
 import '../../avatar/swc-avatar';
 
@@ -162,6 +163,21 @@ export const Anatomy: Story = {
         <img slot="preview" src="./images/card-preview.jpg" alt="" />
         ${avatarGlyph()}
         <span slot="title">Jane Doe</span>
+        <swc-action-button slot="actions" quiet accessible-label="More actions">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            viewBox="0 0 20 18"
+            slot="icon"
+          >
+            <circle cx="10" cy="10" r="1.5" />
+            <path d="M10 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3" />
+            <circle cx="4" cy="10" r="1.5" />
+            <circle cx="4" cy="10" r="1.5" />
+            <circle cx="16" cy="10" r="1.5" />
+            <circle cx="16" cy="10" r="1.5" />
+          </svg>
+        </swc-action-button>
         <span slot="description">Product designer</span>
       `
     )}

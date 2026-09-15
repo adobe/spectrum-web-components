@@ -24,6 +24,7 @@ import {
   type UserCardVariant,
 } from '@adobe/spectrum-wc-core/components/user-card';
 
+import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc/components/user-card/swc-user-card.js';
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 
@@ -67,6 +68,22 @@ const avatarGlyph = (): ReturnType<typeof html> => html`
 
 const previewImage = (): ReturnType<typeof html> => html`
   <img slot="preview" src="./images/card-preview.jpg" alt="" />
+`;
+
+const actionButton = (): ReturnType<typeof html> => html`
+  <swc-action-button slot="actions" quiet accessible-label="More actions">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      viewBox="0 0 20 18"
+      slot="icon"
+    >
+      <circle cx="10" cy="10" r="1.5" />
+      <path d="M10 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3" />
+      <circle cx="4" cy="10" r="1.5" />
+      <circle cx="16" cy="10" r="1.5" />
+    </svg>
+  </swc-action-button>
 `;
 
 const standardSlots = html`
@@ -138,6 +155,24 @@ const anatomyCards = [
       <span slot="title">With footer</span>
       <span slot="description">Product designer</span>
       <span slot="footer">Footer content</span>
+    `
+  ),
+  renderUserCard(
+    {},
+    html`
+      ${avatarGlyph()}
+      <span slot="title">With actions</span>
+      ${actionButton()}
+      <span slot="description">Product designer</span>
+    `
+  ),
+  renderUserCard(
+    {},
+    html`
+      ${previewImage()} ${avatarGlyph()}
+      <span slot="title">With preview and actions</span>
+      ${actionButton()}
+      <span slot="description">Product designer</span>
     `
   ),
 ];
