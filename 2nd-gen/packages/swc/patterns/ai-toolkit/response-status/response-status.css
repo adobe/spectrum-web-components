@@ -25,13 +25,6 @@
   flex-direction: column;
 }
 
-/* No gap when closed: the panel is zero-height then, so a gap would just be
-   trailing space. Split between this and the steps list's padding-block
-   below when open. */
-:host([open]) .swc-ResponseStatus {
-  gap: token("spacing-75");
-}
-
 /* ─────────────────────────────────────
    Status row (icon + label [+ checkmark])
    ───────────────────────────────────── */
@@ -196,6 +189,7 @@
 }
 
 .swc-ResponseStatus-row--button:hover .swc-ResponseStatus-label,
+.swc-ResponseStatus-row--button:focus-visible .swc-ResponseStatus-label,
 .swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-label {
   --swc-body-font-color: token("gray-800");
 
@@ -203,6 +197,7 @@
 }
 
 .swc-ResponseStatus-row--button:hover .swc-ResponseStatus-chevron,
+.swc-ResponseStatus-row--button:focus-visible .swc-ResponseStatus-chevron,
 .swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-chevron {
   color: token("gray-800");
   transition:
@@ -211,6 +206,7 @@
 }
 
 .swc-ResponseStatus-row--button:hover .swc-ResponseStatus-loader,
+.swc-ResponseStatus-row--button:focus-visible .swc-ResponseStatus-loader,
 .swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-loader {
   --swc-pixel-loader-color: token("gray-800");
 }
@@ -220,7 +216,6 @@
    ───────────────────────────────────── */
 
 .swc-ResponseStatus--agentic {
-  gap: token("spacing-100");
   inline-size: 100%;
 }
 
@@ -300,11 +295,6 @@
   list-style: none;
 }
 
-/* Only when open, so the collapsed panel still shrinks to true zero. */
-.swc-ResponseStatus-panel--open .swc-ResponseStatus-steps {
-  padding-block: token("spacing-75");
-}
-
 /* Typography utilities (shadow-local; mirrors typography.css) */
 .swc-Body {
   margin-block: var(--swc-body-margin-top, 0) var(--swc-body-margin-bottom, 0);
@@ -338,5 +328,9 @@
 @media (forced-colors: active) {
   .swc-ResponseStatus-loader {
     color: CanvasText;
+  }
+
+  .swc-ResponseStatus-row--button:focus-visible {
+    outline-color: CanvasText;
   }
 }

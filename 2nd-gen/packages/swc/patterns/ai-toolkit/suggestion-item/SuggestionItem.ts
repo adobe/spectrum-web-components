@@ -14,6 +14,7 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
+import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import { ArrowCurvedIcon } from '../utils/icons/index.js';
@@ -23,7 +24,9 @@ import styles from './suggestion-item.css';
 /**
  * Interactive suggestion action chip used inside `<swc-suggestion-group>`.
  *
- * Label content comes from the default slot.
+ * Composes `<swc-button variant="secondary">` and restyles it into a chip via
+ * the button's public custom properties. Label content comes from the default
+ * slot.
  *
  * @element swc-suggestion-item
  * @slot - Suggestion label text/content.
@@ -49,16 +52,16 @@ export class SuggestionItem extends SpectrumElement {
 
   protected override render(): TemplateResult {
     return html`
-      <button
-        type="button"
+      <swc-button
+        variant="secondary"
         class="swc-SuggestionItem"
         @click=${this._handleClick}
       >
-        <swc-icon aria-hidden="true">${ArrowCurvedIcon()}</swc-icon>
+        <swc-icon slot="icon" aria-hidden="true">${ArrowCurvedIcon()}</swc-icon>
         <span class="swc-SuggestionItem-label">
           <slot></slot>
         </span>
-      </button>
+      </swc-button>
     `;
   }
 }
