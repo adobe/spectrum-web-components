@@ -11,6 +11,10 @@ on:
         options:
           - next
           - snapshot-test
+      branch:
+        description: 'Branch to snapshot. Leave blank to use the branch you dispatched from. Set it to snapshot a branch that does not carry this workflow file yet.'
+        required: false
+        type: string
   push:
     branches:
       - main
@@ -19,8 +23,11 @@ on:
 
 # Scoped to this workflow so a gen1 run and a gen2 run never block on each other -
 # both used to share the same `publish-${{ github.ref }}` group string.
+# Keyed on the branch actually being operated on, so snapshots of two different feature
+# branches run in parallel. For a push (no `branch` input) this falls back to github.ref
+# and behaves exactly as before: a main release still serializes against a main snapshot.
 concurrency:
-  group: publish-gen2-${{ github.ref }}
+  group: publish-gen2-${{ github.event.inputs.branch || github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -37,6 +44,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          # Follows the `branch` input so the changeset count below reflects the branch
+          # actually being snapshotted. Falls back to the dispatched/pushed ref.
+          ref: ${{ github.event.inputs.branch || github.ref }}
           fetch-depth: 0 # need tags so the needs_publish idempotency check below can see them
 
       - name: Check for gen2 changesets
@@ -74,10 +84,13 @@ jobs:
   # tags, or opens a PR, and `permissions: contents: read` makes that structural rather
   # than a convention.
   #
-  # Dispatch it from ANY branch (Actions -> Run workflow -> pick the branch) to publish a
-  # throwaway build of that branch for a consumer to try before it merges. Only this job
-  # is branch-agnostic; version-pr and publish are pinned to main. The branch needs this
-  # workflow file, so feature branches cut before this landed must merge main in first.
+  # To snapshot a feature branch, dispatch from `main` and put the branch name in the
+  # `branch` input. Dispatch always reads the workflow file from the ref it was launched
+  # on, so running from `main` means the branch being snapshotted does NOT need to carry
+  # this file - which is what makes this usable on branches cut before this landed.
+  # (Dispatching directly from a branch that does have the file also works; the input
+  # just defaults to the dispatched ref.) Only this job is branch-aware; version-pr and
+  # publish stay pinned to main and refuse to run at all when `branch` is set.
   #
   # gen2 lives in changesets' persistent pre mode (`2nd-gen/.changeset/pre.json`, tag
   # `beta`), and changesets refuses `--snapshot` while that file is present ("Snapshot
@@ -102,6 +115,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          # The code being snapshotted. Resolves against THIS repo, so fork branches are
+          # not reachable here - snapshots are for internal branches only, which also
+          # keeps fork code away from the npm token.
+          ref: ${{ github.event.inputs.branch || github.ref }}
           fetch-depth: 0
 
       - name: Setup job and install dependencies
@@ -161,6 +178,7 @@ jobs:
         if: always()
         env:
           TAG: ${{ steps.extract-tag.outputs.tag }}
+          TARGET_REF: ${{ github.event.inputs.branch || github.ref }}
           CORE_VERSION: ${{ steps.versions.outputs.core }}
           SWC_VERSION: ${{ steps.versions.outputs.swc }}
           ICONS_VERSION: ${{ steps.versions.outputs.icons }}
@@ -170,6 +188,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
           echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Snapshotted branch** | \`${TARGET_REF}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
           [ -n "$SWC_VERSION" ] && echo "| **@adobe/spectrum-wc** | \`${SWC_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
           [ -n "$CORE_VERSION" ] && echo "| **@adobe/spectrum-wc-core** | \`${CORE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
@@ -190,10 +209,14 @@ jobs:
   # same branch.
   version-pr:
     needs: check-changesets
-    # Main-only: check-changesets is no longer branch-gated (so snapshot can run from a
+    # Main-only: check-changesets is no longer branch-gated (so snapshot can target a
     # feature branch), so the real release path carries that restriction itself.
+    # `!inputs.branch` matters as much as the ref check: when a branch is supplied,
+    # check-changesets counted THAT branch's changesets, so its outputs must not be
+    # allowed to drive a release against main.
     if: >-
       github.ref == 'refs/heads/main' &&
+      !github.event.inputs.branch &&
       needs.check-changesets.outputs.has_changesets == 'true'
     runs-on: ubuntu-latest
     permissions:
@@ -242,10 +265,11 @@ jobs:
   # since it's the only one that actually publishes to npm.
   publish:
     needs: check-changesets
-    # Main-only: check-changesets is no longer branch-gated (so snapshot can run from a
-    # feature branch), so the real release path carries that restriction itself.
+    # Main-only, and never on a branch-targeted dispatch - see the matching comment on
+    # version-pr above for why `!inputs.branch` is load-bearing here.
     if: >-
       github.ref == 'refs/heads/main' &&
+      !github.event.inputs.branch &&
       needs.check-changesets.outputs.has_changesets == 'false' &&
       needs.check-changesets.outputs.needs_publish == 'true'
     runs-on: ubuntu-latest
