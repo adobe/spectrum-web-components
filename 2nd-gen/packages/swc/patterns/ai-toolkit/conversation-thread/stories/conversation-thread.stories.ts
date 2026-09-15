@@ -559,6 +559,7 @@ class ConversationFullPatternDemo extends LitElement {
   };
 
   private renderTurns() {
+    const lastTurnId = this.turns[this.turns.length - 1]?.id;
     return this.turns.map((turn) => {
       if (turn.role === 'user') {
         return html`
@@ -626,7 +627,7 @@ class ConversationFullPatternDemo extends LitElement {
                     <a href="#">Market research summary</a>
                   </swc-message-sources>
                 `}
-            ${turn.loading
+            ${turn.loading || turn.id !== lastTurnId
               ? ''
               : html`
                   <swc-suggestion-group slot="suggestions">
@@ -728,7 +729,7 @@ class ConversationFullPatternDemo extends LitElement {
             @swc-prompt-field-drop=${this.handleDrop}
           >
             ${this.renderAttachments()}
-            <p slot="legal" class="swc-PromptField-legal-disclaimer">
+            <p slot="legal" class="swc-Typography--links">
               Responses are generated using AI, and may be inaccurate. Check
               before using.
               <a
@@ -797,7 +798,7 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
       ></div>
       <span slot="badge">PDF</span>
     </swc-upload-attachment>
-    <p slot="legal" class="swc-PromptField-legal-disclaimer">
+    <p slot="legal" class="swc-Typography--links">
       Responses are generated using AI, and may be inaccurate. Check before
       using.
       <a
