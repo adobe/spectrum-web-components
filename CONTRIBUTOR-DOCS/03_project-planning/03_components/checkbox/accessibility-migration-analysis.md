@@ -62,7 +62,7 @@ The defining difference from [`swc-radio`](../radio/accessibility-migration-anal
 
 ### What it is not
 
-- Not a radio. Radios in a group are mutually exclusive and share one value; checkboxes in a group are independent booleans, each with its own value and form participation. This difference is why form value and keyboard focus live on the item for checkbox but on the group for radio.
+- Not a radio. Radios in a group are mutually exclusive and share one value; checkboxes in a group are independent booleans, each with its own value and form participation. This is why form value lives on the item for checkbox but on the group for radio, and why arrow-key movement selects as it moves in a radio group but only moves focus (never toggles) in a checkbox group, even though both groups use a roving tabindex.
 - Not a switch. A switch signals an immediately-applied on/off action and uses `role="switch"`; a checkbox signals selection or consent and uses `role="checkbox"`, including the tri-state `"mixed"` value a switch never has.
 
 ### Related
