@@ -154,7 +154,7 @@ Component tag may change until API freeze.
 - **Read-only:** stays focusable and reachable; exposes `aria-readonly="true"`; toggling is blocked. It must **not** be announced as disabled (the 1st-gen behavior this doc fixes).
 - **Invalid (for example a required, unchecked consent box):** `aria-invalid="true"` on the control, with the error text both visible and reachable via `aria-errormessage`/`aria-describedby`. This item-level invalid is legitimate for checkbox (it is not, for radio).
 - **Required:** `aria-required="true"` on the control.
-- **In a group:** each checkbox still exposes its own role, name, and checked state and remains an independent Tab stop; the group host supplies the shared `role="group"`, group label, and any group-level required/invalid.
+- **In a group:** each checkbox still exposes its own role, name, and checked state; the group manages a roving tabindex across items (so the group is a single Tab stop that arrow keys move focus within), and the group host supplies the shared `role="group"`, group label, and any group-level required/invalid.
 
 ### Keyboard and focus
 
