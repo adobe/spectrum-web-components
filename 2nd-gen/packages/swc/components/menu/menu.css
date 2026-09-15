@@ -19,10 +19,10 @@
 }
 
 /* `position: absolute` is what `PlacementController` needs to place the
- * surface (writes top/left/translate inline); `display: flex` /
- * `flex-direction: column` stacks slotted rows vertically regardless of
- * their own default display (an unregistered custom element, like the
- * current placeholder story rows, defaults to `inline`). `max-block-size`
+ * surface (writes top/left/translate inline); `inset: auto` resets the UA
+ * popover default of `inset: 0` (which centers the surface in the viewport
+ * via auto-margin resolution, fighting the inline top/left/translate) --
+ * same reset `swc-popover` applies for the same reason. `max-block-size`
  * caps the surface to the placement-aware usable height (falling back to
  * 90% of the block viewport before the first position lands) and scrolls
  * internally past that, matching `spectrum-css`'s own `.spectrum-Menu`.
@@ -36,14 +36,27 @@
  * migration plan's Architecture section for why), but nothing about that
  * decision applies to reusing the same design tokens for the same visual
  * role. Row-level styling (colors, icons, hover/selection states, item
- * padding) is `swc-menu-item`'s own scope, not yet implemented. */
+ * padding) is `swc-menu-item`'s own scope, not yet implemented.
+ *
+ * `display` is deliberately absent here: `[popover]` elements are
+ * `display: none` by default until shown, and an unconditional `display`
+ * here would override that UA default the same way `.swc-Menu[hidden]` once
+ * did (same specificity, author sheet wins the cascade tie) -- see
+ * `:popover-open` below, which is where `display` lives instead.
+ * `flex-direction`, unlike `display`, is not part of the discrete
+ * open/close transition (`allow-discrete` only carries `display`/`overlay`
+ * across it), so it must stay unconditional here rather than scoped to
+ * `:popover-open` -- scoping it there let it snap back to the flex default
+ * (`row`) the instant `:popover-open` stopped matching, while `display:flex`
+ * itself was still lingering into the close fade, visibly flattening the
+ * rows horizontal for that last moment. */
 .swc-Menu {
   --swc-menu-background-color: token("background-layer-2-color");
   --swc-menu-border-color: token("popover-border-color");
   --swc-menu-corner-radius: token("corner-radius-700");
 
-  display: flex;
   position: absolute;
+  inset: auto;
   flex-direction: column;
   max-block-size: min(var(--swc-placement-available-height, 90vb), 90vb);
   background-color: var(--swc-menu-background-color);
@@ -51,15 +64,26 @@
   border-radius: var(--swc-menu-corner-radius);
   box-shadow: token("drop-shadow-elevated");
   overflow: auto;
+  opacity: 0;
+  transition:
+    opacity token("animation-duration-200") token("animation-ease-out"),
+    overlay token("animation-duration-200") allow-discrete,
+    display token("animation-duration-200") allow-discrete;
 }
 
-/* `[hidden]` and `.swc-Menu` are both single-selector specificity (0,1,0),
- * and this stylesheet's `display: flex` above comes after the UA
- * stylesheet's `[hidden] { display: none }` in the cascade, so it was
- * winning the tie and the surface never actually hid despite the attribute
- * being set correctly. The extra specificity here (0,2,0) restores it. */
-.swc-Menu[hidden] {
-  display: none;
+/* Stacks slotted rows vertically regardless of their own default display
+ * (an unregistered custom element, like the current placeholder story rows,
+ * defaults to `inline`). Only `display` itself is scoped to the shown state
+ * (see above); `flex-direction` lives on the base rule. */
+.swc-Menu:popover-open {
+  display: flex;
+  opacity: 1;
+}
+
+@starting-style {
+  .swc-Menu:popover-open {
+    opacity: 0;
+  }
 }
 
 /* Minimal padding so slotted rows are visually distinct and roving focus is
@@ -67,6 +91,12 @@
  * owns its own padding once it exists, superseding this. */
 ::slotted(*) {
   padding: token("spacing-100");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-Menu {
+    transition: none;
+  }
 }
 
 @media (forced-colors: active) {

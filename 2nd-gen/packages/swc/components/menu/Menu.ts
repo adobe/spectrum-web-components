@@ -56,7 +56,12 @@ export class Menu extends MenuBase {
 
   protected override render(): TemplateResult {
     return html`
-      <div class="swc-Menu" role="menu" ?hidden=${!this.open}>
+      <div
+        class="swc-Menu"
+        popover="auto"
+        role="menu"
+        @beforetoggle=${this._onBeforeToggle}
+      >
         <slot @slotchange=${this.handleDefaultSlotChange}></slot>
       </div>
     `;

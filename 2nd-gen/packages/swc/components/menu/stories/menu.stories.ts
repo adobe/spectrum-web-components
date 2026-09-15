@@ -14,6 +14,8 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import { MENU_PLACEMENTS } from '@adobe/spectrum-wc-core/components/menu';
+
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 
@@ -22,6 +24,17 @@ import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 // ────────────────
 
 const { args, argTypes, template } = getStorybookHelpers('swc-menu');
+
+// The manifest only records the `MenuPlacement` alias name, not its expanded
+// literal union, so the helper falls back to a free-text control without
+// this override -- same reason `Popover`'s and `Tooltip`'s own stories
+// override `argTypes.placement` this way.
+argTypes.placement = {
+  ...argTypes.placement,
+  control: { type: 'select' },
+  options: MENU_PLACEMENTS,
+  table: { category: 'attributes', defaultValue: { summary: 'bottom-start' } },
+};
 
 // `actual-placement` is internal CSS-only state that `Menu` manages directly
 // via setAttribute (the flip-resolved side from PlacementController). The
@@ -73,6 +86,12 @@ export const Playground: Story = {
   args: {
     open: false,
     for: 'playground-trigger',
+    'actual-placement': null,
+    placement: 'bottom-start',
+    'should-flip': true,
+    '--swc-menu-background-color': '#8d1919',
+    '--swc-menu-border-color': '#deb0b0',
+    'default-slot': 'Hello I am a button',
   },
   render: (args) => html`
     <swc-button id="playground-trigger">Open menu</swc-button>
