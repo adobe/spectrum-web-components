@@ -1,5 +1,28 @@
 # Change Log
 
+## 1.12.4
+
+### Patch Changes
+
+- [#6735](https://github.com/adobe/spectrum-web-components/pull/6735) [`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b) Thanks [@blunteshwar](https://github.com/blunteshwar)! - **Fixed**: Propagate `lang`/`dir` for a single item's language without breaking layout:
+  - Combobox: forwards `lang`/`dir` from slotted `<sp-menu-item>` (or `.options` data) onto the rendered popover `<sp-menu-item>`, and syncs the input's own `lang` to the committed option's language for correct pronunciation
+  - Breadcrumbs: forwards the same `lang`/`dir` propagation to the "More items" overflow menu
+  - `BreadcrumbItem` now forwards `lang`/`dir` to `#item-link` only, so a single item's language does not flip its own layout or mirror its separator's chevron; the separator tracks the ambient direction (nearest ancestor `dir`, or the document default) instead of the host's own `dir` attribute, including live updates when an ancestor's `dir` changes after mount
+  - As a side effect, `sp-breadcrumb-item`'s `dir` JS property (via `SpectrumElement`'s computed-direction getter) now reflects the item's ambient direction rather than its own authored `dir` attribute; consumer code that reads `.dir` on an `sp-breadcrumb-item` should use `getAttribute('dir')` instead to see the authored value
+
+- Updated dependencies [[`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b), [`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b), [`bc6a084`](https://github.com/adobe/spectrum-web-components/commit/bc6a0847c98bbc50fc8478b21525c562060fbd49), [`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b)]:
+  - @spectrum-web-components/base@1.12.4
+  - @spectrum-web-components/reactive-controllers@1.12.4
+  - @spectrum-web-components/menu@1.12.4
+  - @spectrum-web-components/overlay@1.12.4
+  - @spectrum-web-components/action-button@1.12.4
+  - @spectrum-web-components/icon@1.12.4
+  - @spectrum-web-components/icons-ui@1.12.4
+  - @spectrum-web-components/picker-button@1.12.4
+  - @spectrum-web-components/popover@1.12.4
+  - @spectrum-web-components/progress-circle@1.12.4
+  - @spectrum-web-components/textfield@1.12.4
+
 ## 1.12.2
 
 ### Patch Changes
