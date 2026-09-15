@@ -40,11 +40,7 @@ import {
   type MenuSize,
 } from './Menu.types.js';
 
-/**
- * The `aria-controls` relationship is wired via the element-reference IDL
- * (`ariaControlsElements`) so it works across shadow boundaries. The property
- * is Baseline but not yet in every TypeScript DOM lib, so it is declared here.
- */
+// Element-reference IDL, Baseline but not yet in every TypeScript DOM lib.
 interface ARIAControlsElements {
   ariaControlsElements?: readonly Element[] | null;
 }
@@ -57,14 +53,8 @@ const DOCS_URL =
  * {@link https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/ | menu button}
  * pattern: an externally-referenced trigger (`for`/`triggerElement`) opens a
  * `PlacementController`-anchored surface containing a `role="menu"` list.
- * ARIA and click-to-toggle wiring on the trigger, open/close events, roving
- * `tabindex` and arrow-key navigation among `swc-menu-item` rows, and
- * initial/return focus are all handled here. The shadow-internal surface is
- * a native `popover="auto"` element (see the SWC `render()`), so Escape and
- * an outside click close it via the platform's own top-layer light-dismiss,
- * not a hand-rolled listener. `Tab`/`Shift+Tab` are trapped on the active
- * row rather than leaving the menu; only arrow keys move among rows. A
- * slotted row activated by click or <kbd>Enter</kbd> also closes the menu.
+ * The shadow-internal surface is a native `popover="auto"` element, so
+ * Escape and outside clicks close it via the platform's own light-dismiss.
  *
  * @slot - `swc-menu-item` elements. `swc-menu-group` and `swc-divider` (as a
  *   separator) join in a later migration phase.
@@ -136,12 +126,8 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
 
   private readonly placementController = new PlacementController(this);
 
-  /**
-   * The AT-facing trigger element currently wired with `aria-controls`,
-   * `aria-expanded`, and `aria-haspopup`. Tracked separately from `for`/
-   * `triggerElement` so a previously-wired trigger can be cleaned up if the
-   * resolved trigger changes.
-   */
+  // AT-facing element wired with aria-controls/aria-expanded/aria-haspopup;
+  // tracked so a previously-wired trigger can be cleaned up on change.
   private _interactiveElement: (HTMLElement & ARIAControlsElements) | null =
     null;
 
@@ -152,53 +138,30 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this.open = !this.open;
   };
 
-  /**
-   * The element `PlacementController` positions: `swc-menu`'s shadow-internal
-   * `role="menu"` surface. Returns `null` in the base class; the SWC
-   * rendering layer overrides this once that surface exists.
-   */
+  // The element PlacementController positions. Null in the base class; the
+  // SWC rendering layer overrides this once the shadow surface exists.
   protected get surfaceElement(): HTMLElement | null {
     return null;
   }
 
-  /**
-   * Roving-tabindex and arrow-key navigation among `swc-menu-item` rows.
-   * `wrap: true` overrides the controller's toolbar-oriented default so
-   * ArrowDown from the last item goes to the first (and reverse), matching
-   * menu-button convention; `skipDisabled` and `memory` keep the controller's
-   * own defaults (`false`/`true`) — disabled rows stay in the roving set per
-   * the APG's focusability-of-disabled-controls guidance.
-   */
+  // Roving-tabindex/arrow-key navigation. `wrap: true` overrides the
+  // controller's toolbar-oriented default to match menu-button convention.
   private readonly focusNavigation = new FocusgroupNavigationController(this, {
     direction: 'vertical',
     wrap: true,
     getItems: () => this.getMenuItems(),
   });
 
-  /**
-   * Suppresses the open/close effect in `updated()` when `open` is being
-   * synced *from* a native `beforetoggle` reaction (see `_syncOpen`) rather
-   * than driving toward one — matching `Popover.base.ts`'s own guard against
-   * calling `showPopover()`/`hidePopover()` a second time for a transition
-   * the browser already carried out itself (e.g. Escape or an outside
-   * click).
-   */
+  // Suppresses the open/close effect in updated() when `open` is being
+  // synced from a native beforetoggle reaction rather than driving one.
   private _syncingOpen = false;
 
-  /**
-   * Set at the end of every `updated()` call. Gates the same narrow thing it
-   * does in `Popover.base.ts`/`Tooltip.base.ts`: whether this is genuinely
-   * the first render (an initially-`open` menu should not steal focus or
-   * dispatch a phantom `swc-open` on mount) versus a later, real open/close
-   * transition, which must still run the full open/close branch — register
-   * the dismissible, enter the top layer, position the surface. Do not gate
-   * that whole branch on this flag; only the two things named above.
-   */
+  // Set at the end of every updated() call; suppresses only the phantom
+  // event dispatch and initial focus-steal on the very first render.
   private _hasCompletedFirstUpdate = false;
 
   // Direct `swc-menu-item` children only this phase; `swc-menu-group` joins
-  // once it exists (Phase B), extending this to also collect its default
-  // slot's items, matching the a11y analysis's illustrative query.
+  // once it exists (Phase B).
   private getMenuItems(): HTMLElement[] {
     return Array.from(
       this.querySelectorAll<HTMLElement>(':scope > swc-menu-item')
@@ -206,56 +169,39 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   }
 
   // `deepContains` crosses shadow boundaries, so focus inside a slotted
-  // custom element's own shadow tree (e.g. a future `swc-menu-item` internal
-  // part) is still detected as "inside the menu".
+  // item's own shadow tree still counts as "inside the menu".
   private isFocusWithin(): boolean {
     return deepContains(this, getActiveElement());
   }
 
-  // Shared by the Tab-trap/Enter keydown handler and the click handler
-  // below: whether the event's path crosses one of the roving-tabindex rows
-  // `FocusgroupNavigationController` collects, so keyboard and pointer
-  // activation never disagree about what counts as a row.
+  // Whether the event's path crosses a roving-tabindex row, so keyboard and
+  // pointer activation agree on what counts as a row.
   private isMenuItemEventTarget(event: Event): boolean {
     const items = new Set(this.getMenuItems());
     return event.composedPath().some((node) => items.has(node as HTMLElement));
   }
 
-  // Traps Tab/Shift+Tab on the active row and closes the menu when Enter
-  // activates one, matching click (see `handleItemActivate`). Registered on
-  // `document` (capture) only while open (see `_show()`/`_onBeforeToggle`).
-  // Escape closing the menu is handled by the native `popover="auto"`
-  // light-dismiss instead of a listener here (see the SWC `render()`).
+  // Traps Tab/Shift+Tab on the active row; Enter activates it like a click.
+  // Escape is handled by the native popover light-dismiss, not here.
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
     if (!this.open) {
       return;
     }
     if (event.key === 'Tab' && this.isMenuItemEventTarget(event)) {
-      // Traps focus on the roving-tabindex row rather than letting Tab (or
-      // Shift+Tab) carry it out of the menu to whatever's next/previous in
-      // the page's tab order. Arrow keys are still the only way to move
-      // among rows (`FocusgroupNavigationController`); Tab does nothing
-      // while the menu is open.
+      // Arrow keys are the only way to move among rows while open.
       event.preventDefault();
       return;
     }
     if (event.key === 'Enter' && this.isMenuItemEventTarget(event)) {
-      // Prevents the browser's own Enter default-action from firing too.
-      // That default action resolves against whatever element has focus
-      // once it actually runs, not this event's original target — and
-      // closing the menu synchronously refocuses the trigger `<button>`
-      // (see `_onBeforeToggle`), so an un-prevented Enter here re-activates
-      // that button and reopens the menu it just closed.
+      // Suppresses the browser's own Enter default-action, which would
+      // otherwise re-activate whatever has focus once it resolves.
       event.preventDefault();
       this.open = false;
     }
   };
 
-  // Closes the menu when a slotted row is activated. This phase has no
-  // submenus or selection to special-case yet, so any click landing on one
-  // of the roving-tabindex items (not just anywhere inside the surface,
-  // e.g. its padding) counts — matches the menu button pattern: choosing a
-  // plain command item closes the menu.
+  // Closes the menu when a slotted row is clicked; no submenus/selection to
+  // special-case yet, so any click on a roving-tabindex item counts.
   private readonly handleItemActivate = (event: MouseEvent): void => {
     if (!this.open || !this.isMenuItemEventTarget(event)) {
       return;
@@ -263,19 +209,13 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this.open = false;
   };
 
-  // `click` bubbles from any descendant regardless of `open`, and the
-  // handler already no-ops when closed, so it is wired once for the
-  // component's whole connected lifetime rather than toggled per open/close
-  // the way the document-level Escape/outside-click listeners are (those
-  // need the capture-phase dance; this does not).
+  // Wired once for the connected lifetime; the handler no-ops when closed.
   public override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('click', this.handleItemActivate);
   }
 
-  // Removes this menu's aria-controls reference from a previously-wired
-  // trigger and clears the state/expanded attributes it owns, so a stale
-  // trigger never retains a reference to this menu.
+  // Clears aria-controls/expanded/haspopup from a previously-wired trigger.
   private clearTriggerAria(): void {
     if (!this._interactiveElement) {
       return;
@@ -294,10 +234,8 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this._trigger = null;
   }
 
-  // Resolves `for`/`triggerElement`, wires ARIA onto the AT-facing
-  // `interactiveElement`, and keeps the click-to-toggle listener on the
-  // positioning `trigger` in sync. Called on every relevant property change,
-  // not just once, so a trigger swapped while open is rewired cleanly.
+  // Resolves for/triggerElement, wires ARIA, and keeps the click listener in
+  // sync; called on every relevant property change, not just once.
   private wireTrigger(): void {
     const { trigger, interactiveElement } = resolveTrigger(this, {
       for: this.for,
@@ -349,16 +287,8 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this.placementController.start(this._trigger, surface, options);
   }
 
-  // No CSS transition exists on the surface yet — that lands with rendering
-  // in a later migration phase — so the after-* event fires synchronously
-  // right behind the before-* event rather than waiting on `transitionend`
-  // the way `Tooltip.base.ts`/`Popover.base.ts` do.
-  //
-  // Each event is dispatched from its own literal `new CustomEvent(...)` call
-  // (not a shared helper keyed by a ternary) because the custom-elements-manifest
-  // analyzer statically scans `dispatchEvent(new CustomEvent(...))` calls to
-  // auto-detect events; a ternary event name has no literal `.text` for it to
-  // read, and it emits an extra nameless event in the manifest for one.
+  // Each event is its own literal `new CustomEvent(...)` call, not a shared
+  // helper, so the custom-elements-manifest analyzer can statically detect it.
   private dispatchOpenEvents(isOpen: boolean): void {
     if (isOpen) {
       this.dispatchEvent(
@@ -392,12 +322,8 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this.focusNavigation.refresh();
   }
 
-  // Enters the top layer and, only once that actually succeeds, runs the
-  // rest of the open side effects -- matching `Popover.base.ts`'s own
-  // ordering ("only register listeners, the dismissible stack, and
-  // positioning once the native show actually succeeds, so a failed
-  // `showPopover()` does not leave the component wired up for a menu that
-  // never opened").
+  // Enters the top layer; the rest of the open side effects only run once
+  // that actually succeeds.
   private _show(): void {
     const surface = this.surfaceElement;
     if (!surface) {
@@ -424,13 +350,8 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     });
     this.startPlacement();
     if (this._hasCompletedFirstUpdate) {
-      // Re-checks eligibility (e.g. newly visible rows) first. Forces the
-      // first item active rather than trusting the controller's own
-      // memory-preferring `refresh()` + `getActiveItem()`: every normal
-      // open must land on the first item regardless of which row was
-      // active the last time this menu was open, not wherever `memory`
-      // last parked the roving tab stop. Falls back to `getActiveItem()`
-      // only if the first raw item is not eligible (e.g. mid-transition).
+      // Forces the first item active rather than trusting the controller's
+      // own memory-preferring refresh(); every normal open lands on row one.
       this.focusNavigation.refresh();
       const firstItem = this.getMenuItems()[0];
       const active =
@@ -439,21 +360,15 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
           firstItem) ||
         this.focusNavigation.getActiveItem();
       if (active) {
-        // Deferred with `queueMicrotask` per the controller's own
-        // documented pattern for focusing from a trigger `click` handler:
-        // otherwise the browser moves focus back to the trigger after the
-        // click handler (which set `open`) returns.
+        // Deferred so the browser doesn't move focus back to the trigger
+        // after the click handler that set `open` returns.
         queueMicrotask(() => active.focus());
       }
     }
   }
 
-  // Only asks the surface to leave the top layer. The rest of the close side
-  // effects run from `_onBeforeToggle` instead (see its own doc): that hook
-  // fires for a native light-dismiss (Escape, outside click) exactly the
-  // same way it does for this call, so teardown lives in one place rather
-  // than being duplicated between "we asked it to close" and "it closed
-  // itself".
+  // Only asks the surface to leave the top layer; the close side effects
+  // run from `_onBeforeToggle` so teardown lives in one place.
   private _hide(): void {
     const surface = this.surfaceElement;
     if (surface?.matches(':popover-open')) {
@@ -465,10 +380,8 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     }
   }
 
-  // Sets `open` without re-entering `_show()`/`_hide()` for the resulting
-  // `updated()` call -- for reconciling `open` down to `false` after a
-  // native light-dismiss already closed the surface, matching
-  // `Popover.base.ts`'s own `_syncOpen()`.
+  // Sets `open` without re-entering _show()/_hide() for the resulting
+  // updated() call, matching Popover.base.ts's own _syncOpen().
   private _syncOpen(value: boolean): void {
     if (this.open === value) {
       return;
@@ -477,13 +390,8 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this.open = value;
   }
 
-  // The single source of truth for reacting to a close, whether it came
-  // from our own `_hide()` or a native light-dismiss (Escape, outside
-  // click) neither of which this class listens for directly anymore -- the
-  // `popover="auto"` surface handles both natively (see the SWC
-  // `render()`). Bound in that render template. `beforetoggle` fires before
-  // the surface actually hides, so focus is still inside it here if it was
-  // there, unlike a later hook would see.
+  // Single reconciliation point for any close, native or programmatic;
+  // bound in the SWC render template's beforetoggle binding.
   protected _onBeforeToggle = (event: ToggleEvent): void => {
     if (event.newState === 'open') {
       return;
@@ -524,18 +432,12 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       this.wireTrigger();
     }
 
-    // Runs whenever `open` changes at all, including the very first
-    // `updated()` call for a menu that starts open (`<swc-menu open>`) --
-    // matching `Popover.base.ts`'s own precedent: both run the full open
-    // branch (dismiss registration, listeners, positioning) on that first
-    // call too, and narrowly suppress only the phantom `swc-open`/`swc-close`
-    // event and the initial focus-steal via `_hasCompletedFirstUpdate`
-    // inside `_show()`, not by skipping the branch outright.
+    // Runs on every `open` change, including the first render for a menu
+    // that starts open; `_show()`/`_hasCompletedFirstUpdate` gate the
+    // phantom event and focus-steal, not this branch itself.
     if (changedProperties.has('open')) {
       if (this._syncingOpen) {
-        // The change came from `_onBeforeToggle` reconciling a native
-        // light-dismiss; the surface is already in the right state, so
-        // just consume the guard rather than asking it to close again.
+        // Reconciling a native light-dismiss; already in the right state.
         this._syncingOpen = false;
       } else if (this.open) {
         this._show();

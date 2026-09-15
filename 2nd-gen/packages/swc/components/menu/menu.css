@@ -18,38 +18,13 @@
   box-sizing: border-box;
 }
 
-/* `position: absolute` is what `PlacementController` needs to place the
- * surface (writes top/left/translate inline); `inset: auto` resets the UA
- * popover default of `inset: 0` (which centers the surface in the viewport
- * via auto-margin resolution, fighting the inline top/left/translate) --
- * same reset `swc-popover` applies for the same reason. `max-block-size`
- * caps the surface to the placement-aware usable height (falling back to
- * 90% of the block viewport before the first position lands) and scrolls
- * internally past that, matching `spectrum-css`'s own `.spectrum-Menu`.
- *
- * Background, border, radius, and shadow mirror `swc-popover`'s own tokens,
- * not `spectrum-css`'s `.spectrum-Menu` (which carries none of this chrome
- * itself): in real Spectrum this chrome comes from a wrapping
- * `.spectrum-Popover`, and no menu-specific override of those popover
- * tokens exists anywhere in that repo, so the values are shared rather than
- * guessed. `swc-menu` does not wrap `<swc-popover>` as a component (see the
- * migration plan's Architecture section for why), but nothing about that
- * decision applies to reusing the same design tokens for the same visual
- * role. Row-level styling (colors, icons, hover/selection states, item
- * padding) is `swc-menu-item`'s own scope, not yet implemented.
- *
- * `display` is deliberately absent here: `[popover]` elements are
- * `display: none` by default until shown, and an unconditional `display`
- * here would override that UA default the same way `.swc-Menu[hidden]` once
- * did (same specificity, author sheet wins the cascade tie) -- see
- * `:popover-open` below, which is where `display` lives instead.
- * `flex-direction`, unlike `display`, is not part of the discrete
- * open/close transition (`allow-discrete` only carries `display`/`overlay`
- * across it), so it must stay unconditional here rather than scoped to
- * `:popover-open` -- scoping it there let it snap back to the flex default
- * (`row`) the instant `:popover-open` stopped matching, while `display:flex`
- * itself was still lingering into the close fade, visibly flattening the
- * rows horizontal for that last moment. */
+/* `inset: auto` resets the UA popover default of `inset: 0`, which
+ * auto-centers the surface and fights the inline top/left/translate
+ * PlacementController writes -- same reset `swc-popover` applies.
+ * Background/border/radius/shadow mirror `swc-popover`'s own tokens, since
+ * `spectrum-css`'s `.spectrum-Menu` carries no chrome of its own.
+ * `display` is intentionally absent here (see `:popover-open` below); an
+ * unconditional value would override the UA's default-hidden state. */
 .swc-Menu {
   --swc-menu-background-color: token("background-layer-2-color");
   --swc-menu-border-color: token("popover-border-color");
@@ -71,10 +46,8 @@
     display token("animation-duration-200") allow-discrete;
 }
 
-/* Stacks slotted rows vertically regardless of their own default display
- * (an unregistered custom element, like the current placeholder story rows,
- * defaults to `inline`). Only `display` itself is scoped to the shown state
- * (see above); `flex-direction` lives on the base rule. */
+/* `flex-direction` lives on the base rule, not here, since it isn't part of
+ * the discrete transition and would snap to its default mid-fade otherwise. */
 .swc-Menu:popover-open {
   display: flex;
   opacity: 1;
@@ -86,9 +59,8 @@
   }
 }
 
-/* Minimal padding so slotted rows are visually distinct and roving focus is
- * easy to see moving between them; not a real row treatment. `swc-menu-item`
- * owns its own padding once it exists, superseding this. */
+/* Minimal padding so rows are visually distinct; not a real row treatment.
+ * `swc-menu-item` owns its own padding once it exists. */
 ::slotted(*) {
   padding: token("spacing-100");
 }
