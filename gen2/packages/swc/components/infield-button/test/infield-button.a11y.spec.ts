@@ -190,9 +190,9 @@ test.describe('Infield Button - Pointer Interactions', () => {
     );
     await page.evaluate(() => {
       const el = document.querySelector('swc-infield-button')!;
-      (el as ClickCounter).__clickCount = 0;
+      (el as unknown as ClickCounter).__clickCount = 0;
       el.addEventListener('click', () => {
-        (el as ClickCounter).__clickCount++;
+        (el as unknown as ClickCounter).__clickCount++;
       });
     });
 
@@ -200,8 +200,11 @@ test.describe('Infield Button - Pointer Interactions', () => {
 
     const count = await page.evaluate(
       () =>
-        (document.querySelector('swc-infield-button') as ClickCounter)
-          .__clickCount
+        (
+          document.querySelector(
+            'swc-infield-button'
+          ) as unknown as ClickCounter
+        ).__clickCount
     );
     expect(count, 'click event fires when button is enabled').toBe(1);
   });
@@ -219,9 +222,9 @@ test.describe('Infield Button - Pointer Interactions', () => {
 
     await page.evaluate(() => {
       const el = document.querySelector('swc-infield-button[disabled]')!;
-      (el as ClickCounter).__clickCount = 0;
+      (el as unknown as ClickCounter).__clickCount = 0;
       el.addEventListener('click', () => {
-        (el as ClickCounter).__clickCount++;
+        (el as unknown as ClickCounter).__clickCount++;
       });
     });
 
@@ -232,7 +235,7 @@ test.describe('Infield Button - Pointer Interactions', () => {
     const count = await page.evaluate(() => {
       const el = document.querySelector(
         'swc-infield-button[disabled]'
-      ) as ClickCounter;
+      ) as unknown as ClickCounter;
       return el.__clickCount;
     });
     expect(count, 'click is suppressed while disabled').toBe(0);
