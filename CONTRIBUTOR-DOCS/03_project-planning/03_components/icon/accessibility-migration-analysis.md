@@ -194,7 +194,7 @@ When any icon element is slotted inside a `<swc-button label="Close">`, the butt
 
 `<swc-icon>` is not keyboard focusable. Screen reader users encounter it in **browse mode** (document or scan mode), not via Tab navigation. Manual testers must use browse mode to verify that meaningful icons announce their name, role, and state in reading order, and that decorative icons are silent.
 
-See the **Browse mode (document/scan mode)** section of the [2nd-gen Storybook screen reader testing guide](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) for setup and testing steps.
+See the **Browse mode (document/scan mode)** section of the [gen2 Storybook screen reader testing guide](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) for setup and testing steps.
 
 ---
 
@@ -222,4 +222,4 @@ See the **Browse mode (document/scan mode)** section of the [2nd-gen Storybook s
 - [Non-text content (WCAG 1.1.1)](https://www.w3.org/TR/WCAG22/#non-text-content)
 - [Non-text contrast (WCAG 1.4.11)](https://www.w3.org/TR/WCAG22/#non-text-contrast)
 - [Icon migration roadmap](./rendering-and-styling-migration-analysis.md)
-- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- [gen2 Storybook: Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
