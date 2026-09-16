@@ -236,7 +236,7 @@ describe('Picker, responsive', () => {
     });
 
     it('dispatches change event when menu item is clicked on touch device', async () => {
-      // TODO: This test is flaky in firefox and needs to be addressed in 2nd-gen.
+      // TODO: This test is flaky in firefox and needs to be addressed in gen2.
       if (isFirefox()) {
         return;
       }
