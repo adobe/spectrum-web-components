@@ -54,9 +54,6 @@ export default meta;
 export const Playground: Story = {
   tags: ['dev'],
   args: {
-    // A visible slotted label + placeholder so the Playground reads as a real,
-    // filled-in field rather than an empty box. (`label-slot` is the Storybook
-    // helper's arg for the `label` slot.)
     'label-slot': 'Email address',
     placeholder: 'you@example.com',
   },
@@ -108,9 +105,8 @@ export const Anatomy: Story = {
 
 export const Labelling: Story = {
   render: () => {
-    // Muted caption naming each technique, so the reader can map every example
-    // to the prose: the accessible-label / -labelledby fields have no ordinary
-    // visible label, so without a caption they read as unexplained empty boxes.
+    // Muted captions so the label-less accessible-label / -labelledby fields
+    // aren't unexplained empty boxes.
     const caption =
       'margin-block-end: 8px; font-size: 0.75rem; color: #6e6e6e;';
     return html`
@@ -118,7 +114,10 @@ export const Labelling: Story = {
         style="display: flex; flex-direction: column; gap: 24px; max-inline-size: 44ch;"
       >
         <div>
-          <div style=${caption}>Slotted <code>label</code></div>
+          <div style=${caption}>
+            Slotted
+            <code>label</code>
+          </div>
           <swc-text-field>
             <span slot="label">Email address</span>
           </swc-text-field>
@@ -126,15 +125,16 @@ export const Labelling: Story = {
 
         <div>
           <div style=${caption}>
-            <code>accessible-label</code>: named for assistive tech, no visible
-            label
+            <code>accessible-label</code>
+            : named for assistive tech, no visible label
           </div>
           <swc-text-field accessible-label="Email address"></swc-text-field>
         </div>
 
         <div>
           <div style=${caption}>
-            <code>accessible-labelledby</code>: named by other elements
+            <code>accessible-labelledby</code>
+            : named by other elements
           </div>
           <div style="margin-block-end: 8px;">
             <span id="labelling-row-header">Name</span>
@@ -151,16 +151,10 @@ export const Labelling: Story = {
   tags: ['options'],
   parameters: {
     a11y: {
-      // reason: axe-core cannot read the ARIA element-reflection API
-      // (`ariaLabelledByElements`), which is how `LabellingMixin` resolves
-      // `accessible-labelledby` onto the shadow `<input>`. It only inspects
-      // attributes, so it reports a false "Form element does not have a
-      // label" ("label" rule) violation on this host even though the name
-      // resolves correctly in real browsers and assistive technology. See
-      // the forms-strategy RFC's axe-core policy (CONTRIBUTOR-DOCS,
-      // "3.4 axe-core policy") for the documented false-positive list.
-      // Remove once axe-core adds ARIAMixin element-reference support
-      // (review quarterly).
+      // axe-core false positive: it can't read the `ariaLabelledByElements`
+      // reflection LabellingMixin uses for `accessible-labelledby`, so it flags
+      // a missing label that resolves fine in browsers/AT. See the forms-strategy
+      // RFC axe-core policy (CONTRIBUTOR-DOCS, "3.4 axe-core policy").
       exclude: {
         label: ['#labelling-labelledby-field'],
       },
@@ -177,9 +171,6 @@ export const Sizes: Story = {
   `,
   tags: ['options'],
   parameters: {
-    // Stack each field on its own line at one fixed width via
-    // `--swc-text-field-width` (the field has no default width), so the set is
-    // consistent and comfortably sized.
     flexLayout: 'column-stretch',
     styles: {
       '--swc-text-field-width': '220px',
@@ -198,9 +189,6 @@ export const LabelPositions: Story = {
   `,
   tags: ['options'],
   parameters: {
-    // Stack each field on its own line at one fixed width via
-    // `--swc-text-field-width` (the field has no default width), so the set is
-    // consistent and comfortably sized.
     flexLayout: 'column-stretch',
     styles: {
       '--swc-text-field-width': '220px',
@@ -223,9 +211,6 @@ export const NecessityIndicator: Story = {
   `,
   tags: ['options'],
   parameters: {
-    // Stack each field on its own line at one fixed width via
-    // `--swc-text-field-width` (the field has no default width), so the set is
-    // consistent and comfortably sized.
     flexLayout: 'column-stretch',
     styles: {
       '--swc-text-field-width': '220px',
@@ -286,9 +271,6 @@ export const States: Story = {
   `,
   tags: ['states'],
   parameters: {
-    // Stack each field on its own line at one fixed width via
-    // `--swc-text-field-width` (the field has no default width), so the set is
-    // consistent and comfortably sized.
     flexLayout: 'column-stretch',
     styles: {
       '--swc-text-field-width': '220px',
@@ -308,20 +290,18 @@ export const LabelOverflow: Story = {
       style="display: flex; flex-direction: column; gap: 24px; inline-size: 260px;"
     >
       <swc-text-field placeholder="you@example.com">
-        <span slot="label"
-          >This top label wraps onto multiple lines instead of clipping</span
-        >
+        <span slot="label">
+          This top label wraps onto multiple lines instead of clipping
+        </span>
       </swc-text-field>
       <swc-text-field label-position="side" placeholder="you@example.com">
         <span slot="label">Short side label</span>
       </swc-text-field>
       <swc-text-field label-position="side" placeholder="you@example.com">
-        <span slot="label"
-          >This side label wraps and the input shrinks toward a square</span
-        >
+        <span slot="label">
+          This side label wraps and the input shrinks toward a square
+        </span>
       </swc-text-field>
-      <!-- Capping the label with --swc-field-label-max-inline-size wraps it
-           sooner and gives the side input more room. -->
       <swc-text-field
         label-position="side"
         placeholder="you@example.com"
@@ -341,9 +321,8 @@ LabelOverflow.storyName = 'Label overflow';
 
 export const Accessibility: Story = {
   render: () => {
-    // Muted caption naming each description source, so the external
-    // describedby element reads as part of its example rather than floating
-    // beside the wrong field.
+    // Muted captions so each external describedby element reads as part of its
+    // own example.
     const caption =
       'margin-block-end: 8px; font-size: 0.75rem; color: #6e6e6e;';
     return html`
@@ -351,7 +330,10 @@ export const Accessibility: Story = {
         style="display: flex; flex-direction: column; gap: 24px; max-inline-size: 44ch;"
       >
         <div>
-          <div style=${caption}>Slotted <code>description</code></div>
+          <div style=${caption}>
+            Slotted
+            <code>description</code>
+          </div>
           <swc-text-field accessible-label="Comments">
             <span slot="description">Optional; visible to your team only.</span>
           </swc-text-field>
@@ -359,7 +341,8 @@ export const Accessibility: Story = {
 
         <div>
           <div style=${caption}>
-            <code>accessible-describedby</code>: described by another element
+            <code>accessible-describedby</code>
+            : described by another element
           </div>
           <p
             id="accessibility-external-description"
