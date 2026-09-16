@@ -35,7 +35,8 @@ import { StatusBadge } from './StatusBadge';
  *   ...component-specific sections...
  *   <DocsFooter />
  */
-export const DocsHeader = ({ showSince = true }: { showSince?: boolean }) => {
+// TODO(SWC-2558): default showSince to true once release-stamping automation keeps @since accurate.
+export const DocsHeader = ({ showSince = false }: { showSince?: boolean }) => {
   const resolvedOf = useOf('meta', ['meta']);
   const tags: string[] = resolvedOf?.preparedMeta?.tags ?? [];
 

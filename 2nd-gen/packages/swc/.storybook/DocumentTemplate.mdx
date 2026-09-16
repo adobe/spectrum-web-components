@@ -57,9 +57,7 @@ export const ConditionalSection = ({ tag, title, hideTitle = false }) => {
 
 <Meta isTemplate />
 
-{/* TODO(SWC-2558): re-enable the "since" badge once release-stamping automation keeps @since accurate. */}
-
-<DocsHeader showSince={false} />
+<DocsHeader />
 <SingleStoryDescription />
 
 <ConditionalSection tag="anatomy" title="Anatomy" hideTitle={true} />

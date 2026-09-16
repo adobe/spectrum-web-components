@@ -76,9 +76,10 @@ const Badge = ({
  * These are extracted into the CEM by the `statusPlugin` in `cem.config.js`
  * and read at render time from `custom-elements.json`.
  */
+// TODO(SWC-2558): default showSince to true once release-stamping automation keeps @since accurate.
 export const StatusBadge = ({
   of,
-  showSince = true,
+  showSince = false,
 }: {
   of?: any;
   showSince?: boolean;
