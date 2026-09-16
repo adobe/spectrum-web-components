@@ -92,13 +92,14 @@ jobs:
   # versions are `<calculated>-<tag>.<datetime>` per this gen's `snapshot` config, so they
   # can never collide with a real `2.0.0-beta.N` or with the eventual stable `2.0.0`.
   snapshot:
-    needs: check-changesets
     # Dispatch-triggered and never from main: a snapshot is only for a feature branch. A
     # dispatch from main is a real manual release and flows to version-pr/publish instead.
+    # No changeset gate - a feature branch can be snapshotted any time, even with nothing
+    # pending; a throwaway changeset is synthesized below so there's always a version to
+    # publish.
     if: >-
       github.event_name == 'workflow_dispatch' &&
-      github.ref != 'refs/heads/main' &&
-      needs.check-changesets.outputs.has_changesets == 'true'
+      github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: npm-publish
     permissions:
@@ -137,6 +138,19 @@ jobs:
           # nothing below commits or pushes. Removing the file locally is the only thing
           # that lets `changeset version --snapshot` run at all while gen2 is in pre mode.
           rm -f 2nd-gen/.changeset/pre.json
+
+      - name: Ensure a changeset exists
+        run: |
+          # `changeset version --snapshot` exits without versioning when nothing is
+          # pending. So a branch can be snapshotted regardless of changesets, synthesize a
+          # throwaway one when none exist. It patches the linked lead package, which bumps
+          # the whole `@adobe/spectrum-wc(-core|-icons)` group together. Ephemeral checkout,
+          # never committed.
+          if [ -z "$(find 2nd-gen/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' -print -quit)" ]; then
+            printf -- "---\n'@adobe/spectrum-wc': patch\n---\n\nThrowaway snapshot build (no pending changesets)\n" \
+              > 2nd-gen/.changeset/zzz-snapshot-tmp.md
+            echo "No pending changesets - synthesized a temporary one so the snapshot has a version to publish."
+          fi
 
       - name: Version gen2 packages (snapshot)
         working-directory: 2nd-gen
