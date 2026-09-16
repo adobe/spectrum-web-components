@@ -9,7 +9,6 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -46,10 +45,8 @@ export default meta;
 // ────────────────────
 
 export const Playground: Story = {
-  render: () => html`
-    <swc-thumbnail>
-      <img src="./images/avatar-preview.png" alt="Preview" />
-    </swc-thumbnail>
-  `,
+  args: {
+    'default-slot': '<img src="./images/avatar-preview.png" alt="Preview" />',
+  },
   tags: ['autodocs', 'dev'],
 };
