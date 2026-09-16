@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'NPM dist-tag for a throwaway gen2 snapshot'
+        description: 'NPM dist-tag for the throwaway snapshot. Deliberately not `next` - that channel is fed by main, so pointing it at a branch build would mislead anyone installing @next.'
         required: false
-        default: 'next'
+        default: 'snapshot'
         type: choice
         options:
-          - next
+          - snapshot
           - snapshot-test
       branch:
         description: 'Branch to snapshot. Leave blank to use the branch you dispatched from. Set it to snapshot a branch that does not carry this workflow file yet.'
@@ -79,7 +79,7 @@ jobs:
             echo "gen2-$RELEASED_VERSION not yet released - publish approval will be requested"
           fi
 
-  # Throwaway snapshot publish under `next`/`snapshot-test`. Manual dispatch only - never
+  # Throwaway snapshot publish under the `snapshot` dist-tag. Manual dispatch only - never
   # runs on push, so an ordinary release push can't trigger it. It never commits, pushes,
   # tags, or opens a PR, and `permissions: contents: read` makes that structural rather
   # than a convention.
@@ -129,7 +129,7 @@ jobs:
         env:
           INPUT_TAG: ${{ github.event.inputs.tag }}
         run: |
-          WORKFLOW_TAG="${INPUT_TAG:-next}"
+          WORKFLOW_TAG="${INPUT_TAG:-snapshot}"
           echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
           echo "Using npm tag: $WORKFLOW_TAG"
 
