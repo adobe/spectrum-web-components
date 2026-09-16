@@ -485,19 +485,41 @@ function listMigrationComponents() {
 }
 
 /**
- * List all 2nd-gen units (components or patterns) in `dir` that have a
- * `<unitName>.mdx` doc page, tagged `swc-<unitName>` by convention.
- * Returns [{ dir, mdxPath, tagName }] sorted by dir.
+ * List all 2nd-gen units (components or patterns) in `dir` that have a public
+ * `<name>.mdx` doc page, tagged `swc-<name>`. The doc's own filename is the
+ * source of truth for `<name>` (and its sibling `stories/<name>.stories.ts`):
+ * most units name the folder after the doc, but some don't (e.g.
+ * `patterns/ai-toolkit/suggestion/suggestion-group.mdx`). Prefer `<dir>.mdx`
+ * when present, else fall back to the dir's single public doc. `migration-guide.mdx`
+ * and `*.internal.mdx` are never the unit reference. Returns
+ * [{ dir, mdxPath, tagName }] sorted by name.
  */
 function listGen2Units(dir) {
   return readdirSync(dir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
-    .map((entry) => ({
-      dir: entry.name,
-      mdxPath: join(dir, entry.name, `${entry.name}.mdx`),
-      tagName: `swc-${entry.name}`,
-    }))
-    .filter((u) => existsSync(u.mdxPath))
+    .map((entry) => {
+      const files = readdirSync(join(dir, entry.name));
+      const mdxFile =
+        (files.includes(`${entry.name}.mdx`) && `${entry.name}.mdx`) ||
+        files
+          .filter(
+            (f) =>
+              f.endsWith('.mdx') &&
+              !f.endsWith('.internal.mdx') &&
+              f !== 'migration-guide.mdx'
+          )
+          .sort()[0];
+      if (!mdxFile) {
+        return null;
+      }
+      const name = mdxFile.slice(0, -'.mdx'.length);
+      return {
+        dir: name,
+        mdxPath: join(dir, entry.name, mdxFile),
+        tagName: `swc-${name}`,
+      };
+    })
+    .filter(Boolean)
     .sort((a, b) => a.dir.localeCompare(b.dir));
 }
 
@@ -759,10 +781,15 @@ function readStoriesMeta(unit) {
     return null;
   }
 
-  const metaStart = source.indexOf('const meta');
-  if (metaStart === -1) {
+  // Match the meta declaration in either form — `const meta` or `export const
+  // meta` — and start at the keyword so the JSDoc slice below ends at the
+  // comment's `*/` rather than a dangling `export ` (which dropped the
+  // description for the `export const meta` form).
+  const metaDecl = source.match(/(?:export\s+)?const meta\b/);
+  if (!metaDecl) {
     return null;
   }
+  const metaStart = metaDecl.index;
   const nextExport = source.slice(metaStart).match(/\nexport const /);
   const metaBlock = nextExport
     ? source.slice(metaStart, metaStart + nextExport.index)
