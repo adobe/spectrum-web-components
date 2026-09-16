@@ -13,7 +13,7 @@ A user card shares `preview`, `title`, `description`, the default slot, and `foo
 
 - **`avatar`**: the person's avatar, shown between the preview and the content. Expects an [Avatar](../?path=/docs/components-avatar--docs) element
 
-The card manages the avatar's size (matching the card's own size) and outline attributes, overwriting any other set values.
+The card manages the avatar's size (matching the card's own size) and outline attributes, overwriting any other set values. Use [Asset](../?path=/docs/components-asset--docs) for `preview` content instead of a plain `<img>`, same as [Card](../?path=/docs/components-card--docs).
 
 <Canvas of={Stories.Anatomy} />
 
@@ -73,6 +73,6 @@ Identical to [Card](../?path=/docs/components-card--docs)'s `selectable`: makes 
 
 ## Upcoming features
 
-Deferred items are shared with [Card](../?path=/docs/components-card--docs): hover/disabled states and a standalone `selected` property both wait on a future CardView container, and once the gen2 Asset component ships, it will be the recommended content for `preview` (in place of a plain `<img>`), with any media loading state likely owned by Asset rather than the card. See Card's Upcoming features section for the full list.
+Deferred items are shared with [Card](../?path=/docs/components-card--docs): hover/disabled states and a standalone `selected` property both wait on a future CardView container. See Card's Upcoming features section for the full list.
 
 <DocsFooter />
