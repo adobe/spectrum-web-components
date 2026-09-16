@@ -280,6 +280,10 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     const options: PlacementOptions = {
       placement: this.placement,
       shouldFlip: this.shouldFlip,
+      // Fixed trigger-to-surface gap, not consumer-tunable (see the plan's
+      // Q20). 8px matches spectrum-css's own
+      // --spectrum-actionmenu-button-to-menu-gap (= --spectrum-spacing-100).
+      offset: 8,
       onPlacementChange: (resolvedPlacement) => {
         this.setAttribute('actual-placement', physicalSide(resolvedPlacement));
       },

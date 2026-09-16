@@ -79,9 +79,6 @@ export const Playground: Story = {
     'actual-placement': null,
     placement: 'bottom-start',
     'should-flip': true,
-    '--swc-menu-background-color': '#8d1919',
-    '--swc-menu-border-color': '#deb0b0',
-    'default-slot': 'Hello I am a button',
   },
   render: (args) => html`
     <swc-button id="playground-trigger">Open menu</swc-button>

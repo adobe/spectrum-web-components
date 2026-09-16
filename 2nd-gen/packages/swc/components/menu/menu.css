@@ -21,27 +21,30 @@
 /* `inset: auto` resets the UA popover default of `inset: 0`, which
  * auto-centers the surface and fights the inline top/left/translate
  * PlacementController writes -- same reset `swc-popover` applies.
- * Background/border/radius/shadow mirror `swc-popover`'s own tokens, since
- * `spectrum-css`'s `.spectrum-Menu` carries no chrome of its own.
- * `display` is intentionally absent here (see `:popover-open` below); an
- * unconditional value would override the UA's default-hidden state. */
+ * Background/border/radius/shadow are inline `token()` calls, not
+ * `--swc-menu-*` custom properties: no consumer override request exists yet
+ * (review feedback, PR #6734). `display` is intentionally absent here (see
+ * `:popover-open` below); an unconditional value would override the UA's
+ * default-hidden state. */
 .swc-Menu {
-  --swc-menu-background-color: token("background-layer-2-color");
-  --swc-menu-border-color: token("popover-border-color");
-  --swc-menu-corner-radius: token("corner-radius-700");
+  --_swc-menu-animation-distance: token("spacing-75");
 
   position: absolute;
   inset: auto;
   flex-direction: column;
+  inline-size: max-content;
+  max-inline-size: min(var(--swc-placement-available-width, 100vi), calc(100vi - 24px), 320px);
   max-block-size: min(var(--swc-placement-available-height, 90vb), 90vb);
-  background-color: var(--swc-menu-background-color);
-  border: token("border-width-100") solid var(--swc-menu-border-color);
-  border-radius: var(--swc-menu-corner-radius);
+  padding: token("spacing-100");
+  background-color: token("background-layer-2-color");
+  border: token("border-width-100") solid token("popover-border-color");
+  border-radius: token("corner-radius-700");
   box-shadow: token("drop-shadow-elevated");
   overflow: auto;
   opacity: 0;
   transition:
     opacity token("animation-duration-200") token("animation-ease-out"),
+    transform token("animation-duration-200") token("animation-ease-out"),
     overlay token("animation-duration-200") allow-discrete,
     display token("animation-duration-200") allow-discrete;
 }
@@ -50,11 +53,48 @@
  * the discrete transition and would snap to its default mid-fade otherwise. */
 .swc-Menu:popover-open {
   display: flex;
+}
+
+/* Entry/exit slide offset by requested side (reflected `placement`, known
+ * immediately, unlike the async `actual-placement`), matching `swc-popover`'s
+ * own tip-less slide. `left`/`right` are physical; `start`/`end` resolve
+ * against writing direction via `:dir()`. */
+:host([placement^="top"]) .swc-Menu {
+  transform: translateY(var(--_swc-menu-animation-distance));
+}
+
+:host([placement^="bottom"]) .swc-Menu {
+  transform: translateY(calc(-1 * var(--_swc-menu-animation-distance)));
+}
+
+:host([placement^="left"]) .swc-Menu {
+  transform: translateX(var(--_swc-menu-animation-distance));
+}
+
+:host([placement^="right"]) .swc-Menu {
+  transform: translateX(calc(-1 * var(--_swc-menu-animation-distance)));
+}
+
+:host([placement^="start"]:dir(ltr)) .swc-Menu,
+:host([placement^="end"]:dir(rtl)) .swc-Menu {
+  transform: translateX(var(--_swc-menu-animation-distance));
+}
+
+:host([placement^="start"]:dir(rtl)) .swc-Menu,
+:host([placement^="end"]:dir(ltr)) .swc-Menu {
+  transform: translateX(calc(-1 * var(--_swc-menu-animation-distance)));
+}
+
+/* Gated on `actual-placement` (async, set once the first position lands) so
+ * the surface doesn't fade in at its 0,0 origin and jump to the trigger
+ * mid-transition; matches `swc-popover`'s own gating. */
+:host([actual-placement]) .swc-Menu:popover-open {
   opacity: 1;
+  transform: none;
 }
 
 @starting-style {
-  .swc-Menu:popover-open {
+  :host([actual-placement]) .swc-Menu:popover-open {
     opacity: 0;
   }
 }
