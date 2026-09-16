@@ -44,7 +44,7 @@
 
 ## TL;DR
 
-- **Scope:** three concrete components — `swc-card` (regular/collection/gallery), `swc-user-card`, `swc-product-card`. No dedicated `swc-asset-card`; that need is folded into `swc-card` until the 2nd-gen `Asset` component ships.
+- **Scope:** three concrete components — `swc-card` (regular/collection/gallery), `swc-user-card`, `swc-product-card`. No dedicated `swc-asset-card`; that need is folded into `swc-card`, composed with the 2nd-gen `Asset` component.
 - **Architecture, already built:** `CardBase` (core, behavior only) + `renderCardTemplate()` (shared SWC render function) + `card-template.css` (shared, implemented). `swc-card` is complete through all migration phases (API, styling, accessibility, tests, VRT, and documentation) and in review; `swc-user-card`/`swc-product-card` have not started.
 - **API:** `variant` is a pure style axis, independent of layout (layout is driven entirely by slot presence). `swc-user-card`/`swc-product-card` don't support `quiet`. `title`/`description` are slot-only.
 - **Clickable card, no `href` on Card:** the consumer supplies their own link in the `title` slot; `title-as-link` extends its hit area, `selectable` independently makes the card focusable and dispatches a click event. Both are implemented and tested on `CardBase`.
@@ -92,7 +92,7 @@ React's card implementation is simplified to four patterns, mixed with consumer-
 - **Slot consolidation.** 1st-gen uses two image-area slot names (`cover-photo` for standard/quiet, `preview` for gallery). 2nd-gen consolidates to one `preview` slot.
 - **Slot-only content model.** 1st-gen's `heading`/`subheading` accept both a plain-text attribute and a slot. 2nd-gen's `title`/`description` are slot-only, per the same convention already established for 2nd-gen components generally.
 - **Selection moves to a future container.** 1st-gen's `toggles`/`selected` live on the card itself, with a hover/focus-revealed checkbox. 2nd-gen defers all selection to a future "CardView" grid concept — a deliberate, temporary capability gap versus 1st-gen (see [Deferred](#deferred--out-of-scope)).
-- **`asset` attribute precedent.** 1st-gen's `asset` attribute wires `sp-asset` directly into the preview/cover-photo slots. This is the direct precedent behind folding `AssetCard` into `swc-card` now and pointing consumers at the 2nd-gen `Asset` component once it ships, rather than building a dedicated `swc-asset-card`.
+- **`asset` attribute precedent.** 1st-gen's `asset` attribute wires `sp-asset` directly into the preview/cover-photo slots. This is the direct precedent behind folding `AssetCard` into `swc-card` and pointing consumers at the 2nd-gen `Asset` component, now available, rather than building a dedicated `swc-asset-card`.
 - **Whole-card-clickable precedent.** 1st-gen already solves this via a `LikeAnchor` mixin. See [A11y-3](#accessibility-decisions) for how this maps to 2nd-gen.
 
 
@@ -104,7 +104,7 @@ Three concrete SWC components, all extending the already-built `CardBase`:
   - **Collection** — populating the `collection` slot displays it; leaving it empty hides it, the same simple presence rule as any other optional slot. Implemented in `card.css`: up to 3 square-aspect images in a row below `preview`, extras beyond the 3rd hidden via `:nth-child(n + 4 of [slot="collection"])`. `preview` and `collection` are independently optional in either direction — a card can render `collection` alone with no `preview`, or vice versa. **`size="xs"` special case:** when both `preview` and `collection` are populated at `xs`, the preview image moves into the first position of the collection row (sharing its square aspect ratio) instead of stacking above it, and only 2 collection images show instead of 3 — implemented via a `--_swc-card-media-layout` custom property read through a CSS `@container style()` query, set conditionally via `:host([size="xs"]):has([slot="preview"]):has([slot="collection"])`.
   - **Gallery** — triggered by the absence of **all** of `title`, `description`, `actions`, the default slot, and `footer`, regardless of whether `preview` or `collection` (or neither) is populated. That combination signals the image/asset is the card's only content, so it fills the available space. Any other combination renders the regular layout. **Implemented** in `card.css`: a `--_swc-card-media-layout: gallery` custom property is set by the qualifying `:host(:not(:has(...)))` selector and read via `@container style(--_swc-card-media-layout: gallery)`; a companion `--_swc-card-media-contains` property (`preview` or `collection`) gates the preview-only aspect-ratio override so it doesn't apply when `collection` already supplies its own square aspect ratio.
   - **Media overlay** — a `media` slot lets consumers layer arbitrary content — a badge, an avatar — over the preview/collection region, most commonly paired with gallery layout. Rendering it is **opt-in per component**: `renderCardTemplate()` takes an optional `renderMedia` callback (default: nothing), the same pattern as `renderCollection`/`renderGlyph`; `swc-card`'s `Card.ts` supplies it, `swc-user-card`/`swc-product-card` will each decide independently once built. Because the callback's output is placed after `.swc-CardBase-media` in the template, normal DOM stacking order paints it on top with no `z-index` needed. The consumer fully owns positioning within that shared area (e.g. `justify-self`/`align-self` plus their own margin, as shown in the `Gallery` story's third variant) — Card exposes no dedicated custom properties for it, consistent with the "flexible overlay" intent. This resolves the previously-open Q2 (gallery badge/avatar via `actions`-slot reuse) with a purpose-built slot instead.
-  Phase 1 handles basic `<img>` content and "cover" fit behavior directly. Once the 2nd-gen `Asset` component ships, documentation updates to recommend it in place of plain `<img>`; no dedicated `swc-asset-card` is planned.
+  Phase 1 handled basic `<img>` content and "cover" fit behavior directly; documentation now recommends the 2nd-gen `Asset` component in place of plain `<img>` (see `card.mdx`/`user-card.mdx`). No dedicated `swc-asset-card` is planned.
 - **`swc-user-card`** — adds an `avatar` glyph slot; optional preview image, aspect ratio `3/1`.
 - **`swc-product-card`** — adds a `thumbnail` glyph slot (expects a logo); optional preview image, aspect ratio `5/1`; footer content alignment forced to `end`.
 
@@ -181,14 +181,14 @@ Only `swc-product-card` and `swc-user-card` include a glyph slot, named `thumbna
 
 ## Accessibility decisions
 
-**Where this logic lives:** Card only owns behavior that Card itself is uniquely positioned to provide — its own attribute contracts (A11y-3's `title-as-link`/`selectable`). It does **not** re-validate labeling that a slotted sub-component already owns internally (A11y-1), and it does **not** manage relationships between two slots that the consumer already fully controls themselves (A11y-2). `Avatar` (`Avatar.base.ts`) already has its own `alt`/`decorative` property and a `_warnMissingAlt()` dev-mode check; `Thumbnail` (incoming) and `Asset` (planned) are expected to carry the equivalent contract for their own domains — Card duplicating that validation would be redundant at best, and technically wrong at worst (a raw-`<img>`-alt check doesn't even apply to a slotted `<swc-avatar>`). Where Card *does* own behavior, it's validation/behavior only, no rendering, and belongs in `CardBase`'s `SHARED API`/`IMPLEMENTATION` sections — following the `IllustratedMessageBase.handleHeadingSlotChange` precedent (validation lives in the base; concrete classes wire it to their own rendered `<slot>` elements).
+**Where this logic lives:** Card only owns behavior that Card itself is uniquely positioned to provide — its own attribute contracts (A11y-3's `title-as-link`/`selectable`). It does **not** re-validate labeling that a slotted sub-component already owns internally (A11y-1), and it does **not** manage relationships between two slots that the consumer already fully controls themselves (A11y-2). `Avatar` (`Avatar.base.ts`) already has its own `alt`/`decorative` property and a `_warnMissingAlt()` dev-mode check; `Thumbnail` (incoming) and `Asset` (shipped) carry the equivalent contract for their own domains — Card duplicating that validation would be redundant at best, and technically wrong at worst (a raw-`<img>`-alt check doesn't even apply to a slotted `<swc-avatar>`). Where Card *does* own behavior, it's validation/behavior only, no rendering, and belongs in `CardBase`'s `SHARED API`/`IMPLEMENTATION` sections — following the `IllustratedMessageBase.handleHeadingSlotChange` precedent (validation lives in the base; concrete classes wire it to their own rendered `<slot>` elements).
 
 ### A11y-1: Labeling guidance for preview and glyph content
 
 **Resolution:** documentation only, no `CardBase` runtime validation — matching the `IllustratedMessageBase` precedent for decorative-vs-informative SVGs (documented guidance, not enforced by the component), and consistent with the sub-component ownership described above:
 
-- **`avatar` / `thumbnail` glyph slots:** expected content is the dedicated `Avatar`/`Thumbnail` component (or `Asset`, once available), each of which owns its own labeling contract and dev-mode validation already. Card's docs cross-reference those components' accessibility sections rather than restating alt-text guidance.
-- **`preview` slot:** Phase 1 commonly receives a plain `<img>` before `Asset` is available. Guidance (require `alt`, `alt=""` for decorative) lives in Storybook/MDX accessibility prose, not as a runtime check — consistent with how `IllustratedMessageBase` treats its own default-slot SVG.
+- **`avatar` / `thumbnail` glyph slots:** expected content is the dedicated `Avatar`/`Thumbnail` component (or `Asset`), each of which owns its own labeling contract and dev-mode validation already. Card's docs cross-reference those components' accessibility sections rather than restating alt-text guidance.
+- **`preview` slot:** Phase 1 commonly received a plain `<img>` before `Asset` shipped; docs now recommend `Asset` there instead. Guidance (require `alt`, `alt=""` for decorative) lives in Storybook/MDX accessibility prose, not as a runtime check — consistent with how `IllustratedMessageBase` treats its own default-slot SVG.
 
 **Status:** documentation task for each concrete card's accessibility phase; no `CardBase` implementation needed.
 
@@ -276,11 +276,11 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
 |---|---|
 | Horizontal card orientation | Needs its own template and regions. |
 | Hover / disabled states | Only meaningful in a future "CardView" grid context; no `CardBase` placeholder added — accepted as a temporary capability gap versus 1st-gen's per-card `toggles`/`disabled`. |
-| Loading state | Likely an `Asset` concern (media-related) rather than a card-level state. |
+| Loading state | Owned by `Asset`'s `load-state` property (media-related) rather than a card-level state. |
 | Checkbox-based selection UI | A `CardView` feature, not an individual card feature. |
 | A standalone `selected` property (complementing `selectable`) | Resolved: deferred to a future `CardView` rather than added to `CardBase` now. |
 | `swc-product-card` "side" title position | Deferred per the prior scaffold ticket. |
-| Dedicated `swc-asset-card` component | Folded into `swc-card` for now; revisit once the 2nd-gen `Asset` component ships (see Scope). |
+| Dedicated `swc-asset-card` component | Folded into `swc-card`, composed with the (now-shipped) `Asset` component; no dedicated component planned (see Scope). |
 
 
 ## Test coverage
