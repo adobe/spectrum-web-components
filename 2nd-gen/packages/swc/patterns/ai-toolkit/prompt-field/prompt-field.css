@@ -127,7 +127,7 @@
   --_swc-prompt-field-outer-recede-stop: light-dark(rgb(255 255 255), rgb(255 255 255 / token("opacity-50")));
 
   display: flex;
-  padding: 6px;
+  padding: token("spacing-85");
   container-type: inline-size;
   background: linear-gradient(var(--_swc-prompt-field-outer-dir, to right) in oklch, var(--_swc-prompt-field-outer-stop-1) 0%, var(--_swc-prompt-field-outer-stop-2) 37%, var(--_swc-prompt-field-outer-stop-3) 77%);
   border-radius: 30px;
@@ -195,7 +195,7 @@
   border-radius: inherit;
   box-shadow:
     inset 0 -20px 20px -24px var(--_swc-prompt-field-prominent-inset-glow-color, transparent),
-    inset 0 0 0 1px var(--_swc-prompt-field-border-color),
+    inset 0 0 0 token("border-width-100") var(--_swc-prompt-field-border-color),
     inset 0 6px 15px 0 var(--_swc-prompt-field-inset-shadow-color),
     inset 0 0 0 0 transparent,
     inset 0 -5px 21.6px 0 rgb(255 255 255 / 4%),
@@ -214,7 +214,7 @@
 :host([generating]) .swc-PromptField-box::after {
   box-shadow:
     inset 0 -20px 20px -24px var(--_swc-prompt-field-prominent-inset-glow-color, transparent),
-    inset 0 0 0 1px var(--_swc-prompt-field-border-color),
+    inset 0 0 0 token("border-width-100") var(--_swc-prompt-field-border-color),
     inset 0 6px 15px 0 var(--_swc-prompt-field-inset-shadow-color),
     inset 0 -32px 100px -50px light-dark(rgb(254 246 255), oklch(from var(--swc-prompt-field-brand-color) 44.18% 0.1934 calc(h - 1.8))),
     inset 0 -5px 21.6px 0 rgb(255 255 255 / 4%),
@@ -489,7 +489,7 @@
 }
 
 :host .swc-PromptField-outer-border.dragged .swc-PromptField-box::after {
-  box-shadow: inset 0 0 0 1px var(--_swc-prompt-field-border-color);
+  box-shadow: inset 0 0 0 token("border-width-100") var(--_swc-prompt-field-border-color);
 }
 
 /* stylelint-enable no-descending-specificity */
@@ -590,7 +590,7 @@
 
 .swc-PromptField-attachments--single {
   /* Reserves clearance for the dismiss badge floating above the tile's top-right corner, same as --multiple below. */
-  --_swc-prompt-field-attachment-badge-clearance: 16px;
+  --_swc-prompt-field-attachment-badge-clearance: token("spacing-300");
 
   display: flex;
   flex-wrap: wrap;
@@ -626,7 +626,7 @@
    * upload-attachment.css), so half of the larger (32px media) badge floats
    * above the tile. Reserve that much clearance above the row so the
    * scroll container's overflow-y: hidden doesn't clip it flat. */
-  --_swc-prompt-field-attachment-badge-clearance: 16px;
+  --_swc-prompt-field-attachment-badge-clearance: token("spacing-300");
 
   min-inline-size: 0;
 }
@@ -821,8 +821,8 @@
   display: block;
   flex: 1 1 0%;
   min-inline-size: 0;
-  min-block-size: calc(token("font-size-200") * token("line-height-200") * var(--swc-prompt-field-textarea-min-rows, 1));
-  max-block-size: min(calc(token("font-size-200") * token("line-height-200") * var(--swc-prompt-field-textarea-max-rows, 999)), var(--swc-prompt-field-max-block-size, 40vh));
+  min-block-size: calc(token("font-size-200") * token("line-height-200") * var(--_swc-prompt-field-textarea-min-rows, 1));
+  max-block-size: min(calc(token("font-size-200") * token("line-height-200") * var(--_swc-prompt-field-textarea-max-rows, 999)), var(--swc-prompt-field-max-block-size, 40vh));
   padding: 0;
   font-family: token("sans-serif-font");
   font-size: token("font-size-200");
@@ -981,6 +981,6 @@ slot[name="legal"] {
   }
 
   .swc-PromptField-outer-border {
-    border: 2px solid color-mix(in oklch, var(--swc-prompt-field-brand-color), transparent 65%);
+    border: token("border-width-200") solid color-mix(in oklch, var(--swc-prompt-field-brand-color), transparent 65%);
   }
 }

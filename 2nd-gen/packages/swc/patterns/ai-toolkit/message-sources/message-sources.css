@@ -23,7 +23,7 @@
 .swc-MessageSources {
   display: flex;
   flex-direction: column;
-  gap: var(--swc-message-sources-gap, token("spacing-100"));
+  gap: token("spacing-100");
 }
 
 /* ─────────────────────────────────────
@@ -32,10 +32,10 @@
 
 .swc-MessageSources-toggle {
   display: inline-flex;
-  gap: var(--swc-sources-toggle-gap, token("spacing-100"));
+  gap: token("spacing-100");
   align-items: center;
   inline-size: fit-content;
-  padding: var(--swc-sources-toggle-padding, 3px) token("spacing-100");
+  padding: token("base-padding-vertical-extra-small") token("spacing-100");
   font-family: token("sans-serif-font");
   font-size: token("font-size-100");
   font-weight: token("bold-font-weight");
@@ -69,7 +69,7 @@
   display: flex;
   visibility: hidden;
   flex-direction: column;
-  gap: var(--swc-message-sources-list-gap, token("spacing-75"));
+  gap: token("spacing-75");
   block-size: 0;
   padding: 0 token("spacing-100");
   margin: 0;
@@ -103,8 +103,8 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  inline-size: var(--swc-message-sources-icon-inline-size, 16px);
-  block-size: var(--swc-message-sources-icon-block-size, 20px);
+  inline-size: 16px;
+  block-size: 20px;
   font-size: token("font-size-50");
   font-weight: token("bold-font-weight");
   color: token("gray-700");

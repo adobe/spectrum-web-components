@@ -140,8 +140,8 @@
   /* 2px margin leaves a real gap between the host edge and this surface so
    * the host's inward focus ring (below) lands in empty space instead of
    * being painted over by the surface, which renders on top of it. */
-  margin: 2px;
-  border: 1px solid transparent;
+  margin: token("spacing-50");
+  border: token("border-width-100") solid transparent;
   border-radius: token("corner-radius-medium-default");
 }
 
@@ -158,7 +158,7 @@
   inline-size: var(--swc-upload-attachment-card-thumbnail-inline-size, 48px);
   block-size: var(--swc-upload-attachment-card-thumbnail-block-size, 48px);
   background: token("gray-100");
-  border: 1px solid transparent;
+  border: token("border-width-100") solid transparent;
   border-radius: token("corner-radius-large-default");
 }
 
@@ -219,7 +219,7 @@
   /* 2px inset leaves a real gap between the host edge and this (opaque)
    * surface so the host's inward focus ring (below) lands in empty space
    * instead of being painted over by the surface, which renders on top of it. */
-  inset: 2px;
+  inset: token("spacing-50");
   border-radius: token("corner-radius-large-default");
   box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
   overflow: hidden;
@@ -231,7 +231,7 @@
   inline-size: 100%;
   block-size: 100%;
   background: token("gray-100");
-  border: 1px solid transparent;
+  border: token("border-width-100") solid transparent;
   border-radius: token("corner-radius-large-default");
   overflow: hidden;
 }
@@ -267,7 +267,7 @@
   z-index: 1;
   align-items: center;
   max-inline-size: calc(100% - (2 * token("spacing-75")));
-  min-block-size: 24px;
+  min-block-size: token("component-height-75");
   padding-block: token("spacing-75");
   padding-inline: calc(token("spacing-75") + token("spacing-50") + token("corner-radius-75"));
   font-family: token("sans-serif-font");

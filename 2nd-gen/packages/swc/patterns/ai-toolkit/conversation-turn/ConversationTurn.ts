@@ -22,8 +22,7 @@ import styles from './conversation-turn.css';
  * and system content toward the start at full width.
  *
  * Slot **`swc-user-message`** or **`swc-system-message`** inside each turn
- * Multiple slotted messages are stacked automatically with
- * `--swc-conversation-turn-group-gap` spacing.
+ * Multiple slotted messages are stacked automatically.
  * User-message widths are applied by layout context (full screen, split rail,
  * panel) while system content remains full width.
  *
@@ -34,6 +33,7 @@ import styles from './conversation-turn.css';
  *
  * @element swc-conversation-turn
  * @slot - Turn body (message stack or bubble)
+ *
  * @since 2.0.0-beta.3
  */
 export class ConversationTurn extends SpectrumElement {

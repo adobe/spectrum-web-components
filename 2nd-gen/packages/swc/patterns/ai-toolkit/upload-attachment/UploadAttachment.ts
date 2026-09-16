@@ -47,6 +47,15 @@ import styles from './upload-attachment.css';
  * @slot actions - Optional trailing actions.
  * @fires swc-upload-attachment-dismiss - Dispatched when the dismiss button is pressed.
  * Detail: `{ attachment: this }`
+ *
+ * @cssprop --swc-upload-attachment-focus-indicator-color - Focus ring color for the tile and its dismiss button. Defaults to a dedicated ring color pending a matching design token.
+ * @cssprop --swc-upload-attachment-card-min-block-size - Minimum block size of the surface for `type="card"`. Defaults to 72px.
+ * @cssprop --swc-upload-attachment-card-thumbnail-inline-size - Thumbnail inline size for `type="card"`. Defaults to 48px.
+ * @cssprop --swc-upload-attachment-card-thumbnail-block-size - Thumbnail block size for `type="card"`. Defaults to 48px.
+ * @cssprop --swc-upload-attachment-preview-size - Inline and block size of the tile for `type="media"`. Defaults to 72px.
+ * @cssprop --swc-upload-attachment-dismiss-visual-size - Rendered size of the dismiss button's circular hit area. Defaults to 20px.
+ * @cssprop --swc-upload-attachment-dismiss-icon-inline-size - Inline size of the dismiss icon. Defaults to 8px.
+ * @cssprop --swc-upload-attachment-dismiss-icon-block-size - Block size of the dismiss icon. Defaults to 8px.
  * @since 2.0.0-beta.3
  */
 export class UploadAttachment extends SpectrumElement {
