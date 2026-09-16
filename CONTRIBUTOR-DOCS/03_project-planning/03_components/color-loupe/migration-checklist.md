@@ -46,7 +46,7 @@
 
 ## Overview
 
-This checklist tracks the full 2nd-gen migration of the **`<sp-color-loupe>`** component. It is derived from the acceptance criteria in [SWC-1783](https://jira.corp.adobe.com/browse/SWC-1783) and the component analysis documented in:
+This checklist tracks the full gen2 migration of the **`<sp-color-loupe>`** component. It is derived from the acceptance criteria in [SWC-1783](https://jira.corp.adobe.com/browse/SWC-1783) and the component analysis documented in:
 
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [Accessibility migration analysis](./accessibility-migration-analysis.md)
@@ -57,7 +57,7 @@ This checklist tracks the full 2nd-gen migration of the **`<sp-color-loupe>`** c
 - Events: None dispatched
 - Breaking changes: None anticipated — the `open` / `color` API is unchanged between S1 and S2
 
-**Key bugs to fix in 2nd-gen:**
+**Key bugs to fix in gen2:**
 - SVG path data ends with `ZZ` (double close command); fix to single `Z`
 - `<mask>` references `#path` (non-existent); fix to `#loupe-path`
 - Opacity checkerboard must be inlined (no longer imported from `@spectrum-web-components/opacity-checkerboard`)
@@ -79,13 +79,13 @@ This checklist tracks the full 2nd-gen migration of the **`<sp-color-loupe>`** c
   - No slots
   - CSS custom properties: see [rendering and styling analysis](./rendering-and-styling-migration-analysis.md)
 - [ ] All dependencies identified
-  - 1st-gen imports `@spectrum-web-components/opacity-checkerboard` — must be inlined in 2nd-gen
+  - 1st-gen imports `@spectrum-web-components/opacity-checkerboard` — must be inlined in gen2
   - `SpectrumElement` base class (no mixins)
   - Spectrum CSS tokens (S1 → S2 mapping required for drop-shadow and colorloupe tokens)
 - [ ] Breaking changes identified and documented
   - No breaking API changes anticipated (`open`, `color` are preserved)
   - Opacity checkerboard import removed — inlined via `--swc-opacity-checkerboard-*` tokens
-- [ ] SVG bugs identified for fix in 2nd-gen
+- [ ] SVG bugs identified for fix in gen2
   - Double-Z path bug (`61.575ZZ` → `61.575Z`)
   - Mask ID mismatch (`#path` → `#loupe-path`)
 - [ ] Accessibility analysis reviewed and incorporated into plan (see [SWC-1782](https://jira.corp.adobe.com/browse/SWC-1782) and [accessibility migration analysis](./accessibility-migration-analysis.md))
@@ -97,10 +97,10 @@ This checklist tracks the full 2nd-gen migration of the **`<sp-color-loupe>`** c
 
 ## Phase 2: File structure setup (SWC-1784)
 
-> Goal: Create the 2nd-gen scaffold following the washing machine workflow conventions.
+> Goal: Create the gen2 scaffold following the washing machine workflow conventions.
 
-- [ ] Directory created at `2nd-gen/packages/swc/components/color-loupe/`
-- [ ] Core directory created at `2nd-gen/packages/core/components/color-loupe/`
+- [ ] Directory created at `gen2/packages/swc/components/color-loupe/`
+- [ ] Core directory created at `gen2/packages/core/components/color-loupe/`
 - [ ] Required files scaffolded:
   - `ColorLoupe.ts` (swc package — element registration)
   - `ColorLoupe.base.ts` (core package — base class logic)
@@ -112,13 +112,13 @@ This checklist tracks the full 2nd-gen migration of the **`<sp-color-loupe>`** c
 > **Note**: `ColorLoupe.types.ts` is intentionally omitted — the component has no enums or unions to declare, and bare default values belong with the property in the base class. See [PR #6147 discussion r3119292750](https://github.com/adobe/spectrum-web-components/pull/6147#discussion_r3119292750).
 - [ ] `stories/` directory created with placeholder `color-loupe.stories.ts`
 - [ ] Component registered with `customElements.define('swc-color-loupe', ColorLoupe)`
-- [ ] Entry added to the 2nd-gen package manifest / workspace
+- [ ] Entry added to the gen2 package manifest / workspace
 
 ---
 
 ## Phase 3: API and TypeScript migration (SWC-1785)
 
-> Goal: Port the 1st-gen TypeScript class to the 2nd-gen architecture.
+> Goal: Port the 1st-gen TypeScript class to the gen2 architecture.
 
 ### Properties
 
@@ -232,7 +232,7 @@ This checklist tracks the full 2nd-gen migration of the **`<sp-color-loupe>`** c
 
 ## Phase 7: Test suites (SWC-1789)
 
-> Goal: Achieve complete test coverage following 2nd-gen patterns.
+> Goal: Achieve complete test coverage following gen2 patterns.
 
 ### Unit tests
 
@@ -264,9 +264,9 @@ This checklist tracks the full 2nd-gen migration of the **`<sp-color-loupe>`** c
 
 ## Phase 8: Storybook documentation (SWC-1790)
 
-> Goal: Create complete, accurate, and accessible Storybook stories following the 2nd-gen stories format.
+> Goal: Create complete, accurate, and accessible Storybook stories following the gen2 stories format.
 
-- [ ] `color-loupe.stories.ts` created in `2nd-gen/packages/swc/components/color-loupe/stories/`
+- [ ] `color-loupe.stories.ts` created in `gen2/packages/swc/components/color-loupe/stories/`
 - [ ] Stories follow the format defined in `.ai/rules/stories-format.md`
 - [ ] Meta object includes: `title`, `component`, `args`, `argTypes`, `render`, `parameters.docs.subtitle`, `tags: ['migrated']`
 - [ ] JSDoc description above meta object explains the component's purpose
@@ -286,7 +286,7 @@ This checklist tracks the full 2nd-gen migration of the **`<sp-color-loupe>`** c
 
 ## Phase 9: Consumer migration guide (SWC-1791)
 
-> Goal: Produce a guide for teams upgrading from `<sp-color-loupe>` (1st-gen) to `<swc-color-loupe>` (2nd-gen).
+> Goal: Produce a guide for teams upgrading from `<sp-color-loupe>` (1st-gen) to `<swc-color-loupe>` (gen2).
 
 - [ ] Guide created at the agreed CONTRIBUTOR-DOCS or docs-site location
 - [ ] Element tag rename documented: `<sp-color-loupe>` → `<swc-color-loupe>`
@@ -323,9 +323,9 @@ This checklist tracks the full 2nd-gen migration of the **`<sp-color-loupe>`** c
 | Issue | Status | Reference |
 |-------|--------|-----------|
 | Non-text contrast (WCAG 1.4.11) on loupe chrome — may not be achievable at 3:1 for all color states due to variable overlaid content | Documented risk; accepted per product/a11y decision | [SWC-1193](https://jira.corp.adobe.com/browse/SWC-1193) |
-| SVG mask ID mismatch (`#path` instead of `#loupe-path`) in 1st-gen | Fix in 2nd-gen render method | [Rendering analysis](./rendering-and-styling-migration-analysis.md) |
-| Double-Z SVG path close command (`ZZ` in 1st-gen) | Fix in 2nd-gen render method | [Rendering analysis](./rendering-and-styling-migration-analysis.md) |
-| Opacity checkerboard imported from external package in 1st-gen | Inline in 2nd-gen using `--swc-opacity-checkerboard-*` tokens | [Rendering analysis](./rendering-and-styling-migration-analysis.md) |
+| SVG mask ID mismatch (`#path` instead of `#loupe-path`) in 1st-gen | Fix in gen2 render method | [Rendering analysis](./rendering-and-styling-migration-analysis.md) |
+| Double-Z SVG path close command (`ZZ` in 1st-gen) | Fix in gen2 render method | [Rendering analysis](./rendering-and-styling-migration-analysis.md) |
+| Opacity checkerboard imported from external package in 1st-gen | Inline in gen2 using `--swc-opacity-checkerboard-*` tokens | [Rendering analysis](./rendering-and-styling-migration-analysis.md) |
 
 ---
 

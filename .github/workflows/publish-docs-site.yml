@@ -22,7 +22,7 @@ jobs:
       - name: Generate Custom Elements Manifest
         run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
 
-      - name: Analyze 2nd-gen components
+      - name: Analyze gen2 components
         run: yarn workspace @adobe/spectrum-wc analyze
 
       - name: Generate LLM reference files

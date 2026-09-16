@@ -37,7 +37,7 @@
 
 ## Overview
 
-This doc tells you how **`swc-thumbnail`** should work for **accessibility**. It targets **WCAG 2.2 Level AA**. Until `swc-thumbnail` exists under `2nd-gen/`, use `1st-gen/packages/thumbnail/src/Thumbnail.ts` (`<sp-thumbnail>`) to validate behavior, and update this spec against the real 2nd-gen source when it ships.
+This doc tells you how **`swc-thumbnail`** should work for **accessibility**. It targets **WCAG 2.2 Level AA**. Until `swc-thumbnail` exists under `gen2/`, use `1st-gen/packages/thumbnail/src/Thumbnail.ts` (`<sp-thumbnail>`) to validate behavior, and update this spec against the real gen2 source when it ships.
 
 ### Also read
 
@@ -163,12 +163,12 @@ The selected state belongs to the parent. The thumbnail contributes only its slo
 | **Unit — neither** | `decorative` not set and slotted `<img>` has no `alt` → DEBUG warning fires. |
 | **Unit — DEBUG warnings** | Missing `alt` on slotted `<img>` (no `decorative`) → warning fires. Setting `decorative` suppresses it. |
 | **aXe + Storybook** | Run WCAG 2.x rules on all thumbnail stories: labeled, decorative, and embedded-in-button patterns. |
-| **Playwright ARIA snapshots** | Add `thumbnail.a11y.spec.ts` for 2nd-gen. Cover thumbnail with a labeled `<img>`, decorative thumbnail, and thumbnail embedded in a disabled parent. |
+| **Playwright ARIA snapshots** | Add `thumbnail.a11y.spec.ts` for gen2. Cover thumbnail with a labeled `<img>`, decorative thumbnail, and thumbnail embedded in a disabled parent. |
 | **Contrast** | Border (inset box-shadow) meets 3:1 against adjacent background in default and high-contrast modes. |
 
 ### Manual screen reader testing
 
-The thumbnail is not in the Tab order, so you will not reach it with focus-mode navigation. Use **browse mode** (document or scan mode) to read the page in content order and encounter the thumbnail so you can verify its role (`img`) and accessible name are announced correctly. See the 2nd-gen Storybook [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide, including the **Browse mode (document/scan mode)** section.
+The thumbnail is not in the Tab order, so you will not reach it with focus-mode navigation. Use **browse mode** (document or scan mode) to read the page in content order and encounter the thumbnail so you can verify its role (`img`) and accessible name are announced correctly. See the gen2 Storybook [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide, including the **Browse mode (document/scan mode)** section.
 
 When the thumbnail is embedded inside a focusable parent (for example a button or link), focus-mode navigation does reach the parent; verify that the parent's accessible name reflects the image content via its own label, not by re-announcing the slotted `<img>` separately.
 
@@ -187,7 +187,7 @@ When the thumbnail is embedded inside a focusable parent (for example a button o
 - [ ] aXe (WCAG 2.x) runs on all thumbnail stories.
 - [ ] Playwright ARIA snapshot tests cover all three states above.
 - [ ] DEBUG warnings tested in unit tests.
-- [ ] Manual screen reader testing uses browse mode per the Storybook [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide, since the thumbnail is not keyboard focusable.
+- [ ] Manual screen reader testing uses browse mode per the Storybook [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide, since the thumbnail is not keyboard focusable.
 
 ---
 
@@ -200,4 +200,4 @@ When the thumbnail is embedded inside a focusable parent (for example a button o
 - [WCAG 1.4.11: Non-text contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast)
 - [Using ARIA (read this first)](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [Thumbnail migration roadmap](./rendering-and-styling-migration-analysis.md)
-- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- [gen2 Storybook: Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)

@@ -27,11 +27,11 @@
     - [User confirmation needed](#user-confirmation-needed)
 - [Changes overview](#changes-overview)
     - [Must ship — breaking or a11y-required](#must-ship--breaking-or-a11y-required)
-    - [Additive — ships when ready, zero breakage for consumers already on 2nd-gen](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)
-- [2nd-gen API decisions](#2nd-gen-api-decisions)
+    - [Additive — ships when ready, zero breakage for consumers already on gen2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-gen2)
+- [gen2 API decisions](#gen2-api-decisions)
     - [Public API](#public-api)
     - [Behavioral semantics](#behavioral-semantics)
-    - [Accessibility semantics notes (2nd-gen)](#accessibility-semantics-notes-2nd-gen)
+    - [Accessibility semantics notes (gen2)](#accessibility-semantics-notes-gen2)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
 - [Migration checklist](#migration-checklist)
     - [Preparation (this ticket)](#preparation-this-ticket)
@@ -65,7 +65,7 @@ Button group is a simple layout and semantics wrapper for related button actions
 - **Add `align` property** for button alignment (start/center/end); matches React S2.
 - **Propagate disabled state** from group to children via an optional `disabled` attribute.
 - **Overflow behavior (flex wrapping or auto-switch to vertical)** is documented in React S2 but is not in the Figma design spec; deferred from MVP. Regular flex wrapping may be an acceptable starting point since arrow-key navigation is not managed by button-group.
-- Button group depends on `swc-button` being available in 2nd-gen (already migrated).
+- Button group depends on `swc-button` being available in gen2 (already migrated).
 
 ### Resolved questions
 
@@ -116,7 +116,7 @@ From `button-group.css.ts` (sourced from spectrum-css `spectrum-two` branch):
 | `--mod-buttongroup-spacing-horizontal` | Horizontal gap (deprecated) | Replaced by `--mod-buttongroup-spacing` |
 | `--mod-buttongroup-spacing-vertical` | Vertical gap (deprecated) | Replaced by `--mod-buttongroup-spacing` |
 
-This full modifier surface will not be carried forward to 2nd-gen.
+This full modifier surface will not be carried forward to gen2.
 
 ### Shadow DOM output (rendered HTML)
 
@@ -141,13 +141,13 @@ The component renders only a default slot. All styling is on `:host` and `::slot
 
 ### Dependency-aware recommendation
 
-**Proceed independently.** Button group's only hard dependency is `swc-button`, which is already fully migrated to 2nd-gen (status table shows Button at all steps complete). Button group does not need to wait on any other component, and no other component depends on it being migrated first.
+**Proceed independently.** Button group's only hard dependency is `swc-button`, which is already fully migrated to gen2 (status table shows Button at all steps complete). Button group does not need to wait on any other component, and no other component depends on it being migrated first.
 
 ### Related components and ordering notes
 
 | Component | Relationship | Status |
 | --------- | ------------ | ------ |
-| **Button** (`swc-button`) | Children of button group; must exist in 2nd-gen | **Complete** — fully migrated |
+| **Button** (`swc-button`) | Children of button group; must exist in gen2 | **Complete** — fully migrated |
 | **Action Group** (`swc-action-group`) | Similar layout pattern but for action buttons with toolbar semantics | Analyze ✓ only |
 | **Toggle Group** (`swc-toggle-group`) | Separate component for toggle/selection semantics; not this component | N/A (new for S2) |
 
@@ -173,25 +173,25 @@ None. Button group can proceed independently because `swc-button` is already com
 
 #### API and naming
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B1** | `vertical` boolean → `orientation` property | `vertical` boolean attribute switches to column layout | `orientation="horizontal"` (default) or `orientation="vertical"`; explicit API aligned with React S2 and Figma | Replace `vertical` attribute with `orientation="vertical"`. Source: React S2 `orientation` prop. |
 | **B2** | Default size introduced | Accepts `'s'` \| `'m'` \| `'l'` \| `'xl'` (no default) | Accepts `'s'` \| `'m'` \| `'l'` \| `'xl'` with default `'m'` | Consumers without explicit `size` will now get `'m'` behavior. XL is supported; same 12px gap token as M/L. |
 
 #### Styling and visuals
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B3** | Updated spacing tokens | Uses `--spectrum-spacing-300` (default), `--spectrum-spacing-200` (S) | Same tokens from spectrum-css `spectrum-two`; no visual change expected | No consumer action needed; visual refresh happens automatically. |
 
 #### Accessibility and behavior
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | **B4** | Add `role="group"` on host | No role set on host | Host exposes `role="group"` via ElementInternals or explicit attribute | No consumer action; improvement is transparent. |
 | **B5** | Disabled propagation to children | Not supported | `disabled` attribute on host propagates `disabled` to each slotted `swc-button` | Consumers gain group-level disable; no breaking change. |
 
-### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
+### Additive — ships when ready, zero breakage for consumers already on gen2
 
 | #   | What is added | Notes |
 | --- | ------------- | ----- |
@@ -201,21 +201,21 @@ None. Button group can proceed independently because `swc-button` is already com
 
 ---
 
-## 2nd-gen API decisions
+## gen2 API decisions
 
 These are derived from the 1st-gen implementation, current deprecations, the Figma Desktop Button group spec, the React S2 implementation, and the rendering roadmap. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
 
 ### Public API
 
-#### Properties / attributes (2nd-gen)
+#### Properties / attributes (gen2)
 
 | Property | Type | Default | Attribute | Notes |
 | -------- | ---- | ------- | --------- | ----- |
 | `orientation` | `'horizontal'` \| `'vertical'` | `'horizontal'` | `orientation` | **Confirmed.** Replaces `vertical` boolean. Aligns with React S2. |
-| `size` | `'s'` \| `'m'` \| `'l'` \| `'xl'` | `'m'` | `size` | **Confirmed.** React S2 includes XL. Size S uses 8px gap; M/L/XL share the same 12px gap token. 1st-gen had no default; 2nd-gen defaults to `'m'`. |
+| `size` | `'s'` \| `'m'` \| `'l'` \| `'xl'` | `'m'` | `size` | **Confirmed.** React S2 includes XL. Size S uses 8px gap; M/L/XL share the same 12px gap token. 1st-gen had no default; gen2 defaults to `'m'`. |
 | `disabled` | `boolean` | `false` | `disabled` | **Confirmed.** Aligns with React S2 `isDisabled`. Propagates to child buttons. |
 
-#### Visual matrix (2nd-gen)
+#### Visual matrix (gen2)
 
 N/A. Button group is a layout container, not a visual component with fill/outline treatments. The buttons inside carry their own visual variants.
 
@@ -226,13 +226,13 @@ Figma-confirmed presentation modes:
 - Size S, M, L, XL
 - 2+ buttons in group
 
-#### Slots (2nd-gen)
+#### Slots (gen2)
 
 | Slot | Content | Notes |
 | ------- | ------------------------- | -------------------------------------------- |
 | default | `swc-button` elements | **Confirmed.** Slotted children receive size and disabled propagation. |
 
-#### CSS custom properties (2nd-gen)
+#### CSS custom properties (gen2)
 
 No `--mod-*` properties will be exposed. New `--swc-*` component-level properties may be introduced where needed — these are additive and not breaking. See [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure) for what to expose and how.
 
@@ -259,7 +259,7 @@ When `disabled` is set on the group host, all slotted `swc-button` elements rece
 
 The `orientation` property controls CSS flex-direction (row vs column). The default is `"horizontal"`. Note: `aria-orientation` is **not** set on the host because it is only valid for roles that manage arrow-key navigation (e.g. `toolbar`, `listbox`), which button-group does not implement.
 
-### Accessibility semantics notes (2nd-gen)
+### Accessibility semantics notes (gen2)
 
 Sourced from the [accessibility migration analysis](./accessibility-migration-analysis.md):
 
@@ -274,14 +274,14 @@ Sourced from the [accessibility migration analysis](./accessibility-migration-an
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
+> The 1st-gen component is a **reference only** — gen2 is built independently. Neither generation imports from the other.
 
-Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
+Follow the [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
 
 | Layer    | Path                                            | Contains                                                                                                                                                                                                                                          |
 | -------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Core** | `2nd-gen/packages/core/components/button-group/` | `ButtonGroup.base.ts`, `ButtonGroup.types.ts`, validation (size/orientation normalization), disabled-propagation logic, ARIA attribute management (`role="group"`). No rendering. |
-| **SWC**  | `2nd-gen/packages/swc/components/button-group/`  | `ButtonGroup.ts`, `button-group.css`, element registration (`sp-button-group`), stories, tests, and the specific S2 rendering/styling. |
+| **Core** | `gen2/packages/core/components/button-group/` | `ButtonGroup.base.ts`, `ButtonGroup.types.ts`, validation (size/orientation normalization), disabled-propagation logic, ARIA attribute management (`role="group"`). No rendering. |
+| **SWC**  | `gen2/packages/swc/components/button-group/`  | `ButtonGroup.ts`, `button-group.css`, element registration (`sp-button-group`), stories, tests, and the specific S2 rendering/styling. |
 
 Planned rendering shape:
 
@@ -297,13 +297,13 @@ Planned rendering shape:
 - [x] 1st-gen API surface documented
 - [x] Dependencies identified
 - [x] Breaking changes documented
-- [x] 2nd-gen API decisions drafted
+- [x] gen2 API decisions drafted
 - [x] Plan reviewed by at least one other engineer
 
 ### Setup
 
-- [x] Create `2nd-gen/packages/core/components/button-group/`
-- [x] Create `2nd-gen/packages/swc/components/button-group/`
+- [x] Create `gen2/packages/core/components/button-group/`
+- [x] Create `gen2/packages/swc/components/button-group/`
 - [x] Wire exports in both `package.json` files
 - [x] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
 
@@ -379,11 +379,11 @@ Planned rendering shape:
 #### Breaking changes
 
 - [x] Document `vertical` → `orientation="vertical"` migration path
-- [x] Document default size change (1st-gen: none → 2nd-gen: `m`)
+- [x] Document default size change (1st-gen: none → gen2: `m`)
 
 ### Review
 
-- [x] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
+- [x] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
 - [x] Status table in workstream doc updated
 - [x] PR created with description referencing Epic SWC-2071
 - [ ] Peer engineer sign-off
@@ -396,7 +396,7 @@ Planned rendering shape:
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| **Q1** | ~~Should `size="xl"` be supported in 2nd-gen?~~ **Resolved:** Yes — React S2 also includes XL. Size S uses an 8px gap; M/L/XL all use the same 12px gap token. XL is included in the type definition and test matrix. | ~~Yes~~ Resolved | **Resolved** | @5t3ph |
+| **Q1** | ~~Should `size="xl"` be supported in gen2?~~ **Resolved:** Yes — React S2 also includes XL. Size S uses an 8px gap; M/L/XL all use the same 12px gap token. XL is included in the type definition and test matrix. | ~~Yes~~ Resolved | **Resolved** | @5t3ph |
 
 ### Architecture and behavior
 
@@ -414,8 +414,8 @@ Planned rendering shape:
 
 ## References
 
-- [Washing machine workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
-- [2nd-gen migration status table](../../02_workstreams/02_2nd-gen-component-migration/01_status.md)
+- [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
+- [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
 - [Accessibility migration analysis](./accessibility-migration-analysis.md)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
@@ -429,7 +429,7 @@ Planned rendering shape:
 - [Figma S2 / Web (Desktop scale) — Button group](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13663-6530)
 - [WAI-ARIA APG: Toolbar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/)
 - [WAI-ARIA APG: Keyboard navigation inside components](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents)
-- [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
+- [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - [Button migration plan](../button/migration-plan.md)
 - [Button accessibility migration analysis](../button/accessibility-migration-analysis.md)
 - Epic: SWC-2071 - Button group epic

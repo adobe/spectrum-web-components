@@ -24,7 +24,7 @@ const root = join(__dirname, '..');
 // members of that generation's fixed/linked group, so any package there would do.
 const GENERATIONS = {
   gen1: '1st-gen/packages/button/package.json',
-  gen2: '2nd-gen/packages/swc/package.json',
+  gen2: 'gen2/packages/swc/package.json',
 };
 
 const gen = process.argv[2];
