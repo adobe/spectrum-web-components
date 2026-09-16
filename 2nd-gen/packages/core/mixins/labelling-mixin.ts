@@ -60,9 +60,8 @@ export interface LabellingInterface {
   /**
    * Renders the visible label as a `<label for>` targeting the role-element `id`.
    * Options append a decorative necessity indicator: `required` marks the state,
-   * `necessityIndicator` picks the asterisk (`icon`, which needs `necessityIcon`
-   * to render) or `(required)`/`(optional)` text (`label`), and `necessityLabel`
-   * / `optionalLabel` localize that text.
+   * and `necessityIndicator` picks the asterisk (`icon`, which needs
+   * `necessityIcon` to render) or `(required)`/`(optional)` text (`label`).
    */
   renderLabel(
     forId: string,
@@ -70,8 +69,6 @@ export interface LabellingInterface {
       required?: boolean;
       necessityIndicator?: 'icon' | 'label';
       necessityIcon?: TemplateResult;
-      necessityLabel?: string;
-      optionalLabel?: string;
     }
   ): RenderFieldLabelResult;
 }
@@ -165,8 +162,6 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
         required?: boolean;
         necessityIndicator?: 'icon' | 'label';
         necessityIcon?: TemplateResult;
-        necessityLabel?: string;
-        optionalLabel?: string;
       } = {}
     ): RenderFieldLabelResult {
       return renderFieldLabel({
@@ -175,8 +170,6 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
         required: options.required,
         necessityIndicator: options.necessityIndicator,
         necessityIcon: options.necessityIcon,
-        necessityLabel: options.necessityLabel,
-        optionalLabel: options.optionalLabel,
       });
     }
 

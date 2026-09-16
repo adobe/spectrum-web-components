@@ -85,7 +85,6 @@ export class TextField extends TextFieldBase {
   }
 
   protected override render(): TemplateResult {
-  
     return html`
       <div class="swc-Field swc-TextField">
         ${this.renderLabel(INPUT_ID, {

@@ -34,8 +34,7 @@ export interface RenderFieldLabelOptions {
 
   /**
    * How necessity is marked. `'icon'` (default) shows `necessityIcon` only when
-   * required; `'label'` appends `necessityLabel`/`optionalLabel`, marking both
-   * states.
+   * required; `'label'` appends `(required)`/`(optional)`, marking both states.
    */
   necessityIndicator?: 'icon' | 'label';
 
@@ -44,12 +43,6 @@ export interface RenderFieldLabelOptions {
    * `core` directive can't import a `swc` icon.
    */
   necessityIcon?: TemplateResult;
-
-  /** Localizable required text for `'label'` mode. Defaults to `'(required)'`. */
-  necessityLabel?: string;
-
-  /** Localizable optional text for `'label'` mode. Defaults to `'(optional)'`. */
-  optionalLabel?: string;
 }
 
 /**
@@ -67,8 +60,6 @@ export function renderFieldLabel({
   required = false,
   necessityIndicator = 'icon',
   necessityIcon,
-  necessityLabel = '(required)',
-  optionalLabel = '(optional)',
 }: RenderFieldLabelOptions): RenderFieldLabelResult {
   if (!hasLabelSlotContent) {
     return nothing;
@@ -79,8 +70,6 @@ export function renderFieldLabel({
         indicator: necessityIndicator,
         required,
         icon: necessityIcon,
-        requiredLabel: necessityLabel,
-        optionalLabel,
       })}
     </label>
   `;
@@ -94,18 +83,14 @@ function renderNecessityIndicator({
   indicator,
   required,
   icon,
-  requiredLabel,
-  optionalLabel,
 }: {
   indicator: 'icon' | 'label';
   required: boolean;
   icon: TemplateResult | undefined;
-  requiredLabel: string;
-  optionalLabel: string;
 }): RenderFieldLabelResult {
   if (indicator === 'label') {
     return html`<span class="swc-FieldLabel-necessityLabel" aria-hidden="true"
-      >&nbsp;${required ? requiredLabel : optionalLabel}</span
+      >&nbsp;${required ? '(required)' : '(optional)'}</span
     >`;
   }
   if (!required || !icon) {

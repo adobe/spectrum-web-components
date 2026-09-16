@@ -111,17 +111,15 @@ slot[name="prefix"]::slotted(*) {
 
 /* ── Disabled ─────────────────────────────────────── */
 
-/* :host(:state(disabled)) covers own `disabled` + cascaded <fieldset disabled>.
-   Per the S2 spec the background stays `gray-25`; only text and border dim. */
-:host(:state(disabled)) .swc-TextField-control {
+:host(:disabled) .swc-TextField-control {
   border-color: token("disabled-border-color");
 }
 
-:host(:state(disabled)) .input {
+:host(:disabled) .input {
   color: token("disabled-content-color");
 }
 
-:host(:state(disabled)) slot[name="prefix"]::slotted(*) {
+:host(:disabled) slot[name="prefix"]::slotted(*) {
   color: token("disabled-content-color");
 }
 
@@ -162,12 +160,12 @@ slot[name="prefix"]::slotted(*) {
 @media (forced-colors: active) {
   /* The bordered wrapper is a <div>, not the native :disabled <input>, so the UA
      won't dim it. Force the disabled treatment to the system GrayText. */
-  :host(:state(disabled)) .swc-TextField-control {
+  :host(:disabled) .swc-TextField-control {
     border-color: GrayText;
   }
 
-  :host(:state(disabled)) .input,
-  :host(:state(disabled)) slot[name="prefix"]::slotted(*) {
+  :host(:disabled) .input,
+  :host(:disabled) slot[name="prefix"]::slotted(*) {
     color: GrayText;
   }
 

@@ -184,7 +184,7 @@ export abstract class TextFieldBase extends SizedMixin(
   // ──────────────────────
 
   // Form association: `formAssociated` (static, above) and `attachInternals` stay
-  // on the element; the controller wraps the rest. 
+  // on the element; the controller wraps the rest.
   private internals = this.attachInternals();
 
   private fieldAssoc = new FieldAssociationController(this.internals, {
@@ -269,11 +269,7 @@ export abstract class TextFieldBase extends SizedMixin(
   //     TEXT SELECTION
   // ──────────────────────
 
-  /**
-   * The rendered native `<input>`. `roleElement` is typed `Element | null` on
-   * the mixin, but a text field's role element is always the input, so the cast
-   * gives the selection API below its `<input>`-only members.
-   */
+  /** The role element is always the `<input>`; cast for its selection members. */
   private get inputElement(): HTMLInputElement | null {
     return this.roleElement as HTMLInputElement | null;
   }
@@ -283,11 +279,7 @@ export abstract class TextFieldBase extends SizedMixin(
     this.inputElement?.select();
   }
 
-  /**
-   * Sets the start and end positions of the current text selection. Delegates
-   * straight to the native input, including its behavior on input types that
-   * don't support selection (e.g. `email`), matching a bare `<input>`.
-   */
+  /** Sets the start and end positions of the current text selection. */
   public setSelectionRange(
     start: number | null,
     end: number | null,
@@ -316,11 +308,6 @@ export abstract class TextFieldBase extends SizedMixin(
       url: DOCS_URL,
     });
     super.update(changedProperties);
-    // Custom state for `:host(:state(disabled))`; unlike `[disabled]` it covers
-    // the cascaded `<fieldset disabled>` case, not just the host's own property.
-    this.internals.states[this.effectiveDisabled ? 'add' : 'delete'](
-      'disabled'
-    );
     // Push the current value into the form; exclude it entirely when disabled.
     this.fieldAssoc.setValue(this.effectiveDisabled ? null : this.value);
   }

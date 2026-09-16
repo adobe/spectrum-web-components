@@ -664,19 +664,17 @@ export const DisabledStateTest: Story = {
       throw new Error('form or fieldset not found');
     }
 
-    await step('enabled: no disabled state, value participates', () => {
-      expect(field.matches(':state(disabled)'), 'no disabled state').toBe(
-        false
-      );
+    await step('enabled: not :disabled, value participates', () => {
+      expect(field.matches(':disabled'), 'not :disabled').toBe(false);
       expect(new FormData(form).get('username')).toBe('Example');
     });
 
-    await step('own disabled sets the custom state', async () => {
+    await step('own disabled matches native :disabled', async () => {
       field.disabled = true;
       await field.updateComplete;
       expect(
-        field.matches(':state(disabled)'),
-        'own disabled sets :state(disabled)'
+        field.matches(':disabled'),
+        'own disabled matches :disabled'
       ).toBe(true);
       expect(new FormData(form).has('username')).toBe(false);
       field.disabled = false;
@@ -684,13 +682,13 @@ export const DisabledStateTest: Story = {
     });
 
     await step(
-      'cascaded <fieldset disabled> sets the state on the host',
+      'cascaded <fieldset disabled> matches :disabled on the host',
       async () => {
         fieldset.disabled = true;
         await field.updateComplete;
         expect(
-          field.matches(':state(disabled)'),
-          'cascade sets :state(disabled) without the host property'
+          field.matches(':disabled'),
+          'cascade matches :disabled without the host property'
         ).toBe(true);
         expect(
           field.disabled,
@@ -708,8 +706,8 @@ export const DisabledStateTest: Story = {
         fieldset.disabled = false;
         await field.updateComplete;
         expect(
-          field.matches(':state(disabled)'),
-          'state clears when re-enabled'
+          field.matches(':disabled'),
+          ':disabled clears when re-enabled'
         ).toBe(false);
         expect(new FormData(form).get('username')).toBe('Example');
       }
