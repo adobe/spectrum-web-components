@@ -42,6 +42,17 @@ If the implementation or the needed test coverage has drifted from the migration
 
 For dedicated visual regression stories (`test/vrt/*.vrt.ts`), also use the [`vrt-authoring`](../vrt-authoring/SKILL.md) skill.
 
+## Form-associated components
+
+If the component is form-associated (any control that participates in a `<form>`: text field, checkbox, checkbox group, radio group, picker, combobox, and similar), its stories and tests **must** exercise it **inside a native `<form>`** and cover the full form lifecycle, per [forms strategy RFC §3.5](../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/forms-strategy-rfc.md#35-testing-form-participation). This is required for every form-associated component, not a per-component choice. Cover all four:
+
+- **Value on submit:** submitting the form yields the expected `FormData` (a control contributes its `name`/`value` when it has a value, and nothing when it does not; grouped multi-select controls contribute one entry per selection).
+- **Validation:** a `required`/constrained control blocks submission and reports validity (`:invalid`/`:user-invalid`, `checkValidity()`/`reportValidity()`), clearing once satisfied; validate at the level the constraint lives.
+- **Reset:** `form.reset()` restores every control to its default value via `formResetCallback()`.
+- **Getting the value:** the value read on submit matches the value read programmatically, across value/no-value and post-reset states.
+
+Add a story that renders the component in a `<form>` with submit and reset buttons; it doubles as the consumer-facing example and the fixture these tests drive. Use a native `<form>` for now, and move to a dedicated form component once one exists; likewise use **native** `<button type="submit">`/`<button type="reset">` for the surrounding controls until the clear-button component and the button form-association fast-follow are complete.
+
 ## Native dismissal and trusted input
 
 `@storybook/test`'s `userEvent` dispatches synthetic events (`isTrusted === false`), which browser-native `popover`/`<dialog>` light-dismiss (Escape, outside/backdrop click) ignores, so a synthetic Escape does not dismiss a native overlay. Test that native path in the Playwright accessibility spec (`test/<component>.a11y.spec.ts`), which drives real, trusted input, not in a play function. Play-function files (`test/<component>.test.ts`) are indexed as dev Storybook stories, and importing `vitest/browser` there throws outside the Vitest runner, breaking the dev server. Component-authored JavaScript handlers (click-to-toggle, focus, keydown backstops) work with the synthetic `@storybook/test` `userEvent` and stay in play functions. See [Native dismissal and trusted input](../../../CONTRIBUTOR-DOCS/02_style-guide/04_testing/02_storybook-testing.md#native-dismissal-and-trusted-input) for the full pattern.
