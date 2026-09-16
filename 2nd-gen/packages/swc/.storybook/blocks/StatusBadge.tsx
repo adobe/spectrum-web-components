@@ -76,7 +76,14 @@ const Badge = ({
  * These are extracted into the CEM by the `statusPlugin` in `cem.config.js`
  * and read at render time from `custom-elements.json`.
  */
-export const StatusBadge = ({ of }: { of?: any }) => {
+// TODO(SWC-2558): default showSince to true once release-stamping automation keeps @since accurate.
+export const StatusBadge = ({
+  of,
+  showSince = false,
+}: {
+  of?: any;
+  showSince?: boolean;
+}) => {
   const resolvedOf = useOf(of || 'meta', ['meta']);
   const componentTag = resolvedOf.preparedMeta?.component;
 
@@ -92,7 +99,7 @@ export const StatusBadge = ({ of }: { of?: any }) => {
     );
     if (decl) {
       status = decl.status;
-      since = decl.since;
+      since = showSince ? decl.since : undefined;
       break;
     }
   }
