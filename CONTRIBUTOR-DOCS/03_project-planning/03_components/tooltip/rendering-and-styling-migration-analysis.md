@@ -358,7 +358,7 @@ None found for this component.
 
 **Spectrum CSS class not pursued in WC:**
 
-- `.spectrum-Tooltip--noTip` / `.spectrum-Tooltip--no-tip` — Optional removal of the directional tip. Present in Spectrum CSS / Figma, but **not pursuing for 2nd-gen Tooltip (as of 2026-07-22)**.
+- `.spectrum-Tooltip--noTip` / `.spectrum-Tooltip--no-tip` — Optional removal of the directional tip. Present in Spectrum CSS / Figma, but **not pursuing for gen2 Tooltip (as of 2026-07-22)**.
 
 **No structural HTML changes:**
 

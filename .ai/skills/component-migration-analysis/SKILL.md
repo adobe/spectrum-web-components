@@ -1,11 +1,11 @@
 ---
 name: component-migration-analysis
-description: Create rendering-and-styling migration analysis docs for 2nd-gen component migration. Use when on the "analyze rendering and styling" step for one or more components.
+description: Create rendering-and-styling migration analysis docs for gen2 component migration. Use when on the "analyze rendering and styling" step for one or more components.
 ---
 
 # Component migration: analyze rendering and styling
 
-Create comprehensive migration documentation for the **analyze rendering and styling** step of 2nd-gen component migration. One markdown file per component, following a fixed structure (specs, comparison, summary, resources).
+Create comprehensive migration documentation for the **analyze rendering and styling** step of gen2 component migration. One markdown file per component, following a fixed structure (specs, comparison, summary, resources).
 
 ## Mindset
 
@@ -13,14 +13,14 @@ You are a code archaeologist. Read existing code without judgment — your job i
 
 ## When to use this skill
 
-- You are on the "analyze rendering and styling" step of the 2nd-gen component migration workstream
+- You are on the "analyze rendering and styling" step of the gen2 component migration workstream
 - The user asks to create rendering-and-styling migration analysis for one or more components
 - The user asks to analyze rendering and styling for a component (e.g. "analyze rendering and styling for button", "create migration analysis for dialog")
 
 ## How to invoke
 
 - Say "create migration analysis for [component]", "analyze rendering and styling for [component]", or "rendering and styling migration for [component]"
-- Or refer to the step "analyze rendering and styling" in the 2nd-gen component migration workstream — the agent should use this skill and read the full prompt
+- Or refer to the step "analyze rendering and styling" in the gen2 component migration workstream — the agent should use this skill and read the full prompt
 
 ## Quick reference
 

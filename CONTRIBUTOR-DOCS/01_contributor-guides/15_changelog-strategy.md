@@ -44,14 +44,14 @@ That's it. Component name in backticks, em dash, consumer-facing description. Yo
 
 ## Writing a changeset
 
-Run `yarn changeset:2nd-gen` to start the interactive CLI, scoped to 2nd-gen's own changesets folder (`2nd-gen/.changeset/`). It will list 2nd-gen's packages; select one of these two:
+Run `yarn changeset:gen2` to start the interactive CLI, scoped to gen2's own changesets folder (`gen2/.changeset/`). It will list gen2's packages; select one of these two:
 
 | Package | When to select |
 |---|---|
 | `@adobe/spectrum-wc` | Any component change (new component, feature, bug fix) |
 | `@adobe/spectrum-wc-core` | Changes to shared core logic (mixins, controllers, base classes) |
 
-1st-gen (`@spectrum-web-components/*`) has its own separate changesets setup in `1st-gen/.changeset/` (`yarn changeset:1st-gen`) and follows a separate process. If your PR changes both core and a component, run `yarn changeset:2nd-gen` twice and create one changeset for each package.
+1st-gen (`@spectrum-web-components/*`) has its own separate changesets setup in `1st-gen/.changeset/` (`yarn changeset:1st-gen`) and follows a separate process. If your PR changes both core and a component, run `yarn changeset:gen2` twice and create one changeset for each package.
 
 After selecting the package, choose a bump type, then write the body using the format above.
 
@@ -118,7 +118,7 @@ Bump types follow [semantic versioning](https://semver.org/) — the version num
 ### Rules
 
 - **One changeset per PR** is the default. Most PRs touch a single component and need a single changeset. Create multiple changesets only when the PR contains changes with different bump types (e.g., a minor addition and a patch fix).
-- **Select the right package** in the changeset frontmatter. The `linked` config in `2nd-gen/.changeset/config.json` keeps `@adobe/spectrum-wc` and `@adobe/spectrum-wc-core` at the same version automatically — you only need to list the one you touched:
+- **Select the right package** in the changeset frontmatter. The `linked` config in `gen2/.changeset/config.json` keeps `@adobe/spectrum-wc` and `@adobe/spectrum-wc-core` at the same version automatically — you only need to list the one you touched:
 
   | What changed | Frontmatter |
   |---|---|
@@ -171,7 +171,7 @@ Each entry is automatically prefixed with the PR link and commit reference by `@
 
 ## How it works
 
-`2nd-gen/.changeset/config.json` uses `@changesets/changelog-github` with `disableThanks: true`. This is the standard changesets GitHub changelog generator — it auto-prepends the PR link and commit reference to each entry, groups entries by bump type (`### Minor Changes`, `### Patch Changes`), and handles version headings. The `disableThanks` option suppresses the `Thanks @author!` attribution so entries stay focused on the change itself.
+`gen2/.changeset/config.json` uses `@changesets/changelog-github` with `disableThanks: true`. This is the standard changesets GitHub changelog generator — it auto-prepends the PR link and commit reference to each entry, groups entries by bump type (`### Minor Changes`, `### Patch Changes`), and handles version headings. The `disableThanks` option suppresses the `Thanks @author!` attribution so entries stay focused on the change itself.
 
 No custom scripts are involved. The changeset body you write is preserved as-is; changesets handles all formatting and collation.
 
@@ -187,6 +187,6 @@ Gen2 has no equivalent rollup script; it relies solely on `@changesets/changelog
 
 ## Gen2's pre-release versioning
 
-Gen2 publishes under the `latest` npm tag, but stays permanently in changesets' persistent pre-release mode - so its version numbers keep the `2.0.0-beta.N` format even though `latest` points at them. The first time the release workflow runs with pending 2nd-gen changesets, it enters pre-release mode (`yarn changeset pre enter beta`), which creates `2nd-gen/.changeset/pre.json`. Every subsequent run checks for that file and skips re-entering pre-release mode, so it only happens once. There is currently no `changeset pre exit` step configured anywhere, so gen2 stays on this versioning scheme by design.
+Gen2 publishes under the `latest` npm tag, but stays permanently in changesets' persistent pre-release mode - so its version numbers keep the `2.0.0-beta.N` format even though `latest` points at them. The first time the release workflow runs with pending gen2 changesets, it enters pre-release mode (`yarn changeset pre enter beta`), which creates `gen2/.changeset/pre.json`. Every subsequent run checks for that file and skips re-entering pre-release mode, so it only happens once. There is currently no `changeset pre exit` step configured anywhere, so gen2 stays on this versioning scheme by design.
 
 Each release bumps the pre-release number (`beta.1`, `beta.2`, and so on). This is standard `@changesets/cli` pre-release behavior, not custom logic in this repo: each `.changeset/*.md` file is consumed and deleted the first time it is folded into a version, so a given change should not reappear in a later `beta.N` entry.
