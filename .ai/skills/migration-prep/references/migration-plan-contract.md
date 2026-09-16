@@ -5,7 +5,7 @@ Use the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[c
 ## What later phases should consume
 
 - `Changes overview` for approved breaking changes, additive changes, and consumer migration impact
-- `2nd-gen API decisions` for naming, public API shape, behavior decisions, and confidence levels
+- `gen2 API decisions` for naming, public API shape, behavior decisions, and confidence levels
 - `Architecture: core vs SWC split` for component boundaries and expected file layout
 - `Migration checklist` for phase-specific expectations
 - `Blockers and open questions` for unresolved items that must not be silently decided in code during drafting, or the deferred-ticket table in that section once the plan is finalized
