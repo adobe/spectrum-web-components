@@ -64,10 +64,6 @@ const FIRST_GEN_CONTENT = join(ROOT, '1st-gen/projects/documentation/content');
 const FIRST_GEN_REF_DIR = join(FIRST_GEN_CONTENT, 'reference');
 const SECOND_GEN_COMPONENTS = join(ROOT, '2nd-gen/packages/swc/components');
 const SECOND_GEN_PATTERNS = join(ROOT, '2nd-gen/packages/swc/patterns');
-const SECOND_GEN_CORE_CONTROLLERS = join(
-  ROOT,
-  '2nd-gen/packages/core/controllers'
-);
 
 /**
  * Custom Elements Manifest emitted by `cem analyze` (`yarn workspace
@@ -236,20 +232,6 @@ const GEN2_MIGRATION_GUIDES = [
     title: 'Support and compatibility (Gen2)',
     description:
       'Browser support, versioning, and semantic versioning policy for @adobe/spectrum-wc.',
-    stripFn: 'mdx',
-  },
-];
-
-/**
- * Guides bundled into the spectrum-wc skill.
- */
-const GEN2_DOCS_GUIDES = [
-  {
-    sourcePath: '2nd-gen/packages/core/overview.mdx',
-    refPath: 'guides/core-overview.md',
-    title: 'Core overview',
-    description:
-      'What @adobe/spectrum-wc-core provides: shared primitives, mixins, utilities, and controllers used to build Gen 2 components.',
     stripFn: 'mdx',
   },
 ];
@@ -549,26 +531,6 @@ function unitSlug(unit) {
   return unit.group ? `${unit.group}/${unit.dir}` : unit.dir;
 }
 
-/**
- * Controllers have a `<name>.mdx` doc page but no custom element tag — their
- * API is hand-authored in the mdx itself, not sourced from the CEM.
- * Returns [{ dir, mdxPath }] sorted by dir.
- */
-function listGen2Controllers() {
-  return readdirSync(SECOND_GEN_CORE_CONTROLLERS, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => ({
-      dir: entry.name,
-      mdxPath: join(
-        SECOND_GEN_CORE_CONTROLLERS,
-        entry.name,
-        `${entry.name}.mdx`
-      ),
-    }))
-    .filter((u) => existsSync(u.mdxPath))
-    .sort((a, b) => a.dir.localeCompare(b.dir));
-}
-
 // ---------------------------------------------------------------------------
 // Custom Elements Manifest → Markdown API tables
 // ---------------------------------------------------------------------------
@@ -847,8 +809,9 @@ const toPascalCase = (kebab) =>
 
 /**
  * Rebuild the `## Getting started` block that `<GettingStarted />` renders,
- * mirroring its three branches (utility / controller / migrated) exactly:
- * .storybook/blocks/GettingStarted.tsx.
+ * mirroring its utility and migrated branches from
+ * .storybook/blocks/GettingStarted.tsx. Controllers are internal (not a public
+ * surface), so their branch is intentionally omitted.
  */
 function buildGettingStarted(unit, meta) {
   if (meta.tags.includes('utility')) {
@@ -857,19 +820,6 @@ function buildGettingStarted(unit, meta) {
 
   const packageName = unit.dir;
   const baseClassName = toPascalCase(packageName);
-
-  if (meta.tags.includes('controller')) {
-    return `## Getting started
-
-Controllers are not published as packages. Instead, they are imported directly from the core package.
-
-Import the controller directly from the core package:
-
-\`\`\`typescript
-import { ${baseClassName} } from '@adobe/spectrum-wc-core/controllers/${packageName}.js';
-\`\`\`
-`;
-  }
 
   if (meta.tags.includes('migrated')) {
     const tagName = unit.tagName ?? `swc-${packageName}`;
@@ -1082,10 +1032,8 @@ function buildMigrationSkill(skillDir) {
 
 function buildGen2DocsSkill(skillDir) {
   const refsDir = join(skillDir, 'references');
-  mkdirSync(join(refsDir, 'guides'), { recursive: true });
   mkdirSync(join(refsDir, 'components'), { recursive: true });
   mkdirSync(join(refsDir, 'patterns'), { recursive: true });
-  mkdirSync(join(refsDir, 'controllers'), { recursive: true });
 
   const cem = loadCem();
   if (!cem) {
@@ -1096,7 +1044,6 @@ function buildGen2DocsSkill(skillDir) {
 
   const components = listGen2Units(SECOND_GEN_COMPONENTS);
   const patterns = listGen2Patterns();
-  const controllers = listGen2Controllers();
 
   const sourceMd = readFileSync(
     join(SKILL_SOURCE_DIR, 'spectrum-wc-skill', 'SKILL.md'),
@@ -1105,30 +1052,14 @@ function buildGen2DocsSkill(skillDir) {
   writeFileSync(
     join(skillDir, 'SKILL.md'),
     resolveTokens(sourceMd, {
-      GEN2_GUIDE_LIST: buildGuideList(GEN2_DOCS_GUIDES),
       GEN2_COMPONENT_NAMES: components
         .map((c) => `\`${c.tagName}\``)
         .join(', '),
       GEN2_COMPONENT_LIST: buildGen2UnitList(components, 'components'),
       GEN2_PATTERN_NAMES: patterns.map((c) => `\`${c.tagName}\``).join(', '),
       GEN2_PATTERN_LIST: buildGen2UnitList(patterns, 'patterns'),
-      GEN2_CONTROLLER_LIST: buildGen2UnitList(controllers, 'controllers'),
     })
   );
-
-  let guideCount = 0;
-  for (const guide of GEN2_DOCS_GUIDES) {
-    const src = join(ROOT, guide.sourcePath);
-    if (!existsSync(src)) {
-      console.warn(`  ⚠ guide not found: ${guide.sourcePath}`);
-      continue;
-    }
-    writeFileSync(
-      join(refsDir, guide.refPath),
-      stripContent(readFileSync(src, 'utf8'), guide.stripFn)
-    );
-    guideCount++;
-  }
 
   function writeUnitDocs(units, subdir) {
     for (const unit of units) {
@@ -1151,10 +1082,9 @@ function buildGen2DocsSkill(skillDir) {
 
   const componentCount = writeUnitDocs(components, 'components');
   const patternCount = writeUnitDocs(patterns, 'patterns');
-  const controllerCount = writeUnitDocs(controllers, 'controllers');
 
   console.log(
-    `  spectrum-wc: ${guideCount} guides + ${componentCount} components + ${patternCount} patterns + ${controllerCount} controllers`
+    `  spectrum-wc: ${componentCount} components + ${patternCount} patterns`
   );
 }
 
@@ -1183,10 +1113,9 @@ const SKILL_CONFIGS = [
   {
     name: 'spectrum-wc',
     description:
-      'Build UIs with Spectrum 2 Web Components (swc-* elements, @adobe/spectrum-wc, ' +
-      '@adobe/spectrum-wc-core). Use when developers are working with @adobe/spectrum-wc ' +
-      'or @adobe/spectrum-wc-core packages or swc-* custom elements. Includes component, ' +
-      'pattern, and controller API references and usage guidance.',
+      'Build UIs with Spectrum 2 Web Components (swc-* elements, @adobe/spectrum-wc). ' +
+      'Use when developers are working with the @adobe/spectrum-wc package or swc-* ' +
+      'custom elements. Includes component and pattern API references and usage guidance.',
     buildFn: buildGen2DocsSkill,
   },
 ];
