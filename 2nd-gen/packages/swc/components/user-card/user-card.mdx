@@ -61,14 +61,18 @@ Identical to [Card](../?path=/docs/components-card--docs)'s `selectable`: makes 
 
 ### Features
 
-- **`avatar`** expects an [Avatar](../?path=/docs/components-avatar--docs) element, which owns its own `alt`/`decorative` labeling contract; the card does not add or manage its accessible name.
+- **`avatar`** expects an [Avatar](../?path=/docs/components-avatar--docs) element, which owns its own `alt`/`decorative` labeling contract; see its Accessibility section for that contract. The card does not add or manage the avatar's accessible name.
 - **`title-as-link`** and **`selectable`** behave identically to [Card](../?path=/docs/components-card--docs); see its Accessibility section for details.
 
 ### Best practices
 
-- Provide a meaningful `alt` on the slotted avatar, or mark it `decorative` if the person's name is already announced by the adjacent `title` content, to avoid the avatar repeating the same name a second time.
+- When the avatar depicts the same person named in `title`, link them with `aria-labelledby` instead of giving the avatar its own `alt`, so a screen reader doesn't announce the name twice: `<span slot="title" id="jane">Jane Doe</span>` alongside `<swc-avatar slot="avatar" aria-labelledby="jane">`. Both elements are consumer-authored light-DOM content, so the `id` reference resolves normally with no cross-root complexity.
 - For `title-as-link` and `selectable` usage guidance, see [Card](../?path=/docs/components-card--docs)'s Accessibility section.
 
 <Canvas of={Stories.Accessibility} />
+
+## Upcoming features
+
+Deferred items are shared with [Card](../?path=/docs/components-card--docs): hover/disabled states and a standalone `selected` property both wait on a future CardView container, and once the gen2 Asset component ships, it will be the recommended content for `preview` (in place of a plain `<img>`), with any media loading state likely owned by Asset rather than the card. See Card's Upcoming features section for the full list.
 
 <DocsFooter />
