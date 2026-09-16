@@ -14,6 +14,9 @@ import { expect, test } from '@playwright/test';
 
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
+/** Element augmented with a test-only click counter set inside the browser context. */
+type ClickCounter = HTMLElement & { __clickCount: number };
+
 /**
  * Accessibility tests for Infield Button component .
  *
@@ -187,16 +190,18 @@ test.describe('Infield Button - Pointer Interactions', () => {
     );
     await page.evaluate(() => {
       const el = document.querySelector('swc-infield-button')!;
-      (el as any).__clickCount = 0;
+      (el as ClickCounter).__clickCount = 0;
       el.addEventListener('click', () => {
-        (el as any).__clickCount++;
+        (el as ClickCounter).__clickCount++;
       });
     });
 
     await page.locator('swc-infield-button').first().click();
 
     const count = await page.evaluate(
-      () => (document.querySelector('swc-infield-button') as any).__clickCount
+      () =>
+        (document.querySelector('swc-infield-button') as ClickCounter)
+          .__clickCount
     );
     expect(count, 'click event fires when button is enabled').toBe(1);
   });
@@ -214,9 +219,9 @@ test.describe('Infield Button - Pointer Interactions', () => {
 
     await page.evaluate(() => {
       const el = document.querySelector('swc-infield-button[disabled]')!;
-      (el as any).__clickCount = 0;
+      (el as ClickCounter).__clickCount = 0;
       el.addEventListener('click', () => {
-        (el as any).__clickCount++;
+        (el as ClickCounter).__clickCount++;
       });
     });
 
@@ -225,7 +230,9 @@ test.describe('Infield Button - Pointer Interactions', () => {
     await disabledButton.click({ force: true });
 
     const count = await page.evaluate(() => {
-      const el = document.querySelector('swc-infield-button[disabled]') as any;
+      const el = document.querySelector(
+        'swc-infield-button[disabled]'
+      ) as ClickCounter;
       return el.__clickCount;
     });
     expect(count, 'click is suppressed while disabled').toBe(0);
