@@ -10,11 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { TextFieldBase } from '@adobe/spectrum-wc-core/components/text-field';
 
+import '@adobe/spectrum-wc-icons/swc-icon-alert-triangle.js';
+import '../ui-icons/swc-ui-icon.js';
+
+import formFieldStyles from '../../stylesheets/_lit-styles/form-fields.css';
 import styles from './text-field.css';
 
 /**
@@ -30,6 +34,9 @@ const INPUT_ID = 'input';
  * @element swc-text-field
  * @since 2.0.0-beta.1
  *
+ * @cssprop --swc-text-field-width - Inline size of the field. Unset by default, so the field fills its container (like React Spectrum); set it for a fixed width.
+ * @cssprop --swc-field-label-max-inline-size - Max width of the visible label before it wraps. Unset by default (the label wraps late, like React Spectrum); set it to wrap a long label sooner and give a `side` input more room.
+ *
  * @example
  * <swc-text-field></swc-text-field>
  */
@@ -39,7 +46,7 @@ export class TextField extends TextFieldBase {
   // ──────────────────────────────
 
   public static override get styles(): CSSResultArray {
-    return [styles];
+    return [formFieldStyles, styles];
   }
 
   /**
@@ -64,30 +71,65 @@ export class TextField extends TextFieldBase {
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
   }
 
+  /**
+   * The border/padding live on the control wrapper, not the `<input>`, so a
+   * pointer press on that surrounding area (padding or the non-interactive
+   * prefix) no longer lands on the input. Route it to the input so the whole
+   * control still behaves as one click-to-focus target.
+   */
+  private handleControlPointerDown(event: PointerEvent): void {
+    if (event.target !== this.roleElement) {
+      event.preventDefault();
+      this.roleElement?.focus();
+    }
+  }
+
   protected override render(): TemplateResult {
-    // @todo (SWC-2466 / Phase 4–5): render the required indicator and
-    // validation icon.
+    // The required indicator (asterisk) is rendered by the shared label; only
+    // the invalid AlertTriangle ships here. A valid-state checkmark is not yet
+    // in scope.
     return html`
-      <div class="swc-TextField">
-        ${this.renderLabel(INPUT_ID)}
-        <input
-          id=${INPUT_ID}
-          class="input"
-          type=${this.type}
-          .value=${this.value}
-          placeholder=${ifDefined(this.placeholder || undefined)}
-          pattern=${ifDefined(this.pattern)}
-          inputmode=${ifDefined(this.inputmode)}
-          autocomplete=${ifDefined(this.autocomplete)}
-          maxlength=${ifDefined(this.maxlength)}
-          minlength=${ifDefined(this.minlength)}
-          ?readonly=${this.readonly}
-          ?required=${this.required}
-          ?disabled=${this.effectiveDisabled}
-          aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
-          @input=${this.handleInput}
-          @change=${this.handleChange}
-        />
+      <div class="swc-Field swc-TextField">
+        ${this.renderLabel(INPUT_ID, {
+          required: this.required,
+          necessityIndicator: this.necessityIndicator,
+          necessityIcon: html`<swc-ui-icon
+            icon="asterisk"
+            size=${this.size === 's' ? 'm' : this.size}
+          ></swc-ui-icon>`,
+        })}
+        <div
+          class="swc-TextField-control"
+          @pointerdown=${this.handleControlPointerDown}
+        >
+          <slot name="prefix"></slot>
+          <input
+            id=${INPUT_ID}
+            class="input"
+            type=${this.type}
+            .value=${this.value}
+            placeholder=${ifDefined(this.placeholder || undefined)}
+            pattern=${ifDefined(this.pattern)}
+            inputmode=${ifDefined(this.inputmode)}
+            autocomplete=${ifDefined(this.autocomplete)}
+            maxlength=${ifDefined(this.maxlength)}
+            minlength=${ifDefined(this.minlength)}
+            ?readonly=${this.readonly}
+            ?required=${this.required}
+            ?disabled=${this.effectiveDisabled}
+            aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
+            @input=${this.handleInput}
+            @change=${this.handleChange}
+          />
+          ${this.invalid
+            ? html`
+                <swc-icon-alert-triangle
+                  class="swc-TextField-validationIcon"
+                  aria-hidden="true"
+                ></swc-icon-alert-triangle>
+              `
+            : nothing}
+        </div>
         ${this.renderHelpText()}
       </div>
     `;

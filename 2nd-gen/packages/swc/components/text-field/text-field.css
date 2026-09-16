@@ -10,22 +10,166 @@
  * governing permissions and limitations under the License.
  */
 
-/* @todo (Phase 5, styling): baseline from spectrum-css (spectrum-two) index.css and
-   consume the shared form-fields stylesheet fragment (including the
-   label-position="side" grid variant, Q22). Keep styling on .swc-TextField,
-   not :host. Style disabled via `:host(:state(disabled))` (covers own +
-   cascaded disabled), not `[disabled]`. */
-.swc-TextField {
-  display: inline-flex;
-  flex-direction: column;
-  gap: token("spacing-75");
+:host {
+  /* No default width. The field fills its container. Set
+     `--swc-text-field-width` (or constrain the host) to give it a fixed width. */
+  display: block;
+  inline-size: var(--swc-text-field-width, auto);
 }
 
-.swc-FieldLabel {
-  font: inherit;
+* {
+  box-sizing: border-box;
 }
 
-.swc-FieldDescription,
-.swc-FieldErrorText {
-  font-size: var(--swc-body-size-s);
+.swc-TextField-control {
+  display: flex;
+  grid-area: input;
+  gap: var(--_swc-text-field-affix-gap, token("base-gap-medium"));
+  align-items: center;
+  padding-inline: var(--_swc-text-field-padding-inline, token("base-padding-horizontal-medium"));
+  font-size: var(--_swc-text-field-font-size, token("font-size-100"));
+  background-color: token("gray-25");
+  border-color: token("gray-300");
+  border-style: solid;
+  border-width: token("border-width-200");
+  border-radius: var(--_swc-text-field-border-radius, token("corner-radius-medium-size-medium"));
+}
+
+.input {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  padding-block: var(--_swc-text-field-padding-block, token("base-padding-vertical-medium"));
+  padding-inline: 0;
+  font-family: token("sans-serif-font");
+  font-size: var(--_swc-text-field-font-size, token("font-size-100"));
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-100");
+  color: token("neutral-content-color-default");
+  background-color: transparent;
+  border: none;
+  appearance: none;
+  outline: none;
+}
+
+.input::placeholder {
+  color: token("gray-600");
+  opacity: 1;
+}
+
+/* ── Prefix ───────────────────────────────────────── */
+
+/* Non-interactive leading content (icon, symbol, avatar). `pointer-events: none`
+   passes clicks through to focus the input. A slotted icon auto-sizes to React
+   Spectrum's `fontRelative(20)` (20/14em); avatars/images keep their own size. */
+slot[name="prefix"]::slotted(*) {
+  --swc-icon-inline-size: calc(20 / 14 * 1em);
+  --swc-icon-block-size: calc(20 / 14 * 1em);
+
+  flex: 0 0 auto;
+
+  /* Center regardless of the slotted element's own `align-self` (e.g. avatar). */
+  align-self: center;
+  color: token("gray-600");
+  pointer-events: none;
+}
+
+/* ── Validation icon (trailing flex child) ────────── */
+
+.swc-TextField-validationIcon {
+  --swc-icon-color: token("negative-visual-color");
+  --swc-icon-inline-size: var(--_swc-text-field-validation-icon-size, token("workflow-icon-medium"));
+  --swc-icon-block-size: var(--_swc-text-field-validation-icon-size, token("workflow-icon-medium"));
+
+  flex: 0 0 auto;
+}
+
+/* ── Interaction states (on the control) ──────────── */
+
+.swc-TextField-control:hover {
+  border-color: token("gray-400");
+}
+
+.swc-TextField-control:focus-within {
+  border-color: token("gray-800");
+}
+
+.swc-TextField-control:focus-within:hover {
+  border-color: token("gray-900");
+}
+
+/* The ring shows only on keyboard focus. Native `:focus-visible` can't express
+   this: text inputs match it on pointer click too. `TextFieldBase` tracks input
+   modality and sets the `keyboard-focused` custom state to gate the ring. */
+:host(:state(keyboard-focused)) .swc-TextField-control {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
+}
+
+/* ── Number input ─────────────────────────────────── */
+
+:host([type="number"]) .input {
+  appearance: textfield;
+}
+
+:host([type="number"]) .input::-webkit-inner-spin-button,
+:host([type="number"]) .input::-webkit-outer-spin-button {
+  margin: 0;
+  appearance: none;
+}
+
+/* ── Invalid ──────────────────────────────────────── */
+
+/* Beats the focus/hover border rules (higher or later at equal specificity), so
+   a focused invalid field keeps its error border. */
+:host([invalid]) .swc-TextField-control {
+  border-color: token("negative-border-color-default");
+}
+
+/* ── Disabled ─────────────────────────────────────── */
+
+/* :host(:state(disabled)) covers own `disabled` + cascaded <fieldset disabled>.
+   Per the S2 spec the background stays `gray-25`; only text and border dim. */
+:host(:state(disabled)) .swc-TextField-control {
+  border-color: token("disabled-border-color");
+}
+
+:host(:state(disabled)) .input {
+  color: token("disabled-content-color");
+}
+
+/* No Figma for prefix; per React Spectrum, dim it with the field. */
+:host(:state(disabled)) slot[name="prefix"]::slotted(*) {
+  color: token("disabled-content-color");
+}
+
+/* ── Sizes ────────────────────────────────────────── */
+
+:host([size="s"]) {
+  --_swc-text-field-padding-block: token("base-padding-vertical-small");
+  --_swc-text-field-padding-inline: token("base-padding-horizontal-small");
+  --_swc-text-field-affix-gap: token("base-gap-small");
+  --_swc-text-field-font-size: token("font-size-75");
+  --_swc-text-field-border-radius: token("corner-radius-medium-size-small");
+  --_swc-text-field-validation-icon-size: token("workflow-icon-small");
+  --swc-field-input-min-inline-size: token("component-height-75");
+}
+
+:host([size="l"]) {
+  --_swc-text-field-padding-block: token("base-padding-vertical-large");
+  --_swc-text-field-padding-inline: token("base-padding-horizontal-large");
+  --_swc-text-field-affix-gap: token("base-gap-large");
+  --_swc-text-field-font-size: token("font-size-200");
+  --_swc-text-field-border-radius: token("corner-radius-medium-size-large");
+  --_swc-text-field-validation-icon-size: token("workflow-icon-large");
+  --swc-field-input-min-inline-size: token("component-height-200");
+}
+
+:host([size="xl"]) {
+  --_swc-text-field-padding-block: token("base-padding-vertical-extra-large");
+  --_swc-text-field-padding-inline: token("base-padding-horizontal-extra-large");
+  --_swc-text-field-affix-gap: token("base-gap-extra-large");
+  --_swc-text-field-font-size: token("font-size-300");
+  --_swc-text-field-border-radius: token("corner-radius-medium-size-extra-large");
+  --_swc-text-field-validation-icon-size: token("workflow-icon-extra-large");
+  --swc-field-input-min-inline-size: token("component-height-300");
 }

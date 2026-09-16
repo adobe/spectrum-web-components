@@ -1,0 +1,88 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/*
+ * Shared layout for form fields whose label, description, and error text render
+ * in-shadow via LabellingMixin + HelpTextMixin. A consuming component adds
+ * `swc-Field` to its render root and places its control in the `input` grid
+ * area. This fragment themes the mixin-emitted `.swc-Field*` classes and owns
+ * the `label-position` grid so every field lays them out identically. The grid
+ * `row-gap` reproduces the design's uniform flex-column gap while also
+ * supporting the side-label two-column layout.
+ */
+
+/* ── Field template grid ──────────────────────────── */
+
+.swc-Field {
+  display: grid;
+  grid-template-areas:
+    "label"
+    "input"
+    "messages";
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: token("form-item-gap-medium");
+}
+
+:host([size="s"]) .swc-Field {
+  row-gap: token("form-item-gap-small");
+}
+
+:host([size="l"]) .swc-Field {
+  row-gap: token("form-item-gap-large");
+}
+
+:host([size="xl"]) .swc-Field {
+  row-gap: token("form-item-gap-extra-large");
+}
+
+.swc-FieldLabel {
+  grid-area: label;
+  max-inline-size: var(--swc-field-label-max-inline-size, none);
+  font: inherit;
+  color: token("neutral-subdued-content-color-default");
+  overflow-wrap: break-word;
+}
+
+.swc-FieldLabel-requiredIndicator swc-ui-icon {
+  vertical-align: middle;
+}
+
+.swc-FieldDescription,
+.swc-FieldErrorText {
+  grid-area: messages;
+  font-size: var(--swc-body-size-s);
+}
+
+.swc-FieldDescription {
+  color: token("neutral-subdued-content-color-default");
+}
+
+.swc-FieldErrorText {
+  color: token("negative-content-color-default");
+}
+
+/* ── Side label ───────────────────────────────────── */
+
+:host([label-position="side"]) .swc-Field {
+  grid-template-areas:
+    "label input"
+    ".     messages";
+  grid-template-columns: auto minmax(var(--swc-field-input-min-inline-size, 0), 1fr);
+  align-items: baseline;
+  column-gap: token("spacing-200");
+}
+
+/* ── Disabled ─────────────────────────────────────── */
+
+:host(:state(disabled)) .swc-FieldLabel {
+  color: token("disabled-content-color");
+}

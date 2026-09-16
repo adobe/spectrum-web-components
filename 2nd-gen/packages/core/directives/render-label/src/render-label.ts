@@ -21,10 +21,35 @@ export interface RenderFieldLabelOptions {
   hasLabelSlotContent: boolean;
 
   /**
-   * The `id` of the field's role element (e.g. the `<input>`), wired as the
-   * rendered `<label for>` so the visible label gives native click-to-focus.
+   * The role element's `id` (e.g. the `<input>`), wired as the rendered
+   * `<label for>` so the label gives native click-to-focus.
    */
   forId: string;
+
+  /**
+   * Whether the field is required. The indicator it appends is `aria-hidden`;
+   * the requirement is conveyed to AT by the role element's own `required` state.
+   */
+  required?: boolean;
+
+  /**
+   * How necessity is marked. `'icon'` (default) shows `necessityIcon` only when
+   * required; `'label'` appends `necessityLabel`/`optionalLabel`, marking both
+   * states.
+   */
+  necessityIndicator?: 'icon' | 'label';
+
+  /**
+   * The asterisk glyph for `'icon'` mode, supplied by the consumer because this
+   * `core` directive can't import a `swc` icon.
+   */
+  necessityIcon?: TemplateResult;
+
+  /** Localizable required text for `'label'` mode. Defaults to `'(required)'`. */
+  necessityLabel?: string;
+
+  /** Localizable optional text for `'label'` mode. Defaults to `'(optional)'`. */
+  optionalLabel?: string;
 }
 
 /**
@@ -39,13 +64,54 @@ export interface RenderFieldLabelOptions {
 export function renderFieldLabel({
   hasLabelSlotContent,
   forId,
+  required = false,
+  necessityIndicator = 'icon',
+  necessityIcon,
+  necessityLabel = '(required)',
+  optionalLabel = '(optional)',
 }: RenderFieldLabelOptions): RenderFieldLabelResult {
   if (!hasLabelSlotContent) {
     return nothing;
   }
   return html`
     <label class="swc-FieldLabel" for=${forId}>
-      <slot name="label"></slot>
+      <slot name="label"></slot>${renderNecessityIndicator({
+        indicator: necessityIndicator,
+        required,
+        icon: necessityIcon,
+        requiredLabel: necessityLabel,
+        optionalLabel,
+      })}
     </label>
   `;
+}
+
+/**
+ * The `aria-hidden` necessity indicator span; see `necessityIndicator` for the
+ * icon-vs-label behavior. The leading `&nbsp;` sets the gap from the label text.
+ */
+function renderNecessityIndicator({
+  indicator,
+  required,
+  icon,
+  requiredLabel,
+  optionalLabel,
+}: {
+  indicator: 'icon' | 'label';
+  required: boolean;
+  icon: TemplateResult | undefined;
+  requiredLabel: string;
+  optionalLabel: string;
+}): RenderFieldLabelResult {
+  if (indicator === 'label') {
+    return html`<span class="swc-FieldLabel-necessityLabel" aria-hidden="true"
+      >&nbsp;${required ? requiredLabel : optionalLabel}</span
+    >`;
+  }
+  if (!required || !icon) {
+    return nothing;
+  }
+  return html`<span class="swc-FieldLabel-requiredIndicator" aria-hidden="true"
+    >&nbsp;${icon}</span
+  >`;
 }

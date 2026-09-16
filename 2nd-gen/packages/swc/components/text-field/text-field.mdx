@@ -13,6 +13,8 @@ A text field consists of:
 
 - **Input**: the real, focusable `<input>` that carries the value and native `textbox` role
 - **Label** (optional), provided through the `label` slot: visible text rendered as a real, same-root `<label for>`
+- **Necessity indicator** (optional): an asterisk or `(required)`/`(optional)` text appended to the label, controlled by `necessity-indicator` (see [Necessity indicator](#necessity-indicator))
+- **Validation icon**: a decorative alert icon shown at the trailing edge of the input while `invalid`
 - **Description** (optional), provided through the `description` slot: guidance text associated via `aria-describedby`
 - **Error text** (optional), provided through the `error-text` slot: shown in place of the description and associated via `aria-describedby` only while `invalid`
 
@@ -30,6 +32,30 @@ Three sources can provide the field's accessible name. When more than one is set
 
 <Canvas of={TextFieldStories.Labelling} />
 
+### Sizes
+
+Text fields come in four sizes. Size controls the field height, typography, inline padding, and corner radius. Width is not size-dependent: the field fills its container by default; set `--swc-text-field-width` for a fixed width.
+
+<Canvas of={TextFieldStories.Sizes} />
+
+### Label positions
+
+The `label-position` attribute places the visible label above the input (`top`, the default) or beside it (`side`).
+
+<Canvas of={TextFieldStories.LabelPositions} />
+
+### Necessity indicator
+
+`necessity-indicator` chooses how the field's necessity is marked in the visible label. The default, `icon`, appends an asterisk to required fields only. `label` appends `(required)` to required fields and `(optional)` to optional ones, marking both — use it when most fields in a form share the opposite state (Spectrum's [Required or optional](https://spectrum.adobe.com/page/text-field/#Required-or-optional) pattern). The indicator needs a visible label and is decorative; the requirement itself is conveyed by the input's native `required` state.
+
+<Canvas of={TextFieldStories.NecessityIndicator} />
+
+### Prefix
+
+The `prefix` slot places non-interactive content before the input, inside the field: a symbol (like a currency `$`), an icon, or an avatar. Slotted icons auto-size to the field; other content keeps its own size. Clicking the prefix focuses the input.
+
+<Canvas of={TextFieldStories.Prefix} />
+
 ## States
 
 Text fields can exist in various states:
@@ -44,11 +70,11 @@ Text fields can exist in various states:
 
 ## Behaviors
 
-### Conflicting label sources
+### Label overflow
 
-Setting both `accessible-labelledby` and `accessible-label` triggers a dev-mode console warning: they are two ways to name the same field, so one is always ignored. The warning names `accessible-labelledby` as the source that is used. Pairing a visible label with either one does not warn; that is the recommended way to satisfy [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html). Open the browser console to see the warning for the examples below.
+A long visible label wraps onto multiple lines instead of clipping. In `side` position, the label wraps within its column and the input aligns to the label's first line: a short side label reads as centered against the input, while a long one keeps the input at the top and grows downward past it. By default the label wraps late and the input shrinks toward a control-height square (matching React Spectrum); set `--swc-field-label-max-inline-size` to cap the label so it wraps sooner and leaves the input more room, or widen the field with `--swc-text-field-width`.
 
-<Canvas of={TextFieldStories.ConflictingLabelSources} />
+<Canvas of={TextFieldStories.LabelOverflow} />
 
 ## Accessibility
 
