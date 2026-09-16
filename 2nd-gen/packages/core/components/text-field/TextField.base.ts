@@ -278,41 +278,6 @@ export abstract class TextFieldBase extends SizedMixin(
     return this.roleElement as HTMLInputElement | null;
   }
 
-  /** The offset to the start of the current text selection. */
-  public get selectionStart(): number | null {
-    return this.inputElement?.selectionStart ?? null;
-  }
-
-  public set selectionStart(value: number | null) {
-    if (this.inputElement) {
-      this.inputElement.selectionStart = value;
-    }
-  }
-
-  /** The offset to the end of the current text selection. */
-  public get selectionEnd(): number | null {
-    return this.inputElement?.selectionEnd ?? null;
-  }
-
-  public set selectionEnd(value: number | null) {
-    if (this.inputElement) {
-      this.inputElement.selectionEnd = value;
-    }
-  }
-
-  /** The direction in which the current selection was made. */
-  public get selectionDirection(): 'forward' | 'backward' | 'none' | null {
-    return this.inputElement?.selectionDirection ?? null;
-  }
-
-  public set selectionDirection(
-    value: 'forward' | 'backward' | 'none' | null
-  ) {
-    if (this.inputElement) {
-      this.inputElement.selectionDirection = value;
-    }
-  }
-
   /** Selects all text in the field. */
   public select(): void {
     this.inputElement?.select();

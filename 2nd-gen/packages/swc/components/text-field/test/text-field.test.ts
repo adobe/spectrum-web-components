@@ -83,7 +83,7 @@ export const LabellingTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: States — required reflection + invalid description/error wiring
+// TEST: States: required reflection + invalid description/error wiring
 // ──────────────────────────────────────────────────────────────
 
 export const StatesTest: Story = {
@@ -144,7 +144,7 @@ export const StatesTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: necessity indicator — icon vs label, required vs optional
+// TEST: necessity indicator: icon vs label, required vs optional
 // ──────────────────────────────────────────────────────────────
 
 export const NecessityIndicatorTest: Story = {
@@ -265,11 +265,6 @@ export const SelectionTest: Story = {
       field.setSelectionRange(0, 5);
       expect(input?.selectionStart).toBe(0);
       expect(input?.selectionEnd).toBe(5);
-    });
-
-    await step('selectionStart/End getters read back from the input', () => {
-      expect(field.selectionStart).toBe(0);
-      expect(field.selectionEnd).toBe(5);
     });
   },
 };

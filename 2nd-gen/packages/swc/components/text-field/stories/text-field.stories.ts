@@ -109,7 +109,7 @@ export const Anatomy: Story = {
 export const Labelling: Story = {
   render: () => {
     // Muted caption naming each technique, so the reader can map every example
-    // to the prose — the accessible-label / -labelledby fields have no ordinary
+    // to the prose: the accessible-label / -labelledby fields have no ordinary
     // visible label, so without a caption they read as unexplained empty boxes.
     const caption =
       'margin-block-end: 8px; font-size: 0.75rem; color: #6e6e6e;';
@@ -126,7 +126,7 @@ export const Labelling: Story = {
 
         <div>
           <div style=${caption}>
-            <code>accessible-label</code> — named for assistive tech, no visible
+            <code>accessible-label</code>: named for assistive tech, no visible
             label
           </div>
           <swc-text-field accessible-label="Email address"></swc-text-field>
@@ -134,7 +134,7 @@ export const Labelling: Story = {
 
         <div>
           <div style=${caption}>
-            <code>accessible-labelledby</code> — named by other elements
+            <code>accessible-labelledby</code>: named by other elements
           </div>
           <div style="margin-block-end: 8px;">
             <span id="labelling-row-header">Name</span>
@@ -359,7 +359,7 @@ export const Accessibility: Story = {
 
         <div>
           <div style=${caption}>
-            <code>accessible-describedby</code> — described by another element
+            <code>accessible-describedby</code>: described by another element
           </div>
           <p
             id="accessibility-external-description"
