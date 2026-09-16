@@ -178,6 +178,12 @@ export const Accessibility: Story = {
     <swc-thumbnail decorative>
       <img src=${PLACEHOLDER_SRC} alt="" />
     </swc-thumbnail>
+    <button disabled>
+      <swc-thumbnail>
+        <img src=${PLACEHOLDER_SRC} alt="File preview" />
+      </swc-thumbnail>
+      Upload file
+    </button>
   `,
   parameters: { flexLayout: 'row-wrap' },
   tags: ['a11y'],
