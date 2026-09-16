@@ -12,8 +12,8 @@ on:
           - snapshot
           - snapshot-test
       branch:
-        description: 'Branch to snapshot. Leave blank to use the branch you dispatched from. Set it to snapshot a branch that does not carry this workflow file yet.'
-        required: false
+        description: 'Feature branch to snapshot (not main - main ships via the beta flow). Dispatch from main so the workflow file is current; the branch itself does not need it.'
+        required: true
         type: string
   push:
     branches:
@@ -84,13 +84,13 @@ jobs:
   # tags, or opens a PR, and `permissions: contents: read` makes that structural rather
   # than a convention.
   #
-  # To snapshot a feature branch, dispatch from `main` and put the branch name in the
-  # `branch` input. Dispatch always reads the workflow file from the ref it was launched
-  # on, so running from `main` means the branch being snapshotted does NOT need to carry
-  # this file - which is what makes this usable on branches cut before this landed.
-  # (Dispatching directly from a branch that does have the file also works; the input
-  # just defaults to the dispatched ref.) Only this job is branch-aware; version-pr and
-  # publish stay pinned to main and refuse to run at all when `branch` is set.
+  # Feature-branch-only by design. Dispatch from `main` (so the workflow file is current)
+  # and set the required `branch` input to the feature branch. Dispatch always reads the
+  # workflow file from the ref it was launched on, so the branch being snapshotted does
+  # NOT need to carry this file - which is what makes it usable on branches cut before
+  # this landed. `main` is rejected as a target (guard step below); it ships via the beta
+  # flow, never a snapshot. Only this job is branch-aware; version-pr and publish stay
+  # pinned to main and skip whenever `branch` is set.
   #
   # gen2 lives in changesets' persistent pre mode (`2nd-gen/.changeset/pre.json`, tag
   # `beta`), and changesets refuses `--snapshot` while that file is present ("Snapshot
@@ -112,13 +112,25 @@ jobs:
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
+      - name: Reject main as a snapshot target
+        env:
+          TARGET: ${{ github.event.inputs.branch }}
+        run: |
+          # Snapshots are feature-branch-only. `branch` is a required input, but this also
+          # rejects someone typing `main` into it - main ships through the real beta flow,
+          # never a throwaway snapshot.
+          if [ -z "$TARGET" ] || [ "$TARGET" = "main" ] || [ "$TARGET" = "refs/heads/main" ]; then
+            echo "::error::gen2 snapshots are for feature branches only. Set 'branch' to your feature branch; main releases via the beta flow."
+            exit 1
+          fi
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # The code being snapshotted. Resolves against THIS repo, so fork branches are
-          # not reachable here - snapshots are for internal branches only, which also
-          # keeps fork code away from the npm token.
-          ref: ${{ github.event.inputs.branch || github.ref }}
+          # The feature branch being snapshotted. Resolves against THIS repo, so fork
+          # branches are unreachable here - snapshots are internal-only, which also keeps
+          # fork code away from the npm token.
+          ref: ${{ github.event.inputs.branch }}
           fetch-depth: 0
 
       - name: Setup job and install dependencies
