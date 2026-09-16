@@ -11,10 +11,10 @@
  */
 
 :host {
-  /* No default width. The field fills its container. Set
-     `--swc-text-field-width` (or constrain the host) to give it a fixed width. */
   display: block;
   inline-size: var(--swc-text-field-width, auto);
+
+  --swc-field-input-min-inline-size: token("component-height-100");
 }
 
 * {
@@ -97,24 +97,12 @@ slot[name="prefix"]::slotted(*) {
   border-color: token("gray-900");
 }
 
-/* The ring shows only on keyboard focus. Native `:focus-visible` can't express
-   this: text inputs match it on pointer click too. `TextFieldBase` tracks input
-   modality and sets the `keyboard-focused` custom state to gate the ring. */
+/* Gated on the `keyboard-focused` state set by `TextFieldBase`, not
+   `:focus-visible`: text inputs match `:focus-visible` on pointer click too,
+   which would show the ring on mouse click. */
 :host(:state(keyboard-focused)) .swc-TextField-control {
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
   outline-offset: token("focus-ring-gap");
-}
-
-/* ── Number input ─────────────────────────────────── */
-
-:host([type="number"]) .input {
-  appearance: textfield;
-}
-
-:host([type="number"]) .input::-webkit-inner-spin-button,
-:host([type="number"]) .input::-webkit-outer-spin-button {
-  margin: 0;
-  appearance: none;
 }
 
 /* ── Invalid ──────────────────────────────────────── */
@@ -172,4 +160,24 @@ slot[name="prefix"]::slotted(*) {
   --_swc-text-field-border-radius: token("corner-radius-medium-size-extra-large");
   --_swc-text-field-validation-icon-size: token("workflow-icon-extra-large");
   --swc-field-input-min-inline-size: token("component-height-300");
+}
+
+/* ── High contrast ────────────────────────────────── */
+
+@media (forced-colors: active) {
+  /* The bordered wrapper is a <div>, not the native :disabled <input>, so the UA
+     won't dim it. Force the disabled treatment to the system GrayText. */
+  :host(:state(disabled)) .swc-TextField-control {
+    border-color: GrayText;
+  }
+
+  :host(:state(disabled)) .input,
+  :host(:state(disabled)) slot[name="prefix"]::slotted(*) {
+    color: GrayText;
+  }
+
+  /* Use the system focus color for the keyboard-focus ring. */
+  :host(:state(keyboard-focused)) .swc-TextField-control {
+    outline-color: Highlight;
+  }
 }
