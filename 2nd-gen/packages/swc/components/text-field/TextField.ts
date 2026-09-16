@@ -34,8 +34,8 @@ const INPUT_ID = 'input';
  * @element swc-text-field
  * @since 2.0.0-beta.1
  *
- * @cssprop --swc-text-field-width - Inline size of the field. Unset by default, so the field fills its container (like React Spectrum); set it for a fixed width.
- * @cssprop --swc-field-label-max-inline-size - Max width of the visible label before it wraps. Unset by default (the label wraps late, like React Spectrum); set it to wrap a long label sooner and give a `side` input more room.
+ * @cssprop --swc-text-field-width - Inline size of the field. Unset by default, so the field fills its container; set it for a fixed width.
+ * @cssprop --swc-field-label-max-inline-size - Max width of the visible label before it wraps. Unset by default (the label wraps late); set it to wrap a long label sooner and give a `side` input more room.
  *
  * @example
  * <swc-text-field></swc-text-field>
@@ -85,9 +85,7 @@ export class TextField extends TextFieldBase {
   }
 
   protected override render(): TemplateResult {
-    // The required indicator (asterisk) is rendered by the shared label; only
-    // the invalid AlertTriangle ships here. A valid-state checkmark is not yet
-    // in scope.
+  
     return html`
       <div class="swc-Field swc-TextField">
         ${this.renderLabel(INPUT_ID, {
@@ -95,7 +93,7 @@ export class TextField extends TextFieldBase {
           necessityIndicator: this.necessityIndicator,
           necessityIcon: html`<swc-ui-icon
             icon="asterisk"
-            size=${this.size === 's' ? 'm' : this.size}
+            size=${this.size}
           ></swc-ui-icon>`,
         })}
         <div

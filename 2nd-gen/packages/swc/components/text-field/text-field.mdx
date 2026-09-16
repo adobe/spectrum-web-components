@@ -72,7 +72,7 @@ Text fields can exist in various states:
 
 ### Label overflow
 
-A long visible label wraps onto multiple lines instead of clipping. In `side` position, the label wraps within its column and the input aligns to the label's first line: a short side label reads as centered against the input, while a long one keeps the input at the top and grows downward past it. By default the label wraps late and the input shrinks toward a control-height square (matching React Spectrum); set `--swc-field-label-max-inline-size` to cap the label so it wraps sooner and leaves the input more room, or widen the field with `--swc-text-field-width`.
+A long visible label wraps onto multiple lines instead of clipping. In `side` position, the label wraps within its column and the input aligns to the label's first line: a short side label reads as centered against the input, while a long one keeps the input at the top and grows downward past it. By default the label wraps late and the input shrinks toward a control-height square; set `--swc-field-label-max-inline-size` to cap the label so it wraps sooner and leaves the input more room, or widen the field with `--swc-text-field-width`.
 
 <Canvas of={TextFieldStories.LabelOverflow} />
 
@@ -83,7 +83,7 @@ A long visible label wraps onto multiple lines instead of clipping. In `side` po
 - **Native role**: the host sets no ARIA role; the real `<input>` supplies the implicit `textbox` role.
 - **Browser-resolved name**: each source is wired independently, and the browser's accessible-name computation picks the one that is announced, in the order `accessible-labelledby` &gt; `accessible-label` &gt; slotted label. A slotted visible label always renders as a real `<label for>`, keeping native click-to-focus.
 - **Combining descriptions**: a slotted `description` and an external `accessible-describedby` reference combine rather than override each other; the in-shadow description comes first.
-- **Error text replaces the description while invalid**: following React Spectrum's [TextField](https://react-spectrum.adobe.com/TextField) strategy, the slotted `error-text` replaces the description while `invalid` is `true`, so `aria-describedby` references only the message on screen rather than pointing at the error separately via `aria-errormessage`, since AT support for that attribute is still inconsistent.
+- **Error text replaces the description while invalid**: the slotted `error-text` replaces the description while `invalid` is `true`, so `aria-describedby` references only the message on screen rather than pointing at the error separately via `aria-errormessage`, since AT support for that attribute is still inconsistent.
 - **Dev-mode warnings**: a field with no visible label, no `accessible-label`, and no `accessible-labelledby` triggers a console warning, and so does a field that sets both `accessible-labelledby` and `accessible-label`.
 
 > **Known axe-core false positive.** A field named only via `accessible-labelledby` fails automated axe-core scans with a "Form element does not have a label" (`label` rule) violation, even though the name resolves correctly in real browsers and assistive technology. axe-core inspects DOM attributes and has no standardized way to read `ariaLabelledByElements`, the ARIA element-reflection API in use.

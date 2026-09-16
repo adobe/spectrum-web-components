@@ -57,10 +57,6 @@
 }
 
 /* ── Prefix ───────────────────────────────────────── */
-
-/* Non-interactive leading content (icon, symbol, avatar). `pointer-events: none`
-   passes clicks through to focus the input. A slotted icon auto-sizes to React
-   Spectrum's `fontRelative(20)` (20/14em); avatars/images keep their own size. */
 slot[name="prefix"]::slotted(*) {
   --swc-icon-inline-size: calc(20 / 14 * 1em);
   --swc-icon-block-size: calc(20 / 14 * 1em);
@@ -125,7 +121,6 @@ slot[name="prefix"]::slotted(*) {
   color: token("disabled-content-color");
 }
 
-/* No Figma for prefix; per React Spectrum, dim it with the field. */
 :host(:state(disabled)) slot[name="prefix"]::slotted(*) {
   color: token("disabled-content-color");
 }
