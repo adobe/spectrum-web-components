@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.12.4
+
+### Patch Changes
+
+- [#6735](https://github.com/adobe/spectrum-web-components/pull/6735) [`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b) Thanks [@blunteshwar](https://github.com/blunteshwar)! - Add `@deprecated` JSDoc to `sp-action-group`'s `vertical`, `selects`, `selected`, and `emphasized`, plus a runtime `window.__swc.warn()` deprecation notice on the `selected` setter, ahead of removal in gen2 `<swc-action-group>`.
+
+- Updated dependencies [[`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b)]:
+  - @spectrum-web-components/base@1.12.4
+  - @spectrum-web-components/reactive-controllers@1.12.4
+  - @spectrum-web-components/action-button@1.12.4
+  - @spectrum-web-components/icons-workflow@1.12.4
+
 ## 1.12.2
 
 ### Patch Changes
