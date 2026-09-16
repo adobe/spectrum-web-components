@@ -1,0 +1,136 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+import { expect, test } from '@playwright/test';
+
+import { gotoStory } from '../../../utils/a11y-helpers.js';
+
+/**
+ * Accessibility tests for Thumbnail component
+ *
+ * ARIA snapshot tests validate the accessibility tree structure.
+ * aXe WCAG compliance and color contrast validation are run via
+ * test-storybook (see .storybook/test-runner.ts). Both are included
+ * in the `test:a11y` command.
+ */
+
+test.describe('Thumbnail - ARIA Snapshots', () => {
+  test('should expose img role with alt text for a labeled thumbnail', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-thumbnail--overview',
+      'swc-thumbnail'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - img "Preview"
+    `);
+  });
+
+  test('should hide a decorative thumbnail from the accessibility tree', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-thumbnail--accessibility',
+      'swc-thumbnail'
+    );
+    const thumbnails = root.locator('swc-thumbnail');
+    const decorative = thumbnails.nth(1);
+    expect(
+      await decorative.getAttribute('aria-hidden'),
+      'aria-hidden on decorative host'
+    ).toBe('true');
+    await expect(root).toMatchAriaSnapshot(`
+      - img "Preview"
+    `);
+  });
+
+  test('should expose correct img role for all size variants', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-thumbnail--sizes',
+      'swc-thumbnail'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - img "Preview, size 50"
+      - img "Preview, size 75"
+      - img "Preview, size 100"
+      - img "Preview, size 200"
+      - img "Preview, size 300"
+      - img "Preview, size 400"
+      - img "Preview, size 500"
+      - img "Preview, size 600"
+      - img "Preview, size 700"
+      - img "Preview, size 800"
+      - img "Preview, size 900"
+      - img "Preview, size 1000"
+    `);
+  });
+
+  test('should stay accessible when embedded in a real disabled parent', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-thumbnail--accessibility',
+      'swc-thumbnail'
+    );
+    const button = root.locator('button');
+    await expect(button).toMatchAriaSnapshot(`
+      - button "File preview Upload file" [disabled]:
+        - img "File preview"
+        - text: Upload file
+    `);
+  });
+
+  test('should expose correct img role for fit variants', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'components-thumbnail--fit',
+      'swc-thumbnail'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - img "Preview, fit cover"
+      - img "Preview, fit contain"
+    `);
+  });
+
+  test('should remain in the accessibility tree when a consumer applies its own disabled/selected styling', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-thumbnail--consumer-styled-states',
+      'swc-thumbnail'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - img "Disabled preview"
+      - img "Selected preview"
+    `);
+  });
+
+  test('should not be keyboard focusable', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'components-thumbnail--overview',
+      'swc-thumbnail'
+    );
+    const thumbnail = root.locator('swc-thumbnail');
+    await expect(thumbnail).not.toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(thumbnail).not.toBeFocused();
+  });
+});

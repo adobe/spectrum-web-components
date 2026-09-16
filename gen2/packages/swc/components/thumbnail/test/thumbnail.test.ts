@@ -232,6 +232,34 @@ export const FitInvalidFallbackTest: Story = {
   },
 };
 
+export const DroppedLegacyPropertiesTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step(
+      'does not declare background, layer, disabled, focused, or selected as reactive properties',
+      async () => {
+        for (const legacyProp of [
+          'background',
+          'layer',
+          'disabled',
+          'focused',
+          'selected',
+        ]) {
+          expect(
+            legacyProp in thumbnail,
+            `"${legacyProp}" is not a property on swc-thumbnail`
+          ).toBe(false);
+        }
+      }
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Variants / States
 // ──────────────────────────────────────────────────────────────
@@ -337,6 +365,62 @@ export const DecorativeToggleTest: Story = {
   },
 };
 
+export const DecorativeAltFallbackTest: Story = {
+  render: () => html`
+    <swc-thumbnail decorative><img src="a.png" /></swc-thumbnail>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step(
+      'sets alt="" on a slotted image with no alt when decorative',
+      async () => {
+        const image = thumbnail.querySelector('img') as HTMLImageElement;
+        expect(
+          image.getAttribute('alt'),
+          'alt attribute defaults to empty string'
+        ).toBe('');
+      }
+    );
+  },
+};
+
+export const NotFocusableTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step('has no ARIA role on the host', async () => {
+      expect(thumbnail.getAttribute('role'), 'host role attribute').toBeNull();
+    });
+
+    await step('is not in the tab order', async () => {
+      expect(thumbnail.tabIndex, 'tabIndex is -1').toBe(-1);
+    });
+
+    await step(
+      'does not receive focus when focused programmatically',
+      async () => {
+        thumbnail.focus();
+        expect(
+          document.activeElement,
+          'activeElement is not the thumbnail'
+        ).not.toBe(thumbnail);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Dev mode warnings
+// ──────────────────────────────────────────────────────────────
+
 export const MissingAltWarningTest: Story = {
   render: () => '',
   play: async ({ canvasElement, step }) => {
@@ -364,5 +448,97 @@ export const MissingAltWarningTest: Story = {
       }
       expect(count).toBe(1);
     });
+  },
+};
+
+export const NoSlottedImageWarningTest: Story = {
+  render: () => html`
+    <swc-thumbnail></swc-thumbnail>
+  `,
+  play: async ({ canvasElement, step }) => {
+    await step('does not warn or throw when no image is slotted', async () => {
+      await withWarningSpy(async (warnCalls) => {
+        const thumbnail = await getComponent<Thumbnail>(
+          canvasElement,
+          'swc-thumbnail'
+        );
+        thumbnail.decorative = true;
+        await thumbnail.updateComplete;
+        thumbnail.decorative = false;
+        await thumbnail.updateComplete;
+
+        expect(
+          warnCalls.length,
+          'no warning is emitted without a slotted image'
+        ).toBe(0);
+      });
+    });
+  },
+};
+
+export const AltAccessibleNameNoWarningTest: Story = {
+  render: () => '',
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'does not warn when the slotted image has a meaningful alt',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const thumbnail = document.createElement(
+            'swc-thumbnail'
+          ) as Thumbnail;
+          thumbnail.innerHTML = '<img src="a.png" alt="Layer 1 preview" />';
+          canvasElement.appendChild(thumbnail);
+          await thumbnail.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'no warnings are emitted for a labeled image'
+          ).toBe(0);
+        })
+    );
+  },
+};
+
+export const AriaLabelNoWarningTest: Story = {
+  render: () => '',
+  play: async ({ canvasElement, step }) => {
+    await step('does not warn when the slotted image has an aria-label', () =>
+      withWarningSpy(async (warnCalls) => {
+        const thumbnail = document.createElement('swc-thumbnail') as Thumbnail;
+        thumbnail.innerHTML =
+          '<img src="a.png" aria-label="Layer 1 preview" />';
+        canvasElement.appendChild(thumbnail);
+        await thumbnail.updateComplete;
+
+        expect(
+          warnCalls.length,
+          'no warnings are emitted for an aria-labeled image'
+        ).toBe(0);
+      })
+    );
+  },
+};
+
+export const AriaLabelledbyNoWarningTest: Story = {
+  render: () => '',
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'does not warn when the slotted image has an aria-labelledby',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const thumbnail = document.createElement(
+            'swc-thumbnail'
+          ) as Thumbnail;
+          thumbnail.innerHTML =
+            '<img src="a.png" aria-labelledby="ext-label" />';
+          canvasElement.appendChild(thumbnail);
+          await thumbnail.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'no warnings are emitted for an aria-labelledby image'
+          ).toBe(0);
+        })
+    );
   },
 };
