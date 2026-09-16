@@ -4,17 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'NPM dist-tag for the throwaway snapshot. Deliberately not `next` - that channel is fed by main, so pointing it at a branch build would mislead anyone installing @next.'
+        description: 'NPM dist-tag for the throwaway snapshot. Not `next` - that channel is fed by main, so a branch build under it would mislead anyone installing @next.'
         required: false
         default: 'snapshot'
         type: choice
         options:
           - snapshot
           - snapshot-test
-      branch:
-        description: 'Feature branch to snapshot. Leave blank to instead run a real release from main. Dispatch from main so the workflow file is current; the branch itself does not need it.'
-        required: false
-        type: string
   push:
     branches:
       - main
@@ -22,21 +18,19 @@ on:
       - '2nd-gen/**'
 
 # Scoped to this workflow so a gen1 run and a gen2 run never block on each other -
-# both used to share the same `publish-${{ github.ref }}` group string.
-# Keyed on the branch actually being operated on, so snapshots of two different feature
-# branches run in parallel. For a push (no `branch` input) this falls back to github.ref
-# and behaves exactly as before: a main release still serializes against a main snapshot.
+# both used to share the same `publish-${{ github.ref }}` group string. Keyed on the ref,
+# so snapshots of two different feature branches run in parallel and a main release still
+# serializes against itself.
 concurrency:
-  group: publish-gen2-${{ github.event.inputs.branch || github.ref }}
+  group: publish-gen2-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
   check-changesets:
     runs-on: ubuntu-latest
-    # Deliberately NOT branch-gated: the snapshot job below is allowed to run from any
-    # branch (dispatch a feature branch to publish a throwaway build of it). The
-    # main-only restriction lives on version-pr and publish instead, so the real release
-    # path still cannot run from anywhere but main.
+    # Deliberately NOT branch-gated: the snapshot job runs from a feature branch, so this
+    # job (which it needs) must run there too and count that branch's changesets. The
+    # main-only restriction lives on version-pr and publish instead.
     outputs:
       has_changesets: ${{ steps.check.outputs.has_changesets }}
       needs_publish: ${{ steps.check.outputs.needs_publish }}
@@ -44,9 +38,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # Follows the `branch` input so the changeset count below reflects the branch
-          # actually being snapshotted. Falls back to the dispatched/pushed ref.
-          ref: ${{ github.event.inputs.branch || github.ref }}
+          # The dispatched/pushed ref - main for a release, the feature branch for a
+          # snapshot - so the changeset count below reflects whatever is being run.
           fetch-depth: 0 # need tags so the needs_publish idempotency check below can see them
 
       - name: Check for gen2 changesets
@@ -84,13 +77,11 @@ jobs:
   # tags, or opens a PR, and `permissions: contents: read` makes that structural rather
   # than a convention.
   #
-  # Feature-branch-only by design. Dispatch from `main` (so the workflow file is current)
-  # and set the `branch` input to the feature branch. Dispatch always reads the workflow
-  # file from the ref it was launched on, so the branch being snapshotted does NOT need to
-  # carry this file - which is what makes it usable on branches cut before this landed.
-  # A blank `branch`, or `branch: main`, skips this job (see the `if` below) so a manual
-  # release dispatch from main flows to version-pr/publish untouched. main ships via the
-  # beta flow, never a snapshot.
+  # Feature-branch-only by design. Run it from your feature branch (Actions -> Run
+  # workflow -> pick the branch); it snapshots whatever ref it was dispatched on. It
+  # refuses to run from `main` (see the `if` below) - main ships via the beta flow, never
+  # a throwaway snapshot. workflow_dispatch requires repo write access and only targets
+  # in-repo branches, so fork code can never reach this job or the npm token.
   #
   # gen2 lives in changesets' persistent pre mode (`2nd-gen/.changeset/pre.json`, tag
   # `beta`), and changesets refuses `--snapshot` while that file is present ("Snapshot
@@ -102,15 +93,11 @@ jobs:
   # can never collide with a real `2.0.0-beta.N` or with the eventual stable `2.0.0`.
   snapshot:
     needs: check-changesets
-    # Runs only when a `branch` input names a real feature branch. A blank branch (a manual
-    # release dispatch from main) or `branch: main` SKIPS this job rather than failing it,
-    # so it never gets in the way of a real release - which flows to version-pr/publish
-    # below instead. That's why the guard lives in this `if`, not a failing step.
+    # Dispatch-triggered and never from main: a snapshot is only for a feature branch. A
+    # dispatch from main is a real manual release and flows to version-pr/publish instead.
     if: >-
       github.event_name == 'workflow_dispatch' &&
-      github.event.inputs.branch != '' &&
-      github.event.inputs.branch != 'main' &&
-      github.event.inputs.branch != 'refs/heads/main' &&
+      github.ref != 'refs/heads/main' &&
       needs.check-changesets.outputs.has_changesets == 'true'
     runs-on: ubuntu-latest
     environment: npm-publish
@@ -122,10 +109,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # The feature branch being snapshotted. Resolves against THIS repo, so fork
-          # branches are unreachable here - snapshots are internal-only, which also keeps
-          # fork code away from the npm token.
-          ref: ${{ github.event.inputs.branch }}
+          # The dispatched feature branch itself (github.ref). No cross-branch checkout,
+          # so there's nothing to point at a fork.
           fetch-depth: 0
 
       - name: Setup job and install dependencies
@@ -185,7 +170,7 @@ jobs:
         if: always()
         env:
           TAG: ${{ steps.extract-tag.outputs.tag }}
-          TARGET_REF: ${{ github.event.inputs.branch || github.ref }}
+          TARGET_REF: ${{ github.ref_name }}
           CORE_VERSION: ${{ steps.versions.outputs.core }}
           SWC_VERSION: ${{ steps.versions.outputs.swc }}
           ICONS_VERSION: ${{ steps.versions.outputs.icons }}
@@ -216,14 +201,11 @@ jobs:
   # same branch.
   version-pr:
     needs: check-changesets
-    # Main-only: check-changesets is no longer branch-gated (so snapshot can target a
-    # feature branch), so the real release path carries that restriction itself.
-    # `!inputs.branch` matters as much as the ref check: when a branch is supplied,
-    # check-changesets counted THAT branch's changesets, so its outputs must not be
-    # allowed to drive a release against main.
+    # Main-only: check-changesets is not branch-gated (so snapshot can run from a feature
+    # branch), so the release path carries the restriction itself. A snapshot runs from a
+    # feature branch (github.ref != main), so the ref check alone keeps the two apart.
     if: >-
       github.ref == 'refs/heads/main' &&
-      !github.event.inputs.branch &&
       needs.check-changesets.outputs.has_changesets == 'true'
     runs-on: ubuntu-latest
     permissions:
@@ -272,11 +254,9 @@ jobs:
   # since it's the only one that actually publishes to npm.
   publish:
     needs: check-changesets
-    # Main-only, and never on a branch-targeted dispatch - see the matching comment on
-    # version-pr above for why `!inputs.branch` is load-bearing here.
+    # Main-only - a snapshot runs from a feature branch, so the ref check keeps them apart.
     if: >-
       github.ref == 'refs/heads/main' &&
-      !github.event.inputs.branch &&
       needs.check-changesets.outputs.has_changesets == 'false' &&
       needs.check-changesets.outputs.needs_publish == 'true'
     runs-on: ubuntu-latest
