@@ -45,7 +45,7 @@ export const firstGenA11yProject: PlaywrightTestProject = {
   },
 };
 
-export const secondGenA11yProject: PlaywrightTestProject = {
+export const gen2A11yProject: PlaywrightTestProject = {
   name: 'gen2',
   testDir: './gen2/',
   testMatch: [
@@ -72,7 +72,7 @@ export const firstGenStorybookServer: PlaywrightTestConfig['webServer'] = {
 // modules in parallel. CI jobs must run `storybook:build` before invoking
 // Playwright (see `.circleci/config.yml`). Locally we keep the dev server for
 // fast iteration.
-export const secondGenComponentsOnlyStorybookServer: PlaywrightTestConfig['webServer'] =
+export const gen2ComponentsOnlyStorybookServer: PlaywrightTestConfig['webServer'] =
   {
     command: process.env.CI
       ? 'npx http-server gen2/packages/swc/storybook-static -p 6006 --silent'

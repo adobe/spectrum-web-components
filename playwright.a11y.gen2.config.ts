@@ -14,8 +14,8 @@ import type { PlaywrightTestConfig } from '@playwright/test';
 import {
   a11yReporter,
   a11yUse,
-  secondGenA11yProject,
-  secondGenComponentsOnlyStorybookServer,
+  gen2A11yProject,
+  gen2ComponentsOnlyStorybookServer,
 } from './playwright.a11y.shared.config';
 
 const config: PlaywrightTestConfig = {
@@ -27,9 +27,9 @@ const config: PlaywrightTestConfig = {
 
   use: a11yUse,
 
-  projects: [secondGenA11yProject],
+  projects: [gen2A11yProject],
 
-  webServer: secondGenComponentsOnlyStorybookServer,
+  webServer: gen2ComponentsOnlyStorybookServer,
 };
 
 export default config;

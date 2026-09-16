@@ -54,7 +54,7 @@ const ROOT = join(__dirname, '..');
 const FIRST_GEN_PACKAGES = join(ROOT, '1st-gen/packages');
 const FIRST_GEN_CONTENT = join(ROOT, '1st-gen/projects/documentation/content');
 const FIRST_GEN_REF_DIR = join(FIRST_GEN_CONTENT, 'reference');
-const SECOND_GEN_COMPONENTS = join(ROOT, 'gen2/packages/swc/components');
+const GEN2_COMPONENTS = join(ROOT, 'gen2/packages/swc/components');
 const SKILL_SOURCE_DIR = join(ROOT, 'gen2/packages/ai/skills');
 
 /**
@@ -430,10 +430,10 @@ function listGen1Components() {
  * Returns [{ componentDir, guidePath }] sorted by componentDir.
  */
 function listMigrationComponents() {
-  return readdirSync(SECOND_GEN_COMPONENTS)
+  return readdirSync(GEN2_COMPONENTS)
     .map((dir) => ({
       componentDir: dir,
-      guidePath: join(SECOND_GEN_COMPONENTS, dir, 'migration-guide.mdx'),
+      guidePath: join(GEN2_COMPONENTS, dir, 'migration-guide.mdx'),
     }))
     .filter((c) => existsSync(c.guidePath))
     .sort((a, b) => a.componentDir.localeCompare(b.componentDir));

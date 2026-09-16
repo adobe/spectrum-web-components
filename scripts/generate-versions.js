@@ -75,13 +75,10 @@ export const coreVersion = '${coreVersion || version}';
 }
 
 // Generate gen2 version first (this is the core)
-const secondGenPkgPath = path.join(root, 'gen2/packages/core/package.json');
-const secondGenOutputPath = path.join(
-  root,
-  'gen2/packages/core/element/version.ts'
-);
+const gen2PkgPath = path.join(root, 'gen2/packages/core/package.json');
+const gen2OutputPath = path.join(root, 'gen2/packages/core/element/version.ts');
 
-generateVersion(secondGenPkgPath, secondGenOutputPath, {
+generateVersion(gen2PkgPath, gen2OutputPath, {
   generationName: 'gen2',
 });
 

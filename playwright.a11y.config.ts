@@ -16,8 +16,8 @@ import {
   a11yUse,
   firstGenA11yProject,
   firstGenStorybookServer,
-  secondGenA11yProject,
-  secondGenComponentsOnlyStorybookServer,
+  gen2A11yProject,
+  gen2ComponentsOnlyStorybookServer,
 } from './playwright.a11y.shared.config';
 
 const config: PlaywrightTestConfig = {
@@ -29,9 +29,9 @@ const config: PlaywrightTestConfig = {
 
   use: a11yUse,
 
-  projects: [firstGenA11yProject, secondGenA11yProject],
+  projects: [firstGenA11yProject, gen2A11yProject],
 
-  webServer: [firstGenStorybookServer, secondGenComponentsOnlyStorybookServer],
+  webServer: [firstGenStorybookServer, gen2ComponentsOnlyStorybookServer],
 };
 
 export default config;
