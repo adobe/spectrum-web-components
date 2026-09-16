@@ -83,7 +83,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
   private _emphasized = false;
 
   /**
-   * Hold affordance is not included in the initial 2nd-gen `swc-action-button`
+   * Hold affordance is not included in the initial gen2 `swc-action-button`
    * release. It is planned for a future phase. See the action-button migration
    * plan for consumer options in the interim.
    */

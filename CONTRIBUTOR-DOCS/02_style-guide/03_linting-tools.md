@@ -25,13 +25,13 @@
     - [VS Code / Cursor](#vs-code--cursor)
     - [Troubleshooting IDE issues](#troubleshooting-ide-issues)
 - [Generation-specific notes](#generation-specific-notes)
-    - [2nd-gen](#2nd-gen)
+    - [gen2](#gen2)
     - [1st-gen](#1st-gen)
 - [Common rules and conventions](#common-rules-and-conventions)
     - [Copyright headers](#copyright-headers)
     - [Import sorting](#import-sorting)
     - [CSS property ordering](#css-property-ordering)
-    - [Design tokens (2nd-gen only)](#design-tokens-2nd-gen-only)
+    - [Design tokens (gen2 only)](#design-tokens-gen2-only)
     - [Accessibility (lit-a11y)](#accessibility-lit-a11y)
 - [Disabling rules](#disabling-rules)
     - [ESLint](#eslint)
@@ -88,7 +88,7 @@ Pre-commit hooks via `lint-staged` run linting and formatting on staged files au
 | -------------------------------------------------- | --------------------------------------- |
 | `stylelint-config-standard`                        | Baseline CSS rules                      |
 | `stylelint-order`                                  | Logical order property ordering         |
-| `stylelint-declaration-strict-value`               | Design token enforcement (2nd-gen only) |
+| `stylelint-declaration-strict-value`               | Design token enforcement (gen2 only) |
 | `@spectrum-web-components/stylelint-header-plugin` | Custom header comment rule              |
 
 ## Running linters
@@ -99,7 +99,7 @@ Pre-commit hooks via `lint-staged` run linting and formatting on staged files au
 | ---------------------- | ----------------------------------------- |
 | `yarn lint`            | Check all (ESLint, Stylelint, Prettier)   |
 | `yarn lint:1st-gen`    | Check all on 1st-gen only                 |
-| `yarn lint:2nd-gen`    | Check all on 2nd-gen only                 |
+| `yarn lint:gen2`    | Check all on gen2 only                 |
 | `yarn lint:eslint`     | Check JavaScript/TypeScript only          |
 | `yarn lint:styles`     | Check CSS only                            |
 | `yarn lint:prettier`   | Check formatting only                     |
@@ -135,7 +135,7 @@ Set the `LINT_PATH` environment variable to limit lint or format to a single dir
 ```bash
 # Lint one package or directory
 LINT_PATH=1st-gen/packages/checkbox yarn lint
-LINT_PATH=2nd-gen/packages/swc yarn lint
+LINT_PATH=gen2/packages/swc yarn lint
 
 # Format one package or directory
 LINT_PATH=1st-gen/packages/checkbox yarn format
@@ -151,7 +151,7 @@ LINT_PATH=1st-gen/packages/checkbox yarn format:styles
 For generation-wide linting without a path, you can also use:
 
 - `yarn lint:1st-gen` — Runs all linters on `1st-gen` only
-- `yarn lint:2nd-gen` — Runs all linters on `2nd-gen` only
+- `yarn lint:gen2` — Runs all linters on `gen2` only
 
 ### Pre-commit hooks
 
@@ -189,9 +189,9 @@ If linting isn't working in your IDE:
 
 ## Generation-specific notes
 
-### 2nd-gen
+### gen2
 
-- Uses root `eslint.config.js` with 2nd-gen specific overrides
+- Uses root `eslint.config.js` with gen2 specific overrides
 - Import sorting via `simple-import-sort` with custom groups
 - Accessibility linting via `eslint-plugin-lit-a11y` with targeted allow-lists
 - Stylelint enforces design tokens via `stylelint-declaration-strict-value`
@@ -229,9 +229,9 @@ Import groups are ordered as:
 
 CSS properties are sorted in a custom logical order by `stylelint-order`, defined in [`stylelint-property-order.js`](../../linters/stylelint-property-order.js). Run `yarn format:styles` to sort properties.
 
-### Design tokens (2nd-gen only)
+### Design tokens (gen2 only)
 
-In 2nd-gen CSS files, use design tokens (CSS custom properties) instead of hardcoded values for:
+In gen2 CSS files, use design tokens (CSS custom properties) instead of hardcoded values for:
 
 - `color`, `background-color`, `border-color`
 - `fill`, `stroke`

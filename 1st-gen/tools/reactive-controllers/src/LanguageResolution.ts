@@ -14,7 +14,7 @@ import type { ReactiveController, ReactiveElement } from 'lit';
 
 import { observeAttribute } from './AttributeObserver.js';
 
-// TODO: Update this when theme is migrated to 2nd-gen
+// TODO: Update this when theme is migrated to gen2
 type ProvideLang = {
   callback: (lang: string, unsubscribe: () => void) => void;
 };

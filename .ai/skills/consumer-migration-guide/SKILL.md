@@ -1,7 +1,7 @@
 ---
 name: consumer-migration-guide
 description: Use when creating a per-component migration guide for application developers upgrading from Spectrum 1 Web Components to Spectrum 2 components.
-globs: 2nd-gen/packages/swc/components/*/migration-guide.mdx
+globs: gen2/packages/swc/components/*/migration-guide.mdx
 alwaysApply: false
 ---
 
@@ -26,8 +26,8 @@ Create per-component migration guidance for application developers upgrading app
 ### Output
 
 - **One `.mdx` file per component** at:
-  `2nd-gen/packages/swc/components/[component-name]/migration-guide.mdx`
-- The file is Storybook-renderable MDX. Start every guide with this template so it picks up the `Components` title prefix wired in `2nd-gen/packages/swc/.storybook/main.ts`:
+  `gen2/packages/swc/components/[component-name]/migration-guide.mdx`
+- The file is Storybook-renderable MDX. Start every guide with this template so it picks up the `Components` title prefix wired in `gen2/packages/swc/.storybook/main.ts`:
 
   ```mdx
   import { Meta } from '@storybook/addon-docs/blocks';
@@ -46,9 +46,9 @@ Create per-component migration guidance for application developers upgrading app
 
 ### Step 0: Read the migration plan first
 
-Before writing anything, read `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md`. Locate every item in the documentation checklist that is flagged as "deferred to consumer migration guide" — these are the breaking changes Phase 7 has already identified as needing coverage here. They are the primary input for this guide's `## What changed` and `## Update your code` sections. If the migration plan is absent, derive the breaking changes from the 1st-gen and 2nd-gen source comparison and note the risk.
+Before writing anything, read `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md`. Locate every item in the documentation checklist that is flagged as "deferred to consumer migration guide" — these are the breaking changes Phase 7 has already identified as needing coverage here. They are the primary input for this guide's `## What changed` and `## Update your code` sections. If the migration plan is absent, derive the breaking changes from the 1st-gen and gen2 source comparison and note the risk.
 
-**Scope the guide to what actually shipped.** The migration plan categories (Must-ship, Additive, Deferred) reflect planning intent, not final state — by the time the guide is written, some Additive items may have been implemented and some Must-ship items may have slipped. The 2nd-gen source is the only authority. For every feature you consider including: verify it exists in the shipped source. If it is there, include it regardless of how the plan categorized it. If it is not in the source, exclude it regardless of how the plan categorized it.
+**Scope the guide to what actually shipped.** The migration plan categories (Must-ship, Additive, Deferred) reflect planning intent, not final state — by the time the guide is written, some Additive items may have been implemented and some Must-ship items may have slipped. The gen2 source is the only authority. For every feature you consider including: verify it exists in the shipped source. If it is there, include it regardless of how the plan categorized it. If it is not in the source, exclude it regardless of how the plan categorized it.
 
 ### Consistent import and tag patterns
 
@@ -59,7 +59,7 @@ All guides follow the same import and tag name conventions. Do not grep for thes
 | Tag                | `sp-[component]`                                         | `swc-[component]`                                              |
 | Side-effect import | `@spectrum-web-components/[component]/sp-[component].js` | `@adobe/spectrum-wc/components/[component]/swc-[component].js` |
 
-Use the badge guide at `2nd-gen/packages/swc/components/badge/migration-guide.mdx` as the canonical format reference.
+Use the badge guide at `gen2/packages/swc/components/badge/migration-guide.mdx` as the canonical format reference.
 
 ### Required source inputs
 
@@ -67,7 +67,7 @@ Verify claims against the real implementation and docs before writing:
 
 - **Migration plan:** `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md` — primary source for what breaking changes to cover (see Step 0 above)
 - **Spectrum 1 docs and source:** `1st-gen/packages/[component-name]/README.md`, public element files such as `sp-*.ts`, stories, and tests when needed
-- **Spectrum 2 docs and source:** `2nd-gen/packages/swc/components/[component-name]/`, stories, tests, and any package README or docs that describe the public API
+- **Spectrum 2 docs and source:** `gen2/packages/swc/components/[component-name]/`, stories, tests, and any package README or docs that describe the public API
 - **Related migration docs:** the component's `rendering-and-styling-migration-analysis.md` and `accessibility-migration-analysis.md` when present
 
 ### Important
@@ -81,7 +81,7 @@ Verify claims against the real implementation and docs before writing:
 
 The guide must be **short, direct, and consumer-focused**. Optimize for scannability: a consumer should be able to complete a simple migration in under 5 minutes of reading. Prefer tables, short numbered steps, and before/after snippets over prose. Cut anything that is not strictly required to update product code.
 
-**Spectrum 2 supersedes Spectrum 1.** Verify every claim — especially styling hooks and public custom property names — against the actual Spectrum 2 source (`2nd-gen/packages/swc/components/[component-name]/` and `2nd-gen/packages/core/components/[component-name]/`). Do not carry Spectrum 1 conventions (e.g. `--mod-*` prefixes) into the guide unless the Spectrum 2 implementation actually uses them.
+**Spectrum 2 supersedes Spectrum 1.** Verify every claim — especially styling hooks and public custom property names — against the actual Spectrum 2 source (`gen2/packages/swc/components/[component-name]/` and `gen2/packages/core/components/[component-name]/`). Do not carry Spectrum 1 conventions (e.g. `--mod-*` prefixes) into the guide unless the Spectrum 2 implementation actually uses them.
 
 **Testing is out of scope.** Do not include sections on test selector updates, ARIA snapshot changes, or VRT approval. Consumers own their own tests; the guide's job is to explain what changed in the component, not how to re-test a consumer's app.
 
