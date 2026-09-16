@@ -138,7 +138,6 @@ export abstract class ThumbnailBase extends SpectrumElement {
     if (!this.hasAttribute('fit')) {
       this.setAttribute('fit', this.fit);
     }
-    this._syncAriaHidden();
   }
 
   protected override updated(changes: PropertyValues): void {
