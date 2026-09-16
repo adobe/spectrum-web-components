@@ -18,7 +18,7 @@
     - [1st-gen `sp-card` (secondary reference)](#1st-gen-sp-card-secondary-reference)
 - [Scope and component boundaries](#scope-and-component-boundaries)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
-- [2nd-gen API decisions](#2nd-gen-api-decisions)
+- [gen2 API decisions](#gen2-api-decisions)
     - [Shared properties (already on `CardBase`)](#shared-properties-already-on-cardbase)
     - [Variant support per component](#variant-support-per-component)
     - [Slots and layout per component](#slots-and-layout-per-component)
@@ -44,7 +44,7 @@
 
 ## TL;DR
 
-- **Scope:** three concrete components — `swc-card` (regular/collection/gallery), `swc-user-card`, `swc-product-card`. No dedicated `swc-asset-card`; that need is folded into `swc-card` until the 2nd-gen `Asset` component ships.
+- **Scope:** three concrete components — `swc-card` (regular/collection/gallery), `swc-user-card`, `swc-product-card`. No dedicated `swc-asset-card`; that need is folded into `swc-card` until the gen2 `Asset` component ships.
 - **Architecture, already built:** `CardBase` (core, behavior only) + `renderCardTemplate()` (shared SWC render function) + `card-template.css` (shared, implemented). `swc-card` is complete through all migration phases (API, styling, accessibility, tests, VRT, and documentation) and in review; `swc-user-card`/`swc-product-card` have not started.
 - **API:** `variant` is a pure style axis, independent of layout (layout is driven entirely by slot presence). `swc-user-card`/`swc-product-card` don't support `quiet`. `title`/`description` are slot-only.
 - **Clickable card, no `href` on Card:** the consumer supplies their own link in the `title` slot; `title-as-link` extends its hit area, `selectable` independently makes the card focusable and dispatches a click event. Both are implemented and tested on `CardBase`.
@@ -61,7 +61,7 @@
 - [Reference implementations](#reference-implementations)
 - [Scope and component boundaries](#scope-and-component-boundaries)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
-- [2nd-gen API decisions](#2nd-gen-api-decisions)
+- [gen2 API decisions](#gen2-api-decisions)
 - [Styling approach](#styling-approach)
 - [Accessibility decisions](#accessibility-decisions)
 - [Deferred / out of scope](#deferred--out-of-scope)
@@ -75,25 +75,25 @@
 
 ### React (primary behavior/API reference)
 
-React's card implementation is simplified to four patterns, mixed with consumer-supplied slot content for further variation. Three become dedicated 2nd-gen components; the fourth (`AssetCard`) folds into `swc-card` (see [Scope](#scope-and-component-boundaries)).
+React's card implementation is simplified to four patterns, mixed with consumer-supplied slot content for further variation. Three become dedicated gen2 components; the fourth (`AssetCard`) folds into `swc-card` (see [Scope](#scope-and-component-boundaries)).
 
 | React pattern | Maps to | Notes |
 |---|---|---|
-| `<Card/>` | `swc-card` | Drives regular, collection, and gallery layouts. Default preview aspect ratio `3/2`. Collection layout uses the `collection` slot (1–3 images, square aspect ratio). Gallery layout omits the content area entirely; styles keyed off that omission force the image to fill the space, and images provide their own aspect ratio (not square by default). Extras like Badge and Avatar are consumer-supplied and positioned via a dedicated `media` overlay slot — a 2nd-gen addition with no React equivalent. |
+| `<Card/>` | `swc-card` | Drives regular, collection, and gallery layouts. Default preview aspect ratio `3/2`. Collection layout uses the `collection` slot (1–3 images, square aspect ratio). Gallery layout omits the content area entirely; styles keyed off that omission force the image to fill the space, and images provide their own aspect ratio (not square by default). Extras like Badge and Avatar are consumer-supplied and positioned via a dedicated `media` overlay slot — a gen2 addition with no React equivalent. |
 | `<AssetCard/>` | `swc-card` (folded in) | Reason for differentiation in React is image-vs-illustration handling: image keeps its natural aspect ratio with visible space at the edges; illustration keeps its natural aspect ratio but defaults to 50% of available width with further max-width/height constraints. Preview area uses a square aspect ratio. Treated as a `swc-card` + Asset composition question, not a separate component (see Scope). |
 | `<UserCard/>` | `swc-user-card` | Adds an avatar glyph and an optional preview image, aspect ratio `3/1`. |
 | `<ProductCard/>` | `swc-product-card` | Expects a logo for the thumbnail glyph; supports an optional preview image, aspect ratio `5/1`; forces `end` alignment for footer content. |
 
 ### 1st-gen `sp-card` (secondary reference)
 
-`1st-gen/packages/card` already exists. The differences below are **deliberate redesign decisions**, not migration gaps — this section stays light on purpose and fed the consumer migration guide (`2nd-gen/packages/swc/components/card/migration-guide.mdx`), which is the authored, consumer-facing form of this comparison:
+`1st-gen/packages/card` already exists. The differences below are **deliberate redesign decisions**, not migration gaps — this section stays light on purpose and fed the consumer migration guide (`gen2/packages/swc/components/card/migration-guide.mdx`), which is the authored, consumer-facing form of this comparison:
 
-- **Variant model split.** 1st-gen's `variant` (`'standard' | 'gallery' | 'quiet'`) conflates layout and style in one enum. 2nd-gen splits these: layout is implicit (driven by which slots are populated — see Scope), and `variant` becomes a pure style axis (`primary` / `secondary` / `tertiary` / `quiet`).
-- **Slot consolidation.** 1st-gen uses two image-area slot names (`cover-photo` for standard/quiet, `preview` for gallery). 2nd-gen consolidates to one `preview` slot.
-- **Slot-only content model.** 1st-gen's `heading`/`subheading` accept both a plain-text attribute and a slot. 2nd-gen's `title`/`description` are slot-only, per the same convention already established for 2nd-gen components generally.
-- **Selection moves to a future container.** 1st-gen's `toggles`/`selected` live on the card itself, with a hover/focus-revealed checkbox. 2nd-gen defers all selection to a future "CardView" grid concept — a deliberate, temporary capability gap versus 1st-gen (see [Deferred](#deferred--out-of-scope)).
-- **`asset` attribute precedent.** 1st-gen's `asset` attribute wires `sp-asset` directly into the preview/cover-photo slots. This is the direct precedent behind folding `AssetCard` into `swc-card` now and pointing consumers at the 2nd-gen `Asset` component once it ships, rather than building a dedicated `swc-asset-card`.
-- **Whole-card-clickable precedent.** 1st-gen already solves this via a `LikeAnchor` mixin. See [A11y-3](#accessibility-decisions) for how this maps to 2nd-gen.
+- **Variant model split.** 1st-gen's `variant` (`'standard' | 'gallery' | 'quiet'`) conflates layout and style in one enum. gen2 splits these: layout is implicit (driven by which slots are populated — see Scope), and `variant` becomes a pure style axis (`primary` / `secondary` / `tertiary` / `quiet`).
+- **Slot consolidation.** 1st-gen uses two image-area slot names (`cover-photo` for standard/quiet, `preview` for gallery). gen2 consolidates to one `preview` slot.
+- **Slot-only content model.** 1st-gen's `heading`/`subheading` accept both a plain-text attribute and a slot. gen2's `title`/`description` are slot-only, per the same convention already established for gen2 components generally.
+- **Selection moves to a future container.** 1st-gen's `toggles`/`selected` live on the card itself, with a hover/focus-revealed checkbox. gen2 defers all selection to a future "CardView" grid concept — a deliberate, temporary capability gap versus 1st-gen (see [Deferred](#deferred--out-of-scope)).
+- **`asset` attribute precedent.** 1st-gen's `asset` attribute wires `sp-asset` directly into the preview/cover-photo slots. This is the direct precedent behind folding `AssetCard` into `swc-card` now and pointing consumers at the gen2 `Asset` component once it ships, rather than building a dedicated `swc-asset-card`.
+- **Whole-card-clickable precedent.** 1st-gen already solves this via a `LikeAnchor` mixin. See [A11y-3](#accessibility-decisions) for how this maps to gen2.
 
 
 ## Scope and component boundaries
@@ -104,7 +104,7 @@ Three concrete SWC components, all extending the already-built `CardBase`:
   - **Collection** — populating the `collection` slot displays it; leaving it empty hides it, the same simple presence rule as any other optional slot. Implemented in `card.css`: up to 3 square-aspect images in a row below `preview`, extras beyond the 3rd hidden via `:nth-child(n + 4 of [slot="collection"])`. `preview` and `collection` are independently optional in either direction — a card can render `collection` alone with no `preview`, or vice versa. **`size="xs"` special case:** when both `preview` and `collection` are populated at `xs`, the preview image moves into the first position of the collection row (sharing its square aspect ratio) instead of stacking above it, and only 2 collection images show instead of 3 — implemented via a `--_swc-card-media-layout` custom property read through a CSS `@container style()` query, set conditionally via `:host([size="xs"]):has([slot="preview"]):has([slot="collection"])`.
   - **Gallery** — triggered by the absence of **all** of `title`, `description`, `actions`, the default slot, and `footer`, regardless of whether `preview` or `collection` (or neither) is populated. That combination signals the image/asset is the card's only content, so it fills the available space. Any other combination renders the regular layout. **Implemented** in `card.css`: a `--_swc-card-media-layout: gallery` custom property is set by the qualifying `:host(:not(:has(...)))` selector and read via `@container style(--_swc-card-media-layout: gallery)`; a companion `--_swc-card-media-contains` property (`preview` or `collection`) gates the preview-only aspect-ratio override so it doesn't apply when `collection` already supplies its own square aspect ratio.
   - **Media overlay** — a `media` slot lets consumers layer arbitrary content — a badge, an avatar — over the preview/collection region, most commonly paired with gallery layout. Rendering it is **opt-in per component**: `renderCardTemplate()` takes an optional `renderMedia` callback (default: nothing), the same pattern as `renderCollection`/`renderGlyph`; `swc-card`'s `Card.ts` supplies it, `swc-user-card`/`swc-product-card` will each decide independently once built. Because the callback's output is placed after `.swc-CardBase-media` in the template, normal DOM stacking order paints it on top with no `z-index` needed. The consumer fully owns positioning within that shared area (e.g. `justify-self`/`align-self` plus their own margin, as shown in the `Gallery` story's third variant) — Card exposes no dedicated custom properties for it, consistent with the "flexible overlay" intent. This resolves the previously-open Q2 (gallery badge/avatar via `actions`-slot reuse) with a purpose-built slot instead.
-  Phase 1 handles basic `<img>` content and "cover" fit behavior directly. Once the 2nd-gen `Asset` component ships, documentation updates to recommend it in place of plain `<img>`; no dedicated `swc-asset-card` is planned.
+  Phase 1 handles basic `<img>` content and "cover" fit behavior directly. Once the gen2 `Asset` component ships, documentation updates to recommend it in place of plain `<img>`; no dedicated `swc-asset-card` is planned.
 - **`swc-user-card`** — adds an `avatar` glyph slot; optional preview image, aspect ratio `3/1`.
 - **`swc-product-card`** — adds a `thumbnail` glyph slot (expects a logo); optional preview image, aspect ratio `5/1`; footer content alignment forced to `end`.
 
@@ -117,13 +117,13 @@ Already implemented (prior scaffold ticket); this plan governs the three concret
 
 | Layer | Path | Contains |
 |---|---|---|
-| Core | `2nd-gen/packages/core/components/card/` | `CardBase` — `size` (via `SizedMixin`), `variant`, `density`, and their validation only. No rendering. |
-| SWC (shared template) | `2nd-gen/packages/swc/components/card/card-template.ts` | `renderCardTemplate()` — shared anatomy function called from every concrete card's `render()`, following the same shared-function pattern as `renderPendingSpinner()` (`swc/components/button/pending-spinner.ts`). |
-| SWC (shared styles) | `2nd-gen/packages/swc/stylesheets/_lit-styles/card-template.css` | Shared structural rules for the `.swc-CardBase`/`.swc-CardBase-*` classes; imported into every concrete card's `styles()` array. |
-| SWC (concrete, not started) | `2nd-gen/packages/swc/components/{card,user-card,product-card}/` | Each extends `CardBase` directly — sibling-inheritance pattern, same shape as `ButtonBase` extended independently by `Button` and `ActionButton`. Each owns its own `render()`, styles, glyph slot (if any), stories, and tests. |
+| Core | `gen2/packages/core/components/card/` | `CardBase` — `size` (via `SizedMixin`), `variant`, `density`, and their validation only. No rendering. |
+| SWC (shared template) | `gen2/packages/swc/components/card/card-template.ts` | `renderCardTemplate()` — shared anatomy function called from every concrete card's `render()`, following the same shared-function pattern as `renderPendingSpinner()` (`swc/components/button/pending-spinner.ts`). |
+| SWC (shared styles) | `gen2/packages/swc/stylesheets/_lit-styles/card-template.css` | Shared structural rules for the `.swc-CardBase`/`.swc-CardBase-*` classes; imported into every concrete card's `styles()` array. |
+| SWC (concrete, not started) | `gen2/packages/swc/components/{card,user-card,product-card}/` | Each extends `CardBase` directly — sibling-inheritance pattern, same shape as `ButtonBase` extended independently by `Button` and `ActionButton`. Each owns its own `render()`, styles, glyph slot (if any), stories, and tests. |
 
 
-## 2nd-gen API decisions
+## gen2 API decisions
 
 ### Shared properties (already on `CardBase`)
 
@@ -203,7 +203,7 @@ Only `swc-product-card` and `swc-user-card` include a glyph slot, named `thumbna
 
 ### A11y-3: Whole-card-clickable while preserving nested interactive targets
 
-**1st-gen precedent:** `sp-card` solves this via the `LikeAnchor` mixin (`1st-gen/tools/shared/src/like-anchor.ts`), which accepts `href`/`target`/`rel`/`download`/`referrerpolicy`/`label` properties directly on the card and renders its own `<a>`. The 2nd-gen approach below deliberately avoids accepting link properties on Card at all — navigation stays fully consumer-owned.
+**1st-gen precedent:** `sp-card` solves this via the `LikeAnchor` mixin (`1st-gen/tools/shared/src/like-anchor.ts`), which accepts `href`/`target`/`rel`/`download`/`referrerpolicy`/`label` properties directly on the card and renders its own `<a>`. The gen2 approach below deliberately avoids accepting link properties on Card at all — navigation stays fully consumer-owned.
 
 **Decision:** the consumer supplies their own real `<a>` (or router link) inside the `title` slot; Card only extends that link's hit area to cover the card surface. Two independent, opt-in boolean attributes:
 
@@ -212,7 +212,7 @@ Only `swc-product-card` and `swc-user-card` include a glyph slot, named `thumbna
   - **Anchor nested inside a wrapper — reduced fidelity.** The stretched-link CSS trick doesn't apply. The card falls back to the JS click-proxy (below) for the extended surface: plain click/tap anywhere on the card activates the link, but middle-click, modifier-clicks, and the right-click context menu only work if the user directly targets the visible anchor text itself — the JS proxy calls `.click()`, which cannot forward modifier-key or button state the way native hit-testing does.
   - **Universal fallback / primary mechanism regardless of form:** a click-proxy on the card surface finds the title's linked anchor (`renderRoot.querySelector('slot[name="title"]').assignedElements()`, checking both forms above) and calls `.click()` on it, once filtering (below) rules out clicks that landed on a different interactive target. This is what's implemented today in `Card.base.ts`, and is sufficient on its own — the CSS trick is an enhancement layered on top for the direct-anchor form, not a requirement.
   - **CSS hook, independent of fidelity tier:** `[title-as-link]` (and `[selectable]`) are useful as plain attribute selectors for hover/focus-visible/cursor-pointer styling on the card surface (e.g. `:host([title-as-link]) .swc-CardBase:hover`), giving a consistent visual affordance that the whole card is interactive regardless of which interaction tier actually applies underneath.
-- **`selectable`** — independent of `title-as-link`; makes the card focusable (manages `tabindex`) and captures surface clicks (again filtered) to dispatch a `swc-card-click`-style custom event (exact name TBD), decoupled from navigation. This is the 2nd-gen equivalent of 1st-gen's non-`href` synthetic-click mode, and gives a future `CardView` something to listen for to drive selection without Card needing to own selected-state UI now.
+- **`selectable`** — independent of `title-as-link`; makes the card focusable (manages `tabindex`) and captures surface clicks (again filtered) to dispatch a `swc-card-click`-style custom event (exact name TBD), decoupled from navigation. This is the gen2 equivalent of 1st-gen's non-`href` synthetic-click mode, and gives a future `CardView` something to listen for to drive selection without Card needing to own selected-state UI now.
 
 **Keyboard activation:** `tabindex` and the Enter/Space `keydown` listener are added and removed together, in the same conditional (`CardBase.updated()`) — a focusable card is never left without keyboard activation. When `titleAsLink` alone is set (no `selectable`), the host gets no `tabindex` and needs no card-level keydown handling at all: the consumer's real anchor is the only tab stop, and the browser's native anchor activation already handles Enter correctly. Two related decisions, confirmed:
 
@@ -280,7 +280,7 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
 | Checkbox-based selection UI | A `CardView` feature, not an individual card feature. |
 | A standalone `selected` property (complementing `selectable`) | Resolved: deferred to a future `CardView` rather than added to `CardBase` now. |
 | `swc-product-card` "side" title position | Deferred per the prior scaffold ticket. |
-| Dedicated `swc-asset-card` component | Folded into `swc-card` for now; revisit once the 2nd-gen `Asset` component ships (see Scope). |
+| Dedicated `swc-asset-card` component | Folded into `swc-card` for now; revisit once the gen2 `Asset` component ships (see Scope). |
 
 
 ## Test coverage
@@ -354,9 +354,9 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
 - `research.md` (repo root) — `CardBase` sibling-inheritance precedent research
 - 1st-gen source: [`1st-gen/packages/card/src/Card.ts`](../../../../1st-gen/packages/card/src/Card.ts), [`1st-gen/tools/shared/src/like-anchor.ts`](../../../../1st-gen/tools/shared/src/like-anchor.ts)
 - 1st-gen docs: [`1st-gen/packages/card/README.md`](../../../../1st-gen/packages/card/README.md)
-- Existing 2nd-gen files: [`Card.base.ts`](../../../../2nd-gen/packages/core/components/card/Card.base.ts), [`Card.types.ts`](../../../../2nd-gen/packages/core/components/card/Card.types.ts), [`card-template.ts`](../../../../2nd-gen/packages/swc/components/card/card-template.ts), [`card-template.css`](../../../../2nd-gen/packages/swc/stylesheets/_lit-styles/card-template.css)
-- Tests: [`card.test.ts`](../../../../2nd-gen/packages/swc/components/card/test/card.test.ts), [`card.a11y.spec.ts`](../../../../2nd-gen/packages/swc/components/card/test/card.a11y.spec.ts)
-- Docs: [`card.mdx`](../../../../2nd-gen/packages/swc/components/card/card.mdx) (Storybook docs page), [`migration-guide.mdx`](../../../../2nd-gen/packages/swc/components/card/migration-guide.mdx) (consumer migration guide)
+- Existing gen2 files: [`Card.base.ts`](../../../../gen2/packages/core/components/card/Card.base.ts), [`Card.types.ts`](../../../../gen2/packages/core/components/card/Card.types.ts), [`card-template.ts`](../../../../gen2/packages/swc/components/card/card-template.ts), [`card-template.css`](../../../../gen2/packages/swc/stylesheets/_lit-styles/card-template.css)
+- Tests: [`card.test.ts`](../../../../gen2/packages/swc/components/card/test/card.test.ts), [`card.a11y.spec.ts`](../../../../gen2/packages/swc/components/card/test/card.a11y.spec.ts)
+- Docs: [`card.mdx`](../../../../gen2/packages/swc/components/card/card.mdx) (Storybook docs page), [`migration-guide.mdx`](../../../../gen2/packages/swc/components/card/migration-guide.mdx) (consumer migration guide)
 - [Storybook testing guide](../../../02_style-guide/04_testing/02_storybook-testing.md) — play-function test conventions followed above
 - [Base class vs concrete class](../../../02_style-guide/02_typescript/11_base-vs-concrete.md)
 - [Inclusive Components — Cards: the pseudo-content trick](https://inclusive-components.design/cards/#thepseudocontenttrick) — stretched-link technique referenced in A11y-3
