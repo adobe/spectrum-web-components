@@ -17,9 +17,9 @@
 /**
  * The version of the 2nd-gen Spectrum Web Components library.
  */
-export const version = '2.0.0-beta.3';
+export const version = '2.0.0-beta.4';
 
 /**
  * The version of the core base package.
  */
-export const coreVersion = '2.0.0-beta.3';
+export const coreVersion = '2.0.0-beta.4';
