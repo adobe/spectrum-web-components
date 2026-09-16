@@ -12,8 +12,8 @@ on:
           - snapshot
           - snapshot-test
       branch:
-        description: 'Feature branch to snapshot (not main - main ships via the beta flow). Dispatch from main so the workflow file is current; the branch itself does not need it.'
-        required: true
+        description: 'Feature branch to snapshot. Leave blank to instead run a real release from main. Dispatch from main so the workflow file is current; the branch itself does not need it.'
+        required: false
         type: string
   push:
     branches:
@@ -85,12 +85,12 @@ jobs:
   # than a convention.
   #
   # Feature-branch-only by design. Dispatch from `main` (so the workflow file is current)
-  # and set the required `branch` input to the feature branch. Dispatch always reads the
-  # workflow file from the ref it was launched on, so the branch being snapshotted does
-  # NOT need to carry this file - which is what makes it usable on branches cut before
-  # this landed. `main` is rejected as a target (guard step below); it ships via the beta
-  # flow, never a snapshot. Only this job is branch-aware; version-pr and publish stay
-  # pinned to main and skip whenever `branch` is set.
+  # and set the `branch` input to the feature branch. Dispatch always reads the workflow
+  # file from the ref it was launched on, so the branch being snapshotted does NOT need to
+  # carry this file - which is what makes it usable on branches cut before this landed.
+  # A blank `branch`, or `branch: main`, skips this job (see the `if` below) so a manual
+  # release dispatch from main flows to version-pr/publish untouched. main ships via the
+  # beta flow, never a snapshot.
   #
   # gen2 lives in changesets' persistent pre mode (`2nd-gen/.changeset/pre.json`, tag
   # `beta`), and changesets refuses `--snapshot` while that file is present ("Snapshot
@@ -102,8 +102,15 @@ jobs:
   # can never collide with a real `2.0.0-beta.N` or with the eventual stable `2.0.0`.
   snapshot:
     needs: check-changesets
+    # Runs only when a `branch` input names a real feature branch. A blank branch (a manual
+    # release dispatch from main) or `branch: main` SKIPS this job rather than failing it,
+    # so it never gets in the way of a real release - which flows to version-pr/publish
+    # below instead. That's why the guard lives in this `if`, not a failing step.
     if: >-
       github.event_name == 'workflow_dispatch' &&
+      github.event.inputs.branch != '' &&
+      github.event.inputs.branch != 'main' &&
+      github.event.inputs.branch != 'refs/heads/main' &&
       needs.check-changesets.outputs.has_changesets == 'true'
     runs-on: ubuntu-latest
     environment: npm-publish
@@ -112,18 +119,6 @@ jobs:
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
-      - name: Reject main as a snapshot target
-        env:
-          TARGET: ${{ github.event.inputs.branch }}
-        run: |
-          # Snapshots are feature-branch-only. `branch` is a required input, but this also
-          # rejects someone typing `main` into it - main ships through the real beta flow,
-          # never a throwaway snapshot.
-          if [ -z "$TARGET" ] || [ "$TARGET" = "main" ] || [ "$TARGET" = "refs/heads/main" ]; then
-            echo "::error::gen2 snapshots are for feature branches only. Set 'branch' to your feature branch; main releases via the beta flow."
-            exit 1
-          fi
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
