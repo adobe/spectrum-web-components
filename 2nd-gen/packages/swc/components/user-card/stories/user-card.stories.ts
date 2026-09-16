@@ -24,6 +24,7 @@ import type { UserCardVariant } from '@adobe/spectrum-wc-core/components/user-ca
 import { USER_CARD_VARIANTS } from '@adobe/spectrum-wc-core/components/user-card';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
+import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 import '@adobe/spectrum-wc/components/user-card/swc-user-card.js';
 import '../../avatar/swc-avatar';
 
@@ -105,6 +106,12 @@ const avatarGlyph = (size = '300') => html`
   ></swc-avatar>
 `;
 
+const previewImage = () => html`
+  <swc-asset slot="preview" aspect-ratio="16 / 9">
+    <img src="./images/card-preview.jpg" alt="" />
+  </swc-asset>
+`;
+
 const basicSlots = html`
   ${avatarGlyph()}
   <span slot="title">Jane Doe</span>
@@ -121,7 +128,7 @@ export const Playground: Story = {
     density: 'regular',
     size: 'm',
     'preview-slot':
-      '<img slot="preview" src="./images/card-preview.jpg" alt="" />',
+      '<swc-asset slot="preview" aspect-ratio="16 / 9"><img src="./images/card-preview.jpg" alt="" /></swc-asset>',
     'avatar-slot':
       '<swc-avatar slot="avatar" size="300" src="./images/avatar-preview.png" alt="Jane Doe"></swc-avatar>',
     'title-slot': 'Jane Doe',
@@ -140,8 +147,7 @@ export const Overview: Story = {
     ${template(
       args,
       html`
-        <img slot="preview" src="./images/card-preview.jpg" alt="" />
-        ${avatarGlyph()}
+        ${previewImage()} ${avatarGlyph()}
         <span slot="title">Jane Doe</span>
         <span slot="description">Product designer</span>
       `
@@ -160,8 +166,7 @@ export const Anatomy: Story = {
     ${template(
       args,
       html`
-        <img slot="preview" src="./images/card-preview.jpg" alt="" />
-        ${avatarGlyph()}
+        ${previewImage()} ${avatarGlyph()}
         <span slot="title">Jane Doe</span>
         <swc-action-button slot="actions" quiet accessible-label="More actions">
           <svg
@@ -246,8 +251,7 @@ export const WithPreview: Story = {
     ${template(
       args,
       html`
-        <img slot="preview" src="./images/card-preview.jpg" alt="" />
-        ${avatarGlyph()}
+        ${previewImage()} ${avatarGlyph()}
         <span slot="title">Jane Doe</span>
         <span slot="description">Product designer</span>
       `

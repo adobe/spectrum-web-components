@@ -13,7 +13,7 @@ A user card shares `preview`, `title`, `description`, the default slot, and `foo
 
 - **`avatar`**: the person's avatar, shown between the preview and the content. Expects an [Avatar](../?path=/docs/components-avatar--docs) element
 
-The card manages the avatar's size (matching the card's own size) and outline attributes, overwriting any other set values.
+The card manages the avatar's size (matching the card's own size) and outline attributes, overwriting any other set values. Use [Asset](../?path=/docs/components-asset--docs) for `preview` content instead of a plain `<img>`, same as [Card](../?path=/docs/components-card--docs).
 
 <Canvas of={Stories.Anatomy} />
 
@@ -39,7 +39,7 @@ Density matches [Card](../?path=/docs/components-card--docs): `compact`, `regula
 
 ### With preview
 
-Populating the `preview` slot renders a wide banner image above the avatar, at a `3/1` aspect ratio by default. When a preview is present, the avatar is pulled up to overlap its bottom edge by half the avatar's own size; without a preview, the avatar sits flush at the top of its row. The card always sets `outline` on the avatar with a fixed 2px width, so it reads clearly against the preview.
+Populating the `preview` slot renders a wide banner image above the avatar. When a preview is present, the avatar is pulled up to overlap its bottom edge by half the avatar's own size; without a preview, the avatar sits flush at the top of its row. The card always sets `outline` on the avatar with a fixed 2px width, so it reads clearly against the preview.
 
 <Canvas of={Stories.WithPreview} />
 
@@ -61,14 +61,18 @@ Identical to [Card](../?path=/docs/components-card--docs)'s `selectable`: makes 
 
 ### Features
 
-- **`avatar`** expects an [Avatar](../?path=/docs/components-avatar--docs) element, which owns its own `alt`/`decorative` labeling contract; the card does not add or manage its accessible name.
+- **`avatar`** expects an [Avatar](../?path=/docs/components-avatar--docs) element, which owns its own `alt`/`decorative` labeling contract; see its Accessibility section for that contract. The card does not add or manage the avatar's accessible name.
 - **`title-as-link`** and **`selectable`** behave identically to [Card](../?path=/docs/components-card--docs); see its Accessibility section for details.
 
 ### Best practices
 
-- Provide a meaningful `alt` on the slotted avatar, or mark it `decorative` if the person's name is already announced by the adjacent `title` content, to avoid the avatar repeating the same name a second time.
+- When the avatar depicts the same person named in `title`, link them with `aria-labelledby` instead of giving the avatar its own `alt`, so a screen reader doesn't announce the name twice: `<span slot="title" id="jane">Jane Doe</span>` alongside `<swc-avatar slot="avatar" aria-labelledby="jane">`. Both elements are consumer-authored light-DOM content, so the `id` reference resolves normally with no cross-root complexity.
 - For `title-as-link` and `selectable` usage guidance, see [Card](../?path=/docs/components-card--docs)'s Accessibility section.
 
 <Canvas of={Stories.Accessibility} />
+
+## Upcoming features
+
+Deferred items are shared with [Card](../?path=/docs/components-card--docs): hover/disabled states and a standalone `selected` property both wait on a future CardView container. See Card's Upcoming features section for the full list.
 
 <DocsFooter />

@@ -20,6 +20,8 @@ A card is composed of a media region, a content region, and a footer. Which regi
 - **default slot**: additional body content below the description
 - **`footer`**: footer content at the bottom of the card
 
+Use [Asset](../?path=/docs/components-asset--docs) for `preview` and `collection` content instead of a plain `<img>`; it adds sizing, fit, and load-state options the card itself doesn't provide.
+
 <Canvas of={Stories.Anatomy} />
 
 ## Options
@@ -111,6 +113,5 @@ Set the `selectable` attribute to make the card focusable and dispatch a `swc-ca
 - A **product card** is planned and will ship as its own component with its own documentation, adding a logo thumbnail glyph.
 - A horizontal card orientation is planned, alongside today's vertical layout.
 - Multi-card selection will be handled by a future CardView container. The `selectable` attribute is the per-card groundwork for it: on its own it makes a card focusable and dispatches `swc-card-click`, but it does not render a "checked" selected state.
-- Once the 2nd-gen Asset component is available, it will be the recommended content for the `preview` and `collection` slots in place of a plain `<img>`. A media loading state will _likely_ be owned by Asset, so cards would show loading through their media content rather than a card-level attribute.
 
 <DocsFooter />
