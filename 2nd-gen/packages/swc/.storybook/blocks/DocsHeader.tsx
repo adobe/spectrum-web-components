@@ -35,14 +35,14 @@ import { StatusBadge } from './StatusBadge';
  *   ...component-specific sections...
  *   <DocsFooter />
  */
-export const DocsHeader = () => {
+export const DocsHeader = ({ showSince = true }: { showSince?: boolean }) => {
   const resolvedOf = useOf('meta', ['meta']);
   const tags: string[] = resolvedOf?.preparedMeta?.tags ?? [];
 
   return (
     <>
       <Title />
-      <StatusBadge />
+      <StatusBadge showSince={showSince} />
       <Subtitle />
       <Description />
       <OverviewStory />

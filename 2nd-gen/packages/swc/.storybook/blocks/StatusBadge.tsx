@@ -76,7 +76,13 @@ const Badge = ({
  * These are extracted into the CEM by the `statusPlugin` in `cem.config.js`
  * and read at render time from `custom-elements.json`.
  */
-export const StatusBadge = ({ of }: { of?: any }) => {
+export const StatusBadge = ({
+  of,
+  showSince = true,
+}: {
+  of?: any;
+  showSince?: boolean;
+}) => {
   const resolvedOf = useOf(of || 'meta', ['meta']);
   const componentTag = resolvedOf.preparedMeta?.component;
 
@@ -92,7 +98,7 @@ export const StatusBadge = ({ of }: { of?: any }) => {
     );
     if (decl) {
       status = decl.status;
-      since = decl.since;
+      since = showSince ? decl.since : undefined;
       break;
     }
   }
