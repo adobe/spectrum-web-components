@@ -25,6 +25,7 @@ import {
 } from '@adobe/spectrum-wc-core/components/user-card';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
+import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 import '@adobe/spectrum-wc/components/user-card/swc-user-card.js';
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 
@@ -67,7 +68,9 @@ const avatarGlyph = (): ReturnType<typeof html> => html`
 `;
 
 const previewImage = (): ReturnType<typeof html> => html`
-  <img slot="preview" src="./images/card-preview.jpg" alt="" />
+  <swc-asset slot="preview" aspect-ratio="16 / 9">
+    <img src="./images/card-preview.jpg" alt="" />
+  </swc-asset>
 `;
 
 const actionButton = (): ReturnType<typeof html> => html`
