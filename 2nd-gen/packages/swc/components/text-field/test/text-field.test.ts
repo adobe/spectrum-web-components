@@ -93,7 +93,8 @@ export const StatesTest: Story = {
       canvasElement,
       'swc-text-field'
     );
-    const invalidField = fields[fields.length - 1];
+    const invalidField = fields[fields.length - 2];
+    const disabledInvalidField = fields[fields.length - 1];
     const input = invalidField.shadowRoot?.querySelector('input');
 
     await step('invalid input carries aria-invalid', () => {
@@ -138,6 +139,11 @@ export const StatesTest: Story = {
       // A valid field renders no validation icon.
       expect(
         fields[0].shadowRoot?.querySelector('.swc-TextField-invalidIcon')
+      ).toBeNull();
+      expect(
+        disabledInvalidField.shadowRoot?.querySelector(
+          '.swc-TextField-invalidIcon'
+        )
       ).toBeNull();
     });
   },
