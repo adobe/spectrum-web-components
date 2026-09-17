@@ -383,6 +383,12 @@ export class PromptField extends SpectrumElement {
     const box = event.currentTarget as HTMLElement;
     let target = event.target as Element | null;
     while (target && target !== box && !this._isFocusableOrSlotted(target)) {
+      // The gaps and scroll viewport within the attachment strip aren't
+      // focusable/slotted themselves, so without this the walk would reach
+      // `box` and wrongly focus the textarea on a click anywhere in the strip.
+      if (target.classList.contains('swc-PromptField-attachments')) {
+        return;
+      }
       target = target.parentElement;
     }
     if (target === box) {

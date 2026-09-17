@@ -588,6 +588,12 @@
   --swc-upload-attachment-focus-indicator-color: light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color"));
 }
 
+/* Overrides .swc-PromptField-box's inherited text-input cursor: this strip
+ * doesn't focus the textarea on click, so it shouldn't look like it does. */
+.swc-PromptField-attachments {
+  cursor: default;
+}
+
 .swc-PromptField-attachments--single {
   /* Reserves clearance for the dismiss badge floating above the tile's top-right corner, same as --multiple below. */
   --_swc-prompt-field-attachment-badge-clearance: token("spacing-300");
