@@ -52,7 +52,7 @@ export interface RenderFieldLabelOptions {
  *
  * Most consumers use `LabellingMixin`'s `renderLabel()` instead, which calls
  * this with its resolved state. Render-only, no design tokens: pair it with a
- * style fragment theming the `swc-FieldLabel` class it emits.
+ * style fragment theming the `swc-FormFieldLabel` class it emits.
  */
 export function renderFieldLabel({
   hasLabelSlotContent,
@@ -65,7 +65,7 @@ export function renderFieldLabel({
     return nothing;
   }
   return html`
-    <label class="swc-FieldLabel" for=${forId}>
+    <label class="swc-FormFieldLabel" for=${forId}>
       <slot name="label"></slot>${renderNecessityIndicator({
         indicator: necessityIndicator,
         required,
@@ -89,14 +89,14 @@ function renderNecessityIndicator({
   icon: TemplateResult | undefined;
 }): RenderFieldLabelResult {
   if (indicator === 'label') {
-    return html`<span class="swc-FieldLabel-necessityLabel" aria-hidden="true"
+    return html`<span class="swc-FormFieldLabel-necessityLabel" aria-hidden="true"
       >&nbsp;${required ? '(required)' : '(optional)'}</span
     >`;
   }
   if (!required || !icon) {
     return nothing;
   }
-  return html`<span class="swc-FieldLabel-requiredIndicator" aria-hidden="true"
+  return html`<span class="swc-FormFieldLabel-requiredIndicator" aria-hidden="true"
     >&nbsp;${icon}</span
   >`;
 }

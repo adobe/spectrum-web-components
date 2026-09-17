@@ -81,7 +81,7 @@ export const CombinedDescriptionTest: Story = {
         // The shadow description is an in-shadow element reference, so it is
         // identified by class rather than `closest()` (which cannot cross the
         // shadow boundary).
-        expect(resolved[0]?.className).toContain('swc-FieldDescription');
+        expect(resolved[0]?.className).toContain('swc-FormFieldDescription');
         expect(resolved[1]?.id).toBe('help-text-mixin-external-description');
       }
     );
@@ -102,7 +102,7 @@ export const ErrorTextGatingTest: Story = {
 
     await step('valid host describedby excludes the error text', () => {
       expect(valid.roleElement?.ariaDescribedByElements).toHaveLength(1);
-      expect(valid.shadowRoot?.querySelector('.swc-FieldErrorText')).toBeNull();
+      expect(valid.shadowRoot?.querySelector('.swc-FormFieldErrorText')).toBeNull();
     });
 
     await step(
@@ -110,14 +110,14 @@ export const ErrorTextGatingTest: Story = {
       () => {
         const resolved = invalid.roleElement?.ariaDescribedByElements ?? [];
         expect(resolved).toHaveLength(1);
-        expect(resolved[0]?.className).toContain('swc-FieldErrorText');
+        expect(resolved[0]?.className).toContain('swc-FormFieldErrorText');
         // The description is hidden while invalid: it leaves both the shadow
         // DOM and the describedby set, so no hidden text is announced.
         expect(
-          invalid.shadowRoot?.querySelector('.swc-FieldErrorText')
+          invalid.shadowRoot?.querySelector('.swc-FormFieldErrorText')
         ).toBeTruthy();
         expect(
-          invalid.shadowRoot?.querySelector('.swc-FieldDescription')
+          invalid.shadowRoot?.querySelector('.swc-FormFieldDescription')
         ).toBeNull();
       }
     );
@@ -129,9 +129,9 @@ export const ErrorTextGatingTest: Story = {
         await invalid.updateComplete;
         const resolved = invalid.roleElement?.ariaDescribedByElements ?? [];
         expect(resolved).toHaveLength(1);
-        expect(resolved[0]?.className).toContain('swc-FieldDescription');
+        expect(resolved[0]?.className).toContain('swc-FormFieldDescription');
         expect(
-          invalid.shadowRoot?.querySelector('.swc-FieldErrorText')
+          invalid.shadowRoot?.querySelector('.swc-FormFieldErrorText')
         ).toBeNull();
       }
     );
@@ -163,10 +163,10 @@ export const ErrorWithExternalDescribedbyTest: Story = {
       () => {
         const resolved = host?.roleElement?.ariaDescribedByElements ?? [];
         expect(resolved).toHaveLength(2);
-        expect(resolved[0]?.className).toContain('swc-FieldErrorText');
+        expect(resolved[0]?.className).toContain('swc-FormFieldErrorText');
         expect(resolved[1]?.id).toBe('help-text-mixin-invalid-external');
         expect(
-          host?.shadowRoot?.querySelector('.swc-FieldDescription')
+          host?.shadowRoot?.querySelector('.swc-FormFieldDescription')
         ).toBeNull();
       }
     );

@@ -13,8 +13,8 @@
 /*
  * Shared layout for form fields whose label, description, and error text render
  * in-shadow via LabellingMixin + HelpTextMixin. A consuming component adds
- * `swc-Field` to its render root and places its control in the `input` grid
- * area. This fragment themes the mixin-emitted `.swc-Field*` classes and owns
+ * `swc-FormField` to its render root and places its control in the `input` grid
+ * area. This fragment themes the mixin-emitted `.swc-FormField*` classes and owns
  * the `label-position` grid so every field lays them out identically. The grid
  * `row-gap` reproduces the design's uniform flex-column gap while also
  * supporting the side-label two-column layout.
@@ -22,7 +22,7 @@
 
 /* ── Field template grid ──────────────────────────── */
 
-.swc-Field {
+.swc-FormField {
   display: grid;
   grid-template-areas:
     "label"
@@ -32,19 +32,19 @@
   row-gap: token("form-item-gap-medium");
 }
 
-:host([size="s"]) .swc-Field {
+:host([size="s"]) .swc-FormField {
   row-gap: token("form-item-gap-small");
 }
 
-:host([size="l"]) .swc-Field {
+:host([size="l"]) .swc-FormField {
   row-gap: token("form-item-gap-large");
 }
 
-:host([size="xl"]) .swc-Field {
+:host([size="xl"]) .swc-FormField {
   row-gap: token("form-item-gap-extra-large");
 }
 
-.swc-FieldLabel {
+.swc-FormFieldLabel {
   grid-area: label;
   max-inline-size: var(--swc-field-label-max-inline-size, none);
   font: inherit;
@@ -52,27 +52,27 @@
   overflow-wrap: break-word;
 }
 
-.swc-FieldLabel-requiredIndicator swc-ui-icon {
+.swc-FormFieldLabel-requiredIndicator swc-ui-icon {
   vertical-align: middle;
 }
 
-.swc-FieldDescription,
-.swc-FieldErrorText {
+.swc-FormFieldDescription,
+.swc-FormFieldErrorText {
   grid-area: messages;
   font-size: var(--swc-body-size-s);
 }
 
-.swc-FieldDescription {
+.swc-FormFieldDescription {
   color: token("neutral-subdued-content-color-default");
 }
 
-.swc-FieldErrorText {
+.swc-FormFieldErrorText {
   color: token("negative-content-color-default");
 }
 
 /* ── Side label ───────────────────────────────────── */
 
-:host([label-position="side"]) .swc-Field {
+:host([label-position="side"]) .swc-FormField {
   grid-template-areas:
     "label input"
     ".     messages";
@@ -83,8 +83,8 @@
 
 /* ── Disabled ─────────────────────────────────────── */
 
-:host(:disabled) .swc-FieldLabel,
-:host(:disabled) .swc-FieldDescription,
-:host(:disabled) .swc-FieldErrorText {
+:host(:disabled) .swc-FormFieldLabel,
+:host(:disabled) .swc-FormFieldDescription,
+:host(:disabled) .swc-FormFieldErrorText {
   color: token("disabled-content-color");
 }

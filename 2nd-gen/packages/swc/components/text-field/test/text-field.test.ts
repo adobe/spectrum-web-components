@@ -105,9 +105,9 @@ export const StatesTest: Story = {
       () => {
         const resolved = input?.ariaDescribedByElements ?? [];
         expect(resolved).toHaveLength(1);
-        expect(resolved[0]?.className).toContain('swc-FieldErrorText');
+        expect(resolved[0]?.className).toContain('swc-FormFieldErrorText');
         expect(
-          invalidField.shadowRoot?.querySelector('.swc-FieldDescription')
+          invalidField.shadowRoot?.querySelector('.swc-FormFieldDescription')
         ).toBeNull();
       }
     );
@@ -122,7 +122,7 @@ export const StatesTest: Story = {
       'a required field with a visible label shows a decorative asterisk',
       () => {
         const indicator = fields[1].shadowRoot?.querySelector(
-          '.swc-FieldLabel-requiredIndicator'
+          '.swc-FormFieldLabel-requiredIndicator'
         );
         expect(indicator).toBeTruthy();
         expect(indicator?.getAttribute('aria-hidden')).toBe('true');
@@ -159,14 +159,14 @@ export const NecessityIndicatorTest: Story = {
     await step('icon mode renders the asterisk indicator', () => {
       expect(
         requiredIcon.shadowRoot?.querySelector(
-          '.swc-FieldLabel-requiredIndicator'
+          '.swc-FormFieldLabel-requiredIndicator'
         )
       ).toBeTruthy();
     });
 
     await step('label mode marks a required field "(required)"', () => {
       const label = requiredLabel.shadowRoot?.querySelector(
-        '.swc-FieldLabel-necessityLabel'
+        '.swc-FormFieldLabel-necessityLabel'
       );
       expect(label?.textContent?.trim()).toBe('(required)');
       expect(label?.getAttribute('aria-hidden')).toBe('true');
@@ -174,7 +174,7 @@ export const NecessityIndicatorTest: Story = {
 
     await step('label mode marks an optional field "(optional)"', () => {
       const label = optionalLabel.shadowRoot?.querySelector(
-        '.swc-FieldLabel-necessityLabel'
+        '.swc-FormFieldLabel-necessityLabel'
       );
       expect(label?.textContent?.trim()).toBe('(optional)');
     });
@@ -187,10 +187,10 @@ export const NecessityIndicatorTest: Story = {
       `);
       await field.updateComplete;
       expect(
-        field.shadowRoot?.querySelector('.swc-FieldLabel-requiredIndicator')
+        field.shadowRoot?.querySelector('.swc-FormFieldLabel-requiredIndicator')
       ).toBeNull();
       expect(
-        field.shadowRoot?.querySelector('.swc-FieldLabel-necessityLabel')
+        field.shadowRoot?.querySelector('.swc-FormFieldLabel-necessityLabel')
       ).toBeNull();
       field.parentElement?.remove();
     });
