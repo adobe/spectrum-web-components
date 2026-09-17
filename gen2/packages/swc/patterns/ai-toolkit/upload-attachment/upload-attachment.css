@@ -154,7 +154,7 @@
 }
 
 .swc-UploadAttachment-thumbnail-fallback {
-  --swc-icon-color: var(--swc-upload-attachment-thumbnail-fallback-icon-color, token("gray-600"));
+  --swc-icon-color: var(--swc-upload-attachment-thumbnail-fallback-icon-color, token("gray-900"));
   --swc-icon-inline-size: var(--swc-upload-attachment-thumbnail-fallback-icon-inline-size, 20px);
   --swc-icon-block-size: var(--swc-upload-attachment-thumbnail-fallback-icon-block-size, 20px);
 
@@ -259,7 +259,7 @@
 :host([type="media"]) .swc-UploadAttachment-thumbnail-fallback {
   position: absolute;
   inset: 0;
-  background: token("gray-100");
+  background: light-dark(token("transparent-black-50"), token("transparent-white-50"));
 }
 
 :host([type="media"]) .swc-UploadAttachment-actions {

@@ -51,7 +51,7 @@ import styles from './upload-attachment.css';
  * empty and `mime-type` is set, a fallback icon is rendered based on the MIME type.
  * On `type="card"`, a slotted `swc-icon` is automatically sized to match the
  * fallback icon instead of stretching to fill the tile.
- * @slot badge - Optional file-type badge rendered over `type="media"` previews (for example, "PDF").
+ * @slot badge - Optional file-type badge rendered over `type="media"` previews (for example, "PDF"). Hidden while the mime-type fallback icon is shown, since the icon already conveys the file type.
  * @slot title - Primary text label.
  * @slot subtitle - Secondary text label.
  * @slot actions - Optional trailing actions.
@@ -215,6 +215,11 @@ export class UploadAttachment extends SpectrumElement {
     return (this._assignedThumbnail?.length ?? 0) > 0;
   }
 
+  /** True when the mime-type fallback icon is rendered in place of a real thumbnail. */
+  private _showingFallbackThumbnail(): boolean {
+    return !!this.mimeType && !this._hasThumbnailContent();
+  }
+
   /** Mirrors React Spectrum's AttachmentPreview mime-type fallback order. */
   private _fallbackIcon(): string {
     if (this.mimeType.startsWith('audio/')) {
@@ -233,7 +238,7 @@ export class UploadAttachment extends SpectrumElement {
   }
 
   private _renderThumbnail(): TemplateResult {
-    const showFallback = !!this.mimeType && !this._hasThumbnailContent();
+    const showFallback = this._showingFallbackThumbnail();
     return html`
       <slot
         name="thumbnail"
@@ -283,7 +288,7 @@ export class UploadAttachment extends SpectrumElement {
   }
 
   private _renderBadge(): TemplateResult {
-    if (!this._hasBadgeContent()) {
+    if (!this._hasBadgeContent() || this._showingFallbackThumbnail()) {
       return html`
         <slot
           name="badge"
