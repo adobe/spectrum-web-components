@@ -94,7 +94,7 @@
   grid-template-areas:
     "label input"
     ".     messages";
-  grid-template-columns: auto minmax(var(--swc-field-input-min-inline-size, 0), 1fr);
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: baseline;
   column-gap: token("spacing-200");
 }

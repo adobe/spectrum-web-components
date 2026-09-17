@@ -36,6 +36,8 @@ const INPUT_ID = 'input';
  *
  * @cssprop --swc-text-field-width - Inline size of the field. Unset by default, so the field fills its container; set it for a fixed width.
  * @cssprop --swc-field-label-max-inline-size - Max width of the visible label before it wraps. Unset by default (the label wraps late); set it to wrap a long label sooner and give a `side` input more room.
+ * @cssprop --swc-field-input-min-inline-size - Minimum inline size of the input control. Defaults to the component height for the field size.
+ * @cssprop --swc-field-input-max-inline-size - Maximum inline size of the input control. Defaults to the medium field width token.
  *
  * @example
  * <swc-text-field></swc-text-field>
@@ -90,10 +92,9 @@ export class TextField extends TextFieldBase {
         ${this.renderLabel(INPUT_ID, {
           required: this.required,
           necessityIndicator: this.necessityIndicator,
-          necessityIcon: html`<swc-ui-icon
-            icon="asterisk"
-            size=${this.size}
-          ></swc-ui-icon>`,
+          necessityIcon: html`
+            <swc-ui-icon icon="asterisk" size=${this.size}></swc-ui-icon>
+          `,
         })}
         <div
           class="swc-TextField-control"
