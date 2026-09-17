@@ -89,6 +89,18 @@
   border-radius: token("corner-radius-extra-large-default");
 }
 
+/* Small field shrinks its media attachment tiles to the small (48px) size;
+   the chevron scroll buttons drop to size="s" in the markup. These feed the
+   ::slotted media sizing and the chevron centering calc, which reference the
+   same vars, so both track the smaller tile automatically. A consumer can
+   still override the individual vars. */
+:host([size="s"]) {
+  --swc-prompt-field-attachment-media-inline-size: 48px;
+  --swc-prompt-field-attachment-media-min-inline-size: 48px;
+  --swc-prompt-field-attachment-media-block-size: 48px;
+  --swc-prompt-field-attachment-media-min-block-size: 48px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .swc-PromptField-box {
     transition: none;
@@ -718,13 +730,15 @@
 .swc-PromptField-attachments-scroll.has-scroll-prev {
   --_swc-prompt-field-attachment-fade-start: var(--_swc-prompt-field-attachment-fade);
 
-  scroll-padding-inline-start: calc(token("component-height-100") + token("spacing-400") + token("spacing-75"));
+  /* Same distance as the fade (plateau + soft), so the scroll-padding tracks
+   * the chevron zone at whatever size the buttons are. */
+  scroll-padding-inline-start: var(--_swc-prompt-field-attachment-fade);
 }
 
 .swc-PromptField-attachments-scroll.has-scroll-next {
   --_swc-prompt-field-attachment-fade-end: var(--_swc-prompt-field-attachment-fade);
 
-  scroll-padding-inline-end: calc(token("component-height-100") + token("spacing-400") + token("spacing-75"));
+  scroll-padding-inline-end: var(--_swc-prompt-field-attachment-fade);
 }
 
 /* When the strip overflows (either chevron active), reserve room below the
@@ -732,6 +746,16 @@
  * the same amount, so the total distance stays constant with or without it. */
 .swc-PromptField-attachments-scroll:is(.has-scroll-prev, .has-scroll-next) {
   padding-block-end: var(--_swc-prompt-field-attachment-scrollbar-size);
+}
+
+/* Small field uses small (size="s") chevron buttons, so the edge fade's
+   transparent plateau tracks the smaller button and its soft gradient
+   reaches less far into the shorter tiles. Both the mask and the scroll-snap
+   padding derive from these vars, so overriding them here shrinks the whole
+   chevron-zone reservation. */
+:host([size="s"]) .swc-PromptField-attachments-scroll {
+  --_swc-prompt-field-attachment-fade-plateau: calc(token("component-height-75") + token("spacing-75"));
+  --_swc-prompt-field-attachment-fade-soft: token("spacing-300");
 }
 
 /* Flip the physical mask direction in RTL so fade-start/end (driven by the

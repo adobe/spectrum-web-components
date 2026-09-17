@@ -235,11 +235,25 @@
   text-overflow: ellipsis;
 }
 
+/* Medium (default) tile size. `size="s"`/`"l"` below override the fallback;
+   an explicit `--swc-upload-attachment-preview-size` overrides all three so a
+   consumer can pin a fixed size regardless of `size`. Only `type="media"` is
+   sized by `size`; `type="card"` is a single size. */
 :host([type="media"]) {
-  inline-size: var(--swc-upload-attachment-preview-size, 72px);
-  block-size: var(--swc-upload-attachment-preview-size, 72px);
+  inline-size: var(--swc-upload-attachment-preview-size, 64px);
+  block-size: var(--swc-upload-attachment-preview-size, 64px);
   border-radius: token("corner-radius-large-default");
   overflow: visible;
+}
+
+:host([type="media"][size="s"]) {
+  inline-size: var(--swc-upload-attachment-preview-size, 48px);
+  block-size: var(--swc-upload-attachment-preview-size, 48px);
+}
+
+:host([type="media"][size="l"]) {
+  inline-size: var(--swc-upload-attachment-preview-size, 96px);
+  block-size: var(--swc-upload-attachment-preview-size, 96px);
 }
 
 :host([type="media"]) .swc-UploadAttachment-surface {

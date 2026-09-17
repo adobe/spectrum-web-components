@@ -209,6 +209,25 @@ export const Media: Story = {
   tags: ['options'],
 };
 
+export const Sizes: Story = {
+  render: () => html`
+    ${(['s', 'm', 'l'] as const).map(
+      (size) => html`
+        <swc-upload-attachment type="media" size=${size} dismissible>
+          <div
+            slot="thumbnail"
+            role="img"
+            aria-label="Campaign still"
+            style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#a78bfa,#f472b6);"
+          ></div>
+        </swc-upload-attachment>
+      `
+    )}
+  `,
+  parameters: { flexLayout: 'row-wrap' },
+  tags: ['options'],
+};
+
 export const MediaWithBadge: Story = {
   render: () => html`
     <div style="inline-size:240px;">

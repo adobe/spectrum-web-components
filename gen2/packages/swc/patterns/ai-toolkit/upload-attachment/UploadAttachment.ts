@@ -62,7 +62,7 @@ import styles from './upload-attachment.css';
  * @cssprop --swc-upload-attachment-card-min-block-size - Minimum block size of the surface for `type="card"`. Defaults to 72px.
  * @cssprop --swc-upload-attachment-card-thumbnail-inline-size - Thumbnail inline size for `type="card"`. Defaults to 48px.
  * @cssprop --swc-upload-attachment-card-thumbnail-block-size - Thumbnail block size for `type="card"`. Defaults to 48px.
- * @cssprop --swc-upload-attachment-preview-size - Inline and block size of the tile for `type="media"`. Defaults to 72px.
+ * @cssprop --swc-upload-attachment-preview-size - Inline and block size of the tile for `type="media"`. Overrides the `size` attribute's value (48/64/96px for s/m/l).
  * @cssprop --swc-upload-attachment-dismiss-visual-size - Rendered size of the dismiss button's circular hit area. Defaults to 20px.
  * @cssprop --swc-upload-attachment-dismiss-icon-inline-size - Inline size of the dismiss icon. Defaults to 8px.
  * @cssprop --swc-upload-attachment-dismiss-icon-block-size - Block size of the dismiss icon. Defaults to 8px.
@@ -75,6 +75,13 @@ export class UploadAttachment extends SpectrumElement {
   /** Visual treatment type for this attachment. */
   @property({ type: String, reflect: true })
   public type: 'card' | 'media' = 'card';
+
+  /**
+   * Tile size for `type="media"`: `s` (48px), `m` (64px, default), `l` (96px).
+   * Has no effect on `type="card"`, which is a single size.
+   */
+  @property({ type: String, reflect: true })
+  public size: 's' | 'm' | 'l' = 'm';
 
   /** When `true`, show a dismiss affordance and emit `swc-upload-attachment-dismiss` on click. */
   @property({ type: Boolean, reflect: true })

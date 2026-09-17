@@ -1117,6 +1117,7 @@ export class PromptField extends SpectrumElement {
             ? html`
                 <swc-action-button
                   class="swc-PromptField-attachments-scroll-prev"
+                  size=${ifDefined(this.size === 's' ? 's' : undefined)}
                   accessible-label=${this.attachmentScrollPrevLabel}
                   aria-disabled=${!this._attachmentCanScrollPrev}
                   tabindex=${this._attachmentCanScrollPrev ? nothing : -1}
@@ -1155,6 +1156,7 @@ export class PromptField extends SpectrumElement {
             ? html`
                 <swc-action-button
                   class="swc-PromptField-attachments-scroll-next"
+                  size=${ifDefined(this.size === 's' ? 's' : undefined)}
                   accessible-label=${this.attachmentScrollNextLabel}
                   aria-disabled=${!this._attachmentCanScrollNext}
                   tabindex=${this._attachmentCanScrollNext ? nothing : -1}
