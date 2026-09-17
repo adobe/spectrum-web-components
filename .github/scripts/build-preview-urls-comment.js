@@ -84,13 +84,13 @@ export const buildPreviewURLComment = (prNumber) => {
   // Documentation and Storybook URLs
   const docsFirstGenUrl = `${baseUrl}/${prHash}/docs/gen1-docs/`;
   const storybookFirstGenUrl = `${baseUrl}/${prHash}/docs/gen1-storybook/`;
-  const storybookSecondGenDevUrl = `${baseUrl}/${prHash}/docs/gen2-storybook-dev/`;
-  const storybookSecondGenProdUrl = `${baseUrl}/${prHash}/docs/gen2-storybook-prod/`;
+  const storybookGen2DevUrl = `${baseUrl}/${prHash}/docs/gen2-storybook-dev/`;
+  const storybookGen2ProdUrl = `${baseUrl}/${prHash}/docs/gen2-storybook-prod/`;
 
   let comment = `## 📚 Branch Preview Links
 
-- [Storybook (Gen2, dev mode)](${storybookSecondGenDevUrl})
-- [Storybook (Gen2, prod mode)](${storybookSecondGenProdUrl})
+- [Storybook (Gen2, dev mode)](${storybookGen2DevUrl})
+- [Storybook (Gen2, prod mode)](${storybookGen2ProdUrl})
 - [Documentation Site (Gen1)](${docsFirstGenUrl})
 - [Storybook (Gen1)](${storybookFirstGenUrl})
 

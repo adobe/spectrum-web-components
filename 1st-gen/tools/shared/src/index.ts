@@ -21,3 +21,4 @@ export * from './platform.js';
 export * from './reparent-children.js';
 export * from './get-label-from-slot.js';
 export * from './random-id.js';
+export * from './walk-ancestors.js';

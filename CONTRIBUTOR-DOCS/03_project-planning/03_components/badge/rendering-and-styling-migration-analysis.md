@@ -342,7 +342,7 @@ No significant structural changes.
 - **New color variants**: `brown`, `cinnamon`, `pink`, `silver`, `turquoise`
 - **Style variants**: `outline` and `subtle` styles
 
-**Note**: Fixed positioning exists in both SWC and Spectrum 2 CSS but is not in the design spec. Consider whether to keep this for 2nd gen.
+**Note**: Fixed positioning exists in both SWC and Spectrum 2 CSS but is not in the design spec. Consider whether to keep this for gen2.
 
 ### TODOs
 

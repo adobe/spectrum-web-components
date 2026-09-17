@@ -20,6 +20,10 @@
       "default": "./src/index.js"
     },
     "./package.json": "./package.json",
+    "./src/AttributeObserver.js": {
+      "development": "./src/AttributeObserver.dev.js",
+      "default": "./src/AttributeObserver.js"
+    },
     "./src/ColorController.js": {
       "development": "./src/ColorController.dev.js",
       "default": "./src/ColorController.js"

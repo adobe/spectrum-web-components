@@ -376,7 +376,7 @@ test('should verify color contrast', async ({ page }) => {
 
 ## Story IDs
 
-Find the story ID from the Storybook URL. For 2nd-gen components:
+Find the story ID from the Storybook URL. For gen2 components:
 
 ```
 http://localhost:6006/?path=/story/components-badge--default

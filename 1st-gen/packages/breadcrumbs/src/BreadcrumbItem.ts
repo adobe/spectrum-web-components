@@ -13,14 +13,18 @@
 import {
   CSSResultArray,
   html,
+  nothing,
   PropertyValues,
   TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { normalizeDir } from '@spectrum-web-components/base/src/normalize-dir.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import { observeAttribute } from '@spectrum-web-components/reactive-controllers/src/AttributeObserver.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
+import { walkAncestors } from '@spectrum-web-components/shared/src/walk-ancestors.js';
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 
@@ -49,12 +53,72 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
     return this.shadowRoot.querySelector('#item-link') as HTMLElement;
   }
 
+  // `renderLink()` and `renderSeparator()` bake this host's own `lang`/`dir`
+  // and the ambient `direction` into explicit attributes at render time.
+  // Neither `lang` nor `dir` is a reactive Lit property here, so — unlike
+  // plain CSS inheritance — none of that updates on its own if this host's
+  // own `lang`/`dir` change, or an ancestor's `dir` changes, after mount.
+  public static override get observedAttributes(): string[] {
+    return [...super.observedAttributes, 'dir', 'lang'];
+  }
+
+  public override attributeChangedCallback(
+    name: string,
+    old: string | null,
+    value: string | null
+  ): void {
+    super.attributeChangedCallback(name, old, value);
+    if (name === 'dir' || name === 'lang') {
+      if (name === 'dir') {
+        this.dirNeedsResolve = true;
+      }
+
+      this.requestUpdate();
+    }
+  }
+
+  // `attributeChangedCallback` only reaches this host's own attributes, not
+  // an ancestor's `dir` — react to those via the shared `AttributeObserver`
+  // singleton instead of a `MutationObserver` per item.
+  private ancestorDirUnsubscribes: (() => void)[] = [];
+
   override connectedCallback(): void {
     super.connectedCallback();
 
     if (!this.hasAttribute('role')) {
       this.setAttribute('role', 'listitem');
     }
+
+    for (const ancestor of walkAncestors(this)) {
+      this.ancestorDirUnsubscribes.push(
+        observeAttribute(ancestor, 'dir', () => {
+          this.dirNeedsResolve = true;
+          this.requestUpdate();
+        })
+      );
+    }
+  }
+
+  // Cached result of `this.dir` (`SpectrumElement`'s computed-direction
+  // getter), used by `renderSeparator()`. `dirNeedsResolve` starts `true` so
+  // the first render resolves it; after that it's only re-resolved in
+  // `willUpdate()` when `dir` actually changed on this host or a watched
+  // ancestor, not on every render an unrelated property change (e.g. a
+  // `ResizeObserver`-driven layout pass) triggers.
+  private ambientDir: 'ltr' | 'rtl' = 'ltr';
+  private dirNeedsResolve = true;
+
+  protected override willUpdate(): void {
+    if (this.dirNeedsResolve) {
+      this.dirNeedsResolve = false;
+      this.ambientDir = this.dir as 'ltr' | 'rtl';
+    }
+  }
+
+  override disconnectedCallback(): void {
+    this.ancestorDirUnsubscribes.forEach((unsubscribe) => unsubscribe());
+    this.ancestorDirUnsubscribes = [];
+    super.disconnectedCallback();
   }
 
   private announceSelected(value: string): void {
@@ -89,11 +153,28 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
     }
   }
 
-  protected renderLink(): TemplateResult {
+  protected renderLink(): TemplateResult | typeof nothing {
+    // `Breadcrumbs.renderMenu()` builds a menu-only item (its content is all
+    // `slot="menu"`, nothing for this item's own default slot) — rendering
+    // `#item-link` there would only produce an empty, but still focusable,
+    // link with no label.
+    if (this.classList.contains('is-menu')) {
+      return nothing;
+    }
+
+    // Forward `lang`/`dir` from the host onto the link so a single item's
+    // language only affects its own text rendering, not the host's own
+    // `direction` (which the separator mirrors via `:dir(rtl)`); see
+    // `:host([dir]) { direction: inherit; }` in breadcrumb-item.css. Read the raw
+    // `dir` attribute rather than `this.dir` — `SpectrumElement` overrides
+    // the native `dir` getter to return the *computed* CSS direction, which
+    // is exactly what `direction: inherit` decouples from the attribute.
     return html`
       <a
         id="item-link"
         href=${ifDefined(!this.isLastOfType ? this.href : undefined)}
+        lang=${ifDefined(this.getAttribute('lang') ?? undefined)}
+        dir=${ifDefined(normalizeDir(this.getAttribute('dir')))}
         tabindex="0"
         aria-current=${ifDefined(this.isLastOfType ? 'page' : undefined)}
         @keydown=${this.handleKeyDown}
@@ -105,11 +186,20 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
   }
 
   private renderSeparator(): TemplateResult {
+    // `:dir()` resolves directionality by walking up the `dir` *attribute*
+    // chain, independent of the CSS `direction` property — so it still
+    // picks up this host's own `dir` (set for `#item-link`'s content, per
+    // `renderLink()`) even though `:host([dir]) { direction: inherit; }` keeps the
+    // host's own *computed* direction tied to the ambient context. `ambientDir`
+    // (resolved in `willUpdate()`) holds that computed value so `:dir()` on
+    // `#separator` resolves from its own accurate attribute instead of the
+    // host's.
     return html`
       <sp-icon-chevron100
         id="separator"
         size="xs"
         class="spectrum-UIIcon-ChevronRight100"
+        dir=${this.ambientDir}
       ></sp-icon-chevron100>
     `;
   }

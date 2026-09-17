@@ -1,22 +1,22 @@
 ---
-description: Enforces consistent file structure, section separators, meta configuration, story tags, and layout parameters for 2nd-gen Storybook stories files. Story prose lives in per-unit MDX; the stories file is definitions-only.
-globs: 2nd-gen/packages/swc/components/*/stories/**, 2nd-gen/packages/swc/patterns/*/*/stories/**, 2nd-gen/packages/core/controllers/*/stories/**
+description: Enforces consistent file structure, section separators, meta configuration, story tags, and layout parameters for gen2 Storybook stories files. Story prose lives in per-unit MDX; the stories file is definitions-only.
+globs: gen2/packages/swc/components/*/stories/**, gen2/packages/swc/patterns/*/*/stories/**, gen2/packages/core/controllers/*/stories/**
 paths:
-  - '2nd-gen/packages/swc/components/*/stories/**'
-  - '2nd-gen/packages/swc/patterns/*/*/stories/**'
-  - '2nd-gen/packages/core/controllers/*/stories/**'
+  - 'gen2/packages/swc/components/*/stories/**'
+  - 'gen2/packages/swc/patterns/*/*/stories/**'
+  - 'gen2/packages/core/controllers/*/stories/**'
 alwaysApply: false
 ---
 
 # Storybook stories format standards
 
-Enforce consistent formatting and technical structure for Storybook stories files in 2nd-gen components, patterns, and controllers.
+Enforce consistent formatting and technical structure for Storybook stories files in gen2 components, patterns, and controllers.
 
 **See also**: `.ai/rules/stories-documentation.md` for guidance on WHAT to author in the per-unit MDX (content, patterns, examples).
 
 ## When to apply
 
-- Authoring or reviewing a `.stories.ts` file for a 2nd-gen component, pattern, or controller
+- Authoring or reviewing a `.stories.ts` file for a gen2 component, pattern, or controller
 - Applies automatically when Claude reads a file matching the globs below (Cursor: via `globs`; Claude Code: via `paths`)
 - Adding a new story (Playground, Options, States, Behaviors, Accessibility, etc.) and needing the right tags, layout parameters, or naming convention
 
@@ -24,9 +24,9 @@ Enforce consistent formatting and technical structure for Storybook stories file
 
 Apply to all `.stories.ts` files in:
 
-- `2nd-gen/packages/swc/components/*/stories/` (components)
-- `2nd-gen/packages/swc/patterns/*/*/stories/` (patterns)
-- `2nd-gen/packages/core/controllers/*/stories/` (controllers)
+- `gen2/packages/swc/components/*/stories/` (components)
+- `gen2/packages/swc/patterns/*/*/stories/` (patterns)
+- `gen2/packages/core/controllers/*/stories/` (controllers)
 
 ## Source of truth: per-unit MDX, not JSDoc
 
@@ -210,14 +210,14 @@ const meta: Meta = {
 - **Avoid repetition**: The subtitle and JSDoc description should complement each other, not duplicate content. The subtitle is a brief summary; the JSDoc provides fuller context.
 - **Component links**: When referencing other components in the JSDoc description, use relative Storybook paths: `[ComponentName](../?path=/docs/components-component-name--docs)`
 
-### Controls and options come from the type — don't restate the union
+### Controls and options come from the type; don't restate the union
 
 For a property typed as a string-literal union (directly, or via a referenced alias such as `(typeof MY_CONST)[number]`), the select control and its options are generated automatically. The `@wc-toolkit/type-parser` CEM plugin expands the alias into `parsedType` in the manifest, and `@wc-toolkit/storybook-helpers` reads `parsedType` to build both the `select` control and the `options` list.
 
 So do **not** hand-wire the option list just to make values appear in the control or the API table:
 
 ```typescript
-// ❌ Redundant — the union already drives the control and the API table.
+// ❌ Redundant: the union already drives the control and the API table.
 argTypes.variant = {
   ...argTypes.variant,
   control: { type: 'select' },
@@ -225,7 +225,7 @@ argTypes.variant = {
 };
 ```
 
-Only wire `argTypes.<prop>.options` when you need something the type does not express: a curated ordering, or a "none/clear" sentinel option (e.g. `['', ...MY_STATIC_COLORS]`) for an optional property. Union props that lack a `parsedType` in the generated manifest (for example a `size` supplied through a generic mixin the parser can't resolve) still need the manual wiring.
+Only wire `argTypes.<prop>.options` when you need something the type does not express: a curated ordering, or a "none/clear" sentinel option (e.g. `['', ...MY_STATIC_COLORS]`) for an optional property. Union props that lack a `parsedType` in the generated manifest still need the manual wiring.
 
 ### Internal attributes: exclude from the Storybook helper round-trip
 

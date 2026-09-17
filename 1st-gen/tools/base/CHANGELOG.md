@@ -14,7 +14,7 @@
   - **Added**: New exports `ELEMENT_SIZES` and `DEFAULT_ELEMENT_SIZES` for typed size arrays
   - **Deprecated**: `ElementSizes` record is now deprecated in favor of `ELEMENT_SIZES`. The export is preserved for backward compatibility but will be removed in a future major release.
 
-  **@spectrum-web-components/core (2nd-gen)**
+  **@spectrum-web-components/core (gen2)**
   - **Changed**: Replaced `ElementSizes` record with `ELEMENT_SIZES` const array and `DEFAULT_ELEMENT_SIZES`
   - **Changed**: `VALID_SIZES` arrays are now typed as `readonly ElementSize[]` for better type safety
   - **Changed**: Badge type exports renamed for consistency:
@@ -62,7 +62,7 @@
 
 - No customer-facing changes.
 
-  Introduced architectural changes to support side-by-side development of 1st-gen and 2nd-gen components.
+  Introduced architectural changes to support side-by-side development of 1st-gen and gen2 components.
 
 ## 1.9.1
 
