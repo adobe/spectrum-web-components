@@ -18,11 +18,11 @@ import { fileURLToPath } from 'node:url';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, '../..');
 
-const CORE_COMPONENTS = '2nd-gen/packages/core/components';
-const SWC_COMPONENTS = '2nd-gen/packages/swc/components';
+const CORE_COMPONENTS = 'gen2/packages/core/components';
+const SWC_COMPONENTS = 'gen2/packages/swc/components';
 
 /**
- * 2nd-gen component scaffolder.
+ * gen2 component scaffolder.
  *
  * Mirrors the file layout and conventions described by the migration skills
  * (`migration-setup`, `stories-format`, `stories-documentation`) and the `badge`
@@ -80,7 +80,7 @@ export default function (plop) {
   // automatically.
   plop.setActionType('wire-core-export', (answers) => {
     const name = render('{{dashCase name}}', answers);
-    const pkgPath = path.join(repoRoot, '2nd-gen/packages/core/package.json');
+    const pkgPath = path.join(repoRoot, 'gen2/packages/core/package.json');
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
 
     const before = JSON.stringify([pkg.exports, pkg.typesVersions]);
@@ -148,7 +148,7 @@ export default function (plop) {
 
   plop.setGenerator('component', {
     description:
-      'Scaffold a 2nd-gen component (core base + SWC concrete + stories, docs, tests)',
+      'Scaffold a gen2 component (core base + SWC concrete + stories, docs, tests)',
     prompts: [
       {
         type: 'input',

@@ -1,7 +1,7 @@
-# 2nd-gen scaffolding
+# gen2 scaffolding
 
 A [plop](https://plopjs.com/) generator that produces the deterministic file
-skeleton for a 2nd-gen component: the `core` base layer, the `swc` concrete
+skeleton for a gen2 component: the `core` base layer, the `swc` concrete
 layer, and the stories, docs, and test files that go with them.
 
 The generator exists to take the mechanical, every-time-identical part of
@@ -37,12 +37,12 @@ yarn plop component "action-button" --force
 For a component named `action-button`:
 
 ```
-2nd-gen/packages/core/components/action-button/
+gen2/packages/core/components/action-button/
   ActionButton.types.ts     VALID_SIZES + Size type
   ActionButton.base.ts       abstract base class (SizedMixin + SpectrumElement)
   index.ts                   re-exports base + types
 
-2nd-gen/packages/swc/components/action-button/
+gen2/packages/swc/components/action-button/
   ActionButton.ts            concrete class, render(), styles getter
   index.ts                   re-exports the concrete class
   swc-action-button.ts       defineElement registration + tag-name map
