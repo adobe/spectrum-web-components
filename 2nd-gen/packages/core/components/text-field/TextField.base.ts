@@ -199,7 +199,12 @@ export abstract class TextFieldBase extends SizedMixin(
 
   constructor() {
     super();
-    this.addEventListener('pointerdown', () => (this.#pointerFocus = true));
+    // Capture-phase so the flag is set before any inner `pointerdown` handler
+    // (e.g. the control's click-to-focus, which calls `.focus()` on the input
+    // and synchronously fires `focusin`) runs and reads it.
+    this.addEventListener('pointerdown', () => (this.#pointerFocus = true), {
+      capture: true,
+    });
     this.addEventListener('focusin', () => {
       this.internals.states[this.#pointerFocus ? 'delete' : 'add'](
         'keyboard-focused'

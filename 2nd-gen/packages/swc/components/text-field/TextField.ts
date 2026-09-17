@@ -118,7 +118,7 @@ export class TextField extends TextFieldBase {
             @input=${this.handleInput}
             @change=${this.handleChange}
           />
-          ${this.invalid
+          ${this.invalid && !this.effectiveDisabled
             ? html`
                 <swc-icon-alert-triangle
                   class="swc-TextField-validationIcon"

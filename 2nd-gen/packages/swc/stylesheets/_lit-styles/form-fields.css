@@ -83,6 +83,8 @@
 
 /* ── Disabled ─────────────────────────────────────── */
 
-:host(:disabled) .swc-FieldLabel {
+:host(:disabled) .swc-FieldLabel,
+:host(:disabled) .swc-FieldDescription,
+:host(:disabled) .swc-FieldErrorText {
   color: token("disabled-content-color");
 }

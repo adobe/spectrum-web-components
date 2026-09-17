@@ -101,14 +101,6 @@ slot[name="prefix"]::slotted(*) {
   outline-offset: token("focus-ring-gap");
 }
 
-/* ── Invalid ──────────────────────────────────────── */
-
-/* Beats the focus/hover border rules (higher or later at equal specificity), so
-   a focused invalid field keeps its error border. */
-:host([invalid]) .swc-TextField-control {
-  border-color: token("negative-border-color-default");
-}
-
 /* ── Disabled ─────────────────────────────────────── */
 
 :host(:disabled) .swc-TextField-control {
@@ -119,8 +111,30 @@ slot[name="prefix"]::slotted(*) {
   color: token("disabled-content-color");
 }
 
+:host(:disabled) .input::placeholder {
+  color: token("disabled-content-color");
+}
+
 :host(:disabled) slot[name="prefix"]::slotted(*) {
   color: token("disabled-content-color");
+}
+
+/* ── Invalid ──────────────────────────────────────── */
+
+:host([invalid]:not(:disabled)) .swc-TextField-control {
+  border-color: token("negative-border-color-default");
+}
+
+:host([invalid]:not(:disabled)) .swc-TextField-control:hover {
+  border-color: token("negative-border-color-hover");
+}
+
+:host([invalid]:not(:disabled)) .swc-TextField-control:focus-within {
+  border-color: token("negative-border-color-focus");
+}
+
+:host([invalid]:not(:disabled)) .swc-TextField-control:focus-within:hover {
+  border-color: token("negative-border-color-focus-hover");
 }
 
 /* ── Sizes ────────────────────────────────────────── */
@@ -165,6 +179,7 @@ slot[name="prefix"]::slotted(*) {
   }
 
   :host(:disabled) .input,
+  :host(:disabled) .input::placeholder,
   :host(:disabled) slot[name="prefix"]::slotted(*) {
     color: GrayText;
   }

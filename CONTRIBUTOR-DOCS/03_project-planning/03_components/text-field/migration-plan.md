@@ -70,7 +70,7 @@
 - **A11y is non-negotiable and well-specified.** Add error association via `aria-describedby` when invalid (not `aria-errormessage`; see [Decision log](#decision-log)), `inputmode`, native form association, `delegatesFocus: true`, and `:focus-visible` keyboard-focus differentiation (a WCAG 2.4.7 gap in 1st-gen).
 - **Largest risks / decisions:** now largely settled: the single-line/multiline split (Q6, confirmed), the field-family sharing model (Q7, direction set: shared controllers, iterate), and the sequenced delivery of the two shared controllers (Q8). The remaining architectural work is executing on the controllers, not choosing the approach.
 - **Side-label is core, not additive.** `label-position` (`top`/`side`) is a core layout mode of the field, following the meter/progress-bar precedent in [`LinearProgressMixin`](../../../../2nd-gen/packages/core/mixins/linear-progress-mixin.ts). It is owned by the shared render template (`.swc-FormFieldTemplate` grid), not `field-label`.
-- **Deferred, not dropped:** character count, in-field pending (infield progress circle, not yet built), required-without-asterisk styling, the new inline variant, `prefix` affix, and in-field ContextualHelp.
+- **Deferred, not dropped:** character count, in-field pending (infield progress circle, not yet built), required-without-asterisk styling, the new inline variant, and in-field ContextualHelp. (`prefix` affix was pulled into scope during implementation; see the [Decision log](#decision-log).)
 
 ### Blocker status
 
@@ -279,11 +279,11 @@ Migrate `swc-text-field` **first among the field family**, developing it togethe
 | B9 | Associate the error via `aria-describedby` | none | While `invalid`, replace the description with the slotted `error-text` in the input's `ariaDescribedByElements`; `aria-errormessage` is intentionally not used (see [Decision log](#decision-log)) | None (additive AT improvement). |
 | B10 | Add `inputmode` | none | Author-settable virtual-keyboard hint | None (additive). |
 | B11 | Native form association | Named `<input>` only; no `ElementInternals` | `FieldAssociationController` (`ElementInternals`), incl. `fieldset[disabled]` cascade and form reset | None for basic forms; gains reset/disabled cascade. |
-| B12 | Keyboard-focus differentiation | Same focus styling for pointer and keyboard | `:focus-visible` keyboard ring (fixes [WCAG 2.4.7](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)) | None (visual/a11y fix). |
+| B12 | Keyboard-focus differentiation | Same focus styling for pointer and keyboard | Keyboard-only focus ring, JS modality tracking + `keyboard-focused` custom state (fixes [WCAG 2.4.7](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html); see [Decision log](#decision-log)) | None (visual/a11y fix). |
 | B13 | Help/error `aria-live` | Container defaults to `aria-live="assertive"` | No default live region; same-root `aria-describedby` covers the common case (polite only if truly needed) | None. |
 | B14 | `delegatesFocus` | Host-level focus indirection | Shadow root `delegatesFocus: true`; focus lands on the real `<input>` | None. |
 
-> **Note on B12:** using `:focus-visible` is correct, but browser heuristics for text inputs mean the focus ring shows for **either** pointer clicks **or** keyboard access even with that selector. That is expected and fine; do not try to suppress the pointer-focus ring on the input.
+> **Note on B12 (updated in PR review):** browser heuristics for text inputs match `:focus-visible` on **either** pointer clicks **or** keyboard access, so CSS alone cannot show the ring for keyboard only. The decision (see [Decision log](#decision-log)) is to match React Spectrum: show the focus ring on **keyboard focus only**, suppressing it on pointer/touch. This is done by tracking modality in JS and exposing a `keyboard-focused` custom state the stylesheet keys the ring off of, rather than `:focus-visible` alone. The focus border-color change (shown for both modalities) remains the "field is active" indicator on pointer.
 
 #### Core layout
 
@@ -301,7 +301,7 @@ Migrate `swc-text-field` **first among the field family**, developing it togethe
 | A2 | In-field pending state | **Documented in Spectrum CSS** as a boolean `Loading` state (rendered via `spectrum-InfieldProgressCircle`; see the DOM in the [rendering analysis](../textfield/rendering-and-styling-migration-analysis.md#css-spectrum-2-changes)). Not yet shown in React Spectrum or the Figma state matrix Design shared, so reconcile the gap with Design. Depends on `infield-progress-circle` (not yet built). SWC terminology is "pending"; Spectrum CSS calls it "Loading"; align naming when scheduled. |
 | A4 | Required-without-asterisk styling | S2 adds `isRequiredWithoutAsterisk`; needs Design confirmation (Q4). |
 | A5 | Inline text-field variant | New in S2; **published in Figma** (the source of truth) as a separate "Text field (In-line)" component: corrects the earlier "not in Figma yet." Not yet built in SWC and **not yet supported in React**. Deferral confirmed; whether to schedule it now is Q17. |
-| A6 | `prefix` affix | RS supports; not in Figma yet; anticipate as future `LabellingController` surface. |
+| A6 | `prefix` affix | **Pulled into scope** during implementation (was deferred pending a Design decision; Design confirmed doing it now). Ships as a non-interactive `prefix` slot for leading content (icon, symbol, avatar). See the [Decision log](#decision-log). |
 | A7 | In-field ContextualHelp | RS supports; future `LabellingController` description source. Placement follows RS lead (next to the label), presuming RS validated with Design; see Q23. |
 | A8 | Valid-state checkmark icon | Deferred per Design and RS response (not shown in React Spectrum or the newer Figma). The `valid` property stays in the API for consumers; only the icon is deferred. Revisit if Design reintroduces it. |
 
@@ -369,7 +369,7 @@ Initial expectation for Text field is a small reviewed set (likely field width/m
 - **Form reset:** `FieldAssociationController.formResetCallback()` restores a defined **default value** (the RS `defaultValue` concept, typically the initial attribute value). The reset target must be specified, not left implicit.
 - **Events:** keep `input` and `change` (composed, bubbling), matching native semantics.
 - **Selection API:** keep `setSelectionRange()` and `select()`.
-- **Focus:** `delegatesFocus: true`; keyboard focus via `:focus-visible`.
+- **Focus:** `delegatesFocus: true`; keyboard-only focus ring via JS modality tracking + a `keyboard-focused` custom state (See B12 and the [Decision log](#decision-log)).
 - **Truncated value:** no reveal mechanism; native caret/selection/scroll suffices; optional pointer-only `title` mirroring `value`.
 
 ### Accessibility semantics notes (2nd-gen)
@@ -443,7 +443,7 @@ Planned rendering shape:
 
 #### Visual model and regressions
 
-- [ ] Implement `:focus-visible` keyboard-focus differentiation (B12)
+- [ ] Implement keyboard-only focus ring (Modality tracking + `keyboard-focused` state) (B12)
 - [ ] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source
 - [ ] Add `@cssprop` JSDoc tag for every exposed `--swc-*` property
 - [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
@@ -563,6 +563,9 @@ Settled decisions from planning and PR review, kept here as a historical record 
 | Q22 (naming) | Shared field styles live in a shared `form-fields` stylesheet from the start; classes are `.swc-FormField*` | Text field is the first consumer, but the styles live shared, not authored in text-field. `form-fields`/`FormField` (not `forms`/`Form`) reserves `form`/`Form` for a possible future form-wrapper component or utility. Render-template location/ownership remains open (Q22). |
 | Q27 | `TextFieldType` stays the closed 1st-gen set (`text/url/tel/email/password`); `search` and `number` are excluded | Spectrum models search and number as their own components (`Search` / React Spectrum `SearchField`; `number-field`), so they are not `type` values here. Matches 1st-gen `sp-textfield` and is enforced with `validateEnum`. This intentionally diverges from React Spectrum's TextField, whose `type` is an open `… \| (string & {})` union that also lists `search`; the open escape hatch is incompatible with the closed-enum dev-warning, and search UI belongs to the dedicated component. |
 | B9 | Error text is associated via `aria-describedby` only; `aria-errormessage` is not used | **Reverses the [accessibility migration analysis](./accessibility-migration-analysis.md) recommendation to set both.** While `invalid`, `HelpTextMixin` replaces the description with the slotted `error-text` in the input's `ariaDescribedByElements` (the description is hidden and the error takes its place), following [React Spectrum's TextField](https://react-spectrum.adobe.com/TextField), which swaps the description for the error in one referenced container and associates it through `aria-describedby` alone. Rationale: `aria-errormessage` AT support is still inconsistent while `aria-describedby` is universally read, and referencing only the message currently on screen avoids describing the field with hidden text and the duplicate-announcement and ordering ambiguity of pointing at both. WCAG [Error identification (3.3.1)](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html) is still met (the error is visible and programmatically associated). |
+| B12 | Focus ring shows on **keyboard focus only**, suppressed on pointer/touch | **Reverses the earlier plan note** ("do not suppress the pointer-focus ring"). Confirmed in PR review after checking with React Spectrum: RSP intentionally hides the ring on pointer, and the focus **border-color** change (shown for both modalities) is a sufficient "field is active" indicator on its own, so suppressing the pointer ring is not an accessibility regression. Because text inputs match `:focus-visible` on pointer clicks too, CSS alone cannot achieve this; modality is tracked in JS (a capture-phase `pointerdown` flag, read on `focusin`) and the ring is keyed off a `keyboard-focused` custom state. |
+| A6 | `prefix` affix pulled into scope (was deferred) | Originally deferred pending a Design decision (not in the Figma matrix at planning time). Design confirmed doing it now, so it ships in this migration as a non-interactive `prefix` slot for leading content (icon, symbol, avatar); clicking the prefix focuses the input. Reverses the "deferred" disposition recorded for A6. |
+| B7 / A8 | A disabled field never shows the validation (error) icon | The design state matrix has no disabled + error cell, and React Spectrum renders a disabled invalid field with no error icon (grayed label/value/message, disabled border). So the trailing `AlertTriangle` is not rendered when the field is disabled, and the error border/red treatment is gated on `:not(:disabled)`: disabled always beats invalid. The error message text still renders (grayed) so the association stays intact. |
 
 ---
 

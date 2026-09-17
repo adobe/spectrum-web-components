@@ -263,8 +263,20 @@ export const States: Story = {
       readonly
       value="Read-only value"
     ></swc-text-field>
-    <swc-text-field accessible-label="Disabled" disabled></swc-text-field>
+    <swc-text-field disabled value="Disabled value">
+      <span slot="label">Disabled</span>
+    </swc-text-field>
+    <swc-text-field
+      accessible-label="Disabled placeholder"
+      disabled
+      placeholder="Placeholder"
+    ></swc-text-field>
     <swc-text-field accessible-label="Email address" invalid>
+      <span slot="description">We'll never share your email.</span>
+      <span slot="error-text">Enter a valid email address.</span>
+    </swc-text-field>
+    <swc-text-field disabled invalid value="not-an-email">
+      <span slot="label">Email address</span>
       <span slot="description">We'll never share your email.</span>
       <span slot="error-text">Enter a valid email address.</span>
     </swc-text-field>
