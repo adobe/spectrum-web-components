@@ -11,9 +11,13 @@
  */
 
 import { html } from 'lit';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import { Icon_Folder } from '@adobe/spectrum-wc-icons/Folder.js';
+
+import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 import '../swc-upload-attachment.js';
 
 const { args, argTypes, template } = getStorybookHelpers(
@@ -247,6 +251,13 @@ export const FallbackIcons: Story = {
         <swc-upload-attachment type="card" mime-type="text/plain">
           <span slot="title">Release notes</span>
           <span slot="subtitle">TXT</span>
+        </swc-upload-attachment>
+        <swc-upload-attachment type="card">
+          <swc-icon slot="thumbnail" aria-hidden="true">
+            ${unsafeSVG(Icon_Folder())}
+          </swc-icon>
+          <span slot="title">Shared assets</span>
+          <span slot="subtitle">Folder</span>
         </swc-upload-attachment>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">

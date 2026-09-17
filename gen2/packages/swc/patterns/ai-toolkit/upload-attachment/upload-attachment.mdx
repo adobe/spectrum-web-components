@@ -64,6 +64,8 @@ Set `mime-type` to render a matching icon into the `thumbnail` slot when no thum
 
 `mime-type` only affects rendering when the `thumbnail` slot is empty; a slotted thumbnail always takes priority.
 
+On `type="card"`, a `swc-icon` slotted directly into `thumbnail` is automatically sized to match the fallback icon instead of stretching to fill the tile, so a custom icon looks consistent with the built-in fallback.
+
 <Canvas of={UploadAttachmentStories.FallbackIcons} />
 
 ### Text overflow

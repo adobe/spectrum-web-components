@@ -49,6 +49,8 @@ import styles from './upload-attachment.css';
  *
  * @slot thumbnail - Shared visual slot for icon/thumbnail/preview image. When
  * empty and `mime-type` is set, a fallback icon is rendered based on the MIME type.
+ * On `type="card"`, a slotted `swc-icon` is automatically sized to match the
+ * fallback icon instead of stretching to fill the tile.
  * @slot badge - Optional file-type badge rendered over `type="media"` previews (for example, "PDF").
  * @slot title - Primary text label.
  * @slot subtitle - Secondary text label.
@@ -240,12 +242,11 @@ export class UploadAttachment extends SpectrumElement {
       ></slot>
       ${showFallback
         ? html`
-            <swc-icon
-              class="swc-UploadAttachment-thumbnail-fallback"
-              aria-hidden="true"
-            >
-              ${unsafeSVG(this._fallbackIcon())}
-            </swc-icon>
+            <div class="swc-UploadAttachment-thumbnail-fallback">
+              <swc-icon aria-hidden="true">
+                ${unsafeSVG(this._fallbackIcon())}
+              </swc-icon>
+            </div>
           `
         : ''}
     `;
