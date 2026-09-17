@@ -52,6 +52,13 @@ const meta: Meta = {
     docs: {
       subtitle: `Displays a small preview of an image, such as a layer or asset thumbnail.`,
     },
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9392-43644&p=f&t=l3GqsDFoOZJvv8ZC-0',
+    },
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-p4qyy5j2?file=package.json',
+    },
     flexLayout: 'row-wrap',
   },
   tags: ['migrated'],
@@ -73,9 +80,9 @@ const LANDSCAPE_SRC = './images/landscape-asset.jpg';
 
 export const Playground: Story = {
   args: {
-    'default-slot': '<img src="./images/avatar-preview.png" alt="Preview" />',
+    'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview" />`,
   },
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────
@@ -137,7 +144,7 @@ export const Fit: Story = {
 };
 
 // ──────────────────────────────
-//    BEHAVIORS STORIES
+//    STATES STORIES
 // ──────────────────────────────
 
 export const ConsumerStyledStates: Story = {
@@ -162,8 +169,9 @@ export const ConsumerStyledStates: Story = {
     </swc-thumbnail>
   `,
   parameters: { flexLayout: 'row-wrap' },
-  tags: ['behaviors'],
+  tags: ['states'],
 };
+ConsumerStyledStates.storyName = 'Consumer-styled states';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
