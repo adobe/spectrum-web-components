@@ -29,22 +29,25 @@
    Status row (icon + label [+ checkmark])
    ───────────────────────────────────── */
 
+/* The row is always a <button> (see `_renderHeader`), so the native button
+   chrome is reset here for both the interactive and non-interactive states.
+   Full inline-size so the entire row is clickable when it is a disclosure
+   toggle. The `--button` modifier below adds the interactive affordances. */
 .swc-ResponseStatus-row {
   display: flex;
   gap: token("spacing-100");
   align-items: center;
-  min-block-size: var(--_swc-response-status-row-block-size, 32px);
-}
-
-/* When the row is a button (reasoning toggle). Full inline-size so the
-   entire row is clickable. */
-.swc-ResponseStatus-row--button {
   inline-size: 100%;
+  min-block-size: var(--_swc-response-status-row-block-size, 32px);
   padding: 0;
   color: inherit;
   text-align: start;
   background: transparent;
   border: none;
+}
+
+/* When the row is an active disclosure toggle (there are steps to expand). */
+.swc-ResponseStatus-row--button {
   border-radius: token("corner-radius-medium-default");
 }
 
