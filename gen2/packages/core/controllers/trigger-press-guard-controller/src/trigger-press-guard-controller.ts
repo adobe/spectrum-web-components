@@ -233,10 +233,13 @@ export class TriggerPressGuardController implements ReactiveController {
 
   private readonly onPressEnd = (event: PointerEvent): void => {
     this.pressEndAbort?.abort();
-    // A same-target pointerup still gets its own click, which resets the flag
-    // itself; resetting it here too would race that click's read of
-    // `dismissedByPress`. pointercancel never gets a click, so it always
-    // resets.
+    // A same-target pointerup still gets its own click, which reads and
+    // clears `dismissedByPress` itself; clearing it here too would race that
+    // read. Any other press end (pointercancel, or a pointerup that lands off
+    // the trigger) means no click is coming for this gesture, so both flags
+    // are cleared here instead — otherwise a dismissal noted during a press
+    // that never resolves to a click would incorrectly consume the next,
+    // unrelated click on the trigger.
     if (
       event.type === 'pointerup' &&
       event.composedPath().includes(this.trigger as EventTarget)
@@ -244,6 +247,7 @@ export class TriggerPressGuardController implements ReactiveController {
       return;
     }
     this.pointerActive = false;
+    this.dismissedByPress = false;
   };
 
   // If a native dismissal already consumed this gesture (recorded via

@@ -198,6 +198,42 @@ export const PressEndWithoutClickResetsTest: Story = {
   },
 };
 
+export const DismissDuringCancelledPressDoesNotLeakTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    const trigger = makeTrigger(canvasElement);
+    const controller = new TriggerPressGuardController(makeHost());
+    let toggleCount = 0;
+    controller.attach(trigger, { onToggle: () => toggleCount++ });
+
+    await step(
+      'a dismissal noted during a press that is cancelled (no click) does not leak into the next click',
+      () => {
+        trigger.dispatchEvent(
+          new PointerEvent('pointerdown', { bubbles: true, composed: true })
+        );
+        // A native dismissal lands while this press is still active...
+        controller.noteNativeDismiss();
+        // ...but the gesture is cancelled instead of producing a click (e.g.
+        // the platform reinterpreted it as a scroll).
+        trigger.dispatchEvent(
+          new PointerEvent('pointercancel', { bubbles: true, composed: true })
+        );
+
+        // A later, unrelated click must not be swallowed by the dismissal
+        // attributed to the dead gesture above.
+        click(trigger);
+        expect(
+          toggleCount,
+          'a fresh click after the cancelled gesture still toggles'
+        ).toBe(1);
+      }
+    );
+
+    controller.detach();
+    trigger.remove();
+  },
+};
+
 export const AttachUpdatesCallbackTest: Story = {
   play: async ({ canvasElement, step }) => {
     const trigger = makeTrigger(canvasElement);
