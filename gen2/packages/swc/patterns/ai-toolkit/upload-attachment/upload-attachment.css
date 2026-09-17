@@ -89,9 +89,13 @@
   block-size: 100%;
 }
 
+/* Matches React Spectrum's AttachmentList lightDark('black/3', 'white/3')
+ * tile tint exactly. transparent-black-50 is already 3%, but the closest
+ * white token (transparent-white-50) is 4%, so the white side is a literal
+ * value instead. */
 .swc-UploadAttachment-surface {
   display: flex;
-  background: token("gray-50");
+  background: light-dark(token("transparent-black-50"), rgb(255 255 255 / 3%));
 }
 
 .swc-UploadAttachment-meta {
@@ -141,8 +145,7 @@
    * the host's inward focus ring (below) lands in empty space instead of
    * being painted over by the surface, which renders on top of it. */
   margin: token("spacing-50");
-  background: light-dark(token("transparent-black-50"), token("transparent-white-50"));
-  border: token("border-width-100") solid light-dark(token("transparent-black-50"), token("transparent-white-50"));
+  border: token("border-width-100") solid light-dark(token("transparent-black-50"), rgb(255 255 255 / 3%));
   border-radius: token("corner-radius-medium-default");
 }
 
@@ -169,9 +172,19 @@
   flex-shrink: 0;
   inline-size: var(--swc-upload-attachment-card-thumbnail-inline-size, 48px);
   block-size: var(--swc-upload-attachment-card-thumbnail-block-size, 48px);
-  background: token("gray-100");
   border: token("border-width-100") solid transparent;
   border-radius: token("corner-radius-large-default");
+}
+
+:host([type="card"]) .swc-UploadAttachment-thumbnail ::slotted(*) {
+  background: token("gray-100");
+}
+
+/* Matches the outer card surface's tint instead of the solid gray-100 real
+ * thumbnails get, so the fallback icon reads as part of the same glass
+ * surface rather than a separate opaque chip. */
+:host([type="card"]) .swc-UploadAttachment-thumbnail-fallback {
+  background: light-dark(token("transparent-black-50"), rgb(255 255 255 / 3%));
 }
 
 /* A consumer-slotted swc-icon keeps the 48px box above but shrinks its own
@@ -250,16 +263,17 @@
   position: relative;
   inline-size: 100%;
   block-size: 100%;
-  background: token("gray-100");
-  border: token("border-width-100") solid transparent;
+  background: light-dark(token("transparent-black-50"), rgb(255 255 255 / 3%));
+  border: token("border-width-100") solid light-dark(token("transparent-black-50"), rgb(255 255 255 / 3%));
   border-radius: token("corner-radius-large-default");
   overflow: hidden;
 }
 
+/* No background of its own: it fully covers .swc-UploadAttachment-thumbnail
+ * above, whose own tint already shows through. */
 :host([type="media"]) .swc-UploadAttachment-thumbnail-fallback {
   position: absolute;
   inset: 0;
-  background: light-dark(token("transparent-black-50"), token("transparent-white-50"));
 }
 
 :host([type="media"]) .swc-UploadAttachment-actions {
