@@ -344,6 +344,11 @@
   text-overflow: ellipsis;
 }
 
+/* The small tile has no room for the file-type badge. */
+:host([type="media"][size="s"]) .swc-UploadAttachment-badge {
+  display: none;
+}
+
 :host([type="media"]) .swc-UploadAttachment-meta {
   inline-size: 100%;
 }

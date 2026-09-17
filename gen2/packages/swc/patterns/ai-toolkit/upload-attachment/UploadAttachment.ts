@@ -51,7 +51,7 @@ import styles from './upload-attachment.css';
  * empty and `mime-type` is set, a fallback icon is rendered based on the MIME type.
  * On `type="card"`, a slotted `swc-icon` is automatically sized to match the
  * fallback icon instead of stretching to fill the tile.
- * @slot badge - Optional file-type badge rendered over `type="media"` previews (for example, "PDF"). Hidden while the mime-type fallback icon is shown, since the icon already conveys the file type.
+ * @slot badge - Optional file-type badge rendered over `type="media"` previews (for example, "PDF"). Hidden while the mime-type fallback icon is shown, since the icon already conveys the file type, and on the small (`s`) media size, which has no room for it.
  * @slot title - Primary text label.
  * @slot subtitle - Secondary text label.
  * @slot actions - Optional trailing actions.

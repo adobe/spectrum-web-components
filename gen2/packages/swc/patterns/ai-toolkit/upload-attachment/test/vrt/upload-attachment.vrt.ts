@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../../swc-upload-attachment.js';
@@ -68,14 +68,17 @@ const cardAttachment = ({
 const mediaAttachment = ({
   dismissible = false,
   badge,
+  size,
   forceState,
 }: {
   dismissible?: boolean;
   badge?: string;
+  size?: 's' | 'm' | 'l';
   forceState?: 'host-focus' | 'dismiss-hover' | 'dismiss-focus';
 } = {}) => html`
   <swc-upload-attachment
     type="media"
+    size=${size ?? nothing}
     ?dismissible=${dismissible}
     data-force-state=${forceState ?? ''}
   >
@@ -130,6 +133,14 @@ const permutationContent = () => html`
   ${row(
     [mediaAttachment({ dismissible: true, badge: 'PDF' })],
     'Media with badge'
+  )}
+  ${row(
+    [
+      mediaAttachment({ size: 's', badge: 'PDF' }),
+      mediaAttachment({ size: 'm', badge: 'PDF' }),
+      mediaAttachment({ size: 'l', badge: 'PDF' }),
+    ],
+    'Media sizes (badge hidden at s)'
   )}
   ${row([overflowContent()], 'Text overflow')}
   ${row(MIME_TYPES.map(cardFallback), 'Card fallback icons')}
