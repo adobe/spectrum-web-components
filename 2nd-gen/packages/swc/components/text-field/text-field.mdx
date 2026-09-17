@@ -13,6 +13,8 @@ A text field consists of:
 
 - **Input**: the real, focusable `<input>` that carries the value and native `textbox` role
 - **Label** (optional), provided through the `label` slot: visible text rendered as a real, same-root `<label for>`
+- **Necessity indicator** (optional): an asterisk or `(required)`/`(optional)` text appended to the label, controlled by `necessity-indicator` (see [Necessity indicator](#necessity-indicator))
+- **Validation icon**: a decorative alert icon shown at the trailing edge of the input while `invalid`
 - **Description** (optional), provided through the `description` slot: guidance text associated via `aria-describedby`
 - **Error text** (optional), provided through the `error-text` slot: shown in place of the description and associated via `aria-describedby` only while `invalid`
 
@@ -30,6 +32,30 @@ Three sources can provide the field's accessible name. When more than one is set
 
 <Canvas of={TextFieldStories.Labelling} />
 
+### Sizes
+
+Text fields come in four sizes. Size controls the field height, typography, inline padding, and corner radius. Width is not size-dependent: the field fills its container by default; set `inline-size` on the host for a fixed width.
+
+<Canvas of={TextFieldStories.Sizes} />
+
+### Label positions
+
+The `label-position` attribute places the visible label above the input (`top`, the default) or beside it (`side`).
+
+<Canvas of={TextFieldStories.LabelPositions} />
+
+### Necessity indicator
+
+`necessity-indicator` chooses how the field's necessity is marked in the visible label. The default, `icon`, appends an asterisk to required fields only. `label` appends `(required)` to required fields and `(optional)` to optional ones, marking both; use it when most fields in a form share the opposite state (Spectrum's [Required or optional](https://spectrum.adobe.com/page/text-field/#Required-or-optional) pattern). The indicator needs a visible label and is decorative; the requirement itself is conveyed by the input's native `required` state.
+
+<Canvas of={TextFieldStories.NecessityIndicator} />
+
+### Prefix
+
+The `prefix` slot places non-interactive content before the input, inside the field: a symbol (like a currency `$`), an icon, or an avatar. Slotted icons auto-size to the field; other content keeps its own size. Clicking the prefix focuses the input.
+
+<Canvas of={TextFieldStories.Prefix} />
+
 ## States
 
 Text fields can exist in various states:
@@ -44,11 +70,11 @@ Text fields can exist in various states:
 
 ## Behaviors
 
-### Conflicting label sources
+### Label overflow
 
-Setting both `accessible-labelledby` and `accessible-label` triggers a dev-mode console warning: they are two ways to name the same field, so one is always ignored. The warning names `accessible-labelledby` as the source that is used. Pairing a visible label with either one does not warn; that is the recommended way to satisfy [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html). Open the browser console to see the warning for the examples below.
+A long visible label wraps onto multiple lines instead of clipping. In `side` position, the label wraps within its column and the input aligns to the label's first line: a short side label reads as centered against the input, while a long one keeps the input at the top and grows downward past it. By default the label wraps late and the input shrinks toward a control-height square; set `--swc-field-label-max-inline-size` to cap the label so it wraps sooner and leaves the input more room, or set `inline-size` on the host to widen the field.
 
-<Canvas of={TextFieldStories.ConflictingLabelSources} />
+<Canvas of={TextFieldStories.LabelOverflow} />
 
 ## Accessibility
 
@@ -57,7 +83,7 @@ Setting both `accessible-labelledby` and `accessible-label` triggers a dev-mode 
 - **Native role**: the host sets no ARIA role; the real `<input>` supplies the implicit `textbox` role.
 - **Browser-resolved name**: each source is wired independently, and the browser's accessible-name computation picks the one that is announced, in the order `accessible-labelledby` &gt; `accessible-label` &gt; slotted label. A slotted visible label always renders as a real `<label for>`, keeping native click-to-focus.
 - **Combining descriptions**: a slotted `description` and an external `accessible-describedby` reference combine rather than override each other; the in-shadow description comes first.
-- **Error text replaces the description while invalid**: following React Spectrum's [TextField](https://react-spectrum.adobe.com/TextField) strategy, the slotted `error-text` replaces the description while `invalid` is `true`, so `aria-describedby` references only the message on screen rather than pointing at the error separately via `aria-errormessage`, since AT support for that attribute is still inconsistent.
+- **Error text replaces the description while invalid**: the slotted `error-text` replaces the description while `invalid` is `true`, so `aria-describedby` references only the message on screen rather than pointing at the error separately via `aria-errormessage`, since AT support for that attribute is still inconsistent.
 - **Dev-mode warnings**: a field with no visible label, no `accessible-label`, and no `accessible-labelledby` triggers a console warning, and so does a field that sets both `accessible-labelledby` and `accessible-label`.
 
 > **Known axe-core false positive.** A field named only via `accessible-labelledby` fails automated axe-core scans with a "Form element does not have a label" (`label` rule) violation, even though the name resolves correctly in real browsers and assistive technology. axe-core inspects DOM attributes and has no standardized way to read `ariaLabelledByElements`, the ARIA element-reflection API in use.

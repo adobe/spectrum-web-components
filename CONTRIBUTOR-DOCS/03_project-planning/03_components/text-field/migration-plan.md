@@ -64,13 +64,13 @@
 ## TL;DR
 
 - **Scope narrows to single-line.** 1st-gen `sp-textfield` covers both single-line and multiline (`multiline`/`grows`/`rows`). 2nd-gen splits these: `swc-text-field` is **single-line only**, and multiline moves to a separate **`swc-text-area`** component (per the [a11y analysis](./accessibility-migration-analysis.md#recommendations-swc-text-field)). `multiline`, `grows`, and `rows` therefore leave this component's surface. **Scope split confirmed (Q6).**
-- **Labelling and description/error move in-shadow.** 2nd-gen does **not** depend on a migrated `swc-field-label`/`swc-help-text`. Shared mixins render the visible label, required indicator, description, and error message inside the field's own shadow root, eliminating 1st-gen's cross-root ARIA reach-in and two-writer hazard: **`LabellingMixin`** (name/label) and **`HelpTextMixin`** (description/error-text), which together deliver what the plan originally scoped as a single `LabellingController` (SWC-2466). Form participation uses a shared **`FieldAssociationController`** (SWC-2467) via `ElementInternals`. These two controllers are sequenced dependencies delivered as separate tickets under epic SWC-2323 (Q8).
+- **Labelling and description/error move in-shadow.** 2nd-gen does **not** depend on a migrated `swc-field-label`/`swc-help-text`. Shared mixins render the visible label, required indicator, description, and error message inside the field's own shadow root, eliminating 1st-gen's cross-root ARIA reach-in and two-writer hazard: **`LabellingMixin`** (name/label) and **`HelpTextMixin`** (description/error-text). Form participation uses a shared **`FieldAssociationController`** (SWC-2467) via `ElementInternals`. The controller remains a sequenced dependency delivered under epic SWC-2323 (Q8).
 - **Build the controllers iteratively, following the `LinearProgressMixin` precedent.** Progress bar and meter share a single [`LinearProgressMixin`](../../../../2nd-gen/packages/core/mixins/linear-progress-mixin.ts) that owns the typed property surface, `label`/`description` slots (via `SlotPresenceController`), container ids, and the accessible-name dev warning, while staying deliberately silent on each component's own concerns (`role`, animation). The field controllers should be scoped the same way: prove them on `swc-text-field` first, generalize to `number-field`/`color-field`/`text-area`, and refactor toward a richer shared shape only as real similarities surface. Do not over-build the shared abstraction ahead of a second consumer.
 - **Headline breaking changes (must ship):** remove `quiet` (removed in S2, Q1); rename `label` → `accessible-label` and add `accessible-labelledby`/`accessible-describedby`, dropping the placeholder-as-`aria-label` fallback in favor of a dev-warning (Q10); drop the `TruncatedValueTooltipController` and its tooltip dependency entirely (Q9).
 - **A11y is non-negotiable and well-specified.** Add error association via `aria-describedby` when invalid (not `aria-errormessage`; see [Decision log](#decision-log)), `inputmode`, native form association, `delegatesFocus: true`, and `:focus-visible` keyboard-focus differentiation (a WCAG 2.4.7 gap in 1st-gen).
 - **Largest risks / decisions:** now largely settled: the single-line/multiline split (Q6, confirmed), the field-family sharing model (Q7, direction set: shared controllers, iterate), and the sequenced delivery of the two shared controllers (Q8). The remaining architectural work is executing on the controllers, not choosing the approach.
-- **Side-label is core, not additive.** `label-position` (`top`/`side`) is a core layout mode of the field, following the meter/progress-bar precedent in [`LinearProgressMixin`](../../../../2nd-gen/packages/core/mixins/linear-progress-mixin.ts). It is owned by the shared render template (`.swc-FormFieldTemplate` grid), not `field-label`.
-- **Deferred, not dropped:** character count, in-field pending (infield progress circle, not yet built), required-without-asterisk styling, the new inline variant, `prefix` affix, and in-field ContextualHelp.
+- **Side-label is core, not additive.** `label-position` (`top`/`side`) is a core layout mode of the field, following the meter/progress-bar precedent in [`LinearProgressMixin`](../../../../2nd-gen/packages/core/mixins/linear-progress-mixin.ts). It is owned by the shared `.swc-FormField` grid, not `field-label`.
+- **Deferred, not dropped:** character count, in-field pending (infield progress circle, not yet built), required-without-asterisk styling, the new inline variant, and in-field ContextualHelp. (`prefix` affix was pulled into scope during implementation; see the [Decision log](#decision-log).)
 
 ### Blocker status
 
@@ -176,15 +176,15 @@ Multiline (`<textarea>`, optionally with a `#sizer` div when `grows` and `rows =
 | Package | Version | Role |
 | ------- | ------- | ---- |
 | `@spectrum-web-components/base` | workspace | `SizedMixin`, `Focusable` host, Lit `html`/directives (`ifDefined`, `live`). |
-| `@spectrum-web-components/help-text` | workspace | `ManageHelpText` mixin (slotted help/negative-help text). **Replaced by `LabellingController` in 2nd-gen.** |
+| `@spectrum-web-components/help-text` | workspace | `ManageHelpText` mixin (slotted help/negative-help text). **Replaced by the shared `LabellingMixin` and `HelpTextMixin` in 2nd-gen.** |
 | `@spectrum-web-components/shared` | workspace | `Focusable`. |
 | `@spectrum-web-components/icon` | workspace | Checkmark icon styles. |
 | `@spectrum-web-components/icons-ui` | workspace | `sp-icon-checkmark100` (valid icon). |
 | `@spectrum-web-components/icons-workflow` | workspace | `sp-icon-alert` (invalid icon). |
 | `@spectrum-web-components/overlay` | workspace | `Placement` type for the truncated-value tooltip. **Dropped in 2nd-gen.** |
 | `TruncatedValueTooltipController` (internal) | — | Custom overlay/tooltip revealing a truncated value. **Dropped in 2nd-gen.** |
-| `LabellingController` (SWC-2466) | **not yet built** | In-shadow label/description/error render. **Sequenced implementation dependency** (separate SWC-2323 ticket; verified absent from `2nd-gen/packages/core/controllers/`). Does not block this plan. |
-| `FieldAssociationController` (SWC-2467) | **not yet built** | `ElementInternals` form participation. **Sequenced implementation dependency** (separate SWC-2323 ticket; verified absent). Does not block this plan. |
+| `LabellingMixin` + `HelpTextMixin` | workspace | In-shadow label, required indicator, description, and error rendering for `swc-text-field`; implemented in the shared core mixin path. |
+| `FieldAssociationController` (SWC-2467) | workspace | `ElementInternals` form participation, including form value, reset, disabled cascade, and validity behavior; implemented and wired into `TextFieldBase`. |
 
 **Reverse dependencies (1st-gen).** `NumberField` and `ColorField` both `extends TextfieldBase`: `NumberField` overrides `value` (number), `handleInput`, and `renderField` (wraps stepper buttons) and drives the truncation tooltip's `syncTooltipText`; `ColorField` overrides `value`, `render`, and `checkValidity`. The extension points they rely on (`handleInput`, `handleChange`, `renderField`, value coercion) must have clean equivalents in the 2nd-gen core base or shared controllers, and the dropped `syncTooltipText` coupling must be re-solved without the tooltip when `number-field` migrates. These reverse dependencies drive the shared-base decision (Q7).
 
@@ -204,9 +204,9 @@ Multiline (`<textarea>`, optionally with a `#sizer` div when `grows` and `rows =
 
 ### Dependency-aware recommendation
 
-Migrate `swc-text-field` **first among the field family**, developing it together with the two shared field controllers as their proving ground (rather than waiting for the controllers to be finished in isolation):
+Migrate `swc-text-field` **first among the field family**, using it as the proving ground for shared field behavior:
 
-1. **`LabellingController`** (SWC-2466): renders label, required indicator, description, and error message in-shadow via a shared render directive (the pattern `renderPendingSpinner` already establishes) plus a shared stylesheet. Exposes `accessible-label`, `accessible-labelledby`, and `accessible-describedby`. Scope it minimally at first, mirroring how [`LinearProgressMixin`](../../../../2nd-gen/packages/core/mixins/linear-progress-mixin.ts) owns the `label`/`description` slots plus the accessible-name warning while staying silent on component specifics.
+1. **`LabellingMixin` + `HelpTextMixin`:** render the label, required indicator, description, and error message in-shadow via shared render directives and the shared stylesheet. They expose the accessible naming and description behavior used by `swc-text-field`; future field-family generalization remains iterative.
 2. **`FieldAssociationController`** (SWC-2467): wraps the host's `ElementInternals` for `setFormValue()`, reset-to-default, the `fieldset[disabled]` cascade, and the validity reads. Note `static formAssociated` (read off the constructor at element-definition time) and `attachInternals()` (element-only) cannot live on a plain controller; each host declares them, passes its `attachInternals()` result in, restores the controller's `defaultValue` on `formResetCallback()`, and delegates `formDisabledCallback()` to the controller. Centralizing that host-side boilerplate (plus the `name`/`value`/`disabled` surface) into a shared mixin or base is deferred until a second consumer demonstrates the need, per the `LinearProgressMixin` precedent.
 
 `swc-text-field` is the simplest consumer of both controllers, so it is the right proving ground before `number-field`, `color-field`, and `text-area` adopt them.
@@ -215,12 +215,12 @@ Migrate `swc-text-field` **first among the field family**, developing it togethe
 
 - **`swc-text-area`**: the multiline sibling extracted from 1st-gen `sp-textfield[multiline]`. Should follow `swc-text-field` and reuse the same controllers. Has its own [accessibility analysis](../text-area/accessibility-migration-analysis.md).
 - **`number-field`, `color-field`**: both `extends TextfieldBase` in 1st-gen. In 2nd-gen they should consume the same controllers; whether they also share a base class is Q7.
-- **`help-text`, `field-label`**: only *analyzed*, not migrated. Deliberately **not** prerequisites: 2nd-gen renders label/description/error in-shadow via `LabellingController` instead of composing separate elements.
+- **`help-text`, `field-label`**: only *analyzed*, not migrated. Deliberately **not** prerequisites: 2nd-gen renders label/description/error in-shadow via `LabellingMixin` and `HelpTextMixin` instead of composing separate elements.
 - **`tooltip`, `progress-circle`**: migrated. `tooltip` is no longer needed here (truncation tooltip dropped). `progress-circle` is not the pending surface; **`infield-progress-circle`** is, and it is not yet built (defers in-field pending, Q15).
-- **Shared `_lit-styles/` fragment**: the label/required/description/error stylesheet is a genuine shared structural pattern across every field that adopts `LabellingController` (`2nd-gen/packages/swc/stylesheets/_lit-styles/` already hosts `pending-spinner.css` as precedent). Recommend it live as a shared fragment created and owned alongside the controllers and consumed by `text-field`, not authored inside `text-field`. Name the classes **generically for the whole form family, not per-component** (e.g. `.swc-FormFieldLabel`, `.swc-FormFieldDescription`, `.swc-FormFieldErrorIcon`) and name the stylesheet `form-fields`. The render-root wrapper should be a shared `.swc-FormFieldTemplate` that sets up a CSS **grid template** reused across all form components, with a `label-position="side"` grid variant supporting the core side-label mode (C1):
+- **Shared `_lit-styles/` fragment**: the label/required/description/error stylesheet is a genuine shared structural pattern across every field that adopts `LabellingMixin` and `HelpTextMixin` (`2nd-gen/packages/swc/stylesheets/_lit-styles/` already hosts `pending-spinner.css` as precedent). Recommend it live as a shared fragment created and owned alongside the controllers and consumed by `text-field`, not authored inside `text-field`. Name the classes **generically for the whole form family, not per-component** (e.g. `.swc-FormFieldLabel`, `.swc-FormFieldDescription`, `.swc-FormFieldErrorText`) and name the stylesheet `form-fields`. The render-root wrapper should be a shared `.swc-FormField` that sets up a CSS **grid template** reused across all form components, with a `label-position="side"` grid variant supporting the core side-label mode (C1):
 
   ```css
-  .swc-FormFieldTemplate {
+  .swc-FormField {
     display: grid;
     grid-template-areas:
       'label'
@@ -228,7 +228,7 @@ Migrate `swc-text-field` **first among the field family**, developing it togethe
       'messages';
   }
 
-  :host([label-position='side']) .swc-FormFieldTemplate {
+  :host([label-position='side']) .swc-FormField {
     grid-template-areas:
       'label input'
       '. messages';
@@ -275,21 +275,21 @@ Migrate `swc-text-field` **first among the field family**, developing it togethe
 
 | #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
-| B8 | In-shadow labelling | `sp-field-label` reaches across shadow roots to set `aria-label`; two-writer hazard | `LabellingController` renders label/required/description/error in one shadow root; single writer by construction | Prefer slotted label or `accessible-label`; external association via `accessible-labelledby`. |
+| B8 | In-shadow labelling | `sp-field-label` reaches across shadow roots to set `aria-label`; two-writer hazard | `LabellingMixin` and `HelpTextMixin` render label/required/description/error in one shadow root; single writer by construction | Prefer slotted label or `accessible-label`; external association via `accessible-labelledby`. |
 | B9 | Associate the error via `aria-describedby` | none | While `invalid`, replace the description with the slotted `error-text` in the input's `ariaDescribedByElements`; `aria-errormessage` is intentionally not used (see [Decision log](#decision-log)) | None (additive AT improvement). |
 | B10 | Add `inputmode` | none | Author-settable virtual-keyboard hint | None (additive). |
 | B11 | Native form association | Named `<input>` only; no `ElementInternals` | `FieldAssociationController` (`ElementInternals`), incl. `fieldset[disabled]` cascade and form reset | None for basic forms; gains reset/disabled cascade. |
-| B12 | Keyboard-focus differentiation | Same focus styling for pointer and keyboard | `:focus-visible` keyboard ring (fixes [WCAG 2.4.7](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)) | None (visual/a11y fix). |
+| B12 | Keyboard-focus differentiation | Same focus styling for pointer and keyboard | Keyboard-only focus ring, JS modality tracking + `keyboard-focused` custom state (fixes [WCAG 2.4.7](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html); see [Decision log](#decision-log)) | None (visual/a11y fix). |
 | B13 | Help/error `aria-live` | Container defaults to `aria-live="assertive"` | No default live region; same-root `aria-describedby` covers the common case (polite only if truly needed) | None. |
 | B14 | `delegatesFocus` | Host-level focus indirection | Shadow root `delegatesFocus: true`; focus lands on the real `<input>` | None. |
 
-> **Note on B12:** using `:focus-visible` is correct, but browser heuristics for text inputs mean the focus ring shows for **either** pointer clicks **or** keyboard access even with that selector. That is expected and fine; do not try to suppress the pointer-focus ring on the input.
+> **Note on B12 (updated in PR review):** browser heuristics for text inputs match `:focus-visible` on **either** pointer clicks **or** keyboard access, so CSS alone cannot show the ring for keyboard only. The decision (see [Decision log](#decision-log)) is to match React Spectrum: show the focus ring on **keyboard focus only**, suppressing it on pointer/touch. This is done by tracking modality in JS and exposing a `keyboard-focused` custom state the stylesheet keys the ring off of, rather than `:focus-visible` alone. The focus border-color change (shown for both modalities) remains the "field is active" indicator on pointer.
 
 #### Core layout
 
 | #   | What ships | 2nd-gen behavior | Consumer migration path |
 | --- | ---------- | ---------------- | ----------------------- |
-| C1 | `label-position` (`top`/`side`) | Core layout mode: the visible label renders above (`top`, default) or beside (`side`) the input. Owned by the shared render template (`.swc-FormFieldTemplate` CSS grid), following the meter/progress-bar precedent in [`LinearProgressMixin`](../../../../2nd-gen/packages/core/mixins/linear-progress-mixin.ts), **not** `field-label`. Reclassified from additive to core. | None (new capability; default `top` matches prior single-position behavior). Ships with the labelling render template. |
+| C1 | `label-position` (`top`/`side`) | Core layout mode: the visible label renders above (`top`, default) or beside (`side`) the input. Owned by the shared `.swc-FormField` CSS grid, following the meter/progress-bar precedent in [`LinearProgressMixin`](../../../../2nd-gen/packages/core/mixins/linear-progress-mixin.ts), **not** `field-label`. Reclassified from additive to core. | None (new capability; default `top` matches prior single-position behavior). Ships with the shared form-field styles. |
 
 ### Additive: ships when ready, zero breakage for consumers already on 2nd-gen
 
@@ -301,8 +301,8 @@ Migrate `swc-text-field` **first among the field family**, developing it togethe
 | A2 | In-field pending state | **Documented in Spectrum CSS** as a boolean `Loading` state (rendered via `spectrum-InfieldProgressCircle`; see the DOM in the [rendering analysis](../textfield/rendering-and-styling-migration-analysis.md#css-spectrum-2-changes)). Not yet shown in React Spectrum or the Figma state matrix Design shared, so reconcile the gap with Design. Depends on `infield-progress-circle` (not yet built). SWC terminology is "pending"; Spectrum CSS calls it "Loading"; align naming when scheduled. |
 | A4 | Required-without-asterisk styling | S2 adds `isRequiredWithoutAsterisk`; needs Design confirmation (Q4). |
 | A5 | Inline text-field variant | New in S2; **published in Figma** (the source of truth) as a separate "Text field (In-line)" component: corrects the earlier "not in Figma yet." Not yet built in SWC and **not yet supported in React**. Deferral confirmed; whether to schedule it now is Q17. |
-| A6 | `prefix` affix | RS supports; not in Figma yet; anticipate as future `LabellingController` surface. |
-| A7 | In-field ContextualHelp | RS supports; future `LabellingController` description source. Placement follows RS lead (next to the label), presuming RS validated with Design; see Q23. |
+| A6 | `prefix` affix | **Pulled into scope** during implementation (was deferred pending a Design decision; Design confirmed doing it now). Ships as a non-interactive `prefix` slot for leading content (icon, symbol, avatar). See the [Decision log](#decision-log). |
+| A7 | In-field ContextualHelp | RS supports; future shared field description source. Placement follows RS lead (next to the label), presuming RS validated with Design; see Q23. |
 | A8 | Valid-state checkmark icon | Deferred per Design and RS response (not shown in React Spectrum or the newer Figma). The `valid` property stays in the API for consumers; only the icon is deferred. Revisit if Design reintroduces it. |
 
 ---
@@ -336,7 +336,8 @@ These are derived from the 1st-gen implementation, the [accessibility migration 
 | `required` | `boolean` | `false` | `required` (reflect) | **Confirmed.** Native `required`; no `aria-required`. |
 | `invalid` | `boolean` | `false` | `invalid` (reflect) | **Confirmed.** Drives `aria-invalid` and swaps the description for the error in `aria-describedby` (see [Decision log](#decision-log)). |
 | `valid` | `boolean` | `false` | `valid` (reflect) | **Inferred.** Keep the property: its value is that **consumers can react to a valid state**, independent of the visual checkmark, which is **deferred** (not shown in React or the newer Figma; per Design and RS, tracked as additive A8). |
-| `labelPosition` | `'top' \| 'side'` | `'top'` | `label-position` (reflect) | **Confirmed (core).** Places the visible label above (`top`) or beside (`side`) the input. Owned by the shared render template (`.swc-FormFieldTemplate` grid), mirroring the meter/progress-bar `label-position` in `LinearProgressMixin` (C1). |
+| `labelPosition` | `'top' \| 'side'` | `'top'` | `label-position` (reflect) | **Confirmed (core).** Places the visible label above (`top`) or beside (`side`) the input. Owned by the shared `.swc-FormField` grid, mirroring the meter/progress-bar `label-position` in `LinearProgressMixin` (C1). |
+| `necessityIndicator` | `'icon' \| 'label'` | `'icon'` | `necessity-indicator` (reflect) | **Confirmed.** Marks the visible label with an asterisk for required fields, or with `(required)` / `(optional)` text when `label` is selected. |
 | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | `size` (reflect) | **Inferred.** Give an explicit default `m` (drop `noDefaultSize`). |
 | `disabled` | `boolean` | `false` | `disabled` (reflect) | **Confirmed.** Removed from tab order; `formDisabledCallback` cascade. |
 | `allowedKeys` | `string` | `''` | `allowed-keys` | **Open question (Q11).** Niche 1st-gen quirk; carry forward or drop. |
@@ -369,7 +370,7 @@ Initial expectation for Text field is a small reviewed set (likely field width/m
 - **Form reset:** `FieldAssociationController.formResetCallback()` restores a defined **default value** (the RS `defaultValue` concept, typically the initial attribute value). The reset target must be specified, not left implicit.
 - **Events:** keep `input` and `change` (composed, bubbling), matching native semantics.
 - **Selection API:** keep `setSelectionRange()` and `select()`.
-- **Focus:** `delegatesFocus: true`; keyboard focus via `:focus-visible`.
+- **Focus:** `delegatesFocus: true`; keyboard-only focus ring via JS modality tracking + a `keyboard-focused` custom state (See B12 and the [Decision log](#decision-log)).
 - **Truncated value:** no reveal mechanism; native caret/selection/scroll suffices; optional pointer-only `title` mirroring `value`.
 
 ### Accessibility semantics notes (2nd-gen)
@@ -386,13 +387,13 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 | Layer    | Path                                            | Contains                                                                                                                                                                                                 |
 | -------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Core** | `2nd-gen/packages/core/components/text-field/`  | `TextField.base.ts`, `TextField.types.ts`, enum/required validation, value normalization, and wiring of the shared `LabellingController` and `FieldAssociationController`. No rendering.                 |
+| **Core** | `2nd-gen/packages/core/components/text-field/`  | `TextField.base.ts`, `TextField.types.ts`, enum/required validation, value normalization, and wiring of the shared `LabellingMixin`, `HelpTextMixin`, and `FieldAssociationController`. No rendering.                 |
 | **SWC**  | `2nd-gen/packages/swc/components/text-field/`   | `TextField.ts`, `text-field.css`, `swc-text-field` registration, stories, tests, and S2 rendering/styling.                                                                                              |
 
 Planned rendering shape:
 
 - Core owns API normalization, enum/required dev-warnings (via `validateEnum`/`warnIf`), value/validity state, and controller wiring.
-- SWC renders: a `.swc-TextField` wrapper containing the `LabellingController` output (label, required indicator), the real `<input class="input">`, the validation icon (`aria-hidden`), and the description/error container.
+- SWC renders: a `.swc-FormField swc-TextField` wrapper containing the shared mixin output (label, required indicator, description/error), the real `<input class="input">`, and the invalid icon (`aria-hidden`).
 
 **Field-family sharing (Q7, direction confirmed).** The 1st-gen `TextfieldBase` inheritance (used by `number-field`/`color-field`) is expressed in 2nd-gen as **shared controllers first**: `text-area`, `number-field`, and `color-field` compose the same `LabellingController`/`FieldAssociationController` rather than deep-inheriting a single class. This mirrors how meter and progress-bar share the [`LinearProgressMixin`](../../../../2nd-gen/packages/core/mixins/linear-progress-mixin.ts) while keeping component-specific concerns (there: `role`/animation; here: `type`/validation/stepper) in each component's own base. Prove the controllers on `swc-text-field` first, then generalize; introduce a small shared base only if a second consumer demonstrates the need. Iterate rather than over-engineering the shared abstraction ahead of that second consumer.
 
@@ -414,7 +415,7 @@ Planned rendering shape:
 - [x] Create `2nd-gen/packages/swc/components/text-field/` (`TextField.ts`, `text-field.css`, `index.ts`, `swc-text-field.ts`)
 - [x] Wire exports in both `package.json` files — core `package.json` gained explicit `./components/text-field` entries (`exports` + `typesVersions`); the SWC `package.json` uses wildcard exports (`./components/*`, `./components/*.js`), so no change was needed there
 - [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory — deferred to Phase 5 (styling); not needed to build the scaffold
-- [ ] Scaffold `LabellingController` (SWC-2466) and `FieldAssociationController` (SWC-2467) alongside `text-field`, or confirm they are available to depend on — neither controller exists yet; wiring deferred to Phase 3 (API) per session decision. `TextField.base.ts` carries a `@todo (SWC-2466 / SWC-2467)` marker so the scaffold builds without them
+- [x] Confirm the shared `LabellingMixin`, `HelpTextMixin`, and `FieldAssociationController` are available and wired into `text-field`; the original `LabellingController` proposal is superseded for this implementation
 
 > **Phase 2 note.** Stories and tests were intentionally not scaffolded in Phase 2; they are authored in their dedicated phases (Testing / Documentation). The scaffold render in `TextField.ts` is a minimal `.swc-TextField` wrapper with a bare `<input>` and no API wiring, sufficient to confirm the build passes.
 
@@ -423,7 +424,7 @@ Planned rendering shape:
 #### Naming and public surface
 
 - [x] `TextField.types.ts`: define `TextFieldType`, the `size` union, and the `label-position` (`top`/`side`) union; export public types
-- [x] `TextField.base.ts`: implement `accessible-label`, `value` (string), `type`, `placeholder`, `pattern`, `inputmode`, `autocomplete`, `maxlength`/`minlength`, `readonly`, `required`, `invalid`/`valid`, `label-position` (core; default `top`), `size`, `disabled`. `accessible-labelledby`/`accessible-describedby` element-refs deferred to `LabellingController` (SWC-2466); `checkValidity()`/selection methods deferred to Phase 5 (need the rendered input)
+- [x] `TextField.base.ts`: implement `accessible-label`, `value` (string), `type`, `placeholder`, `pattern`, `inputmode`, `autocomplete`, `maxlength`/`minlength`, `readonly`, `required`, `invalid`/`valid`, `label-position` (core; default `top`), `necessity-indicator`, `size`, `disabled`, form validity, and selection methods. `accessible-labelledby`/`accessible-describedby` are implemented through the shared mixin path
 - [x] Remove `quiet`, `multiline`, `grows`, `rows`, `focused`, `tooltip-placement` — not carried into 2nd-gen; deprecated on 1st-gen `Textfield` with `@deprecated` + `__swc.warn`
 - [ ] Resolve `allowedKeys` (Q11) before finalizing the surface
 
@@ -436,14 +437,14 @@ Planned rendering shape:
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] Add `.swc-TextField` to the internal wrapper in `render()`; keep styling off `:host`
+- [x] Add `.swc-TextField` to the internal wrapper in `render()`; keep styling off `:host`
 - [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `text-field.css` as baseline
-- [ ] Consume the shared label/description/error stylesheet fragment (the `form-fields` stylesheet: `.swc-FormFieldTemplate` grid, `.swc-FormFieldLabel`/`.swc-FormFieldDescription`/`.swc-FormFieldErrorIcon`) from `_lit-styles/`; author these styles in the shared `form-fields` stylesheet from the start (text-field is the first consumer), not inside `text-field` (Q22)
-- [ ] Implement both `label-position` modes (`top` default, `side`) via the `.swc-FormFieldTemplate` grid variant (C1)
+- [x] Consume the shared label/description/error stylesheet fragment (the `form-fields` stylesheet: `.swc-FormField` grid, `.swc-FormFieldLabel`/`.swc-FormFieldDescription`/`.swc-FormFieldErrorText`) from `_lit-styles/`; author these styles in the shared `form-fields` stylesheet from the start (text-field is the first consumer), not inside `text-field` (Q22)
+- [x] Implement both `label-position` modes (`top` default, `side`) via the `.swc-FormField` grid variant (C1)
 
 #### Visual model and regressions
 
-- [ ] Implement `:focus-visible` keyboard-focus differentiation (B12)
+- [x] Implement keyboard-only focus ring (Modality tracking + `keyboard-focused` state) (B12)
 - [ ] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source
 - [ ] Add `@cssprop` JSDoc tag for every exposed `--swc-*` property
 - [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
@@ -454,19 +455,19 @@ Planned rendering shape:
 
 #### Naming and semantics
 
-- [ ] `LabellingController` renders label/required/description/error in-shadow via the shared directive (no external `field-label`/`help-text`, no cross-root reach-in)
-- [ ] Exactly one accessible-name writer; precedence `accessible-labelledby` > `accessible-label` > slotted label; no conflicting combinations
-- [ ] Placeholder is never the accessible name; dev-warn an entirely unlabeled field; never set `aria-placeholder`
-- [ ] `accessible-labelledby`/`accessible-describedby` resolve element references (not IDREF strings)
+- [x] `LabellingMixin` and `HelpTextMixin` render label/required/description/error in-shadow via shared directives (no external `field-label`/`help-text`, no cross-root reach-in)
+- [x] Exactly one accessible-name writer; precedence `accessible-labelledby` > `accessible-label` > slotted label; no conflicting combinations
+- [x] Placeholder is never the accessible name; dev-warn an entirely unlabeled field; never set `aria-placeholder`
+- [x] `accessible-labelledby`/`accessible-describedby` resolve element references (not IDREF strings)
 
 #### State verification
 
-- [ ] `aria-invalid="true"` only when invalid (never explicit `"false"`)
-- [ ] error text replaces the description in `aria-describedby` only while `invalid` is `true`; `aria-errormessage` intentionally not used (see [Decision log](#decision-log))
-- [ ] `FieldAssociationController` wires `formAssociated`, `attachInternals`, `setFormValue`, `formResetCallback`, `formDisabledCallback`
-- [ ] Validation icon stays `aria-hidden="true"`
-- [ ] `readonly` vs `disabled` distinct in tab order (not just visually)
-- [ ] Help/error container does not default to `aria-live="assertive"`
+- [x] `aria-invalid="true"` only when invalid (never explicit "false")
+- [x] error text replaces the description in `aria-describedby` only while `invalid` is `true`; `aria-errormessage` intentionally not used (see [Decision log](#decision-log))
+- [x] `FieldAssociationController` wires `formAssociated`, `attachInternals`, `setFormValue`, `formResetCallback`, `formDisabledCallback`
+- [x] Invalid icon stays `aria-hidden="true"`; a valid checkmark remains deferred
+- [x] `readonly` vs `disabled` distinct in tab order (not just visually)
+- [x] Help/error container does not default to `aria-live="assertive"`
 - [ ] Border and focus-ring meet 3:1 non-text contrast ([WCAG 1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)) against S2 tokens (re-check SWC-214)
 
 ### Testing
@@ -490,8 +491,8 @@ Planned rendering shape:
 
 #### General
 
-- [ ] JSDoc on all public props, slots, and `--swc-*` properties
-- [ ] Storybook stories: anatomy, sizes, states, validation, label positions, accessibility
+- [x] JSDoc on all public props, slots, and `--swc-*` properties
+- [x] Storybook stories: anatomy, sizes, states, validation, label positions, accessibility
 
 #### Breaking changes
 
@@ -531,8 +532,8 @@ Planned rendering shape:
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q22 | Two shared artifacts for the field family, created with the controllers and consumed by `text-field` (the first consumer): **(1)** a shared **CSS fragment** — the `form-fields` stylesheet (`.swc-FormFieldTemplate` grid + `.swc-FormField*` classes) in `swc/stylesheets/_lit-styles/` (settled convention; naming and live-shared decided, see [Decision log](#decision-log)); and **(2)** a shared **render template** — a standalone `TemplateResult`-returning function per the [shared render templates](../../../02_style-guide/02_typescript/09_rendering-patterns.md) style guide (the `card-template.ts` pattern: an options object of static values, optional render callbacks, and event-handler pass-throughs). **Open decision to record: where the render template lives.** That style guide's "Where the template file lives" calls out field-family templates (`text-field`/`text-area`/`number-field`/`picker`/`combobox`) as having no settled convention: either host it in `text-field` (first to migrate, mirroring `card/`) or introduce a dedicated shared location (e.g. `swc/components/_lit-templates/`), and it says to record the choice in the migration plan. | No | CSS fragment + naming settled (Decision log); render-template **location** is the open decision to record here | CSS reviewer + Architecture |
-| Q23 | In-field ContextualHelp (A7) placement: the plan describes it as **in-field**, but React Spectrum's `contextualHelp` places the element **next to the label**, not inside the input frame. **Follow the RS lead** (next to the label), presuming RS validated the placement with Design. Regardless of placement, the `LabellingController` should model description sources (help text, error message, contextual help, `prefix`) as an **extensible set** so A6/A7 can be added without an API redesign. No 2nd-gen `contextual-help` component exists yet. | No | Direction set: follow RS placement (next to label); controller API should stay extensible | Accessibility + Architecture |
+| Q22 | Two shared artifacts for the field family, created with the controllers and consumed by `text-field` (the first consumer): **(1)** a shared **CSS fragment** — the `form-fields` stylesheet (`.swc-FormField` grid + `.swc-FormField*` classes) in `swc/stylesheets/_lit-styles/` (settled convention; naming and live-shared decided, see [Decision log](#decision-log)); and **(2)** a shared **render template** — a standalone `TemplateResult`-returning function per the [shared render templates](../../../02_style-guide/02_typescript/09_rendering-patterns.md) style guide (the `card-template.ts` pattern: an options object of static values, optional render callbacks, and event-handler pass-throughs). **Open decision to record: where the render template lives.** That style guide's "Where the template file lives" calls out field-family templates (`text-field`/`text-area`/`number-field`/`picker`/`combobox`) as having no settled convention: either host it in `text-field` (first to migrate, mirroring `card/`) or introduce a dedicated shared location (e.g. `swc/components/_lit-templates/`), and it says to record the choice in the migration plan. | No | CSS fragment + naming settled (Decision log); render-template **location** is the open decision to record here | CSS reviewer + Architecture |
+| Q23 | In-field ContextualHelp (A7) placement: the plan describes it as **in-field**, but React Spectrum's `contextualHelp` places the element **next to the label**, not inside the input frame. **Follow the RS lead** (next to the label), presuming RS validated the placement with Design. Regardless of placement, the shared field description model should remain extensible so help text, error message, contextual help, and `prefix` can be added without an API redesign. No 2nd-gen `contextual-help` component exists yet. | No | Direction set: follow RS placement (next to label); shared field API should stay extensible | Accessibility + Architecture |
 | Q15 | In-field pending/`Loading` state: documented in Spectrum CSS (boolean `Loading` state via `spectrum-InfieldProgressCircle`) but absent from React Spectrum and the shared Figma matrix. Depends on `infield-progress-circle` (not built). Reconcile the RS/Figma gap with Design and align terminology (SWC "pending" vs Spectrum CSS "Loading"). | No | Deferred (additive, A2): sourced in Spectrum CSS; reconcile RS/Figma with Design | Scope + Design |
 | Q17 | Inline text-field variant is **published in Figma** (separate "Text field (In-line)" component; Figma is the source of truth); the earlier "not in Figma/Spectrum CSS yet" rationale is stale and not the deciding factor. It is a new **additive** S2 variant not yet built in SWC; default is to defer until scheduled unless prioritized into this migration. | No | Deferred (additive, A5): defer unless prioritized | Scope |
 | Q18 | Pull non-a11y gen1 `sp-textfield` Jira issues into the Open gen1 issues table. | No | Open: needs Jira export | Ticket owner |
@@ -555,14 +556,17 @@ Settled decisions from planning and PR review, kept here as a historical record 
 | Q14 / B5, B10 | `autocomplete` dedicated token type (drop combobox tokens); add `inputmode` | Confirmed by the a11y analysis. Combobox tokens move to the combobox component. |
 | B15 | Slots `help-text`/`negative-help-text` → `description`/`error-text` | Matches React Spectrum and the `LinearProgressMixin` precedent; `description` also disambiguates from contextual-help content. |
 | Q7 | Field family shares controllers, applied iteratively | Follow the `LabellingController` + `FieldAssociationController` pattern (tickets under epic SWC-2323), the same shared-controller approach meter and progress-bar took with `LinearProgressMixin`. Prove the controllers on `text-field` first; introduce a small shared base only if a second consumer proves the need. |
-| Q2 / C1 | `label-position` (`top`/`side`) is a core feature, not additive | Precedent is meter/progress-bar `label-position`. Owned by the shared render template (`.swc-FormFieldTemplate` grid), not `field-label`, since it is a visual style driven by the passed attribute. |
-| Q8 | Shared controllers (SWC-2466/2467) are a sequenced dependency, not a plan blocker | They do not exist yet (verified) but are separate tickets under epic SWC-2323; `text-field` implementation (Phase 3+) consumes them once available. |
+| Q2 / C1 | `label-position` (`top`/`side`) is a core feature, not additive | Precedent is meter/progress-bar `label-position`. Owned by the shared `.swc-FormField` grid, not `field-label`, since it is a visual style driven by the passed attribute. |
+| Q8 | Shared field behavior is implemented iteratively, not as a plan blocker | `text-field` now uses `LabellingMixin`, `HelpTextMixin`, and `FieldAssociationController`; future field-family consumers can generalize the shared shape when their needs are proven. |
 | Q3 | Read-only has no distinct visual treatment; stays focusable and non-editable | Follows React Spectrum, which applies no visual or cursor change; no Design input needed. See Q26 for a possible "Labeled Value" component overlap. |
 | Q5 / B7 / A8 | Validation icons: `AlertTriangle` (invalid) ships; valid checkmark deferred | Per Design and RS response, the valid checkmark is deferred (not shown in React or the newer Figma); tracked as additive A8. The `valid` property stays for consumers. Invalid-icon sizing is extracted from Figma with the rest of the tokens (Q20). |
 | Q16 / A1 | Character count deferred | React Spectrum does not support it yet; deferral confirmed. If added later it needs a dedicated a11y plan (`aria-describedby` alone is insufficient for announcing a live count). |
-| Q22 (naming) | Shared field styles live in a shared `form-fields` stylesheet from the start; classes are `.swc-FormField*` | Text field is the first consumer, but the styles live shared, not authored in text-field. `form-fields`/`FormField` (not `forms`/`Form`) reserves `form`/`Form` for a possible future form-wrapper component or utility. Render-template location/ownership remains open (Q22). |
+| Q22 (naming) | Shared field styles live in a shared `form-fields` stylesheet from the start; the wrapper and emitted classes use `.swc-FormField*` | Text field is the first consumer, but the styles live shared, not authored in text-field. The implemented wrapper is `.swc-FormField`, with `.swc-FormFieldLabel`, `.swc-FormFieldDescription`, and `.swc-FormFieldErrorText` for shared output. `form-fields`/`FormField` (not `forms`/`Form`) reserves `form`/`Form` for a possible future form-wrapper component or utility. Render-template location/ownership remains open (Q22). |
 | Q27 | `TextFieldType` stays the closed 1st-gen set (`text/url/tel/email/password`); `search` and `number` are excluded | Spectrum models search and number as their own components (`Search` / React Spectrum `SearchField`; `number-field`), so they are not `type` values here. Matches 1st-gen `sp-textfield` and is enforced with `validateEnum`. This intentionally diverges from React Spectrum's TextField, whose `type` is an open `… \| (string & {})` union that also lists `search`; the open escape hatch is incompatible with the closed-enum dev-warning, and search UI belongs to the dedicated component. |
 | B9 | Error text is associated via `aria-describedby` only; `aria-errormessage` is not used | **Reverses the [accessibility migration analysis](./accessibility-migration-analysis.md) recommendation to set both.** While `invalid`, `HelpTextMixin` replaces the description with the slotted `error-text` in the input's `ariaDescribedByElements` (the description is hidden and the error takes its place), following [React Spectrum's TextField](https://react-spectrum.adobe.com/TextField), which swaps the description for the error in one referenced container and associates it through `aria-describedby` alone. Rationale: `aria-errormessage` AT support is still inconsistent while `aria-describedby` is universally read, and referencing only the message currently on screen avoids describing the field with hidden text and the duplicate-announcement and ordering ambiguity of pointing at both. WCAG [Error identification (3.3.1)](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html) is still met (the error is visible and programmatically associated). |
+| B12 | Focus ring shows on **keyboard focus only**, suppressed on pointer/touch | **Reverses the earlier plan note** ("do not suppress the pointer-focus ring"). Confirmed in PR review after checking with React Spectrum: RSP intentionally hides the ring on pointer, and the focus **border-color** change (shown for both modalities) is a sufficient "field is active" indicator on its own, so suppressing the pointer ring is not an accessibility regression. Because text inputs match `:focus-visible` on pointer clicks too, CSS alone cannot achieve this; modality is tracked in JS (a capture-phase `pointerdown` flag, read on `focusin`) and the ring is keyed off a `keyboard-focused` custom state. |
+| A6 | `prefix` affix pulled into scope (was deferred) | Originally deferred pending a Design decision (not in the Figma matrix at planning time). Design confirmed doing it now, so it ships in this migration as a non-interactive `prefix` slot for leading content (icon, symbol, avatar); clicking the prefix focuses the input. Reverses the "deferred" disposition recorded for A6. |
+| B7 / A8 | A disabled field never shows the validation (error) icon | The design state matrix has no disabled + error cell, and React Spectrum renders a disabled invalid field with no error icon (grayed label/value/message, disabled border). So the trailing `AlertTriangle` is not rendered when the field is disabled, and the error border/red treatment is gated on `:not(:disabled)`: disabled always beats invalid. The error message text still renders (grayed) so the association stays intact. |
 
 ---
 

@@ -38,7 +38,7 @@ export interface RenderFieldHelpTextOptions {
  * Most consumers use `HelpTextMixin`'s `renderHelpText()` instead, which calls
  * this with its resolved state and the element callbacks that build
  * `ariaDescribedByElements`. Render-only, no design tokens: pair it with a
- * style fragment theming the `swc-FieldDescription` / `swc-FieldErrorText`
+ * style fragment theming the `swc-FormFieldDescription` / `swc-FormFieldErrorText`
  * classes it emits.
  */
 export function renderFieldHelpText({
@@ -55,14 +55,14 @@ export function renderFieldHelpText({
   return html`
     ${hasDescriptionSlotContent && !showError
       ? html`
-          <span class="swc-FieldDescription" ${ref(onDescriptionElement)}>
+          <span class="swc-FormFieldDescription" ${ref(onDescriptionElement)}>
             <slot name="description"></slot>
           </span>
         `
       : nothing}
     ${showError
       ? html`
-          <span class="swc-FieldErrorText" ${ref(onErrorTextElement)}>
+          <span class="swc-FormFieldErrorText" ${ref(onErrorTextElement)}>
             <slot name="error-text"></slot>
           </span>
         `

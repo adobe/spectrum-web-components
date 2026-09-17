@@ -10,22 +10,200 @@
  * governing permissions and limitations under the License.
  */
 
-/* @todo (Phase 5, styling): baseline from spectrum-css (spectrum-two) index.css and
-   consume the shared form-fields stylesheet fragment (including the
-   label-position="side" grid variant, Q22). Keep styling on .swc-TextField,
-   not :host. Style disabled via `:host(:state(disabled))` (covers own +
-   cascaded disabled), not `[disabled]`. */
-.swc-TextField {
-  display: inline-flex;
-  flex-direction: column;
-  gap: token("spacing-75");
+:host {
+  display: block;
 }
 
-.swc-FieldLabel {
-  font: inherit;
+* {
+  box-sizing: border-box;
 }
 
-.swc-FieldDescription,
-.swc-FieldErrorText {
-  font-size: var(--swc-body-size-s);
+.swc-TextField-control {
+  display: flex;
+  grid-area: input;
+  gap: var(--swc-text-field-affix-gap, token("base-gap-medium"));
+  align-items: center;
+  min-inline-size: var(--swc-field-input-min-inline-size, token("component-height-100"));
+  max-inline-size: var(--swc-field-input-max-inline-size, token("field-default-width-medium"));
+  padding-inline: var(--swc-text-field-padding-inline, token("base-padding-horizontal-medium"));
+  font-size: var(--swc-text-field-font-size, token("font-size-100"));
+  background-color: token("gray-25");
+  border-color: token("gray-300");
+  border-style: solid;
+  border-width: token("border-width-200");
+  border-radius: var(--swc-text-field-border-radius, token("corner-radius-medium-size-medium"));
+}
+
+.swc-TextField-input {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  padding-block: var(--swc-text-field-padding-block, token("base-padding-vertical-medium"));
+  padding-inline: 0;
+  font-family: inherit;
+  font-size: var(--swc-text-field-font-size, token("font-size-100"));
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-100");
+  color: token("neutral-content-color-default");
+  background-color: transparent;
+  border: none;
+  appearance: none;
+  outline: none;
+}
+
+.swc-TextField-input::placeholder {
+  color: token("gray-600");
+}
+
+/* ── Prefix ───────────────────────────────────────── */
+slot[name="prefix"]::slotted(*) {
+  --swc-icon-inline-size: 1lh;
+  --swc-icon-block-size: 1lh;
+
+  flex: 0 0 auto;
+
+  /* Center regardless of the slotted element's own `align-self` (e.g. avatar). */
+  align-self: center;
+  color: token("gray-600");
+  pointer-events: none;
+}
+
+slot[name="prefix"]::slotted(swc-avatar) {
+  --swc-avatar-size: token("avatar-size-100");
+}
+
+/* ── Invalid icon (trailing flex child) ──────────── */
+
+.swc-TextField-invalidIcon {
+  --_swc-text-field-validation-icon-size: var(--swc-text-field-validation-icon-size, token("workflow-icon-medium"));
+  --swc-icon-inline-size: var(--_swc-text-field-validation-icon-size);
+  --swc-icon-block-size: var(--_swc-text-field-validation-icon-size);
+
+  flex: 0 0 auto;
+}
+
+/* ── Interaction states (on the control) ──────────── */
+
+.swc-TextField-control:hover {
+  border-color: token("gray-400");
+}
+
+.swc-TextField-control:focus-within {
+  border-color: token("gray-800");
+}
+
+.swc-TextField-control:focus-within:hover {
+  border-color: token("gray-900");
+}
+
+/* Gated on the `keyboard-focused` state set by `TextFieldBase`, not
+   `:focus-visible`: text inputs match `:focus-visible` on pointer click too,
+   which would show the ring on mouse click. */
+:host(:state(keyboard-focused)) .swc-TextField-control {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
+}
+
+/* ── Disabled ─────────────────────────────────────── */
+
+:host(:disabled) .swc-TextField-control {
+  border-color: token("disabled-border-color");
+}
+
+:host(:disabled) .swc-TextField-input {
+  color: token("disabled-content-color");
+}
+
+:host(:disabled) .swc-TextField-input::placeholder {
+  color: token("disabled-content-color");
+}
+
+:host(:disabled) slot[name="prefix"]::slotted(*) {
+  color: token("disabled-content-color");
+}
+
+/* ── Invalid ──────────────────────────────────────── */
+
+:host([invalid]:not(:disabled)) .swc-TextField-control {
+  border-color: token("negative-border-color-default");
+}
+
+:host([invalid]:not(:disabled)) .swc-TextField-control:hover {
+  border-color: token("negative-border-color-hover");
+}
+
+:host([invalid]:not(:disabled)) .swc-TextField-control:focus-within {
+  border-color: token("negative-border-color-focus");
+}
+
+:host([invalid]:not(:disabled)) .swc-TextField-control:focus-within:hover {
+  border-color: token("negative-border-color-focus-hover");
+}
+
+:host([invalid]:not(:disabled)) .swc-TextField-invalidIcon {
+  --swc-icon-color: token("negative-visual-color");
+}
+
+/* ── Sizes ────────────────────────────────────────── */
+
+:host([size="s"]) {
+  --swc-text-field-padding-block: token("base-padding-vertical-small");
+  --swc-text-field-padding-inline: token("base-padding-horizontal-small");
+  --swc-text-field-affix-gap: token("base-gap-small");
+  --swc-text-field-font-size: token("font-size-75");
+  --swc-text-field-border-radius: token("corner-radius-medium-size-small");
+  --swc-text-field-validation-icon-size: token("workflow-icon-small");
+  --swc-field-input-min-inline-size: token("component-height-75");
+}
+
+:host([size="s"]) slot[name="prefix"]::slotted(swc-avatar) {
+  --swc-avatar-size: token("avatar-size-75");
+}
+
+:host([size="l"]) {
+  --swc-text-field-padding-block: token("base-padding-vertical-large");
+  --swc-text-field-padding-inline: token("base-padding-horizontal-large");
+  --swc-text-field-affix-gap: token("base-gap-large");
+  --swc-text-field-font-size: token("font-size-200");
+  --swc-text-field-border-radius: token("corner-radius-medium-size-large");
+  --swc-text-field-validation-icon-size: token("workflow-icon-large");
+  --swc-field-input-min-inline-size: token("component-height-200");
+}
+
+:host([size="l"]) slot[name="prefix"]::slotted(swc-avatar) {
+  --swc-avatar-size: token("avatar-size-200");
+}
+
+:host([size="xl"]) {
+  --swc-text-field-padding-block: token("base-padding-vertical-extra-large");
+  --swc-text-field-padding-inline: token("base-padding-horizontal-extra-large");
+  --swc-text-field-affix-gap: token("base-gap-extra-large");
+  --swc-text-field-font-size: token("font-size-300");
+  --swc-text-field-border-radius: token("corner-radius-medium-size-extra-large");
+  --swc-text-field-validation-icon-size: token("workflow-icon-extra-large");
+  --swc-field-input-min-inline-size: token("component-height-300");
+}
+
+:host([size="xl"]) slot[name="prefix"]::slotted(swc-avatar) {
+  --swc-avatar-size: token("avatar-size-300");
+}
+
+/* ── High contrast ────────────────────────────────── */
+
+@media (forced-colors: active) {
+  /* The bordered wrapper is a <div>, not the native :disabled <input>, so the UA
+     won't dim it. Force the disabled treatment to the system GrayText. */
+  :host(:disabled) .swc-TextField-control {
+    border-color: GrayText;
+  }
+
+  :host(:disabled) .swc-TextField-input,
+  :host(:disabled) .swc-TextField-input::placeholder,
+  :host(:disabled) slot[name="prefix"]::slotted(*) {
+    color: GrayText;
+  }
+
+  /* Use the system focus color for the keyboard-focus ring. */
+  :host(:state(keyboard-focused)) .swc-TextField-control {
+    outline-color: Highlight;
+  }
 }

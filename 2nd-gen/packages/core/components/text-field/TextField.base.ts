@@ -23,10 +23,12 @@ import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   TEXT_FIELD_LABEL_POSITIONS,
+  TEXT_FIELD_NECESSITY_INDICATORS,
   TEXT_FIELD_TYPES,
   TEXT_FIELD_VALID_SIZES,
   type TextFieldAutocomplete,
   type TextFieldLabelPosition,
+  type TextFieldNecessityIndicator,
   type TextFieldSize,
   type TextFieldType,
 } from './TextField.types.js';
@@ -40,6 +42,7 @@ const DOCS_URL =
  * @attribute {ElementSize} size - The size of the text field.
  *
  * @slot label - Visible label content, rendered as a same-root `<label for>` by `LabellingMixin`.
+ * @slot prefix - Non-interactive content shown before the input inside the field (e.g. an icon, symbol, or avatar).
  * @slot description - Guidance / non-error help text, associated via `aria-describedby`.
  * @slot error-text - Error message shown when `invalid`, folded into `aria-describedby`.
  */
@@ -157,6 +160,20 @@ export abstract class TextFieldBase extends SizedMixin(
   public labelPosition: TextFieldLabelPosition = 'top';
 
   /**
+   * How the field's necessity is marked in the visible label. `icon` shows an
+   * asterisk only when `required`. `label` appends `(required)` when required and
+   * `(optional)` when not required. Requires a visible label to show.
+   *
+   * @default icon
+   */
+  @property({
+    type: String,
+    reflect: true,
+    attribute: 'necessity-indicator',
+  })
+  public necessityIndicator: TextFieldNecessityIndicator = 'icon';
+
+  /**
    * Whether the field is disabled: not editable and removed from tab order.
    */
   @property({ type: Boolean, reflect: true })
@@ -167,13 +184,38 @@ export abstract class TextFieldBase extends SizedMixin(
   // ──────────────────────
 
   // Form association: `formAssociated` (static, above) and `attachInternals` stay
-  // on the element; the controller wraps the rest. Constraint validity
-  // (required/pattern/…) is populated with the render work.
+  // on the element; the controller wraps the rest.
   private internals = this.attachInternals();
 
   private fieldAssoc = new FieldAssociationController(this.internals, {
     onDisabledChange: () => this.requestUpdate(),
   });
+
+  // Text inputs match `:focus-visible` even on pointer click (the platform always
+  // shows a ring on elements that take keyboard text), so CSS alone can't suppress
+  // the ring on click. Track modality here and expose a `keyboard-focused` custom
+  // state the stylesheet keys the ring off of instead.
+  #pointerFocus = false;
+
+  constructor() {
+    super();
+    // Capture-phase so the flag is set before any inner `pointerdown` handler
+    // (e.g. the control's click-to-focus, which calls `.focus()` on the input
+    // and synchronously fires `focusin`) runs and reads it.
+    this.addEventListener('pointerdown', () => (this.#pointerFocus = true), {
+      capture: true,
+    });
+    this.addEventListener('focusin', () => {
+      this.internals.states[this.#pointerFocus ? 'delete' : 'add'](
+        'keyboard-focused'
+      );
+      this.#pointerFocus = false;
+    });
+    this.addEventListener('focusout', () => {
+      this.#pointerFocus = false;
+      this.internals.states.delete('keyboard-focused');
+    });
+  }
 
   /**
    * The host's own `disabled` OR the cascaded form / `<fieldset disabled>` state.
@@ -228,8 +270,28 @@ export abstract class TextFieldBase extends SizedMixin(
     this.fieldAssoc.formDisabledCallback(disabled);
   }
 
-  // @todo setSelectionRange() / select() delegate to the rendered native
-  // <input>; they land with the render implementation.
+  // ──────────────────────
+  //     TEXT SELECTION
+  // ──────────────────────
+
+  /** The role element is always the `<input>`; cast for its selection members. */
+  private get inputElement(): HTMLInputElement | null {
+    return this.roleElement as HTMLInputElement | null;
+  }
+
+  /** Selects all text in the field. */
+  public select(): void {
+    this.inputElement?.select();
+  }
+
+  /** Sets the start and end positions of the current text selection. */
+  public setSelectionRange(
+    start: number | null,
+    end: number | null,
+    direction?: 'forward' | 'backward' | 'none'
+  ): void {
+    this.inputElement?.setSelectionRange(start, end, direction);
+  }
 
   protected override update(changedProperties: PropertyValues): void {
     validateEnum(this, {
@@ -244,12 +306,13 @@ export abstract class TextFieldBase extends SizedMixin(
       valid: TEXT_FIELD_LABEL_POSITIONS,
       url: DOCS_URL,
     });
+    validateEnum(this, {
+      prop: 'necessity-indicator',
+      value: this.necessityIndicator,
+      valid: TEXT_FIELD_NECESSITY_INDICATORS,
+      url: DOCS_URL,
+    });
     super.update(changedProperties);
-    // Custom state for `:host(:state(disabled))`; unlike `[disabled]` it covers
-    // the cascaded `<fieldset disabled>` case, not just the host's own property.
-    this.internals.states[this.effectiveDisabled ? 'add' : 'delete'](
-      'disabled'
-    );
     // Push the current value into the form; exclude it entirely when disabled.
     this.fieldAssoc.setValue(this.effectiveDisabled ? null : this.value);
   }

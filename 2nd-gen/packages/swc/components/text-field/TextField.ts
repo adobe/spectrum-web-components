@@ -10,11 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { TextFieldBase } from '@adobe/spectrum-wc-core/components/text-field';
 
+import '@adobe/spectrum-wc-icons/swc-icon-alert-triangle.js';
+import '../ui-icons/swc-ui-icon.js';
+
+import formFieldStyles from '../../stylesheets/_lit-styles/form-fields.css';
 import styles from './text-field.css';
 
 /**
@@ -23,12 +27,28 @@ import styles from './text-field.css';
  * only needs to be unique within this component's own shadow root.
  */
 const INPUT_ID = 'input';
+const NECESSITY_INDICATOR_TEXT = {
+  required: '(required)',
+  optional: '(optional)',
+};
 
 /**
  * A single-line text field for entering and editing text.
  *
  * @element swc-text-field
  * @since 2.0.0-beta.1
+ *
+ * @cssprop --swc-field-label-max-inline-size - Max width of the visible label before it wraps. Unset by default (the label wraps late); set it to wrap a long label sooner and give a `side` input more room.
+ * @cssprop --swc-field-input-min-inline-size - Minimum inline size of the input control. Defaults to the component height for the field size.
+ * @cssprop --swc-field-input-max-inline-size - Maximum inline size of the input control. Defaults to the medium field width token.
+ * @cssprop --swc-text-field-padding-block - Vertical padding of the text-field control. Changes by size.
+ * @cssprop --swc-text-field-padding-inline - Horizontal padding of the text-field control. Changes by size.
+ * @cssprop --swc-text-field-affix-gap - Gap between the input and affixes. Changes by size.
+ * @cssprop --swc-text-field-font-size - Font size of the input. Changes by size.
+ * @cssprop --swc-text-field-border-radius - Corner radius of the text-field control. Changes by size.
+ * @cssprop --swc-text-field-validation-icon-size - Size of the invalid-state icon. Changes by size.
+ * @cssprop --swc-form-field-label-font-size - Font size of the visible field label. Defaults to the field size typography scale.
+ * @cssprop --swc-form-field-description-font-size - Font size of the description and error text. Defaults to the field size typography scale.
  *
  * @example
  * <swc-text-field></swc-text-field>
@@ -39,7 +59,7 @@ export class TextField extends TextFieldBase {
   // ──────────────────────────────
 
   public static override get styles(): CSSResultArray {
-    return [styles];
+    return [formFieldStyles, styles];
   }
 
   /**
@@ -64,30 +84,62 @@ export class TextField extends TextFieldBase {
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
   }
 
+  /**
+   * The border/padding live on the control wrapper, not the `<input>`, so a
+   * pointer press on that surrounding area (padding or the non-interactive
+   * prefix) no longer lands on the input. Route it to the input so the whole
+   * control still behaves as one click-to-focus target.
+   */
+  private handleControlPointerDown(event: PointerEvent): void {
+    if (event.target !== this.roleElement) {
+      event.preventDefault();
+      this.roleElement?.focus();
+    }
+  }
+
   protected override render(): TemplateResult {
-    // @todo (SWC-2466 / Phase 4–5): render the required indicator and
-    // validation icon.
     return html`
-      <div class="swc-TextField">
-        ${this.renderLabel(INPUT_ID)}
-        <input
-          id=${INPUT_ID}
-          class="input"
-          type=${this.type}
-          .value=${this.value}
-          placeholder=${ifDefined(this.placeholder || undefined)}
-          pattern=${ifDefined(this.pattern)}
-          inputmode=${ifDefined(this.inputmode)}
-          autocomplete=${ifDefined(this.autocomplete)}
-          maxlength=${ifDefined(this.maxlength)}
-          minlength=${ifDefined(this.minlength)}
-          ?readonly=${this.readonly}
-          ?required=${this.required}
-          ?disabled=${this.effectiveDisabled}
-          aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
-          @input=${this.handleInput}
-          @change=${this.handleChange}
-        />
+      <div class="swc-FormField swc-TextField">
+        ${this.renderLabel(INPUT_ID, {
+          required: this.required,
+          necessityIndicator: this.necessityIndicator,
+          necessityIndicatorText: NECESSITY_INDICATOR_TEXT,
+          necessityIcon: html`
+            <swc-ui-icon icon="asterisk" size=${this.size}></swc-ui-icon>
+          `,
+        })}
+        <div
+          class="swc-TextField-control"
+          @pointerdown=${this.handleControlPointerDown}
+        >
+          <slot name="prefix"></slot>
+          <input
+            id=${INPUT_ID}
+            class="swc-TextField-input"
+            type=${this.type}
+            .value=${this.value}
+            placeholder=${ifDefined(this.placeholder || undefined)}
+            pattern=${ifDefined(this.pattern)}
+            inputmode=${ifDefined(this.inputmode)}
+            autocomplete=${ifDefined(this.autocomplete)}
+            maxlength=${ifDefined(this.maxlength)}
+            minlength=${ifDefined(this.minlength)}
+            ?readonly=${this.readonly}
+            ?required=${this.required}
+            ?disabled=${this.effectiveDisabled}
+            aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
+            @input=${this.handleInput}
+            @change=${this.handleChange}
+          />
+          ${this.invalid && !this.effectiveDisabled
+            ? html`
+                <swc-icon-alert-triangle
+                  class="swc-TextField-invalidIcon"
+                  aria-hidden="true"
+                ></swc-icon-alert-triangle>
+              `
+            : nothing}
+        </div>
         ${this.renderHelpText()}
       </div>
     `;

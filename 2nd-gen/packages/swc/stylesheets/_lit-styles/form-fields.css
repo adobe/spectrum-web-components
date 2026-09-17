@@ -1,0 +1,118 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/*
+ * Shared layout for form fields whose label, description, and error text render
+ * in-shadow via LabellingMixin + HelpTextMixin. A consuming component adds
+ * `swc-FormField` to its render root and places its control in the `input` grid
+ * area. This fragment themes the mixin-emitted `.swc-FormField*` classes and owns
+ * the `label-position` grid so every field lays them out identically. The grid
+ * `row-gap` reproduces the design's uniform flex-column gap while also
+ * supporting the side-label two-column layout.
+ */
+
+/* ── Field template grid ──────────────────────────── */
+
+:host {
+  --swc-form-field-label-font-size: token("font-size-100");
+  --swc-form-field-description-font-size: token("font-size-75");
+}
+
+.swc-FormField {
+  display: grid;
+  grid-template-areas:
+    "label"
+    "input"
+    "messages";
+  row-gap: token("form-item-gap-medium");
+
+  --_swc-form-field-font-family: inherit;
+  --_swc-form-field-font-weight: token("regular-font-weight");
+  --_swc-form-field-line-height: token("line-height-100");
+}
+
+:host([size="s"]) .swc-FormField {
+  --swc-form-field-label-font-size: token("font-size-75");
+  --swc-form-field-description-font-size: token("font-size-75");
+
+  row-gap: token("form-item-gap-small");
+}
+
+:host([size="m"]) .swc-FormField {
+  --swc-form-field-label-font-size: token("font-size-100");
+  --swc-form-field-description-font-size: token("font-size-100");
+}
+
+:host([size="l"]) .swc-FormField {
+  --swc-form-field-label-font-size: token("font-size-200");
+  --swc-form-field-description-font-size: token("font-size-200");
+
+  row-gap: token("form-item-gap-large");
+}
+
+:host([size="xl"]) .swc-FormField {
+  --swc-form-field-label-font-size: token("font-size-300");
+  --swc-form-field-description-font-size: token("font-size-300");
+
+  row-gap: token("form-item-gap-extra-large");
+}
+
+.swc-FormFieldLabel {
+  grid-area: label;
+  max-inline-size: var(--swc-field-label-max-inline-size, none);
+  font-family: var(--_swc-form-field-font-family);
+  font-size: var(--swc-form-field-label-font-size, token("font-size-100"));
+  font-weight: var(--_swc-form-field-font-weight);
+  line-height: var(--_swc-form-field-line-height);
+  color: token("neutral-subdued-content-color-default");
+  overflow-wrap: break-word;
+}
+
+.swc-FormFieldLabel-requiredIndicator swc-ui-icon {
+  vertical-align: middle;
+}
+
+.swc-FormFieldDescription,
+.swc-FormFieldErrorText {
+  grid-area: messages;
+  font-family: var(--_swc-form-field-font-family);
+  font-size: var(--swc-form-field-description-font-size, token("font-size-75"));
+  font-weight: var(--_swc-form-field-font-weight);
+  line-height: var(--_swc-form-field-line-height);
+}
+
+.swc-FormFieldDescription {
+  color: token("neutral-subdued-content-color-default");
+}
+
+.swc-FormFieldErrorText {
+  color: token("negative-content-color-default");
+}
+
+/* ── Side label ───────────────────────────────────── */
+
+:host([label-position="side"]) .swc-FormField {
+  grid-template-areas:
+    "label input"
+    ".     messages";
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: token("spacing-200");
+}
+
+/* ── Disabled ─────────────────────────────────────── */
+
+:host(:disabled) .swc-FormFieldLabel,
+:host(:disabled) .swc-FormFieldDescription,
+:host(:disabled) .swc-FormFieldErrorText {
+  color: token("disabled-content-color");
+}
