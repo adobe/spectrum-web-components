@@ -16,6 +16,7 @@ import { property } from 'lit/decorators.js';
 import {
   PageScrollLockController,
   PlacementController,
+  TriggerPressGuardController,
   type VirtualTrigger,
 } from '@adobe/spectrum-wc-core/controllers/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
@@ -266,26 +267,10 @@ export abstract class PopoverBase extends SpectrumElement {
   /** The positioning anchor (an element or a `VirtualTrigger`). */
   private _anchor: HTMLElement | VirtualTrigger | null = null;
 
-  /** The element the click-to-toggle listeners are currently attached to. */
-  private _clickTrigger: HTMLElement | null = null;
-
-  /**
-   * True between a trigger press start (`pointerdown`/`touchstart`) and its
-   * `click`, so a light-dismiss inside that window is attributed to the press.
-   * Both events open it, covering touch (where the dismiss can fire off
-   * `touchstart` before `pointerdown`).
-   */
-  private _triggerPointerActive = false;
-
-  /** Cancels the pending press-end listeners armed in `_onTriggerPressStart`. */
-  private _pressEndAbort: AbortController | null = null;
-
-  /**
-   * Set when the trigger press light-dismissed an open popover (an `'outside'`
-   * close observed while `_triggerPointerActive`), so the trailing `click` of
-   * that same gesture is read as the close rather than a reopen.
-   */
-  private _dismissedByTriggerPress = false;
+  // Click-to-toggle on the resolved trigger, without the surface reopening on
+  // the same click that light-dismissed it (see the controller's own doc for
+  // why that needs dedicated gesture tracking, not just a naive toggle).
+  private readonly _pressGuard = new TriggerPressGuardController(this);
 
   /** Cause of the in-progress close, read when dispatching `swc-close`. */
   private _closeSource: PopoverCloseSource | null = null;
@@ -332,7 +317,7 @@ export abstract class PopoverBase extends SpectrumElement {
     unregisterDismissible(this);
     this._removeEscapeListener();
     this._scrollLock.unlock();
-    this._removeTriggerListeners();
+    this._pressGuard.detach();
     this._clearTriggerAria();
     this._interactiveElement = null;
     this._anchor = null;
@@ -458,103 +443,16 @@ export abstract class PopoverBase extends SpectrumElement {
     }
 
     // Click-to-toggle on the trigger host, unless the consumer drives `open`
-    // themselves (`manual`). Listens on the host so clicks bubbling from an inner
-    // button are caught. The capturing `pointerdown`/`touchstart` listeners open
-    // the reopen-guard gesture window (see `_onTriggerPressStart`).
-    const clickTrigger = this.manual ? null : trigger;
-    if (clickTrigger !== this._clickTrigger) {
-      this._removeTriggerListeners();
-      if (clickTrigger) {
-        clickTrigger.addEventListener(
-          'pointerdown',
-          this._onTriggerPressStart,
-          {
-            capture: true,
-          }
-        );
-        clickTrigger.addEventListener('touchstart', this._onTriggerPressStart, {
-          capture: true,
-        });
-        clickTrigger.addEventListener('click', this._onTriggerClick);
-        this._clickTrigger = clickTrigger;
-      }
-    }
+    // themselves (`manual`). Listens on the host so clicks bubbling from an
+    // inner button are caught. `attach` is a no-op for an unchanged trigger.
+    this._pressGuard.attach(this.manual ? null : trigger, {
+      onToggle: () => (this.open = !this.open),
+    });
     // Re-anchoring while open (trigger or positioning input changed) is driven
     // from `updated()`, so this method only wires the trigger and ARIA. Doing it
     // here too would double-start the controller when `updated()` also re-shows
     // or re-anchors in the same cycle (e.g. a `modal` toggle while open).
   }
-
-  private _removeTriggerListeners(): void {
-    this._clickTrigger?.removeEventListener(
-      'pointerdown',
-      this._onTriggerPressStart,
-      { capture: true }
-    );
-    this._clickTrigger?.removeEventListener(
-      'touchstart',
-      this._onTriggerPressStart,
-      { capture: true }
-    );
-    this._clickTrigger?.removeEventListener('click', this._onTriggerClick);
-    this._clickTrigger = null;
-  }
-
-  // In the default mode, pressing the (outside) trigger while open is a native
-  // light-dismiss: the browser hides the popover before the click fires. Opening
-  // the gesture window at press start (capture, before the dismiss) lets
-  // `_onBeforeToggle` attribute that close to the press, so `_onTriggerClick`
-  // reads the trailing click as a close, not a reopen. Only sets the flag, never
-  // clears `_dismissedByTriggerPress`: on touch both `pointerdown` and
-  // `touchstart` fire for one press, and the second must not reset a dismissal
-  // already recorded (`_onTriggerClick` clears it per gesture).
-  private _onTriggerPressStart = (): void => {
-    this._triggerPointerActive = true;
-    // Catches a press that ends without a click (drag off the trigger, or a
-    // cancelled gesture), which would otherwise leave the flag stuck true.
-    this._pressEndAbort = new AbortController();
-    const { signal } = this._pressEndAbort;
-    document.addEventListener('pointerup', this._onTriggerPressEnd, {
-      capture: true,
-      once: true,
-      signal,
-    });
-    document.addEventListener('pointercancel', this._onTriggerPressEnd, {
-      capture: true,
-      once: true,
-      signal,
-    });
-  };
-
-  private _onTriggerPressEnd = (event: PointerEvent): void => {
-    this._pressEndAbort?.abort();
-    // A same-target pointerup still gets its own click, which resets the flag
-    // itself; resetting it here too would race that click's read of
-    // `_dismissedByTriggerPress`. pointercancel never gets a click, so it
-    // always resets.
-    if (
-      event.type === 'pointerup' &&
-      event.composedPath().includes(this._clickTrigger as EventTarget)
-    ) {
-      return;
-    }
-    this._triggerPointerActive = false;
-  };
-
-  // If the press light-dismissed the popover (recorded in `_onBeforeToggle`),
-  // consume this click so it does not toggle back open; otherwise toggle from the
-  // live state. Keying off the real close event makes this correct with or without
-  // a native dismiss (e.g. keyboard activation) and needs no timer. (`popovertarget`
-  // can't reach the shadow-DOM surface across roots, so the correlation is manual.)
-  private _onTriggerClick = (): void => {
-    const dismissedByThisGesture = this._dismissedByTriggerPress;
-    this._triggerPointerActive = false;
-    this._dismissedByTriggerPress = false;
-    if (dismissedByThisGesture) {
-      return;
-    }
-    this.open = !this.open;
-  };
 
   private _clearTriggerAria(): void {
     const element = this._interactiveElement;
@@ -793,11 +691,11 @@ export abstract class PopoverBase extends SpectrumElement {
       this._dispatchOpen();
     } else {
       const source = this._closeSource ?? 'outside';
-      // Attribute an outside light-dismiss that lands during a trigger press to
-      // that press, so `_onTriggerClick` reads the trailing click as the close
-      // rather than a reopen.
-      if (source === 'outside' && this._triggerPointerActive) {
-        this._dismissedByTriggerPress = true;
+      // Attribute an outside light-dismiss that lands during a trigger press
+      // to that press, so the trailing click is read as the close rather
+      // than a reopen (see `TriggerPressGuardController`).
+      if (source === 'outside') {
+        this._pressGuard.noteNativeDismiss();
       }
       // `beforetoggle` fires before the popover hides, so focus is still inside if
       // it was there. Unlike modal `<dialog>` (which restores focus natively), the

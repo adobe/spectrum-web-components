@@ -46,6 +46,7 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 | `SlotTextController` | Observes whether a slot has meaningful text/element content | `card`, `button`, `action-button`, `illustrated-message`, `badge` |
 | `LiveSelectionController` | Coordinates single/multiple selection across event-dispatching children | `accordion` |
 | `PageScrollLockController` | Reference-counted page scroll lock for stacked blocking surfaces | `popover` |
+| `TriggerPressGuardController` | Click-to-toggle for a trigger of a native light-dismissible surface, without the surface reopening on the click that closed it | `popover` |
 | `PendingController` | Delayed busy-state activation, size freeze, pending accessible name | `button`, `action-button` (via `PendingMixin`) |
 | `LanguageResolutionController` | Resolves locale (from `<html lang>`, `navigator.language`, or a language-provider event) for formatting. See [Controller composition](../02_style-guide/02_typescript/14_controller-composition.md#languageresolutioncontroller) | `progress-circle`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
 | `ColorController` | `colorjs.io` conversion wrapper | none |
