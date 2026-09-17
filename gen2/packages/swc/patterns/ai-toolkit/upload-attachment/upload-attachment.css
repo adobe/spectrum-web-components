@@ -180,12 +180,9 @@
   background: token("gray-100");
 }
 
-/* Matches the outer card surface's tint instead of the solid gray-100 real
- * thumbnails get, so the fallback icon reads as part of the same glass
- * surface rather than a separate opaque chip. */
-:host([type="card"]) .swc-UploadAttachment-thumbnail-fallback {
-  background: light-dark(token("transparent-black-50"), rgb(255 255 255 / 3%));
-}
+/* No background of its own: React's equivalent icon wrapper is a plain
+ * sizing/centering box with no fill, so the icon floats directly on the
+ * outer card's own tint instead of a second, redundant translucent layer. */
 
 /* A consumer-slotted swc-icon keeps the 48px box above but shrinks its own
  * content area (via padding, so the box itself stays 48px) to the same size
@@ -253,6 +250,12 @@
    * surface so the host's inward focus ring (below) lands in empty space
    * instead of being painted over by the surface, which renders on top of it. */
   inset: token("spacing-50");
+
+  /* Cancels the base rule's translucent tint: .swc-UploadAttachment-thumbnail
+   * below sits exactly on top of this and carries the same tint itself, so
+   * without this override the two non-opaque layers would stack and compound
+   * to roughly double the intended opacity. */
+  background: none;
   border-radius: token("corner-radius-large-default");
   box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
   overflow: hidden;
