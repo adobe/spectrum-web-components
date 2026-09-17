@@ -131,8 +131,12 @@ export const Anatomy: Story = {
       open: boolean;
     };
     menu.open = true;
+    // The native popover lives on the shadow-internal `.swc-Menu` surface,
+    // not on the `<swc-menu>` host, so `:popover-open` is checked there.
     await waitFor(() => {
-      expect(menu.matches(':popover-open')).toBe(true);
+      expect(
+        menu.shadowRoot?.querySelector('.swc-Menu')?.matches(':popover-open')
+      ).toBe(true);
     });
   },
   tags: ['anatomy'],
@@ -223,8 +227,12 @@ export const Accessibility: Story = {
       open: boolean;
     };
     menu.open = true;
+    // The native popover lives on the shadow-internal `.swc-Menu` surface,
+    // not on the `<swc-menu>` host, so `:popover-open` is checked there.
     await waitFor(() => {
-      expect(menu.matches(':popover-open')).toBe(true);
+      expect(
+        menu.shadowRoot?.querySelector('.swc-Menu')?.matches(':popover-open')
+      ).toBe(true);
     });
   },
   tags: ['a11y'],
