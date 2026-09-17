@@ -596,7 +596,7 @@
 
 .swc-PromptField-attachments--single {
   /* Reserves clearance for the dismiss badge floating above the tile's top-right corner, same as --multiple below. */
-  --_swc-prompt-field-attachment-badge-clearance: token("spacing-300");
+  --_swc-prompt-field-attachment-badge-clearance: token("spacing-200");
 
   display: flex;
   flex-wrap: wrap;
@@ -629,10 +629,10 @@
 
 .swc-PromptField-attachments--multiple {
   /* Dismiss badges are centered on each tile's top-right corner (see
-   * upload-attachment.css), so half of the larger (32px media) badge floats
-   * above the tile. Reserve that much clearance above the row so the
-   * scroll container's overflow-y: hidden doesn't clip it flat. */
-  --_swc-prompt-field-attachment-badge-clearance: token("spacing-300");
+   * upload-attachment.css); at the default 20px dismiss-visual-size that
+   * floats roughly 6px above the tile. Reserve enough clearance above the
+   * row so the scroll container's overflow-y: hidden doesn't clip it flat. */
+  --_swc-prompt-field-attachment-badge-clearance: token("spacing-200");
 
   min-inline-size: 0;
 }
@@ -765,8 +765,23 @@
   --swc-action-button-focus-indicator-color: light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color"));
   --swc-action-button-border-radius: token("corner-radius-full");
 
+  /* Matches React Spectrum's carousel nav button (transparent-overlay-100):
+   * a translucent tint instead of swc-action-button's opaque gray-100
+   * default, so the chevron reads as part of the same glass surface as the
+   * attachment tiles rather than a flat gray circle. React's button also
+   * keeps this exact color on hover/focus/press (no separate variant), so
+   * all three states are set to the same value here too. */
+  --swc-action-button-background-color-default: light-dark(token("transparent-black-100"), token("transparent-white-100"));
+  --swc-action-button-background-color-hover: light-dark(token("transparent-black-100"), token("transparent-white-100"));
+  --swc-action-button-background-color-focus: light-dark(token("transparent-black-100"), token("transparent-white-100"));
+  --swc-action-button-background-color-down: light-dark(token("transparent-black-100"), token("transparent-white-100"));
+
+  /* Centers on the tile itself, not the row (which also includes the
+   * badge-clearance padding above the tile): that clearance is a fixed
+   * offset to skip past, not something to split in half along with the
+   * tile height. */
   position: absolute;
-  inset-block-start: calc((var(--_swc-prompt-field-attachment-badge-clearance, 0) + var(--swc-prompt-field-attachment-media-block-size, 68px)) / 2);
+  inset-block-start: calc(var(--_swc-prompt-field-attachment-badge-clearance, 0) + (var(--swc-prompt-field-attachment-media-block-size, 68px) / 2));
   z-index: 4;
   flex: 0 0 auto;
   transform: translateY(-50%);
@@ -787,8 +802,6 @@
 }
 
 .swc-PromptField-attachments-scroll-prev {
-  --_swc-prompt-field-attachment-scroll-icon-transform: scaleX(-1);
-
   inset-inline-start: 0;
 }
 
@@ -796,8 +809,8 @@
   inset-inline-end: 0;
 }
 
-.swc-PromptField-attachments-scroll-prev swc-ui-icon,
-.swc-PromptField-attachments-scroll-next swc-ui-icon {
+.swc-PromptField-attachments-scroll-prev swc-icon,
+.swc-PromptField-attachments-scroll-next swc-icon {
   display: inline-flex;
   position: relative;
   z-index: 2;
@@ -806,10 +819,10 @@
   transform: var(--_swc-prompt-field-attachment-scroll-icon-transform);
 }
 
-:host(:dir(rtl)) .swc-PromptField-attachments-scroll-prev {
-  --_swc-prompt-field-attachment-scroll-icon-transform: none;
-}
-
+/* ChevronLeft/ChevronRight already point the correct logical direction in
+ * LTR, so no flip is needed there; RTL mirrors the whole strip, so both
+ * icons flip together to keep pointing toward their logical prev/next side. */
+:host(:dir(rtl)) .swc-PromptField-attachments-scroll-prev,
 :host(:dir(rtl)) .swc-PromptField-attachments-scroll-next {
   --_swc-prompt-field-attachment-scroll-icon-transform: scaleX(-1);
 }

@@ -26,6 +26,7 @@ import {
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 
 import {
@@ -41,9 +42,10 @@ import {
   getActiveElement,
   isFocusVisibleInTree,
 } from '@adobe/spectrum-wc-core/utils/index.js';
+import { Icon_ChevronLeft } from '@adobe/spectrum-wc-icons/ChevronLeft.js';
+import { Icon_ChevronRight } from '@adobe/spectrum-wc-icons/ChevronRight.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
-import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '../pixel-loader/swc-pixel-loader.js';
 
@@ -1116,11 +1118,9 @@ export class PromptField extends SpectrumElement {
                   tabindex=${this._attachmentCanScrollPrev ? nothing : -1}
                   @click=${this._handleAttachmentScrollPrev}
                 >
-                  <swc-ui-icon
-                    slot="icon"
-                    icon="chevron"
-                    size="s"
-                  ></swc-ui-icon>
+                  <swc-icon slot="icon" aria-hidden="true">
+                    ${unsafeSVG(Icon_ChevronLeft())}
+                  </swc-icon>
                 </swc-action-button>
               `
             : nothing}
@@ -1156,11 +1156,9 @@ export class PromptField extends SpectrumElement {
                   tabindex=${this._attachmentCanScrollNext ? nothing : -1}
                   @click=${this._handleAttachmentScrollNext}
                 >
-                  <swc-ui-icon
-                    slot="icon"
-                    icon="chevron"
-                    size="s"
-                  ></swc-ui-icon>
+                  <swc-icon slot="icon" aria-hidden="true">
+                    ${unsafeSVG(Icon_ChevronRight())}
+                  </swc-icon>
                 </swc-action-button>
               `
             : nothing}
