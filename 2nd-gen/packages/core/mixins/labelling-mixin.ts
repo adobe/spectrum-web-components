@@ -14,6 +14,7 @@ import { property } from 'lit/decorators.js';
 
 import { SlotPresenceController } from '../controllers/slot-presence-controller/index.js';
 import {
+  type NecessityLabels,
   renderFieldLabel,
   type RenderFieldLabelResult,
 } from '../directives/render-label/index.js';
@@ -61,13 +62,14 @@ export interface LabellingInterface {
    * Renders the visible label as a `<label for>` targeting the role-element `id`.
    * Options append a decorative necessity indicator: `required` marks the state,
    * and `necessityIndicator` picks the asterisk (`icon`, which needs
-   * `necessityIcon` to render) or `(required)`/`(optional)` text (`label`).
+   * `necessityIcon` to render) or consumer-provided text (`label`).
    */
   renderLabel(
     forId: string,
     options?: {
       required?: boolean;
       necessityIndicator?: 'icon' | 'label';
+      necessityLabels?: NecessityLabels;
       necessityIcon?: TemplateResult;
     }
   ): RenderFieldLabelResult;
@@ -161,6 +163,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
       options: {
         required?: boolean;
         necessityIndicator?: 'icon' | 'label';
+        necessityLabels?: NecessityLabels;
         necessityIcon?: TemplateResult;
       } = {}
     ): RenderFieldLabelResult {
@@ -169,6 +172,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
         forId,
         required: options.required,
         necessityIndicator: options.necessityIndicator,
+        necessityLabels: options.necessityLabels,
         necessityIcon: options.necessityIcon,
       });
     }

@@ -27,6 +27,10 @@ import styles from './text-field.css';
  * only needs to be unique within this component's own shadow root.
  */
 const INPUT_ID = 'input';
+const NECESSITY_LABELS = {
+  required: '(required)',
+  optional: '(optional)',
+};
 
 /**
  * A single-line text field for entering and editing text.
@@ -92,6 +96,7 @@ export class TextField extends TextFieldBase {
         ${this.renderLabel(INPUT_ID, {
           required: this.required,
           necessityIndicator: this.necessityIndicator,
+          necessityLabels: NECESSITY_LABELS,
           necessityIcon: html`
             <swc-ui-icon icon="asterisk" size=${this.size}></swc-ui-icon>
           `,

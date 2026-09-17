@@ -25,6 +25,7 @@ export {
 } from './render-help-text/index.js';
 export {
   renderFieldLabel,
+  type NecessityLabels,
   type RenderFieldLabelOptions,
   type RenderFieldLabelResult,
 } from './render-label/index.js';

@@ -15,6 +15,12 @@ import { html, nothing, type TemplateResult } from 'lit';
 /** Return type of {@link renderFieldLabel}: the label template, or `nothing`. */
 export type RenderFieldLabelResult = TemplateResult | typeof nothing;
 
+/** Consumer-provided copy for the text necessity indicator. */
+export interface NecessityLabels {
+  required: string;
+  optional: string;
+}
+
 /** Options accepted by {@link renderFieldLabel}. */
 export interface RenderFieldLabelOptions {
   /** Whether slotted `label` content is present in the host's light DOM. */
@@ -34,9 +40,12 @@ export interface RenderFieldLabelOptions {
 
   /**
    * How necessity is marked. `'icon'` (default) shows `necessityIcon` only when
-   * required; `'label'` appends `(required)`/`(optional)`, marking both states.
+   * required; `'label'` appends consumer-provided text, marking both states.
    */
   necessityIndicator?: 'icon' | 'label';
+
+  /** Copy for the required and optional text in `'label'` mode. */
+  necessityLabels?: NecessityLabels;
 
   /**
    * The asterisk glyph for `'icon'` mode, supplied by the consumer because this
@@ -59,6 +68,7 @@ export function renderFieldLabel({
   forId,
   required = false,
   necessityIndicator = 'icon',
+  necessityLabels,
   necessityIcon,
 }: RenderFieldLabelOptions): RenderFieldLabelResult {
   if (!hasLabelSlotContent) {
@@ -66,9 +76,11 @@ export function renderFieldLabel({
   }
   return html`
     <label class="swc-FormFieldLabel" for=${forId}>
-      <slot name="label"></slot>${renderNecessityIndicator({
+      <slot name="label"></slot>
+      ${renderNecessityIndicator({
         indicator: necessityIndicator,
         required,
+        labels: necessityLabels,
         icon: necessityIcon,
       })}
     </label>
@@ -82,21 +94,27 @@ export function renderFieldLabel({
 function renderNecessityIndicator({
   indicator,
   required,
+  labels,
   icon,
 }: {
   indicator: 'icon' | 'label';
   required: boolean;
+  labels: NecessityLabels | undefined;
   icon: TemplateResult | undefined;
 }): RenderFieldLabelResult {
-  if (indicator === 'label') {
-    return html`<span class="swc-FormFieldLabel-necessityLabel" aria-hidden="true"
-      >&nbsp;${required ? '(required)' : '(optional)'}</span
-    >`;
+  if (indicator === 'label' && labels) {
+    return html`
+      <span class="swc-FormFieldLabel-necessityLabel" aria-hidden="true">
+        &nbsp;${required ? labels.required : labels.optional}
+      </span>
+    `;
   }
   if (!required || !icon) {
     return nothing;
   }
-  return html`<span class="swc-FormFieldLabel-requiredIndicator" aria-hidden="true"
-    >&nbsp;${icon}</span
-  >`;
+  return html`
+    <span class="swc-FormFieldLabel-requiredIndicator" aria-hidden="true">
+      &nbsp;${icon}
+    </span>
+  `;
 }
