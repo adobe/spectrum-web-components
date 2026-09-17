@@ -11,9 +11,13 @@
  */
 
 import { html } from 'lit';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import { Icon_Folder } from '@adobe/spectrum-wc-icons/Folder.js';
+
+import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 import '../swc-upload-attachment.js';
 
 const { args, argTypes, template } = getStorybookHelpers(
@@ -205,6 +209,25 @@ export const Media: Story = {
   tags: ['options'],
 };
 
+export const Sizes: Story = {
+  render: () => html`
+    ${(['s', 'm', 'l'] as const).map(
+      (size) => html`
+        <swc-upload-attachment type="media" size=${size} dismissible>
+          <div
+            slot="thumbnail"
+            role="img"
+            aria-label="Campaign still"
+            style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#a78bfa,#f472b6);"
+          ></div>
+        </swc-upload-attachment>
+      `
+    )}
+  `,
+  parameters: { flexLayout: 'row-wrap' },
+  tags: ['options'],
+};
+
 export const MediaWithBadge: Story = {
   render: () => html`
     <div style="inline-size:240px;">
@@ -221,6 +244,57 @@ export const MediaWithBadge: Story = {
   `,
   tags: ['options'],
 };
+
+export const FallbackIcons: Story = {
+  render: () => html`
+    <div
+      style="display:flex;flex-direction:column;gap:16px;max-inline-size:720px;"
+    >
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">
+        <swc-upload-attachment type="card" mime-type="application/pdf">
+          <span slot="title">Brand guidelines</span>
+          <span slot="subtitle">PDF</span>
+        </swc-upload-attachment>
+        <swc-upload-attachment type="card" mime-type="image/png">
+          <span slot="title">Campaign still</span>
+          <span slot="subtitle">PNG</span>
+        </swc-upload-attachment>
+        <swc-upload-attachment type="card" mime-type="audio/mpeg">
+          <span slot="title">Voiceover draft</span>
+          <span slot="subtitle">MP3</span>
+        </swc-upload-attachment>
+        <swc-upload-attachment type="card" mime-type="video/mp4">
+          <span slot="title">Storyboard animatic</span>
+          <span slot="subtitle">MP4</span>
+        </swc-upload-attachment>
+        <swc-upload-attachment type="card" mime-type="text/plain">
+          <span slot="title">Release notes</span>
+          <span slot="subtitle">TXT</span>
+        </swc-upload-attachment>
+        <swc-upload-attachment type="card">
+          <swc-icon slot="thumbnail" aria-hidden="true">
+            ${unsafeSVG(Icon_Folder())}
+          </swc-icon>
+          <span slot="title">Shared assets</span>
+          <span slot="subtitle">Folder</span>
+        </swc-upload-attachment>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">
+        <swc-upload-attachment type="media" mime-type="application/pdf">
+          <span slot="badge">PDF</span>
+        </swc-upload-attachment>
+        <swc-upload-attachment type="media" mime-type="audio/mpeg">
+          <span slot="badge">MP3</span>
+        </swc-upload-attachment>
+        <swc-upload-attachment type="media" mime-type="video/mp4">
+          <span slot="badge">MP4</span>
+        </swc-upload-attachment>
+      </div>
+    </div>
+  `,
+  tags: ['options'],
+};
+FallbackIcons.storyName = 'Fallback icons';
 
 export const TextOverflow: Story = {
   render: () => html`

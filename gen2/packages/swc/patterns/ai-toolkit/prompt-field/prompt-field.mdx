@@ -20,6 +20,15 @@ A prompt field consists of:
 
 ## Options
 
+### Sizes
+
+`size` sets the prompt field's overall scale, adjusting icon spacing, padding, and text size:
+
+- **Small (`s`)**: compact spacing and typography; use it when the prompt field's primary context is a side panel, docked composer, or other space-constrained layout
+- **Medium (`m`)** (default): standard spacing and typography for full-width or primary composer placements
+
+<Canvas of={PromptFieldStories.Sizes} />
+
 ### Variant
 
 `variant` sets the intensity of the AI brand treatment (the gradient ring, background wash, and glow):
@@ -60,6 +69,19 @@ The textarea grows with content up to `--swc-prompt-field-max-block-size` (defau
 Every prompt field in production must include Legal-approved disclaimer copy below the composer. Slot your product's approved text into **`legal`**: wording, links, and locale are consumer-owned, not baked into the component.
 
 Slotted `legal` content inherits the footer typography automatically. When it contains links, add the `swc-Typography--links` class to the wrapping element so the links inherit that typography and render in the subdued neutral color instead of the default accent blue. `swc-prompt-field` logs a development warning when the `legal` slot is empty.
+
+```html
+<swc-prompt-field>
+  <p slot="legal" class="swc-Typography--links">
+    Responses are generated using AI, and may be inaccurate. Check before using.
+    <a
+      href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+    >
+      AI User Guidelines
+    </a>
+  </p>
+</swc-prompt-field>
+```
 
 ### Attachment
 

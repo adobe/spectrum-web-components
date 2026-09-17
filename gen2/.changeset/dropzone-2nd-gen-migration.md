@@ -1,7 +1,6 @@
 ---
 '@adobe/spectrum-wc': minor
 '@adobe/spectrum-wc-core': minor
-'@spectrum-web-components/dropzone': patch
 ---
 
 Add the gen2 `<swc-dropzone>`, migrated from the Spectrum 1 `<sp-dropzone>`.

@@ -2,6 +2,15 @@ name: Publish Packages (gen2)
 
 on:
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'NPM dist-tag for the throwaway snapshot. Not `next` - that channel is fed by main, so a branch build under it would mislead anyone installing @next.'
+        required: false
+        default: 'snapshot'
+        type: choice
+        options:
+          - snapshot
+          - snapshot-test
   push:
     branches:
       - main
@@ -9,7 +18,9 @@ on:
       - 'gen2/**'
 
 # Scoped to this workflow so a gen1 run and a gen2 run never block on each other -
-# both used to share the same `publish-${{ github.ref }}` group string.
+# both used to share the same `publish-${{ github.ref }}` group string. Keyed on the ref,
+# so snapshots of two different feature branches run in parallel and a main release still
+# serializes against itself.
 concurrency:
   group: publish-gen2-${{ github.ref }}
   cancel-in-progress: false
@@ -17,10 +28,9 @@ concurrency:
 jobs:
   check-changesets:
     runs-on: ubuntu-latest
-    # Both triggers reduce to "must be on main": push only fires on main (trigger
-    # above), and a workflow_dispatch is only allowed from main. dispatch from any
-    # other branch skips here, so version-pr/publish (which need this job) skip too.
-    if: github.ref == 'refs/heads/main'
+    # Deliberately NOT branch-gated: the snapshot job runs from a feature branch, so this
+    # job (which it needs) must run there too and count that branch's changesets. The
+    # main-only restriction lives on version-pr and publish instead.
     outputs:
       has_changesets: ${{ steps.check.outputs.has_changesets }}
       needs_publish: ${{ steps.check.outputs.needs_publish }}
@@ -28,6 +38,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          # The dispatched/pushed ref - main for a release, the feature branch for a
+          # snapshot - so the changeset count below reflects whatever is being run.
           fetch-depth: 0 # need tags so the needs_publish idempotency check below can see them
 
       - name: Check for gen2 changesets
@@ -60,11 +72,141 @@ jobs:
             echo "gen2-$RELEASED_VERSION not yet released - publish approval will be requested"
           fi
 
-  # No throwaway snapshot job here (unlike gen1): once this job enters persistent pre
-  # mode, changesets disallows `--snapshot`, and a non-snapshot version call would
-  # collide with the real release's version. Test pending changes via the real release
-  # itself (published under `latest`) once the Version PR merges.
+  # Throwaway snapshot publish under the `snapshot` dist-tag. Manual dispatch only - never
+  # runs on push, so an ordinary release push can't trigger it. It never commits, pushes,
+  # tags, or opens a PR, and `permissions: contents: read` makes that structural rather
+  # than a convention.
   #
+  # Feature-branch-only by design. Run it from your feature branch (Actions -> Run
+  # workflow -> pick the branch); it snapshots whatever ref it was dispatched on. It
+  # refuses to run from `main` (see the `if` below) - main ships via the beta flow, never
+  # a throwaway snapshot. workflow_dispatch requires repo write access and only targets
+  # in-repo branches, so fork code can never reach this job or the npm token.
+  #
+  # gen2 lives in changesets' persistent pre mode (`gen2/.changeset/pre.json`, tag
+  # `beta`), and changesets refuses `--snapshot` while that file is present ("Snapshot
+  # release is not allowed in pre mode"). This job therefore deletes pre.json from its
+  # own ephemeral checkout before versioning. That copy dies with the runner: the
+  # committed pre state on `main` is never modified or pushed back, so the beta channel's
+  # version accounting (initialVersions + consumed changesets) is untouched. Snapshot
+  # versions are `<calculated>-<tag>.<datetime>` per this gen's `snapshot` config, so they
+  # can never collide with a real `2.0.0-beta.N` or with the eventual stable `2.0.0`.
+  snapshot:
+    # Dispatch-triggered and never from main: a snapshot is only for a feature branch. A
+    # dispatch from main is a real manual release and flows to version-pr/publish instead.
+    # No changeset gate - a feature branch can be snapshotted any time, even with nothing
+    # pending; a throwaway changeset is synthesized below so there's always a version to
+    # publish.
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    permissions:
+      contents: read # snapshot never writes back - no commit, tag, or PR
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # The dispatched feature branch itself (github.ref). No cross-branch checkout,
+          # so there's nothing to point at a fork.
+          fetch-depth: 0
+
+      - name: Setup job and install dependencies
+        uses: ./.github/actions/setup-job
+
+      - name: Determine snapshot tag
+        id: extract-tag
+        env:
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+        run: |
+          WORKFLOW_TAG="${INPUT_TAG:-snapshot}"
+          echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
+          echo "Using npm tag: $WORKFLOW_TAG"
+
+      - name: Verify NPM authentication
+        id: npm-auth
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+        run: npm whoami --registry=https://registry.npmjs.org
+
+      - name: Leave pre mode for this runner only
+        run: |
+          # Ephemeral by construction: this checkout is discarded when the job ends and
+          # nothing below commits or pushes. Removing the file locally is the only thing
+          # that lets `changeset version --snapshot` run at all while gen2 is in pre mode.
+          rm -f gen2/.changeset/pre.json
+
+      - name: Ensure a changeset exists
+        run: |
+          # `changeset version --snapshot` exits without versioning when nothing is
+          # pending. So a branch can be snapshotted regardless of changesets, synthesize a
+          # throwaway one when none exist. It patches the linked lead package, which bumps
+          # the whole `@adobe/spectrum-wc(-core|-icons)` group together. Ephemeral checkout,
+          # never committed.
+          if [ -z "$(find gen2/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' -print -quit)" ]; then
+            printf -- "---\n'@adobe/spectrum-wc': patch\n---\n\nThrowaway snapshot build (no pending changesets)\n" \
+              > gen2/.changeset/zzz-snapshot-tmp.md
+            echo "No pending changesets - synthesized a temporary one so the snapshot has a version to publish."
+          fi
+
+      - name: Version gen2 packages (snapshot)
+        working-directory: gen2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn changeset version --snapshot ${{ steps.extract-tag.outputs.tag }}
+
+      - name: Capture snapshot versions
+        id: versions
+        run: |
+          CORE_VERSION=$(node -p "require('./gen2/packages/core/package.json').version")
+          SWC_VERSION=$(node -p "require('./gen2/packages/swc/package.json').version")
+          ICONS_VERSION=$(node -p "require('./gen2/packages/icons/package.json').version")
+          echo "core=$CORE_VERSION" >> $GITHUB_OUTPUT
+          echo "swc=$SWC_VERSION" >> $GITHUB_OUTPUT
+          echo "icons=$ICONS_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Refresh lockfile and rebuild
+        run: |
+          yarn install --refresh-lockfile
+          yarn build
+
+      - name: Publish gen2 packages (snapshot)
+        if: steps.npm-auth.outcome == 'success'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+        working-directory: gen2
+        run: yarn changeset publish --no-git-tag --tag ${{ steps.extract-tag.outputs.tag }}
+
+      - name: Snapshot summary
+        if: always()
+        env:
+          TAG: ${{ steps.extract-tag.outputs.tag }}
+          TARGET_REF: ${{ github.ref_name }}
+          CORE_VERSION: ${{ steps.versions.outputs.core }}
+          SWC_VERSION: ${{ steps.versions.outputs.swc }}
+          ICONS_VERSION: ${{ steps.versions.outputs.icons }}
+          AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
+        run: |
+          echo "## Snapshot summary (gen2)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Snapshotted branch** | \`${TARGET_REF}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
+          [ -n "$SWC_VERSION" ] && echo "| **@adobe/spectrum-wc** | \`${SWC_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+          [ -n "$CORE_VERSION" ] && echo "| **@adobe/spectrum-wc-core** | \`${CORE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+          [ -n "$ICONS_VERSION" ] && echo "| **@adobe/spectrum-wc-icons** | \`${ICONS_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "$AUTH_OUTCOME" == "success" ]; then
+            echo "✅ Throwaway snapshot published under \`${TAG}\`. The \`beta\` channel and its pre-release state are unchanged." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Snapshot failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
+          fi
+
   # Version-then-PR for the persistent pre-release version format (2.0.0-beta.N). No
   # npm-publish environment gate here - nothing is published yet, just a bot-authored PR
   # a human reviews and merges. Uses peter-evans/create-pull-request instead of
@@ -73,9 +215,12 @@ jobs:
   # same branch.
   version-pr:
     needs: check-changesets
-    # No event/branch check needed: push and workflow_dispatch are this workflow's only
-    # triggers, and check-changesets (which this needs) already skips any non-main run.
-    if: needs.check-changesets.outputs.has_changesets == 'true'
+    # Main-only: check-changesets is not branch-gated (so snapshot can run from a feature
+    # branch), so the release path carries the restriction itself. A snapshot runs from a
+    # feature branch (github.ref != main), so the ref check alone keeps the two apart.
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      needs.check-changesets.outputs.has_changesets == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write # commits the Version PR branch
@@ -123,9 +268,9 @@ jobs:
   # since it's the only one that actually publishes to npm.
   publish:
     needs: check-changesets
-    # No event/branch check needed: push and workflow_dispatch are this workflow's only
-    # triggers, and check-changesets (which this needs) already skips any non-main run.
+    # Main-only - a snapshot runs from a feature branch, so the ref check keeps them apart.
     if: >-
+      github.ref == 'refs/heads/main' &&
       needs.check-changesets.outputs.has_changesets == 'false' &&
       needs.check-changesets.outputs.needs_publish == 'true'
     runs-on: ubuntu-latest
