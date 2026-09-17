@@ -131,13 +131,13 @@ export const StatesTest: Story = {
 
     await step('an invalid field renders a decorative validation icon', () => {
       const icon = invalidField.shadowRoot?.querySelector(
-        '.swc-TextField-validationIcon'
+        '.swc-TextField-invalidIcon'
       );
       expect(icon).toBeTruthy();
       expect(icon?.getAttribute('aria-hidden')).toBe('true');
       // A valid field renders no validation icon.
       expect(
-        fields[0].shadowRoot?.querySelector('.swc-TextField-validationIcon')
+        fields[0].shadowRoot?.querySelector('.swc-TextField-invalidIcon')
       ).toBeNull();
     });
   },

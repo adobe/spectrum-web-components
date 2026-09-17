@@ -69,10 +69,9 @@ slot[name="prefix"]::slotted(*) {
   pointer-events: none;
 }
 
-/* ── Validation icon (trailing flex child) ────────── */
+/* ── Invalid icon (trailing flex child) ──────────── */
 
-.swc-TextField-validationIcon {
-  --swc-icon-color: token("negative-visual-color");
+.swc-TextField-invalidIcon {
   --swc-icon-inline-size: var(--_swc-text-field-validation-icon-size, token("workflow-icon-medium"));
   --swc-icon-block-size: var(--_swc-text-field-validation-icon-size, token("workflow-icon-medium"));
 
@@ -135,6 +134,10 @@ slot[name="prefix"]::slotted(*) {
 
 :host([invalid]:not(:disabled)) .swc-TextField-control:focus-within:hover {
   border-color: token("negative-border-color-focus-hover");
+}
+
+:host([invalid]:not(:disabled)) .swc-TextField-invalidIcon {
+  --swc-icon-color: token("negative-visual-color");
 }
 
 /* ── Sizes ────────────────────────────────────────── */

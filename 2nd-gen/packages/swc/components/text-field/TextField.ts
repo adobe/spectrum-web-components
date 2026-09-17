@@ -121,7 +121,7 @@ export class TextField extends TextFieldBase {
           ${this.invalid && !this.effectiveDisabled
             ? html`
                 <swc-icon-alert-triangle
-                  class="swc-TextField-validationIcon"
+                  class="swc-TextField-invalidIcon"
                   aria-hidden="true"
                 ></swc-icon-alert-triangle>
               `
