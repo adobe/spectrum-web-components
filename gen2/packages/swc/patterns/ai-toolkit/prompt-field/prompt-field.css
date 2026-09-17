@@ -642,6 +642,11 @@
   gap: token("spacing-300");
   align-items: start;
   padding-block-start: var(--_swc-prompt-field-attachment-badge-clearance);
+
+  /* Matches .swc-PromptField-attachments-scroll's own inline padding (the
+   * --multiple layout) so a tile doesn't visibly shift when the count
+   * crosses from one attachment to more than one. */
+  padding-inline: token("spacing-75");
 }
 
 .swc-PromptField-attachments--single > slot {
