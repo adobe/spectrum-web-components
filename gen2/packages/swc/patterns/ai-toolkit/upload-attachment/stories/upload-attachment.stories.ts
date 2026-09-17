@@ -222,6 +222,50 @@ export const MediaWithBadge: Story = {
   tags: ['options'],
 };
 
+export const FallbackIcons: Story = {
+  render: () => html`
+    <div
+      style="display:flex;flex-direction:column;gap:16px;max-inline-size:720px;"
+    >
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">
+        <swc-upload-attachment type="card" mime-type="application/pdf">
+          <span slot="title">Brand guidelines</span>
+          <span slot="subtitle">PDF</span>
+        </swc-upload-attachment>
+        <swc-upload-attachment type="card" mime-type="image/png">
+          <span slot="title">Campaign still</span>
+          <span slot="subtitle">PNG</span>
+        </swc-upload-attachment>
+        <swc-upload-attachment type="card" mime-type="audio/mpeg">
+          <span slot="title">Voiceover draft</span>
+          <span slot="subtitle">MP3</span>
+        </swc-upload-attachment>
+        <swc-upload-attachment type="card" mime-type="video/mp4">
+          <span slot="title">Storyboard animatic</span>
+          <span slot="subtitle">MP4</span>
+        </swc-upload-attachment>
+        <swc-upload-attachment type="card" mime-type="text/plain">
+          <span slot="title">Release notes</span>
+          <span slot="subtitle">TXT</span>
+        </swc-upload-attachment>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">
+        <swc-upload-attachment type="media" mime-type="application/pdf">
+          <span slot="badge">PDF</span>
+        </swc-upload-attachment>
+        <swc-upload-attachment type="media" mime-type="audio/mpeg">
+          <span slot="badge">MP3</span>
+        </swc-upload-attachment>
+        <swc-upload-attachment type="media" mime-type="video/mp4">
+          <span slot="badge">MP4</span>
+        </swc-upload-attachment>
+      </div>
+    </div>
+  `,
+  tags: ['options'],
+};
+FallbackIcons.storyName = 'Fallback icons';
+
 export const TextOverflow: Story = {
   render: () => html`
     <div

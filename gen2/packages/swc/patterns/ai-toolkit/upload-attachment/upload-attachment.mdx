@@ -52,6 +52,20 @@ Use `type="media"` with an optional `badge` slot when the preview needs a file-t
 
 <Canvas of={UploadAttachmentStories.MediaWithBadge} />
 
+### Fallback icons
+
+Set `mime-type` to render a matching icon into the `thumbnail` slot when no thumbnail content is provided:
+
+- **`audio/*`**: audio wave icon
+- **`video/*`**: play icon
+- **`image/*`**: image icon
+- **`text/*`**: file text icon
+- Anything else: generic file icon
+
+`mime-type` only affects rendering when the `thumbnail` slot is empty; a slotted thumbnail always takes priority.
+
+<Canvas of={UploadAttachmentStories.FallbackIcons} />
+
 ### Text overflow
 
 Subtitle truncates with a trailing ellipsis when the attachment is narrower than the text. On `type="card"`, the title truncates in the middle instead: the start shortens with an ellipsis while the last few characters and file extension stay pinned, so the file type stays visible even when the name is clipped.

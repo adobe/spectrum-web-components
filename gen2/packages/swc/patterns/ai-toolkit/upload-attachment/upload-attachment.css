@@ -141,7 +141,8 @@
    * the host's inward focus ring (below) lands in empty space instead of
    * being painted over by the surface, which renders on top of it. */
   margin: token("spacing-50");
-  border: token("border-width-100") solid transparent;
+  background: light-dark(token("transparent-black-50"), token("transparent-white-50"));
+  border: token("border-width-100") solid light-dark(token("transparent-black-50"), token("transparent-white-50"));
   border-radius: token("corner-radius-medium-default");
 }
 
@@ -152,7 +153,18 @@
   justify-content: center;
 }
 
-:host([type="card"]) .swc-UploadAttachment-thumbnail ::slotted(*) {
+.swc-UploadAttachment-thumbnail-fallback {
+  --swc-icon-color: var(--swc-upload-attachment-thumbnail-fallback-icon-color, token("gray-600"));
+  --swc-icon-inline-size: var(--swc-upload-attachment-thumbnail-fallback-icon-inline-size, 20px);
+  --swc-icon-block-size: var(--swc-upload-attachment-thumbnail-fallback-icon-block-size, 20px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:host([type="card"]) .swc-UploadAttachment-thumbnail ::slotted(*),
+:host([type="card"]) .swc-UploadAttachment-thumbnail-fallback {
   box-sizing: border-box;
   flex-shrink: 0;
   inline-size: var(--swc-upload-attachment-card-thumbnail-inline-size, 48px);
@@ -234,6 +246,12 @@
   border: token("border-width-100") solid transparent;
   border-radius: token("corner-radius-large-default");
   overflow: hidden;
+}
+
+:host([type="media"]) .swc-UploadAttachment-thumbnail-fallback {
+  position: absolute;
+  inset: 0;
+  background: token("gray-100");
 }
 
 :host([type="media"]) .swc-UploadAttachment-actions {

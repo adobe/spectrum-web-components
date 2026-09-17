@@ -13,11 +13,18 @@
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property, query, queryAssignedElements } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { getLabelFromSlot } from '@adobe/spectrum-wc-core/utils/index.js';
+import { Icon_AudioWave } from '@adobe/spectrum-wc-icons/AudioWave.js';
+import { Icon_File } from '@adobe/spectrum-wc-icons/File.js';
+import { Icon_FileText } from '@adobe/spectrum-wc-icons/FileText.js';
+import { Icon_Image } from '@adobe/spectrum-wc-icons/Image.js';
+import { Icon_Play } from '@adobe/spectrum-wc-icons/Play.js';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
+import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import { CrossIcon } from '../utils/icons/index.js';
 
@@ -40,7 +47,8 @@ import styles from './upload-attachment.css';
  *   <span slot="title">Brief.pdf</span>
  * </swc-upload-attachment>
  *
- * @slot thumbnail - Shared visual slot for icon/thumbnail/preview image.
+ * @slot thumbnail - Shared visual slot for icon/thumbnail/preview image. When
+ * empty and `mime-type` is set, a fallback icon is rendered based on the MIME type.
  * @slot badge - Optional file-type badge rendered over `type="media"` previews (for example, "PDF").
  * @slot title - Primary text label.
  * @slot subtitle - Secondary text label.
@@ -56,6 +64,9 @@ import styles from './upload-attachment.css';
  * @cssprop --swc-upload-attachment-dismiss-visual-size - Rendered size of the dismiss button's circular hit area. Defaults to 20px.
  * @cssprop --swc-upload-attachment-dismiss-icon-inline-size - Inline size of the dismiss icon. Defaults to 8px.
  * @cssprop --swc-upload-attachment-dismiss-icon-block-size - Block size of the dismiss icon. Defaults to 8px.
+ * @cssprop --swc-upload-attachment-thumbnail-fallback-icon-color - Color of the mime-type fallback icon.
+ * @cssprop --swc-upload-attachment-thumbnail-fallback-icon-inline-size - Inline size of the mime-type fallback icon.
+ * @cssprop --swc-upload-attachment-thumbnail-fallback-icon-block-size - Block size of the mime-type fallback icon.
  * @since 2.0.0-beta.3
  */
 export class UploadAttachment extends SpectrumElement {
@@ -82,8 +93,20 @@ export class UploadAttachment extends SpectrumElement {
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
 
+  /**
+   * MIME type of the attached file (for example `image/png`). When set and no
+   * content is slotted into `thumbnail`, renders a matching fallback icon:
+   * `audio/*` → audio wave, `video/*` → play, `image/*` → image,
+   * `text/*` → file text, anything else → generic file.
+   */
+  @property({ type: String, attribute: 'mime-type' })
+  public mimeType = '';
+
   @queryAssignedElements({ slot: 'badge', flatten: true })
   private _assignedBadge!: HTMLElement[];
+
+  @queryAssignedElements({ slot: 'thumbnail', flatten: true })
+  private _assignedThumbnail!: HTMLElement[];
 
   @query('slot[name="title"]')
   private _titleSlot?: HTMLSlotElement;
@@ -182,6 +205,52 @@ export class UploadAttachment extends SpectrumElement {
     return (this._assignedBadge?.length ?? 0) > 0;
   }
 
+  private _handleThumbnailSlotChange(): void {
+    this.requestUpdate();
+  }
+
+  private _hasThumbnailContent(): boolean {
+    return (this._assignedThumbnail?.length ?? 0) > 0;
+  }
+
+  /** Mirrors React Spectrum's AttachmentPreview mime-type fallback order. */
+  private _fallbackIcon(): string {
+    if (this.mimeType.startsWith('audio/')) {
+      return Icon_AudioWave();
+    }
+    if (this.mimeType.startsWith('video/')) {
+      return Icon_Play();
+    }
+    if (this.mimeType.startsWith('image/')) {
+      return Icon_Image();
+    }
+    if (this.mimeType.startsWith('text/')) {
+      return Icon_FileText();
+    }
+    return Icon_File();
+  }
+
+  private _renderThumbnail(): TemplateResult {
+    const showFallback = !!this.mimeType && !this._hasThumbnailContent();
+    return html`
+      <slot
+        name="thumbnail"
+        ?hidden=${showFallback}
+        @slotchange=${this._handleThumbnailSlotChange}
+      ></slot>
+      ${showFallback
+        ? html`
+            <swc-icon
+              class="swc-UploadAttachment-thumbnail-fallback"
+              aria-hidden="true"
+            >
+              ${unsafeSVG(this._fallbackIcon())}
+            </swc-icon>
+          `
+        : ''}
+    `;
+  }
+
   private _handleDismissClick(): void {
     this.dispatchEvent(
       new CustomEvent('swc-upload-attachment-dismiss', {
@@ -234,7 +303,7 @@ export class UploadAttachment extends SpectrumElement {
     return html`
       <div class="swc-UploadAttachment-surface">
         <div class="swc-UploadAttachment-thumbnail">
-          <slot name="thumbnail"></slot>
+          ${this._renderThumbnail()}
         </div>
         ${this._renderBadge()}
         <div class="swc-UploadAttachment-actions">
@@ -256,7 +325,7 @@ export class UploadAttachment extends SpectrumElement {
     return html`
       <div class="swc-UploadAttachment-surface">
         <div class="swc-UploadAttachment-thumbnail">
-          <slot name="thumbnail"></slot>
+          ${this._renderThumbnail()}
         </div>
         <div class="swc-UploadAttachment-meta">
           <div class="swc-UploadAttachment-title">
