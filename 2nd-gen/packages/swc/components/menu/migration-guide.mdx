@@ -1,0 +1,166 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Menu/Migration guide" />
+
+# Menu migration guide
+
+Replace `<sp-menu>` with `<swc-menu>`, update the import, and author a real trigger element for `swc-menu` to reference; this guide covers the menu host only, since `sp-menu-item`, `sp-menu-group`, and `sp-menu-divider` have not migrated yet.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/menu
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/menu/sp-menu.js';
+
+// After
+import '@adobe/spectrum-wc/components/menu/swc-menu.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/menu/swc-menu.js`) registers and loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area           | Spectrum 1 (`sp-menu`)                 | Spectrum 2 (`swc-menu`)                                                                     |
+| -------------- | -------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Tag            | `sp-menu`                              | `swc-menu`                                                                                  |
+| Import path    | `@spectrum-web-components/menu`        | `@adobe/spectrum-wc/components/menu/swc-menu.js`                                            |
+| `close` event  | `close`                                | `swc-close` / `swc-after-close` (see [step 3](#3-listen-for-the-new-open-and-close-events)) |
+| Default `size` | No reflected default (`noDefaultSize`) | `'m'`                                                                                       |
+
+### Added in Spectrum 2
+
+| Addition                             | Notes                                                                                                |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| `for` / `triggerElement`             | References an externally-authored trigger; required, see [step 2](#2-author-and-reference-a-trigger) |
+| `placement`                          | 12 values covering all six sides with two alignments each; default `'bottom-start'`                  |
+| `should-flip`                        | Reposition to the opposite side when the requested side doesn't fit; default `true`                  |
+| `open`                               | Reflected boolean controlling visibility                                                             |
+| `xl` size                            | Joins `s` / `m` / `l`                                                                                |
+| `swc-open` / `swc-after-open` events | Fire as the menu opens                                                                               |
+
+### Removed in Spectrum 2
+
+| Removed                                                                                     | Replacement                                                                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label` property                                                                            | No replacement on the menu itself. Add an accessible name to your trigger element instead, see [step 2](#2-author-and-reference-a-trigger). |
+| `ignore` property                                                                           | No replacement.                                                                                                                             |
+| `getNeighboringFocusableElement()` method                                                   | No public replacement; arrow-key navigation is handled internally.                                                                          |
+| `role="menu"` on the host element                                                           | Moved to the shadow-internal surface. Do not select `sp-menu[role="menu"]`-style host selectors.                                            |
+| `mobile-view` / `mobile-back-label` (mobile drilldown tray)                                 | No replacement. Not currently planned.                                                                                                      |
+| `selects` / `value` / `selectedItems` / `selectOrToggleItem()` / `change` event (selection) | Not yet available in Spectrum 2.                                                                                                            |
+| Link items (`href`, `target`, `download`, `rel`, `referrerpolicy` on menu items)            | Not yet available. A dedicated link-row component is planned but has not shipped.                                                           |
+| `--mod-menu-*` custom properties                                                            | No replacement; `<swc-menu>` currently exposes no public CSS custom properties (see [Styling](#styling)).                                   |
+
+## Update your code
+
+### 1. Rename the tag
+
+```html
+<!-- Before -->
+<sp-menu label="Selection type">
+  <sp-menu-item>Deselect</sp-menu-item>
+</sp-menu>
+
+<!-- After -->
+<swc-menu for="menu-trigger">
+  <swc-menu-item>Deselect</swc-menu-item>
+</swc-menu>
+```
+
+### 2. Author and reference a trigger
+
+`<sp-menu>` rendered as a bare list; something else (`sp-popover`, `sp-action-menu`, or your own code) owned opening and closing it. `<swc-menu>` owns its own open/close and click-to-toggle wiring, but does not render a trigger. Author a real trigger element and reference it with `for` (its `id`) or `triggerElement` (a direct reference, for example across a shadow boundary):
+
+```html
+<!-- Before -->
+<sp-popover open>
+  <sp-menu label="Selection type">
+    <sp-menu-item>Deselect</sp-menu-item>
+  </sp-menu>
+</sp-popover>
+
+<!-- After -->
+<sp-button id="menu-trigger">Selection type</sp-button>
+<swc-menu for="menu-trigger">
+  <swc-menu-item>Deselect</swc-menu-item>
+</swc-menu>
+```
+
+The trigger's own accessible name (visible text, `aria-label`, or an equivalent attribute) is now the menu's accessible name. `swc-menu` has no `label` property of its own.
+
+### 3. Listen for the new open and close events
+
+`close` is replaced by four lifecycle events: `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close`.
+
+```js
+// Before
+menu.addEventListener('close', () => {
+  /* ... */
+});
+
+// After
+menu.addEventListener('swc-close', () => {
+  /* ... */
+});
+```
+
+## Accessibility
+
+- The menu's accessible name comes from the trigger you author, not a `label` property. See [step 2](#2-author-and-reference-a-trigger).
+- `<swc-menu>` does not carry `role="menu"` on its host element. Do not write selectors or assistive-technology test assertions against that attribute on the host.
+
+## Styling
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1 <code>{'--mod-menu-*'}</code>{' '}
+  properties <strong>do not apply</strong> to <code>{'<swc-menu>'}</code>.{' '}
+  <code>{'<swc-menu>'}</code> currently exposes no public CSS custom properties;
+  remove any <code>{'--mod-menu-*'}</code> overrides.
+</div>
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-menu-*'}</code> private properties, and shadow DOM are{' '}
+  <strong>not public API</strong>. Styling applied to them will break without
+  warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update imports
+- [ ] Rename all `<sp-menu>` to `<swc-menu>`
+- [ ] Author a real trigger element and reference it via `for` or `triggerElement`
+- [ ] Move the accessible name from `label` to the trigger element
+- [ ] Replace `close` event listeners with `swc-close`
+- [ ] Remove any `--mod-menu-*` overrides
+- [ ] Hold off migrating menus that use selection, link items, or the mobile drilldown tray; none of these have shipped in Spectrum 2 yet

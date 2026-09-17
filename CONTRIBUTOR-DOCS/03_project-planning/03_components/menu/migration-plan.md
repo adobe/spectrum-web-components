@@ -672,12 +672,12 @@ Planned rendering shape:
 
 #### General
 
-- [ ] JSDoc on all public props, slots, and CSS custom properties
-- [ ] Storybook stories for anatomy, options (sizes), states, behaviors (open/close, submenu), and accessibility
+- [x] JSDoc on all public props, slots, and CSS custom properties — `swc-menu` exposes no CSS custom properties this phase (see [Styling](#styling))
+- [x] Storybook stories for anatomy, options (sizes), and behaviors (open/close) — no `states` story (menu has none this phase) or `submenu` story (Phase B, not implemented); a `menu.mdx` per-component docs page ties these together, plus a local-only `TriggerElement` story kept out of the production docs build
 
 #### Breaking changes
 
-- [ ] Document [B1](#deferred-to-later-phases)–[B10](#must-ship) in the consumer migration guide ([SWC-1223](https://jira.corp.adobe.com/browse/SWC-1223))
+- [x] Document B1–B10 in the consumer migration guide — `2nd-gen/packages/swc/components/menu/migration-guide.mdx`
 
 ### Review
 
