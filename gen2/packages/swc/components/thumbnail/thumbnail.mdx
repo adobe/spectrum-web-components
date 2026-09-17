@@ -1,0 +1,82 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as ThumbnailStories from './stories/thumbnail.stories';
+
+<Meta of={ThumbnailStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A thumbnail consists of:
+
+- **Default slot**: an `<img>` element to preview
+
+<Canvas of={ThumbnailStories.Anatomy} />
+
+## Options
+
+### Sizes
+
+Thumbnails come in 12 sizes, from `50` (16 px) to `1000` (64 px). The default size is `500` (40 px).
+
+> **Note**: `size` is a number in Spectrum 2 (`el.size === 500`); in Spectrum 1 it was a string (`el.size === '500'`). See the [migration guide](?path=/docs/components-thumbnail-migration-guide--docs).
+
+<Canvas of={ThumbnailStories.Sizes} />
+
+### Fit
+
+`fit` controls how the slotted image fills the thumbnail's bounds:
+
+- **`contain`** (default): scales the image to fit entirely within the bounds
+- **`cover`**: scales and crops the image to fill the bounds completely
+
+> **Note**: `fit` replaces Spectrum 1's `cover` boolean attribute. See the [migration guide](?path=/docs/components-thumbnail-migration-guide--docs).
+
+<Canvas of={ThumbnailStories.Fit} />
+
+## States
+
+### Consumer-styled states
+
+A thumbnail has no built-in `disabled` or `selected` state. A parent component applies its own visual treatment (for example, reduced opacity or an outline) directly to the `<swc-thumbnail>` element.
+
+> **Note**: Spectrum 1's `disabled`, `focused`, `selected`, and `layer` attributes are not part of the Spectrum 2 API. See the [migration guide](?path=/docs/components-thumbnail-migration-guide--docs).
+
+<Canvas of={ThumbnailStories.ConsumerStyledStates} />
+
+## Accessibility
+
+### Features
+
+The `<swc-thumbnail>` element implements several accessibility features:
+
+#### Alt text
+
+- Provide a meaningful `alt` value on the slotted `<img>` describing the previewed content
+- Set `decorative` when the image content is already described by surrounding context; the component then hides the entire thumbnail with `aria-hidden="true"` and sets `alt=""` on the slotted image if it has none
+
+#### Non-interactive element
+
+- Thumbnails have no interactive behavior and are never part of the tab order
+- No `role` is set on the host; the slotted `<img>`'s implicit `img` role and `alt` value carry the accessible name
+- To make a thumbnail part of an interactive control (for example a button or selectable card), wrap it in that control; the wrapping element owns focus and any disabled or selected state
+
+### Best practices
+
+- Always set `alt` on the slotted image, or mark the thumbnail `decorative`: a missing accessible name triggers a DEBUG-mode warning
+- Use `decorative` only when the image content is already identified by surrounding text
+- Give the wrapping element its own `disabled` or `aria-disabled` attribute; the thumbnail does not expose one itself
+
+<Canvas of={ThumbnailStories.Accessibility} />
+
+## Upcoming features
+
+The following features are planned for future releases. No code changes are required today.
+
+| Feature           | Description                                                                                             |
+| ----------------- | ------------------------------------------------------------------------------------------------------- |
+| Custom properties | Additional `--swc-thumbnail-*` custom properties for style customization beyond the current size token. |
+
+<DocsFooter />
