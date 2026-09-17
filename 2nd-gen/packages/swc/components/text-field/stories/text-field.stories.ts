@@ -163,11 +163,25 @@ export const Labelling: Story = {
 };
 
 export const Sizes: Story = {
-  render: (args) => html`
-    ${template({ ...args, size: 's', 'label-slot': 'Small' })}
-    ${template({ ...args, size: 'm', 'label-slot': 'Medium' })}
-    ${template({ ...args, size: 'l', 'label-slot': 'Large' })}
-    ${template({ ...args, size: 'xl', 'label-slot': 'Extra-large' })}
+  render: () => html`
+    <div style="display: flex; flex-direction: column; gap: 20px; max-inline-size: 360px;">
+      <swc-text-field size="s" placeholder="Small placeholder">
+        <span slot="label">Small</span>
+        <span slot="description">Used for compact layouts.</span>
+      </swc-text-field>
+      <swc-text-field size="m" placeholder="Medium placeholder">
+        <span slot="label">Medium</span>
+        <span slot="description">Default field sizing.</span>
+      </swc-text-field>
+      <swc-text-field size="l" placeholder="Large placeholder">
+        <span slot="label">Large</span>
+        <span slot="description">For denser form surfaces.</span>
+      </swc-text-field>
+      <swc-text-field size="xl" placeholder="Extra-large placeholder">
+        <span slot="label">Extra-large</span>
+        <span slot="description">For prominent entry points.</span>
+      </swc-text-field>
+    </div>
   `,
   tags: ['options'],
   parameters: {
