@@ -33,8 +33,11 @@
     "label"
     "input"
     "messages";
-  grid-template-columns: minmax(0, 1fr);
   row-gap: token("form-item-gap-medium");
+
+  --_swc-form-field-font-family: inherit;
+  --_swc-form-field-font-weight: token("regular-font-weight");
+  --_swc-form-field-line-height: token("line-height-100");
 }
 
 :host([size="s"]) .swc-FormField {
@@ -66,8 +69,10 @@
 .swc-FormFieldLabel {
   grid-area: label;
   max-inline-size: var(--swc-field-label-max-inline-size, none);
-  font: inherit;
+  font-family: var(--_swc-form-field-font-family);
   font-size: var(--swc-form-field-label-font-size, token("font-size-100"));
+  font-weight: var(--_swc-form-field-font-weight);
+  line-height: var(--_swc-form-field-line-height);
   color: token("neutral-subdued-content-color-default");
   overflow-wrap: break-word;
 }
@@ -79,7 +84,10 @@
 .swc-FormFieldDescription,
 .swc-FormFieldErrorText {
   grid-area: messages;
+  font-family: var(--_swc-form-field-font-family);
   font-size: var(--swc-form-field-description-font-size, token("font-size-75"));
+  font-weight: var(--_swc-form-field-font-weight);
+  line-height: var(--_swc-form-field-line-height);
 }
 
 .swc-FormFieldDescription {

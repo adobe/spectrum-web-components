@@ -41,6 +41,12 @@ const NECESSITY_INDICATOR_TEXT = {
  * @cssprop --swc-field-label-max-inline-size - Max width of the visible label before it wraps. Unset by default (the label wraps late); set it to wrap a long label sooner and give a `side` input more room.
  * @cssprop --swc-field-input-min-inline-size - Minimum inline size of the input control. Defaults to the component height for the field size.
  * @cssprop --swc-field-input-max-inline-size - Maximum inline size of the input control. Defaults to the medium field width token.
+ * @cssprop --swc-text-field-padding-block - Vertical padding of the text-field control. Changes by size.
+ * @cssprop --swc-text-field-padding-inline - Horizontal padding of the text-field control. Changes by size.
+ * @cssprop --swc-text-field-affix-gap - Gap between the input and affixes. Changes by size.
+ * @cssprop --swc-text-field-font-size - Font size of the input. Changes by size.
+ * @cssprop --swc-text-field-border-radius - Corner radius of the text-field control. Changes by size.
+ * @cssprop --swc-text-field-validation-icon-size - Size of the invalid-state icon. Changes by size.
  * @cssprop --swc-form-field-label-font-size - Font size of the visible field label. Defaults to the field size typography scale.
  * @cssprop --swc-form-field-description-font-size - Font size of the description and error text. Defaults to the field size typography scale.
  *

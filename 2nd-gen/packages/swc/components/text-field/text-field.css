@@ -21,26 +21,26 @@
 .swc-TextField-control {
   display: flex;
   grid-area: input;
-  gap: var(--_swc-text-field-affix-gap, token("base-gap-medium"));
+  gap: var(--swc-text-field-affix-gap, token("base-gap-medium"));
   align-items: center;
   min-inline-size: var(--swc-field-input-min-inline-size, token("component-height-100"));
   max-inline-size: var(--swc-field-input-max-inline-size, token("field-default-width-medium"));
-  padding-inline: var(--_swc-text-field-padding-inline, token("base-padding-horizontal-medium"));
-  font-size: var(--_swc-text-field-font-size, token("font-size-100"));
+  padding-inline: var(--swc-text-field-padding-inline, token("base-padding-horizontal-medium"));
+  font-size: var(--swc-text-field-font-size, token("font-size-100"));
   background-color: token("gray-25");
   border-color: token("gray-300");
   border-style: solid;
   border-width: token("border-width-200");
-  border-radius: var(--_swc-text-field-border-radius, token("corner-radius-medium-size-medium"));
+  border-radius: var(--swc-text-field-border-radius, token("corner-radius-medium-size-medium"));
 }
 
 .swc-TextField-input {
   flex: 1 1 auto;
   min-inline-size: 0;
-  padding-block: var(--_swc-text-field-padding-block, token("base-padding-vertical-medium"));
+  padding-block: var(--swc-text-field-padding-block, token("base-padding-vertical-medium"));
   padding-inline: 0;
-  font-family: token("sans-serif-font");
-  font-size: var(--_swc-text-field-font-size, token("font-size-100"));
+  font-family: inherit;
+  font-size: var(--swc-text-field-font-size, token("font-size-100"));
   font-weight: token("regular-font-weight");
   line-height: token("line-height-100");
   color: token("neutral-content-color-default");
@@ -52,13 +52,12 @@
 
 .swc-TextField-input::placeholder {
   color: token("gray-600");
-  opacity: 1;
 }
 
 /* ── Prefix ───────────────────────────────────────── */
 slot[name="prefix"]::slotted(*) {
-  --swc-icon-inline-size: calc(20 / 14 * 1em);
-  --swc-icon-block-size: calc(20 / 14 * 1em);
+  --swc-icon-inline-size: 1lh;
+  --swc-icon-block-size: 1lh;
 
   flex: 0 0 auto;
 
@@ -68,11 +67,16 @@ slot[name="prefix"]::slotted(*) {
   pointer-events: none;
 }
 
+slot[name="prefix"]::slotted(swc-avatar) {
+  --swc-avatar-size: token("avatar-size-100");
+}
+
 /* ── Invalid icon (trailing flex child) ──────────── */
 
 .swc-TextField-invalidIcon {
-  --swc-icon-inline-size: var(--_swc-text-field-validation-icon-size, token("workflow-icon-medium"));
-  --swc-icon-block-size: var(--_swc-text-field-validation-icon-size, token("workflow-icon-medium"));
+  --_swc-text-field-validation-icon-size: var(--swc-text-field-validation-icon-size, token("workflow-icon-medium"));
+  --swc-icon-inline-size: var(--_swc-text-field-validation-icon-size);
+  --swc-icon-block-size: var(--_swc-text-field-validation-icon-size);
 
   flex: 0 0 auto;
 }
@@ -142,33 +146,45 @@ slot[name="prefix"]::slotted(*) {
 /* ── Sizes ────────────────────────────────────────── */
 
 :host([size="s"]) {
-  --_swc-text-field-padding-block: token("base-padding-vertical-small");
-  --_swc-text-field-padding-inline: token("base-padding-horizontal-small");
-  --_swc-text-field-affix-gap: token("base-gap-small");
-  --_swc-text-field-font-size: token("font-size-75");
-  --_swc-text-field-border-radius: token("corner-radius-medium-size-small");
-  --_swc-text-field-validation-icon-size: token("workflow-icon-small");
+  --swc-text-field-padding-block: token("base-padding-vertical-small");
+  --swc-text-field-padding-inline: token("base-padding-horizontal-small");
+  --swc-text-field-affix-gap: token("base-gap-small");
+  --swc-text-field-font-size: token("font-size-75");
+  --swc-text-field-border-radius: token("corner-radius-medium-size-small");
+  --swc-text-field-validation-icon-size: token("workflow-icon-small");
   --swc-field-input-min-inline-size: token("component-height-75");
 }
 
+:host([size="s"]) slot[name="prefix"]::slotted(swc-avatar) {
+  --swc-avatar-size: token("avatar-size-75");
+}
+
 :host([size="l"]) {
-  --_swc-text-field-padding-block: token("base-padding-vertical-large");
-  --_swc-text-field-padding-inline: token("base-padding-horizontal-large");
-  --_swc-text-field-affix-gap: token("base-gap-large");
-  --_swc-text-field-font-size: token("font-size-200");
-  --_swc-text-field-border-radius: token("corner-radius-medium-size-large");
-  --_swc-text-field-validation-icon-size: token("workflow-icon-large");
+  --swc-text-field-padding-block: token("base-padding-vertical-large");
+  --swc-text-field-padding-inline: token("base-padding-horizontal-large");
+  --swc-text-field-affix-gap: token("base-gap-large");
+  --swc-text-field-font-size: token("font-size-200");
+  --swc-text-field-border-radius: token("corner-radius-medium-size-large");
+  --swc-text-field-validation-icon-size: token("workflow-icon-large");
   --swc-field-input-min-inline-size: token("component-height-200");
 }
 
+:host([size="l"]) slot[name="prefix"]::slotted(swc-avatar) {
+  --swc-avatar-size: token("avatar-size-200");
+}
+
 :host([size="xl"]) {
-  --_swc-text-field-padding-block: token("base-padding-vertical-extra-large");
-  --_swc-text-field-padding-inline: token("base-padding-horizontal-extra-large");
-  --_swc-text-field-affix-gap: token("base-gap-extra-large");
-  --_swc-text-field-font-size: token("font-size-300");
-  --_swc-text-field-border-radius: token("corner-radius-medium-size-extra-large");
-  --_swc-text-field-validation-icon-size: token("workflow-icon-extra-large");
+  --swc-text-field-padding-block: token("base-padding-vertical-extra-large");
+  --swc-text-field-padding-inline: token("base-padding-horizontal-extra-large");
+  --swc-text-field-affix-gap: token("base-gap-extra-large");
+  --swc-text-field-font-size: token("font-size-300");
+  --swc-text-field-border-radius: token("corner-radius-medium-size-extra-large");
+  --swc-text-field-validation-icon-size: token("workflow-icon-extra-large");
   --swc-field-input-min-inline-size: token("component-height-300");
+}
+
+:host([size="xl"]) slot[name="prefix"]::slotted(swc-avatar) {
+  --swc-avatar-size: token("avatar-size-300");
 }
 
 /* ── High contrast ────────────────────────────────── */
