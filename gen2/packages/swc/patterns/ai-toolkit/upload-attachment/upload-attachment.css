@@ -257,7 +257,6 @@
    * to roughly double the intended opacity. */
   background: none;
   border-radius: token("corner-radius-large-default");
-  box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
   overflow: hidden;
 }
 
