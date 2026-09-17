@@ -3,4 +3,4 @@
 '@adobe/spectrum-wc': patch
 ---
 
-Make text-field necessity-indicator labels consumer-provided so downstream field components can customize or localize required and optional copy.
+Make text-field necessity-indicator text consumer-provided so downstream field components can customize or localize required and optional copy.

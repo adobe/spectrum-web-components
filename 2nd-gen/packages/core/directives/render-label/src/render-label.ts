@@ -16,7 +16,7 @@ import { html, nothing, type TemplateResult } from 'lit';
 export type RenderFieldLabelResult = TemplateResult | typeof nothing;
 
 /** Consumer-provided copy for the text necessity indicator. */
-export interface NecessityLabels {
+export interface NecessityIndicatorText {
   required: string;
   optional: string;
 }
@@ -45,7 +45,7 @@ export interface RenderFieldLabelOptions {
   necessityIndicator?: 'icon' | 'label';
 
   /** Copy for the required and optional text in `'label'` mode. */
-  necessityLabels?: NecessityLabels;
+  necessityIndicatorText?: NecessityIndicatorText;
 
   /**
    * The asterisk glyph for `'icon'` mode, supplied by the consumer because this
@@ -68,7 +68,7 @@ export function renderFieldLabel({
   forId,
   required = false,
   necessityIndicator = 'icon',
-  necessityLabels,
+  necessityIndicatorText,
   necessityIcon,
 }: RenderFieldLabelOptions): RenderFieldLabelResult {
   if (!hasLabelSlotContent) {
@@ -80,7 +80,7 @@ export function renderFieldLabel({
       ${renderNecessityIndicator({
         indicator: necessityIndicator,
         required,
-        labels: necessityLabels,
+        labels: necessityIndicatorText,
         icon: necessityIcon,
       })}
     </label>
@@ -99,7 +99,7 @@ function renderNecessityIndicator({
 }: {
   indicator: 'icon' | 'label';
   required: boolean;
-  labels: NecessityLabels | undefined;
+  labels: NecessityIndicatorText | undefined;
   icon: TemplateResult | undefined;
 }): RenderFieldLabelResult {
   if (indicator === 'label' && labels) {

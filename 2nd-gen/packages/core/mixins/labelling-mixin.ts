@@ -14,7 +14,7 @@ import { property } from 'lit/decorators.js';
 
 import { SlotPresenceController } from '../controllers/slot-presence-controller/index.js';
 import {
-  type NecessityLabels,
+  type NecessityIndicatorText,
   renderFieldLabel,
   type RenderFieldLabelResult,
 } from '../directives/render-label/index.js';
@@ -69,7 +69,7 @@ export interface LabellingInterface {
     options?: {
       required?: boolean;
       necessityIndicator?: 'icon' | 'label';
-      necessityLabels?: NecessityLabels;
+      necessityIndicatorText?: NecessityIndicatorText;
       necessityIcon?: TemplateResult;
     }
   ): RenderFieldLabelResult;
@@ -163,7 +163,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
       options: {
         required?: boolean;
         necessityIndicator?: 'icon' | 'label';
-        necessityLabels?: NecessityLabels;
+        necessityIndicatorText?: NecessityIndicatorText;
         necessityIcon?: TemplateResult;
       } = {}
     ): RenderFieldLabelResult {
@@ -172,7 +172,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
         forId,
         required: options.required,
         necessityIndicator: options.necessityIndicator,
-        necessityLabels: options.necessityLabels,
+        necessityIndicatorText: options.necessityIndicatorText,
         necessityIcon: options.necessityIcon,
       });
     }
