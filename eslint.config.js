@@ -138,7 +138,7 @@ export default defineConfig([
       '1st-gen/test/*.js',
       '1st-gen/test/plugins/*.js',
       '1st-gen/test/visual/*.js',
-      '2nd-gen/packages/**/dist/**',
+      'gen2/packages/**/dist/**',
       // Icons
       '1st-gen/packages/icons/**',
       '1st-gen/packages/iconset/**',
@@ -149,7 +149,7 @@ export default defineConfig([
       '**/custom-elements.json',
       '**/tokens.css',
       '**/tokens.json',
-      '2nd-gen/packages/swc/stylesheets/global/**',
+      'gen2/packages/swc/stylesheets/global/**',
       // Config and tooling files (Node env; skip lint to avoid needing node globals for many files)
       '**/*.config.js',
       '**/*.config.cjs',
@@ -357,7 +357,7 @@ export default defineConfig([
       '1st-gen/scripts/**/*.js',
       '1st-gen/projects/**/scripts/**/*.js',
       'CONTRIBUTOR-DOCS/**/*.js',
-      '2nd-gen/packages/tools/**/*.js',
+      'gen2/packages/tools/**/*.js',
     ],
     plugins: { swc: swcPlugin },
     rules: {
@@ -435,8 +435,8 @@ export default defineConfig([
       '1st-gen/web-test-runner*.js',
       '1st-gen/storybook/**/*.js',
       'CONTRIBUTOR-DOCS/**/*.js',
-      '2nd-gen/packages/tools/**/*.ts',
-      '2nd-gen/packages/tools/**/*.js',
+      'gen2/packages/tools/**/*.ts',
+      'gen2/packages/tools/**/*.js',
       '1st-gen/packages/icons-workflow/bin/**/*.js',
       '1st-gen/packages/icons-ui/bin/**/*.js',
     ],
@@ -449,7 +449,7 @@ export default defineConfig([
   // Storybook config files: Node globals and tooling imports
   // ────────────────────────────────────────────────────────────────────────────
   {
-    files: ['2nd-gen/packages/swc/.storybook/**/*.ts'],
+    files: ['gen2/packages/swc/.storybook/**/*.ts'],
     languageOptions: {
       globals: globals.node,
     },
@@ -506,9 +506,9 @@ export default defineConfig([
   // Storybook plugin: recommended rules for story files (CSF format, naming, etc.)
   // ────────────────────────────────────────────────────────────────────────────
   ...storybook.configs['flat/recommended'],
-  // 2nd-gen test files are CSF story files using play functions (e.g., asset.test.ts)
+  // gen2 test files are CSF story files using play functions (e.g., asset.test.ts)
   {
-    files: ['2nd-gen/**/test/*.test.ts'],
+    files: ['gen2/**/test/*.test.ts'],
     plugins: { storybook: storybook },
     rules: {
       'storybook/await-interactions': 'error',
@@ -523,7 +523,7 @@ export default defineConfig([
     },
   },
   {
-    files: ['**/*.stories.ts', '**/*.stories.js', '2nd-gen/**/test/*.test.ts'],
+    files: ['**/*.stories.ts', '**/*.stories.js', 'gen2/**/test/*.test.ts'],
     rules: {
       // Project imports from @storybook/web-components intentionally
       'storybook/no-renderer-packages': 'off',

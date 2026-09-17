@@ -16,11 +16,11 @@
  * aligning with https://react-spectrum.adobe.com/llms.txt.
  *
  * Data sources:
- *   - 1st-gen/projects/documentation/custom-elements.json  (1st-gen APIs)
- *   - 2nd-gen/packages/swc/dist/custom-elements.json  (2nd-gen APIs)
- *   - 1st-gen/packages/[name]/README.md  (1st-gen descriptions)
- *   - 1st-gen/projects/documentation/content/*.md  (1st-gen guide pages, Eleventy frontmatter)
- *   - 2nd-gen/packages/swc/.storybook/{guides,learn-about-swc}/**\/*.mdx  (2nd-gen guides)
+ *   - 1st-gen/projects/documentation/custom-elements.json  (gen1 APIs)
+ *   - gen2/packages/swc/dist/custom-elements.json  (gen2 APIs)
+ *   - 1st-gen/packages/[name]/README.md  (gen1 descriptions)
+ *   - 1st-gen/projects/documentation/content/*.md  (gen1 guide pages, Eleventy frontmatter)
+ *   - gen2/packages/swc/.storybook/{guides,learn-about-swc}/**\/*.mdx  (gen2 guides)
  *
  * Output per generation:
  *   - llms.txt          Link index (guides + components -> reference/[tag].md)
@@ -79,22 +79,19 @@ const ROOT = join(__dirname, '..');
 /**
  * Where each generation's files land so they're served at the right URL.
  *
- * 1st-gen: content/ is Eleventy's input dir; files are passthrough-copied to
+ * gen1: content/ is Eleventy's input dir; files are passthrough-copied to
  *          _site/ then Rollup copies them into dist/, which GitHub Pages serves
  *          at https://opensource.adobe.com/spectrum-web-components/
  *
- * 2nd-gen: public/ is Storybook's staticDirs root (see .storybook/main.ts),
+ * gen2: public/ is Storybook's staticDirs root (see .storybook/main.ts),
  *          copied verbatim into storybook-static/ at build time.
  */
-const FIRST_GEN_OUT = join(ROOT, '1st-gen/projects/documentation/content');
-const SECOND_GEN_OUT = join(ROOT, '2nd-gen/packages/swc/public');
-const SECOND_GEN_CEM = join(
-  ROOT,
-  '2nd-gen/packages/swc/dist/custom-elements.json'
-);
+const GEN1_OUT = join(ROOT, '1st-gen/projects/documentation/content');
+const GEN2_OUT = join(ROOT, 'gen2/packages/swc/public');
+const GEN2_CEM = join(ROOT, 'gen2/packages/swc/dist/custom-elements.json');
 
-const FIRST_GEN_URL = 'https://opensource.adobe.com/spectrum-web-components';
-const SECOND_GEN_URL = 'https://spectrum-web-components.adobe.com';
+const GEN1_URL = 'https://opensource.adobe.com/spectrum-web-components';
+const GEN2_URL = 'https://spectrum-web-components.adobe.com';
 
 /**
  * Elements defined in helper/internal packages that should not appear in the
@@ -130,7 +127,7 @@ function readCem(cemPath) {
 }
 
 /**
- * Parses the first meaningful sentence from a 1st-gen README's ## Overview
+ * Parses the first meaningful sentence from a gen1 README's ## Overview
  * section to use as the component description.
  */
 function readmeDescription(packageName) {
@@ -170,7 +167,7 @@ function readmeDescription(packageName) {
 }
 
 /**
- * Derive the npm package directory name from a 1st-gen CEM module path.
+ * Derive the npm package directory name from a gen1 CEM module path.
  * Pattern: packages/[name]/src/ComponentName.js
  */
 function packageNameFromPath(modulePath) {
@@ -179,10 +176,10 @@ function packageNameFromPath(modulePath) {
 }
 
 /**
- * Derive the component directory name for 2nd-gen imports.
- * Pattern: 2nd-gen/packages/swc/components/[name]/ComponentName.ts
+ * Derive the component directory name for gen2 imports.
+ * Pattern: gen2/packages/swc/components/[name]/ComponentName.ts
  */
-function secondGenComponentFromPath(modulePath) {
+function gen2ComponentFromPath(modulePath) {
   const match = modulePath?.match(/components\/([^/]+)\//);
   return match ? match[1] : null;
 }
@@ -212,7 +209,7 @@ function buildComponent(decl, modulePath, gen) {
   const packageDir =
     gen === 1
       ? packageNameFromPath(modulePath)
-      : secondGenComponentFromPath(modulePath);
+      : gen2ComponentFromPath(modulePath);
 
   const npmPackage =
     gen === 1
@@ -311,13 +308,13 @@ function parseEleventyFrontmatter(filePath) {
 }
 
 /**
- * Returns guide entries for 1st-gen from Eleventy content directory.
+ * Returns guide entries for gen1 from Eleventy content directory.
  * Each entry: { title, url, section }
  *   section 'guides'          top-level pages (getting-started, etc.)
  *   section 'developer-guides'  content/guides/ subdirectory
  */
-function readFirstGenGuides() {
-  const contentDir = FIRST_GEN_OUT;
+function readGen1Guides() {
+  const contentDir = GEN1_OUT;
   const guides = [];
 
   // Top-level .md pages (skip index.md — that's the homepage)
@@ -329,7 +326,7 @@ function readFirstGenGuides() {
     if (meta) {
       guides.push({
         title: meta.title,
-        url: `${FIRST_GEN_URL}/${meta.slug}/`,
+        url: `${GEN1_URL}/${meta.slug}/`,
         section: 'guides',
       });
     }
@@ -346,7 +343,7 @@ function readFirstGenGuides() {
       if (meta) {
         guides.push({
           title: meta.title,
-          url: `${FIRST_GEN_URL}/guides/${meta.slug}/`,
+          url: `${GEN1_URL}/guides/${meta.slug}/`,
           section: 'developer-guides',
         });
       }
@@ -388,13 +385,13 @@ function collectMdxFiles(dir) {
 }
 
 /**
- * Returns guide entries for 2nd-gen from Storybook MDX files.
+ * Returns guide entries for gen2 from Storybook MDX files.
  * Each entry: { title, url, section }
  *   section 'learn'   learn-about-swc/ directory
  *   section 'guides'  guides/ directory
  */
-function readSecondGenGuides() {
-  const storybookDir = join(ROOT, '2nd-gen/packages/swc/.storybook');
+function readGen2Guides() {
+  const storybookDir = join(ROOT, 'gen2/packages/swc/.storybook');
   const guides = [];
 
   // learn-about-swc/*.mdx  (titlePrefix: 'Learn about SWC')
@@ -410,7 +407,7 @@ function readSecondGenGuides() {
         const storyId = storybookStoryId('Learn about SWC', metaTitle);
         guides.push({
           title: metaTitle,
-          url: `${SECOND_GEN_URL}/?path=/docs/${storyId}--docs`,
+          url: `${GEN2_URL}/?path=/docs/${storyId}--docs`,
           section: 'learn',
         });
       }
@@ -427,7 +424,7 @@ function readSecondGenGuides() {
         const storyId = storybookStoryId('Guides', metaTitle);
         guides.push({
           title: metaTitle,
-          url: `${SECOND_GEN_URL}/?path=/docs/${storyId}--docs`,
+          url: `${GEN2_URL}/?path=/docs/${storyId}--docs`,
           section: 'guides',
         });
       }
@@ -572,7 +569,7 @@ function generateLlmsTxt({ components, guides, gen, docsUrl, crossLink }) {
     `- [Documentation](${docsUrl}): Full docs with live examples`,
     '- [GitHub](https://github.com/adobe/spectrum-web-components): Source code and issues',
     is1st
-      ? '- [npm](https://www.npmjs.com/search?q=%40spectrum-web-components): All 1st-gen packages'
+      ? '- [npm](https://www.npmjs.com/search?q=%40spectrum-web-components): All gen1 packages'
       : '- [npm (@adobe/spectrum-wc)](https://www.npmjs.com/package/@adobe/spectrum-wc): Package',
     `- [llms-full.txt](${docsUrl}/llms-full.txt): All ${spectrumVersion} component APIs in one file`,
   ];
@@ -621,7 +618,7 @@ function generateLlmsFullTxt({ components, gen, docsUrl, now }) {
 
 /**
  * XML sitemap listing all doc URLs for this generation.
- * 1st-gen links to HTML pages; 2nd-gen links to Storybook SPA routes.
+ * gen1 links to HTML pages; gen2 links to Storybook SPA routes.
  */
 function generateSitemap({ components, guides, gen, docsUrl, now }) {
   const entry = (loc, priority, changefreq) =>
@@ -640,12 +637,12 @@ function generateSitemap({ components, guides, gen, docsUrl, now }) {
   // Component pages
   for (const comp of components) {
     if (gen === 1 && comp.packageDir) {
-      // 1st-gen component docs are HTML pages at /components/[dir]/
+      // gen1 component docs are HTML pages at /components/[dir]/
       entries.push(
         entry(`${docsUrl}/components/${comp.packageDir}/`, '0.7', 'monthly')
       );
     } else if (gen === 2) {
-      // 2nd-gen: reference markdown files served from Storybook's staticDirs
+      // gen2: reference markdown files served from Storybook's staticDirs
       entries.push(
         entry(`${docsUrl}/reference/${comp.tagName}.md`, '0.7', 'monthly')
       );
@@ -666,7 +663,7 @@ function generateSitemap({ components, guides, gen, docsUrl, now }) {
 // ---------------------------------------------------------------------------
 
 function writeGen({ components, guides, gen, outDir, docsUrl, crossLink }) {
-  const genLabel = gen === 1 ? '1st' : '2nd';
+  const genLabel = gen === 1 ? 'gen1' : 'gen2';
   const now = new Date().toISOString().slice(0, 10);
   const refDir = join(outDir, 'reference');
   mkdirSync(refDir, { recursive: true });
@@ -698,78 +695,78 @@ function writeGen({ components, guides, gen, outDir, docsUrl, crossLink }) {
   }
 
   console.log(
-    `${genLabel}-gen: llms.txt + llms-full.txt + sitemap.xml + ${components.length} reference/*.md -> ${outDir}`
+    `${genLabel}: llms.txt + llms-full.txt + sitemap.xml + ${components.length} reference/*.md -> ${outDir}`
   );
 }
 
 function main() {
   console.log('Reading Custom Elements Manifests...');
 
-  const firstGenCem = readCem(
+  const gen1Cem = readCem(
     join(ROOT, '1st-gen/projects/documentation/custom-elements.json')
   );
-  const secondGenCem = readCem(SECOND_GEN_CEM);
+  const gen2Cem = readCem(GEN2_CEM);
 
-  const firstGen = extractComponents(firstGenCem, 1);
-  const secondGen = extractComponents(secondGenCem, 2);
+  const gen1 = extractComponents(gen1Cem, 1);
+  const gen2 = extractComponents(gen2Cem, 2);
 
-  console.log(`  1st-gen: ${firstGen.length} components`);
-  console.log(`  2nd-gen: ${secondGen.length} components`);
+  console.log(`  gen1: ${gen1.length} components`);
+  console.log(`  gen2: ${gen2.length} components`);
 
-  if (firstGenCem.missing) {
+  if (gen1Cem.missing) {
     console.warn(
-      'Warning: 1st-gen CEM not found; skipping 1st-gen output. Run `yarn docs:analyze` first.'
+      'Warning: gen1 CEM not found; skipping gen1 output. Run `yarn docs:analyze` first.'
     );
-  } else if (firstGen.length === 0) {
+  } else if (gen1.length === 0) {
     console.error(
-      'Error: 1st-gen CEM found but yielded 0 components. The manifest may be malformed.'
+      'Error: gen1 CEM found but yielded 0 components. The manifest may be malformed.'
     );
     process.exit(1);
   }
 
-  if (secondGenCem.missing) {
+  if (gen2Cem.missing) {
     console.warn(
-      'Warning: 2nd-gen CEM not found; skipping 2nd-gen output. Run `yarn analyze` first.'
+      'Warning: gen2 CEM not found; skipping gen2 output. Run `yarn analyze` first.'
     );
-  } else if (secondGen.length === 0) {
+  } else if (gen2.length === 0) {
     console.error(
-      'Error: 2nd-gen CEM found but yielded 0 components. The manifest may be malformed.'
+      'Error: gen2 CEM found but yielded 0 components. The manifest may be malformed.'
     );
     process.exit(1);
   }
 
   console.log('Reading guide metadata...');
-  const firstGenGuides = readFirstGenGuides();
-  const secondGenGuides = readSecondGenGuides();
-  console.log(`  1st-gen: ${firstGenGuides.length} guides`);
-  console.log(`  2nd-gen: ${secondGenGuides.length} guides`);
+  const gen1Guides = readGen1Guides();
+  const gen2Guides = readGen2Guides();
+  console.log(`  gen1: ${gen1Guides.length} guides`);
+  console.log(`  gen2: ${gen2Guides.length} guides`);
 
-  if (!firstGenCem.missing) {
+  if (!gen1Cem.missing) {
     writeGen({
-      components: firstGen,
-      guides: firstGenGuides,
+      components: gen1,
+      guides: gen1Guides,
       gen: 1,
-      outDir: FIRST_GEN_OUT,
-      docsUrl: FIRST_GEN_URL,
+      outDir: GEN1_OUT,
+      docsUrl: GEN1_URL,
       crossLink: {
-        label: '2nd-gen llms.txt',
-        url: `${SECOND_GEN_URL}/llms.txt`,
-        desc: 'Spectrum 2 (swc-*) component index',
+        label: 'gen2 llms.txt',
+        url: `${GEN2_URL}/llms.txt`,
+        desc: 'Spectrum gen2 (swc-*) component index',
       },
     });
   }
 
-  if (!secondGenCem.missing) {
+  if (!gen2Cem.missing) {
     writeGen({
-      components: secondGen,
-      guides: secondGenGuides,
+      components: gen2,
+      guides: gen2Guides,
       gen: 2,
-      outDir: SECOND_GEN_OUT,
-      docsUrl: SECOND_GEN_URL,
+      outDir: GEN2_OUT,
+      docsUrl: GEN2_URL,
       crossLink: {
-        label: '1st-gen llms.txt',
-        url: `${FIRST_GEN_URL}/llms.txt`,
-        desc: 'Spectrum 1 (sp-*) component index',
+        label: 'gen1 llms.txt',
+        url: `${GEN1_URL}/llms.txt`,
+        desc: 'Spectrum gen1 (sp-*) component index',
       },
     });
   }

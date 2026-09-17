@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Project planning](../README.md) / Strategies / RFC: 2nd-gen icon strategy (Spectrum 2)
+[CONTRIBUTOR-DOCS](../../README.md) / [Project planning](../README.md) / Strategies / RFC: gen2 icon strategy (Spectrum 2)
 
 <!-- Document title (editable) -->
 
-# RFC: 2nd-gen icon strategy (Spectrum 2)
+# RFC: gen2 icon strategy (Spectrum 2)
 
 <!-- Generated TOC - DO NOT EDIT -->
 
@@ -39,7 +39,7 @@
 |                |                                                                   |
 | -------------- | ----------------------------------------------------------------- |
 | **Status**     | Accepted: Phases 0–4 implemented (UI icons + public workflow icons); UI icons since made deliverable (see amendment) |
-| **Scope**      | Spectrum 2 (S2) icon delivery for 2nd-gen Spectrum Web Components |
+| **Scope**      | Spectrum 2 (S2) icon delivery for gen2 Spectrum Web Components |
 | **Supersedes** | 1st-gen `icon`, `iconset`, `icons`, `icons-workflow`, `icons-ui`  |
 
 > ⚠️ **Important:** Amendment (2026-09-10): UI icons are now **also deliverable**. Design asked that the UI icon set be usable directly by consumers, not only inside Spectrum controls. The `<swc-ui-icon>` element ships in `@adobe/spectrum-wc` and now has consumer documentation alongside workflow icons. This supersedes the "UI icons are internal / never imported" framing in sections 1, 3, and 4 below: UI icons remain the art Spectrum controls render internally, and are additionally published for direct consumer use. Their package home (swc), size-to-step behavior, and internal `TemplateResult` art are unchanged; only their audience widened.
@@ -464,9 +464,9 @@ can be committed and shipped.
    External contributors and public CI build only from the committed art and never
    need A4U access.
 
-**Layout.** UI source SVGs live at `2nd-gen/packages/swc/icon-source/ui/`, with
+**Layout.** UI source SVGs live at `gen2/packages/swc/icon-source/ui/`, with
 `icon-source.json` alongside them in `icon-source/`. The generated bundles and the
-`<swc-ui-icon>` element live at `2nd-gen/packages/swc/components/ui-icons/` (generated
+`<swc-ui-icon>` element live at `gen2/packages/swc/components/ui-icons/` (generated
 art in its `icon-set/` subfolder), imported relatively by swc components rather than
 through a public subpath. A dev-only
 Storybook gallery (Internal → UI icons) previews the available icons and their
@@ -505,7 +505,7 @@ rewrite, kebab-casing, license and banner) into `icon-source/utils/`, so the wor
 generator reuses them; each family keeps its own generator because their outputs differ
 (UI emits Lit `TemplateResult` bundles, workflow emits SVG-string functions and elements).
 
-**Components already using icons are in scope.** Any 2nd-gen component that renders
+**Components already using icons are in scope.** Any gen2 component that renders
 a UI icon internally (pickers, menus, accordions, and similar) or exposes an icon
 slot must be repointed from the 1st-gen icon packages to this source as part of the
 migration, not deferred to a follow-up. Components that render UI icons internally

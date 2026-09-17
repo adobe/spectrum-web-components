@@ -27,11 +27,11 @@
     - [User confirmation needed](#user-confirmation-needed)
 - [Changes overview](#changes-overview)
     - [Must ship — breaking or a11y-required](#must-ship--breaking-or-a11y-required)
-    - [Additive — ships when ready, zero breakage for consumers already on 2nd-gen](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)
-- [2nd-gen API decisions](#2nd-gen-api-decisions)
+    - [Additive — ships when ready, zero breakage for consumers already on gen2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-gen2)
+- [gen2 API decisions](#gen2-api-decisions)
     - [Public API](#public-api)
     - [Behavioral semantics](#behavioral-semantics)
-    - [Accessibility semantics notes (2nd-gen)](#accessibility-semantics-notes-2nd-gen)
+    - [Accessibility semantics notes (gen2)](#accessibility-semantics-notes-gen2)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
     - [Indeterminate animation (progress-bar `progress-bar.css` only)](#indeterminate-animation-progress-bar-progress-barcss-only)
 - [Migration checklist](#migration-checklist)
@@ -61,11 +61,11 @@
 
 ## TL;DR
 
-- **Component**: `<sp-progress-bar>` (1st-gen, `@spectrum-web-components/progress-bar@1.11.2`) → `<swc-progress-bar>` (2nd-gen).
+- **Component**: `<sp-progress-bar>` (1st-gen, `@spectrum-web-components/progress-bar@1.11.2`) → `<swc-progress-bar>` (gen2).
 - **What this is**: a non-focusable, read-only bar that shows **task progress** (0–100, or a custom range) or an **indeterminate** loading animation when completion time is unknown. ARIA pattern is **`role="progressbar"`**, distinct from `meter`'s scalar-measurement role (separate, already-migrated component).
 - **Architecture (already decided)**: `<swc-progress-bar>` is the **second consumer of `LinearProgressMixin`**, the thin shared mixin in `core` that the Meter migration created **specifically so progress-bar could inherit it without further breaking changes**. The mixin already owns every property, computed value, and behavior the two components share (value clamping, fill-fraction, locale formatting, slot presence tracking, DEBUG warnings) and is intentionally silent on ARIA role and animation. Shared bar/track/fill/label-layout CSS already lives in `linear-progress-base.css`, consumed today by `meter.css` and to be consumed unchanged by `progress-bar.css`. **No changes to the mixin or shared CSS are planned by this migration** — progress bar adds only what is unique to it.
 - **What progress bar adds on top of the shared layer**: `role="progressbar"` on the shadow wrapper; an `indeterminate` boolean; conditional suppression of all four `aria-value*` attributes (and the visible value text) when indeterminate; and the indeterminate fill animation in `progress-bar.css`. It has **no `variant` property** (single accent fill).
-- **API alignment**: 2nd-gen aligns with [React Spectrum S2 ProgressBar](https://react-spectrum.adobe.com/ProgressBar) and the shared linear-progress surface validated during the Meter migration. Net effect: rename `progress` → `value`; add `minValue`/`maxValue`; replace `side-label` boolean with `label-position` enum; remove the already-deprecated `over-background`; expose `value-label` and `formatOptions`; expose `static-color` as `{white, black}`; add `label` + `description` named slots; keep `indeterminate`.
+- **API alignment**: gen2 aligns with [React Spectrum S2 ProgressBar](https://react-spectrum.adobe.com/ProgressBar) and the shared linear-progress surface validated during the Meter migration. Net effect: rename `progress` → `value`; add `minValue`/`maxValue`; replace `side-label` boolean with `label-position` enum; remove the already-deprecated `over-background`; expose `value-label` and `formatOptions`; expose `static-color` as `{white, black}`; add `label` + `description` named slots; keep `indeterminate`.
 - **Must-ship breaking/a11y**: tag rename; move `role="progressbar"` off the host onto the shadow `.swc-LinearProgress` element; add `aria-valuemin`/`aria-valuemax`/`aria-valuetext` when determinate and **omit all value attributes when indeterminate**; drop `--mod-*` passthroughs for the shared `--swc-linear-progress-*` set; render inside a `<div class="swc-LinearProgress">` wrapper instead of styling the host; fix the 1st-gen DEBUG warning that incorrectly references `<sp-progress-circle>`.
 - **Net-new from S2/React**: arbitrary numeric range (`minValue`/`maxValue`); custom `value-label`; custom `formatOptions` (JS property, full `Intl.NumberFormatOptions` pass-through); `static-color="black"`; `description` named slot.
 
@@ -114,7 +114,7 @@ None custom. (No `dispatchEvent` calls in `ProgressBar.ts`.)
 
 1st-gen exposes a broad `--mod-progressbar-*` modifier surface (fill/track/text color, thickness, font-size, line-height, min/max size, spacing, indeterminate animation duration and easing) inherited from `spectrum-progress-bar.css`. See the [rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md) for the full list.
 
-This full modifier surface will not be carried forward to 2nd-gen.
+This full modifier surface will not be carried forward to gen2.
 
 ### Shadow DOM output (rendered HTML)
 
@@ -143,9 +143,9 @@ Plus the host receives `role="progressbar"` and the `aria-value*` attributes (om
 | `@spectrum-web-components/reactive-controllers` | `1.11.2` | `LanguageResolutionController` for locale-aware percent formatting         |
 | `@spectrum-web-components/shared`               | `1.11.2` | `ObserveSlotText`, `getLabelFromSlot`                                      |
 
-2nd-gen equivalents:
+gen2 equivalents:
 
-| 1st-gen import                                             | 2nd-gen equivalent                                                                                         | Status                                                                                                                                       |
+| 1st-gen import                                             | gen2 equivalent                                                                                         | Status                                                                                                                                       |
 | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `SpectrumElement` from `@spectrum-web-components/base`     | `@adobe/spectrum-wc-core/element/index.js`                                                           | Available                                                                                                                                    |
 | `SizedMixin` from `@spectrum-web-components/base`          | `@adobe/spectrum-wc-core/mixins/index.js`                                                            | Available (applied inside `ProgressBarBase` exactly as in `MeterBase`)                                                                       |
@@ -153,7 +153,7 @@ Plus the host receives `role="progressbar"` and the `aria-value*` attributes (om
 | `getLabelFromSlot` from `shared`                           | Not needed — named `label` slot + `aria-labelledby` requires no text extraction                            | N/A                                                                                                                                          |
 | `ObserveSlotText` from `shared`                            | Not needed — `label`/`description` slot presence tracked in `LinearProgressMixin` via `ObserveSlotPresence` | N/A                                                                                                                                          |
 | `<sp-field-label>` rendered in shadow                      | `<swc-field-label>` does **not** exist yet                                                                 | **Not migrated** — render plain `<span class="swc-LinearProgress-label">` / `<span class="swc-LinearProgress-value">` (same as Meter, B8). |
-| _(shared behavior with meter)_                             | `LinearProgressMixin` in `2nd-gen/packages/core/mixins/linear-progress-mixin.ts`                          | **Already exists** — created by the Meter migration for this exact purpose; consumed unchanged.                                              |
+| _(shared behavior with meter)_                             | `LinearProgressMixin` in `gen2/packages/core/mixins/linear-progress-mixin.ts`                          | **Already exists** — created by the Meter migration for this exact purpose; consumed unchanged.                                              |
 
 ---
 
@@ -165,8 +165,8 @@ Progress bar **proceeds independently and now** — its only shared prerequisite
 
 ### Related components and ordering notes
 
-- **Meter** ([`2nd-gen/packages/swc/components/meter`](../../../../2nd-gen/packages/swc/components/meter/)) — fully migrated; the reference implementation for this migration's render shape, ARIA placement, slot model, and test structure. The two components are siblings under the same mixin; neither extends the other.
-- **Progress circle** ([`2nd-gen/packages/swc/components/progress-circle`](../../../../2nd-gen/packages/swc/components/progress-circle/)) — migrated; the reference for the `role="progressbar"` determinate-vs-indeterminate ARIA pattern and the DEBUG accessible-name warning. Progress circle is circular and does **not** share `LinearProgressMixin` (different geometry), but its ARIA rules for `progressbar` are the closest precedent.
+- **Meter** ([`gen2/packages/swc/components/meter`](../../../../gen2/packages/swc/components/meter/)) — fully migrated; the reference implementation for this migration's render shape, ARIA placement, slot model, and test structure. The two components are siblings under the same mixin; neither extends the other.
+- **Progress circle** ([`gen2/packages/swc/components/progress-circle`](../../../../gen2/packages/swc/components/progress-circle/)) — migrated; the reference for the `role="progressbar"` determinate-vs-indeterminate ARIA pattern and the DEBUG accessible-name warning. Progress circle is circular and does **not** share `LinearProgressMixin` (different geometry), but its ARIA rules for `progressbar` are the closest precedent.
 - **Field label** — internal render dependency only; not migrated. Render plain `<span>` elements (B8), same decision as Meter.
 
 ### User confirmation needed
@@ -189,33 +189,33 @@ Progress bar **proceeds independently and now** — its only shared prerequisite
 
 #### API and naming
 
-| #      | What changes                       | 1st-gen behavior                                            | 2nd-gen behavior                                                                                  | Consumer migration path                                                                                  |
+| #      | What changes                       | 1st-gen behavior                                            | gen2 behavior                                                                                  | Consumer migration path                                                                                  |
 | ------ | ---------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | **B1** | Custom element tag rename          | `<sp-progress-bar>`                                         | `<swc-progress-bar>`                                                                               | Update all tag references; install `@spectrum-web-components/swc-progress-bar`.                          |
 | **B2** | `progress` → `value` rename. _(Source: React Spectrum S2 ProgressBar API; alignment with `<swc-meter>`.)_ | `progress` (number, 0–100)                  | `value` (number, default 0). Range bounded by `minValue`/`maxValue`.                              | Rename attribute/property. `<sp-progress-bar progress="50">` → `<swc-progress-bar value="50">`.         |
 | **B3** | Add `minValue` and `maxValue`. _(Source: React Spectrum S2 ProgressBar API; shared mixin.)_ | No range customization; `progress` implicitly 0–100.        | `minValue` (number, default 0) and `maxValue` (number, default 100). `value` is clamped.          | None for consumers on the implicit 0–100 range. New API for arbitrary ranges.                            |
 | **B4** | `side-label` boolean → `label-position` enum. _(Source: React Spectrum `labelPosition`; shared mixin.)_ | `<sp-progress-bar side-label>` boolean.     | `<swc-progress-bar label-position="side">`. Values: `'top'` (default), `'side'`.                  | Replace `side-label` with `label-position="side"`. Default (top) unchanged.                              |
-| **B5** | Remove the deprecated `over-background`. _(Source: 1st-gen already marks it `@deprecated` in favor of `static-color`.)_ | `over-background` boolean sets `staticColor='white'` and warns. | Removed entirely. Not part of the 2nd-gen API.                                                | Replace `over-background` with `static-color="white"`.                                                   |
-| **B6** | `--mod-*` passthroughs removed. _(Source: [CSS style guide — custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure).)_ | Customize via `--mod-progressbar-*`.        | Customize via the shared `--swc-linear-progress-*` set (`fill-color`, `track-color`, `text-color`, `thickness`, `font-size`, `top-to-text`). | Replace `--mod-progressbar-fill-color` → `--swc-linear-progress-fill-color`, `--mod-progressbar-thickness` → `--swc-linear-progress-thickness`, etc. Indeterminate animation `--mod-*` (duration/easing/fill-size) have no 2nd-gen replacement. |
+| **B5** | Remove the deprecated `over-background`. _(Source: 1st-gen already marks it `@deprecated` in favor of `static-color`.)_ | `over-background` boolean sets `staticColor='white'` and warns. | Removed entirely. Not part of the gen2 API.                                                | Replace `over-background` with `static-color="white"`.                                                   |
+| **B6** | `--mod-*` passthroughs removed. _(Source: [CSS style guide — custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure).)_ | Customize via `--mod-progressbar-*`.        | Customize via the shared `--swc-linear-progress-*` set (`fill-color`, `track-color`, `text-color`, `thickness`, `font-size`, `top-to-text`). | Replace `--mod-progressbar-fill-color` → `--swc-linear-progress-fill-color`, `--mod-progressbar-thickness` → `--swc-linear-progress-thickness`, etc. Indeterminate animation `--mod-*` (duration/easing/fill-size) have no gen2 replacement. |
 | **B7** | `label` string attribute → `label` named slot. _(Source: alignment with `<swc-meter>`; B8/B11.)_ | `label="text"` attribute mirrored to `aria-label`; slot text hoisted into `label`. | Visible label via the **`label` named slot**; `accessibleLabel` (`accessible-label`) is the no-visible-label fallback. | Move label text into `<span slot="label">…</span>`, or set `accessible-label` when no visible label (e.g. indeterminate-only spinners). |
 
 #### Styling and visuals
 
-| #      | What changes                  | 1st-gen behavior                                  | 2nd-gen behavior                                                                                                | Consumer migration path                                                       |
+| #      | What changes                  | 1st-gen behavior                                  | gen2 behavior                                                                                                | Consumer migration path                                                       |
 | ------ | ----------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | **B8** | Internal label rendering. _(Source: contributor docs selector patterns; `role="progressbar"` does not pair with native `<label>`.)_ | `<sp-field-label>` rendered in shadow (label + percentage). | Plain `<span class="swc-LinearProgress-label">` / `<span class="swc-LinearProgress-value">`. The shadow role element uses `aria-labelledby` to reference the label `<span>`. | None for top-level consumers. Consumers querying `sp-field-label` inside shadow DOM update selectors. |
 | **B8a**| Fill sizing via `inline-size`, not `transform`. _(Source: shared `linear-progress-base.css`; `<swc-meter>`.)_ | `transform: scaleX(calc(progress / 100))`. | `inline-size: <fillPercent>%` with a `min-inline-size` floor for 0% visibility (WCAG 1.4.11), reset to `0` when indeterminate. | None — internal rendering only. |
 
 #### Accessibility and behavior
 
-| #       | What changes                       | 1st-gen behavior                                                                  | 2nd-gen behavior                                                                                                            | Consumer migration path                                  |
+| #       | What changes                       | 1st-gen behavior                                                                  | gen2 behavior                                                                                                            | Consumer migration path                                  |
 | ------- | ---------------------------------- | --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
 | **B9**  | ARIA role placement. _(Source: [accessibility-migration-analysis.md](./accessibility-migration-analysis.md); [WAI-ARIA 1.2 `progressbar`](https://www.w3.org/TR/wai-aria-1.2/#progressbar); alignment with `<swc-meter>` B9.)_ | `role="progressbar"` set on the host. | `role="progressbar"` set on the shadow `.swc-LinearProgress` element (not the host). All `aria-value*`/naming attributes live there. Host carries no ARIA. | None — AT-only. Tests/snapshots asserting host-level ARIA update. |
 | **B10** | Determinate value attributes. _(Source: accessibility-migration-analysis.md; React S2 API.)_ | Only `aria-valuenow` (+ `aria-valuetext`) set; no `aria-valuemin`/`max`. | When determinate: `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<value>`, `aria-valuetext=<formatted value>` on the role element. | None — AT-only. |
 | **B11** | Indeterminate value suppression. _(Source: accessibility-migration-analysis.md; APG progressbar pattern.)_ | Removes `aria-valuemin`/`max`/`now`/`text` when indeterminate (correct). | Same intent, preserved: all four attributes **fully omitted** (via `nothing`, not empty strings) when `indeterminate`; visible value text also omitted. | None — AT-only. |
 | **B12** | Accessible-name model + warning fix. _(Source: accessibility-migration-analysis.md § Known 1st-gen issues; alignment with `<swc-meter>` B11.)_ | `aria-label` mirrors `label`; slot text hoists into `label`. DEBUG warning incorrectly lists `<sp-progress-circle>` in one bullet. | Two inputs: **`label` named slot** (`aria-labelledby`) and **`accessibleLabel`** fallback (`aria-label`). DEBUG warning fires when neither resolves a name, with **correct progress-bar copy and docs URL** (see Q1). | Consumers move `label="…"` into the `label` slot, or set `accessible-label`. |
 
-### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
+### Additive — ships when ready, zero breakage for consumers already on gen2
 
 | #      | What is added                | Notes                                                                                                                                                              |
 | ------ | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -226,7 +226,7 @@ Progress bar **proceeds independently and now** — its only shared prerequisite
 
 ---
 
-## 2nd-gen API decisions
+## gen2 API decisions
 
 These are derived from the 1st-gen implementation, the [rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md), the [accessibility migration analysis](./accessibility-migration-analysis.md), the shipped `<swc-meter>` implementation (shared-surface source of truth), `spectrum-css` `spectrum-two`, and the React S2 implementation. Confidence labels:
 
@@ -236,7 +236,7 @@ These are derived from the 1st-gen implementation, the [rendering and styling mi
 
 ### Public API
 
-#### Properties / attributes (2nd-gen)
+#### Properties / attributes (gen2)
 
 | Property        | Type                                    | Default                | Attribute          | Notes                                                                                                                                                  |
 | --------------- | --------------------------------------- | ---------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -253,7 +253,7 @@ These are derived from the 1st-gen implementation, the [rendering and styling mi
 
 > **No `variant` property.** Unlike `<swc-meter>`, progress bar has a single accent fill (`accent-content-color-default`, the default in `linear-progress-base.css`). This is the principal API difference between the two components.
 
-#### Visual matrix (2nd-gen)
+#### Visual matrix (gen2)
 
 Confirmed against the shipped `<swc-meter>` shared surface (Figma `S2 / Web (Desktop scale)`-validated during the Meter migration) and `spectrum-css` `spectrum-two` `progressbar/index.css`.
 
@@ -266,14 +266,14 @@ All sizes (`s`, `m` default, `l`, `xl`), both `label-position` values (`top` def
 
 The indeterminate animation specifics (keyframes, duration, easing, reduced-motion fallback) are tracked as **Q2** — they are the one visual item not inherited from the Meter-validated surface.
 
-#### Slots (2nd-gen)
+#### Slots (gen2)
 
 | Slot          | Content                                | Notes                                                                                                                                                      |
 | ------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `label`       | Visible progress-bar label             | **Confirmed.** Renders inside `<span class="swc-LinearProgress-label">`; the container id is referenced by `aria-labelledby` on the role element. Inherited from the mixin. |
 | `description` | Description text below the progress bar | **Confirmed.** Renders inside `<span class="swc-LinearProgress-description">`; `aria-describedby`-referenced when the slot has assigned nodes. Inherited from the mixin.    |
 
-#### CSS custom properties (2nd-gen)
+#### CSS custom properties (gen2)
 
 No `--mod-*` properties will be exposed. New `--swc-*` component-level properties may be introduced where needed — these are additive and not breaking. See [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure) for what to expose and how.
 
@@ -300,7 +300,7 @@ No progress-bar-only custom property is planned. The indeterminate animation rea
 - **No `variant`.** Single accent fill. No variant validation logic.
 - **No custom events.** Behavior parity with 1st-gen.
 
-### Accessibility semantics notes (2nd-gen)
+### Accessibility semantics notes (gen2)
 
 Sourced from [`accessibility-migration-analysis.md`](./accessibility-migration-analysis.md), the React Spectrum S2 ProgressBar API, and the shipped `<swc-progress-circle>` ARIA pattern:
 
@@ -319,16 +319,16 @@ Sourced from [`accessibility-migration-analysis.md`](./accessibility-migration-a
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
+> The 1st-gen component is a **reference only** — gen2 is built independently. Neither generation imports from the other.
 
-Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern, and `<swc-meter>` as the direct sibling reference.
+Follow the [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern, and `<swc-meter>` as the direct sibling reference.
 
 | Layer    | Path                                              | Contains                                                                                                                                                                                                                                                  |
 | -------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Mixin (existing)** | `2nd-gen/packages/core/mixins/linear-progress-mixin.ts` | `LinearProgressMixin`. **Already built and tested by the Meter migration.** Consumed unchanged. Owns all shared props, computed getters, locale formatting, slot tracking, and DEBUG warnings.                                                            |
-| **Core** | `2nd-gen/packages/core/components/progress-bar/`  | `ProgressBar.base.ts` (extends `LinearProgressMixin(SizedMixin(SpectrumElement, …))`), `ProgressBar.types.ts`, `index.ts`. Owns only what is progress-bar-specific: the `indeterminate` typed property; progress-bar-correct DEBUG warning copy/URL (Q1). **No rendering.** |
-| **SWC**  | `2nd-gen/packages/swc/components/progress-bar/`   | `ProgressBar.ts` (extends `ProgressBarBase`), `progress-bar.css`, `index.ts`, `swc-progress-bar.ts` registration, `stories/`, `test/`, `migration-guide.mdx`, `progress-bar.mdx`. Owns: S2 rendering with the `swc-LinearProgress` wrapper, `role="progressbar"` + conditional `aria-value*` bindings, indeterminate gating in the template. Imports `linear-progress-base.css` for shared rules. |
-| **Shared CSS (existing)** | `2nd-gen/packages/swc/stylesheets/_lit-styles/linear-progress-base.css` | **Already built by the Meter migration.** Consumed unchanged. Bar/track/fill structure, sizes, label/value layout, static colors, reduced-motion, forced-colors.                                                                                          |
+| **Mixin (existing)** | `gen2/packages/core/mixins/linear-progress-mixin.ts` | `LinearProgressMixin`. **Already built and tested by the Meter migration.** Consumed unchanged. Owns all shared props, computed getters, locale formatting, slot tracking, and DEBUG warnings.                                                            |
+| **Core** | `gen2/packages/core/components/progress-bar/`  | `ProgressBar.base.ts` (extends `LinearProgressMixin(SizedMixin(SpectrumElement, …))`), `ProgressBar.types.ts`, `index.ts`. Owns only what is progress-bar-specific: the `indeterminate` typed property; progress-bar-correct DEBUG warning copy/URL (Q1). **No rendering.** |
+| **SWC**  | `gen2/packages/swc/components/progress-bar/`   | `ProgressBar.ts` (extends `ProgressBarBase`), `progress-bar.css`, `index.ts`, `swc-progress-bar.ts` registration, `stories/`, `test/`, `migration-guide.mdx`, `progress-bar.mdx`. Owns: S2 rendering with the `swc-LinearProgress` wrapper, `role="progressbar"` + conditional `aria-value*` bindings, indeterminate gating in the template. Imports `linear-progress-base.css` for shared rules. |
+| **Shared CSS (existing)** | `gen2/packages/swc/stylesheets/_lit-styles/linear-progress-base.css` | **Already built by the Meter migration.** Consumed unchanged. Bar/track/fill structure, sizes, label/value layout, static colors, reduced-motion, forced-colors.                                                                                          |
 
 Planned rendering shape for `ProgressBar.ts.render()`:
 
@@ -396,7 +396,7 @@ Notes:
 }
 ```
 
-Exact keyframe geometry, duration token, and fallback width are **Q2** — to be lifted from `spectrum-css` `spectrum-two` `progressbar/index.css` and verified against Figma during the Styling phase. The 1st-gen uses `transform-origin` + separate LTR/RTL keyframes; 2nd-gen should prefer logical `:dir(rtl)` to swap the animation name.
+Exact keyframe geometry, duration token, and fallback width are **Q2** — to be lifted from `spectrum-css` `spectrum-two` `progressbar/index.css` and verified against Figma during the Styling phase. The 1st-gen uses `transform-origin` + separate LTR/RTL keyframes; gen2 should prefer logical `:dir(rtl)` to swap the animation name.
 
 ---
 
@@ -407,16 +407,16 @@ Exact keyframe geometry, duration token, and fallback width are **Q2** — to be
 - [x] 1st-gen API surface documented
 - [x] Dependencies identified
 - [x] Breaking changes documented
-- [x] 2nd-gen API decisions drafted
+- [x] gen2 API decisions drafted
 - [ ] Plan reviewed by at least one other engineer
 
 ### Setup
 
-- [x] Create `2nd-gen/packages/core/components/progress-bar/` with `ProgressBar.base.ts` (extends `LinearProgressMixin(SizedMixin(SpectrumElement, …))`), `ProgressBar.types.ts`, `index.ts`
-- [x] Create `2nd-gen/packages/swc/components/progress-bar/` with `ProgressBar.ts`, `progress-bar.css` (`@import`s `linear-progress-base.css`), `swc-progress-bar.ts`, `index.ts`, `stories/`, `test/`
+- [x] Create `gen2/packages/core/components/progress-bar/` with `ProgressBar.base.ts` (extends `LinearProgressMixin(SizedMixin(SpectrumElement, …))`), `ProgressBar.types.ts`, `index.ts`
+- [x] Create `gen2/packages/swc/components/progress-bar/` with `ProgressBar.ts`, `progress-bar.css` (`@import`s `linear-progress-base.css`), `swc-progress-bar.ts`, `index.ts`, `stories/`, `test/`
 - [x] Wire exports in `core` and `swc` `package.json` files
 - [x] Confirm `LinearProgressMixin` and `linear-progress-base.css` are imported, not modified
-- [x] Add to root workspace; confirm `yarn build:2nd-gen` passes with empty stubs
+- [x] Add to root workspace; confirm `yarn build:gen2` passes with empty stubs
 - [ ] Verify `spectrum-css` is checked out at `spectrum-two` branch as sibling directory (`../spectrum-css`)
 
 ### API
@@ -440,7 +440,7 @@ Exact keyframe geometry, duration token, and fallback width are **Q2** — to be
 - [x] `value`/`minValue`/`maxValue`/`label-position`/`static-color`/`value-label`/`formatOptions` match React Spectrum S2 ProgressBar and the shipped `<swc-meter>` surface
 - [x] `indeterminate` boolean matches React Spectrum (`isIndeterminate`) and 1st-gen behavior
 - [x] Confirm **no** `variant` property (single accent fill) against React + Figma
-- [x] Confirm `over-background` removal (B5) is acceptable — already deprecated in 1st-gen; not carried to 2nd-gen
+- [x] Confirm `over-background` removal (B5) is acceptable — already deprecated in 1st-gen; not carried to gen2
 
 ### Styling
 
@@ -518,12 +518,12 @@ Exact keyframe geometry, duration token, and fallback width are **Q2** — to be
 
 #### Breaking changes
 
-- [ ] Consumer migration guide at `2nd-gen/packages/swc/components/progress-bar/migration-guide.mdx` covering B1–B12 and additive A1–A4 (per the [`consumer-migration-guide` rule](../../../../.ai/skills/consumer-migration-guide/SKILL.md)). Cross-link the Meter migration guide for the shared-surface details.
+- [ ] Consumer migration guide at `gen2/packages/swc/components/progress-bar/migration-guide.mdx` covering B1–B12 and additive A1–A4 (per the [`consumer-migration-guide` rule](../../../../.ai/skills/consumer-migration-guide/SKILL.md)). Cross-link the Meter migration guide for the shared-surface details.
 
 ### Review
 
-- [ ] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
-- [ ] Status table in [`01_status.md`](../../02_workstreams/02_2nd-gen-component-migration/01_status.md) updated to reflect Progress Bar progress
+- [ ] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
+- [ ] Status table in [`01_status.md`](../../02_workstreams/02_gen2-component-migration/01_status.md) updated to reflect Progress Bar progress
 - [ ] PR created with description referencing Epic SWC-1769
 - [ ] Peer engineer sign-off
 
@@ -554,8 +554,8 @@ Exact keyframe geometry, duration token, and fallback width are **Q2** — to be
 
 ## References
 
-- [Washing machine workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
-- [2nd-gen migration status table](../../02_workstreams/02_2nd-gen-component-migration/01_status.md)
+- [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
+- [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
 - [Accessibility migration analysis](./accessibility-migration-analysis.md)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [Meter migration plan](../meter/migration-plan.md) — sibling reference; defines the shared `LinearProgressMixin` and `linear-progress-base.css` contract
@@ -565,12 +565,12 @@ Exact keyframe geometry, duration token, and fallback width are **Q2** — to be
 - [1st-gen styles — `progress-bar.css`](../../../../1st-gen/packages/progress-bar/src/progress-bar.css)
 - [1st-gen tests — `progress-bar.test.ts`](../../../../1st-gen/packages/progress-bar/test/progress-bar.test.ts)
 - [1st-gen README](../../../../1st-gen/packages/progress-bar/README.md)
-- [2nd-gen shared mixin — `linear-progress-mixin.ts`](../../../../2nd-gen/packages/core/mixins/linear-progress-mixin.ts)
-- [2nd-gen shared CSS — `linear-progress-base.css`](../../../../2nd-gen/packages/swc/stylesheets/_lit-styles/linear-progress-base.css)
-- [2nd-gen sibling — `Meter.ts`](../../../../2nd-gen/packages/swc/components/meter/Meter.ts)
-- [2nd-gen reference — `ProgressCircle.base.ts`](../../../../2nd-gen/packages/core/components/progress-circle/ProgressCircle.base.ts) — `progressbar` determinate/indeterminate ARIA + DEBUG warning pattern
+- [gen2 shared mixin — `linear-progress-mixin.ts`](../../../../gen2/packages/core/mixins/linear-progress-mixin.ts)
+- [gen2 shared CSS — `linear-progress-base.css`](../../../../gen2/packages/swc/stylesheets/_lit-styles/linear-progress-base.css)
+- [gen2 sibling — `Meter.ts`](../../../../gen2/packages/swc/components/meter/Meter.ts)
+- [gen2 reference — `ProgressCircle.base.ts`](../../../../gen2/packages/core/components/progress-circle/ProgressCircle.base.ts) — `progressbar` determinate/indeterminate ARIA + DEBUG warning pattern
 - [Figma — S2 / Web (Desktop scale), progress bar frame](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13059-181) — visual reference, including the indeterminate animation (Q2)
 - [React Spectrum S2 ProgressBar](https://react-spectrum.adobe.com/ProgressBar)
 - [Spectrum CSS — `spectrum-two` branch, `components/progressbar/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/progressbar/index.css) — S2 styling source of truth; lift the indeterminate animation from here
-- [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
+- [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - Epic: SWC-1769 — Progress bar component migration
