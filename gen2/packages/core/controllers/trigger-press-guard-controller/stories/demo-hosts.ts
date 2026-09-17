@@ -13,6 +13,10 @@
 import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 
+import { PlacementController } from '@adobe/spectrum-wc-core/controllers/index.js';
+
+import '@adobe/spectrum-wc/components/button/swc-button.js';
+
 import { TriggerPressGuardController } from '../index.js';
 
 declare global {
@@ -29,6 +33,12 @@ declare global {
  * both directly observable: click the button to open the popover, then click
  * it again — with the controller wired, the popover closes; without it (see
  * `NaiveReopenBug`), the same click reopens it instead.
+ *
+ * Positioning uses `PlacementController` (the same Floating UI-based
+ * mechanism every real anchored surface in this project uses) rather than
+ * CSS anchor positioning, which silently stops resolving the anchor once
+ * this story renders inside the Storybook docs page's wrapped Canvas iframe
+ * — it only worked in the story's own isolated canvas.
  */
 @customElement('demo-press-guard-host')
 export class DemoPressGuardHost extends LitElement {
@@ -43,10 +53,11 @@ export class DemoPressGuardHost extends LitElement {
   @query('.surface')
   private surface!: HTMLElement;
 
-  @query('button')
-  private trigger!: HTMLButtonElement;
+  @query('swc-button')
+  private trigger!: HTMLElement;
 
   private readonly pressGuard = new TriggerPressGuardController(this);
+  private readonly placement = new PlacementController(this);
 
   private readonly onNaiveClick = (): void => {
     this.open = !this.open;
@@ -75,24 +86,31 @@ export class DemoPressGuardHost extends LitElement {
   protected override updated(): void {
     if (this.open && !this.surface.matches(':popover-open')) {
       this.surface.showPopover();
+      this.placement.start(this.trigger, this.surface, {
+        placement: 'bottom-start',
+        offset: 8,
+      });
     } else if (!this.open && this.surface.matches(':popover-open')) {
       this.surface.hidePopover();
+      this.placement.stop();
     }
   }
 
   protected override render(): TemplateResult {
     return html`
-      <button
-        type="button"
-        @click=${this.naive ? this.onNaiveClick : undefined}
-      >
+      <swc-button @click=${this.naive ? this.onNaiveClick : undefined}>
         ${this.open ? 'Close' : 'Open'} popover
-      </button>
+      </swc-button>
       <div
         class="surface"
         popover="auto"
         @beforetoggle=${this.onBeforeToggle}
-        style="padding: 8px 12px; border: 1px solid; margin-top: 4px;"
+        style="
+          position: absolute;
+          inset: auto;
+          padding: 8px 12px;
+          border: 1px solid;
+        "
       >
         Popover content
       </div>
