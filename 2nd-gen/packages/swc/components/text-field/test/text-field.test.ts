@@ -179,21 +179,26 @@ export const NecessityIndicatorTest: Story = {
       expect(label?.textContent?.trim()).toBe('(optional)');
     });
 
-    await step('icon mode shows no indicator on an optional field', async () => {
-      const field = await fixture<TextField>(html`
-        <swc-text-field necessity-indicator="icon">
-          <span slot="label">Optional field</span>
-        </swc-text-field>
-      `);
-      await field.updateComplete;
-      expect(
-        field.shadowRoot?.querySelector('.swc-FormFieldLabel-requiredIndicator')
-      ).toBeNull();
-      expect(
-        field.shadowRoot?.querySelector('.swc-FormFieldLabel-necessityLabel')
-      ).toBeNull();
-      field.parentElement?.remove();
-    });
+    await step(
+      'icon mode shows no indicator on an optional field',
+      async () => {
+        const field = await fixture<TextField>(html`
+          <swc-text-field necessity-indicator="icon">
+            <span slot="label">Optional field</span>
+          </swc-text-field>
+        `);
+        await field.updateComplete;
+        expect(
+          field.shadowRoot?.querySelector(
+            '.swc-FormFieldLabel-requiredIndicator'
+          )
+        ).toBeNull();
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldLabel-necessityLabel')
+        ).toBeNull();
+        field.parentElement?.remove();
+      }
+    );
   },
 };
 
@@ -224,7 +229,7 @@ export const PrefixTest: Story = {
 
     await step('prefix and input share the bordered control wrapper', () => {
       const control = field.shadowRoot?.querySelector('.swc-TextField-control');
-      const input = field.shadowRoot?.querySelector('.input');
+      const input = field.shadowRoot?.querySelector('.swc-TextField-input');
       const slot = field.shadowRoot?.querySelector('slot[name="prefix"]');
       expect(control).toBeTruthy();
       // The prefix slot precedes the input inside the control.
@@ -245,8 +250,10 @@ PrefixTest.storyName = 'Prefix';
 
 export const SelectionTest: Story = {
   render: () => html`
-    <swc-text-field accessible-label="Selection" value="hello world">
-    </swc-text-field>
+    <swc-text-field
+      accessible-label="Selection"
+      value="hello world"
+    ></swc-text-field>
   `,
   play: async ({ canvasElement, step }) => {
     const field = await getComponent<TextField>(
@@ -382,21 +389,23 @@ export const EnumValidationTest: Story = {
       })
     );
 
-    await step('warns when "necessity-indicator" is not a supported value', () =>
-      withWarningSpy(async (warnCalls) => {
-        const field = await fixture<TextField>(html`
-          <swc-text-field
-            accessible-label="Named"
-            necessity-indicator="star"
-          ></swc-text-field>
-        `);
-        await field.updateComplete;
-        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-        expect(
-          messages.some((m) => m.includes('expects "necessity-indicator"'))
-        ).toBe(true);
-        field.parentElement?.remove();
-      })
+    await step(
+      'warns when "necessity-indicator" is not a supported value',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const field = await fixture<TextField>(html`
+            <swc-text-field
+              accessible-label="Named"
+              necessity-indicator="star"
+            ></swc-text-field>
+          `);
+          await field.updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          expect(
+            messages.some((m) => m.includes('expects "necessity-indicator"'))
+          ).toBe(true);
+          field.parentElement?.remove();
+        })
     );
   },
 };
@@ -672,10 +681,9 @@ export const DisabledStateTest: Story = {
     await step('own disabled matches native :disabled', async () => {
       field.disabled = true;
       await field.updateComplete;
-      expect(
-        field.matches(':disabled'),
-        'own disabled matches :disabled'
-      ).toBe(true);
+      expect(field.matches(':disabled'), 'own disabled matches :disabled').toBe(
+        true
+      );
       expect(new FormData(form).has('username')).toBe(false);
       field.disabled = false;
       await field.updateComplete;

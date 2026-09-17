@@ -12,7 +12,6 @@
 
 :host {
   display: block;
-  inline-size: var(--swc-text-field-width, auto);
 }
 
 * {
@@ -35,7 +34,7 @@
   border-radius: var(--_swc-text-field-border-radius, token("corner-radius-medium-size-medium"));
 }
 
-.input {
+.swc-TextField-input {
   flex: 1 1 auto;
   min-inline-size: 0;
   padding-block: var(--_swc-text-field-padding-block, token("base-padding-vertical-medium"));
@@ -51,7 +50,7 @@
   outline: none;
 }
 
-.input::placeholder {
+.swc-TextField-input::placeholder {
   color: token("gray-600");
   opacity: 1;
 }
@@ -106,11 +105,11 @@ slot[name="prefix"]::slotted(*) {
   border-color: token("disabled-border-color");
 }
 
-:host(:disabled) .input {
+:host(:disabled) .swc-TextField-input {
   color: token("disabled-content-color");
 }
 
-:host(:disabled) .input::placeholder {
+:host(:disabled) .swc-TextField-input::placeholder {
   color: token("disabled-content-color");
 }
 
@@ -181,8 +180,8 @@ slot[name="prefix"]::slotted(*) {
     border-color: GrayText;
   }
 
-  :host(:disabled) .input,
-  :host(:disabled) .input::placeholder,
+  :host(:disabled) .swc-TextField-input,
+  :host(:disabled) .swc-TextField-input::placeholder,
   :host(:disabled) slot[name="prefix"]::slotted(*) {
     color: GrayText;
   }

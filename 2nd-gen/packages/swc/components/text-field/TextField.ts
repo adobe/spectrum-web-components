@@ -38,10 +38,11 @@ const NECESSITY_INDICATOR_TEXT = {
  * @element swc-text-field
  * @since 2.0.0-beta.1
  *
- * @cssprop --swc-text-field-width - Inline size of the field. Unset by default, so the field fills its container; set it for a fixed width.
  * @cssprop --swc-field-label-max-inline-size - Max width of the visible label before it wraps. Unset by default (the label wraps late); set it to wrap a long label sooner and give a `side` input more room.
  * @cssprop --swc-field-input-min-inline-size - Minimum inline size of the input control. Defaults to the component height for the field size.
  * @cssprop --swc-field-input-max-inline-size - Maximum inline size of the input control. Defaults to the medium field width token.
+ * @cssprop --swc-form-field-label-font-size - Font size of the visible field label. Defaults to the field size typography scale.
+ * @cssprop --swc-form-field-description-font-size - Font size of the description and error text. Defaults to the field size typography scale.
  *
  * @example
  * <swc-text-field></swc-text-field>
@@ -108,7 +109,7 @@ export class TextField extends TextFieldBase {
           <slot name="prefix"></slot>
           <input
             id=${INPUT_ID}
-            class="input"
+            class="swc-TextField-input"
             type=${this.type}
             .value=${this.value}
             placeholder=${ifDefined(this.placeholder || undefined)}

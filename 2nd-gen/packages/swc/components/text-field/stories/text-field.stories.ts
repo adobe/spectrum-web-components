@@ -69,7 +69,7 @@ export const Playground: Story = {
 export const Overview: Story = {
   tags: ['overview'],
   render: () => html`
-    <swc-text-field style="--swc-text-field-width: 220px;">
+    <swc-text-field style="inline-size: 220px;">
       <span slot="label">Email address</span>
     </swc-text-field>
   `,
@@ -94,7 +94,7 @@ export const Anatomy: Story = {
   parameters: {
     flexLayout: 'column-stretch',
     styles: {
-      '--swc-text-field-width': '220px',
+      'inline-size': '220px',
     },
   },
 };
@@ -164,7 +164,9 @@ export const Labelling: Story = {
 
 export const Sizes: Story = {
   render: () => html`
-    <div style="display: flex; flex-direction: column; gap: 20px; max-inline-size: 360px;">
+    <div
+      style="display: flex; flex-direction: column; gap: 20px; max-inline-size: 360px;"
+    >
       <swc-text-field size="s" placeholder="Small placeholder">
         <span slot="label">Small</span>
         <span slot="description">Used for compact layouts.</span>
@@ -187,7 +189,7 @@ export const Sizes: Story = {
   parameters: {
     flexLayout: 'column-stretch',
     styles: {
-      '--swc-text-field-width': '220px',
+      'inline-size': '220px',
     },
   },
 };
@@ -205,7 +207,7 @@ export const LabelPositions: Story = {
   parameters: {
     flexLayout: 'column-stretch',
     styles: {
-      '--swc-text-field-width': '220px',
+      'inline-size': '220px',
     },
   },
 };
@@ -227,7 +229,7 @@ export const NecessityIndicator: Story = {
   parameters: {
     flexLayout: 'column-stretch',
     styles: {
-      '--swc-text-field-width': '220px',
+      'inline-size': '220px',
     },
   },
 };
@@ -257,7 +259,7 @@ export const Prefix: Story = {
   parameters: {
     flexLayout: 'column-stretch',
     styles: {
-      '--swc-text-field-width': '220px',
+      'inline-size': '220px',
     },
   },
 };
@@ -299,7 +301,7 @@ export const States: Story = {
   parameters: {
     flexLayout: 'column-stretch',
     styles: {
-      '--swc-text-field-width': '220px',
+      'inline-size': '220px',
     },
   },
 };
