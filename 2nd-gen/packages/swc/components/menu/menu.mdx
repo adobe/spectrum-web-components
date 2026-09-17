@@ -1,0 +1,84 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as MenuStories from './stories/menu.stories';
+
+<Meta of={MenuStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A `<swc-menu>` consists of:
+
+- An externally-referenced **trigger**, set via the `for` or `triggerElement` property. `swc-menu` does not render a trigger of its own.
+- A shadow-internal surface carrying `role="menu"`, anchored to the trigger.
+- **Default slot**: the menu's rows. `swc-menu-item` has not shipped yet, so these examples slot placeholder rows with `role="menuitem"` until it does.
+
+<Canvas of={MenuStories.Anatomy} />
+
+## Options
+
+### Sizes
+
+`size` accepts `s`, `m`, `l`, and `xl` (default `m`). `swc-menu-item` doesn't exist yet, so no row content currently reflects this size; set it now so your markup carries the right value once row-level sizing ships.
+
+<Canvas of={MenuStories.Sizes} />
+
+## Behaviors
+
+### Open and close
+
+Clicking the trigger opens the menu and moves focus to the first row. From there:
+
+- <kbd>Arrow Up</kbd> / <kbd>Arrow Down</kbd> move focus between rows, wrapping
+  from the last row back to the first and vice versa.
+- <kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd> are trapped on the active
+  row; they do not move focus out of the menu.
+- <kbd>Enter</kbd> or a click on a row closes the menu.
+- <kbd>Escape</kbd> or a click outside the menu closes it and returns focus to
+  the trigger.
+
+The menu is a native `popover="auto"` element: it renders in the browser's top layer, so it is never clipped by an ancestor's `overflow`, and Escape/outside-click light-dismiss come from the platform rather than a hand-rolled listener.
+
+Four events mark the lifecycle: `swc-open` and `swc-after-open` fire as the menu opens; `swc-close` and `swc-after-close` fire as it closes, however the close was triggered.
+
+<Canvas of={MenuStories.OpenAndClose} />
+
+## Accessibility
+
+### Features
+
+#### ARIA role and relationship
+
+1. **`role="menu"`**: set on the shadow-internal surface.
+2. **`aria-haspopup="menu"` and `aria-expanded`**: wired onto the trigger's interactive element (for a 2nd-gen SWC trigger with an open shadow root, its inner `<button>`) as the menu opens and closes.
+3. **Accessible name**: `swc-menu` has no `label` property. The menu's accessible name comes entirely from the trigger you author; give the trigger its own accessible name (visible text, `aria-label`, or `accessible-label` on a 2nd-gen SWC trigger).
+
+#### Keyboard navigation
+
+- <kbd>Arrow Up</kbd> / <kbd>Arrow Down</kbd>: move focus between rows, wrapping
+  at the ends.
+- <kbd>Tab</kbd> / <kbd>Shift</kbd> + <kbd>Tab</kbd>: trapped on the active row
+  while the menu is open.
+- <kbd>Enter</kbd>: activates the focused row and closes the menu.
+- <kbd>Escape</kbd>: closes the menu and returns focus to the trigger.
+
+### Best practices
+
+- **Give the trigger an accessible name.** The menu has no accessible-name property of its own; an unlabeled trigger leaves the whole menu unlabeled too.
+- **Don't slot interactive descendants.** Rows carry text and, once `swc-menu-item` ships, decorative icons only. Slotting a button, link, or other focusable element inside a row breaks the roving-tabindex model.
+
+<Canvas of={MenuStories.Accessibility} />
+
+## Upcoming features
+
+The following are planned for future releases:
+
+- Icons and thumbnails within each row.
+- Descriptions and trailing values on rows.
+- Single- and multi-select modes.
+- Grouped sections with headers, and dividers as separators between rows.
+- Nested submenus.
+
+<DocsFooter />
