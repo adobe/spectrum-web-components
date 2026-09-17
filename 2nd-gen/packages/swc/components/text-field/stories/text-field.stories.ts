@@ -249,7 +249,7 @@ export const Prefix: Story = {
       <span slot="label">User Email</span>
       <swc-avatar
         slot="prefix"
-        src="https://picsum.photos/id/823/40/40"
+        src="./images/avatar-preview.png"
         alt=""
       ></swc-avatar>
     </swc-text-field>
