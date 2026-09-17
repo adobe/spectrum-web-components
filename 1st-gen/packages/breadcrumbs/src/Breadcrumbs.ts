@@ -33,6 +33,7 @@ import type { Directionality } from '@spectrum-web-components/base/src/normalize
 import { normalizeDir } from '@spectrum-web-components/base/src/normalize-dir.js';
 import { observeAttribute } from '@spectrum-web-components/reactive-controllers/src/AttributeObserver.js';
 
+/* eslint-disable import/no-extraneous-dependencies */
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
