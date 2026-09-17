@@ -790,8 +790,8 @@
   inset-inline-end: 0;
 }
 
-.swc-PromptField-attachments-scroll-prev swc-icon,
-.swc-PromptField-attachments-scroll-next swc-icon {
+.swc-PromptField-attachments-scroll-prev swc-ui-icon,
+.swc-PromptField-attachments-scroll-next swc-ui-icon {
   display: inline-flex;
   position: relative;
   z-index: 2;
