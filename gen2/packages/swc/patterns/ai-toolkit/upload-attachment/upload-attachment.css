@@ -213,6 +213,9 @@
 }
 
 :host([type="media"]) .swc-UploadAttachment-surface {
+  /* Matches swc-card's own internal preview/media rounding to the tile radius below. */
+  --swc-card-base-border-radius: token("corner-radius-large-default");
+
   display: block;
   position: absolute;
 
@@ -223,69 +226,6 @@
   border-radius: token("corner-radius-large-default");
   box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
   overflow: hidden;
-}
-
-:host([type="media"]) .swc-UploadAttachment-thumbnail {
-  display: block;
-  position: relative;
-  inline-size: 100%;
-  block-size: 100%;
-  background: token("gray-100");
-  border: token("border-width-100") solid transparent;
-  border-radius: token("corner-radius-large-default");
-  overflow: hidden;
-}
-
-:host([type="media"]) .swc-UploadAttachment-actions {
-  display: none;
-}
-
-:host([type="media"]) .swc-UploadAttachment-thumbnail ::slotted(img) {
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
-  inset: 0;
-  inline-size: 100%;
-  block-size: 100%;
-  object-fit: cover;
-}
-
-:host([type="media"]) .swc-UploadAttachment-thumbnail ::slotted(*) {
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
-  inset: 0;
-  inline-size: 100%;
-  block-size: 100%;
-}
-
-:host([type="media"]) .swc-UploadAttachment-badge {
-  display: inline-flex;
-  position: absolute;
-  inset-block-end: token("spacing-75");
-  inset-inline-start: token("spacing-75");
-  z-index: 1;
-  align-items: center;
-  max-inline-size: calc(100% - (2 * token("spacing-75")));
-  min-block-size: token("component-height-75");
-  padding-block: token("spacing-75");
-  padding-inline: calc(token("spacing-75") + token("spacing-50") + token("corner-radius-75"));
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-75");
-  font-weight: token("medium-font-weight");
-  line-height: token("line-height-font-size-75");
-  color: token("gray-1000");
-  background: token("neutral-subtle-background-color-default");
-  border-radius: token("corner-radius-400");
-}
-
-:host([type="media"]) .swc-UploadAttachment-badge ::slotted(*) {
-  display: block;
-  min-inline-size: 0;
-  max-inline-size: 152px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 :host([type="media"]) .swc-UploadAttachment-meta {

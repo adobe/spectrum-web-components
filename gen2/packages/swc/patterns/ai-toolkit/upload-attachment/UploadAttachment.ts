@@ -10,14 +10,22 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
-import { property, query, queryAssignedElements } from 'lit/decorators.js';
+import {
+  CSSResultArray,
+  html,
+  nothing,
+  PropertyValues,
+  TemplateResult,
+} from 'lit';
+import { property, query } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { getLabelFromSlot } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
+import '@adobe/spectrum-wc/components/card/swc-card.js';
+import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 
 import { CrossIcon } from '../utils/icons/index.js';
 
@@ -38,6 +46,13 @@ import styles from './upload-attachment.css';
  * @example
  * <swc-upload-attachment type="card" dismissible>
  *   <span slot="title">Brief.pdf</span>
+ * </swc-upload-attachment>
+ *
+ * @example
+ * <swc-upload-attachment type="media" dismissible progress="42">
+ *   <swc-asset slot="thumbnail">
+ *     <img src="photo.jpg" alt="Campaign still" />
+ *   </swc-asset>
  * </swc-upload-attachment>
  *
  * @slot thumbnail - Shared visual slot for icon/thumbnail/preview image.
@@ -82,8 +97,13 @@ export class UploadAttachment extends SpectrumElement {
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
 
-  @queryAssignedElements({ slot: 'badge', flatten: true })
-  private _assignedBadge!: HTMLElement[];
+  /**
+   * Upload progress percentage (0-100), shown as a `swc-progress-circle`
+   * overlay on the `type="media"` preview. Hidden when unset or at 100
+   * (complete); update as the upload advances to show it mid-transfer.
+   */
+  @property({ type: Number, reflect: true })
+  public progress?: number;
 
   @query('slot[name="title"]')
   private _titleSlot?: HTMLSlotElement;
@@ -174,14 +194,6 @@ export class UploadAttachment extends SpectrumElement {
     this.requestUpdate();
   }
 
-  private _handleBadgeSlotChange(): void {
-    this.requestUpdate();
-  }
-
-  private _hasBadgeContent(): boolean {
-    return (this._assignedBadge?.length ?? 0) > 0;
-  }
-
   private _handleDismissClick(): void {
     this.dispatchEvent(
       new CustomEvent('swc-upload-attachment-dismiss', {
@@ -212,40 +224,33 @@ export class UploadAttachment extends SpectrumElement {
     `;
   }
 
-  private _renderBadge(): TemplateResult {
-    if (!this._hasBadgeContent()) {
-      return html`
-        <slot
-          name="badge"
-          hidden
-          @slotchange=${this._handleBadgeSlotChange}
-        ></slot>
-      `;
-    }
-
-    return html`
-      <div class="swc-UploadAttachment-badge">
-        <slot name="badge" @slotchange=${this._handleBadgeSlotChange}></slot>
-      </div>
-    `;
+  private _shouldShowProgress(): boolean {
+    return typeof this.progress === 'number' && this.progress < 100;
   }
 
   private _renderMediaSurface(): TemplateResult {
     return html`
-      <div class="swc-UploadAttachment-surface">
-        <div class="swc-UploadAttachment-thumbnail">
-          <slot name="thumbnail"></slot>
-        </div>
-        ${this._renderBadge()}
-        <div class="swc-UploadAttachment-actions">
-          <slot name="actions"></slot>
-        </div>
-        <slot
-          name="title"
-          hidden
-          @slotchange=${this._handleTitleSlotChange}
-        ></slot>
-      </div>
+      <swc-card class="swc-UploadAttachment-surface" variant="quiet">
+        <slot name="thumbnail" slot="preview"></slot>
+        ${this._shouldShowProgress()
+          ? html`
+              <swc-progress-circle
+                slot="media"
+                size="s"
+                static-color="white"
+                progress=${this.progress}
+                label="Uploading"
+              ></swc-progress-circle>
+            `
+          : nothing}
+        <slot name="badge" slot="media"></slot>
+      </swc-card>
+      <slot name="actions" hidden></slot>
+      <slot
+        name="title"
+        hidden
+        @slotchange=${this._handleTitleSlotChange}
+      ></slot>
     `;
   }
 
@@ -255,9 +260,9 @@ export class UploadAttachment extends SpectrumElement {
     );
     return html`
       <div class="swc-UploadAttachment-surface">
-        <div class="swc-UploadAttachment-thumbnail">
-          <slot name="thumbnail"></slot>
-        </div>
+        <swc-card class="swc-UploadAttachment-thumbnail" variant="quiet">
+          <slot name="thumbnail" slot="preview"></slot>
+        </swc-card>
         <div class="swc-UploadAttachment-meta">
           <div class="swc-UploadAttachment-title">
             <span class="swc-UploadAttachment-title-start" aria-hidden="true">
