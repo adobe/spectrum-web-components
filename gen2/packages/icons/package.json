@@ -32,7 +32,7 @@
   ],
   "scripts": {
     "analyze": "cem analyze --config cem.config.js",
-    "build": "vite build && yarn analyze && yarn verify:tree-shaking",
+    "build": "tsc --build && vite build && yarn analyze && yarn verify:tree-shaking",
     "clean": "rimraf dist",
     "dev": "vite build --watch",
     "prepublishOnly": "yarn build",
