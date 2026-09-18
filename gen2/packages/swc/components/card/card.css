@@ -28,6 +28,19 @@
   grid-area: media;
 }
 
+/* Stack layout: several `media` slots can share the same grid cell as the preview/collection region;
+ * `place-self` positions each one within it instead of a second, nested
+ * overlap mechanism. */
+::slotted(swc-progress-circle[slot="media"]) {
+  place-self: center;
+}
+
+::slotted(swc-badge[slot="media"]) {
+  place-self: end start;
+  margin-block-end: token("spacing-75");
+  margin-inline-start: token("spacing-75");
+}
+
 /* ─────────────────────────────────────────────────────────────────────────────
    COLLECTION SLOT
    ───────────────────────────────────────────────────────────────────────────── */
