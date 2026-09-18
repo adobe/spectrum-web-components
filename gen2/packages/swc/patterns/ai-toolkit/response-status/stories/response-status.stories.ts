@@ -20,7 +20,6 @@ import '../swc-response-status.js';
 import {
   PIXEL_LOADER_ICON_NAMES,
   PIXEL_LOADER_PRESET_NAMES,
-  RESPONSE_STATUSES,
 } from '../ResponseStatus.js';
 
 // ────────────────
@@ -34,27 +33,6 @@ const activeStepsSlot = `<swc-response-status-step status="complete"><span slot=
 delete (args as Record<string, unknown>)['summary-slot'];
 delete (argTypes as Record<string, unknown>)['summary-slot'];
 
-argTypes.status = {
-  ...argTypes.status,
-  control: { type: 'select' },
-  options: RESPONSE_STATUSES,
-  table: {
-    ...argTypes.status?.table,
-    category: 'attributes',
-    defaultValue: { summary: 'active' },
-  },
-};
-
-argTypes.open = {
-  ...argTypes.open,
-  control: { type: 'boolean' },
-  table: {
-    ...argTypes.open?.table,
-    category: 'attributes',
-    defaultValue: { summary: 'false' },
-  },
-};
-
 argTypes.loader = {
   ...argTypes.loader,
   control: { type: 'select' },
@@ -63,33 +41,6 @@ argTypes.loader = {
     ...argTypes.loader?.table,
     category: 'attributes',
     defaultValue: { summary: 'mega' },
-  },
-};
-
-argTypes['accessible-label'] = {
-  ...argTypes['accessible-label'],
-  control: { type: 'text' },
-  table: {
-    ...argTypes['accessible-label']?.table,
-    category: 'attributes',
-  },
-};
-
-argTypes['label-slot'] = {
-  ...argTypes['label-slot'],
-  control: { type: 'text' },
-  table: {
-    ...argTypes['label-slot']?.table,
-    category: 'slots',
-  },
-};
-
-argTypes['default-slot'] = {
-  ...argTypes['default-slot'],
-  control: { type: 'text' },
-  table: {
-    ...argTypes['default-slot']?.table,
-    category: 'slots',
   },
 };
 
