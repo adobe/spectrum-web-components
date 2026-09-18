@@ -10,13 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, nothing } from 'lit';
-import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
+import { html } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Icon_ChevronDown } from '@adobe/spectrum-wc-icons/ChevronDown.js';
-
-import '@adobe/spectrum-wc/components/icon/swc-icon.js';
+import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 
 import type { CustomPropertyCase } from '../../../../.storybook/helpers/index.js';
 import {
@@ -31,8 +29,8 @@ import customElementsManifest from '../../../../dist/custom-elements.json';
 // Metadata
 
 const meta: Meta = {
-  title: 'Icon/Icon VRT',
-  component: 'swc-icon',
+  title: 'UI icons/UI icons VRT',
+  component: 'swc-ui-icon',
   tags: ['dev'],
 };
 
@@ -40,36 +38,32 @@ export default meta;
 
 // Helpers
 
-const iconSvg = unsafeSVG(Icon_ChevronDown());
+type UiIconPropertyCase = CustomPropertyCase<`--swc-icon-${string}`>;
 
-// Every `--swc-icon-*` property documented via `@cssprop` in Icon.ts is a
-// public contract: one row per property, a reference icon next to the same
-// icon with that one property overridden to an obviously different value.
-type IconPropertyCase = CustomPropertyCase<`--swc-icon-${string}`>;
-
-const MOD_PROPERTY_CASES: readonly IconPropertyCase[] = [
+const MOD_PROPERTY_CASES: readonly UiIconPropertyCase[] = [
   { property: '--swc-icon-color', value: 'magenta' },
-  { property: '--swc-icon-inline-size', value: '48px' },
-  { property: '--swc-icon-block-size', value: '48px' },
 ];
 
-const modPropertyIcon = (_testCase: IconPropertyCase, style?: string) => html`
-  <swc-icon accessible-label="Chevron icon" style=${style ?? nothing}>
-    ${iconSvg}
-  </swc-icon>
+const modPropertyIcon = (_testCase: UiIconPropertyCase, style?: string) => html`
+  <swc-ui-icon
+    icon="chevron"
+    accessible-label="Chevron"
+    style=${ifDefined(style)}
+  ></swc-ui-icon>
 `;
 
 const modPropertiesContent = () =>
   customPropertyRows(MOD_PROPERTY_CASES, modPropertyIcon);
 
-const coveredIconCustomProperties = coveredCustomProperties(MOD_PROPERTY_CASES);
+const coveredUiIconCustomProperties =
+  coveredCustomProperties(MOD_PROPERTY_CASES);
 
-const verifyIconCustomPropertyCoverage = async () => {
+const verifyUiIconCustomPropertyCoverage = async () => {
   await verifyCustomPropertyCoverage({
     customElementsManifest,
-    modulePath: 'components/icon/Icon.ts',
-    declarationName: 'Icon',
-    coveredProperties: coveredIconCustomProperties,
+    modulePath: 'components/ui-icons/UiIcon.ts',
+    declarationName: 'UiIcon',
+    coveredProperties: coveredUiIconCustomProperties,
   });
 };
 
@@ -78,5 +72,5 @@ const verifyIconCustomPropertyCoverage = async () => {
 export const CustomProperties: Story = {
   render: () => theme(modPropertiesContent(), 'light', 'ltr'),
   parameters: vrtParameters,
-  play: verifyIconCustomPropertyCoverage,
+  play: verifyUiIconCustomPropertyCoverage,
 };

@@ -95,7 +95,12 @@ export default defineConfig({
     processStylesheets(),
     dts({
       include: ['**/*.ts'],
-      exclude: ['**/*.test.ts', '**/*.spec.ts', '**/*.stories.ts'],
+      exclude: [
+        '**/*.test.ts',
+        '**/*.spec.ts',
+        '**/*.stories.ts',
+        '**/*.vrt.ts',
+      ],
       outDir: 'dist',
       beforeWriteFile: (filePath, content) => {
         return {

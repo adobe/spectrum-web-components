@@ -20,7 +20,7 @@ import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 import { getComponent } from '../../../utils/test-utils.js';
 import type { UiIconName } from '../icon-set/index.js';
 import { UI_ICONS } from '../icon-set/index.js';
-import meta, { Overview } from '../stories/ui-icons.internal.stories.js';
+import meta, { Overview } from '../stories/ui-icons.stories.js';
 import { DIRECTIONAL_UI_ICONS } from '../ui-icon-direction.js';
 import type { UiIconArt } from '../ui-icons.types.js';
 import { resolveUiIconArt } from '../ui-icons.types.js';

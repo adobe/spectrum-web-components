@@ -1,6 +1,6 @@
-# UI icons (internal)
+# UI icons
 
-The internal UI icon set: chevrons, checkmarks, arrows, and other control internals. Not published for consumers; consumed by other swc components through the `<swc-ui-icon>` element.
+The Spectrum UI icon set: chevrons, checkmarks, arrows, and other control internals. Spectrum components render these through the `<swc-ui-icon>` element, and the element also ships in `@adobe/spectrum-wc` so consumers can use the same optically-tuned set directly.
 
 Contents:
 
@@ -13,6 +13,6 @@ Source and generation:
 - `icon-set/` is built from `../../icon-source/ui/` by `yarn generate:ui-icons`.
 - The A4U set version is recorded in `../../icon-source/icon-source.json`.
 
-Preview:
+Documentation:
 
-- The available icons and their optical sizes render in dev Storybook under **UI icons** (`stories/ui-icons.internal.stories.ts`, `ui-icons.internal.mdx`). The `.internal.*` files are excluded from the production Storybook build.
+- The consumer docs page (usage, available icons, optical sizes, and accessibility) lives in `ui-icons.mdx`, backed by `stories/ui-icons.stories.ts`. It renders in Storybook under **UI icons**.

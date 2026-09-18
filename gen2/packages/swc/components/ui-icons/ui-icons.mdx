@@ -1,0 +1,48 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as Stories from './stories/ui-icons.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+UI icons are the small, functional glyphs Spectrum controls use, such as the chevron in a picker, the checkmark in a checkbox, or the arrow in a stepper. Spectrum's own components render them for you, and the set also ships in `@adobe/spectrum-wc` as the `<swc-ui-icon>` element so you can use the same optically-tuned art in your own layouts. For a custom, non-Spectrum drawing, use the [Icon](../?path=/docs/components-icon--docs) frame instead; for larger, pickable art such as stars and folders, use a [workflow icon](../?path=/docs/icons-workflow-icons--docs).
+
+## Usage
+
+Import the element, then choose an icon by name and a size:
+
+```ts
+import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
+```
+
+```html
+<swc-ui-icon icon="chevron" size="m" accessible-label="Expand"></swc-ui-icon>
+```
+
+The `icon` value is the kebab-case name from the set, for example `chevron` or `corner-triangle`. The gallery below lists every available name.
+
+## Options
+
+### Available icons
+
+Every icon in the set, rendered at the medium (`m`) size. The label under each is its `icon` value.
+
+<Canvas of={Stories.AvailableIcons} />
+
+### Optical sizes
+
+A UI icon is not one drawing scaled up and down. Each t-shirt size maps to a distinct, optically-tuned numeral step (`50`/`75`/`100`/`200`/`300` for `xs`/`s`/`m`/`l`/`xl`), and `<swc-ui-icon>` selects the step that matches its `size` rather than resizing a single drawing. Because each step is a separate drawing, set `size` rather than resizing with CSS. The chevron across every size:
+
+<Canvas of={Stories.OpticalSizes} />
+
+## Accessibility
+
+UI icons are decorative by default: the surrounding control owns the accessible name, so `<swc-ui-icon>` sets `aria-hidden="true"` on itself when no `accessible-label` is given. Provide `accessible-label` only when the icon is the sole meaning of its container; the element then exposes itself as an image (`role="img"` with that label). The rendered SVG never carries its own semantics.
+
+Do not write an explicit `aria-hidden` attribute on `<swc-ui-icon>` in markup: the attribute is host-owned and applied by `IconBase` after first render, so a hand-authored value only duplicates that logic. When you use a `<swc-ui-icon>` on its own rather than inside a Spectrum control, treat it like any icon: label it when it carries meaning, and leave it decorative when adjacent text already does.
+
+<Canvas of={Stories.Accessibility} />
+
+<DocsFooter />

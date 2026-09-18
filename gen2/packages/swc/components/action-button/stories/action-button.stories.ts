@@ -20,6 +20,9 @@ import {
 } from '@adobe/spectrum-wc-core/components/action-button';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
+import '@adobe/spectrum-wc-icons/swc-icon-edit.js';
+import '@adobe/spectrum-wc-icons/swc-icon-settings.js';
+import '@adobe/spectrum-wc-icons/swc-icon-upload.js';
 
 import { SIZE_LABELS } from '../../../.storybook/helpers/index.js';
 
@@ -76,7 +79,9 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-const editIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M33.567 8.2 27.8 2.432a1.215 1.215 0 0 0-.866-.353H26.9a1.371 1.371 0 0 0-.927.406L5.084 23.372a.99.99 0 0 0-.251.422L2.055 33.1c-.114.377.459.851.783.851a.251.251 0 0 0 .062-.007c.276-.063 7.866-2.344 9.311-2.778a.972.972 0 0 0 .414-.249l20.888-20.889a1.372 1.372 0 0 0 .4-.883 1.221 1.221 0 0 0-.346-.945ZM11.4 29.316c-2.161.649-4.862 1.465-6.729 2.022l2.009-6.73Z"/></svg>`;
+const editIcon = `<swc-icon-edit></swc-icon-edit>`;
+const settingsIcon = `<swc-icon-settings></swc-icon-settings>`;
+const uploadIcon = `<swc-icon-upload></swc-icon-upload>`;
 
 // ──────────────────────────
 //    PLAYGROUND STORY
@@ -84,7 +89,8 @@ const editIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"
 
 export const Playground: Story = {
   args: {
-    'default-slot': 'Edit',
+    'default-slot': 'Settings',
+    'icon-slot': settingsIcon,
   },
   tags: ['dev'],
 };
@@ -95,7 +101,8 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   args: {
-    'default-slot': 'Edit',
+    'default-slot': 'Settings',
+    'icon-slot': settingsIcon,
   },
   tags: ['overview'],
 };
@@ -110,20 +117,10 @@ export const Anatomy: Story = {
     ${template({
       ...args,
       'default-slot': 'Icon and label',
-      'icon-slot': editIconSvg,
+      'icon-slot': editIcon,
     })}
     <swc-action-button size=${args.size} accessible-label="Edit">
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 36 36"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M33.567 8.2 27.8 2.432a1.215 1.215 0 0 0-.866-.353H26.9a1.371 1.371 0 0 0-.927.406L5.084 23.372a.99.99 0 0 0-.251.422L2.055 33.1c-.114.377.459.851.783.851a.251.251 0 0 0 .062-.007c.276-.063 7.866-2.344 9.311-2.778a.972.972 0 0 0 .414-.249l20.888-20.889a1.372 1.372 0 0 0 .4-.883 1.221 1.221 0 0 0-.346-.945ZM11.4 29.316c-2.161.649-4.862 1.465-6.729 2.022l2.009-6.73Z"
-        />
-      </svg>
+      <swc-icon-edit slot="icon"></swc-icon-edit>
     </swc-action-button>
   `,
   tags: ['anatomy'],
@@ -141,7 +138,7 @@ export const Sizes: Story = {
         ...args,
         size,
         'default-slot': SIZE_LABELS[size],
-        'icon-slot': editIconSvg,
+        'icon-slot': editIcon,
       })
     )}
   `,
@@ -155,13 +152,13 @@ export const Quiet: Story = {
       ...args,
       quiet: false,
       'default-slot': 'Default',
-      'icon-slot': editIconSvg,
+      'icon-slot': editIcon,
     })}
     ${template({
       ...args,
       quiet: true,
       'default-slot': 'Quiet',
-      'icon-slot': editIconSvg,
+      'icon-slot': editIcon,
     })}
   `,
   tags: ['options'],
@@ -175,14 +172,14 @@ export const StaticColors: Story = {
         ...args,
         'static-color': 'white',
         'default-slot': 'Default',
-        'icon-slot': editIconSvg,
+        'icon-slot': editIcon,
       })}
       ${template({
         ...args,
         'static-color': 'white',
         quiet: true,
         'default-slot': 'Quiet',
-        'icon-slot': editIconSvg,
+        'icon-slot': editIcon,
       })}
     </div>
     <div style="display: flex; gap: 16px; flex-wrap: wrap;">
@@ -190,14 +187,14 @@ export const StaticColors: Story = {
         ...args,
         'static-color': 'black',
         'default-slot': 'Default',
-        'icon-slot': editIconSvg,
+        'icon-slot': editIcon,
       })}
       ${template({
         ...args,
         'static-color': 'black',
         quiet: true,
         'default-slot': 'Quiet',
-        'icon-slot': editIconSvg,
+        'icon-slot': editIcon,
       })}
     </div>
   `,
@@ -217,19 +214,19 @@ export const States: Story = {
     ${template({
       ...args,
       'default-slot': 'Default',
-      'icon-slot': editIconSvg,
+      'icon-slot': editIcon,
     })}
     ${template({
       ...args,
       disabled: true,
       'default-slot': 'Disabled',
-      'icon-slot': editIconSvg,
+      'icon-slot': editIcon,
     })}
     ${template({
       ...args,
       pending: true,
       'default-slot': 'Pending',
-      'icon-slot': editIconSvg,
+      'icon-slot': editIcon,
     })}
   `,
   tags: ['states'],
@@ -264,14 +261,14 @@ export const Pending: Story = {
           ${template({
             ...args,
             'default-slot': 'Upload',
-            'icon-slot': editIconSvg,
+            'icon-slot': uploadIcon,
           })}
           ${template({
             ...args,
             quiet: true,
             'default-slot': 'Edit',
             'pending-label': 'Edit in-progress',
-            'icon-slot': editIconSvg,
+            'icon-slot': editIcon,
           })}
         </div>
       </div>
@@ -287,17 +284,7 @@ export const Pending: Story = {
 export const IconOnly: Story = {
   render: (args) => html`
     <swc-action-button size=${args.size} accessible-label="Edit">
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 36 36"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M33.567 8.2 27.8 2.432a1.215 1.215 0 0 0-.866-.353H26.9a1.371 1.371 0 0 0-.927.406L5.084 23.372a.99.99 0 0 0-.251.422L2.055 33.1c-.114.377.459.851.783.851a.251.251 0 0 0 .062-.007c.276-.063 7.866-2.344 9.311-2.778a.972.972 0 0 0 .414-.249l20.888-20.889a1.372 1.372 0 0 0 .4-.883 1.221 1.221 0 0 0-.346-.945ZM11.4 29.316c-2.161.649-4.862 1.465-6.729 2.022l2.009-6.73Z"
-        />
-      </svg>
+      <swc-icon-edit slot="icon"></swc-icon-edit>
     </swc-action-button>
   `,
   tags: ['behaviors'],
@@ -312,17 +299,7 @@ export const Accessibility: Story = {
   render: (args) => html`
     ${template({ ...args, 'default-slot': 'Format' })}
     <swc-action-button size=${args.size} accessible-label="Edit">
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 36 36"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M33.567 8.2 27.8 2.432a1.215 1.215 0 0 0-.866-.353H26.9a1.371 1.371 0 0 0-.927.406L5.084 23.372a.99.99 0 0 0-.251.422L2.055 33.1c-.114.377.459.851.783.851a.251.251 0 0 0 .062-.007c.276-.063 7.866-2.344 9.311-2.778a.972.972 0 0 0 .414-.249l20.888-20.889a1.372 1.372 0 0 0 .4-.883 1.221 1.221 0 0 0-.346-.945ZM11.4 29.316c-2.161.649-4.862 1.465-6.729 2.022l2.009-6.73Z"
-        />
-      </svg>
+      <swc-icon-edit slot="icon"></swc-icon-edit>
     </swc-action-button>
     ${template({
       ...args,
