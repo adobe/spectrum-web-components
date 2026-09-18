@@ -70,3 +70,7 @@ export {
   SlotTextController,
   type SlotTextConfig,
 } from './slot-text-controller/index.js';
+export {
+  TriggerPressGuardController,
+  type TriggerPressGuardControllerOptions,
+} from './trigger-press-guard-controller/index.js';
