@@ -28,9 +28,10 @@ concurrency:
 jobs:
   check-changesets:
     runs-on: ubuntu-latest
-    # Deliberately NOT branch-gated: the snapshot job runs from a feature branch, so this
-    # job (which it needs) must run there too and count that branch's changesets. The
-    # main-only restriction lives on version-pr and publish instead.
+    # Only feeds version-pr/publish (the main-only release path), so gate it to main. The
+    # snapshot job does not need it - it synthesizes its own changeset - so a feature-branch
+    # dispatch skips straight to snapshot without running this.
+    if: github.ref == 'refs/heads/main'
     outputs:
       has_changesets: ${{ steps.check.outputs.has_changesets }}
       needs_publish: ${{ steps.check.outputs.needs_publish }}
@@ -83,7 +84,7 @@ jobs:
   # a throwaway snapshot. workflow_dispatch requires repo write access and only targets
   # in-repo branches, so fork code can never reach this job or the npm token.
   #
-  # gen2 lives in changesets' persistent pre mode (`2nd-gen/.changeset/pre.json`, tag
+  # gen2 lives in changesets' persistent pre mode (`gen2/.changeset/pre.json`, tag
   # `beta`), and changesets refuses `--snapshot` while that file is present ("Snapshot
   # release is not allowed in pre mode"). This job therefore deletes pre.json from its
   # own ephemeral checkout before versioning. That copy dies with the runner: the
@@ -137,7 +138,7 @@ jobs:
           # Ephemeral by construction: this checkout is discarded when the job ends and
           # nothing below commits or pushes. Removing the file locally is the only thing
           # that lets `changeset version --snapshot` run at all while gen2 is in pre mode.
-          rm -f 2nd-gen/.changeset/pre.json
+          rm -f gen2/.changeset/pre.json
 
       - name: Ensure a changeset exists
         run: |
@@ -146,14 +147,14 @@ jobs:
           # throwaway one when none exist. It patches the linked lead package, which bumps
           # the whole `@adobe/spectrum-wc(-core|-icons)` group together. Ephemeral checkout,
           # never committed.
-          if [ -z "$(find 2nd-gen/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' -print -quit)" ]; then
+          if [ -z "$(find gen2/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' -print -quit)" ]; then
             printf -- "---\n'@adobe/spectrum-wc': patch\n---\n\nThrowaway snapshot build (no pending changesets)\n" \
-              > 2nd-gen/.changeset/zzz-snapshot-tmp.md
+              > gen2/.changeset/zzz-snapshot-tmp.md
             echo "No pending changesets - synthesized a temporary one so the snapshot has a version to publish."
           fi
 
       - name: Version gen2 packages (snapshot)
-        working-directory: 2nd-gen
+        working-directory: gen2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn changeset version --snapshot ${{ steps.extract-tag.outputs.tag }}
@@ -161,9 +162,9 @@ jobs:
       - name: Capture snapshot versions
         id: versions
         run: |
-          CORE_VERSION=$(node -p "require('./2nd-gen/packages/core/package.json').version")
-          SWC_VERSION=$(node -p "require('./2nd-gen/packages/swc/package.json').version")
-          ICONS_VERSION=$(node -p "require('./2nd-gen/packages/icons/package.json').version")
+          CORE_VERSION=$(node -p "require('./gen2/packages/core/package.json').version")
+          SWC_VERSION=$(node -p "require('./gen2/packages/swc/package.json').version")
+          ICONS_VERSION=$(node -p "require('./gen2/packages/icons/package.json').version")
           echo "core=$CORE_VERSION" >> $GITHUB_OUTPUT
           echo "swc=$SWC_VERSION" >> $GITHUB_OUTPUT
           echo "icons=$ICONS_VERSION" >> $GITHUB_OUTPUT
@@ -174,10 +175,11 @@ jobs:
           yarn build
 
       - name: Publish gen2 packages (snapshot)
+        id: publish
         if: steps.npm-auth.outcome == 'success'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
-        working-directory: 2nd-gen
+        working-directory: gen2
         run: yarn changeset publish --no-git-tag --tag ${{ steps.extract-tag.outputs.tag }}
 
       - name: Snapshot summary
@@ -185,26 +187,28 @@ jobs:
         env:
           TAG: ${{ steps.extract-tag.outputs.tag }}
           TARGET_REF: ${{ github.ref_name }}
-          CORE_VERSION: ${{ steps.versions.outputs.core }}
           SWC_VERSION: ${{ steps.versions.outputs.swc }}
+          CORE_VERSION: ${{ steps.versions.outputs.core }}
           ICONS_VERSION: ${{ steps.versions.outputs.icons }}
-          AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
+          # The actual publish result, not just the auth check - so a failed publish
+          # doesn't get reported as a success.
+          PUBLISH_OUTCOME: ${{ steps.publish.outcome }}
         run: |
           echo "## Snapshot summary (gen2)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
-          echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
-          echo "| **Snapshotted branch** | \`${TARGET_REF}\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
-          [ -n "$SWC_VERSION" ] && echo "| **@adobe/spectrum-wc** | \`${SWC_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
-          [ -n "$CORE_VERSION" ] && echo "| **@adobe/spectrum-wc-core** | \`${CORE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
-          [ -n "$ICONS_VERSION" ] && echo "| **@adobe/spectrum-wc-icons** | \`${ICONS_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
 
-          if [ "$AUTH_OUTCOME" == "success" ]; then
-            echo "✅ Throwaway snapshot published under \`${TAG}\`. The \`beta\` channel and its pre-release state are unchanged." >> $GITHUB_STEP_SUMMARY
+          if [ "$PUBLISH_OUTCOME" == "success" ]; then
+            echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+            echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| **Snapshotted branch** | \`${TARGET_REF}\` |" >> $GITHUB_STEP_SUMMARY
+            echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
+            [ -n "$SWC_VERSION" ] && echo "| **@adobe/spectrum-wc** | \`${SWC_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+            [ -n "$CORE_VERSION" ] && echo "| **@adobe/spectrum-wc-core** | \`${CORE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+            [ -n "$ICONS_VERSION" ] && echo "| **@adobe/spectrum-wc-icons** | \`${ICONS_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "✅ Snapshot published. Install the exact version above (e.g. \`@adobe/spectrum-wc@${SWC_VERSION}\`), not \`@${TAG}\` - the \`${TAG}\` tag is shared and moves with the next snapshot. The \`beta\` channel and its pre-release state are unchanged." >> $GITHUB_STEP_SUMMARY
           else
-            echo "❌ Snapshot failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
+            echo "❌ Snapshot did not publish (publish outcome: \`${PUBLISH_OUTCOME:-skipped}\`). Check the job logs." >> $GITHUB_STEP_SUMMARY
           fi
 
   # Version-then-PR for the persistent pre-release version format (2.0.0-beta.N). No
