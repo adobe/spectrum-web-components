@@ -45,6 +45,11 @@
 
 :host([type="user"]) .swc-ConversationTurn > slot {
   align-items: flex-end;
+
+  /* Reading-width cap for the user bubble column. The host and
+   * .swc-ConversationTurn stay full-width so justify-content/align-items
+   * position this capped column against the real thread edge. */
+  max-inline-size: 75%;
 }
 
 :host([type="system"]) .swc-ConversationTurn {
@@ -55,7 +60,7 @@
   align-items: stretch;
 }
 
-/* Let system stacks span the column; user bubbles keep their own max-inline-size. */
+/* Let system stacks span the full turn column. */
 :host([type="system"]) ::slotted(*) {
   flex: 1 1 100%;
   min-inline-size: 0;
