@@ -89,9 +89,13 @@
   block-size: 100%;
 }
 
+/* Matches React Spectrum's AttachmentList lightDark('black/3', 'white/3')
+ * tile tint exactly. transparent-black-50 is already 3%, but the closest
+ * white token (transparent-white-50) is 4%, so the white side is a literal
+ * value instead. */
 .swc-UploadAttachment-surface {
   display: flex;
-  background: token("gray-50");
+  background: light-dark(token("transparent-black-50"), rgb(255 255 255 / 3%));
 }
 
 .swc-UploadAttachment-meta {
@@ -141,7 +145,7 @@
    * the host's inward focus ring (below) lands in empty space instead of
    * being painted over by the surface, which renders on top of it. */
   margin: token("spacing-50");
-  border: token("border-width-100") solid transparent;
+  border: token("border-width-100") solid light-dark(token("transparent-black-50"), rgb(255 255 255 / 3%));
   border-radius: token("corner-radius-medium-default");
 }
 
@@ -152,14 +156,40 @@
   justify-content: center;
 }
 
-:host([type="card"]) .swc-UploadAttachment-thumbnail ::slotted(*) {
+.swc-UploadAttachment-thumbnail-fallback {
+  --swc-icon-color: var(--swc-upload-attachment-thumbnail-fallback-icon-color, token("gray-900"));
+  --swc-icon-inline-size: var(--swc-upload-attachment-thumbnail-fallback-icon-inline-size, 20px);
+  --swc-icon-block-size: var(--swc-upload-attachment-thumbnail-fallback-icon-block-size, 20px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:host([type="card"]) .swc-UploadAttachment-thumbnail ::slotted(*),
+:host([type="card"]) .swc-UploadAttachment-thumbnail-fallback {
   box-sizing: border-box;
   flex-shrink: 0;
   inline-size: var(--swc-upload-attachment-card-thumbnail-inline-size, 48px);
   block-size: var(--swc-upload-attachment-card-thumbnail-block-size, 48px);
-  background: token("gray-100");
   border: token("border-width-100") solid transparent;
   border-radius: token("corner-radius-large-default");
+}
+
+:host([type="card"]) .swc-UploadAttachment-thumbnail ::slotted(*) {
+  background: token("gray-100");
+}
+
+/* No background of its own: React's equivalent icon wrapper is a plain
+ * sizing/centering box with no fill, so the icon floats directly on the
+ * outer card's own tint instead of a second, redundant translucent layer. */
+
+/* A consumer-slotted swc-icon keeps the 48px box above but shrinks its own
+ * content area (via padding, so the box itself stays 48px) to the same size
+ * as the mime-type fallback icon, so either one looks like a small centered
+ * glyph instead of stretching to fill the tile. */
+:host([type="card"]) .swc-UploadAttachment-thumbnail ::slotted(swc-icon) {
+  padding: calc((var(--swc-upload-attachment-card-thumbnail-inline-size, 48px) - var(--swc-upload-attachment-thumbnail-fallback-icon-inline-size, 20px)) / 2);
 }
 
 :host([type="card"]) .swc-UploadAttachment-meta {
@@ -205,11 +235,25 @@
   text-overflow: ellipsis;
 }
 
+/* Medium (default) tile size. `size="s"`/`"l"` below override the fallback;
+   an explicit `--swc-upload-attachment-preview-size` overrides all three so a
+   consumer can pin a fixed size regardless of `size`. Only `type="media"` is
+   sized by `size`; `type="card"` is a single size. */
 :host([type="media"]) {
-  inline-size: var(--swc-upload-attachment-preview-size, 72px);
-  block-size: var(--swc-upload-attachment-preview-size, 72px);
+  inline-size: var(--swc-upload-attachment-preview-size, 64px);
+  block-size: var(--swc-upload-attachment-preview-size, 64px);
   border-radius: token("corner-radius-large-default");
   overflow: visible;
+}
+
+:host([type="media"][size="s"]) {
+  inline-size: var(--swc-upload-attachment-preview-size, 48px);
+  block-size: var(--swc-upload-attachment-preview-size, 48px);
+}
+
+:host([type="media"][size="l"]) {
+  inline-size: var(--swc-upload-attachment-preview-size, 96px);
+  block-size: var(--swc-upload-attachment-preview-size, 96px);
 }
 
 :host([type="media"]) .swc-UploadAttachment-surface {
@@ -220,8 +264,13 @@
    * surface so the host's inward focus ring (below) lands in empty space
    * instead of being painted over by the surface, which renders on top of it. */
   inset: token("spacing-50");
+
+  /* Cancels the base rule's translucent tint: .swc-UploadAttachment-thumbnail
+   * below sits exactly on top of this and carries the same tint itself, so
+   * without this override the two non-opaque layers would stack and compound
+   * to roughly double the intended opacity. */
+  background: none;
   border-radius: token("corner-radius-large-default");
-  box-shadow: token("drop-shadow-emphasized-default-x") token("drop-shadow-emphasized-default-y") token("drop-shadow-emphasized-default-blur") token("drop-shadow-emphasized-default-color");
   overflow: hidden;
 }
 
@@ -230,10 +279,17 @@
   position: relative;
   inline-size: 100%;
   block-size: 100%;
-  background: token("gray-100");
-  border: token("border-width-100") solid transparent;
+  background: light-dark(token("transparent-black-50"), rgb(255 255 255 / 3%));
+  border: token("border-width-100") solid light-dark(token("transparent-black-50"), rgb(255 255 255 / 3%));
   border-radius: token("corner-radius-large-default");
   overflow: hidden;
+}
+
+/* No background of its own: it fully covers .swc-UploadAttachment-thumbnail
+ * above, whose own tint already shows through. */
+:host([type="media"]) .swc-UploadAttachment-thumbnail-fallback {
+  position: absolute;
+  inset: 0;
 }
 
 :host([type="media"]) .swc-UploadAttachment-actions {
@@ -286,6 +342,11 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* The small tile has no room for the file-type badge. */
+:host([type="media"][size="s"]) .swc-UploadAttachment-badge {
+  display: none;
 }
 
 :host([type="media"]) .swc-UploadAttachment-meta {
