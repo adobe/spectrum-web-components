@@ -69,7 +69,7 @@
   min-inline-size: 0;
   padding: token("spacing-300");
   background: radial-gradient(circle at var(--_swc-prompt-field-wash-x, right) bottom in oklab, var(--_swc-prompt-field-bg-stop-1) 0%, var(--_swc-prompt-field-bg-stop-2) 35%, var(--_swc-prompt-field-bg-stop-3) 82%, var(--_swc-prompt-field-bg-stop-4) 100%);
-  border-radius: 24px;
+  border-radius: var(--_swc-prompt-field-box-corner-radius, 24px);
   box-shadow:
     0 20px 20px -24px var(--_swc-prompt-field-prominent-outer-glow-color, transparent),
     0 -3px 10px 1px var(--_swc-prompt-field-drop-shadow-color);
@@ -86,7 +86,7 @@
 
 /* Small size uses a tighter corner radius to match its dropped outer ring (see .swc-PromptField-outer-border). */
 :host([size="s"]) .swc-PromptField-box {
-  border-radius: token("corner-radius-extra-large-default");
+  --_swc-prompt-field-box-corner-radius: token("corner-radius-extra-large-default");
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -132,13 +132,11 @@
   --_swc-prompt-field-outer-recede-stop: light-dark(rgb(255 255 255), rgb(255 255 255 / token("opacity-50")));
 
   display: flex;
-  padding: token("spacing-85");
+  padding: var(--_swc-prompt-field-outer-padding, token("spacing-85"));
   container-type: inline-size;
-  background: linear-gradient(var(--_swc-prompt-field-outer-dir, to right) in oklch, var(--_swc-prompt-field-outer-stop-1) 0%, var(--_swc-prompt-field-outer-stop-2) 37%, var(--_swc-prompt-field-outer-stop-3) 77%);
-  border-radius: 30px;
-  box-shadow:
-    0 2px 4px var(--_swc-prompt-field-outer-shadow),
-    0 6px 16px -10px var(--_swc-prompt-field-outer-hue);
+  background: var(--_swc-prompt-field-outer-background, linear-gradient(var(--_swc-prompt-field-outer-dir, to right) in oklch, var(--_swc-prompt-field-outer-stop-1) 0%, var(--_swc-prompt-field-outer-stop-2) 37%, var(--_swc-prompt-field-outer-stop-3) 77%));
+  border-radius: var(--_swc-prompt-field-outer-corner-radius, 30px);
+  box-shadow: var(--_swc-prompt-field-outer-box-shadow, 0 2px 4px var(--_swc-prompt-field-outer-shadow), 0 6px 16px -10px var(--_swc-prompt-field-outer-hue));
   transition:
     --_swc-prompt-field-outer-stop-1 var(--_swc-prompt-field-transition),
     --_swc-prompt-field-outer-stop-2 var(--_swc-prompt-field-transition),
@@ -147,10 +145,10 @@
 
   /* Small size drops the ring entirely: the card's own border and shadow (.swc-PromptField-box) are the whole treatment. */
   :host([size="s"]) & {
-    padding: 0;
-    background: none;
-    border-radius: token("corner-radius-extra-large-default");
-    box-shadow: none;
+    --_swc-prompt-field-outer-padding: 0;
+    --_swc-prompt-field-outer-background: none;
+    --_swc-prompt-field-outer-corner-radius: token("corner-radius-extra-large-default");
+    --_swc-prompt-field-outer-box-shadow: none;
   }
 
   :host([variant="subtle"]) & {
@@ -565,25 +563,25 @@
 /* Right padding clears the absolutely positioned send/stop button below, so multi-line text doesn't run under it. */
 .swc-PromptField-text-group {
   display: flex;
-  gap: token("spacing-200");
+  gap: var(--_swc-prompt-field-text-group-gap, token("spacing-200"));
   align-items: center;
   min-inline-size: 0;
 
   /* One button height in both states, so the collapse only removes the action bar below — the row never changes height, and the bottom-anchored send button reads centered on it when collapsed. */
-  min-block-size: token("component-height-100");
+  min-block-size: var(--_swc-prompt-field-text-group-min-block-size, token("component-height-100"));
 
   /* Fixed offset so a single line still reads vertically centered in the row. */
-  padding-block-start: calc((token("component-height-100") - (token("font-size-200") * token("line-height-200"))) / 2);
-  padding-inline-start: token("spacing-75");
-  padding-inline-end: calc(token("component-height-100") + token("spacing-300"));
+  padding-block-start: var(--_swc-prompt-field-text-group-padding-block-start, calc((token("component-height-100") - (token("font-size-200") * token("line-height-200"))) / 2));
+  padding-inline-start: var(--_swc-prompt-field-text-group-padding-inline-start, token("spacing-75"));
+  padding-inline-end: var(--_swc-prompt-field-text-group-padding-inline-end, calc(token("component-height-100") + token("spacing-300")));
 }
 
 :host([size="s"]) .swc-PromptField-text-group {
-  gap: 8px;
-  min-block-size: token("component-height-75");
-  padding-block-start: calc((token("component-height-75") - (token("font-size-100") * token("line-height-100"))) / 2);
-  padding-inline-start: 2px;
-  padding-inline-end: calc(token("component-height-75") + token("spacing-300"));
+  --_swc-prompt-field-text-group-gap: token("spacing-100");
+  --_swc-prompt-field-text-group-min-block-size: token("component-height-75");
+  --_swc-prompt-field-text-group-padding-block-start: calc((token("component-height-75") - (token("font-size-100") * token("line-height-100"))) / 2);
+  --_swc-prompt-field-text-group-padding-inline-start: 2px;
+  --_swc-prompt-field-text-group-padding-inline-end: calc(token("component-height-75") + token("spacing-300"));
 }
 
 .swc-PromptField-status-icon {
@@ -615,15 +613,26 @@
   --swc-upload-attachment-focus-indicator-color: light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color"));
 }
 
+/* Overrides .swc-PromptField-box's inherited text-input cursor: this strip
+ * doesn't focus the textarea on click, so it shouldn't look like it does. */
+.swc-PromptField-attachments {
+  cursor: default;
+}
+
 .swc-PromptField-attachments--single {
   /* Reserves clearance for the dismiss badge floating above the tile's top-right corner, same as --multiple below. */
-  --_swc-prompt-field-attachment-badge-clearance: token("spacing-300");
+  --_swc-prompt-field-attachment-badge-clearance: token("spacing-200");
 
   display: flex;
   flex-wrap: wrap;
   gap: token("spacing-300");
   align-items: start;
   padding-block-start: var(--_swc-prompt-field-attachment-badge-clearance);
+
+  /* Matches .swc-PromptField-attachments-scroll's own inline padding (the
+   * --multiple layout) so a tile doesn't visibly shift when the count
+   * crosses from one attachment to more than one. */
+  padding-inline: token("spacing-75");
 }
 
 .swc-PromptField-attachments--single > slot {
@@ -650,10 +659,10 @@
 
 .swc-PromptField-attachments--multiple {
   /* Dismiss badges are centered on each tile's top-right corner (see
-   * upload-attachment.css), so half of the larger (32px media) badge floats
-   * above the tile. Reserve that much clearance above the row so the
-   * scroll container's overflow-y: hidden doesn't clip it flat. */
-  --_swc-prompt-field-attachment-badge-clearance: token("spacing-300");
+   * upload-attachment.css); at the default 20px dismiss-visual-size that
+   * floats roughly 6px above the tile. Reserve enough clearance above the
+   * row so the scroll container's overflow-y: hidden doesn't clip it flat. */
+  --_swc-prompt-field-attachment-badge-clearance: token("spacing-200");
 
   min-inline-size: 0;
 }
@@ -786,8 +795,23 @@
   --swc-action-button-focus-indicator-color: light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color"));
   --swc-action-button-border-radius: token("corner-radius-full");
 
+  /* Matches React Spectrum's carousel nav button (transparent-overlay-100):
+   * a translucent tint instead of swc-action-button's opaque gray-100
+   * default, so the chevron reads as part of the same glass surface as the
+   * attachment tiles rather than a flat gray circle. React's button also
+   * keeps this exact color on hover/focus/press (no separate variant), so
+   * all three states are set to the same value here too. */
+  --swc-action-button-background-color-default: light-dark(token("transparent-black-100"), token("transparent-white-100"));
+  --swc-action-button-background-color-hover: light-dark(token("transparent-black-100"), token("transparent-white-100"));
+  --swc-action-button-background-color-focus: light-dark(token("transparent-black-100"), token("transparent-white-100"));
+  --swc-action-button-background-color-down: light-dark(token("transparent-black-100"), token("transparent-white-100"));
+
+  /* Centers on the tile itself, not the row (which also includes the
+   * badge-clearance padding above the tile): that clearance is a fixed
+   * offset to skip past, not something to split in half along with the
+   * tile height. */
   position: absolute;
-  inset-block-start: calc((var(--_swc-prompt-field-attachment-badge-clearance, 0) + var(--swc-prompt-field-attachment-media-block-size, 68px)) / 2);
+  inset-block-start: calc(var(--_swc-prompt-field-attachment-badge-clearance, 0) + (var(--swc-prompt-field-attachment-media-block-size, 68px) / 2));
   z-index: 4;
   flex: 0 0 auto;
   transform: translateY(-50%);
@@ -808,8 +832,6 @@
 }
 
 .swc-PromptField-attachments-scroll-prev {
-  --_swc-prompt-field-attachment-scroll-icon-transform: scaleX(-1);
-
   inset-inline-start: 0;
 }
 
@@ -827,10 +849,10 @@
   transform: var(--_swc-prompt-field-attachment-scroll-icon-transform);
 }
 
-:host(:dir(rtl)) .swc-PromptField-attachments-scroll-prev {
-  --_swc-prompt-field-attachment-scroll-icon-transform: none;
-}
-
+/* ChevronLeft/ChevronRight already point the correct logical direction in
+ * LTR, so no flip is needed there; RTL mirrors the whole strip, so both
+ * icons flip together to keep pointing toward their logical prev/next side. */
+:host(:dir(rtl)) .swc-PromptField-attachments-scroll-prev,
 :host(:dir(rtl)) .swc-PromptField-attachments-scroll-next {
   --_swc-prompt-field-attachment-scroll-icon-transform: scaleX(-1);
 }
@@ -848,13 +870,13 @@
   display: block;
   flex: 1 1 0%;
   min-inline-size: 0;
-  min-block-size: calc(token("font-size-200") * token("line-height-200") * var(--_swc-prompt-field-textarea-min-rows, 1));
-  max-block-size: min(calc(token("font-size-200") * token("line-height-200") * var(--_swc-prompt-field-textarea-max-rows, 999)), var(--swc-prompt-field-max-block-size, 40vh));
+  min-block-size: calc(var(--_swc-prompt-field-textarea-font-size, token("font-size-200")) * var(--_swc-prompt-field-textarea-line-height, token("line-height-200")) * var(--_swc-prompt-field-textarea-min-rows, 1));
+  max-block-size: min(calc(var(--_swc-prompt-field-textarea-font-size, token("font-size-200")) * var(--_swc-prompt-field-textarea-line-height, token("line-height-200")) * var(--_swc-prompt-field-textarea-max-rows, 999)), var(--swc-prompt-field-max-block-size, 40vh));
   padding: 0;
   font-family: token("sans-serif-font");
-  font-size: token("font-size-200");
+  font-size: var(--_swc-prompt-field-textarea-font-size, token("font-size-200"));
   font-weight: token("regular-font-weight");
-  line-height: token("line-height-200");
+  line-height: var(--_swc-prompt-field-textarea-line-height, token("line-height-200"));
   color: token("gray-900");
   background: transparent;
   border: none;
@@ -873,10 +895,8 @@
 }
 
 :host([size="s"]) .swc-PromptField-textarea {
-  min-block-size: calc(token("font-size-100") * token("line-height-100") * var(--_swc-prompt-field-textarea-min-rows, 1));
-  max-block-size: min(calc(token("font-size-100") * token("line-height-100") * var(--_swc-prompt-field-textarea-max-rows, 999)), var(--swc-prompt-field-max-block-size, 40vh));
-  font-size: token("font-size-100");
-  line-height: token("line-height-100");
+  --_swc-prompt-field-textarea-font-size: token("font-size-100");
+  --_swc-prompt-field-textarea-line-height: token("line-height-100");
 }
 
 /* Own single-row grid animates 0fr <-> 1fr; overflow/min-block-size live on the row wrapper below, not here, since 0fr only resolves to a true 0 on the grid item, not the container. */
