@@ -353,6 +353,26 @@ const showFormData = (event: SubmitEvent): void => {
   }
 };
 
+const showValidity = (event: Event): void => {
+  const form = (event.currentTarget as HTMLElement).closest('form');
+  if (!form) {
+    return;
+  }
+  const field = form.querySelector('swc-text-field');
+  const output = form.querySelector<HTMLOutputElement>('[data-validity]');
+  if (field && output) {
+    const fieldValid = field.checkValidity();
+    const formValid = form.checkValidity();
+    output.textContent = [
+      `field.checkValidity(): ${fieldValid ? 'valid' : 'invalid'}`,
+      `form.checkValidity(): ${formValid ? 'valid' : 'invalid'}`,
+      field.validity.valueMissing ? 'validity.valueMissing: true' : '',
+    ]
+      .filter(Boolean)
+      .join('\n');
+  }
+};
+
 export const FormBehavior: Story = {
   render: () => html`
     <form
@@ -365,6 +385,7 @@ export const FormBehavior: Story = {
       <div style="display: flex; gap: 8px;">
         <button type="submit">Submit</button>
         <button type="reset">Reset</button>
+        <button type="button" @click=${showValidity}>Check validity</button>
       </div>
       <section aria-labelledby="submitted-form-data-label">
         <div id="submitted-form-data-label">Submitted form data</div>
@@ -374,6 +395,16 @@ export const FormBehavior: Story = {
           style="display: block; min-block-size: 2lh; white-space: pre-wrap;"
         >
           Submit the form to see its data.
+        </output>
+      </section>
+      <section aria-labelledby="validity-label">
+        <div id="validity-label">Validity state</div>
+        <output
+          data-validity
+          aria-live="polite"
+          style="display: block; min-block-size: 3lh; white-space: pre-wrap;"
+        >
+          Click Check validity to inspect the field and form validity.
         </output>
       </section>
     </form>

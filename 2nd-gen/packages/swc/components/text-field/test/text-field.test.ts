@@ -671,8 +671,13 @@ export const FormBehaviorTest: Story = {
     const form = canvasElement.querySelector('form');
     const input = field.shadowRoot?.querySelector('input');
     const output = form?.querySelector<HTMLOutputElement>('[data-form-data]');
-    if (!form || !input || !output) {
-      throw new Error('form, input, or output not found');
+    const validityOutput =
+      form?.querySelector<HTMLOutputElement>('[data-validity]');
+    const checkValidityButton = form?.querySelector<HTMLButtonElement>(
+      'button[type="button"]'
+    );
+    if (!form || !input || !output || !validityOutput || !checkValidityButton) {
+      throw new Error('form, input, outputs, or validity button not found');
     }
 
     await step('required participates in native validation', async () => {
@@ -683,6 +688,12 @@ export const FormBehaviorTest: Story = {
       expect(field.validity.valueMissing).toBe(true);
       expect(field.checkValidity()).toBe(false);
       expect(form.checkValidity()).toBe(false);
+      checkValidityButton.click();
+      expect(validityOutput.textContent?.trim()).toBe(
+        'field.checkValidity(): invalid\n' +
+          'form.checkValidity(): invalid\n' +
+          'validity.valueMissing: true'
+      );
 
       field.value = 'Filled';
       await field.updateComplete;
@@ -690,6 +701,10 @@ export const FormBehaviorTest: Story = {
       expect(field.validity.valid).toBe(true);
       expect(field.checkValidity()).toBe(true);
       expect(form.checkValidity()).toBe(true);
+      checkValidityButton.click();
+      expect(validityOutput.textContent?.trim()).toBe(
+        'field.checkValidity(): valid\nform.checkValidity(): valid'
+      );
     });
 
     await step('reset restores the initial value', async () => {
