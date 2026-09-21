@@ -54,8 +54,8 @@ export default meta;
 export const Playground: Story = {
   tags: ['dev'],
   args: {
-    'label-slot': 'Email address',
-    placeholder: 'you@example.com',
+    'label-slot': 'Favorite food',
+    placeholder: 'Pasta, tacos, or sushi',
   },
   render: (args) => html`
     ${template({ ...args })}
@@ -70,7 +70,7 @@ export const Overview: Story = {
   tags: ['overview'],
   render: () => html`
     <swc-text-field style="inline-size: 220px;">
-      <span slot="label">Email address</span>
+      <span slot="label">Favorite food</span>
     </swc-text-field>
   `,
 };
@@ -81,11 +81,11 @@ export const Overview: Story = {
 
 export const Anatomy: Story = {
   render: () => html`
-    <swc-text-field>
+    <swc-text-field autocomplete="email">
       <span slot="label">Email address</span>
       <span slot="description">Used for order updates only.</span>
     </swc-text-field>
-    <swc-text-field invalid>
+    <swc-text-field autocomplete="email" invalid>
       <span slot="label">Email address</span>
       <span slot="error-text">Enter a valid email address.</span>
     </swc-text-field>
@@ -118,7 +118,7 @@ export const Labelling: Story = {
             Slotted
             <code>label</code>
           </div>
-          <swc-text-field>
+          <swc-text-field autocomplete="email">
             <span slot="label">Email address</span>
           </swc-text-field>
         </div>
@@ -128,7 +128,10 @@ export const Labelling: Story = {
             <code>accessible-label</code>
             : named for assistive tech, no visible label
           </div>
-          <swc-text-field accessible-label="Email address"></swc-text-field>
+          <swc-text-field
+            autocomplete="email"
+            accessible-label="Email address"
+          ></swc-text-field>
         </div>
 
         <div>
@@ -142,6 +145,7 @@ export const Labelling: Story = {
           </div>
           <swc-text-field
             id="labelling-labelledby-field"
+            autocomplete="billing street-address"
             accessible-labelledby="labelling-row-header labelling-col-header"
           ></swc-text-field>
         </div>
@@ -286,11 +290,15 @@ export const States: Story = {
       disabled
       placeholder="Placeholder"
     ></swc-text-field>
-    <swc-text-field accessible-label="Email address" invalid>
+    <swc-text-field
+      autocomplete="email"
+      accessible-label="Email address"
+      invalid
+    >
       <span slot="description">We'll never share your email.</span>
       <span slot="error-text">Enter a valid email address.</span>
     </swc-text-field>
-    <swc-text-field disabled invalid value="not-an-email">
+    <swc-text-field autocomplete="email" disabled invalid value="not-an-email">
       <span slot="label">Email address</span>
       <span slot="description">We'll never share your email.</span>
       <span slot="error-text">Enter a valid email address.</span>
@@ -316,22 +324,22 @@ export const LabelOverflow: Story = {
     <div
       style="display: flex; flex-direction: column; gap: 24px; inline-size: 260px;"
     >
-      <swc-text-field placeholder="you@example.com">
+      <swc-text-field placeholder="My favorite book">
         <span slot="label">
           This top label wraps onto multiple lines instead of clipping
         </span>
       </swc-text-field>
-      <swc-text-field label-position="side" placeholder="you@example.com">
+      <swc-text-field label-position="side" placeholder="My favorite book">
         <span slot="label">Short side label</span>
       </swc-text-field>
-      <swc-text-field label-position="side" placeholder="you@example.com">
+      <swc-text-field label-position="side" placeholder="My favorite book">
         <span slot="label">
           This side label wraps and the input shrinks toward a square
         </span>
       </swc-text-field>
       <swc-text-field
         label-position="side"
-        placeholder="you@example.com"
+        placeholder="My favorite book"
         style="--swc-field-label-max-inline-size: 120px;"
       >
         <span slot="label">Tightly capped label wraps early</span>

@@ -98,6 +98,7 @@ A long visible label wraps onto multiple lines instead of clipping. In `side` po
 
 - Prefer a slotted `label` for ordinary fields; reserve `accessible-label`/`accessible-labelledby` for fields with no visible label of their own or a name composed from elements the field doesn't own.
 - When a field has both a visible label and a programmatic name, make sure the programmatic name contains the visible text, per [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html). Do not set both `accessible-label` and `accessible-labelledby`; a dev-mode warning flags that combination.
+- Set `autocomplete` when a field collects a recognized personal-data type, such as `email` or `billing street-address`, so browsers and assistive technology can identify its purpose and offer appropriate autofill. See [`autocomplete` HTML attribute (MDN)](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete).
 - Always pair `invalid` with slotted `error-text` so the invalid state is not conveyed by color or the validation icon alone.
 - Use `accessible-describedby` for a description composed from light-DOM content the field doesn't own; it combines with, rather than replaces, a slotted `description`.
 
