@@ -39,7 +39,7 @@ export class ButtonGroup extends SizedMixin(SpectrumElement, {
 
   /**
    * @deprecated Use `orientation="vertical"` on `<swc-button-group>` instead.
-   * The `vertical` attribute will not be carried forward to 2nd-gen.
+   * The `vertical` attribute will not be carried forward to gen2.
    */
   @property({ type: Boolean, reflect: true })
   public set vertical(value: boolean) {
@@ -49,7 +49,7 @@ export class ButtonGroup extends SizedMixin(SpectrumElement, {
     if (window.__swc?.DEBUG) {
       window.__swc.warn(
         this,
-        `The "vertical" attribute on <${this.localName}> is deprecated. Use orientation="vertical" on <swc-button-group> when migrating to 2nd-gen.`,
+        `The "vertical" attribute on <${this.localName}> is deprecated. Use orientation="vertical" on <swc-button-group> when migrating to gen2.`,
         'https://opensource.adobe.com/spectrum-web-components/components/button-group/',
         { level: 'deprecation' }
       );

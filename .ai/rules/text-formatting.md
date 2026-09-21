@@ -185,5 +185,5 @@ tracked for a future release (SWC-2035)
 <!-- ✅ Good -->
 
 verify that the background color maintains sufficient contrast on hover
-not part of the initial 2nd-gen Button scope
+not part of the initial gen2 Button scope
 ```
