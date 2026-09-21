@@ -342,15 +342,22 @@ export const LabelOverflow: Story = {
 };
 LabelOverflow.storyName = 'Label overflow';
 
-const preventFormSubmit = (event: SubmitEvent): void => {
+const showFormData = (event: SubmitEvent): void => {
   event.preventDefault();
+  const form = event.currentTarget as HTMLFormElement;
+  const output = form.querySelector<HTMLOutputElement>('[data-form-data]');
+  if (output) {
+    output.textContent = [...new FormData(form)]
+      .map(([name, value]) => `${name}: ${value}`)
+      .join('\n');
+  }
 };
 
 export const FormBehavior: Story = {
   render: () => html`
     <form
       style="display: flex; flex-direction: column; gap: 16px; inline-size: 220px;"
-      @submit=${preventFormSubmit}
+      @submit=${showFormData}
     >
       <swc-text-field name="username" value="Initial" required>
         <span slot="label">Username</span>
@@ -359,6 +366,16 @@ export const FormBehavior: Story = {
         <button type="submit">Submit</button>
         <button type="reset">Reset</button>
       </div>
+      <section aria-labelledby="submitted-form-data-label">
+        <div id="submitted-form-data-label">Submitted form data</div>
+        <output
+          data-form-data
+          aria-live="polite"
+          style="display: block; min-block-size: 2lh; white-space: pre-wrap;"
+        >
+          Submit the form to see its data.
+        </output>
+      </section>
     </form>
   `,
   tags: ['behaviors'],

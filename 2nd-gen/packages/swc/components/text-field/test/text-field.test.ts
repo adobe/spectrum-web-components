@@ -670,8 +670,9 @@ export const FormBehaviorTest: Story = {
     );
     const form = canvasElement.querySelector('form');
     const input = field.shadowRoot?.querySelector('input');
-    if (!form || !input) {
-      throw new Error('form or input not found');
+    const output = form?.querySelector<HTMLOutputElement>('[data-form-data]');
+    if (!form || !input || !output) {
+      throw new Error('form, input, or output not found');
     }
 
     await step('required participates in native validation', async () => {
@@ -719,6 +720,7 @@ export const FormBehaviorTest: Story = {
       form.requestSubmit();
       expect(submitCount).toBe(1);
       expect(new FormData(form).get('username')).toBe('Submitted');
+      expect(output.textContent?.trim()).toBe('username: Submitted');
     });
   },
 };
