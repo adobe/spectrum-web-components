@@ -39,8 +39,8 @@ const DEMO_STYLES = css`
     border-radius: 4px;
   }
 
-  .swc-FieldDescription,
-  .swc-FieldErrorText {
+  .swc-FormFieldDescription,
+  .swc-FormFieldErrorText {
     font-size: smaller;
   }
 `;
