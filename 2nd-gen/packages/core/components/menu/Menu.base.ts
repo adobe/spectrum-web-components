@@ -131,10 +131,73 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   private _interactiveElement: (HTMLElement & ARIAControlsElements) | null =
     null;
 
-  /** The trigger element currently carrying the click-to-toggle listener. */
+  /** The trigger element currently carrying the click-to-toggle listeners. */
   private _trigger: HTMLElement | null = null;
 
+  /**
+   * True between a trigger press start (`pointerdown`/`touchstart`) and its
+   * `click`, so a light-dismiss inside that window is attributed to the press.
+   * Mirrors `Popover.base.ts`'s own reopen guard: pressing the trigger while
+   * open is an "outside" click from the surface's perspective, so the native
+   * popover light-dismiss closes it before the trailing click fires. Without
+   * this, that trailing click reads `open` as already `false` and flips it
+   * back to `true`, reopening the menu the same click was meant to close.
+   */
+  private _triggerPointerActive = false;
+
+  /** Cancels the pending press-end listeners armed in `_onTriggerPressStart`. */
+  private _pressEndAbort: AbortController | null = null;
+
+  /**
+   * Set when the trigger press light-dismissed an open menu (a native close
+   * observed while `_triggerPointerActive`), so the trailing `click` of that
+   * same gesture is read as the close rather than a reopen.
+   */
+  private _dismissedByTriggerPress = false;
+
+  private readonly _onTriggerPressStart = (): void => {
+    this._triggerPointerActive = true;
+    // Catches a press that ends without a click (drag off the trigger, or a
+    // cancelled gesture), which would otherwise leave the flag stuck true.
+    this._pressEndAbort = new AbortController();
+    const { signal } = this._pressEndAbort;
+    document.addEventListener('pointerup', this._onTriggerPressEnd, {
+      capture: true,
+      once: true,
+      signal,
+    });
+    document.addEventListener('pointercancel', this._onTriggerPressEnd, {
+      capture: true,
+      once: true,
+      signal,
+    });
+  };
+
+  private readonly _onTriggerPressEnd = (event: PointerEvent): void => {
+    this._pressEndAbort?.abort();
+    // A same-target pointerup still gets its own click, which resets the flag
+    // itself; resetting it here too would race that click's read of
+    // `_dismissedByTriggerPress`. pointercancel never gets a click, so it
+    // always resets.
+    if (
+      event.type === 'pointerup' &&
+      event.composedPath().includes(this._trigger as EventTarget)
+    ) {
+      return;
+    }
+    this._triggerPointerActive = false;
+  };
+
+  // If the press light-dismissed the menu (recorded in `_onBeforeToggle`),
+  // consume this click so it does not toggle back open; otherwise toggle from
+  // the live state.
   private readonly _handleTriggerClick = (): void => {
+    const dismissedByThisGesture = this._dismissedByTriggerPress;
+    this._triggerPointerActive = false;
+    this._dismissedByTriggerPress = false;
+    if (dismissedByThisGesture) {
+      return;
+    }
     this.open = !this.open;
   };
 
@@ -230,6 +293,16 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   }
 
   private removeTriggerClickListener(): void {
+    this._trigger?.removeEventListener(
+      'pointerdown',
+      this._onTriggerPressStart,
+      { capture: true }
+    );
+    this._trigger?.removeEventListener(
+      'touchstart',
+      this._onTriggerPressStart,
+      { capture: true }
+    );
     this._trigger?.removeEventListener('click', this._handleTriggerClick);
     this._trigger = null;
   }
@@ -266,6 +339,14 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     if (trigger !== this._trigger) {
       this.removeTriggerClickListener();
       if (trigger) {
+        // Capturing `pointerdown`/`touchstart` open the reopen-guard gesture
+        // window (see `_onTriggerPressStart`); `click` drives the toggle.
+        trigger.addEventListener('pointerdown', this._onTriggerPressStart, {
+          capture: true,
+        });
+        trigger.addEventListener('touchstart', this._onTriggerPressStart, {
+          capture: true,
+        });
         trigger.addEventListener('click', this._handleTriggerClick);
       }
       this._trigger = trigger;
@@ -365,8 +446,11 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
         this.focusNavigation.getActiveItem();
       if (active) {
         // Deferred so the browser doesn't move focus back to the trigger
-        // after the click handler that set `open` returns.
-        queueMicrotask(() => active.focus());
+        // after the click handler that set `open` returns. `preventScroll`
+        // because this fires before PlacementController's async compute has
+        // applied the real position, so an unguarded focus() would scroll
+        // the page to this item's temporary, not-yet-positioned location.
+        queueMicrotask(() => active.focus({ preventScroll: true }));
       }
     }
   }
@@ -399,6 +483,15 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   protected _onBeforeToggle = (event: ToggleEvent): void => {
     if (event.newState === 'open') {
       return;
+    }
+    // A press on the trigger while open light-dismisses the surface (an
+    // "outside" click from the popover's perspective) before the trailing
+    // click fires; correlate that dismissal here so `_handleTriggerClick`
+    // reads the trailing click as the close rather than a reopen. `this.open`
+    // is still `true` here for a genuine native dismiss; a programmatic close
+    // (e.g. `_hide()`) already set it `false` before this fires.
+    if (this.open && this._triggerPointerActive) {
+      this._dismissedByTriggerPress = true;
     }
     const restoreFocusToTrigger = this.isFocusWithin();
     this._syncOpen(false);
