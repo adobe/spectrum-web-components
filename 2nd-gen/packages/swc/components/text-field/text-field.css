@@ -19,30 +19,33 @@
 }
 
 .swc-TextField-control {
+  --_swc-text-field-border-width: token("border-width-200");
+
   display: flex;
   grid-area: input;
   gap: var(--swc-text-field-affix-gap, token("base-gap-medium"));
   align-items: center;
   min-inline-size: var(--swc-field-input-min-inline-size, token("component-height-100"));
   max-inline-size: var(--swc-field-input-max-inline-size, token("field-default-width-medium"));
-  padding-inline: var(--swc-text-field-padding-inline, token("base-padding-horizontal-medium"));
+  min-block-size: var(--_swc-text-field-min-block-size, token("component-height-100"));
+  padding-inline: calc(var(--swc-text-field-padding-inline, token("base-padding-horizontal-medium")) - var(--_swc-text-field-border-width));
   font-size: var(--swc-text-field-font-size, token("font-size-100"));
   background-color: token("gray-25");
   border-color: token("gray-300");
   border-style: solid;
-  border-width: token("border-width-200");
+  border-width: var(--_swc-text-field-border-width);
   border-radius: var(--swc-text-field-border-radius, token("corner-radius-medium-size-medium"));
 }
 
 .swc-TextField-input {
   flex: 1 1 auto;
   min-inline-size: 0;
-  padding-block: var(--swc-text-field-padding-block, token("base-padding-vertical-medium"));
+  padding-block: calc(var(--swc-text-field-padding-block, token("base-padding-vertical-medium")) - var(--_swc-text-field-border-width));
   padding-inline: 0;
   font-family: inherit;
   font-size: var(--swc-text-field-font-size, token("font-size-100"));
   font-weight: token("regular-font-weight");
-  line-height: token("line-height-100");
+  line-height: var(--swc-text-field-line-height, normal);
   color: token("neutral-content-color-default");
   background-color: transparent;
   border: none;
@@ -146,6 +149,7 @@ slot[name="prefix"]::slotted(swc-avatar) {
 /* ── Sizes ────────────────────────────────────────── */
 
 :host([size="s"]) {
+  --_swc-text-field-min-block-size: token("component-height-75");
   --swc-text-field-padding-block: token("base-padding-vertical-small");
   --swc-text-field-padding-inline: token("base-padding-horizontal-small");
   --swc-text-field-affix-gap: token("base-gap-small");
@@ -160,6 +164,7 @@ slot[name="prefix"]::slotted(swc-avatar) {
 }
 
 :host([size="l"]) {
+  --_swc-text-field-min-block-size: token("component-height-200");
   --swc-text-field-padding-block: token("base-padding-vertical-large");
   --swc-text-field-padding-inline: token("base-padding-horizontal-large");
   --swc-text-field-affix-gap: token("base-gap-large");
@@ -174,6 +179,7 @@ slot[name="prefix"]::slotted(swc-avatar) {
 }
 
 :host([size="xl"]) {
+  --_swc-text-field-min-block-size: token("component-height-300");
   --swc-text-field-padding-block: token("base-padding-vertical-extra-large");
   --swc-text-field-padding-inline: token("base-padding-horizontal-extra-large");
   --swc-text-field-affix-gap: token("base-gap-extra-large");
@@ -205,5 +211,9 @@ slot[name="prefix"]::slotted(swc-avatar) {
   /* Use the system focus color for the keyboard-focus ring. */
   :host(:state(keyboard-focused)) .swc-TextField-control {
     outline-color: Highlight;
+  }
+
+  :host([invalid]:not(:disabled)) .swc-TextField-invalidIcon {
+    --swc-icon-color: CanvasText;
   }
 }

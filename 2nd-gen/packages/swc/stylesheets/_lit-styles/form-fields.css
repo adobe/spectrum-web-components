@@ -25,6 +25,7 @@
 :host {
   --swc-form-field-label-font-size: token("font-size-100");
   --swc-form-field-description-font-size: token("font-size-75");
+  --swc-form-field-row-gap: token("form-item-gap-medium");
 }
 
 .swc-FormField {
@@ -33,7 +34,7 @@
     "label"
     "input"
     "messages";
-  row-gap: token("form-item-gap-medium");
+  row-gap: var(--swc-form-field-row-gap);
 
   --_swc-form-field-font-family: inherit;
   --_swc-form-field-font-weight: token("regular-font-weight");
@@ -43,8 +44,7 @@
 :host([size="s"]) .swc-FormField {
   --swc-form-field-label-font-size: token("font-size-75");
   --swc-form-field-description-font-size: token("font-size-75");
-
-  row-gap: token("form-item-gap-small");
+  --swc-form-field-row-gap: token("form-item-gap-small");
 }
 
 :host([size="m"]) .swc-FormField {
@@ -55,15 +55,13 @@
 :host([size="l"]) .swc-FormField {
   --swc-form-field-label-font-size: token("font-size-200");
   --swc-form-field-description-font-size: token("font-size-200");
-
-  row-gap: token("form-item-gap-large");
+  --swc-form-field-row-gap: token("form-item-gap-large");
 }
 
 :host([size="xl"]) .swc-FormField {
   --swc-form-field-label-font-size: token("font-size-300");
   --swc-form-field-description-font-size: token("font-size-300");
-
-  row-gap: token("form-item-gap-extra-large");
+  --swc-form-field-row-gap: token("form-item-gap-extra-large");
 }
 
 .swc-FormFieldLabel {

@@ -44,7 +44,9 @@ const NECESSITY_INDICATOR_TEXT = {
  * @cssprop --swc-text-field-padding-block - Vertical padding of the text-field control. Changes by size.
  * @cssprop --swc-text-field-padding-inline - Horizontal padding of the text-field control. Changes by size.
  * @cssprop --swc-text-field-affix-gap - Gap between the input and affixes. Changes by size.
+ * @cssprop --swc-form-field-row-gap - Vertical gap between the label, control, and help text. Changes by size.
  * @cssprop --swc-text-field-font-size - Font size of the input. Changes by size.
+ * @cssprop --swc-text-field-line-height - Line height of the input. Defaults to the browser's normal input line height.
  * @cssprop --swc-text-field-border-radius - Corner radius of the text-field control. Changes by size.
  * @cssprop --swc-text-field-validation-icon-size - Size of the invalid-state icon. Changes by size.
  * @cssprop --swc-form-field-label-font-size - Font size of the visible field label. Defaults to the field size typography scale.
