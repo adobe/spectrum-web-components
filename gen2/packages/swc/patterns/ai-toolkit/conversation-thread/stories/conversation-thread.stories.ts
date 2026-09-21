@@ -12,7 +12,6 @@
 
 import { html, LitElement } from 'lit';
 import { state } from 'lit/decorators.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../swc-conversation-thread.js';
@@ -138,8 +137,6 @@ type DemoAttachment = {
   objectUrl?: string;
   /** File-type label for non-image media tiles (for example, "PDF"). */
   badge?: string;
-  /** MIME type, used for the composer's mime-type fallback icon when there's no preview. */
-  mimeType?: string;
 };
 
 const getFileBadge = (fileName: string): string | undefined => {
@@ -478,7 +475,6 @@ class ConversationFullPatternDemo extends LitElement {
         thumbnailUrl: objectUrl,
         objectUrl,
         badge: isImage ? undefined : getFileBadge(fileName),
-        mimeType: isImage ? undefined : mimeType,
       } satisfies DemoAttachment;
     });
 
@@ -659,18 +655,8 @@ class ConversationFullPatternDemo extends LitElement {
           type="media"
           dismissible
           data-attachment-id=${attachment.id}
-          mime-type=${ifDefined(attachment.mimeType)}
         >
-          ${attachment.thumbnailUrl
-            ? html`
-                <img
-                  slot="thumbnail"
-                  src=${attachment.thumbnailUrl}
-                  alt=${attachment.title}
-                  style="inline-size:100%;block-size:100%;object-fit:cover;"
-                />
-              `
-            : ''}
+          ${renderDemoAttachmentThumbnail(attachment)}
           ${attachment.badge
             ? html`
                 <span slot="badge">${attachment.badge}</span>
@@ -804,12 +790,13 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
   </swc-conversation-thread>
 
   <swc-prompt-field>
-    <swc-upload-attachment
-      slot="attachment"
-      type="media"
-      dismissible
-      mime-type="application/pdf"
-    >
+    <swc-upload-attachment slot="attachment" type="media" dismissible>
+      <div
+        slot="thumbnail"
+        role="img"
+        aria-label="Hilton commercial assets"
+        style="inline-size:100%;block-size:100%;background:#f3f3f3;"
+      ></div>
       <span slot="badge">PDF</span>
     </swc-upload-attachment>
     <p slot="legal" class="swc-Typography--links">

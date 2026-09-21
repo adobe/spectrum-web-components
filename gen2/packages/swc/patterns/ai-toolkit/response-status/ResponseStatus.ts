@@ -614,7 +614,6 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _renderHeader(showDisclosure: boolean): TemplateResult {
-    const label = this._currentVisibleLabel();
     const status = this._resolvedStatus;
     const rowClass = [
       'swc-ResponseStatus-row',
@@ -630,8 +629,9 @@ export class ResponseStatus extends SpectrumElement {
     // element tag never changes when the first step arrives. Swapping the tag
     // (div -> button) makes lit rebuild the header subtree, tearing down and
     // restarting the nested pixel loader's animation. The disclosure wiring
-    // (aria-label/expanded/controls, chevron) is toggled via attributes
-    // instead, matching React Spectrum's ResponseStatus. `_handleToggle`
+    // (aria-expanded/controls, chevron) is toggled via attributes instead.
+    // The visible label inside the button is its accessible name, so no
+    // aria-label is needed. `_handleToggle`
     // already no-ops when there are no steps, so the click handler stays
     // attached.
     //
@@ -648,7 +648,6 @@ export class ResponseStatus extends SpectrumElement {
         class=${rowClass}
         role=${ifDefined(showDisclosure ? undefined : 'status')}
         tabindex=${ifDefined(showDisclosure ? undefined : -1)}
-        aria-label=${ifDefined(showDisclosure ? label : undefined)}
         aria-expanded=${ifDefined(showDisclosure ? this.open : undefined)}
         aria-controls=${ifDefined(showDisclosure ? this.panelId : undefined)}
         @click=${this._handleToggle}
