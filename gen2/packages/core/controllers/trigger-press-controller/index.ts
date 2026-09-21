@@ -11,6 +11,6 @@
  */
 
 export {
-  TriggerPressGuardController,
-  type TriggerPressGuardControllerOptions,
-} from './src/trigger-press-guard-controller.js';
+  TriggerPressController,
+  type TriggerPressControllerOptions,
+} from './src/trigger-press-controller.js';

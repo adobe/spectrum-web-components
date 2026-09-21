@@ -20,13 +20,13 @@ import './demo-hosts.js';
 // ────────────────
 
 /**
- * `TriggerPressGuardController` is a Lit `ReactiveController` that wires
+ * `TriggerPressController` is a Lit `ReactiveController` that wires
  * click-to-toggle on a trigger for a native light-dismissible surface
  * (`popover="auto"`, a non-modal `<dialog>`) without the surface reopening on
  * the same click that was meant to close it.
  */
 const meta: Meta = {
-  title: 'Controllers/Trigger press guard controller',
+  title: 'Controllers/Trigger press controller',
   component: 'demo-press-guard-host',
   render: () => html`
     <demo-press-guard-host></demo-press-guard-host>

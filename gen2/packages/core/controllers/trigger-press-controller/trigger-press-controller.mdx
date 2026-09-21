@@ -3,7 +3,7 @@
 import { Canvas, Meta } from '@storybook/addon-docs/blocks';
 import { DocsFooter, DocsHeader } from '../../../swc/.storybook/blocks';
 
-import * as Stories from './stories/trigger-press-guard-controller.stories';
+import * as Stories from './stories/trigger-press-controller.stories';
 
 <Meta of={Stories} />
 
@@ -11,7 +11,7 @@ import * as Stories from './stories/trigger-press-guard-controller.stories';
 
 ## Usage
 
-`TriggerPressGuardController` wires click-to-toggle on a trigger for a surface the platform can close on its own (a native `popover="auto"` element, a non-modal `<dialog>`) without the surface reopening on the same click that was meant to close it.
+`TriggerPressController` wires click-to-toggle on a trigger for a surface the platform can close on its own (a native `popover="auto"` element, a non-modal `<dialog>`) without the surface reopening on the same click that was meant to close it.
 
 ### The bug it prevents
 
@@ -28,12 +28,12 @@ This is a JS-only fix because a custom element's shadow-internal surface cannot 
 ```typescript
 import { LitElement, type PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
-import { TriggerPressGuardController } from '@adobe/spectrum-wc-core/controllers/trigger-press-guard-controller.js';
+import { TriggerPressController } from '@adobe/spectrum-wc-core/controllers/trigger-press-controller.js';
 
 class SwcToggle extends LitElement {
   @property({ type: Boolean, reflect: true }) open = false;
 
-  private readonly pressGuard = new TriggerPressGuardController(this);
+  private readonly pressGuard = new TriggerPressController(this);
 
   private wireTrigger(trigger: HTMLElement | null): void {
     this.pressGuard.attach(trigger, {
@@ -74,7 +74,7 @@ The same markup without the controller: a plain `open = !open` click handler reo
 
 ### Features
 
-`TriggerPressGuardController` only wires pointer/click listeners; it does not manage focus, ARIA, or positioning. Pair it with the host's own trigger ARIA wiring (`aria-haspopup`, `aria-expanded`) and focus-return-on-close handling.
+`TriggerPressController` only wires pointer/click listeners; it does not manage focus, ARIA, or positioning. Pair it with the host's own trigger ARIA wiring (`aria-haspopup`, `aria-expanded`) and focus-return-on-close handling.
 
 ### Best practices
 
@@ -86,7 +86,7 @@ The same markup without the controller: a plain `open = !open` click handler reo
 
 ### Constructor
 
-`new TriggerPressGuardController(host)` — registers the controller on the host.
+`new TriggerPressController(host)` — registers the controller on the host.
 
 ### Members
 

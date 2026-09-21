@@ -121,7 +121,7 @@ test.describe('Popover - native dismissal', () => {
     expect(await readCloseSource(page)).toBe('outside');
   });
 
-  // Regression test for the reopen guard (TriggerPressGuardController):
+  // Regression test for the reopen guard (TriggerPressController):
   // pressing the trigger again while open light-dismisses the popover before
   // the trailing click fires, so a naive `open = !open` handler would read
   // `open` as already false and flip it back to true instead of leaving it

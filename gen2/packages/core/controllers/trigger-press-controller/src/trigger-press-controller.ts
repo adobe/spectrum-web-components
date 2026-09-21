@@ -13,19 +13,19 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
 /**
- * Options for {@link TriggerPressGuardController.attach}.
+ * Options for {@link TriggerPressController.attach}.
  */
-export interface TriggerPressGuardControllerOptions {
+export interface TriggerPressControllerOptions {
   /**
    * Called on a trigger click that is not consumed as a same-gesture reopen
-   * guard (see {@link TriggerPressGuardController} for when a click is
+   * guard (see {@link TriggerPressController} for when a click is
    * consumed instead). Typically flips the host's own `open` property.
    */
   onToggle: () => void;
 }
 
 /**
- * **TriggerPressGuardController** — click-to-toggle wiring for a trigger that
+ * **TriggerPressController** — click-to-toggle wiring for a trigger that
  * opens a native light-dismissible surface (`popover="auto"`, a non-modal
  * `<dialog>`, or anything else the platform can close on its own), without
  * the surface reopening on the same click that was meant to close it.
@@ -45,13 +45,13 @@ export interface TriggerPressGuardControllerOptions {
  *
  * A capturing `pointerdown`/`touchstart` listener on the trigger opens a
  * short "gesture window" before the platform gets a chance to light-dismiss.
- * The consumer calls {@link TriggerPressGuardController.noteNativeDismiss}
+ * The consumer calls {@link TriggerPressController.noteNativeDismiss}
  * from its own native-close handler (for example a `popover` element's
  * `beforetoggle` reaction) whenever it observes a close that was **not**
  * driven by its own `open` setter. If that close lands inside the gesture
  * window, the controller remembers it, and the trailing `click` — read by
  * this controller's own listener — is consumed instead of calling
- * {@link TriggerPressGuardControllerOptions.onToggle}. A close observed
+ * {@link TriggerPressControllerOptions.onToggle}. A close observed
  * outside the gesture window (Escape, an outside click elsewhere, a
  * programmatic close) is not affected.
  *
@@ -63,11 +63,11 @@ export interface TriggerPressGuardControllerOptions {
  *
  * ### Usage
  *
- * Construct once per host, then call {@link TriggerPressGuardController.attach}
+ * Construct once per host, then call {@link TriggerPressController.attach}
  * every time the resolved trigger element changes (attaching the same
  * element again is a no-op for the listeners, but still updates the
- * {@link TriggerPressGuardControllerOptions.onToggle} callback). Call
- * {@link TriggerPressGuardController.noteNativeDismiss} from the surface's own
+ * {@link TriggerPressControllerOptions.onToggle} callback). Call
+ * {@link TriggerPressController.noteNativeDismiss} from the surface's own
  * native-close reaction, guarded by whatever the host already uses to tell a
  * genuine native dismissal apart from its own programmatic close (typically:
  * the close reaction fires while the host's `open` property is still `true`).
@@ -77,7 +77,7 @@ export interface TriggerPressGuardControllerOptions {
  * class MyToggle extends LitElement {
  *   @property({ type: Boolean, reflect: true }) open = false;
  *
- *   private readonly pressGuard = new TriggerPressGuardController(this);
+ *   private readonly pressGuard = new TriggerPressController(this);
  *
  *   private wireTrigger(trigger: HTMLElement | null): void {
  *     this.pressGuard.attach(trigger, {
@@ -100,11 +100,11 @@ export interface TriggerPressGuardControllerOptions {
  * }
  * ```
  */
-export class TriggerPressGuardController implements ReactiveController {
+export class TriggerPressController implements ReactiveController {
   /** The element currently carrying the press/click listeners. */
   private trigger: HTMLElement | null = null;
 
-  private options: TriggerPressGuardControllerOptions | null = null;
+  private options: TriggerPressControllerOptions | null = null;
 
   /**
    * True between a trigger press start (`pointerdown`/`touchstart`) and its
@@ -146,7 +146,7 @@ export class TriggerPressGuardController implements ReactiveController {
    */
   public attach(
     trigger: HTMLElement | null,
-    options: TriggerPressGuardControllerOptions
+    options: TriggerPressControllerOptions
   ): void {
     this.options = options;
     if (trigger === this.trigger) {

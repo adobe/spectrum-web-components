@@ -17,7 +17,7 @@ import { PlacementController } from '@adobe/spectrum-wc-core/controllers/index.j
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 
-import { TriggerPressGuardController } from '../index.js';
+import { TriggerPressController } from '../index.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -28,7 +28,7 @@ declare global {
 /**
  * @internal
  *
- * Storybook-only host pairing {@link TriggerPressGuardController} with a real
+ * Storybook-only host pairing {@link TriggerPressController} with a real
  * `popover="auto"` surface, so the reopen bug it prevents (and its fix) are
  * both directly observable: click the button to open the popover, then click
  * it again — with the controller wired, the popover closes; without it (see
@@ -56,7 +56,7 @@ export class DemoPressGuardHost extends LitElement {
   @query('swc-button')
   private trigger!: HTMLElement;
 
-  private readonly pressGuard = new TriggerPressGuardController(this);
+  private readonly pressGuard = new TriggerPressController(this);
   private readonly placement = new PlacementController(this);
 
   private readonly onNaiveClick = (): void => {

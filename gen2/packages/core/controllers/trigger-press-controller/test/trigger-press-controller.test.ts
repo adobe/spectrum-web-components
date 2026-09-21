@@ -15,10 +15,10 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { TriggerPressGuardController } from '../index.js';
+import { TriggerPressController } from '../index.js';
 
 export default {
-  title: 'Controllers/Trigger press guard controller/Tests',
+  title: 'Controllers/Trigger press controller/Tests',
   tags: ['!autodocs', 'dev'],
   render: () => html`
     <div></div>
@@ -52,7 +52,7 @@ function click(trigger: HTMLElement): void {
 export const BasicToggleTest: Story = {
   play: async ({ canvasElement, step }) => {
     const trigger = makeTrigger(canvasElement);
-    const controller = new TriggerPressGuardController(makeHost());
+    const controller = new TriggerPressController(makeHost());
     let toggleCount = 0;
     controller.attach(trigger, { onToggle: () => toggleCount++ });
 
@@ -74,7 +74,7 @@ export const BasicToggleTest: Story = {
 export const ReopenGuardTest: Story = {
   play: async ({ canvasElement, step }) => {
     const trigger = makeTrigger(canvasElement);
-    const controller = new TriggerPressGuardController(makeHost());
+    const controller = new TriggerPressController(makeHost());
     let toggleCount = 0;
     controller.attach(trigger, { onToggle: () => toggleCount++ });
 
@@ -115,7 +115,7 @@ export const ReopenGuardTest: Story = {
 export const NoteNativeDismissWithoutPressTest: Story = {
   play: async ({ canvasElement, step }) => {
     const trigger = makeTrigger(canvasElement);
-    const controller = new TriggerPressGuardController(makeHost());
+    const controller = new TriggerPressController(makeHost());
     let toggleCount = 0;
     controller.attach(trigger, { onToggle: () => toggleCount++ });
 
@@ -136,7 +136,7 @@ export const NoteNativeDismissWithoutPressTest: Story = {
 export const TouchstartOpensGestureWindowTest: Story = {
   play: async ({ canvasElement, step }) => {
     const trigger = makeTrigger(canvasElement);
-    const controller = new TriggerPressGuardController(makeHost());
+    const controller = new TriggerPressController(makeHost());
     let toggleCount = 0;
     controller.attach(trigger, { onToggle: () => toggleCount++ });
 
@@ -171,7 +171,7 @@ export const TouchstartOpensGestureWindowTest: Story = {
 export const DoublePressStartTest: Story = {
   play: async ({ canvasElement, step }) => {
     const trigger = makeTrigger(canvasElement);
-    const controller = new TriggerPressGuardController(makeHost());
+    const controller = new TriggerPressController(makeHost());
     let toggleCount = 0;
     controller.attach(trigger, { onToggle: () => toggleCount++ });
 
@@ -215,7 +215,7 @@ export const PressEndWithoutClickResetsTest: Story = {
     const trigger = makeTrigger(canvasElement);
     const other = document.createElement('div');
     canvasElement.appendChild(other);
-    const controller = new TriggerPressGuardController(makeHost());
+    const controller = new TriggerPressController(makeHost());
     let toggleCount = 0;
     controller.attach(trigger, { onToggle: () => toggleCount++ });
 
@@ -250,7 +250,7 @@ export const PressEndWithoutClickResetsTest: Story = {
 export const DismissDuringCancelledPressDoesNotLeakTest: Story = {
   play: async ({ canvasElement, step }) => {
     const trigger = makeTrigger(canvasElement);
-    const controller = new TriggerPressGuardController(makeHost());
+    const controller = new TriggerPressController(makeHost());
     let toggleCount = 0;
     controller.attach(trigger, { onToggle: () => toggleCount++ });
 
@@ -286,7 +286,7 @@ export const DismissDuringCancelledPressDoesNotLeakTest: Story = {
 export const AttachUpdatesCallbackTest: Story = {
   play: async ({ canvasElement, step }) => {
     const trigger = makeTrigger(canvasElement);
-    const controller = new TriggerPressGuardController(makeHost());
+    const controller = new TriggerPressController(makeHost());
     let firstCalled = 0;
     let secondCalled = 0;
     controller.attach(trigger, { onToggle: () => firstCalled++ });
@@ -312,7 +312,7 @@ export const AttachUpdatesCallbackTest: Story = {
 export const DetachRemovesListenersTest: Story = {
   play: async ({ canvasElement, step }) => {
     const trigger = makeTrigger(canvasElement);
-    const controller = new TriggerPressGuardController(makeHost());
+    const controller = new TriggerPressController(makeHost());
     let toggleCount = 0;
     controller.attach(trigger, { onToggle: () => toggleCount++ });
 
@@ -329,7 +329,7 @@ export const DetachRemovesListenersTest: Story = {
 export const HostDisconnectedDetachesTest: Story = {
   play: async ({ canvasElement, step }) => {
     const trigger = makeTrigger(canvasElement);
-    const controller = new TriggerPressGuardController(makeHost());
+    const controller = new TriggerPressController(makeHost());
     let toggleCount = 0;
     controller.attach(trigger, { onToggle: () => toggleCount++ });
 

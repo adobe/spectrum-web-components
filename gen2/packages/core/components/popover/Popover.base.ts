@@ -16,7 +16,7 @@ import { property } from 'lit/decorators.js';
 import {
   PageScrollLockController,
   PlacementController,
-  TriggerPressGuardController,
+  TriggerPressController,
   type VirtualTrigger,
 } from '@adobe/spectrum-wc-core/controllers/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
@@ -270,7 +270,7 @@ export abstract class PopoverBase extends SpectrumElement {
   // Click-to-toggle on the resolved trigger, without the surface reopening on
   // the same click that light-dismissed it (see the controller's own doc for
   // why that needs dedicated gesture tracking, not just a naive toggle).
-  private readonly _pressGuard = new TriggerPressGuardController(this);
+  private readonly _pressGuard = new TriggerPressController(this);
 
   /** Cause of the in-progress close, read when dispatching `swc-close`. */
   private _closeSource: PopoverCloseSource | null = null;
@@ -693,7 +693,7 @@ export abstract class PopoverBase extends SpectrumElement {
       const source = this._closeSource ?? 'outside';
       // Attribute an outside light-dismiss that lands during a trigger press
       // to that press, so the trailing click is read as the close rather
-      // than a reopen (see `TriggerPressGuardController`).
+      // than a reopen (see `TriggerPressController`).
       if (source === 'outside') {
         this._pressGuard.noteNativeDismiss();
       }
