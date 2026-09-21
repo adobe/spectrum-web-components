@@ -300,8 +300,10 @@ function stripMdx(content) {
       // by buildApiSection, both from the same stories.ts / CEM sources).
       .replace(/^<DocsHeader\s*\/>\s*\n?/gm, '')
       .replace(/^<DocsFooter\s*\/>\s*\n?/gm, '')
-      // Replace Storybook-only Canvas examples with a plain Markdown note
-      .replace(/^<Canvas\b[^>]*\/>\s*\n?/gm, '_Storybook example omitted._\n')
+      // Replace Storybook-only Canvas examples with a plain Markdown note.
+      // [\s\S]*? spans multi-line <Canvas> whose props contain `>` (e.g. an
+      // `onClick: () =>` arrow), stopping at the first self-closing `/>`.
+      .replace(/<Canvas\b[\s\S]*?\/>\s*\n?/g, '_Storybook example omitted._\n')
       // Remove <img> tags with a JS expression source (can't resolve at build time)
       .replace(/<img\s[^>]*\{[^}]*\}[^>]*\/?>/gi, '')
       // Remove JSX block comments
@@ -535,6 +537,32 @@ function listGen2Patterns() {
     }
   }
   return units.sort((a, b) => unitSlug(a).localeCompare(unitSlug(b)));
+}
+
+/**
+ * Group-root pattern docs (e.g. `patterns/ai-toolkit/pattern-overview.mdx`): a
+ * `<Meta>`-titled Storybook page with cross-component composition/anatomy
+ * guidance, living beside the unit dirs rather than inside one. No custom
+ * element tag, so no API table. Returns pseudo-units { dir, mdxPath, group }.
+ */
+function listGen2PatternOverviews() {
+  const overviews = [];
+  for (const group of readdirSync(GEN2_PATTERNS, { withFileTypes: true })) {
+    if (!group.isDirectory()) {
+      continue;
+    }
+    const groupDir = join(GEN2_PATTERNS, group.name);
+    for (const file of readdirSync(groupDir)) {
+      if (file.endsWith('.mdx') && !file.endsWith('.internal.mdx')) {
+        overviews.push({
+          dir: file.slice(0, -'.mdx'.length),
+          mdxPath: join(groupDir, file),
+          group: group.name,
+        });
+      }
+    }
+  }
+  return overviews.sort((a, b) => unitSlug(a).localeCompare(unitSlug(b)));
 }
 
 /**
@@ -1194,6 +1222,7 @@ function buildGen2DocsSkill(skillDir) {
 
   const components = listGen2Units(GEN2_COMPONENTS);
   const patterns = listGen2Patterns();
+  const patternOverviews = listGen2PatternOverviews();
 
   // Map each unit's Storybook docs id → its generated reference path, so
   // in-skill cross-links can be rewritten to relative files (see rewriteDocLinks).
@@ -1227,7 +1256,10 @@ function buildGen2DocsSkill(skillDir) {
         .join(', '),
       GEN2_COMPONENT_LIST: buildGen2UnitList(components, 'components'),
       GEN2_PATTERN_NAMES: patterns.map((c) => `\`${c.tagName}\``).join(', '),
-      GEN2_PATTERN_LIST: buildGen2UnitList(patterns, 'patterns'),
+      GEN2_PATTERN_LIST: buildGen2UnitList(
+        [...patternOverviews, ...patterns],
+        'patterns'
+      ),
     })
   );
 
@@ -1254,11 +1286,12 @@ function buildGen2DocsSkill(skillDir) {
 
   const componentCount = writeUnitDocs(components, 'components');
   const patternCount = writeUnitDocs(patterns, 'patterns');
+  const overviewCount = writeUnitDocs(patternOverviews, 'patterns');
 
   assertGeneratedDocsValid(refsDir);
 
   console.log(
-    `  spectrum-wc: ${componentCount} components + ${patternCount} patterns`
+    `  spectrum-wc: ${componentCount} components + ${patternCount} patterns + ${overviewCount} pattern overviews`
   );
 }
 
