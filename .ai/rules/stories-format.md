@@ -227,6 +227,10 @@ argTypes.variant = {
 
 Only wire `argTypes.<prop>.options` when you need something the type does not express: a curated ordering, or a "none/clear" sentinel option (e.g. `['', ...MY_STATIC_COLORS]`) for an optional property. Union props that lack a `parsedType` in the generated manifest still need the manual wiring.
 
+The same goes for **default values**: the API table and the initial control value come from the manifest, including properties exposed through a getter/setter pair. Don't restate a default in `args` or `argTypes.<prop>.table.defaultValue` just to make it show up — set it in the component instead.
+
+If a control or default is missing, treat it as a manifest bug rather than a story problem. Run `yarn analyze` and read the summary: `cem.config.js` names every property whose type it could not expand into a select, and `CEM_VERBOSE=1 yarn analyze` lists the raw type-parser bails behind it.
+
 ### Internal attributes: exclude from the Storybook helper round-trip
 
 If a component manages an **internal DOM attribute directly** via `setAttribute`/`removeAttribute` — i.e. a CSS-only state attribute that is **not** a declared `@property` and not part of the public API (for example Tooltip's `actual-placement`) — you must declare it in `argTypes` with the control disabled, even though it is not a real control.
