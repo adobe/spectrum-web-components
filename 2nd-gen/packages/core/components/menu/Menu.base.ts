@@ -446,8 +446,11 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
         this.focusNavigation.getActiveItem();
       if (active) {
         // Deferred so the browser doesn't move focus back to the trigger
-        // after the click handler that set `open` returns.
-        queueMicrotask(() => active.focus());
+        // after the click handler that set `open` returns. `preventScroll`
+        // because this fires before PlacementController's async compute has
+        // applied the real position, so an unguarded focus() would scroll
+        // the page to this item's temporary, not-yet-positioned location.
+        queueMicrotask(() => active.focus({ preventScroll: true }));
       }
     }
   }
