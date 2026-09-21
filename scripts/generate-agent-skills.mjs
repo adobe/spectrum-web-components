@@ -600,6 +600,30 @@ function mdTable(headers, rows) {
 const code = (text) => (text ? `\`${text}\`` : '');
 
 /**
+ * CEM analyzer output can include entries with no `name` (artifacts such as an
+ * un-parseable `@fires`) and repeated entries for the same name. Drop nameless
+ * entries (unless `keepNameless`, for the default slot) and dedupe by name —
+ * first occurrence wins, but a later duplicate's non-empty description fills a
+ * missing one — so API tables carry no blank or duplicate rows.
+ */
+function dedupeCemEntries(entries, { keepNameless = false } = {}) {
+  const byName = new Map();
+  for (const entry of entries ?? []) {
+    const name = typeof entry?.name === 'string' ? entry.name.trim() : '';
+    if (!name && !keepNameless) {
+      continue;
+    }
+    const existing = byName.get(name);
+    if (!existing) {
+      byName.set(name, entry);
+    } else if (!existing.description && entry.description) {
+      byName.set(name, entry);
+    }
+  }
+  return [...byName.values()];
+}
+
+/**
  * Build the Properties/Slots/Events/CSS Custom Properties/CSS Parts tables
  * for a single custom element tag, mirroring the categories rendered by the
  * live `<ApiTable />` Storybook block. Returns null if the tag isn't a
@@ -617,12 +641,14 @@ function buildApiTables(tagName, cem, headingLevel) {
       .map((attr) => [attr.fieldName, attr])
   );
 
-  const props = (component.members ?? []).filter(
-    (m) =>
-      m.kind === 'field' &&
-      m.privacy !== 'private' &&
-      m.privacy !== 'protected' &&
-      !m.static
+  const props = dedupeCemEntries(
+    (component.members ?? []).filter(
+      (m) =>
+        m.kind === 'field' &&
+        m.privacy !== 'private' &&
+        m.privacy !== 'protected' &&
+        !m.static
+    )
   );
 
   const sections = [
@@ -646,17 +672,16 @@ function buildApiTables(tagName, cem, headingLevel) {
       'Slots',
       mdTable(
         ['Name', 'Description'],
-        (component.slots ?? []).map((slot) => [
-          code(slot.name || '(default)'),
-          slot.description,
-        ])
+        dedupeCemEntries(component.slots, { keepNameless: true }).map(
+          (slot) => [code(slot.name || '(default)'), slot.description]
+        )
       ),
     ],
     [
       'Events',
       mdTable(
         ['Name', 'Description'],
-        (component.events ?? []).map((event) => [
+        dedupeCemEntries(component.events).map((event) => [
           code(event.name),
           event.description,
         ])
@@ -666,7 +691,7 @@ function buildApiTables(tagName, cem, headingLevel) {
       'CSS custom properties',
       mdTable(
         ['Name', 'Default', 'Description'],
-        (component.cssProperties ?? []).map((prop) => [
+        dedupeCemEntries(component.cssProperties).map((prop) => [
           code(prop.name),
           prop.default != null ? code(prop.default) : '-',
           prop.description,
@@ -677,7 +702,7 @@ function buildApiTables(tagName, cem, headingLevel) {
       'CSS parts',
       mdTable(
         ['Name', 'Description'],
-        (component.cssParts ?? []).map((part) => [
+        dedupeCemEntries(component.cssParts).map((part) => [
           code(part.name),
           part.description,
         ])
@@ -1057,6 +1082,112 @@ function buildMigrationSkill(skillDir) {
   );
 }
 
+const DOCS_SITE = 'https://spectrum-web-components.adobe.com';
+
+/**
+ * Storybook derives a docs-page id from a meta `title` by lowercasing and
+ * replacing runs of non-alphanumerics with `-` (e.g. 'Components/Action button'
+ * → 'components-action-button'); the docs page id appends '--docs'.
+ */
+function storybookDocSlug(title) {
+  return (
+    title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') + '--docs'
+  );
+}
+
+/**
+ * Rewrite Storybook doc links (`/docs/<id>`, `?path=/docs/<id>`,
+ * `../?path=/docs/<id>`, with an optional `#anchor`) that break once the skill
+ * is read as loose Markdown. Targets that resolve to a generated unit doc
+ * become a relative `.md` link; the rest become absolute links to the live docs
+ * site. `selfRef` and the `slugToRef` values are paths relative to `references/`.
+ */
+function rewriteDocLinks(content, selfRef, slugToRef) {
+  return content.replace(/(\]\()([^)\s]+)(\))/g, (whole, open, href, close) => {
+    const m = href.match(/\/docs\/([a-z0-9-]+)(#[^)]*)?$/i);
+    if (!m) {
+      return whole;
+    }
+    const [, slug, anchor = ''] = m;
+    const targetRef = slugToRef.get(slug);
+    if (targetRef) {
+      let rel = relative(dirname(selfRef), targetRef);
+      if (!rel.startsWith('.')) {
+        rel = './' + rel;
+      }
+      return `${open}${rel}${anchor}${close}`;
+    }
+    return `${open}${DOCS_SITE}/?path=/docs/${slug}${anchor}${close}`;
+  });
+}
+
+/**
+ * Fail generation if the emitted Markdown has broken references: an unresolved
+ * Storybook doc link, a relative `.md` link with no target file, a table row
+ * with a blank name, or a duplicate name within one table. Guards the link
+ * rewriting and CEM de-duplication above against silent regressions.
+ */
+function assertGeneratedDocsValid(refsDir) {
+  const problems = [];
+  for (const rel of collectFiles(refsDir)) {
+    if (!rel.endsWith('.md')) {
+      continue;
+    }
+    const file = join(refsDir, rel);
+    const md = readFileSync(file, 'utf8');
+
+    for (const [, href] of md.matchAll(/\]\(([^)\s]+)\)/g)) {
+      if (/^(https?:|mailto:|#)/i.test(href)) {
+        continue;
+      }
+      if (/\/docs\//i.test(href)) {
+        problems.push(`${rel}: unresolved Storybook link (${href})`);
+      } else if (href.split('#')[0].endsWith('.md')) {
+        if (!existsSync(join(dirname(file), href.split('#')[0]))) {
+          problems.push(`${rel}: broken relative link (${href})`);
+        }
+      }
+    }
+
+    let inFence = false;
+    let names = null;
+    for (const line of md.split('\n')) {
+      if (/^\s*```/.test(line)) {
+        inFence = !inFence;
+        names = null;
+        continue;
+      }
+      if (inFence || !/^\s*\|.*\|\s*$/.test(line)) {
+        names = null;
+        continue;
+      }
+      if (/^\s*\|(?:\s*:?-+:?\s*\|)+\s*$/.test(line)) {
+        names = new Set();
+        continue;
+      }
+      if (names === null) {
+        continue;
+      }
+      const name = (line.split('|')[1] ?? '').replace(/`/g, '').trim();
+      if (!name) {
+        problems.push(`${rel}: blank table row name`);
+      } else if (names.has(name)) {
+        problems.push(`${rel}: duplicate table row (${name})`);
+      } else {
+        names.add(name);
+      }
+    }
+  }
+  if (problems.length > 0) {
+    throw new Error(
+      `Generated spectrum-wc docs failed validation:\n  ${problems.join('\n  ')}`
+    );
+  }
+}
+
 function buildGen2DocsSkill(skillDir) {
   const refsDir = join(skillDir, 'references');
   mkdirSync(join(refsDir, 'components'), { recursive: true });
@@ -1071,6 +1202,26 @@ function buildGen2DocsSkill(skillDir) {
 
   const components = listGen2Units(SECOND_GEN_COMPONENTS);
   const patterns = listGen2Patterns();
+
+  // Map each unit's Storybook docs id → its generated reference path, so
+  // in-skill cross-links can be rewritten to relative files (see rewriteDocLinks).
+  // Storybook prepends a per-directory `titlePrefix` (see .storybook/main.ts) to
+  // each story's bare `title`, so the docs id is kebab(`<section>/<title>`).
+  const slugToRef = new Map();
+  for (const [units, subdir, section] of [
+    [components, 'components', 'Components'],
+    [patterns, 'patterns', 'Patterns'],
+  ]) {
+    for (const unit of units) {
+      const meta = readStoriesMeta(unit);
+      if (meta?.title) {
+        slugToRef.set(
+          storybookDocSlug(`${section}/${meta.title}`),
+          `${subdir}/${unitSlug(unit)}.md`
+        );
+      }
+    }
+  }
 
   const sourceMd = readFileSync(
     join(SKILL_SOURCE_DIR, 'spectrum-wc-skill', 'SKILL.md'),
@@ -1100,7 +1251,9 @@ function buildGen2DocsSkill(skillDir) {
       if (api) {
         content = content.trimEnd() + '\n\n' + api + '\n';
       }
-      const outPath = join(refsDir, subdir, `${unitSlug(unit)}.md`);
+      const ref = `${subdir}/${unitSlug(unit)}.md`;
+      content = rewriteDocLinks(content, ref, slugToRef);
+      const outPath = join(refsDir, ref);
       mkdirSync(dirname(outPath), { recursive: true });
       writeFileSync(outPath, content);
     }
@@ -1109,6 +1262,8 @@ function buildGen2DocsSkill(skillDir) {
 
   const componentCount = writeUnitDocs(components, 'components');
   const patternCount = writeUnitDocs(patterns, 'patterns');
+
+  assertGeneratedDocsValid(refsDir);
 
   console.log(
     `  spectrum-wc: ${componentCount} components + ${patternCount} patterns`
