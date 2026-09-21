@@ -1,11 +1,11 @@
 ---
 name: migration-testing
-description: Phase 6 of 1st-gen to 2nd-gen component migration. Use to write unit tests, accessibility tests, and Storybook play functions for a migrated component.
+description: Phase 6 of 1st-gen to gen2 component migration. Use to write unit tests, accessibility tests, and Storybook play functions for a migrated component.
 ---
 
-# Migration testing ([Phase 6](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md))
+# Migration testing ([Phase 6](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/README.md))
 
-[Phase 6](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is automated test coverage for behavior and accessibility — unit tests via Vitest, a11y tests via Playwright, and Storybook play functions.
+[Phase 6](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/README.md) of the 1st-gen → gen2 component migration. The goal is automated test coverage for behavior and accessibility — unit tests via Vitest, a11y tests via Playwright, and Storybook play functions.
 
 ## Mindset
 
@@ -19,7 +19,7 @@ Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[
 - The user asks to "add tests" or "write tests" for a migrated component
 - The user asks to add play functions, a11y specs, or unit tests
 - The user asks to add dedicated VRT stories for a migrated component
-- The user refers to "Phase 6" of the 2nd-gen component migration workstream
+- The user refers to "Phase 6" of the gen2 component migration workstream
 
 ## When NOT to use
 
@@ -36,7 +36,7 @@ Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[
 
 ## Workflow
 
-Follow **[Phase 6: Testing](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-6-testing)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+Follow **[Phase 6: Testing](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-6-testing)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
 
 If the implementation or the needed test coverage has drifted from the migration plan, follow [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
 

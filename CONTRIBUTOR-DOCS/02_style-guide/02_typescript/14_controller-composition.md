@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-gen TypeScript](README.md) / Controller composition
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 TypeScript](README.md) / Controller composition
 
 <!-- Document title (editable) -->
 
@@ -25,7 +25,7 @@
 
 <!-- Document content (editable) -->
 
-This guide explains how Lit reactive controllers work in 2nd-gen components.
+This guide explains how Lit reactive controllers work in gen2 components.
 
 For the official Lit documentation, see [Lit — Controllers](https://lit.dev/docs/composition/controllers/).
 
@@ -59,7 +59,7 @@ To attach a controller, call `host.addController(this)` in the constructor. This
 
 ## Available controllers
 
-For the full inventory (what each one does and which components/patterns use it), see [2nd-gen shared resources](../../01_contributor-guides/16_2nd-gen-shared-resources.md#controllers).
+For the full inventory (what each one does and which components/patterns use it), see [gen2 shared resources](../../01_contributor-guides/16_gen2-shared-resources.md#controllers).
 
 | Controller | Location | Purpose |
 |-----------|----------|---------|
@@ -77,11 +77,11 @@ For the full inventory (what each one does and which components/patterns use it)
 
 ## Planned controllers
 
-The following controllers exist in 1st-gen and may be recreated in 2nd-gen core (using 1st-gen as reference):
+The following controllers exist in 1st-gen and may be recreated in gen2 core (using 1st-gen as reference):
 
 | Controller | 1st-gen location | Purpose |
 |-----------|-----------------|---------|
-| `RovingTabindexController` | `1st-gen/packages/shared/` | Keyboard navigation (superseded by `FocusgroupNavigationController` in 2nd-gen) |
+| `RovingTabindexController` | `1st-gen/packages/shared/` | Keyboard navigation (superseded by `FocusgroupNavigationController` in gen2) |
 | `MatchMediaController` | `1st-gen/packages/picker/` | Device-adaptive behavior |
 | `InteractionController` (base) | `1st-gen/packages/overlay/` | Base for trigger behavior |
 | `ClickController` | `1st-gen/packages/overlay/` | Click-to-open overlay |
@@ -107,7 +107,7 @@ The following controllers exist in 1st-gen and may be recreated in 2nd-gen core 
 
 ## LanguageResolutionController
 
-The main controller for locale in 2nd-gen is `LanguageResolutionController`. It resolves the component's language/locale for formatting numbers, dates, and accessibility text.
+The main controller for locale in gen2 is `LanguageResolutionController`. It resolves the component's language/locale for formatting numbers, dates, and accessibility text.
 
 **File:** `core/controllers/language-resolution.ts`
 
