@@ -19,20 +19,20 @@
  *   - index.json entry has { name, description, files: [...] } — no archives
  *
  * Prose for each skill is authored in dedicated source files:
- *   2nd-gen/packages/ai/skills/swc-skill/SKILL.md
- *   2nd-gen/packages/ai/skills/gen2-migration/SKILL.md
- *   2nd-gen/packages/ai/skills/spectrum-wc-skill/SKILL.md
+ *   gen2/packages/ai/skills/swc-skill/SKILL.md
+ *   gen2/packages/ai/skills/gen2-migration/SKILL.md
+ *   gen2/packages/ai/skills/spectrum-wc-skill/SKILL.md
  *
  * The spectrum-wc skill's component/pattern references end with an API section
  * (Properties, Slots, Events, CSS Custom Properties, CSS Parts) rendered as
- * Markdown tables from 2nd-gen/packages/swc/dist/custom-elements.json — the
+ * Markdown tables from gen2/packages/swc/dist/custom-elements.json, the
  * same manifest the live Storybook `<ApiTable />` block reads at runtime. Run
  * `yarn build` (or `yarn workspace @adobe/spectrum-wc build`) before this
  * script so that manifest exists.
  *
  * The script resolves {{TOKEN}} placeholders with generated component and
  * guide lists, then writes the skill directories under .well-known/agent-skills/
- * in the 2nd-gen Storybook public dir.
+ * in the gen2 Storybook public dir.
  *
  * Usage:
  *   node scripts/generate-agent-skills.mjs
@@ -62,26 +62,22 @@ const ROOT = join(__dirname, '..');
 const FIRST_GEN_PACKAGES = join(ROOT, '1st-gen/packages');
 const FIRST_GEN_CONTENT = join(ROOT, '1st-gen/projects/documentation/content');
 const FIRST_GEN_REF_DIR = join(FIRST_GEN_CONTENT, 'reference');
-const SECOND_GEN_COMPONENTS = join(ROOT, '2nd-gen/packages/swc/components');
-const SECOND_GEN_PATTERNS = join(ROOT, '2nd-gen/packages/swc/patterns');
+const GEN2_COMPONENTS = join(ROOT, 'gen2/packages/swc/components');
+const GEN2_PATTERNS = join(ROOT, 'gen2/packages/swc/patterns');
 
 /**
  * Custom Elements Manifest emitted by `cem analyze` (`yarn workspace
  * @adobe/spectrum-wc analyze`), which runs as part of that package's `build`
- * script. Not checked in — generate:skills must run after a full `yarn build`
- * (see .github/workflows/publish-2ndgen-docs.yml).
+ * script. Not checked in; generate:skills must run after a full `yarn build`.
  */
-const SECOND_GEN_CEM_PATH = join(
-  ROOT,
-  '2nd-gen/packages/swc/dist/custom-elements.json'
-);
-const SKILL_SOURCE_DIR = join(ROOT, '2nd-gen/packages/ai/skills');
+const GEN2_CEM_PATH = join(ROOT, 'gen2/packages/swc/dist/custom-elements.json');
+const SKILL_SOURCE_DIR = join(ROOT, 'gen2/packages/ai/skills');
 
 /**
  * Storybook's staticDirs root — files here are served verbatim at the site root.
  * Skills are written under .well-known/agent-skills/ so `npx skills add <domain>` works.
  */
-const OUTPUT_DIR = join(ROOT, '2nd-gen/packages/swc/public');
+const OUTPUT_DIR = join(ROOT, 'gen2/packages/swc/public');
 
 // ---------------------------------------------------------------------------
 // Guide definitions
@@ -163,8 +159,7 @@ const GEN1_GUIDES = [
  */
 const GEN2_MIGRATION_GUIDES = [
   {
-    sourcePath:
-      '2nd-gen/packages/swc/.storybook/resources/migrate-from-gen1.mdx',
+    sourcePath: 'gen2/packages/swc/.storybook/resources/migrate-from-gen1.mdx',
     refPath: 'guides/migrate-from-gen1.md',
     title: 'Migrate from Gen1',
     description:
@@ -172,8 +167,7 @@ const GEN2_MIGRATION_GUIDES = [
     stripFn: 'mdx',
   },
   {
-    sourcePath:
-      '2nd-gen/packages/swc/.storybook/learn-about-swc/gen1-vs-gen2.mdx',
+    sourcePath: 'gen2/packages/swc/.storybook/learn-about-swc/gen1-vs-gen2.mdx',
     refPath: 'guides/gen1-vs-gen2.md',
     title: 'Gen1 vs Gen2',
     description:
@@ -181,8 +175,7 @@ const GEN2_MIGRATION_GUIDES = [
     stripFn: 'mdx',
   },
   {
-    sourcePath:
-      '2nd-gen/packages/swc/.storybook/learn-about-swc/get-started.mdx',
+    sourcePath: 'gen2/packages/swc/.storybook/learn-about-swc/get-started.mdx',
     refPath: 'guides/get-started.md',
     title: 'Get started (Gen2)',
     description:
@@ -191,7 +184,7 @@ const GEN2_MIGRATION_GUIDES = [
   },
   {
     sourcePath:
-      '2nd-gen/packages/swc/.storybook/guides/customization/getting-started.mdx',
+      'gen2/packages/swc/.storybook/guides/customization/getting-started.mdx',
     refPath: 'guides/customization-getting-started.md',
     title: 'Customization: getting started',
     description:
@@ -200,7 +193,7 @@ const GEN2_MIGRATION_GUIDES = [
   },
   {
     sourcePath:
-      '2nd-gen/packages/swc/.storybook/guides/customization/theme-scales.mdx',
+      'gen2/packages/swc/.storybook/guides/customization/theme-scales.mdx',
     refPath: 'guides/customization-theme-scales.md',
     title: 'Customization: theme and scales',
     description:
@@ -208,8 +201,7 @@ const GEN2_MIGRATION_GUIDES = [
     stripFn: 'mdx',
   },
   {
-    sourcePath:
-      '2nd-gen/packages/swc/.storybook/guides/customization/fonts.mdx',
+    sourcePath: 'gen2/packages/swc/.storybook/guides/customization/fonts.mdx',
     refPath: 'guides/customization-fonts.md',
     title: 'Customization: fonts',
     description:
@@ -218,7 +210,7 @@ const GEN2_MIGRATION_GUIDES = [
   },
   {
     sourcePath:
-      '2nd-gen/packages/swc/.storybook/guides/customization/component-styles.mdx',
+      'gen2/packages/swc/.storybook/guides/customization/component-styles.mdx',
     refPath: 'guides/customization-component-styles.md',
     title: 'Customization: component styles',
     description:
@@ -227,7 +219,7 @@ const GEN2_MIGRATION_GUIDES = [
   },
   {
     sourcePath:
-      '2nd-gen/packages/swc/.storybook/resources/support-and-compatibility.mdx',
+      'gen2/packages/swc/.storybook/resources/support-and-compatibility.mdx',
     refPath: 'guides/support-and-compatibility.md',
     title: 'Support and compatibility (Gen2)',
     description:
@@ -471,21 +463,21 @@ function listGen1Components() {
 }
 
 /**
- * List all 2nd-gen components that have a migration-guide.mdx.
+ * List all gen2 components that have a migration-guide.mdx.
  * Returns [{ componentDir, guidePath }] sorted by componentDir.
  */
 function listMigrationComponents() {
-  return readdirSync(SECOND_GEN_COMPONENTS)
+  return readdirSync(GEN2_COMPONENTS)
     .map((dir) => ({
       componentDir: dir,
-      guidePath: join(SECOND_GEN_COMPONENTS, dir, 'migration-guide.mdx'),
+      guidePath: join(GEN2_COMPONENTS, dir, 'migration-guide.mdx'),
     }))
     .filter((c) => existsSync(c.guidePath))
     .sort((a, b) => a.componentDir.localeCompare(b.componentDir));
 }
 
 /**
- * List all 2nd-gen units (components or patterns) in `dir` that have a public
+ * List all gen2 units (components or patterns) in `dir` that have a public
  * `<name>.mdx` doc page, tagged `swc-<name>`. The doc's own filename is the
  * source of truth for `<name>` (and its sibling `stories/<name>.stories.ts`):
  * most units name the folder after the doc, but some don't (e.g.
@@ -532,13 +524,13 @@ function listGen2Units(dir) {
  */
 function listGen2Patterns() {
   const units = [];
-  for (const group of readdirSync(SECOND_GEN_PATTERNS, {
+  for (const group of readdirSync(GEN2_PATTERNS, {
     withFileTypes: true,
   })) {
     if (!group.isDirectory()) {
       continue;
     }
-    for (const unit of listGen2Units(join(SECOND_GEN_PATTERNS, group.name))) {
+    for (const unit of listGen2Units(join(GEN2_PATTERNS, group.name))) {
       units.push({ ...unit, group: group.name });
     }
   }
@@ -558,11 +550,11 @@ function unitSlug(unit) {
 // ---------------------------------------------------------------------------
 
 function loadCem() {
-  if (!existsSync(SECOND_GEN_CEM_PATH)) {
+  if (!existsSync(GEN2_CEM_PATH)) {
     return null;
   }
   try {
-    return JSON.parse(readFileSync(SECOND_GEN_CEM_PATH, 'utf8'));
+    return JSON.parse(readFileSync(GEN2_CEM_PATH, 'utf8'));
   } catch {
     return null;
   }
@@ -1200,7 +1192,7 @@ function buildGen2DocsSkill(skillDir) {
     );
   }
 
-  const components = listGen2Units(SECOND_GEN_COMPONENTS);
+  const components = listGen2Units(GEN2_COMPONENTS);
   const patterns = listGen2Patterns();
 
   // Map each unit's Storybook docs id → its generated reference path, so
