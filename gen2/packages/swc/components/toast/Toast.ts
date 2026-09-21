@@ -10,10 +10,20 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { ToastBase } from '@adobe/spectrum-wc-core/components/toast';
+import {
+  SWC_TOAST_ACTION_EVENT,
+  ToastBase,
+} from '@adobe/spectrum-wc-core/components/toast';
+
+import '@adobe/spectrum-wc-icons/swc-icon-alert-triangle.js';
+import '@adobe/spectrum-wc-icons/swc-icon-checkmark-circle.js';
+import '@adobe/spectrum-wc-icons/swc-icon-info-circle.js';
+import '../button/swc-button.js';
+import '../close-button/swc-close-button.js';
 
 import styles from './toast.css';
 
@@ -24,19 +34,113 @@ import styles from './toast.css';
  * @since 2.0.0
  *
  * @slot - Toast message text.
- * @slot action - Optional action button.
+ *
+ * @fires swc-open - Dispatched when the toast begins to open.
+ * @fires swc-after-open - Dispatched after the toast finishes opening.
+ * @fires swc-close - Cancelable event dispatched when the toast begins to close.
+ * @fires swc-after-close - Dispatched after the toast finishes closing.
+ * @fires swc-toast-action - Dispatched when the optional action button is activated.
  */
 export class Toast extends ToastBase {
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
+  protected override get internalElement(): HTMLElement | null {
+    return this.shadowRoot?.querySelector('.swc-Toast') ?? null;
+  }
+
   protected override render(): TemplateResult {
     return html`
-      <div class=${classMap({ 'swc-Toast': true })}>
-        <slot></slot>
-        <slot name="action"></slot>
+      <div
+        class=${classMap({
+          'swc-Toast': true,
+          [`swc-Toast--${this.variant}`]: true,
+        })}
+      >
+        <div class="swc-Toast-body" role="alert" aria-atomic="true">
+          <div
+            class="swc-Toast-content"
+            aria-hidden=${this.contentRevealed ? nothing : 'true'}
+          >
+            ${this.renderIcon()}
+            <div class="swc-Toast-text"><slot></slot></div>
+          </div>
+        </div>
+        ${this.actionLabel
+          ? html`
+              <swc-button
+                size="m"
+                variant="secondary"
+                fill-style="outline"
+                static-color="white"
+                @click=${this.requestAction}
+              >
+                ${this.actionLabel}
+              </swc-button>
+            `
+          : nothing}
+        <swc-close-button
+          size="m"
+          static-color="white"
+          accessible-label="Close"
+          @click=${this.requestClose}
+        ></swc-close-button>
       </div>
     `;
+  }
+
+  private readonly requestAction = (): void => {
+    this.dispatchEvent(
+      new Event(SWC_TOAST_ACTION_EVENT, { bubbles: true, composed: true })
+    );
+  };
+
+  private renderIcon(): TemplateResult | typeof nothing {
+    const accessibleLabel = this.resolvedIconLabel;
+    switch (this.variant) {
+      case 'info':
+        return html`
+          <swc-icon-info-circle
+            class="swc-Toast-typeIcon"
+            size="m"
+            accessible-label=${ifDefined(accessibleLabel)}
+          ></swc-icon-info-circle>
+        `;
+      case 'positive':
+        return html`
+          <swc-icon-checkmark-circle
+            class="swc-Toast-typeIcon"
+            size="m"
+            accessible-label=${ifDefined(accessibleLabel)}
+          ></swc-icon-checkmark-circle>
+        `;
+      case 'negative':
+        return html`
+          <swc-icon-alert-triangle
+            class="swc-Toast-typeIcon"
+            size="m"
+            accessible-label=${ifDefined(accessibleLabel)}
+          ></swc-icon-alert-triangle>
+        `;
+      default:
+        return nothing;
+    }
+  }
+
+  private get resolvedIconLabel(): string | undefined {
+    if (this.iconLabel !== undefined) {
+      return this.iconLabel || undefined;
+    }
+    switch (this.variant) {
+      case 'info':
+        return 'Information';
+      case 'positive':
+        return 'Success';
+      case 'negative':
+        return 'Error';
+      default:
+        return undefined;
+    }
   }
 }
