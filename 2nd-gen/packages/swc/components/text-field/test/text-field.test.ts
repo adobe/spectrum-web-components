@@ -26,6 +26,7 @@ import {
 import meta from '../stories/text-field.stories.js';
 import {
   Accessibility,
+  FormBehavior,
   Labelling,
   NecessityIndicator,
   States,
@@ -655,6 +656,73 @@ export const FormParticipationTest: Story = {
   },
 };
 FormParticipationTest.storyName = 'Form participation';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Native form validation, reset, and submit behavior
+// ──────────────────────────────────────────────────────────────
+
+export const FormBehaviorTest: Story = {
+  ...FormBehavior,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.shadowRoot?.querySelector('input');
+    if (!form || !input) {
+      throw new Error('form or input not found');
+    }
+
+    await step('required participates in native validation', async () => {
+      field.value = '';
+      await field.updateComplete;
+      expect(input.required).toBe(true);
+      expect(input.validity.valueMissing).toBe(true);
+      expect(form.checkValidity()).toBe(false);
+
+      field.value = 'Filled';
+      await field.updateComplete;
+      expect(input.validity.valueMissing).toBe(false);
+      expect(form.checkValidity()).toBe(true);
+    });
+
+    await step('reset restores the initial value', async () => {
+      field.value = 'Changed';
+      await field.updateComplete;
+      form.reset();
+      await field.updateComplete;
+      expect(field.value).toBe('Initial');
+      expect(new FormData(form).get('username')).toBe('Initial');
+    });
+
+    await step(
+      'submit is blocked while the required field is empty',
+      async () => {
+        let submitCount = 0;
+        form.addEventListener('submit', () => submitCount++);
+        field.value = '';
+        await field.updateComplete;
+        form.requestSubmit();
+        expect(submitCount).toBe(0);
+      }
+    );
+
+    await step('submit includes the field value when valid', async () => {
+      let submitCount = 0;
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        submitCount++;
+      });
+      field.value = 'Submitted';
+      await field.updateComplete;
+      form.requestSubmit();
+      expect(submitCount).toBe(1);
+      expect(new FormData(form).get('username')).toBe('Submitted');
+    });
+  },
+};
+FormBehaviorTest.storyName = 'Native form behavior';
 
 export const DisabledStateTest: Story = {
   render: () => html`

@@ -342,6 +342,29 @@ export const LabelOverflow: Story = {
 };
 LabelOverflow.storyName = 'Label overflow';
 
+const preventFormSubmit = (event: SubmitEvent): void => {
+  event.preventDefault();
+};
+
+export const FormBehavior: Story = {
+  render: () => html`
+    <form
+      style="display: flex; flex-direction: column; gap: 16px; inline-size: 220px;"
+      @submit=${preventFormSubmit}
+    >
+      <swc-text-field name="username" value="Initial" required>
+        <span slot="label">Username</span>
+      </swc-text-field>
+      <div style="display: flex; gap: 8px;">
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+      </div>
+    </form>
+  `,
+  tags: ['behaviors'],
+};
+FormBehavior.storyName = 'Native form behavior';
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
