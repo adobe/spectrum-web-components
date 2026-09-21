@@ -249,7 +249,8 @@ export class TriggerPressController implements ReactiveController {
     // unrelated click on the trigger.
     if (
       event.type === 'pointerup' &&
-      event.composedPath().includes(this.trigger as EventTarget)
+      this.trigger !== null &&
+      event.composedPath().includes(this.trigger)
     ) {
       return;
     }

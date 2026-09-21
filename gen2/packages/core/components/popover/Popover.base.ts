@@ -317,7 +317,6 @@ export abstract class PopoverBase extends SpectrumElement {
     unregisterDismissible(this);
     this._removeEscapeListener();
     this._scrollLock.unlock();
-    this._pressGuard.detach();
     this._clearTriggerAria();
     this._interactiveElement = null;
     this._anchor = null;
