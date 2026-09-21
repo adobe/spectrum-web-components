@@ -22,8 +22,6 @@ import '../swc-user-message.js';
 // ────────────────
 
 const { args, argTypes, template } = getStorybookHelpers('swc-user-message');
-delete (args as Record<string, unknown>).content;
-delete (argTypes as Record<string, unknown>).content;
 
 // Wraps a single swc-user-message in a conversation turn for proper alignment.
 const withUserTurn = (story: () => unknown) => html`

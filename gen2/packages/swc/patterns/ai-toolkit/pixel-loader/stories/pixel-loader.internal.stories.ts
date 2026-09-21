@@ -24,9 +24,10 @@ import { PIXEL_LOADER_PRESET_NAMES } from '../data.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-pixel-loader');
 
+// The empty option is a sentinel, not a preset: it clears `preset` so the
+// loader falls back to `icon`. The manifest cannot express that.
 argTypes.preset = {
   ...argTypes.preset,
-  control: { type: 'select' },
   options: ['', ...PIXEL_LOADER_PRESET_NAMES],
 };
 
