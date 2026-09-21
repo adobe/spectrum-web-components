@@ -41,8 +41,8 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 | `PlacementController` | Floating UI-based positioning (flip, shift, arrow, size) for anchored surfaces | `tooltip`, `popover` |
 | `HoverController` | Hover and keyboard-focus wiring for native-Popover-API triggers | `tooltip` |
 | `FocusgroupNavigationController` | Roving-tabindex arrow key navigation for composite widgets ([Open UI `focusgroup`](https://open-ui.org/components/focusgroup.explainer/)-aligned). See [Focus management](14_focus-management.md) | `tabs`, `action-group`, `message-feedback`, `conversation-thread`, `prompt-field` |
-| `SlotAttributePropagationController` | Propagates a host attribute (e.g. `size`) to slotted children | `card`, `dropzone`, `illustrated-message`, `button-group` |
-| `SlotPresenceController` | Observes whether slotted content matching a selector is present | `button`, `action-button`, `badge`, `accordion`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
+| `SlotAttributePropagationController` | Propagates a host attribute (e.g. `size`) to slotted children | `card`, `dropzone`, `illustrated-message`, `button-group`, `toast` |
+| `SlotPresenceController` | Observes whether slotted content matching a selector is present | `button`, `action-button`, `badge`, `accordion`, `toast`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
 | `SlotTextController` | Observes whether a slot has meaningful text/element content | `card`, `button`, `action-button`, `illustrated-message`, `badge` |
 | `LiveSelectionController` | Coordinates single/multiple selection across event-dispatching children | `accordion` |
 | `PageScrollLockController` | Reference-counted page scroll lock for stacked blocking surfaces | `popover` |
@@ -76,7 +76,7 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 | `isDebug()` | Whether dev mode is active (the gate `warnIf`/`validateEnum` build on) | `progress-circle`, `card`, `dropzone`, `asset`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
 | `capitalize()` | Capitalizes first character of a string | `progress-circle`, `divider` |
 | `physicalSide()` | Drops alignment suffix from a placement (`bottom-start` to `bottom`) | `popover` |
-| `runAfterTransition()` | Runs a callback once an element's CSS transition settles (or synchronously if none will run); built on `hasActiveTransition()`/`maxTransitionDurationMs()` in the same file | `popover` |
+| `runAfterTransition()` | Runs a callback once an element's CSS transition settles (or synchronously if none will run); built on `hasActiveTransition()`/`maxTransitionDurationMs()` in the same file | `popover`, `toast` |
 | `uniqueId()` (`swc/utils/id.ts`, not `core`) | Collision-resistant component ID generation | `prompt-field`, `suggestion`, `response-status`, `message-sources` |
 
 ## Directives

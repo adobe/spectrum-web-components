@@ -388,11 +388,11 @@ Planned rendering shape:
 
 #### Naming and public surface
 
-- [ ] `Toast.types.ts`: define `ToastVariant` as `'neutral' | 'info' | 'positive' | 'negative'`
-- [ ] `Toast.base.ts`: variant validation via `validateEnum()`, `icon-label` fallback
-- [ ] Wire `SlotPresenceController` to gate on whether the `action` slot has content
-- [ ] Wire `SlotAttributePropagationController` to propagate `size`/`variant` onto the slotted `action` button
-- [ ] Gate `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` on the host's own CSS transition completion via the shared `runAfterTransition`
+- [x] `Toast.types.ts`: define `ToastVariant` as `'neutral' | 'info' | 'positive' | 'negative'`
+- [x] `Toast.base.ts`: variant validation via `validateEnum()`, `icon-label` fallback
+- [x] Wire `SlotPresenceController` to gate on whether the `action` slot has content
+- [x] Wire `SlotAttributePropagationController` to propagate `size`/`variant` onto the slotted `action` button
+- [x] Gate `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` on the host's own CSS transition completion via the shared `runAfterTransition`
 
 #### Container and queue
 
@@ -454,16 +454,16 @@ Checklist items sourced from [accessibility-migration-analysis.md](./accessibili
 
 #### Naming and semantics
 
-- [ ] Host: `role="alertdialog"`, `aria-modal="false"`, `aria-labelledby` from slot text (or `aria-label` fallback)
-- [ ] Inner wrapper: `role="alert"`, `aria-atomic="true"`
+- [x] Host: `role="alertdialog"`, `aria-modal="false"`, `aria-labelledby` from slot text (or `aria-label` fallback)
+- [x] Inner wrapper: `role="alert"`, `aria-atomic="true"`
 - [ ] Inner wrapper's message content is set only after the node already exists, empty, in the accessibility tree; do not populate it in the same step that creates or reveals the node (Q10; still needs verification against slotted content and a toggled `open` lifecycle, see Q11)
-- [ ] `aria-hidden="true"` on host when `open` is false
+- [x] `aria-hidden="true"` on host when `open` is false
 
 #### State verification
 
 - [ ] Timer pauses on `pointerenter` + `focusin`, preserves remaining time, resumes only when both clear; region-wide, pausing any visible toast pauses all of them (Q7)
 - [ ] `timeout` hard-disabled when the action slot has content, checked once at open time (not live-reactive to later slot changes), gated on slot presence via `SlotPresenceController`; paired with a `warnIf()` dev warning, matching the "mutually exclusive / no-effect combination" pattern used elsewhere (e.g. Badge's `outline` + non-semantic `variant`) (Q2)
-- [ ] `tabindex="0"` on host always; opening a toast does not move focus there
+- [x] `tabindex="0"` on host always; opening a toast does not move focus there
 - [ ] Focus management on toast-close: nearest remaining toast for keyboard users, out of the region entirely for pointer users
 - [ ] When the last toast closes and the queue empties, focus returns to whatever was focused before the user entered the region, regardless of modality
 - [ ] Collapsing the expanded view sends focus to the container region

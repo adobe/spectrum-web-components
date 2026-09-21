@@ -1,0 +1,48 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as ToastStories from './stories/toast.stories';
+
+<Meta of={ToastStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A toast consists of:
+
+- **Variant icon**: communicates the semantic variant when `variant` is `info`, `positive`, or `negative`
+- **Message**: provided through the default slot
+- **Action**, provided through the `action` slot: supports one `<swc-button>` with the fixed secondary, outline, static-white treatment
+- **Close button**: dismisses the toast
+
+<Canvas of={ToastStories.Anatomy} />
+
+## Accessibility
+
+### Features
+
+The `<swc-toast>` host has `role="alertdialog"`, `aria-modal="false"`, and `tabindex="0"`. An inner wrapper has `role="alert"` and `aria-atomic="true"` so the message can be announced without moving focus when the toast opens.
+
+The host's accessible name depends on the default-slot content:
+
+- Bare message text produces an `aria-label` derived from that text.
+- A single light-DOM message element with an `id` is referenced by `aria-labelledby`.
+
+The first example uses bare text. The second uses an ID-bearing `<span>`. Inspect each `<swc-toast>` host to compare the resulting attributes.
+
+### Best practices
+
+- Use bare text when the message does not need its own element.
+- Use one ID-bearing message element when the message already has stable light-DOM markup that the host can reference.
+- Set `icon-label=""` when the message already communicates the variant and announcing the icon label would be redundant.
+- Provide a descriptive label for the optional action button.
+
+<Canvas of={ToastStories.Accessibility} />
+
+## Upcoming features
+
+- A first-party toast container will manage queued notifications, placement, focus routing, and expanded multi-toast presentation.
+- Auto-dismiss timing and region-wide pause behavior will be managed by the container.
+
+<DocsFooter />
