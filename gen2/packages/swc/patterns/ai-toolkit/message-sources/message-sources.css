@@ -25,7 +25,7 @@
   flex-direction: column;
 }
 
-/* No gap when collapsed: the list is zero block-size then, so a gap would just be trailing space. */
+/* No gap when collapsed (list is zero-height). */
 .swc-MessageSources:has(.swc-MessageSources-toggle[aria-expanded="true"]) {
   gap: token("spacing-100");
 }

@@ -625,23 +625,10 @@ export class ResponseStatus extends SpectrumElement {
       .filter(Boolean)
       .join(' ');
 
-    // Always a <button>, even in the non-interactive (no-steps) state, so the
-    // element tag never changes when the first step arrives. Swapping the tag
-    // (div -> button) makes lit rebuild the header subtree, tearing down and
-    // restarting the nested pixel loader's animation. The disclosure wiring
-    // (aria-expanded/controls, chevron) is toggled via attributes instead.
-    // The visible label inside the button is its accessible name, so no
-    // aria-label is needed. `_handleToggle`
-    // already no-ops when there are no steps, so the click handler stays
-    // attached.
-    //
-    // In the non-interactive state the button is neutralized so it is not a
-    // phantom control: `role="status"` overrides the implicit button role (AT
-    // reads it as a status live region announcing the label, not an actionable
-    // button) and `tabindex="-1"` keeps it out of the tab order so keyboard
-    // users never land on a control that does nothing. It becomes a real
-    // disclosure button, with native focus and keyboard support, once there
-    // are steps to expand.
+    // Always a <button> so the tag never changes when the first step arrives
+    // (swapping div<->button restarts the nested loader animation). With no
+    // steps it's neutralized via role="status" + tabindex="-1"; the visible
+    // label is the accessible name, so no aria-label.
     return html`
       <button
         type="button"

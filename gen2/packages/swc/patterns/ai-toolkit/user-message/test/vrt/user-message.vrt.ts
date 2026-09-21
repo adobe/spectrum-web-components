@@ -151,11 +151,8 @@ const typeRows = () =>
   );
 
 const extraRows = () => [
-  // Narrow column forces wrap well before the turn's cap; unconstrained long
-  // copy hits that cap. The cap (75% of the column) lives on the parent
-  // `swc-conversation-turn`, so it's applied here via maxInlineSize to
-  // reproduce it in isolation. Captions distinguish the two widths, which
-  // otherwise read as similar wrapping bubbles.
+  // Narrow vs. capped column; the 75% cap normally lives on the parent turn,
+  // so maxInlineSize reproduces it here in isolation.
   row(
     [
       captioned(

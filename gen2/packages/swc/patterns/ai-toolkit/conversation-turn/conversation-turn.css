@@ -46,9 +46,7 @@
 :host([type="user"]) .swc-ConversationTurn > slot {
   align-items: flex-end;
 
-  /* Reading-width cap for the user bubble column. The host and
-   * .swc-ConversationTurn stay full-width so justify-content/align-items
-   * position this capped column against the real thread edge. */
+  /* Reading-width cap for the user bubble column. */
   max-inline-size: 75%;
 }
 

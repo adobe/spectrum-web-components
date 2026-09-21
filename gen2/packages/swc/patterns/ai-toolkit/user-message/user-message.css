@@ -10,16 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-/* Sizing per explicit user-message type sourced from Figma spec (node 5-2281), full-screen modality.
- *
- * copy  — fills available column width (text reflows naturally); the reading-width
- *         cap is owned by the parent `swc-conversation-turn`
- * card  — fixed 324px (content 292px = 324px − 2×16px padding), capped at 440px
- * media — shrinks to the fixed 180×180px inner card + 2×8px padding ≈ 196px square
- *
- * The host IS the visible bubble so focus rings rendered by the parent
- * `swc-conversation-turn` hug its border box exactly.
- */
+/* Per-type sizing (Figma 5-2281): copy fills the column (cap owned by the
+ * parent turn); card 324px, capped 440px; media ~196px (180px + padding).
+ * The host is the visible bubble. */
 
 :host {
   display: block;

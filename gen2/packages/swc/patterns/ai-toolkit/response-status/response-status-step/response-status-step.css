@@ -223,7 +223,7 @@
   will-change: transform;
 }
 
-/* Sweeps for the first 80% of the cycle, then holds at the end position for the remaining 20% before looping. */
+/* Sweeps over the first 80%, then holds before looping. */
 @keyframes swc-response-status-step-shimmer {
   0% {
     translate: -100% 0;
