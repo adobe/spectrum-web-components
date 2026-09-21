@@ -45,14 +45,24 @@ test.describe('Thumbnail - ARIA Snapshots', () => {
       'components-thumbnail--accessibility',
       'swc-thumbnail'
     );
-    const thumbnails = root.locator('swc-thumbnail');
-    const decorative = thumbnails.nth(1);
-    expect(
-      await decorative.getAttribute('aria-hidden'),
-      'aria-hidden on decorative host'
-    ).toBe('true');
+    const decorative = root.locator('swc-thumbnail[decorative]');
+    await expect(
+      decorative,
+      'decorative host is marked aria-hidden'
+    ).toHaveAttribute('aria-hidden', 'true');
+
+    // `toMatchAriaSnapshot` matches a subset. Absence is covered by the
+    // `aria-hidden` and count assertions.
+    await expect(
+      root.getByRole('img'),
+      'only non-decorative thumbnails are exposed'
+    ).toHaveCount(2);
+
     await expect(root).toMatchAriaSnapshot(`
       - img "Preview"
+      - button "File preview Upload file" [disabled]:
+        - img "File preview"
+        - text: Upload file
     `);
   });
 
@@ -130,7 +140,33 @@ test.describe('Thumbnail - ARIA Snapshots', () => {
     );
     const thumbnail = root.locator('swc-thumbnail');
     await expect(thumbnail).not.toBeFocused();
-    await page.keyboard.press('Tab');
-    await expect(thumbnail).not.toBeFocused();
+
+    // One press would only prove it isn't first in the tab order.
+    for (let i = 0; i < 10; i++) {
+      await page.keyboard.press('Tab');
+      await expect(thumbnail).not.toBeFocused();
+    }
+  });
+
+  test('should be skipped entirely when tabbing through a story with focusable siblings', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-thumbnail--accessibility',
+      'swc-thumbnail'
+    );
+    const thumbnails = root.locator('swc-thumbnail');
+    const count = await thumbnails.count();
+
+    for (let i = 0; i < count + 5; i++) {
+      await page.keyboard.press('Tab');
+      const focusedIsThumbnail = await page.evaluate(
+        () => document.activeElement?.tagName.toLowerCase() === 'swc-thumbnail'
+      );
+      expect(focusedIsThumbnail, 'focus never lands on a thumbnail').toBe(
+        false
+      );
+    }
   });
 });

@@ -232,6 +232,57 @@ export const FitInvalidFallbackTest: Story = {
   },
 };
 
+export const DefaultAttributeReflectionTest: Story = {
+  render: () => html`
+    <swc-thumbnail><img src="a.png" alt="Preview" /></swc-thumbnail>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    // :host([size]) and :host([fit]) styles need these attributes present.
+    await step(
+      'reflects default size and fit attributes when neither is authored',
+      async () => {
+        expect(
+          thumbnail.getAttribute('size'),
+          'size attribute defaults to 500'
+        ).toBe('500');
+        expect(
+          thumbnail.getAttribute('fit'),
+          'fit attribute defaults to contain'
+        ).toBe('contain');
+      }
+    );
+  },
+};
+
+export const AuthoredAttributesArePreservedTest: Story = {
+  render: () => html`
+    <swc-thumbnail size="100" fit="cover">
+      <img src="a.png" alt="Preview" />
+    </swc-thumbnail>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    // Reflection must not overwrite authored values.
+    await step('leaves authored size and fit untouched', async () => {
+      expect(thumbnail.getAttribute('size'), 'authored size survives').toBe(
+        '100'
+      );
+      expect(thumbnail.getAttribute('fit'), 'authored fit survives').toBe(
+        'cover'
+      );
+    });
+  },
+};
+
 export const DroppedLegacyPropertiesTest: Story = {
   ...Overview,
   play: async ({ canvasElement, step }) => {
@@ -401,7 +452,23 @@ export const NotFocusableTest: Story = {
     });
 
     await step('is not in the tab order', async () => {
+      // `tabIndex === -1` is the custom-element default. Check the attribute
+      // too.
+      expect(
+        thumbnail.hasAttribute('tabindex'),
+        'no tabindex attribute is set on the host'
+      ).toBe(false);
       expect(thumbnail.tabIndex, 'tabIndex is -1').toBe(-1);
+    });
+
+    await step('exposes no focusable elements in its shadow root', async () => {
+      const focusable = thumbnail.shadowRoot?.querySelectorAll(
+        'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      expect(
+        focusable?.length ?? 0,
+        'shadow root contains no focusable nodes'
+      ).toBe(0);
     });
 
     await step(
