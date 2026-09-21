@@ -616,8 +616,6 @@ export class ResponseStatus extends SpectrumElement {
   private _renderHeader(showDisclosure: boolean): TemplateResult {
     const label = this._currentVisibleLabel();
     const status = this._resolvedStatus;
-    const statusRole =
-      !showDisclosure && status === 'active' ? 'status' : undefined;
     const rowClass = [
       'swc-ResponseStatus-row',
       showDisclosure ? 'swc-ResponseStatus-row--button' : '',
@@ -628,30 +626,39 @@ export class ResponseStatus extends SpectrumElement {
       .filter(Boolean)
       .join(' ');
 
-    const rowContent = html`
-      ${this._renderLeadingIcon()}
-      <span class="swc-ResponseStatus-headerTrail">
-        ${this._renderLabel()}
-        ${showDisclosure ? this._renderChevron(this.open) : nothing}
-      </span>
-    `;
-
-    if (showDisclosure) {
-      return html`
-        <button
-          class=${rowClass}
-          aria-label=${label}
-          aria-expanded=${this.open}
-          aria-controls=${this.panelId}
-          @click=${this._handleToggle}
-        >
-          ${rowContent}
-        </button>
-      `;
-    }
-
+    // Always a <button>, even in the non-interactive (no-steps) state, so the
+    // element tag never changes when the first step arrives. Swapping the tag
+    // (div -> button) makes lit rebuild the header subtree, tearing down and
+    // restarting the nested pixel loader's animation. The disclosure wiring
+    // (aria-label/expanded/controls, chevron) is toggled via attributes
+    // instead, matching React Spectrum's ResponseStatus. `_handleToggle`
+    // already no-ops when there are no steps, so the click handler stays
+    // attached.
+    //
+    // In the non-interactive state the button is neutralized so it is not a
+    // phantom control: `role="status"` overrides the implicit button role (AT
+    // reads it as a status live region announcing the label, not an actionable
+    // button) and `tabindex="-1"` keeps it out of the tab order so keyboard
+    // users never land on a control that does nothing. It becomes a real
+    // disclosure button, with native focus and keyboard support, once there
+    // are steps to expand.
     return html`
-      <div class=${rowClass} role=${ifDefined(statusRole)}>${rowContent}</div>
+      <button
+        type="button"
+        class=${rowClass}
+        role=${ifDefined(showDisclosure ? undefined : 'status')}
+        tabindex=${ifDefined(showDisclosure ? undefined : -1)}
+        aria-label=${ifDefined(showDisclosure ? label : undefined)}
+        aria-expanded=${ifDefined(showDisclosure ? this.open : undefined)}
+        aria-controls=${ifDefined(showDisclosure ? this.panelId : undefined)}
+        @click=${this._handleToggle}
+      >
+        ${this._renderLeadingIcon()}
+        <span class="swc-ResponseStatus-headerTrail">
+          ${this._renderLabel()}
+          ${showDisclosure ? this._renderChevron(this.open) : nothing}
+        </span>
+      </button>
     `;
   }
 

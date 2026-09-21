@@ -1,7 +1,6 @@
 ---
 '@adobe/spectrum-wc': minor
 '@adobe/spectrum-wc-core': minor
-'@spectrum-web-components/action-group': patch
 ---
 
 Add the gen2 `<swc-action-group>` file structure, API, accessibility semantics, and Spectrum 2 styling, migrated from the Spectrum 1 `<sp-action-group>`.

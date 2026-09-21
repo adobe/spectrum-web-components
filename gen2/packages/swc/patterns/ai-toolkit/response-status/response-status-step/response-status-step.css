@@ -14,7 +14,7 @@
   display: grid;
   grid-template-columns: 20px 1fr;
   align-items: stretch;
-  column-gap: token("spacing-100");
+  column-gap: token("spacing-85");
 }
 
 *,
@@ -194,7 +194,7 @@
 /* Masked, `translate`-animated overlay clone of the label: cheaper to
    animate on the compositor than sweeping `background-position` on the text. */
 .swc-ResponseStatusStep-titleShimmer {
-  --_swc-response-status-step-shimmer-spread: 4ch;
+  --_swc-response-status-step-shimmer-spread: 60%;
 
   position: absolute;
   inset: 0;
@@ -219,16 +219,18 @@
   inset: 0;
   background: linear-gradient(90deg, transparent calc(50% - var(--_swc-response-status-step-shimmer-spread)), token("gray-900") 50%, transparent calc(50% + var(--_swc-response-status-step-shimmer-spread)));
   content: "";
-  animation: swc-response-status-step-shimmer 1800ms infinite;
+  animation: swc-response-status-step-shimmer 1800ms cubic-bezier(0.41, 0.01, 0.43, 0.99) infinite;
   will-change: transform;
 }
 
+/* Sweeps for the first 80% of the cycle, then holds at the end position for the remaining 20% before looping. */
 @keyframes swc-response-status-step-shimmer {
-  from {
+  0% {
     translate: -100% 0;
   }
 
-  to {
+  80%,
+  100% {
     translate: 100% 0;
   }
 }
