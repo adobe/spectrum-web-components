@@ -680,11 +680,15 @@ export const FormBehaviorTest: Story = {
       await field.updateComplete;
       expect(input.required).toBe(true);
       expect(input.validity.valueMissing).toBe(true);
+      expect(field.validity.valueMissing).toBe(true);
+      expect(field.checkValidity()).toBe(false);
       expect(form.checkValidity()).toBe(false);
 
       field.value = 'Filled';
       await field.updateComplete;
       expect(input.validity.valueMissing).toBe(false);
+      expect(field.validity.valid).toBe(true);
+      expect(field.checkValidity()).toBe(true);
       expect(form.checkValidity()).toBe(true);
     });
 

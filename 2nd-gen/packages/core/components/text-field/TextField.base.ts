@@ -293,6 +293,18 @@ export abstract class TextFieldBase extends SizedMixin(
     this.inputElement?.setSelectionRange(start, end, direction);
   }
 
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+    const input = this.inputElement;
+    if (input) {
+      this.internals.setValidity(
+        input.validity,
+        input.validationMessage,
+        input
+      );
+    }
+  }
+
   protected override update(changedProperties: PropertyValues): void {
     validateEnum(this, {
       prop: 'type',
