@@ -626,21 +626,23 @@ export class ResponseStatus extends SpectrumElement {
       .join(' ');
 
     // Always a <button> so the tag never changes when the first step arrives
-    // (swapping div<->button restarts the nested loader animation). With no
-    // steps it's neutralized via role="status" + tabindex="-1"; the visible
-    // label is the accessible name, so no aria-label.
+    // (swapping div<->button restarts the nested loader animation). Disclosure
+    // trigger only when there are steps; otherwise inert (tabindex="-1") with
+    // the label exposed as a role="status" live region. Name comes from content.
     return html`
       <button
         type="button"
         class=${rowClass}
-        role=${ifDefined(showDisclosure ? undefined : 'status')}
         tabindex=${ifDefined(showDisclosure ? undefined : -1)}
         aria-expanded=${ifDefined(showDisclosure ? this.open : undefined)}
         aria-controls=${ifDefined(showDisclosure ? this.panelId : undefined)}
         @click=${this._handleToggle}
       >
         ${this._renderLeadingIcon()}
-        <span class="swc-ResponseStatus-headerTrail">
+        <span
+          class="swc-ResponseStatus-headerTrail"
+          role=${ifDefined(showDisclosure ? undefined : 'status')}
+        >
           ${this._renderLabel()}
           ${showDisclosure ? this._renderChevron(this.open) : nothing}
         </span>
