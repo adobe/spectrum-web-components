@@ -385,9 +385,10 @@ Rendering shape (implemented in the API/accessibility phases):
 
 #### Visual regression
 
-- [ ] Add VRT coverage for all 12 sizes in the default presentation (`disabled`/`focused`/`selected`/`layer` visual treatments are consumer-owned and out of scope for `swc-thumbnail`'s own VRT, see [Decision log](#decision-log) C6, C7)
-- [ ] Add VRT coverage for `fit="cover"` and the default `fit="contain"`, applied via the component's own attribute selectors (see [Decision log](#decision-log) C8)
-- [ ] Add forced-colors (Windows High Contrast) coverage for the default border treatment
+- [x] Add VRT coverage for all 12 sizes in the default presentation (`disabled`/`focused`/`selected`/`layer` visual treatments are consumer-owned and out of scope for `swc-thumbnail`'s own VRT, see [Decision log](#decision-log) C6, C7)
+- [x] Add VRT coverage for `fit="cover"` and the default `fit="contain"`, applied via the component's own attribute selectors (see [Decision log](#decision-log) C8) — rendered against landscape and portrait assets, since a square source makes the two `fit` values pixel-identical
+- [x] Add forced-colors (Windows High Contrast) coverage for the default border treatment
+- [x] Add custom-property VRT coverage for `--swc-thumbnail-size`, verified against the CEM via `verifyCustomPropertyCoverage`
 
 ### Documentation
 
