@@ -215,6 +215,13 @@ export class TriggerPressGuardController implements ReactiveController {
   // press) gets a chance to close the surface first.
   private readonly onPressStart = (): void => {
     this.pointerActive = true;
+    // A touch gesture fires both `pointerdown` and `touchstart` on the same
+    // trigger, so this runs twice per press. Without aborting the previous
+    // controller first, the second `addEventListener` below is a no-op (the
+    // DOM dedupes on type/listener/capture, ignoring the new `signal`), so
+    // `pressEndAbort` would end up pointing at a controller with nothing
+    // attached to it while the real listeners stay tied to the first one.
+    this.pressEndAbort?.abort();
     // Catches a press that ends without a click (drag off the trigger, or a
     // cancelled gesture), which would otherwise leave the flag stuck true.
     this.pressEndAbort = new AbortController();

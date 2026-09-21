@@ -161,6 +161,55 @@ export const TouchstartOpensGestureWindowTest: Story = {
   },
 };
 
+// A touch gesture fires both `touchstart` and `pointerdown` on the trigger
+// for the same physical press, so `onPressStart` runs twice before the
+// trailing click. Regression coverage for the second `onPressStart` call
+// aborting the first call's still-pending `pressEndAbort` controller before
+// creating its own (rather than leaving that controller's document listeners
+// attached past this gesture, tied to a signal `pressEndAbort` no longer
+// references).
+export const DoublePressStartTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    const trigger = makeTrigger(canvasElement);
+    const controller = new TriggerPressGuardController(makeHost());
+    let toggleCount = 0;
+    controller.attach(trigger, { onToggle: () => toggleCount++ });
+
+    await step(
+      'a dismissal noted during a touchstart+pointerdown press is still consumed by the trailing click',
+      () => {
+        trigger.dispatchEvent(
+          new Event('touchstart', { bubbles: true, composed: true })
+        );
+        trigger.dispatchEvent(
+          new PointerEvent('pointerdown', { bubbles: true, composed: true })
+        );
+        controller.noteNativeDismiss();
+        trigger.dispatchEvent(
+          new PointerEvent('pointerup', { bubbles: true, composed: true })
+        );
+        trigger.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+
+        expect(
+          toggleCount,
+          'onToggle is not called for the click that closed the surface'
+        ).toBe(0);
+      }
+    );
+
+    await step('a normal gesture right after still toggles normally', () => {
+      click(trigger);
+      expect(
+        toggleCount,
+        'the double press-start does not affect the next, unrelated gesture'
+      ).toBe(1);
+    });
+
+    controller.detach();
+    trigger.remove();
+  },
+};
+
 export const PressEndWithoutClickResetsTest: Story = {
   play: async ({ canvasElement, step }) => {
     const trigger = makeTrigger(canvasElement);
