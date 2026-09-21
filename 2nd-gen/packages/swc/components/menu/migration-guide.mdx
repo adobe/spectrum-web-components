@@ -119,7 +119,7 @@ menu.addEventListener('swc-close', () => {
 ## Accessibility
 
 - The menu's accessible name comes from the trigger you author, not a `label` property. See [step 2](#2-author-and-reference-a-trigger).
-- `<swc-menu>` does not carry `role="menu"` on its host element. Do not write selectors or assistive-technology test assertions against that attribute on the host.
+- `<swc-menu>` does not carry `role="menu"` on its host element; it is set on the shadow-internal surface instead.
 
 ## Styling
 

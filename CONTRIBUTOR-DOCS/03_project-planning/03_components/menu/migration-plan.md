@@ -673,11 +673,11 @@ Planned rendering shape:
 #### General
 
 - [x] JSDoc on all public props, slots, and CSS custom properties — `swc-menu` exposes no CSS custom properties this phase (see [Styling](#styling))
-- [x] Storybook stories for anatomy, options (sizes), and behaviors (open/close) — no `states` story (menu has none this phase) or `submenu` story (Phase B, not implemented); a `menu.mdx` per-component docs page ties these together, plus a local-only `TriggerElement` story kept out of the production docs build
+- [x] Storybook stories for anatomy, options (placements, sizes), states, and behaviors (trigger element, open/close) — no `submenu` story (Phase B, not implemented); a `menu.mdx` per-component docs page ties these together, including the `TriggerElement` story promoted to the production docs build per review feedback
 
 #### Breaking changes
 
-- [x] Document B1–B10 in the consumer migration guide — `2nd-gen/packages/swc/components/menu/migration-guide.mdx`
+- [x] Document B2, B5, B6, B9, B10 in the consumer migration guide — `2nd-gen/packages/swc/components/menu/migration-guide.mdx`. B1 and B3 are Phase B items (not shipped this pass). B4 is an internal controller swap with no consumer-observable difference. B7 and B8 apply to `swc-menu-item`'s rows, which haven't shipped yet; document them once that component lands.
 
 ### Review
 

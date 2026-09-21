@@ -44,9 +44,11 @@ argTypes['actual-placement'] = {
 };
 
 /**
- * A menu is a full [menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)
- * host: an externally-referenced trigger opens a `PlacementController`-anchored
- * surface containing a `role="menu"` list of `swc-menu-item` rows.
+ * A `<swc-menu>` is a list of actions or options anchored to a trigger. It
+ * renders in the top layer and follows the
+ * [menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)
+ * pattern: the trigger you reference with `for` or `triggerElement` opens
+ * the list and receives `aria-haspopup` and `aria-expanded`.
  */
 const meta: Meta = {
   title: 'Menu',
@@ -55,7 +57,9 @@ const meta: Meta = {
   argTypes,
   render: (args) => template(args),
   parameters: {
-    docs: { subtitle: `Menu-button host for a list of actions` },
+    docs: {
+      subtitle: `Menus display a list of actions or options that a user can choose.`,
+    },
     design: {
       type: 'figma',
       url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=37252-553',
@@ -159,6 +163,69 @@ export const Sizes: Story = {
   tags: ['options'],
 };
 
+export const Placements: Story = {
+  render: (args) => html`
+    <swc-button id="placement-bottom-start-trigger">Edit</swc-button>
+    ${template(
+      {
+        ...args,
+        for: 'placement-bottom-start-trigger',
+        placement: 'bottom-start',
+        'actual-placement': null,
+      },
+      defaultItems
+    )}
+    <swc-button id="placement-top-start-trigger">Edit</swc-button>
+    ${template(
+      {
+        ...args,
+        for: 'placement-top-start-trigger',
+        placement: 'top-start',
+        'actual-placement': null,
+      },
+      defaultItems
+    )}
+    <swc-button id="placement-start-top-trigger">Edit</swc-button>
+    ${template(
+      {
+        ...args,
+        for: 'placement-start-top-trigger',
+        placement: 'start-top',
+        'actual-placement': null,
+      },
+      defaultItems
+    )}
+    <swc-button id="placement-end-top-trigger">Edit</swc-button>
+    ${template(
+      {
+        ...args,
+        for: 'placement-end-top-trigger',
+        placement: 'end-top',
+        'actual-placement': null,
+      },
+      defaultItems
+    )}
+  `,
+  parameters: { flexLayout: 'row-wrap' },
+  tags: ['options'],
+};
+
+// ──────────────────────────
+//    STATES STORIES
+// ──────────────────────────
+
+export const States: Story = {
+  args: {
+    for: 'states-trigger',
+    'actual-placement': null,
+  },
+  render: (args) => html`
+    <swc-button id="states-trigger">Edit</swc-button>
+    ${template(args, defaultItems)}
+  `,
+  tags: ['states'],
+};
+
 // ──────────────────────────────
 //    BEHAVIORS STORIES
 // ──────────────────────────────
@@ -176,10 +243,10 @@ export const OpenAndClose: Story = {
 };
 OpenAndClose.storyName = 'Open and close';
 
-// Local-only: exercises `triggerElement`, a cross-shadow-boundary edge case,
-// not referenced from the per-component MDX so it stays out of the
-// production docs build. `tags: ['dev']` keeps it in the local sidebar only.
+// Exercises `triggerElement`, for referencing a trigger across a shadow
+// boundary where `for`'s id lookup can't reach.
 export const TriggerElement: Story = {
+  tags: ['behaviors'],
   render: () => {
     let triggerEl: HTMLElement | null = null;
     return html`
@@ -204,7 +271,6 @@ export const TriggerElement: Story = {
       </swc-menu>
     `;
   },
-  tags: ['dev'],
 };
 
 // ────────────────────────────────
