@@ -103,6 +103,38 @@ export const StatesTest: Story = {
     });
 
     await step(
+      'disabled invalid fields suppress invalid presentation and association',
+      () => {
+        const disabledInput =
+          disabledInvalidField.shadowRoot?.querySelector('input');
+        expect(disabledInput?.getAttribute('aria-invalid')).toBeNull();
+        expect(
+          disabledInvalidField.shadowRoot?.querySelector(
+            '.swc-FormFieldErrorText'
+          )
+        ).toBeNull();
+        expect(
+          disabledInput?.ariaDescribedByElements?.some((element) =>
+            element.className.includes('swc-FormFieldErrorText')
+          )
+        ).toBe(false);
+      }
+    );
+
+    await step('re-enabling restores the invalid presentation', async () => {
+      disabledInvalidField.disabled = false;
+      await disabledInvalidField.updateComplete;
+      const reenabledInput =
+        disabledInvalidField.shadowRoot?.querySelector('input');
+      expect(reenabledInput?.getAttribute('aria-invalid')).toBe('true');
+      expect(
+        disabledInvalidField.shadowRoot?.querySelector(
+          '.swc-FormFieldErrorText'
+        )
+      ).toBeTruthy();
+    });
+
+    await step(
       'error text replaces the description in ariaDescribedByElements while invalid',
       () => {
         const resolved = input?.ariaDescribedByElements ?? [];

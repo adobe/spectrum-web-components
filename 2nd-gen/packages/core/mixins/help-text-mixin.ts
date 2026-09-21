@@ -53,7 +53,7 @@ export interface HelpTextInterface {
   readonly describedByInternals: ElementInternals | null;
 
   /** Renders the description/error-text markup for the current state. */
-  renderHelpText(): RenderFieldHelpTextResult;
+  renderHelpText(options?: { invalid?: boolean }): RenderFieldHelpTextResult;
 }
 
 /**
@@ -160,11 +160,13 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
         .filter((element): element is HTMLElement => element !== null);
     }
 
-    public renderHelpText(): RenderFieldHelpTextResult {
+    public renderHelpText(options?: {
+      invalid?: boolean;
+    }): RenderFieldHelpTextResult {
       return renderFieldHelpText({
         hasDescriptionSlotContent: this.hasDescriptionSlotContent,
         hasErrorTextSlotContent: this.hasErrorTextSlotContent,
-        invalid: this._isInvalid,
+        invalid: options?.invalid ?? this._isInvalid,
         onDescriptionElement: this._captureDescriptionElement,
         onErrorTextElement: this._captureErrorTextElement,
       });

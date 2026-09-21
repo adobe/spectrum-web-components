@@ -127,7 +127,9 @@ export class TextField extends TextFieldBase {
             ?readonly=${this.readonly}
             ?required=${this.required}
             ?disabled=${this.effectiveDisabled}
-            aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
+            aria-invalid=${ifDefined(
+              this.invalid && !this.effectiveDisabled ? 'true' : undefined
+            )}
             @input=${this.handleInput}
             @change=${this.handleChange}
           />
@@ -140,7 +142,9 @@ export class TextField extends TextFieldBase {
               `
             : nothing}
         </div>
-        ${this.renderHelpText()}
+        ${this.renderHelpText({
+          invalid: this.invalid && !this.effectiveDisabled,
+        })}
       </div>
     `;
   }
