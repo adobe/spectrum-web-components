@@ -39,8 +39,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # The dispatched/pushed ref - main for a release, the feature branch for a
-          # snapshot - so the changeset count below reflects whatever is being run.
+          # Always main (this job is gated to main below), so the changeset count reflects
+          # the release path. The feature-branch snapshot job does its own checkout.
           fetch-depth: 0 # need tags so the needs_publish idempotency check below can see them
 
       - name: Check for gen2 changesets
@@ -90,8 +90,9 @@ jobs:
   # own ephemeral checkout before versioning. That copy dies with the runner: the
   # committed pre state on `main` is never modified or pushed back, so the beta channel's
   # version accounting (initialVersions + consumed changesets) is untouched. Snapshot
-  # versions are `<calculated>-<tag>.<datetime>` per this gen's `snapshot` config, so they
-  # can never collide with a real `2.0.0-beta.N` or with the eventual stable `2.0.0`.
+  # versions are `0.0.0-<tag>.<datetime>` (`snapshot.useCalculatedVersion: false`), so they
+  # sort below any real `2.x` and can't satisfy a consumer's `^2.0.0-beta.x` range - a
+  # calculated `2.0.0-<tag>` would have won that resolution.
   snapshot:
     # Dispatch-triggered and never from main: a snapshot is only for a feature branch. A
     # dispatch from main is a real manual release and flows to version-pr/publish instead.
@@ -219,9 +220,9 @@ jobs:
   # same branch.
   version-pr:
     needs: check-changesets
-    # Main-only: check-changesets is not branch-gated (so snapshot can run from a feature
-    # branch), so the release path carries the restriction itself. A snapshot runs from a
-    # feature branch (github.ref != main), so the ref check alone keeps the two apart.
+    # Main-only, matching check-changesets. The snapshot job runs from a feature branch
+    # (github.ref != main) and doesn't depend on check-changesets, so the ref check alone
+    # keeps the release path and the snapshot path apart.
     if: >-
       github.ref == 'refs/heads/main' &&
       needs.check-changesets.outputs.has_changesets == 'true'
@@ -268,8 +269,8 @@ jobs:
           echo "📝 Version PR opened/updated at \`changeset-release/gen2\` - nothing published yet" >> $GITHUB_STEP_SUMMARY
 
   # Real publish, once the Version PR above has merged (no pending changesets left).
-  # Only this job sits behind the npm-publish environment's required-reviewer approval,
-  # since it's the only one that actually publishes to npm.
+  # This job and the snapshot job both sit behind the npm-publish environment's
+  # required-reviewer approval, since both publish to npm.
   publish:
     needs: check-changesets
     # Main-only - a snapshot runs from a feature branch, so the ref check keeps them apart.
