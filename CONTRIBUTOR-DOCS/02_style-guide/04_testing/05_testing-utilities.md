@@ -23,7 +23,7 @@
 
 <!-- Document content (editable) -->
 
-Test utilities live in `2nd-gen/packages/swc/utils/`.
+Test utilities live in `gen2/packages/swc/utils/`.
 
 ## `getComponent<T>(canvasElement, selector)`
 

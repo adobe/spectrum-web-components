@@ -21,12 +21,12 @@ Project milestones represent significant checkpoints in our work, typically mark
 
 ## Barebones
 
-The Barebones milestone is the initial milestone in our 2nd-gen effort. Its purpose is to prove out and de-risk the strategy by establishing the multi-generation architecture with a small set of simple components.
+The Barebones milestone is the initial milestone in our gen2 effort. Its purpose is to prove out and de-risk the strategy by establishing the multi-generation architecture with a small set of simple components.
 
 The work for this milestone is being done on the `barebones` branch and includes:
 
 - Moving virtually all previous repository contents into a new `1st-gen/` folder
-- Creating the `2nd-gen/` folder structure with both the Core library and the 2nd-gen SWC library
+- Creating the `gen2/` folder structure with both the Core library and the gen2 SWC library
 - Migrating 5 simple components to the new multi-generation architecture
 - Verifying that all existing 1st-gen tests still pass
 - Confirming that 1st-gen releases continue to work as expected
