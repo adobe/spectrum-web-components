@@ -56,7 +56,7 @@ import styles from './upload-attachment.css';
  * </swc-upload-attachment>
  *
  * @slot thumbnail - Shared visual slot for icon/thumbnail/preview image.
- * @slot badge - Optional file-type badge rendered over `type="media"` previews (for example, "PDF").
+ * @slot badge - Optional file-type badge rendered over `type="media"` previews (for example, "PDF"). Use only at `size="l"` and above; it crowds the default `size="m"` (64px) preview.
  * @slot title - Primary text label.
  * @slot subtitle - Secondary text label.
  * @slot actions - Optional trailing actions.
@@ -65,18 +65,19 @@ import styles from './upload-attachment.css';
  *
  * @cssprop --swc-upload-attachment-focus-indicator-color - Focus ring color for the tile and its dismiss button. Defaults to a dedicated ring color pending a matching design token.
  * @cssprop --swc-upload-attachment-card-min-block-size - Minimum block size of the surface for `type="card"`. Defaults to 72px.
- * @cssprop --swc-upload-attachment-card-thumbnail-inline-size - Thumbnail inline size for `type="card"`. Defaults to 48px.
- * @cssprop --swc-upload-attachment-card-thumbnail-block-size - Thumbnail block size for `type="card"`. Defaults to 48px.
- * @cssprop --swc-upload-attachment-preview-size - Inline and block size of the tile for `type="media"`. Defaults to 72px.
+ * @cssprop --swc-upload-attachment-card-thumbnail-size - Inline and block size of the thumbnail for `type="card"`. Defaults to 48px.
  * @cssprop --swc-upload-attachment-dismiss-visual-size - Rendered size of the dismiss button's circular hit area. Defaults to 20px.
- * @cssprop --swc-upload-attachment-dismiss-icon-inline-size - Inline size of the dismiss icon. Defaults to 8px.
- * @cssprop --swc-upload-attachment-dismiss-icon-block-size - Block size of the dismiss icon. Defaults to 8px.
+ * @cssprop --swc-upload-attachment-dismiss-icon-size - Inline and block size of the dismiss icon. Defaults to 8px.
  * @since 2.0.0-beta.3
  */
 export class UploadAttachment extends SpectrumElement {
   /** Visual treatment type for this attachment. */
   @property({ type: String, reflect: true })
   public type: 'card' | 'media' = 'card';
+
+  /** Tile size for `type="media"` (64px `m`, 96px `l`). Has no effect on `type="card"`. */
+  @property({ type: String, reflect: true })
+  public size: 'm' | 'l' = 'm';
 
   /** When `true`, show a dismiss affordance and emit `swc-upload-attachment-dismiss` on click. */
   @property({ type: Boolean, reflect: true })
@@ -229,22 +230,28 @@ export class UploadAttachment extends SpectrumElement {
   }
 
   private _renderMediaSurface(): TemplateResult {
+    const loading = this._shouldShowProgress();
     return html`
-      <swc-card class="swc-UploadAttachment-surface" variant="quiet">
-        <slot name="thumbnail" slot="preview"></slot>
-        ${this._shouldShowProgress()
+      <div class="swc-UploadAttachment-stack">
+        <swc-card class="swc-UploadAttachment-surface" variant="quiet">
+          ${loading
+            ? nothing
+            : html`
+                <slot name="thumbnail" slot="preview"></slot>
+              `}
+        </swc-card>
+        ${loading
           ? html`
               <swc-progress-circle
-                slot="media"
+                class="swc-UploadAttachment-progress"
                 size="s"
-                static-color="white"
                 progress=${this.progress}
                 label="Uploading"
               ></swc-progress-circle>
             `
           : nothing}
-        <slot name="badge" slot="media"></slot>
-      </swc-card>
+        <slot name="badge"></slot>
+      </div>
       <slot name="actions" hidden></slot>
       <slot
         name="title"

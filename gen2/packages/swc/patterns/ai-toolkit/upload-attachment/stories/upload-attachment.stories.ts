@@ -24,11 +24,21 @@ const { args, argTypes, template } = getStorybookHelpers(
 
 argTypes.type = {
   ...argTypes.type,
-  control: { type: 'select' },
+  control: { type: 'radio' },
   options: ['card', 'media'],
   table: {
     category: 'attributes',
     defaultValue: { summary: 'card' },
+  },
+};
+
+argTypes.size = {
+  ...argTypes.size,
+  control: { type: 'radio' },
+  options: ['m', 'l'],
+  table: {
+    category: 'attributes',
+    defaultValue: { summary: 'm' },
   },
 };
 
@@ -59,11 +69,6 @@ const meta: Meta = {
 
 export default meta;
 
-const playgroundCardThumbnail =
-  '<div slot="thumbnail" role="img" aria-label="File thumbnail"></div>';
-const playgroundMediaThumbnail =
-  '<swc-asset slot="thumbnail" aspect-ratio="1:1"><img src="images/landscape-asset.jpg" alt="Campaign preview"></swc-asset>';
-
 /** Strings long enough to overflow at narrow widths (title and subtitle ellipsis). */
 const longOverflowTitle =
   'Hotel commercial assets for marketing campaign Q1–Q2 regional rollout';
@@ -72,24 +77,16 @@ const longOverflowSubtitle =
 
 export const Playground: Story = {
   args: {
-    type: 'card',
+    type: 'media',
     dismissible: false,
     'title-slot': '<span slot="title">Hilton commercial assets</span>',
     'subtitle-slot': '<span slot="subtitle">2026</span>',
+    'thumbnail-slot':
+      '<swc-asset slot="thumbnail" aspect-ratio="1:1"><img src="images/landscape-asset.jpg" alt="Campaign preview"></swc-asset>',
+    'badge-slot': '<swc-badge slot="badge" size="s" subtle>PDF</swc-badge>',
+    size: 'l',
   },
-  render: (args) => {
-    const isMedia = args.type === 'media';
-    return html`
-      <div>
-        ${template({
-          ...args,
-          'thumbnail-slot': isMedia
-            ? playgroundMediaThumbnail
-            : playgroundCardThumbnail,
-        })}
-      </div>
-    `;
-  },
+  render: (args) => template(args),
   tags: ['dev'],
 };
 
@@ -98,7 +95,7 @@ export const Overview: Story = {
     type: 'card',
     dismissible: true,
     'thumbnail-slot':
-      '<div slot="thumbnail" role="img" aria-label="File thumbnail"></div>',
+      '<swc-asset slot="thumbnail" aspect-ratio="1:1"><img src="images/landscape-asset.jpg" alt="Campaign preview"></swc-asset>',
     'title-slot': '<span slot="title">Hilton commercial assets</span>',
     'subtitle-slot': '<span slot="subtitle">2026</span>',
   },
@@ -116,17 +113,23 @@ export const MultiCard: Story = {
       </p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">
         <swc-upload-attachment type="card" dismissible>
-          <div slot="thumbnail" role="img" aria-label="PDF"></div>
+          <swc-asset slot="thumbnail" aspect-ratio="1:1">
+            <img src="images/landscape-asset.jpg" alt="Campaign preview" />
+          </swc-asset>
           <span slot="title">Brand guidelines</span>
           <span slot="subtitle">PDF</span>
         </swc-upload-attachment>
         <swc-upload-attachment type="card" dismissible>
-          <div slot="thumbnail" role="img" aria-label="Spreadsheet"></div>
+          <swc-asset slot="thumbnail" aspect-ratio="1:1">
+            <img src="images/landscape-asset.jpg" alt="Campaign preview" />
+          </swc-asset>
           <span slot="title">Q2 metrics draft</span>
           <span slot="subtitle">XLSX</span>
         </swc-upload-attachment>
         <swc-upload-attachment type="card" dismissible>
-          <div slot="thumbnail" role="img" aria-label="Deck"></div>
+          <swc-asset slot="thumbnail" aspect-ratio="1:1">
+            <img src="images/landscape-asset.jpg" alt="Campaign preview" />
+          </swc-asset>
           <span slot="title">Executive summary</span>
           <span slot="subtitle">PPTX</span>
         </swc-upload-attachment>
@@ -151,7 +154,7 @@ export const MultiMedia: Story = {
             <img src="images/landscape-asset.jpg" alt="Campaign still" />
           </swc-asset>
         </swc-upload-attachment>
-        <swc-upload-attachment type="media" dismissible>
+        <swc-upload-attachment type="media" size="l" dismissible>
           <swc-asset slot="thumbnail" aspect-ratio="1:1">
             <img src="images/card-preview.jpg" alt="Document preview" />
           </swc-asset>
@@ -173,7 +176,9 @@ export const Card: Story = {
   render: () => html`
     <div style="max-inline-size:360px;">
       <swc-upload-attachment type="card" dismissible>
-        <div slot="thumbnail" role="img" aria-label="File thumbnail"></div>
+        <swc-asset slot="thumbnail" aspect-ratio="1:1">
+          <img src="images/landscape-asset.jpg" alt="Campaign preview" />
+        </swc-asset>
         <span slot="title">Hilton commercial assets</span>
         <span slot="subtitle">2026</span>
       </swc-upload-attachment>
@@ -198,11 +203,30 @@ export const Media: Story = {
 export const MediaWithBadge: Story = {
   render: () => html`
     <div style="inline-size:240px;">
-      <swc-upload-attachment type="media" dismissible>
+      <swc-upload-attachment type="media" size="l" dismissible>
         <swc-asset slot="thumbnail" aspect-ratio="1:1">
           <img src="images/card-preview.jpg" alt="Mixed attachment preview" />
         </swc-asset>
-        <swc-badge slot="badge">PDF</swc-badge>
+        <swc-badge slot="badge" size="s" subtle>PDF</swc-badge>
+      </swc-upload-attachment>
+    </div>
+  `,
+  tags: ['options'],
+};
+
+export const Sizes: Story = {
+  render: () => html`
+    <div style="display:flex;gap:12px;align-items:flex-start;">
+      <swc-upload-attachment type="media" size="m" dismissible>
+        <swc-asset slot="thumbnail" aspect-ratio="1:1">
+          <img src="images/landscape-asset.jpg" alt="Campaign preview" />
+        </swc-asset>
+      </swc-upload-attachment>
+      <swc-upload-attachment type="media" size="l" dismissible>
+        <swc-asset slot="thumbnail" aspect-ratio="1:1">
+          <img src="images/card-preview.jpg" alt="Campaign preview" />
+        </swc-asset>
+        <swc-badge slot="badge" size="s" subtle>PDF</swc-badge>
       </swc-upload-attachment>
     </div>
   `,
@@ -240,7 +264,9 @@ export const TextOverflow: Story = {
     >
       <div style="max-inline-size:280px;">
         <swc-upload-attachment type="card" dismissible>
-          <div slot="thumbnail" role="img" aria-label="File thumbnail"></div>
+          <swc-asset slot="thumbnail" aspect-ratio="1:1">
+            <img src="images/landscape-asset.jpg" alt="Campaign preview" />
+          </swc-asset>
           <span slot="title">${longOverflowTitle}</span>
           <span slot="subtitle">${longOverflowSubtitle}</span>
         </swc-upload-attachment>
