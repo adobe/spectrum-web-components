@@ -212,19 +212,15 @@ Stories and docs must demonstrate the group **inside a form**, since coordinatin
     </swc-checkbox-group>
     <button type="submit">Submit</button>
     <button type="reset">Reset</button>
-  <output id="form-data-output" for="interests">No form data</output>
-  <output id="validity-output" for="interests">Invalid: valueMissing</output>
 </form>
 ```
-
-The story must update both outputs after input, submit, and reset. The form-data output should serialize `new FormData(form)`, and the validity output should call `group.checkValidity()` and expose the resulting `group.validity.valid` and `group.validity.valueMissing` state. The initial state must show the required group as invalid, the state must become valid when an item is checked, and reset must restore both the default selections and the corresponding outputs.
 
 ### Automated tests
 
 | Kind of test | What to check |
 | --- | --- |
 | **Unit** | `role="group"` is fixed on the host and not author-overridable; unsupported group-level ARIA states are not prescribed; `disabled` propagates to every slotted checkbox; the group calls **no** `setFormValue` (each checkbox submits its own value); group-level validity ("select at least one") reports `valueMissing` through the group's `ElementInternals` when required and nothing is checked, and clears when an item is checked. |
-| **Form participation (in a `<form>`)** | Rendered inside a native `<form>`: **submit** yields `FormData` containing one entry per checked item under the shared `name` (so the **value on submit** is the full multi-select set), and nothing for unchecked items; the story renders that `FormData` in a dedicated output; group-level **validation** ("select at least one") uses the group's `ElementInternals.setValidity()` to block submission and report invalidity when `required` and nothing is checked, then clears once an item is checked; the story calls `group.checkValidity()` and renders `group.validity.valid` and `group.validity.valueMissing` in a dedicated validity-state output; **reset** (`form.reset()`) restores every item to its default checked state and updates both outputs. A story demonstrating this in a native `<form>` doubles as the consumer-facing example. |
+| **Form participation (in a `<form>`)** | Rendered inside a native `<form>`: **submit** yields `FormData` containing one entry per checked item under the shared `name` (so the **value on submit** is the full multi-select set), and nothing for unchecked items; group-level **validation** ("select at least one") uses the group's `ElementInternals.setValidity()` to block submission and report invalidity when `required` and nothing is checked, then clears once an item is checked; **reset** (`form.reset()`) restores every item to its default checked state. A story demonstrating this in a native `<form>` doubles as the consumer-facing example. |
 | **aXe + Storybook** | A dev-warning story for a group with no accessible name. A required-and-untouched story. An invalid story with visible error text associated through the standards-supported description pattern selected during implementation. Read-only and disabled stories. Top-label, side-label, vertical, and horizontal layout stories (layout only; same tree shape). Document any roleless-child axe false positives per the forms RFC [§3.4](../../05_strategies/forms-strategy-rfc.md#34-axe-core-policy). |
 | **Playwright ARIA snapshots** | `role=group` with the correct accessible name and the correct independent `aria-checked` on each child, across required/invalid/read-only/disabled states and both label positions and orientations from the design spec's state matrix. |
 | **Playwright keyboard** | Each checkbox is an independent Tab stop (no roving, no arrow navigation); <kbd>Space</kbd> toggles the focused item; disabled items are skipped; read-only keeps focus movement but blocks every toggle. |
@@ -242,7 +238,7 @@ The story must update both outputs after input, submit, and reset. The form-data
 - [ ] Description/help text and error message render inside the group's own shadow root and preserve a correct host-attached association without introducing a cross-root regression.
 - [ ] The help/error container does not default to `aria-live="assertive"`, or to any live region, for the common case.
 - [ ] The group owns **no** form value and calls **no** `setFormValue`; each `swc-checkbox` submits its own `name`/`value` (the reverse of radio group).
-- [ ] Stories and tests demonstrate the group in a native `<form>` and cover the full form lifecycle: value on submit (multi-select `FormData` under the shared `name`) rendered in a form-data output, group-level "select at least one" validation checked with `checkValidity()` and rendered through `validity.valid`/`validity.valueMissing` in a validity-state output, and `form.reset()` restoring the default checked items and both outputs.
+- [ ] Stories and tests demonstrate the group in a native `<form>` and cover the full form lifecycle: value on submit (multi-select `FormData` under the shared `name`), group-level "select at least one" validation, and `form.reset()` restoring the default checked items.
 - [ ] There is no cache-authoritative selection controller, no mutual exclusion, and no `FocusgroupNavigationController`; each checkbox is an independent Tab stop with no arrow-key navigation.
 - [ ] Group-level validity ("select at least one", custom `validate`) runs on the group via its own `ElementInternals` for validity only, with the group-validity-plus-per-item-value split confirmed in the migration plan and the `swc-field-group` scoping spike.
 - [ ] `disabled` propagates to every slotted checkbox via `SlotAttributePropagationController`.
