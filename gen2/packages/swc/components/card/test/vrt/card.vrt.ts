@@ -24,6 +24,7 @@ import {
 
 import '@adobe/spectrum-wc/components/card/swc-card.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
+import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 
@@ -259,6 +260,178 @@ const collectionCards = [
   ),
 ];
 
+// Asset: swc-asset as preview/collection content instead of a plain <img>,
+// covering fit, background, and an explicit aspect-ratio override.
+const assetCards = [
+  renderCard(
+    {},
+    html`
+      <swc-asset slot="preview">
+        <img src="./images/landscape-asset.jpg" alt="" />
+      </swc-asset>
+      <span slot="title">Default asset</span>
+    `
+  ),
+  renderCard(
+    {},
+    html`
+      <swc-asset slot="preview" fit="contain" background="solid">
+        <img src="./images/portrait-asset.jpg" alt="" />
+      </swc-asset>
+      <span slot="title">Contain · solid background</span>
+    `
+  ),
+  renderCard(
+    {},
+    html`
+      <swc-asset
+        slot="preview"
+        fit="contain"
+        background="checkerboard"
+        aspect-ratio="square"
+      >
+        <img src="./images/portrait-asset.jpg" alt="" />
+      </swc-asset>
+      <span slot="title">Checkerboard · square</span>
+    `
+  ),
+  renderCard(
+    {},
+    html`
+      <swc-asset slot="preview">
+        <img src="./images/landscape-asset.jpg" alt="" />
+      </swc-asset>
+      <swc-asset slot="collection">
+        <img src="./images/portrait-asset.jpg" alt="" />
+      </swc-asset>
+      <swc-asset slot="collection" fit="contain" background="checkerboard">
+        <img src="./images/portrait-asset.jpg" alt="" />
+      </swc-asset>
+      <swc-asset
+        decorative
+        slot="collection"
+        fit="contain"
+        background="checkerboard"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="96"
+          height="96"
+          viewBox="0 0 96 96"
+        >
+          <defs>
+            <linearGradient
+              id="5ed56c__d"
+              x1="65.566"
+              x2="25.102"
+              y1="11.636"
+              y2="67.288"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#FF4885"></stop>
+              <stop offset="1" stop-color="#FF4885" stop-opacity="0"></stop>
+            </linearGradient>
+            <linearGradient
+              id="5ed56c__e"
+              x1="38.978"
+              x2="46.479"
+              y1="-12.921"
+              y2="38.007"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop offset="0.156" stop-color="#7A6AFD"></stop>
+              <stop offset="1" stop-color="#7A6AFD" stop-opacity="0"></stop>
+            </linearGradient>
+            <linearGradient
+              id="5ed56c__f"
+              x1="-58.165"
+              x2="82.825"
+              y1="89.197"
+              y2="59.638"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#30A7FE" stop-opacity="0"></stop>
+              <stop
+                offset="0.432"
+                stop-color="#30A7FE"
+                stop-opacity="0.995"
+              ></stop>
+              <stop offset="0.609" stop-color="#30A7FE"></stop>
+              <stop offset="1" stop-color="#30A7FE" stop-opacity="0"></stop>
+            </linearGradient>
+            <radialGradient
+              id="5ed56c__c"
+              cx="0"
+              cy="0"
+              r="1"
+              gradientTransform="matrix(0 102.569 -108.806 0 78.212 60.623)"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop offset="0.089" stop-color="#EB1000"></stop>
+              <stop offset="1" stop-color="#EB1000" stop-opacity="0"></stop>
+            </radialGradient>
+            <clipPath id="5ed56c__b">
+              <rect
+                width="75.36"
+                height="71.04"
+                x="11.039"
+                y="13.92"
+                fill="#fff"
+                rx="10"
+              ></rect>
+            </clipPath>
+          </defs>
+          <clipPath id="5ed56c__a">
+            <path
+              fill="#fff"
+              d="M42.927 26H12v-3.48c0-3.049 2.493-5.52 5.568-5.52h15.42c1.691 0 3.291.762 4.348 2.072zM75.692 30.8H12v40.235c0 4.617 3.723 8.365 8.308 8.365h55.384c4.586 0 8.308-3.748 8.308-8.365v-31.87c0-4.617-3.722-8.365-8.308-8.365"
+            ></path>
+            <path
+              stroke="#fff"
+              stroke-linecap="round"
+              stroke-miterlimit="10"
+              stroke-width="4.8"
+              d="M42.927 26H12v-3.48c0-3.049 2.493-5.52 5.568-5.52h15.42c1.691 0 3.291.762 4.348 2.072zM75.692 30.8H12v40.235c0 4.617 3.723 8.365 8.308 8.365h55.384c4.586 0 8.308-3.748 8.308-8.365v-31.87c0-4.617-3.722-8.365-8.308-8.365Z"
+            ></path>
+          </clipPath>
+          <g clip-path="url(#5ed56c__a)">
+            <g clip-path="url(#5ed56c__b)">
+              <rect
+                width="75.36"
+                height="71.04"
+                x="11.039"
+                y="13.92"
+                fill="#D9F4FD"
+                rx="10"
+              ></rect>
+              <ellipse
+                cx="78.212"
+                cy="60.623"
+                fill="url(#5ed56c__c)"
+                rx="108.806"
+                ry="102.569"
+              ></ellipse>
+              <path
+                fill="url(#5ed56c__d)"
+                d="M4.256 36.171C3.046 11.616 23.182-9.213 49.23-10.353s48.144 17.84 49.353 42.395S79.658 77.426 53.61 78.566 5.466 60.726 4.256 36.171"
+              ></path>
+              <path
+                fill="url(#5ed56c__e)"
+                d="M30.078-35.238c-5.876-3.427-13.321-3.448-19.219-.054L-48.13-1.34c-5.777 3.326-5.787 11.174-.017 14.512l58.599 33.904c5.889 3.407 13.334 3.403 19.218-.012l58.478-33.936c5.74-3.33 5.75-11.135.018-14.479z"
+              ></path>
+              <path
+                fill="url(#5ed56c__f)"
+                d="M-26.528 47.9c12.159 0 23.172 4.638 31.146 12.122 15.948 14.993 29.17 15.005 45.118.038 7.974-7.522 19-12.173 31.173-12.173 24.33.013 44.04 18.542 44.04 41.415 0 22.874-19.71 41.391-44.04 41.391-12.2 0-23.227-4.665-31.2-12.187-15.935-14.941-29.143-14.928-45.09.064-7.975 7.497-18.988 12.123-31.147 12.123-24.317 0-44.026-18.53-44.026-41.39 0-22.861 19.71-41.403 44.026-41.403"
+              ></path>
+            </g>
+          </g>
+        </svg>
+      </swc-asset>
+      <span slot="title">Asset preview + collection</span>
+    `
+  ),
+];
+
 // size="xs" merges preview into the collection row (the `3col` layout) and
 // caps the collection at two items.
 const xsCollectionCards = [
@@ -401,7 +574,7 @@ const permutationContent = () => html`
   )}
   ${row(anatomyCards, 'Anatomy')} ${row(contentOnlyCards, 'Content-only')}
   ${row(collectionCards, 'Collection')}
-  ${row(xsCollectionCards, 'Collection · xs merge')}
+  ${row(xsCollectionCards, 'Collection · xs merge')} ${row(assetCards, 'Asset')}
   ${row(galleryCards, 'Gallery & media overlay')}
   ${groupPermutationsBy(INTERACTIVE_PERMUTATIONS, 'data-force-state').map(
     ([state, perms]) => row(perms.map(renderInteractiveCard), state)

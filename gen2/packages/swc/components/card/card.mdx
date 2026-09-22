@@ -20,6 +20,8 @@ A card is composed of a media region, a content region, and a footer. Which regi
 - **default slot**: additional body content below the description
 - **`footer`**: footer content at the bottom of the card
 
+[`swc-asset`](../?path=/docs/components-asset--docs) is the recommended content for the `preview` and `collection` slots (used throughout these examples). It slots an `<img>` or `<svg>` and adds sizing, `fit`, and background-treatment options.
+
 <Canvas of={Stories.Anatomy} />
 
 ## Options
@@ -63,7 +65,23 @@ The `media` slot can overlay content, such as a badge or avatar, over that media
 
 <Canvas of={Stories.Gallery} />
 
+### Asset card
+
+An asset card represents an asset such as an image, video, document, or folder. The `swc-asset` placed in the `preview` slot can contain either an image or SVG illustration. Add metadata in the content section using the `title` and `description` slots.
+
+The aspect ratio of the asset is controlled by the `swc-asset` component itself, ensuring that images and illustrations maintain their intended proportions within the card's layout. All [asset features](/docs/components-asset--docs) are supported, including alternate background treatments and [loading state](#loading-state).
+
+<Canvas of={Stories.AssetCard} />
+
 ## Behaviors
+
+### Loading state
+
+[`swc-asset`](../?path=/docs/components-asset--docs) exposes a `loadState` property and `swc-asset-load`/`swc-asset-error` events rather than rendering a loading treatment of its own, so the embedding card decides what to show while its preview loads. One pattern: slot a `swc-progress-circle` into `media`, and remove it once `swc-asset-load` (or `swc-asset-error`) fires.
+
+To preview the loading state, you may need to simulate a slow network with your browser's developer tools.
+
+<Canvas of={Stories.LoadingState} />
 
 ### Title as link
 
@@ -105,6 +123,5 @@ Set the `selectable` attribute to make the card focusable and dispatch a `swc-ca
 - Two more card types are planned and will each ship as their own component with their own documentation: a **user card** (adds an avatar glyph) and a **product card** (adds a logo thumbnail glyph).
 - A horizontal card orientation is planned, alongside today's vertical layout.
 - Multi-card selection will be handled by a future CardView container. The `selectable` attribute is the per-card groundwork for it: on its own it makes a card focusable and dispatches `swc-card-click`, but it does not render a "checked" selected state.
-- Once the gen2 Asset component is available, it will be the recommended content for the `preview` and `collection` slots in place of a plain `<img>`. A media loading state will _likely_ be owned by Asset, so cards would show loading through their media content rather than a card-level attribute.
 
 <DocsFooter />

@@ -40,6 +40,15 @@ import styles from './card.css';
  *   </swc-action-button>
  * </swc-card>
  *
+ * @example
+ * <swc-card>
+ *   <swc-asset slot="preview">
+ *     <img src="preview.jpg" alt="" />
+ *   </swc-asset>
+ *   <span slot="title">Card title</span>
+ *   <span slot="description">Supporting description text.</span>
+ * </swc-card>
+ *
  * @slot collection - Optional collection images. Assign each image to the slot.
  * @slot media - Optional overlay content (e.g. a badge or avatar) layered over the preview/collection media region.
  *
