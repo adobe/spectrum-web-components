@@ -249,6 +249,7 @@ jobs:
             (cd gen2 && yarn changeset pre enter beta)
           fi
           (cd gen2 && yarn changeset version)
+          node scripts/generate-versions.js --gen=gen2
           yarn install --refresh-lockfile
 
       - name: Open or update the gen2 Version PR
