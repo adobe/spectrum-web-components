@@ -35,6 +35,8 @@
   border-style: solid;
   border-width: var(--_swc-text-field-border-width);
   border-radius: var(--swc-text-field-border-radius, token("corner-radius-medium-size-medium"));
+  transition-duration: token("animation-duration-100");
+  transition-property: border-color;
 }
 
 .swc-TextField-input {
