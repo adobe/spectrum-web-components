@@ -19,7 +19,7 @@
   ],
   "snapshot": {
     "prereleaseTemplate": "{tag}.{datetime}",
-    "useCalculatedVersion": true
+    "useCalculatedVersion": false
   },
   "updateInternalDependencies": "patch"
 }
