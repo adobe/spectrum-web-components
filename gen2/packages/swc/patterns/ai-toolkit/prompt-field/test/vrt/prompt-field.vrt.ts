@@ -146,6 +146,7 @@ const attachmentSlot = (kind: AttachmentKind) => {
 type FieldCase = {
   group?: string;
   variant?: (typeof VARIANTS)[number];
+  size?: 's' | 'm';
   generating?: boolean;
   collapsed?: boolean;
   disabled?: boolean;
@@ -161,6 +162,7 @@ type FieldCase = {
 // scroll state actually trigger.
 const renderField = ({
   variant = 'balanced',
+  size = 'm',
   generating = false,
   collapsed = false,
   disabled = false,
@@ -180,6 +182,7 @@ const renderField = ({
         label="Prompt"
         placeholder="Ask a question, share an idea, or add a task."
         variant=${variant}
+        size=${size}
         ?generating=${generating}
         ?collapsed=${collapsed}
         ?disabled=${disabled}
@@ -252,6 +255,38 @@ const ANATOMY_PERMUTATIONS = createPermutations([
     group: ['Dragged'],
     dragged: [true],
     value: [SHORT_PROMPT],
+  },
+]);
+
+// Small size drops the outer ring, tightens the card radius, and suppresses
+// the generating spread glow, so it gets its own coverage across the same
+// variant/generating/content/attachment axes as the default size above.
+const SIZE_PERMUTATIONS = createPermutations([
+  {
+    group: ['Small size — variants'],
+    size: ['s'],
+    variant: VARIANTS,
+    generating: [false, true],
+    value: [SHORT_PROMPT],
+  },
+  {
+    group: ['Small size — content'],
+    size: ['s'],
+    collapsed: [false, true],
+    value: ['', SHORT_PROMPT, LONG_PROMPT],
+  },
+  {
+    group: ['Small size — attachments'],
+    size: ['s'],
+    value: [SHORT_PROMPT],
+    attachment: ['card', 'media', 'manyMedia'],
+  },
+  {
+    group: ['Small size — buttons hover'],
+    size: ['s'],
+    value: [SHORT_PROMPT],
+    attachment: ['manyMedia'],
+    buttonState: ['hover'],
   },
 ]);
 
@@ -378,10 +413,15 @@ const anatomyRows = () =>
     row(stack(cases as FieldCase[]), group)
   );
 
+const sizeRows = () =>
+  groupPermutationsBy(SIZE_PERMUTATIONS, 'group').map(([group, cases]) =>
+    row(stack(cases as FieldCase[]), group)
+  );
+
 // VRT stories
 
 export const Permutations: Story = {
-  render: () => bothThemes([...variantRows(), ...anatomyRows()]),
+  render: () => bothThemes([...variantRows(), ...anatomyRows(), ...sizeRows()]),
   parameters: vrtParameters,
   play: async (context) => {
     await forceButtonStates(context);
