@@ -12,6 +12,7 @@
 
 :host {
   --swc-upload-attachment-focus-indicator-color: #4b4efc;
+  --_swc-upload-attachment-tint: light-dark(token("transparent-black-50"), token("transparent-white-50"));
 
   display: block;
   position: relative;
@@ -29,6 +30,7 @@
  * ring a real empty gap to sit in, instead of being painted over by that
  * (opaque) surface. */
 :host(:focus-visible) {
+  border-radius: 12px;
   outline: token("focus-indicator-thickness") solid var(--swc-upload-attachment-focus-indicator-color);
   outline-offset: calc(token("focus-indicator-thickness") * -1);
 }
@@ -91,7 +93,7 @@
 
 .swc-UploadAttachment-surface {
   display: flex;
-  background: token("gray-50");
+  background: var(--_swc-upload-attachment-tint);
 }
 
 .swc-UploadAttachment-meta {
@@ -143,6 +145,8 @@
   margin: token("spacing-50");
   border: token("border-width-100") solid transparent;
   border-radius: token("corner-radius-medium-default");
+  outline: token("border-width-100") solid var(--_swc-upload-attachment-tint);
+  outline-offset: calc(token("border-width-100") * -1);
 }
 
 :host([type="card"]) .swc-UploadAttachment-thumbnail {
@@ -227,6 +231,12 @@
  * relying on swc-card's own internal grid while its `preview` slot is
  * empty (loading). */
 :host([type="media"]) .swc-UploadAttachment-stack {
+  /* A flat black tint reads as nearly invisible against an already-dark
+   * background, so this flips to the equivalent white-tint weight class in
+   * dark mode. Declared here (not per rule) so `.swc-UploadAttachment-surface`
+   * below picks it up by inheritance instead of repeating the light-dark(). */
+  --_swc-upload-attachment-loading-tint: light-dark(token("transparent-black-50"), token("transparent-white-50"));
+
   display: grid;
   position: absolute;
 
@@ -240,9 +250,15 @@
   /* Default (non-static-color) progress-circle needs a light neutral
    * backdrop for contrast; visible whenever the thumbnail isn't rendered
    * (while loading), and otherwise sits behind the thumbnail unnoticed. */
-  background: token("gray-100");
+  background: var(--_swc-upload-attachment-tint);
   border-radius: token("corner-radius-large-default");
   overflow: hidden;
+
+  /* Drawn inward (negative offset), matching the dismiss button's ring
+   * above, so it never extends past this box and can't get clipped by the
+   * `overflow: hidden` here. */
+  outline: token("border-width-100") solid var(--_swc-upload-attachment-tint);
+  outline-offset: calc(token("border-width-100") * -1);
 }
 
 :host([type="media"]) .swc-UploadAttachment-surface {
@@ -254,8 +270,12 @@
 
   /* Otherwise the shared gray-50 rule above paints an opaque rectangle over
    * the whole stack (even while empty, loading), hiding the stack's own
-   * gray-100 backdrop behind it. */
-  background: transparent;
+   * tint behind it. */
+  background: var(--_swc-upload-attachment-tint);
+
+  /* Drawn inward (negative offset), matching the stack's own ring above. */
+  outline: token("border-width-100") solid var(--_swc-upload-attachment-tint);
+  outline-offset: calc(token("border-width-100") * -1);
 }
 
 :host([type="media"]) .swc-UploadAttachment-progress {

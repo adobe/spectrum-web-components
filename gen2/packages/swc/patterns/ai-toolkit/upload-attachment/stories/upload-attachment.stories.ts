@@ -158,7 +158,7 @@ export const MultiMedia: Story = {
           <swc-asset slot="thumbnail" aspect-ratio="1:1">
             <img src="images/card-preview.jpg" alt="Document preview" />
           </swc-asset>
-          <swc-badge slot="badge">PDF</swc-badge>
+          <swc-badge slot="badge" subtle>PDF</swc-badge>
         </swc-upload-attachment>
         <swc-upload-attachment type="media" dismissible>
           <swc-asset slot="thumbnail" aspect-ratio="1:1">
