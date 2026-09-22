@@ -282,8 +282,13 @@ export class PixelLoader extends SpectrumElement {
     // straight to the hold/exit that follows instead — both here and in the
     // ticker interval below, so the next preset step fires when the
     // fast-forwarded animation actually finishes rather than a full cycle
-    // later.
+    // later. Computed once (rather than separately in `_syncTicker` and
+    // `_playCells`) since both need the same value for the same transition.
     const justUnpaused = changed.get('paused') === true && !this.paused;
+    const skipEntryMs =
+      justUnpaused && this._animationMode === 'full'
+        ? buildCompleteMsFor(this._activeCells.cells)
+        : 0;
 
     // Resync the ticker on `paused` (freeze stops cycling) and on each
     // `_presetIndex` step, since every icon's cycle duration differs.
@@ -295,7 +300,7 @@ export class PixelLoader extends SpectrumElement {
       changed.has('_presetIndex') ||
       changed.has('random')
     ) {
-      this._syncTicker(justUnpaused);
+      this._syncTicker(skipEntryMs);
     }
 
     // A single-icon change willUpdate did not commit means a build is in
@@ -311,7 +316,7 @@ export class PixelLoader extends SpectrumElement {
       changed.has('random') ||
       (changed.has('_displayedIcon') && !this._resolvedPreset)
     ) {
-      this._playCells(justUnpaused);
+      this._playCells(skipEntryMs);
     }
   }
 
@@ -416,7 +421,7 @@ export class PixelLoader extends SpectrumElement {
     };
   }
 
-  private _syncTicker(skipEntry = false): void {
+  private _syncTicker(skipMs = 0): void {
     this._stopTicker();
 
     // Reduced motion still cycles (the fade communicates activity); only the
@@ -433,18 +438,16 @@ export class PixelLoader extends SpectrumElement {
     const cells = this._cellsForIcon(icons[this._presetIndex % icons.length]);
     const duration = this._cycleDuration(cells);
 
-    // `_playCells(true)` fast-forwards this same icon's animation past its
+    // `_playCells(skipMs)` fast-forwards this same icon's animation past its
     // entry when coming off `paused`; shorten this one interval by the same
     // amount so the next step fires when that animation actually finishes
     // instead of a full cycle later.
-    const skipMs =
-      skipEntry && this._animationMode === 'full'
-        ? buildCompleteMsFor(cells)
-        : 0;
-
-    this._ticker = window.setInterval(() => {
-      this._presetIndex = (this._presetIndex + 1) % icons.length;
-    }, Math.max(0, duration - skipMs));
+    this._ticker = window.setInterval(
+      () => {
+        this._presetIndex = (this._presetIndex + 1) % icons.length;
+      },
+      Math.max(0, duration - skipMs)
+    );
   }
 
   private _stopTicker(): void {
@@ -532,7 +535,7 @@ export class PixelLoader extends SpectrumElement {
     });
   }
 
-  private _playCells(skipEntry = false): void {
+  private _playCells(skipMs = 0): void {
     this._cancelAnimations();
 
     const cellEls = this._cellEls();
@@ -614,19 +617,14 @@ export class PixelLoader extends SpectrumElement {
       );
     }
 
-    if (skipEntry) {
-      const skipMs = buildCompleteMsFor(cells);
+    if (skipMs > 0) {
       this._animations.forEach((animation) => {
         animation.currentTime = skipMs;
       });
     }
   }
 
-  private _renderCell(
-    cell: Cell,
-    radii: CornerRadii,
-    settled: boolean
-  ): TemplateResult {
+  private _renderCell(cell: Cell, radii: CornerRadii): TemplateResult {
     return html`
       <div
         class="swc-PixelLoader-cell"
@@ -637,16 +635,6 @@ export class PixelLoader extends SpectrumElement {
             radii,
             PixelLoader.CORNER_RADIUS
           ),
-          // Paint the static (paused) frame settled from the very first frame.
-          // `_playCells`'s static branch sets these same values, but only
-          // after this template has already committed to the DOM; without
-          // this, a cell can paint once at its bare, un-settled default (most
-          // visible on the fully-rounded isolated cells) before that runs.
-          ...(settled && {
-            translate: SETTLED_TRANSLATE,
-            scale: SETTLED_SCALE,
-            opacity: String(SETTLED_OPACITY),
-          }),
         })}
       ></div>
     `;
@@ -655,18 +643,10 @@ export class PixelLoader extends SpectrumElement {
   protected override render(): TemplateResult {
     const { cells } = this._activeCells;
     const radii = computeCornerRadii(cells);
-    const settled = this._animationMode === 'static';
 
     return html`
-      <div
-        class="swc-PixelLoader"
-        role="progressbar"
-        aria-label=${this.label}
-        style=${settled ? `opacity: ${SETTLED_OPACITY}` : ''}
-      >
-        ${cells.map((cell, index) =>
-          this._renderCell(cell, radii[index], settled)
-        )}
+      <div class="swc-PixelLoader" role="progressbar" aria-label=${this.label}>
+        ${cells.map((cell, index) => this._renderCell(cell, radii[index]))}
       </div>
     `;
   }
