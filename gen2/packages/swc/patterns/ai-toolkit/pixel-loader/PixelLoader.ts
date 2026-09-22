@@ -18,6 +18,7 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { validateEnum } from '@adobe/spectrum-wc-core/utils';
 
 import {
+  buildCompleteMsFor,
   cellScaleKeyframes,
   cellTranslateKeyframes,
   durationForCells,
@@ -106,6 +107,16 @@ export class PixelLoader extends SpectrumElement {
   @property({ type: Boolean, reflect: true })
   public paused = false;
 
+  /**
+   * Shuffles `preset`'s icon order once, instead of always cycling the fixed
+   * sequence defined in `PRESETS`. The preset's first icon still always leads
+   * (e.g. `aiLogo`); only the icons after it shuffle. The shuffle is stable
+   * for as long as `preset` stays the same; changing `preset` reshuffles.
+   * Ignored in single-icon mode.
+   */
+  @property({ type: Boolean, reflect: true })
+  public random = false;
+
   /** Accessible label for the loading indicator. */
   @property({ type: String, reflect: true })
   public label = 'Loading';
@@ -121,6 +132,12 @@ export class PixelLoader extends SpectrumElement {
   // paths). Invalidated in `updated` since a new icon/preset re-renders cells.
   private _containerCache: HTMLElement | null = null;
   private _cellElsCache: HTMLElement[] | null = null;
+
+  // The `random` shuffle, cached so it stays stable across re-renders and
+  // ticker steps instead of reshuffling on every read. Keyed to the preset it
+  // was generated for so a `preset` change regenerates it.
+  private _shuffledPresetIcons: PixelLoaderIconName[] | null = null;
+  private _shuffledPresetKey: PixelLoaderPresetName | undefined;
 
   private _ticker: number | null = null;
 
@@ -252,20 +269,33 @@ export class PixelLoader extends SpectrumElement {
     if (
       changed.has('_displayedIcon') ||
       changed.has('preset') ||
-      changed.has('_presetIndex')
+      changed.has('_presetIndex') ||
+      changed.has('random')
     ) {
       this._containerCache = null;
       this._cellElsCache = null;
     }
 
+    // Coming off `paused` already shows the fully-assembled, settled frame
+    // (see `_playCells`'s static branch); replaying the entry drop from
+    // scratch would visibly rebuild an icon that is already built. Skip
+    // straight to the hold/exit that follows instead — both here and in the
+    // ticker interval below, so the next preset step fires when the
+    // fast-forwarded animation actually finishes rather than a full cycle
+    // later.
+    const justUnpaused = changed.get('paused') === true && !this.paused;
+
     // Resync the ticker on `paused` (freeze stops cycling) and on each
     // `_presetIndex` step, since every icon's cycle duration differs.
+    // `random` reshuffles which icon sits at the current index, which can
+    // change that icon's own cycle duration too.
     if (
       changed.has('preset') ||
       changed.has('paused') ||
-      changed.has('_presetIndex')
+      changed.has('_presetIndex') ||
+      changed.has('random')
     ) {
-      this._syncTicker();
+      this._syncTicker(justUnpaused);
     }
 
     // A single-icon change willUpdate did not commit means a build is in
@@ -278,9 +308,10 @@ export class PixelLoader extends SpectrumElement {
       changed.has('preset') ||
       changed.has('paused') ||
       changed.has('_presetIndex') ||
+      changed.has('random') ||
       (changed.has('_displayedIcon') && !this._resolvedPreset)
     ) {
-      this._playCells();
+      this._playCells(justUnpaused);
     }
   }
 
@@ -331,7 +362,35 @@ export class PixelLoader extends SpectrumElement {
 
   private _presetIcons(): PixelLoaderIconName[] | undefined {
     const preset = this._resolvedPreset;
-    return preset ? PRESETS[preset] : undefined;
+    if (!preset) {
+      return undefined;
+    }
+
+    const icons = PRESETS[preset];
+    if (!this.random) {
+      return icons;
+    }
+
+    if (this._shuffledPresetKey !== preset || !this._shuffledPresetIcons) {
+      // The preset's first icon (its opening "brand" frame, e.g. `aiLogo`)
+      // always leads; only the rest of the sequence shuffles.
+      const [first, ...rest] = icons;
+      this._shuffledPresetIcons = [first, ...this._shuffled(rest)];
+      this._shuffledPresetKey = preset;
+    }
+    return this._shuffledPresetIcons;
+  }
+
+  /** Fisher-Yates shuffle; does not mutate `icons`. */
+  private _shuffled(
+    icons: readonly PixelLoaderIconName[]
+  ): PixelLoaderIconName[] {
+    const shuffled = [...icons];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
   }
 
   /** Cells for a named icon, guarding against an unknown name. */
@@ -357,7 +416,7 @@ export class PixelLoader extends SpectrumElement {
     };
   }
 
-  private _syncTicker(): void {
+  private _syncTicker(skipEntry = false): void {
     this._stopTicker();
 
     // Reduced motion still cycles (the fade communicates activity); only the
@@ -372,9 +431,20 @@ export class PixelLoader extends SpectrumElement {
     // the ticker stays in step. Derive its cells from the `icons` list already
     // resolved above rather than re-resolving the preset via `_activeCells`.
     const cells = this._cellsForIcon(icons[this._presetIndex % icons.length]);
+    const duration = this._cycleDuration(cells);
+
+    // `_playCells(true)` fast-forwards this same icon's animation past its
+    // entry when coming off `paused`; shorten this one interval by the same
+    // amount so the next step fires when that animation actually finishes
+    // instead of a full cycle later.
+    const skipMs =
+      skipEntry && this._animationMode === 'full'
+        ? buildCompleteMsFor(cells)
+        : 0;
+
     this._ticker = window.setInterval(() => {
       this._presetIndex = (this._presetIndex + 1) % icons.length;
-    }, this._cycleDuration(cells));
+    }, Math.max(0, duration - skipMs));
   }
 
   private _stopTicker(): void {
@@ -462,7 +532,7 @@ export class PixelLoader extends SpectrumElement {
     });
   }
 
-  private _playCells(): void {
+  private _playCells(skipEntry = false): void {
     this._cancelAnimations();
 
     const cellEls = this._cellEls();
@@ -543,9 +613,20 @@ export class PixelLoader extends SpectrumElement {
         container.animate(groupOpacityKeyframes(total), options)
       );
     }
+
+    if (skipEntry) {
+      const skipMs = buildCompleteMsFor(cells);
+      this._animations.forEach((animation) => {
+        animation.currentTime = skipMs;
+      });
+    }
   }
 
-  private _renderCell(cell: Cell, radii: CornerRadii): TemplateResult {
+  private _renderCell(
+    cell: Cell,
+    radii: CornerRadii,
+    settled: boolean
+  ): TemplateResult {
     return html`
       <div
         class="swc-PixelLoader-cell"
@@ -556,6 +637,16 @@ export class PixelLoader extends SpectrumElement {
             radii,
             PixelLoader.CORNER_RADIUS
           ),
+          // Paint the static (paused) frame settled from the very first frame.
+          // `_playCells`'s static branch sets these same values, but only
+          // after this template has already committed to the DOM; without
+          // this, a cell can paint once at its bare, un-settled default (most
+          // visible on the fully-rounded isolated cells) before that runs.
+          ...(settled && {
+            translate: SETTLED_TRANSLATE,
+            scale: SETTLED_SCALE,
+            opacity: String(SETTLED_OPACITY),
+          }),
         })}
       ></div>
     `;
@@ -564,10 +655,18 @@ export class PixelLoader extends SpectrumElement {
   protected override render(): TemplateResult {
     const { cells } = this._activeCells;
     const radii = computeCornerRadii(cells);
+    const settled = this._animationMode === 'static';
 
     return html`
-      <div class="swc-PixelLoader" role="progressbar" aria-label=${this.label}>
-        ${cells.map((cell, index) => this._renderCell(cell, radii[index]))}
+      <div
+        class="swc-PixelLoader"
+        role="progressbar"
+        aria-label=${this.label}
+        style=${settled ? `opacity: ${SETTLED_OPACITY}` : ''}
+      >
+        ${cells.map((cell, index) =>
+          this._renderCell(cell, radii[index], settled)
+        )}
       </div>
     `;
   }
