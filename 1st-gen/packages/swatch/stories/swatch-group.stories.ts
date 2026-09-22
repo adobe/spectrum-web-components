@@ -232,3 +232,47 @@ export const shapeRectangle = (args: Properties): TemplateResult =>
 shapeRectangle.args = {
   shape: 'rectangle',
 } as Properties;
+
+const directionTemplate = (
+  dir: 'ltr' | 'rtl',
+  args: Properties
+): TemplateResult => html`
+  <div dir=${dir}>
+    <p>
+      <code>dir=${dir}</code>
+      — tab into the group, then press
+      <kbd>ArrowRight</kbd>
+      and
+      <kbd>ArrowLeft</kbd>
+      .
+    </p>
+    ${template(args)}
+  </div>
+`;
+
+export const rtlNavigation = (args: Properties): TemplateResult =>
+  directionTemplate('rtl', args);
+rtlNavigation.args = {
+  selects: 'single',
+  selected: ['--spectrum-red-700'],
+} as Properties;
+rtlNavigation.storyName = 'RTL keyboard navigation';
+rtlNavigation.parameters = {
+  docs: {
+    description: {
+      story:
+        'In RTL, ArrowRight should move focus to the Swatch that is visually to the right. Today it moves focus to the left, because the focus group advances by DOM order without mirroring for text direction.',
+    },
+  },
+};
+
+export const rtlNavigationComparison = (
+  args: Properties
+): TemplateResult => html`
+  ${directionTemplate('ltr', args)} ${directionTemplate('rtl', args)}
+`;
+rtlNavigationComparison.args = {
+  selects: 'single',
+  selected: ['--spectrum-red-700'],
+} as Properties;
+rtlNavigationComparison.storyName = 'RTL vs LTR keyboard navigation';

@@ -111,6 +111,14 @@ export class FocusGroupController<
 
   _focusInIndex = (_elements: T[]): number => 0;
 
+  /**
+   * The resolved text direction of the host. Horizontal arrow keys are mirrored
+   * in RTL so that focus always follows the visual layout rather than DOM order.
+   */
+  get isLTR(): boolean {
+    return getComputedStyle(this.host).direction !== 'rtl';
+  }
+
   host: ReactiveElement;
 
   isFocusableElement = (_el: T): boolean => true;
@@ -392,15 +400,17 @@ export class FocusGroupController<
     }
     let diff = 0;
     this.prevIndex = this.currentIndex;
+    // In RTL the visually "next" element is the previous one in DOM order.
+    const horizontalDiff = this.isLTR ? 1 : -1;
     switch (event.key) {
       case 'ArrowRight':
-        diff += 1;
+        diff += horizontalDiff;
         break;
       case 'ArrowDown':
         diff += this.direction === 'grid' ? this.directionLength : 1;
         break;
       case 'ArrowLeft':
-        diff -= 1;
+        diff -= horizontalDiff;
         break;
       case 'ArrowUp':
         diff -= this.direction === 'grid' ? this.directionLength : 1;
