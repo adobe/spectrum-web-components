@@ -25,6 +25,7 @@ import { spy } from 'sinon';
 
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
+import type { OverlayTrigger } from '@spectrum-web-components/overlay';
 import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
 
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
@@ -33,6 +34,7 @@ import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/tray/sp-tray.js';
 
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
@@ -42,6 +44,7 @@ import {
   mouseMoveOver,
   sendTabKey,
 } from '../../../test/testing-helpers.js';
+import { mobileView } from '../stories/submenu.stories.js';
 
 type SelectsWithKeyboardTest = {
   dir: CSSStyleDeclaration['direction'];
@@ -1321,6 +1324,57 @@ describe('Submenu', () => {
       await elementUpdated(menu);
 
       expect(menu.currentMobileSubmenu).to.be.undefined;
+    });
+    it('resets drill-down when the containing tray closes', async function () {
+      const tray = await fixture<HTMLElement>(html`
+        <sp-tray open>
+          <sp-menu mobile-view>
+            <sp-menu-item class="root">
+              Has submenu
+              <sp-menu slot="submenu">
+                <sp-menu-item>One</sp-menu-item>
+              </sp-menu>
+            </sp-menu-item>
+          </sp-menu>
+        </sp-tray>
+      `);
+      const menu = tray.querySelector('sp-menu') as Menu;
+      const rootItem = menu.querySelector('.root') as MenuItem;
+      await elementUpdated(menu);
+
+      menu.openMobileSubmenu(rootItem);
+      await elementUpdated(menu);
+      expect(menu.currentMobileSubmenu).to.equal(rootItem);
+
+      // sp-tray dispatches a bubbling `close` when dismissed.
+      tray.dispatchEvent(new Event('close', { bubbles: true }));
+      await elementUpdated(menu);
+
+      expect(menu.currentMobileSubmenu).to.be.undefined;
+    });
+    it('reopens the mobile view story after the tray closes', async function () {
+      const overlayTrigger = await fixture<OverlayTrigger>(mobileView());
+      expect(overlayTrigger.localName).to.equal('overlay-trigger');
+
+      const button = overlayTrigger.querySelector('sp-button') as HTMLElement;
+      const tray = overlayTrigger.querySelector('sp-tray') as HTMLElement & {
+        close(): void;
+      };
+
+      let opened = oneEvent(overlayTrigger, 'sp-opened');
+      button.click();
+      await opened;
+      expect(overlayTrigger.open).to.equal('click');
+
+      const closed = oneEvent(overlayTrigger, 'sp-closed');
+      tray.close();
+      await closed;
+      expect(overlayTrigger.open).to.be.undefined;
+
+      opened = oneEvent(overlayTrigger, 'sp-opened');
+      button.click();
+      await opened;
+      expect(overlayTrigger.open).to.equal('click');
     });
     it('does not open overlay on hover in mobile mode', async function () {
       expect(this.rootItem.open).to.be.false;
