@@ -18,8 +18,3 @@
  * The version of the 1st-gen Spectrum Web Components library.
  */
 export const version = '1.12.3';
-
-/**
- * The version of the core base package.
- */
-export const coreVersion = '1.12.3';
