@@ -627,8 +627,9 @@ export class ResponseStatus extends SpectrumElement {
 
     // Always a <button> so the tag never changes when the first step arrives
     // (swapping div<->button restarts the nested loader animation). Disclosure
-    // trigger only when there are steps; otherwise inert (tabindex="-1") with
-    // the label exposed as a role="status" live region. Name comes from content.
+    // trigger only when there are steps; otherwise inert (tabindex="-1"). Only
+    // the still-running state is a role="status" live region; a settled label
+    // is static. Name comes from content.
     return html`
       <button
         type="button"
@@ -641,7 +642,9 @@ export class ResponseStatus extends SpectrumElement {
         ${this._renderLeadingIcon()}
         <span
           class="swc-ResponseStatus-headerTrail"
-          role=${ifDefined(showDisclosure ? undefined : 'status')}
+          role=${ifDefined(
+            !showDisclosure && status === 'active' ? 'status' : undefined
+          )}
         >
           ${this._renderLabel()}
           ${showDisclosure ? this._renderChevron(this.open) : nothing}
