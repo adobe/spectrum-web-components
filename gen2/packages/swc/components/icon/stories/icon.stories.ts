@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -17,6 +18,7 @@ import {
   ICON_VALID_SIZES,
   type IconSize,
 } from '@adobe/spectrum-wc-core/components/icon';
+import { Icon_ChevronDown } from '@adobe/spectrum-wc-icons/ChevronDown.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
@@ -59,15 +61,11 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-// A stand-in for a consumer's own SVG: a single <svg> with a viewBox and a
-// currentColor fill, matching the custom-icon contract documented on this page.
-const customSvg = html`
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.82 6.2 20.86l1.11-6.46-4.7-4.58 6.49-.94z"
-      fill="currentColor"
-    />
-  </svg>
+// A Spectrum workflow icon's SVG string, slotted in to stand in for a consumer's
+// own SVG. Its fill resolves through `var(--swc-icon-color, currentColor)`,
+// matching the custom-icon contract documented on this page.
+const iconSvg = html`
+  ${unsafeSVG(Icon_ChevronDown())}
 `;
 
 const sizeLabels = {
@@ -84,7 +82,7 @@ const sizeLabels = {
 
 export const Playground: Story = {
   tags: ['dev'],
-  render: (args) => template(args, customSvg),
+  render: (args) => template(args, iconSvg),
   args: {
     'accessible-label': 'Favorite',
     size: 'm',
@@ -97,7 +95,7 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   tags: ['overview'],
-  render: (args) => template(args, customSvg),
+  render: (args) => template(args, iconSvg),
   args: {
     'accessible-label': 'Favorite',
     size: 'm',
@@ -115,7 +113,7 @@ export const Anatomy: Story = {
         ...args,
         'accessible-label': args['accessible-label'] || 'Favorite',
       },
-      customSvg
+      iconSvg
     ),
   tags: ['anatomy'],
 };
@@ -133,7 +131,7 @@ export const Sizes: Story = {
           'accessible-label': args['accessible-label'] || sizeLabels[size],
           size,
         },
-        customSvg
+        iconSvg
       )
     )}
   `,
@@ -147,12 +145,12 @@ export const Color: Story = {
   render: (args) => html`
     ${template(
       { ...args, size: 'l', 'accessible-label': 'Inherits text color' },
-      customSvg
+      iconSvg
     )}
     <div style="color: #d7373f">
       ${template(
         { ...args, size: 'l', 'accessible-label': 'Colored via CSS color' },
-        customSvg
+        iconSvg
       )}
     </div>
     <div style="--swc-icon-color: #0d66d0">
@@ -162,7 +160,7 @@ export const Color: Story = {
           size: 'l',
           'accessible-label': 'Colored via --swc-icon-color',
         },
-        customSvg
+        iconSvg
       )}
     </div>
   `,
@@ -177,7 +175,7 @@ export const Color: Story = {
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-  render: (args) => template(args, customSvg),
+  render: (args) => template(args, iconSvg),
   tags: ['a11y'],
   args: {
     'accessible-label': 'Favorite',

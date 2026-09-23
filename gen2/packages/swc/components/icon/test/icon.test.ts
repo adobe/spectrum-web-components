@@ -10,10 +10,12 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Icon } from '@adobe/spectrum-wc/icon';
+import { Icon_ChevronDown } from '@adobe/spectrum-wc-icons/ChevronDown.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
@@ -31,6 +33,9 @@ export default {
   },
   tags: ['!autodocs', 'dev'],
 } as Meta;
+
+// A Spectrum workflow icon's SVG string, slotted into the frame as the test fixture.
+const iconSvg = unsafeSVG(Icon_ChevronDown());
 
 // ──────────────────────────────────────────────────────────────
 // TEST: Defaults
@@ -57,13 +62,7 @@ export const OverviewTest: Story = {
 
 export const SizeAttributeTest: Story = {
   render: () => html`
-    <swc-icon size="xl" accessible-label="Search">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-        <path
-          d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
-        />
-      </svg>
-    </swc-icon>
+    <swc-icon size="xl" accessible-label="Search">${iconSvg}</swc-icon>
   `,
   play: async ({ canvasElement, step }) => {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
@@ -80,13 +79,7 @@ export const SizeAttributeTest: Story = {
 
 export const LabeledHostAccessibilityTest: Story = {
   render: () => html`
-    <swc-icon accessible-label="Search">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-        <path
-          d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
-        />
-      </svg>
-    </swc-icon>
+    <swc-icon accessible-label="Search">${iconSvg}</swc-icon>
   `,
   play: async ({ canvasElement, step }) => {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
@@ -107,13 +100,7 @@ export const LabeledHostAccessibilityTest: Story = {
 
 export const NoLabelAriaHiddenTest: Story = {
   render: () => html`
-    <swc-icon>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-        <path
-          d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
-        />
-      </svg>
-    </swc-icon>
+    <swc-icon>${iconSvg}</swc-icon>
   `,
   play: async ({ canvasElement, step }) => {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
@@ -136,13 +123,7 @@ export const NoLabelAriaHiddenTest: Story = {
 
 export const LabelTogglingTest: Story = {
   render: () => html`
-    <swc-icon accessible-label="x">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-        <path
-          d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
-        />
-      </svg>
-    </swc-icon>
+    <swc-icon accessible-label="x">${iconSvg}</swc-icon>
   `,
   play: async ({ canvasElement, step }) => {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');

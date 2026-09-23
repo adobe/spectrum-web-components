@@ -11,6 +11,7 @@
  */
 
 import { html } from 'lit';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
@@ -21,6 +22,7 @@ import {
   BUTTON_VALID_SIZES,
   BUTTON_VARIANTS,
 } from '@adobe/spectrum-wc-core/components/button';
+import { Icon_Add } from '@adobe/spectrum-wc-icons/Add.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 
@@ -48,6 +50,8 @@ export default {
   },
   tags: ['!autodocs', 'dev'],
 } as Meta;
+
+const addIconSlot = unsafeSVG(Icon_Add().replace('<svg ', '<svg slot="icon" '));
 
 // ──────────────────────────────────────────────────────────────
 // SECTION 1: Defaults
@@ -511,20 +515,7 @@ export const StatesTest: Story = {
 
 export const DisabledBehaviorTest: Story = {
   render: () => html`
-    <swc-button disabled>
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 36 36"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
-        />
-      </svg>
-      Save
-    </swc-button>
+    <swc-button disabled>${addIconSlot} Save</swc-button>
   `,
   play: async ({ canvasElement, step }) => {
     const button = await getComponent<Button>(canvasElement, 'swc-button');
@@ -567,19 +558,7 @@ export const DisabledBehaviorTest: Story = {
 
 export const IconOnlyPendingAriaTest: Story = {
   render: () => html`
-    <swc-button accessible-label="Add item" pending>
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 36 36"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
-        />
-      </svg>
-    </swc-button>
+    <swc-button accessible-label="Add item" pending>${addIconSlot}</swc-button>
   `,
   play: async ({ canvasElement, step }) => {
     const button = await getComponent<Button>(canvasElement, 'swc-button');
@@ -895,19 +874,7 @@ export const PendingAndDisabledWarningTest: Story = {
 
 export const IconOnlyMissingLabelWarningTest: Story = {
   render: () => html`
-    <swc-button>
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 36 36"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
-        />
-      </svg>
-    </swc-button>
+    <swc-button>${addIconSlot}</swc-button>
   `,
   play: async ({ canvasElement, step }) => {
     const button = await getComponent<Button>(canvasElement, 'swc-button');
@@ -932,20 +899,7 @@ export const IconOnlyMissingLabelWarningTest: Story = {
 
 export const LabelSlotUpdatesDynamicallyTest: Story = {
   render: () => html`
-    <swc-button>
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 36 36"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
-        />
-      </svg>
-      Save
-    </swc-button>
+    <swc-button>${addIconSlot} Save</swc-button>
   `,
   play: async ({ canvasElement, step }) => {
     const button = await getComponent<Button>(canvasElement, 'swc-button');

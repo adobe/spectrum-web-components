@@ -21,6 +21,7 @@ import {
 } from '@adobe/spectrum-wc-core/components/infield-button';
 
 import '@adobe/spectrum-wc/components/infield-button/swc-infield-button.js';
+import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 
 // ────────────────
 //    METADATA
@@ -46,10 +47,10 @@ const sizeLabels = {
 } as const satisfies Record<InfieldButtonSize, string>;
 
 // S2 UI chevron (right-pointing) rotated 90° clockwise to point down for picker disclosure.
-const chevronIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" aria-hidden="true" focusable="false" style="rotate: 90deg;"><path fill="currentColor" d="M3.375 9.375a.628.628 0 0 1-.442-1.067L6.24 5 2.933 1.692a.626.626 0 0 1 .885-.885l3.75 3.75a.63.63 0 0 1 0 .885l-3.75 3.75a.62.62 0 0 1-.443.183"/></svg>`;
-const addIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.125 4.375h-2.5v-2.5a.626.626 0 0 0-1.25 0v2.5h-2.5a.626.626 0 0 0 0 1.25h2.5v2.5a.626.626 0 0 0 1.25 0v-2.5h2.5a.626.626 0 0 0 0-1.25"/></svg>`;
-const removeIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.125 5.625h-6.25a.626.626 0 0 1 0-1.25h6.25a.626.626 0 0 1 0 1.25"/></svg>`;
-const crossIconSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path fill="currentColor" d="m5.885 5 2.307-2.308a.626.626 0 0 0-.885-.885L5 4.116 2.692 1.808a.626.626 0 0 0-.884.884L4.115 5 1.808 7.308a.63.63 0 0 0 0 .884.623.623 0 0 0 .884 0L5 5.885l2.308 2.307a.623.623 0 0 0 .884 0 .63.63 0 0 0 0-.884z"/></svg>`;
+const chevronIconSvg = `<swc-ui-icon slot="icon" icon="chevron" style="rotate: 90deg;"></swc-ui-icon>`;
+const addIconSvg = `<swc-ui-icon slot="icon" icon="add"></swc-ui-icon>`;
+const removeIconSvg = `<swc-ui-icon slot="icon" icon="dash"></swc-ui-icon>`;
+const crossIconSvg = `<swc-ui-icon slot="icon" icon="cross"></swc-ui-icon>`;
 
 // ──────────────────────────────────────────────────
 //    REUSABLE FIELD TEMPLATE

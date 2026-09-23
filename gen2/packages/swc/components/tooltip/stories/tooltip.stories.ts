@@ -12,6 +12,7 @@
 
 import { html } from 'lit';
 import { ref } from 'lit/directives/ref.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
@@ -22,6 +23,7 @@ import {
   type TooltipPlacement,
   type TooltipVariant,
 } from '@adobe/spectrum-wc-core/components/tooltip';
+import { Icon_Add } from '@adobe/spectrum-wc-icons/Add.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/popover/swc-popover.js';
@@ -91,6 +93,8 @@ const TABULAR_PLACEMENTS: TooltipPlacement[] = [
   'start',
 ];
 
+const addIconSlot = unsafeSVG(Icon_Add().replace('<svg ', '<svg slot="icon" '));
+
 // Renders a button+tooltip pair linked via the `for` attribute.
 // Each pair needs a unique `id` so multiple instances can coexist in the same story.
 const triggered = (
@@ -110,17 +114,7 @@ const triggered = (
         id=${id}
         accessible-label=${String(tooltipArgs['default-slot'] ?? '')}
       >
-        <svg
-          slot="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 36 36"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <path
-            d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
-          />
-        </svg>
+        ${addIconSlot}
       </swc-button>
       ${template({ ...tooltipArgs, for: id })}
     `;
