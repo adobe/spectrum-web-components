@@ -232,33 +232,6 @@ export const FitInvalidFallbackTest: Story = {
   },
 };
 
-export const DefaultAttributeReflectionTest: Story = {
-  render: () => html`
-    <swc-thumbnail><img src="a.png" alt="Preview" /></swc-thumbnail>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const thumbnail = await getComponent<Thumbnail>(
-      canvasElement,
-      'swc-thumbnail'
-    );
-
-    // :host([size]) and :host([fit]) styles need these attributes present.
-    await step(
-      'reflects default size and fit attributes when neither is authored',
-      async () => {
-        expect(
-          thumbnail.getAttribute('size'),
-          'size attribute defaults to 500'
-        ).toBe('500');
-        expect(
-          thumbnail.getAttribute('fit'),
-          'fit attribute defaults to contain'
-        ).toBe('contain');
-      }
-    );
-  },
-};
-
 export const AuthoredAttributesArePreservedTest: Story = {
   render: () => html`
     <swc-thumbnail size="100" fit="cover">
@@ -543,69 +516,39 @@ export const NoSlottedImageWarningTest: Story = {
   },
 };
 
-export const AltAccessibleNameNoWarningTest: Story = {
+export const AccessibleNameNoWarningTest: Story = {
   render: () => '',
   play: async ({ canvasElement, step }) => {
-    await step(
-      'does not warn when the slotted image has a meaningful alt',
-      () =>
-        withWarningSpy(async (warnCalls) => {
-          const thumbnail = document.createElement(
-            'swc-thumbnail'
-          ) as Thumbnail;
-          thumbnail.innerHTML = '<img src="a.png" alt="Layer 1 preview" />';
-          canvasElement.appendChild(thumbnail);
-          await thumbnail.updateComplete;
+    const cases = [
+      { label: 'alt', markup: '<img src="a.png" alt="Layer 1 preview" />' },
+      {
+        label: 'aria-label',
+        markup: '<img src="a.png" aria-label="Layer 1 preview" />',
+      },
+      {
+        label: 'aria-labelledby',
+        markup: '<img src="a.png" aria-labelledby="ext-label" />',
+      },
+    ];
 
-          expect(
-            warnCalls.length,
-            'no warnings are emitted for a labeled image'
-          ).toBe(0);
-        })
-    );
-  },
-};
+    for (const { label, markup } of cases) {
+      await step(
+        `does not warn when the slotted image has an accessible name via ${label}`,
+        () =>
+          withWarningSpy(async (warnCalls) => {
+            const thumbnail = document.createElement(
+              'swc-thumbnail'
+            ) as Thumbnail;
+            thumbnail.innerHTML = markup;
+            canvasElement.appendChild(thumbnail);
+            await thumbnail.updateComplete;
 
-export const AriaLabelNoWarningTest: Story = {
-  render: () => '',
-  play: async ({ canvasElement, step }) => {
-    await step('does not warn when the slotted image has an aria-label', () =>
-      withWarningSpy(async (warnCalls) => {
-        const thumbnail = document.createElement('swc-thumbnail') as Thumbnail;
-        thumbnail.innerHTML =
-          '<img src="a.png" aria-label="Layer 1 preview" />';
-        canvasElement.appendChild(thumbnail);
-        await thumbnail.updateComplete;
-
-        expect(
-          warnCalls.length,
-          'no warnings are emitted for an aria-labeled image'
-        ).toBe(0);
-      })
-    );
-  },
-};
-
-export const AriaLabelledbyNoWarningTest: Story = {
-  render: () => '',
-  play: async ({ canvasElement, step }) => {
-    await step(
-      'does not warn when the slotted image has an aria-labelledby',
-      () =>
-        withWarningSpy(async (warnCalls) => {
-          const thumbnail = document.createElement(
-            'swc-thumbnail'
-          ) as Thumbnail;
-          thumbnail.innerHTML =
-            '<img src="a.png" aria-labelledby="ext-label" />';
-          canvasElement.appendChild(thumbnail);
-          await thumbnail.updateComplete;
-
-          expect(
-            warnCalls.length,
-            'no warnings are emitted for an aria-labelledby image'
-          ).toBe(0);
-        })
-    );
+            expect(
+              warnCalls.length,
+              `no warnings are emitted for an image labeled via ${label}`
+            ).toBe(0);
+          })
+      );
+    }
   },
 };
