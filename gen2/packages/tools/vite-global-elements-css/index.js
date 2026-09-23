@@ -32,8 +32,8 @@ const SWC_PREFIXED_ATTRS = ['size', 'static-color'];
  * generated global custom element genuinely carries these attributes at
  * runtime, so they're kept as native attribute selectors instead.
  *
- * @param {string} attrName
- * @returns {boolean}
+ * @param {string} attrName - Attribute name to test.
+ * @returns {boolean} `true` if the attribute is a reflected ARIA attribute.
  */
 function isAriaAttr(attrName) {
   return attrName.startsWith('aria-');
@@ -43,7 +43,7 @@ function isAriaAttr(attrName) {
 
 /**
  * @param {string} sourcePath - Path relative to project root.
- * @returns {string}
+ * @returns {string} The generated file header comment.
  */
 function makeHeader(sourcePath) {
   const year = new Date().getFullYear();
@@ -72,7 +72,7 @@ function makeHeader(sourcePath) {
  * 'action-button' → 'swc-ActionButton'.
  *
  * @param {string} component - Component identifier, e.g. 'button' or 'action-button'.
- * @returns {string}
+ * @returns {string} The derived BEM block class, e.g. 'swc-Button'.
  */
 export function deriveBlock(component) {
   return (
@@ -88,7 +88,7 @@ export function deriveBlock(component) {
  * Returns the resolved BEM block class for an entry.
  *
  * @param {import('./index.d.ts').GlobalElementEntry} entry - Entry to resolve the block for.
- * @returns {string}
+ * @returns {string} The resolved BEM block class.
  */
 function getBlock(entry) {
   return entry.rootElementSelector ?? deriveBlock(entry.component);
@@ -99,8 +99,8 @@ function getBlock(entry) {
 /**
  * Splits a comma-separated selector list while respecting parentheses nesting.
  *
- * @param {string} list
- * @returns {string[]}
+ * @param {string} list - Comma-separated selector list.
+ * @returns {string[]} The individual selectors.
  */
 function splitSelectors(list) {
   const parts = [];
@@ -128,7 +128,7 @@ function splitSelectors(list) {
  * Parses attribute selectors from a :host() argument string.
  *
  * @param {string} args - e.g. '[variant="primary"][fill-style="outline"]'
- * @returns {{ name: string; value?: string }[]}
+ * @returns {{ name: string; value?: string }[]} The parsed attribute selectors.
  */
 function parseHostAttrs(args) {
   /** @type {{ name: string; value?: string }[]} */
@@ -152,9 +152,9 @@ function parseHostAttrs(args) {
  * All other attributes use the raw value (string attrs) or the attribute name
  * itself (boolean attrs).
  *
- * @param {string} attrName
- * @param {string | undefined} value
- * @returns {string}
+ * @param {string} attrName - Host attribute name.
+ * @param {string | undefined} value - Attribute value, or undefined for boolean attributes.
+ * @returns {string} The BEM modifier string.
  */
 function buildModifier(attrName, value) {
   if (value === undefined) {
@@ -170,9 +170,9 @@ function buildModifier(attrName, value) {
 /**
  * Transforms `slot[name="X"]::slotted(*)` occurrences to `.block-X`.
  *
- * @param {string} fragment
- * @param {string} block
- * @returns {string}
+ * @param {string} fragment - Selector fragment to transform.
+ * @param {string} block - BEM block class name.
+ * @returns {string} The transformed fragment.
  */
 function transformSlotted(fragment, block) {
   return fragment.replace(
@@ -194,9 +194,9 @@ function transformSlotted(fragment, block) {
  *   :host([aria-x="y"])         → .block[aria-x="y"] (reflected ARIA attrs stay native)
  *   slot[name="X"]::slotted(*)  → .block__X
  *
- * @param {string} selector
- * @param {string} block
- * @returns {string}
+ * @param {string} selector - Single shadow-DOM selector (no commas).
+ * @param {string} block - BEM block class name.
+ * @returns {string} The global BEM equivalent selector.
  */
 function transformSingle(selector, block) {
   // Wildcard → scoped to the block and all its descendants, preserving the
@@ -268,9 +268,9 @@ function transformSingle(selector, block) {
 /**
  * Transforms a full comma-separated selector list from shadow-DOM form to global BEM form.
  *
- * @param {string} list
- * @param {string} block
- * @returns {string}
+ * @param {string} list - Comma-separated shadow-DOM selector list.
+ * @param {string} block - BEM block class name.
+ * @returns {string} The global BEM selector list.
  */
 export function transformSelector(list, block) {
   return splitSelectors(list)
@@ -335,7 +335,7 @@ function stripExcludedBlocks(container) {
  * Removes all comment nodes from the AST. Called after fence stripping so that
  * fence comments are already gone and only source comments remain.
  *
- * @param {import('postcss').Root} root
+ * @param {import('postcss').Root} root - PostCSS root to strip comments from.
  */
 function stripComments(root) {
   /** @type {import('postcss').Comment[]} */
@@ -350,8 +350,8 @@ function stripComments(root) {
  * Walks all rules in the AST (including those nested inside @media etc.) and
  * applies BEM selector derivation.
  *
- * @param {import('postcss').Root} root
- * @param {string} block
+ * @param {import('postcss').Root} root - PostCSS root to transform.
+ * @param {string} block - BEM block class name.
  */
 function applySelectTransform(root, block) {
   root.walkRules((rule) => {
@@ -364,7 +364,7 @@ function applySelectTransform(root, block) {
  * all declarations into the first occurrence and deduplicating (last wins per property).
  * Recurses into at-rules so nested rules inside @media are also merged.
  *
- * @param {import('postcss').Container} container
+ * @param {import('postcss').Container} container - PostCSS container whose rules to merge.
  */
 function mergeRules(container) {
   // Recurse into at-rules first so inner rules are merged before outer grouping
@@ -422,8 +422,8 @@ function mergeRules(container) {
  * Moves all remaining nodes into `@layer swc-global-elements { }` and appends
  * the all:revert-layer rule after the layer.
  *
- * @param {import('postcss').Root} root
- * @param {string} block
+ * @param {import('postcss').Root} root - PostCSS root to wrap.
+ * @param {string} block - BEM block class name.
  * @param {string[]} textElements - Child element suffixes (e.g. ['label']) whose
  *   classes should also receive all:revert-layer, protecting inherited typographic
  *   properties on light-DOM text nodes from unlayered application CSS.
@@ -481,7 +481,7 @@ function wrapInLayer(root, block, textElements = []) {
  * @param {string} block - BEM block class name, e.g. 'swc-Button'.
  * @param {string[]} [textElements] - Child element suffixes (e.g. ['label']) whose classes
  *   should also receive all:revert-layer alongside the root block.
- * @returns {string}
+ * @returns {string} The derived global-elements stylesheet.
  */
 export function deriveCSS(sourceCss, block, textElements = []) {
   const root = postcss.parse(sourceCss);
@@ -500,17 +500,17 @@ export function deriveCSS(sourceCss, block, textElements = []) {
 // ── Path helpers ────────────────────────────────────────────────────────────
 
 /**
- * @param {import('./index.d.ts').GlobalElementEntry} entry
- * @returns {string}
+ * @param {import('./index.d.ts').GlobalElementEntry} entry - Entry to resolve the source name for.
+ * @returns {string} The source name (explicit `source` or the component name).
  */
 function getSourceName(entry) {
   return entry.source ?? entry.component;
 }
 
 /**
- * @param {import('./index.d.ts').GlobalElementEntry} entry
- * @param {string} projectRoot
- * @returns {string}
+ * @param {import('./index.d.ts').GlobalElementEntry} entry - Entry to resolve the source path for.
+ * @param {string} projectRoot - Absolute project root path.
+ * @returns {string} The absolute path to the component's source CSS.
  */
 function getSourcePath(entry, projectRoot) {
   const name = getSourceName(entry);
@@ -520,9 +520,9 @@ function getSourcePath(entry, projectRoot) {
 /**
  * Returns the path to `{name}-base.css` if it exists alongside `{name}.css`, else null.
  *
- * @param {import('./index.d.ts').GlobalElementEntry} entry
- * @param {string} projectRoot
- * @returns {string | null}
+ * @param {import('./index.d.ts').GlobalElementEntry} entry - Entry to resolve the base path for.
+ * @param {string} projectRoot - Absolute project root path.
+ * @returns {string | null} The base CSS path if it exists, otherwise null.
  */
 function getBasePath(entry, projectRoot) {
   const name = getSourceName(entry);
@@ -531,9 +531,9 @@ function getBasePath(entry, projectRoot) {
 }
 
 /**
- * @param {import('./index.d.ts').GlobalElementEntry} entry
- * @param {string} projectRoot
- * @returns {string}
+ * @param {import('./index.d.ts').GlobalElementEntry} entry - Entry to resolve the output path for.
+ * @param {string} projectRoot - Absolute project root path.
+ * @returns {string} The absolute output path for the derived global CSS.
  */
 function getOutputPath(entry, projectRoot) {
   return join(
@@ -549,8 +549,8 @@ function getOutputPath(entry, projectRoot) {
 /**
  * Reads source(s), derives global CSS, and writes to the output path.
  *
- * @param {import('./index.d.ts').GlobalElementEntry} entry
- * @param {string} projectRoot
+ * @param {import('./index.d.ts').GlobalElementEntry} entry - Entry to generate output for.
+ * @param {string} projectRoot - Absolute project root path.
  */
 function generateEntry(entry, projectRoot) {
   const src = getSourcePath(entry, projectRoot);
@@ -594,8 +594,8 @@ function generateEntry(entry, projectRoot) {
  * written before `processStylesheets` runs in `closeBundle`. In dev mode,
  * `configureServer` watches source files and re-derives on save.
  *
- * @param {import('./index.d.ts').GlobalElementCSSOptions} options
- * @returns {import('vite').Plugin}
+ * @param {import('./index.d.ts').GlobalElementCSSOptions} options - Plugin options, including the elements to derive.
+ * @returns {import('vite').Plugin} The configured Vite plugin.
  */
 export function globalElementCSS(options) {
   let projectRoot = '';
