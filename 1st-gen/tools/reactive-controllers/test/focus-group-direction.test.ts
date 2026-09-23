@@ -15,9 +15,15 @@ import { sendKeys } from '@web/test-runner-commands';
 import { ActionButton } from '@spectrum-web-components/action-button';
 import { ActionGroup } from '@spectrum-web-components/action-group';
 import { html } from '@spectrum-web-components/base';
+import type { Radio, RadioGroup } from '@spectrum-web-components/radio';
+import type { Tab, Tabs } from '@spectrum-web-components/tabs';
 
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
+import '@spectrum-web-components/radio/sp-radio-group.js';
+import '@spectrum-web-components/radio/sp-radio.js';
+import '@spectrum-web-components/tabs/sp-tab.js';
+import '@spectrum-web-components/tabs/sp-tabs.js';
 
 const createGroup = async (
   dir: 'ltr' | 'rtl',
@@ -132,5 +138,77 @@ describe('FocusGroupController text direction', () => {
 
     await sendKeys({ press: 'ArrowLeft' });
     expect(document.activeElement === first).to.be.true;
+  });
+
+  it('mirrors arrow keys in a horizontal RTL Tabs', async () => {
+    const wrapper = await fixture<HTMLDivElement>(html`
+      <div dir="rtl">
+        <sp-tabs selected="1">
+          <sp-tab label="Tab 1" value="1"></sp-tab>
+          <sp-tab label="Tab 2" value="2"></sp-tab>
+          <sp-tab label="Tab 3" value="3"></sp-tab>
+        </sp-tabs>
+      </div>
+    `);
+    const el = wrapper.querySelector('sp-tabs') as Tabs;
+    await elementUpdated(el);
+    const tabs = [...el.querySelectorAll('sp-tab')] as Tab[];
+
+    el.focus();
+    await nextFrame();
+    expect(document.activeElement === tabs[0]).to.be.true;
+
+    await sendKeys({ press: 'ArrowLeft' });
+    expect(document.activeElement === tabs[1]).to.be.true;
+  });
+
+  it('does not mirror arrow keys in a vertical RTL Tabs', async () => {
+    const wrapper = await fixture<HTMLDivElement>(html`
+      <div dir="rtl">
+        <sp-tabs selected="1" direction="vertical">
+          <sp-tab label="Tab 1" value="1"></sp-tab>
+          <sp-tab label="Tab 2" value="2"></sp-tab>
+          <sp-tab label="Tab 3" value="3"></sp-tab>
+        </sp-tabs>
+      </div>
+    `);
+    const el = wrapper.querySelector('sp-tabs') as Tabs;
+    await elementUpdated(el);
+    const tabs = [...el.querySelectorAll('sp-tab')] as Tab[];
+
+    el.focus();
+    await nextFrame();
+    expect(document.activeElement === tabs[0]).to.be.true;
+
+    await sendKeys({ press: 'ArrowRight' });
+    expect(document.activeElement === tabs[1]).to.be.true;
+
+    await sendKeys({ press: 'ArrowLeft' });
+    expect(document.activeElement === tabs[0]).to.be.true;
+  });
+
+  it('does not mirror arrow keys in a vertical RTL Radio Group', async () => {
+    const wrapper = await fixture<HTMLDivElement>(html`
+      <div dir="rtl">
+        <sp-radio-group vertical selected="1" name="example">
+          <sp-radio value="1">Option 1</sp-radio>
+          <sp-radio value="2">Option 2</sp-radio>
+          <sp-radio value="3">Option 3</sp-radio>
+        </sp-radio-group>
+      </div>
+    `);
+    const el = wrapper.querySelector('sp-radio-group') as RadioGroup;
+    await elementUpdated(el);
+    const radios = [...el.querySelectorAll('sp-radio')] as Radio[];
+
+    el.focus();
+    await nextFrame();
+    expect(document.activeElement === radios[0]).to.be.true;
+
+    await sendKeys({ press: 'ArrowRight' });
+    expect(document.activeElement === radios[1]).to.be.true;
+
+    await sendKeys({ press: 'ArrowLeft' });
+    expect(document.activeElement === radios[0]).to.be.true;
   });
 });
