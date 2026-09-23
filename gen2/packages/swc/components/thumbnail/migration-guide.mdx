@@ -110,7 +110,8 @@ Move any styling tied to these attributes into your own CSS, targeting `<swc-thu
 <!-- After -->
 <style>
   .layer-selected-thumbnail {
-    outline: 2px solid var(--swc-focus-indicator-color);
+    outline: var(--swc-focus-indicator-thickness) solid
+      var(--swc-focus-indicator-color);
   }
 </style>
 <swc-thumbnail class="layer-selected-thumbnail">

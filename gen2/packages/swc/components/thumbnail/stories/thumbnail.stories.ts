@@ -161,12 +161,18 @@ export const ConsumerStyledStates: Story = {
         border-radius: var(--swc-corner-radius-75);
       }
     </style>
-    <swc-thumbnail class="disabled-thumbnail">
-      <img src=${PLACEHOLDER_SRC} alt="Disabled preview" />
-    </swc-thumbnail>
-    <swc-thumbnail class="selected-thumbnail">
-      <img src=${PLACEHOLDER_SRC} alt="Selected preview" />
-    </swc-thumbnail>
+    <button type="button" disabled>
+      <swc-thumbnail class="disabled-thumbnail">
+        <img src=${PLACEHOLDER_SRC} alt="Preview" />
+      </swc-thumbnail>
+      Layer 1
+    </button>
+    <button type="button" aria-pressed="true">
+      <swc-thumbnail class="selected-thumbnail">
+        <img src=${PLACEHOLDER_SRC} alt="Preview" />
+      </swc-thumbnail>
+      Layer 2
+    </button>
   `,
   parameters: { flexLayout: 'row-wrap' },
   tags: ['states'],
