@@ -306,6 +306,14 @@ export const States: Story = {
   `,
   tags: ['states'],
   parameters: {
+    a11y: {
+      // WCAG 1.4.3 exempts text that is part of an inactive UI component.
+      // axe cannot infer that this slotted description belongs to the
+      // disabled custom element, so exclude only its color-contrast result.
+      exclude: {
+        'color-contrast': ['swc-text-field[disabled] > [slot="description"]'],
+      },
+    },
     flexLayout: 'column-stretch',
     styles: {
       'inline-size': '220px',
