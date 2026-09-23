@@ -55,6 +55,20 @@ export default meta;
 // ────────────────────
 
 export const Playground: Story = {
+  render: (args) => html`
+    <div style="padding: 160px;">${template(args)}</div>
+  `,
+  tags: ['dev'],
+};
+
+export const IconOnlyPlayground: Story = {
+  args: {
+    'default-slot': '',
+    'accessible-label': 'Ask AI',
+  },
+  render: (args) => html`
+    <div style="padding: 160px;">${template(args)}</div>
+  `,
   tags: ['dev'],
 };
 
