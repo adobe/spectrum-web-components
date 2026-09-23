@@ -97,6 +97,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     elements: () => this.buttons,
     hostDelegatesFocus: true,
     isFocusableElement: (el: ActionButton) => !el.disabled,
+    // Matches `:host([vertical])`, which renders the group as a column.
     mirrorHorizontalInRTL: () => !this.vertical,
   });
 

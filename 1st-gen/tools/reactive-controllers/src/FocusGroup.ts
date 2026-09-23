@@ -125,8 +125,8 @@ export class FocusGroupController<
   _focusInIndex = (_elements: T[]): number => 0;
 
   /**
-   * The resolved text direction of the host. Horizontal arrow keys are mirrored
-   * in RTL so that focus always follows the visual layout rather than DOM order.
+   * Whether the host resolves to a left-to-right direction. Read from the
+   * computed style, so `direction` inherited through CSS is respected.
    */
   get isLTR(): boolean {
     return getComputedStyle(this.host).direction !== 'rtl';
@@ -459,10 +459,14 @@ export class FocusGroupController<
     if (this.stopKeyEventPropagation) {
       event.stopPropagation();
     }
-    if (this.direction === 'grid' && this.currentIndex + diff < 0) {
+    // Home and End already point past a boundary and rely on wrapping to land
+    // on the first or last focusable element, so they skip the grid clamp.
+    const clampToGrid =
+      this.direction === 'grid' && event.key !== 'Home' && event.key !== 'End';
+    if (clampToGrid && this.currentIndex + diff < 0) {
       this.currentIndex = 0;
     } else if (
-      this.direction === 'grid' &&
+      clampToGrid &&
       this.currentIndex + diff > this.elements.length - 1
     ) {
       this.currentIndex = this.elements.length - 1;

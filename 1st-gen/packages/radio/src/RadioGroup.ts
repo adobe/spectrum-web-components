@@ -56,7 +56,8 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
     },
     elements: () => this.buttons,
     isFocusableElement: (el: Radio) => !el.disabled,
-    // Radio groups render as a column unless `horizontal` is set.
+    // Matches `:host([horizontal])`, the only rule that renders a row. It wins
+    // over `[vertical]`, and radio groups are a column by default.
     mirrorHorizontalInRTL: () => this.horizontal,
   });
 

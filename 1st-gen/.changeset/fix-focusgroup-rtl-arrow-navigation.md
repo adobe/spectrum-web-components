@@ -1,11 +1,24 @@
 ---
 '@spectrum-web-components/reactive-controllers': patch
+'@spectrum-web-components/action-group': patch
+'@spectrum-web-components/radio': patch
+'@spectrum-web-components/tabs': patch
+'@spectrum-web-components/swatch': patch
+'@spectrum-web-components/tags': patch
+'@spectrum-web-components/grid': patch
 ---
 
-**fix(reactive-controllers):** Fixed `FocusGroupController` moving focus opposite to the visual layout when arrow keys are used in a right-to-left context.
+**fix(reactive-controllers):** Fixed arrow keys moving focus opposite to the visual layout in a right-to-left context.
 
-`handleKeydown` mapped <kbd>ArrowRight</kbd> to `+1` and <kbd>ArrowLeft</kbd> to `-1` in DOM order without consulting the resolved text direction, so under `dir="rtl"` focus travelled backwards relative to what the user sees. This affected every horizontally rendered focus group, including `sp-swatch-group`, `sp-action-group`, `sp-tabs`, `sp-radio-group` and `sp-tags`.
+`FocusGroupController` mapped <kbd>ArrowRight</kbd> to the next element and <kbd>ArrowLeft</kbd> to the previous one in DOM order, without checking the text direction. Under `dir="rtl"`, focus therefore moved away from the arrow the user pressed. This affected `sp-swatch-group`, `sp-action-group`, `sp-tabs`, `sp-radio-group` and `sp-tags`.
 
-The horizontal step is now mirrored when the host's computed direction is `rtl`, and only when the host reports that its elements are laid out along the inline axis. A new `mirrorHorizontalInRTL` config option carries that report, accepting a boolean or a callback for hosts that can render either way, such as `() => !this.vertical`. It defaults to `true` only for `direction: 'horizontal'`, which is the one value that unambiguously describes a single inline-axis row.
+<kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> now swap when the host's computed direction is `rtl` and the host lays out its elements in a row. A new `mirrorHorizontalInRTL` config option tells the controller whether that is the case. It accepts a boolean, or a callback for hosts that can render as either a row or a column. It defaults to `true` only for `direction: 'horizontal'`.
 
-Vertically rendered groups therefore keep <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> stepping in DOM order, so they stay consistent with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd>. `sp-grid` also keeps DOM order, because it positions its items with a physical transform and so does not flip with the writing mode. <kbd>Home</kbd> and <kbd>End</kbd> remain logical in both directions.
+- `sp-action-group` and `sp-tabs` mirror unless they render vertically.
+- `sp-radio-group` mirrors only with `horizontal`, because it renders as a column by default.
+- `sp-swatch-group` and `sp-tags` always mirror.
+- `sp-grid` never mirrors, because it positions items with physical offsets that do not follow the text direction.
+
+In a column, <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> keep following DOM order, so they stay consistent with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd>.
+
+**fix(grid):** Fixed <kbd>Home</kbd> and <kbd>End</kbd> being swapped in `sp-grid`. <kbd>Home</kbd> now moves focus to the first item and <kbd>End</kbd> to the last, as in every other focus group.

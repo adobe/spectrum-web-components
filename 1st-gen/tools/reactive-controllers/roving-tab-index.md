@@ -401,12 +401,12 @@ The `RovingTabindexController` provides the following keyboard interactions:
         <sp-table-row>
             <sp-table-cell><kbd>→</kbd> (Right Arrow)</sp-table-cell>
             <sp-table-cell>horizontal, both, grid</sp-table-cell>
-            <sp-table-cell>Moves focus to the next element</sp-table-cell>
+            <sp-table-cell>Moves focus to the next element, or to the previous element when <code>mirrorHorizontalInRTL</code> applies in a right-to-left context</sp-table-cell>
         </sp-table-row>
         <sp-table-row>
             <sp-table-cell><kbd>←</kbd>(Left Arrow)</sp-table-cell>
             <sp-table-cell>horizontal, both, grid</sp-table-cell>
-            <sp-table-cell>Moves focus to the previous element</sp-table-cell>
+            <sp-table-cell>Moves focus to the previous element, or to the next element when <code>mirrorHorizontalInRTL</code> applies in a right-to-left context</sp-table-cell>
         </sp-table-row>
         <sp-table-row>
             <sp-table-cell><kbd>↓</kbd> (Down Arrow)</sp-table-cell>
@@ -417,6 +417,16 @@ The `RovingTabindexController` provides the following keyboard interactions:
             <sp-table-cell><kbd>↑</kbd> (Up Arrow)</sp-table-cell>
             <sp-table-cell>vertical, both, grid</sp-table-cell>
             <sp-table-cell>Moves focus to the previous element (or up in grid)</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>Home</kbd></sp-table-cell>
+            <sp-table-cell>All</sp-table-cell>
+            <sp-table-cell>Moves focus to the first focusable element, in any text direction</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>End</kbd></sp-table-cell>
+            <sp-table-cell>All</sp-table-cell>
+            <sp-table-cell>Moves focus to the last focusable element, in any text direction</sp-table-cell>
         </sp-table-row>
     </sp-table-body>
 </sp-table>
