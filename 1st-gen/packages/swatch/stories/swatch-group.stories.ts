@@ -111,12 +111,13 @@ export default {
     ): TemplateResult => html`
       <div
         @change=${async (event: Event & { target: SwatchGroup }) => {
+          const output = (event.currentTarget as HTMLElement)
+            .lastElementChild as HTMLDivElement;
           await 0;
           if (event.defaultPrevented) {
             return;
           }
-          const next = event.target.nextElementSibling as HTMLDivElement;
-          next.textContent = `Selected: ${JSON.stringify(
+          output.textContent = `Selected: ${JSON.stringify(
             event.target.selected
           )}`;
         }}

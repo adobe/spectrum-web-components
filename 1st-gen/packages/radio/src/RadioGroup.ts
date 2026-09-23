@@ -56,7 +56,8 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
     },
     elements: () => this.buttons,
     isFocusableElement: (el: Radio) => !el.disabled,
-    mirrorHorizontalInRTL: () => !this.vertical,
+    // Radio groups render as a column unless `horizontal` is set.
+    mirrorHorizontalInRTL: () => this.horizontal,
   });
 
   public override focus(): void {

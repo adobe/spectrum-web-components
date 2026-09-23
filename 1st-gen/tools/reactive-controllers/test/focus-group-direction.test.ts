@@ -18,14 +18,45 @@ import { ActionGroup } from '@spectrum-web-components/action-group';
 import { html } from '@spectrum-web-components/base';
 import type { Radio, RadioGroup } from '@spectrum-web-components/radio';
 import { FocusGroupController } from '@spectrum-web-components/reactive-controllers/src/FocusGroup.js';
+import type { SwatchGroup } from '@spectrum-web-components/swatch';
 import type { Tab, Tabs } from '@spectrum-web-components/tabs';
+import type { Tags } from '@spectrum-web-components/tags';
 
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/radio/sp-radio-group.js';
 import '@spectrum-web-components/radio/sp-radio.js';
+import '@spectrum-web-components/swatch/sp-swatch-group.js';
+import '@spectrum-web-components/swatch/sp-swatch.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
+import '@spectrum-web-components/tags/sp-tag.js';
+import '@spectrum-web-components/tags/sp-tags.js';
+
+/**
+ * Focuses `host`, then checks that `ArrowRight` and `ArrowLeft` step to the
+ * second item and back, in whichever direction `mirrored` implies.
+ */
+const expectArrowSteps = async (
+  host: HTMLElement,
+  items: Element[],
+  mirrored: boolean
+): Promise<void> => {
+  const [forward, back] = mirrored
+    ? ['ArrowLeft', 'ArrowRight']
+    : ['ArrowRight', 'ArrowLeft'];
+
+  host.focus();
+  await nextFrame();
+  expect(document.activeElement === items[0], 'initial focus').to.be.true;
+
+  await sendKeys({ press: forward });
+  expect(document.activeElement === items[1], `${forward} steps forward`).to.be
+    .true;
+
+  await sendKeys({ press: back });
+  expect(document.activeElement === items[0], `${back} steps back`).to.be.true;
+};
 
 const createGroup = async (
   dir: 'ltr' | 'rtl',
@@ -265,6 +296,81 @@ describe('FocusGroupController text direction', () => {
 
     await sendKeys({ press: 'ArrowLeft' });
     expect(document.activeElement === radios[0]).to.be.true;
+  });
+
+  it('does not mirror arrow keys in a default (column) RTL Radio Group', async () => {
+    const wrapper = await fixture<HTMLDivElement>(html`
+      <div dir="rtl">
+        <sp-radio-group selected="1" name="example">
+          <sp-radio value="1">Option 1</sp-radio>
+          <sp-radio value="2">Option 2</sp-radio>
+          <sp-radio value="3">Option 3</sp-radio>
+        </sp-radio-group>
+      </div>
+    `);
+    const el = wrapper.querySelector('sp-radio-group') as RadioGroup;
+    await elementUpdated(el);
+    await expectArrowSteps(el, [...el.querySelectorAll('sp-radio')], false);
+  });
+
+  it('mirrors arrow keys in a horizontal RTL Radio Group', async () => {
+    const wrapper = await fixture<HTMLDivElement>(html`
+      <div dir="rtl">
+        <sp-radio-group horizontal selected="1" name="example">
+          <sp-radio value="1">Option 1</sp-radio>
+          <sp-radio value="2">Option 2</sp-radio>
+          <sp-radio value="3">Option 3</sp-radio>
+        </sp-radio-group>
+      </div>
+    `);
+    const el = wrapper.querySelector('sp-radio-group') as RadioGroup;
+    await elementUpdated(el);
+    await expectArrowSteps(el, [...el.querySelectorAll('sp-radio')], true);
+  });
+
+  it('does not mirror arrow keys in a vertical-right RTL Tabs', async () => {
+    const wrapper = await fixture<HTMLDivElement>(html`
+      <div dir="rtl">
+        <sp-tabs selected="1" direction="vertical-right">
+          <sp-tab label="Tab 1" value="1"></sp-tab>
+          <sp-tab label="Tab 2" value="2"></sp-tab>
+          <sp-tab label="Tab 3" value="3"></sp-tab>
+        </sp-tabs>
+      </div>
+    `);
+    const el = wrapper.querySelector('sp-tabs') as Tabs;
+    await elementUpdated(el);
+    await expectArrowSteps(el, [...el.querySelectorAll('sp-tab')], false);
+  });
+
+  it('mirrors arrow keys in an RTL Swatch Group', async () => {
+    const wrapper = await fixture<HTMLDivElement>(html`
+      <div dir="rtl">
+        <sp-swatch-group aria-label="Colors">
+          <sp-swatch color="red" label="Red" value="red"></sp-swatch>
+          <sp-swatch color="green" label="Green" value="green"></sp-swatch>
+          <sp-swatch color="blue" label="Blue" value="blue"></sp-swatch>
+        </sp-swatch-group>
+      </div>
+    `);
+    const el = wrapper.querySelector('sp-swatch-group') as SwatchGroup;
+    await elementUpdated(el);
+    await expectArrowSteps(el, [...el.querySelectorAll('sp-swatch')], true);
+  });
+
+  it('mirrors arrow keys in RTL Tags', async () => {
+    const wrapper = await fixture<HTMLDivElement>(html`
+      <div dir="rtl">
+        <sp-tags>
+          <sp-tag deletable>Tag 1</sp-tag>
+          <sp-tag deletable>Tag 2</sp-tag>
+          <sp-tag deletable>Tag 3</sp-tag>
+        </sp-tags>
+      </div>
+    `);
+    const el = wrapper.querySelector('sp-tags') as Tags;
+    await elementUpdated(el);
+    await expectArrowSteps(el, [...el.querySelectorAll('sp-tag')], true);
   });
 
   it('only mirrors the unambiguous horizontal direction by default', async () => {
