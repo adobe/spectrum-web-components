@@ -20,6 +20,7 @@
 
 .swc-TextField-control {
   --_swc-text-field-border-width: token("border-width-200");
+  --_swc-text-field-validation-icon-size: var(--swc-text-field-validation-icon-size, token("workflow-icon-medium"));
 
   display: flex;
   grid-area: input;
@@ -37,6 +38,11 @@
   border-radius: var(--swc-text-field-border-radius, token("corner-radius-medium-size-medium"));
   transition-duration: token("animation-duration-100");
   transition-property: border-color;
+}
+
+.swc-TextField-control::after {
+  flex: 0 0 var(--_swc-text-field-validation-icon-size);
+  content: "";
 }
 
 .swc-TextField-input {
@@ -82,7 +88,6 @@ slot[name="prefix"]::slotted(*) {
 /* ── Invalid icon (trailing flex child) ──────────── */
 
 .swc-TextField-invalidIcon {
-  --_swc-text-field-validation-icon-size: var(--swc-text-field-validation-icon-size, token("workflow-icon-medium"));
   --swc-icon-inline-size: var(--_swc-text-field-validation-icon-size);
   --swc-icon-block-size: var(--_swc-text-field-validation-icon-size);
 
@@ -133,6 +138,10 @@ slot[name="prefix"]::slotted(*) {
 
 :host([invalid]:not(:disabled)) .swc-TextField-control {
   border-color: token("negative-border-color-default");
+}
+
+:host([invalid]:not(:disabled)) .swc-TextField-control::after {
+  display: none;
 }
 
 :host([invalid]:not(:disabled)) .swc-TextField-control:hover {

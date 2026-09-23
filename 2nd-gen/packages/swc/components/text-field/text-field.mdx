@@ -34,7 +34,7 @@ Three sources can provide the field's accessible name. When more than one is set
 
 ### Sizes
 
-Text fields come in four sizes. Size controls the field height, typography, inline padding, and corner radius. Width is not size-dependent: the field fills its container by default; set `inline-size` on the host for a fixed width.
+Text fields come in four sizes. Size controls the field height, typography, inline padding, corner radius, and default maximum width. The control reserves space for the invalid icon and its gap, so showing validation does not change the field width.
 
 <Canvas of={TextFieldStories.Sizes} />
 

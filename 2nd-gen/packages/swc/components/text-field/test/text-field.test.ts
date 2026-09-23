@@ -120,6 +120,37 @@ export const SizesTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Invalid icon width reservation
+// ──────────────────────────────────────────────────────────────
+
+export const InvalidWidthTest: Story = {
+  render: () => html`
+    <div style="display: flex; align-items: flex-start;">
+      <swc-text-field accessible-label="Email address"></swc-text-field>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const control = field.shadowRoot?.querySelector<HTMLElement>(
+      '.swc-TextField-control'
+    );
+
+    await step(
+      'invalid presentation does not increase the field width',
+      async () => {
+        const validWidth = control?.getBoundingClientRect().width;
+        field.invalid = true;
+        await field.updateComplete;
+        expect(control?.getBoundingClientRect().width).toBe(validWidth);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: States: required reflection + invalid description/error wiring
 // ──────────────────────────────────────────────────────────────
 
