@@ -114,6 +114,11 @@ export const StatesTest: Story = {
           )
         ).toBeNull();
         expect(
+          disabledInvalidField.shadowRoot?.querySelector(
+            '.swc-TextField-invalidIcon'
+          )
+        ).toBeNull();
+        expect(
           disabledInput?.ariaDescribedByElements?.some((element) =>
             element.className.includes('swc-FormFieldErrorText')
           )
@@ -130,6 +135,11 @@ export const StatesTest: Story = {
       expect(
         disabledInvalidField.shadowRoot?.querySelector(
           '.swc-FormFieldErrorText'
+        )
+      ).toBeTruthy();
+      expect(
+        disabledInvalidField.shadowRoot?.querySelector(
+          '.swc-TextField-invalidIcon'
         )
       ).toBeTruthy();
     });
@@ -172,11 +182,6 @@ export const StatesTest: Story = {
       // A valid field renders no validation icon.
       expect(
         fields[0].shadowRoot?.querySelector('.swc-TextField-invalidIcon')
-      ).toBeNull();
-      expect(
-        disabledInvalidField.shadowRoot?.querySelector(
-          '.swc-TextField-invalidIcon'
-        )
       ).toBeNull();
     });
   },

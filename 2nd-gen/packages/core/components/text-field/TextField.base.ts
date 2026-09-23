@@ -324,6 +324,9 @@ export abstract class TextFieldBase extends SizedMixin(
       valid: TEXT_FIELD_NECESSITY_INDICATORS,
       url: DOCS_URL,
     });
+    if (changedProperties.has('disabled')) {
+      this.toggleAttribute('disabled', this.disabled);
+    }
     super.update(changedProperties);
     // Push the current value into the form; exclude it entirely when disabled.
     this.fieldAssoc.setValue(this.effectiveDisabled ? null : this.value);
