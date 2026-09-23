@@ -1,7 +1,6 @@
 ---
-description: Suggests the preferred branch naming format for Spectrum Web Components contributions — lowercase, dash-separated, with a conventional commit type and optional issue number.
-globs:
-alwaysApply: true
+name: branch-naming
+description: Suggests the preferred branch name format for Spectrum Web Components contributions (lowercase, dash-separated, a conventional commit type, and an optional issue number). Use when creating, renaming, or checking a git branch name.
 ---
 
 # Branch naming format

@@ -21,12 +21,16 @@ Coding agents working in this repository should treat **`.ai/`** as the canonica
 
 ## Rules vs skills
 
-- **Rules** are file-path-scoped or always-on. Two are always in context (`branch-naming`, `styles`, both `alwaysApply: true`). The rest are **path-scoped**: they carry both `globs:` (Cursor) and `paths:` (Claude Code) frontmatter, so each tool loads them only when a matching file is in context — deterministically, not by guessing intent. See [`.ai/README.md`](./.ai/README.md) for the full catalog.
+- **Rules** are **path-scoped**: each `.ai/rules/*.md` file carries a `paths:` list, so tools load it only when a matching file is in context, deterministically rather than by guessing intent. `yarn ai:sync` generates the tool copies in `.github/instructions/` and `.cursor/rules/`, and `.claude/rules` is a symlink to `.ai/rules/`. See [`.ai/README.md`](./.ai/README.md) for the full catalog.
 - **Skills** are **on-demand** playbooks for guidance with no natural file-path scope — task or intent-driven work (for example jira-ticket, code-conformance, explain-code, test-driven development, session handoff). A skill has no glob/paths auto-trigger; it must be matched to the task by description, or invoked explicitly. When the user's request fits a skill's description, **read that skill's `SKILL.md`** before doing the work.
 
 ## IDE-specific folders
 
-Some editors load extra project config from their own directories (for example `.cursor/` and `.claude/`). Those locations are thin adapters that symlink back to `.ai/`. **`.ai/` remains the portable source of truth** for rules and skills documented here. If instructions conflict, prefer **`.ai/README.md`** and the files under **`.ai/rules/`** and **`.ai/skills/`**.
+Some editors load extra project config from their own directories (for example `.cursor/`, `.claude/`, and `.github/instructions/`). Those locations are thin adapters: symlinks back to `.ai/`, or files generated from it by `yarn ai:sync`. Never edit a generated file; edit its `.ai/` source. **`.ai/` remains the portable source of truth** for rules and skills documented here. If instructions conflict, prefer **`.ai/README.md`** and the files under **`.ai/rules/`** and **`.ai/skills/`**.
+
+## Conventions
+
+- **Branch names:** follow the `branch-naming` skill (`<username>/<type>-<description>[-swc-<issue>]`). Branches that the Copilot app creates for its own sessions are exempt.
 
 ## Non-trivial changes
 
