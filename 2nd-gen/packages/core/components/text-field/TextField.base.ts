@@ -274,6 +274,10 @@ export abstract class TextFieldBase extends SizedMixin(
   //     TEXT SELECTION
   // ──────────────────────
 
+  /*
+   * Expose native text-selection methods on the host because the internal
+   * `<input>` is encapsulated by the shadow root and unavailable to consumers.
+   */
   /** The role element is always the `<input>`; cast for its selection members. */
   private get inputElement(): HTMLInputElement | null {
     return this.roleElement as HTMLInputElement | null;
