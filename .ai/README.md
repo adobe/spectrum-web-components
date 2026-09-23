@@ -12,22 +12,26 @@ All rules and skills now live in **`.ai/`** — a tool-agnostic, plain-markdown 
 - No sync step, no duplication, no drift between tools
 - New contributors or tools start from `AGENTS.md` at the repo root, which bootstraps everything
 
-### Rules carry both `globs:` and `paths:` frontmatter
+### Rules carry `paths:` frontmatter; tool copies are generated
 
-Rule files use Cursor-style `globs` / `alwaysApply` frontmatter, which Cursor honors live via its per-file `.mdc` symlinks. Claude Code does **not** read `globs` — it has its own path-scoping mechanism, a `paths:` frontmatter field (YAML list of glob patterns) on files under `.claude/rules/`. A rule file without `paths:` loads unconditionally into every session; a rule file with `paths:` loads only when Claude reads a file matching one of those patterns — this works through the `.claude/rules → ../.ai/rules` directory symlink too, since Claude Code resolves symlinked paths when matching.
+Every rule in `.ai/rules/` has a `description` and a quoted `paths:` list of globs. `yarn ai:sync` (`.ai/scripts/sync.js`) generates the tool-specific copies from that one source:
 
-Every rule file in `.ai/rules/` that has a Cursor `globs:` value also carries an equivalent `paths:` list, so both tools apply the same conditional loading — this includes `styles.md`, whose `alwaysApply: true` makes it always-active in Cursor regardless of file type, but which still gets `paths: ['*.css']` so Claude Code (which doesn't read `alwaysApply`) only loads it for CSS files instead of every session. `branch-naming` is the one rule with no natural file-path scope at all — no `globs:`/`paths:`, unconditional in both tools, as intended.
+- `.github/instructions/<name>.instructions.md` with `applyTo` for GitHub Copilot (CLI, app, VS Code, cloud agent, and code review)
+- `.cursor/rules/<name>.mdc` with `globs` for Cursor
+- Claude Code reads `.ai/rules/` directly through the `.claude/rules` symlink, because `paths:` is its own key
+
+Glob semantics follow GitHub's `applyTo`: `*` stays within one directory and `**` crosses directories, so `*.css` matches only root-level files and `**/*.css` matches CSS anywhere. `yarn lint:ai` fails when a glob matches no tracked file, and when a generated file doesn't match its source. The pre-commit hook runs `yarn ai:sync` whenever `.ai/` or an `AGENTS.md` file is staged.
 
 ### Rules vs. skills: how to choose
 
-- **Path-scoped rule** — the guidance is tied to a specific set of file paths (e.g. "when editing a `.stories.ts` file" or "when editing a component README"). Give it both `globs:` (Cursor) and `paths:` (Claude) so it loads deterministically whenever a matching file is in context, in either tool — no risk of it going unread just because a task's intent wasn't explicit.
+- **Path-scoped rule** — the guidance is tied to a specific set of file paths (e.g. "when editing a `.stories.ts` file" or "when editing a component README"). Give it a `paths:` list so it loads deterministically whenever a matching file is in context, in every tool — no risk of it going unread just because a task's intent wasn't explicit.
 - **Skill** — the guidance is tied to a task or intent, not a file path (e.g. "draft a Jira ticket", "run a consistency pass"). There's no glob to scope it by, so it's invoked on demand: the agent matches the task to the skill's description, or the user names it explicitly.
 
 Getting this wrong in either direction has a real cost: forcing task-scoped guidance into a rule with no natural `paths:` value means it's either always-inlined (wasting tokens) or never triggers; forcing file-scoped guidance into a skill loses the deterministic trigger a path-scoped rule gives you and depends on the agent guessing intent.
 
 ## CI integration
 
-- `yarn lint:ai` runs `.ai/scripts/validate.js`, which checks story tags, AGENTS.md paths, config schema, symlinks, and per-unit MDX docs pages. Catches broken internal links, symlinks, misconfigured rules, and structural drift in `<unit>.mdx` files before merge
+- `yarn lint:ai` runs `.ai/scripts/validate.js`, which checks story tags, links, config schema, instruction and skill frontmatter, symlinks, generated files, and per-unit MDX docs pages. The header of `validate.js` lists each check.
 - `yarn lint:docs-pages` runs the per-unit MDX docs-page check in isolation. Use during authoring to catch missing `<Canvas>` references, unknown `##` section headings, or out-of-order sections in a single component / pattern / controller MDX
 - Pre-commit hook runs the contributor docs nav script to keep breadcrumbs and TOCs in sync automatically
 
@@ -53,9 +57,9 @@ See [Config-based rules](#when-rules-and-skills-are-activated) below for the ful
 
 ### Available rules
 
-Two rules are always-active (`alwaysApply: true`, no `paths:`). Everything else with a natural file-path scope is a **path-scoped rule** — it carries both `globs:` (Cursor) and `paths:` (Claude) so it loads only when a matching file is in context, in either tool. Guidance with no natural file-path scope is a skill instead — see [Available skills](#available-skills).
+Every rule is a **path-scoped rule**: it carries a `paths:` list so it loads only when a matching file is in context, in every tool. Guidance with no natural file-path scope is a skill instead — see [Available skills](#available-skills). `branch-naming` and `storybook-mdx-conversion` were rules and are now skills.
 
-#### Always-active rules
+#### Path-scoped rules
 
 ##### Styles
 
@@ -65,17 +69,7 @@ Two rules are always-active (`alwaysApply: true`, no `paths:`). Everything else 
 - **custom_properties**: Never rename without prompting for approval first
 - **media_queries**: Sort high-contrast and other media queries to the bottom of the file
 - **duplicate_properties**: Warn about or suggest fixes; keep the definition that honors the CSS cascade
-- Applies to: `*.css` files
-
-##### Branch naming
-
-- **branch_format**: Recommends `username/type-description[-swc-XXX]` format
-  - Uses conventional commit types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`
-  - Commit type list and validation pattern: `.ai/config.json` (`git.types`, `validationPattern`). When adding or removing a type, update both `types` and `validationPattern` together.
-  - Lowercase letters and numbers only, words separated by dashes
-  - Severity: Warning (recommended, not required)
-
-#### Path-scoped rules
+- Applies to: `**/*.css`
 
 ##### Text formatting
 
@@ -113,20 +107,10 @@ These two rules share the same glob/path set (`gen2/**/stories/**` and `gen2/**/
 - Applies to: `CONTRIBUTOR-DOCS/**`
 - Points to the `contributor-docs-nav` skill for the full Operator/Maintainer workflow
 
-##### Storybook MDX conversion
-
-- **imports**: Add `Meta` import from `@storybook/addon-docs/blocks`
-- **meta_tag**: Add `<Meta title="..." />` matching the document's main heading
-- **comments**: Convert all `<!-- -->` HTML comments to `{/* */}` JSX comments
-- **preserve_content**: Keep all markdown syntax, HTML elements, links, and formatting unchanged
-- Applies to: `**/*.md`, `**/*.mdx`
-- For manual, one-off conversions only — the automated `yarn generate:contributor-docs` script already converts all of `CONTRIBUTOR-DOCS/` and shouldn't be hand-duplicated; see the rule file for the full distinction
-
 ### When rules and skills are activated
 
-**Always-active rules:** `branch-naming` has no `globs:`/`paths:` at all — always in context in both tools. `styles` uses `alwaysApply: true` and is always-active in Cursor regardless of file type, but also carries `paths: ['*.css']` so Claude Code (which ignores `alwaysApply`) only loads it for CSS files.
-**Path-scoped rules:** `text-formatting`, `stories-documentation`, `stories-format`, `component-readme`, `contributor-doc-update`, `storybook-mdx-conversion` carry both `globs:` (Cursor) and `paths:` (Claude) — loaded only when a matching file is in context, deterministically, in both tools.
-**Skills:** Guidance with no natural file-path scope — `jira-ticket`, `github-description`, `code-conformance`, `consistency-pass`, `deep-understanding`, `migration-phase-awareness`, `contributor-docs-nav`, and the rest of the [Available skills](#available-skills) catalog — invoked on demand by the agent matching task intent, or by explicit request.
+**Path-scoped rules:** `styles`, `text-formatting`, `stories-documentation`, `stories-format`, `component-readme`, and `contributor-doc-update` carry a `paths:` list — loaded only when a matching file is in context, deterministically, in every tool. Always-on guidance belongs in `AGENTS.md`, not in a rule.
+**Skills:** Guidance with no natural file-path scope — `branch-naming`, `storybook-mdx-conversion`, `jira-ticket`, `github-description`, `code-conformance`, `consistency-pass`, `deep-understanding`, `migration-phase-awareness`, `contributor-docs-nav`, and the rest of the [Available skills](#available-skills) catalog — invoked on demand by the agent matching task intent, or by explicit request.
 **Config-based rules:** The `config.json` also defines structured validation for editors and other tooling to verify branch names, Jira ticket drafts, text-formatting, etc.:
 
 - **text_formatting.headings**: Sentence case enforcement with technical term exceptions
@@ -143,14 +127,14 @@ These two rules share the same glob/path set (`gen2/**/stories/**` and `gen2/**/
 
 | Rule/skill                     | Always active | Path-scoped rule | Skill (on-demand) | Config-based | Glob / paths                      |
 | ------------------------------ | :-----------: | :--------------: | :---------------: | :----------: | --------------------------------- |
-| branch-naming                  |       x       |                  |                   |              | —                                 |
-| styles                         |       x       |                  |                   |              | `*.css`                           |
+| branch-naming                  |               |                  |         x         |              | —                                 |
+| styles                         |               |        x         |                   |              | `**/*.css`                        |
 | text-formatting                |               |        x         |                   |              | `**/*.md`, `**/*.txt`, `**/*.mdx` |
-| stories-documentation          |               |        x         |                   |              | `gen2/**/*.mdx`                   |
-| stories-format                 |               |        x         |                   |              | `gen2/**/stories/**`              |
+| stories-documentation          |               |        x         |                   |              | `gen2/packages/…/*.mdx` (3 globs) |
+| stories-format                 |               |        x         |                   |              | `gen2/packages/…/stories/**` (3)  |
 | component-readme               |               |        x         |                   |              | `1st-gen/packages/*/README.md`    |
 | contributor-doc-update         |               |        x         |                   |              | `CONTRIBUTOR-DOCS/**`             |
-| storybook-mdx-conversion       |               |        x         |                   |              | `**/*.md`, `**/*.mdx`             |
+| storybook-mdx-conversion       |               |                  |         x         |              | —                                 |
 | contributor-docs-nav           |               |                  |         x         |              | —                                 |
 | deep-understanding             |               |                  |         x         |              | —                                 |
 | code-conformance               |               |                  |         x         |              | —                                 |
@@ -408,42 +392,39 @@ Workflows are reference documents that support agent and contributor workflows. 
 
 Canonical content lives in **`.ai/`** (this directory). Tool-specific directories (`.cursor/`, `.claude/`) are thin adapters that point back here via symlinks — edit files in `.ai/`, never in the adapter directories.
 
-### Current symlink structure
+### Current adapter structure
 
 ```text
 .ai/rules/
-└── *.md                          ← canonical, tool-agnostic source of truth
+└── *.md                          ← canonical, tool-agnostic source of truth (edit these)
 
 .ai/skills/
-└── <skill-name>/SKILL.md         ← canonical, tool-agnostic source of truth
+└── <skill-name>/SKILL.md         ← canonical, tool-agnostic source of truth (edit these)
+
+.github/instructions/
+└── *.instructions.md             GENERATED by `yarn ai:sync` (Copilot reads `applyTo`)
 
 .cursor/rules/
-└── *.mdc → ../../.ai/rules/*.md  (per-file symlinks; Cursor expects .mdc; reads `globs`/`alwaysApply`)
+└── *.mdc                         GENERATED by `yarn ai:sync` (Cursor reads `globs`)
 .cursor/skills/ → ../.ai/skills/  (directory symlink)
 
-.claude/rules/ → ../.ai/rules/    (directory symlink; Claude Code reads .md; reads `paths`/`alwaysApply`, not `globs`)
-.claude/skills/ → ../.ai/skills/  (directory symlink)
+.claude/rules/ → ../.ai/rules/    (directory symlink; Claude Code reads `paths`)
+.claude/skills/ → ../.ai/skills/  (directory symlink; also how Copilot discovers skills)
 ```
 
-Editing any `.ai/rules/*.md` file immediately updates what both Cursor and Claude Code see — no sync step required. Each tool reads its own frontmatter key for path-scoping (`globs` for Cursor, `paths` for Claude Code), so a rule meant to be conditional in both needs both keys set to equivalent patterns.
+Edit only `.ai/`. Generated files start with a `GENERATED by .ai/scripts/sync.js` comment; `yarn lint:ai` fails if one is edited by hand or falls out of date.
 
 ### Adding a new rule
 
-> Before adding a rule, decide whether the guidance has a natural file-path scope. If it does, give it both `globs:` and `paths:` so it loads deterministically in Cursor and Claude Code alike (see [Rules vs. skills: how to choose](#rules-vs-skills-how-to-choose)). If it doesn't — the guidance is about a task or intent, not a file path — write it as a skill instead.
+> Before adding a rule, decide whether the guidance has a natural file-path scope. If it does, give it a `paths:` list so it loads deterministically in every tool (see [Rules vs. skills: how to choose](#rules-vs-skills-how-to-choose)). If it doesn't — the guidance is about a task or intent, not a file path — write it as a skill instead. Guidance that must always apply goes in [`AGENTS.md`](../AGENTS.md).
 
 1. Create `rule-name.md` in `.ai/rules/` with YAML frontmatter:
-   - `globs:` — Cursor's glob pattern(s), comma-separated in one string if there are several
-   - `paths:` — the same patterns as a YAML list, one item per glob, for Claude Code. **Quote each item** — an unquoted value starting with `*` (e.g. `**/*.mdx`) parses as an invalid YAML alias, not a literal string
-   - `alwaysApply: false` (omit `globs`/`paths` entirely and set `alwaysApply: true` instead if the rule should always be in context)
-2. Add one per-file symlink for Cursor (required — Cursor needs `.mdc` extension):
-
-   ```sh
-   ln -s "../../.ai/rules/rule-name.md" ".cursor/rules/rule-name.mdc"
-   ```
-
-   `.claude/rules/` is a directory symlink pointing at `.ai/rules/`, so it picks up the new file automatically — no extra step needed. Claude Code resolves `paths:` matches through that symlink.
-
-3. Register it in the tables in this README (rules catalog) and in [`AGENTS.md`](../AGENTS.md).
+   - `description:` — what the rule covers
+   - `paths:` — a YAML list of globs, one item per glob. **Quote each item** — an unquoted value starting with `*` (e.g. `**/*.mdx`) parses as an invalid YAML alias, not a literal string. Use `**/` to match in any directory; `*` alone stays in one directory
+   - `excludeAgent:` — optional; `code-review` or `cloud-agent` when that GitHub agent shouldn't use the rule
+2. Run `yarn ai:sync` to generate `.github/instructions/rule-name.instructions.md` and `.cursor/rules/rule-name.mdc`, and commit them with the source. The pre-commit hook does this for you.
+3. Run `yarn lint:ai`. It fails if a glob matches no tracked file.
+4. Register it in the tables in this README (rules catalog).
 
 ### Adding a new skill
 
@@ -453,55 +434,20 @@ Editing any `.ai/rules/*.md` file immediately updates what both Cursor and Claud
 
 ### Symlink setup
 
-The symlinks in `.cursor/` and `.claude/` are committed to the repo, so **no setup is required after cloning**. Rules and skills should work automatically for all contributors.
+The three directory symlinks (`.claude/rules`, `.claude/skills`, and `.cursor/skills`) are committed to the repo, so **no setup is required after cloning**. Cursor rules are generated files, not symlinks.
 
 #### Recreating broken symlinks
 
-If a symlink is accidentally deleted or broken (e.g. after a file was deleted and recreated rather than edited in place), recreate it with the commands below.
-
-##### Claude Code
+If a symlink is accidentally deleted or broken, recreate it from the repository root:
 
 ```sh
-mkdir -p .claude
+mkdir -p .claude .cursor
 ln -s ../.ai/rules .claude/rules
 ln -s ../.ai/skills .claude/skills
-```
-
-Claude Code reads `.md` files, so directory-level symlinks work directly. Verify:
-
-```sh
-ls -la .claude/
-# rules -> ../.ai/rules
-# skills -> ../.ai/skills
-```
-
-##### Cursor
-
-> **Cursor requires per-file symlinks for rules.** Cursor expects `.mdc` files and does not follow a directory symlink that contains `.md` files. Each rule needs its own symlink with the `.mdc` extension pointing back to the `.md` source.
-
-```sh
-mkdir -p .cursor/rules
-for f in .ai/rules/*.md; do
-  name=$(basename "$f" .md)
-  ln -s "../../.ai/rules/${name}.md" ".cursor/rules/${name}.mdc"
-done
-
 ln -s ../.ai/skills .cursor/skills
 ```
 
-Verify:
-
-```sh
-ls -la .cursor/rules/
-# branch-naming.mdc -> ../../.ai/rules/branch-naming.md
-# styles.mdc -> ../../.ai/rules/styles.md
-# ... one entry per file in .ai/rules/
-
-ls -la .cursor/
-# skills -> ../.ai/skills
-```
-
-If Cursor does not pick up the rules after symlinking, reload the window: `Cmd+Shift+P` → "Developer: Reload Window".
+Verify with `ls -la .claude/ .cursor/`, then run `yarn lint:ai`. If Cursor rules are missing or stale, run `yarn ai:sync`. If Cursor doesn't pick up changes, reload the window: `Cmd+Shift+P` → "Developer: Reload Window".
 
 ### Using rules and skills in other environments
 

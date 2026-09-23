@@ -5,6 +5,7 @@
 .claude/handoffs
 .claude/settings.local.json
 .claude/worktrees
+.github/copilot/settings.local.json
 mcp-server.log
 
 # deep-understanding skill artifact (planning doc, not source)

@@ -1,5 +1,15 @@
 yarn lint-staged --allow-empty
 
+# If any .ai/ sources or AGENTS.md files are staged, regenerate the Copilot and Cursor
+# instruction files from them and stage the results (yarn ai:sync).
+if git diff --cached --name-only | grep -qE "^\.ai/|(^|/)AGENTS\.md$"; then
+  node .ai/scripts/sync.js || exit 1
+  git add -A -- .github/instructions .cursor/rules
+  if git diff --cached --name-only | grep -q "^\.ai/README\.md$"; then
+    git add .ai/README.md
+  fi
+fi
+
 # If any CONTRIBUTOR-DOCS files are staged, regenerate navigation and verify links,
 # then regenerate the Storybook contributor-docs MDX and update preview.ts sort order.
 if git diff --cached --name-only | grep -q "^CONTRIBUTOR-DOCS/"; then
