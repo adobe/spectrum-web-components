@@ -649,4 +649,26 @@ describe('Radio Group - late children', () => {
     expect(changeSpy.callCount).to.equal(2);
     expect(document.activeElement === bulbasaur).to.be.true;
   });
+  it('mirrors left and right arrow keys in RTL', async () => {
+    const el = await fixture<RadioGroup>(html`
+      <sp-radio-group dir="rtl">
+        <sp-radio value="bulbasaur">Bulbasaur</sp-radio>
+        <sp-radio value="squirtle">Squirtle</sp-radio>
+        <sp-radio value="charmander">Charmander</sp-radio>
+      </sp-radio-group>
+    `);
+    const bulbasaur = el.querySelector('[value="bulbasaur"]') as Radio;
+    const squirtle = el.querySelector('[value="squirtle"]') as Radio;
+
+    bulbasaur.focus();
+    await elementUpdated(el);
+
+    el.dispatchEvent(arrowLeftEvent());
+    await elementUpdated(el);
+    expect(document.activeElement === squirtle).to.be.true;
+
+    el.dispatchEvent(arrowRightEvent());
+    await elementUpdated(el);
+    expect(document.activeElement === bulbasaur).to.be.true;
+  });
 });

@@ -391,16 +391,17 @@ export class FocusGroupController<
       return;
     }
     let diff = 0;
+    const isRTL = getComputedStyle(this.host).direction === 'rtl';
     this.prevIndex = this.currentIndex;
     switch (event.key) {
       case 'ArrowRight':
-        diff += 1;
+        diff += isRTL ? -1 : 1;
         break;
       case 'ArrowDown':
         diff += this.direction === 'grid' ? this.directionLength : 1;
         break;
       case 'ArrowLeft':
-        diff -= 1;
+        diff += isRTL ? 1 : -1;
         break;
       case 'ArrowUp':
         diff -= this.direction === 'grid' ? this.directionLength : 1;
