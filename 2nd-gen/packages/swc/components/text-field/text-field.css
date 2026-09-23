@@ -40,11 +40,6 @@
   transition-property: border-color;
 }
 
-.swc-TextField-control::after {
-  flex: 0 0 var(--_swc-text-field-validation-icon-size);
-  content: "";
-}
-
 .swc-TextField-input {
   flex: 1 1 auto;
   min-inline-size: 0;
@@ -87,11 +82,16 @@ slot[name="prefix"]::slotted(*) {
 
 /* ── Invalid icon (trailing flex child) ──────────── */
 
+.swc-TextField-invalidIcon,
+.swc-TextField-invalidIconSpacer {
+  flex: 0 0 var(--_swc-text-field-validation-icon-size);
+  inline-size: var(--_swc-text-field-validation-icon-size);
+  block-size: var(--_swc-text-field-validation-icon-size);
+}
+
 .swc-TextField-invalidIcon {
   --swc-icon-inline-size: var(--_swc-text-field-validation-icon-size);
   --swc-icon-block-size: var(--_swc-text-field-validation-icon-size);
-
-  flex: 0 0 auto;
 }
 
 /* ── Interaction states (on the control) ──────────── */
@@ -138,10 +138,6 @@ slot[name="prefix"]::slotted(*) {
 
 :host([invalid]:not(:disabled)) .swc-TextField-control {
   border-color: token("negative-border-color-default");
-}
-
-:host([invalid]:not(:disabled)) .swc-TextField-control::after {
-  display: none;
 }
 
 :host([invalid]:not(:disabled)) .swc-TextField-control:hover {
