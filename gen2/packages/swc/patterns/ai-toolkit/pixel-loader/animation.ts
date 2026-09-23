@@ -199,8 +199,8 @@ export function groupOpacityKeyframes(total: number): Keyframe[] {
 // Reduced-motion fade cadence (frames): the whole grid fades in together,
 // holds fully assembled, then fades out together. No per-cell falling or
 // scaling, and no per-row stagger, so it still signals activity without motion.
-const REDUCED_FADE = OP_FADE_IN;
-const REDUCED_HOLD = msToFrames(600);
+const REDUCED_FADE = msToFrames(1000);
+const REDUCED_HOLD = msToFrames(300);
 
 /** Loop length in frames for the reduced-motion fade. */
 export function reducedMotionLoopFrames(): number {
