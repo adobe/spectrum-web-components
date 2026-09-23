@@ -172,7 +172,7 @@ Stories and docs must demonstrate the checkbox **inside a form**, since form par
 ```html
 <form id="signup">
     <swc-checkbox name="terms" value="accepted" required>
-        I agree to the terms of service
+        <span slot="label">I agree to the terms of service</span>
     </swc-checkbox>
     <button type="submit">Submit</button>
     <button type="reset">Reset</button>
