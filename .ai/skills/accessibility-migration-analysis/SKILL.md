@@ -1,8 +1,6 @@
 ---
 name: accessibility-migration-analysis
 description: Create accessibility migration analysis docs for gen2 component migration. Use when on the "analyze accessibility" step for one or more components.
-globs: CONTRIBUTOR-DOCS/**/accessibility-migration-analysis.md
-alwaysApply: false
 ---
 
 # Component migration: analyze accessibility
@@ -153,7 +151,7 @@ Body text under each `###` is normal paragraphs and/or bullets.
 - **Split** — name the **two (or more) distinct gen2 components** and which role each owns; note 1st-gen API surfaces that map to each.
 - **Wrapper pattern** — when only a **landmark** role differs (for example `toolbar` around a `group`), document **outer wrapper + inner component**, not role swapping on the inner host.
 
-Do **not** guess which role wins when multiple are plausible—use the **ask-questions** skill if needed.
+Do **not** guess which role wins when multiple are plausible—use the **ask-questions-if-underspecified** skill if needed.
 
 ## Recommendations: ARIA roles, states, and properties
 
@@ -334,7 +332,7 @@ Review the [{{component-readable-name}} accessibility migration analysis](https:
 
 ## Related rules and skills
 
-- `contributor-doc-update.mdc` — when to run `update-nav.js` after heading or structure changes.
-- `ask-questions` skill — when dual or conditional host roles need a product decision before Recommendations are written.
+- `contributor-doc-update` rule — when to run `update-nav.js` after heading or structure changes.
+- `ask-questions-if-underspecified` skill — when dual or conditional host roles need a product decision before Recommendations are written.
 - `component-migration-analysis` skill — for `rendering-and-styling-migration-analysis.md`, not this file.
-- `stories-documentation.mdc` / `stories-format.mdc` — Storybook docs, separate from this contributor planning doc.
+- `stories-documentation` / `stories-format` rules and skills — Storybook docs, separate from this contributor planning doc.

@@ -11,7 +11,7 @@ description: Phase 7 of 1st-gen to gen2 component migration. Use to author the
 
 See also:
 
-- [`documentation`](../documentation/SKILL.md) — Adobe content writing standards
+- [`documentation-standards`](../documentation-standards/SKILL.md) — Adobe content writing standards
 - [`stories-format`](../../rules/stories-format.md) — stories file structure
 - [`stories-documentation`](../../rules/stories-documentation.md) — per-unit MDX authoring patterns
 
