@@ -12,6 +12,7 @@
 
 :host {
   display: block;
+  inline-size: var(--swc-text-field-width, var(--swc-field-input-max-inline-size, token("field-default-width-medium")));
 }
 
 * {
@@ -80,18 +81,15 @@ slot[name="prefix"]::slotted(*) {
   pointer-events: none;
 }
 
-/* ── Invalid icon (trailing flex child) ──────────── */
-
-.swc-TextField-invalidIcon,
-.swc-TextField-invalidIconSpacer {
-  flex: 0 0 var(--_swc-text-field-validation-icon-size);
-  inline-size: var(--_swc-text-field-validation-icon-size);
-  block-size: var(--_swc-text-field-validation-icon-size);
-}
+/* ── Invalid icon ─────────────────────────────────── */
 
 .swc-TextField-invalidIcon {
   --swc-icon-inline-size: var(--_swc-text-field-validation-icon-size);
   --swc-icon-block-size: var(--_swc-text-field-validation-icon-size);
+
+  flex: 0 0 var(--_swc-text-field-validation-icon-size);
+  inline-size: var(--_swc-text-field-validation-icon-size);
+  block-size: var(--_swc-text-field-validation-icon-size);
 }
 
 /* ── Interaction states (on the control) ──────────── */

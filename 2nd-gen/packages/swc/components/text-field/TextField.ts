@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
@@ -166,12 +166,7 @@ export class TextField extends TextFieldBase {
                   aria-hidden="true"
                 ></swc-icon-alert-triangle>
               `
-            : html`
-                <span
-                  class="swc-TextField-invalidIconSpacer"
-                  aria-hidden="true"
-                ></span>
-              `}
+            : nothing}
         </div>
         ${this.renderFieldDescription({
           invalid: this.invalid && !this.effectiveDisabled,
