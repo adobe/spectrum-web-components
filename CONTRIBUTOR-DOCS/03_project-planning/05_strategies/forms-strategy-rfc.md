@@ -157,7 +157,7 @@ The canonical surface for form fields. Contributors align Phase 3 (API) and Phas
 | Concern | Name / approach | Notes |
 |---------|-----------------|-------|
 | Form participation | `static formAssociated = true` + `attachInternals()`, wrapped by `FieldAssociationController` | Value submitted via `internals.setFormValue(value)`. |
-| Label surface (visible) | Default slot when the label is the component's only or primary content; named `slot="label"` when it is supplementary to other primary content | Primary-vs-supplementary rule; pending the slot-API research decision. |
+| Label surface (visible) | Named `slot="label"` | Preferred over the default slot so label content is explicit and consistent across fields; pending confirmation across all migrated components. |
 | Accessible name (no visible label) | `accessible-label` attribute | Established convention; do **not** expose raw `aria-label` on the host. |
 | Help / description surface | `slot="description"`, wired by `HelpTextMixin` | Associates through a role-appropriate ARIA description relationship. |
 | Error text surface | Error text wired by `HelpTextMixin` | Associates through `aria-describedby`; do not prescribe `aria-errormessage` given inconsistent support. |
@@ -191,7 +191,7 @@ These are active research spikes; their outcomes finalize the *pending research*
 
 - **Button activation:** whether a dedicated `ButtonAssociationController` is needed for button-like fields (clear button, a future submit button), or whether a native inner `<button>` already covers keyboard activation, role, and focusability.
 - **Grouped selection:** whether a dedicated `RadioGroupController` is needed for radio group (composing `SelectionController`, `FocusgroupNavigationController`, and `SlotAttributePropagationController`), or whether those primitives are composed inline.
-- **Label slot rule:** confirming the primary-vs-supplementary rule for default slot vs named `slot="label"` holds across all migrated components, and how it relates to the `accessible-label` attribute used for no-visible-label cases.
+- **Label slot rule:** confirming `slot="label"` holds as the consistent label surface across all migrated components, and how it relates to the `accessible-label` attribute used for no-visible-label cases.
 - **`accessible-labelledby` / `accessible-describedby` and `LabellingMixin`:** the cross-root name and description mappings are implemented through the shared mixin; components must still verify the exact role-specific association behavior and avoid prescribing unsupported ARIA states.
 
 ---

@@ -124,7 +124,7 @@ The [React Spectrum Switch](https://react-spectrum.adobe.com/Switch) reference d
 | Topic | What to do |
 | --- | --- |
 | **Host and role placement** | The host should not carry the `switch` role. Render a real native `<input type="checkbox">` in the shadow root and set that input's role to `switch`, following the forms strategy's general shadow-DOM role placement. The role is fixed and must not be author-overridable. The host carries FACE internals for form value and validity. |
-| **Accessible name** | Use the default label slot for the common case, wired by `LabellingMixin` to the inner role-bearing input. Support `accessible-label` for a switch with no visible label and `accessible-labelledby` for a name composed from external light-DOM elements. Do not require consumers to set raw `aria-label` or `aria-labelledby` on the host. A switch without an accessible name should produce the repository's development warning and have a dedicated Storybook/aXe test. |
+| **Accessible name** | Use the `label` slot for the common case, wired by `LabellingMixin` to the inner role-bearing input. Support `accessible-label` for a switch with no visible label and `accessible-labelledby` for a name composed from external light-DOM elements. Do not require consumers to set raw `aria-label` or `aria-labelledby` on the host. A switch without an accessible name should produce the repository's development warning and have a dedicated Storybook/aXe test. |
 | **Selected state** | Mirror the `checked` or selected property to the native input's checked state and expose `aria-checked="true"` when selected and `aria-checked="false"` when not selected. Never expose `aria-checked="mixed"` for a switch. The state must update for pointer, keyboard, and programmatic changes. |
 | **Read-only state** | Preserve focusability and expose read-only semantics on the role-bearing switch when `readonly` or `isReadOnly` is set. Do not carry forward 1st-gen `CheckboxMixin` behavior, which sets `disabled` on the native input and removes a read-only switch from the Tab order. A read-only switch must not change state on activation, but it remains discoverable and exposes its current state. |
 | **Disabled state** | Reflect `disabled` to the native input so the browser removes the switch from sequential focus navigation and exposes disabled state. Do not use disabled to emulate read-only. Verify disabled selected and disabled unselected states. |
@@ -170,10 +170,10 @@ Stories and tests must demonstrate Switch inside a native `<form>`, because the 
 ```html
 <form id="settings-form">
     <swc-switch name="available-offline" value="available" checked>
-        Available offline
+        <span slot="label">Available offline</span>
     </swc-switch>
     <swc-switch name="require-password" value="required" required>
-        Require password
+        <span slot="label">Require password</span>
     </swc-switch>
     <button type="submit">Submit</button>
     <button type="reset">Reset</button>
