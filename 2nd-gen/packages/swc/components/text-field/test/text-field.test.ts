@@ -128,10 +128,7 @@ export const InvalidWidthTest: Story = {
     <div
       style="display: flex; flex-direction: column; align-items: flex-start; gap: 24px;"
     >
-      <swc-text-field
-        accessible-label="Email address"
-        style="inline-size: 208px;"
-      ></swc-text-field>
+      <swc-text-field accessible-label="Email address"></swc-text-field>
       <div style="inline-size: 260px;">
         <swc-text-field id="narrow-field" label-position="side">
           <span slot="label">
@@ -397,10 +394,16 @@ export const PrefixTest: Story = {
 
     await step('the prefix avatar follows the field size', async () => {
       const avatar = field.querySelector('swc-avatar');
-      expect(avatar?.getAttribute('size')).toBe('100');
+      expect(avatar?.getAttribute('size')).toBe('75');
+      field.size = 's';
+      await field.updateComplete;
+      expect(avatar?.getAttribute('size')).toBe('50');
       field.size = 'l';
       await field.updateComplete;
       expect(avatar?.getAttribute('size')).toBe('200');
+      field.size = 'xl';
+      await field.updateComplete;
+      expect(avatar?.getAttribute('size')).toBe('300');
     });
 
     await step('prefix and input share the bordered control wrapper', () => {

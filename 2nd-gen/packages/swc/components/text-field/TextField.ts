@@ -36,8 +36,8 @@ const NECESSITY_INDICATOR_TEXT = {
   optional: '(optional)',
 };
 const PREFIX_AVATAR_SIZE = {
-  s: '75',
-  m: '100',
+  s: '50',
+  m: '75',
   l: '200',
   xl: '300',
 } as const satisfies Record<TextFieldSize, string>;
