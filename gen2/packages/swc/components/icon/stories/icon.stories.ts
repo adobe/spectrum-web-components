@@ -61,11 +61,15 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-// A Spectrum workflow icon's SVG string, slotted in to stand in for a consumer's
-// own SVG. Its fill resolves through `var(--swc-icon-color, currentColor)`,
-// matching the custom-icon contract documented on this page.
-const iconSvg = html`
-  ${unsafeSVG(Icon_ChevronDown())}
+// A Spectrum workflow icon's SVG string, marked presentational (aria-hidden) so
+// the labelled host stays the only node in the accessibility tree. Returned fresh
+// per use so each slot gets its own `unsafeSVG` directive instance.
+const iconMarkup = Icon_ChevronDown().replace(
+  '<svg ',
+  '<svg aria-hidden="true" '
+);
+const renderIcon = () => html`
+  ${unsafeSVG(iconMarkup)}
 `;
 
 const sizeLabels = {
@@ -82,9 +86,9 @@ const sizeLabels = {
 
 export const Playground: Story = {
   tags: ['dev'],
-  render: (args) => template(args, iconSvg),
+  render: (args) => template(args, renderIcon()),
   args: {
-    'accessible-label': 'Favorite',
+    'accessible-label': 'Chevron',
     size: 'm',
   },
 };
@@ -95,9 +99,9 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   tags: ['overview'],
-  render: (args) => template(args, iconSvg),
+  render: (args) => template(args, renderIcon()),
   args: {
-    'accessible-label': 'Favorite',
+    'accessible-label': 'Chevron',
     size: 'm',
   },
 };
@@ -111,9 +115,9 @@ export const Anatomy: Story = {
     template(
       {
         ...args,
-        'accessible-label': args['accessible-label'] || 'Favorite',
+        'accessible-label': args['accessible-label'] || 'Chevron icon',
       },
-      iconSvg
+      renderIcon()
     ),
   tags: ['anatomy'],
 };
@@ -131,7 +135,7 @@ export const Sizes: Story = {
           'accessible-label': args['accessible-label'] || sizeLabels[size],
           size,
         },
-        iconSvg
+        renderIcon()
       )
     )}
   `,
@@ -145,12 +149,12 @@ export const Color: Story = {
   render: (args) => html`
     ${template(
       { ...args, size: 'l', 'accessible-label': 'Inherits text color' },
-      iconSvg
+      renderIcon()
     )}
     <div style="color: #d7373f">
       ${template(
         { ...args, size: 'l', 'accessible-label': 'Colored via CSS color' },
-        iconSvg
+        renderIcon()
       )}
     </div>
     <div style="--swc-icon-color: #0d66d0">
@@ -160,7 +164,7 @@ export const Color: Story = {
           size: 'l',
           'accessible-label': 'Colored via --swc-icon-color',
         },
-        iconSvg
+        renderIcon()
       )}
     </div>
   `,
@@ -175,10 +179,10 @@ export const Color: Story = {
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-  render: (args) => template(args, iconSvg),
+  render: (args) => template(args, renderIcon()),
   tags: ['a11y'],
   args: {
-    'accessible-label': 'Favorite',
+    'accessible-label': 'Chevron',
     size: 'm',
   },
 };

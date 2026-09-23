@@ -49,8 +49,8 @@ export const OverviewTest: Story = {
     await step('renders with expected default properties', async () => {
       expect(
         icon.accessibleLabel,
-        'accessibleLabel property is "Favorite"'
-      ).toBe('Favorite');
+        'accessibleLabel property is "Chevron"'
+      ).toBe('Chevron');
       expect(icon.shadowRoot, 'shadow root is attached').toBeTruthy();
     });
   },
