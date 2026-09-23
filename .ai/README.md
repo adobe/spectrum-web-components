@@ -37,23 +37,11 @@ Getting this wrong in either direction has a real cost: forcing task-scoped guid
 
 ## Rules
 
-`.ai/config.json` holds structured, config-based validation data that editors and tooling read directly — branch naming pattern, Jira ticket templates and labels, text-formatting exceptions, and editor/language preferences. It's flat top-level sections, not a generic rule registry:
+Rules are narrative, per-topic guidance in `.ai/rules/` that an agent reads when a matching file is in context. Structured data that used to live in a separate config file now lives with the guidance or tool that uses it:
 
-```json
-{
-  "git": {
-    "validationPattern": "^[a-z0-9]+\\/(feat|fix|...)-[a-z0-9-]+(-swc-[0-9]+)?$",
-    "types": ["feat", "fix", "docs", "..."]
-  },
-  "jira_tickets": {
-    "title_format": { "max_length": 80 },
-    "labels": { "...": "..." }
-  },
-  "text_formatting": { "headings": { "case": "sentence" } }
-}
-```
-
-See [Config-based rules](#when-rules-and-skills-are-activated) below for the full key list. Narrative, per-topic guidance — the kind a human or agent reads rather than a validator parses — lives in the `.ai/rules/` and `.ai/skills/` markdown files instead.
+- Commit and branch types come from commitlint (`commitlint.config.cjs`); `yarn lint:ai` fails if the `branch-naming` or `conventional-commit` skill disagrees with it
+- Jira labels, issue types, and templates are in the `jira-ticket` skill
+- Editor and formatter settings are in `.editorconfig`, `.prettierrc.yaml`, and `.vscode/settings.json`
 
 ### Available rules
 
@@ -120,65 +108,37 @@ These two rules work as a pair: `stories-documentation` defines _what_ to docume
 
 **Path-scoped rules:** `styles`, `text-formatting`, `stories-documentation`, `stories-format`, `component-readme`, `contributor-doc-update`, `accessibility-migration-analysis`, `consumer-migration-guide`, and the two lessons files in `.ai/memory/` carry a `paths:` list — loaded only when a matching file is in context, deterministically, in every tool. Always-on guidance belongs in `AGENTS.md`, not in a rule.
 **Skills:** Guidance with no natural file-path scope — `branch-naming`, `storybook-mdx-conversion`, `jira-ticket`, `github-description`, `code-conformance`, `consistency-pass`, `deep-understanding`, `migration-phase-awareness`, `contributor-docs-nav`, and the rest of the [Available skills](#available-skills) catalog — invoked on demand by the agent matching task intent, or by explicit request.
-**Config-based rules:** The `config.json` also defines structured validation for editors and other tooling to verify branch names, Jira ticket drafts, text-formatting, etc.:
 
-- **text_formatting.headings**: Sentence case enforcement with technical term exceptions
-- **text_formatting.patterns**: File patterns for text formatting (`**/*.md`, `**/*.txt`, `**/*.mdx`)
-- **git.validationPattern**: Branch name regex validation
-- **git.validationMessage**: Message shown when branch name validation fails
-- **git.branchNameTemplate**: Template for branch names (`{username}/{type}-{description}{?-{issue}}`)
-- **git.types**: Allowed branch/commit types (feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert)
-- **jira_tickets.title_format**: Title pattern and max length (80 characters)
-- **jira_tickets.required_sections**: Ensures required sections are present
-- **jira_tickets.templates**: Template structure for bug and feature ticket types
-- **jira_tickets.labels**: Validates allowed label values
-- **jira_tickets.issue_types**: Ensures correct issue type selection
-
-| Rule/skill                     | Always active | Path-scoped rule | Skill (on-demand) | Config-based | Glob / paths                      |
-| ------------------------------ | :-----------: | :--------------: | :---------------: | :----------: | --------------------------------- |
-| branch-naming                  |               |                  |         x         |              | —                                 |
-| styles                         |               |        x         |                   |              | `**/*.css`                        |
-| text-formatting                |               |        x         |                   |              | `**/*.md`, `**/*.txt`, `**/*.mdx` |
-| stories-documentation          |               |        x         |                   |              | `gen2/packages/…/*.mdx` (3 globs) |
-| stories-format                 |               |        x         |                   |              | `gen2/packages/…/stories/**` (3)  |
-| component-readme               |               |        x         |                   |              | `1st-gen/packages/*/README.md`    |
-| contributor-doc-update         |               |        x         |                   |              | `CONTRIBUTOR-DOCS/**`             |
-| storybook-mdx-conversion       |               |                  |         x         |              | —                                 |
-| contributor-docs-nav           |               |                  |         x         |              | —                                 |
-| deep-understanding             |               |                  |         x         |              | —                                 |
-| code-conformance               |               |                  |         x         |              | —                                 |
-| consistency-pass               |               |                  |         x         |              | —                                 |
-| migration-phase-awareness      |               |                  |         x         |              | —                                 |
-| github-description             |               |                  |         x         |              | —                                 |
-| jira-ticket                    |               |                  |         x         |              | —                                 |
-| text_formatting.headings       |               |                  |                   |      x       | —                                 |
-| text_formatting.patterns       |               |                  |                   |      x       | —                                 |
-| git.validationPattern          |               |                  |                   |      x       | —                                 |
-| git.validationMessage          |               |                  |                   |      x       | —                                 |
-| git.branchNameTemplate         |               |                  |                   |      x       | —                                 |
-| git.types                      |               |                  |                   |      x       | —                                 |
-| jira_tickets.title_format      |               |                  |                   |      x       | —                                 |
-| jira_tickets.required_sections |               |                  |                   |      x       | —                                 |
-| jira_tickets.templates         |               |                  |                   |      x       | —                                 |
-| jira_tickets.labels            |               |                  |                   |      x       | —                                 |
-| jira_tickets.issue_types       |               |                  |                   |      x       | —                                 |
+| Rule/skill                | Path-scoped rule | Skill (on-demand) | Glob / paths                      |
+| ------------------------- | :--------------: | :---------------: | --------------------------------- |
+| branch-naming             |                  |         x         | —                                 |
+| styles                    |        x         |                   | `**/*.css`                        |
+| text-formatting           |        x         |                   | `**/*.md`, `**/*.txt`, `**/*.mdx` |
+| stories-documentation     |        x         |         x         | `gen2/packages/…/*.mdx` (3 globs) |
+| stories-format            |        x         |         x         | `gen2/packages/…/stories/**` (3)  |
+| component-readme          |        x         |                   | `1st-gen/packages/*/README.md`    |
+| contributor-doc-update    |        x         |                   | `CONTRIBUTOR-DOCS/**`             |
+| storybook-mdx-conversion  |                  |         x         | —                                 |
+| contributor-docs-nav      |                  |         x         | —                                 |
+| deep-understanding        |                  |         x         | —                                 |
+| code-conformance          |                  |         x         | —                                 |
+| consistency-pass          |                  |         x         | —                                 |
+| migration-phase-awareness |                  |         x         | —                                 |
+| github-description        |                  |         x         | —                                 |
+| jira-ticket               |                  |         x         | —                                 |
 
 ### Usage
 
-1. Rules are automatically enforced by your coding agent while editing relevant files; however, if you wish to enable a rule that is not triggered by default, you can do so by mentioning it in the chat (e.g. `@` in Cursor, or by name in Claude Code).
-2. Rules can be toggled using the `enabled` flag
-3. Custom error messages will be shown when rules are violated
-4. Exceptions are handled through the `exceptions` field in relevant rules
+1. Rules load automatically while your coding agent works on matching files. To use a rule outside that trigger, mention it by name in the chat.
+2. Skills load when a task matches their description, or when you name them.
 
 ### Updating rules
 
 To modify these rules:
 
-1. Edit the `config.json` or the appropriate file in the `rules` directory
+1. Edit the file in `.ai/rules/` (never a generated copy)
 2. Try to follow the existing structure and format where possible
-3. Ensure valid regex patterns, where applicable
-4. Include clear error messages
-5. Test changes before committing
+3. Run `yarn ai:sync` and `yarn lint:ai` before committing
 
 ## Skills
 
@@ -220,7 +180,7 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - **purpose**: Draft and format Jira tickets — title, labels, severity, description — following Spectrum Web Components conventions
 - **How to invoke**: Ask to create, draft, or format a Jira ticket (bug, RFC, or feature/research ticket)
 - Use when: Writing a Jira ticket for a bug report, RFC, or feature/research request
-- Provides: Jira markup syntax rules, title format, general/bug/RFC templates (RFC generates three sequential tickets: authoring, internal shepherding, external shepherding), severity classification (SEV1–SEV5), allowed labels and issue types (`.ai/config.json` `jira_tickets`)
+- Provides: Jira markup syntax rules, title format, general/bug/RFC templates (RFC generates three sequential tickets: authoring, internal shepherding, external shepherding), severity classification (SEV1–SEV5), allowed labels and issue types
 
 #### GitHub description
 
@@ -385,17 +345,7 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: Implementing any feature or bugfix, before writing implementation code
 - Provides: TDD cycle, verification checklist, good/bad test examples, anti-patterns to avoid
 
-## Workflows
-
-Workflows are reference documents that support agent and contributor workflows. They live in `.ai/workflows/`.
-
-### Available workflows
-
-#### Reusable prompts
-
-- **File**: `.ai/workflows/reusable-prompts.md`
-- **Purpose**: A reference list of natural-language phrases that trigger each skill or phase. Use these as copy-paste shortcuts when invoking skills in chat (e.g. "Phase 4 migration for [component]" triggers `migration-a11y`).
-- **Covers**: Memory/lesson capture, all 8 washing-machine migration phases, and the most common invocation phrases for each
+Trigger phrases for each migration phase ("Phase 4 migration for [component]") and for lesson capture ("remember this", "log this lesson") are in each skill's `description`, so agents match them without a separate prompt list.
 
 ## Using rules and skills across tools and IDEs
 
