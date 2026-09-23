@@ -23,7 +23,6 @@ The plan's architectural sections also govern **where each property and type lan
 
 - Phase 2 (migration-setup) is complete and the file structure exists
 - The user asks to "migrate the API" or "move properties/types" for a component
-- The user asks to implement static arrays or debug validation
 - The user refers to "Phase 3" of the gen2 component migration workstream
 
 ## When NOT to use

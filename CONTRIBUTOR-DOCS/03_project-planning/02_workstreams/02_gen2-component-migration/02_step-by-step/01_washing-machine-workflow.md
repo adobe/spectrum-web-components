@@ -355,13 +355,13 @@ Wire the field per the approved [forms strategy](../../../05_strategies/forms-st
 <details>
 <summary>**Stop and ask:** Breaking API changes</summary>
 
-If the gen2 API renames or omits a 1st-gen public prop or attribute, confirm the difference with the team and document a migration path for consumers.
+If the gen2 API renames or omits any 1st-gen public API, verify that the difference and consumer migration path match an approved numbered breaking-change entry in the migration plan. If it is missing or differs, update the plan and align with the team before proceeding.
 </details>
 
 ### Quality gate
 
 - [ ] Public API is documented; types are in core; base holds behavior; SWC holds rendering.
-- [ ] Static readonly patterns and debug validation align with Badge (or equivalent) and TypeScript conventions.
+- [ ] Static readonly patterns, debug warnings, and dev-mode validation align with Badge (or equivalent) and TypeScript conventions.
 - [ ] Dev-warning validation uses the shared `core/utils` helpers for every applicable category (see table above), not hand-rolled checks.
 
 ---
