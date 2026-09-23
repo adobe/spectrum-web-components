@@ -56,7 +56,7 @@ import {
 
 /**
  * Skill layout problems (nesting, a name that differs from its directory, rule-style keys)
- * are errors. Set to false only to downgrade them to warnings while normalizing skills.
+ * are errors now that every skill is normalized.
  */
 const STRICT_SKILL_LAYOUT = true;
 
