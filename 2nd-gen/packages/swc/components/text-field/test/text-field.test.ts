@@ -125,8 +125,20 @@ export const SizesTest: Story = {
 
 export const InvalidWidthTest: Story = {
   render: () => html`
-    <div style="display: flex; align-items: flex-start;">
-      <swc-text-field accessible-label="Email address"></swc-text-field>
+    <div
+      style="display: flex; flex-direction: column; align-items: flex-start; gap: 24px;"
+    >
+      <swc-text-field
+        accessible-label="Email address"
+        style="inline-size: 208px;"
+      ></swc-text-field>
+      <div style="inline-size: 260px;">
+        <swc-text-field id="narrow-field" label-position="side">
+          <span slot="label">
+            This side label wraps and the input shrinks toward a square
+          </span>
+        </swc-text-field>
+      </div>
     </div>
   `,
   play: async ({ canvasElement, step }) => {
@@ -137,14 +149,59 @@ export const InvalidWidthTest: Story = {
     const control = field.shadowRoot?.querySelector<HTMLElement>(
       '.swc-TextField-control'
     );
+    const input = field.shadowRoot?.querySelector<HTMLInputElement>(
+      '.swc-TextField-input'
+    );
 
     await step(
-      'invalid presentation does not increase the field width',
+      'the input yields reserved space to the invalid icon without changing the control width',
       async () => {
-        const validWidth = control?.getBoundingClientRect().width;
+        const validControlRect = control?.getBoundingClientRect();
+        const validInputRect = input?.getBoundingClientRect();
+
         field.invalid = true;
         await field.updateComplete;
-        expect(control?.getBoundingClientRect().width).toBe(validWidth);
+
+        const invalidControlRect = control?.getBoundingClientRect();
+        const invalidInputRect = input?.getBoundingClientRect();
+
+        expect(invalidControlRect?.width).toBe(validControlRect?.width);
+        expect(invalidInputRect?.width).toBeLessThan(
+          validInputRect?.width ?? 0
+        );
+        expect(invalidInputRect?.left).toBeGreaterThanOrEqual(
+          invalidControlRect?.left ?? 0
+        );
+        expect(invalidInputRect?.right).toBeLessThanOrEqual(
+          invalidControlRect?.right ?? 0
+        );
+      }
+    );
+
+    await step(
+      'a long value stays inside the control at its minimum width',
+      async () => {
+        const narrowField = await getComponent<TextField>(
+          canvasElement,
+          '#narrow-field'
+        );
+        narrowField.value =
+          'A very long value that must remain inside the control';
+        await narrowField.updateComplete;
+
+        const narrowControl =
+          narrowField.shadowRoot?.querySelector<HTMLElement>(
+            '.swc-TextField-control'
+          );
+        const narrowInput =
+          narrowField.shadowRoot?.querySelector<HTMLInputElement>(
+            '.swc-TextField-input'
+          );
+        const controlRect = narrowControl?.getBoundingClientRect();
+        const inputRect = narrowInput?.getBoundingClientRect();
+
+        expect(inputRect?.left).toBeGreaterThanOrEqual(controlRect?.left ?? 0);
+        expect(inputRect?.right).toBeLessThanOrEqual(controlRect?.right ?? 0);
       }
     );
   },
