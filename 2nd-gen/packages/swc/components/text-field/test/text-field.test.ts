@@ -29,6 +29,7 @@ import {
   FormBehavior,
   Labelling,
   NecessityIndicator,
+  Sizes,
   States,
 } from '../stories/text-field.stories.js';
 
@@ -80,6 +81,31 @@ export const LabellingTest: Story = {
         ]);
       }
     );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Size-specific field widths
+// ──────────────────────────────────────────────────────────────
+
+export const SizesTest: Story = {
+  ...Sizes,
+  play: async ({ canvasElement, step }) => {
+    const fields = await getComponents<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+
+    await step('each size uses its matching default field width', () => {
+      expect(
+        fields.map((field) => {
+          const control = field.shadowRoot?.querySelector<HTMLElement>(
+            '.swc-TextField-control'
+          );
+          return control ? getComputedStyle(control).maxInlineSize : null;
+        })
+      ).toEqual(['192px', '208px', '224px', '240px']);
+    });
   },
 };
 

@@ -23,8 +23,6 @@
 /* ── Field template grid ──────────────────────────── */
 
 :host {
-  --swc-form-field-label-font-size: token("font-size-100");
-  --swc-form-field-description-font-size: token("font-size-75");
   --swc-form-field-row-gap: token("form-item-gap-medium");
 }
 

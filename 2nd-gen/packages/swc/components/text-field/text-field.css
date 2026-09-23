@@ -166,6 +166,7 @@ slot[name="prefix"]::slotted(swc-avatar) {
   --swc-text-field-border-radius: token("corner-radius-medium-size-small");
   --swc-text-field-validation-icon-size: token("workflow-icon-small");
   --swc-field-input-min-inline-size: token("component-height-75");
+  --swc-field-input-max-inline-size: token("field-default-width-small");
 }
 
 :host([size="s"]) slot[name="prefix"]::slotted(swc-avatar) {
@@ -181,6 +182,7 @@ slot[name="prefix"]::slotted(swc-avatar) {
   --swc-text-field-border-radius: token("corner-radius-medium-size-large");
   --swc-text-field-validation-icon-size: token("workflow-icon-large");
   --swc-field-input-min-inline-size: token("component-height-200");
+  --swc-field-input-max-inline-size: token("field-default-width-large");
 }
 
 :host([size="l"]) slot[name="prefix"]::slotted(swc-avatar) {
@@ -196,6 +198,7 @@ slot[name="prefix"]::slotted(swc-avatar) {
   --swc-text-field-border-radius: token("corner-radius-medium-size-extra-large");
   --swc-text-field-validation-icon-size: token("workflow-icon-extra-large");
   --swc-field-input-min-inline-size: token("component-height-300");
+  --swc-field-input-max-inline-size: token("field-default-width-extra-large");
 }
 
 :host([size="xl"]) slot[name="prefix"]::slotted(swc-avatar) {
