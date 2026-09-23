@@ -2,6 +2,7 @@
   "compilerOptions": {
     "allowImportingTsExtensions": false,
     "composite": true,
+    "emitDeclarationOnly": true,
     "noEmit": false,
     "outDir": "./dist",
     "paths": {

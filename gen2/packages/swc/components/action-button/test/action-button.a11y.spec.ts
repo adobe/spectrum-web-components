@@ -14,6 +14,9 @@ import { expect, test } from '@playwright/test';
 
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
+/** Element augmented with a test-only click counter set inside the browser context. */
+type ClickCounter = HTMLElement & { __clickCount: number };
+
 /**
  * Accessibility tests for ActionButton component .
  *
@@ -171,15 +174,17 @@ test.describe('Action Button - Keyboard Interactions', () => {
     );
     await page.evaluate(() => {
       const el = document.querySelector('swc-action-button')!;
-      (el as any).__clickCount = 0;
+      (el as unknown as ClickCounter).__clickCount = 0;
       el.addEventListener('click', () => {
-        (el as any).__clickCount++;
+        (el as unknown as ClickCounter).__clickCount++;
       });
     });
     await page.keyboard.press('Tab');
     await page.keyboard.press('Enter');
     const count = await page.evaluate(
-      () => (document.querySelector('swc-action-button') as any).__clickCount
+      () =>
+        (document.querySelector('swc-action-button') as unknown as ClickCounter)
+          .__clickCount
     );
     expect(count, 'Enter fires click event').toBe(1);
   });
@@ -192,15 +197,17 @@ test.describe('Action Button - Keyboard Interactions', () => {
     );
     await page.evaluate(() => {
       const el = document.querySelector('swc-action-button')!;
-      (el as any).__clickCount = 0;
+      (el as unknown as ClickCounter).__clickCount = 0;
       el.addEventListener('click', () => {
-        (el as any).__clickCount++;
+        (el as unknown as ClickCounter).__clickCount++;
       });
     });
     await page.keyboard.press('Tab');
     await page.keyboard.press('Space');
     const count = await page.evaluate(
-      () => (document.querySelector('swc-action-button') as any).__clickCount
+      () =>
+        (document.querySelector('swc-action-button') as unknown as ClickCounter)
+          .__clickCount
     );
     expect(count, 'Space fires click event').toBe(1);
   });
@@ -234,7 +241,9 @@ test.describe('Action Button - Keyboard Interactions', () => {
       'swc-action-button'
     );
     await page.evaluate(() => {
-      const pending = document.querySelectorAll('swc-action-button')[2] as any;
+      const pending = document.querySelectorAll(
+        'swc-action-button'
+      )[2] as unknown as ClickCounter;
       pending.__clickCount = 0;
       pending.addEventListener('click', () => {
         pending.__clickCount++;
@@ -248,7 +257,11 @@ test.describe('Action Button - Keyboard Interactions', () => {
 
     const count = await page.evaluate(
       () =>
-        (document.querySelectorAll('swc-action-button')[2] as any).__clickCount
+        (
+          document.querySelectorAll(
+            'swc-action-button'
+          )[2] as unknown as ClickCounter
+        ).__clickCount
     );
     expect(count, 'Enter does not activate a pending button').toBe(0);
   });
