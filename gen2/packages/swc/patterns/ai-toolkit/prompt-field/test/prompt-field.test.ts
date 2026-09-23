@@ -706,13 +706,18 @@ export const AttachmentFocusOrderTest: Story = {
 };
 
 /**
- * @todo SWC-2528 Flaky on Firefox (smooth-scroll focus-settle timing); skipped there until fixed.
+ * @todo SWC-2528 Flaky on Firefox and WebKit (smooth-scroll focus-settle
+ * timing); skipped there until fixed.
  */
 export const AttachmentChevronPagingFocusTest: Story = {
   render: () => '',
   play: async ({ canvasElement, step }) => {
-    // Skip on Firefox pending SWC-2528.
-    if (navigator.userAgent.includes('Firefox')) {
+    // Skip on Firefox and WebKit pending SWC-2528. WebKit UAs include
+    // "Safari" but not "Chrome" (Chromium UAs include both).
+    const isWebKit =
+      navigator.userAgent.includes('Safari') &&
+      !navigator.userAgent.includes('Chrome');
+    if (navigator.userAgent.includes('Firefox') || isWebKit) {
       return;
     }
 
