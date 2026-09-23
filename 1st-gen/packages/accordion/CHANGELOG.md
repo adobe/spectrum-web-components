@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- [#6268](https://github.com/adobe/spectrum-web-components/pull/6268) [`abe7cbd`](https://github.com/adobe/spectrum-web-components/commit/abe7cbdf7af837633e223ba033e08560111c95ce) Thanks [@rise-erpelding](https://github.com/rise-erpelding)! - **feat(accordion):** Add 2nd-gen `<swc-accordion>` and `<swc-accordion-item>` with Spectrum 2-oriented behavior. Key changes from 1st-gen `<sp-accordion>` / `<sp-accordion-item>`:
+- [#6268](https://github.com/adobe/spectrum-web-components/pull/6268) [`abe7cbd`](https://github.com/adobe/spectrum-web-components/commit/abe7cbdf7af837633e223ba033e08560111c95ce) Thanks [@rise-erpelding](https://github.com/rise-erpelding)! - **feat(accordion):** Add gen2 `<swc-accordion>` and `<swc-accordion-item>` with Spectrum 2-oriented behavior. Key changes from 1st-gen `<sp-accordion>` / `<sp-accordion-item>`:
   - Core `AccordionBase` / `AccordionItemBase` with public API: `allow-multiple`, `level`, `size`, `density`, `quiet`, host `disabled`, item `open` / `disabled`, slotted heading (`slot="label"`), optional `slot="actions"`, and cancellable `swc-accordion-item-toggle`
   - APG-aligned accessibility: `<h*>` wrapping a native header `<button>`, `aria-expanded` / `aria-controls`, `role="region"` + `aria-labelledby`, closed panels use `aria-hidden="true"` plus CSS collapse (not HTML `hidden`; supports `calc-size()` height animation), disabled items use `aria-disabled` on the header and `inert` on the panel (no roving `tabindex` or arrow-key header navigation)
   - Space on the header calls `preventDefault()` and toggles without scrolling overflow containers (SWC-1487)
