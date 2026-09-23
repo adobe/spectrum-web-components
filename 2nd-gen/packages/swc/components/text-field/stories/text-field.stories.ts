@@ -140,8 +140,8 @@ export const Labelling: Story = {
             : named by other elements
           </div>
           <div style="margin-block-end: 8px;">
-            <span id="labelling-row-header">Name</span>
-            <span id="labelling-col-header">Billing address</span>
+            <span id="labelling-row-header">Billing</span>
+            <span id="labelling-col-header">Street address</span>
           </div>
           <swc-text-field
             id="labelling-labelledby-field"

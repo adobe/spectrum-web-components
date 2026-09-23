@@ -25,6 +25,8 @@ declare global {
 
 const DEMO_STYLES = css`
   :host {
+    --_swc-demo-negative-color: #d7373f;
+
     display: inline-flex;
     flex-direction: column;
     gap: 4px;
@@ -39,9 +41,17 @@ const DEMO_STYLES = css`
     border-radius: 4px;
   }
 
+  :host([invalid]) input {
+    border-color: var(--_swc-demo-negative-color);
+  }
+
   .swc-FormFieldDescription,
   .swc-FormFieldErrorText {
     font-size: smaller;
+  }
+
+  .swc-FormFieldErrorText {
+    color: var(--_swc-demo-negative-color);
   }
 `;
 
@@ -57,6 +67,10 @@ export class DemoFieldDescriptionHost extends FieldDescriptionMixin(
 ) {
   static override styles = DEMO_STYLES;
 
+  private get _inputId(): string {
+    return 'demo-field-description-host-input';
+  }
+
   /** Whether the demo field is in an invalid state. */
   @property({ type: Boolean, reflect: true })
   public invalid = false;
@@ -67,7 +81,11 @@ export class DemoFieldDescriptionHost extends FieldDescriptionMixin(
 
   protected override render(): TemplateResult {
     return html`
-      <input aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)} />
+      <label for=${this._inputId}>Description</label>
+      <input
+        id=${this._inputId}
+        aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
+      />
       ${this.renderFieldDescription()}
     `;
   }

@@ -147,6 +147,49 @@ export const ErrorTextGatingTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Invalid state presentation
+// ──────────────────────────────────────────────────────────────
+
+export const InvalidPresentationTest: Story = {
+  render: () => html`
+    <demo-field-description-host invalid>
+      <span slot="description">Example description</span>
+      <span slot="error-text">Enter a valid value</span>
+    </demo-field-description-host>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = canvasElement.querySelector<DemoFieldDescriptionHost>(
+      'demo-field-description-host'
+    );
+
+    await step('input has an accessible label', () => {
+      const label = host?.shadowRoot?.querySelector('label');
+      const input = host?.roleElement;
+      expect(label?.getAttribute('for')).toBe(input?.id);
+      expect(label?.textContent).toBe('Description');
+    });
+
+    await step('invalid input has visible invalid-state styling', () => {
+      const input = host?.roleElement;
+      expect(input).toBeTruthy();
+      expect(input && getComputedStyle(input).borderColor).toBe(
+        'rgb(215, 55, 63)'
+      );
+      const errorText = host?.shadowRoot?.querySelector(
+        '.swc-FormFieldErrorText'
+      );
+      expect(errorText).toBeTruthy();
+      expect(errorText && getComputedStyle(errorText).color).toBe(
+        'rgb(215, 55, 63)'
+      );
+      expect(
+        host?.shadowRoot?.querySelector('.swc-FormFieldDescription')
+      ).toBeNull();
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: External accessible-describedby survives the invalid swap
 // ──────────────────────────────────────────────────────────────
 

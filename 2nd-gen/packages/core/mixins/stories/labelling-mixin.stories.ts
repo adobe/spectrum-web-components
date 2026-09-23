@@ -80,20 +80,43 @@ export const Overview: Story = {
 
 export const NameSourcePrecedence: Story = {
   render: () => html`
-    <demo-labelling-host>
-      <span slot="label">Slotted label only</span>
-    </demo-labelling-host>
-    <demo-labelling-host
-      accessible-label="accessible-label only"
-    ></demo-labelling-host>
-    <div id="labelling-mixin-row-header">Name</div>
-    <div id="labelling-mixin-col-header">Billing address</div>
-    <demo-labelling-host
-      id="labelling-mixin-labelledby-host"
-      accessible-labelledby="labelling-mixin-row-header labelling-mixin-col-header"
-    >
-      <span slot="label">Ignored: accessible-labelledby wins</span>
-    </demo-labelling-host>
+    <div style="display: grid; gap: 20px;">
+      <section>
+        <p style="margin: 0 0 8px;"><strong>Visible label</strong></p>
+        <demo-labelling-host>
+          <span slot="label">Example label</span>
+        </demo-labelling-host>
+      </section>
+
+      <section>
+        <p style="margin: 0 0 8px;">
+          <strong>Accessible label</strong>
+          <br />
+          Uses
+          <code>accessible-label</code>
+          when no visible label is needed.
+        </p>
+        <demo-labelling-host
+          accessible-label="Accessible label example"
+        ></demo-labelling-host>
+      </section>
+
+      <section>
+        <p style="margin: 0 0 8px;">
+          <strong>External labels</strong>
+          <br />
+          Uses
+          <code>accessible-labelledby</code>
+          to combine text from other elements.
+        </p>
+        <div id="labelling-mixin-row-header">Row header label</div>
+        <div id="labelling-mixin-col-header">Column header label</div>
+        <demo-labelling-host
+          id="labelling-mixin-labelledby-host"
+          accessible-labelledby="labelling-mixin-row-header labelling-mixin-col-header"
+        ></demo-labelling-host>
+      </section>
+    </div>
   `,
   tags: ['behaviors'],
   parameters: {
@@ -117,24 +140,37 @@ NameSourcePrecedence.storyName = 'Name source precedence';
 
 export const ConflictingLabelSources: Story = {
   render: () => html`
-    <div id="labelling-mixin-conflict-header">
-      External label (check console)
+    <div style="display: grid; gap: 20px;">
+      <section>
+        <div
+          id="labelling-mixin-conflict-header"
+          style="margin-block-end: 8px;"
+        >
+          External label (check console)
+        </div>
+        <demo-labelling-host
+          id="labelling-mixin-conflict-labelledby-host"
+          accessible-label="Different text (check console)"
+          accessible-labelledby="labelling-mixin-conflict-header"
+        ></demo-labelling-host>
+      </section>
+
+      <section>
+        <div
+          id="labelling-mixin-conflict-header-2"
+          style="margin-block-end: 8px;"
+        >
+          External label (check console)
+        </div>
+        <demo-labelling-host
+          id="labelling-mixin-conflict-labelledby-slot-host"
+          accessible-label="Different text (check console)"
+          accessible-labelledby="labelling-mixin-conflict-header-2"
+        >
+          <span slot="label">Visible label</span>
+        </demo-labelling-host>
+      </section>
     </div>
-    <demo-labelling-host
-      id="labelling-mixin-conflict-labelledby-host"
-      accessible-label="Different text (check console)"
-      accessible-labelledby="labelling-mixin-conflict-header"
-    ></demo-labelling-host>
-    <div id="labelling-mixin-conflict-header-2">
-      External label (check console)
-    </div>
-    <demo-labelling-host
-      id="labelling-mixin-conflict-labelledby-slot-host"
-      accessible-label="Different text (check console)"
-      accessible-labelledby="labelling-mixin-conflict-header-2"
-    >
-      <span slot="label">Visible label</span>
-    </demo-labelling-host>
   `,
   tags: ['behaviors'],
   parameters: {
