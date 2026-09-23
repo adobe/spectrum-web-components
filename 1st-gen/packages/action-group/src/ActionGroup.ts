@@ -97,6 +97,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     elements: () => this.buttons,
     hostDelegatesFocus: true,
     isFocusableElement: (el: ActionButton) => !el.disabled,
+    mirrorHorizontalInRTL: () => !this.vertical,
   });
 
   @property({ type: Boolean, reflect: true })

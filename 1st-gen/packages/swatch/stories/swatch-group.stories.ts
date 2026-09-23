@@ -261,7 +261,7 @@ rtlNavigation.parameters = {
   docs: {
     description: {
       story:
-        'In RTL, ArrowRight should move focus to the Swatch that is visually to the right. Today it moves focus to the left, because the focus group advances by DOM order without mirroring for text direction.',
+        'In RTL, `ArrowRight` moves focus to the swatch visually to the right, and `ArrowLeft` moves focus to the swatch visually to the left. Horizontal navigation is mirrored to match the visual layout.',
     },
   },
 };

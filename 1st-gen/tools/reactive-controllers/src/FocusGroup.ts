@@ -22,6 +22,19 @@ export type FocusGroupConfig<T> = {
   listenerScope?: HTMLElement | (() => HTMLElement);
 
   /**
+   * Whether `ArrowLeft` and `ArrowRight` swap meaning in a right-to-left
+   * writing mode, so focus follows the visual order instead of the DOM order.
+   *
+   * Only hosts that lay their elements out along the inline axis should mirror.
+   * `direction: 'both'` and `'grid'` say nothing about that, so those hosts must
+   * report it themselves, e.g. `() => !this.vertical`. Hosts that position their
+   * elements physically, like `sp-grid`, should pass `false`.
+   *
+   * @default true when `direction` is `horizontal`, otherwise false
+   */
+  mirrorHorizontalInRTL?: boolean | (() => boolean);
+
+  /**
    * When true, arrow key events will stop propagation after being handled.
    * This prevents parent elements from also reacting to arrow keys.
    *
@@ -120,33 +133,16 @@ export class FocusGroupController<
   }
 
   /**
-   * Whether the elements are laid out along the inline axis, which is the only
-   * case where Left/Right relate to the visual order.
-   *
-   * `direction: 'both'` accepts Left/Right and Up/Down as equivalent steps
-   * through the same DOM order, so it is used by hosts that render either
-   * horizontally or vertically. Comparing the offset between the first two
-   * elements tells the two apart, so a vertical host keeps Left/Right stepping
-   * in DOM order instead of mirroring them against a non-existent inline axis.
+   * Whether `ArrowLeft` / `ArrowRight` swap meaning in RTL, as reported by the
+   * host. See {@link FocusGroupConfig.mirrorHorizontalInRTL}.
    */
-  private get hasInlineLayout(): boolean {
-    if (this.direction === 'vertical') {
-      return false;
-    }
-    if (this.direction !== 'both') {
-      return true;
-    }
-    const [first, second] = this.elements;
-    if (!first || !second) {
-      return false;
-    }
-    const firstRect = first.getBoundingClientRect();
-    const secondRect = second.getBoundingClientRect();
-    return (
-      Math.abs(secondRect.left - firstRect.left) >
-      Math.abs(secondRect.top - firstRect.top)
-    );
+  get mirrorHorizontalInRTL(): boolean {
+    return this._mirrorHorizontalInRTL();
   }
+
+  _mirrorHorizontalInRTL = (): boolean => {
+    return this.direction === 'horizontal';
+  };
 
   host: ReactiveElement;
 
@@ -183,6 +179,7 @@ export class FocusGroupController<
       focusInIndex,
       isFocusableElement,
       listenerScope,
+      mirrorHorizontalInRTL,
       stopKeyEventPropagation,
     }: FocusGroupConfig<T> = { elements: () => [] }
   ) {
@@ -210,6 +207,11 @@ export class FocusGroupController<
       listenerScope,
       'object',
       this._listenerScope
+    );
+    this._mirrorHorizontalInRTL = ensureMethod<() => boolean, boolean>(
+      mirrorHorizontalInRTL,
+      'boolean',
+      this._mirrorHorizontalInRTL
     );
   }
   /*  In  handleItemMutation() method the first if condition is checking if the element is not focused or if the element's children's length is not decreasing then it means no element has been deleted and we must return.
@@ -430,7 +432,7 @@ export class FocusGroupController<
     let diff = 0;
     this.prevIndex = this.currentIndex;
     // In RTL the visually "next" element is the previous one in DOM order.
-    const horizontalDiff = this.isLTR || !this.hasInlineLayout ? 1 : -1;
+    const horizontalDiff = this.isLTR || !this.mirrorHorizontalInRTL ? 1 : -1;
     switch (event.key) {
       case 'ArrowRight':
         diff += horizontalDiff;

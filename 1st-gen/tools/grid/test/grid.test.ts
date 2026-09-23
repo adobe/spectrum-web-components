@@ -294,6 +294,38 @@ describe('Grid', () => {
     expect(focused === document.activeElement).to.be.true;
     expect(focused.focused).to.be.true;
   });
+  it('keeps roving tabindex in DOM order in RTL, since items are positioned physically', async () => {
+    const test = await fixture<HTMLDivElement>(html`
+      <div dir="rtl">${Default()}</div>
+    `);
+    const el = test.querySelector('sp-grid') as Grid;
+
+    await elementUpdated(el);
+    el.focus();
+    await nextFrame();
+    await nextFrame();
+
+    const first = el.querySelector(el.focusableSelector) as Card;
+    const second = el.querySelector(
+      `${el.focusableSelector}:nth-child(2)`
+    ) as Card;
+
+    // The virtualizer positions children with a physical transform, so the
+    // visual order does not flip with the writing mode.
+    expect(second.getBoundingClientRect().left).to.be.greaterThan(
+      first.getBoundingClientRect().left
+    );
+
+    expect(first === document.activeElement).to.be.true;
+
+    await sendKeys({ press: 'ArrowRight' });
+    await elementUpdated(second);
+    expect(second === document.activeElement).to.be.true;
+
+    await sendKeys({ press: 'ArrowLeft' });
+    await elementUpdated(first);
+    expect(first === document.activeElement).to.be.true;
+  });
   it('manages selection', async () => {
     const test = await fixture<HTMLDivElement>(html`
       <div>${Default()}</div>
