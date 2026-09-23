@@ -68,6 +68,13 @@ slot[name="prefix"]::slotted(*) {
 
   /* Center regardless of the slotted element's own `align-self` (e.g. avatar). */
   align-self: center;
+
+  /* Match the input's font metrics so slotted text (e.g. "https://") shares
+     its baseline instead of inheriting mismatched metrics from the light DOM. */
+  font-family: inherit;
+  font-size: var(--swc-text-field-font-size, token("font-size-100"));
+  font-weight: token("regular-font-weight");
+  line-height: var(--swc-text-field-line-height, normal);
   color: token("gray-600");
   pointer-events: none;
 }
