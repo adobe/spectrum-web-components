@@ -79,10 +79,6 @@ slot[name="prefix"]::slotted(*) {
   pointer-events: none;
 }
 
-slot[name="prefix"]::slotted(swc-avatar) {
-  --swc-avatar-size: token("avatar-size-100");
-}
-
 /* ── Invalid icon (trailing flex child) ──────────── */
 
 .swc-TextField-invalidIcon {
@@ -169,10 +165,6 @@ slot[name="prefix"]::slotted(swc-avatar) {
   --swc-field-input-max-inline-size: token("field-default-width-small");
 }
 
-:host([size="s"]) slot[name="prefix"]::slotted(swc-avatar) {
-  --swc-avatar-size: token("avatar-size-75");
-}
-
 :host([size="l"]) {
   --_swc-text-field-min-block-size: token("component-height-200");
   --swc-text-field-padding-block: token("base-padding-vertical-large");
@@ -185,10 +177,6 @@ slot[name="prefix"]::slotted(swc-avatar) {
   --swc-field-input-max-inline-size: token("field-default-width-large");
 }
 
-:host([size="l"]) slot[name="prefix"]::slotted(swc-avatar) {
-  --swc-avatar-size: token("avatar-size-200");
-}
-
 :host([size="xl"]) {
   --_swc-text-field-min-block-size: token("component-height-300");
   --swc-text-field-padding-block: token("base-padding-vertical-extra-large");
@@ -199,10 +187,6 @@ slot[name="prefix"]::slotted(swc-avatar) {
   --swc-text-field-validation-icon-size: token("workflow-icon-extra-large");
   --swc-field-input-min-inline-size: token("component-height-300");
   --swc-field-input-max-inline-size: token("field-default-width-extra-large");
-}
-
-:host([size="xl"]) slot[name="prefix"]::slotted(swc-avatar) {
-  --swc-avatar-size: token("avatar-size-300");
 }
 
 /* ── High contrast ────────────────────────────────── */

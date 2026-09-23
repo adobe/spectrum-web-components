@@ -15,6 +15,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { TextField } from '@adobe/spectrum-wc/text-field';
 
+import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 
 import {
@@ -105,6 +106,15 @@ export const SizesTest: Story = {
           return control ? getComputedStyle(control).maxInlineSize : null;
         })
       ).toEqual(['192px', '208px', '224px', '240px']);
+    });
+
+    await step('consumers can override form-field size properties', () => {
+      const field = fields[1];
+      field.style.setProperty('--swc-form-field-label-font-size', '30px');
+      const label = field.shadowRoot?.querySelector<HTMLElement>(
+        '.swc-FormFieldLabel'
+      );
+      expect(label && getComputedStyle(label).fontSize).toBe('30px');
     });
   },
 };
@@ -279,7 +289,7 @@ export const NecessityIndicatorTest: Story = {
 export const PrefixTest: Story = {
   render: () => html`
     <swc-text-field accessible-label="Amount">
-      <span slot="prefix">$</span>
+      <swc-avatar slot="prefix" alt=""></swc-avatar>
     </swc-text-field>
   `,
   play: async ({ canvasElement, step }) => {
@@ -294,7 +304,15 @@ export const PrefixTest: Story = {
       );
       const assigned = slot?.assignedElements() ?? [];
       expect(assigned).toHaveLength(1);
-      expect(assigned[0]?.textContent).toBe('$');
+      expect(assigned[0]?.localName).toBe('swc-avatar');
+    });
+
+    await step('the prefix avatar follows the field size', async () => {
+      const avatar = field.querySelector('swc-avatar');
+      expect(avatar?.getAttribute('size')).toBe('100');
+      field.size = 'l';
+      await field.updateComplete;
+      expect(avatar?.getAttribute('size')).toBe('200');
     });
 
     await step('prefix and input share the bordered control wrapper', () => {

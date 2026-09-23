@@ -13,7 +13,11 @@
 import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { TextFieldBase } from '@adobe/spectrum-wc-core/components/text-field';
+import {
+  TextFieldBase,
+  type TextFieldSize,
+} from '@adobe/spectrum-wc-core/components/text-field';
+import { SlotAttributePropagationController } from '@adobe/spectrum-wc-core/controllers/index.js';
 
 import '@adobe/spectrum-wc-icons/swc-icon-alert-triangle.js';
 import '../ui-icons/swc-ui-icon.js';
@@ -31,6 +35,12 @@ const NECESSITY_INDICATOR_TEXT = {
   required: '(required)',
   optional: '(optional)',
 };
+const PREFIX_AVATAR_SIZE = {
+  s: '75',
+  m: '100',
+  l: '200',
+  xl: '300',
+} as const satisfies Record<TextFieldSize, string>;
 
 /**
  * A single-line text field for entering and editing text.
@@ -56,6 +66,16 @@ const NECESSITY_INDICATOR_TEXT = {
  * <swc-text-field></swc-text-field>
  */
 export class TextField extends TextFieldBase {
+  private readonly prefixAvatarSize = new SlotAttributePropagationController(
+    this,
+    {
+      attribute: 'size',
+      getValue: () => PREFIX_AVATAR_SIZE[this.size],
+      selector: 'swc-avatar',
+      slotName: 'prefix',
+    }
+  );
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────
@@ -66,7 +86,7 @@ export class TextField extends TextFieldBase {
 
   /**
    * The `<input>` that both `LabellingMixin` (accessible name / `<label for>`)
-   * and `HelpTextMixin` (resolved description) wire their ARIA relationships
+   * and `FieldDescriptionMixin` (resolved description) wire their ARIA relationships
    * onto. Queried by its stable `id` (referenced by the rendered `<label for>`).
    */
   public override get roleElement(): HTMLInputElement | null {
@@ -84,6 +104,10 @@ export class TextField extends TextFieldBase {
    */
   private handleChange(): void {
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+  }
+
+  private handlePrefixSlotChange(): void {
+    this.prefixAvatarSize.propagate();
   }
 
   /**
@@ -114,7 +138,7 @@ export class TextField extends TextFieldBase {
           class="swc-TextField-control"
           @pointerdown=${this.handleControlPointerDown}
         >
-          <slot name="prefix"></slot>
+          <slot name="prefix" @slotchange=${this.handlePrefixSlotChange}></slot>
           <input
             id=${INPUT_ID}
             class="swc-TextField-input"
@@ -144,7 +168,7 @@ export class TextField extends TextFieldBase {
               `
             : nothing}
         </div>
-        ${this.renderHelpText({
+        ${this.renderFieldDescription({
           invalid: this.invalid && !this.effectiveDisabled,
         })}
       </div>

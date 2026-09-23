@@ -12,7 +12,7 @@
 
 /*
  * Shared layout for form fields whose label, description, and error text render
- * in-shadow via LabellingMixin + HelpTextMixin. A consuming component adds
+ * in-shadow via LabellingMixin + FieldDescriptionMixin. A consuming component adds
  * `swc-FormField` to its render root and places its control in the `input` grid
  * area. This fragment themes the mixin-emitted `.swc-FormField*` classes and owns
  * the `label-position` grid so every field lays them out identically. The grid
@@ -39,24 +39,24 @@
   --_swc-form-field-line-height: token("line-height-100");
 }
 
-:host([size="s"]) .swc-FormField {
+:host([size="s"]) {
   --swc-form-field-label-font-size: token("font-size-75");
   --swc-form-field-description-font-size: token("font-size-75");
   --swc-form-field-row-gap: token("form-item-gap-small");
 }
 
-:host([size="m"]) .swc-FormField {
+:host([size="m"]) {
   --swc-form-field-label-font-size: token("font-size-100");
   --swc-form-field-description-font-size: token("font-size-100");
 }
 
-:host([size="l"]) .swc-FormField {
+:host([size="l"]) {
   --swc-form-field-label-font-size: token("font-size-200");
   --swc-form-field-description-font-size: token("font-size-200");
   --swc-form-field-row-gap: token("form-item-gap-large");
 }
 
-:host([size="xl"]) .swc-FormField {
+:host([size="xl"]) {
   --swc-form-field-label-font-size: token("font-size-300");
   --swc-form-field-description-font-size: token("font-size-300");
   --swc-form-field-row-gap: token("form-item-gap-extra-large");
