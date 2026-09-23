@@ -59,9 +59,9 @@ import '@adobe/spectrum-wc/components/button/swc-button.js';
   Prefer this registering import; import the class directly (e.g.
   `@adobe/spectrum-wc/components/button/Button.js`) only for extension or typing.
 
-- **Accessibility**: `swc-*` components expose correct ARIA roles, labels, and
-  keyboard navigation. Each component reference documents its accessibility
-  features and best practices.
+- **Accessibility**: components handle their own roles, state, and keyboard
+  interaction, but some require attributes you must supply. Read the
+  accessibility section of each component's reference before using it.
 
 ## Documentation structure
 
