@@ -114,7 +114,7 @@ const markdownFilesIn = (dir) =>
 
 /**
  * Every instruction source. `kind` is `rule` or `memory`; `target` is the generated file stem.
- * Memory files without frontmatter are returned with `data: null` and are not generated.
+ * Files without frontmatter are returned with `data: null`; the validator reports them.
  */
 export function listInstructionSources() {
   const rules = markdownFilesIn(RULES_DIR).map((file) => ({
