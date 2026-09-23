@@ -119,6 +119,35 @@ export class FocusGroupController<
     return getComputedStyle(this.host).direction !== 'rtl';
   }
 
+  /**
+   * Whether the elements are laid out along the inline axis, which is the only
+   * case where Left/Right relate to the visual order.
+   *
+   * `direction: 'both'` accepts Left/Right and Up/Down as equivalent steps
+   * through the same DOM order, so it is used by hosts that render either
+   * horizontally or vertically. Comparing the offset between the first two
+   * elements tells the two apart, so a vertical host keeps Left/Right stepping
+   * in DOM order instead of mirroring them against a non-existent inline axis.
+   */
+  private get hasInlineLayout(): boolean {
+    if (this.direction === 'vertical') {
+      return false;
+    }
+    if (this.direction !== 'both') {
+      return true;
+    }
+    const [first, second] = this.elements;
+    if (!first || !second) {
+      return false;
+    }
+    const firstRect = first.getBoundingClientRect();
+    const secondRect = second.getBoundingClientRect();
+    return (
+      Math.abs(secondRect.left - firstRect.left) >
+      Math.abs(secondRect.top - firstRect.top)
+    );
+  }
+
   host: ReactiveElement;
 
   isFocusableElement = (_el: T): boolean => true;
@@ -401,7 +430,7 @@ export class FocusGroupController<
     let diff = 0;
     this.prevIndex = this.currentIndex;
     // In RTL the visually "next" element is the previous one in DOM order.
-    const horizontalDiff = this.isLTR ? 1 : -1;
+    const horizontalDiff = this.isLTR || !this.hasInlineLayout ? 1 : -1;
     switch (event.key) {
       case 'ArrowRight':
         diff += horizontalDiff;

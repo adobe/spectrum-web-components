@@ -19,10 +19,13 @@ import { html } from '@spectrum-web-components/base';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 
-const createGroup = async (dir: 'ltr' | 'rtl'): Promise<ActionGroup> => {
+const createGroup = async (
+  dir: 'ltr' | 'rtl',
+  vertical = false
+): Promise<ActionGroup> => {
   const wrapper = await fixture<HTMLDivElement>(html`
     <div dir=${dir}>
-      <sp-action-group>
+      <sp-action-group ?vertical=${vertical}>
         <sp-action-button>Button 1</sp-action-button>
         <sp-action-button>Button 2</sp-action-button>
         <sp-action-button>Button 3</sp-action-button>
@@ -89,6 +92,45 @@ describe('FocusGroupController text direction', () => {
     expect(document.activeElement === last).to.be.true;
 
     await sendKeys({ press: 'Home' });
+    expect(document.activeElement === first).to.be.true;
+  });
+
+  it('does not mirror arrow keys in a vertical RTL group', async () => {
+    const el = await createGroup('rtl', true);
+    const [first, second] = [
+      ...el.querySelectorAll('sp-action-button'),
+    ] as ActionButton[];
+
+    el.focus();
+    await nextFrame();
+    expect(document.activeElement === first).to.be.true;
+
+    // There is no inline axis to mirror against, so ArrowRight must agree with
+    // ArrowDown and keep stepping forward through the DOM order.
+    await sendKeys({ press: 'ArrowRight' });
+    expect(document.activeElement === second).to.be.true;
+
+    await sendKeys({ press: 'ArrowLeft' });
+    expect(document.activeElement === first).to.be.true;
+
+    await sendKeys({ press: 'ArrowDown' });
+    expect(document.activeElement === second).to.be.true;
+  });
+
+  it('does not mirror arrow keys in a vertical LTR group', async () => {
+    const el = await createGroup('ltr', true);
+    const [first, second] = [
+      ...el.querySelectorAll('sp-action-button'),
+    ] as ActionButton[];
+
+    el.focus();
+    await nextFrame();
+    expect(document.activeElement === first).to.be.true;
+
+    await sendKeys({ press: 'ArrowRight' });
+    expect(document.activeElement === second).to.be.true;
+
+    await sendKeys({ press: 'ArrowLeft' });
     expect(document.activeElement === first).to.be.true;
   });
 });
