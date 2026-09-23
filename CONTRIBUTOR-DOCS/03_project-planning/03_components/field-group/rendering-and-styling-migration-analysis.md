@@ -88,7 +88,7 @@ None found for this component.
 <div class="group" role="presentation">
     <slot @slotchange="handleSlotchange"></slot>
 </div>
-<!-- Help text rendered via renderHelpText() method -->
+<!-- Help text rendered via renderFieldDescription() method -->
 <sp-help-text slot="help-text" variant="neutral" icon id="help-text-id">
     Help text content
 </sp-help-text>

@@ -13,11 +13,11 @@
 import { html, nothing, type TemplateResult } from 'lit';
 import { ref } from 'lit/directives/ref.js';
 
-/** Return type of {@link renderFieldHelpText}: the help-text template, or `nothing`. */
-export type RenderFieldHelpTextResult = TemplateResult | typeof nothing;
+/** Return type of {@link renderFieldDescription}: the field-description template, or `nothing`. */
+export type RenderFieldDescriptionResult = TemplateResult | typeof nothing;
 
-/** Options accepted by {@link renderFieldHelpText}. */
-export interface RenderFieldHelpTextOptions {
+/** Options accepted by {@link renderFieldDescription}. */
+export interface RenderFieldDescriptionOptions {
   /** Whether slotted `description` content is present in the host's light DOM. */
   hasDescriptionSlotContent: boolean;
   /** Whether slotted `error-text` content is present in the host's light DOM. */
@@ -31,23 +31,23 @@ export interface RenderFieldHelpTextOptions {
 }
 
 /**
- * Renders the shared description/error-text markup for help-text-capable
+ * Renders the shared description/error-text markup for form-field
  * components. Returns `nothing` when there is no description and no active
  * (`invalid`) error message, so callers can interpolate unconditionally.
  *
- * Most consumers use `HelpTextMixin`'s `renderHelpText()` instead, which calls
+ * Most consumers use `FieldDescriptionMixin`'s `renderFieldDescription()` instead, which calls
  * this with its resolved state and the element callbacks that build
  * `ariaDescribedByElements`. Render-only, no design tokens: pair it with a
  * style fragment theming the `swc-FormFieldDescription` / `swc-FormFieldErrorText`
  * classes it emits.
  */
-export function renderFieldHelpText({
+export function renderFieldDescription({
   hasDescriptionSlotContent,
   hasErrorTextSlotContent,
   invalid,
   onDescriptionElement,
   onErrorTextElement,
-}: RenderFieldHelpTextOptions): RenderFieldHelpTextResult {
+}: RenderFieldDescriptionOptions): RenderFieldDescriptionResult {
   const showError = invalid && hasErrorTextSlotContent;
   if (!hasDescriptionSlotContent && !showError) {
     return nothing;

@@ -28,7 +28,7 @@ import './demo-hosts.js';
  * Three accessible-name sources are supported: `accessible-labelledby`,
  * `accessible-label`, and a slotted visible label. Each is wired
  * independently, and the browser picks which one is announced (in that
- * order). `HelpTextMixin` (`@adobe/spectrum-wc-core/mixins`) is the companion
+ * order). `FieldDescriptionMixin` (`@adobe/spectrum-wc-core/mixins`) is the companion
  * mixin for description/error-text association.
  */
 const meta: Meta = {

@@ -15,7 +15,7 @@ import { property } from 'lit/decorators.js';
 import { FieldAssociationController } from '@adobe/spectrum-wc-core/controllers/field-association-controller/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
-  HelpTextMixin,
+  FieldDescriptionMixin,
   LabellingMixin,
   SizedMixin,
 } from '@adobe/spectrum-wc-core/mixins/index.js';
@@ -47,7 +47,7 @@ const DOCS_URL =
  * @slot error-text - Error message shown when `invalid`, folded into `aria-describedby`.
  */
 export abstract class TextFieldBase extends SizedMixin(
-  HelpTextMixin(LabellingMixin(SpectrumElement)),
+  FieldDescriptionMixin(LabellingMixin(SpectrumElement)),
   {
     validSizes: TEXT_FIELD_VALID_SIZES,
     defaultSize: 'm',

@@ -16,11 +16,11 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../stories/demo-hosts.js';
 
-import type { DemoHelpTextHost } from '../stories/demo-hosts.js';
-import helpTextMeta, {
+import type { DemoFieldDescriptionHost } from '../stories/demo-hosts.js';
+import fieldDescriptionMeta, {
   CombinedDescription,
   ErrorTextGating,
-} from '../stories/help-text-mixin.stories.js';
+} from '../stories/field-description-mixin.stories.js';
 
 // Enables DEBUG mode and captures window.__swc.warn calls for the duration of `fn`.
 async function withWarningSpy(
@@ -48,10 +48,10 @@ async function withWarningSpy(
 }
 
 export default {
-  ...helpTextMeta,
-  title: 'Mixins/Help text mixin/Tests',
+  ...fieldDescriptionMeta,
+  title: 'Mixins/Field description mixin/Tests',
   parameters: {
-    ...helpTextMeta.parameters,
+    ...fieldDescriptionMeta.parameters,
     docs: { disable: true, page: null },
   },
   tags: ['!autodocs', 'dev'],
@@ -65,7 +65,9 @@ export const CombinedDescriptionTest: Story = {
   ...CombinedDescription,
   play: async ({ canvasElement, step }) => {
     const hosts = Array.from(
-      canvasElement.querySelectorAll<DemoHelpTextHost>('demo-help-text-host')
+      canvasElement.querySelectorAll<DemoFieldDescriptionHost>(
+        'demo-field-description-host'
+      )
     );
     const [slottedOnly, combined] = hosts;
 
@@ -82,7 +84,9 @@ export const CombinedDescriptionTest: Story = {
         // identified by class rather than `closest()` (which cannot cross the
         // shadow boundary).
         expect(resolved[0]?.className).toContain('swc-FormFieldDescription');
-        expect(resolved[1]?.id).toBe('help-text-mixin-external-description');
+        expect(resolved[1]?.id).toBe(
+          'field-description-mixin-external-description'
+        );
       }
     );
   },
@@ -96,13 +100,17 @@ export const ErrorTextGatingTest: Story = {
   ...ErrorTextGating,
   play: async ({ canvasElement, step }) => {
     const hosts = Array.from(
-      canvasElement.querySelectorAll<DemoHelpTextHost>('demo-help-text-host')
+      canvasElement.querySelectorAll<DemoFieldDescriptionHost>(
+        'demo-field-description-host'
+      )
     );
     const [valid, invalid] = hosts;
 
     await step('valid host describedby excludes the error text', () => {
       expect(valid.roleElement?.ariaDescribedByElements).toHaveLength(1);
-      expect(valid.shadowRoot?.querySelector('.swc-FormFieldErrorText')).toBeNull();
+      expect(
+        valid.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+      ).toBeNull();
     });
 
     await step(
@@ -144,18 +152,18 @@ export const ErrorTextGatingTest: Story = {
 
 export const ErrorWithExternalDescribedbyTest: Story = {
   render: () => html`
-    <p id="help-text-mixin-invalid-external">External rules</p>
-    <demo-help-text-host
+    <p id="field-description-mixin-invalid-external">External rules</p>
+    <demo-field-description-host
       invalid
-      accessible-describedby="help-text-mixin-invalid-external"
+      accessible-describedby="field-description-mixin-invalid-external"
     >
       <span slot="description">Hidden while invalid</span>
       <span slot="error-text">Enter a valid value</span>
-    </demo-help-text-host>
+    </demo-field-description-host>
   `,
   play: async ({ canvasElement, step }) => {
-    const host = canvasElement.querySelector<DemoHelpTextHost>(
-      'demo-help-text-host'
+    const host = canvasElement.querySelector<DemoFieldDescriptionHost>(
+      'demo-field-description-host'
     );
 
     await step(
@@ -164,7 +172,9 @@ export const ErrorWithExternalDescribedbyTest: Story = {
         const resolved = host?.roleElement?.ariaDescribedByElements ?? [];
         expect(resolved).toHaveLength(2);
         expect(resolved[0]?.className).toContain('swc-FormFieldErrorText');
-        expect(resolved[1]?.id).toBe('help-text-mixin-invalid-external');
+        expect(resolved[1]?.id).toBe(
+          'field-description-mixin-invalid-external'
+        );
         expect(
           host?.shadowRoot?.querySelector('.swc-FormFieldDescription')
         ).toBeNull();
@@ -181,7 +191,7 @@ const UNRESOLVED_PHRASE = '"accessible-describedby" references';
 
 function appendExternalDescribedbyTarget(): HTMLElement {
   const el = document.createElement('p');
-  el.id = 'help-text-unresolved-external';
+  el.id = 'field-description-unresolved-external';
   el.textContent = 'External description';
   document.body.append(el);
   return el;
@@ -196,10 +206,10 @@ export const UnresolvedDescribedbyTest: Story = {
       'warns and names the id when accessible-describedby resolves to nothing',
       () =>
         withWarningSpy(async (warnCalls) => {
-          const host = document.createElement('demo-help-text-host');
+          const host = document.createElement('demo-field-description-host');
           host.setAttribute('accessible-describedby', 'does-not-exist');
           document.body.append(host);
-          await (host as DemoHelpTextHost).updateComplete;
+          await (host as DemoFieldDescriptionHost).updateComplete;
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
           expect(
             messages.some(
@@ -214,13 +224,13 @@ export const UnresolvedDescribedbyTest: Story = {
     await step('does not warn when the referenced id resolves', () =>
       withWarningSpy(async (warnCalls) => {
         const external = appendExternalDescribedbyTarget();
-        const host = document.createElement('demo-help-text-host');
+        const host = document.createElement('demo-field-description-host');
         host.setAttribute(
           'accessible-describedby',
-          'help-text-unresolved-external'
+          'field-description-unresolved-external'
         );
         document.body.append(host);
-        await (host as DemoHelpTextHost).updateComplete;
+        await (host as DemoFieldDescriptionHost).updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
         expect(messages.some((m) => m.includes(UNRESOLVED_PHRASE))).toBe(false);
         external.remove();
@@ -233,13 +243,13 @@ export const UnresolvedDescribedbyTest: Story = {
       () =>
         withWarningSpy(async (warnCalls) => {
           const external = appendExternalDescribedbyTarget();
-          const host = document.createElement('demo-help-text-host');
+          const host = document.createElement('demo-field-description-host');
           host.setAttribute(
             'accessible-describedby',
-            'help-text-unresolved-external missing-one'
+            'field-description-unresolved-external missing-one'
           );
           document.body.append(host);
-          await (host as DemoHelpTextHost).updateComplete;
+          await (host as DemoFieldDescriptionHost).updateComplete;
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
           const unresolvedMsg = messages.find((m) =>
             m.includes(UNRESOLVED_PHRASE)
@@ -247,7 +257,7 @@ export const UnresolvedDescribedbyTest: Story = {
           expect(unresolvedMsg).toBeTruthy();
           expect(unresolvedMsg).toContain('"missing-one"');
           expect(unresolvedMsg).not.toContain(
-            '"help-text-unresolved-external"'
+            '"field-description-unresolved-external"'
           );
           external.remove();
           host.remove();

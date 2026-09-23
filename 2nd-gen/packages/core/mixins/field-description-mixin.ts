@@ -14,9 +14,9 @@ import { property } from 'lit/decorators.js';
 
 import { SlotPresenceController } from '../controllers/slot-presence-controller/index.js';
 import {
-  renderFieldHelpText,
-  type RenderFieldHelpTextResult,
-} from '../directives/render-help-text/index.js';
+  renderFieldDescription,
+  type RenderFieldDescriptionResult,
+} from '../directives/render-field-description/index.js';
 import { componentDocsHref, isDebug, warnIf } from '../utils/index.js';
 
 type Constructor<T = Record<string, unknown>> = {
@@ -33,8 +33,8 @@ type DescribedByTarget = Element & {
   ariaDescribedByElements: Element[] | null;
 };
 
-/** The API {@link HelpTextMixin} adds to its host. */
-export interface HelpTextInterface {
+/** The API {@link FieldDescriptionMixin} adds to its host. */
+export interface FieldDescriptionInterface {
   accessibleDescribedby?: string;
   readonly hasDescriptionSlotContent: boolean;
   readonly hasErrorTextSlotContent: boolean;
@@ -53,13 +53,15 @@ export interface HelpTextInterface {
   readonly describedByInternals: ElementInternals | null;
 
   /** Renders the description/error-text markup for the current state. */
-  renderHelpText(options?: { invalid?: boolean }): RenderFieldHelpTextResult;
+  renderFieldDescription(options?: {
+    invalid?: boolean;
+  }): RenderFieldDescriptionResult;
 }
 
 /**
  * Adds description/error-text rendering and accessible-description wiring to a
  * host: the `accessible-describedby` property, `description`/`error-text` slot
- * tracking, `renderHelpText()`, and a dev-mode warning for unresolved
+ * tracking, `renderFieldDescription()`, and a dev-mode warning for unresolved
  * `accessible-describedby` id references.
  *
  * A rendering subclass overrides {@link roleElement} to return the element the
@@ -67,15 +69,18 @@ export interface HelpTextInterface {
  * the error message replaces the description in both the rendered output and
  * `aria-describedby`.
  */
-export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
+export function FieldDescriptionMixin<T extends Constructor<ReactiveElement>>(
   constructor: T
-): T & Constructor<HelpTextInterface> {
-  class HelpTextElement extends constructor implements HelpTextInterface {
+): T & Constructor<FieldDescriptionInterface> {
+  class FieldDescriptionElement
+    extends constructor
+    implements FieldDescriptionInterface
+  {
     /** Tracks the `description`/`error-text` slots so the shadow containers stay conditional. */
-    private readonly _helpTextSlotPresence = new SlotPresenceController(this, [
-      DESCRIPTION_SLOT_SELECTOR,
-      ERROR_TEXT_SLOT_SELECTOR,
-    ]);
+    private readonly _fieldDescriptionSlotPresence = new SlotPresenceController(
+      this,
+      [DESCRIPTION_SLOT_SELECTOR, ERROR_TEXT_SLOT_SELECTOR]
+    );
 
     /**
      * Space-separated element `id`s, resolved against the host's root node,
@@ -110,12 +115,16 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
 
     /** @internal */
     public get hasDescriptionSlotContent(): boolean {
-      return this._helpTextSlotPresence.getPresence(DESCRIPTION_SLOT_SELECTOR);
+      return this._fieldDescriptionSlotPresence.getPresence(
+        DESCRIPTION_SLOT_SELECTOR
+      );
     }
 
     /** @internal */
     public get hasErrorTextSlotContent(): boolean {
-      return this._helpTextSlotPresence.getPresence(ERROR_TEXT_SLOT_SELECTOR);
+      return this._fieldDescriptionSlotPresence.getPresence(
+        ERROR_TEXT_SLOT_SELECTOR
+      );
     }
 
     /** @internal */
@@ -160,10 +169,10 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
         .filter((element): element is HTMLElement => element !== null);
     }
 
-    public renderHelpText(options?: {
+    public renderFieldDescription(options?: {
       invalid?: boolean;
-    }): RenderFieldHelpTextResult {
-      return renderFieldHelpText({
+    }): RenderFieldDescriptionResult {
+      return renderFieldDescription({
         hasDescriptionSlotContent: this.hasDescriptionSlotContent,
         hasErrorTextSlotContent: this.hasErrorTextSlotContent,
         invalid: options?.invalid ?? this._isInvalid,
@@ -174,7 +183,7 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
 
     protected override updated(changedProperties: PropertyValues): void {
       super.updated(changedProperties);
-      this._syncHelpText();
+      this._syncFieldDescription();
       if (isDebug()) {
         this._warnUnresolvedDescribedby();
       }
@@ -210,7 +219,7 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
       );
     }
 
-    private _syncHelpText(): void {
+    private _syncFieldDescription(): void {
       // Mirror the rendered elements: the directive shows either the
       // description or the error (never both), so this references what's shown.
       const describedBy = [
@@ -235,5 +244,6 @@ export function HelpTextMixin<T extends Constructor<ReactiveElement>>(
       target.ariaDescribedByElements = nextRefs;
     }
   }
-  return HelpTextElement as unknown as T & Constructor<HelpTextInterface>;
+  return FieldDescriptionElement as unknown as T &
+    Constructor<FieldDescriptionInterface>;
 }
