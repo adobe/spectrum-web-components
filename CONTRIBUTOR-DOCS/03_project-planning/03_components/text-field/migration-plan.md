@@ -472,20 +472,20 @@ Planned rendering shape:
 
 ### Testing
 
-- [ ] Port applicable coverage from `1st-gen/packages/textfield/test/` (single-line only)
-- [ ] Add Playwright `text-field.a11y.spec.ts` with `toMatchAriaSnapshot` (name/value/description across states and label positions)
-- [ ] Unit: same-root unique ids; `aria-describedby` only when description/error present; form participation (`FormData`, reset, `fieldset[disabled]`)
+- [x] Port applicable coverage from `1st-gen/packages/textfield/test/` (single-line only)
+- [x] Add Playwright `text-field.a11y.spec.ts` with `toMatchAriaSnapshot` (name/value/description across states and label positions)
+- [x] Unit: same-root unique ids; `aria-describedby` only when description/error present; form participation (`FormData`, reset, `fieldset[disabled]`)
 
 #### Behavior
 
-- [ ] `input`/`change` events; `checkValidity()`; `setSelectionRange()`/`select()`
-- [ ] Dev-warning story for a field with no accessible name at all
+- [x] `input`/`change` events; `checkValidity()`; `setSelectionRange()`/`select()`
+- [x] Dev-warning story for a field with no accessible name at all
 
 #### Visual regression
 
-- [ ] Add VRT coverage for size × state combinations (default/hover/focus/keyboard-focus/disabled/readonly/invalid/valid) across both `label-position` modes (`top`/`side`)
-- [ ] Add focus-visible regression coverage for the keyboard ring (B12)
-- [ ] Add forced-colors (high-contrast) coverage for invalid/valid and focus states
+- [x] Add VRT coverage for size × state combinations (default/hover/focus/keyboard-focus/disabled/readonly/invalid/valid) across both `label-position` modes (`top`/`side`)
+- [x] Add focus-visible regression coverage for the keyboard ring (B12)
+- [x] Add forced-colors (high-contrast) coverage for invalid/valid and focus states
 
 ### Documentation
 

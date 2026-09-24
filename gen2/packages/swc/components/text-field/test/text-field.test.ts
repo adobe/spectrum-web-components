@@ -224,6 +224,16 @@ export const StatesTest: Story = {
     });
 
     await step(
+      'invalid input never carries aria-errormessage (decision B9, describedby only)',
+      () => {
+        // Decision B9 in accessibility-migration-analysis.md: gen2 associates
+        // the error via aria-describedby only, because AT support for
+        // aria-errormessage is inconsistent while aria-describedby is universal.
+        expect(input?.getAttribute('aria-errormessage')).toBeNull();
+      }
+    );
+
+    await step(
       'disabled invalid fields suppress invalid presentation and association',
       () => {
         const disabledInput =
@@ -484,7 +494,10 @@ export const AccessibilityTest: Story = {
 
 export const BindingsTest: Story = {
   render: () => html`
-    <swc-text-field accessible-label="Username"></swc-text-field>
+    <swc-text-field
+      accessible-label="Username"
+      placeholder="Enter your username"
+    ></swc-text-field>
   `,
   play: async ({ canvasElement, step }) => {
     const field = await getComponent<TextField>(
@@ -507,6 +520,17 @@ export const BindingsTest: Story = {
       await field.updateComplete;
       expect(input().getAttribute('aria-invalid')).toBe('true');
     });
+
+    await step(
+      'placeholder passes through natively, not as aria-placeholder',
+      () => {
+        // accessibility-migration-analysis.md (placeholder section): the
+        // browser exposes native `placeholder` to the a11y tree, so gen2 does
+        // not duplicate via `aria-placeholder`.
+        expect(input().placeholder).toBe('Enter your username');
+        expect(input().getAttribute('aria-placeholder')).toBeNull();
+      }
+    );
 
     await step('typing round-trips the native value back to the host', () => {
       // The @input handler is the only path that syncs user edits onto
