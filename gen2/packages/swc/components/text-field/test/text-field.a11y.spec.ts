@@ -67,6 +67,8 @@ test.describe('Text field - ARIA Snapshots', () => {
     await expect(root).toMatchAriaSnapshot(`
       - textbox "Email address"
       - textbox "Email address"
+      - text: Billing
+      - text: Street address
       - textbox "Billing Street address"
     `);
   });
@@ -99,7 +101,7 @@ test.describe('Text field - ARIA Snapshots', () => {
     `);
   });
 
-  test('folds necessity into the label when necessity-indicator="label"', async ({
+  test('exposes an identical accessible name across necessity-indicator modes', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -107,13 +109,14 @@ test.describe('Text field - ARIA Snapshots', () => {
       'components-text-field--necessity-indicator',
       'swc-text-field'
     );
-    // Icon mode: asterisk is aria-hidden, name is just the label. Label
-    // mode: "(required)" / "(optional)" is text in the `<label for>`, so
-    // it becomes part of the accessible name.
+    // The necessity-indicator span is `aria-hidden="true"` (see
+    // `renderNecessityIndicator` in `render-label.ts`), so the "(required)"
+    // and "(optional)" text is excluded from the accessible name. All three
+    // fields expose the same name; the mode only affects visible presentation.
     await expect(root).toMatchAriaSnapshot(`
       - textbox "Email address"
-      - textbox "Email address (required)"
-      - textbox "Email address (optional)"
+      - textbox "Email address"
+      - textbox "Email address"
     `);
   });
 

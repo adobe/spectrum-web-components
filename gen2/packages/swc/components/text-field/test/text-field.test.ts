@@ -224,6 +224,18 @@ export const StatesTest: Story = {
     });
 
     await step(
+      'invalid input never carries aria-errormessage (decision B9 — describedby only)',
+      () => {
+        // See CONTRIBUTOR-DOCS/.../text-field/accessibility-migration-analysis.md
+        // (decision log B9): gen2 associates the error via aria-describedby
+        // only. aria-errormessage is intentionally not used, following React
+        // Spectrum, because AT support is inconsistent while aria-describedby
+        // is universally read.
+        expect(input?.getAttribute('aria-errormessage')).toBeNull();
+      }
+    );
+
+    await step(
       'disabled invalid fields suppress invalid presentation and association',
       () => {
         const disabledInput =
@@ -484,7 +496,10 @@ export const AccessibilityTest: Story = {
 
 export const BindingsTest: Story = {
   render: () => html`
-    <swc-text-field accessible-label="Username"></swc-text-field>
+    <swc-text-field
+      accessible-label="Username"
+      placeholder="Enter your username"
+    ></swc-text-field>
   `,
   play: async ({ canvasElement, step }) => {
     const field = await getComponent<TextField>(
@@ -507,6 +522,19 @@ export const BindingsTest: Story = {
       await field.updateComplete;
       expect(input().getAttribute('aria-invalid')).toBe('true');
     });
+
+    await step(
+      'placeholder passes through natively, not as aria-placeholder',
+      () => {
+        // See CONTRIBUTOR-DOCS/.../text-field/accessibility-migration-analysis.md
+        // ("placeholder — no aria-placeholder"): the browser exposes the native
+        // `placeholder` attribute to the accessibility tree, so gen2 does not
+        // duplicate via `aria-placeholder` (which is for custom widgets faking
+        // role="textbox" on non-native elements).
+        expect(input().placeholder).toBe('Enter your username');
+        expect(input().getAttribute('aria-placeholder')).toBeNull();
+      }
+    );
 
     await step('typing round-trips the native value back to the host', () => {
       // The @input handler is the only path that syncs user edits onto
