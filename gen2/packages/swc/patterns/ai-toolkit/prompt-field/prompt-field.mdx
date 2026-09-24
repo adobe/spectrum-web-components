@@ -114,9 +114,9 @@ Attachments own dismiss behavior via **`dismissible`** and emit **`swc-upload-at
 
 ### Multi-attachment scroll
 
-When several attachments exceed the composer width, the strip scrolls horizontally at full width. Round chevron buttons flank the strip and render only when scrolling is possible in that direction. Each click advances by one viewport width and settles on a tile boundary; the browser's native scroll clamping keeps the final page from overshooting the end. Edge fades on both sides signal overflow and hide at the ends of the list.
+When several attachments exceed the composer width, the strip scrolls horizontally at full width. This works the same for `type="card"` and `type="media"` tiles. Round chevron buttons flank the strip and render only when scrolling is possible in that direction. Each click of `>` moves the tile that is partly hidden at the trailing edge to the start of the strip; `<` does the same in reverse. A tile that is already at that edge is skipped, so each click moves the strip, even when a tile is wider than the space between the chevrons. The browser's native scroll clamping keeps the final page from overshooting the end. Edge fades on both sides signal overflow. As the strip scrolls away from an end, the fade on that side grows in and its chevron fades in with it, so both appear while the strip moves. Where the browser does not support scroll-driven animations, they appear once the scroll stops.
 
-Trackpad, wheel, touch scrolling, and the platform's native scrollbar all work on the attachment strip. Chevron paging does not reveal the scrollbar.
+Trackpad, wheel, and touch scrolling all work on the attachment strip. The strip has no visible scrollbar: the chevrons, edge fades, and arrow keys cover navigation. The strip does not snap to tile edges, so free scrolling stops where the user lets go.
 
 <Canvas of={PromptFieldStories.MultiAttachmentScroll} />
 
@@ -184,10 +184,10 @@ The `<swc-prompt-field>` element implements the following accessibility features
 The attachment strip is a `role="region"` landmark (labeled `attachment-strip-label`, default "Uploaded assets strip") wrapping roving-tabindex thumbnails; the landmark itself is not a tab stop:
 
 - **Tab**: moves through the previous chevron when present, then directly to the active thumbnail (the first one, until Arrow keys move that roving stop elsewhere), then that thumbnail's Close button, then the next chevron when present, then out of the strip
-- **Arrow Left/Right**: move the active thumbnail one tile at a time and scroll it into view (distinct from the `<`/`>` chevrons, which page by a full set)
+- **Arrow Left/Right**: move the active thumbnail one tile at a time and scroll it into view (distinct from the `<`/`>` chevrons, which page to the next partly hidden tile)
 - **Shift+Tab** from Close: returns to the thumbnail; **Shift+Tab** from a thumbnail exits the strip entirely
 - Activating the `>` chevron (click, Enter, or Space) keeps focus on the chevron and scrolls the next set of tiles into view; **Shift+Tab** from it then moves into that newly displayed set (its active thumbnail's Close button when shown, otherwise the thumbnail). The `<` chevron is the mirror: activating it keeps focus there, and **Tab** moves into the newly displayed set
-- At either end of the strip, the `<`/`>` chevron becomes `aria-disabled` rather than being removed; if it had focus when scrolling reached that end, focus moves to the active thumbnail so it is never stranded on the now-hidden chevron
+- At either end of the strip, the `<`/`>` chevron is hidden rather than removed. Where the browser supports scroll-driven animations, the scroll position hides it with `visibility: hidden`, so it is out of the tab order and the accessibility tree there; other browsers set `aria-disabled` once the scroll stops. If it had focus when scrolling reached that end, focus moves to the thumbnail at that end (the last one for `>`, the first one for `<`) so it is never stranded on the now-hidden chevron
 
 ### Best practices
 
@@ -195,6 +195,7 @@ The attachment strip is a `role="region"` landmark (labeled `attachment-strip-la
 - Use `accessible-label` only when a distinct non-visual name is required
 - Use `placeholder` as a hint, not a replacement for the label
 - Ensure attachment content slotted into `attachment` slot includes descriptive text
+- Give every `swc-upload-attachment` a `title` slot (for example, the file name) or an `accessible-label`, including `type="media"` tiles, where the title is not shown. The tile's accessible name comes from it; without one, screen readers only announce the tile's Close button
 - Drag and drop is a progressive enhancement, not the only way to attach a file: native browser drag-and-drop has no keyboard equivalent, so the **`+`** button must stay available and fully functional for keyboard and screen reader users
 
 <Canvas of={PromptFieldStories.Accessibility} />
