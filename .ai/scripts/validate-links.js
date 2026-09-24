@@ -32,6 +32,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { SAMPLE_LINKS } from './ai-files.js';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '../..');
 const aiDir = path.join(repoRoot, '.ai');
@@ -48,11 +50,6 @@ const SKIP_DIRS = new Set([
 
 // Runtime folders that agents create on demand and git ignores.
 const RUNTIME_PATHS = ['.ai/handoffs'];
-
-// Links inside quoted writing samples, which resolve from the sampled document, not here.
-const SAMPLE_LINKS = new Set([
-  '.ai/skills/documentation-standards/SKILL.md ../accordion-item/',
-]);
 
 /**
  * Recursively find all AGENTS.md files under a directory.
