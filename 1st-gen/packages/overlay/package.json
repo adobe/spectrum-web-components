@@ -56,10 +56,6 @@
       "development": "./src/Overlay.dev.js",
       "default": "./src/Overlay.js"
     },
-    "./src/OverlayDialog.js": {
-      "development": "./src/OverlayDialog.dev.js",
-      "default": "./src/OverlayDialog.js"
-    },
     "./src/OverlayNoPopover.js": {
       "development": "./src/OverlayNoPopover.dev.js",
       "default": "./src/OverlayNoPopover.js"
