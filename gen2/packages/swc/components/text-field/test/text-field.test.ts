@@ -224,13 +224,11 @@ export const StatesTest: Story = {
     });
 
     await step(
-      'invalid input never carries aria-errormessage (decision B9 — describedby only)',
+      'invalid input never carries aria-errormessage (decision B9, describedby only)',
       () => {
-        // See CONTRIBUTOR-DOCS/.../text-field/accessibility-migration-analysis.md
-        // (decision log B9): gen2 associates the error via aria-describedby
-        // only. aria-errormessage is intentionally not used, following React
-        // Spectrum, because AT support is inconsistent while aria-describedby
-        // is universally read.
+        // Decision B9 in accessibility-migration-analysis.md: gen2 associates
+        // the error via aria-describedby only, because AT support for
+        // aria-errormessage is inconsistent while aria-describedby is universal.
         expect(input?.getAttribute('aria-errormessage')).toBeNull();
       }
     );
@@ -526,11 +524,9 @@ export const BindingsTest: Story = {
     await step(
       'placeholder passes through natively, not as aria-placeholder',
       () => {
-        // See CONTRIBUTOR-DOCS/.../text-field/accessibility-migration-analysis.md
-        // ("placeholder — no aria-placeholder"): the browser exposes the native
-        // `placeholder` attribute to the accessibility tree, so gen2 does not
-        // duplicate via `aria-placeholder` (which is for custom widgets faking
-        // role="textbox" on non-native elements).
+        // accessibility-migration-analysis.md (placeholder section): the
+        // browser exposes native `placeholder` to the a11y tree, so gen2 does
+        // not duplicate via `aria-placeholder`.
         expect(input().placeholder).toBe('Enter your username');
         expect(input().getAttribute('aria-placeholder')).toBeNull();
       }

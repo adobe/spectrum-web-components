@@ -208,10 +208,6 @@ const labelPositionLabels = {
   side: 'Side label',
 } as const satisfies Record<TextFieldLabelPosition, string>;
 
-// Sizes, label positions, necessity crossed with required/optional, the
-// documented visual states, anatomy variants, prefix content types, forced
-// hover and keyboard-focused rings, wrapping in both positions, and CJK
-// label rendering.
 const permutationContent = () => html`
   ${row(
     TEXT_FIELD_VALID_SIZES.map((size) =>

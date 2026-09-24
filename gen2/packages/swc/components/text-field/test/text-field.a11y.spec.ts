@@ -15,10 +15,10 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for Text Field component (2nd generation).
+ * Accessibility tests for the gen2 Text Field component.
  *
- * ARIA snapshot tests validate the accessibility tree — the `textbox` role,
- * its accessible name, and its description — across every labelling source,
+ * ARIA snapshot tests validate the accessibility tree (the `textbox` role,
+ * its accessible name, and its description) across every labelling source,
  * size, label position, necessity indicator, prefix, and state the stories
  * cover. aXe WCAG compliance and color-contrast checks run via
  * test-storybook (see .storybook/test-runner.ts).
