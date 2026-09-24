@@ -338,6 +338,7 @@ export const AttachmentScrollPaginationTest: Story = {
     const scrollEl = el.shadowRoot?.querySelector<HTMLDivElement>(
       '.swc-PromptField-attachments-scroll'
     );
+    useInstantScroll(scrollEl);
     const nextButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
       '.swc-PromptField-attachments-scroll-next'
     );
@@ -537,6 +538,7 @@ export const AttachmentScrollMultipleFieldsTest: Story = {
       cards,
       '.swc-PromptField-attachments-scroll'
     ) as HTMLDivElement;
+    useInstantScroll(cardsScroll);
 
     await step('the cards Next chevron pages forward', async () => {
       part(cards, '.swc-PromptField-attachments-scroll-next')?.click();
@@ -641,6 +643,7 @@ export const AttachmentScrollNarrowCardsTest: Story = {
     const scrollEl = el.shadowRoot!.querySelector<HTMLDivElement>(
       '.swc-PromptField-attachments-scroll'
     )!;
+    useInstantScroll(scrollEl);
     const chevron = (side: 'prev' | 'next') =>
       el.shadowRoot!.querySelector<HTMLElement>(
         `.swc-PromptField-attachments-scroll-${side}`
@@ -774,10 +777,18 @@ export const AttachmentScrollRTLTest: Story = {
 };
 
 /**
- * Resolves once the strip's horizontal scroll comes to rest (smooth paging has
- * stopped). Built on `waitFor`, so it inherits its polling and timeout instead
- * of a hand-tuned frame budget; it only reports "settled" after motion has been
- * observed, so it never resolves early at the pre-animation start position.
+ * Makes chevron paging in `scrollEl` instant instead of smooth. The scroll
+ * then lands on its final position right away, so tests don't poll a smooth
+ * scroll animation, which is timing-dependent on a loaded machine.
+ */
+function useInstantScroll(scrollEl: HTMLElement | null | undefined): void {
+  scrollEl?.style.setProperty('scroll-behavior', 'auto');
+}
+
+/**
+ * Waits for the frames after an instant scroll, so its `scroll`/`scrollend`
+ * handling (including the component's frame-count fallback) and the
+ * re-render have run.
  */
 async function waitForScrollSettled(
   scrollEl: HTMLDivElement | null | undefined
@@ -785,17 +796,9 @@ async function waitForScrollSettled(
   if (!scrollEl) {
     return;
   }
-  let previous = Number.NaN;
-  let moved = false;
-  await waitFor(() => {
-    const current = scrollEl.scrollLeft;
-    if (!Number.isNaN(previous) && current !== previous) {
-      moved = true;
-    }
-    const settled = moved && current === previous;
-    previous = current;
-    expect(settled, 'scroll position has come to rest').toBe(true);
-  });
+  for (let frame = 0; frame < 5; frame++) {
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+  }
 }
 
 function dispatchKeydown(
@@ -1041,6 +1044,7 @@ export const AttachmentChevronPagingFocusTest: Story = {
     const scrollEl = el.shadowRoot?.querySelector<HTMLDivElement>(
       '.swc-PromptField-attachments-scroll'
     );
+    useInstantScroll(scrollEl);
     const getNextButton = (): HTMLButtonElement | null | undefined =>
       el.shadowRoot?.querySelector<HTMLButtonElement>(
         '.swc-PromptField-attachments-scroll-next'
