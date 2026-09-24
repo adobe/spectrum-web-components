@@ -38,7 +38,7 @@
 
 ## Overview
 
-This doc tells you how **`swc-option-group`** should work for **accessibility**. It matches the goal of **WCAG 2.2 Level AA**. `swc-option-group` is a new 2nd-gen component — there is no 1st-gen `sp-option-group`, and 1st-gen `sp-combobox` had no grouping at all. It is a labeled container that groups related [`swc-option`](../option/accessibility-migration-analysis.md) elements inside a listbox, implementing the APG [grouped listbox](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/examples/listbox-grouped/) pattern for [`swc-combobox`](../combobox/accessibility-migration-analysis.md).
+This doc tells you how **`swc-option-group`** should work for **accessibility**. It matches the goal of **WCAG 2.2 Level AA**. `swc-option-group` is a new gen2 component — there is no 1st-gen `sp-option-group`, and 1st-gen `sp-combobox` had no grouping at all. It is a labeled container that groups related [`swc-option`](../option/accessibility-migration-analysis.md) elements inside a listbox, implementing the APG [grouped listbox](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/examples/listbox-grouped/) pattern for [`swc-combobox`](../combobox/accessibility-migration-analysis.md).
 
 Like `swc-option`, its reason for existing is **role ownership**: it carries `role="group"` on its own host and names that group, so a combobox in a different shadow root can present grouped options with correct structure and correct group labels, without re-rendering shadow-DOM copies.
 
@@ -98,14 +98,14 @@ Like `swc-option`, its reason for existing is **role ownership**: it carries `ro
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary | Notes |
 | --- | --- | --- | --- | --- | --- |
-| [SWC-592](https://jira.corp.adobe.com/browse/SWC-592) | Bug | To Do | Unresolved | Combobox a11y issues speaking the options | Grouping adds category context to option announcements; net-new in 2nd-gen (1st-gen combobox had no groups) |
+| [SWC-592](https://jira.corp.adobe.com/browse/SWC-592) | Bug | To Do | Unresolved | Combobox a11y issues speaking the options | Grouping adds category context to option announcements; net-new in gen2 (1st-gen combobox had no groups) |
 | [SWC-1373](https://jira.corp.adobe.com/browse/SWC-1373) | Story | To Do | Unresolved | Spike: compare semantics across menu, action menu, combobox, and picker | Informs how option groups relate to menu groups |
 
 ---
 
 ## Recommendations: `<swc-option-group>`
 
-Component tag may change until API freeze. `swc-option-group` is new in 2nd-gen; there is no 1st-gen equivalent to preserve compatibility with.
+Component tag may change until API freeze. `swc-option-group` is new in gen2; there is no 1st-gen equivalent to preserve compatibility with.
 
 ### ARIA roles, states, and properties
 
@@ -150,7 +150,7 @@ Because `swc-option-group` adds **one more nesting level** between the listbox a
 
 ### Manual screen reader testing
 
-Test `swc-option-group` through its composed parent (`swc-combobox`), using [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) in NVDA, JAWS, and VoiceOver. Confirm that: entering a group announces the group name as context, arrowing moves across group boundaries without getting stuck on a label, each option is announced within its group, and a localized group name and rows are spoken in the correct language. Verify cross-root exposure in **Firefox**, where element-reference ARIA is least consistent.
+Test `swc-option-group` through its composed parent (`swc-combobox`), using [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) in NVDA, JAWS, and VoiceOver. Confirm that: entering a group announces the group name as context, arrowing moves across group boundaries without getting stuck on a label, each option is announced within its group, and a localized group name and rows are spoken in the correct language. Verify cross-root exposure in **Firefox**, where element-reference ARIA is least consistent.
 
 ---
 
@@ -170,8 +170,8 @@ Test `swc-option-group` through its composed parent (`swc-combobox`), using [Scr
 
 - [Combobox accessibility migration analysis (this repo)](../combobox/accessibility-migration-analysis.md) and [Option accessibility migration analysis (this repo)](../option/accessibility-migration-analysis.md) — the container and leaf this component sits between.
 - [Menu group accessibility migration analysis (this repo)](../menu-group/accessibility-migration-analysis.md) — the menu-family `role="group"` analogue.
-- [Forms strategy: 2nd-gen proposal (this repo)](../../05_strategies/forms-strategy-rfc.md) — role placement and cross-root ARIA policy.
+- [Forms strategy: gen2 proposal (this repo)](../../05_strategies/forms-strategy-rfc.md) — role placement and cross-root ARIA policy.
 - [WAI-ARIA](https://www.w3.org/TR/wai-aria-1.2/), [WCAG 2.2](https://www.w3.org/TR/WCAG22/), [APG: read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [APG: listbox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/) and [grouped listbox example](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/examples/listbox-grouped/)
 - [React Spectrum: ComboBox — sections](https://react-spectrum.adobe.com/ComboBox) (`ComboBoxSection` / `Header` grouping).
-- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- [gen2 Storybook: Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)

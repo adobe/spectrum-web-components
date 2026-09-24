@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - '2nd-gen/**'
+      - 'gen2/**'
       - '.github/workflows/chromatic-vrt.yml'
   pull_request:
     types: [opened, synchronize, reopened, labeled, ready_for_review]
@@ -48,10 +48,12 @@ jobs:
       - name: Setup Job and Install Dependencies
         if: ${{ env.SKIP_VRT != 'true' }}
         uses: ./.github/actions/setup-job
+        with:
+          build-command: yarn build:gen2
 
       - name: Generate Custom Elements Manifest
         if: ${{ env.SKIP_VRT != 'true' }}
-        working-directory: 2nd-gen/packages/swc
+        working-directory: gen2/packages/swc
         run: yarn analyze
 
       - name: Publish to Chromatic
@@ -59,6 +61,6 @@ jobs:
         uses: chromaui/action@v15
         with:
           projectToken: ${{ secrets.CHROMATIC_TOKEN }}
-          workingDir: 2nd-gen/packages/swc
+          workingDir: gen2/packages/swc
           autoAcceptChanges: 'main'
           skip: ${{ env.SKIP_VRT }}

@@ -25,6 +25,7 @@ import { spy } from 'sinon';
 
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
+import type { OverlayTrigger } from '@spectrum-web-components/overlay';
 import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
 
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
@@ -33,6 +34,7 @@ import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/tray/sp-tray.js';
 
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
@@ -42,6 +44,7 @@ import {
   mouseMoveOver,
   sendTabKey,
 } from '../../../test/testing-helpers.js';
+import { mobileView } from '../stories/submenu.stories.js';
 
 type SelectsWithKeyboardTest = {
   dir: CSSStyleDeclaration['direction'];
@@ -1129,6 +1132,111 @@ describe('Submenu', () => {
       ) as MenuItem;
       expect(backItem).to.not.be.null;
     });
+    describe('touch', () => {
+      it('does not open submenu on touch pointerdown/pointerup alone', async function () {
+        // Unlike the non-mobile-view "touch interactions" tests, mobile view
+        // opens only via the click that follows a touch tap, not the earlier
+        // pointerup fast-path — see handlePointerdown's `!this.isMobileView`
+        // condition.
+        const menu = this.el as Menu;
+        expect(menu.currentMobileSubmenu).to.be.undefined;
+
+        this.rootItem.dispatchEvent(
+          new PointerEvent('pointerdown', {
+            bubbles: true,
+            pointerType: 'touch',
+          })
+        );
+        this.rootItem.dispatchEvent(
+          new PointerEvent('pointerup', {
+            bubbles: true,
+            pointerType: 'touch',
+          })
+        );
+        await elementUpdated(menu);
+
+        expect(menu.currentMobileSubmenu).to.be.undefined;
+      });
+      it('opens submenu via the click that follows a touch tap', async function () {
+        const menu = this.el as Menu;
+
+        this.rootItem.dispatchEvent(
+          new PointerEvent('pointerdown', {
+            bubbles: true,
+            pointerType: 'touch',
+          })
+        );
+        this.rootItem.dispatchEvent(
+          new PointerEvent('pointerup', {
+            bubbles: true,
+            pointerType: 'touch',
+          })
+        );
+        this.rootItem.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        await elementUpdated(menu);
+
+        expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
+      });
+      it('reliably opens a different submenu via touch after a prior touch-driven open', async function () {
+        // Regression test: opening one submenu via touch used to leave the
+        // menu's internal drill-down bookkeeping corrupted (a touch tap's
+        // compatibility click, arriving after pointerup had already opened
+        // it, used to re-trigger the same open logic a second time), causing
+        // the *next* submenu opened via touch to fail intermittently.
+        const el = await fixture<Menu>(html`
+          <sp-menu mobile-view>
+            <sp-menu-item class="submenu-a">
+              Submenu A
+              <sp-menu slot="submenu">
+                <sp-menu-item>A Item</sp-menu-item>
+              </sp-menu>
+            </sp-menu-item>
+            <sp-menu-item class="submenu-b">
+              Submenu B
+              <sp-menu slot="submenu">
+                <sp-menu-item>B Item</sp-menu-item>
+              </sp-menu>
+            </sp-menu-item>
+          </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        const submenuA = el.querySelector('.submenu-a') as MenuItem;
+        const submenuB = el.querySelector('.submenu-b') as MenuItem;
+        await elementUpdated(submenuA);
+        await elementUpdated(submenuB);
+
+        const touchTap = async (item: MenuItem): Promise<void> => {
+          item.dispatchEvent(
+            new PointerEvent('pointerdown', {
+              bubbles: true,
+              pointerType: 'touch',
+            })
+          );
+          item.dispatchEvent(
+            new PointerEvent('pointerup', {
+              bubbles: true,
+              pointerType: 'touch',
+            })
+          );
+          item.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+          await elementUpdated(el);
+        };
+
+        await touchTap(submenuA);
+        expect(el.currentMobileSubmenu).to.equal(submenuA);
+
+        el.closeMobileSubmenu();
+        await elementUpdated(el);
+        expect(el.currentMobileSubmenu).to.be.undefined;
+
+        await touchTap(submenuB);
+        expect(
+          el.currentMobileSubmenu,
+          'a different submenu should open via touch after a prior touch-driven open'
+        ).to.equal(submenuB);
+      });
+    });
     it('navigates back via back button', async function () {
       const menu = this.el as Menu;
 
@@ -1216,6 +1324,57 @@ describe('Submenu', () => {
       await elementUpdated(menu);
 
       expect(menu.currentMobileSubmenu).to.be.undefined;
+    });
+    it('resets drill-down when the containing tray closes', async function () {
+      const tray = await fixture<HTMLElement>(html`
+        <sp-tray open>
+          <sp-menu mobile-view>
+            <sp-menu-item class="root">
+              Has submenu
+              <sp-menu slot="submenu">
+                <sp-menu-item>One</sp-menu-item>
+              </sp-menu>
+            </sp-menu-item>
+          </sp-menu>
+        </sp-tray>
+      `);
+      const menu = tray.querySelector('sp-menu') as Menu;
+      const rootItem = menu.querySelector('.root') as MenuItem;
+      await elementUpdated(menu);
+
+      menu.openMobileSubmenu(rootItem);
+      await elementUpdated(menu);
+      expect(menu.currentMobileSubmenu).to.equal(rootItem);
+
+      // sp-tray dispatches a bubbling `close` when dismissed.
+      tray.dispatchEvent(new Event('close', { bubbles: true }));
+      await elementUpdated(menu);
+
+      expect(menu.currentMobileSubmenu).to.be.undefined;
+    });
+    it('reopens the mobile view story after the tray closes', async function () {
+      const overlayTrigger = await fixture<OverlayTrigger>(mobileView());
+      expect(overlayTrigger.localName).to.equal('overlay-trigger');
+
+      const button = overlayTrigger.querySelector('sp-button') as HTMLElement;
+      const tray = overlayTrigger.querySelector('sp-tray') as HTMLElement & {
+        close(): void;
+      };
+
+      let opened = oneEvent(overlayTrigger, 'sp-opened');
+      button.click();
+      await opened;
+      expect(overlayTrigger.open).to.equal('click');
+
+      const closed = oneEvent(overlayTrigger, 'sp-closed');
+      tray.close();
+      await closed;
+      expect(overlayTrigger.open).to.be.undefined;
+
+      opened = oneEvent(overlayTrigger, 'sp-opened');
+      button.click();
+      await opened;
+      expect(overlayTrigger.open).to.equal('click');
     });
     it('does not open overlay on hover in mobile mode', async function () {
       expect(this.rootItem.open).to.be.false;
@@ -1334,6 +1493,39 @@ describe('Submenu', () => {
       await elementUpdated(menu);
 
       expect(document.activeElement === firstItem).to.be.true;
+    });
+    it('skips [hidden] nested items when moving between the back row and the submenu', async function () {
+      const menu = this.el as Menu;
+      const submenuEl = this.rootItem.submenuElement as HTMLElement;
+      const hiddenItem = submenuEl.querySelector('.submenu-item-1') as MenuItem;
+      const firstVisibleItem = submenuEl.querySelector(
+        '.submenu-item-2'
+      ) as MenuItem;
+      hiddenItem.hidden = true;
+      await elementUpdated(hiddenItem);
+
+      menu.openMobileSubmenu(this.rootItem);
+      await elementUpdated(menu);
+      expect(menu.currentMobileSubmenu).to.equal(this.rootItem);
+
+      const backItem = submenuEl.querySelector(
+        '.mobile-back-button'
+      ) as MenuItem;
+      await elementUpdated(backItem);
+      await waitUntil(
+        () => document.activeElement === backItem,
+        'back row is focused after drill-down'
+      );
+
+      await sendKeys({ press: 'ArrowDown' });
+      await elementUpdated(menu);
+
+      expect(document.activeElement).to.equal(firstVisibleItem);
+
+      await sendKeys({ press: 'ArrowUp' });
+      await elementUpdated(menu);
+
+      expect(document.activeElement).to.equal(backItem);
     });
     it('navigates correctly in RTL mode', async function () {
       const el = await fixture<Menu>(html`

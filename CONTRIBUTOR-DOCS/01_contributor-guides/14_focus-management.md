@@ -47,7 +47,7 @@
 
 ## Overview
 
-2nd-gen Spectrum Web Components use three composable, opt-in primitives for focus management instead of the 1st-gen `Focusable` base class inheritance chain. Each component picks only what it needs:
+gen2 Spectrum Web Components use three composable, opt-in primitives for focus management instead of the 1st-gen `Focusable` base class inheritance chain. Each component picks only what it needs:
 
 ```
 SpectrumElement (base, no focus logic)
@@ -551,7 +551,7 @@ class SpTextfield extends Focusable {
   }
 }
 
-// 2nd-gen
+// gen2
 import { DisabledMixin } from '@adobe/spectrum-wc-core/mixins';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element';
 
@@ -564,7 +564,7 @@ class SpTextfield extends DisabledMixin(SpectrumElement) {
 }
 ```
 
-> **⚠️ `aria-disabled` does not block click events.** Unlike the native `disabled` attribute used in 1st-gen's `Focusable`, `DisabledMixin` uses `aria-disabled` which leaves the element interactive at the DOM level. Every interaction handler must explicitly guard with `if (this.disabled) return;`. This is the most common migration mistake — in 1st-gen, the native `disabled` attribute on inner elements blocked clicks automatically; in 2nd-gen, you must guard them yourself.
+> **⚠️ `aria-disabled` does not block click events.** Unlike the native `disabled` attribute used in 1st-gen's `Focusable`, `DisabledMixin` uses `aria-disabled` which leaves the element interactive at the DOM level. Every interaction handler must explicitly guard with `if (this.disabled) return;`. This is the most common migration mistake — in 1st-gen, the native `disabled` attribute on inner elements blocked clicks automatically; in gen2, you must guard them yourself.
 
 ### Replacing focusElement getter
 
@@ -576,7 +576,7 @@ get focusElement() {
   return this.shadowRoot.querySelector('#inner-input');
 }
 
-// 2nd-gen: template order handles it
+// gen2: template order handles it
 override render() {
   return html`
     <input id="inner-input" />  <!-- First focusable = focus target -->
@@ -594,7 +594,7 @@ override render() {
 import { FocusGroupController } from '@spectrum-web-components/reactive-controllers';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers';
 
-// 2nd-gen
+// gen2
 import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers';
 ```
 

@@ -22,6 +22,18 @@ import type {
 } from '../src/Swatch.js';
 import { SwatchGroup } from '../src/SwatchGroup.js';
 
+const updateSelectedOutput = async (
+  event: Event & { target: SwatchGroup }
+): Promise<void> => {
+  const output = (event.currentTarget as HTMLElement)
+    .lastElementChild as HTMLDivElement;
+  await 0;
+  if (event.defaultPrevented) {
+    return;
+  }
+  output.textContent = `Selected: ${JSON.stringify(event.target.selected)}`;
+};
+
 type Properties = {
   border: SwatchBorder | 'normal';
   density?: 'normal' | 'spacious' | 'compact';
@@ -109,18 +121,7 @@ export default {
         };
       }
     ): TemplateResult => html`
-      <div
-        @change=${async (event: Event & { target: SwatchGroup }) => {
-          await 0;
-          if (event.defaultPrevented) {
-            return;
-          }
-          const next = event.target.nextElementSibling as HTMLDivElement;
-          next.textContent = `Selected: ${JSON.stringify(
-            event.target.selected
-          )}`;
-        }}
-      >
+      <div @change=${updateSelectedOutput}>
         ${story()}
         <div>Selected: ${JSON.stringify(selected)}</div>
       </div>
@@ -232,3 +233,47 @@ export const shapeRectangle = (args: Properties): TemplateResult =>
 shapeRectangle.args = {
   shape: 'rectangle',
 } as Properties;
+
+const directionTemplate = (
+  dir: 'ltr' | 'rtl',
+  args: Properties
+): TemplateResult => html`
+  <div dir=${dir}>
+    <p>
+      <code>dir=${dir}</code>
+      — tab into the group, then press
+      <kbd>ArrowRight</kbd>
+      and
+      <kbd>ArrowLeft</kbd>
+      .
+    </p>
+    ${template(args)}
+  </div>
+`;
+
+export const RtlNavigation = (args: Properties): TemplateResult =>
+  directionTemplate('rtl', args);
+RtlNavigation.args = {
+  selects: 'single',
+  selected: ['--spectrum-red-700'],
+} as Properties;
+RtlNavigation.storyName = 'RTL keyboard navigation';
+RtlNavigation.parameters = {
+  docs: {
+    description: {
+      story:
+        'In RTL, `ArrowRight` moves focus to the swatch visually to the right, and `ArrowLeft` moves focus to the swatch visually to the left. Horizontal navigation is mirrored to match the visual layout.',
+    },
+  },
+};
+
+export const RtlNavigationComparison = (
+  args: Properties
+): TemplateResult => html`
+  ${directionTemplate('ltr', args)} ${directionTemplate('rtl', args)}
+`;
+RtlNavigationComparison.args = {
+  selects: 'single',
+  selected: ['--spectrum-red-700'],
+} as Properties;
+RtlNavigationComparison.storyName = 'RTL vs LTR keyboard navigation';
