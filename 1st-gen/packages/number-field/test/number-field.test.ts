@@ -1788,6 +1788,17 @@ describe('NumberField', () => {
       expect(el.valueAsString).to.equal('7');
       expect(el.value).to.equal(7);
     });
+    it('validates negative values against min, max + step', async () => {
+      el.min = -8;
+      el.value = -8;
+      expect(el.value).to.equal(-8);
+      el.value = -3;
+      expect(el.value).to.equal(-3);
+      el.min = undefined;
+      el.max = -5;
+      el.value = -12;
+      expect(el.value).to.equal(-10);
+    });
   });
   describe('indeterminate', () => {
     let el: NumberField;

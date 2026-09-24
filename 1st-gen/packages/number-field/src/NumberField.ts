@@ -591,7 +591,10 @@ export class NumberField extends TextfieldBase {
 
   private validateInput(value: number): number {
     value = this.valueWithLimits(value);
-    const signMultiplier = value < 0 ? -1 : 1; // 'signMultiplier' adjusts 'value' for 'validateInput' and reverts it before returning.
+    // Without a `min`, steps are anchored at 0, so mirror negative values to snap them
+    // symmetrically. With a `min`, the value is already >= `min`, so snap it as is.
+    const signMultiplier =
+      value < 0 && typeof this.min === 'undefined' ? -1 : 1;
     value *= signMultiplier;
 
     // Step shouldn't validate when 0...
@@ -610,8 +613,9 @@ export class NumberField extends TextfieldBase {
         }
       }
       if (typeof this.max !== 'undefined') {
-        while (value > this.max) {
-          value -= this.step;
+        // Compare against `max` using the real (unmirrored) value.
+        while (value * signMultiplier > this.max) {
+          value -= this.step * signMultiplier;
         }
       }
       value = parseFloat(this.valueFormatter.format(value));
