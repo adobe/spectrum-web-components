@@ -35,7 +35,9 @@ import {
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
 
-// Metadata
+// ────────────────
+//    METADATA
+// ────────────────
 
 const meta: Meta = {
   title: 'Text field/Text field VRT',
@@ -45,7 +47,9 @@ const meta: Meta = {
 
 export default meta;
 
-// Helpers
+// ────────────────
+//    HELPERS
+// ────────────────
 
 // Text field draws its keyboard focus ring off a custom `:state(keyboard-focused)`
 // element-internals state, not `:host(:focus-visible)`, because text inputs match
@@ -375,7 +379,9 @@ const permutationContent = () => html`
   )}
 `;
 
-// VRT stories
+// ────────────────
+//    VRT STORIES
+// ────────────────
 
 export const Permutations: Story = {
   render: () => html`
