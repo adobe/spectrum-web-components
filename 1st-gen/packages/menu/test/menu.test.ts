@@ -317,13 +317,20 @@ describe('Menu', () => {
     );
     await elementUpdated(el);
 
+    const firstItem = el.querySelector(
+      'sp-menu-item:first-of-type'
+    ) as MenuItem;
     const lastItem = el.querySelector('sp-menu-item:last-of-type') as MenuItem;
 
     el.focus();
     await elementUpdated(el);
-    el.dispatchEvent(arrowDownEvent());
+    expect(document.activeElement).to.equal(firstItem);
 
-    expect(document.activeElement === lastItem).to.be.true;
+    await sendKeys({ press: 'ArrowDown' });
+    expect(document.activeElement).to.equal(lastItem);
+
+    await sendKeys({ press: 'ArrowUp' });
+    expect(document.activeElement).to.equal(firstItem);
   });
 
   it('handles hover and keyboard input', async () => {
