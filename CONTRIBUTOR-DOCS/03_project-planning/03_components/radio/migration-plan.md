@@ -27,11 +27,11 @@
     - [Related components and ordering notes](#related-components-and-ordering-notes)
 - [Changes overview](#changes-overview)
     - [Must ship — breaking or a11y-required](#must-ship--breaking-or-a11y-required)
-    - [Additive — ships when ready, zero breakage for consumers already on 2nd-gen](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)
-- [2nd-gen API decisions](#2nd-gen-api-decisions)
+    - [Additive — ships when ready, zero breakage for consumers already on gen2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-gen2)
+- [gen2 API decisions](#gen2-api-decisions)
     - [Public API](#public-api)
     - [Behavioral semantics](#behavioral-semantics)
-    - [Accessibility semantics notes (2nd-gen)](#accessibility-semantics-notes-2nd-gen)
+    - [Accessibility semantics notes (gen2)](#accessibility-semantics-notes-gen2)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
 - [Migration checklist](#migration-checklist)
     - [Preparation (this ticket)](#preparation-this-ticket)
@@ -55,15 +55,15 @@
 
 > **Epic SWC-2348** · Planning output. Must be reviewed before implementation begins.
 >
-> This plan covers **`swc-radio`, the individual radio item, only.** `swc-radio-group` (sibling discovery, mutual exclusion, roving tabindex, group-level `invalid`/`readonly`, and form participation for the set) has its own separate migration plan. `swc-radio` cannot ship independently: it has no supported standalone usage (B3) and is documented only as part of `swc-radio-group`'s Storybook page (see [Related components and ordering notes](#related-components-and-ordering-notes) for the resulting delivery model). No open blockers remain in this plan; all resolved decisions are recorded in the [Decision log](#decision-log). Everything else draws on the [accessibility migration analysis](./accessibility-migration-analysis.md), which is authoritative for the 2nd-gen semantic design and was authored against the approved [forms strategy RFC](../../05_strategies/forms-strategy-rfc.md) (SWC-1888).
+> This plan covers **`swc-radio`, the individual radio item, only.** `swc-radio-group` (sibling discovery, mutual exclusion, roving tabindex, group-level `invalid`/`readonly`, and form participation for the set) has its own separate migration plan. `swc-radio` cannot ship independently: it has no supported standalone usage (B3) and is documented only as part of `swc-radio-group`'s Storybook page (see [Related components and ordering notes](#related-components-and-ordering-notes) for the resulting delivery model). No open blockers remain in this plan; all resolved decisions are recorded in the [Decision log](#decision-log). Everything else draws on the [accessibility migration analysis](./accessibility-migration-analysis.md), which is authoritative for the gen2 semantic design and was authored against the approved [forms strategy RFC](../../05_strategies/forms-strategy-rfc.md) (SWC-1888).
 
 ---
 
 ## TL;DR
 
-- **Biggest architectural change: a real native `<input type="radio">` joins the shadow DOM.** 1st-gen `sp-radio` has no native input at all — it sets `role="radio"` on the host and hand-writes `aria-checked`/`aria-disabled`/`aria-invalid` in `updated()`. 2nd-gen renders a real `<input type="radio">` inside its own shadow root (the same shadow-DOM-first pattern `swc-text-field` uses), so role, `checked`, and keyboard activation come from the browser for free. This removes most of `Radio.ts`'s hand-written ARIA bookkeeping and its `FocusVisiblePolyfillMixin` synthetic-keydown trick (native `:focus-visible` replaces it).
+- **Biggest architectural change: a real native `<input type="radio">` joins the shadow DOM.** 1st-gen `sp-radio` has no native input at all — it sets `role="radio"` on the host and hand-writes `aria-checked`/`aria-disabled`/`aria-invalid` in `updated()`. gen2 renders a real `<input type="radio">` inside its own shadow root (the same shadow-DOM-first pattern `swc-text-field` uses), so role, `checked`, and keyboard activation come from the browser for free. This removes most of `Radio.ts`'s hand-written ARIA bookkeeping and its `FocusVisiblePolyfillMixin` synthetic-keydown trick (native `:focus-visible` replaces it).
 - **`invalid` and `readonly` move entirely to `swc-radio-group`.** Neither is a per-item concept: 1st-gen's own `readonly` was never actually enforced (`click()`/`activate()` never checked it), and `invalid` describes the selection as a whole, not one option. Both are removed from `swc-radio` and implemented once, correctly, on the group.
-- **No standalone Tab stop.** 1st-gen `sp-radio` defaults its own `tabIndex` to `0` and answers `Space` itself so it can be used outside a group. 2nd-gen drops that: tabindex management is delegated entirely to the enclosing `swc-radio-group`, matching the APG radio pattern. `swc-radio` is not supported as a standalone control.
+- **No standalone Tab stop.** 1st-gen `sp-radio` defaults its own `tabIndex` to `0` and answers `Space` itself so it can be used outside a group. gen2 drops that: tabindex management is delegated entirely to the enclosing `swc-radio-group`, matching the APG radio pattern. `swc-radio` is not supported as a standalone control.
 - **Per-item `description` ships as a new capability: a named `description` slot.** [React Spectrum's `Radio`](https://react-spectrum.adobe.com/RadioGroup) supports an optional description per item (the reference screenshot supplied for this plan shows "Standard Shipping (Free)" / "Delivers in 5–7 business days"). Design has confirmed this is in scope. Wired via same-root `aria-describedby`, the same pattern `swc-text-field` uses.
 - **No dependency on `LabellingController`; label/description wiring is implemented directly** via a real, same-root `<label for="…">` and the already-built `SlotPresenceController`. See the [Decision log](#decision-log) for why.
 - **Form-value participation lives entirely on `swc-radio-group`, not per-item (Q12, officially signed off by the a11y SME).** `swc-radio` does not depend on `FieldAssociationController`. See [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites) and [Decision log](#decision-log) for the reasoning.
@@ -120,7 +120,7 @@ No other public methods; `activate()`, `handleKeyup()`, and `manageAutoFocus()` 
 
 1st-gen exposes 30 `--mod-radio-*` modifier custom properties (animation duration, border widths/colors across every focus/hover/checked/emphasized permutation, control size, focus indicator, font/line-height including CJK, disabled colors). See the [rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md#component-specifications) for the full list.
 
-This full modifier surface will not be carried forward to 2nd-gen.
+This full modifier surface will not be carried forward to gen2.
 
 ### Shadow DOM output (rendered HTML)
 
@@ -137,7 +137,7 @@ This full modifier surface will not be carried forward to 2nd-gen.
 </sp-radio>
 ```
 
-2nd-gen (planned; real native input supplies role/checked, `delegatesFocus: true`, label association via a real `<label for>` matching Spectrum CSS's own reference anatomy, description rendered in-shadow and `aria-describedby`-wired only when present — see [Public API](#public-api), [Decision log](#decision-log), and the [accessibility analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties)):
+gen2 (planned; real native input supplies role/checked, `delegatesFocus: true`, label association via a real `<label for>` matching Spectrum CSS's own reference anatomy, description rendered in-shadow and `aria-describedby`-wired only when present — see [Public API](#public-api), [Decision log](#decision-log), and the [accessibility analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties)):
 
 ```html
 <swc-radio>
@@ -158,12 +158,12 @@ This full modifier surface will not be carried forward to 2nd-gen.
 | Package | Version | Role |
 | ------- | ------- | ---- |
 | `@spectrum-web-components/base` | workspace | `SizedMixin`, `SpectrumElement`, decorators. |
-| `@spectrum-web-components/shared` | workspace | `FocusVisiblePolyfillMixin`. **Dropped in 2nd-gen** — native `:focus-visible` on the real input replaces the polyfill and its synthetic-keydown autofocus trick. |
-| `SlotPresenceController` | already built | Gates the optional `description` slot/`aria-describedby` on whether the slot actually has content. See [`2nd-gen/packages/core/controllers/slot-presence-controller/`](../../../../2nd-gen/packages/core/controllers/slot-presence-controller/slot-presence-controller.mdx). Not a sequenced dependency — available now. |
+| `@spectrum-web-components/shared` | workspace | `FocusVisiblePolyfillMixin`. **Dropped in gen2** — native `:focus-visible` on the real input replaces the polyfill and its synthetic-keydown autofocus trick. |
+| `SlotPresenceController` | already built | Gates the optional `description` slot/`aria-describedby` on whether the slot actually has content. See [`gen2/packages/core/controllers/slot-presence-controller/`](../../../../gen2/packages/core/controllers/slot-presence-controller/slot-presence-controller.mdx). Not a sequenced dependency — available now. |
 
 `swc-radio` does **not** depend on `LabellingController` or `FieldAssociationController`; see the [Decision log](#decision-log). Form-value participation (`FieldAssociationController`, SWC-2467) is `swc-radio-group`'s dependency, not this item's.
 
-`@spectrum-web-components/field-group`, `@spectrum-web-components/help-text`, and `@spectrum-web-components/reactive-controllers` are listed in the package's `package.json` but are consumed by `RadioGroup`, not `Radio` — `Radio.ts` itself does not import them. They are out of scope for this item-only plan; see the [radio group doc](../radio-group/accessibility-migration-analysis.md) for the group's dependencies, including `RovingTabindexController` (1st-gen) and its 2nd-gen successor, `FocusgroupNavigationController`.
+`@spectrum-web-components/field-group`, `@spectrum-web-components/help-text`, and `@spectrum-web-components/reactive-controllers` are listed in the package's `package.json` but are consumed by `RadioGroup`, not `Radio` — `Radio.ts` itself does not import them. They are out of scope for this item-only plan; see the [radio group doc](../radio-group/accessibility-migration-analysis.md) for the group's dependencies, including `RovingTabindexController` (1st-gen) and its gen2 successor, `FocusgroupNavigationController`.
 
 ---
 
@@ -177,7 +177,7 @@ This full modifier surface will not be carried forward to 2nd-gen.
 
 ### Dependency-aware recommendation
 
-`swc-radio` does not extend another 2nd-gen component and is not itself a shared base. It depends on one already-built shared controller (`SlotPresenceController`) and does not depend on `LabellingController` or `FieldAssociationController` (see the [Decision log](#decision-log) for both).
+`swc-radio` does not extend another gen2 component and is not itself a shared base. It depends on one already-built shared controller (`SlotPresenceController`) and does not depend on `LabellingController` or `FieldAssociationController` (see the [Decision log](#decision-log) for both).
 
 **Resolved: form-value participation belongs to `swc-radio-group` alone, not `swc-radio`.** The inner `<input type="radio">` in each item's shadow root is invisible to an ancestor light-DOM `<form>` regardless of where `ElementInternals` attaches, so the mechanism is needed somewhere, but not per item. Per the HTML spec, a "radio button group" is scoped to a single tree, and each item's shadow root is its own separate tree, so giving every item's inner input a shared `name` never produces native cross-item mutual exclusion anyway; `swc-radio-group` already has to hand-roll that in JS. Centralizing form participation there too (one `ElementInternals`, one `setFormValue(this.selected)` call site driven by the group's already-authoritative `selected` state) avoids keeping N per-item `ElementInternals` instances in lockstep with that same state, and matches how `invalid`, `readonly`, coordinated reset, and constraint validation already concentrate at the group level in both a11y docs. Officially signed off by the a11y SME. This reverses what `accessibility-migration-analysis.md` (this item's own doc) and `radio-group/accessibility-migration-analysis.md` originally specified, both of which said value submission happens per-item. This item's own doc has been updated to reflect the group-only direction; the corresponding update to `radio-group/accessibility-migration-analysis.md` is tracked on that component's own workstream.
 
@@ -192,11 +192,11 @@ Label association (`<label for>`) and description gating (`SlotPresenceControlle
   - **Separate migration-plan ticket, combined implementation.** `swc-radio-group` gets its own Phase 1 migration-plan ticket, SWC-2546. SWC-2470 (the ticket previously scoped as "decide whether a `RadioGroupController` is needed") is now a subticket of SWC-2546 rather than being repurposed into it — its narrower research question still needs answering, just as an input to the group's plan rather than the plan itself. The remaining implementation phases (setup/API, styling, testing, docs, review) are **combined** with this item's existing tickets (SWC-2351–2355) rather than tracked as a second parallel set, the same pattern used for a container-and-children pair like Tabs or Accordion. Those tickets keep their current titles (the "Radio" component name, per docs naming, already covers both); only their descriptions extend to cover `swc-radio-group`.
   - **Shared feature branch.** Both components' implementation lands on one feature branch, with each combined ticket still producing its own PR into that branch (standard practice for this kind of joint migration), and a single final PR merging the feature branch to `main` once both are complete.
   - **Dependency-aware recommendation on SWC-2470:** whichever way that research resolves (a dedicated `RadioGroupController` vs. composing coordination inline), it does not block or complicate this item's own API — `swc-radio` only ever exposes a minimal `select()`/`deselect()`-style hook for the group to call, and that surface is stable regardless of which shape the group's internal coordination takes. So `swc-radio-group`'s plan does not need to resolve SWC-2470 before this item's implementation tickets can proceed.
-  - **`size`/`emphasized` propagation:** rather than requiring the consumer to repeat `size`/`emphasized` on every single `<swc-radio>`, `swc-radio-group` should set them once and propagate them onto each item automatically. The existing `SlotAttributePropagationController` (`2nd-gen/packages/core/controllers/slot-attribute-propagation-controller/`) is the established pattern for exactly this: `ButtonGroup` already propagates `size` to its default slot's assigned elements, and `IllustratedMessage` propagates `size` to a named `actions` slot. `swc-radio-group` can use the same controller for both `size` and `emphasized` on its default slot. The item's own `size`/`emphasized` properties are unchanged by this; only the ergonomic burden of setting them per-item moves.
+  - **`size`/`emphasized` propagation:** rather than requiring the consumer to repeat `size`/`emphasized` on every single `<swc-radio>`, `swc-radio-group` should set them once and propagate them onto each item automatically. The existing `SlotAttributePropagationController` (`gen2/packages/core/controllers/slot-attribute-propagation-controller/`) is the established pattern for exactly this: `ButtonGroup` already propagates `size` to its default slot's assigned elements, and `IllustratedMessage` propagates `size` to a named `actions` slot. `swc-radio-group` can use the same controller for both `size` and `emphasized` on its default slot. The item's own `size`/`emphasized` properties are unchanged by this; only the ergonomic burden of setting them per-item moves.
   - **Roving tabindex with `delegatesFocus`:** confirmed that `FocusgroupNavigationController` (which the group is expected to use, `skipDisabled: true`) already handles items whose real focusable target is nested inside their own shadow root. Its `resolveManagedFocusTarget`/`resolveManagedKeydownTarget` walk `event.composedPath()` with a `shadowRoot.activeElement` fallback specifically to solve "listeners on the shadow host see `event.target` retargeted... when focus lands on a descendant inside the shadow tree" — exactly the `swc-radio` situation. It sets `tabIndex` on the `<swc-radio>` host (from `getItems()`) and calls `.focus()` on that host; `delegatesFocus: true` then routes actual focus into the inner input. No controller changes needed.
   - **`name` propagation not needed:** see B12. With form-value participation resolved as group-only, the inner input's `name` never reaches the outer `<form>` regardless, so propagating it would be cosmetic only. Dropped.
   - **Storybook docs:** `swc-radio` gets no standalone docs page; its usage is documented entirely within `swc-radio-group`'s page (see the Documentation section of the [Migration checklist](#migration-checklist)).
-- **Checkbox**: the multi-select sibling pattern; not yet migrated to 2nd-gen. No ordering dependency in either direction. Checkbox's form semantics are genuinely per-item (multiple checkboxes can each independently contribute to `FormData`), unlike radio's single-value-for-the-set semantics, so checkbox is likely to need its own `FieldAssociationController`, unlike `swc-radio`. Checkbox may still want the same `<label for>` + `SlotPresenceController` pattern this plan lands on for labelling/description, and the same `SlotAttributePropagationController` pattern for `size`, as reusable implementation patterns.
+- **Checkbox**: the multi-select sibling pattern; not yet migrated to gen2. No ordering dependency in either direction. Checkbox's form semantics are genuinely per-item (multiple checkboxes can each independently contribute to `FormData`), unlike radio's single-value-for-the-set semantics, so checkbox is likely to need its own `FieldAssociationController`, unlike `swc-radio`. Checkbox may still want the same `<label for>` + `SlotPresenceController` pattern this plan lands on for labelling/description, and the same `SlotAttributePropagationController` pattern for `size`, as reusable implementation patterns.
 - **Shared `_lit-styles/` fragment and render template — resolved, not needed for `swc-radio`.** `swc-text-field`'s plan proposes a shared `form-fields` stylesheet and a `.swc-FormFieldTemplate` grid (label-position `top`/`side`) for its own `LabellingController`-rendered output. `swc-radio`'s anatomy (button, inline label, optional description; no label-position modes, no error state at the item level) is a genuinely different shape, so `swc-radio` does not consume either the shared stylesheet or a shared render template — its render output is simple enough to author directly. `swc-radio-group`, which is more field-like (it owns label/description/error placement for the whole set), may still be a reasonable consumer of the shared `form-fields` stylesheet; that's its plan's decision, not this one's.
 - **Global element stylesheet**: no `stylesheets/global/global-radio.css` is anticipated; radio is always used within a group's styling context, not as a bare global element like link/button. Mark **N/A** unless Design requests a global baseline.
 
@@ -218,7 +218,7 @@ Label association (`<label for>`) and description gating (`SlotPresenceControlle
 
 #### API and naming
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | B1 | Remove `invalid`/`aria-invalid` from the item | `sp-radio` sets `aria-invalid` on itself from its own `invalid` property (SWC-285 tracks removing this) | No `invalid` property or `aria-invalid` on `swc-radio`; invalid state lives entirely on `swc-radio-group` (source: [a11y analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties)) | Move `invalid` to the enclosing `swc-radio-group`. |
 | B2 | Remove `readonly` from the item | Declared on `sp-radio` but never enforced (`click()`/`activate()` never check it) | No `readonly` property on `swc-radio`; implemented once, correctly, on `swc-radio-group` (source: [a11y analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties), matching [React Spectrum's `isReadOnly` on `RadioGroup`](https://react-spectrum.adobe.com/RadioGroup)) | Move `readonly` to the enclosing `swc-radio-group`. |
@@ -228,7 +228,7 @@ Label association (`<label for>`) and description gating (`SlotPresenceControlle
 
 #### Styling and visuals
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | B6 | Real native `<input type="radio">` added to shadow DOM | No native input; `#input`/`#button`/`#label` are all custom `div`/`span` elements, role/state hand-written on the host | A real `<input type="radio">` inside `swc-radio`'s own shadow root supplies role, `checked`, and keyboard activation natively, alongside the existing custom visual button indicator (source: [a11y analysis](./accessibility-migration-analysis.md#what-it-is)) | None for normal slotted usage; anyone reading `role`/`aria-checked` directly off the `sp-radio` host must instead inspect the shadow-internal input on `swc-radio`. |
 | B7 | `--mod-radio-*` surface removed | ~27 `--mod-radio-*` custom properties | Not exposed; a small reviewed `--swc-*` set only | Remove `--mod-*` overrides; file requests for any needed `--swc-*`. |
@@ -238,7 +238,7 @@ Label association (`<label for>`) and description gating (`SlotPresenceControlle
 
 #### Accessibility and behavior
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | B9 | `checked`/`aria-checked` come from the browser | Hand-written `aria-checked` in `updated()` | Native input's `checked` IDL property drives its own implicit `aria-checked`; `swc-radio`'s own `checked` stays in sync (source: [a11y analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties)) | None. |
 | B10 | `disabled` reflects onto the native input | Hand-written `aria-disabled` in `updated()`; `pointer-events: none` via CSS | Native `disabled` on the inner input removes it from the tab order and exposes disabled state to AT for free | None. |
@@ -247,7 +247,7 @@ Label association (`<label for>`) and description gating (`SlotPresenceControlle
 | B13 | Same-root `aria-describedby` for `description` | N/A | Set on the inner input only when a description is actually present (source: [a11y analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties)) | None (additive AT improvement, tied to B4). |
 | B15 | Dev-mode warning for standalone usage | N/A | If `swc-radio` renders with no enclosing `swc-radio-group`, warn rather than silently rendering an inert control. | None (dev-time only). |
 
-### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
+### Additive — ships when ready, zero breakage for consumers already on gen2
 
 | #   | What is added | Notes |
 | --- | -------------- | ----- |
@@ -257,7 +257,7 @@ Label association (`<label for>`) and description gating (`SlotPresenceControlle
 
 ---
 
-## 2nd-gen API decisions
+## gen2 API decisions
 
 These are derived from the 1st-gen implementation, the [accessibility migration analysis](./accessibility-migration-analysis.md), the [rendering-and-styling analysis](./rendering-and-styling-migration-analysis.md), the approved forms strategy (SWC-1888), the Figma size/state/emphasis matrix supplied for this plan, and React Spectrum. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
 
@@ -267,7 +267,7 @@ These are derived from the 1st-gen implementation, the [accessibility migration 
 
 ### Public API
 
-#### Properties / attributes (2nd-gen)
+#### Properties / attributes (gen2)
 
 | Property | Type | Default | Attribute | Notes |
 | -------- | ---- | ------- | --------- | ----- |
@@ -280,7 +280,7 @@ These are derived from the 1st-gen implementation, the [accessibility migration 
 | `invalid`, `readonly` | — | — | — | **Removed** (see B1, B2). |
 | `accessibleLabel`, `accessibleLabelledby`, `accessibleDescribedby` | — | — | — | **Deferred out of the API** (see A4, [Decision log](#decision-log)). Not shipped even as additive scope; no evidenced radio-specific use case. |
 
-#### Visual matrix (2nd-gen)
+#### Visual matrix (gen2)
 
 Based on the Figma size/state/emphasis matrix supplied for this plan, the supported visual combinations are:
 
@@ -296,16 +296,16 @@ Additional Figma-confirmed presentation notes:
 
 - The Emphasized row is only visually distinct once checked, matching 1st-gen's CSS scoping of `--emphasized` selectors to `:checked`; there is no separate "emphasized + unchecked" treatment.
 - Label text wrap is a CSS behavior confirmation (the label must wrap correctly at every size), not a new boolean property — no 1st-gen or Figma evidence supports a truncation mode.
-- Focus-visible, invalid, and readonly are **not** shown in this matrix because they are not item-level states in 2nd-gen (invalid/readonly move to the group; focus-visible is a keyboard-only ring layered on top of any of the above rather than a distinct row).
+- Focus-visible, invalid, and readonly are **not** shown in this matrix because they are not item-level states in gen2 (invalid/readonly move to the group; focus-visible is a keyboard-only ring layered on top of any of the above rather than a distinct row).
 
-#### Slots (2nd-gen)
+#### Slots (gen2)
 
 | Slot | Content | Notes |
 | ---- | ------- | ----- |
 | `label` | Visible label text of the radio | Named slot, matching the `LinearProgressMixin` precedent (meter, progress-bar) and `swc-text-field`'s plan — see [Decision log](#decision-log). Breaking change from 1st-gen's default slot (B14). |
 | `description` | Optional secondary/help text for this single item | Named slot, rendered in-shadow directly by `swc-radio`, gated by `SlotPresenceController`; associated via same-root `aria-describedby` only when populated (no `LabellingController` dependency — see [Decision log](#decision-log)). |
 
-#### CSS custom properties (2nd-gen)
+#### CSS custom properties (gen2)
 
 No `--mod-*` properties will be exposed. New `--swc-*` component-level properties may be introduced where needed — these are additive and not breaking. See [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure) for what to expose and how.
 
@@ -326,7 +326,7 @@ Initial expectation for Radio is a small reviewed set (likely control size and f
 - **Accessible name:** a real, same-root `<label for="…">` wraps/targets the named `label` slot's content and the inner input's generated `id`, matching Spectrum CSS's own reference anatomy for `.spectrum-Radio-label` (see [Decision log](#decision-log)).
 - **Description:** `SlotPresenceController` watches the `description` slot; when populated, `aria-describedby` on the inner input targets the description container's `id`. Implemented directly in `Radio.base.ts`.
 
-### Accessibility semantics notes (2nd-gen)
+### Accessibility semantics notes (gen2)
 
 Authoritative source: [accessibility migration analysis](./accessibility-migration-analysis.md). Key points: the host sets no `role` (the native `<input type="radio">` supplies `role="radio"`); `checked`/`aria-checked` come from the browser; accessible name comes from a real, same-root `<label for="…">` (not `LabellingController` — see [Decision log](#decision-log)); per-item `description` is wired via same-root `aria-describedby`, gated by `SlotPresenceController`; `disabled` reflects onto the native input rather than a hand-written `aria-disabled`; no per-item `invalid`/`readonly`; `swc-radio` has no independent Tab stop.
 
@@ -334,14 +334,14 @@ Authoritative source: [accessibility migration analysis](./accessibility-migrati
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
+> The 1st-gen component is a **reference only** — gen2 is built independently. Neither generation imports from the other.
 
-Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
+Follow the [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
 
 | Layer    | Path                                            | Contains                                                                                                                                                                                                                                          |
 | -------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Core** | `2nd-gen/packages/core/components/radio/` | `Radio.base.ts`, `Radio.types.ts`, value/checked normalization, wiring of the shared `SlotPresenceController`, and the standalone-usage dev-warning (B15). No `FieldAssociationController` (that's `swc-radio-group`'s). No rendering. |
-| **SWC**  | `2nd-gen/packages/swc/components/radio/`  | `Radio.ts`, `radio.css`, `swc-radio` registration, stories, tests, and the specific S2 rendering/styling. |
+| **Core** | `gen2/packages/core/components/radio/` | `Radio.base.ts`, `Radio.types.ts`, value/checked normalization, wiring of the shared `SlotPresenceController`, and the standalone-usage dev-warning (B15). No `FieldAssociationController` (that's `swc-radio-group`'s). No rendering. |
+| **SWC**  | `gen2/packages/swc/components/radio/`  | `Radio.ts`, `radio.css`, `swc-radio` registration, stories, tests, and the specific S2 rendering/styling. |
 
 Planned rendering shape:
 
@@ -361,13 +361,13 @@ Planned rendering shape:
 - [x] 1st-gen API surface documented
 - [x] Dependencies identified
 - [x] Breaking changes documented
-- [x] 2nd-gen API decisions drafted
+- [x] gen2 API decisions drafted
 - [ ] Plan reviewed by at least one other engineer
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/components/radio/`
-- [ ] Create `2nd-gen/packages/swc/components/radio/`
+- [ ] Create `gen2/packages/core/components/radio/`
+- [ ] Create `gen2/packages/swc/components/radio/`
 - [ ] Wire exports in both `package.json` files
 - [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
 - [ ] Confirm the shared feature branch for combined `swc-radio`/`swc-radio-group` delivery exists before opening implementation PRs against it
@@ -445,7 +445,7 @@ Planned rendering shape:
 Retain this section for any components with visual rendering, modifying as needed for the component's specs and variants. Replace the example bullets below with VRT items that match this component, and reference real bug tickets only when they apply to this component.
 -->
 
-- [ ] Add VRT coverage for the size × emphasis × selection × state matrix confirmed in [Visual matrix (2nd-gen)](#visual-matrix-2nd-gen), including hover and disabled
+- [ ] Add VRT coverage for the size × emphasis × selection × state matrix confirmed in [Visual matrix (gen2)](#visual-matrix-gen2), including hover and disabled
 - [ ] Add VRT coverage for wrapped (multi-line) labels at every size
 - [ ] Add focus-visible regression coverage for the keyboard ring on the inner input
 - [ ] Add forced-colors (high-contrast) coverage for checked/disabled states
@@ -465,7 +465,7 @@ Retain this section for any components with visual rendering, modifying as neede
 
 ### Review
 
-- [ ] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
+- [ ] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
 - [ ] Status table in workstream doc updated
 - [ ] PR created against the shared `swc-radio`/`swc-radio-group` feature branch (not directly against `main`), with a description referencing Epic SWC-2348
 - [ ] Peer engineer sign-off
@@ -487,7 +487,7 @@ _None currently — all resolved; see [Decision log](#decision-log)._
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q4 | `FieldAssociationController` does not exist yet (verified absent from `2nd-gen/packages/core/controllers/`). It is `swc-radio-group`'s dependency, not this item's (see [Decision log](#decision-log)). Sequenced delivery tracked under `swc-text-field`'s epic (SWC-2323), not a blocker to this plan. | No | Open: track `swc-text-field`'s controller delivery | Architecture |
+| Q4 | `FieldAssociationController` does not exist yet (verified absent from `gen2/packages/core/controllers/`). It is `swc-radio-group`'s dependency, not this item's (see [Decision log](#decision-log)). Sequenced delivery tracked under `swc-text-field`'s epic (SWC-2323), not a blocker to this plan. | No | Open: track `swc-text-field`'s controller delivery | Architecture |
 | Q6 | Whether `swc-radio-group` needs a dedicated `RadioGroupController` or composes coordination inline (SWC-2470). Genuinely unresolved architecture question; see [Related components and ordering notes](#related-components-and-ordering-notes) for why it doesn't block this plan regardless of outcome. | No | Tracked as a subticket of SWC-2546, not blocking here | Architecture |
 
 ### Scope and prerequisites
@@ -507,7 +507,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 | --- | -------- | -------------------- |
 | Q5 / B5 | `swc-radio` does not depend on `LabellingController`. Label association uses a real, same-root `<label for="…">` targeting the inner input's generated `id`, matching Spectrum CSS's own reference anatomy (`spectrum-Radio-label` is a real `<label for>`, not an ARIA-wired span) — zero ARIA or JS needed for the ordinary case. The optional per-item `description` is gated by the already-built `SlotPresenceController` and wired via a same-root `aria-describedby`, implemented directly in `Radio.base.ts`. `accessible-label`, `accessible-labelledby`, and `accessible-describedby` are deferred out of the public API entirely (tracked as additive A4, not must-ship). | Unlike `swc-text-field` (where an unlabeled-but-placeholder'd field, or a grid-composed external label, are real, evidenced use cases), a radio option without its own visible label isn't a usable pattern — you can't compare unlabeled options. The three-way accessible-name precedence problem `LabellingController` exists to solve for text-field has no corresponding evidenced use case for a single radio item, so depending on it (and shipping the override properties it enables) would be premature API surface. |
 | Q1 | Per-item `description` ships as a named `description` slot, not a string property (B4). | Consistent with `swc-text-field`'s `description` slot naming; the item's primary label is already slot-based, so a slot is the natural fit. |
-| — / B14 | Label content moves to a named `label` slot; the default (unnamed) slot goes unused. | Matches the established `LinearProgressMixin` precedent (meter, progress-bar use `[slot="label"]`/`[slot="description"]`, not a default slot) and `swc-text-field`'s plan. Naming consistency across the label-bearing 2nd-gen components was judged more valuable than preserving 1st-gen's default-slot usage. |
+| — / B14 | Label content moves to a named `label` slot; the default (unnamed) slot goes unused. | Matches the established `LinearProgressMixin` precedent (meter, progress-bar use `[slot="label"]`/`[slot="description"]`, not a default slot) and `swc-text-field`'s plan. Naming consistency across the label-bearing gen2 components was judged more valuable than preserving 1st-gen's default-slot usage. |
 | Q2 | No truncation/clamp mode for the label at any size. | Figma matrix shows wrap only at every size; no 1st-gen or Figma evidence supports a truncation mode. |
 | Q3 | The reference description screenshot's visual treatment (font size, color, spacing under the label) maps onto Spectrum 2 tokens, not a React-Spectrum-specific style. | Confirmed. |
 | Q12 | Form-value participation belongs to `swc-radio-group` alone; `swc-radio` has no `FieldAssociationController` dependency (B11, B12). | **Officially signed off by the a11y SME.** This item's own `accessibility-migration-analysis.md` has been updated to match (its "Form association" row, testing table, and summary checklist no longer describe a per-item `FieldAssociationController`); `radio-group/accessibility-migration-analysis.md`'s corresponding update is tracked on that component's own workstream, not this one. Full reasoning in [Dependency-aware recommendation](#dependency-aware-recommendation), the sole detailed home for this decision. |
@@ -520,21 +520,21 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 
 ## References
 
-- [Washing machine workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
-- [2nd-gen migration status table](../../02_workstreams/02_2nd-gen-component-migration/01_status.md)
+- [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
+- [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
 - [Accessibility migration analysis](./accessibility-migration-analysis.md)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [Radio group accessibility migration analysis](../radio-group/accessibility-migration-analysis.md) — the coordinating parent; separate plan
 - [Forms strategy RFC (SWC-1888)](../../05_strategies/forms-strategy-rfc.md)
-- [Text field migration plan](../text-field/migration-plan.md) — the first form-field-related 2nd-gen implementation; source of the `FieldAssociationController` sequencing `swc-radio-group`'s plan depends on, and of the `LabellingController`/shared `form-fields` stylesheet this plan deliberately does not depend on (see [Decision log](#decision-log)) (not yet merged at time of drafting)
-- [`SlotPresenceController`](../../../../2nd-gen/packages/core/controllers/slot-presence-controller/slot-presence-controller.mdx) — already-built controller this plan uses to gate the `description` slot/`aria-describedby`
+- [Text field migration plan](../text-field/migration-plan.md) — the first form-field-related gen2 implementation; source of the `FieldAssociationController` sequencing `swc-radio-group`'s plan depends on, and of the `LabellingController`/shared `form-fields` stylesheet this plan deliberately does not depend on (see [Decision log](#decision-log)) (not yet merged at time of drafting)
+- [`SlotPresenceController`](../../../../gen2/packages/core/controllers/slot-presence-controller/slot-presence-controller.mdx) — already-built controller this plan uses to gate the `description` slot/`aria-describedby`
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [1st-gen source](../../../../1st-gen/packages/radio/src/Radio.ts)
 - [1st-gen tests](../../../../1st-gen/packages/radio/test/radio.test.ts)
 - [1st-gen README](../../../../1st-gen/packages/radio/README.md)
 - [React Spectrum RadioGroup](https://react-spectrum.adobe.com/RadioGroup) (covers both `RadioGroup` and `Radio` props, including per-item `description`)
 - [Spectrum CSS — `spectrum-two` branch, `components/radio/index.css`](https://github.com/adobe/spectrum-css/tree/spectrum-two/components/radio): reviewed via a sibling checkout at `spectrum-css/components/radio/index.css`
-- [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
+- [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - Epic: SWC-2348, Radio migration epic
 - SWC-2349, radio a11y research ticket (source of the accessibility migration analysis)
 - SWC-2350, "[Radio] Analyze component and create migration plan" — **this document is its deliverable**

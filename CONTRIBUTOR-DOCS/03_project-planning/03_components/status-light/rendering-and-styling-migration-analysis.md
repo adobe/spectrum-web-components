@@ -255,12 +255,12 @@ The status light component has several missing variants in the web component imp
 
 **Variants present in both S1 and S2:**
 
-- Cyan variant: CSS supports `--cyan` but web components doesn't, this is in the design spec and **will need to be added in 2nd gen**
+- Cyan variant: CSS supports `--cyan` but web components doesn't, this is in the design spec and **will need to be added in gen2**
 
 **Variants not in design spec for S2 (need verification):**
 These variants are not in the design spec for S2 but are present in the S2 preview for CSS. These will likely need verification to determine whether or not we will include them.
 
-Notes: These variants all exist in the S2 design spec and CSS preview of the Badge component. These all also have a similarly-colored "semantic" variant. This may be useful when determining whether they should be included in the 2nd gen web components.
+Notes: These variants all exist in the S2 design spec and CSS preview of the Badge component. These all also have a similarly-colored "semantic" variant. This may be useful when determining whether they should be included in the gen2 web components.
 
 - Gray variant (similar to "neutral" variant)
 - Blue variant (similar to "info" variant)

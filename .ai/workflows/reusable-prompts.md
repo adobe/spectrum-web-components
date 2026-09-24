@@ -11,7 +11,7 @@ Log any lessons learned from this session
 Review the session and update memory with anything new
 Make sure to capture lessons from our work today
 
-**To start any phases of a 2nd-gen component migration:**
+**To start any phases of a gen2 component migration:**
 
 - Phase 1
 
@@ -22,7 +22,7 @@ Phase 1 migration for [component]
 
 - Phase 2
 
-Scaffold [component] for 2nd-gen
+Scaffold [component] for gen2
 Phase 2 for [component] migration
 Phase 2 migration for [component]
 Create the core and SWC structure for [component]
