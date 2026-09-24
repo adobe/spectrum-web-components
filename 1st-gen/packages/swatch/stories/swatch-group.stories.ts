@@ -22,6 +22,18 @@ import type {
 } from '../src/Swatch.js';
 import { SwatchGroup } from '../src/SwatchGroup.js';
 
+const updateSelectedOutput = async (
+  event: Event & { target: SwatchGroup }
+): Promise<void> => {
+  const output = (event.currentTarget as HTMLElement)
+    .lastElementChild as HTMLDivElement;
+  await 0;
+  if (event.defaultPrevented) {
+    return;
+  }
+  output.textContent = `Selected: ${JSON.stringify(event.target.selected)}`;
+};
+
 type Properties = {
   border: SwatchBorder | 'normal';
   density?: 'normal' | 'spacious' | 'compact';
@@ -109,19 +121,7 @@ export default {
         };
       }
     ): TemplateResult => html`
-      <div
-        @change=${async (event: Event & { target: SwatchGroup }) => {
-          const output = (event.currentTarget as HTMLElement)
-            .lastElementChild as HTMLDivElement;
-          await 0;
-          if (event.defaultPrevented) {
-            return;
-          }
-          output.textContent = `Selected: ${JSON.stringify(
-            event.target.selected
-          )}`;
-        }}
-      >
+      <div @change=${updateSelectedOutput}>
         ${story()}
         <div>Selected: ${JSON.stringify(selected)}</div>
       </div>
@@ -251,14 +251,14 @@ const directionTemplate = (
   </div>
 `;
 
-export const rtlNavigation = (args: Properties): TemplateResult =>
+export const RtlNavigation = (args: Properties): TemplateResult =>
   directionTemplate('rtl', args);
-rtlNavigation.args = {
+RtlNavigation.args = {
   selects: 'single',
   selected: ['--spectrum-red-700'],
 } as Properties;
-rtlNavigation.storyName = 'RTL keyboard navigation';
-rtlNavigation.parameters = {
+RtlNavigation.storyName = 'RTL keyboard navigation';
+RtlNavigation.parameters = {
   docs: {
     description: {
       story:
@@ -267,13 +267,13 @@ rtlNavigation.parameters = {
   },
 };
 
-export const rtlNavigationComparison = (
+export const RtlNavigationComparison = (
   args: Properties
 ): TemplateResult => html`
   ${directionTemplate('ltr', args)} ${directionTemplate('rtl', args)}
 `;
-rtlNavigationComparison.args = {
+RtlNavigationComparison.args = {
   selects: 'single',
   selected: ['--spectrum-red-700'],
 } as Properties;
-rtlNavigationComparison.storyName = 'RTL vs LTR keyboard navigation';
+RtlNavigationComparison.storyName = 'RTL vs LTR keyboard navigation';

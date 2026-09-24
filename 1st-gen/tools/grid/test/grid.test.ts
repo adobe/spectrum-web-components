@@ -19,7 +19,7 @@ import {
 } from '@open-wc/testing';
 import { emulateMedia, resetMouse, sendKeys } from '@web/test-runner-commands';
 
-import { html } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 import { Card } from '@spectrum-web-components/card';
 import { Grid } from '@spectrum-web-components/grid';
 import { isWebKit } from '@spectrum-web-components/shared';
@@ -36,6 +36,10 @@ import {
   testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 import { Default } from '../stories/grid.stories.js';
+
+const renderPlainItem = (item: { id: number }): TemplateResult => html`
+  <div class="item">Item ${item.id}</div>
+`;
 
 describe('Grid', () => {
   testForLitDevWarnings(
@@ -302,9 +306,7 @@ describe('Grid', () => {
           style="inline-size: 400px; block-size: 400px"
           .items=${[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]}
           .focusableSelector=${'.item'}
-          .renderItem=${(item: { id: number }) => html`
-            <div class="item">Item ${item.id}</div>
-          `}
+          .renderItem=${renderPlainItem}
         ></sp-grid>
       </div>
     `);
