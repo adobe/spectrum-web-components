@@ -911,7 +911,10 @@ export const FormBehaviorTest: Story = {
       form.requestSubmit();
       expect(submitCount).toBe(1);
       expect(new FormData(form).get('username')).toBe('Submitted');
-      expect(output.textContent?.trim()).toBe('username: Submitted');
+      expect(new FormData(form).get('nested')).toBe('Cascade demo');
+      expect(output.textContent?.trim()).toBe(
+        'username: Submitted\nnested: Cascade demo'
+      );
     });
   },
 };
