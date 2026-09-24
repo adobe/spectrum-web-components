@@ -1,0 +1,115 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as MenuStories from './stories/menu.stories';
+
+<Meta of={MenuStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A `<swc-menu>` consists of:
+
+- An externally-referenced **trigger**, set via the `for` or `triggerElement` property. `swc-menu` does not render a trigger of its own.
+- A shadow-internal surface carrying `role="menu"`, anchored to the trigger.
+- **Default slot**: the menu's rows. `swc-menu-item` has not shipped yet, so these examples slot placeholder rows with `role="menuitem"` until it does.
+
+<Canvas of={MenuStories.Anatomy} />
+
+## Options
+
+### Placements
+
+The `placement` attribute sets the preferred position of the menu relative to its trigger: `bottom-start` (default), `bottom-end`, `top-start`, `top-end`, `left-top`, `left-bottom`, `right-top`, `right-bottom`, and the logical inline sides `start-top` / `start-bottom` / `end-top` / `end-bottom`.
+
+The `start` and `end` values are RTL-aware: `start` maps to the left side in LTR and to the right in RTL; `end` maps to the right in LTR and to the left in RTL. `top`, `bottom`, `left`, and `right` are physical and stay fixed regardless of writing direction.
+
+The menu's `PlacementController` handles pixel positioning automatically. When there is insufficient space on the requested side, the menu flips to the opposite side unless `should-flip` is `false`. The `placement` attribute always holds your requested value; it is never rewritten by the flip. The resolved physical side is not part of the public API but is reflected to the `actual-placement` attribute for styling. Because `<swc-menu>` renders in the browser's top layer, the flip boundary is the viewport, not a scroll-container ancestor.
+
+<Canvas of={MenuStories.Placements} />
+
+### Sizes
+
+`size` accepts `s`, `m`, `l`, and `xl` (default `m`). `swc-menu-item` doesn't exist yet, so no row content currently reflects this size; set it now so your markup carries the right value once row-level sizing ships.
+
+<Canvas of={MenuStories.Sizes} />
+
+## States
+
+`open` is the single source of truth for visibility: the menu is either open or closed. Clicking the trigger, clicking a row, pressing <kbd>Escape</kbd>, or clicking outside all reconcile back to `open`. There are no disabled or selected states.
+
+Because `<swc-menu>` uses `popover="auto"`, opening it dismisses any other open auto popover in the document, including other menus, popovers, and pickers.
+
+<Canvas of={MenuStories.States} />
+
+## Behaviors
+
+### Trigger element
+
+The menu positions against a trigger resolved from the `for` attribute (an id in the same tree root) or the `triggerElement` property. Use `triggerElement` when the trigger and menu are in **different shadow roots**, where `getElementById` cannot cross the boundary, or when the menu is **inserted programmatically** and a stable `id` is not available. Setting `triggerElement` to `null` reverts to `for`-based resolution.
+
+```js
+const menu = document.querySelector('swc-menu');
+menu.triggerElement = someElement; // replaces any `for` wiring
+```
+
+<Canvas of={MenuStories.TriggerElement} />
+
+### Open and close
+
+Clicking the trigger opens the menu and moves focus to the first row. Clicking a row, pressing <kbd>Enter</kbd> on a row, pressing <kbd>Escape</kbd>, or clicking outside the menu closes it; closing returns focus to the trigger if focus was still inside the menu.
+
+The menu is a native `popover="auto"` element: it renders in the browser's top layer, so it is never clipped by an ancestor's `overflow`, and Escape/outside-click light-dismiss come from the platform rather than a hand-rolled listener.
+
+<Canvas of={MenuStories.OpenAndClose} />
+
+### Events
+
+`<swc-menu>` dispatches four lifecycle events as visibility changes:
+
+- **`swc-open`**: dispatched when the menu begins to open, before the enter transition plays.
+- **`swc-after-open`**: dispatched after the enter transition completes.
+- **`swc-close`**: dispatched when the menu begins to close, before the exit transition plays, however the close was triggered.
+- **`swc-after-close`**: dispatched after the exit transition completes.
+
+When no CSS transition is active (for example when `prefers-reduced-motion` removes it), `swc-after-open` and `swc-after-close` dispatch synchronously on the same tick as `swc-open` and `swc-close`.
+
+## Accessibility
+
+### Features
+
+#### ARIA role and relationship
+
+1. **`role="menu"`**: set on the shadow-internal surface.
+2. **`aria-haspopup="menu"` and `aria-expanded`**: wired onto the trigger's interactive element (for a 2nd-gen SWC trigger with an open shadow root, its inner `<button>`) as the menu opens and closes.
+3. **Accessible name**: `swc-menu` has no `label` property. The menu's accessible name comes entirely from the trigger you author; give the trigger its own accessible name (visible text, `aria-label`, or `accessible-label` on a 2nd-gen SWC trigger).
+
+#### Keyboard navigation
+
+- <kbd>Arrow Up</kbd> / <kbd>Arrow Down</kbd>: move focus between rows, wrapping
+  at the ends.
+- <kbd>Home</kbd> / <kbd>End</kbd>: move focus to the first or last row.
+- <kbd>Tab</kbd> / <kbd>Shift</kbd> + <kbd>Tab</kbd>: trapped on the active row
+  while the menu is open.
+- <kbd>Enter</kbd>: activates the focused row and closes the menu.
+- <kbd>Escape</kbd>: closes the menu and returns focus to the trigger.
+
+### Best practices
+
+- **Give the trigger an accessible name.** The menu has no accessible-name property of its own; an unlabeled trigger leaves the whole menu unlabeled too.
+- **Don't slot interactive descendants.** Rows carry text and, once `swc-menu-item` ships, decorative icons only. Slotting a button, link, or other focusable element inside a row breaks the roving-tabindex model.
+
+<Canvas of={MenuStories.Accessibility} />
+
+## Upcoming features
+
+The following are planned for future releases:
+
+- Icons and thumbnails within each row.
+- Descriptions and trailing values on rows.
+- Single- and multi-select modes.
+- Grouped sections with headers, and dividers as separators between rows.
+- Nested submenus.
+
+<DocsFooter />
