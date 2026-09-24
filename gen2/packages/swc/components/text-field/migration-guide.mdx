@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Text field migration guide
 
-Replace `<sp-textfield>` with `<swc-text-field>`, update the import, provide the label through the `label` slot or `accessible-label`, and rename the `help-text` and `negative-help-text` slots to `description` and `error-text`. Multiline fields move to `<swc-text-area>`.
+Replace `<sp-textfield>` with `<swc-text-field>`, update the import, provide the label through the `label` slot or `accessible-label`, and rename the `help-text` and `negative-help-text` slots to `description` and `error-text`. Multiline fields will move to `<swc-text-area>` once it is migrated.
 
 ## Installation
 
@@ -32,45 +32,45 @@ import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 
 ### Renamed
 
-| Area                | Spectrum 1 (`sp-textfield`)                            | Spectrum 2 (`swc-text-field`)                                    |
-| ------------------- | ------------------------------------------------------ | ---------------------------------------------------------------- |
-| Tag                 | `sp-textfield` (one word)                              | `swc-text-field` (three words)                                   |
-| Import path         | `@spectrum-web-components/textfield`                   | `@adobe/spectrum-wc/components/text-field/swc-text-field.js`     |
-| Base class          | `Textfield`                                            | `TextField`                                                      |
-| Label attribute     | `label="Name"` (sets `aria-label`)                     | `accessible-label="Name"` or `<span slot="label">Name</span>`    |
-| Help text slot      | `slot="help-text"`                                     | `slot="description"`                                             |
-| Error text slot     | `slot="negative-help-text"` (self-managed by `invalid`) | `slot="error-text"` (shown while `invalid`)                     |
-| CSS custom props    | `--mod-textfield-*` (~67 properties)                   | `--swc-*` (small reviewed set, see [Styling](#styling))          |
+| Area             | Spectrum 1 (`sp-textfield`)                             | Spectrum 2 (`swc-text-field`)                                 |
+| ---------------- | ------------------------------------------------------- | ------------------------------------------------------------- |
+| Tag              | `sp-textfield`                                          | `swc-text-field`                                              |
+| Import path      | `@spectrum-web-components/textfield`                    | `@adobe/spectrum-wc/components/text-field/swc-text-field.js`  |
+| Base class       | `Textfield`                                             | `TextField`                                                   |
+| Label attribute  | `label="Name"` (sets `aria-label`)                      | `accessible-label="Name"` or `<span slot="label">Name</span>` |
+| Help text slot   | `slot="help-text"`                                      | `slot="description"`                                          |
+| Error text slot  | `slot="negative-help-text"` (self-managed by `invalid`) | `slot="error-text"` (shown while `invalid`)                   |
+| CSS custom props | `--mod-textfield-*` (~62 properties)                    | `--swc-*` (reduced set, see [Styling](#styling))              |
 
 ### Added in Spectrum 2
 
-| Addition                                                              | Notes                                                                                                     |
-| --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `accessible-labelledby` attribute                                     | Space-separated `id`s referencing external elements to compose the accessible name (e.g. grid headers).   |
-| `accessible-describedby` attribute                                    | Element references combined with a slotted `description` for external description sources.                |
-| `label-position` attribute (`top` \| `side`)                          | Places the visible label above (default) or beside the input.                                             |
-| `necessity-indicator` attribute (`icon` \| `label`)                   | Chooses asterisk (`icon`, default) or appended `(required)`/`(optional)` text (`label`).                  |
-| `size` attribute (`s` \| `m` \| `l` \| `xl`)                          | Field size and typography scale.                                                                          |
-| `inputmode` attribute                                                 | Virtual-keyboard hint passed through to the native `<input>`.                                             |
-| `prefix` slot                                                         | Non-interactive content (icon, symbol, avatar) rendered inside the field before the input.                |
-| Native form association                                               | `ElementInternals`-based participation: `formResetCallback`, `formDisabledCallback`, `fieldset[disabled]` cascade. |
-| Keyboard-only focus ring                                              | Focus ring shows only on keyboard focus; pointer focus is indicated by a border color change.             |
-| `delegatesFocus`                                                      | Focus lands directly on the internal `<input>`; the field is a single tab stop.                           |
+| Addition                                            | Notes                                                                                                                                                                                                                                                                   |
+| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `accessible-labelledby` attribute                   | Space-separated `id`s referencing external elements to compose the accessible name.                                                                                                                                                                                     |
+| `accessible-describedby` attribute                  | Element references combined with a slotted `description` for external description sources.                                                                                                                                                                              |
+| `label-position` attribute (`top` \| `side`)        | Places the visible label above (default) or beside the input.                                                                                                                                                                                                           |
+| `necessity-indicator` attribute (`icon` \| `label`) | Chooses asterisk (`icon`, default) or appended `(required)`/`(optional)` text (`label`).                                                                                                                                                                                |
+| `size` attribute (`s` \| `m` \| `l` \| `xl`)        | Field size and typography scale.                                                                                                                                                                                                                                        |
+| `inputmode` attribute                               | Virtual-keyboard hint passed through to the native `<input>`.                                                                                                                                                                                                           |
+| `prefix` slot                                       | Non-interactive content (icon, symbol, avatar) rendered inside the field before the input.                                                                                                                                                                              |
+| Native form association                             | `ElementInternals`-based participation: `formResetCallback`, `formDisabledCallback`, `fieldset[disabled]` cascade, plus the constraint-validation surface (`form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, `reportValidity()`) on the host. |
+| Keyboard-only focus ring                            | Focus ring shows only on keyboard focus; pointer focus is indicated by a border color change.                                                                                                                                                                           |
+| `delegatesFocus`                                    | Focus lands directly on the internal `<input>`; the field is a single tab stop.                                                                                                                                                                                         |
 
 ### Removed in Spectrum 2
 
-| Removed                                                                                   | Replacement                                                                                                 |
-| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `quiet` attribute                                                                         | No replacement. Use a table or inline layout for the dense use case.                                        |
-| `multiline`, `grows`, `rows` attributes                                                   | Use `<swc-text-area>` instead. `grows` and `rows` are configured on the text area.                          |
-| `tooltip-placement` attribute (truncated-value tooltip)                                   | No replacement. The full value is reachable natively; add a `title` attribute if you want a pointer hover.  |
-| `label` attribute as accessible name                                                      | Use `accessible-label` for a name-only field, or slot a visible label via `<span slot="label">…</span>`.    |
-| Placeholder used as accessible name fallback                                              | Provide a real label (slotted or `accessible-label`). Unlabeled fields now trigger a dev-mode warning.      |
-| `autocomplete="list"` and `autocomplete="none"`                                           | These are combobox tokens; use `<sp-combobox>` (or its Spectrum 2 equivalent) instead.                      |
-| `slot="help-text"` and `slot="negative-help-text"`                                        | `slot="description"` and `slot="error-text"`. See [step 3](#3-rename-the-help-text-slots).                  |
-| `focused` reflected attribute                                                             | Use `:focus`/`:focus-within` in CSS. The property was private and is no longer exposed.                     |
-| `allowed-keys` attribute                                                                  | Not carried into Spectrum 2. Use `pattern` for validation or filter input in `@input`.                      |
-| Public `--mod-textfield-*` custom properties                                              | The `--mod-*` surface is entirely removed. Use the `--swc-*` set in [Styling](#styling).                    |
+| Removed                                                 | Replacement                                                                                                                                       |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `quiet` attribute                                       | No replacement. Use a table or inline layout for the dense use case.                                                                              |
+| `multiline`, `grows`, `rows` attributes                 | Use `<swc-text-area>` once it is migrated (keep using `<sp-textfield multiline>` until then). `grows` and `rows` are configured on the text area. |
+| `tooltip-placement` attribute (truncated-value tooltip) | No replacement. The full value is reachable natively; add a `title` attribute if you want a pointer hover.                                        |
+| `label` attribute as accessible name                    | Use `accessible-label` for a name-only field, or slot a visible label via `<span slot="label">…</span>`.                                          |
+| Placeholder used as accessible name fallback            | Provide a real label (slotted or `accessible-label`). Unlabeled fields now trigger a dev-mode warning.                                            |
+| `autocomplete="list"` and `autocomplete="none"`         | These are combobox tokens; use `<sp-combobox>` (or `<swc-combobox>` once it is migrated) instead.                                                 |
+| `slot="help-text"` and `slot="negative-help-text"`      | `slot="description"` and `slot="error-text"`. See [step 3](#3-rename-the-help-text-slots).                                                        |
+| `focused` reflected attribute                           | Use `:focus`/`:focus-within` in CSS. The property was private and is no longer exposed.                                                           |
+| `allowed-keys` attribute                                | Not carried into Spectrum 2. Use `pattern` for validation or filter input in `@input`.                                                            |
+| Public `--mod-textfield-*` custom properties            | The `--mod-*` surface is entirely removed. Use the `--swc-*` set in [Styling](#styling).                                                          |
 
 ## Update your code
 
@@ -85,7 +85,7 @@ import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 
 ### 2. Provide a label
 
-Every field needs a label. Choose one of three sources. Fields with none trigger a dev-mode warning.
+The Spectrum 1 `label` attribute is removed. Every field needs a label from one of three sources; fields with none trigger a dev-mode warning.
 
 ```html
 <!-- Before: `label` attribute -->
@@ -102,9 +102,7 @@ Every field needs a label. Choose one of three sources. Fields with none trigger
 <!-- After: `accessible-labelledby` for a name composed from external elements -->
 <span id="row-header">Billing</span>
 <span id="col-header">Street address</span>
-<swc-text-field
-  accessible-labelledby="row-header col-header"
-></swc-text-field>
+<swc-text-field accessible-labelledby="row-header col-header"></swc-text-field>
 ```
 
 If your Spectrum 1 code relied on the placeholder being used as the accessible name when no label was set, add a label. Placeholder text is no longer promoted to the accessible name.
@@ -130,18 +128,13 @@ The `error-text` slot is shown in place of the `description` slot while the fiel
 
 ### 4. Replace multiline fields
 
-Multiline is a separate component in Spectrum 2. `grows`, `rows`, and the multiline value binding move with it.
+Multiline is a separate component in Spectrum 2. `grows`, `rows`, and the multiline value binding move with it. `<swc-text-area>` is not yet available; keep using `<sp-textfield multiline>` until it is migrated, then swap to the pattern below.
 
 ```html
 <!-- Before -->
-<sp-textfield
-  multiline
-  grows
-  rows="3"
-  label="Notes"
-></sp-textfield>
+<sp-textfield multiline grows rows="3" label="Notes"></sp-textfield>
 
-<!-- After -->
+<!-- After (once `<swc-text-area>` is migrated) -->
 <swc-text-area rows="3">
   <span slot="label">Notes</span>
 </swc-text-area>
@@ -161,7 +154,7 @@ Neither has a Spectrum 2 replacement. Delete both attributes.
 
 ### 6. Narrow `autocomplete` for combobox use
 
-`autocomplete="list"` and `autocomplete="none"` are combobox-only tokens and are removed from the text-field type. Move that markup to `<sp-combobox>` (or the Spectrum 2 combobox once available).
+`autocomplete="list"` and `autocomplete="none"` are combobox-only tokens and are removed from the text-field type. Move that markup to `<sp-combobox>` (or `<swc-combobox>` once it is migrated).
 
 ```html
 <!-- Before -->
@@ -176,14 +169,16 @@ Ordinary `autocomplete` values (`email`, `name`, `street-address`, etc.) work un
 ## Accessibility
 
 - **Label:** provide one of the three name sources. See [step 2](#2-provide-a-label). Fields with no label trigger a dev-mode warning.
-- **Label in name:** when a field has both a visible label and a programmatic name (`accessible-label` or `accessible-labelledby`), make sure the programmatic name contains the visible text, per [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html). Setting both `accessible-label` and `accessible-labelledby` triggers a dev-mode warning.
+- **`aria-label` / `aria-labelledby` on the host are ignored.** Setting either on `<swc-text-field>` does not name the field and triggers a dev-mode warning. Use `accessible-label` or `accessible-labelledby` instead.
+- **Label in name:** when a field has both a visible label and a programmatic name (`accessible-label` or `accessible-labelledby`), make sure the programmatic name contains the visible text, per [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html). Setting both `accessible-labelledby` and `accessible-label` triggers a dev-mode warning once `accessible-labelledby` resolves; `accessible-labelledby` wins and `accessible-label` is ignored.
+- **`accessible-labelledby` id resolution:** ids are resolved against the field's root node (document or shadow root) once per render. Unresolved ids trigger a dev-mode warning.
 - **Description and error:** rename the slots. See [step 3](#3-rename-the-help-text-slots). Always pair `invalid` with slotted `error-text` so the invalid state is not conveyed by color or icon alone.
 - **`autocomplete`:** set it for fields collecting recognized personal-data types so browsers and assistive technology can identify the field's purpose. See [`autocomplete` HTML attribute (MDN)](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete).
 - **Known axe-core false positive:** a field named only via `accessible-labelledby` fails the axe `label` rule ("Form element does not have a label"), even though the name resolves correctly in browsers and AT. Scope the rule if you run axe against pages containing these fields.
 
 ## Styling
 
-Spectrum 2 exposes a small, reviewed set of `--swc-*` custom properties on `<swc-text-field>`. The Spectrum 1 `--mod-textfield-*` surface (~67 properties) is not carried forward.
+Spectrum 2 exposes a reduced set of `--swc-*` custom properties on `<swc-text-field>`. The Spectrum 1 `--mod-textfield-*` surface (~62 properties) is not carried forward.
 
 {/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
 
@@ -199,30 +194,30 @@ Spectrum 2 exposes a small, reviewed set of `--swc-*` custom properties on `<swc
   <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
   <code>{'--mod-textfield-*'}</code> properties <strong>do not apply</strong> to{' '}
   <code>{'<swc-text-field>'}</code>. Remove every{' '}
-  <code>{'--mod-textfield-*'}</code> override. Most have no 1:1 replacement.
-  Use the reduced <code>{'--swc-*'}</code> set below, and file a request if
-  you need a hook that is not on the list.
+  <code>{'--mod-textfield-*'}</code> override. Most have no 1:1 replacement. Use
+  the reduced <code>{'--swc-*'}</code> set below, and file a request if you need
+  a hook that is not on the list.
 </div>
 
 ### Public custom properties
 
 {/* @todo Replace the Description column with the `@cssprop` JSDoc descriptions from `<swc-text-field>`'s CEM entry once they are added in a follow-up PR. */}
 
-| Custom property                          | Description                                                                                                   |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `--swc-field-label-max-inline-size`      | Max inline size of the visible label before it wraps. Unset by default; set it to wrap a long label sooner.   |
-| `--swc-field-input-min-inline-size`      | Minimum inline size of the input control. Defaults to the component height for the field size.                |
-| `--swc-field-input-max-inline-size`      | Maximum inline size of the input control. Defaults to the medium field width token.                           |
-| `--swc-text-field-padding-block`         | Vertical padding of the text-field control. Changes by size.                                                  |
-| `--swc-text-field-padding-inline`        | Horizontal padding of the text-field control. Changes by size.                                                |
-| `--swc-text-field-affix-gap`             | Gap between the input and slotted `prefix`. Changes by size.                                                  |
-| `--swc-text-field-font-size`             | Font size of the input. Changes by size.                                                                      |
-| `--swc-text-field-line-height`           | Line height of the input. Defaults to the browser's normal input line height.                                 |
-| `--swc-text-field-border-radius`         | Corner radius of the text-field control. Changes by size.                                                     |
-| `--swc-text-field-validation-icon-size`  | Size of the invalid-state icon. Changes by size.                                                              |
-| `--swc-form-field-row-gap`               | Vertical gap between the label, control, and description or error text. Changes by size.                      |
-| `--swc-form-field-label-font-size`       | Font size of the visible field label. Defaults to the field size typography scale.                            |
-| `--swc-form-field-description-font-size` | Font size of the description and error text. Defaults to the field size typography scale.                     |
+| Custom property                          | Description                                                                                                 |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `--swc-field-label-max-inline-size`      | Max inline size of the visible label before it wraps. Unset by default; set it to wrap a long label sooner. |
+| `--swc-field-input-min-inline-size`      | Minimum inline size of the input control. Defaults to the component height for the field size.              |
+| `--swc-field-input-max-inline-size`      | Maximum inline size of the input control. Defaults to the medium field width token.                         |
+| `--swc-text-field-padding-block`         | Vertical padding of the text-field control. Changes by size.                                                |
+| `--swc-text-field-padding-inline`        | Horizontal padding of the text-field control. Changes by size.                                              |
+| `--swc-text-field-affix-gap`             | Gap between the input and slotted `prefix`. Changes by size.                                                |
+| `--swc-text-field-font-size`             | Font size of the input. Changes by size.                                                                    |
+| `--swc-text-field-line-height`           | Line height of the input. Defaults to the browser's normal input line height.                               |
+| `--swc-text-field-border-radius`         | Corner radius of the text-field control. Changes by size.                                                   |
+| `--swc-text-field-validation-icon-size`  | Size of the invalid-state icon. Changes by size.                                                            |
+| `--swc-form-field-row-gap`               | Vertical gap between the label, control, and description or error text. Changes by size.                    |
+| `--swc-form-field-label-font-size`       | Font size of the visible field label. Defaults to the field size typography scale.                          |
+| `--swc-form-field-description-font-size` | Font size of the description and error text. Defaults to the field size typography scale.                   |
 
 <div
   style={{
@@ -243,10 +238,13 @@ Spectrum 2 exposes a small, reviewed set of `--swc-*` custom properties on `<swc
 
 - [ ] Swap the import to `@adobe/spectrum-wc/components/text-field/swc-text-field.js`.
 - [ ] Rename `<sp-textfield>` to `<swc-text-field>` everywhere.
-- [ ] Replace the `label` attribute with a slotted `label` or `accessible-label`.
+- [ ] Remove the `label` attribute and pick a name source:
+  - [ ] Use `<span slot="label">…</span>` for a visible label (recommended).
+  - [ ] Use `accessible-label` for a name-only field with no visible label.
+  - [ ] Use `accessible-labelledby` when the name is composed from external elements.
 - [ ] Add a label to fields that relied on the placeholder as their accessible name.
 - [ ] Rename `slot="help-text"` to `slot="description"` and `slot="negative-help-text"` to `slot="error-text"`.
-- [ ] Replace `<sp-textfield multiline>` with `<swc-text-area>`; move `grows` and `rows`.
+- [ ] Replace `<sp-textfield multiline>` with `<swc-text-area>` (once migrated); move `grows` and `rows`.
 - [ ] Remove `quiet` and `tooltip-placement`.
 - [ ] Move `autocomplete="list"` or `autocomplete="none"` markup to a combobox.
 - [ ] Remove all `--mod-textfield-*` overrides; adopt the `--swc-*` properties above where needed.

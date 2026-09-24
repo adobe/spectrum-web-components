@@ -11,14 +11,14 @@ import * as Stories from './stories/field-description-mixin.stories';
 
 `FieldDescriptionMixin` adds description/error-text rendering and accessible description wiring to a host so components do not hand-roll it. It is one of two decoupled primitives for form-field labelling:
 
-- **`FieldDescriptionMixin`** (`@adobe/spectrum-wc-core/mixins`): the `accessible-describedby` property, `description` / `error-text` slot presence tracking, and `renderFieldDescription()`.
+- **`FieldDescriptionMixin`** (`@adobe/spectrum-wc-core/mixins`): the `accessible-describedby` attribute (mirrored by the `accessibleDescribedby` property), `description` / `error-text` slot presence tracking, and `renderFieldDescription()`.
 - **`renderFieldDescription`** (`@adobe/spectrum-wc-core/directives/render-field-description`): the underlying render-only directive. The mixin owns and exposes it; use it directly only for stateless rendering without the mixin.
 
 `LabellingMixin` (`@adobe/spectrum-wc-core/mixins`) is the companion mixin for accessible-name association; `swc-text-field` composes both.
 
 ### What it does
 
-- **Combined description sources**: unlike accessible-name sources, a slotted `description` and an external `accessibleDescribedby` reference combine rather than override each other. The role element's `ariaDescribedByElements` lists the in-shadow description first, then the resolved external elements.
+- **Combined description sources**: unlike accessible-name sources, a slotted `description` and an external `accessible-describedby` reference combine rather than override each other. The role element's `ariaDescribedByElements` lists the in-shadow description first, then the resolved external elements.
 - **Invalid-gated error message**: while the host reads as `invalid` the in-shadow error-text element replaces the description in that `ariaDescribedByElements` list (the description is hidden; any external elements remain). `invalid` is read structurally, so a host that doesn't declare it at all simply never surfaces an error message. It is not exposed via `aria-errormessage`, since AT support for that attribute is still inconsistent.
 - **Conditional rendering**: `renderFieldDescription()` renders nothing when there is no description content and no active error message.
 
@@ -70,7 +70,7 @@ While the host is `invalid`, the error message replaces the description: the err
 ### Best practices
 
 - Pair `invalid` with slotted `error-text` so the invalid state is not conveyed by color alone.
-- Use `accessibleDescribedby` for a description composed from light-DOM content the field doesn't own; it combines with, rather than replaces, a slotted `description`.
+- Use `accessible-describedby` for a description composed from light-DOM content the field doesn't own; it combines with, rather than replaces, a slotted `description`.
 
 <Canvas of={Stories.Accessibility} />
 
