@@ -58,6 +58,8 @@ type Knob =
 interface Group {
   id: string;
   label: string;
+  /** Plain-language summary of which part of the effect the group controls. */
+  description: string;
   knobs: Knob[];
 }
 
@@ -106,6 +108,8 @@ const GROUPS: Group[] = [
   {
     id: 'surface',
     label: 'Surface',
+    description:
+      'The frosted-glass body of the button. Set its tint and opacity, the label color, and how much it blurs and saturates what is behind it. Gloss is the soft light dome across the top. Brand color retints every brand-based color at once.',
     knobs: [
       { kind: 'brand', label: 'Brand color' },
       color('label-color', 'Label', false),
@@ -123,6 +127,8 @@ const GROUPS: Group[] = [
   {
     id: 'nebula',
     label: 'Nebula',
+    description:
+      'The blurred color glow that rises from below the bottom edge. Four color stops go from left to right over a pale mist. The edges set where the glow sits, blur sets how soft it is, and the pointer settings set how much it brightens, saturates, grows, and leans toward the pointer.',
     knobs: [
       color('nebula-1', 'Stop 1 (left)'),
       color('nebula-2', 'Stop 2'),
@@ -144,6 +150,8 @@ const GROUPS: Group[] = [
   {
     id: 'pointer',
     label: 'Pointer light',
+    description:
+      'The light that shows when the pointer comes near: a hairline on the edge, a halo outside the button, and a caustic glow, rim band, and glint inside the glass. All layers get stronger as the pointer comes closer. Speed flare adds more when the pointer moves fast. The alpha of the rim and specular colors scales all layers.',
     knobs: [
       color('rim', 'Rim color'),
       color('specular', 'Specular color'),
@@ -168,6 +176,8 @@ const GROUPS: Group[] = [
   {
     id: 'rim',
     label: 'Rim and stroke',
+    description:
+      'Thin lines on the edge of the button. The specular crescent follows the pointer. The stroke is a faint static line (dark mode only by default). The bottom rim is a colored hairline along the lower edge (light mode only by default).',
     knobs: [
       num('specular-width', 'Specular width', 0, 4, 0.25, 'px'),
       num('specular-size', 'Specular reach (× height)', 0, 2, 0.01),
@@ -185,6 +195,8 @@ const GROUPS: Group[] = [
   {
     id: 'shadow',
     label: 'Shadow',
+    description:
+      'The soft drop shadow under the button, made of seven layers. Set its color, its strength, how far it drops (offset), and how far it spreads (blur).',
     knobs: [
       color('shadow', 'Shadow color'),
       num('shadow-strength', 'Shadow strength', 0, 3, 0.05),
@@ -195,6 +207,8 @@ const GROUPS: Group[] = [
   {
     id: 'motion',
     label: 'Motion',
+    description:
+      'How the pointer light moves. Proximity radius is how far from the button the light starts. Stiffness and damping control the spring that makes the light lag behind the pointer and settle. The rates control how fast the light fades in and out. Press scale is how much the button shrinks when you press it. Values other than press scale go to DEFAULT_MOTION in AIButton.ts, not CSS.',
     knobs: [
       num('press-scale', 'Press scale', 0.8, 1, 0.005),
       motion('proximityRadius', 'Proximity radius (px)', 0, 400, 5),
@@ -224,11 +238,12 @@ const round = (value: number): number => Math.round(value * 1000) / 1000;
 @customElement('swc-ai-button-design-tuner')
 export class AIButtonDesignTuner extends LitElement {
   public static override styles = css`
+    /* Controls pinned on the left with their own scroll; the preview fills the rest and never scrolls away. */
     :host {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      gap: 16px;
+      display: grid;
+      grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr);
+      block-size: 100vh;
       font-family: system-ui, sans-serif;
       font-size: 12px;
       color: rgb(34 34 34);
@@ -236,32 +251,62 @@ export class AIButtonDesignTuner extends LitElement {
 
     .preview {
       display: flex;
-      flex: 1 1 480px;
+      grid-column: 2;
+      grid-row: 1;
       flex-wrap: wrap;
       /* Wider than the default 160px proximity radius, so pointing at one button doesn't light the other. */
       gap: 200px;
       align-items: center;
       justify-content: center;
-      padding: 160px;
+      align-content: center;
+      overflow: auto;
+      padding: 64px;
       background: light-dark(rgb(255 255 255), rgb(29 29 29));
-      border: 1px solid light-dark(rgb(225 225 225), rgb(29 29 29));
-      border-radius: 8px;
     }
 
     .reference {
       display: none;
     }
 
+    /* Positioned, so the visually hidden labels stay inside its scroll area. */
     .panel {
+      position: relative;
       display: flex;
-      flex: 0 1 380px;
+      grid-column: 1;
+      grid-row: 1;
       flex-direction: column;
       gap: 8px;
-      max-block-size: calc(100vh - 32px);
       overflow: auto;
       padding: 12px;
       background: rgb(245 245 245);
-      border-radius: 8px;
+      border-inline-end: 1px solid rgb(218 218 218);
+    }
+
+    .description {
+      margin: 0 0 6px;
+      color: rgb(80 80 80);
+      line-height: 1.4;
+    }
+
+    /* Narrow canvas: preview on top, controls scroll below it. */
+    @media (max-width: 720px) {
+      :host {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: 40vh minmax(0, 1fr);
+      }
+
+      .preview {
+        grid-column: 1;
+        grid-row: 1;
+        padding: 24px;
+      }
+
+      .panel {
+        grid-column: 1;
+        grid-row: 2;
+        border-inline-end: 0;
+        border-block-start: 1px solid rgb(218 218 218);
+      }
     }
 
     .toolbar {
@@ -817,6 +862,7 @@ export class AIButtonDesignTuner extends LitElement {
                   <span class="visually-hidden">${group.label}</span>
                 </button>
               </legend>
+              <p class="description">${group.description}</p>
               ${group.knobs.map((knob) => this.renderKnob(knob))}
             </fieldset>
           `

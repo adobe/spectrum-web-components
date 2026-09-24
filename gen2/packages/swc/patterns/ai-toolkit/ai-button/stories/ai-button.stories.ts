@@ -80,7 +80,7 @@ export const DesignTuning: Story = {
       theme=${globals.theme === 'dark' ? 'dark' : 'light'}
     ></swc-ai-button-design-tuner>
   `,
-  parameters: { controls: { disable: true } },
+  parameters: { controls: { disable: true }, layout: 'fullscreen' },
   tags: ['dev'],
 };
 
