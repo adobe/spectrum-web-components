@@ -104,6 +104,9 @@ export class GridController<
     });
     this.rovingTabindexController = new RovingTabindexController<T>(this.host, {
       direction: 'grid',
+      // The virtualizer positions items with a physical `translate`, so the
+      // visual order stays left-to-right regardless of the writing mode.
+      mirrorHorizontalInRTL: false,
       elements,
       focusInIndex: () => {
         const activeElement = (this.host.getRootNode() as Document)
