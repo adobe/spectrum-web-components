@@ -11,14 +11,19 @@ Resources to help AI coding tools understand and work with Spectrum Web Componen
 [Agent Skills](https://agentskills.io) are bundles of instructions and reference files that
 your AI coding tool can load when they are relevant to a task.
 
-Two skills are available for Spectrum Web Components. There is not yet a dedicated skill for
-building a new Gen2 project with no Gen1 code to migrate; in the meantime, point your AI client
-at this documentation site directly for Gen2 component and pattern references.
+Three skills are available for Spectrum Web Components: one for building with each generation,
+plus a migration skill.
 
 ### Gen1
 
 Activated when your project uses `@spectrum-web-components/*` packages or `sp-*` custom elements.
 Includes guides, component API references, accessibility guidance, and integration examples.
+
+### Gen2
+
+Activated when your project uses the `@adobe/spectrum-wc` package or `swc-*` custom elements.
+Includes Spectrum 2 component and pattern API references (properties, slots, events, CSS custom
+properties, CSS parts) plus usage guidance.
 
 ### Migrate from Gen1 to Gen2
 
@@ -35,6 +40,7 @@ npx skills add https://spectrum-web-components.adobe.com
 ```
 
 - Choose **Gen1** if you are building with `sp-*` components. When prompting your AI client, mentioning `sp-*`, `@spectrum-web-components`, or "Spectrum 1" will activate this skill.
+- Choose **Gen2** if you are building with `swc-*` components. Mentioning `swc-*`, `@adobe/spectrum-wc`, or "Spectrum 2" will activate this skill.
 - Choose **Migrate from Gen1 to Gen2** if you are upgrading an existing app to `swc-*` components. Mentioning "migrate", "Gen2", or `@adobe/spectrum-wc` will activate this skill.
 - Choose both if you are mid-migration and working with both generations at the same time.
 
