@@ -11,10 +11,7 @@
  */
 
 import { CSSResult, CSSResultGroup } from '@spectrum-web-components/base';
-import {
-  coreVersion,
-  version,
-} from '@spectrum-web-components/base/src/version.js';
+import { version } from '@spectrum-web-components/base/src/version.js';
 
 import {
   Color,
@@ -47,7 +44,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
   private static templateElement?: HTMLTemplateElement;
   private static instances: Set<Theme> = new Set();
   static VERSION = version;
-  static CORE_VERSION = coreVersion;
   static get observedAttributes(): string[] {
     return ['color', 'scale', 'lang', 'system'];
   }
