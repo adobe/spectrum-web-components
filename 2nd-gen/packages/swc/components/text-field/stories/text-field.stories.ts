@@ -318,7 +318,9 @@ export const States: Story = {
     </swc-text-field>
     <swc-text-field autocomplete="email" disabled invalid value="not-an-email">
       <span slot="label">Email address</span>
-      <span slot="description">We'll never share your email.</span>
+      <span id="disabled-field-description" slot="description">
+        We'll never share your email.
+      </span>
       <span slot="error-text">Enter a valid email address.</span>
     </swc-text-field>
   `,
@@ -329,7 +331,7 @@ export const States: Story = {
       // axe cannot infer that this slotted description belongs to the
       // disabled custom element, so exclude only its color-contrast result.
       exclude: {
-        'color-contrast': ['swc-text-field[disabled] > [slot="description"]'],
+        'color-contrast': ['#disabled-field-description'],
       },
     },
     flexLayout: 'column-stretch',
