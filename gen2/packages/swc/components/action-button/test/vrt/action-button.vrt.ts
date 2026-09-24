@@ -12,17 +12,16 @@
 
 import { html, nothing } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import {
   ACTION_BUTTON_STATIC_COLORS,
   ACTION_BUTTON_VALID_SIZES,
 } from '@adobe/spectrum-wc-core/components/action-button';
-import { Icon_Edit } from '@adobe/spectrum-wc-icons/Edit.js';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
+import '@adobe/spectrum-wc-icons/swc-icon-edit.js';
 
 import {
   createPermutations,
@@ -49,17 +48,6 @@ export default meta;
 
 // Helpers
 
-// A plain <svg> string assigned to the icon slot, matching how the stories file
-// passes the edit icon. `template()`'s named-slot rendering sets `slot="icon"`
-// for us, so the markup itself carries no slot attribute.
-const ICON_SLOT_MARKUP = Icon_Edit();
-
-// Same edit icon written directly into the icon slot for the raw-markup paths
-// below (icon-only anatomy), where `template()`'s named-slot rendering isn't used.
-const editIconSlot = unsafeSVG(
-  Icon_Edit().replace('<svg ', '<svg slot="icon" ')
-);
-
 // Group labels for the `quiet` axis, since `groupPermutationsBy` would
 // otherwise render raw 'true'/'false' row headings.
 const QUIET_LABELS: Record<string, string> = {
@@ -77,7 +65,7 @@ const ACTION_BUTTON_PERMUTATIONS = createPermutations([
   {
     quiet: [false, true],
     size: ACTION_BUTTON_VALID_SIZES,
-    'icon-slot': [ICON_SLOT_MARKUP],
+    'icon-slot': ['<swc-icon-edit slot="icon"></swc-icon-edit>'],
   },
   { quiet: [false, true], disabled: [true] },
   { quiet: [false, true], pending: [true] },
@@ -94,7 +82,7 @@ const STATIC_COLOR_PERMUTATION_GROUPS = ACTION_BUTTON_STATIC_COLORS.map(
       {
         'static-color': [color],
         quiet: [false, true],
-        'icon-slot': [ICON_SLOT_MARKUP],
+        'icon-slot': ['<swc-icon-edit slot="icon"></swc-icon-edit>'],
       },
       {
         'static-color': [color],
@@ -151,7 +139,7 @@ const renderIconOnlyPermutation = ({
     ?pending=${pending}
     accessible-label="Edit"
   >
-    ${editIconSlot}
+    <swc-icon-edit slot="icon"></swc-icon-edit>
   </swc-action-button>
 `;
 

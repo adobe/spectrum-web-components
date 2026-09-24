@@ -11,7 +11,6 @@
  */
 
 import { html } from 'lit';
-import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -24,9 +23,9 @@ import {
   type ButtonStaticColor,
   type ButtonVariant,
 } from '@adobe/spectrum-wc-core/components/button';
-import { Icon_Add } from '@adobe/spectrum-wc-icons/Add.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
+import '@adobe/spectrum-wc-icons/swc-icon-add.js';
 
 import { SIZE_LABELS } from '../../../.storybook/helpers/index.js';
 
@@ -111,9 +110,6 @@ const staticColorLabels = {
   black: 'Static black',
 } as const satisfies Record<ButtonStaticColor, string>;
 
-const addIconSvg = Icon_Add();
-const addIconSlot = unsafeSVG(Icon_Add().replace('<svg ', '<svg slot="icon" '));
-
 // ────────────────────
 //    PLAYGROUND STORY
 // ────────────────────
@@ -152,7 +148,7 @@ export const Anatomy: Story = {
     ${template({
       ...args,
       'default-slot': 'Icon and label',
-      'icon-slot': addIconSvg,
+      'icon-slot': '<swc-icon-add slot="icon"></swc-icon-add>',
     })}
     <swc-button
       variant=${args.variant}
@@ -160,7 +156,7 @@ export const Anatomy: Story = {
       size=${args.size}
       accessible-label="Add"
     >
-      ${addIconSlot}
+      <swc-icon-add slot="icon"></swc-icon-add>
     </swc-button>
   `,
   tags: ['anatomy'],
@@ -310,7 +306,7 @@ export const TextWrapping: Story = {
     ${template({
       ...args,
       'default-slot': 'Submit and notify all stakeholders',
-      'icon-slot': addIconSvg,
+      'icon-slot': '<swc-icon-add slot="icon"></swc-icon-add>',
       style: 'max-inline-size: 180px',
     })}
   `,
@@ -357,7 +353,7 @@ export const Accessibility: Story = {
       size=${args.size ?? 'm'}
       accessible-label="Add item"
     >
-      ${addIconSlot}
+      <swc-icon-add slot="icon"></swc-icon-add>
     </swc-button>
     ${template({
       ...args,

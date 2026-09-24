@@ -11,12 +11,10 @@
  */
 
 import { html, nothing } from 'lit';
-import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Icon_Edit } from '@adobe/spectrum-wc-icons/Edit.js';
-
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
+import '@adobe/spectrum-wc-icons/swc-icon-edit.js';
 
 import type {
   CustomPropertyCase,
@@ -49,12 +47,8 @@ const forceActionButtonStates = forcePseudoStates(
   '.swc-ActionButton'
 );
 
-const editIconSlot = unsafeSVG(
-  Icon_Edit().replace('<svg ', '<svg slot="icon" ')
-);
-
 const iconSvg = () => html`
-  ${editIconSlot}
+  <swc-icon-edit slot="icon"></swc-icon-edit>
 `;
 
 // Every `--swc-action-button-*` custom property is a public contract: consumers
