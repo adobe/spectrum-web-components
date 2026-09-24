@@ -44,9 +44,9 @@
   --_swc-ai-button-light-x: 50%;
   --_swc-ai-button-light-y: 0%;
 
-  /* Pointer-light rim hue and specular, both brand-relative; dark mode uses a softer lilac so the light reads as frosted glass, not a white edge. */
-  --_swc-ai-button-rim: light-dark(oklch(from var(--swc-ai-button-brand-color) 66% 0.24 h), oklch(from var(--swc-ai-button-brand-color) 78% 0.12 calc(h - 20)));
-  --_swc-ai-button-specular: light-dark(oklch(from var(--swc-ai-button-brand-color) 99% 0.02 h), oklch(from var(--swc-ai-button-brand-color) 88% 0.09 calc(h - 20)));
+  /* Pointer-light rim hue and specular, both brand-relative. Their alpha scales every reflection layer: light mode uses a pale, half-strength pink; dark mode a full-strength soft lilac. */
+  --_swc-ai-button-rim: light-dark(oklch(from var(--swc-ai-button-brand-color) 80% 0.12 h / 50%), oklch(from var(--swc-ai-button-brand-color) 78% 0.12 calc(h - 20)));
+  --_swc-ai-button-specular: light-dark(oklch(from var(--swc-ai-button-brand-color) 99% 0.015 h / 70%), oklch(from var(--swc-ai-button-brand-color) 88% 0.09 calc(h - 20)));
   --_swc-ai-button-glow: calc(var(--_swc-ai-button-proximity) * (0.7 + var(--_swc-ai-button-energy) * 0.3));
 
   /* Diffused drop shadow: brand-tinted grey in light mode, black in dark mode. The alpha sets the overall strength. */
@@ -80,8 +80,8 @@
   border-radius: 9999px;
   box-shadow:
     /* Pointer rim: the edge lights in the rim hue only while the pointer is near. */
-    inset 0 0 0 0.5px oklch(from var(--_swc-ai-button-rim) l c h / calc(var(--_swc-ai-button-glow) * 40%)),
-    /* Far edge: a weaker refraction where the light exits. */ inset calc(var(--_swc-ai-button-lit-x) * -5) calc(var(--_swc-ai-button-lit-y) * -5) 10px -4px oklch(from var(--_swc-ai-button-rim) l c h / calc(var(--_swc-ai-button-glow) * 40%)),
+    inset 0 0 0 0.5px oklch(from var(--_swc-ai-button-rim) l c h / calc(alpha * var(--_swc-ai-button-glow) * 40 / 100)),
+    /* Far edge: a weaker refraction where the light exits. */ inset calc(var(--_swc-ai-button-lit-x) * -5) calc(var(--_swc-ai-button-lit-y) * -5) 10px -4px oklch(from var(--_swc-ai-button-rim) l c h / calc(alpha * var(--_swc-ai-button-glow) * 40 / 100)),
     /* Seven-layer diffused shadow, scaled from the design's 512px hero to the button height. */ 0 calc(var(--_swc-ai-button-height) * 0.0239) calc(var(--_swc-ai-button-height) * 0.0188) oklch(from var(--_swc-ai-button-shadow) l c h / calc(alpha * 0.28)),
     0 calc(var(--_swc-ai-button-height) * 0.0542) calc(var(--_swc-ai-button-height) * 0.0427) oklch(from var(--_swc-ai-button-shadow) l c h / calc(alpha * 0.212)),
     0 calc(var(--_swc-ai-button-height) * 0.0944) calc(var(--_swc-ai-button-height) * 0.0743) oklch(from var(--_swc-ai-button-shadow) l c h / calc(alpha * 0.182)),
@@ -89,7 +89,7 @@
     0 calc(var(--_swc-ai-button-height) * 0.2313) calc(var(--_swc-ai-button-height) * 0.1821) oklch(from var(--_swc-ai-button-shadow) l c h / calc(alpha * 0.14)),
     0 calc(var(--_swc-ai-button-height) * 0.361) calc(var(--_swc-ai-button-height) * 0.2841) oklch(from var(--_swc-ai-button-shadow) l c h / calc(alpha * 0.12)),
     0 calc(var(--_swc-ai-button-height) * 0.5993) calc(var(--_swc-ai-button-height) * 0.4717) oklch(from var(--_swc-ai-button-shadow) l c h / calc(alpha * 0.098)),
-    /* Halo leaning toward the pointer. */ calc(var(--_swc-ai-button-lit-x) * -3) calc(var(--_swc-ai-button-lit-y) * -3 + 4px) calc(20px + var(--_swc-ai-button-energy) * 12px) -4px oklch(from var(--_swc-ai-button-rim) l c h / calc(var(--_swc-ai-button-glow) * 45%));
+    /* Halo leaning toward the pointer. */ calc(var(--_swc-ai-button-lit-x) * -3) calc(var(--_swc-ai-button-lit-y) * -3 + 4px) calc(20px + var(--_swc-ai-button-energy) * 12px) -4px oklch(from var(--_swc-ai-button-rim) l c h / calc(alpha * var(--_swc-ai-button-glow) * 45 / 100));
   overflow: hidden;
   user-select: none;
   forced-color-adjust: none;
@@ -140,11 +140,11 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(circle calc(var(--_swc-ai-button-height) * 0.9) at var(--_swc-ai-button-light-x) var(--_swc-ai-button-light-y), oklch(from var(--_swc-ai-button-rim) l c h / calc(var(--_swc-ai-button-glow) * 30%)), transparent 75%);
+  background: radial-gradient(circle calc(var(--_swc-ai-button-height) * 0.9) at var(--_swc-ai-button-light-x) var(--_swc-ai-button-light-y), oklch(from var(--_swc-ai-button-rim) l c h / calc(alpha * var(--_swc-ai-button-glow) * 30 / 100)), transparent 75%);
   border-radius: inherit;
   box-shadow:
-    inset 0 0 calc(var(--_swc-ai-button-height) * 0.08) 0 oklch(from var(--_swc-ai-button-specular) l c h / calc(var(--_swc-ai-button-glow) * 70%)),
-    inset 0 0 calc(var(--_swc-ai-button-height) * 0.3) calc(var(--_swc-ai-button-height) * 0.04) oklch(from var(--_swc-ai-button-rim) l c h / calc(var(--_swc-ai-button-glow) * 100%));
+    inset 0 0 calc(var(--_swc-ai-button-height) * 0.08) 0 oklch(from var(--_swc-ai-button-specular) l c h / calc(alpha * var(--_swc-ai-button-glow) * 70 / 100)),
+    inset 0 0 calc(var(--_swc-ai-button-height) * 0.3) calc(var(--_swc-ai-button-height) * 0.04) oklch(from var(--_swc-ai-button-rim) l c h / calc(alpha * var(--_swc-ai-button-glow) * 100 / 100));
   pointer-events: none;
   mask: radial-gradient(circle calc(var(--_swc-ai-button-height) * 1.05) at var(--_swc-ai-button-light-x) var(--_swc-ai-button-light-y), rgb(0 0 0), rgb(0 0 0 / 50%) 45%, transparent);
 }
@@ -156,7 +156,7 @@
   z-index: -1;
   padding: 1px;
   background:
-    radial-gradient(circle calc(var(--_swc-ai-button-height) * 0.85) at var(--_swc-ai-button-light-x) var(--_swc-ai-button-light-y), oklch(from var(--_swc-ai-button-specular) l c h / calc(var(--_swc-ai-button-glow) * 100%)), oklch(from var(--_swc-ai-button-rim) l c h / calc(var(--_swc-ai-button-glow) * 60%)) 45%, transparent),
+    radial-gradient(circle calc(var(--_swc-ai-button-height) * 0.85) at var(--_swc-ai-button-light-x) var(--_swc-ai-button-light-y), oklch(from var(--_swc-ai-button-specular) l c h / calc(alpha * var(--_swc-ai-button-glow) * 100 / 100)), oklch(from var(--_swc-ai-button-rim) l c h / calc(alpha * var(--_swc-ai-button-glow) * 60 / 100)) 45%, transparent),
     /* Dark mode stroke: a faint white that brightens the colors beneath it, slightly stronger at the bottom. */ linear-gradient(to bottom, light-dark(transparent, rgb(255 255 255 / 5%)), light-dark(transparent, rgb(255 255 255 / 8%)));
   border-radius: inherit;
   pointer-events: none;
