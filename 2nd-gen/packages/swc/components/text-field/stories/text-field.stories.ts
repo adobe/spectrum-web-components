@@ -273,7 +273,9 @@ export const Prefix: Story = {
 
 export const States: Story = {
   render: () => html`
-    <swc-text-field accessible-label="Default"></swc-text-field>
+    <swc-text-field accessible-label="Default">
+      <span slot="label">Default</span>
+    </swc-text-field>
     <swc-text-field required>
       <span slot="label">Full name</span>
     </swc-text-field>
