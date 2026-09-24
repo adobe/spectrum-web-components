@@ -1,22 +1,22 @@
 ---
-description: Authoring guide for the per-unit MDX docs page for 2nd-gen components, internal components, patterns, and controllers. Covers section content, accessible examples, and 1st-gen comparison notes. Story prose lives in MDX, not in JSDoc above story exports.
-globs: 2nd-gen/packages/swc/components/*/*.mdx, 2nd-gen/packages/swc/patterns/*/*/*.mdx, 2nd-gen/packages/core/controllers/*/*.mdx
+description: Authoring guide for the per-unit MDX docs page for gen2 components, internal components, patterns, and controllers. Covers section content, accessible examples, and 1st-gen comparison notes. Story prose lives in MDX, not in JSDoc above story exports.
+globs: gen2/packages/swc/components/*/*.mdx, gen2/packages/swc/patterns/*/*/*.mdx, gen2/packages/core/controllers/*/*.mdx
 paths:
-  - '2nd-gen/packages/swc/components/*/*.mdx'
-  - '2nd-gen/packages/swc/patterns/*/*/*.mdx'
-  - '2nd-gen/packages/core/controllers/*/*.mdx'
+  - 'gen2/packages/swc/components/*/*.mdx'
+  - 'gen2/packages/swc/patterns/*/*/*.mdx'
+  - 'gen2/packages/core/controllers/*/*.mdx'
 alwaysApply: false
 ---
 
 # Per-unit MDX authoring standards
 
-Authoring guide for the per-unit MDX file that powers each Storybook Docs page. Applies to all four 2nd-gen genres: components, internal components, patterns, and controllers.
+Authoring guide for the per-unit MDX file that powers each Storybook Docs page. Applies to all four gen2 genres: components, internal components, patterns, and controllers.
 
 **See also**: `.ai/rules/stories-format.md` for the stories file (`.stories.ts`) structure and conventions.
 
 ## When to apply
 
-- Authoring or reviewing a per-unit `<unit>.mdx` docs page for a 2nd-gen component, internal component, pattern, or controller
+- Authoring or reviewing a per-unit `<unit>.mdx` docs page for a gen2 component, internal component, pattern, or controller
 - Applies automatically when Claude reads a file matching the globs below (Cursor: via `globs`; Claude Code: via `paths`)
 - Verifying documentation prose against the component's actual implementation to avoid hallucinated attributes, slots, or ARIA claims
 
@@ -24,10 +24,10 @@ Authoring guide for the per-unit MDX file that powers each Storybook Docs page. 
 
 Apply to per-unit MDX files in:
 
-- `2nd-gen/packages/swc/components/<name>/<name>.mdx` (components)
-- `2nd-gen/packages/swc/components/<name>/<name>.internal.mdx` (internal components — production builds exclude these)
-- `2nd-gen/packages/swc/patterns/<group>/<unit>/<unit>.mdx` (patterns)
-- `2nd-gen/packages/core/controllers/<name>/<name>.mdx` (controllers)
+- `gen2/packages/swc/components/<name>/<name>.mdx` (components)
+- `gen2/packages/swc/components/<name>/<name>.internal.mdx` (internal components — production builds exclude these)
+- `gen2/packages/swc/patterns/<group>/<unit>/<unit>.mdx` (patterns)
+- `gen2/packages/core/controllers/<name>/<name>.mdx` (controllers)
 
 ## Authoring surface: per-unit MDX
 
@@ -675,13 +675,13 @@ All stories must demonstrate accessible usage:
 - Show proper ARIA usage when applicable
 - Never demonstrate inaccessible patterns
 
-## 1st-gen to 2nd-gen comparison
+## 1st-gen to gen2 comparison
 
-When creating 2nd-gen documentation, check 1st-gen (`1st-gen/packages/*/README.md`) for content to preserve or differences to highlight.
+When creating gen2 documentation, check 1st-gen (`1st-gen/packages/*/README.md`) for content to preserve or differences to highlight.
 
 ### Where to document differences
 
-Document 1st-gen vs 2nd-gen differences as inline notes in the relevant per-unit MDX section, immediately under the section heading and above the `<Canvas>` reference. Keep notes concise — link to the consumer migration guide for full upgrade instructions.
+Document 1st-gen vs gen2 differences as inline notes in the relevant per-unit MDX section, immediately under the section heading and above the `<Canvas>` reference. Keep notes concise — link to the consumer migration guide for full upgrade instructions.
 
 **Pattern for new options or variants**:
 
@@ -690,7 +690,7 @@ Document 1st-gen vs 2nd-gen differences as inline notes in the relevant per-unit
 
 Component-names come in [X] sizes...
 
-> **Note**: the `xl` size is new in 2nd-gen and not available in 1st-gen.
+> **Note**: the `xl` size is new in gen2 and not available in 1st-gen.
 
 <Canvas of={Stories.Sizes} />
 ```
@@ -702,14 +702,14 @@ Component-names come in [X] sizes...
 
 The component exposes the following public methods...
 
-> **Migration note**: the `validate()` method from 1st-gen has been removed in 2nd-gen. Use the `invalid` property instead. See the [consumer migration guide](?path=/docs/components-<name>-migration-guide--docs) for full upgrade steps.
+> **Migration note**: the `validate()` method from 1st-gen has been removed in gen2. Use the `invalid` property instead. See the [consumer migration guide](?path=/docs/components-<name>-migration-guide--docs) for full upgrade steps.
 
 <Canvas of={Stories.Methods} />
 ```
 
 ### Content to check from 1st-gen
 
-Compare 2nd-gen against 1st-gen for:
+Compare gen2 against 1st-gen for:
 
 1. **Size options**: Verify all sizes (especially `xl`) are documented
 2. **Variant lists**: Ensure all variants are listed (check for `accent`, etc.)
@@ -722,7 +722,7 @@ Compare 2nd-gen against 1st-gen for:
 
 ### Common differences to highlight
 
-**New in 2nd-gen:**
+**New in gen2:**
 
 - Additional sizes (e.g., `xl`)
 - Additional variants (e.g., `accent`)
@@ -730,14 +730,14 @@ Compare 2nd-gen against 1st-gen for:
 - Improved ARIA implementation
 - Better high contrast support
 
-**Changed in 2nd-gen:**
+**Changed in gen2:**
 
 - Property names (e.g., `emphasized` → `outline`)
 - Slot names or structure
 - Event names or payloads
 - Default values
 
-**Removed from 2nd-gen:**
+**Removed from gen2:**
 
 - Deprecated properties
 - Removed methods
@@ -748,7 +748,7 @@ Compare 2nd-gen against 1st-gen for:
 Use the Custom Elements Manifest (CEM) to verify differences:
 
 1. **Check 1st-gen CEM**: `1st-gen/packages/component-name/custom-elements.json`
-2. **Check 2nd-gen types**: `2nd-gen/packages/core/components/component-name/*.types.ts`
+2. **Check gen2 types**: `gen2/packages/core/components/component-name/*.types.ts`
 3. **Compare**:
    - Properties and their types
    - Slots and their descriptions
@@ -761,8 +761,8 @@ Use the Custom Elements Manifest (CEM) to verify differences:
 # Check 1st-gen properties
 grep -A 5 '"name": "size"' 1st-gen/packages/badge/custom-elements.json
 
-# Check 2nd-gen types
-grep "VALID_SIZES" 2nd-gen/packages/core/components/badge/Badge.types.ts
+# Check gen2 types
+grep "VALID_SIZES" gen2/packages/core/components/badge/Badge.types.ts
 ```
 
 ### Common gaps to check
@@ -790,10 +790,10 @@ grep "VALID_SIZES" 2nd-gen/packages/core/components/badge/Badge.types.ts
 After creating or updating documentation:
 
 1. **Read the component source files:**
-   - Base class implementation (`2nd-gen/packages/core/components/*/Component.base.ts`)
-   - Component-specific implementation (`2nd-gen/packages/swc/components/*/Component.ts`)
-   - TypeScript type definitions (`2nd-gen/packages/core/components/*/Component.types.ts`)
-   - CSS stylesheets (`2nd-gen/packages/swc/components/*/component.css`)
+   - Base class implementation (`gen2/packages/core/components/*/Component.base.ts`)
+   - Component-specific implementation (`gen2/packages/swc/components/*/Component.ts`)
+   - TypeScript type definitions (`gen2/packages/core/components/*/Component.types.ts`)
+   - CSS stylesheets (`gen2/packages/swc/components/*/component.css`)
 
 2. **Verify slots:**
    - Check JSDoc comments in component class (`@slot` decorators)
@@ -872,20 +872,20 @@ Use these commands to verify claims:
 
 ```bash
 # Search for properties
-grep -n "@property" 2nd-gen/packages/swc/components/component-name/Component.ts
+grep -n "@property" gen2/packages/swc/components/component-name/Component.ts
 
 # Search for slots
-grep -n "@slot" 2nd-gen/packages/core/components/component-name/Component.base.ts
+grep -n "@slot" gen2/packages/core/components/component-name/Component.base.ts
 
 # Search for ARIA attributes
-grep -n "aria-" 2nd-gen/packages/swc/components/component-name/Component.ts
+grep -n "aria-" gen2/packages/swc/components/component-name/Component.ts
 
 # Search for events
-grep -n "dispatchEvent\|new CustomEvent" 2nd-gen/packages/swc/components/component-name/Component.ts
+grep -n "dispatchEvent\|new CustomEvent" gen2/packages/swc/components/component-name/Component.ts
 
 # Compare with 1st-gen
 diff <(grep "@property" 1st-gen/packages/component-name/*.ts) \
-     <(grep "@property" 2nd-gen/packages/swc/components/component-name/*.ts)
+     <(grep "@property" gen2/packages/swc/components/component-name/*.ts)
 ```
 
 ### Documentation after verification

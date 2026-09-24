@@ -180,6 +180,15 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
   public openMobileSubmenu(item: MenuItem): void {
     this._projectMobileSubmenu(item);
     this._mobileSubmenuStack = [...this._mobileSubmenuStack, item];
+    // Listen for the containing tray's `close` only while drilled into a
+    // submenu, so reopening returns to the top level.
+    if (!this._mobileCloseContainer) {
+      this._mobileCloseContainer = this.closest('sp-tray');
+      this._mobileCloseContainer?.addEventListener(
+        'close',
+        this.handleContainerClose
+      );
+    }
     this._triggerMobileTransition('forward');
     this._focusProjectedSubmenu(item);
   }
@@ -196,6 +205,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       this._restoreMobileSubmenu(closedItem);
     }
     this._mobileSubmenuStack = this._mobileSubmenuStack.slice(0, -1);
+    if (this._mobileSubmenuStack.length === 0) {
+      this._detachMobileCloseListener();
+    }
 
     const previous = this.currentMobileSubmenu;
     if (previous?.submenuElement) {
@@ -295,7 +307,8 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     const submenu = this.asMenu(submenuEl);
     const firstItem = submenu.childItems.find(
       (child) =>
-        !child.disabled && !child.classList.contains('mobile-back-button')
+        this.isFocusableElement(child) &&
+        !child.classList.contains('mobile-back-button')
     );
     if (!firstItem) {
       return;
@@ -405,7 +418,33 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
       this._restoreMobileSubmenu(this._mobileSubmenuStack[i]);
     }
     this._mobileSubmenuStack = [];
+    this._detachMobileCloseListener();
   }
+
+  /**
+   * The containing tray the drill-down is listening to for its `close`
+   * event, tracked so the listener can be removed. Set only while a
+   * submenu is drilled into (see `openMobileSubmenu`).
+   */
+  private _mobileCloseContainer: Element | null = null;
+
+  private _detachMobileCloseListener(): void {
+    this._mobileCloseContainer?.removeEventListener(
+      'close',
+      this.handleContainerClose
+    );
+    this._mobileCloseContainer = null;
+  }
+
+  /**
+   * When the containing tray is dismissed (click-outside, Escape, or
+   * programmatic close) it dispatches a `close` event. Reset the drill-down
+   * stack so reopening shows the top-level menu instead of the previously
+   * active submenu.
+   */
+  private handleContainerClose = (): void => {
+    this.resetMobileSubmenus();
+  };
 
   /**
    * Moves the submenu element from its MenuItem parent into this Menu's
@@ -1639,7 +1678,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
   }
 
   private isFocusableElement(el: MenuItem): boolean {
-    return el ? !el.disabled : false;
+    return el ? !el.disabled && !el.hidden : false;
   }
 
   public override disconnectedCallback(): void {

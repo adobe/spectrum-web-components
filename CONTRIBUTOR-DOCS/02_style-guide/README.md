@@ -11,7 +11,7 @@
 <details open>
 <summary><strong>Beneath this doc</strong></summary>
 
-- [2nd-Gen CSS](01_css/README.md)
+- [gen2 CSS](01_css/README.md)
     - [Component CSS](01_css/01_component-css.md)
     - [Custom Properties](01_css/02_custom-properties.md)
     - [Component CSS PR Checklist](01_css/03_component-css-pr-checklist.md)
@@ -19,7 +19,7 @@
     - [Styling Anti-Patterns (What to Avoid)](01_css/05_anti-patterns.md)
     - [Property order quick reference](01_css/06_property-order-quick-reference.md)
     - [Non-component stylesheets](01_css/07_stylesheets.md)
-- [2nd-gen TypeScript](02_typescript/README.md)
+- [gen2 TypeScript](02_typescript/README.md)
     - [File organization](02_typescript/01_file-organization.md)
     - [Class structure](02_typescript/02_class-structure.md)
     - [TypeScript modifier keywords](02_typescript/03_typescript-modifiers.md)
@@ -56,6 +56,6 @@
 
 This section covers the coding conventions and authoring patterns used across Spectrum Web Components. Following these guides keeps the codebase consistent, reviewable, and accessible.
 
-- **[2nd-gen CSS](01_css/README.md)** — Property ordering, class naming, custom properties, selector patterns, and forced-colors requirements for component stylesheets.
-- **[2nd-gen TypeScript](02_typescript/README.md)** — File organization, class structure, decorators, JSDoc, type definitions, naming, and composition patterns for component TypeScript.
+- **[gen2 CSS](01_css/README.md)** — Property ordering, class naming, custom properties, selector patterns, and forced-colors requirements for component stylesheets.
+- **[gen2 TypeScript](02_typescript/README.md)** — File organization, class structure, decorators, JSDoc, type definitions, naming, and composition patterns for component TypeScript.
 - **[Linting tools](03_linting-tools.md)** — How automated linting enforces these conventions and how to configure or extend the rules.

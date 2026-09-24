@@ -38,7 +38,7 @@
     - [Asset component plan](asset/component-plan.md)
 - Avatar
     - [Avatar accessibility migration analysis](avatar/accessibility-migration-analysis.md)
-    - [Avatar — 2nd-Gen Migration Plan](avatar/migration-plan.md)
+    - [Avatar — gen2 Migration Plan](avatar/migration-plan.md)
     - [Avatar accessibility migration analysis](avatar/rendering-and-styling-migration-analysis.md)
 - Badge
     - [Badge accessibility migration analysis](badge/accessibility-migration-analysis.md)
@@ -54,7 +54,10 @@
 - Card
     - [Card family plan](card/migration-plan.md)
 - Checkbox
+    - [Checkbox accessibility migration analysis](checkbox/accessibility-migration-analysis.md)
     - [Checkbox migration roadmap](checkbox/rendering-and-styling-migration-analysis.md)
+- Checkbox Group
+    - [Checkbox group accessibility migration analysis](checkbox-group/accessibility-migration-analysis.md)
 - Close Button
     - [Close button accessibility migration analysis](close-button/accessibility-migration-analysis.md)
     - [Close button migration plan](close-button/migration-plan.md)
@@ -181,9 +184,11 @@
     - [Textfield and Textarea migration roadmap](textfield/rendering-and-styling-migration-analysis.md)
 - Thumbnail
     - [Thumbnail accessibility migration analysis](thumbnail/accessibility-migration-analysis.md)
+    - [Thumbnail migration plan](thumbnail/migration-plan.md)
     - [Thumbnail migration roadmap](thumbnail/rendering-and-styling-migration-analysis.md)
 - Toast
     - [Toast accessibility migration analysis](toast/accessibility-migration-analysis.md)
+    - [Toast migration plan](toast/migration-plan.md)
 - Tooltip
     - [Tooltip accessibility migration analysis](tooltip/accessibility-migration-analysis.md)
     - [Tooltip migration plan](tooltip/migration-plan.md)
@@ -201,4 +206,4 @@ Each component has its own folder (kebab-case). Inside you'll find analysis and 
 
 For a workstream-centric view of the same work, see [Workstreams](../02_workstreams/README.md). For how the two views fit together, see the [Project planning overview](../README.md).
 
-When migrating a **form field** (text field, checkbox, radio, picker, combobox, and similar), start from the canonical [forms strategy](../05_strategies/forms-strategy-rfc.md): it defines the ElementInternals/FACE decision, the label/help/error pattern, IDREF and cross-root rules, and the axe policy that Phase 3 and Phase 4 of the [washing machine workflow](../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md) depend on.
+When migrating a **form field** (text field, checkbox, radio, picker, combobox, and similar), start from the canonical [forms strategy](../05_strategies/forms-strategy-rfc.md): it defines the ElementInternals/FACE decision, the label/help/error pattern, IDREF and cross-root rules, and the axe policy that Phase 3 and Phase 4 of the [washing machine workflow](../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md) depend on.
