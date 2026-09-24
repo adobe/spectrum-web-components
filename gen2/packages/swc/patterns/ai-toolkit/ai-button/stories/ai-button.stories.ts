@@ -15,6 +15,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '../swc-ai-button.js';
+import './ai-button-design-tuner.js';
 
 // ────────────────
 //    METADATA
@@ -69,6 +70,17 @@ export const IconOnlyPlayground: Story = {
   render: (args) => html`
     <div style="padding: 160px;">${template(args)}</div>
   `,
+  tags: ['dev'],
+};
+
+// Prototyping aid for the glass design spike: live sliders and color pickers for the private effect properties.
+export const DesignTuning: Story = {
+  render: (_args, { globals }) => html`
+    <swc-ai-button-design-tuner
+      theme=${globals.theme === 'dark' ? 'dark' : 'light'}
+    ></swc-ai-button-design-tuner>
+  `,
+  parameters: { controls: { disable: true } },
   tags: ['dev'],
 };
 

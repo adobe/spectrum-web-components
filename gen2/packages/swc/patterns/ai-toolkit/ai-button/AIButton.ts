@@ -23,19 +23,18 @@ import { SparkleIcon } from '../utils/icons/index.js';
 
 import styles from './ai-button.css';
 
-/** Distance (px) beyond the button edge at which the pointer light starts. */
-const PROXIMITY_RADIUS = 160;
-
-/** Spring tuning for the light source: slightly underdamped for a liquid lag. */
-const SPRING_STIFFNESS = 140;
-const SPRING_DAMPING = 17;
-
-/** Exponential smoothing rates (1/s) for proximity and pointer-speed energy. */
-const PROXIMITY_RATE = 9;
-const ENERGY_RATE = 4;
-
-/** Pointer speed (px/ms) that maps to full energy. */
-const ENERGY_SPEED = 2.5;
+const DEFAULT_MOTION = {
+  /** Distance (px) beyond the button edge at which the pointer light starts. */
+  proximityRadius: 160,
+  /** Spring tuning for the light source: slightly underdamped for a liquid lag. */
+  springStiffness: 140,
+  springDamping: 17,
+  /** Exponential smoothing rates (1/s) for proximity and pointer-speed energy. */
+  proximityRate: 9,
+  energyRate: 4,
+  /** Pointer speed (px/ms) that maps to full energy. */
+  energySpeed: 2.5,
+};
 
 const SETTLE_EPSILON = 0.001;
 
@@ -76,6 +75,14 @@ export class AIButton extends ButtonBase {
   @query('.swc-AIButton')
   private _button?: HTMLButtonElement;
 
+  /**
+   * Pointer-light motion tuning, read every frame. A prototyping hook for the
+   * design tuning story, not public API.
+   *
+   * @internal
+   */
+  public motionTuning = { ...DEFAULT_MOTION };
+
   private _frame = 0;
   private _lastTime = 0;
   private _pointer: { x: number; y: number; t: number } | null = null;
@@ -97,7 +104,7 @@ export class AIButton extends ButtonBase {
         (now - previous.t);
       this._targetEnergy = Math.max(
         this._targetEnergy,
-        Math.min(1, speed / ENERGY_SPEED)
+        Math.min(1, speed / this.motionTuning.energySpeed)
       );
     }
     this._pointer = { x: event.clientX, y: event.clientY, t: now };
@@ -126,6 +133,13 @@ export class AIButton extends ButtonBase {
       : 1 / 60;
     this._lastTime = time;
 
+    const {
+      proximityRadius,
+      springStiffness,
+      springDamping,
+      proximityRate,
+      energyRate,
+    } = this.motionTuning;
     const rect = this.getBoundingClientRect();
     const halfWidth = rect.width / 2;
     const halfHeight = rect.height / 2;
@@ -139,7 +153,7 @@ export class AIButton extends ButtonBase {
       // Nearest-point distance from the pointer to the button box (0 inside).
       const dx = Math.max(rect.left - x, 0, x - rect.right);
       const dy = Math.max(rect.top - y, 0, y - rect.bottom);
-      const reach = Math.max(0, 1 - Math.hypot(dx, dy) / PROXIMITY_RADIUS);
+      const reach = Math.max(0, 1 - Math.hypot(dx, dy) / proximityRadius);
       // Smoothstep so the light blooms in gently instead of linearly.
       this._targetProximity = reach * reach * (3 - 2 * reach);
     } else {
@@ -175,23 +189,21 @@ export class AIButton extends ButtonBase {
       this._targetEnergy = 0;
     } else {
       light.vx +=
-        (SPRING_STIFFNESS * (targetX - light.x) - SPRING_DAMPING * light.vx) *
-        dt;
+        (springStiffness * (targetX - light.x) - springDamping * light.vx) * dt;
       light.vy +=
-        (SPRING_STIFFNESS * (targetY - light.y) - SPRING_DAMPING * light.vy) *
-        dt;
+        (springStiffness * (targetY - light.y) - springDamping * light.vy) * dt;
       light.x += light.vx * dt;
       light.y += light.vy * dt;
 
       this._proximity +=
         (this._targetProximity - this._proximity) *
-        (1 - Math.exp(-PROXIMITY_RATE * dt));
+        (1 - Math.exp(-proximityRate * dt));
       // Energy rises fast with pointer speed near the button, then decays.
       const energyTarget = this._targetEnergy * this._proximity;
-      const rate = energyTarget > this._energy ? ENERGY_RATE * 3 : ENERGY_RATE;
+      const rate = energyTarget > this._energy ? energyRate * 3 : energyRate;
       this._energy +=
         (energyTarget - this._energy) * (1 - Math.exp(-rate * dt));
-      this._targetEnergy *= Math.exp(-ENERGY_RATE * 2 * dt);
+      this._targetEnergy *= Math.exp(-energyRate * 2 * dt);
     }
 
     this._writeLight(halfWidth, halfHeight);
