@@ -14,7 +14,7 @@ import * as Stories from './stories/labelling-mixin.stories';
 - **`LabellingMixin`** (`@adobe/spectrum-wc-core/mixins`): the `accessible-label` / `accessible-labelledby` properties, `label` slot presence tracking, the "no accessible name" dev warning, and `renderLabel()`.
 - **`renderFieldLabel`** (`@adobe/spectrum-wc-core/directives/render-label`): the underlying render-only directive. The mixin owns and exposes it; use it directly only for stateless label rendering without the mixin.
 
-`HelpTextMixin` (`@adobe/spectrum-wc-core/mixins`) is the companion mixin for description/error-text association; `swc-text-field` composes both.
+`FieldDescriptionMixin` (`@adobe/spectrum-wc-core/mixins`) is the companion mixin for description/error-text association; `swc-text-field` composes both.
 
 ### What it does
 
@@ -102,9 +102,9 @@ Setting both `accessible-labelledby` and `accessible-label` triggers a dev-mode 
 
 ### Related primitives
 
-| Export             | Module                                            | Purpose                                                           |
-| ------------------ | ------------------------------------------------- | ----------------------------------------------------------------- |
-| `renderFieldLabel` | `@adobe/spectrum-wc-core/directives/render-label` | Underlying label render; exposed via the mixin's `renderLabel()`. |
-| `HelpTextMixin`    | `@adobe/spectrum-wc-core/mixins`                  | Companion mixin for description/error-text association.           |
+| Export                  | Module                                            | Purpose                                                           |
+| ----------------------- | ------------------------------------------------- | ----------------------------------------------------------------- |
+| `renderFieldLabel`      | `@adobe/spectrum-wc-core/directives/render-label` | Underlying label render; exposed via the mixin's `renderLabel()`. |
+| `FieldDescriptionMixin` | `@adobe/spectrum-wc-core/mixins`                  | Companion mixin for description/error-text association.           |
 
 <DocsFooter />

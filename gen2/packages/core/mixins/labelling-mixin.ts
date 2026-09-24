@@ -9,11 +9,12 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { PropertyValues, ReactiveElement } from 'lit';
+import { PropertyValues, ReactiveElement, type TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SlotPresenceController } from '../controllers/slot-presence-controller/index.js';
 import {
+  type NecessityIndicatorText,
   renderFieldLabel,
   type RenderFieldLabelResult,
 } from '../directives/render-label/index.js';
@@ -59,8 +60,19 @@ export interface LabellingInterface {
 
   /**
    * Renders the visible label as a `<label for>` targeting the role-element `id`.
+   * Options append a decorative necessity indicator: `required` marks the state,
+   * and `necessityIndicator` picks the asterisk (`icon`, which needs
+   * `necessityIcon` to render) or consumer-provided text (`label`).
    */
-  renderLabel(forId: string): RenderFieldLabelResult;
+  renderLabel(
+    forId: string,
+    options?: {
+      required?: boolean;
+      necessityIndicator?: 'icon' | 'label';
+      necessityIndicatorText?: NecessityIndicatorText;
+      necessityIcon?: TemplateResult;
+    }
+  ): RenderFieldLabelResult;
 }
 
 /**
@@ -146,10 +158,22 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
       );
     }
 
-    public renderLabel(forId: string): RenderFieldLabelResult {
+    public renderLabel(
+      forId: string,
+      options: {
+        required?: boolean;
+        necessityIndicator?: 'icon' | 'label';
+        necessityIndicatorText?: NecessityIndicatorText;
+        necessityIcon?: TemplateResult;
+      } = {}
+    ): RenderFieldLabelResult {
       return renderFieldLabel({
         hasLabelSlotContent: this.hasLabelSlotContent,
         forId,
+        required: options.required,
+        necessityIndicator: options.necessityIndicator,
+        necessityIndicatorText: options.necessityIndicatorText,
+        necessityIcon: options.necessityIcon,
       });
     }
 

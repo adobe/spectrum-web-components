@@ -15,6 +15,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { TextField } from '@adobe/spectrum-wc/text-field';
 
+import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 
 import {
@@ -26,7 +27,10 @@ import {
 import meta from '../stories/text-field.stories.js';
 import {
   Accessibility,
+  FormBehavior,
   Labelling,
+  NecessityIndicator,
+  Sizes,
   States,
 } from '../stories/text-field.stories.js';
 
@@ -63,9 +67,7 @@ export const LabellingTest: Story = {
 
     await step('accessible-label sets aria-label on the input', () => {
       const input = labelOnly.shadowRoot?.querySelector('input');
-      expect(input?.getAttribute('aria-label')).toBe(
-        'Accessible-label only (no visible label)'
-      );
+      expect(input?.getAttribute('aria-label')).toBe('Email address');
     });
 
     await step(
@@ -84,7 +86,126 @@ export const LabellingTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: States — required reflection + invalid description/error wiring
+// TEST: Size-specific field widths
+// ──────────────────────────────────────────────────────────────
+
+export const SizesTest: Story = {
+  ...Sizes,
+  play: async ({ canvasElement, step }) => {
+    const fields = await getComponents<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+
+    await step('each size uses its matching default field width', () => {
+      expect(
+        fields.map((field) => {
+          const control = field.shadowRoot?.querySelector<HTMLElement>(
+            '.swc-TextField-control'
+          );
+          return control ? getComputedStyle(control).maxInlineSize : null;
+        })
+      ).toEqual(['192px', '208px', '224px', '240px']);
+    });
+
+    await step('consumers can override form-field size properties', () => {
+      const field = fields[1];
+      field.style.setProperty('--swc-form-field-label-font-size', '30px');
+      const label = field.shadowRoot?.querySelector<HTMLElement>(
+        '.swc-FormFieldLabel'
+      );
+      expect(label && getComputedStyle(label).fontSize).toBe('30px');
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Invalid icon width reservation
+// ──────────────────────────────────────────────────────────────
+
+export const InvalidWidthTest: Story = {
+  render: () => html`
+    <div
+      style="display: flex; flex-direction: column; align-items: flex-start; gap: 24px;"
+    >
+      <swc-text-field accessible-label="Email address"></swc-text-field>
+      <div style="inline-size: 260px;">
+        <swc-text-field id="narrow-field" label-position="side">
+          <span slot="label">
+            This side label wraps and the input shrinks toward a square
+          </span>
+        </swc-text-field>
+      </div>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const control = field.shadowRoot?.querySelector<HTMLElement>(
+      '.swc-TextField-control'
+    );
+    const input = field.shadowRoot?.querySelector<HTMLInputElement>(
+      '.swc-TextField-input'
+    );
+
+    await step(
+      'the input yields reserved space to the invalid icon without changing the control width',
+      async () => {
+        const validControlRect = control?.getBoundingClientRect();
+        const validInputRect = input?.getBoundingClientRect();
+
+        field.invalid = true;
+        await field.updateComplete;
+
+        const invalidControlRect = control?.getBoundingClientRect();
+        const invalidInputRect = input?.getBoundingClientRect();
+
+        expect(invalidControlRect?.width).toBe(validControlRect?.width);
+        expect(invalidInputRect?.width).toBeLessThan(
+          validInputRect?.width ?? 0
+        );
+        expect(invalidInputRect?.left).toBeGreaterThanOrEqual(
+          invalidControlRect?.left ?? 0
+        );
+        expect(invalidInputRect?.right).toBeLessThanOrEqual(
+          invalidControlRect?.right ?? 0
+        );
+      }
+    );
+
+    await step(
+      'a long value stays inside the control at its minimum width',
+      async () => {
+        const narrowField = await getComponent<TextField>(
+          canvasElement,
+          '#narrow-field'
+        );
+        narrowField.value =
+          'A very long value that must remain inside the control';
+        await narrowField.updateComplete;
+
+        const narrowControl =
+          narrowField.shadowRoot?.querySelector<HTMLElement>(
+            '.swc-TextField-control'
+          );
+        const narrowInput =
+          narrowField.shadowRoot?.querySelector<HTMLInputElement>(
+            '.swc-TextField-input'
+          );
+        const controlRect = narrowControl?.getBoundingClientRect();
+        const inputRect = narrowInput?.getBoundingClientRect();
+
+        expect(inputRect?.left).toBeGreaterThanOrEqual(controlRect?.left ?? 0);
+        expect(inputRect?.right).toBeLessThanOrEqual(controlRect?.right ?? 0);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: States: required reflection + invalid description/error wiring
 // ──────────────────────────────────────────────────────────────
 
 export const StatesTest: Story = {
@@ -94,7 +215,8 @@ export const StatesTest: Story = {
       canvasElement,
       'swc-text-field'
     );
-    const invalidField = fields[fields.length - 1];
+    const invalidField = fields[fields.length - 2];
+    const disabledInvalidField = fields[fields.length - 1];
     const input = invalidField.shadowRoot?.querySelector('input');
 
     await step('invalid input carries aria-invalid', () => {
@@ -102,13 +224,55 @@ export const StatesTest: Story = {
     });
 
     await step(
+      'disabled invalid fields suppress invalid presentation and association',
+      () => {
+        const disabledInput =
+          disabledInvalidField.shadowRoot?.querySelector('input');
+        expect(disabledInput?.getAttribute('aria-invalid')).toBeNull();
+        expect(
+          disabledInvalidField.shadowRoot?.querySelector(
+            '.swc-FormFieldErrorText'
+          )
+        ).toBeNull();
+        expect(
+          disabledInvalidField.shadowRoot?.querySelector(
+            '.swc-TextField-invalidIcon'
+          )
+        ).toBeNull();
+        expect(
+          disabledInput?.ariaDescribedByElements?.some((element) =>
+            element.className.includes('swc-FormFieldErrorText')
+          )
+        ).toBe(false);
+      }
+    );
+
+    await step('re-enabling restores the invalid presentation', async () => {
+      disabledInvalidField.disabled = false;
+      await disabledInvalidField.updateComplete;
+      const reenabledInput =
+        disabledInvalidField.shadowRoot?.querySelector('input');
+      expect(reenabledInput?.getAttribute('aria-invalid')).toBe('true');
+      expect(
+        disabledInvalidField.shadowRoot?.querySelector(
+          '.swc-FormFieldErrorText'
+        )
+      ).toBeTruthy();
+      expect(
+        disabledInvalidField.shadowRoot?.querySelector(
+          '.swc-TextField-invalidIcon'
+        )
+      ).toBeTruthy();
+    });
+
+    await step(
       'error text replaces the description in ariaDescribedByElements while invalid',
       () => {
         const resolved = input?.ariaDescribedByElements ?? [];
         expect(resolved).toHaveLength(1);
-        expect(resolved[0]?.className).toContain('swc-FieldErrorText');
+        expect(resolved[0]?.className).toContain('swc-FormFieldErrorText');
         expect(
-          invalidField.shadowRoot?.querySelector('.swc-FieldDescription')
+          invalidField.shadowRoot?.querySelector('.swc-FormFieldDescription')
         ).toBeNull();
       }
     );
@@ -118,8 +282,179 @@ export const StatesTest: Story = {
       const requiredInput = requiredField.shadowRoot?.querySelector('input');
       expect(requiredInput?.required).toBe(true);
     });
+
+    await step(
+      'a required field with a visible label shows a decorative asterisk',
+      () => {
+        const indicator = fields[1].shadowRoot?.querySelector(
+          '.swc-FormFieldLabel-requiredIndicator'
+        );
+        expect(indicator).toBeTruthy();
+        expect(indicator?.getAttribute('aria-hidden')).toBe('true');
+      }
+    );
+
+    await step('an invalid field renders a decorative validation icon', () => {
+      const icon = invalidField.shadowRoot?.querySelector(
+        '.swc-TextField-invalidIcon'
+      );
+      expect(icon).toBeTruthy();
+      expect(icon?.getAttribute('aria-hidden')).toBe('true');
+      // A valid field renders no validation icon.
+      expect(
+        fields[0].shadowRoot?.querySelector('.swc-TextField-invalidIcon')
+      ).toBeNull();
+    });
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: necessity indicator: icon vs label, required vs optional
+// ──────────────────────────────────────────────────────────────
+
+export const NecessityIndicatorTest: Story = {
+  ...NecessityIndicator,
+  play: async ({ canvasElement, step }) => {
+    const fields = await getComponents<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const [requiredIcon, requiredLabel, optionalLabel] = fields;
+
+    await step('icon mode renders the asterisk indicator', () => {
+      expect(
+        requiredIcon.shadowRoot?.querySelector(
+          '.swc-FormFieldLabel-requiredIndicator'
+        )
+      ).toBeTruthy();
+    });
+
+    await step('label mode marks a required field "(required)"', () => {
+      const label = requiredLabel.shadowRoot?.querySelector(
+        '.swc-FormFieldLabel-necessityLabel'
+      );
+      expect(label?.textContent?.trim()).toBe('(required)');
+      expect(label?.getAttribute('aria-hidden')).toBe('true');
+    });
+
+    await step('label mode marks an optional field "(optional)"', () => {
+      const label = optionalLabel.shadowRoot?.querySelector(
+        '.swc-FormFieldLabel-necessityLabel'
+      );
+      expect(label?.textContent?.trim()).toBe('(optional)');
+    });
+
+    await step(
+      'icon mode shows no indicator on an optional field',
+      async () => {
+        const field = await fixture<TextField>(html`
+          <swc-text-field necessity-indicator="icon">
+            <span slot="label">Optional field</span>
+          </swc-text-field>
+        `);
+        await field.updateComplete;
+        expect(
+          field.shadowRoot?.querySelector(
+            '.swc-FormFieldLabel-requiredIndicator'
+          )
+        ).toBeNull();
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldLabel-necessityLabel')
+        ).toBeNull();
+        field.parentElement?.remove();
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: prefix slot renders as a leading affix inside the control
+// ──────────────────────────────────────────────────────────────
+
+export const PrefixTest: Story = {
+  render: () => html`
+    <swc-text-field accessible-label="Amount">
+      <swc-avatar slot="prefix" alt=""></swc-avatar>
+    </swc-text-field>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+
+    await step('prefix content is assigned to the prefix slot', () => {
+      const slot = field.shadowRoot?.querySelector<HTMLSlotElement>(
+        'slot[name="prefix"]'
+      );
+      const assigned = slot?.assignedElements() ?? [];
+      expect(assigned).toHaveLength(1);
+      expect(assigned[0]?.localName).toBe('swc-avatar');
+    });
+
+    await step('the prefix avatar follows the field size', async () => {
+      const avatar = field.querySelector('swc-avatar');
+      expect(avatar?.getAttribute('size')).toBe('75');
+      field.size = 's';
+      await field.updateComplete;
+      expect(avatar?.getAttribute('size')).toBe('50');
+      field.size = 'l';
+      await field.updateComplete;
+      expect(avatar?.getAttribute('size')).toBe('200');
+      field.size = 'xl';
+      await field.updateComplete;
+      expect(avatar?.getAttribute('size')).toBe('300');
+    });
+
+    await step('prefix and input share the bordered control wrapper', () => {
+      const control = field.shadowRoot?.querySelector('.swc-TextField-control');
+      const input = field.shadowRoot?.querySelector('.swc-TextField-input');
+      const slot = field.shadowRoot?.querySelector('slot[name="prefix"]');
+      expect(control).toBeTruthy();
+      // The prefix slot precedes the input inside the control.
+      expect(control?.contains(input ?? null)).toBe(true);
+      expect(control?.contains(slot ?? null)).toBe(true);
+      const nodes = [...(control?.children ?? [])];
+      expect(nodes.indexOf(slot as Element)).toBeLessThan(
+        nodes.indexOf(input as Element)
+      );
+    });
+  },
+};
+PrefixTest.storyName = 'Prefix';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: host selection API delegates to the native input
+// ──────────────────────────────────────────────────────────────
+
+export const SelectionTest: Story = {
+  render: () => html`
+    <swc-text-field
+      accessible-label="Selection"
+      value="hello world"
+    ></swc-text-field>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const input = field.shadowRoot?.querySelector('input');
+
+    await step('select() selects all text through the host', () => {
+      field.select();
+      expect(input?.selectionStart).toBe(0);
+      expect(input?.selectionEnd).toBe('hello world'.length);
+    });
+
+    await step('setSelectionRange() sets a range on the native input', () => {
+      field.setSelectionRange(0, 5);
+      expect(input?.selectionStart).toBe(0);
+      expect(input?.selectionEnd).toBe(5);
+    });
+  },
+};
+SelectionTest.storyName = 'Selection';
 
 // ──────────────────────────────────────────────────────────────
 // TEST: accessible-describedby combines with a slotted description
@@ -231,6 +566,25 @@ export const EnumValidationTest: Story = {
         ).toBe(true);
         field.parentElement?.remove();
       })
+    );
+
+    await step(
+      'warns when "necessity-indicator" is not a supported value',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const field = await fixture<TextField>(html`
+            <swc-text-field
+              accessible-label="Named"
+              necessity-indicator="star"
+            ></swc-text-field>
+          `);
+          await field.updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          expect(
+            messages.some((m) => m.includes('expects "necessity-indicator"'))
+          ).toBe(true);
+          field.parentElement?.remove();
+        })
     );
   },
 };
@@ -475,6 +829,94 @@ export const FormParticipationTest: Story = {
 };
 FormParticipationTest.storyName = 'Form participation';
 
+// ──────────────────────────────────────────────────────────────
+// TEST: Native form validation, reset, and submit behavior
+// ──────────────────────────────────────────────────────────────
+
+export const FormBehaviorTest: Story = {
+  ...FormBehavior,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.shadowRoot?.querySelector('input');
+    const output = form?.querySelector<HTMLOutputElement>('[data-form-data]');
+    const validityOutput =
+      form?.querySelector<HTMLOutputElement>('[data-validity]');
+    const checkValidityButton = form?.querySelector<HTMLButtonElement>(
+      'button[type="button"]'
+    );
+    if (!form || !input || !output || !validityOutput || !checkValidityButton) {
+      throw new Error('form, input, outputs, or validity button not found');
+    }
+
+    await step('required participates in native validation', async () => {
+      field.value = '';
+      await field.updateComplete;
+      expect(input.required).toBe(true);
+      expect(input.validity.valueMissing).toBe(true);
+      expect(field.validity.valueMissing).toBe(true);
+      expect(field.checkValidity()).toBe(false);
+      expect(form.checkValidity()).toBe(false);
+      checkValidityButton.click();
+      expect(validityOutput.textContent?.trim()).toBe(
+        'field.checkValidity(): invalid\n' +
+          'form.checkValidity(): invalid\n' +
+          'validity.valueMissing: true'
+      );
+
+      field.value = 'Filled';
+      await field.updateComplete;
+      expect(input.validity.valueMissing).toBe(false);
+      expect(field.validity.valid).toBe(true);
+      expect(field.checkValidity()).toBe(true);
+      expect(form.checkValidity()).toBe(true);
+      checkValidityButton.click();
+      expect(validityOutput.textContent?.trim()).toBe(
+        'field.checkValidity(): valid\nform.checkValidity(): valid'
+      );
+    });
+
+    await step('reset restores the initial (empty) value', async () => {
+      field.value = 'Changed';
+      await field.updateComplete;
+      form.reset();
+      await field.updateComplete;
+      expect(field.value).toBe('');
+      expect(new FormData(form).get('username')).toBe('');
+    });
+
+    await step(
+      'submit is blocked while the required field is empty',
+      async () => {
+        let submitCount = 0;
+        form.addEventListener('submit', () => submitCount++);
+        field.value = '';
+        await field.updateComplete;
+        form.requestSubmit();
+        expect(submitCount).toBe(0);
+      }
+    );
+
+    await step('submit includes the field value when valid', async () => {
+      let submitCount = 0;
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        submitCount++;
+      });
+      field.value = 'Submitted';
+      await field.updateComplete;
+      form.requestSubmit();
+      expect(submitCount).toBe(1);
+      expect(new FormData(form).get('username')).toBe('Submitted');
+      expect(output.textContent?.trim()).toBe('username: Submitted');
+    });
+  },
+};
+FormBehaviorTest.storyName = 'Native form behavior';
+
 export const DisabledStateTest: Story = {
   render: () => html`
     <form>
@@ -498,33 +940,30 @@ export const DisabledStateTest: Story = {
       throw new Error('form or fieldset not found');
     }
 
-    await step('enabled: no disabled state, value participates', () => {
-      expect(field.matches(':state(disabled)'), 'no disabled state').toBe(
-        false
-      );
+    await step('enabled: not :disabled, value participates', () => {
+      expect(field.matches(':disabled'), 'not :disabled').toBe(false);
       expect(new FormData(form).get('username')).toBe('Example');
     });
 
-    await step('own disabled sets the custom state', async () => {
+    await step('own disabled matches native :disabled', async () => {
       field.disabled = true;
       await field.updateComplete;
-      expect(
-        field.matches(':state(disabled)'),
-        'own disabled sets :state(disabled)'
-      ).toBe(true);
+      expect(field.matches(':disabled'), 'own disabled matches :disabled').toBe(
+        true
+      );
       expect(new FormData(form).has('username')).toBe(false);
       field.disabled = false;
       await field.updateComplete;
     });
 
     await step(
-      'cascaded <fieldset disabled> sets the state on the host',
+      'cascaded <fieldset disabled> matches :disabled on the host',
       async () => {
         fieldset.disabled = true;
         await field.updateComplete;
         expect(
-          field.matches(':state(disabled)'),
-          'cascade sets :state(disabled) without the host property'
+          field.matches(':disabled'),
+          'cascade matches :disabled without the host property'
         ).toBe(true);
         expect(
           field.disabled,
@@ -542,8 +981,8 @@ export const DisabledStateTest: Story = {
         fieldset.disabled = false;
         await field.updateComplete;
         expect(
-          field.matches(':state(disabled)'),
-          'state clears when re-enabled'
+          field.matches(':disabled'),
+          ':disabled clears when re-enabled'
         ).toBe(false);
         expect(new FormData(form).get('username')).toBe('Example');
       }

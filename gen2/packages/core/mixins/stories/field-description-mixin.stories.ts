@@ -20,9 +20,9 @@ import './demo-hosts.js';
 // ────────────────
 
 /**
- * `HelpTextMixin` adds description/error-text rendering and accessible
+ * `FieldDescriptionMixin` adds description/error-text rendering and accessible
  * description wiring to a host: the `accessible-describedby` property,
- * `description` / `error-text` slot presence tracking, and `renderHelpText()`.
+ * `description` / `error-text` slot presence tracking, and `renderFieldDescription()`.
  *
  * A slotted `description` and an external `accessible-describedby` reference
  * combine rather than override each other; the in-shadow description comes
@@ -31,8 +31,8 @@ import './demo-hosts.js';
  * the companion mixin for accessible-name association.
  */
 const meta: Meta = {
-  title: 'Mixins/Help text mixin',
-  component: 'demo-help-text-host',
+  title: 'Mixins/Field description mixin',
+  component: 'demo-field-description-host',
   parameters: {
     docs: {
       subtitle:
@@ -53,9 +53,9 @@ type Story = StoryObj;
 
 export const Playground: Story = {
   render: () => html`
-    <demo-help-text-host>
+    <demo-field-description-host>
       <span slot="description">Example description</span>
-    </demo-help-text-host>
+    </demo-field-description-host>
   `,
   tags: ['dev'],
 };
@@ -66,9 +66,9 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   render: () => html`
-    <demo-help-text-host>
+    <demo-field-description-host>
       <span slot="description">Example description</span>
-    </demo-help-text-host>
+    </demo-field-description-host>
   `,
   tags: ['overview'],
 };
@@ -79,15 +79,17 @@ export const Overview: Story = {
 
 export const CombinedDescription: Story = {
   render: () => html`
-    <demo-help-text-host>
+    <demo-field-description-host>
       <span slot="description">Slotted description only</span>
-    </demo-help-text-host>
-    <p id="help-text-mixin-external-description">External description text</p>
-    <demo-help-text-host
-      accessible-describedby="help-text-mixin-external-description"
+    </demo-field-description-host>
+    <p id="field-description-mixin-external-description">
+      External description text
+    </p>
+    <demo-field-description-host
+      accessible-describedby="field-description-mixin-external-description"
     >
       <span slot="description">Combined with a slotted description</span>
-    </demo-help-text-host>
+    </demo-field-description-host>
   `,
   tags: ['behaviors'],
 };
@@ -95,14 +97,14 @@ CombinedDescription.storyName = 'Combined description sources';
 
 export const ErrorTextGating: Story = {
   render: () => html`
-    <demo-help-text-host>
+    <demo-field-description-host>
       <span slot="description">Shown while valid</span>
       <span slot="error-text">Replaces the description while invalid</span>
-    </demo-help-text-host>
-    <demo-help-text-host invalid>
+    </demo-field-description-host>
+    <demo-field-description-host invalid>
       <span slot="description">Hidden while invalid</span>
       <span slot="error-text">Replaces the description while invalid</span>
-    </demo-help-text-host>
+    </demo-field-description-host>
   `,
   tags: ['behaviors'],
 };
@@ -114,10 +116,10 @@ ErrorTextGating.storyName = 'Error text replaces the description while invalid';
 
 export const Accessibility: Story = {
   render: () => html`
-    <demo-help-text-host invalid>
+    <demo-field-description-host invalid>
       <span slot="description">Helper text</span>
       <span slot="error-text">Enter a valid value</span>
-    </demo-help-text-host>
+    </demo-field-description-host>
   `,
   tags: ['a11y'],
 };

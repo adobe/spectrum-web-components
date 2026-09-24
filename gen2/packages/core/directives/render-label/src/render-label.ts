@@ -15,16 +15,43 @@ import { html, nothing, type TemplateResult } from 'lit';
 /** Return type of {@link renderFieldLabel}: the label template, or `nothing`. */
 export type RenderFieldLabelResult = TemplateResult | typeof nothing;
 
+/** Consumer-provided copy for the text necessity indicator. */
+export interface NecessityIndicatorText {
+  required: string;
+  optional: string;
+}
+
 /** Options accepted by {@link renderFieldLabel}. */
 export interface RenderFieldLabelOptions {
   /** Whether slotted `label` content is present in the host's light DOM. */
   hasLabelSlotContent: boolean;
 
   /**
-   * The `id` of the field's role element (e.g. the `<input>`), wired as the
-   * rendered `<label for>` so the visible label gives native click-to-focus.
+   * The role element's `id` (e.g. the `<input>`), wired as the rendered
+   * `<label for>` so the label gives native click-to-focus.
    */
   forId: string;
+
+  /**
+   * Whether the field is required. The indicator it appends is `aria-hidden`;
+   * the requirement is conveyed to AT by the role element's own `required` state.
+   */
+  required?: boolean;
+
+  /**
+   * How necessity is marked. `'icon'` (default) shows `necessityIcon` only when
+   * required; `'label'` appends consumer-provided text, marking both states.
+   */
+  necessityIndicator?: 'icon' | 'label';
+
+  /** Copy for the required and optional text in `'label'` mode. */
+  necessityIndicatorText?: NecessityIndicatorText;
+
+  /**
+   * The asterisk glyph for `'icon'` mode, supplied by the consumer because this
+   * `core` directive can't import a `swc` icon.
+   */
+  necessityIcon?: TemplateResult;
 }
 
 /**
@@ -34,18 +61,58 @@ export interface RenderFieldLabelOptions {
  *
  * Most consumers use `LabellingMixin`'s `renderLabel()` instead, which calls
  * this with its resolved state. Render-only, no design tokens: pair it with a
- * style fragment theming the `swc-FieldLabel` class it emits.
+ * style fragment theming the `swc-FormFieldLabel` class it emits.
+ *
+ * The `<slot>` and the necessity indicator `<span>` are rendered adjacent (no
+ * whitespace text node between them). Combined with a leading `&nbsp;` inside
+ * the span, this removes the wrap-break opportunity that would otherwise
+ * orphan the indicator on its own line when the label wraps.
  */
 export function renderFieldLabel({
   hasLabelSlotContent,
   forId,
+  required = false,
+  necessityIndicator = 'icon',
+  necessityIndicatorText,
+  necessityIcon,
 }: RenderFieldLabelOptions): RenderFieldLabelResult {
   if (!hasLabelSlotContent) {
     return nothing;
   }
-  return html`
-    <label class="swc-FieldLabel" for=${forId}>
-      <slot name="label"></slot>
-    </label>
-  `;
+  const necessity = renderNecessityIndicator({
+    indicator: necessityIndicator,
+    required,
+    labels: necessityIndicatorText,
+    icon: necessityIcon,
+  });
+  // prettier-ignore
+  return html`<label class="swc-FormFieldLabel" for=${forId}><slot name="label"></slot>${necessity}</label>`;
+}
+
+/**
+ * The `aria-hidden` necessity indicator span; see `necessityIndicator` for the
+ * icon-vs-label behavior. The leading `&nbsp;` (non-breaking space) sets the
+ * gap from the label text and — with no whitespace text node between the slot
+ * and this span — keeps the indicator on the same wrap line as the last word.
+ */
+function renderNecessityIndicator({
+  indicator,
+  required,
+  labels,
+  icon,
+}: {
+  indicator: 'icon' | 'label';
+  required: boolean;
+  labels: NecessityIndicatorText | undefined;
+  icon: TemplateResult | undefined;
+}): RenderFieldLabelResult {
+  if (indicator === 'label' && labels) {
+    // prettier-ignore
+    return html`<span class="swc-FormFieldLabel-necessityLabel" aria-hidden="true">&nbsp;${required ? labels.required : labels.optional}</span>`;
+  }
+  if (!required || !icon) {
+    return nothing;
+  }
+  // prettier-ignore
+  return html`<span class="swc-FormFieldLabel-requiredIndicator" aria-hidden="true">&nbsp;${icon}</span>`;
 }

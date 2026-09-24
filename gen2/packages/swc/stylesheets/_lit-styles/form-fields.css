@@ -1,0 +1,136 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/*
+ * Shared layout for form fields whose label, description, and error text render
+ * in-shadow via LabellingMixin + FieldDescriptionMixin. A consuming component adds
+ * `swc-FormField` to its render root and places its control in the `input` grid
+ * area. This fragment themes the mixin-emitted `.swc-FormField*` classes and owns
+ * the `label-position` grid so every field lays them out identically. Vertical
+ * spacing between the label / control / messages rows is applied as margins on
+ * the label and messages, so an empty row never contributes perceived gap.
+ */
+
+/* ── Field template grid ──────────────────────────── */
+
+:host {
+  --swc-form-field-row-gap: token("form-item-gap-medium");
+}
+
+.swc-FormField {
+  display: grid;
+  grid-template-areas:
+    "label"
+    "input"
+    "messages";
+
+  --_swc-form-field-font-family: inherit;
+  --_swc-form-field-font-weight: token("regular-font-weight");
+  --_swc-form-field-line-height: token("line-height-100");
+}
+
+:host([size="s"]) {
+  --swc-form-field-label-font-size: token("font-size-75");
+  --swc-form-field-description-font-size: token("font-size-75");
+  --swc-form-field-row-gap: token("form-item-gap-small");
+}
+
+:host([size="m"]) {
+  --swc-form-field-label-font-size: token("font-size-100");
+  --swc-form-field-description-font-size: token("font-size-100");
+}
+
+:host([size="l"]) {
+  --swc-form-field-label-font-size: token("font-size-200");
+  --swc-form-field-description-font-size: token("font-size-200");
+  --swc-form-field-row-gap: token("form-item-gap-large");
+}
+
+:host([size="xl"]) {
+  --swc-form-field-label-font-size: token("font-size-300");
+  --swc-form-field-description-font-size: token("font-size-300");
+  --swc-form-field-row-gap: token("form-item-gap-extra-large");
+}
+
+.swc-FormFieldLabel {
+  grid-area: label;
+
+  /* Space between label and input; only present when the label is rendered so
+     no perceived gap remains when the label slot is empty. */
+  margin-block-end: var(--swc-form-field-row-gap);
+  font-family: var(--_swc-form-field-font-family);
+  font-size: var(--swc-form-field-label-font-size, token("font-size-100"));
+  font-weight: var(--_swc-form-field-font-weight);
+  line-height: var(--_swc-form-field-line-height);
+  color: token("neutral-subdued-content-color-default");
+
+  /* Progressive enhancement: keep the necessity indicator with the last word on
+     wrap. Combined with an adjacent `<span>` sibling (no whitespace text node)
+     and a `&nbsp;` between them, this avoids leaving the indicator alone on a
+     line. Unsupported browsers (e.g. Firefox) fall back to normal wrapping. */
+  text-wrap: pretty;
+  overflow-wrap: break-word;
+}
+
+.swc-FormFieldLabel-requiredIndicator swc-ui-icon {
+  vertical-align: middle;
+}
+
+.swc-FormFieldDescription,
+.swc-FormFieldErrorText {
+  grid-area: messages;
+
+  /* Space between input and messages; only present when messages are rendered,
+     so an unset description/error slot never creates perceived bottom padding. */
+  margin-block-start: var(--swc-form-field-row-gap);
+  font-family: var(--_swc-form-field-font-family);
+  font-size: var(--swc-form-field-description-font-size, token("font-size-75"));
+  font-weight: var(--_swc-form-field-font-weight);
+  line-height: var(--_swc-form-field-line-height);
+}
+
+.swc-FormFieldDescription {
+  color: token("neutral-subdued-content-color-default");
+}
+
+.swc-FormFieldErrorText {
+  color: token("negative-content-color-default");
+}
+
+/* ── Side label ───────────────────────────────────── */
+
+:host([label-position="side"]) .swc-FormField {
+  grid-template-areas:
+    "label input"
+    ".     messages";
+
+  /* `fit-content(50%)` lets the label grow up to half the field width and then
+     wrap, preventing a long side label from kicking the input out of view while
+     keeping the CP consumer override. `--swc-field-label-max-inline-size`
+     overrides the 50% ceiling. */
+  grid-template-columns: fit-content(var(--swc-field-label-max-inline-size, 50%)) 1fr;
+  align-items: baseline;
+  column-gap: token("spacing-200");
+}
+
+/* Label and input sit on the same row in the side layout, so the vertical
+   spacing that separates the top-label from the input is not desired here. */
+:host([label-position="side"]) .swc-FormFieldLabel {
+  margin-block-end: 0;
+}
+
+/* ── Disabled ─────────────────────────────────────── */
+
+:host(:disabled) .swc-FormFieldLabel,
+:host(:disabled) .swc-FormFieldDescription {
+  color: token("disabled-content-color");
+}

@@ -617,34 +617,21 @@ export const Sizes: Story = {
 
 ## Image assets
 
-When stories require placeholder images, use the [picsum.photos](https://picsum.photos/) API instead of local image assets. This keeps the repository lightweight and provides consistent, high-quality images.
+When stories require images, use checked-in local assets instead of third-party image services. This keeps Storybook and visual tests reliable when external services are unavailable.
 
-### Use static IDs for VRT consistency
+### Use local assets for VRT consistency
 
-**Always use static image IDs** to ensure visual regression tests (VRTs) produce consistent snapshots. Random images cause false positives in VRT comparisons.
+**Always use deterministic local assets** to ensure visual regression tests (VRTs) produce consistent snapshots. Remote or random images can make tests fail when a service is unavailable or changes its response.
 
-**URL format**: `https://picsum.photos/id/{ID}/{WIDTH}/{HEIGHT}`
+Use assets from the component package's `public/images/` directory with a relative path such as `./images/avatar-preview.png`.
 
 ```typescript
-// ✅ Good - static ID ensures consistent VRT snapshots
-'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="User avatar" />`
+// ✅ Good - checked-in asset ensures consistent VRT snapshots
+'default-slot': `<img src="./images/avatar-preview.png" alt="User avatar" />`
 
-// ✅ Good - with blur effect
-'default-slot': `<img src="https://picsum.photos/id/56/80/80/?blur=2" alt="Background preview" />`
-
-// ❌ Bad - random image causes VRT failures
-'default-slot': `<img src="https://picsum.photos/80/80" alt="Random image" />`
+// ❌ Bad - third-party image service can be unavailable during tests
+'default-slot': `<img src="https://example.com/avatar.png" alt="User avatar" />`
 ```
-
-### Recommended static IDs
-
-Use these IDs for common use cases:
-
-| ID  | Description        | Example URL                          |
-| --- | ------------------ | ------------------------------------ |
-| 64  | Portrait/avatar    | `https://picsum.photos/id/64/80/80`  |
-| 56  | Background/texture | `https://picsum.photos/id/56/80/80`  |
-| 823 | Person/profile     | `https://picsum.photos/id/823/80/80` |
 
 ### Example usage
 
@@ -656,7 +643,7 @@ const anatomyArgs = [
   },
   {
     label: 'User avatar',
-    'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="User avatar preview" />`,
+    'default-slot': `<img src="./images/avatar-preview.png" alt="User avatar preview" />`,
   },
 ];
 
@@ -713,5 +700,5 @@ See `asset.stories.ts` for complete examples.
 - [ ] No `section-order` parameter on any story
 - [ ] No `description-only` tag on any story
 - [ ] All stories accessible with meaningful content
-- [ ] Image assets: use `picsum.photos` with static IDs (if applicable)
+- [ ] Image assets: use checked-in local assets (if applicable)
 - [ ] Per-unit MDX file exists at the unit root and references each section-tagged story via `<Canvas of={Stories.StoryName} />` (see `.ai/rules/stories-documentation.md`)
