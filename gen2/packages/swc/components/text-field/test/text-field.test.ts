@@ -879,13 +879,13 @@ export const FormBehaviorTest: Story = {
       );
     });
 
-    await step('reset restores the initial value', async () => {
+    await step('reset restores the initial (empty) value', async () => {
       field.value = 'Changed';
       await field.updateComplete;
       form.reset();
       await field.updateComplete;
-      expect(field.value).toBe('Initial');
-      expect(new FormData(form).get('username')).toBe('Initial');
+      expect(field.value).toBe('');
+      expect(new FormData(form).get('username')).toBe('');
     });
 
     await step(

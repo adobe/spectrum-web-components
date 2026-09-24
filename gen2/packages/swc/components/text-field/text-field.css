@@ -26,7 +26,6 @@
   grid-area: input;
   grid-template-areas: "prefix input invalid-icon";
   grid-template-columns: auto minmax(var(--swc-field-input-min-inline-size, token("component-height-100")), 1fr) var(--_swc-text-field-validation-icon-size);
-  gap: var(--swc-text-field-affix-gap, token("base-gap-medium"));
   align-items: center;
   min-inline-size: min-content;
   max-inline-size: var(--swc-field-input-max-inline-size, token("field-default-width-medium"));
@@ -63,8 +62,12 @@
   outline: none;
 }
 
+/* The input spans through the icon column when valid, so there's no perceived
+   gap. When invalid, the icon takes its own column and we need visual space
+   between the input's text edge and the icon. */
 .swc-TextField-input[aria-invalid] {
   grid-column: input;
+  margin-inline-end: var(--swc-text-field-affix-gap, token("base-gap-medium"));
 }
 
 .swc-TextField-input::placeholder {
@@ -82,6 +85,11 @@ slot[name="prefix"]::slotted(*) {
 
   /* Center regardless of the slotted element's own `align-self` (e.g. avatar). */
   align-self: center;
+
+  /* Space to the input. Applying it as a margin on the slotted element (rather
+     than a grid `gap`) keeps the visual gap absent when the prefix slot is
+     empty, so the input's inline padding isn't perceived as too generous. */
+  margin-inline-end: var(--swc-text-field-affix-gap, token("base-gap-medium"));
 
   /* Match the input's font metrics so slotted text (e.g. "https://") shares
      its baseline instead of inheriting mismatched metrics from the light DOM. */

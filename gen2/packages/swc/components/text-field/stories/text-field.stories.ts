@@ -362,13 +362,13 @@ export const LabelOverflow: Story = {
       </swc-text-field>
       <swc-text-field label-position="side" placeholder="My favorite book">
         <span slot="label">
-          This side label wraps and the input shrinks toward a square
+          This side label wraps and pushes over the input
         </span>
       </swc-text-field>
       <swc-text-field
         label-position="side"
         placeholder="My favorite book"
-        style="--swc-field-label-max-inline-size: 120px;"
+        style="--swc-field-label-max-inline-size: 80px;"
       >
         <span slot="label">Tightly capped label wraps early</span>
       </swc-text-field>
@@ -415,13 +415,23 @@ export const FormBehavior: Story = {
       style="display: flex; flex-direction: column; gap: 16px; inline-size: 220px;"
       @submit=${showFormData}
     >
-      <swc-text-field name="username" value="Initial" required>
+      <swc-text-field name="username" required>
         <span slot="label">Username</span>
       </swc-text-field>
       <div style="display: flex; gap: 8px;">
-        <button type="submit">Submit</button>
-        <button type="reset">Reset</button>
-        <button type="button" @click=${showValidity}>Check validity</button>
+        <button type="submit" class="swc-Button">
+          <span class="swc-Button-label">Submit</span>
+        </button>
+        <button type="reset" class="swc-Button swc-Button--secondary">
+          <span class="swc-Button-label">Reset</span>
+        </button>
+        <button
+          type="button"
+          class="swc-Button swc-Button--secondary"
+          @click=${showValidity}
+        >
+          <span class="swc-Button-label">Check validity</span>
+        </button>
       </div>
       <section aria-labelledby="submitted-form-data-label">
         <div id="submitted-form-data-label">Submitted form data</div>

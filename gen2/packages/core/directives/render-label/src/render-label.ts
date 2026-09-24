@@ -62,6 +62,11 @@ export interface RenderFieldLabelOptions {
  * Most consumers use `LabellingMixin`'s `renderLabel()` instead, which calls
  * this with its resolved state. Render-only, no design tokens: pair it with a
  * style fragment theming the `swc-FormFieldLabel` class it emits.
+ *
+ * The `<slot>` and the necessity indicator `<span>` are rendered adjacent (no
+ * whitespace text node between them). Combined with a leading `&nbsp;` inside
+ * the span, this removes the wrap-break opportunity that would otherwise
+ * orphan the indicator on its own line when the label wraps.
  */
 export function renderFieldLabel({
   hasLabelSlotContent,
@@ -74,22 +79,21 @@ export function renderFieldLabel({
   if (!hasLabelSlotContent) {
     return nothing;
   }
-  return html`
-    <label class="swc-FormFieldLabel" for=${forId}>
-      <slot name="label"></slot>
-      ${renderNecessityIndicator({
-        indicator: necessityIndicator,
-        required,
-        labels: necessityIndicatorText,
-        icon: necessityIcon,
-      })}
-    </label>
-  `;
+  const necessity = renderNecessityIndicator({
+    indicator: necessityIndicator,
+    required,
+    labels: necessityIndicatorText,
+    icon: necessityIcon,
+  });
+  // prettier-ignore
+  return html`<label class="swc-FormFieldLabel" for=${forId}><slot name="label"></slot>${necessity}</label>`;
 }
 
 /**
  * The `aria-hidden` necessity indicator span; see `necessityIndicator` for the
- * icon-vs-label behavior. The leading `&nbsp;` sets the gap from the label text.
+ * icon-vs-label behavior. The leading `&nbsp;` (non-breaking space) sets the
+ * gap from the label text and — with no whitespace text node between the slot
+ * and this span — keeps the indicator on the same wrap line as the last word.
  */
 function renderNecessityIndicator({
   indicator,
@@ -103,18 +107,12 @@ function renderNecessityIndicator({
   icon: TemplateResult | undefined;
 }): RenderFieldLabelResult {
   if (indicator === 'label' && labels) {
-    return html`
-      <span class="swc-FormFieldLabel-necessityLabel" aria-hidden="true">
-        &nbsp;${required ? labels.required : labels.optional}
-      </span>
-    `;
+    // prettier-ignore
+    return html`<span class="swc-FormFieldLabel-necessityLabel" aria-hidden="true">&nbsp;${required ? labels.required : labels.optional}</span>`;
   }
   if (!required || !icon) {
     return nothing;
   }
-  return html`
-    <span class="swc-FormFieldLabel-requiredIndicator" aria-hidden="true">
-      &nbsp;${icon}
-    </span>
-  `;
+  // prettier-ignore
+  return html`<span class="swc-FormFieldLabel-requiredIndicator" aria-hidden="true">&nbsp;${icon}</span>`;
 }

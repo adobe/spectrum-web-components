@@ -72,7 +72,7 @@ Text fields can exist in various states:
 
 ### Label overflow
 
-A long visible label wraps onto multiple lines instead of clipping. In `side` position, the label wraps within its column and the input aligns to the label's first line: a short side label reads as centered against the input, while a long one keeps the input at the top and grows downward past it. By default the label wraps late and the input shrinks toward a control-height square; set `--swc-field-label-max-inline-size` to cap the label so it wraps sooner and leaves the input more room, or set `inline-size` on the host to widen the field.
+A long visible label wraps onto multiple lines instead of clipping. In `side` position, the label wraps within its column (capped at 50% of the field width by default) and the input aligns to the label's first line: a short side label reads as centered against the input, while a long one keeps the input at the top and grows downward past it. Set `--swc-field-label-max-inline-size` to widen or tighten that column cap for a specific field, or set `inline-size` on the host to widen the field.
 
 <Canvas of={TextFieldStories.LabelOverflow} />
 
