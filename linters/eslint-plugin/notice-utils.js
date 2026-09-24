@@ -69,7 +69,7 @@ export function resolveTemplate(fileName, { templateFile, template }) {
  *
  * @param {object} options - Rule options (mustMatch, templateFile, template, templateVars, onNonMatchingHeader, messages)
  * @param {string} fileName - Path to the file being linted
- * @returns {{ resolvedTemplate: string | null, mustMatch: RegExp | null, onNonMatchingHeader: 'prepend' | 'replace' | 'report', messages: object }}
+ * @returns {{ resolvedTemplate: string | null, mustMatch: RegExp | null, onNonMatchingHeader: 'prepend' | 'replace' | 'report', messages: object }} The resolved notice-rule options.
  */
 export function resolveOptions(options, fileName) {
   const opts = options || {};
@@ -120,15 +120,15 @@ export function resolveOptions(options, fileName) {
 /**
  * Create a fixer for the notice-after-shebang rule: insert after shebang or replace existing header range.
  *
- * @param {object} params
+ * @param {object} params - Fixer parameters.
  * @param {string | null} params.resolvedTemplate - Resolved header text (trimmed when used)
  * @param {boolean} params.hasHeaderComment - Whether a header comment block exists after the shebang
  * @param {[number, number] | null} params.replaceRange - Range to replace when onNonMatchingHeader === 'replace'
  * @param {string} params.replaceSuffix - Newline(s) after the header when replacing
  * @param {number} params.endOfFirstLine - End offset of the shebang line (insertion point)
  * @param {string} params.text - Full source text (to detect existing newlines after shebang)
- * @param {'prepend' | 'replace' | 'report'} params.onNonMatchingHeader
- * @returns {((fixer: import('eslint').Rule.RuleFixer) => import('eslint').Rule.Fix) | undefined}
+ * @param {'prepend' | 'replace' | 'report'} params.onNonMatchingHeader - How to handle a non-matching header.
+ * @returns {((fixer: import('eslint').Rule.RuleFixer) => import('eslint').Rule.Fix) | undefined} The fixer function, or undefined when no fix applies.
  */
 export function createFixerForShebang({
   resolvedTemplate,
