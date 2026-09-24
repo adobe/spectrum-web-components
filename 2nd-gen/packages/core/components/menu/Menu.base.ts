@@ -27,6 +27,7 @@ import {
   physicalSide,
   registerDismissible,
   resolveTrigger,
+  runAfterTransition,
   unregisterDismissible,
   validateAllowedChildren,
   validateEnum,
@@ -60,10 +61,10 @@ const DOCS_URL =
  * @slot - `swc-menu-item` elements. `swc-menu-group` and `swc-divider` (as a
  *   separator) join in a later migration phase.
  *
- * @fires swc-open - Dispatched when the menu begins to open.
- * @fires swc-after-open - Dispatched after the menu finishes opening.
- * @fires swc-close - Dispatched when the menu begins to close.
- * @fires swc-after-close - Dispatched after the menu finishes closing.
+ * @fires swc-open - Dispatched when the menu begins opening.
+ * @fires swc-after-open - Dispatched after the open transition completes.
+ * @fires swc-close - Dispatched when the menu begins closing.
+ * @fires swc-after-close - Dispatched after the close transition completes.
  */
 export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   validSizes: MENU_VALID_SIZES,
@@ -161,6 +162,10 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   // Set at the end of every updated() call; suppresses only the phantom
   // event dispatch and initial focus-steal on the very first render.
   private _hasCompletedFirstUpdate = false;
+
+  // Cancels the pending `_afterTransition` run armed by the last open/close
+  // cycle, matching `Popover.base.ts`'s own field of the same name.
+  private _cancelAfterTransition?: () => void;
 
   // Direct `swc-menu-item` children only this phase; `swc-menu-group` joins
   // once it exists (Phase B).
@@ -288,22 +293,67 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
 
   // Each event is its own literal `new CustomEvent(...)` call, not a shared
   // helper, so the custom-elements-manifest analyzer can statically detect it.
-  private dispatchOpenEvents(isOpen: boolean): void {
-    if (isOpen) {
-      this.dispatchEvent(
-        new CustomEvent('swc-open', { bubbles: true, composed: true })
-      );
+  private _dispatchOpen(): void {
+    this.dispatchEvent(
+      new CustomEvent('swc-open', { bubbles: true, composed: true })
+    );
+    // No fallback timer on open: nothing is gated on `swc-after-open`, so a
+    // delayed (janky) `transitionend` must not be pre-empted by the timer
+    // (matches `Popover.base.ts`'s own `_dispatchOpen`).
+    this._afterTransition(() => {
       this.dispatchEvent(
         new CustomEvent('swc-after-open', { bubbles: true, composed: true })
       );
-    } else {
-      this.dispatchEvent(
-        new CustomEvent('swc-close', { bubbles: true, composed: true })
-      );
+    }, false);
+  }
+
+  private _dispatchClose(): void {
+    this.dispatchEvent(
+      new CustomEvent('swc-close', { bubbles: true, composed: true })
+    );
+    this._afterTransition(() => {
       this.dispatchEvent(
         new CustomEvent('swc-after-close', { bubbles: true, composed: true })
       );
+      this._stopPositioningWhenClosed();
+    });
+  }
+
+  // Run `callback` once the surface's CSS transition settles (or
+  // immediately when none will run). Each call supersedes the previous
+  // open/close cycle's pending run, so a rapid close-then-reopen never
+  // dispatches a spurious `swc-after-close` after reopening. `fallback` arms
+  // the allow-discrete safety timer (default true; the close path relies on
+  // it to always tear down positioning). Matches `Popover.base.ts`'s own
+  // `_afterTransition`.
+  private _afterTransition(callback: () => void, fallback = true): void {
+    this._cancelAfterTransition?.();
+    const element = this.surfaceElement;
+    if (!element) {
+      callback();
+      return;
     }
+    this._cancelAfterTransition = runAfterTransition(
+      element,
+      () => {
+        this._cancelAfterTransition = undefined;
+        callback();
+      },
+      { fallback }
+    );
+  }
+
+  // Clears the now-stale `actual-placement` attribute once the exit
+  // transition finishes, so the discrete transition doesn't snap to its
+  // default mid-fade. Guarded by `!this.open` so a rapid reopen during the
+  // fade keeps its positioning (matches `Popover.base.ts`'s own
+  // `_stopPositioningWhenClosed`).
+  private _stopPositioningWhenClosed(): void {
+    if (this.open) {
+      return;
+    }
+    this.placementController.stop();
+    this.removeAttribute('actual-placement');
   }
 
   /**
@@ -341,7 +391,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       return;
     }
     if (this._hasCompletedFirstUpdate) {
-      this.dispatchOpenEvents(true);
+      this._dispatchOpen();
     }
     registerDismissible(this);
     document.addEventListener('keydown', this.handleKeyDown, {
@@ -410,15 +460,20 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     }
     const restoreFocusToTrigger = this.isFocusWithin();
     this._syncOpen(false);
+    // Freeze positioning at the current location the moment the close
+    // begins: `stop()` tears down the `autoUpdate` loop but leaves
+    // `actual-placement` in place until `_stopPositioningWhenClosed`, so the
+    // surface fades out from where it is instead of snapping mid-fade.
+    this.placementController.stop();
     if (this._hasCompletedFirstUpdate) {
-      this.dispatchOpenEvents(false);
+      this._dispatchClose();
+    } else {
+      this._stopPositioningWhenClosed();
     }
     unregisterDismissible(this);
     document.removeEventListener('keydown', this.handleKeyDown, {
       capture: true,
     });
-    this.placementController.stop();
-    this.removeAttribute('actual-placement');
     if (restoreFocusToTrigger) {
       this._interactiveElement?.focus({ preventScroll: true });
     }

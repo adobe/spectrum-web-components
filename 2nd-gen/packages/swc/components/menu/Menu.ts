@@ -33,10 +33,10 @@ import styles from './menu.css';
  *
  * @slot - `swc-menu-item` elements.
  *
- * @fires swc-open - Dispatched when the menu begins to open.
- * @fires swc-after-open - Dispatched after the menu finishes opening.
- * @fires swc-close - Dispatched when the menu begins to close.
- * @fires swc-after-close - Dispatched after the menu finishes closing.
+ * @fires swc-open - Dispatched when the menu begins opening.
+ * @fires swc-after-open - Dispatched after the open transition completes.
+ * @fires swc-close - Dispatched when the menu begins closing.
+ * @fires swc-after-close - Dispatched after the close transition completes.
  */
 export class Menu extends MenuBase {
   public static override get styles(): CSSResultArray {
