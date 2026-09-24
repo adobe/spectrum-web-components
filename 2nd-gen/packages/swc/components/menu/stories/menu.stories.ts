@@ -14,6 +14,8 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import { MENU_PLACEMENTS } from '@adobe/spectrum-wc-core/components/menu';
+
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 
@@ -23,12 +25,17 @@ import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-menu');
 
-// `actual-placement` is internal CSS-only state that `Menu` manages directly
-// via setAttribute (the flip-resolved side from PlacementController). The
-// Storybook helper otherwise observes every attribute change, writes it back
-// into `args`, and re-applies it through its `spread` directive on the next
-// render — clobbering the resolved side with a stale value. Declaring it
-// here (control disabled) makes the helper exclude it from the spread.
+// The manifest only records the type alias name, not its expanded union, so
+// the helper falls back to free text without this override.
+argTypes.placement = {
+  ...argTypes.placement,
+  control: { type: 'select' },
+  options: MENU_PLACEMENTS,
+  table: { category: 'attributes', defaultValue: { summary: 'bottom-start' } },
+};
+
+// Internal CSS-only state `Menu` sets itself; excluded so the helper's
+// attribute round-trip doesn't clobber it with a stale value.
 argTypes['actual-placement'] = {
   table: { disable: true },
   control: false,
@@ -57,12 +64,8 @@ export default meta;
 //    PLAYGROUND STORY
 // ────────────────────
 
-// `swc-menu-item` doesn't exist yet (Phase A minimal surface, tracked
-// separately from this ticket). These placeholders use its own tag name and
-// `role="menuitem"` (the role `swc-menu-item` sets on its host once it
-// exists) so the story exercises the same tag-based item query
-// `focusNavigation` runs against, and stays aXe-clean under the `role="menu"`
-// container, which requires `menuitem` children.
+// Placeholders for `swc-menu-item`, which doesn't exist yet; matches its
+// eventual tag name and `role="menuitem"` so the story stays aXe-clean.
 const defaultItems = html`
   <swc-menu-item role="menuitem" tabindex="-1">Cut</swc-menu-item>
   <swc-menu-item role="menuitem" tabindex="-1">Copy</swc-menu-item>
@@ -73,6 +76,9 @@ export const Playground: Story = {
   args: {
     open: false,
     for: 'playground-trigger',
+    'actual-placement': null,
+    placement: 'bottom-start',
+    'should-flip': true,
   },
   render: (args) => html`
     <swc-button id="playground-trigger">Open menu</swc-button>

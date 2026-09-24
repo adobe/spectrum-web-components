@@ -33,26 +33,29 @@ import styles from './menu.css';
  *
  * @slot - `swc-menu-item` elements.
  *
- * @fires swc-open - Dispatched when the menu begins to open.
- * @fires swc-after-open - Dispatched after the menu finishes opening.
- * @fires swc-close - Dispatched when the menu begins to close.
- * @fires swc-after-close - Dispatched after the menu finishes closing.
+ * @fires swc-open - Dispatched when the menu begins opening.
+ * @fires swc-after-open - Dispatched after the open transition completes.
+ * @fires swc-close - Dispatched when the menu begins closing.
+ * @fires swc-after-close - Dispatched after the close transition completes.
  */
 export class Menu extends MenuBase {
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
-  // The element `PlacementController` positions. A plain `querySelector` (not
-  // a cached `@query`) since it must resolve to the current shadow tree on
-  // every read.
+  // Plain querySelector, not a cached @query, so it resolves fresh each read.
   protected override get surfaceElement(): HTMLElement | null {
     return this.shadowRoot?.querySelector('.swc-Menu') ?? null;
   }
 
   protected override render(): TemplateResult {
     return html`
-      <div class="swc-Menu" role="menu" ?hidden=${!this.open}>
+      <div
+        class="swc-Menu"
+        popover="auto"
+        role="menu"
+        @beforetoggle=${this._onBeforeToggle}
+      >
         <slot @slotchange=${this.handleDefaultSlotChange}></slot>
       </div>
     `;

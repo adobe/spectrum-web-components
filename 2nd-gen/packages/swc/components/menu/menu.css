@@ -14,33 +14,108 @@
   display: block;
 }
 
-/* Unstyled positioning and layout only: `position: absolute` is what
- * `PlacementController` needs to place the surface (writes top/left/translate
- * inline), and `display: flex` / `flex-direction: column` stacks slotted rows
- * vertically regardless of their own default display (an unregistered custom
- * element, like the current placeholder story rows, defaults to `inline`).
- * Visual styling (background, border, radius, elevation) is deferred until
- * `swc-menu-item` exists to style and size against for real; see the
- * migration plan's Architecture section for why this single class will carry
- * both the `spectrum-css` popover-chrome and menu-list roles once it lands. */
+* {
+  box-sizing: border-box;
+}
+
+/* `inset: auto` resets the UA popover default of `inset: 0`, which
+ * auto-centers the surface and fights the inline top/left/translate
+ * PlacementController writes -- same reset `swc-popover` applies.
+ * Background/border/radius/shadow are inline `token()` calls, not
+ * `--swc-menu-*` custom properties: no consumer override request exists yet.
+ * `display` is intentionally absent here (see `:popover-open` below); an
+ * unconditional value would override the UA's default-hidden state. */
 .swc-Menu {
-  display: flex;
+  --_swc-menu-animation-distance: token("spacing-75");
+
   position: absolute;
+  inset: auto;
   flex-direction: column;
+  inline-size: max-content;
+  max-inline-size: min(var(--swc-placement-available-width, 100vi), calc(100vi - 24px), 320px);
+  max-block-size: min(var(--swc-placement-available-height, 90vb), 90vb);
+  padding: token("spacing-100");
+  background-color: token("background-layer-2-color");
+  border: token("border-width-100") solid token("popover-border-color");
+  border-radius: token("corner-radius-700");
+  box-shadow: token("drop-shadow-elevated");
+  overflow: auto;
+
+  /* Keep scrolling past the end of a long menu from chaining out to the
+   * page, matching `swc-popover`'s own scroll containment. */
+  overscroll-behavior: contain;
+  opacity: 0;
+  transition:
+    opacity token("animation-duration-200") token("animation-ease-out"),
+    transform token("animation-duration-200") token("animation-ease-out"),
+    overlay token("animation-duration-200") allow-discrete,
+    display token("animation-duration-200") allow-discrete;
 }
 
-/* `[hidden]` and `.swc-Menu` are both single-selector specificity (0,1,0),
- * and this stylesheet's `display: flex` above comes after the UA
- * stylesheet's `[hidden] { display: none }` in the cascade, so it was
- * winning the tie and the surface never actually hid despite the attribute
- * being set correctly. The extra specificity here (0,2,0) restores it. */
-.swc-Menu[hidden] {
-  display: none;
+/* `flex-direction` lives on the base rule, not here, since it isn't part of
+ * the discrete transition and would snap to its default mid-fade otherwise. */
+.swc-Menu:popover-open {
+  display: flex;
 }
 
-/* Minimal padding so slotted rows are visually distinct and roving focus is
- * easy to see moving between them; not a real row treatment. `swc-menu-item`
- * owns its own padding once it exists, superseding this. */
+/* Entry/exit slide offset by requested side (reflected `placement`, known
+ * immediately, unlike the async `actual-placement`), matching `swc-popover`'s
+ * own tip-less slide. `left`/`right` are physical; `start`/`end` resolve
+ * against writing direction via `:dir()`. */
+:host([placement^="top"]) .swc-Menu {
+  transform: translateY(var(--_swc-menu-animation-distance));
+}
+
+:host([placement^="bottom"]) .swc-Menu {
+  transform: translateY(calc(-1 * var(--_swc-menu-animation-distance)));
+}
+
+:host([placement^="left"]) .swc-Menu {
+  transform: translateX(var(--_swc-menu-animation-distance));
+}
+
+:host([placement^="right"]) .swc-Menu {
+  transform: translateX(calc(-1 * var(--_swc-menu-animation-distance)));
+}
+
+:host([placement^="start"]:dir(ltr)) .swc-Menu,
+:host([placement^="end"]:dir(rtl)) .swc-Menu {
+  transform: translateX(var(--_swc-menu-animation-distance));
+}
+
+:host([placement^="start"]:dir(rtl)) .swc-Menu,
+:host([placement^="end"]:dir(ltr)) .swc-Menu {
+  transform: translateX(calc(-1 * var(--_swc-menu-animation-distance)));
+}
+
+/* Gated on `actual-placement` (async, set once the first position lands) so
+ * the surface doesn't fade in at its 0,0 origin and jump to the trigger
+ * mid-transition; matches `swc-popover`'s own gating. */
+:host([actual-placement]) .swc-Menu:popover-open {
+  opacity: 1;
+  transform: none;
+}
+
+@starting-style {
+  :host([actual-placement]) .swc-Menu:popover-open {
+    opacity: 0;
+  }
+}
+
+/* Minimal padding so rows are visually distinct; not a real row treatment.
+ * `swc-menu-item` owns its own padding once it exists. */
 ::slotted(*) {
   padding: token("spacing-100");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-Menu {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .swc-Menu {
+    border-color: CanvasText;
+  }
 }
