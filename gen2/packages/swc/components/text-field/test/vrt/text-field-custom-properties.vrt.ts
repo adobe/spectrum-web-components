@@ -88,7 +88,7 @@ const renderModPropertyCase = (
         <span slot="description">Description text</span>
         ${showsError
           ? html`
-              <span slot="error-text">Fix this field.</span>
+              <span slot="error-text">Fix this field</span>
             `
           : nothing}
       </swc-text-field>

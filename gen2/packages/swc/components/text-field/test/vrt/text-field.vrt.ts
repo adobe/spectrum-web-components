@@ -273,14 +273,14 @@ const permutationContent = () => html`
         label: 'Invalid',
         invalid: true,
         description: 'Field help text',
-        errorText: 'Enter a valid value.',
+        errorText: 'Enter a valid value',
       }),
       renderCase({
         label: 'Invalid + disabled',
         invalid: true,
         disabled: true,
         description: 'Field help text',
-        errorText: 'Enter a valid value.',
+        errorText: 'Enter a valid value',
       }),
     ],
     'States'
@@ -336,13 +336,13 @@ const permutationContent = () => html`
       renderCase({
         label: 'Invalid hover',
         invalid: true,
-        errorText: 'Enter a valid value.',
+        errorText: 'Enter a valid value',
         forceState: 'hover',
       }),
       renderCase({
         label: 'Invalid focus-visible',
         invalid: true,
-        errorText: 'Enter a valid value.',
+        errorText: 'Enter a valid value',
         forceState: 'focus-visible',
       }),
     ],
@@ -359,12 +359,14 @@ const permutationContent = () => html`
         labelPosition: 'side',
         label: 'This side label wraps and the input shrinks',
         placeholder: 'Placeholder',
+        extraStyle: 'inline-size: 360px;',
       }),
       renderCase({
         labelPosition: 'side',
         label: 'Tightly capped label wraps early',
         placeholder: 'Placeholder',
-        extraStyle: '--swc-field-label-max-inline-size: 120px;',
+        extraStyle:
+          'inline-size: 360px; --swc-field-label-max-inline-size: 120px;',
       }),
     ],
     'Wrapping'
