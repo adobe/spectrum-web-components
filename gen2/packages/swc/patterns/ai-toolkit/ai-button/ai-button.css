@@ -44,15 +44,13 @@
   --_swc-ai-button-light-x: 50%;
   --_swc-ai-button-light-y: 0%;
 
-  /* Pointer-light rim hue and near-white specular, both brand-relative; dark mode uses a softer lilac so the light reads as frosted glass. */
+  /* Pointer-light rim hue and specular, both brand-relative; dark mode uses a softer lilac so the light reads as frosted glass, not a white edge. */
   --_swc-ai-button-rim: light-dark(oklch(from var(--swc-ai-button-brand-color) 66% 0.24 h), oklch(from var(--swc-ai-button-brand-color) 78% 0.12 calc(h - 20)));
-  --_swc-ai-button-specular: light-dark(oklch(from var(--swc-ai-button-brand-color) 99% 0.02 h), oklch(from var(--swc-ai-button-brand-color) 97% 0.03 h));
-
-  /* Ambient edge tint: a neutral hairline, dark on light glass and white on dark glass. */
-  --_swc-ai-button-fresnel: light-dark(rgb(0 0 0 / 30%), rgb(255 255 255 / 32%));
+  --_swc-ai-button-specular: light-dark(oklch(from var(--swc-ai-button-brand-color) 99% 0.02 h), oklch(from var(--swc-ai-button-brand-color) 88% 0.09 calc(h - 20)));
   --_swc-ai-button-glow: calc(var(--_swc-ai-button-proximity) * (0.7 + var(--_swc-ai-button-energy) * 0.3));
-  --_swc-ai-button-drop-near: light-dark(rgb(0 0 0 / 8%), rgb(0 0 0 / 30%));
-  --_swc-ai-button-drop-far: light-dark(rgb(0 0 0 / 4%), transparent);
+
+  /* Diffused drop shadow: brand-tinted grey in light mode, black in dark mode. The alpha sets the overall strength. */
+  --_swc-ai-button-shadow: light-dark(oklch(from var(--swc-ai-button-brand-color) 60.9% 0.037 calc(h - 11.9) / 50%), rgb(0 0 0 / 100%));
 
   /* Light-facing offset (inset shadows shift away from the light to brighten the near edge). */
   --_swc-ai-button-lit-x: calc(var(--_swc-ai-button-dir-x) * var(--_swc-ai-button-proximity) * -1px);
@@ -81,12 +79,16 @@
   /* Half-height stadium radius; token("corner-radius-full") is 50% (an ellipse). */
   border-radius: 9999px;
   box-shadow:
-    /* Ambient fresnel: the glass edge always carries a faint tint. */
-    inset 0 0 0 0.5px oklch(from var(--_swc-ai-button-fresnel) l c h / calc(alpha * (0.18 + var(--_swc-ai-button-glow) * 0.22))),
-    inset 0 0 8px 0 oklch(from var(--_swc-ai-button-fresnel) l c h / calc(alpha * (0.14 + var(--_swc-ai-button-glow) * 0.12))),
+    /* Pointer rim: the edge lights in the rim hue only while the pointer is near. */
+    inset 0 0 0 0.5px oklch(from var(--_swc-ai-button-rim) l c h / calc(var(--_swc-ai-button-glow) * 40%)),
     /* Far edge: a weaker refraction where the light exits. */ inset calc(var(--_swc-ai-button-lit-x) * -5) calc(var(--_swc-ai-button-lit-y) * -5) 10px -4px oklch(from var(--_swc-ai-button-rim) l c h / calc(var(--_swc-ai-button-glow) * 40%)),
-    0 1.5px 3px var(--_swc-ai-button-drop-near),
-    0 6px 9px var(--_swc-ai-button-drop-far),
+    /* Seven-layer diffused shadow, scaled from the design's 512px hero to the button height. */ 0 calc(var(--_swc-ai-button-height) * 0.0239) calc(var(--_swc-ai-button-height) * 0.0188) oklch(from var(--_swc-ai-button-shadow) l c h / calc(alpha * 0.28)),
+    0 calc(var(--_swc-ai-button-height) * 0.0542) calc(var(--_swc-ai-button-height) * 0.0427) oklch(from var(--_swc-ai-button-shadow) l c h / calc(alpha * 0.212)),
+    0 calc(var(--_swc-ai-button-height) * 0.0944) calc(var(--_swc-ai-button-height) * 0.0743) oklch(from var(--_swc-ai-button-shadow) l c h / calc(alpha * 0.182)),
+    0 calc(var(--_swc-ai-button-height) * 0.1499) calc(var(--_swc-ai-button-height) * 0.118) oklch(from var(--_swc-ai-button-shadow) l c h / calc(alpha * 0.16)),
+    0 calc(var(--_swc-ai-button-height) * 0.2313) calc(var(--_swc-ai-button-height) * 0.1821) oklch(from var(--_swc-ai-button-shadow) l c h / calc(alpha * 0.14)),
+    0 calc(var(--_swc-ai-button-height) * 0.361) calc(var(--_swc-ai-button-height) * 0.2841) oklch(from var(--_swc-ai-button-shadow) l c h / calc(alpha * 0.12)),
+    0 calc(var(--_swc-ai-button-height) * 0.5993) calc(var(--_swc-ai-button-height) * 0.4717) oklch(from var(--_swc-ai-button-shadow) l c h / calc(alpha * 0.098)),
     /* Halo leaning toward the pointer. */ calc(var(--_swc-ai-button-lit-x) * -3) calc(var(--_swc-ai-button-lit-y) * -3 + 4px) calc(20px + var(--_swc-ai-button-energy) * 12px) -4px oklch(from var(--_swc-ai-button-rim) l c h / calc(var(--_swc-ai-button-glow) * 45%));
   overflow: hidden;
   user-select: none;
@@ -107,7 +109,7 @@
   background:
     radial-gradient(closest-side at 14% 55%, light-dark(oklch(from var(--swc-ai-button-brand-color) l c h / 55%), oklch(from var(--swc-ai-button-brand-color) 55.5% 0.197 calc(h - 292.1) / 70%)), transparent), radial-gradient(closest-side at 36% 62%, light-dark(oklch(from var(--swc-ai-button-brand-color) l c h / 45%), oklch(from var(--swc-ai-button-brand-color) 50.5% 0.209 calc(h - 1))), transparent),
     radial-gradient(closest-side at 66% 60%, light-dark(oklch(from var(--swc-ai-button-brand-color) 67.5% 0.213 calc(h + 67.7) / 30%), oklch(from var(--swc-ai-button-brand-color) 50.6% 0.251 calc(h - 38.8))), transparent), radial-gradient(closest-side at 86% 50%, light-dark(oklch(from var(--swc-ai-button-brand-color) 78.8% 0.169 calc(h + 106) / 40%), oklch(from var(--swc-ai-button-brand-color) 45.4% 0.312 calc(h - 58.3))), transparent),
-    radial-gradient(ellipse 60% 40% at 50% 12%, light-dark(oklch(from var(--swc-ai-button-brand-color) 91.3% 0.072 h / 60%), oklch(from var(--swc-ai-button-brand-color) 73.6% 0.025 calc(h - 20.6) / 30%)), transparent);
+    radial-gradient(ellipse 75% 45% at 50% 8%, light-dark(oklch(from var(--swc-ai-button-brand-color) 91.3% 0.072 h / 60%), oklch(from var(--swc-ai-button-brand-color) 73.6% 0.025 calc(h - 20.6) / 45%)), transparent);
   pointer-events: none;
   opacity: calc(0.72 + var(--_swc-ai-button-glow) * 0.28);
   filter: blur(calc(var(--_swc-ai-button-height) * 0.2)) saturate(calc(1 + var(--_swc-ai-button-glow) * 0.35));
@@ -120,14 +122,14 @@
   inset: 0;
   z-index: -1;
   padding: 1px;
-  background: linear-gradient(to right in oklch, light-dark(oklch(from var(--swc-ai-button-brand-color) l c h / 55%), transparent) 15%, light-dark(oklch(from var(--swc-ai-button-brand-color) 67.5% 0.213 calc(h + 67.7) / 45%), transparent) 70%, light-dark(oklch(from var(--swc-ai-button-brand-color) 78.8% 0.169 calc(h + 106) / 65%), transparent) 90%);
+  background: linear-gradient(to right in oklch, light-dark(oklch(from var(--swc-ai-button-brand-color) l c h / 30%), transparent) 15%, light-dark(oklch(from var(--swc-ai-button-brand-color) 67.5% 0.213 calc(h + 67.7) / 22%), transparent) 70%, light-dark(oklch(from var(--swc-ai-button-brand-color) 78.8% 0.169 calc(h + 106) / 35%), transparent) 90%);
   border-radius: inherit;
   pointer-events: none;
   content: "";
 
   /* Ring (content-box excluded from border-box), intersected with a fade so only the lower edge shows. */
   mask:
-    linear-gradient(transparent 62%, rgb(0 0 0) 95%),
+    linear-gradient(transparent 65%, rgb(0 0 0)),
     linear-gradient(rgb(0 0 0) 0 0) content-box,
     linear-gradient(rgb(0 0 0) 0 0);
   mask-composite: intersect, exclude;
@@ -147,7 +149,7 @@
   mask: radial-gradient(circle calc(var(--_swc-ai-button-height) * 1.05) at var(--_swc-ai-button-light-x) var(--_swc-ai-button-light-y), rgb(0 0 0), rgb(0 0 0 / 50%) 45%, transparent);
 }
 
-/* Specular crescent: a hairline edge highlight that swings toward the pointer, over a static top-lit stroke in dark mode. */
+/* Specular crescent: a hairline edge highlight that swings toward the pointer, over a faint static stroke in dark mode. */
 .swc-AIButton-specular {
   position: absolute;
   inset: 0;
@@ -155,7 +157,7 @@
   padding: 1px;
   background:
     radial-gradient(circle calc(var(--_swc-ai-button-height) * 0.85) at var(--_swc-ai-button-light-x) var(--_swc-ai-button-light-y), oklch(from var(--_swc-ai-button-specular) l c h / calc(var(--_swc-ai-button-glow) * 100%)), oklch(from var(--_swc-ai-button-rim) l c h / calc(var(--_swc-ai-button-glow) * 60%)) 45%, transparent),
-    /* Dark mode stroke: brightest at the top, fading down the sides. */ linear-gradient(to bottom, light-dark(transparent, rgb(255 255 255 / 20%)), light-dark(transparent, rgb(255 255 255 / 4%)) 70%, transparent);
+    /* Dark mode stroke: a faint white that brightens the colors beneath it, slightly stronger at the bottom. */ linear-gradient(to bottom, light-dark(transparent, rgb(255 255 255 / 5%)), light-dark(transparent, rgb(255 255 255 / 8%)));
   border-radius: inherit;
   pointer-events: none;
   mask:
@@ -164,16 +166,14 @@
   mask-composite: exclude;
 }
 
-/* Glass gloss: top-edge hairline and dome reflection. */
+/* Glass gloss: a soft dome reflection, with no edge line so the rim takes the color beneath it. */
 .swc-AIButton::after {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(ellipse 90% 60% at 50% 0%, light-dark(rgb(255 255 255 / 30%), rgb(255 255 255 / 7%)), transparent 70%);
+  background: radial-gradient(ellipse 90% 60% at 50% 0%, light-dark(rgb(255 255 255 / 20%), rgb(255 255 255 / 4%)), transparent 70%);
   border-radius: inherit;
-  box-shadow:
-    inset 0 1px 0 0 light-dark(rgb(255 255 255 / 90%), rgb(255 255 255 / 14%)),
-    inset -4px -5px 17px light-dark(rgb(255 255 255 / 45%), rgb(255 255 255 / 6%));
+  box-shadow: inset -4px -5px 17px light-dark(rgb(255 255 255 / 10%), transparent);
   pointer-events: none;
   content: "";
 }
