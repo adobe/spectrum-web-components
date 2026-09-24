@@ -128,7 +128,7 @@ const GROUPS: Group[] = [
     id: 'nebula',
     label: 'Nebula',
     description:
-      'The blurred color glow that rises from below the bottom edge. Four color stops go from left to right over a pale mist. The edges set where the glow sits, blur sets how soft it is, and the pointer settings set how much it brightens, saturates, grows, and leans toward the pointer.',
+      'The blurred color glow that rises from below the bottom edge. The color stops go from left to right over a pale mist. The edges set where the glow sits, blur sets how soft it is, and the pointer settings set how much it brightens, saturates, grows, and leans toward the pointer.',
     knobs: [
       color('nebula-1', 'Stop 1 (left)'),
       color('nebula-2', 'Stop 2'),
@@ -196,7 +196,7 @@ const GROUPS: Group[] = [
     id: 'shadow',
     label: 'Shadow',
     description:
-      'The soft drop shadow under the button, made of seven layers. Set its color, its strength, how far it drops (offset), and how far it spreads (blur).',
+      'The soft drop shadow under the button. Set its color, its strength, how far it drops (offset), and how far it spreads (blur).',
     knobs: [
       color('shadow', 'Shadow color'),
       num('shadow-strength', 'Shadow strength', 0, 3, 0.05),
@@ -282,9 +282,17 @@ export class AIButtonDesignTuner extends LitElement {
       border-inline-end: 1px solid rgb(218 218 218);
     }
 
-    .description {
+    .about {
       margin: 0 0 6px;
       color: rgb(80 80 80);
+    }
+
+    .about summary {
+      cursor: pointer;
+    }
+
+    .about p {
+      margin: 4px 0 0;
       line-height: 1.4;
     }
 
@@ -862,7 +870,10 @@ export class AIButtonDesignTuner extends LitElement {
                   <span class="visually-hidden">${group.label}</span>
                 </button>
               </legend>
-              <p class="description">${group.description}</p>
+              <details class="about">
+                <summary>What does this control?</summary>
+                <p>${group.description}</p>
+              </details>
               ${group.knobs.map((knob) => this.renderKnob(knob))}
             </fieldset>
           `
