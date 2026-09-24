@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, type TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -46,6 +46,24 @@ const meta: Meta = {
 };
 
 export default meta;
+
+// ────────────────────
+//    HELPERS
+// ────────────────────
+
+function captioned(
+  caption: TemplateResult,
+  content: TemplateResult
+): TemplateResult {
+  return html`
+    <div
+      style="display: flex; flex-direction: column; gap: var(--swc-spacing-100);"
+    >
+      <p class="swc-Detail swc-Detail--sizeM">${caption}</p>
+      ${content}
+    </div>
+  `;
+}
 
 // ────────────────────
 //    PLAYGROUND STORY
@@ -104,41 +122,39 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 export const Labelling: Story = {
-  render: () => {
-    // Muted captions so the label-less accessible-label / -labelledby fields
-    // aren't unexplained empty boxes.
-    const caption =
-      'margin-block-end: 8px; font-size: 0.75rem; color: #6e6e6e;';
-    return html`
-      <div
-        style="display: flex; flex-direction: column; gap: 24px; max-inline-size: 44ch;"
-      >
-        <div>
-          <div style=${caption}>
-            Slotted
-            <code>label</code>
-          </div>
+  render: () => html`
+    <div
+      style="display: flex; flex-direction: column; gap: 24px; max-inline-size: 44ch;"
+    >
+      ${captioned(
+        html`
+          Slotted
+          <code>label</code>
+        `,
+        html`
           <swc-text-field autocomplete="email">
             <span slot="label">Email address</span>
           </swc-text-field>
-        </div>
-
-        <div>
-          <div style=${caption}>
-            <code>accessible-label</code>
-            : named for assistive tech, no visible label
-          </div>
+        `
+      )}
+      ${captioned(
+        html`
+          <code>accessible-label</code>
+          : named for assistive tech, no visible label
+        `,
+        html`
           <swc-text-field
             autocomplete="email"
             accessible-label="Email address"
           ></swc-text-field>
-        </div>
-
-        <div>
-          <div style=${caption}>
-            <code>accessible-labelledby</code>
-            : named by other elements
-          </div>
+        `
+      )}
+      ${captioned(
+        html`
+          <code>accessible-labelledby</code>
+          : named by other elements
+        `,
+        html`
           <div style="margin-block-end: 8px;">
             <span id="labelling-row-header">Billing</span>
             <span id="labelling-col-header">Street address</span>
@@ -148,10 +164,10 @@ export const Labelling: Story = {
             autocomplete="billing street-address"
             accessible-labelledby="labelling-row-header labelling-col-header"
           ></swc-text-field>
-        </div>
-      </div>
-    `;
-  },
+        `
+      )}
+    </div>
+  `,
   tags: ['options'],
   parameters: {
     a11y: {
