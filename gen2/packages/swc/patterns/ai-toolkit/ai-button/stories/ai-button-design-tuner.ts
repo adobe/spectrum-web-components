@@ -238,7 +238,8 @@ export class AIButtonDesignTuner extends LitElement {
       display: flex;
       flex: 1 1 480px;
       flex-wrap: wrap;
-      gap: 32px;
+      /* Wider than the default 160px proximity radius, so pointing at one button doesn't light the other. */
+      gap: 200px;
       align-items: center;
       justify-content: center;
       padding: 160px;
