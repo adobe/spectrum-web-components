@@ -617,13 +617,13 @@ Planned rendering shape:
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
 - [x] Add `.swc-Menu` to the internal semantic element in `render()`; keep styling off `:host` — `surfaceElement` is no longer a no-op (see [Q24](#blockers-and-open-questions)).
-- [x] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `menu.css` as baseline — **finding, not a straight copy:** `.spectrum-Menu` itself has no chrome; that lives on `.spectrum-Menu-item` (not implemented yet, [Q15](#cross-component-follow-ups-not-blocking-swc-menu)) or comes from a wrapping `.spectrum-Popover` in real Spectrum. `menu.css` mirrors `swc-popover`'s own `--swc-popover-*` chrome tokens instead ([Q3](#blockers-and-open-questions) stands; this is a token-sharing choice, not an architecture change). Row-level styling stays deferred.
+- [x] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `menu.css` as baseline — **finding, not a straight copy:** `.spectrum-Menu` itself has no chrome; that lives on `.spectrum-Menu-item` (not implemented yet, [Q15](#cross-component-follow-ups-not-blocking-swc-menu)) or comes from a wrapping `.spectrum-Popover` in real Spectrum. `menu.css` inlines the same underlying design tokens `swc-popover` uses for its chrome (`background-layer-2-color`, `popover-border-color`, `corner-radius-700`, `drop-shadow-elevated`) directly via `token()`, not as `--swc-menu-*` custom properties ([Q3](#blockers-and-open-questions) stands; this is a token-sharing choice, not an architecture change). Row-level styling stays deferred.
 - [x] Surface is a native `popover="auto"` element, not a plain hidden `<div>` — fixes top-layer clipping, adds entrance/exit animation ([Q25](#blockers-and-open-questions)).
 
 #### Visual model and regressions
 
 - [x] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source — present, but scoped to `--spectrum-menu-item-*` line-height properties, not anything `.swc-Menu` itself owns; deferred with the rest of row-level styling
-- [x] Add `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-*` property — `--swc-menu-background-color`, `--swc-menu-border-color`, `--swc-menu-corner-radius`
+- [x] Add `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-*` property — none exposed this pass; background/border/radius are inline `token()` calls with no consumer override request yet (see the styling checklist item above), so there is nothing to tag
 - [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility

@@ -398,7 +398,12 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       capture: true,
     });
     this.startPlacement();
-    if (this._hasCompletedFirstUpdate) {
+    // `startPlacement()` no-ops without a resolved trigger, which leaves
+    // `actual-placement` unset and the surface invisible (menu.css gates
+    // `opacity` on it). Without this guard the menu would still move focus
+    // into that invisible surface (e.g. `open` set with a missing or
+    // mistyped `for`).
+    if (this._hasCompletedFirstUpdate && this._trigger) {
       // Forces the first item active rather than trusting the controller's
       // own memory-preferring refresh(); every normal open lands on row one.
       this.focusNavigation.refresh();

@@ -22,10 +22,9 @@
  * auto-centers the surface and fights the inline top/left/translate
  * PlacementController writes -- same reset `swc-popover` applies.
  * Background/border/radius/shadow are inline `token()` calls, not
- * `--swc-menu-*` custom properties: no consumer override request exists yet
- * (review feedback, PR #6734). `display` is intentionally absent here (see
- * `:popover-open` below); an unconditional value would override the UA's
- * default-hidden state. */
+ * `--swc-menu-*` custom properties: no consumer override request exists yet.
+ * `display` is intentionally absent here (see `:popover-open` below); an
+ * unconditional value would override the UA's default-hidden state. */
 .swc-Menu {
   --_swc-menu-animation-distance: token("spacing-75");
 
@@ -41,6 +40,10 @@
   border-radius: token("corner-radius-700");
   box-shadow: token("drop-shadow-elevated");
   overflow: auto;
+
+  /* Keep scrolling past the end of a long menu from chaining out to the
+   * page, matching `swc-popover`'s own scroll containment. */
+  overscroll-behavior: contain;
   opacity: 0;
   transition:
     opacity token("animation-duration-200") token("animation-ease-out"),
