@@ -29,14 +29,12 @@
 .swc-AIButton {
   --_swc-ai-button-height: token("component-height-100");
   --_swc-ai-button-font-size: token("font-size-100");
-  --_swc-ai-button-fill-y: 4px;
-  --_swc-ai-button-fill-x: 2px;
 
-  /* con-bg idle stop-4 mixed into the text color, per the source treatment. */
-  --_swc-ai-button-label-color: light-dark(color-mix(in srgb, black, oklch(from var(--swc-ai-button-brand-color) 95.08% 0.0433 calc(h - 243.9)) 20%), white);
+  /* Deep brand plum in light mode (#360042 at the default brand color); white in dark mode. */
+  --_swc-ai-button-label-color: light-dark(oklch(from var(--swc-ai-button-brand-color) 24.4% 0.117 calc(h - 3.3)), white);
 
-  /* Dark mode is a neutral charcoal glass; color lives only in the nebula rising from the bottom edge. */
-  --_swc-ai-button-surface: light-dark(rgb(255 255 255 / 72%), oklch(from var(--swc-ai-button-brand-color) 22% 0.008 calc(h + 19) / 88%));
+  /* Neutral frosted glass (pale warm grey in light mode, charcoal in dark mode); color lives only in the nebula rising from the bottom edge. */
+  --_swc-ai-button-surface: light-dark(oklch(from var(--swc-ai-button-brand-color) 95.4% 0.004 calc(h + 50) / 90%), oklch(from var(--swc-ai-button-brand-color) 22% 0.008 calc(h + 19) / 88%));
 
   /* Pointer light, written each frame by the element: proximity (0 far → 1 inside), speed energy (0 → 1), direction (-1 → 1, 0 at center), and light position within the box. */
   --_swc-ai-button-proximity: 0;
@@ -50,10 +48,11 @@
   --_swc-ai-button-rim: light-dark(oklch(from var(--swc-ai-button-brand-color) 66% 0.24 h), oklch(from var(--swc-ai-button-brand-color) 78% 0.12 calc(h - 20)));
   --_swc-ai-button-specular: light-dark(oklch(from var(--swc-ai-button-brand-color) 99% 0.02 h), oklch(from var(--swc-ai-button-brand-color) 97% 0.03 h));
 
-  /* Ambient edge tint: brand-colored in light mode, a neutral white hairline in dark mode. */
-  --_swc-ai-button-fresnel: light-dark(var(--_swc-ai-button-rim), rgb(255 255 255 / 32%));
+  /* Ambient edge tint: a neutral hairline, dark on light glass and white on dark glass. */
+  --_swc-ai-button-fresnel: light-dark(rgb(0 0 0 / 30%), rgb(255 255 255 / 32%));
   --_swc-ai-button-glow: calc(var(--_swc-ai-button-proximity) * (0.7 + var(--_swc-ai-button-energy) * 0.3));
-  --_swc-ai-button-drop: light-dark(rgb(0 0 0 / 8%), rgb(0 0 0 / 30%));
+  --_swc-ai-button-drop-near: light-dark(rgb(0 0 0 / 8%), rgb(0 0 0 / 30%));
+  --_swc-ai-button-drop-far: light-dark(rgb(0 0 0 / 4%), transparent);
 
   /* Light-facing offset (inset shadows shift away from the light to brighten the near edge). */
   --_swc-ai-button-lit-x: calc(var(--_swc-ai-button-dir-x) * var(--_swc-ai-button-proximity) * -1px);
@@ -72,7 +71,7 @@
   font-family: token("sans-serif-font");
   font-size: var(--_swc-ai-button-font-size);
   font-style: token("default-font-style");
-  font-weight: token("bold-font-weight");
+  font-weight: token("medium-font-weight");
   line-height: token("line-height-100");
   color: var(--_swc-ai-button-label-color);
   text-align: start;
@@ -86,7 +85,8 @@
     inset 0 0 0 0.5px oklch(from var(--_swc-ai-button-fresnel) l c h / calc(alpha * (0.18 + var(--_swc-ai-button-glow) * 0.22))),
     inset 0 0 8px 0 oklch(from var(--_swc-ai-button-fresnel) l c h / calc(alpha * (0.14 + var(--_swc-ai-button-glow) * 0.12))),
     /* Far edge: a weaker refraction where the light exits. */ inset calc(var(--_swc-ai-button-lit-x) * -5) calc(var(--_swc-ai-button-lit-y) * -5) 10px -4px oklch(from var(--_swc-ai-button-rim) l c h / calc(var(--_swc-ai-button-glow) * 40%)),
-    0 2px 6px -2px var(--_swc-ai-button-drop),
+    0 1.5px 3px var(--_swc-ai-button-drop-near),
+    0 6px 9px var(--_swc-ai-button-drop-far),
     /* Halo leaning toward the pointer. */ calc(var(--_swc-ai-button-lit-x) * -3) calc(var(--_swc-ai-button-lit-y) * -3 + 4px) calc(20px + var(--_swc-ai-button-energy) * 12px) -4px oklch(from var(--_swc-ai-button-rim) l c h / calc(var(--_swc-ai-button-glow) * 45%));
   overflow: hidden;
   user-select: none;
@@ -99,32 +99,38 @@
   padding-inline: 0;
 }
 
-/* Frosted color wash (light mode), sitting low in the pill and drifting with the light. */
-.swc-AIButton::before {
-  position: absolute;
-  inset: var(--_swc-ai-button-fill-y) var(--_swc-ai-button-fill-x) 0;
-  z-index: -1;
-  background-image: linear-gradient(to right in oklch, light-dark(oklch(from var(--swc-ai-button-brand-color) 95.52% 0.0222 calc(h - 294.6)), transparent) 0%, light-dark(oklch(from var(--swc-ai-button-brand-color) 91.32% 0.0721 calc(h + 0.1)), transparent) 12%, light-dark(oklch(from var(--swc-ai-button-brand-color) 95.08% 0.0433 calc(h - 243.9)), transparent) 77%);
-  border-radius: 9999px;
-  pointer-events: none;
-  content: "";
-  opacity: calc(0.6 + var(--_swc-ai-button-proximity) * 0.3);
-  filter: blur(6px);
-  transform: translate(calc(var(--_swc-ai-button-lit-x) * -3), calc(var(--_swc-ai-button-lit-y) * -2));
-}
-
-/* Nebula (dark mode): a blurred red → purple → violet → blue glow rising from below the bottom edge over a lavender mist. It leans and swells toward the pointer. Light mode renders it transparent. */
+/* Nebula: a blurred glow rising from below the bottom edge over a soft mist, leaning and swelling toward the pointer. Light mode is brand magenta → pink → coral; dark mode is red → purple → violet → blue. */
 .swc-AIButton-nebula {
   position: absolute;
   inset: 44% -20% -60%;
   z-index: -1;
   background:
-    radial-gradient(closest-side at 14% 55%, light-dark(transparent, oklch(from var(--swc-ai-button-brand-color) 55.5% 0.197 calc(h - 292.1) / 70%)), transparent), radial-gradient(closest-side at 36% 62%, light-dark(transparent, oklch(from var(--swc-ai-button-brand-color) 50.5% 0.209 calc(h - 1))), transparent), radial-gradient(closest-side at 66% 60%, light-dark(transparent, oklch(from var(--swc-ai-button-brand-color) 50.6% 0.251 calc(h - 38.8))), transparent),
-    radial-gradient(closest-side at 86% 50%, light-dark(transparent, oklch(from var(--swc-ai-button-brand-color) 45.4% 0.312 calc(h - 58.3))), transparent), radial-gradient(ellipse 60% 40% at 50% 12%, light-dark(transparent, oklch(from var(--swc-ai-button-brand-color) 73.6% 0.025 calc(h - 20.6) / 30%)), transparent);
+    radial-gradient(closest-side at 14% 55%, light-dark(oklch(from var(--swc-ai-button-brand-color) l c h / 55%), oklch(from var(--swc-ai-button-brand-color) 55.5% 0.197 calc(h - 292.1) / 70%)), transparent), radial-gradient(closest-side at 36% 62%, light-dark(oklch(from var(--swc-ai-button-brand-color) l c h / 45%), oklch(from var(--swc-ai-button-brand-color) 50.5% 0.209 calc(h - 1))), transparent),
+    radial-gradient(closest-side at 66% 60%, light-dark(oklch(from var(--swc-ai-button-brand-color) 67.5% 0.213 calc(h + 67.7) / 30%), oklch(from var(--swc-ai-button-brand-color) 50.6% 0.251 calc(h - 38.8))), transparent), radial-gradient(closest-side at 86% 50%, light-dark(oklch(from var(--swc-ai-button-brand-color) 78.8% 0.169 calc(h + 106) / 40%), oklch(from var(--swc-ai-button-brand-color) 45.4% 0.312 calc(h - 58.3))), transparent),
+    radial-gradient(ellipse 60% 40% at 50% 12%, light-dark(oklch(from var(--swc-ai-button-brand-color) 91.3% 0.072 h / 60%), oklch(from var(--swc-ai-button-brand-color) 73.6% 0.025 calc(h - 20.6) / 30%)), transparent);
   pointer-events: none;
   opacity: calc(0.72 + var(--_swc-ai-button-glow) * 0.28);
   filter: blur(calc(var(--_swc-ai-button-height) * 0.2)) saturate(calc(1 + var(--_swc-ai-button-glow) * 0.35));
   transform: translate(calc(var(--_swc-ai-button-lit-x) * -8), calc(var(--_swc-ai-button-lit-y) * -4)) scale(calc(1 + var(--_swc-ai-button-glow) * 0.08));
+}
+
+/* Bottom rim (light mode): the nebula catching the lower edge of the glass as a hairline, brand pink on the left to coral on the right. */
+.swc-AIButton::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  padding: 1px;
+  background: linear-gradient(to right in oklch, light-dark(oklch(from var(--swc-ai-button-brand-color) l c h / 55%), transparent) 15%, light-dark(oklch(from var(--swc-ai-button-brand-color) 67.5% 0.213 calc(h + 67.7) / 45%), transparent) 70%, light-dark(oklch(from var(--swc-ai-button-brand-color) 78.8% 0.169 calc(h + 106) / 65%), transparent) 90%);
+  border-radius: inherit;
+  pointer-events: none;
+  content: "";
+
+  /* Ring (content-box excluded from border-box), intersected with a fade so only the lower edge shows. */
+  mask:
+    linear-gradient(transparent 62%, rgb(0 0 0) 95%),
+    linear-gradient(rgb(0 0 0) 0 0) content-box,
+    linear-gradient(rgb(0 0 0) 0 0);
+  mask-composite: intersect, exclude;
 }
 
 /* Glass body: light entering from the pointer side, as a luminous rim band and a faint caustic behind it. The radial mask centered on the lit edge fades the band around the shape without seams. */
@@ -158,17 +164,16 @@
   mask-composite: exclude;
 }
 
-/* Glass gloss: top-edge hairline and dome reflection over a fine frost grain. */
+/* Glass gloss: top-edge hairline and dome reflection. */
 .swc-AIButton::after {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(ellipse 90% 60% at 50% 0%, light-dark(rgb(255 255 255 / 55%), rgb(255 255 255 / 7%)), transparent 70%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background: radial-gradient(ellipse 90% 60% at 50% 0%, light-dark(rgb(255 255 255 / 30%), rgb(255 255 255 / 7%)), transparent 70%);
   border-radius: inherit;
   box-shadow:
     inset 0 1px 0 0 light-dark(rgb(255 255 255 / 90%), rgb(255 255 255 / 14%)),
-    inset 0 -0.5px 1px light-dark(oklch(from var(--swc-ai-button-brand-color) 95.08% 0.0433 calc(h - 243.9)), transparent),
-    inset 0 -6px 10px -8px light-dark(rgb(255 255 255 / 80%), rgb(255 255 255 / 6%));
+    inset -4px -5px 17px light-dark(rgb(255 255 255 / 45%), rgb(255 255 255 / 6%));
   pointer-events: none;
   content: "";
 }
@@ -211,14 +216,11 @@
   box-shadow: inset 0 0 0 0.5px light-dark(rgb(0 0 0 / 4%), rgb(255 255 255 / 10%));
 }
 
-.swc-AIButton:disabled::before {
-  opacity: 0;
-}
-
 .swc-AIButton:disabled::after {
   box-shadow: none;
 }
 
+.swc-AIButton:disabled::before,
 .swc-AIButton:disabled .swc-AIButton-nebula,
 .swc-AIButton:disabled .swc-AIButton-glass,
 .swc-AIButton:disabled .swc-AIButton-specular {
@@ -242,15 +244,11 @@
 :host([size="l"]) .swc-AIButton {
   --_swc-ai-button-height: token("component-height-200");
   --_swc-ai-button-font-size: token("font-size-200");
-  --_swc-ai-button-fill-y: 6px;
-  --_swc-ai-button-fill-x: 4px;
 }
 
 :host([size="xl"]) .swc-AIButton {
   --_swc-ai-button-height: token("component-height-300");
   --_swc-ai-button-font-size: token("font-size-300");
-  --_swc-ai-button-fill-y: 10px;
-  --_swc-ai-button-fill-x: 4px;
 }
 
 /* ─────────────────────────────────────
