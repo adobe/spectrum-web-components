@@ -34,15 +34,14 @@
 import fs from 'fs';
 import path from 'path';
 
-import { ROOT as repoRoot, trackedFilesOnDisk } from './ai-files.js';
+import {
+  ROOT as repoRoot,
+  SAMPLE_LINKS,
+  trackedFilesOnDisk,
+} from './ai-files.js';
 
 // Runtime folders that agents create on demand and git ignores.
 const RUNTIME_PATHS = ['.ai/handoffs'];
-
-// Links inside quoted writing samples, which resolve from the sampled document, not here.
-const SAMPLE_LINKS = new Set([
-  '.ai/skills/documentation-standards/SKILL.md ../accordion-item/',
-]);
 
 /**
  * Every tracked AGENTS.md file.
