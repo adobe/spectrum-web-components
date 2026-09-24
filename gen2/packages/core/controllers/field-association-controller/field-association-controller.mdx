@@ -13,7 +13,7 @@ import * as Stories from './stories/field-association-controller.stories';
 
 It handles:
 
-- **Form value**: `setValue(value)` submits the value; `setValue(null)` excludes the field from `FormData` (unchecked, unselected, or disabled).
+- **Form value**: `setValue(value, state?)` submits the value; `setValue(null)` excludes the field from `FormData` (unchecked, unselected, or disabled). The optional `state` mirrors [`ElementInternals.setFormValue`'s state argument](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals/setFormValue) for autofill and back-forward navigation restoration.
 - **Disabled cascade**: the host forwards `formDisabledCallback` here; the controller tracks it as `formDisabled` and fires `onDisabledChange` so the host re-syncs.
 - **Validity**: `validity`, `validationMessage`, `willValidate`, `checkValidity()`, and `reportValidity()` pass through to `ElementInternals`.
 
@@ -121,17 +121,17 @@ The validity members read straight off `ElementInternals`; writing validity stay
 
 ### Members
 
-| Member                           | Description                                                                                                                      |
-| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `setValue(value)`                | Sets the form value via `internals.setFormValue`. Pass `null` to exclude the field from `FormData`.                              |
-| `formDisabled`                   | Read-only. `true` when an ancestor form or `<fieldset disabled>` has disabled the field.                                         |
-| `formDisabledCallback(disabled)` | Delegate target for the host's `formDisabledCallback`. Records the cascaded state and fires `onDisabledChange` on a real change. |
-| `form`                           | Read-only. The associated `HTMLFormElement`, or `null`.                                                                          |
-| `validity`                       | Read-only. The field's `ValidityState`.                                                                                          |
-| `validationMessage`              | Read-only. The localized validation message.                                                                                     |
-| `willValidate`                   | Read-only. Whether the field is a candidate for constraint validation.                                                           |
-| `checkValidity()`                | Runs constraint validation; returns whether the field is valid.                                                                  |
-| `reportValidity()`               | Runs constraint validation and reports the problem to the user if invalid.                                                       |
+| Member                           | Description                                                                                                                                                                                                                                                                                                               |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `setValue(value, state?)`        | Sets the form value via `internals.setFormValue`. Pass `null` to exclude the field from `FormData`. The optional `state` mirrors [`ElementInternals.setFormValue`'s state argument](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals/setFormValue) for autofill and back-forward navigation restoration. |
+| `formDisabled`                   | Read-only. `true` when an ancestor form or `<fieldset disabled>` has disabled the field.                                                                                                                                                                                                                                  |
+| `formDisabledCallback(disabled)` | Delegate target for the host's `formDisabledCallback`. Records the cascaded state and fires `onDisabledChange` on a real change.                                                                                                                                                                                          |
+| `form`                           | Read-only. The associated `HTMLFormElement`, or `null`.                                                                                                                                                                                                                                                                   |
+| `validity`                       | Read-only. The field's `ValidityState`.                                                                                                                                                                                                                                                                                   |
+| `validationMessage`              | Read-only. The localized validation message.                                                                                                                                                                                                                                                                              |
+| `willValidate`                   | Read-only. Whether the field is a candidate for constraint validation.                                                                                                                                                                                                                                                    |
+| `checkValidity()`                | Runs constraint validation; returns whether the field is valid.                                                                                                                                                                                                                                                           |
+| `reportValidity()`               | Runs constraint validation and reports the problem to the user if invalid.                                                                                                                                                                                                                                                |
 
 ### Options (`FieldAssociationControllerOptions`)
 
@@ -149,5 +149,6 @@ These stay on the element and cannot be delegated:
 | `attachInternals()`                | Can only be called on the element; its result is passed into the controller.        |
 | `internals.setValidity(...)`       | Writing validity is per-component logic; the controller only exposes the read side. |
 | Calling `setValue` on value change | The browser does not observe the host's value; the host re-pushes it.               |
+| `formResetCallback()`              | The browser calls it on the host; the host decides how to restore its own state.    |
 
 <DocsFooter />
