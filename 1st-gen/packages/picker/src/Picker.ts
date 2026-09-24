@@ -241,6 +241,8 @@ export class ExpandableElement extends SpectrumElement {
         }
       } else if (this.strategy?.preventNextToggle === 'no') {
         this.open = false;
+        // Keep controller state in sync so a stale open value can't block reopening.
+        this.strategy.open = false;
       } else if (!this.strategy?.pointerdownState) {
         // Prevent browser driven closure while opening the Picker
         // and the expected event series has not completed.
