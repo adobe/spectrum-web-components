@@ -270,6 +270,7 @@ export class AIButton extends ButtonBase {
         ?disabled=${this.disabled}
         aria-label=${ifDefined(this.accessibleLabel ?? undefined)}
       >
+        <span class="swc-AIButton-nebula" aria-hidden="true"></span>
         <span class="swc-AIButton-glass" aria-hidden="true"></span>
         <span class="swc-AIButton-specular" aria-hidden="true"></span>
         <swc-icon class="swc-AIButton-icon" aria-hidden="true">
