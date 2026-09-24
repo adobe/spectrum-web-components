@@ -26,7 +26,7 @@ Coding agents working in this repository should treat **`.ai/`** as the canonica
 
 ## IDE-specific folders
 
-Some editors load extra project config from their own directories (for example `.cursor/` and `.claude/`). Those locations are thin adapters that symlink back to `.ai/`. **`.ai/` remains the portable source of truth** for rules and skills documented here. If instructions conflict, prefer **`.ai/README.md`** and the files under **`.ai/rules/`** and **`.ai/skills/`**.
+Some editors load extra project config from their own directories (for example `.cursor/` and `.claude/`). Those locations are thin adapters that symlink back to `.ai/`. GitHub Copilot loads generated adapters from `.github/instructions/`; update them with `yarn generate:copilot-instructions` after changing `.ai/rules/`. **`.ai/` remains the portable source of truth** for rules and skills documented here. If instructions conflict, prefer **`.ai/README.md`** and the files under **`.ai/rules/`** and **`.ai/skills/`**.
 
 ## Non-trivial changes
 

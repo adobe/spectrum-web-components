@@ -6,10 +6,11 @@ This directory contains rules, skills, and accumulated memory that coding agents
 
 ## Why `.ai/`
 
-All rules and skills now live in **`.ai/`** — a tool-agnostic, plain-markdown directory that any agent or tool can read. IDE-specific directories (`.cursor/`, `.claude/`) become thin adapters that point back to `.ai/` via symlinks:
+All rules and skills now live in **`.ai/`** — a tool-agnostic, plain-markdown directory that any agent or tool can read. IDE-specific directories (`.cursor/`, `.claude/`) become thin adapters that point back to `.ai/` via symlinks. GitHub Copilot uses generated adapters under `.github/instructions/` because it requires `*.instructions.md` files with `applyTo` frontmatter and does not load `.ai/rules/` directly:
 
 - Edit once in `.ai/` → all tools see the update automatically
-- No sync step, no duplication, no drift between tools
+- Run `yarn generate:copilot-instructions` after rule changes to refresh Copilot's committed adapters
+- `yarn lint:ai` fails when Copilot adapters drift from their canonical rules
 - New contributors or tools start from `AGENTS.md` at the repo root, which bootstraps everything
 
 ### Rules carry both `globs:` and `paths:` frontmatter
@@ -27,7 +28,7 @@ Getting this wrong in either direction has a real cost: forcing task-scoped guid
 
 ## CI integration
 
-- `yarn lint:ai` runs `.ai/scripts/validate.js`, which checks story tags, AGENTS.md paths, config schema, symlinks, and per-unit MDX docs pages. Catches broken internal links, symlinks, misconfigured rules, and structural drift in `<unit>.mdx` files before merge
+- `yarn lint:ai` runs `.ai/scripts/validate.js`, which checks story tags, AGENTS.md paths, config schema, symlinks, generated Copilot instructions, and per-unit MDX docs pages. Catches broken internal links, adapters, misconfigured rules, and structural drift in `<unit>.mdx` files before merge
 - `yarn lint:docs-pages` runs the per-unit MDX docs-page check in isolation. Use during authoring to catch missing `<Canvas>` references, unknown `##` section headings, or out-of-order sections in a single component / pattern / controller MDX
 - Pre-commit hook runs the contributor docs nav script to keep breadcrumbs and TOCs in sync automatically
 
@@ -182,10 +183,11 @@ These two rules share the same glob/path set (`gen2/**/stories/**` and `gen2/**/
 To modify these rules:
 
 1. Edit the `config.json` or the appropriate file in the `rules` directory
-2. Try to follow the existing structure and format where possible
-3. Ensure valid regex patterns, where applicable
-4. Include clear error messages
-5. Test changes before committing
+2. Run `yarn generate:copilot-instructions` after changing a rule
+3. Try to follow the existing structure and format where possible
+4. Ensure valid regex patterns, where applicable
+5. Include clear error messages
+6. Test changes before committing
 
 ## Skills
 
