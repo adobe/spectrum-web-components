@@ -65,3 +65,7 @@ export {
   SlotTextController,
   type SlotTextConfig,
 } from './slot-text-controller/index.js';
+export {
+  TriggerPressController,
+  type TriggerPressControllerOptions,
+} from './trigger-press-controller/index.js';
