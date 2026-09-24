@@ -17,6 +17,7 @@ import {
   FocusgroupNavigationController,
   PlacementController,
   type PlacementOptions,
+  TriggerPressController,
 } from '@adobe/spectrum-wc-core/controllers/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
@@ -26,6 +27,7 @@ import {
   physicalSide,
   registerDismissible,
   resolveTrigger,
+  runAfterTransition,
   unregisterDismissible,
   validateAllowedChildren,
   validateEnum,
@@ -59,10 +61,10 @@ const DOCS_URL =
  * @slot - `swc-menu-item` elements. `swc-menu-group` and `swc-divider` (as a
  *   separator) join in a later migration phase.
  *
- * @fires swc-open - Dispatched when the menu begins to open.
- * @fires swc-after-open - Dispatched after the menu finishes opening.
- * @fires swc-close - Dispatched when the menu begins to close.
- * @fires swc-after-close - Dispatched after the menu finishes closing.
+ * @fires swc-open - Dispatched when the menu begins opening.
+ * @fires swc-after-open - Dispatched after the open transition completes.
+ * @fires swc-close - Dispatched when the menu begins closing.
+ * @fires swc-after-close - Dispatched after the close transition completes.
  */
 export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   validSizes: MENU_VALID_SIZES,
@@ -134,72 +136,10 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   /** The trigger element currently carrying the click-to-toggle listeners. */
   private _trigger: HTMLElement | null = null;
 
-  /**
-   * True between a trigger press start (`pointerdown`/`touchstart`) and its
-   * `click`, so a light-dismiss inside that window is attributed to the press.
-   * Mirrors `Popover.base.ts`'s own reopen guard: pressing the trigger while
-   * open is an "outside" click from the surface's perspective, so the native
-   * popover light-dismiss closes it before the trailing click fires. Without
-   * this, that trailing click reads `open` as already `false` and flips it
-   * back to `true`, reopening the menu the same click was meant to close.
-   */
-  private _triggerPointerActive = false;
-
-  /** Cancels the pending press-end listeners armed in `_onTriggerPressStart`. */
-  private _pressEndAbort: AbortController | null = null;
-
-  /**
-   * Set when the trigger press light-dismissed an open menu (a native close
-   * observed while `_triggerPointerActive`), so the trailing `click` of that
-   * same gesture is read as the close rather than a reopen.
-   */
-  private _dismissedByTriggerPress = false;
-
-  private readonly _onTriggerPressStart = (): void => {
-    this._triggerPointerActive = true;
-    // Catches a press that ends without a click (drag off the trigger, or a
-    // cancelled gesture), which would otherwise leave the flag stuck true.
-    this._pressEndAbort = new AbortController();
-    const { signal } = this._pressEndAbort;
-    document.addEventListener('pointerup', this._onTriggerPressEnd, {
-      capture: true,
-      once: true,
-      signal,
-    });
-    document.addEventListener('pointercancel', this._onTriggerPressEnd, {
-      capture: true,
-      once: true,
-      signal,
-    });
-  };
-
-  private readonly _onTriggerPressEnd = (event: PointerEvent): void => {
-    this._pressEndAbort?.abort();
-    // A same-target pointerup still gets its own click, which resets the flag
-    // itself; resetting it here too would race that click's read of
-    // `_dismissedByTriggerPress`. pointercancel never gets a click, so it
-    // always resets.
-    if (
-      event.type === 'pointerup' &&
-      event.composedPath().includes(this._trigger as EventTarget)
-    ) {
-      return;
-    }
-    this._triggerPointerActive = false;
-  };
-
-  // If the press light-dismissed the menu (recorded in `_onBeforeToggle`),
-  // consume this click so it does not toggle back open; otherwise toggle from
-  // the live state.
-  private readonly _handleTriggerClick = (): void => {
-    const dismissedByThisGesture = this._dismissedByTriggerPress;
-    this._triggerPointerActive = false;
-    this._dismissedByTriggerPress = false;
-    if (dismissedByThisGesture) {
-      return;
-    }
-    this.open = !this.open;
-  };
+  // Click-to-toggle on the resolved trigger, without the surface reopening on
+  // the same click that light-dismissed it (see the controller's own doc for
+  // why that needs dedicated gesture tracking, not just a naive toggle).
+  private readonly _pressGuard = new TriggerPressController(this);
 
   // The element PlacementController positions. Null in the base class; the
   // SWC rendering layer overrides this once the shadow surface exists.
@@ -222,6 +162,10 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   // Set at the end of every updated() call; suppresses only the phantom
   // event dispatch and initial focus-steal on the very first render.
   private _hasCompletedFirstUpdate = false;
+
+  // Cancels the pending `_afterTransition` run armed by the last open/close
+  // cycle, matching `Popover.base.ts`'s own field of the same name.
+  private _cancelAfterTransition?: () => void;
 
   // Direct `swc-menu-item` children only this phase; `swc-menu-group` joins
   // once it exists (Phase B).
@@ -292,21 +236,6 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this._interactiveElement = null;
   }
 
-  private removeTriggerClickListener(): void {
-    this._trigger?.removeEventListener(
-      'pointerdown',
-      this._onTriggerPressStart,
-      { capture: true }
-    );
-    this._trigger?.removeEventListener(
-      'touchstart',
-      this._onTriggerPressStart,
-      { capture: true }
-    );
-    this._trigger?.removeEventListener('click', this._handleTriggerClick);
-    this._trigger = null;
-  }
-
   // Resolves for/triggerElement, wires ARIA, and keeps the click listener in
   // sync; called on every relevant property change, not just once.
   private wireTrigger(): void {
@@ -336,21 +265,11 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       target.setAttribute('aria-haspopup', 'menu');
     }
 
-    if (trigger !== this._trigger) {
-      this.removeTriggerClickListener();
-      if (trigger) {
-        // Capturing `pointerdown`/`touchstart` open the reopen-guard gesture
-        // window (see `_onTriggerPressStart`); `click` drives the toggle.
-        trigger.addEventListener('pointerdown', this._onTriggerPressStart, {
-          capture: true,
-        });
-        trigger.addEventListener('touchstart', this._onTriggerPressStart, {
-          capture: true,
-        });
-        trigger.addEventListener('click', this._handleTriggerClick);
-      }
-      this._trigger = trigger;
-    }
+    // `attach` is a no-op for an unchanged trigger.
+    this._pressGuard.attach(trigger, {
+      onToggle: () => (this.open = !this.open),
+    });
+    this._trigger = trigger;
   }
 
   private startPlacement(): void {
@@ -374,22 +293,67 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
 
   // Each event is its own literal `new CustomEvent(...)` call, not a shared
   // helper, so the custom-elements-manifest analyzer can statically detect it.
-  private dispatchOpenEvents(isOpen: boolean): void {
-    if (isOpen) {
-      this.dispatchEvent(
-        new CustomEvent('swc-open', { bubbles: true, composed: true })
-      );
+  private _dispatchOpen(): void {
+    this.dispatchEvent(
+      new CustomEvent('swc-open', { bubbles: true, composed: true })
+    );
+    // No fallback timer on open: nothing is gated on `swc-after-open`, so a
+    // delayed (janky) `transitionend` must not be pre-empted by the timer
+    // (matches `Popover.base.ts`'s own `_dispatchOpen`).
+    this._afterTransition(() => {
       this.dispatchEvent(
         new CustomEvent('swc-after-open', { bubbles: true, composed: true })
       );
-    } else {
-      this.dispatchEvent(
-        new CustomEvent('swc-close', { bubbles: true, composed: true })
-      );
+    }, false);
+  }
+
+  private _dispatchClose(): void {
+    this.dispatchEvent(
+      new CustomEvent('swc-close', { bubbles: true, composed: true })
+    );
+    this._afterTransition(() => {
       this.dispatchEvent(
         new CustomEvent('swc-after-close', { bubbles: true, composed: true })
       );
+      this._stopPositioningWhenClosed();
+    });
+  }
+
+  // Run `callback` once the surface's CSS transition settles (or
+  // immediately when none will run). Each call supersedes the previous
+  // open/close cycle's pending run, so a rapid close-then-reopen never
+  // dispatches a spurious `swc-after-close` after reopening. `fallback` arms
+  // the allow-discrete safety timer (default true; the close path relies on
+  // it to always tear down positioning). Matches `Popover.base.ts`'s own
+  // `_afterTransition`.
+  private _afterTransition(callback: () => void, fallback = true): void {
+    this._cancelAfterTransition?.();
+    const element = this.surfaceElement;
+    if (!element) {
+      callback();
+      return;
     }
+    this._cancelAfterTransition = runAfterTransition(
+      element,
+      () => {
+        this._cancelAfterTransition = undefined;
+        callback();
+      },
+      { fallback }
+    );
+  }
+
+  // Clears the now-stale `actual-placement` attribute once the exit
+  // transition finishes, so the discrete transition doesn't snap to its
+  // default mid-fade. Guarded by `!this.open` so a rapid reopen during the
+  // fade keeps its positioning (matches `Popover.base.ts`'s own
+  // `_stopPositioningWhenClosed`).
+  private _stopPositioningWhenClosed(): void {
+    if (this.open) {
+      return;
+    }
+    this.placementController.stop();
+    this.removeAttribute('actual-placement');
   }
 
   /**
@@ -427,14 +391,19 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       return;
     }
     if (this._hasCompletedFirstUpdate) {
-      this.dispatchOpenEvents(true);
+      this._dispatchOpen();
     }
     registerDismissible(this);
     document.addEventListener('keydown', this.handleKeyDown, {
       capture: true,
     });
     this.startPlacement();
-    if (this._hasCompletedFirstUpdate) {
+    // `startPlacement()` no-ops without a resolved trigger, which leaves
+    // `actual-placement` unset and the surface invisible (menu.css gates
+    // `opacity` on it). Without this guard the menu would still move focus
+    // into that invisible surface (e.g. `open` set with a missing or
+    // mistyped `for`).
+    if (this._hasCompletedFirstUpdate && this._trigger) {
       // Forces the first item active rather than trusting the controller's
       // own memory-preferring refresh(); every normal open lands on row one.
       this.focusNavigation.refresh();
@@ -486,24 +455,30 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     }
     // A press on the trigger while open light-dismisses the surface (an
     // "outside" click from the popover's perspective) before the trailing
-    // click fires; correlate that dismissal here so `_handleTriggerClick`
-    // reads the trailing click as the close rather than a reopen. `this.open`
-    // is still `true` here for a genuine native dismiss; a programmatic close
-    // (e.g. `_hide()`) already set it `false` before this fires.
-    if (this.open && this._triggerPointerActive) {
-      this._dismissedByTriggerPress = true;
+    // click fires; correlate that dismissal here so the trailing click reads
+    // as the close rather than a reopen (see `TriggerPressController`).
+    // `this.open` is still `true` here for a genuine native dismiss; a
+    // programmatic close (e.g. `_hide()`) already set it `false` before this
+    // fires.
+    if (this.open) {
+      this._pressGuard.noteNativeDismiss();
     }
     const restoreFocusToTrigger = this.isFocusWithin();
     this._syncOpen(false);
+    // Freeze positioning at the current location the moment the close
+    // begins: `stop()` tears down the `autoUpdate` loop but leaves
+    // `actual-placement` in place until `_stopPositioningWhenClosed`, so the
+    // surface fades out from where it is instead of snapping mid-fade.
+    this.placementController.stop();
     if (this._hasCompletedFirstUpdate) {
-      this.dispatchOpenEvents(false);
+      this._dispatchClose();
+    } else {
+      this._stopPositioningWhenClosed();
     }
     unregisterDismissible(this);
     document.removeEventListener('keydown', this.handleKeyDown, {
       capture: true,
     });
-    this.placementController.stop();
-    this.removeAttribute('actual-placement');
     if (restoreFocusToTrigger) {
       this._interactiveElement?.focus({ preventScroll: true });
     }
@@ -559,7 +534,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     super.disconnectedCallback();
     this.placementController.stop();
     this.clearTriggerAria();
-    this.removeTriggerClickListener();
+    this._trigger = null;
     unregisterDismissible(this);
     document.removeEventListener('keydown', this.handleKeyDown, {
       capture: true,
