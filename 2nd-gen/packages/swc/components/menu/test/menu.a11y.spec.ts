@@ -108,4 +108,24 @@ test.describe('Menu - native dismissal', () => {
     await page.mouse.click(2, 2);
     await expect(menu).toHaveJSProperty('open', false);
   });
+
+  // Regression test for the reopen guard: pressing the trigger again while
+  // open light-dismisses the menu before the trailing click fires, so a
+  // naive `open = !open` handler would read `open` as already false and
+  // flip it back to true instead of leaving it closed. Needs a real,
+  // trusted click; synthetic play-function clicks don't trigger native
+  // light-dismiss at all.
+  test('clicking the trigger again while open closes it instead of reopening it', async ({
+    page,
+  }) => {
+    await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
+    const menu = page.locator('swc-menu');
+    const trigger = page.getByRole('button', { name: 'Edit' });
+
+    await trigger.click();
+    await expect(menu).toHaveJSProperty('open', true);
+
+    await trigger.click();
+    await expect(menu).toHaveJSProperty('open', false);
+  });
 });
