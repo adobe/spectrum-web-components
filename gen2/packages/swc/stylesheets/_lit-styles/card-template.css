@@ -148,7 +148,7 @@
   object-fit: cover;
 }
 
-::slotted(:where(swc-asset)[slot="preview"]) {
+::slotted(swc-asset[slot="preview"]) {
   --swc-asset-aspect-ratio: var(--swc-card-base-preview-aspect-ratio, 3/2);
 }
 
