@@ -10,8 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
-import { createRef, ref } from 'lit/directives/ref.js';
+import { html, nothing } from 'lit';
+import { ref } from 'lit/directives/ref.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -106,8 +106,8 @@ const densityLabels = {
 } as const satisfies Record<CardDensity, string>;
 
 const mediaImage = (slot = 'preview', alt = '') => html`
-  <swc-asset slot=${slot}>
-    <img src="./images/card-preview.jpg" alt=${alt} />
+  <swc-asset slot=${slot} ?decorative=${alt === ''}>
+    <img src="./images/card-preview.jpg" alt=${alt === '' ? nothing : alt} />
   </swc-asset>
 `;
 
@@ -489,6 +489,7 @@ export const AssetCard: Story = {
   tags: ['options'],
   parameters: { flexLayout: 'row-wrap' },
 };
+AssetCard.storyName = 'Asset card';
 
 // ──────────────────────────────
 //    BEHAVIORS STORIES
@@ -496,24 +497,87 @@ export const AssetCard: Story = {
 
 export const LoadingState: Story = {
   render: (args) => {
-    const progressRef = createRef<HTMLElement>();
-    const handleAssetLoad = () => {
-      progressRef.value?.remove();
+    // Guarantees the spinner is visible for a beat even on a fast connection
+    // or from cache, so the transition isn't reduced to a flash.
+    const MIN_LOADING_MS = 1200;
+    let assetEl: HTMLElement | undefined;
+    let pendingImg: HTMLImageElement | undefined;
+
+    const startLoading = () => {
+      const card = assetEl?.parentElement;
+      if (!assetEl || !card) {
+        return;
+      }
+      if (!card.querySelector('swc-progress-circle')) {
+        const spinner = document.createElement('swc-progress-circle');
+        spinner.setAttribute('slot', 'media');
+        spinner.setAttribute('label', 'Loading preview');
+        card.append(spinner);
+      }
+
+      // A fresh <img> (not just a new src) makes swc-asset reset load-state
+      // and re-attach listeners; the cache-busting query forces a real
+      // network fetch so the loading state is reliably visible on replay.
+      // The reveal class is withheld until the spinner is actually removed
+      // (see handleAssetLoad).
+      const img = document.createElement('img');
+      img.alt = '';
+      img.src = `./images/landscape-art.jpg?t=${Date.now()}`;
+      pendingImg = img;
+      assetEl.replaceChildren(img);
     };
+
+    // swc-asset's own swc-asset-load/swc-asset-error events drive the
+    // spinner removal, rather than tracking the <img> directly.
+    const handleAssetLoad = () => {
+      const card = assetEl?.parentElement;
+      const img = pendingImg;
+      setTimeout(() => {
+        card?.querySelector('swc-progress-circle')?.remove();
+        img?.classList.add('loading-state-reveal');
+      }, MIN_LOADING_MS);
+    };
+
     return html`
-      <div style="inline-size: min(280px, 100vw - 2rem);">
+      <style>
+        :where(#loading-state-container) img {
+          visibility: hidden;
+          opacity: 0;
+        }
+
+        .loading-state-reveal {
+          visibility: visible;
+          opacity: 1;
+          transition:
+            visibility 0.4s ease,
+            opacity 0.4s ease;
+        }
+      </style>
+      <div
+        id="loading-state-container"
+        style="inline-size: min(280px, 100vw - 2rem);"
+      >
         ${template(
           { ...args, size: 'm' },
           html`
             <swc-asset
+              ${ref((el) => {
+                if (el) {
+                  assetEl = el as HTMLElement;
+                  // The element isn't attached to its final parent yet at
+                  // this point in lit's commit phase, so parentElement lookups
+                  // (in startLoading) would silently no-op; defer a tick.
+                  queueMicrotask(startLoading);
+                }
+              })}
               slot="preview"
               background="solid"
               @swc-asset-load=${handleAssetLoad}
+              @swc-asset-error=${handleAssetLoad}
             >
-              <img src="./images/landscape-art.jpg" alt="" />
+              <!-- Image inserted dynamically due to demonstrating loading delay -->
             </swc-asset>
             <swc-progress-circle
-              ${ref(progressRef)}
               slot="media"
               label="Loading preview"
             ></swc-progress-circle>
@@ -524,6 +588,9 @@ export const LoadingState: Story = {
               A Rocky Coast
             </a>
             <span slot="description">Artist: William Trost Richards</span>
+            <swc-action-button slot="actions" quiet @click=${startLoading}>
+              Replay
+            </swc-action-button>
           `
         )}
       </div>

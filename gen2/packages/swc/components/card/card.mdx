@@ -77,9 +77,9 @@ The aspect ratio of the asset is controlled by the `swc-asset` component itself,
 
 ### Loading state
 
-[`swc-asset`](../?path=/docs/components-asset--docs) exposes a `loadState` property and `swc-asset-load`/`swc-asset-error` events rather than rendering a loading treatment of its own, so the embedding card decides what to show while its preview loads. One pattern: slot a `swc-progress-circle` into `media`, and remove it once `swc-asset-load` (or `swc-asset-error`) fires.
+[`swc-asset`](../?path=/docs/components-asset--docs) exposes a `loadState` property and `swc-asset-load`/`swc-asset-error` events rather than rendering a loading treatment of its own, so the embedding card decides what to show while its preview loads.
 
-To preview the loading state, you may need to simulate a slow network with your browser's developer tools.
+One pattern: slot a `swc-progress-circle` into `media`, and remove it once `swc-asset-load` (or `swc-asset-error`) fires. The example below also includes a minimum display duration for the spinner, cache-busts its image, and includes a **Replay** control so the transition is visible on demand.
 
 <Canvas of={Stories.LoadingState} />
 

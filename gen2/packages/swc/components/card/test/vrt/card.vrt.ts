@@ -430,6 +430,31 @@ const assetCards = [
       <span slot="title">Asset preview + collection</span>
     `
   ),
+  // xs merges preview into the collection row
+  renderCard(
+    { size: 'xs' },
+    html`
+      <swc-asset slot="preview">
+        <img src="./images/landscape-asset.jpg" alt="" />
+      </swc-asset>
+      <swc-asset slot="collection">
+        <img src="./images/portrait-asset.jpg" alt="" />
+      </swc-asset>
+      <swc-asset slot="collection" fit="contain" background="checkerboard">
+        <img src="./images/portrait-asset.jpg" alt="" />
+      </swc-asset>
+      <span slot="title">Asset · xs merge</span>
+    `
+  ),
+  // Gallery layout (no other slots), preview-only, no collection.
+  renderCard(
+    {},
+    html`
+      <swc-asset slot="preview" fit="contain" background="solid">
+        <img src="./images/landscape-asset.jpg" alt="" />
+      </swc-asset>
+    `
+  ),
 ];
 
 // size="xs" merges preview into the collection row (the `3col` layout) and
