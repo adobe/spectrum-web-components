@@ -307,7 +307,8 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     const submenu = this.asMenu(submenuEl);
     const firstItem = submenu.childItems.find(
       (child) =>
-        !child.disabled && !child.classList.contains('mobile-back-button')
+        this.isFocusableElement(child) &&
+        !child.classList.contains('mobile-back-button')
     );
     if (!firstItem) {
       return;
