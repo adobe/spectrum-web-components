@@ -118,6 +118,8 @@ jobs:
 
       - name: Setup job and install dependencies
         uses: ./.github/actions/setup-job
+        with:
+          build-command: yarn build:gen2
 
       - name: Determine snapshot tag
         id: extract-tag
@@ -173,7 +175,7 @@ jobs:
       - name: Refresh lockfile and rebuild
         run: |
           yarn install --refresh-lockfile
-          yarn build
+          yarn build:gen2
 
       - name: Publish gen2 packages (snapshot)
         id: publish
@@ -240,6 +242,8 @@ jobs:
 
       - name: Setup job and install dependencies
         uses: ./.github/actions/setup-job
+        with:
+          build-command: yarn build:gen2
 
       - name: Version gen2 packages
         env:
@@ -249,6 +253,7 @@ jobs:
             (cd gen2 && yarn changeset pre enter beta)
           fi
           (cd gen2 && yarn changeset version)
+          node scripts/generate-versions.js --gen=gen2
           yarn install --refresh-lockfile
 
       - name: Open or update the gen2 Version PR
@@ -292,6 +297,8 @@ jobs:
 
       - name: Setup job and install dependencies
         uses: ./.github/actions/setup-job
+        with:
+          build-command: yarn build:gen2
 
       - name: Verify NPM authentication
         id: npm-auth
@@ -314,7 +321,7 @@ jobs:
             exit 0
           fi
           yarn install --refresh-lockfile
-          yarn build
+          yarn build:gen2
           # No --tag here: changesets forbids a custom dist-tag while in pre mode
           # (throws "Releasing under custom tag is not allowed in pre mode", exit 1),
           # so `changeset publish` ships to the pre tag (beta).

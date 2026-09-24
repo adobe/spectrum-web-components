@@ -50,6 +50,7 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
     },
     elements: () => this.tags,
     isFocusableElement: (el: Tag) => !el.disabled && el.deletable,
+    mirrorHorizontalInRTL: true,
   });
 
   constructor() {
