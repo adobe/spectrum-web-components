@@ -1,5 +1,31 @@
 # Change Log
 
+## 1.12.4
+
+### Patch Changes
+
+- [#6780](https://github.com/adobe/spectrum-web-components/pull/6780) [`eb29944`](https://github.com/adobe/spectrum-web-components/commit/eb299448d6896370b65d04b0b8a8c642599a88b3) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(reactive-controllers):** Fixed arrow keys moving focus opposite to the visual layout in a right-to-left context.
+
+  `FocusGroupController` mapped <kbd>ArrowRight</kbd> to the next element and <kbd>ArrowLeft</kbd> to the previous one in DOM order, without checking the text direction. Under `dir="rtl"`, focus therefore moved away from the arrow the user pressed. This affected `sp-swatch-group`, `sp-action-group`, `sp-tabs`, `sp-radio-group` and `sp-tags`.
+
+  <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> now swap when the host's computed direction is `rtl` and the host lays out its elements in a row. A new `mirrorHorizontalInRTL` config option tells the controller whether that is the case. It accepts a boolean, or a callback for hosts that can render as either a row or a column. It defaults to `true` only for `direction: 'horizontal'`.
+  - `sp-action-group` and `sp-tabs` mirror unless they render vertically.
+  - `sp-radio-group` mirrors only with `horizontal`, because it renders as a column by default.
+  - `sp-swatch-group` and `sp-tags` always mirror.
+  - `sp-grid` never mirrors, because it positions items with physical offsets that do not follow the text direction.
+
+  In a column, <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> keep following DOM order, so they stay consistent with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd>.
+
+  **fix(grid):** Fixed <kbd>Home</kbd> and <kbd>End</kbd> being swapped in `sp-grid`. <kbd>Home</kbd> now moves focus to the first item and <kbd>End</kbd> to the last, as in every other focus group.
+
+- Updated dependencies [[`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b), [`bcd9ce0`](https://github.com/adobe/spectrum-web-components/commit/bcd9ce09097a89ff37b87e9e2de1e9b4a2001af8), [`eb29944`](https://github.com/adobe/spectrum-web-components/commit/eb299448d6896370b65d04b0b8a8c642599a88b3)]:
+  - @spectrum-web-components/base@1.12.4
+  - @spectrum-web-components/reactive-controllers@1.12.4
+  - @spectrum-web-components/shared@1.12.4
+  - @spectrum-web-components/action-button@1.12.4
+  - @spectrum-web-components/icon@1.12.4
+  - @spectrum-web-components/icons-ui@1.12.4
+
 ## 1.12.2
 
 ### Patch Changes

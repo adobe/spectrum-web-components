@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.12.4
+
+### Patch Changes
+
+- [#6771](https://github.com/adobe/spectrum-web-components/pull/6771) [`bcd9ce0`](https://github.com/adobe/spectrum-web-components/commit/bcd9ce09097a89ff37b87e9e2de1e9b4a2001af8) Thanks [@caseyisonit](https://github.com/caseyisonit)! - **fix**: align the generated 1st-gen version metadata with the removed core dependency tracking.
+
+  The generated `@spectrum-web-components/base` version file no longer exports a stale `coreVersion`, and the 1st-gen `CORE_VERSION` static stays aligned with `VERSION` to preserve runtime compatibility without tracking a removed dependency.
+
+- Updated dependencies [[`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b), [`bcd9ce0`](https://github.com/adobe/spectrum-web-components/commit/bcd9ce09097a89ff37b87e9e2de1e9b4a2001af8)]:
+  - @spectrum-web-components/base@1.12.4
+  - @spectrum-web-components/styles@1.12.4
+
 ## 1.12.2
 
 ### Patch Changes

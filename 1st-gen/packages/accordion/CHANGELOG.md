@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.12.4
+
+### Patch Changes
+
+- Updated dependencies [[`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b), [`bcd9ce0`](https://github.com/adobe/spectrum-web-components/commit/bcd9ce09097a89ff37b87e9e2de1e9b4a2001af8), [`eb29944`](https://github.com/adobe/spectrum-web-components/commit/eb299448d6896370b65d04b0b8a8c642599a88b3)]:
+  - @spectrum-web-components/base@1.12.4
+  - @spectrum-web-components/reactive-controllers@1.12.4
+  - @spectrum-web-components/shared@1.12.4
+  - @spectrum-web-components/icon@1.12.4
+  - @spectrum-web-components/icons-ui@1.12.4
+
 ## 1.12.2
 
 ### Patch Changes

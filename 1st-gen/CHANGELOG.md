@@ -3,6 +3,203 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.4](https://github.com/adobe/spectrum-web-components/compare/gen1-1.12.3...gen1-1.12.4) (2026-09-24)
+
+## Patch Changes
+
+**sp-action-group**: Add `@deprecated` JSDoc to `sp-action-group`'s `vertical`, `selects`, `selected`, and `emphasized`, plus a runtime `window.__swc.warn()` deprecation notice on the `selected` setter, ahead of removal in gen2 `<swc-action-group>`.
+
+**sp-combobox**: **Fixed**: Propagate `lang`/`dir` for a single item's language without breaking layout:
+
+- Combobox: forwards `lang`/`dir` from slotted `<sp-menu-item>` (or `.options` data) onto the rendered popover `<sp-menu-item>`, and syncs the input's own `lang` to the committed option's language for correct pronunciation
+- Breadcrumbs: forwards the same `lang`/`dir` propagation to the "More items" overflow menu
+- `BreadcrumbItem` now forwards `lang`/`dir` to `#item-link` only, so a single item's language does not flip its own layout or mirror its separator's chevron; the separator tracks the ambient direction (nearest ancestor `dir`, or the document default) instead of the host's own `dir` attribute, including live updates when an ancestor's `dir` changes after mount
+- As a side effect, `sp-breadcrumb-item`'s `dir` JS property (via `SpectrumElement`'s computed-direction getter) now reflects the item's ambient direction rather than its own authored `dir` attribute; consumer code that reads `.dir` on an `sp-breadcrumb-item` should use `getAttribute('dir')` instead to see the authored value
+
+**sp-breadcrumbs**: **Fixed**: Propagate `lang`/`dir` for a single item's language without breaking layout:
+
+- Combobox: forwards `lang`/`dir` from slotted `<sp-menu-item>` (or `.options` data) onto the rendered popover `<sp-menu-item>`, and syncs the input's own `lang` to the committed option's language for correct pronunciation
+- Breadcrumbs: forwards the same `lang`/`dir` propagation to the "More items" overflow menu
+- `BreadcrumbItem` now forwards `lang`/`dir` to `#item-link` only, so a single item's language does not flip its own layout or mirror its separator's chevron; the separator tracks the ambient direction (nearest ancestor `dir`, or the document default) instead of the host's own `dir` attribute, including live updates when an ancestor's `dir` changes after mount
+- As a side effect, `sp-breadcrumb-item`'s `dir` JS property (via `SpectrumElement`'s computed-direction getter) now reflects the item's ambient direction rather than its own authored `dir` attribute; consumer code that reads `.dir` on an `sp-breadcrumb-item` should use `getAttribute('dir')` instead to see the authored value
+
+**sp-base**: **Fixed**: Propagate `lang`/`dir` for a single item's language without breaking layout:
+
+- Combobox: forwards `lang`/`dir` from slotted `<sp-menu-item>` (or `.options` data) onto the rendered popover `<sp-menu-item>`, and syncs the input's own `lang` to the committed option's language for correct pronunciation
+- Breadcrumbs: forwards the same `lang`/`dir` propagation to the "More items" overflow menu
+- `BreadcrumbItem` now forwards `lang`/`dir` to `#item-link` only, so a single item's language does not flip its own layout or mirror its separator's chevron; the separator tracks the ambient direction (nearest ancestor `dir`, or the document default) instead of the host's own `dir` attribute, including live updates when an ancestor's `dir` changes after mount
+- As a side effect, `sp-breadcrumb-item`'s `dir` JS property (via `SpectrumElement`'s computed-direction getter) now reflects the item's ambient direction rather than its own authored `dir` attribute; consumer code that reads `.dir` on an `sp-breadcrumb-item` should use `getAttribute('dir')` instead to see the authored value
+
+**sp-reactive-controllers**: **Fixed**: Propagate `lang`/`dir` for a single item's language without breaking layout:
+
+- Combobox: forwards `lang`/`dir` from slotted `<sp-menu-item>` (or `.options` data) onto the rendered popover `<sp-menu-item>`, and syncs the input's own `lang` to the committed option's language for correct pronunciation
+- Breadcrumbs: forwards the same `lang`/`dir` propagation to the "More items" overflow menu
+- `BreadcrumbItem` now forwards `lang`/`dir` to `#item-link` only, so a single item's language does not flip its own layout or mirror its separator's chevron; the separator tracks the ambient direction (nearest ancestor `dir`, or the document default) instead of the host's own `dir` attribute, including live updates when an ancestor's `dir` changes after mount
+- As a side effect, `sp-breadcrumb-item`'s `dir` JS property (via `SpectrumElement`'s computed-direction getter) now reflects the item's ambient direction rather than its own authored `dir` attribute; consumer code that reads `.dir` on an `sp-breadcrumb-item` should use `getAttribute('dir')` instead to see the authored value
+
+**sp-shared**: **Fixed**: Propagate `lang`/`dir` for a single item's language without breaking layout:
+
+- Combobox: forwards `lang`/`dir` from slotted `<sp-menu-item>` (or `.options` data) onto the rendered popover `<sp-menu-item>`, and syncs the input's own `lang` to the committed option's language for correct pronunciation
+- Breadcrumbs: forwards the same `lang`/`dir` propagation to the "More items" overflow menu
+- `BreadcrumbItem` now forwards `lang`/`dir` to `#item-link` only, so a single item's language does not flip its own layout or mirror its separator's chevron; the separator tracks the ambient direction (nearest ancestor `dir`, or the document default) instead of the host's own `dir` attribute, including live updates when an ancestor's `dir` changes after mount
+- As a side effect, `sp-breadcrumb-item`'s `dir` JS property (via `SpectrumElement`'s computed-direction getter) now reflects the item's ambient direction rather than its own authored `dir` attribute; consumer code that reads `.dir` on an `sp-breadcrumb-item` should use `getAttribute('dir')` instead to see the authored value
+
+**sp-dropzone**: 1st-gen `<sp-dropzone>` gains `@deprecated` JSDoc for `isDragged`/`isFilled`, `onDragOver`/`onDragLeave`/`onDrop`, and the removed `DropzoneEventDetail` type, plus matching development-mode console warnings for the upcoming `swc-dropzone-*` event rename and overriding the drag handler methods. `isDragged`/`isFilled` have no runtime warning: both attributes (`dragged`/`filled`) are unchanged and still valid, so Lit's attribute-to-property sync and (for `isDragged`) the component's own internal drag handling route through the same reactive properties a consumer's JS assignment would use, and a warning there would fire for ordinary, unmigrated attribute/template-binding usage the migration plan explicitly promises is unaffected.
+
+**sp-base**: **fix**: align the generated 1st-gen version metadata with the removed core dependency tracking.
+
+The generated `@spectrum-web-components/base` version file no longer exports a stale `coreVersion`, and the 1st-gen `CORE_VERSION` static stays aligned with `VERSION` to preserve runtime compatibility without tracking a removed dependency.
+
+**sp-theme**: **fix**: align the generated 1st-gen version metadata with the removed core dependency tracking.
+
+The generated `@spectrum-web-components/base` version file no longer exports a stale `coreVersion`, and the 1st-gen `CORE_VERSION` static stays aligned with `VERSION` to preserve runtime compatibility without tracking a removed dependency.
+
+**sp-reactive-controllers**: **fix(reactive-controllers):** Fixed arrow keys moving focus opposite to the visual layout in a right-to-left context.
+
+`FocusGroupController` mapped <kbd>ArrowRight</kbd> to the next element and <kbd>ArrowLeft</kbd> to the previous one in DOM order, without checking the text direction. Under `dir="rtl"`, focus therefore moved away from the arrow the user pressed. This affected `sp-swatch-group`, `sp-action-group`, `sp-tabs`, `sp-radio-group` and `sp-tags`.
+
+<kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> now swap when the host's computed direction is `rtl` and the host lays out its elements in a row. A new `mirrorHorizontalInRTL` config option tells the controller whether that is the case. It accepts a boolean, or a callback for hosts that can render as either a row or a column. It defaults to `true` only for `direction: 'horizontal'`.
+
+- `sp-action-group` and `sp-tabs` mirror unless they render vertically.
+- `sp-radio-group` mirrors only with `horizontal`, because it renders as a column by default.
+- `sp-swatch-group` and `sp-tags` always mirror.
+- `sp-grid` never mirrors, because it positions items with physical offsets that do not follow the text direction.
+
+In a column, <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> keep following DOM order, so they stay consistent with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd>.
+
+**fix(grid):** Fixed <kbd>Home</kbd> and <kbd>End</kbd> being swapped in `sp-grid`. <kbd>Home</kbd> now moves focus to the first item and <kbd>End</kbd> to the last, as in every other focus group.
+
+**sp-action-group**: **fix(reactive-controllers):** Fixed arrow keys moving focus opposite to the visual layout in a right-to-left context.
+
+`FocusGroupController` mapped <kbd>ArrowRight</kbd> to the next element and <kbd>ArrowLeft</kbd> to the previous one in DOM order, without checking the text direction. Under `dir="rtl"`, focus therefore moved away from the arrow the user pressed. This affected `sp-swatch-group`, `sp-action-group`, `sp-tabs`, `sp-radio-group` and `sp-tags`.
+
+<kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> now swap when the host's computed direction is `rtl` and the host lays out its elements in a row. A new `mirrorHorizontalInRTL` config option tells the controller whether that is the case. It accepts a boolean, or a callback for hosts that can render as either a row or a column. It defaults to `true` only for `direction: 'horizontal'`.
+
+- `sp-action-group` and `sp-tabs` mirror unless they render vertically.
+- `sp-radio-group` mirrors only with `horizontal`, because it renders as a column by default.
+- `sp-swatch-group` and `sp-tags` always mirror.
+- `sp-grid` never mirrors, because it positions items with physical offsets that do not follow the text direction.
+
+In a column, <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> keep following DOM order, so they stay consistent with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd>.
+
+**fix(grid):** Fixed <kbd>Home</kbd> and <kbd>End</kbd> being swapped in `sp-grid`. <kbd>Home</kbd> now moves focus to the first item and <kbd>End</kbd> to the last, as in every other focus group.
+
+**sp-radio**: **fix(reactive-controllers):** Fixed arrow keys moving focus opposite to the visual layout in a right-to-left context.
+
+`FocusGroupController` mapped <kbd>ArrowRight</kbd> to the next element and <kbd>ArrowLeft</kbd> to the previous one in DOM order, without checking the text direction. Under `dir="rtl"`, focus therefore moved away from the arrow the user pressed. This affected `sp-swatch-group`, `sp-action-group`, `sp-tabs`, `sp-radio-group` and `sp-tags`.
+
+<kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> now swap when the host's computed direction is `rtl` and the host lays out its elements in a row. A new `mirrorHorizontalInRTL` config option tells the controller whether that is the case. It accepts a boolean, or a callback for hosts that can render as either a row or a column. It defaults to `true` only for `direction: 'horizontal'`.
+
+- `sp-action-group` and `sp-tabs` mirror unless they render vertically.
+- `sp-radio-group` mirrors only with `horizontal`, because it renders as a column by default.
+- `sp-swatch-group` and `sp-tags` always mirror.
+- `sp-grid` never mirrors, because it positions items with physical offsets that do not follow the text direction.
+
+In a column, <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> keep following DOM order, so they stay consistent with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd>.
+
+**fix(grid):** Fixed <kbd>Home</kbd> and <kbd>End</kbd> being swapped in `sp-grid`. <kbd>Home</kbd> now moves focus to the first item and <kbd>End</kbd> to the last, as in every other focus group.
+
+**sp-tabs**: **fix(reactive-controllers):** Fixed arrow keys moving focus opposite to the visual layout in a right-to-left context.
+
+`FocusGroupController` mapped <kbd>ArrowRight</kbd> to the next element and <kbd>ArrowLeft</kbd> to the previous one in DOM order, without checking the text direction. Under `dir="rtl"`, focus therefore moved away from the arrow the user pressed. This affected `sp-swatch-group`, `sp-action-group`, `sp-tabs`, `sp-radio-group` and `sp-tags`.
+
+<kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> now swap when the host's computed direction is `rtl` and the host lays out its elements in a row. A new `mirrorHorizontalInRTL` config option tells the controller whether that is the case. It accepts a boolean, or a callback for hosts that can render as either a row or a column. It defaults to `true` only for `direction: 'horizontal'`.
+
+- `sp-action-group` and `sp-tabs` mirror unless they render vertically.
+- `sp-radio-group` mirrors only with `horizontal`, because it renders as a column by default.
+- `sp-swatch-group` and `sp-tags` always mirror.
+- `sp-grid` never mirrors, because it positions items with physical offsets that do not follow the text direction.
+
+In a column, <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> keep following DOM order, so they stay consistent with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd>.
+
+**fix(grid):** Fixed <kbd>Home</kbd> and <kbd>End</kbd> being swapped in `sp-grid`. <kbd>Home</kbd> now moves focus to the first item and <kbd>End</kbd> to the last, as in every other focus group.
+
+**sp-swatch**: **fix(reactive-controllers):** Fixed arrow keys moving focus opposite to the visual layout in a right-to-left context.
+
+`FocusGroupController` mapped <kbd>ArrowRight</kbd> to the next element and <kbd>ArrowLeft</kbd> to the previous one in DOM order, without checking the text direction. Under `dir="rtl"`, focus therefore moved away from the arrow the user pressed. This affected `sp-swatch-group`, `sp-action-group`, `sp-tabs`, `sp-radio-group` and `sp-tags`.
+
+<kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> now swap when the host's computed direction is `rtl` and the host lays out its elements in a row. A new `mirrorHorizontalInRTL` config option tells the controller whether that is the case. It accepts a boolean, or a callback for hosts that can render as either a row or a column. It defaults to `true` only for `direction: 'horizontal'`.
+
+- `sp-action-group` and `sp-tabs` mirror unless they render vertically.
+- `sp-radio-group` mirrors only with `horizontal`, because it renders as a column by default.
+- `sp-swatch-group` and `sp-tags` always mirror.
+- `sp-grid` never mirrors, because it positions items with physical offsets that do not follow the text direction.
+
+In a column, <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> keep following DOM order, so they stay consistent with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd>.
+
+**fix(grid):** Fixed <kbd>Home</kbd> and <kbd>End</kbd> being swapped in `sp-grid`. <kbd>Home</kbd> now moves focus to the first item and <kbd>End</kbd> to the last, as in every other focus group.
+
+**sp-tags**: **fix(reactive-controllers):** Fixed arrow keys moving focus opposite to the visual layout in a right-to-left context.
+
+`FocusGroupController` mapped <kbd>ArrowRight</kbd> to the next element and <kbd>ArrowLeft</kbd> to the previous one in DOM order, without checking the text direction. Under `dir="rtl"`, focus therefore moved away from the arrow the user pressed. This affected `sp-swatch-group`, `sp-action-group`, `sp-tabs`, `sp-radio-group` and `sp-tags`.
+
+<kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> now swap when the host's computed direction is `rtl` and the host lays out its elements in a row. A new `mirrorHorizontalInRTL` config option tells the controller whether that is the case. It accepts a boolean, or a callback for hosts that can render as either a row or a column. It defaults to `true` only for `direction: 'horizontal'`.
+
+- `sp-action-group` and `sp-tabs` mirror unless they render vertically.
+- `sp-radio-group` mirrors only with `horizontal`, because it renders as a column by default.
+- `sp-swatch-group` and `sp-tags` always mirror.
+- `sp-grid` never mirrors, because it positions items with physical offsets that do not follow the text direction.
+
+In a column, <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> keep following DOM order, so they stay consistent with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd>.
+
+**fix(grid):** Fixed <kbd>Home</kbd> and <kbd>End</kbd> being swapped in `sp-grid`. <kbd>Home</kbd> now moves focus to the first item and <kbd>End</kbd> to the last, as in every other focus group.
+
+**sp-grid**: **fix(reactive-controllers):** Fixed arrow keys moving focus opposite to the visual layout in a right-to-left context.
+
+`FocusGroupController` mapped <kbd>ArrowRight</kbd> to the next element and <kbd>ArrowLeft</kbd> to the previous one in DOM order, without checking the text direction. Under `dir="rtl"`, focus therefore moved away from the arrow the user pressed. This affected `sp-swatch-group`, `sp-action-group`, `sp-tabs`, `sp-radio-group` and `sp-tags`.
+
+<kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> now swap when the host's computed direction is `rtl` and the host lays out its elements in a row. A new `mirrorHorizontalInRTL` config option tells the controller whether that is the case. It accepts a boolean, or a callback for hosts that can render as either a row or a column. It defaults to `true` only for `direction: 'horizontal'`.
+
+- `sp-action-group` and `sp-tabs` mirror unless they render vertically.
+- `sp-radio-group` mirrors only with `horizontal`, because it renders as a column by default.
+- `sp-swatch-group` and `sp-tags` always mirror.
+- `sp-grid` never mirrors, because it positions items with physical offsets that do not follow the text direction.
+
+In a column, <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> keep following DOM order, so they stay consistent with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd>.
+
+**fix(grid):** Fixed <kbd>Home</kbd> and <kbd>End</kbd> being swapped in `sp-grid`. <kbd>Home</kbd> now moves focus to the first item and <kbd>End</kbd> to the last, as in every other focus group.
+
+**sp-menu**: **fix(menu):** Fixed `sp-menu-item` selection toggling on and immediately back off when pressed via <kbd>Space</kbd> or <kbd>Enter</kbd>.
+
+The keydown handler called `focusElement.click()`, which already dispatches a click that flows through `handleClick` → `handlePointerBasedSelection` → `selectOrToggleItem`, and then called `selectOrToggleItem` a second time explicitly. The redundant second call toggled the item's selection state back off in the same tick, so keyboard users saw two `change` events and no visible selection, most noticeably with `selects="multiple"` where the final selected value reverted to empty.
+
+**sp-menu**: **fix(menu):** Fixed keyboard navigation in `sp-menu` landing on `sp-menu-item` elements that have the `hidden` attribute. Hidden items are now skipped the same way disabled items are, including when pressing ArrowDown from the back row in the mobile drill-down view.
+
+**sp-menu**: **fix(menu):** Fixed `sp-menu-item` submenus opening from a touch tap's `pointerup` in mobile view, bypassing the drill-down navigation.
+
+`handlePointerdown`'s touch fast-path lacked an `!this.isMobileView` guard, so a touch `pointerup` on a menu item with a submenu triggered the desktop-style overlay-opening logic even when `mobile-view` was set. This left `currentMobileSubmenu` unset while the overlay-based submenu was also open, corrupting the drill-down bookkeeping and causing the next touch-driven submenu open to fail intermittently. In mobile view, submenus now open only via the click that follows a touch tap, consistent with the drill-down navigation model.
+
+**sp-overlay**: **fix(overlay):** Removed the `./src/OverlayDialog.js` entry from the package `exports` map. The file does not exist, so importing that path always failed to resolve.
+
+**sp-overlay**: **fix(overlay):** Fixed `[type="auto"]` `sp-overlay` incorrectly closing when clicking inside its own content, if the trigger and the overlay share a focusable ancestor (e.g. a `tabindex="0"` wrapper). Fixes [#5731](https://github.com/adobe/spectrum-web-components/issues/5731).
+
+**Affected pattern**, previously broken:
+
+```html
+<div tabindex="0">
+  <sp-button id="trigger">Open</sp-button>
+  <sp-overlay trigger="trigger@click" type="auto">
+    <sp-popover>
+      Clicking anywhere in here used to close the popover.
+    </sp-popover>
+  </sp-overlay>
+</div>
+```
+
+**Root cause:** `closeOnFocusOut` decided whether focus left the overlay by checking if the newly-focused element (`event.relatedTarget`) was a descendant of the overlay. Clicking non-focusable overlay content (plain text, padding, etc.) causes the browser to resolve focus onto the nearest focusable ancestor instead of the click target; when that ancestor also wraps the overlay itself, it sits above the overlay in the DOM, so the check always concluded focus had left and closed the overlay even though the click landed inside it.
+
+**Fix:** `closeOnFocusOut` now also tracks whether the `pointerdown` causing the current focus change originated inside the overlay's own composed subtree, and treats focus as remaining within the overlay in that case regardless of where it was ultimately resolved to.
+
+**sp-picker**: **fix(picker):** the mobile Tray now reopens after being dismissed by an outside tap. When the overlay closed externally with `preventNextToggle === 'no'`, `handleBeforetoggle` set the host's `open` to `false` but left the interaction controller's `open` state stale at `true`, so the next tap set `preventNextToggle = 'yes'` and skipped the toggle. The controller state is now synced on external close, matching the sibling branch.
+
+**sp-menu**: **fix(menu):** Reset the `mobile-view` drill-down when the containing `<sp-tray>` is dismissed.
+
+Previously, drilling into a submenu and then dismissing the tray (click-outside, Escape, or programmatic close) kept the submenu state, so reopening the tray showed the stale submenu instead of the top-level menu. While drilled in, `<sp-menu mobile-view>` now listens for the containing tray's `close` event and resets the stack on dismiss. Desktop flyout submenus are unaffected.
+
+**sp-progress-bar**: **docs(progress-bar):** Added deprecation notices to `<sp-progress-bar>` ahead of the Spectrum 2 migration.
+
+The `label`, `side-label`, and `progress` properties are now marked `@deprecated` and emit `window.__swc.DEBUG` warnings pointing to their `<swc-progress-bar>` replacements (`label` slot, `label-position="side"`, and `value`). Runtime behavior is unchanged when debug validation is disabled.
+
 # [1.12.2](https://github.com/adobe/spectrum-web-components/compare/v1.12.1...v1.12.2) (2026-07-06)
 
 ## Patch Changes
