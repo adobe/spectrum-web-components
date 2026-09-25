@@ -1,0 +1,53 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../.storybook/blocks';
+
+import * as AIButtonStories from './stories/ai-button.stories';
+
+<Meta of={AIButtonStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+An AI button consists of:
+
+- **Sparkle icon**: always shown, marks the action as AI-powered
+- **Label**: consumer-provided default-slot content, optional
+
+<Canvas of={AIButtonStories.Anatomy} />
+
+## Options
+
+### Sizes
+
+AI buttons come in four sizes: small, medium (default), large, and extra-large.
+
+<Canvas of={AIButtonStories.Sizes} />
+
+### Brand color
+
+The gradient hue derives from the `--swc-ai-button-brand-color` custom
+property. Override it with an OKLCH color to retint the whole button.
+
+<Canvas of={AIButtonStories.BrandColor} />
+
+## States
+
+The button can be disabled, which removes focusability and prevents interaction.
+
+<Canvas of={AIButtonStories.States} />
+
+## Accessibility
+
+### Features
+
+The `<swc-ai-button>` element implements:
+
+- Native `<button>` interaction semantics
+- Keyboard activation via <kbd>Enter</kbd> and <kbd>Space</kbd>
+- An `accessible-label` requirement for icon-only buttons, forwarded as
+  `aria-label`
+
+<Canvas of={AIButtonStories.Accessibility} />
+
+<DocsFooter />
