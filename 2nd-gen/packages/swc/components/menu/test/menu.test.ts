@@ -57,6 +57,17 @@ const isMenuOpen = (menu: Menu): boolean =>
   menu.shadowRoot?.querySelector('.swc-Menu')?.matches(':popover-open') ??
   false;
 
+// Awaits a DOM event dispatched on the given element, resolving with the event object.
+const waitForEvent = <T extends Event>(
+  el: EventTarget,
+  eventName: string
+): Promise<T> =>
+  new Promise<T>((resolve) => {
+    el.addEventListener(eventName, (event) => resolve(event as T), {
+      once: true,
+    });
+  });
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Defaults
 // ──────────────────────────────────────────────────────────────
@@ -181,39 +192,26 @@ export const LifecycleEventsTest: Story = {
     const menu = await getComponent<Menu>(canvasElement, 'swc-menu');
 
     await step('fires swc-open and swc-after-open when opened', async () => {
-      let opened = false;
-      let afterOpened = false;
-      menu.addEventListener('swc-open', () => (opened = true), {
-        once: true,
-      });
-      menu.addEventListener('swc-after-open', () => (afterOpened = true), {
-        once: true,
-      });
+      // swc-after-open only fires once the enter transition settles, which
+      // can land either side of the popover-open state flip depending on
+      // transition timing in a given browser/CI environment. Await the
+      // events directly rather than racing a boolean flag against an
+      // unrelated `isMenuOpen` poll.
+      const openPromise = waitForEvent(menu, 'swc-open');
+      const afterOpenPromise = waitForEvent(menu, 'swc-after-open');
 
       menu.open = true;
-      await waitFor(() => expect(isMenuOpen(menu)).toBe(true), {
-        timeout: 1000,
-      });
-      expect(opened, 'swc-open fired').toBe(true);
-      expect(afterOpened, 'swc-after-open fired').toBe(true);
+      await openPromise;
+      await afterOpenPromise;
     });
 
     await step('fires swc-close and swc-after-close when closed', async () => {
-      let closed = false;
-      let afterClosed = false;
-      menu.addEventListener('swc-close', () => (closed = true), {
-        once: true,
-      });
-      menu.addEventListener('swc-after-close', () => (afterClosed = true), {
-        once: true,
-      });
+      const closePromise = waitForEvent(menu, 'swc-close');
+      const afterClosePromise = waitForEvent(menu, 'swc-after-close');
 
       menu.open = false;
-      await waitFor(() => expect(isMenuOpen(menu)).toBe(false), {
-        timeout: 1000,
-      });
-      expect(closed, 'swc-close fired').toBe(true);
-      expect(afterClosed, 'swc-after-close fired').toBe(true);
+      await closePromise;
+      await afterClosePromise;
     });
 
     await step('dispatches events that bubble and are composed', async () => {
