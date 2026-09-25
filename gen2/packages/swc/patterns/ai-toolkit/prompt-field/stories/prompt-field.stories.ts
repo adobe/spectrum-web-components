@@ -304,7 +304,7 @@ export const Attachment: Story = {
           <swc-upload-attachment slot="attachment" type="card" dismissible>
             <div slot="thumbnail" role="img" aria-label="PDF"></div>
             <span slot="title">Brand guidelines</span>
-            <span slot="subtitle">PDF</span>
+            <swc-badge slot="badge" size="s" subtle>PDF</swc-badge>
           </swc-upload-attachment>
           <swc-upload-attachment slot="attachment" type="card" dismissible>
             <div slot="thumbnail" role="img" aria-label="Spreadsheet"></div>
@@ -337,7 +337,7 @@ export const Attachment: Story = {
               aria-label="Storyboard frame"
               style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#f472b6,#facc15);"
             ></div>
-            <span slot="badge">PDF</span>
+            <swc-badge slot="badge" size="s" subtle>PDF</swc-badge>
           </swc-upload-attachment>
           ${legalDisclaimerSlot}
         </swc-prompt-field>
