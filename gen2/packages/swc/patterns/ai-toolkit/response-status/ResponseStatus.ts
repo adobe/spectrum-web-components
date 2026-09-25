@@ -614,10 +614,7 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _renderHeader(showDisclosure: boolean): TemplateResult {
-    const label = this._currentVisibleLabel();
     const status = this._resolvedStatus;
-    const statusRole =
-      !showDisclosure && status === 'active' ? 'status' : undefined;
     const rowClass = [
       'swc-ResponseStatus-row',
       showDisclosure ? 'swc-ResponseStatus-row--button' : '',
@@ -628,30 +625,31 @@ export class ResponseStatus extends SpectrumElement {
       .filter(Boolean)
       .join(' ');
 
-    const rowContent = html`
-      ${this._renderLeadingIcon()}
-      <span class="swc-ResponseStatus-headerTrail">
-        ${this._renderLabel()}
-        ${showDisclosure ? this._renderChevron(this.open) : nothing}
-      </span>
-    `;
-
-    if (showDisclosure) {
-      return html`
-        <button
-          class=${rowClass}
-          aria-label=${label}
-          aria-expanded=${this.open}
-          aria-controls=${this.panelId}
-          @click=${this._handleToggle}
-        >
-          ${rowContent}
-        </button>
-      `;
-    }
-
+    // Always a <button> so the tag never changes when the first step arrives
+    // (swapping div<->button restarts the nested loader animation). Disclosure
+    // trigger only when there are steps; otherwise inert (tabindex="-1"). Only
+    // the still-running state is a role="status" live region; a settled label
+    // is static. Name comes from content.
     return html`
-      <div class=${rowClass} role=${ifDefined(statusRole)}>${rowContent}</div>
+      <button
+        type="button"
+        class=${rowClass}
+        tabindex=${ifDefined(showDisclosure ? undefined : -1)}
+        aria-expanded=${ifDefined(showDisclosure ? this.open : undefined)}
+        aria-controls=${ifDefined(showDisclosure ? this.panelId : undefined)}
+        @click=${this._handleToggle}
+      >
+        ${this._renderLeadingIcon()}
+        <span
+          class="swc-ResponseStatus-headerTrail"
+          role=${ifDefined(
+            !showDisclosure && status === 'active' ? 'status' : undefined
+          )}
+        >
+          ${this._renderLabel()}
+          ${showDisclosure ? this._renderChevron(this.open) : nothing}
+        </span>
+      </button>
     `;
   }
 

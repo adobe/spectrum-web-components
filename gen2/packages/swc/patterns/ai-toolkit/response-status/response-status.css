@@ -29,23 +29,28 @@
    Status row (icon + label [+ checkmark])
    ───────────────────────────────────── */
 
+/* Always a <button> (see `_renderHeader`); reset the native chrome. */
 .swc-ResponseStatus-row {
   display: flex;
   gap: token("spacing-100");
   align-items: center;
-  min-block-size: var(--_swc-response-status-row-block-size, 32px);
-}
-
-/* When the row is a button (reasoning toggle). Full inline-size so the
-   entire row is clickable. */
-.swc-ResponseStatus-row--button {
   inline-size: 100%;
-  padding: var(--_swc-response-status-toggle-padding-block, 3px) token("spacing-100");
+  min-block-size: var(--_swc-response-status-row-block-size, 32px);
+  padding: 0;
   color: inherit;
   text-align: start;
   background: transparent;
   border: none;
+}
+
+/* Active disclosure toggle (has steps). */
+.swc-ResponseStatus-row--button {
   border-radius: token("corner-radius-medium-default");
+}
+
+.swc-ResponseStatus-row--button:focus-visible {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
 }
 
 .swc-ResponseStatus-label {
@@ -206,18 +211,12 @@
   --swc-pixel-loader-color: token("gray-800");
 }
 
-.swc-ResponseStatus-row--button:focus-visible {
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-ring-gap");
-}
-
 /* ─────────────────────────────────────
    Agentic mode
    ───────────────────────────────────── */
 
 .swc-ResponseStatus--agentic {
   inline-size: 100%;
-  max-inline-size: 540px;
 }
 
 .swc-ResponseStatus-row--processing {

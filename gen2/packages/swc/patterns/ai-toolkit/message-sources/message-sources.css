@@ -23,6 +23,10 @@
 .swc-MessageSources {
   display: flex;
   flex-direction: column;
+}
+
+/* No gap when collapsed (list is zero-height). */
+.swc-MessageSources:has(.swc-MessageSources-toggle[aria-expanded="true"]) {
   gap: token("spacing-100");
 }
 
