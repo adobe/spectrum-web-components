@@ -14,7 +14,7 @@
  * Validates `.ai/` instruction and skill frontmatter against the canonical schema, so
  * every generated Copilot, Claude, and Cursor file loads the way the source intends.
  *
- * Instructions (`.ai/rules/*.md`, and `.ai/memory/*.md` once they have frontmatter):
+ * Instructions (`.ai/rules/*.md` and `.ai/memory/*.md`):
  *   - `description` (required) and `paths` (required, quoted YAML list); optional `excludeAgent`
  *   - no `globs`, `alwaysApply`, `applyTo`, or `name`
  *   - every `paths` glob matches at least one tracked file (GitHub `applyTo` semantics)
@@ -77,13 +77,7 @@ function validateInstruction(source, errors, warnings) {
     return;
   }
   if (!source.data) {
-    if (source.kind === 'memory') {
-      warnings.push(
-        `${where}: no frontmatter, so it isn't generated as an instruction yet`
-      );
-    } else {
-      errors.push(`${where}: missing frontmatter (description, paths)`);
-    }
+    errors.push(`${where}: missing frontmatter (description, paths)`);
     return;
   }
   const data = source.data;
