@@ -277,14 +277,14 @@ Derived from the 1st-gen implementation, the accessibility migration analysis, t
 
 Icons confirmed against Figma. Source from the public `@adobe/spectrum-wc-icons` workflow-icon package (`Icon_InfoCircle()`, `Icon_CheckmarkCircle()`, `Icon_AlertTriangle()`, or the `<swc-icon-*>` elements), not the internal lean icon set in `gen2/packages/swc/components/icon/elements/`. Forward Toast's resolved icon label (default or `icon-label` override) straight into the icon's own `accessible-label`; empty renders it decorative, matching the a11y doc's `icon-label=""` suppression behavior for free.
 
-Action button (when present): secondary, outline, `static-color="white"`. Confirmed by Figma playground and RSP S2 (`variant="secondary" fillStyle="outline" staticColor="white"`).
+Action button (when present): a `<swc-button slot="action">`, not `<swc-action-button>`, styled as secondary, outline, `static-color="white"`. Confirmed by Figma playground and RSP S2 (`variant="secondary" fillStyle="outline" staticColor="white"`).
 
 #### Slots (gen2)
 
 | Slot | Content | Notes |
 | ---- | ------- | ----- |
 | default | Toast message text | **Open question**, Q9: staying the default slot means content can be a bare text node with no element to hold the `aria-labelledby` target ID (falls back to `aria-label`, see [Accessibility semantics notes](#accessibility-semantics-notes-gen2)); a named slot would let the component guarantee a light-DOM wrapper instead. |
-| `action` | Optional action button | **Confirmed** (Q3): kept as a light-DOM slot rather than `action-label`/`swc-action` props. Presence is gated by `SlotPresenceController` and `size`/`variant` are propagated onto the slotted button by `SlotAttributePropagationController`, both already built; see [Dependencies](#dependencies). |
+| `action` | Optional `<swc-button slot="action">` | **Confirmed** (Q3): kept as a light-DOM slot rather than `action-label`/`swc-action` props. The expected element is `swc-button` (not `swc-action-button`). Presence is gated by `SlotPresenceController` and `size`/`variant` are propagated onto the slotted button by `SlotAttributePropagationController`, both already built; see [Dependencies](#dependencies). |
 
 #### CSS custom properties (gen2)
 
@@ -305,7 +305,7 @@ No properties are exposed in the initial set. Add a `--swc-toast-*` property onl
 | ----- | ----- | ----- |
 | `<swc-toast-container>` | Custom element, placed once per app view | Renders the container region; exposes no public method for adding toasts itself |
 | `placement` | `'top' \| 'top-end' \| 'bottom' \| 'bottom-end'` | Default `bottom`, matching RSP S2 and how toasts have appeared in this codebase previously. The `-end` values are logical (RTL-aware), not literal left/right |
-| Queue export | For example a module export with `add()`/`close()`/`clear()`, or per-variant convenience methods (`.info()`, `.positive()`, etc.) | Decoupled from the container element; exact shape still open as part of Q13, including how an action button and an `onClose` callback are supplied (see below) |
+| Queue export | For example a module export with `add()`/`close()`/`clear()`, or per-variant convenience methods (`.info()`, `.positive()`, etc.) | Decoupled from the container element; exact shape still open as part of Q13, including how a `<swc-button slot="action">` and an `onClose` callback are supplied (see below) |
 
 **Only one container per app view:** because the queue export is decoupled from the container element, nothing else stops a consumer from placing two `<swc-toast-container>` instances, which would double-render every toast. The container's `connectedCallback()` should warn via `warnIf()` (see [Dependencies](#dependencies)) if a second instance connects while one is already present.
 
@@ -313,7 +313,7 @@ The container's `role="region"` wrapper carries a dynamic `aria-label` reflectin
 
 **How content flows from the queue export to a rendered toast:** calling the queue export (`add()`, or a per-variant convenience method) constructs a `<swc-toast>` element, sets its `variant`/`icon-label`/etc., and sets the call's message argument as its slotted content, then hands it to `swc-toast-container` to render; see [Slots (gen2)](#slots-gen2) for the slot itself (Q9). `swc-toast` stays usable standalone for most of its API: the queue export is a convenience for the common case, not the only way to use the component, and a consumer can still hand-author `<swc-toast open>` directly in markup with no container involved. Auto-dismiss is the exception: whether `timeout` has any effect at all outside the container is Q15, still open, leaning toward no.
 
-**Still open as part of Q13:** how an action button is supplied through the imperative queue export, since `action` is a light-DOM slot (Q3), not a prop. One option is accepting a real element/node in the call's options for the container to slot in; the other is treating actionable toasts as the hand-authored-markup case above, and leaving the queue export to cover the plain-message case only. Also open: whether the queue export accepts an `onClose` callback per call, matching RSP S2's `addToast()`, which fires whenever that specific toast closes, for any reason.
+**Still open as part of Q13:** how a `<swc-button>` action button is supplied through the imperative queue export, since `action` is a light-DOM slot (Q3), not a prop. The rendered element is expected to be `<swc-button slot="action">`, not `<swc-action-button>`. One option is accepting a real `swc-button` element/node in the call's options for the container to slot in; the other is treating actionable toasts as the hand-authored-markup case above, and leaving the queue export to cover the plain-message case only. Also open: whether the queue export accepts an `onClose` callback per call, matching RSP S2's `addToast()`, which fires whenever that specific toast closes, for any reason.
 
 ### Behavioral semantics
 
