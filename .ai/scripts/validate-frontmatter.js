@@ -54,9 +54,9 @@ import {
 
 /**
  * Skill layout problems (nesting, a name that differs from its directory, rule-style keys)
- * are warnings until every existing skill is normalized; then this becomes true.
+ * are errors now that every skill is normalized.
  */
-const STRICT_SKILL_LAYOUT = false;
+const STRICT_SKILL_LAYOUT = true;
 
 const INSTRUCTION_SIZE_WARNING = 12 * 1024;
 const SKILL_NAME = /^[a-z0-9]+(-[a-z0-9]+)*$/;

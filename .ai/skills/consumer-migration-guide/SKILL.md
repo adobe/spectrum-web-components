@@ -1,8 +1,6 @@
 ---
 name: consumer-migration-guide
 description: Use when creating a per-component migration guide for application developers upgrading from Spectrum 1 Web Components to Spectrum 2 components.
-globs: gen2/packages/swc/components/*/migration-guide.mdx
-alwaysApply: false
 ---
 
 # Component migration: consumer guide

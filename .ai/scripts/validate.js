@@ -18,7 +18,8 @@
  * Runs seven checks:
  *   1. Story tags: valid tags in gen2 *.stories.ts files
  *   2. Links: relative links in AGENTS.md files and `.ai/` Markdown resolve to real files
- *   3. Config schema: .ai/config.json structure and regex validity
+ *   3. Conventions: branch and commit types documented in .ai/skills/ match the types
+ *      commitlint enforces (this replaced the old .ai/config.json schema check)
  *   4. Frontmatter: `.ai/` instruction and skill metadata matches the canonical schema,
  *      `paths` globs match tracked files, skill names and descriptions load in Copilot,
  *      and generated folders hold only generated files
@@ -36,7 +37,7 @@
 
 import { validateDocsPages } from '../../scripts/validate-docs-pages.js';
 import { syncAi } from './sync.js';
-import { validateConfigSchema } from './validate-config-schema.js';
+import { validateConventions } from './validate-conventions.js';
 import { validateFrontmatter } from './validate-frontmatter.js';
 import { validateLinks } from './validate-links.js';
 import { validateStoryTags } from './validate-story-tags.js';
@@ -84,14 +85,14 @@ printSection(
   links.fileCount
 );
 
-// 3. Config schema
-const config = validateConfigSchema();
-totalErrors += config.errors.length;
+// 3. Conventions
+const conventions = validateConventions();
+totalErrors += conventions.errors.length;
 printSection(
-  'Config schema (.ai/config.json)',
-  config.errors,
-  config.warnings,
-  1
+  'Commit and branch conventions (commitlint)',
+  conventions.errors,
+  conventions.warnings,
+  conventions.fileCount
 );
 
 // 4. Frontmatter
