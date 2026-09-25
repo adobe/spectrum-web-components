@@ -1,5 +1,5 @@
 ---
-description: Accumulated lessons for agents working in this repository, covering path depths, module format, repository layout, Storybook tag conventions, and documentation style.
+description: Accumulated lessons for agents working in this repository, covering path depths, module format, repository layout, the gen2 styling API prefix, generated build output, Storybook tag conventions, and documentation style.
 applyTo: '**'
 excludeAgent: code-review
 ---
@@ -33,6 +33,19 @@ Accumulated lessons from working sessions on this project. Grouped by category. 
 
 ---
 
+## Styling API
+
+- **gen2 components expose `--swc-*` custom properties**: A gen2 component's public styling API, meaning the custom properties it documents with `@cssprop` and that consumers set to override it, uses the `--swc-*` prefix (for example `--swc-badge-height`). `--mod-*` and `--spectrum-*` are 1st-gen and Spectrum CSS conventions. Use them in gen2 docs, examples, and JSDoc only when a 1st-gen to gen2 migration guide compares the two. Stylelint's `custom-property-pattern` doesn't enforce the prefix.
+
+---
+
+## Generated files
+
+- **Keep regenerated build output**: When `yarn build` rewrites a generated file, such as `gen2/packages/swc/stylesheets/global/global-*.css` (built from component CSS by `gen2/packages/tools/vite-global-elements-css`), commit the regenerated file even if the diff looks unrelated, such as reordered properties. The committed copy was stale. Revert it only if the diff contradicts its source.
+
+---
+
 ## Documentation
 
 - **Contributor migration-analysis markdown**: Prefer plain sentences with backticks for roles, elements, and code. Bold is fine sparingly for scanning cues; follow `accessibility-migration-analysis` skill (≈30% cap on bold markup for body prose, single spans for multi-word emphasis).
+- **Don't hard-wrap prose**: `.prettierrc.yaml` sets `printWidth: 80` but leaves `proseWrap` at its default, `preserve`, so Prettier never reflows Markdown prose. Write each paragraph on one line in `.md` and `.mdx` files, and break lines only for structure: list items, headings, tables, and code. Reviewers have flagged hand-wrapped prose as diff noise.
