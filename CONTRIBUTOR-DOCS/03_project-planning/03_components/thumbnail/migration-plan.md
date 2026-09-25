@@ -394,12 +394,12 @@ Rendering shape (implemented in the API/accessibility phases):
 
 #### General
 
-- [ ] JSDoc on all public props, slots, and CSS custom properties (correct the default-slot JSDoc; do not repeat the 1st-gen `@slot image` inaccuracy)
-- [ ] Storybook stories for all sizes, `fit` (`cover`/`contain`), and `decorative`; include an example of a consumer applying its own `disabled`/`selected`-style overrides
+- [x] JSDoc on all public props, slots, and CSS custom properties (correct the default-slot JSDoc; do not repeat the 1st-gen `@slot image` inaccuracy)
+- [x] Storybook stories for all sizes, `fit` (`cover`/`contain`), and `decorative`; include an example of a consumer applying its own `disabled`/`selected`-style overrides
 
 #### Breaking changes
 
-- [ ] Document the tag rename (`sp-thumbnail` → `swc-thumbnail`), the `size` type change (`string` → `number`), the `cover` → `fit` rename/expansion, and the removal of `background`, `layer`, `disabled`, `focused`, and `selected` as component attributes (replaced by consumer-owned CSS overrides, except `fit` which stays component-owned) in the consumer migration guide
+- [x] Document the tag rename (`sp-thumbnail` → `swc-thumbnail`), the `size` type change (`string` → `number`), the `cover` → `fit` rename/expansion, and the removal of `background`, `layer`, `disabled`, `focused`, and `selected` as component attributes (replaced by consumer-owned CSS overrides, except `fit` which stays component-owned) in the consumer migration guide
 
 ### Review
 

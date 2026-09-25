@@ -127,8 +127,12 @@ test.describe('Thumbnail - ARIA Snapshots', () => {
       'swc-thumbnail'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - img "Disabled preview"
-      - img "Selected preview"
+      - button "Preview Layer 1" [disabled]:
+        - img "Preview"
+        - text: Layer 1
+      - button "Preview Layer 2" [pressed]:
+        - img "Preview"
+        - text: Layer 2
     `);
   });
 

@@ -1,0 +1,216 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Thumbnail/Migration guide" />
+
+# Thumbnail migration guide
+
+Replace `<sp-thumbnail>` with `<swc-thumbnail>`, update the import, and remove `background`, `layer`, `disabled`, `focused`, and `selected`, none of which carry forward to Spectrum 2.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/thumbnail
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
+
+// After
+import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js`) registers and loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area        | Spectrum 1 (`sp-thumbnail`)          | Spectrum 2 (`swc-thumbnail`)                                     |
+| ----------- | ------------------------------------ | ---------------------------------------------------------------- |
+| Tag         | `sp-thumbnail`                       | `swc-thumbnail`                                                  |
+| Import path | `@spectrum-web-components/thumbnail` | `@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js`       |
+| `size`      | String (`el.size === '500'`)         | Number (`el.size === 500`); the HTML attribute is still a string |
+| `cover`     | Boolean attribute                    | `fit` attribute: `'cover'` or `'contain'` (default)              |
+
+### Added in Spectrum 2
+
+| Addition     | Notes                                                                                                              |
+| ------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `decorative` | Boolean attribute. Hides the thumbnail (and its slotted image) from assistive technology with `aria-hidden="true"` |
+
+### Removed in Spectrum 2
+
+| Removed                | Replacement                                                                                                                                                                                       |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `background` attribute | None. The frame's opacity checkerboard covers any background set on `<swc-thumbnail>` or a wrapper, so it never shows. For a custom background or letterboxing, compose your own preview element. |
+| `layer` attribute      | Apply your own border styling directly to `<swc-thumbnail>` or a wrapping element.                                                                                                                |
+| `disabled` attribute   | Apply your own dimmed/opacity styling to `<swc-thumbnail>` from the parent component that is actually disabled.                                                                                   |
+| `focused` attribute    | The parent interactive element that wraps the thumbnail draws its own focus ring.                                                                                                                 |
+| `selected` attribute   | Apply your own selected-state styling (for example an outline) to `<swc-thumbnail>` from the parent component.                                                                                    |
+
+## Update your code
+
+### 1. Rename the tag
+
+```html
+<!-- Before -->
+<sp-thumbnail size="500">
+  <img src="preview.png" alt="Layer 1 preview" />
+</sp-thumbnail>
+<!-- After -->
+<swc-thumbnail size="500">
+  <img src="preview.png" alt="Layer 1 preview" />
+</swc-thumbnail>
+```
+
+### 2. Update numeric `size` access in JavaScript
+
+The `size` attribute value is unchanged (`size="500"`). Only JavaScript that reads or sets `.size` as a property needs to switch to a numeric literal:
+
+```js
+// Before
+thumbnail.size = '500';
+
+// After
+thumbnail.size = 500;
+```
+
+### 3. Replace `cover` with `fit`
+
+```html
+<!-- Before -->
+<sp-thumbnail cover>
+  <img src="preview.png" alt="Layer 1 preview" />
+</sp-thumbnail>
+<!-- After -->
+<swc-thumbnail fit="cover">
+  <img src="preview.png" alt="Layer 1 preview" />
+</swc-thumbnail>
+```
+
+If you did not set `cover`, no change is needed: the new default, `fit="contain"`, matches the old unset behavior.
+
+### 4. Remove `background`, `layer`, `disabled`, `focused`, and `selected`
+
+Move any styling tied to these attributes into your own CSS, targeting `<swc-thumbnail>` directly:
+
+```html
+<!-- Before -->
+<sp-thumbnail layer selected>
+  <img src="preview.png" alt="Layer 1 preview" />
+</sp-thumbnail>
+
+<!-- After -->
+<style>
+  .layer-selected-thumbnail {
+    outline: var(--swc-focus-indicator-thickness) solid
+      var(--swc-focus-indicator-color);
+  }
+</style>
+<swc-thumbnail class="layer-selected-thumbnail">
+  <img src="preview.png" alt="Layer 1 preview" />
+</swc-thumbnail>
+```
+
+> ⚠️ **Important:** `background` is the exception: the opacity checkerboard covers it, so no CSS on `<swc-thumbnail>` restores it. Compose your own preview element instead.
+
+### 5. (Optional) Adopt `decorative`
+
+Set `decorative` when the slotted image's content is already described by surrounding text:
+
+```html
+<!-- Before -->
+<sp-thumbnail>
+  <img src="preview.png" alt="" />
+</sp-thumbnail>
+
+<!-- After -->
+<swc-thumbnail decorative>
+  <img src="preview.png" alt="" />
+</swc-thumbnail>
+```
+
+## Accessibility
+
+- Give every slotted `<img>` a meaningful `alt`, or set `decorative` (see [step 5](#5-optional-adopt-decorative)). In dev builds, an image with none of `alt`, `aria-label`, or `aria-labelledby` warns; an empty `alt=""` counts and stays silent, marking it as described by surrounding context.
+
+## Styling
+
+Spectrum 2 exposes one public CSS custom property on `<swc-thumbnail>`.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--mod-thumbnail-*'}</code> properties <strong>do not apply</strong> to{' '}
+  <code>{'<swc-thumbnail>'}</code>. Remove every{' '}
+  <code>{'--mod-thumbnail-*'}</code> override; only <code>size</code> has a
+  direct replacement below.
+</div>
+
+### Removed `--mod-thumbnail-*` properties
+
+| Removed (Spectrum 1)                        | Replacement (Spectrum 2) |
+| ------------------------------------------- | ------------------------ |
+| `--mod-thumbnail-size`                      | `--swc-thumbnail-size`   |
+| `--mod-thumbnail-border-color`              | No replacement           |
+| `--mod-thumbnail-border-color-selected`     | No replacement           |
+| `--mod-thumbnail-border-radius`             | No replacement           |
+| `--mod-thumbnail-border-width`              | No replacement           |
+| `--mod-thumbnail-border-width-selected`     | No replacement           |
+| `--mod-thumbnail-color-opacity-disabled`    | No replacement           |
+| `--mod-thumbnail-focus-indicator-color`     | No replacement           |
+| `--mod-thumbnail-focus-indicator-gap`       | No replacement           |
+| `--mod-thumbnail-focus-indicator-thickness` | No replacement           |
+| `--mod-thumbnail-layer-border-color-inner`  | No replacement           |
+| `--mod-thumbnail-layer-border-color-outer`  | No replacement           |
+| `--mod-thumbnail-layer-border-width-inner`  | No replacement           |
+| `--mod-thumbnail-layer-border-width-outer`  | No replacement           |
+
+### Public custom properties
+
+{/* @todo Replace the Description column with the `@cssprop` JSDoc descriptions from `<swc-thumbnail>`'s CEM entry once they are added in a follow-up PR. */}
+
+| Custom property        | Description                                                                                    |
+| ---------------------- | ---------------------------------------------------------------------------------------------- |
+| `--swc-thumbnail-size` | Size (inline and block) of the thumbnail. Defaults to the token matching the `size` attribute. |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-thumbnail-*'}</code> private properties, and shadow DOM are{' '}
+  <strong>not public API</strong>. Styling applied to them will break without
+  warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update imports
+- [ ] Rename all `<sp-thumbnail>` to `<swc-thumbnail>`
+- [ ] Update any JavaScript that reads or sets `.size` to use a numeric literal
+- [ ] Replace `cover` with `fit="cover"`
+- [ ] Remove `background`, `layer`, `disabled`, `focused`, and `selected`; replace with your own CSS where still needed
+- [ ] Replace `--mod-thumbnail-*` overrides with `--swc-thumbnail-size` where applicable
+- [ ] Confirm every slotted image has `alt`, or set `decorative`
