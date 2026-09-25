@@ -17,10 +17,15 @@ import { MenuBase } from '@adobe/spectrum-wc-core/components/menu';
 import styles from './menu.css';
 
 /**
- * A menu is a full menu-button host: an externally-referenced trigger opens a
- * `PlacementController`-anchored surface containing a `role="menu"` list of
- * `swc-menu-item` rows (`swc-menu-group` and `swc-divider` as a separator
- * join in a later migration phase).
+ * A menu is a list of actions or options anchored to an externally-referenced
+ * trigger, following the menu-button pattern. `swc-menu-item` rows
+ * (`swc-menu-group` and `swc-divider` as a separator join in a later
+ * migration phase) render in a shadow-internal `role="menu"` surface.
+ *
+ * The behavior (trigger and ARIA wiring, positioning, keyboard navigation,
+ * and event dispatch) lives in `MenuBase`; this class supplies only the
+ * styles, the render template, and the shadow-DOM element getter it
+ * overrides.
  *
  * @element swc-menu
  *
