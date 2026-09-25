@@ -223,7 +223,17 @@ export class ResponseStatus extends SpectrumElement {
   protected override willUpdate(changed: PropertyValues<this>): void {
     this._applyLabelRoll();
 
-    if (changed.has('status') && this._resolvedStatus === 'active') {
+    // Restart the "hold on the settled frame, then animate" beat whenever
+    // `status` newly becomes `active` *or* `loader` changes (e.g. swapping
+    // presets/icons live in Storybook controls) so the paused-first frame
+    // reads correctly every time, not just on initial load.
+    const enteringActive =
+      changed.has('status') && this._resolvedStatus === 'active';
+    const loaderChanged = changed.has('loader');
+    if (
+      this._resolvedStatus === 'active' &&
+      (enteringActive || loaderChanged)
+    ) {
       this._loaderPaused = true;
       this._engageLoader();
     }
