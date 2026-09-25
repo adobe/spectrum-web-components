@@ -1,0 +1,368 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+import { html } from 'lit';
+import { expect } from '@storybook/test';
+import type { Meta, StoryObj as Story } from '@storybook/web-components';
+
+import { Thumbnail } from '@adobe/spectrum-wc/thumbnail';
+import {
+  THUMBNAIL_DEFAULT_FIT,
+  THUMBNAIL_DEFAULT_SIZE,
+  THUMBNAIL_VALID_FITS,
+  THUMBNAIL_VALID_SIZES,
+} from '@adobe/spectrum-wc-core/components/thumbnail/index.js';
+
+import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
+
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '../../../utils/test-utils.js';
+import meta, {
+  Fit,
+  Overview,
+  Playground,
+  Sizes,
+} from '../stories/thumbnail.stories.js';
+
+export default {
+  ...meta,
+  title: 'Thumbnail/Tests',
+  parameters: {
+    ...meta.parameters,
+    docs: { disable: true, page: null },
+  },
+  tags: ['!autodocs', 'dev'],
+} as Meta;
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Defaults
+// ──────────────────────────────────────────────────────────────
+
+export const PlaygroundTest: Story = {
+  ...Playground,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step('renders and registers as a swc-thumbnail element', async () => {
+      expect(thumbnail).toBeTruthy();
+      expect(thumbnail).toBeInstanceOf(Thumbnail);
+    });
+
+    await step('renders the slotted image', async () => {
+      const image = thumbnail.querySelector('img');
+      expect(image).toBeTruthy();
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Properties / Attributes
+// ──────────────────────────────────────────────────────────────
+
+export const SizeAttributeSetByFirstUpdatedTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step(
+      'sets size attribute to default when not passed as attribute',
+      async () => {
+        expect(thumbnail.hasAttribute('size'), 'size attribute present').toBe(
+          true
+        );
+        expect(thumbnail.getAttribute('size'), 'size attribute value').toBe(
+          String(THUMBNAIL_DEFAULT_SIZE)
+        );
+        expect(thumbnail.size, 'size property value').toBe(
+          THUMBNAIL_DEFAULT_SIZE
+        );
+      }
+    );
+  },
+};
+
+export const SizeReflectionTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step('reflects size to attribute after mutation', async () => {
+      thumbnail.size = 300;
+      await thumbnail.updateComplete;
+      expect(
+        thumbnail.getAttribute('size'),
+        'size attribute after mutation'
+      ).toBe('300');
+      expect(thumbnail.size, 'size property after mutation').toBe(300);
+    });
+  },
+};
+
+export const SizeInvalidFallbackTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step(
+      'falls back to the default size and warns on an invalid value',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          thumbnail.size = 999 as Thumbnail['size'];
+          await thumbnail.updateComplete;
+
+          expect(thumbnail.size, 'size after invalid value').toBe(
+            THUMBNAIL_DEFAULT_SIZE
+          );
+          expect(
+            thumbnail.getAttribute('size'),
+            'size attribute after invalid value'
+          ).toBe(String(THUMBNAIL_DEFAULT_SIZE));
+          expect(
+            warnCalls.length,
+            'warning count for invalid size'
+          ).toBeGreaterThan(0);
+        })
+    );
+  },
+};
+
+export const FitAttributeSetByFirstUpdatedTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step(
+      'sets fit attribute to default when not passed as attribute',
+      async () => {
+        expect(thumbnail.hasAttribute('fit'), 'fit attribute present').toBe(
+          true
+        );
+        expect(thumbnail.getAttribute('fit'), 'fit attribute value').toBe(
+          THUMBNAIL_DEFAULT_FIT
+        );
+        expect(thumbnail.fit, 'fit property value').toBe(THUMBNAIL_DEFAULT_FIT);
+      }
+    );
+  },
+};
+
+export const FitReflectionTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step(
+      'reflects fit to attribute and applies object-fit to the slotted image',
+      async () => {
+        thumbnail.fit = 'cover';
+        await thumbnail.updateComplete;
+        expect(
+          thumbnail.getAttribute('fit'),
+          'fit attribute after mutation'
+        ).toBe('cover');
+        expect(thumbnail.fit, 'fit property after mutation').toBe('cover');
+
+        const image = thumbnail.querySelector('img') as HTMLImageElement;
+        expect(
+          getComputedStyle(image).objectFit,
+          'computed object-fit for fit="cover"'
+        ).toBe('cover');
+      }
+    );
+  },
+};
+
+export const FitInvalidFallbackTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step(
+      'falls back to the default fit and warns on an invalid value',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          thumbnail.fit = 'invalid' as Thumbnail['fit'];
+          await thumbnail.updateComplete;
+
+          expect(thumbnail.fit, 'fit after invalid value').toBe(
+            THUMBNAIL_DEFAULT_FIT
+          );
+          expect(
+            thumbnail.getAttribute('fit'),
+            'fit attribute after invalid value'
+          ).toBe(THUMBNAIL_DEFAULT_FIT);
+          expect(
+            warnCalls.length,
+            'warning count for invalid fit'
+          ).toBeGreaterThan(0);
+        })
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Variants / States
+// ──────────────────────────────────────────────────────────────
+
+export const SizesTest: Story = {
+  ...Sizes,
+  play: async ({ canvasElement, step }) => {
+    const thumbnails = await getComponents<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step('renders all valid sizes', async () => {
+      expect(
+        thumbnails.length,
+        'number of thumbnails matching THUMBNAIL_VALID_SIZES'
+      ).toBe(THUMBNAIL_VALID_SIZES.length);
+
+      for (const size of THUMBNAIL_VALID_SIZES) {
+        const thumbnail = canvasElement.querySelector(
+          `swc-thumbnail[size="${size}"]`
+        ) as Thumbnail | null;
+        expect(thumbnail, `thumbnail with size=${size} exists`).toBeTruthy();
+        await thumbnail?.updateComplete;
+        expect(thumbnail?.size, `size property for size=${size}`).toBe(size);
+      }
+    });
+
+    await step('renders the checkerboard slot wrapper', async () => {
+      for (const thumbnail of thumbnails) {
+        const wrapper = thumbnail.shadowRoot?.querySelector(
+          '.swc-Thumbnail.swc-OpacityCheckerboard'
+        );
+        expect(wrapper, 'checkerboard wrapper present').toBeTruthy();
+        expect(
+          wrapper?.querySelector('slot'),
+          'slot present in checkerboard wrapper'
+        ).toBeTruthy();
+      }
+    });
+  },
+};
+
+export const FitOptionsTest: Story = {
+  ...Fit,
+  play: async ({ canvasElement, step }) => {
+    const thumbnails = await getComponents<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step('renders all valid fit values', async () => {
+      expect(
+        thumbnails.length,
+        'number of thumbnails matching THUMBNAIL_VALID_FITS'
+      ).toBe(THUMBNAIL_VALID_FITS.length);
+    });
+
+    await step(
+      'applies the matching computed object-fit for each fit value',
+      async () => {
+        for (const fit of THUMBNAIL_VALID_FITS) {
+          const thumbnail = canvasElement.querySelector(
+            `swc-thumbnail[fit="${fit}"]`
+          ) as Thumbnail | null;
+          expect(thumbnail, `thumbnail with fit=${fit} exists`).toBeTruthy();
+          await thumbnail?.updateComplete;
+
+          const image = thumbnail?.querySelector('img') as HTMLImageElement;
+          expect(
+            getComputedStyle(image).objectFit,
+            `computed object-fit for fit=${fit}`
+          ).toBe(fit);
+        }
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Accessibility
+// ──────────────────────────────────────────────────────────────
+
+export const DecorativeToggleTest: Story = {
+  render: () => html`
+    <swc-thumbnail decorative><img src="a.png" alt="" /></swc-thumbnail>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step('applies aria-hidden when decorative', async () => {
+      expect(thumbnail.getAttribute('aria-hidden')).toBe('true');
+    });
+
+    await step('removes aria-hidden once decorative is unset', async () => {
+      thumbnail.decorative = false;
+      await thumbnail.updateComplete;
+      expect(thumbnail.hasAttribute('aria-hidden')).toBe(false);
+    });
+  },
+};
+
+export const MissingAltWarningTest: Story = {
+  render: () => '',
+  play: async ({ canvasElement, step }) => {
+    await step('warns exactly once for a missing accessible name', async () => {
+      let count = 0;
+      const original = window.__swc?.warn;
+      if (window.__swc) {
+        window.__swc.warn = ((...args: unknown[]) => {
+          count += 1;
+          return (original as (...a: unknown[]) => void)?.apply(
+            window.__swc,
+            args
+          );
+        }) as typeof window.__swc.warn;
+      }
+
+      const thumbnail = document.createElement('swc-thumbnail') as Thumbnail;
+      thumbnail.innerHTML = '<img src="a.png" />';
+      canvasElement.appendChild(thumbnail);
+      await thumbnail.updateComplete;
+      await new Promise((resolve) => setTimeout(resolve, 50));
+
+      if (window.__swc && original) {
+        window.__swc.warn = original;
+      }
+      expect(count).toBe(1);
+    });
+  },
+};
