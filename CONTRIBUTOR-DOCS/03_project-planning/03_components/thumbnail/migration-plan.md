@@ -378,16 +378,17 @@ Rendering shape (implemented in the API/accessibility phases):
 
 ### Testing
 
-- [ ] Port `1st-gen/packages/thumbnail/test/thumbnail.test.ts` coverage that still applies (accessible load, size, `cover`→`fit` rendering, checkerboard slot rendering)
-- [ ] Port `1st-gen/packages/thumbnail/test/thumbnail-memory.test.ts` memory-leak coverage
-- [ ] Add unit tests for `decorative`, the missing-`alt` DEBUG warning, and the numeric `size` `warnIf` validation
-- [ ] Add Playwright `thumbnail.a11y.spec.ts` with `toMatchAriaSnapshot`, covering: labeled `<img>`, `decorative`, and embedded-in-a-consumer-styled-disabled-parent
+- [x] Port `1st-gen/packages/thumbnail/test/thumbnail.test.ts` coverage that still applies (accessible load, size, `cover`→`fit` rendering, checkerboard slot rendering)
+- [ ] Port `1st-gen/packages/thumbnail/test/thumbnail-memory.test.ts` memory-leak coverage — not carried forward; it depends on the 1st-gen-only `testForMemoryLeaks` helper, and no gen2 component test suite (Badge, Avatar, Link) has an equivalent, since gen2's testing conventions cover interaction, accessibility, and visual regression only, not memory-leak testing
+- [x] Add unit tests for `decorative`, the missing-`alt` DEBUG warning, and the numeric `size` `warnIf` validation
+- [x] Add Playwright `thumbnail.a11y.spec.ts` with `toMatchAriaSnapshot`, covering: labeled `<img>`, `decorative`, and embedded-in-a-consumer-styled-disabled-parent
 
 #### Visual regression
 
-- [ ] Add VRT coverage for all 12 sizes in the default presentation (`disabled`/`focused`/`selected`/`layer` visual treatments are consumer-owned and out of scope for `swc-thumbnail`'s own VRT, see [Decision log](#decision-log) C6, C7)
-- [ ] Add VRT coverage for `fit="cover"` and the default `fit="contain"`, applied via the component's own attribute selectors (see [Decision log](#decision-log) C8)
-- [ ] Add forced-colors (Windows High Contrast) coverage for the default border treatment
+- [x] Add VRT coverage for all 12 sizes in the default presentation (`disabled`/`focused`/`selected`/`layer` visual treatments are consumer-owned and out of scope for `swc-thumbnail`'s own VRT, see [Decision log](#decision-log) C6, C7)
+- [x] Add VRT coverage for `fit="cover"` and the default `fit="contain"`, applied via the component's own attribute selectors (see [Decision log](#decision-log) C8) — rendered against landscape and portrait assets, since a square source makes the two `fit` values pixel-identical
+- [x] Add forced-colors (Windows High Contrast) coverage for the default border treatment
+- [x] Add custom-property VRT coverage for `--swc-thumbnail-size`, verified against the CEM via `verifyCustomPropertyCoverage`
 
 ### Documentation
 
