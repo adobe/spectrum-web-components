@@ -79,10 +79,12 @@ If you're unsure about an accessibility detail, the [Web Accessibility Initiativ
 
 ### Branch naming
 
-We use a straightforward branch naming convention:
+Name branches `<username>/<type>-<description>[-swc-<issue>]`, where `<type>` is a conventional commit type:
 
-- `[username]/[short-description]` (e.g., `alex/fix-dropdown-bug`)
-- If referencing a known issue, incorporate the issue number (e.g., `alex/123-fix-dropdown-bug`)
+- `alex/fix-dropdown-bug`
+- `alex/fix-dropdown-bug-swc-123` when the work references a Jira issue
+
+Use lowercase letters, numbers, and dashes. This is a recommendation, not an enforced rule. Coding agents follow the same guidance from the [`branch-naming` skill](https://github.com/adobe/spectrum-web-components/blob/main/.ai/skills/branch-naming/SKILL.md). Branches that the GitHub Copilot app creates for its own sessions are exempt.
 
 ### Changeset requirements
 
@@ -130,15 +132,18 @@ Format: `type(component?): subject`
 
 The component is optional but should reference the package you are updating.
 
-Types include:
+The allowed types are the ones [`@commitlint/config-conventional`](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional) defines, and the `commit-msg` hook rejects anything else. The subject must start with a lowercase letter. The most common types are:
 
 - `feat`: New features or enhancements
 - `fix`: Bug fixes
 - `docs`: Documentation changes
 - `style`: Formatting, linting (not CSS changes)
-- `chore`: Build tooling, repo management, dependency updates
+- `refactor`: Code changes that neither fix a bug nor add a feature
 - `perf`: Performance improvements
 - `test`: Adding or updating tests
+- `chore`: Build tooling, repo management, dependency updates
+
+`build`, `ci`, and `revert` are also allowed. The [`conventional-commit` skill](https://github.com/adobe/spectrum-web-components/blob/main/.ai/skills/conventional-commit/SKILL.md) has the full list, which `yarn lint:ai` keeps in sync with commitlint.
 
 Examples:
 

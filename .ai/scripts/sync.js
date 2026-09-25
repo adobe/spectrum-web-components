@@ -130,20 +130,20 @@ function renderCatalog(sources, skills) {
     '',
     '### Instructions',
     '',
-    '| Source | Applies to | Excluded agent | Description |',
-    '| --- | --- | --- | --- |',
-    ...sources.map(
-      (s) =>
-        `| [\`${s.rel.replace(/^\.ai\//, '')}\`](./${s.rel.replace(/^\.ai\//, '')}) | ${s.data.paths.map((p) => `\`${p}\``).join(', ')} | ${s.data.excludeAgent ?? ''} | ${escapeCell(s.data.description)} |`
-    ),
+    ...sources.map((s) => {
+      const file = s.rel.replace(/^\.ai\//, '');
+      const scope = s.data.paths.map((p) => `\`${p}\``).join(', ');
+      const excluded = s.data.excludeAgent
+        ? `; not used by ${s.data.excludeAgent}`
+        : '';
+      return `- **[\`${file}\`](./${file})** (${scope}${excluded}): ${escapeCell(s.data.description)}`;
+    }),
     '',
     '### Skills',
     '',
-    '| Skill | Description |',
-    '| --- | --- |',
     ...skills.map(
       (s) =>
-        `| [\`${s.data?.name ?? s.dir}\`](./skills/${s.dir}/SKILL.md) | ${escapeCell(s.data?.description)} |`
+        `- **[\`${s.data?.name ?? s.dir}\`](./skills/${s.dir}/SKILL.md)**: ${escapeCell(s.data?.description)}`
     ),
     '',
     CATALOG_END,
