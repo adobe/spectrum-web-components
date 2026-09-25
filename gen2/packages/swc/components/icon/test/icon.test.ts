@@ -10,12 +10,10 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Icon } from '@adobe/spectrum-wc/icon';
-import { Icon_ChevronDown } from '@adobe/spectrum-wc-icons/ChevronDown.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
@@ -34,8 +32,17 @@ export default {
   tags: ['!autodocs', 'dev'],
 } as Meta;
 
-// A Spectrum workflow icon's SVG string, slotted into the frame as the test fixture.
-const iconSvg = unsafeSVG(Icon_ChevronDown());
+// A custom, non-Spectrum SVG slotted into the frame as the test fixture — the
+// frame's intended use. Follows the slotted-SVG contract: a single `<svg>` with a
+// `viewBox`, no `width`/`height`, `fill="currentColor"`, and no ARIA.
+const iconSvg = html`
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+      fill="currentColor"
+    />
+  </svg>
+`;
 
 // ──────────────────────────────────────────────────────────────
 // TEST: Defaults
@@ -49,8 +56,8 @@ export const OverviewTest: Story = {
     await step('renders with expected default properties', async () => {
       expect(
         icon.accessibleLabel,
-        'accessibleLabel property is "Chevron"'
-      ).toBe('Chevron');
+        'accessibleLabel property is "Favorite"'
+      ).toBe('Favorite');
       expect(icon.shadowRoot, 'shadow root is attached').toBeTruthy();
     });
   },

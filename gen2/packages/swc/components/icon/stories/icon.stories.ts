@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -18,7 +17,6 @@ import {
   ICON_VALID_SIZES,
   type IconSize,
 } from '@adobe/spectrum-wc-core/components/icon';
-import { Icon_ChevronDown } from '@adobe/spectrum-wc-icons/ChevronDown.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
@@ -61,15 +59,18 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-// A Spectrum workflow icon's SVG string, marked presentational (aria-hidden) so
-// the labelled host stays the only node in the accessibility tree. Returned fresh
-// per use so each slot gets its own `unsafeSVG` directive instance.
-const iconMarkup = Icon_ChevronDown().replace(
-  '<svg ',
-  '<svg aria-hidden="true" '
-);
+// A custom, non-Spectrum drawing — the frame's intended use. It follows the
+// slotted-SVG contract: a single `<svg>` with a `viewBox`, no `width`/`height`,
+// `fill="currentColor"`, and no ARIA (the host owns accessibility). Using plain
+// literal markup here keeps the frame's demos and VRT goldens independent of the
+// icon packages, exactly as the docs tell consumers to author their own art.
 const renderIcon = () => html`
-  ${unsafeSVG(iconMarkup)}
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+      fill="currentColor"
+    />
+  </svg>
 `;
 
 const sizeLabels = {
@@ -88,7 +89,7 @@ export const Playground: Story = {
   tags: ['dev'],
   render: (args) => template(args, renderIcon()),
   args: {
-    'accessible-label': 'Chevron',
+    'accessible-label': 'Favorite',
     size: 'm',
   },
 };
@@ -101,7 +102,7 @@ export const Overview: Story = {
   tags: ['overview'],
   render: (args) => template(args, renderIcon()),
   args: {
-    'accessible-label': 'Chevron',
+    'accessible-label': 'Favorite',
     size: 'm',
   },
 };
@@ -115,7 +116,7 @@ export const Anatomy: Story = {
     template(
       {
         ...args,
-        'accessible-label': args['accessible-label'] || 'Chevron icon',
+        'accessible-label': args['accessible-label'] || 'Favorite icon',
       },
       renderIcon()
     ),
@@ -182,7 +183,7 @@ export const Accessibility: Story = {
   render: (args) => template(args, renderIcon()),
   tags: ['a11y'],
   args: {
-    'accessible-label': 'Chevron',
+    'accessible-label': 'Favorite',
     size: 'm',
   },
 };

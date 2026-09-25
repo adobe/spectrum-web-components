@@ -33,9 +33,11 @@ Every icon in the set, rendered at the medium (`m`) size. The label under each i
 
 ### Optical sizes
 
-A UI icon is not one drawing scaled up and down. Each t-shirt size maps to a distinct, optically-tuned numeral step (`50`/`75`/`100`/`200`/`300` for `xs`/`s`/`m`/`l`/`xl`), and `<swc-ui-icon>` selects the step that matches its `size` rather than resizing a single drawing. Because each step is a separate drawing, set `size` rather than resizing with CSS. The chevron across every size:
+A UI icon is not one drawing scaled up and down. Each size maps to a distinct, optically-tuned numeral step (`50`/`75`/`100`/`200`/`300` for `xs`/`s`/`m`/`l`/`xl`), and `<swc-ui-icon>` selects the step that matches its `size` rather than resizing a single drawing. The chevron across every size:
 
 <Canvas of={Stories.OpticalSizes} />
+
+`size` is the only supported sizing path for `<swc-ui-icon>`. It sets the box _and_ selects the matching optical step, so the two always agree. The frame-level box properties (`--swc-icon-inline-size` / `--swc-icon-block-size`) belong to the [Icon](../?path=/docs/components-icon--docs) frame, where scaling one drawing is expected; do not use them to resize a UI icon, because they would stretch the box without changing the optical step and produce a mismatched glyph.
 
 ## Accessibility
 
