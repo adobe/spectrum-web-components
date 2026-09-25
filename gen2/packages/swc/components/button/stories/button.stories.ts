@@ -25,6 +25,7 @@ import {
 } from '@adobe/spectrum-wc-core/components/button';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
+import '@adobe/spectrum-wc-icons/swc-icon-add.js';
 
 import { SIZE_LABELS } from '../../../.storybook/helpers/index.js';
 
@@ -109,8 +110,6 @@ const staticColorLabels = {
   black: 'Static black',
 } as const satisfies Record<ButtonStaticColor, string>;
 
-const addIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"/></svg>`;
-
 // ────────────────────
 //    PLAYGROUND STORY
 // ────────────────────
@@ -149,7 +148,7 @@ export const Anatomy: Story = {
     ${template({
       ...args,
       'default-slot': 'Icon and label',
-      'icon-slot': addIconSvg,
+      'icon-slot': '<swc-icon-add slot="icon"></swc-icon-add>',
     })}
     <swc-button
       variant=${args.variant}
@@ -157,19 +156,7 @@ export const Anatomy: Story = {
       size=${args.size}
       accessible-label="Add"
     >
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 36 36"
-        height="18"
-        width="18"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
-        />
-      </svg>
+      <swc-icon-add slot="icon"></swc-icon-add>
     </swc-button>
   `,
   tags: ['anatomy'],
@@ -319,7 +306,7 @@ export const TextWrapping: Story = {
     ${template({
       ...args,
       'default-slot': 'Submit and notify all stakeholders',
-      'icon-slot': addIconSvg,
+      'icon-slot': '<swc-icon-add slot="icon"></swc-icon-add>',
       style: 'max-inline-size: 180px',
     })}
   `,
@@ -366,17 +353,7 @@ export const Accessibility: Story = {
       size=${args.size ?? 'm'}
       accessible-label="Add item"
     >
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 36 36"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
-        />
-      </svg>
+      <swc-icon-add slot="icon"></swc-icon-add>
     </swc-button>
     ${template({
       ...args,

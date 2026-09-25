@@ -26,6 +26,7 @@ import {
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
+import '@adobe/spectrum-wc-icons/swc-icon-add.js';
 
 // ────────────────
 //    METADATA
@@ -110,17 +111,7 @@ const triggered = (
         id=${id}
         accessible-label=${String(tooltipArgs['default-slot'] ?? '')}
       >
-        <svg
-          slot="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 36 36"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <path
-            d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
-          />
-        </svg>
+        <swc-icon-add slot="icon"></swc-icon-add>
       </swc-button>
       ${template({ ...tooltipArgs, for: id })}
     `;

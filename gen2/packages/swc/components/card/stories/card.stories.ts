@@ -25,6 +25,7 @@ import {
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc/components/card/swc-card.js';
+import '@adobe/spectrum-wc-icons/swc-icon-more.js';
 import '../../status-light/swc-status-light';
 import '../../badge/swc-badge';
 import '../../avatar/swc-avatar';
@@ -125,15 +126,7 @@ export const Playground: Story = {
       '<img slot="preview" src="./images/card-preview.jpg" alt="" />',
     'title-slot': 'Card title',
     'description-slot': 'Supporting description text.',
-    'actions-slot': `<swc-action-button quiet accessible-label="More actions"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-      viewBox="0 0 20 18" slot="icon">
-      <circle cx="10" cy="10" r="1.5" />
-      <path d="M10 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3" />
-      <circle cx="4" cy="10" r="1.5" />
-      <circle cx="4" cy="10" r="1.5" />
-      <circle cx="16" cy="10" r="1.5" />
-      <circle cx="16" cy="10" r="1.5" />
-    </svg></swc-action-button>`,
+    'actions-slot': `<swc-action-button quiet accessible-label="More actions"><swc-icon-more slot="icon"></swc-icon-more></swc-action-button>`,
   },
   render: (args) => template(args),
   tags: ['dev'],
@@ -162,19 +155,7 @@ export const Anatomy: Story = {
         <span slot="title">Collection slots filled</span>
         <p slot="description">Supporting description text.</p>
         <swc-action-button slot="actions" quiet accessible-label="More actions">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            viewBox="0 0 20 18"
-            slot="icon"
-          >
-            <circle cx="10" cy="10" r="1.5" />
-            <path d="M10 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3" />
-            <circle cx="4" cy="10" r="1.5" />
-            <circle cx="4" cy="10" r="1.5" />
-            <circle cx="16" cy="10" r="1.5" />
-            <circle cx="16" cy="10" r="1.5" />
-          </svg>
+          <swc-icon-more slot="icon"></swc-icon-more>
         </swc-action-button>
         <swc-status-light slot="footer" variant="positive" size="s">
           Published
@@ -188,19 +169,7 @@ export const Anatomy: Story = {
         <span slot="title">Preview only</span>
         <p slot="description">Supporting description text.</p>
         <swc-action-button slot="actions" quiet accessible-label="More actions">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            viewBox="0 0 20 18"
-            slot="icon"
-          >
-            <circle cx="10" cy="10" r="1.5" />
-            <path d="M10 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3" />
-            <circle cx="4" cy="10" r="1.5" />
-            <circle cx="4" cy="10" r="1.5" />
-            <circle cx="16" cy="10" r="1.5" />
-            <circle cx="16" cy="10" r="1.5" />
-          </svg>
+          <swc-icon-more slot="icon"></swc-icon-more>
         </swc-action-button>
         <swc-status-light slot="footer" variant="positive" size="s">
           Published
@@ -361,19 +330,7 @@ export const TitleAsLink: Story = {
           Clicking anywhere on the card activates this link.
         </span>
         <swc-action-button slot="actions" quiet accessible-label="More actions">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            viewBox="0 0 20 18"
-            slot="icon"
-          >
-            <circle cx="10" cy="10" r="1.5" />
-            <path d="M10 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3" />
-            <circle cx="4" cy="10" r="1.5" />
-            <circle cx="4" cy="10" r="1.5" />
-            <circle cx="16" cy="10" r="1.5" />
-            <circle cx="16" cy="10" r="1.5" />
-          </svg>
+          <swc-icon-more slot="icon"></swc-icon-more>
         </swc-action-button>
       `
     )}

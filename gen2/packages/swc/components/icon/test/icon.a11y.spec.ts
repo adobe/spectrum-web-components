@@ -29,7 +29,7 @@ test.describe('Icon - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(page, 'components-icon--overview', 'swc-icon');
     await expect(root).toMatchAriaSnapshot(`
-      - img "Search"
+      - img "Favorite"
     `);
   });
 
@@ -38,7 +38,7 @@ test.describe('Icon - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(page, 'components-icon--anatomy', 'swc-icon');
     await expect(root).toMatchAriaSnapshot(`
-      - img "Chevron icon"
+      - img "Favorite icon"
     `);
   });
 
