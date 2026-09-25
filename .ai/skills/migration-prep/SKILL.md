@@ -78,6 +78,8 @@ Use these sources to build a full-enough feature/functionality inventory first, 
 - `Additive` for deferred or out-of-scope work that is not required for the baseline migration
 - open questions / blockers where scope still needs a decision
 
+Record every renamed or removed 1st-gen public API as a numbered `B#` entry with its consumer migration path, and obtain team review before finalizing the plan.
+
 During discovery, explicitly check whether the component should:
 
 - extend from another gen2 component or shared base that is already planned or in progress

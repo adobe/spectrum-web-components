@@ -97,6 +97,8 @@ Return to the list from Step 0. For each unchecked documentation item in the mig
 - If it belongs in the consumer migration guide (breaking changes, migration paths from 1st-gen), note it as deferred to the `consumer-migration-guide` skill — do **not** add it to the per-component MDX or the stories file.
 - If it is genuinely missing from both the docs and the consumer guide, flag it to the user.
 
+Before completing Phase 7, verify that every shipped public API rename or removal is documented in `migration-guide.mdx`; invoke the `consumer-migration-guide` skill for missing coverage.
+
 **Verify `@cssprop` completeness and accuracy.** Read the component's CSS file (`gen2/packages/swc/components/[component]/[component].css`) and list every exposed `--swc-*` property. Then read the SWC class (`gen2/packages/swc/components/[component]/[Component].ts`) and confirm:
 
 - Every exposed property has a `@cssprop` tag on the primary class export.
