@@ -464,30 +464,17 @@ export const NotFocusableTest: Story = {
 export const MissingAltWarningTest: Story = {
   render: () => '',
   play: async ({ canvasElement, step }) => {
-    await step('warns exactly once for a missing accessible name', async () => {
-      let count = 0;
-      const original = window.__swc?.warn;
-      if (window.__swc) {
-        window.__swc.warn = ((...args: unknown[]) => {
-          count += 1;
-          return (original as (...a: unknown[]) => void)?.apply(
-            window.__swc,
-            args
-          );
-        }) as typeof window.__swc.warn;
-      }
+    await step('warns exactly once for a missing accessible name', () =>
+      withWarningSpy(async (warnCalls) => {
+        const thumbnail = document.createElement('swc-thumbnail') as Thumbnail;
+        thumbnail.innerHTML = '<img src="a.png" />';
+        canvasElement.appendChild(thumbnail);
+        await thumbnail.updateComplete;
+        await new Promise((resolve) => setTimeout(resolve, 50));
 
-      const thumbnail = document.createElement('swc-thumbnail') as Thumbnail;
-      thumbnail.innerHTML = '<img src="a.png" />';
-      canvasElement.appendChild(thumbnail);
-      await thumbnail.updateComplete;
-      await new Promise((resolve) => setTimeout(resolve, 50));
-
-      if (window.__swc && original) {
-        window.__swc.warn = original;
-      }
-      expect(count).toBe(1);
-    });
+        expect(warnCalls.length, 'warns exactly once').toBe(1);
+      })
+    );
   },
 };
 
