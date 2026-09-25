@@ -12,6 +12,7 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { computeAccessibleName } from 'dom-accessibility-api';
 
 import { Thumbnail } from '@adobe/spectrum-wc/thumbnail';
 import {
@@ -506,19 +507,24 @@ export const NoSlottedImageWarningTest: Story = {
 export const AccessibleNameNoWarningTest: Story = {
   render: () => '',
   play: async ({ canvasElement, step }) => {
+    const expectedName = 'Layer 1 preview';
     const cases = [
-      { label: 'alt', markup: '<img src="a.png" alt="Layer 1 preview" />' },
+      { label: 'alt', markup: `<img src="a.png" alt="${expectedName}" />` },
       {
         label: 'aria-label',
-        markup: '<img src="a.png" aria-label="Layer 1 preview" />',
+        markup: `<img src="a.png" aria-label="${expectedName}" />`,
       },
       {
         label: 'aria-labelledby',
         markup: '<img src="a.png" aria-labelledby="ext-label" />',
+        // `aria-labelledby` resolves an IDREF, so the referenced element must
+        // actually exist in the document for the image to have a computed
+        // accessible name — an absent ID would leave the image unnamed.
+        externalLabel: `<span id="ext-label">${expectedName}</span>`,
       },
     ];
 
-    for (const { label, markup } of cases) {
+    for (const { label, markup, externalLabel } of cases) {
       await step(
         `does not warn when the slotted image has an accessible name via ${label}`,
         () =>
@@ -528,7 +534,16 @@ export const AccessibleNameNoWarningTest: Story = {
             ) as Thumbnail;
             thumbnail.innerHTML = markup;
             canvasElement.appendChild(thumbnail);
+            if (externalLabel) {
+              canvasElement.insertAdjacentHTML('beforeend', externalLabel);
+            }
             await thumbnail.updateComplete;
+
+            const img = thumbnail.querySelector('img') as HTMLImageElement;
+            expect(
+              computeAccessibleName(img),
+              `the slotted image has a computed accessible name via ${label}`
+            ).toBe(expectedName);
 
             expect(
               warnCalls.length,

@@ -130,6 +130,16 @@ export abstract class ThumbnailBase extends SpectrumElement {
   //     IMPLEMENTATION
   // ──────────────────────
 
+  protected override firstUpdated(changes: PropertyValues): void {
+    super.firstUpdated(changes);
+    if (!this.hasAttribute('size')) {
+      this.setAttribute('size', String(this.size));
+    }
+    if (!this.hasAttribute('fit')) {
+      this.setAttribute('fit', this.fit);
+    }
+  }
+
   protected override updated(changes: PropertyValues): void {
     super.updated(changes);
     if (changes.has('decorative')) {
