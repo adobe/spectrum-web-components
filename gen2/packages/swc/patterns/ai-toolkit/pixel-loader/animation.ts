@@ -196,62 +196,40 @@ export function groupOpacityKeyframes(total: number): Keyframe[] {
   ];
 }
 
-// Reduced-motion row fade cadence (frames): rows reveal/clear `ROW_STEP` apart,
-// each fading over `ROW_FADE`, with `ROW_HOLD` assembled between. Grouping by
-// row (rather than per cell) both removes the falling/scaling motion and keeps
-// this loop shorter than the full per-cell build.
-const ROW_STEP = 6;
-const ROW_FADE = 16;
-const ROW_HOLD = msToFrames(600);
+// Reduced-motion fade cadence (frames): the whole grid fades in together,
+// holds fully assembled, then fades out together. No per-cell falling or
+// scaling, and no per-row stagger, so it still signals activity without motion.
+const REDUCED_FADE = msToFrames(1000);
+const REDUCED_HOLD = msToFrames(300);
 
-/** Distinct rows of `cells`, bottom-up (visual bottom first) to match the build. */
-function rowsBottomUp(cells: readonly Cell[]): number[] {
-  return Array.from(new Set(cells.map((cell) => cell.row))).sort(
-    (a, b) => b - a
-  );
+/** Loop length in frames for the reduced-motion fade. */
+export function reducedMotionLoopFrames(): number {
+  return REDUCED_FADE + REDUCED_HOLD + REDUCED_FADE;
 }
 
-/** Loop length in frames for the reduced-motion row fade. */
-export function reducedMotionLoopFrames(cells: readonly Cell[]): number {
-  const rowSpread = (rowsBottomUp(cells).length - 1) * ROW_STEP;
-  // Fade the last row in, hold, then fade rows out over the same spread.
-  return rowSpread + ROW_FADE + ROW_HOLD + rowSpread + ROW_FADE;
-}
-
-/** Duration of one reduced-motion row-fade cycle, in ms. */
-export function reducedMotionDuration(cells: readonly Cell[]): number {
-  return (reducedMotionLoopFrames(cells) / FPS) * 1000;
+/** Duration of one reduced-motion fade cycle, in ms. */
+export function reducedMotionDuration(): number {
+  return (reducedMotionLoopFrames() / FPS) * 1000;
 }
 
 /**
- * Reduced-motion keyframes for one cell: an `opacity` fade with no transform,
- * timed by the cell's row so the grid fades in one row at a time (bottom-up),
- * holds, then fades out row by row. Honors `prefers-reduced-motion` by dropping
- * the falling and scaling motion while still signalling that something loads.
+ * Reduced-motion keyframes shared by every cell: an `opacity` fade in, a hold,
+ * then a fade out, with no transform. Honors `prefers-reduced-motion` by
+ * dropping the falling and scaling motion while still signalling that
+ * something loads.
  */
-export function reducedMotionKeyframes(
-  cell: Cell,
-  cells: readonly Cell[],
-  total: number
-): Keyframe[] {
-  const rows = rowsBottomUp(cells);
-  const order = rows.indexOf(cell.row);
-  const allIn = (rows.length - 1) * ROW_STEP + ROW_FADE;
-  const inStart = order * ROW_STEP;
-  const outStart = allIn + ROW_HOLD + order * ROW_STEP;
-  const frames: Keyframe[] = [
+export function reducedMotionKeyframes(): Keyframe[] {
+  const total = reducedMotionLoopFrames();
+  return [
     { offset: 0, opacity: 0, easing: EASE.fade },
-    { offset: offset(inStart, total), opacity: 0, easing: EASE.fade },
-    { offset: offset(inStart + ROW_FADE, total), opacity: 1, easing: 'linear' },
-    { offset: offset(outStart, total), opacity: 1, easing: EASE.fade },
+    { offset: offset(REDUCED_FADE, total), opacity: 1, easing: 'linear' },
     {
-      offset: offset(outStart + ROW_FADE, total),
-      opacity: 0,
-      easing: 'linear',
+      offset: offset(REDUCED_FADE + REDUCED_HOLD, total),
+      opacity: 1,
+      easing: EASE.fade,
     },
     { offset: 1, opacity: 0 },
   ];
-  return dedupe(frames);
 }
 
 /** Fully settled appearance: full size, full opacity, no vertical offset. */

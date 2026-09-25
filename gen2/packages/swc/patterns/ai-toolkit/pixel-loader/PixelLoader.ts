@@ -25,7 +25,6 @@ import {
   loopFramesFor,
   reducedMotionDuration,
   reducedMotionKeyframes,
-  reducedMotionLoopFrames,
   SETTLE_EASING,
   SETTLED_OPACITY,
   SETTLED_SCALE,
@@ -58,7 +57,7 @@ export type { PixelLoaderIconName, PixelLoaderPresetName } from './data.js';
  * preference (see `_animationMode`). Every play/ticker/commit decision keys off
  * this rather than re-testing the two conditions:
  * - `static`: frozen on the settled frame (`paused`).
- * - `reduced`: an in-place, row-by-row opacity fade (`prefers-reduced-motion`).
+ * - `reduced`: an in-place, whole-grid opacity fade (`prefers-reduced-motion`).
  * - `full`: the per-cell falling-and-scaling build.
  */
 type AnimationMode = 'static' | 'reduced' | 'full';
@@ -305,11 +304,11 @@ export class PixelLoader extends SpectrumElement {
 
   /**
    * Duration of one loader cycle for `cells`, in ms. Reduced motion runs the
-   * shorter row-fade cycle instead of the full per-cell falling build.
+   * shorter whole-grid fade cycle instead of the full per-cell falling build.
    */
   private _cycleDuration(cells: readonly Cell[]): number {
     return this._animationMode === 'reduced'
-      ? reducedMotionDuration(cells)
+      ? reducedMotionDuration()
       : durationForCells(cells);
   }
 
@@ -368,9 +367,10 @@ export class PixelLoader extends SpectrumElement {
     }
 
     // Advance one icon per cycle. The interval is the current preset icon's own
-    // cycle duration (reduced motion swaps in its shorter row-fade cycle), so
-    // the ticker stays in step. Derive its cells from the `icons` list already
-    // resolved above rather than re-resolving the preset via `_activeCells`.
+    // cycle duration (reduced motion swaps in its shorter whole-grid fade
+    // cycle), so the ticker stays in step. Derive its cells from the `icons`
+    // list already resolved above rather than re-resolving the preset via
+    // `_activeCells`.
     const cells = this._cellsForIcon(icons[this._presetIndex % icons.length]);
     this._ticker = window.setInterval(() => {
       this._presetIndex = (this._presetIndex + 1) % icons.length;
@@ -503,20 +503,24 @@ export class PixelLoader extends SpectrumElement {
       easing: 'linear',
     };
 
-    // Reduced motion: fade the grid in and out one row at a time in place, with
-    // no transform and no group envelope, so it still signals activity without
-    // the falling or scaling motion.
+    // Reduced motion: hold the cells settled in place and fade the whole grid
+    // in and out together on the container, with no per-cell transform or
+    // stagger, so it still signals activity without the falling or scaling
+    // motion.
     if (mode === 'reduced') {
-      const rowTotal = reducedMotionLoopFrames(cells);
       cellEls.forEach((cellEl, index) => {
-        const cell = cells[index];
-        if (!cell) {
+        if (!cells[index]) {
           return;
         }
-        this._animations.push(
-          cellEl.animate(reducedMotionKeyframes(cell, cells, rowTotal), options)
-        );
+        cellEl.style.translate = SETTLED_TRANSLATE;
+        cellEl.style.scale = SETTLED_SCALE;
+        cellEl.style.opacity = String(SETTLED_OPACITY);
       });
+      if (container) {
+        this._animations.push(
+          container.animate(reducedMotionKeyframes(), options)
+        );
+      }
       return;
     }
 
