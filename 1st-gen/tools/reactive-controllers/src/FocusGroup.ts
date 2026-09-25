@@ -22,6 +22,19 @@ export type FocusGroupConfig<T> = {
   listenerScope?: HTMLElement | (() => HTMLElement);
 
   /**
+   * Whether `ArrowLeft` and `ArrowRight` swap meaning in a right-to-left
+   * writing mode, so focus follows the visual order instead of the DOM order.
+   *
+   * Only hosts that lay their elements out along the inline axis should mirror.
+   * `direction: 'both'` and `'grid'` say nothing about that, so those hosts must
+   * report it themselves, e.g. `() => !this.vertical`. Hosts that position their
+   * elements physically, like `sp-grid`, should pass `false`.
+   *
+   * @default true when `direction` is `horizontal`, otherwise false
+   */
+  mirrorHorizontalInRTL?: boolean | (() => boolean);
+
+  /**
    * When true, arrow key events will stop propagation after being handled.
    * This prevents parent elements from also reacting to arrow keys.
    *
@@ -111,6 +124,26 @@ export class FocusGroupController<
 
   _focusInIndex = (_elements: T[]): number => 0;
 
+  /**
+   * Whether the host resolves to a left-to-right direction. Read from the
+   * computed style, so `direction` inherited through CSS is respected.
+   */
+  get isLTR(): boolean {
+    return getComputedStyle(this.host).direction !== 'rtl';
+  }
+
+  /**
+   * Whether `ArrowLeft` / `ArrowRight` swap meaning in RTL, as reported by the
+   * host. See {@link FocusGroupConfig.mirrorHorizontalInRTL}.
+   */
+  get mirrorHorizontalInRTL(): boolean {
+    return this._mirrorHorizontalInRTL();
+  }
+
+  _mirrorHorizontalInRTL = (): boolean => {
+    return this.direction === 'horizontal';
+  };
+
   host: ReactiveElement;
 
   isFocusableElement = (_el: T): boolean => true;
@@ -146,6 +179,7 @@ export class FocusGroupController<
       focusInIndex,
       isFocusableElement,
       listenerScope,
+      mirrorHorizontalInRTL,
       stopKeyEventPropagation,
     }: FocusGroupConfig<T> = { elements: () => [] }
   ) {
@@ -173,6 +207,11 @@ export class FocusGroupController<
       listenerScope,
       'object',
       this._listenerScope
+    );
+    this._mirrorHorizontalInRTL = ensureMethod<() => boolean, boolean>(
+      mirrorHorizontalInRTL,
+      'boolean',
+      this._mirrorHorizontalInRTL
     );
   }
   /*  In  handleItemMutation() method the first if condition is checking if the element is not focused or if the element's children's length is not decreasing then it means no element has been deleted and we must return.
@@ -392,15 +431,17 @@ export class FocusGroupController<
     }
     let diff = 0;
     this.prevIndex = this.currentIndex;
+    // In RTL the visually "next" element is the previous one in DOM order.
+    const horizontalDiff = this.isLTR || !this.mirrorHorizontalInRTL ? 1 : -1;
     switch (event.key) {
       case 'ArrowRight':
-        diff += 1;
+        diff += horizontalDiff;
         break;
       case 'ArrowDown':
         diff += this.direction === 'grid' ? this.directionLength : 1;
         break;
       case 'ArrowLeft':
-        diff -= 1;
+        diff -= horizontalDiff;
         break;
       case 'ArrowUp':
         diff -= this.direction === 'grid' ? this.directionLength : 1;
@@ -418,10 +459,14 @@ export class FocusGroupController<
     if (this.stopKeyEventPropagation) {
       event.stopPropagation();
     }
-    if (this.direction === 'grid' && this.currentIndex + diff < 0) {
+    // Home and End already point past a boundary and rely on wrapping to land
+    // on the first or last focusable element, so they skip the grid clamp.
+    const clampToGrid =
+      this.direction === 'grid' && event.key !== 'Home' && event.key !== 'End';
+    if (clampToGrid && this.currentIndex + diff < 0) {
       this.currentIndex = 0;
     } else if (
-      this.direction === 'grid' &&
+      clampToGrid &&
       this.currentIndex + diff > this.elements.length - 1
     ) {
       this.currentIndex = this.elements.length - 1;
