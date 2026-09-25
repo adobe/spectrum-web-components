@@ -35,16 +35,21 @@ import { existsSync, readdirSync, readFileSync } from 'fs';
 import path from 'path';
 
 import {
+  AGENT_KEYS,
+  AGENT_PROMPT_MAX,
+  AGENT_TOOL_ALIASES,
   AI_DIR,
   assertGlobSemantics,
   codePointLength,
   EXCLUDE_AGENT_VALUES,
   GENERATED_MARKER,
   INSTRUCTION_KEYS,
+  listAgents,
   listInstructionSources,
   listSkills,
   matchesGlob,
   readMarkdown,
+  REJECTED_AGENT_KEYS,
   REJECTED_INSTRUCTION_KEYS,
   REJECTED_SKILL_KEYS,
   ROOT,
@@ -246,7 +251,11 @@ function validateUniqueness(sources, skills, errors) {
   }
 
   // Generated folders hold only generated files.
-  for (const dir of ['.github/instructions', '.cursor/rules']) {
+  for (const dir of [
+    '.github/instructions',
+    '.github/agents',
+    '.cursor/rules',
+  ]) {
     const full = path.join(ROOT, dir);
     if (!existsSync(full)) {
       continue;
@@ -265,6 +274,49 @@ function validateUniqueness(sources, skills, errors) {
         );
       }
     }
+  }
+}
+
+function validateAgent(agent, errors) {
+  const where = agent.rel;
+  if (agent.error || !agent.data) {
+    errors.push(`${where}: ${agent.error ?? 'missing frontmatter'}`);
+    return;
+  }
+  for (const key of Object.keys(agent.data)) {
+    if (REJECTED_AGENT_KEYS[key]) {
+      errors.push(
+        `${where}: \`${key}\` isn't allowed; ${REJECTED_AGENT_KEYS[key]}`
+      );
+    } else if (!AGENT_KEYS.has(key)) {
+      errors.push(`${where}: unknown custom agent key \`${key}\``);
+    }
+  }
+  if (
+    typeof agent.data.description !== 'string' ||
+    !agent.data.description.trim()
+  ) {
+    errors.push(`${where}: \`description\` is required`);
+  }
+  const tools = agent.data.tools;
+  if (tools !== undefined) {
+    const list = Array.isArray(tools) ? tools : [tools];
+    for (const tool of list) {
+      const valid =
+        typeof tool === 'string' &&
+        (AGENT_TOOL_ALIASES.has(tool) || /^[a-z0-9-]+\/\*$/.test(tool));
+      if (!valid) {
+        errors.push(
+          `${where}: tool '${tool}' isn't a Copilot tool alias (${[...AGENT_TOOL_ALIASES].join(', ')}) or '<server>/*'`
+        );
+      }
+    }
+  }
+  const length = codePointLength(agent.body);
+  if (length > AGENT_PROMPT_MAX) {
+    errors.push(
+      `${where}: prompt is ${length} characters; Copilot allows ${AGENT_PROMPT_MAX}`
+    );
   }
 }
 
@@ -298,9 +350,11 @@ export function validateFrontmatter() {
 
   const sources = listInstructionSources();
   const skills = listSkills();
+  const agentSources = listAgents();
 
   sources.forEach((s) => validateInstruction(s, errors, warnings));
   skills.forEach((s) => validateSkill(s, errors, warnings));
+  agentSources.forEach((a) => validateAgent(a, errors));
   validateUniqueness(
     sources.filter((s) => s.data && !s.error),
     skills,
@@ -353,6 +407,6 @@ export function validateFrontmatter() {
   return {
     errors,
     warnings,
-    fileCount: sources.length + skills.length,
+    fileCount: sources.length + skills.length + agentSources.length,
   };
 }

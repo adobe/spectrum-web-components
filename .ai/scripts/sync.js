@@ -18,7 +18,9 @@
  * Inputs:
  *   .ai/rules/<name>.md   → .github/instructions/<name>.instructions.md  (Copilot)
  *                         → .cursor/rules/<name>.mdc                     (Cursor)
- *   .ai/memory/<name>.md  → the same targets, named memory-<name>        (only with frontmatter)
+ *   .ai/memory/<name>.md  → the same targets, named memory-<name>
+ *   .ai/agents/<name>.agent.md → .github/agents/<name>.agent.md             (Copilot only)
+ *   provenance metadata   → .ai/THIRD-PARTY-NOTICES.md                     (vendored files)
  *   skill and rule frontmatter → the catalog block in .ai/README.md, between
  *                                <!-- ai:catalog:start --> and <!-- ai:catalog:end -->
  *
@@ -48,13 +50,18 @@ import { stringify as stringifyYaml } from 'yaml';
 import {
   AI_DIR,
   GENERATED_MARKER,
+  licenseFileFor,
+  listAgents,
   listInstructionSources,
   listSkills,
+  provenanceOf,
   rel,
   ROOT,
 } from './ai-files.js';
 
 const README = path.join(AI_DIR, 'README.md');
+const NOTICES = path.join(AI_DIR, 'THIRD-PARTY-NOTICES.md');
+const AGENTS_TARGET_DIR = '.github/agents';
 const CATALOG_START = '<!-- ai:catalog:start -->';
 const CATALOG_END = '<!-- ai:catalog:end -->';
 
@@ -104,6 +111,90 @@ const cursorTarget = {
 
 const TARGETS = [copilotTarget, cursorTarget];
 
+/**
+ * Copilot custom agents: `.ai/agents/<name>.agent.md` → `.github/agents/<name>.agent.md`.
+ * Only Copilot gets a copy; `metadata` (provenance) stays in the source.
+ */
+async function renderAgent(agent, filepath) {
+  const data = { ...agent.data };
+  delete data.metadata;
+  const text = `${yamlBlock(data)}\n${header(agent)}\n\n${agent.body.trimStart()}`;
+  return formatMarkdown(text, filepath);
+}
+
+/** First "Copyright …" line of a license text, used in the notices. */
+function copyrightLine(licenseFile) {
+  if (!existsSync(licenseFile)) {
+    return '';
+  }
+  return (
+    readFileSync(licenseFile, 'utf8')
+      .split('\n')
+      .find((line) => /^copyright/i.test(line.trim()))
+      ?.trim() ?? ''
+  );
+}
+
+/**
+ * `.ai/THIRD-PARTY-NOTICES.md`, generated from the provenance metadata of vendored files.
+ * Returns `null` when nothing in `.ai/` is vendored.
+ */
+function renderNotices(entries) {
+  if (!entries.length) {
+    return null;
+  }
+  const bySource = new Map();
+  for (const entry of entries) {
+    const list = bySource.get(entry.source) ?? [];
+    list.push(entry);
+    bySource.set(entry.source, list);
+  }
+  const lines = [
+    '# Third-party notices',
+    '',
+    `${GENERATED_MARKER} from provenance metadata. Do not edit. Run \`yarn ai:sync\`. -->`,
+    '',
+    'Some files in `.ai/` are adapted from third-party open-source projects. Each is listed below with the upstream path and commit it was copied from and its license. The adaptations made for this repository are described in the pull request that added each file. The full license texts are in [`licenses/`](./licenses/).',
+    '',
+  ];
+  for (const [source, list] of [...bySource].sort()) {
+    const licenses = [...new Set(list.map((item) => item.license))];
+    lines.push(`## ${source}`, '');
+    for (const license of licenses) {
+      const file = licenseFileFor(source, license);
+      lines.push(
+        `- **License:** ${license}, ${copyrightLine(file)} ([\`licenses/${path.basename(file)}\`](./licenses/${path.basename(file)}))`
+      );
+    }
+    lines.push('');
+    for (const entry of list.sort((a, b) => a.file.localeCompare(b.file))) {
+      const upstream = entry.upstream
+        ? `; upstream: ${entry.upstream} (${entry.license}, ${copyrightLine(licenseFileFor(entry.upstream, entry.license))})`
+        : '';
+      lines.push(
+        `- [\`${entry.file}\`](./${entry.file}): adapted from \`${entry.sourcePath}\` at \`${entry.sourceSha}\`${upstream}`
+      );
+    }
+    lines.push('');
+  }
+  return lines.join('\n');
+}
+
+/** Every vendored file, as `{ file, source, sourcePath, sourceSha, upstream, license }`. */
+function vendoredEntries(sources, skills, agents) {
+  const entries = [];
+  const add = (file, data) => {
+    const provenance = provenanceOf(data);
+    if (provenance) {
+      entries.push({ file: path.relative(AI_DIR, file), ...provenance });
+    }
+  };
+  sources.forEach((s) => add(s.file, s.data));
+  skills.forEach((s) => add(path.dirname(s.file), s.data));
+  agents.forEach((a) => add(a.file, a.data));
+  return entries;
+}
+
 /** True for a file this script owns: it has the marker, or it's a legacy symlink into `.ai/rules/`. */
 function isOwned(file) {
   const stat = lstatSync(file);
@@ -122,7 +213,7 @@ const escapeCell = (value) =>
     .replace(/\|/g, '\\|')
     .trim();
 
-function renderCatalog(sources, skills) {
+function renderCatalog(sources, skills, agents = []) {
   const lines = [
     CATALOG_START,
     '',
@@ -146,6 +237,17 @@ function renderCatalog(sources, skills) {
         `- **[\`${s.data?.name ?? s.dir}\`](./skills/${s.dir}/SKILL.md)**: ${escapeCell(s.data?.description)}`
     ),
     '',
+    ...(agents.length
+      ? [
+          '### Custom agents',
+          '',
+          ...agents.map(
+            (a) =>
+              `- **[\`${a.name}\`](./agents/${a.name}.agent.md)** (tools: ${[].concat(a.data.tools ?? 'all').join(', ')}): ${escapeCell(a.data.description)}`
+          ),
+          '',
+        ]
+      : []),
     CATALOG_END,
   ];
   return lines.join('\n');
@@ -170,16 +272,31 @@ export async function syncAi({ write = false } = {}) {
     }
   }
 
+  const agents = listAgents().filter((a) => a.data && !a.error);
+  for (const agent of agents) {
+    const filepath = path.join(
+      ROOT,
+      AGENTS_TARGET_DIR,
+      `${agent.name}.agent.md`
+    );
+    expected.set(filepath, await renderAgent(agent, filepath));
+  }
+
+  const skills = listSkills().filter((s) => s.data && !s.error);
+  const notices = renderNotices(vendoredEntries(sources, skills, agents));
+  if (notices) {
+    expected.set(NOTICES, await formatMarkdown(notices, NOTICES));
+  }
+
   // The README catalog is generated only once the markers exist.
   if (existsSync(README)) {
     const current = readFileSync(README, 'utf8');
     const start = current.indexOf(CATALOG_START);
     const end = current.indexOf(CATALOG_END);
     if (start !== -1 && end > start) {
-      const skills = listSkills().filter((s) => s.data && !s.error);
       const replaced =
         current.slice(0, start) +
-        renderCatalog(sources, skills) +
+        renderCatalog(sources, skills, agents) +
         current.slice(end + CATALOG_END.length);
       expected.set(README, await formatMarkdown(replaced, README));
     }
@@ -207,8 +324,9 @@ export async function syncAi({ write = false } = {}) {
   }
 
   // Remove generated files whose source no longer exists.
-  for (const target of TARGETS) {
-    const dir = path.join(ROOT, target.dir);
+  for (const dir of [...TARGETS.map((t) => t.dir), AGENTS_TARGET_DIR].map((d) =>
+    path.join(ROOT, d)
+  )) {
     if (!existsSync(dir)) {
       continue;
     }

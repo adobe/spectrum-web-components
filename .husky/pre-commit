@@ -4,7 +4,10 @@ yarn lint-staged --allow-empty
 # instruction files from them and stage the results (yarn ai:sync).
 if git diff --cached --name-only | grep -qE "^\.ai/|(^|/)AGENTS\.md$"; then
   node .ai/scripts/sync.js || exit 1
-  git add -A -- .github/instructions .cursor/rules
+  git add -A -- .github/instructions .github/agents .cursor/rules
+  if [ -f .ai/THIRD-PARTY-NOTICES.md ] || git ls-files --error-unmatch .ai/THIRD-PARTY-NOTICES.md >/dev/null 2>&1; then
+    git add -A -- .ai/THIRD-PARTY-NOTICES.md
+  fi
   if git diff --cached --name-only | grep -q "^\.ai/README\.md$"; then
     git add .ai/README.md
   fi

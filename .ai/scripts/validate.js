@@ -15,17 +15,21 @@
 /**
  * Entry point for AI tooling CI validation (`yarn lint:ai`).
  *
- * Runs seven checks:
+ * Runs nine checks:
  *   1. Story tags: valid tags in gen2 *.stories.ts files
  *   2. Links: relative links in AGENTS.md files and `.ai/` Markdown resolve to real files
  *   3. Conventions: branch and commit types documented in .ai/skills/ match the types
  *      commitlint enforces (this replaced the old .ai/config.json schema check)
- *   4. Frontmatter: `.ai/` instruction and skill metadata matches the canonical schema,
- *      `paths` globs match tracked files, skill names and descriptions load in Copilot,
- *      and generated folders hold only generated files
- *   5. Symlinks: the .claude/ and .cursor/ directory symlinks point to .ai/ sources
- *   6. Generated files: .github/instructions/ and .cursor/rules/ match `yarn ai:sync`
- *   7. Docs pages: per-unit MDX docs pages for gen2 components, internal
+ *   4. Frontmatter: `.ai/` instruction, skill, and custom agent metadata matches the
+ *      canonical schema, `paths` globs match tracked files, skill names and
+ *      descriptions load in Copilot, and generated folders hold only generated files
+ *   5. Provenance: vendored files record their source, commit, and license, and the
+ *      license text exists in .ai/licenses/
+ *   6. Skill assets: links in SKILL.md resolve and bundled files stay small
+ *   7. Symlinks: the .claude/ and .cursor/ directory symlinks point to .ai/ sources
+ *   8. Generated files: .github/instructions/, .github/agents/, .cursor/rules/, the
+ *      README catalog, and .ai/THIRD-PARTY-NOTICES.md match `yarn ai:sync`
+ *   9. Docs pages: per-unit MDX docs pages for gen2 components, internal
  *      components, patterns, and controllers conform to the per-unit MDX
  *      authoring standards in `.ai/rules/stories-documentation.md`
  *
@@ -40,6 +44,8 @@ import { syncAi } from './sync.js';
 import { validateConventions } from './validate-conventions.js';
 import { validateFrontmatter } from './validate-frontmatter.js';
 import { validateLinks } from './validate-links.js';
+import { validateProvenance } from './validate-provenance.js';
+import { validateSkillAssets } from './validate-skill-assets.js';
 import { validateStoryTags } from './validate-story-tags.js';
 import { validateSymlinks } from './validate-symlinks.js';
 
@@ -99,13 +105,33 @@ printSection(
 const frontmatter = validateFrontmatter();
 totalErrors += frontmatter.errors.length;
 printSection(
-  'Instruction and skill frontmatter (.ai/)',
+  'Instruction, skill, and agent frontmatter (.ai/)',
   frontmatter.errors,
   frontmatter.warnings,
   frontmatter.fileCount
 );
 
-// 5. Symlinks
+// 5. Provenance
+const provenance = validateProvenance();
+totalErrors += provenance.errors.length;
+printSection(
+  'Provenance of vendored content (.ai/)',
+  provenance.errors,
+  provenance.warnings,
+  provenance.fileCount
+);
+
+// 6. Skill assets
+const assets = validateSkillAssets();
+totalErrors += assets.errors.length;
+printSection(
+  'Skill bundled files (.ai/skills/)',
+  assets.errors,
+  assets.warnings,
+  assets.fileCount
+);
+
+// 7. Symlinks
 const symlinks = validateSymlinks();
 totalErrors += symlinks.errors.length;
 printSection(
@@ -115,7 +141,7 @@ printSection(
   symlinks.fileCount
 );
 
-// 6. Generated files
+// 8. Generated files
 const generated = await syncAi({ write: false });
 totalErrors += generated.errors.length;
 printSection(
@@ -125,7 +151,7 @@ printSection(
   generated.fileCount
 );
 
-// 7. Docs pages
+// 9. Docs pages
 const docsPages = validateDocsPages();
 totalErrors += docsPages.errors.length;
 printSection(

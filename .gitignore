@@ -179,3 +179,7 @@ debug-storybook.log
 # gen2/packages/swc/icon-source/README.md
 gen2/packages/swc/icon-source/ui/*.svg
 gen2/packages/swc/icon-source/workflow/*.svg
+
+# plans and specs written by the optional Superpowers plugin (see .ai/README.md);
+# personal working notes that never belong in a pull request
+docs/superpowers/
