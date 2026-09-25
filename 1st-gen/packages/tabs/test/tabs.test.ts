@@ -555,6 +555,30 @@ describe('Tabs', () => {
 
     expect(el.selected).to.equal('second');
   });
+  it('manages tabs that replace the slotted content', async () => {
+    const el = await fixture<Tabs>(html`
+      <sp-tabs selected="first">
+        <sp-tab value="first">Tab 1</sp-tab>
+      </sp-tabs>
+    `);
+    await elementUpdated(el);
+
+    const first = document.createElement('sp-tab') as Tab;
+    first.value = 'first';
+    const second = document.createElement('sp-tab') as Tab;
+    second.value = 'second';
+    el.replaceChildren(first, second);
+    await elementUpdated(el);
+
+    expect(el.selected).to.equal('first');
+    expect(first.selected).to.be.true;
+
+    second.click();
+    await elementUpdated(el);
+
+    expect(el.selected).to.equal('second');
+    expect(second.selected).to.be.true;
+  });
   it('updates selection indicator in response to tab updates', async () => {
     const el = await fixture<Tabs>(html`
       <sp-tabs selected="first">
