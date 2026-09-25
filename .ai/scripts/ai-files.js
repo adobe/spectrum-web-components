@@ -176,6 +176,13 @@ export function trackedFiles() {
   return trackedCache;
 }
 
+if (typeof path.matchesGlob !== 'function') {
+  console.error(
+    `yarn lint:ai and yarn ai:sync need Node 22.5 or later (found ${process.version}). Run \`nvm use\` to switch to the version in .nvmrc.`
+  );
+  process.exit(1);
+}
+
 /**
  * Glob match with the semantics GitHub documents for `applyTo`: `*` stays within one
  * directory and `**` crosses directories.

@@ -110,6 +110,9 @@ function isOwned(file) {
   if (stat.isSymbolicLink()) {
     return readlinkSync(file).includes('.ai/rules/');
   }
+  if (!stat.isFile()) {
+    return false;
+  }
   return readFileSync(file, 'utf8').includes(GENERATED_MARKER);
 }
 
