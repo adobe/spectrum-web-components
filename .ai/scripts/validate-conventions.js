@@ -93,6 +93,11 @@ export function validateConventions() {
       ].flatMap((m) =>
         [...m[1].matchAll(/`([^`]+)`/g)].map((found) => found[1])
       );
+      if (examples.length === 0) {
+        errors.push(
+          `${BRANCH_SKILL}: no branch names found under "### Good examples"`
+        );
+      }
       for (const example of examples) {
         if (!pattern.test(example)) {
           errors.push(
