@@ -17,11 +17,13 @@ import type { CardDensity } from '@adobe/spectrum-wc-core/components/card';
 
 import '@adobe/spectrum-wc/components/card/swc-card.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
+import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 
 import type { CustomPropertyCase } from '../../../../.storybook/helpers/index.js';
 import {
   coveredCustomProperties,
   customPropertyRows,
+  row,
   theme,
   verifyCustomPropertyCoverage,
   vrtParameters,
@@ -56,6 +58,8 @@ type CardPropertyCase = CustomPropertyCase<`--swc-card-${string}`> & {
   // The gallery preview aspect ratio only applies in the gallery layout, which
   // is triggered by a preview-only card (no title/description/actions/footer).
   gallery?: boolean;
+  // Renders preview/collection content as swc-asset instead of a plain <img>.
+  asset?: boolean;
 };
 
 const CARD_PROPERTY_CASES: readonly CardPropertyCase[] = [
@@ -106,8 +110,37 @@ const CARD_PROPERTY_CASES: readonly CardPropertyCase[] = [
   },
 ];
 
+// The same three aspect-ratio properties, driven through swc-asset's
+// `--swc-asset-aspect-ratio` weak-sync instead of a plain <img>'s literal
+// `aspect-ratio`, so both content types stay covered independently.
+const CARD_ASSET_PROPERTY_CASES: readonly CardPropertyCase[] = [
+  {
+    property: '--swc-card-base-preview-aspect-ratio',
+    value: '1',
+    asset: true,
+  },
+  {
+    property: '--swc-card-collection-item-aspect-ratio',
+    value: '2',
+    withCollection: true,
+    asset: true,
+  },
+  {
+    property: '--swc-card-gallery-preview-aspect-ratio',
+    value: '3 / 1',
+    gallery: true,
+    asset: true,
+  },
+];
+
 const previewImage = (slot = 'preview'): ReturnType<typeof html> => html`
   <img slot=${slot} src="./images/card-preview.jpg" alt="" />
+`;
+
+const assetPreview = (slot = 'preview'): ReturnType<typeof html> => html`
+  <swc-asset slot=${slot}>
+    <img src="./images/card-preview.jpg" alt="" />
+  </swc-asset>
 `;
 
 const modPropertyCard = (
@@ -116,22 +149,24 @@ const modPropertyCard = (
     withActions,
     withCollection,
     gallery,
+    asset,
   }: CardPropertyCase,
   style?: string
-) =>
-  gallery
+) => {
+  const preview = asset ? assetPreview : previewImage;
+  return gallery
     ? // Gallery layout: preview only, no content slots, so
       // `--swc-card-gallery-preview-aspect-ratio` governs the preview.
       html`
-        <swc-card style=${style ?? nothing}>${previewImage()}</swc-card>
+        <swc-card style=${style ?? ''}>${preview()}</swc-card>
       `
     : html`
-        <swc-card density=${density} style=${style ?? nothing}>
-          ${previewImage()}
+        <swc-card density=${density} style=${style ?? ''}>
+          ${preview()}
           ${withCollection
             ? html`
-                ${previewImage('collection')} ${previewImage('collection')}
-                ${previewImage('collection')}
+                ${preview('collection')} ${preview('collection')}
+                ${preview('collection')}
               `
             : nothing}
           <span slot="title">This is the card title</span>
@@ -143,9 +178,26 @@ const modPropertyCard = (
             : nothing}
         </swc-card>
       `;
+};
 
-const modPropertiesContent = () =>
-  customPropertyRows(CARD_PROPERTY_CASES, modPropertyCard);
+// customPropertyRows() labels rows by property name, which would collide with
+// the plain-<img> rows above for these same three properties, so these get
+// their own local row helper with a distinguishing label instead.
+const assetPropertyRows = (cases: readonly CardPropertyCase[]) =>
+  cases.map((testCase) =>
+    row(
+      [
+        modPropertyCard(testCase),
+        modPropertyCard(testCase, `${testCase.property}: ${testCase.value};`),
+      ],
+      `${testCase.property} (asset)`
+    )
+  );
+
+const modPropertiesContent = () => [
+  ...customPropertyRows(CARD_PROPERTY_CASES, modPropertyCard),
+  ...assetPropertyRows(CARD_ASSET_PROPERTY_CASES),
+];
 
 const coveredCardCustomProperties =
   coveredCustomProperties(CARD_PROPERTY_CASES);
