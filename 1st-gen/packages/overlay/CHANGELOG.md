@@ -1,5 +1,37 @@
 # Change Log
 
+## 1.12.4
+
+### Patch Changes
+
+- [#6794](https://github.com/adobe/spectrum-web-components/pull/6794) [`38890d6`](https://github.com/adobe/spectrum-web-components/commit/38890d68cc1a9383bd992a037f6d08a8543e18ec) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(overlay):** Removed the `./src/OverlayDialog.js` entry from the package `exports` map. The file does not exist, so importing that path always failed to resolve.
+
+- [#6735](https://github.com/adobe/spectrum-web-components/pull/6735) [`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b) Thanks [@blunteshwar](https://github.com/blunteshwar)! - **fix(overlay):** Fixed `[type="auto"]` `sp-overlay` incorrectly closing when clicking inside its own content, if the trigger and the overlay share a focusable ancestor (e.g. a `tabindex="0"` wrapper). Fixes [#5731](https://github.com/adobe/spectrum-web-components/issues/5731).
+
+  **Affected pattern**, previously broken:
+
+  ```html
+  <div tabindex="0">
+    <sp-button id="trigger">Open</sp-button>
+    <sp-overlay trigger="trigger@click" type="auto">
+      <sp-popover>
+        Clicking anywhere in here used to close the popover.
+      </sp-popover>
+    </sp-overlay>
+  </div>
+  ```
+
+  **Root cause:** `closeOnFocusOut` decided whether focus left the overlay by checking if the newly-focused element (`event.relatedTarget`) was a descendant of the overlay. Clicking non-focusable overlay content (plain text, padding, etc.) causes the browser to resolve focus onto the nearest focusable ancestor instead of the click target; when that ancestor also wraps the overlay itself, it sits above the overlay in the DOM, so the check always concluded focus had left and closed the overlay even though the click landed inside it.
+
+  **Fix:** `closeOnFocusOut` now also tracks whether the `pointerdown` causing the current focus change originated inside the overlay's own composed subtree, and treats focus as remaining within the overlay in that case regardless of where it was ultimately resolved to.
+
+- Updated dependencies [[`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b), [`bcd9ce0`](https://github.com/adobe/spectrum-web-components/commit/bcd9ce09097a89ff37b87e9e2de1e9b4a2001af8), [`eb29944`](https://github.com/adobe/spectrum-web-components/commit/eb299448d6896370b65d04b0b8a8c642599a88b3)]:
+  - @spectrum-web-components/base@1.12.4
+  - @spectrum-web-components/reactive-controllers@1.12.4
+  - @spectrum-web-components/shared@1.12.4
+  - @spectrum-web-components/theme@1.12.4
+  - @spectrum-web-components/action-button@1.12.4
+
 ## 1.12.2
 
 ### Patch Changes
