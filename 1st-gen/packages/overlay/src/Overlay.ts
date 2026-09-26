@@ -822,8 +822,13 @@ export class Overlay extends ComputedOverlayBase {
     }
   };
 
-  private closeOnCancelEvent = (): void => {
-    this.open = false;
+  private closeOnCancelEvent = (event: Event): void => {
+    // Only close the overlay if the cancel event originated from within this overlay.
+    const path = event.composedPath();
+    const isWithinOverlay = path.some((el) => el === this);
+    if (isWithinOverlay) {
+      this.open = false;
+    }
   };
 
   /**
