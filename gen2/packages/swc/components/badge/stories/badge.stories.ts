@@ -41,33 +41,10 @@ import { SIZE_LABELS } from '../../../.storybook/helpers/index.js';
 const { args, argTypes, template } = getStorybookHelpers('swc-badge');
 
 // @todo: Carry the args table defaultValue pattern to all argTypes in all components. Explore how to get our custom types to properly reflect with this new pattern.
-argTypes.variant = {
-  ...argTypes.variant,
-  control: { type: 'select' },
-  options: Badge.VARIANTS,
-  table: {
-    category: 'attributes',
-    defaultValue: {
-      summary: 'neutral',
-    },
-  },
-};
-
 argTypes.fixed = {
   ...argTypes.fixed,
   control: { type: 'select' },
   options: ['', ...Badge.FIXED_VALUES],
-};
-
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: Badge.VALID_SIZES,
-  table: {
-    ...argTypes.size?.table,
-    category: 'attributes',
-    defaultValue: { summary: 's' },
-  },
 };
 
 argTypes['icon-slot'] = {
@@ -77,22 +54,6 @@ argTypes['icon-slot'] = {
   description:
     'Select a named workflow icon to display in the icon slot. Each name maps to a ' +
     'per-icon custom element from the `@adobe/spectrum-wc-icons` package.',
-};
-
-argTypes.outline = {
-  ...argTypes.outline,
-  table: {
-    ...argTypes.outline?.table,
-    defaultValue: { summary: 'false' },
-  },
-};
-
-argTypes.subtle = {
-  ...argTypes.subtle,
-  table: {
-    ...argTypes.subtle?.table,
-    defaultValue: { summary: 'false' },
-  },
 };
 
 /**
