@@ -105,14 +105,14 @@ A textbox or combobox exposes a **live value** to assistive technology, and that
 
 Hosts do **not** expose the raw `aria-label` / `aria-labelledby` attributes. Because of cross-root ARIA issues, and so consumers get one consistent API across every field instead of setting `aria-label` on the components that happen to support it (and then reaching for it on the ones that do not), fields expose the established **`accessible-label`** attribute for a string name, and the proposed **`accessible-labelledby`** / **`accessible-describedby`** attributes (properties `accessibleLabelledby` / `accessibleDescribedby`) for ID references to a name and a description respectively. This holds even for host-role controls (button-like, radio-like); see [§3.2](#32-where-aria-roles-live).
 
-A **`LabellingMixin`** owns the label wiring so fields do not hand-roll it: it watches the shadow DOM slots, shows or hides the internal label element based on slot content presence, and keeps the ARIA relationships in sync as content changes. **`HelpTextMixin`** owns help and error text rendering and association; its current invalid-state behavior replaces help text with error text. Components that need both a persistent description and an error must define that coexistence explicitly rather than assuming both remain associated. Use `aria-errormessage` only where the receiving role supports it, and retain `aria-describedby` for compatibility because browser and screen reader support for `aria-errormessage` remains inconsistent ([support is improving but incomplete](https://cerovac.com/a11y/2024/06/support-for-aria-errormessage-is-getting-better-but-still-not-there-yet/), [current support data](https://a11ysupport.io/tech/aria/aria-errormessage)).
+A **`LabellingMixin`** owns the label wiring so fields do not hand-roll it: it watches the shadow DOM slots, shows or hides the internal label element based on slot content presence, and keeps the ARIA relationships in sync as content changes. **`HelpTextMixin`** owns help and error text rendering and association; its current invalid-state behavior replaces help text with error text. Components that need both a persistent description and an error must define that coexistence explicitly rather than assuming both remain associated. Do not prescribe `aria-errormessage`: the current `HelpTextMixin` contract does not add it, and browser and screen reader support for `aria-errormessage` remains inconsistent ([support is improving but incomplete](https://cerovac.com/a11y/2024/06/support-for-aria-errormessage-is-getting-better-but-still-not-there-yet/), [current support data](https://a11ysupport.io/tech/aria/aria-errormessage)); associate error text through `aria-describedby` instead.
 
 Two complementary sources feed the accessible name and description:
 
 - **Slotted content** (`slot="label"` / `slot="description"`) projects into the shadow DOM and wires through **same-root** `aria-labelledby` / `aria-describedby` pointing at the shadow-internal elements. This is a plain IDREF because both ends live in the same root.
 - **Light-DOM siblings** wire through the `accessible-labelledby` and `accessible-describedby` attributes, which resolve element IDs and, via the `LabellingMixin`, set the **cross-root element-reference properties** `ariaLabelledByElements` / `ariaDescribedByElements`, rather than raw IDREFs that cannot cross the shadow boundary.
 
-When both sources exist, the shadow-internal label appears first in the merged element-reference list. Error text associates the same way through `aria-errormessage`.
+When both sources exist, the shadow-internal label appears first in the merged element-reference list. Error text associates the same way through `aria-describedby`, not `aria-errormessage`.
 
 - **Reference:** [semantic HTML and ARIA guide](../../../gen2/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx).
 
@@ -157,10 +157,10 @@ The canonical surface for form fields. Contributors align Phase 3 (API) and Phas
 | Concern | Name / approach | Notes |
 |---------|-----------------|-------|
 | Form participation | `static formAssociated = true` + `attachInternals()`, wrapped by `FieldAssociationController` | Value submitted via `internals.setFormValue(value)`. |
-| Label surface (visible) | Default slot when the label is the component's only or primary content; named `slot="label"` when it is supplementary to other primary content | Primary-vs-supplementary rule; pending the slot-API research decision. |
+| Label surface (visible) | Named `slot="label"` | Preferred over the default slot so label content is explicit and consistent across fields; pending confirmation across all migrated components. |
 | Accessible name (no visible label) | `accessible-label` attribute | Established convention; do **not** expose raw `aria-label` on the host. |
 | Help / description surface | `slot="description"`, wired by `HelpTextMixin` | Associates through a role-appropriate ARIA description relationship. |
-| Error text surface | Error text wired by `HelpTextMixin` | Associates through a role-appropriate ARIA description/error relationship; retain `aria-describedby` when using `aria-errormessage` for compatibility. |
+| Error text surface | Error text wired by `HelpTextMixin` | Associates through `aria-describedby`; do not prescribe `aria-errormessage` given inconsistent support. |
 | Disabled cascade | `formDisabledCallback(disabled)` | Receives cascade from ancestor `<fieldset disabled>` or owning form. |
 | Reset | `formResetCallback()` | Restores the field to its default value on form reset. |
 | Cross-root name from light DOM | `accessible-labelledby` attribute (property `accessibleLabelledby`) → `ariaLabelledByElements` via `LabellingMixin` | Element references, not raw IDREFs; do **not** expose raw `aria-labelledby`. |
@@ -191,7 +191,7 @@ These are active research spikes; their outcomes finalize the *pending research*
 
 - **Button activation:** whether a dedicated `ButtonAssociationController` is needed for button-like fields (clear button, a future submit button), or whether a native inner `<button>` already covers keyboard activation, role, and focusability.
 - **Grouped selection:** whether a dedicated `RadioGroupController` is needed for radio group (composing `SelectionController`, `FocusgroupNavigationController`, and `SlotAttributePropagationController`), or whether those primitives are composed inline.
-- **Label slot rule:** confirming the primary-vs-supplementary rule for default slot vs named `slot="label"` holds across all migrated components, and how it relates to the `accessible-label` attribute used for no-visible-label cases.
+- **Label slot rule:** confirming `slot="label"` holds as the consistent label surface across all migrated components, and how it relates to the `accessible-label` attribute used for no-visible-label cases.
 - **`accessible-labelledby` / `accessible-describedby` and `LabellingMixin`:** the cross-root name and description mappings are implemented through the shared mixin; components must still verify the exact role-specific association behavior and avoid prescribing unsupported ARIA states.
 
 ---
