@@ -11,20 +11,11 @@
  */
 
 /**
- * Public exports for render-only Lit template directives shared across gen2 packages.
+ * Builds the Spectrum Web Components docs-page URL for a component from its tag
+ * name (the `swc-` prefix is stripped). Used to link dev-mode warnings to the
+ * component's documentation.
  */
-
-export {
-  renderPendingSpinner,
-  type PendingSpinnerResult,
-} from './pending-spinner/index.js';
-export {
-  renderFieldHelpText,
-  type RenderFieldHelpTextOptions,
-  type RenderFieldHelpTextResult,
-} from './render-help-text/index.js';
-export {
-  renderFieldLabel,
-  type RenderFieldLabelOptions,
-  type RenderFieldLabelResult,
-} from './render-label/index.js';
+export function componentDocsHref(localName: string): string {
+  const name = localName.replace(/^swc-/, '');
+  return `https://spectrum-web-components.adobe.com/?path=/docs/components-${name}--docs`;
+}

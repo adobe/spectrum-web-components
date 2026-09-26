@@ -199,6 +199,14 @@
       "types": "./dist/components/tabs/index.d.ts",
       "import": "./dist/components/tabs/index.js"
     },
+    "./components/text-field": {
+      "types": "./dist/components/text-field/index.d.ts",
+      "import": "./dist/components/text-field/index.js"
+    },
+    "./components/text-field/index.js": {
+      "types": "./dist/components/text-field/index.d.ts",
+      "import": "./dist/components/text-field/index.js"
+    },
     "./components/tooltip": {
       "types": "./dist/components/tooltip/index.d.ts",
       "import": "./dist/components/tooltip/index.js"
@@ -218,6 +226,14 @@
     "./controllers/drag-and-drop-controller.js": {
       "types": "./dist/controllers/drag-and-drop-controller/index.d.ts",
       "import": "./dist/controllers/drag-and-drop-controller/index.js"
+    },
+    "./controllers/field-association-controller": {
+      "types": "./dist/controllers/field-association-controller/index.d.ts",
+      "import": "./dist/controllers/field-association-controller/index.js"
+    },
+    "./controllers/field-association-controller/index.js": {
+      "types": "./dist/controllers/field-association-controller/index.d.ts",
+      "import": "./dist/controllers/field-association-controller/index.js"
     },
     "./controllers/focus-group-navigation-controller.js": {
       "types": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts",
@@ -302,6 +318,22 @@
     "./directives/pending-spinner/index.js": {
       "types": "./dist/directives/pending-spinner/index.d.ts",
       "import": "./dist/directives/pending-spinner/index.js"
+    },
+    "./directives/render-help-text": {
+      "types": "./dist/directives/render-help-text/index.d.ts",
+      "import": "./dist/directives/render-help-text/index.js"
+    },
+    "./directives/render-help-text/index.js": {
+      "types": "./dist/directives/render-help-text/index.d.ts",
+      "import": "./dist/directives/render-help-text/index.js"
+    },
+    "./directives/render-label": {
+      "types": "./dist/directives/render-label/index.d.ts",
+      "import": "./dist/directives/render-label/index.js"
+    },
+    "./directives/render-label/index.js": {
+      "types": "./dist/directives/render-label/index.d.ts",
+      "import": "./dist/directives/render-label/index.js"
     },
     "./element": {
       "types": "./dist/element/index.d.ts",
@@ -511,6 +543,12 @@
       "components/tabs/index.js": [
         "dist/components/tabs/index.d.ts"
       ],
+      "components/text-field": [
+        "dist/components/text-field/index.d.ts"
+      ],
+      "components/text-field/index.js": [
+        "dist/components/text-field/index.d.ts"
+      ],
       "components/tooltip": [
         "dist/components/tooltip/index.d.ts"
       ],
@@ -525,6 +563,12 @@
       ],
       "controllers/drag-and-drop-controller.js": [
         "dist/controllers/drag-and-drop-controller/index.d.ts"
+      ],
+      "controllers/field-association-controller": [
+        "dist/controllers/field-association-controller/index.d.ts"
+      ],
+      "controllers/field-association-controller/index.js": [
+        "dist/controllers/field-association-controller/index.d.ts"
       ],
       "controllers/focus-group-navigation-controller/focus-group-navigation-controller.js": [
         "dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts"
