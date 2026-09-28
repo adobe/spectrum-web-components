@@ -378,15 +378,25 @@ export const LabelOverflow: Story = {
 };
 LabelOverflow.storyName = 'Label overflow';
 
-const showFormData = (event: SubmitEvent): void => {
+// `novalidate` on the form (below) suppresses the native validation bubble, so
+// submission no longer natively blocks on an invalid field either. Mirror that
+// blocking decision here and surface it through the field's own invalid
+// presentation (icon + error text) instead.
+const handleSubmit = (event: SubmitEvent): void => {
   event.preventDefault();
   const form = event.currentTarget as HTMLFormElement;
+  const field = form.querySelector('swc-text-field');
   const output = form.querySelector<HTMLOutputElement>('[data-form-data]');
-  if (output) {
-    output.textContent = [...new FormData(form)]
-      .map(([name, value]) => `${name}: ${value}`)
-      .join('\n');
+  if (!field || !output) {
+    return;
   }
+  field.invalid = !field.checkValidity();
+  if (field.invalid) {
+    return;
+  }
+  output.textContent = [...new FormData(form)]
+    .map(([name, value]) => `${name}: ${value}`)
+    .join('\n');
 };
 
 const showValidity = (event: Event): void => {
@@ -412,11 +422,13 @@ const showValidity = (event: Event): void => {
 export const FormBehavior: Story = {
   render: () => html`
     <form
+      novalidate
       style="display: flex; flex-direction: column; gap: 16px; inline-size: 220px;"
-      @submit=${showFormData}
+      @submit=${handleSubmit}
     >
       <swc-text-field name="username" required>
         <span slot="label">Username</span>
+        <span slot="error-text">Enter a username.</span>
       </swc-text-field>
       <div style="display: flex; gap: 8px;">
         <button type="submit" class="swc-Button">
