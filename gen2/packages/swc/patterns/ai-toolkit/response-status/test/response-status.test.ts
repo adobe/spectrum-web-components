@@ -11,7 +11,7 @@
  */
 
 import { html } from 'lit';
-import { expect, waitFor } from '@storybook/test';
+import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../swc-response-status.js';
@@ -200,6 +200,62 @@ export const StatusApiTest: Story = {
         ).toBe('mega');
       }
     );
+  },
+};
+
+export const FirstStepTransitionTest: Story = {
+  render: () => html`
+    <swc-response-status status="active">
+      <span slot="label">Generating response</span>
+    </swc-response-status>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+    const header = el.shadowRoot?.querySelector<HTMLElement>(
+      '.swc-ResponseStatus-row'
+    );
+    const loader = el.shadowRoot?.querySelector('swc-pixel-loader');
+
+    await step('a status without steps is not a button', async () => {
+      expect(header?.querySelector('[role="status"]')).toBeTruthy();
+      expect(header?.querySelector('button')).toBeNull();
+      expect(header?.hasAttribute('tabindex')).toBe(false);
+      expect(loader).toBeTruthy();
+    });
+
+    await step('the first step preserves the header and loader', async () => {
+      el.appendChild(document.createElement('swc-response-status-step'));
+      await waitFor(() => {
+        expect(
+          header
+            ?.querySelector('button.swc-ResponseStatus-headerTrail')
+            ?.getAttribute('aria-expanded')
+        ).toBe('false');
+      });
+
+      expect(el.shadowRoot?.querySelector('.swc-ResponseStatus-row')).toBe(
+        header
+      );
+      expect(el.shadowRoot?.querySelector('swc-pixel-loader')).toBe(loader);
+      expect(
+        header?.querySelector('button')?.getAttribute('aria-controls')
+      ).toBe(el.shadowRoot?.querySelector('.swc-ResponseStatus-panel')?.id);
+    });
+
+    await step('Enter and Space toggle the disclosure', async () => {
+      const button = header?.querySelector('button');
+      button?.focus();
+      await userEvent.keyboard('{Enter}');
+      await el.updateComplete;
+      expect(el.open).toBe(true);
+
+      await userEvent.keyboard(' ');
+      await el.updateComplete;
+      expect(el.open).toBe(false);
+    });
   },
 };
 
@@ -686,8 +742,8 @@ export const HeaderLabelWrapTest: Story = {
       <swc-response-status status="complete">
         <span slot="label">
           A deliberately long status label written to exceed two full lines of
-          wrapped text at this width so completed responses can still be read
-          in full without expanding a panel
+          wrapped text at this width so completed responses can still be read in
+          full without expanding a panel
         </span>
       </swc-response-status>
     </div>
