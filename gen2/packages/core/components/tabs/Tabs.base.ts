@@ -245,6 +245,8 @@ export abstract class TabsBase extends SpectrumElement {
    */
   private _panels: TabPanelLike[] = [];
 
+  private readonly managedPanelLabels = new WeakMap<TabPanelLike, string>();
+
   /**
    * @internal
    *
@@ -452,6 +454,15 @@ export abstract class TabsBase extends SpectrumElement {
       if (tab) {
         tab.setAttribute('aria-controls', id);
         panel.setAttribute('aria-labelledby', tab.id);
+        this.managedPanelLabels.set(panel, tab.id);
+      } else {
+        if (
+          panel.getAttribute('aria-labelledby') ===
+          this.managedPanelLabels.get(panel)
+        ) {
+          panel.removeAttribute('aria-labelledby');
+        }
+        this.managedPanelLabels.delete(panel);
       }
 
       panel.selected = tabId === this.selected;

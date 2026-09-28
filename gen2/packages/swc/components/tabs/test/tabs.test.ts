@@ -1872,6 +1872,59 @@ export const ReplacedTabsPanelLinkTest: Story = {
   },
 };
 
+export const RemovedTabsPanelLabelTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Removed tab panel test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const panel = await getComponent<TabPanel>(canvasElement, 'swc-tab-panel');
+    const originalTab = await getComponent<Tab>(canvasElement, 'swc-tab');
+
+    await step('removing the tab clears the panel label', async () => {
+      expect(panel.getAttribute('aria-labelledby')).toBe(originalTab.id);
+      originalTab.remove();
+      await settle(tabs, [panel]);
+      expect(panel.hasAttribute('aria-labelledby')).toBe(false);
+    });
+
+    await step('an unrelated tab leaves the panel unlabelled', async () => {
+      const unrelatedTab = createTab('2');
+      tabs.prepend(unrelatedTab);
+      await settle(tabs, [unrelatedTab]);
+      expect(panel.hasAttribute('aria-labelledby')).toBe(false);
+    });
+
+    await step('a matching tab restores the panel label', async () => {
+      const replacement = createTab('1');
+      tabs.prepend(replacement);
+      await settle(tabs, [replacement]);
+      expect(panel.getAttribute('aria-labelledby')).toBe(replacement.id);
+      expect(replacement.getAttribute('aria-controls')).toBe(panel.id);
+    });
+  },
+};
+
+export const UnmatchedPanelLabelTest: Story = {
+  render: () => html`
+    <swc-tabs accessible-label="Unmatched panel test">
+      <swc-tab-panel tab-id="missing" aria-labelledby="external-heading">
+        <h2 id="external-heading">Panel heading</h2>
+      </swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const panel = await getComponent<TabPanel>(canvasElement, 'swc-tab-panel');
+
+    await step('keeps a consumer-provided panel label', () => {
+      expect(panel.getAttribute('aria-labelledby')).toBe('external-heading');
+    });
+  },
+};
+
 export const ReplacedPanelsLinkTest: Story = {
   render: () => html`
     <swc-tabs selected="1" accessible-label="Replaced panels test">

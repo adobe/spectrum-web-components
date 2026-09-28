@@ -694,6 +694,51 @@ describe('Tabs', () => {
       expect(panels[1].selected).to.be.true;
     });
 
+    it('clears stale panel labels when a tab is removed or replaced with a different value', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const panel = el.querySelector('sp-tab-panel') as TabPanel;
+      const originalTab = el.querySelector('sp-tab') as Tab;
+      expect(panel.getAttribute('aria-labelledby')).to.equal(originalTab.id);
+
+      originalTab.remove();
+      await elementUpdated(el);
+      expect(panel.hasAttribute('aria-labelledby')).to.be.false;
+
+      const unrelatedTab = createTab('second');
+      el.prepend(unrelatedTab);
+      await elementUpdated(el);
+      expect(panel.hasAttribute('aria-labelledby')).to.be.false;
+
+      const replacement = createTab('first');
+      el.prepend(replacement);
+      await elementUpdated(el);
+      expect(panel.getAttribute('aria-labelledby')).to.equal(replacement.id);
+      expect(replacement.getAttribute('aria-controls')).to.equal(panel.id);
+    });
+
+    it('preserves a consumer-provided label when no tab matches the panel', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs>
+          <sp-tab-panel value="missing" aria-labelledby="external-heading">
+            <h2 id="external-heading">Panel heading</h2>
+          </sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const panel = el.querySelector('sp-tab-panel') as TabPanel;
+      expect(panel.getAttribute('aria-labelledby')).to.equal(
+        'external-heading'
+      );
+    });
+
     it('links replacement tab panels to the existing tabs', async () => {
       const el = await fixture<Tabs>(html`
         <sp-tabs selected="first">

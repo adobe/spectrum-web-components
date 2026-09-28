@@ -160,6 +160,8 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
   @query('slot[name="tab-panel"]')
   private panelSlotEl!: HTMLSlotElement;
 
+  private readonly managedPanelLabels = new WeakMap<TabPanel, string>();
+
   @query('#list')
   private tabList!: HTMLDivElement;
 
@@ -381,6 +383,15 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
       if (tab) {
         tab.setAttribute('aria-controls', id);
         panel.setAttribute('aria-labelledby', tab.id);
+        this.managedPanelLabels.set(panel, tab.id);
+      } else {
+        if (
+          panel.getAttribute('aria-labelledby') ===
+          this.managedPanelLabels.get(panel)
+        ) {
+          panel.removeAttribute('aria-labelledby');
+        }
+        this.managedPanelLabels.delete(panel);
       }
       panel.selected = value === this.selected;
     });
