@@ -625,31 +625,36 @@ export class ResponseStatus extends SpectrumElement {
       .filter(Boolean)
       .join(' ');
 
-    // Always a <button> so the tag never changes when the first step arrives
-    // (swapping div<->button restarts the nested loader animation). Disclosure
-    // trigger only when there are steps; otherwise inert (tabindex="-1"). Only
-    // the still-running state is a role="status" live region; a settled label
-    // is static. Name comes from content.
+    const trailContent = html`
+      ${this._renderLabel()}
+      ${showDisclosure ? this._renderChevron(this.open) : nothing}
+    `;
+
+    // The row keeps the loader mounted while only its trailing control changes.
     return html`
-      <button
-        type="button"
-        class=${rowClass}
-        tabindex=${ifDefined(showDisclosure ? undefined : -1)}
-        aria-expanded=${ifDefined(showDisclosure ? this.open : undefined)}
-        aria-controls=${ifDefined(showDisclosure ? this.panelId : undefined)}
-        @click=${this._handleToggle}
-      >
+      <div class=${rowClass}>
         ${this._renderLeadingIcon()}
-        <span
-          class="swc-ResponseStatus-headerTrail"
-          role=${ifDefined(
-            !showDisclosure && status === 'active' ? 'status' : undefined
-          )}
-        >
-          ${this._renderLabel()}
-          ${showDisclosure ? this._renderChevron(this.open) : nothing}
-        </span>
-      </button>
+        ${showDisclosure
+          ? html`
+              <button
+                type="button"
+                class="swc-ResponseStatus-headerTrail swc-ResponseStatus-headerTrail--button"
+                aria-expanded=${this.open}
+                aria-controls=${this.panelId}
+                @click=${this._handleToggle}
+              >
+                ${trailContent}
+              </button>
+            `
+          : html`
+              <span
+                class="swc-ResponseStatus-headerTrail"
+                role=${ifDefined(status === 'active' ? 'status' : undefined)}
+              >
+                ${trailContent}
+              </span>
+            `}
+      </div>
     `;
   }
 

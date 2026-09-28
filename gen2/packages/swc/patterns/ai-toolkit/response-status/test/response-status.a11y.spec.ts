@@ -60,15 +60,27 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
       'swc-response-status'
     );
     await waitForCustomElement(page, 'swc-response-status-step');
-    // The header disclosure is the top-level row button; per-step disclosures
+    // The header's button is inside the stable row; per-step disclosures
     // are nested step toggles. Both take their name from content.
     const toggle = root.locator(
-      'button.swc-ResponseStatus-row[aria-expanded="true"]'
+      'button.swc-ResponseStatus-headerTrail--button'
     );
     await expect(toggle).toHaveCount(1, { timeout: 10000 });
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
     await expect(toggle).toContainText(
       'Searching repositories for Europe trips'
     );
+    await expect(toggle).toHaveAccessibleName(
+      'Searching repositories for Europe trips'
+    );
+    const icon = root.locator('.swc-ResponseStatus-leadingIcon');
+    const bounds = await icon.boundingBox();
+    expect(bounds).not.toBeNull();
+    await page.mouse.click(
+      bounds!.x + bounds!.width / 2,
+      bounds!.y + bounds!.height / 2
+    );
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
     // Scoped to the timeline panel: each step's description scroll region is
     // also `role="group"`, so an unscoped selector would match more than one.
     await expect(
@@ -86,13 +98,15 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
     );
     await waitForCustomElement(page, 'swc-response-status-step');
     // Steps story order: complete, active, complete, stopped. Steps start
-    // collapsed by default; the header row button is excluded by class.
+    // collapsed by default; the header disclosure is excluded by class.
     const stepToggles = root.locator(
-      'button[aria-expanded]:not(.swc-ResponseStatus-row)'
+      'button[aria-expanded]:not(.swc-ResponseStatus-headerTrail--button)'
     );
     await expect(stepToggles).toHaveCount(4, { timeout: 10000 });
     await expect(
-      root.locator('button[aria-expanded="true"]:not(.swc-ResponseStatus-row)')
+      root.locator(
+        'button[aria-expanded="true"]:not(.swc-ResponseStatus-headerTrail--button)'
+      )
     ).toHaveCount(0);
   });
 
@@ -106,7 +120,7 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
     );
     await waitForCustomElement(page, 'swc-response-status-step');
     const toggle = root.locator(
-      'button.swc-ResponseStatus-row[aria-expanded="false"]'
+      'button.swc-ResponseStatus-headerTrail--button[aria-expanded="false"]'
     );
     await expect(toggle).toHaveCount(1);
     await expect(toggle).toContainText(

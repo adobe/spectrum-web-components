@@ -426,7 +426,7 @@ export const AgenticApiTest: Story = {
       });
 
       const button = el.shadowRoot?.querySelector<HTMLButtonElement>(
-        '.swc-ResponseStatus-row--button'
+        '.swc-ResponseStatus-headerTrail--button'
       );
       button?.click();
       await el.updateComplete;

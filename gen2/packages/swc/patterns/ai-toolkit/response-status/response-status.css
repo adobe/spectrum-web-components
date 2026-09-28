@@ -29,9 +29,10 @@
    Status row (icon + label [+ checkmark])
    ───────────────────────────────────── */
 
-/* Always a <button> (see `_renderHeader`); reset the native chrome. */
+/* The row stays mounted when steps turn it into a disclosure. */
 .swc-ResponseStatus-row {
   display: flex;
+  position: relative;
   gap: token("spacing-100");
   align-items: center;
   inline-size: 100%;
@@ -48,7 +49,7 @@
   border-radius: token("corner-radius-medium-default");
 }
 
-.swc-ResponseStatus-row--button:focus-visible {
+.swc-ResponseStatus-row--button:has(> .swc-ResponseStatus-headerTrail--button:focus-visible) {
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
   outline-offset: token("focus-ring-gap");
 }
@@ -66,6 +67,28 @@
   gap: token("spacing-100");
   align-items: center;
   min-inline-size: 0;
+}
+
+.swc-ResponseStatus-headerTrail--button {
+  flex: 1;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: start;
+  background: transparent;
+  border: none;
+}
+
+.swc-ResponseStatus-headerTrail--button:focus-visible {
+  outline: none;
+}
+
+/* The loader is a sibling, but its full row remains part of the hit target. */
+.swc-ResponseStatus-headerTrail--button::before {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  content: "";
 }
 
 .swc-ResponseStatus-headerTrailViewport {
@@ -193,26 +216,20 @@
   rotate: 90deg;
 }
 
-.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-label,
-.swc-ResponseStatus-row--button:focus-visible .swc-ResponseStatus-label,
-.swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-label {
+.swc-ResponseStatus-row--button:has(> .swc-ResponseStatus-headerTrail--button:is(:hover, :focus-visible, [aria-expanded="true"])) .swc-ResponseStatus-label {
   --swc-body-font-color: token("gray-800");
 
   transition: all token("animation-duration-100") token("animation-ease-in-out");
 }
 
-.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-chevron,
-.swc-ResponseStatus-row--button:focus-visible .swc-ResponseStatus-chevron,
-.swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-chevron {
+.swc-ResponseStatus-row--button:has(> .swc-ResponseStatus-headerTrail--button:is(:hover, :focus-visible, [aria-expanded="true"])) .swc-ResponseStatus-chevron {
   color: token("gray-800");
   transition:
     rotate token("animation-duration-100") token("animation-ease-in-out"),
     color token("animation-duration-100") token("animation-ease-in-out");
 }
 
-.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-loader,
-.swc-ResponseStatus-row--button:focus-visible .swc-ResponseStatus-loader,
-.swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-loader {
+.swc-ResponseStatus-row--button:has(> .swc-ResponseStatus-headerTrail--button:is(:hover, :focus-visible, [aria-expanded="true"])) .swc-ResponseStatus-loader {
   --swc-pixel-loader-color: token("gray-800");
 }
 
@@ -335,7 +352,7 @@
     color: CanvasText;
   }
 
-  .swc-ResponseStatus-row--button:focus-visible {
+  .swc-ResponseStatus-row--button:has(> .swc-ResponseStatus-headerTrail--button:focus-visible) {
     outline-color: CanvasText;
   }
 }
