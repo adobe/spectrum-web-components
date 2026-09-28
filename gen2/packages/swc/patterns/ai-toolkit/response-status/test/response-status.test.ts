@@ -138,6 +138,17 @@ export const StatusApiTest: Story = {
       );
     });
 
+    await step('settled labels without steps are not buttons', async () => {
+      const row = el.shadowRoot?.querySelector('.swc-ResponseStatus-row');
+      expect(row?.querySelector('button')).toBeNull();
+      expect(row?.querySelector('[role="status"]')).toBeNull();
+
+      el.status = 'stopped';
+      await el.updateComplete;
+      expect(row?.querySelector('button')).toBeNull();
+      expect(row?.querySelector('[role="status"]')).toBeNull();
+    });
+
     await step(
       'coerces unsupported host status to active behavior',
       async () => {

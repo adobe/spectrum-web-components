@@ -107,7 +107,7 @@ The `LabelCadence` story demonstrates one consumer-side queue pattern.
 
 The `<swc-response-status>` element implements the following accessibility features:
 
-- When no steps exist, `active` status labels are exposed with `role="status"` so updates are announced politely without moving focus
+- When no steps exist, `active` status labels are exposed with `role="status"` so updates are announced politely without moving focus. Completed and stopped labels are static text; none of these rows is exposed as a button
 - The pixel loader in the active status row is decorative (`aria-hidden`) so it does not add a nested progressbar; the status label already conveys that work is in progress
 - When steps exist, the header uses a native disclosure button with `aria-expanded` and `aria-controls` to communicate panel state. Its hit area spans the row, and Enter and Space toggle it
 - The step timeline uses `role="group"` with an accessible name from the `accessible-label` attribute (defaults to “Execution steps”)

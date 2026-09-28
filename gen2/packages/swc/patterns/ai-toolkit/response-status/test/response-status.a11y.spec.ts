@@ -47,8 +47,12 @@ test.describe('ResponseStatus - ARIA Snapshots', () => {
     const status = root.locator('[role="status"]').first();
     await expect(status).toHaveText('Searching repositories for Europe trips');
     const activeStatus = root.locator('swc-response-status').first();
+    await expect(activeStatus).toMatchAriaSnapshot(`
+      - status: Searching repositories for Europe trips
+    `);
     await expect(activeStatus.locator('[aria-expanded]')).toHaveCount(0);
     await expect(activeStatus.locator('[aria-controls]')).toHaveCount(0);
+    await expect(activeStatus.getByRole('button')).toHaveCount(0);
   });
 
   test('should expose active disclosure with expanded step timeline', async ({
