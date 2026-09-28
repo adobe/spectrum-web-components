@@ -127,7 +127,7 @@ export const Playground: Story = {
     density: 'regular',
     size: 'm',
     'preview-slot':
-      '<swc-asset slot="preview"><img src="./images/card-preview.jpg" alt="" /></swc-asset>',
+      '<swc-asset slot="preview" decorative><img src="./images/card-preview.jpg" alt="" /></swc-asset>',
     'title-slot': 'Card title',
     'description-slot': 'Supporting description text.',
     'actions-slot': `<swc-action-button quiet accessible-label="More actions"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
@@ -502,12 +502,16 @@ export const LoadingState: Story = {
     const MIN_LOADING_MS = 1200;
     let assetEl: HTMLElement | undefined;
     let pendingImg: HTMLImageElement | undefined;
+    let loadingTimeout: ReturnType<typeof setTimeout> | undefined;
 
     const startLoading = () => {
       const card = assetEl?.parentElement;
       if (!assetEl || !card) {
         return;
       }
+      // A stale timeout from a prior Replay must not remove the spinner or
+      // reveal the old image out from under a newer, still-loading request.
+      clearTimeout(loadingTimeout);
       if (!card.querySelector('swc-progress-circle')) {
         const spinner = document.createElement('swc-progress-circle');
         spinner.setAttribute('slot', 'media');
@@ -521,7 +525,8 @@ export const LoadingState: Story = {
       // The reveal class is withheld until the spinner is actually removed
       // (see handleAssetLoad).
       const img = document.createElement('img');
-      img.alt = '';
+      img.alt =
+        'Rugged, rocky coastline with crashing waves under a stormy sky';
       img.src = `./images/landscape-art.jpg?t=${Date.now()}`;
       pendingImg = img;
       assetEl.replaceChildren(img);
@@ -532,7 +537,10 @@ export const LoadingState: Story = {
     const handleAssetLoad = () => {
       const card = assetEl?.parentElement;
       const img = pendingImg;
-      setTimeout(() => {
+      loadingTimeout = setTimeout(() => {
+        if (pendingImg !== img) {
+          return;
+        }
         card?.querySelector('swc-progress-circle')?.remove();
         img?.classList.add('loading-state-reveal');
       }, MIN_LOADING_MS);
