@@ -230,32 +230,27 @@
   block-size: 96px;
 }
 
-/* swc-card's `media` slot overlays directly on its `preview` region (they
- * share `grid-area: media` in card.css's own internal grid), so the
- * progress circle and badge are projected there via that slot instead of
- * upload-attachment maintaining its own separate overlay grid/tile. `place-self`
- * positions each within that shared area (centered for the progress circle,
- * corner-anchored for the badge). */
+/* Progress circle and badge project into swc-card's own `media` slot
+ * instead of a separate overlay. */
 :host([type="media"]) .swc-UploadAttachment-surface {
-  /* Match swc-card's rounding to the tile radius, and give it its own gray
-   * tint (stays visible in both light and dark mode) as the neutral backdrop
-   * for the progress circle while loading; hidden behind the thumbnail once
-   * loaded. */
-  --swc-card-base-border-radius: token("corner-radius-large-default");
   --swc-card-base-background-color: var(--_swc-upload-attachment-tint);
+  --swc-card-base-grid-template-rows: 1fr;
 
+  /* Override the base `display: flex`: as a flex item, swc-card's internal
+   * `.swc-CardBase` shrinks to content width instead of filling the tile. */
+  display: grid;
   position: absolute;
 
   /* 2px inset gives the host's inward focus ring empty space to sit in. */
   inset: token("spacing-50");
+  border-radius: token("corner-radius-large-default");
   overflow: hidden;
-
-  /* Drawn inward to match the dismiss button's ring without clipping. */
   outline: token("border-width-100") solid var(--_swc-upload-attachment-tint);
   outline-offset: calc(token("border-width-100") * -1);
 }
 
 :host([type="media"]) .swc-UploadAttachment-progress {
+  display: flex;
   grid-area: media;
   place-self: center;
 }

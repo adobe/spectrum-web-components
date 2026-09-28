@@ -102,6 +102,8 @@ export class UploadAttachment extends SpectrumElement {
    * Upload progress percentage (0-100), shown as a `swc-progress-circle`
    * overlay on the `type="media"` preview. Hidden when unset or at 100
    * (complete); update as the upload advances to show it mid-transfer.
+   * The overlay itself is delayed by 1s after upload starts, so a fast
+   * upload doesn't flash the loading state.
    */
   @property({ type: Number, reflect: true })
   public progress?: number;
@@ -110,6 +112,14 @@ export class UploadAttachment extends SpectrumElement {
   private _titleSlot?: HTMLSlotElement;
 
   private _titleObserver = new MutationObserver(() => this.requestUpdate());
+
+  /** Whether the delayed progress-circle visual is currently shown; see {@link _syncProgressVisibility}. */
+  private _progressVisible = false;
+
+  /** Tracks the last-seen `_shouldShowProgress()` value so `_syncProgressVisibility` only reacts to transitions. */
+  private _wasLoading = false;
+
+  private _progressTimer: ReturnType<typeof setTimeout> | null = null;
 
   public static override get styles(): CSSResultArray {
     return [styles, visuallyHiddenStyles];
@@ -130,10 +140,12 @@ export class UploadAttachment extends SpectrumElement {
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
     this._titleObserver.disconnect();
+    this._clearProgressTimer();
   }
 
   protected override willUpdate(_changed: PropertyValues<this>): void {
     this._syncHostAccessibleLabel();
+    this._syncProgressVisibility();
   }
 
   private _titleText(): string {
@@ -229,8 +241,44 @@ export class UploadAttachment extends SpectrumElement {
     return typeof this.progress === 'number' && this.progress < 100;
   }
 
-  private _renderMediaSurface(): TemplateResult {
+  /**
+   * Delays showing the progress circle for 1s after an upload starts, so a
+   * fast upload doesn't flash the loading state (mirrors the delayed busy
+   * visual used for `pending` buttons). Only reacts to transitions, so
+   * progress updates during an already-armed delay don't restart the timer.
+   */
+  private _syncProgressVisibility(): void {
     const loading = this._shouldShowProgress();
+    if (loading === this._wasLoading) {
+      return;
+    }
+    this._wasLoading = loading;
+    this._clearProgressTimer();
+    if (loading) {
+      this._progressTimer = setTimeout(() => {
+        this._progressTimer = null;
+        // Guard against the upload finishing after the timer fired but
+        // before this callback ran.
+        if (!this._shouldShowProgress()) {
+          return;
+        }
+        this._progressVisible = true;
+        this.requestUpdate();
+      }, 1000);
+    } else {
+      this._progressVisible = false;
+    }
+  }
+
+  private _clearProgressTimer(): void {
+    if (this._progressTimer !== null) {
+      clearTimeout(this._progressTimer);
+      this._progressTimer = null;
+    }
+  }
+
+  private _renderMediaSurface(): TemplateResult {
+    const loading = this._progressVisible;
     return html`
       <swc-card class="swc-UploadAttachment-surface" variant="quiet">
         ${loading
