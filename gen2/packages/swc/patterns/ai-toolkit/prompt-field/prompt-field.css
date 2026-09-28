@@ -610,11 +610,6 @@
    Uploaded attachments
    ───────────────────────────────────── */
 
-/* Match the composer buttons: tile and dismiss focus rings track the themed card (black on light, white on dark) instead of the attachment's default accent. */
-::slotted(swc-upload-attachment) {
-  --swc-upload-attachment-focus-indicator-color: light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color"));
-}
-
 .swc-PromptField-attachments--single {
   /* Reserves clearance for the dismiss badge floating above the tile's top-right corner, same as --multiple below. */
   --_swc-prompt-field-attachment-badge-clearance: token("spacing-300");

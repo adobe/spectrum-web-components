@@ -55,7 +55,7 @@ import styles from './upload-attachment.css';
  *   </swc-asset>
  * </swc-upload-attachment>
  *
- * @slot thumbnail - Shared visual slot for icon/thumbnail/preview image.
+ * @slot thumbnail - Shared visual slot for icon/thumbnail/preview image. When slotting `swc-asset`, it defaults to a square aspect ratio; pass `aspect-ratio` on it to override.
  * @slot badge - Optional file-type badge rendered over `type="media"` previews (for example, "PDF"). Use only at `size="l"` and above; it crowds the default `size="m"` (64px) preview.
  * @slot title - Primary text label.
  * @slot subtitle - Secondary text label.
@@ -63,7 +63,7 @@ import styles from './upload-attachment.css';
  * @fires swc-upload-attachment-dismiss - Dispatched when the dismiss button is pressed.
  * Detail: `{ attachment: this }`
  *
- * @cssprop --swc-upload-attachment-focus-indicator-color - Focus ring color for the tile and its dismiss button. Defaults to a dedicated ring color pending a matching design token.
+ * @cssprop --swc-upload-attachment-focus-indicator-color - Focus ring color for the tile and its dismiss button. Defaults to the themed static focus indicator (black on light, white on dark).
  * @cssprop --swc-upload-attachment-card-min-block-size - Minimum block size of the surface for `type="card"`. Defaults to 72px.
  * @cssprop --swc-upload-attachment-card-thumbnail-size - Inline and block size of the thumbnail for `type="card"`. Defaults to 48px.
  * @cssprop --swc-upload-attachment-dismiss-visual-size - Rendered size of the dismiss button's circular hit area. Defaults to 20px.
@@ -232,27 +232,28 @@ export class UploadAttachment extends SpectrumElement {
   private _renderMediaSurface(): TemplateResult {
     const loading = this._shouldShowProgress();
     return html`
-      <div class="swc-UploadAttachment-stack">
-        <swc-card class="swc-UploadAttachment-surface" variant="quiet">
-          ${loading
-            ? nothing
-            : html`
-                <slot name="thumbnail" slot="preview"></slot>
-              `}
-        </swc-card>
+      <swc-card class="swc-UploadAttachment-surface" variant="quiet">
+        ${loading
+          ? nothing
+          : html`
+              <slot name="thumbnail" slot="preview"></slot>
+            `}
         ${loading
           ? html`
               <swc-progress-circle
                 class="swc-UploadAttachment-progress"
+                slot="media"
                 size="s"
                 progress=${this.progress}
                 label="Uploading"
               ></swc-progress-circle>
             `
           : nothing}
-        <slot name="badge"></slot>
+        <slot name="badge" slot="media"></slot>
+      </swc-card>
+      <div class="swc-UploadAttachment-actions">
+        <slot name="actions"></slot>
       </div>
-      <slot name="actions" hidden></slot>
       <slot
         name="title"
         hidden

@@ -11,7 +11,7 @@
  */
 
 :host {
-  --swc-upload-attachment-focus-indicator-color: #4b4efc;
+  --swc-upload-attachment-focus-indicator-color: light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color"));
   --_swc-upload-attachment-tint: light-dark(token("transparent-black-50"), token("transparent-white-50"));
 
   display: block;
@@ -45,9 +45,10 @@
   /* 20px round gray circle rendered by swc-action-button. Icon-only, so the
    * width comes from edge-to-visual-only; set it equal to the vertical inset so
    * width matches min-block-size and the button stays square. */
+  --_swc-upload-attachment-dismiss-icon-size: var(--swc-upload-attachment-dismiss-icon-size, token("ui-icon-extra-small"));
   --swc-action-button-min-block-size: var(--swc-upload-attachment-dismiss-visual-size, 20px);
-  --swc-action-button-icon-size: var(--swc-upload-attachment-dismiss-icon-size, 8px);
-  --swc-action-button-edge-to-text: calc((var(--swc-upload-attachment-dismiss-visual-size, 20px) - var(--swc-upload-attachment-dismiss-icon-size, 8px)) / 2);
+  --swc-action-button-icon-size: var(--_swc-upload-attachment-dismiss-icon-size);
+  --swc-action-button-edge-to-text: calc((var(--swc-upload-attachment-dismiss-visual-size, 20px) - var(--_swc-upload-attachment-dismiss-icon-size)) / 2);
   --swc-action-button-edge-to-visual: var(--swc-action-button-edge-to-text);
   --swc-action-button-edge-to-visual-only: var(--swc-action-button-edge-to-text);
   --swc-action-button-border-radius: token("corner-radius-full");
@@ -69,8 +70,8 @@
 .swc-UploadAttachment-dismiss-icon svg {
   display: block;
   flex: 0 0 auto;
-  inline-size: var(--swc-upload-attachment-dismiss-icon-size, 8px);
-  block-size: var(--swc-upload-attachment-dismiss-icon-size, 8px);
+  inline-size: var(--_swc-upload-attachment-dismiss-icon-size);
+  block-size: var(--_swc-upload-attachment-dismiss-icon-size);
 }
 
 .swc-UploadAttachment-dismiss[hidden] {
@@ -89,6 +90,14 @@
   position: relative;
   inline-size: 100%;
   block-size: 100%;
+}
+
+/* Both card and media thumbnails render at a fixed square size; hand
+ * swc-asset that default so consumers don't need to repeat
+ * aspect-ratio="square" on every thumbnail. An explicit aspect-ratio (or
+ * width/height) on the slotted element still wins over this fallback. */
+::slotted([slot="thumbnail"]) {
+  --swc-asset-aspect-ratio: 1 / 1;
 }
 
 .swc-UploadAttachment-surface {
@@ -159,8 +168,8 @@
 :host([type="card"]) .swc-UploadAttachment-thumbnail ::slotted(*) {
   box-sizing: border-box;
   flex-shrink: 0;
-  inline-size: var(--swc-upload-attachment-card-thumbnail-size, 48px);
-  block-size: var(--swc-upload-attachment-card-thumbnail-size, 48px);
+  inline-size: var(--swc-upload-attachment-card-thumbnail-size, token("thumbnail-size-700"));
+  block-size: var(--swc-upload-attachment-card-thumbnail-size, token("thumbnail-size-700"));
   background: token("gray-100");
   border: token("border-width-100") solid transparent;
   border-radius: token("corner-radius-large-default");
@@ -210,8 +219,8 @@
 }
 
 :host([type="media"]) {
-  inline-size: 64px;
-  block-size: 64px;
+  inline-size: token("thumbnail-size-1000");
+  block-size: token("thumbnail-size-1000");
   border-radius: token("corner-radius-large-default");
   overflow: visible;
 }
@@ -221,73 +230,39 @@
   block-size: 96px;
 }
 
-/* Staggered row/column spans (see https://smolcss.dev/#smol-stack-layout
- * for the named-area variant this replaces): on this 2x2 grid, the surface
- * and progress circle each span both rows and both columns, so they fully
- * overlap the tile; the badge spans only row 2 / column 1, so it overlaps
- * just that bottom-start cell instead of the whole thing. All three are
- * plain children authored directly here (never slotted into swc-card
- * itself), so this sidesteps the height collapse that would hit anything
- * relying on swc-card's own internal grid while its `preview` slot is
- * empty (loading). */
-:host([type="media"]) .swc-UploadAttachment-stack {
-  /* A flat black tint reads as nearly invisible against an already-dark
-   * background, so this flips to the equivalent white-tint weight class in
-   * dark mode. Declared here (not per rule) so `.swc-UploadAttachment-surface`
-   * below picks it up by inheritance instead of repeating the light-dark(). */
-  --_swc-upload-attachment-loading-tint: light-dark(token("transparent-black-50"), token("transparent-white-50"));
+/* swc-card's `media` slot overlays directly on its `preview` region (they
+ * share `grid-area: media` in card.css's own internal grid), so the
+ * progress circle and badge are projected there via that slot instead of
+ * upload-attachment maintaining its own separate overlay grid/tile. `place-self`
+ * positions each within that shared area (centered for the progress circle,
+ * corner-anchored for the badge). */
+:host([type="media"]) .swc-UploadAttachment-surface {
+  /* Match swc-card's rounding to the tile radius, and give it its own gray
+   * tint (stays visible in both light and dark mode) as the neutral backdrop
+   * for the progress circle while loading; hidden behind the thumbnail once
+   * loaded. */
+  --swc-card-base-border-radius: token("corner-radius-large-default");
+  --swc-card-base-background-color: var(--_swc-upload-attachment-tint);
 
-  display: grid;
   position: absolute;
 
-  /* 2px inset leaves a real gap between the host edge and this (opaque)
-   * stack so the host's inward focus ring (below) lands in empty space
-   * instead of being painted over by it, which renders on top of it. */
+  /* 2px inset gives the host's inward focus ring empty space to sit in. */
   inset: token("spacing-50");
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr 1fr;
-
-  /* Default (non-static-color) progress-circle needs a light neutral
-   * backdrop for contrast; visible whenever the thumbnail isn't rendered
-   * (while loading), and otherwise sits behind the thumbnail unnoticed. */
-  background: var(--_swc-upload-attachment-tint);
-  border-radius: token("corner-radius-large-default");
   overflow: hidden;
 
-  /* Drawn inward (negative offset), matching the dismiss button's ring
-   * above, so it never extends past this box and can't get clipped by the
-   * `overflow: hidden` here. */
-  outline: token("border-width-100") solid var(--_swc-upload-attachment-tint);
-  outline-offset: calc(token("border-width-100") * -1);
-}
-
-:host([type="media"]) .swc-UploadAttachment-surface {
-  /* Matches swc-card's own internal preview/media rounding to the tile radius above. */
-  --swc-card-base-border-radius: token("corner-radius-large-default");
-
-  grid-row: 1 / span 2;
-  grid-column: 1 / span 2;
-
-  /* Otherwise the shared gray-50 rule above paints an opaque rectangle over
-   * the whole stack (even while empty, loading), hiding the stack's own
-   * tint behind it. */
-  background: var(--_swc-upload-attachment-tint);
-
-  /* Drawn inward (negative offset), matching the stack's own ring above. */
+  /* Drawn inward to match the dismiss button's ring without clipping. */
   outline: token("border-width-100") solid var(--_swc-upload-attachment-tint);
   outline-offset: calc(token("border-width-100") * -1);
 }
 
 :host([type="media"]) .swc-UploadAttachment-progress {
-  grid-row: 1 / span 2;
-  grid-column: 1 / span 2;
+  grid-area: media;
   place-self: center;
 }
 
 :host([type="media"]) ::slotted(swc-badge[slot="badge"]) {
   z-index: 2;
-  grid-row: 2 / span 1;
-  grid-column: 1 / span 1;
+  grid-area: media;
   place-self: end start;
   margin-block-end: token("spacing-75");
   margin-inline-start: token("spacing-75");

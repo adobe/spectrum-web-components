@@ -19,6 +19,7 @@ import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
 import {
   forcedColorsVrtParameters,
+  forcePseudoState,
   forcePseudoStates,
   row,
   theme,
@@ -40,24 +41,27 @@ export default meta;
 // Helpers
 
 // UploadAttachment styles focus on `:host(:focus-visible)` directly (no
-// `:hover`/`:active` treatment of its own; the dismiss button's own hover
-// state is already covered by swc-action-button's VRT).
+// `:hover`/`:active` treatment of its own). The dismiss button's own hover
+// state is already covered by swc-action-button's VRT, but its
+// `:focus-visible` outline color is customized here (via
+// `--swc-action-button-focus-indicator-color`), so that variant needs its
+// own forced case below.
 type ForcedState = 'focus-visible';
 
 const landscapeAsset = (alt: string) => html`
-  <swc-asset slot="thumbnail" aspect-ratio="1:1">
+  <swc-asset slot="thumbnail">
     <img src="images/landscape-asset.jpg" alt=${alt} />
   </swc-asset>
 `;
 
 const portraitAsset = (alt: string) => html`
-  <swc-asset slot="thumbnail" aspect-ratio="1:1">
+  <swc-asset slot="thumbnail">
     <img src="images/portrait-asset.jpg" alt=${alt} />
   </swc-asset>
 `;
 
 const cardPreviewAsset = (alt: string) => html`
-  <swc-asset slot="thumbnail" aspect-ratio="1:1">
+  <swc-asset slot="thumbnail">
     <img src="images/card-preview.jpg" alt=${alt} />
   </swc-asset>
 `;
@@ -68,6 +72,7 @@ type CardCase = {
   dismissible?: boolean;
   lang?: string;
   forceState?: ForcedState;
+  forceDismissState?: ForcedState;
 };
 
 const renderCardAttachment = ({
@@ -76,11 +81,13 @@ const renderCardAttachment = ({
   dismissible = true,
   lang,
   forceState,
+  forceDismissState,
 }: CardCase) => html`
   <swc-upload-attachment
     type="card"
     ?dismissible=${dismissible}
     data-force-state=${forceState ?? nothing}
+    data-force-dismiss-state=${forceDismissState ?? nothing}
     style="max-inline-size: 280px;"
   >
     ${landscapeAsset('File preview')}
@@ -101,6 +108,7 @@ type MediaCase = {
   progress?: number;
   badge?: string;
   forceState?: ForcedState;
+  forceDismissState?: ForcedState;
 };
 
 const renderMediaAttachment = ({
@@ -110,6 +118,7 @@ const renderMediaAttachment = ({
   progress,
   badge,
   forceState,
+  forceDismissState,
 }: MediaCase) => html`
   <swc-upload-attachment
     type="media"
@@ -117,6 +126,7 @@ const renderMediaAttachment = ({
     ?dismissible=${dismissible}
     progress=${progress ?? nothing}
     data-force-state=${forceState ?? nothing}
+    data-force-dismiss-state=${forceDismissState ?? nothing}
   >
     ${asset}
     ${badge
@@ -131,12 +141,46 @@ const forceUploadAttachmentStates = forcePseudoStates(
   'swc-upload-attachment[data-force-state]'
 );
 
+// The dismiss button is an swc-action-button that draws its own
+// `:focus-visible` outline on its internal `.swc-ActionButton`, using a
+// customized `--swc-action-button-focus-indicator-color` (rather than
+// swc-action-button's default), so force it there instead of on the host.
+const forceDismissButtonStates = ({
+  canvasElement,
+}: {
+  canvasElement: HTMLElement;
+}) => {
+  canvasElement
+    .querySelectorAll<HTMLElement>(
+      'swc-upload-attachment[data-force-dismiss-state]'
+    )
+    .forEach((host) => {
+      const state = host.dataset.forceDismissState as
+        | ForcedState
+        | undefined;
+      const dismissButton = host.shadowRoot?.querySelector<HTMLElement>(
+        '.swc-UploadAttachment-dismiss'
+      );
+      if (state && dismissButton) {
+        forcePseudoState(dismissButton, state, '.swc-ActionButton');
+      }
+    });
+};
+
+const forceUploadAttachmentAllStates = async (
+  context: Parameters<typeof forceUploadAttachmentStates>[0]
+) => {
+  await forceUploadAttachmentStates(context);
+  forceDismissButtonStates(context);
+};
+
 // Card tiles (title/subtitle metadata, dismissible and non-dismissible),
 // media tiles at both sizes with and without the upload-progress overlay and
 // the badge overlay (badge shown only at size="l", per its documented
 // guidance since it crowds the default 64px size="m" tile), non-dismissible
 // media, middle title truncation and subtitle ellipsis on `type="card"`,
-// forced `:focus-visible` on both types, and CJK title/subtitle text.
+// forced `:focus-visible` on both types (host and, separately, the dismiss
+// button's own customized outline color), and CJK title/subtitle text.
 const permutationContent = () => html`
   ${row(
     [
@@ -235,6 +279,20 @@ const permutationContent = () => html`
   ${row(
     [
       renderCardAttachment({
+        title: 'Card',
+        forceDismissState: 'focus-visible',
+      }),
+      renderMediaAttachment({
+        asset: landscapeAsset('Media'),
+        alt: 'Media',
+        forceDismissState: 'focus-visible',
+      }),
+    ],
+    'Forced dismiss button focus-visible'
+  )}
+  ${row(
+    [
+      renderCardAttachment({
         title: '承認ワークフローを開始するファイル名.pdf',
         subtitle: '欧州とアジアのクルーズ旅行パッケージ',
         lang: 'ja',
@@ -264,7 +322,7 @@ export const Permutations: Story = {
     ${theme(permutationContent(), 'dark', 'rtl')}
   `,
   parameters: vrtParameters,
-  play: forceUploadAttachmentStates,
+  play: forceUploadAttachmentAllStates,
 };
 
 // `forced-colors` replaces the whole page palette, so it can't be scoped to a
@@ -273,5 +331,5 @@ export const Permutations: Story = {
 export const ForcedColors: Story = {
   render: () => theme(permutationContent(), 'light', 'ltr'),
   parameters: forcedColorsVrtParameters,
-  play: forceUploadAttachmentStates,
+  play: forceUploadAttachmentAllStates,
 };

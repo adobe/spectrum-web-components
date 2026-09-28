@@ -41,7 +41,7 @@ export default meta;
 // Helpers
 
 const thumbnail = (alt: string) => html`
-  <swc-asset slot="thumbnail" aspect-ratio="1:1">
+  <swc-asset slot="thumbnail">
     <img src="images/landscape-asset.jpg" alt=${alt} />
   </swc-asset>
 `;
