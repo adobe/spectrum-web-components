@@ -125,6 +125,14 @@ export default defineConfig({
   build: {
     lib: {
       entry: [
+        ...glob.sync(resolve(__dirname, 'components/*/[A-Z]*.ts')),
+        ...glob.sync(resolve(__dirname, 'components/*/*/[A-Z]*.ts'), {
+          ignore: ['**/stories/**', '**/test/**'],
+        }),
+        ...glob.sync(resolve(__dirname, 'patterns/*/*/[A-Z]*.ts')),
+        ...glob.sync(resolve(__dirname, 'patterns/*/*/*/[A-Z]*.ts'), {
+          ignore: ['**/stories/**', '**/test/**'],
+        }),
         ...glob.sync(resolve(__dirname, 'components/*/index.ts')),
         ...glob.sync(resolve(__dirname, 'components/*/swc-*.ts')),
         ...glob.sync(resolve(__dirname, 'patterns/*/*/index.ts')),

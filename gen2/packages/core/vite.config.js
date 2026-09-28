@@ -108,7 +108,6 @@ export default defineConfig({
       include: ['**/*.ts'],
       exclude: ['**/*.test.ts', '**/*.stories.ts'],
       outDir: 'dist',
-      insertTypesEntry: true,
     }),
   ],
   build: {
