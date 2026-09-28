@@ -28,7 +28,7 @@ This is a JS-only fix because a custom element's shadow-internal surface cannot 
 ```typescript
 import { LitElement, type PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
-import { TriggerPressController } from '@adobe/spectrum-wc-core/controllers/trigger-press-controller.js';
+import { TriggerPressController } from '@adobe/spectrum-wc-core/controllers/trigger-press-controller';
 
 class SwcToggle extends LitElement {
   @property({ type: Boolean, reflect: true }) open = false;

@@ -47,7 +47,7 @@ import { Icon_Star } from '@adobe/spectrum-wc-icons/Star.js';
 element.innerHTML = Icon_Star();
 ```
 
-The package's default export is the barrel of every function, for convenience:
+The package root exports every function, for convenience:
 
 ```ts
 import { Icon_Star, Icon_Folder } from '@adobe/spectrum-wc-icons';

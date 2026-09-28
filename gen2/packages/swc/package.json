@@ -15,10 +15,6 @@
   },
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
     "./*": {
       "types": "./dist/components/*/index.d.ts",
       "import": "./dist/components/*/index.js"
@@ -36,18 +32,6 @@
       "default": "./dist/components/*.js"
     },
     "./customElements": "./dist/custom-elements.json",
-    "./global-button.css": {
-      "default": "./dist/global-button.css"
-    },
-    "./global-elements.css": {
-      "default": "./dist/global-elements.css"
-    },
-    "./global-link.css": {
-      "default": "./dist/global-link.css"
-    },
-    "./link.css": {
-      "default": "./dist/link.css"
-    },
     "./patterns/*": {
       "types": "./dist/patterns/*/index.d.ts",
       "import": "./dist/patterns/*/index.js"
@@ -60,13 +44,11 @@
       "types": "./dist/patterns/*/index.d.ts",
       "import": "./dist/patterns/*/index.js"
     },
-    "./utils/*": {
-      "types": "./dist/utils/*.d.ts",
-      "import": "./dist/utils/*.js"
+    "./utils/id": {
+      "types": "./dist/utils/id.d.ts",
+      "import": "./dist/utils/id.js"
     }
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
   "files": [
     "dist/"
   ],

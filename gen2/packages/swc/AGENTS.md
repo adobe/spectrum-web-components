@@ -10,7 +10,8 @@ swc/
 │   └── badge/
 │       ├── Badge.ts       # Concrete class — extends core base, adds render() and CSS
 │       ├── badge.css      # Component styles (token-based)
-│       ├── index.ts       # Element registration and re-exports
+│       ├── index.ts       # Class and type re-exports; does not register the element
+│       ├── swc-badge.ts  # Element registration
 │       ├── stories/
 │       └── test/
 ├── stylesheets/       # Generated design tokens and typography (do not edit by hand)
@@ -19,6 +20,8 @@ swc/
 ```
 
 Use [Badge](./components/badge/) as the reference implementation.
+
+The package uses wildcard subpath exports for class barrels, direct class files (for subclassing), and `swc-*.js` registration modules. Prefer the barrel for class imports and the registration module for element use. Generated chunks and CSS-as-JS modules may also resolve through these wildcards, but they are not supported import paths. The package root has no export.
 
 ## Does NOT belong here
 
