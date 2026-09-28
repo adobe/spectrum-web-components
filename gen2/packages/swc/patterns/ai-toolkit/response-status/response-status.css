@@ -126,9 +126,7 @@
   white-space: normal;
 }
 
-/* Capped rather than unbounded: the row sizes to this content (see
-   `.swc-ResponseStatus-row`'s `min-block-size`), so an unbounded label could
-   grow the row arbitrarily tall. Past the cap, the last visible line ellipses. */
+/* Active and stopped labels default to two lines. */
 .swc-ResponseStatus-headerTrailLine--settled .swc-ResponseStatus-label {
   -webkit-box-orient: vertical;
   display: -webkit-box;
@@ -136,6 +134,13 @@
   overflow: hidden;
   -webkit-line-clamp: var(--swc-response-status-label-max-lines, 2);
   line-clamp: var(--swc-response-status-label-max-lines, 2);
+}
+
+/* A completed label has no disclosure if there are no steps, so keep its
+   full text visible unless the consumer explicitly sets a line cap. */
+.swc-ResponseStatus-row--complete .swc-ResponseStatus-headerTrailLine--settled .swc-ResponseStatus-label {
+  -webkit-line-clamp: var(--swc-response-status-label-max-lines, unset);
+  line-clamp: var(--swc-response-status-label-max-lines, unset);
 }
 
 /* Outgoing/incoming labels start at their pre-transition opacity; the

@@ -67,7 +67,7 @@ export type ResponseStatusStatus = (typeof RESPONSE_STATUSES)[number];
  * Detail: `{ open: boolean }`
  * @fires swc-response-status-step-toggle - Dispatched when the user expands or collapses
  * a step's description. Detail: `{ open: boolean, index: number }`
- * @cssprop --swc-response-status-label-max-lines - Maximum number of lines the settled header label wraps to before ellipsing. Defaults to 2.
+ * @cssprop --swc-response-status-label-max-lines - Maximum number of lines for a settled header label. Defaults to 2 when active or stopped; completed labels show in full unless a cap is set.
  * @since 2.0.0-beta.3
  */
 export class ResponseStatus extends SpectrumElement {

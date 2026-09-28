@@ -666,7 +666,7 @@ export const DetailOverflowVisibilityTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Settled header label wraps instead of overflowing
+// TEST: Completed header label remains readable at narrow widths
 // ──────────────────────────────────────────────────────────────
 
 export const HeaderLabelWrapTest: Story = {
@@ -675,8 +675,8 @@ export const HeaderLabelWrapTest: Story = {
       <swc-response-status status="complete">
         <span slot="label">
           A deliberately long status label written to exceed two full lines of
-          wrapped text at this width so the multi-line clamp has something real
-          to bound instead of just happening to fit
+          wrapped text at this width so completed responses can still be read
+          in full without expanding a panel
         </span>
       </swc-response-status>
     </div>
@@ -688,7 +688,7 @@ export const HeaderLabelWrapTest: Story = {
     );
 
     await step(
-      'wraps and clamps the settled label without leaking past the row',
+      'wraps the complete label without hiding the end of the text',
       async () => {
         await waitFor(
           () => {
@@ -711,12 +711,7 @@ export const HeaderLabelWrapTest: Story = {
             );
             const labelHeight = label?.getBoundingClientRect().height ?? 0;
 
-            // Wrapped to more than one line...
-            expect(labelHeight).toBeGreaterThan(lineHeight * 1.5);
-            // ...but clamped rather than unbounded: stays within the default
-            // 2-line cap (`--swc-response-status-label-max-lines`) even
-            // though the text alone would wrap to more lines at this width.
-            expect(labelHeight).toBeLessThanOrEqual(lineHeight * 2 + 1);
+            expect(labelHeight).toBeGreaterThan(lineHeight * 2 + 1);
 
             // The row grows to fit the wrapped label instead of staying a
             // fixed single-line height and letting the extra lines spill past
@@ -731,5 +726,18 @@ export const HeaderLabelWrapTest: Story = {
         );
       }
     );
+
+    await step('allows consumers to cap long labels explicitly', async () => {
+      el.style.setProperty('--swc-response-status-label-max-lines', '2');
+      const label = el.shadowRoot?.querySelector<HTMLElement>(
+        '.swc-ResponseStatus-headerTrailLine .swc-ResponseStatus-label'
+      );
+      const lineHeight = parseFloat(
+        getComputedStyle(label as HTMLElement).lineHeight || '0'
+      );
+      expect(label?.getBoundingClientRect().height).toBeLessThanOrEqual(
+        lineHeight * 2 + 1
+      );
+    });
   },
 };
