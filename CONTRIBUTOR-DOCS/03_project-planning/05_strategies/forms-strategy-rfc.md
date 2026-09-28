@@ -24,6 +24,7 @@
     - [3.3 IDREF strategy: label, help text, and errors](#33-idref-strategy-label-help-text-and-errors)
     - [3.4 axe-core policy](#34-axe-core-policy)
     - [3.5 Testing form participation](#35-testing-form-participation)
+    - [3.6 Validation timing and submit behavior](#36-validation-timing-and-submit-behavior)
 - [4. Naming table](#4-naming-table)
 - [5. Migration path](#5-migration-path)
 - [6. Open questions](#6-open-questions)
@@ -35,7 +36,7 @@
 
 ## Summary
 
-This proposal records the team's recommended direction for **gen2 form fields** (text field, checkbox, radio, picker, combobox) before scaling migration. It synthesizes the proof-of-concept findings for text field and combobox as form-associated custom elements, plus the cross-root ARIA `referenceTarget` shim research. The core decisions are: form fields participate in forms through the **ElementInternals / form-associated custom element (FACE)** API; ARIA roles default to the **shadow DOM**, with an explicit host-role exception for button-like and radio-like controls (see [§3.2](#32-where-aria-roles-live)); label, help text, and error text associate through **IDREF relationships** that use a cross-root-safe pattern; and **axe-core** exclusions are documented, not silent.
+This proposal records the team's recommended direction for **gen2 form fields** (text field, checkbox, radio, picker, combobox) before scaling migration. It synthesizes the proof-of-concept findings for text field and combobox as form-associated custom elements, plus the cross-root ARIA `referenceTarget` shim research. The core decisions are: form fields participate in forms through the **ElementInternals / form-associated custom element (FACE)** API; ARIA roles default to the **shadow DOM**, with an explicit host-role exception for button-like and radio-like controls (see [§3.2](#32-where-aria-roles-live)); label, help text, and error text associate through **IDREF relationships** that use a cross-root-safe pattern; **axe-core** exclusions are documented, not silent; and validation errors display when the user **commits** a value or submits the form, not on each keystroke, with the submit button kept enabled (see [§3.6](#36-validation-timing-and-submit-behavior)).
 
 
 > **Scope:** Form-field API and accessibility direction only. This proposal does **not** implement the shared controllers or migrate a production component; those are follow-up work.
@@ -72,9 +73,9 @@ This proposal records the team's recommended direction for **gen2 form fields** 
 
 ## 2. Scope
 
-**In scope:** the recommended direction for form participation, role placement, IDREF/label/help/error association, and axe policy, plus a naming table contributors follow during migration.
+**In scope:** the recommended direction for form participation, role placement, IDREF/label/help/error association, axe policy, and validation timing and submit behavior, plus a naming table contributors follow during migration.
 
-**Out of scope:** implementing a shared form-field mixin, migrating a specific production component, and full validation UI. Those are tracked as follow-up work.
+**Out of scope:** implementing a shared form-field mixin, migrating a specific production component, and the full validation UI (for example, a form-level error summary component). Those are tracked as follow-up work.
 
 ---
 
@@ -142,11 +143,21 @@ Every form-associated component (text field, checkbox, checkbox group, radio gro
 Every form-associated component's story set and test suite must cover the full form lifecycle:
 
 - **Value on submit:** submitting the form yields the expected `FormData`. A control contributes its `name`/`value` when it has a value and contributes nothing when it does not (an unchecked checkbox, an empty field). Grouped multi-select controls (checkbox group) contribute one entry per selected item under the shared `name`; single-value controls (radio group, picker) contribute one entry.
-- **Validation:** a `required` (or otherwise constrained) control blocks submission and reports validity (`:invalid`/`:user-invalid`, `checkValidity()`/`reportValidity()`), and the invalid state clears once the constraint is satisfied. Validate at the level the constraint lives (per item for a standalone required checkbox; at the group for "select at least one" or "choose exactly one").
+- **Validation:** a `required` (or otherwise constrained) control blocks submission and reports validity (`:invalid`/`:user-invalid`, `checkValidity()`/`reportValidity()`), and the invalid state clears once the constraint is satisfied. Validate at the level the constraint lives (per item for a standalone required checkbox; at the group for "select at least one" or "choose exactly one"). Tests also cover the display timing in [§3.6](#36-validation-timing-and-submit-behavior): no error appears while the user types, the error appears on commit or submit, and after a failed submit focus moves to the first invalid field.
 - **Reset:** `form.reset()` restores every control to its default value via `formResetCallback()`.
 - **Getting the value:** the value read on submit matches the value read programmatically, across the checked/selected, unchecked/empty, and post-reset states.
 
 A single story that renders the component in a `<form>` with a submit button and a reset button doubles as the consumer-facing example and the fixture these tests drive. Use **native** `<button type="submit">` and `<button type="reset">` for now: hold off on a Spectrum button for the submit/reset controls until the clear-button component ships and the button form-association fast-follow is complete (the button-activation open question in [§6](#6-open-questions)). The field under test is the form-associated 2nd-gen component; the surrounding submit/reset controls stay native until then.
+
+### 3.6 Validation timing and submit behavior
+
+Good validation helps the user with specific error messages, but does not show errors for input that is not complete yet. gen2 fields follow the same behavior as React Spectrum; see the [React Spectrum forms guide](https://react-spectrum.adobe.com/forms#validation) and [Form focus management](https://react-spectrum.adobe.com/Form#focus-management).
+
+- **Validate on commit, not as the user types (default).** A field always keeps its validity current (so `checkValidity()` and `validity` are accurate at all times), but it shows the invalid state and error text only when the user commits a value (for example, on blur or `change`) or submits the form. This matches the native `:user-invalid` behavior and prevents errors for partial input.
+- **Realtime validation is opt-in.** Some cases need feedback on each keystroke, for example password requirements. For these cases, consumers opt in: they listen for `input` and set the field's invalid state and error text themselves. Do not make realtime validation the default for any field.
+- **Do not switch to realtime validation after submit.** After a failed submit, the field keeps commit-based timing. The error text updates on the next commit, not on each keystroke. This keeps the behavior consistent before and after submit.
+- **Focus the first invalid field on submit, but let consumers override it.** When submit is blocked, focus moves to the first invalid field in DOM order, as it does for native controls (FACE fields supply the focus target as the validation anchor in `internals.setValidity()`). Consumers can move focus somewhere else, for example to an inline alert that summarizes the errors. To do this, they cancel the `invalid` event on the invalid fields (listen in the capture phase on the `<form>`, because `invalid` does not bubble) and move focus themselves.
+- **Keep the submit button enabled.** Do not disable the submit button until the form is valid. A disabled button is removed from the tab order, gives no reason why it is disabled, and does not tell the user which field to fix. Let submit run validation and move focus to the problem instead.
 
 ---
 
@@ -180,7 +191,7 @@ The canonical surface for form fields. Contributors align Phase 3 (API) and Phas
 Contributors migrating a form field follow the washing machine workflow with these additions:
 
 - **Phase 3 (API):** wire form participation and name the API from the [naming table](#4-naming-table). See [Washing machine workflow, Phase 3](../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-3-api-migration).
-- **Phase 4 (accessibility):** wire label, help text, and errors per [§3.3](#33-idref-strategy-label-help-text-and-errors), and satisfy the axe policy in [§3.4](#34-axe-core-policy). See [Washing machine workflow, Phase 4](../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-4-accessibility).
+- **Phase 4 (accessibility):** wire label, help text, and errors per [§3.3](#33-idref-strategy-label-help-text-and-errors), satisfy the axe policy in [§3.4](#34-axe-core-policy), and follow the validation timing and focus behavior in [§3.6](#36-validation-timing-and-submit-behavior). See [Washing machine workflow, Phase 4](../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-4-accessibility).
 - **Phase 6 (testing):** add stories and tests that exercise the component inside a native `<form>` and cover the full form lifecycle (value on submit, validation, reset, getting the value) per [§3.5](#35-testing-form-participation). See [Washing machine workflow, Phase 6](../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-6-testing).
 
 ---
