@@ -96,10 +96,16 @@ const chevronIcon: Record<string, (dir: 'Down' | 'Up') => TemplateResult> = {
   `,
 };
 
-const digitsAfterDecimalOf = (value?: number): number =>
-  value && value !== Math.floor(value)
-    ? (value.toString().split('.')[1]?.length ?? 0)
-    : 0;
+const digitsAfterDecimalOf = (value?: number): number => {
+  if (!value) {
+    return 0;
+  }
+  const [significand, exponent = '0'] = value.toString().split('e');
+  return Math.max(
+    0,
+    (significand.split('.')[1]?.length ?? 0) - Number(exponent)
+  );
+};
 
 /**
  * @element sp-number-field
@@ -597,8 +603,8 @@ export class NumberField extends TextfieldBase {
   private validateInput(value: number): number {
     value = this.valueWithLimits(value);
 
-    // Step shouldn't validate when 0...
-    if (this.step) {
+    // A non-positive step cannot define a grid.
+    if (this.step && this.step > 0) {
       // The step grid starts at `min`, or at 0 when there is no `min`.
       const anchor = typeof this.min !== 'undefined' ? this.min : 0;
       const offset = value - anchor;

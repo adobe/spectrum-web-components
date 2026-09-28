@@ -492,6 +492,35 @@ describe('NumberField', () => {
       expect(el.valueAsString).to.equal('-8.5');
       expect(el.focusElement.value).to.equal('-8.5');
     });
+    it('retains the precision of a step written in scientific notation', async () => {
+      const el = await getElFrom(
+        Default({
+          step: 1e-7,
+          formatOptions: { maximumFractionDigits: 7 },
+        })
+      );
+
+      el.value = 2e-7;
+      expect(el.value).to.equal(2e-7);
+      await elementUpdated(el);
+      expect(el.value).to.equal(2e-7);
+      expect(el.focusElement.value).to.equal('0.0000002');
+    });
+    it('retains the precision of a minimum written in scientific notation', async () => {
+      const el = await getElFrom(
+        Default({
+          step: 1,
+          min: 1e-7,
+          formatOptions: { maximumFractionDigits: 7 },
+        })
+      );
+
+      el.value = 1e-7;
+      expect(el.value).to.equal(1e-7);
+      await elementUpdated(el);
+      expect(el.value).to.equal(1e-7);
+      expect(el.focusElement.value).to.equal('0.0000001');
+    });
     it('correctly handles max values greater than 1000 with step=1', async () => {
       const el = await getElFrom(
         Default({
@@ -1844,6 +1873,16 @@ describe('NumberField', () => {
       expect(el.value).to.equal(5);
       el.value = 8;
       expect(el.value).to.equal(10);
+    });
+    it('does not snap values when step is negative', async () => {
+      el.max = 9;
+      el.step = -5;
+      el.value = 6;
+      expect(el.value).to.equal(6);
+      el.value = 9;
+      expect(el.value).to.equal(9);
+      await elementUpdated(el);
+      expect(el.value).to.equal(9);
     });
     it('keeps negative values at or below a negative max without min', async () => {
       el.max = -6;
