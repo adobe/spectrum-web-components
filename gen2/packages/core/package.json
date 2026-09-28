@@ -219,10 +219,6 @@
       "types": "./dist/controllers/drag-and-drop-controller/index.d.ts",
       "import": "./dist/controllers/drag-and-drop-controller/index.js"
     },
-    "./controllers/focus-group-navigation-controller.js": {
-      "types": "./dist/controllers/focusgroup-navigation-controller/index.d.ts",
-      "import": "./dist/controllers/focusgroup-navigation-controller/index.js"
-    },
     "./controllers/focusgroup-navigation-controller.js": {
       "types": "./dist/controllers/focusgroup-navigation-controller/index.d.ts",
       "import": "./dist/controllers/focusgroup-navigation-controller/index.js"
