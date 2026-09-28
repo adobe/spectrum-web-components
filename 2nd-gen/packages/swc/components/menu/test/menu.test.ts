@@ -24,7 +24,11 @@ import { isTopDismissible } from '@adobe/spectrum-wc-core/utils/index.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 
-import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
+import {
+  getComponent,
+  waitForEvent,
+  withWarningSpy,
+} from '../../../utils/test-utils.js';
 import meta, { OpenAndClose } from '../stories/menu.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
@@ -56,17 +60,6 @@ const getItems = (canvasElement: HTMLElement): HTMLElement[] =>
 const isMenuOpen = (menu: Menu): boolean =>
   menu.shadowRoot?.querySelector('.swc-Menu')?.matches(':popover-open') ??
   false;
-
-// Awaits a DOM event dispatched on the given element, resolving with the event object.
-const waitForEvent = <T extends Event>(
-  el: EventTarget,
-  eventName: string
-): Promise<T> =>
-  new Promise<T>((resolve) => {
-    el.addEventListener(eventName, (event) => resolve(event as T), {
-      once: true,
-    });
-  });
 
 // ──────────────────────────────────────────────────────────────
 // TEST: Defaults
@@ -215,17 +208,27 @@ export const LifecycleEventsTest: Story = {
     });
 
     await step('dispatches events that bubble and are composed', async () => {
-      let bubbledOpen = false;
-      canvasElement.addEventListener('swc-open', () => (bubbledOpen = true), {
-        once: true,
-      });
+      const openPromise = waitForEvent(menu, 'swc-open');
+      const afterOpenPromise = waitForEvent(menu, 'swc-after-open');
       menu.open = true;
-      await waitFor(() => expect(isMenuOpen(menu)).toBe(true), {
-        timeout: 1000,
-      });
-      expect(bubbledOpen, 'swc-open bubbled to canvas').toBe(true);
+      const openEvent = await openPromise;
+      const afterOpenEvent = await afterOpenPromise;
+
+      const closePromise = waitForEvent(menu, 'swc-close');
+      const afterClosePromise = waitForEvent(menu, 'swc-after-close');
       menu.open = false;
-      await menu.updateComplete;
+      const closeEvent = await closePromise;
+      const afterCloseEvent = await afterClosePromise;
+
+      for (const [name, event] of [
+        ['swc-open', openEvent],
+        ['swc-after-open', afterOpenEvent],
+        ['swc-close', closeEvent],
+        ['swc-after-close', afterCloseEvent],
+      ] as const) {
+        expect(event.bubbles, `${name} bubbles`).toBe(true);
+        expect(event.composed, `${name} is composed`).toBe(true);
+      }
     });
   },
 };
@@ -502,6 +505,7 @@ export const NoTriggerNoThrowTest: Story = {
     await step(
       'opens without throwing when no for attribute or triggerElement is set',
       async () => {
+        const activeElementBefore = document.activeElement;
         let threw = false;
         try {
           menu.open = true;
@@ -512,6 +516,13 @@ export const NoTriggerNoThrowTest: Story = {
         expect(threw, 'no error thrown when opening without a trigger').toBe(
           false
         );
+        // MenuBase._show() guards the focus-first-row step on a resolved
+        // trigger, since without one the surface never gets `actual-placement`
+        // and stays invisible; focus should not move into it.
+        expect(
+          document.activeElement,
+          'focus does not move into the menu when it has no resolved trigger'
+        ).toBe(activeElementBefore);
         menu.open = false;
         await menu.updateComplete;
       }
@@ -744,6 +755,41 @@ export const ArrowKeyNavigationTest: Story = {
       }
     );
 
+    await step(
+      'picks up a row added while open (slotchange refreshes navigation)',
+      async () => {
+        const newRow = document.createElement('swc-menu-item');
+        newRow.setAttribute('role', 'menuitem');
+        newRow.setAttribute('tabindex', '-1');
+        newRow.textContent = 'Duplicate';
+        menu.appendChild(newRow);
+        await new Promise((r) => requestAnimationFrame(r));
+
+        await userEvent.keyboard('{End}');
+        expect(
+          document.activeElement,
+          'End moves focus to the newly added row'
+        ).toBe(getItems(canvasElement)[3]);
+
+        // Move focus off the row before removing it, so this exercises the
+        // roving set picking up the removal rather than focus recovery for
+        // a removed-while-focused row (a separate, untested concern).
+        await userEvent.keyboard('{Home}');
+        expect(document.activeElement, 'focus back on the first row').toBe(
+          getItems(canvasElement)[0]
+        );
+
+        newRow.remove();
+        await new Promise((r) => requestAnimationFrame(r));
+
+        await userEvent.keyboard('{End}');
+        expect(
+          document.activeElement,
+          'End moves focus to the last row again once the added row is removed'
+        ).toBe(getItems(canvasElement)[2]);
+      }
+    );
+
     await step('closes the menu', async () => {
       menu.open = false;
       await menu.updateComplete;
@@ -785,7 +831,7 @@ export const ClickActivationTest: Story = {
     });
 
     await step(
-      'a click while closed does not throw or reopen the menu',
+      'clicking a row while already closed is a no-op smoke check',
       async () => {
         await userEvent.click(getItems(canvasElement)[0]);
         await menu.updateComplete;
@@ -950,6 +996,26 @@ export const ReanchorOnPlacementChangeTest: Story = {
     await step(
       'reruns positioning when shouldFlip, for, or triggerElement changes while open',
       async () => {
+        const trigger1 = canvasElement.querySelector(
+          '#reanchor-trigger'
+        ) as HTMLElement;
+        const trigger2 = canvasElement.querySelector(
+          '#reanchor-trigger-2'
+        ) as HTMLElement;
+        // `actual-placement` coming back only proves positioning reran, not
+        // which trigger it anchored to (re-anchoring to the previous trigger
+        // would also set it). Compare the surface's horizontal distance to
+        // each trigger instead, since it should be closer to whichever one
+        // is actually resolved.
+        const surfaceDistanceTo = (target: HTMLElement): number => {
+          const surfaceRect = menu.shadowRoot
+            ?.querySelector('.swc-Menu')
+            ?.getBoundingClientRect();
+          return Math.abs(
+            (surfaceRect?.left ?? 0) - target.getBoundingClientRect().left
+          );
+        };
+
         menu.open = true;
         await waitFor(() => expect(isMenuOpen(menu)).toBe(true), {
           timeout: 1000,
@@ -970,17 +1036,22 @@ export const ReanchorOnPlacementChangeTest: Story = {
           () => expect(menu.getAttribute('actual-placement')).toBeTruthy(),
           { timeout: 1000 }
         );
+        expect(
+          surfaceDistanceTo(trigger2),
+          'surface re-anchors to the new for target, not the old trigger'
+        ).toBeLessThan(surfaceDistanceTo(trigger1));
 
-        const trigger = canvasElement.querySelector(
-          '#reanchor-trigger'
-        ) as HTMLElement;
         menu.removeAttribute('actual-placement');
-        menu.triggerElement = trigger;
+        menu.triggerElement = trigger1;
         await menu.updateComplete;
         await waitFor(
           () => expect(menu.getAttribute('actual-placement')).toBeTruthy(),
           { timeout: 1000 }
         );
+        expect(
+          surfaceDistanceTo(trigger1),
+          'surface re-anchors to triggerElement, not the previous for target'
+        ).toBeLessThan(surfaceDistanceTo(trigger2));
 
         menu.open = false;
         await menu.updateComplete;
@@ -1085,23 +1156,23 @@ export const KeydownWhileClosedTest: Story = {
 
         // Setting `open` updates the property synchronously; the document
         // keydown listener isn't removed until the deferred close reaction
-        // runs. Dispatching in this same synchronous window exercises
-        // handleKeyDown's own `!this.open` guard rather than relying on the
-        // listener already being gone.
+        // runs. Dispatching in this same synchronous window, from a row (so
+        // `isMenuItemEventTarget` sees it in the composed path, the same as
+        // a real trusted keydown would), exercises handleKeyDown's own
+        // `!this.open` guard rather than relying on the listener already
+        // being gone.
+        const row = getItems(canvasElement)[0];
         menu.open = false;
-        let threw = false;
-        try {
-          document.dispatchEvent(
-            new KeyboardEvent('keydown', {
-              key: 'Tab',
-              bubbles: true,
-              cancelable: true,
-            })
-          );
-        } catch {
-          threw = true;
-        }
-        expect(threw, 'no error dispatching keydown during close').toBe(false);
+        const event = new KeyboardEvent('keydown', {
+          key: 'Tab',
+          bubbles: true,
+          cancelable: true,
+        });
+        row.dispatchEvent(event);
+        expect(
+          event.defaultPrevented,
+          'Tab is not trapped once the menu has closed'
+        ).toBe(false);
 
         await waitFor(() => expect(isMenuOpen(menu)).toBe(false), {
           timeout: 1000,
@@ -1261,5 +1332,43 @@ export const DisconnectCleanupTest: Story = {
         'aria-expanded cleared'
       ).toBe(false);
     });
+
+    // Removing an already-closed menu only exercises part of
+    // disconnectedCallback's cleanup; removing one that's still open also
+    // has to drop the document keydown listener, unregister from the
+    // dismissible stack, and stop placement.
+    await step(
+      'disconnects while open and unregisters from the dismissible stack',
+      async () => {
+        const trigger2 = document.createElement('button');
+        trigger2.id = 'disconnect-trigger-2';
+        trigger2.textContent = 'Edit 2';
+        canvasElement.appendChild(trigger2);
+
+        const menu2 = document.createElement('swc-menu') as Menu;
+        menu2.setAttribute('for', 'disconnect-trigger-2');
+        menu2.innerHTML =
+          '<swc-menu-item role="menuitem" tabindex="-1">Cut</swc-menu-item>';
+        canvasElement.appendChild(menu2);
+        await menu2.updateComplete;
+
+        menu2.open = true;
+        await waitFor(() => expect(isMenuOpen(menu2)).toBe(true), {
+          timeout: 1000,
+        });
+        expect(
+          isTopDismissible(menu2),
+          'menu2 is the top dismissible while open'
+        ).toBe(true);
+
+        menu2.remove();
+        await new Promise((r) => requestAnimationFrame(r));
+
+        expect(
+          isTopDismissible(menu2),
+          'menu unregisters from the dismissible stack when removed while open'
+        ).toBe(false);
+      }
+    );
   },
 };

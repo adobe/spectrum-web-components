@@ -36,8 +36,9 @@ test.describe('Menu - ARIA snapshots', () => {
       'swc-button'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - button "Edit"
+      - button "Edit" [expanded=false]
     `);
+    await expect(root.getByRole('menu')).toHaveCount(0);
   });
 
   test('open: an internal menu surface holds the rows', async ({ page }) => {
