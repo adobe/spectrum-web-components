@@ -240,6 +240,14 @@ export abstract class TabsBase extends SpectrumElement {
   /**
    * @internal
    *
+   * Cached list of tab panel elements. Updated via
+   * `handlePanelSlotChange`, and relinked when the tabs change.
+   */
+  private _panels: TabPanelLike[] = [];
+
+  /**
+   * @internal
+   *
    * Manages roving tabindex and arrow-key / Home / End focus movement within
    * the tab list. Direction is kept in sync with `this.direction` via
    * `setOptions` in `willUpdate`. Disabled tabs remain in the navigation
@@ -317,6 +325,8 @@ export abstract class TabsBase extends SpectrumElement {
     this._navigation.refresh();
     this.updateCheckedState();
     this.updateSelectionIndicator();
+    // Tabs can change without the panel slot changing, so relink the panels.
+    this.managePanels(this._panels);
   }
 
   /**
@@ -326,8 +336,8 @@ export abstract class TabsBase extends SpectrumElement {
    */
   protected handlePanelSlotChange(event: Event): void {
     const slot = event.target as HTMLSlotElement;
-    const panels = slot.assignedElements() as TabPanelLike[];
-    this.managePanels(panels);
+    this._panels = slot.assignedElements() as TabPanelLike[];
+    this.managePanels(this._panels);
   }
 
   /**
@@ -435,7 +445,9 @@ export abstract class TabsBase extends SpectrumElement {
   private managePanels(panels: TabPanelLike[]): void {
     for (const panel of panels) {
       const { tabId, id } = panel;
-      const tab = this.querySelector(`[role="tab"][tab-id="${tabId}"]`);
+      const tab = tabId
+        ? this._tabs.find((el) => el.tabId === tabId)
+        : undefined;
 
       if (tab) {
         tab.setAttribute('aria-controls', id);
