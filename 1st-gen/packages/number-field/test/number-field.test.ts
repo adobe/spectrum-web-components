@@ -478,6 +478,20 @@ describe('NumberField', () => {
       expect(el.valueAsString).to.equal('-2.4');
       expect(el.focusElement.value).to.equal('-2.4');
     });
+    it('keeps a fractional negative min set by attribute', async () => {
+      const el = await getElFrom(
+        Default({
+          step: 5,
+          min: -8.5,
+          max: 10,
+          value: -8.5,
+        })
+      );
+
+      expect(el.value).to.equal(-8.5);
+      expect(el.valueAsString).to.equal('-8.5');
+      expect(el.focusElement.value).to.equal('-8.5');
+    });
     it('correctly handles max values greater than 1000 with step=1', async () => {
       const el = await getElFrom(
         Default({
@@ -1798,6 +1812,126 @@ describe('NumberField', () => {
       el.max = -5;
       el.value = -12;
       expect(el.value).to.equal(-10);
+    });
+    it('snaps negative values to the grid of a negative min', async () => {
+      el.min = -8;
+      await elementUpdated(el);
+      el.value = -6;
+      await elementUpdated(el);
+      expect(el.value).to.equal(-8);
+      expect(el.formattedValue).to.equal('-8');
+      el.value = -5;
+      await elementUpdated(el);
+      expect(el.value).to.equal(-3);
+      expect(el.formattedValue).to.equal('-3');
+      el.value = 1;
+      await elementUpdated(el);
+      expect(el.value).to.equal(2);
+      expect(el.formattedValue).to.equal('2');
+      el.value = -20;
+      await elementUpdated(el);
+      expect(el.value).to.equal(-8);
+      expect(el.formattedValue).to.equal('-8');
+    });
+    it('snaps negative values symmetrically around 0 without min', async () => {
+      el.value = -7;
+      expect(el.value).to.equal(-5);
+      el.value = -8;
+      expect(el.value).to.equal(-10);
+      el.value = -12.5;
+      expect(el.value).to.equal(-15);
+      el.value = 7;
+      expect(el.value).to.equal(5);
+      el.value = 8;
+      expect(el.value).to.equal(10);
+    });
+    it('keeps negative values at or below a negative max without min', async () => {
+      el.max = -6;
+      await elementUpdated(el);
+      el.value = -2;
+      await elementUpdated(el);
+      expect(el.value).to.equal(-10);
+      expect(el.formattedValue).to.equal('-10');
+      el.value = -14;
+      await elementUpdated(el);
+      expect(el.value).to.equal(-15);
+      expect(el.formattedValue).to.equal('-15');
+    });
+    it('keeps negative values between a negative min and max', async () => {
+      el.min = -8;
+      el.max = -4;
+      await elementUpdated(el);
+      el.value = -4;
+      await elementUpdated(el);
+      expect(el.value).to.equal(-8);
+      el.value = 0;
+      await elementUpdated(el);
+      expect(el.value).to.equal(-8);
+      el.value = -12;
+      await elementUpdated(el);
+      expect(el.value).to.equal(-8);
+    });
+    it('keeps the precision of a fractional min', async () => {
+      el.min = -8.5;
+      el.value = -8.5;
+      expect(el.value).to.equal(-8.5);
+      await elementUpdated(el);
+      expect(el.value).to.equal(-8.5);
+      expect(el.formattedValue).to.equal('-8.5');
+      el.value = -7;
+      await elementUpdated(el);
+      expect(el.value).to.equal(-8.5);
+      el.value = -6;
+      await elementUpdated(el);
+      expect(el.value).to.equal(-3.5);
+      expect(el.formattedValue).to.equal('-3.5');
+    });
+    it('keeps values at or below a fractional max', async () => {
+      el.step = 1;
+      el.max = 2.5;
+      await elementUpdated(el);
+      el.value = 3;
+      await elementUpdated(el);
+      expect(el.value).to.equal(2);
+      expect(el.formattedValue).to.equal('2');
+    });
+    it('keeps a negative min with more decimals than step', async () => {
+      el.step = 0.1;
+      el.min = -0.35;
+      el.max = 0;
+      await elementUpdated(el);
+      el.value = -0.35;
+      await elementUpdated(el);
+      expect(el.value).to.equal(-0.35);
+      expect(el.formattedValue).to.equal('-0.35');
+      el.value = -0.2;
+      await elementUpdated(el);
+      expect(el.value).to.equal(-0.15);
+      el.value = 0;
+      await elementUpdated(el);
+      expect(el.value).to.equal(-0.05);
+    });
+    it('steps across 0 from a negative min', async () => {
+      el.min = -8;
+      await elementUpdated(el);
+      el.focus();
+      await elementUpdated(el);
+      await sendKeys({ press: 'ArrowUp' });
+      await elementUpdated(el);
+      expect(el.formattedValue).to.equal('-8');
+      expect(el.value).to.equal(-8);
+      await sendKeys({ press: 'ArrowUp' });
+      await elementUpdated(el);
+      expect(el.formattedValue).to.equal('-3');
+      expect(el.value).to.equal(-3);
+      await sendKeys({ press: 'ArrowUp' });
+      await elementUpdated(el);
+      expect(el.formattedValue).to.equal('2');
+      expect(el.value).to.equal(2);
+      await sendKeys({ press: 'ArrowDown' });
+      await elementUpdated(el);
+      expect(el.formattedValue).to.equal('-3');
+      expect(el.value).to.equal(-3);
     });
   });
   describe('indeterminate', () => {
