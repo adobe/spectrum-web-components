@@ -36,11 +36,11 @@ AGENT / CONTRIBUTOR QUICK START:
 - [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites)
 - [Changes overview](#changes-overview)
   - [Must ship — breaking or a11y-required](#must-ship--breaking-or-a11y-required)
-  - [Additive — ships when ready, zero breakage for consumers already on 2nd-gen](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)
-- [2nd-gen API decisions](#2nd-gen-api-decisions)
+  - [Additive — ships when ready, zero breakage for consumers already on gen2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-gen2)
+- [gen2 API decisions](#gen2-api-decisions)
   - [Public API](#public-api)
   - [Behavioral semantics](#behavioral-semantics)
-  - [Accessibility semantics notes (2nd-gen)](#accessibility-semantics-notes-2nd-gen)
+  - [Accessibility semantics notes (gen2)](#accessibility-semantics-notes-gen2)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
 - [Migration checklist](#migration-checklist)
   - [Preparation (this ticket)](#preparation-this-ticket)
@@ -119,7 +119,7 @@ AGENT / CONTRIBUTOR QUICK START:
 
 <!-- 1st-gen - very surface level overview of highlights from the associated rendering-and-styling-migration-analysis.md -->
 
-This full modifier surface will not be carried forward to 2nd-gen.
+This full modifier surface will not be carried forward to gen2.
 
 ### Shadow DOM output (rendered HTML)
 
@@ -149,7 +149,7 @@ This full modifier surface will not be carried forward to 2nd-gen.
 
 ## Migration sequencing and prerequisites
 
-<!-- Document whether this component should extend from another 2nd-gen component or shared base, whether another migration depends on it, and whether migration order should change as a result. Use the status table and related analyses as evidence. -->
+<!-- Document whether this component should extend from another gen2 component or shared base, whether another migration depends on it, and whether migration order should change as a result. Use the status table and related analyses as evidence. -->
 <!-- If this materially changes the plan, ask the user whether a decision already exists. If not, offer to recommend a migration order or shared-base strategy based on current evidence. -->
 
 ### Dependency-aware recommendation
@@ -190,20 +190,20 @@ Summarize must-ship aspects across the following categories.
 
 <!-- Prefer a short source note in the "What changes" or "Notes" text when a breaking change is recommended, especially for renames or deprecations. -->
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
-| --- | ------------ | ---------------- | ---------------- | ----------------------- |
+| #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
+| --- | ------------ | ---------------- | ------------- | ----------------------- |
 
 #### Styling and visuals
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
-| --- | ------------ | ---------------- | ---------------- | ----------------------- |
+| #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
+| --- | ------------ | ---------------- | ------------- | ----------------------- |
 
 #### Accessibility and behavior
 
-| #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
-| --- | ------------ | ---------------- | ---------------- | ----------------------- |
+| #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
+| --- | ------------ | ---------------- | ------------- | ----------------------- |
 
-### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
+### Additive — ships when ready, zero breakage for consumers already on gen2
 
 <!--
 Summarize additive aspects across the following categories.
@@ -217,7 +217,7 @@ Summarize additive aspects across the following categories.
 
 ---
 
-## 2nd-gen API decisions
+## gen2 API decisions
 
 These are derived from the 1st-gen implementation, current deprecations, the Figma `S2 / Web` [component] spec, the React S2 implementation, and the rendering roadmap. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
 
@@ -229,12 +229,12 @@ Use lightweight confidence labels where helpful:
 
 ### Public API
 
-#### Properties / attributes (2nd-gen)
+#### Properties / attributes (gen2)
 
 | Property | Type | Default | Attribute | Notes |
 | -------- | ---- | ------- | --------- | ----- |
 
-#### Visual matrix (2nd-gen)
+#### Visual matrix (gen2)
 
 <!--
 Refer to the following example content for this section. If not applicable, mark as N/A with a brief reason rather than removing the section.
@@ -259,7 +259,7 @@ Additional Figma-confirmed presentation modes:
 - Disabled
 - Hover -->
 
-#### Slots (2nd-gen)
+#### Slots (gen2)
 
 <!--
 
@@ -272,7 +272,7 @@ Example content for this section
 
 -->
 
-#### CSS custom properties (2nd-gen)
+#### CSS custom properties (gen2)
 
 <!-- This statement should stay mostly consistent for all components, per the linked guidelines -->
 
@@ -286,22 +286,22 @@ Initial expectation for [Component] is a small reviewed set.
 
 <!-- Include as many sections as are necessary to address the component's unique aspects. Callout any non-obvious implementation details. -->
 
-### Accessibility semantics notes (2nd-gen)
+### Accessibility semantics notes (gen2)
 
 ---
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
+> The 1st-gen component is a **reference only** — gen2 is built independently. Neither generation imports from the other.
 
-Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
+Follow the [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
 
 <!-- Use the prescribed table format below; do not convert this section to bullets or another schema. -->
 
-| Layer    | Path                                            | Contains                                                                                                                                                                                                                                          |
-| -------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Core** | `2nd-gen/packages/core/components/[component]/` | `[Component].base.ts`, `[Component].types.ts`, validation, state, accessible-name logic, attribute forwarding, pending-label behavior, and other reusable semantic rules. No rendering. Add component-specific reusable behaviors here as needed. |
-| **SWC**  | `2nd-gen/packages/swc/components/[component]/`  | `[Component].ts`, `[component].css`, element registration, stories, tests, and the specific S2 rendering/styling for `sp-[component]`.                                                                                                            |
+| Layer    | Path                                         | Contains                                                                                                                                                                                                                                          |
+| -------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Core** | `gen2/packages/core/components/[component]/` | `[Component].base.ts`, `[Component].types.ts`, validation, state, accessible-name logic, attribute forwarding, pending-label behavior, and other reusable semantic rules. No rendering. Add component-specific reusable behaviors here as needed. |
+| **SWC**  | `gen2/packages/swc/components/[component]/`  | `[Component].ts`, `[component].css`, element registration, stories, tests, and the specific S2 rendering/styling for `sp-[component]`.                                                                                                            |
 
 <!-- Retain this section with any clarifying notes, using existing bullets as a starting point. -->
 
@@ -323,13 +323,13 @@ Planned rendering shape:
 - [ ] 1st-gen API surface documented
 - [ ] Dependencies identified
 - [ ] Breaking changes documented
-- [ ] 2nd-gen API decisions drafted
+- [ ] gen2 API decisions drafted
 - [ ] Plan reviewed by at least one other engineer
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/components/[component]/`
-- [ ] Create `2nd-gen/packages/swc/components/[component]/`
+- [ ] Create `gen2/packages/core/components/[component]/`
+- [ ] Create `gen2/packages/swc/components/[component]/`
 - [ ] Wire exports in both `package.json` files
 - [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
 
@@ -404,7 +404,7 @@ Retain this section for any components with visual rendering, modifying as neede
 
 <!-- These should be stable across components -->
 
-- [ ] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
+- [ ] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
 - [ ] Status table in workstream doc updated
 - [ ] PR created with description referencing Epic SWC-####
 - [ ] Peer engineer sign-off
@@ -475,8 +475,8 @@ Rules:
 <!-- IMPORTANT: Use as references for compiling data and details and informing decisions for all other sections of this plan. -->
 <!-- Do not leave this section sparse. Include the analysis docs, 1st-gen implementation references, relevant design references, and any bug tickets that informed decisions. -->
 
-- [Washing machine workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
-- [2nd-gen migration status table](../../02_workstreams/02_2nd-gen-component-migration/01_status.md)
+- [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
+- [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
 - [Accessibility migration analysis](./accessibility-migration-analysis.md) - include only if available, otherwise mark as TODO and leave as plain text
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
@@ -487,7 +487,7 @@ Rules:
 - [1st-gen README](../../../../1st-gen/packages/[component]/README.md) — include only if a README exists
 - [React Spectrum S2 [Component]](https://react-spectrum.adobe.com/[Component]) — confirm the URL slug matches the actual React Spectrum docs page
 - [Spectrum CSS — `spectrum-two` branch](https://github.com/adobe/spectrum-css/tree/spectrum-two) — S2 styling source of truth for the component. Replace this generic repo link with the explicit component source you reviewed when possible, typically `spectrum-css/components/[component]/index.css` from a sibling checkout on **`spectrum-two`** (not `/dist`). See the [Setup](#setup) checklist.
-- [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
+- [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - Epic: SWC-#### - [Component] epic
 
 <!-- Include in the list bug tickets with summary if applicable, ex. "SWC-459: pending state a11y criteria" -->

@@ -38,7 +38,7 @@
 
 ## Overview
 
-This doc tells you how **`swc-option`** should work for **accessibility**. It matches the goal of **WCAG 2.2 Level AA**. `swc-option` is a new 2nd-gen component — it has no 1st-gen `sp-option` predecessor. It is the selectable row inside a `listbox`: a single value the user can choose. Its first consumer is [`swc-combobox`](../combobox/accessibility-migration-analysis.md), which replaces 1st-gen's practice of borrowing `sp-menu-item` for combobox options.
+This doc tells you how **`swc-option`** should work for **accessibility**. It matches the goal of **WCAG 2.2 Level AA**. `swc-option` is a new gen2 component — it has no 1st-gen `sp-option` predecessor. It is the selectable row inside a `listbox`: a single value the user can choose. Its first consumer is [`swc-combobox`](../combobox/accessibility-migration-analysis.md), which replaces 1st-gen's practice of borrowing `sp-menu-item` for combobox options.
 
 The reason `swc-option` exists is **role ownership**. 1st-gen `sp-combobox` builds its popup from `sp-menu` / `sp-menu-item`, which carry `menu`/`menuitem` semantics, and then works around that mismatch by re-rendering shadow-DOM copies of the options so it can attach the `listbox`/`option` roles it actually needs. A dedicated `swc-option` that **owns `role="option"` on its own host** lets the combobox point `aria-activedescendant` straight at the author's real element, across shadow roots, with the correct role already in place — no menu-to-listbox impedance mismatch and no duplicate rendering. See [`swc-combobox`'s Shadow DOM section](../combobox/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues) for the parent side of this relationship.
 
@@ -46,7 +46,7 @@ The reason `swc-option` exists is **role ownership**. 1st-gen `sp-combobox` buil
 
 - [Combobox accessibility migration analysis](../combobox/accessibility-migration-analysis.md) — the first consumer; explains the cross-root `aria-activedescendant` / `aria-controls` wiring that references `swc-option` elements.
 - [Menu item accessibility migration analysis](../menu-item/accessibility-migration-analysis.md) — the `menuitem` sibling `swc-option` is deliberately **not** a variant of (different role, different pattern).
-- [Forms strategy: 2nd-gen proposal](../../05_strategies/forms-strategy-rfc.md) — role-placement and cross-root ARIA direction.
+- [Forms strategy: gen2 proposal](../../05_strategies/forms-strategy-rfc.md) — role-placement and cross-root ARIA direction.
 
 ### What it is
 
@@ -73,7 +73,7 @@ The reason `swc-option` exists is **role ownership**. 1st-gen `sp-combobox` buil
 - [`swc-combobox`](../combobox/accessibility-migration-analysis.md) — the parent that references `swc-option` elements as active descendants.
 - [`swc-option-group`](../option-group/accessibility-migration-analysis.md) — a labeled `role="group"` container that groups a set of `swc-option`s inside the parent's listbox.
 - [`swc-menu-item`](../menu-item/accessibility-migration-analysis.md) — the `menuitem` counterpart; same visual family, different role and pattern.
-- The [`LiveSelectionController`](../../../../2nd-gen/packages/core/controllers/live-selection-controller/live-selection-controller.mdx) — driven by the *parent* (combobox or picker) over a set of `swc-option` children, not by the option itself. A **focus-managing** parent such as a picker (roving `tabindex`) may additionally use the [`FocusgroupNavigationController`](../../../../2nd-gen/packages/core/controllers/focusgroup-navigation-controller/focusgroup-navigation-controller.mdx), but the active-descendant combobox does **not** — it manages the active option without moving DOM focus.
+- The [`LiveSelectionController`](../../../../gen2/packages/core/controllers/live-selection-controller/live-selection-controller.mdx) — driven by the *parent* (combobox or picker) over a set of `swc-option` children, not by the option itself. A **focus-managing** parent such as a picker (roving `tabindex`) may additionally use the [`FocusgroupNavigationController`](../../../../gen2/packages/core/controllers/focusgroup-navigation-controller/focusgroup-navigation-controller.mdx), but the active-descendant combobox does **not** — it manages the active option without moving DOM focus.
 
 ---
 
@@ -111,7 +111,7 @@ The reason `swc-option` exists is **role ownership**. 1st-gen `sp-combobox` buil
 
 ## Recommendations: `<swc-option>`
 
-Component tag may change until API freeze. `swc-option` is new in 2nd-gen; there is no 1st-gen `sp-option` to preserve compatibility with. Where behavior is inherited from a parent, this doc points at [`swc-combobox`](../combobox/accessibility-migration-analysis.md) rather than restating it.
+Component tag may change until API freeze. `swc-option` is new in gen2; there is no 1st-gen `sp-option` to preserve compatibility with. Where behavior is inherited from a parent, this doc points at [`swc-combobox`](../combobox/accessibility-migration-analysis.md) rather than restating it.
 
 ### ARIA roles, states, and properties
 
@@ -166,7 +166,7 @@ This is not the divider-style "permanently non-focusable decoration" case: the o
 
 ### Manual screen reader testing
 
-Test `swc-option` through its **composed** parent (`swc-combobox`), not in isolation, using [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) in NVDA, JAWS, and VoiceOver. Confirm that: arrowing through the open listbox announces each option's name once (including a localized option in its own language), the selected option is announced as selected, disabled options are announced as dimmed/unavailable and are skipped by arrow keys, and the active option announced by the combobox matches the visible active indicator. Verify cross-root exposure in **Firefox**, where element-reference ARIA is least consistent.
+Test `swc-option` through its **composed** parent (`swc-combobox`), not in isolation, using [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) in NVDA, JAWS, and VoiceOver. Confirm that: arrowing through the open listbox announces each option's name once (including a localized option in its own language), the selected option is announced as selected, disabled options are announced as dimmed/unavailable and are skipped by arrow keys, and the active option announced by the combobox matches the visible active indicator. Verify cross-root exposure in **Firefox**, where element-reference ARIA is least consistent.
 
 ---
 
@@ -191,9 +191,9 @@ Test `swc-option` through its **composed** parent (`swc-combobox`), not in isola
 - [Combobox accessibility migration analysis (this repo)](../combobox/accessibility-migration-analysis.md) — the first consumer and the cross-root reference model.
 - [Option group accessibility migration analysis (this repo)](../option-group/accessibility-migration-analysis.md) — the `role="group"` container for a set of options.
 - [Menu item accessibility migration analysis (this repo)](../menu-item/accessibility-migration-analysis.md) — the `menuitem` sibling `swc-option` is deliberately not.
-- [Forms strategy: 2nd-gen proposal (this repo)](../../05_strategies/forms-strategy-rfc.md) — role placement and cross-root ARIA policy.
+- [Forms strategy: gen2 proposal (this repo)](../../05_strategies/forms-strategy-rfc.md) — role placement and cross-root ARIA policy.
 - [WAI-ARIA](https://www.w3.org/TR/wai-aria-1.2/), [WCAG 2.2](https://www.w3.org/TR/WCAG22/), [APG: read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [APG: listbox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/) and [combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/)
-- [`LiveSelectionController` (this repo)](../../../../2nd-gen/packages/core/controllers/live-selection-controller/live-selection-controller.mdx) and [`FocusgroupNavigationController` (this repo)](../../../../2nd-gen/packages/core/controllers/focusgroup-navigation-controller/focusgroup-navigation-controller.mdx)
+- [`LiveSelectionController` (this repo)](../../../../gen2/packages/core/controllers/live-selection-controller/live-selection-controller.mdx) and [`FocusgroupNavigationController` (this repo)](../../../../gen2/packages/core/controllers/focusgroup-navigation-controller/focusgroup-navigation-controller.mdx)
 - [React Spectrum: ComboBox](https://react-spectrum.adobe.com/ComboBox) — `ComboBoxItem` slots (`label`, `description`, icon, avatar) and `textValue`.
-- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- [gen2 Storybook: Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)

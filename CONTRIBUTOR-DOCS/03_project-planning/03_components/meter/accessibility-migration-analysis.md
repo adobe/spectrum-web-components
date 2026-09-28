@@ -43,7 +43,7 @@
 
 ## Overview
 
-This doc explains how **`swc-meter`** should work for **accessibility**. It supports **WCAG 2.2 Level AA**. Until **`swc-meter`** exists under `2nd-gen/`, use **`1st-gen/packages/meter/src/Meter.ts`** (`<sp-meter>`) to validate behavior, and update this spec against the real 2nd-gen source when it ships.
+This doc explains how **`swc-meter`** should work for **accessibility**. It supports **WCAG 2.2 Level AA**. Until **`swc-meter`** exists under `gen2/`, use **`1st-gen/packages/meter/src/Meter.ts`** (`<sp-meter>`) to validate behavior, and update this spec against the real gen2 source when it ships.
 
 ### Also read
 
@@ -110,7 +110,7 @@ This doc explains how **`swc-meter`** should work for **accessibility**. It supp
 | **Label slot (visible label)** | A **`label` slot** provides the **visible** **label** text. The slot content is wrapped in a shadow DOM container that has a **stable ID** (for example `label`). The inner element with `role=”meter”` references that ID via **`aria-labelledby`**. This keeps the ID reference entirely within the shadow tree and avoids cross-root ARIA. |
 | **`accessibleLabel` property (screen reader-only label)** | For **rare** contexts where no visible label is appropriate (for example a data grid column where the column header already labels the meter), authors set **`accessibleLabel`** on the component. When this property is non-empty, the inner element with `role=”meter”` sets **`aria-label`** to its value instead of using **`aria-labelledby`**. Do **not** use both simultaneously. A **dev warning** in debug builds is appropriate when neither a label slot value nor `accessibleLabel` is provable. |
 | **Description slot** | A **`description` slot** renders **additional text below the meter** (for example “2 GB of 10 GB used”). The slot content is wrapped in a shadow DOM container that has a **stable ID** (for example `description`). The inner element with `role=”meter”` references that ID via **`aria-describedby`**. Do **not** call this slot “help text”: that term implies the meter is a form field, which it is not. |
-| **`aria-valuemin` / `aria-valuemax`** | Set to **`”0”`** and **`”100”`** to match the **current** public **`progress` API** (0–100). 1st-gen does **not** set these; **2nd-gen** should. If the product later allows **arbitrary** ranges, recompute all three of **min**, **max**, and **now** from the same **source of truth** as the visible value. |
+| **`aria-valuemin` / `aria-valuemax`** | Set to **`”0”`** and **`”100”`** to match the **current** public **`progress` API** (0–100). 1st-gen does **not** set these; **gen2** should. If the product later allows **arbitrary** ranges, recompute all three of **min**, **max**, and **now** from the same **source of truth** as the visible value. |
 | **`aria-valuenow`** | Mirror **`progress`**, updated on change (1st-gen does this). |
 | **`aria-valuetext`** | Expose a **string** that matches the **displayed** **percentage** (for example the same **localized** value as the **`sp-field-label`** in the **percentage** area). This keeps **AT** in sync with sighted users, and satisfies the APG when a **percent** is a **sensible** “human” value. If the value should **not** be spoken as a **percent** only, set **`aria-valuetext`** to the **user-friendly** string. |
 | **0% appearance ([WCAG 1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast))** | When **`progress` = 0**, the **fill** is effectively **invisible**—at-risk **non-text** **contrast** on the **track** only. **Mitigate** using the **bar** / **track** / **fill** **rules** in the [**Loading animation discovery** Figma](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery) (and align with the [Progress bar 0% guidance](../progress-bar/accessibility-migration-analysis.md#non-text-contrast-at-0-wcag-1411) where the **bar** is shared), so **graphical** parts **meet** **3:1**; **`aria-valuenow`**, **`aria-valuetext`**, and any **visible** **percent** must still read as **0%**—treatment is for **perception** only. |
@@ -173,16 +173,16 @@ Placing the role on a shadow DOM node is a deliberate departure from the 1st-gen
 
 ## Known 1st-gen issues
 
-Gaps in **1st-gen** **`<sp-meter>`** that **2nd-gen** **`swc-meter`** should fix and cover with tests.
+Gaps in **1st-gen** **`<sp-meter>`** that **gen2** **`swc-meter`** should fix and cover with tests.
 
 ### Role and value attributes
 
-- The host uses **`setAttribute('role', 'meter progressbar')`**. ARIA **`role`** must be a **single** [token](https://www.w3.org/TR/wai-aria-1.2/) from the spec; the **correct** **fixed** **role** for this widget is **`meter`**, not **`progressbar`**, per the [APG meter pattern](https://www.w3.org/WAI/ARIA/apg/patterns/meter/). In **2nd-gen**, the role moves off the host entirely and onto an inner shadow DOM element.
-- **`aria-valuemin`**, **`aria-valuemax`**, and **`aria-valuetext`** are **not** set in `Meter.ts` (only **`aria-valuenow`**, **`aria-label`**, and the **`role`** string are set in code paths reviewed here). They should be added in **2nd-gen** to match the pattern.
+- The host uses **`setAttribute('role', 'meter progressbar')`**. ARIA **`role`** must be a **single** [token](https://www.w3.org/TR/wai-aria-1.2/) from the spec; the **correct** **fixed** **role** for this widget is **`meter`**, not **`progressbar`**, per the [APG meter pattern](https://www.w3.org/WAI/ARIA/apg/patterns/meter/). In **gen2**, the role moves off the host entirely and onto an inner shadow DOM element.
+- **`aria-valuemin`**, **`aria-valuemax`**, and **`aria-valuetext`** are **not** set in `Meter.ts` (only **`aria-valuenow`**, **`aria-label`**, and the **`role`** string are set in code paths reviewed here). They should be added in **gen2** to match the pattern.
 
 ### Labeling and description
 
-- 1st-gen exposes a **`label` property** and a **default slot** that feed the visible label, but there is no explicit **description** slot. In **2nd-gen**, the **label slot** replaces the `label` attribute as the primary visible-label surface, and a **description slot** replaces the "help text" pattern (which incorrectly frames the meter as a form field). Consumers who need a screen reader-only label in labelless contexts use the **`accessibleLabel`** property.
+- 1st-gen exposes a **`label` property** and a **default slot** that feed the visible label, but there is no explicit **description** slot. In **gen2**, the **label slot** replaces the `label` attribute as the primary visible-label surface, and a **description slot** replaces the "help text" pattern (which incorrectly frames the meter as a form field). Consumers who need a screen reader-only label in labelless contexts use the **`accessibleLabel`** property.
 
 ### Non-text contrast at 0% (WCAG 1.4.11)
 
@@ -201,13 +201,13 @@ Gaps in **1st-gen** **`<sp-meter>`** that **2nd-gen** **`swc-meter`** should fix
 | Kind of test | What to check |
 |--------------|----------------|
 | **Unit** | Inner shadow DOM element carries **single** **`role="meter"`**; host has **no** ARIA role. **Min**/**max**/**now**/**valuetext** correct. Name resolves via **`aria-labelledby`** to label slot container ID, or via **`aria-label`** when `accessibleLabel` is set. Description resolves via **`aria-describedby`** to description slot container ID when content is present. Host **not** **focusable** by default. |
-| **aXe + Storybook** | **WCAG 2.x** on **meter** stories (1st-gen now; 2nd-gen when added). |
-| **Playwright ARIA snapshots** | Add **`meter.a11y.spec.ts`** for 2nd-gen, covering **side-label**, **sizes**, **variants**, and **key** `progress` values, mirroring the **progress-bar** / **progress-circle** snapshot approach. |
+| **aXe + Storybook** | **WCAG 2.x** on **meter** stories (1st-gen now; gen2 when added). |
+| **Playwright ARIA snapshots** | Add **`meter.a11y.spec.ts`** for gen2, covering **side-label**, **sizes**, **variants**, and **key** `progress` values, mirroring the **progress-bar** / **progress-circle** snapshot approach. |
 | **Contrast** | **0%**, **variants**, **`staticColor`**, and any **over-photo** or **on-image** use cases. |
 
 ### Manual screen reader testing
 
-The **meter** is not in the **Tab** order, so you will not reach it the same way as **focusable** **controls** when a **screen** **reader** is in **forms** or **application**-style **focus** **navigation**. Use **browse** **mode** (document or scan mode) to read the page in **content** **order** and **encounter** the **meter** so you can verify its **name** and **value** are announced. See the 2nd-gen Storybook [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide, including **Browse mode (document/scan mode)**.
+The **meter** is not in the **Tab** order, so you will not reach it the same way as **focusable** **controls** when a **screen** **reader** is in **forms** or **application**-style **focus** **navigation**. Use **browse** **mode** (document or scan mode) to read the page in **content** **order** and **encounter** the **meter** so you can verify its **name** and **value** are announced. See the gen2 Storybook [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide, including **Browse mode (document/scan mode)**.
 
 ---
 
@@ -222,9 +222,9 @@ The **meter** is not in the **Tab** order, so you will not reach it the same way
 - [ ] **No** **`aria-live="assertive"`**; **`polite`** **live** regions are **rare** and only when a single **primary** announcement strategy exists.
 - [ ] **0%** and **variant** stories meet **non-text contrast** expectations, including **0%** **mitigations** aligned with the **Figma** *Loading* file where the **bar** spec applies.
 - [ ] **Dev warning** (if any) fires when neither a label slot value nor `accessibleLabel` is provable at runtime.
-- [ ] **1st-gen** issues (combined **role** on host, missing min/max/valuetext, no description slot) are **regression-tested** in 2nd-gen.
+- [ ] **1st-gen** issues (combined **role** on host, missing min/max/valuetext, no description slot) are **regression-tested** in gen2.
 - [ ] **aXe** (WCAG 2.x) runs on **meter** stories.
-- [ ] **Manual** **screen** **reader** **testing** uses **browse** **mode** per the Storybook [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide, because the **meter** is **not** **keyboard** **focusable**.
+- [ ] **Manual** **screen** **reader** **testing** uses **browse** **mode** per the Storybook [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide, because the **meter** is **not** **keyboard** **focusable**.
 
 ---
 
@@ -241,4 +241,4 @@ The **meter** is not in the **Tab** order, so you will not reach it the same way
 - [Progress bar accessibility migration analysis](../progress-bar/accessibility-migration-analysis.md)
 - [Progress circle accessibility migration analysis](../progress-circle/accessibility-migration-analysis.md)
 - [Meter migration roadmap](./rendering-and-styling-migration-analysis.md)
-- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- [gen2 Storybook: Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)

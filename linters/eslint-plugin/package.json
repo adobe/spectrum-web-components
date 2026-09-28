@@ -5,7 +5,7 @@
   "description": "ESLint plugin for Spectrum Web Components (prevent-argument-names, document-active-element)",
   "license": "Apache-2.0",
   "author": "Adobe",
-  "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+  "homepage": "https://spectrum-web-components.adobe.com/",
   "repository": {
     "directory": "linters/eslint-plugin",
     "type": "git",

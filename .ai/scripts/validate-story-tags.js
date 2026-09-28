@@ -13,7 +13,7 @@
  */
 
 /**
- * Validate Storybook story tags in 2nd-gen component stories files.
+ * Validate Storybook story tags in gen2 component stories files.
  *
  * Checks:
  * - Every tag value is in the known allowed set
@@ -139,7 +139,7 @@ function validateFile(filePath) {
  * Run validation across all stories files. Returns { errors, fileCount }.
  */
 export function validateStoryTags() {
-  const storiesRoot = path.join(repoRoot, '2nd-gen/packages/swc/components');
+  const storiesRoot = path.join(repoRoot, 'gen2/packages/swc/components');
 
   if (!fs.existsSync(storiesRoot)) {
     return { errors: [], fileCount: 0 };

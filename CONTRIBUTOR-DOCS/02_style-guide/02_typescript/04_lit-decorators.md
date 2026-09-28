@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-gen TypeScript](README.md) / Lit decorators and modifiers
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 TypeScript](README.md) / Lit decorators and modifiers
 
 <!-- Document title (editable) -->
 
@@ -15,7 +15,7 @@
 - [@property()](#property)
 - [@query()](#query)
 - [@queryAssignedNodes()](#queryassignednodes)
-- [Decorators not yet used in 2nd-gen](#decorators-not-yet-used-in-2nd-gen)
+- [Decorators not yet used in gen2](#decorators-not-yet-used-in-gen2)
     - [@state()](#state)
     - [@queryAll()](#queryall)
     - [@queryAsync()](#queryasync)
@@ -27,13 +27,13 @@
 
 <!-- Document content (editable) -->
 
-This guide covers the Lit decorators used in 2nd-gen components. Decorators are special annotations that add behavior to class members. They come from the `lit/decorators.js` module.
+This guide covers the Lit decorators used in gen2 components. Decorators are special annotations that add behavior to class members. They come from the `lit/decorators.js` module.
 
 For more on Lit decorators, see the [Lit decorators documentation](https://lit.dev/docs/components/decorators/).
 
 ## Usage summary
 
-| Decorator | Used in 2nd-gen | Files | Purpose |
+| Decorator | Used in gen2 | Files | Purpose |
 |-----------|-----------------|-------|---------|
 | `@property()` | Yes | 11 | Reactive properties that trigger re-renders |
 | `@query()` | Yes | 1 | Query a shadow root element |
@@ -187,9 +187,9 @@ private [assignedNodesList]!: NodeListOf<HTMLElement>;
 
 This queries the nodes assigned to the specified slot and flattens nested slots. Use this when you need to observe or react to slotted content.
 
-## Decorators not yet used in 2nd-gen
+## Decorators not yet used in gen2
 
-The following Lit decorators are available but not currently used in 2nd-gen components. They are documented here so contributors know they exist.
+The following Lit decorators are available but not currently used in gen2 components. They are documented here so contributors know they exist.
 
 ### @state()
 

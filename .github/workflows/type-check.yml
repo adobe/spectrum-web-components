@@ -6,7 +6,7 @@ name: Type Check
 #
 # Diagnostics are annotated inline via a GitHub problem matcher (no
 # third-party actions). The check fails on any type error anywhere in
-# 2nd-gen/packages/** (whole-repo gate), so the backlog must be green on main.
+# gen2/packages/** (whole-repo gate), so the backlog must be green on main.
 # Triage locally with the same `yarn type-check`.
 #
 # Lit-template semantics (unknown tag/attribute, binding types) are a dev-time
@@ -38,7 +38,7 @@ defaults:
 
 jobs:
   type-check:
-    name: Type Check (2nd-gen)
+    name: Type Check (gen2)
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -73,7 +73,7 @@ jobs:
 
       # Run the compiler and annotate diagnostics inline via a GitHub problem
       # matcher (no third-party actions). The step fails on any type error
-      # anywhere in 2nd-gen (whole-repo gate).
+      # anywhere in gen2 (whole-repo gate).
       - name: Type check
         run: |
           echo "::add-matcher::.github/tsc-problem-matcher.json"

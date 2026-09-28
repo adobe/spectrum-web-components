@@ -14,12 +14,12 @@
 - [TL;DR](#tldr)
 - [Current API surface](#current-api-surface)
     - [1st-gen (`sp-asset`, published — out of scope)](#1st-gen-sp-asset-published--out-of-scope)
-    - [2nd-gen (`swc-asset`, internal genre — the starting point for this plan)](#2nd-gen-swc-asset-internal-genre--the-starting-point-for-this-plan)
+    - [gen2 (`swc-asset`, internal genre — the starting point for this plan)](#gen2-swc-asset-internal-genre--the-starting-point-for-this-plan)
 - [Dependencies](#dependencies)
 - [Changes overview](#changes-overview)
     - [Must ship — v1 core](#must-ship--v1-core)
     - [Additive — deferred, not required for v1](#additive--deferred-not-required-for-v1)
-- [2nd-gen API decisions](#2nd-gen-api-decisions)
+- [gen2 API decisions](#gen2-api-decisions)
     - [Public API](#public-api)
     - [CSS custom properties](#css-custom-properties)
     - [Behavioral semantics](#behavioral-semantics)
@@ -46,7 +46,7 @@
 
 > **Epic SWC-2317** — [Asset] Expanded feature set.
 >
-> This is not a 1st-gen → 2nd-gen migration. `swc-asset` already exists (internal genre); this
+> This is not a 1st-gen → gen2 migration. `swc-asset` already exists (internal genre); this
 > plan covers **expanding it in place** into a general image/media primitive, then promoting it
 > to a public component.
 
@@ -64,11 +64,11 @@ Genre promotion (internal → public) ships as part of this work, since the expl
 consumers to slot Asset directly once it lands. Responsive/adaptive image support (including
 `<picture>`) and video are deferred past v1.
 
-Card's own in-progress work (`seckles/swc-card` branch, not yet merged) is a **consumer**, not a
-dependency that blocks this plan: Card's v1 ships with plain `<img>` support and one
+Card's own work (merged as SWC-2566) is a **consumer**, not a
+dependency that blocked this plan: Card's v1 ships with plain `<img>` support and one
 aspect-ratio custom property, independent of Asset's timeline. The only coordination point is a
 weak-sync mechanism for `aspect-ratio` (see [Behavioral semantics](#behavioral-semantics)),
-which has already been tested and requires no changes to Card's existing CSS.
+which has been tested and required no changes to Card's `<img>` CSS.
 
 No open blockers remain; Q1–Q4 are resolved and documented in the [Decision log](#decision-log).
 
@@ -92,9 +92,9 @@ No open blockers remain; Q1–Q4 are resolved and documented in the [Decision lo
 **No sizing, fit, loading-state, or background-treatment API exists.** This package is real and
 externally published; nothing here changes as part of this plan — out of scope.
 
-### 2nd-gen (`swc-asset`, internal genre — the starting point for this plan)
+### gen2 (`swc-asset`, internal genre — the starting point for this plan)
 
-**Source:** [`2nd-gen/packages/core/components/asset/Asset.base.ts`](../../../../2nd-gen/packages/core/components/asset/Asset.base.ts), [`2nd-gen/packages/swc/components/asset/Asset.ts`](../../../../2nd-gen/packages/swc/components/asset/Asset.ts)
+**Source:** [`gen2/packages/core/components/asset/Asset.base.ts`](../../../../gen2/packages/core/components/asset/Asset.base.ts), [`gen2/packages/swc/components/asset/Asset.ts`](../../../../gen2/packages/swc/components/asset/Asset.ts)
 **Custom element tag:** `swc-asset` — currently `@status internal`, docs/stories named
 `asset.internal.mdx` / `asset.internal.stories.ts` (excluded from production builds today)
 
@@ -130,10 +130,10 @@ Out of scope for v1: responsive/adaptive sizing (`srcset`/`sizes`-equivalent, in
 
 | Package/component                        | Role                                                                                       | Blocking? |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------- | --------- |
-| `2nd-gen/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css` | Shared `.swc-OpacityCheckerboard` fragment; import directly for the checkerboard background option | No — already exists |
-| `swc-card` (`seckles/swc-card` branch, unmerged) | Primary intended **consumer** once Asset ships; not a build dependency of Asset itself | No — independent timelines, only the aspect-ratio weak-sync contract needs to line up |
+| `gen2/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css` | Shared `.swc-OpacityCheckerboard` fragment; import directly for the checkerboard background option | No — already exists |
+| `swc-card` (SWC-2566, merged) | Primary intended **consumer** once Asset ships; not a build dependency of Asset itself | No — independent timelines, only the aspect-ratio weak-sync contract needed to line up |
 | `swc-thumbnail` (migration not started)   | Sibling visual primitive; a11y model reference only (see [accessibility-migration-analysis.md](../thumbnail/accessibility-migration-analysis.md)) | No |
-| `2nd-gen/packages/core/controllers/pending-controller` | Considered and **not** reused as-is for the loading state (see [Decision log](#decision-log)) — scope mismatch between a whole-control busy state and a per-image loading state. Its readable-property-plus-transition pattern (`pendingActive`) informed the `loadState` design, though. | No |
+| `gen2/packages/core/controllers/pending-controller` | Considered and **not** reused as-is for the loading state (see [Decision log](#decision-log)) — scope mismatch between a whole-control busy state and a per-image loading state. Its readable-property-plus-transition pattern (`pendingActive`) informed the `loadState` design, though. | No |
 
 No prerequisite migration or shared-base relationship blocks this work. Asset does not need to
 wait on Card, Thumbnail, or any other component's migration.
@@ -195,7 +195,7 @@ docs (SWC-2321) should also reference Asset directly as an example consumer.
 
 ---
 
-## 2nd-gen API decisions
+## gen2 API decisions
 
 ### Public API
 
@@ -211,13 +211,13 @@ docs (SWC-2321) should also reference Asset directly as an example consumer.
 | `loadState`       | `'loading' \| 'loaded' \| 'error'` (readonly)                | `'loading'` (`'loaded'` immediately for a slotted `<svg>` or no child) | `load-state` (reflected) | Set internally by Asset from the slotted `<img>`'s `load`/`error` events; a consumer sets this only by changing what's slotted, not directly. See [Behavioral semantics](#behavioral-semantics) |
 | `variant`         | _(removed)_                                                  | —           | —                   | See B1 |
 
-**Slots (2nd-gen):**
+**Slots (gen2):**
 
 | Slot    | Content                          |
 | ------- | ---------------------------------- |
 | default | A single `<img>` or `<svg>` element. More than one child, or an unsupported child type, triggers a DEBUG warning |
 
-**Events (2nd-gen):**
+**Events (gen2):**
 
 | Event | `detail` | Fired when |
 | ----- | -------- | ---------- |
@@ -227,7 +227,7 @@ docs (SWC-2321) should also reference Asset directly as an example consumer.
 ### CSS custom properties
 
 No `--mod-*` properties are exposed, per [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
-and the retirement of that pattern for 2nd-gen (`05_anti-patterns.md` #2).
+and the retirement of that pattern for gen2 (`05_anti-patterns.md` #2).
 
 | Custom property                | Type            | Exposed? | Purpose |
 | --------------------------------- | ----------------- | -------- | ------- |
@@ -467,8 +467,8 @@ The existing split is retained and extended, not restructured:
 
 | Layer    | Path                                             | Contains                                                                                                    |
 | -------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| **Core** | `2nd-gen/packages/core/components/asset/`         | `Asset.base.ts` (shared properties: `aspectRatio`, `width`, `height`, `fit`, `decorative`, `accessibleLabel`, `background`), `Asset.types.ts` (new `AssetFit`/`AssetBackground` types; `AssetVariant`/`ASSET_VARIANTS` removed), validation/DEBUG warnings, accessible-name resolution logic |
-| **SWC**  | `2nd-gen/packages/swc/components/asset/`          | `Asset.ts`, `asset.css` (aspect-ratio/sizing resolution, `fit` attribute selectors, checkerboard import), element registration, stories, tests |
+| **Core** | `gen2/packages/core/components/asset/`         | `Asset.base.ts` (shared properties: `aspectRatio`, `width`, `height`, `fit`, `decorative`, `accessibleLabel`, `background`), `Asset.types.ts` (new `AssetFit`/`AssetBackground` types; `AssetVariant`/`ASSET_VARIANTS` removed), validation/DEBUG warnings, accessible-name resolution logic |
+| **SWC**  | `gen2/packages/swc/components/asset/`          | `Asset.ts`, `asset.css` (aspect-ratio/sizing resolution, `fit` attribute selectors, checkerboard import), element registration, stories, tests |
 
 Planned rendering shape: Core owns API normalization, warnings, and the slotted-content
 inspection logic (accessible-name detection, decorative handling); SWC renders the `.swc-Asset`
@@ -485,7 +485,7 @@ This plan is the shared baseline for the following linked tickets:
 | Ticket       | Title                                                                 | Consumes from this plan                                                                                 |
 | ------------ | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | **SWC-2318** | Define v1 API and accessibility plan **(this document)**              | —                                                                                                        |
-| **SWC-2319** | Implement v1 API: file structure, TypeScript, accessibility, styling  | [2nd-gen API decisions](#2nd-gen-api-decisions), [Architecture](#architecture-core-vs-swc-split)        |
+| **SWC-2319** | Implement v1 API: file structure, TypeScript, accessibility, styling  | [gen2 API decisions](#gen2-api-decisions), [Architecture](#architecture-core-vs-swc-split)        |
 | **SWC-2320** | Code conformance and test coverage for v1 API                         | [Changes overview](#changes-overview), [Accessibility semantics notes](#accessibility-semantics-notes) |
 | **SWC-2321** | Storybook documentation and consumer migration guide for v1 API       | [Public API](#public-api), [Changes overview](#changes-overview)                                        |
 | **SWC-2322** | Review and finalize v1 release                                        | Whole plan, for the final consistency pass                                                              |
@@ -500,10 +500,10 @@ plan contract pattern this document follows).
 
 ### Preparation (SWC-2318, this document)
 
-- [x] Current API surface documented (1st-gen and 2nd-gen)
+- [x] Current API surface documented (1st-gen and gen2)
 - [x] Dependencies identified
 - [x] Changes overview documented (Must ship / Additive)
-- [x] 2nd-gen API decisions drafted
+- [x] gen2 API decisions drafted
 - [x] Plan reviewed by at least one other engineer
 - [x] Loading state design resolved (Q1–Q3) — see [Decision log](#decision-log)
 - [x] SVG accessible-name detection algorithm signed off by the team's a11y SME (Q4)
@@ -519,10 +519,9 @@ plan contract pattern this document follows).
       `role="img"` + `aria-label`/`aria-labelledby`/child `<title>`) and the DEBUG warning path
 - [x] Implement DEBUG warnings: invalid `fit`/`background` values; `aspectRatio` set together
       with both `width` and `height`; more than one slotted child or an unsupported child type
-- [ ] Update Card to slot `<swc-asset>` in its `preview` slot, as a live validation target for
-      this API while it's being built — spun out to SWC-2566, tracked separately from Asset's own
-      finalization
-- [ ] Split Card's `card-template.css` preview-slot rule and `card.css` collection-slot rule — see [Behavioral semantics](#behavioral-semantics); part of SWC-2566
+- [x] Update Card to slot `<swc-asset>` in its `preview` slot, as a live validation target for
+      this API while it's being built — SWC-2566
+- [x] Split Card's `card-template.css` preview-slot rule and `card.css` collection-slot rule — see [Behavioral semantics](#behavioral-semantics); SWC-2566
 - [x] `Asset.types.ts`: define `ASSET_LOAD_STATE_VALUES`/`AssetLoadState`
       (`'loading' | 'loaded' | 'error'`); `Asset.types.ts` or `Asset.base.ts`: define
       `SWC_ASSET_LOAD_EVENT`/`SWC_ASSET_ERROR_EVENT` constants
@@ -550,7 +549,7 @@ plan contract pattern this document follows).
       `checkerboard` via the shared fragment; `transparent` as the no-op default); added
       `reflect: true` to `background` for the same reason as `fit`
 - [x] Add `border-radius: inherit` and `overflow: hidden` to `.swc-Asset` (not `:host`)
-- [x] Import `2nd-gen/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css`
+- [x] Import `gen2/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css`
 - [x] Add `@cssprop` JSDoc tags for `--swc-asset-aspect-ratio` and `--swc-asset-background-color`
 - [x] Pass stylelint
 
@@ -575,8 +574,8 @@ plan contract pattern this document follows).
 - [x] Confirm an unconfigured `<swc-asset>` (no `aspectRatio`/`width`/`height`, no ancestor
       default) doesn't collapse to zero size, standalone and inside a sized flex container. Not
       literally tested inside Card's `preview` slot, since Card's own Asset integration
-      (`seckles/swc-card` branch) isn't merged into this repo yet; the sized-container case stands
-      in for that embedding context
+      (SWC-2566, merged) came after this test was originally written; the sized-container case
+      stands in for that embedding context
 - [x] Playwright `asset.a11y.spec.ts` with `toMatchAriaSnapshot`
 - [x] VRT coverage for `background` treatments (transparent/solid/checkerboard) and `fit`
       (cover/contain), including `fit="contain"` with a non-transparent `background`
@@ -595,9 +594,8 @@ plan contract pattern this document follows).
 - [x] Storybook stories for sizing, `fit`, `background`, and `decorative`/`accessibleLabel`
 - [x] Consumer migration guide covers the `variant` removal and the `label` →
       `accessibleLabel` rename
-- [ ] Reference Card directly as an example consumer (Storybook docs and/or the consumer
-      migration guide), pointing at its `preview` and `collection` slot usage — deferred until
-      Card's own Asset integration merges (SWC-2566)
+- [x] Reference Card directly as an example consumer (Storybook docs and/or the consumer
+      migration guide), pointing at its `preview` and `collection` slot usage — SWC-2566
 - [x] Document v1 support for a single `img` or `svg` child only
 - [x] Document `loading="lazy"`/`decoding="async"` performance guidance
 - [x] Document the resulting CSS behavior when combining `aspectRatio` with only one of
@@ -611,8 +609,8 @@ plan contract pattern this document follows).
 
 ### Review (SWC-2322)
 
-- [x] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
-- [x] 2nd-gen migration status table updated
+- [x] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
+- [x] gen2 migration status table updated
 - [x] PR created referencing Epic SWC-2317 (#6716, #6723, #6729, all merged)
 - [x] Peer engineer sign-off (rubencarvalho, aramos-adobe, rise-erpelding)
 
@@ -636,13 +634,13 @@ treatment of its own in v1, standalone or embedded (resolves Q2). A failed load 
 
 **Why:**
 
-- `PendingController` (`2nd-gen/packages/core/controllers/pending-controller`) was considered and
+- `PendingController` (`gen2/packages/core/controllers/pending-controller`) was considered and
   rejected as a direct fit: it manages a whole control's busy state folded into its accessible
   name, whereas loading here is a per-`swc-asset`-instance visual concern the embedding parent
   (Card or otherwise) should represent however fits its own content. Its readable-property pattern
   (`pendingActive`) did inform the decision to expose `loadState` as a property, not only events.
-- Dropzone (`2nd-gen/packages/core/components/dropzone/Dropzone.types.ts`) is the only existing
-  precedent for custom lifecycle events in 2nd-gen: exported `SWC_<COMPONENT>_<EVENT>_EVENT`
+- Dropzone (`gen2/packages/core/components/dropzone/Dropzone.types.ts`) is the only existing
+  precedent for custom lifecycle events in gen2: exported `SWC_<COMPONENT>_<EVENT>_EVENT`
   constants, a `declare global` `GlobalEventHandlersEventMap` augmentation, and a custom `detail`
   interface only when specific fields need to survive past the native event (its
   `DropzoneDragLeaveDetail`). The `swc-asset-*` naming and `detail.src` shape follow that pattern.
@@ -690,11 +688,11 @@ checklist](#implementation-checklist).
 
 - [Thumbnail accessibility migration analysis](../thumbnail/accessibility-migration-analysis.md) — a11y model reference (decorative, no disabled/focused/selected, host has no ARIA role)
 - [1st-gen source](../../../../1st-gen/packages/asset/src/Asset.ts)
-- [2nd-gen source (core)](../../../../2nd-gen/packages/core/components/asset/Asset.base.ts)
-- [2nd-gen source (SWC)](../../../../2nd-gen/packages/swc/components/asset/Asset.ts)
-- [Opacity checkerboard shared style](../../../../2nd-gen/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css)
-- [Pending controller](../../../../2nd-gen/packages/core/controllers/pending-controller/src/pending-controller.ts) — considered and likely not directly reused for the loading state (see Q1)
+- [gen2 source (core)](../../../../gen2/packages/core/components/asset/Asset.base.ts)
+- [gen2 source (SWC)](../../../../gen2/packages/swc/components/asset/Asset.ts)
+- [Opacity checkerboard shared style](../../../../gen2/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css)
+- [Pending controller](../../../../gen2/packages/core/controllers/pending-controller/src/pending-controller.ts) — considered and likely not directly reused for the loading state (see Q1)
 - [React Spectrum Image](https://react-spectrum.adobe.com/Image) — feature-comparison reference from the originating request
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md)
-- `seckles/swc-card` branch (unmerged) — Card's in-progress Gen2 implementation, the primary intended consumer of Asset once shipped
+- `swc-card` (SWC-2566, merged) — Card's Gen2 implementation, the primary intended consumer of Asset

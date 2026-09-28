@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-gen TypeScript](README.md) / Component types
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 TypeScript](README.md) / Component types
 
 <!-- Document title (editable) -->
 
@@ -44,7 +44,7 @@
 
 <!-- Document content (editable) -->
 
-This guide defines patterns for the `*.types.ts` files in `core/components/*/`. These files contain the constants and types that 2nd-gen component classes consume.
+This guide defines patterns for the `*.types.ts` files in `core/components/*/`. These files contain the constants and types that gen2 component classes consume.
 
 > **Note:** This guide was migrated from `02_style-guide/03_component-types.md`. The original file has been removed.
 
@@ -99,8 +99,8 @@ Use the component name in `PascalCase` matching the class name:
 
 | Scope | Name example | When to use |
 | ----- | ------------ | ----------- |
-| Canonical | `BADGE_VARIANTS_COLOR` | Values supported in 2nd-gen |
-| Canonical | `BadgeVariant` | Type for 2nd-gen consumers |
+| Canonical | `BADGE_VARIANTS_COLOR` | Values supported in gen2 |
+| Canonical | `BadgeVariant` | Type for gen2 consumers |
 
 > **Note:** S1-only constants and types (`_S1` suffix) are no longer needed in core. If you encounter them in existing files, they can be removed. 1st-gen manages its own values independently.
 
@@ -295,7 +295,7 @@ Group types at the bottom of the file in this order:
     export type BadgeVariantS1 = (typeof BADGE_VARIANTS_S1)[number]; // @todo remove with 1st-gen
     ```
 
-3. **Canonical types** — the clean, unsuffixed names that 2nd-gen consumers use
+3. **Canonical types** — the clean, unsuffixed names that gen2 consumers use
 
     ```typescript
     export type BadgeVariant = (typeof BADGE_VARIANTS)[number];
@@ -332,7 +332,7 @@ When 1st-gen is retired, the removal process for each types file is:
 3. Remove the `@todo` comment about S1 removal
 4. Optionally, if a shared constant was only shared for S1's benefit and is identical to the canonical array, inline it
 
-No renames. No changes to canonical type names. No breaking changes for 2nd-gen consumers.
+No renames. No changes to canonical type names. No breaking changes for gen2 consumers.
 
 ## Reference template
 

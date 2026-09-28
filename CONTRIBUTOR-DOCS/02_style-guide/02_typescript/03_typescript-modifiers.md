@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-gen TypeScript](README.md) / TypeScript modifier keywords
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 TypeScript](README.md) / TypeScript modifier keywords
 
 <!-- Document title (editable) -->
 
@@ -24,7 +24,7 @@
 
 <!-- Document content (editable) -->
 
-This guide explains the TypeScript modifier keywords used in 2nd-gen components. Each keyword controls who can access a class member and how it behaves. Using them correctly keeps the API clear and prevents bugs.
+This guide explains the TypeScript modifier keywords used in gen2 components. Each keyword controls who can access a class member and how it behaves. Using them correctly keeps the API clear and prevents bugs.
 
 ## static
 
@@ -103,7 +103,7 @@ export abstract class BadgeBase extends SizedMixin(...) {
 protected abstract renderIcon(variant: string): TemplateResult;
 ```
 
-Abstract methods are rare in 2nd-gen. Most base classes use the `API TO OVERRIDE` pattern with concrete default values instead.
+Abstract methods are rare in gen2. Most base classes use the `API TO OVERRIDE` pattern with concrete default values instead.
 
 ## override
 
@@ -247,7 +247,7 @@ Modifiers can be combined. The order is:
 [public | protected | private] [static] [abstract | override] [readonly] name
 ```
 
-Common combinations in 2nd-gen:
+Common combinations in gen2:
 
 | Combination | Usage |
 |-------------|-------|
