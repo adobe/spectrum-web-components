@@ -21,6 +21,14 @@
  * Prose for each skill is authored in dedicated source files:
  *   gen2/packages/ai/skills/swc-skill/SKILL.md
  *   gen2/packages/ai/skills/gen2-migration/SKILL.md
+ *   gen2/packages/ai/skills/spectrum-wc-skill/SKILL.md
+ *
+ * The spectrum-wc skill's component/pattern references end with an API section
+ * (Properties, Slots, Events, CSS Custom Properties, CSS Parts) rendered as
+ * Markdown tables from gen2/packages/swc/dist/custom-elements.json, the
+ * same manifest the live Storybook `<ApiTable />` block reads at runtime. Run
+ * `yarn build` (or `yarn workspace @adobe/spectrum-wc build`) before this
+ * script so that manifest exists.
  *
  * The script resolves {{TOKEN}} placeholders with generated component and
  * guide lists, then writes the skill directories under .well-known/agent-skills/
@@ -55,6 +63,14 @@ const FIRST_GEN_PACKAGES = join(ROOT, '1st-gen/packages');
 const FIRST_GEN_CONTENT = join(ROOT, '1st-gen/projects/documentation/content');
 const FIRST_GEN_REF_DIR = join(FIRST_GEN_CONTENT, 'reference');
 const GEN2_COMPONENTS = join(ROOT, 'gen2/packages/swc/components');
+const GEN2_PATTERNS = join(ROOT, 'gen2/packages/swc/patterns');
+
+/**
+ * Custom Elements Manifest emitted by `cem analyze` (`yarn workspace
+ * @adobe/spectrum-wc analyze`), which runs as part of that package's `build`
+ * script. Not checked in; generate:skills must run after a full `yarn build`.
+ */
+const GEN2_CEM_PATH = join(ROOT, 'gen2/packages/swc/dist/custom-elements.json');
 const SKILL_SOURCE_DIR = join(ROOT, 'gen2/packages/ai/skills');
 
 /**
@@ -259,16 +275,35 @@ function stripEleventy(content) {
  * to handle one level of brace nesting (covers {{...}} double-brace JSX
  * expressions). This avoids the greedy-match bug where [^>]* inside {} would
  * stop at the first > in an expression such as style={{ padding: 4 > 0 }}.
+ *
+ * Fenced ```code blocks``` are swapped for placeholders before any of the
+ * above run, and restored verbatim afterward, so an example snippet's own
+ * `import ...` line (or any other MDX-looking text inside a fence) survives
+ * intact instead of being mistaken for real MDX syntax.
  */
 function stripMdx(content) {
-  return (
-    content
+  const codeBlocks = [];
+  const withPlaceholders = content.replace(/```[\s\S]*?```/g, (match) => {
+    codeBlocks.push(match);
+    return `CODE_BLOCK_${codeBlocks.length - 1}`;
+  });
+
+  const stripped =
+    withPlaceholders
       // Remove import statements
       .replace(/^import\s+.*?from\s+['"][^'"]+['"]\s*;?\s*\n/gm, '')
       // Remove <Meta .../> (single-line self-closing)
       .replace(/^<Meta\s[^>]*\/>\s*\n/gm, '')
-      // Replace Storybook-only Canvas examples with a plain Markdown note
-      .replace(/^<Canvas\b[^>]*\/>\s*\n?/gm, '_Storybook example omitted._\n')
+      // Remove <DocsHeader /> / <DocsFooter /> — Storybook chrome rendered
+      // from the unit's stories.ts meta and a live CEM-backed API table
+      // (the former is rebuilt as Markdown by buildDocsHeader, the latter
+      // by buildApiSection, both from the same stories.ts / CEM sources).
+      .replace(/^<DocsHeader\s*\/>\s*\n?/gm, '')
+      .replace(/^<DocsFooter\s*\/>\s*\n?/gm, '')
+      // Replace Storybook-only Canvas examples with a plain Markdown note.
+      // [\s\S]*? spans multi-line <Canvas> whose props contain `>` (e.g. an
+      // `onClick: () =>` arrow), stopping at the first self-closing `/>`.
+      .replace(/<Canvas\b[\s\S]*?\/>\s*\n?/g, '_Storybook example omitted._\n')
       // Remove <img> tags with a JS expression source (can't resolve at build time)
       .replace(/<img\s[^>]*\{[^}]*\}[^>]*\/?>/gi, '')
       // Remove JSX block comments
@@ -290,7 +325,11 @@ function stripMdx(content) {
       // Collapse runs of 3+ blank lines introduced by removals
       .replace(/\n{3,}/g, '\n\n')
       .replace(/^\n+/, '')
-      .trimEnd() + '\n'
+      .trimEnd() + '\n';
+
+  return stripped.replace(
+    /CODE_BLOCK_(\d+)/g,
+    (_, i) => codeBlocks[Number(i)]
   );
 }
 
@@ -439,6 +478,480 @@ function listMigrationComponents() {
     .sort((a, b) => a.componentDir.localeCompare(b.componentDir));
 }
 
+/**
+ * List all gen2 units (components or patterns) in `dir` that have a public
+ * `<name>.mdx` doc page, tagged `swc-<name>`. The doc's own filename is the
+ * source of truth for `<name>` (and its sibling `stories/<name>.stories.ts`):
+ * most units name the folder after the doc, but some don't (e.g.
+ * `patterns/ai-toolkit/suggestion/suggestion-group.mdx`). Prefer `<dir>.mdx`
+ * when present, else fall back to the dir's single public doc. `migration-guide.mdx`
+ * and `*.internal.mdx` are never the unit reference. Returns
+ * [{ dir, mdxPath, tagName }] sorted by name.
+ */
+function listGen2Units(dir) {
+  return readdirSync(dir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => {
+      const files = readdirSync(join(dir, entry.name));
+      const mdxFile =
+        (files.includes(`${entry.name}.mdx`) && `${entry.name}.mdx`) ||
+        files
+          .filter(
+            (f) =>
+              f.endsWith('.mdx') &&
+              !f.endsWith('.internal.mdx') &&
+              f !== 'migration-guide.mdx'
+          )
+          .sort()[0];
+      if (!mdxFile) {
+        return null;
+      }
+      const name = mdxFile.slice(0, -'.mdx'.length);
+      return {
+        dir: name,
+        mdxPath: join(dir, entry.name, mdxFile),
+        tagName: `swc-${name}`,
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.dir.localeCompare(b.dir));
+}
+
+/**
+ * Patterns nest one level deeper than components: patterns/<group>/<unit>/<unit>.mdx.
+ * `group` is kept alongside the unit (rather than folded into `dir`, which stays
+ * the leaf name used to resolve stories.ts paths) so two groups can each contain
+ * a same-named unit without one's generated reference overwriting the other's;
+ * see `unitSlug`.
+ */
+function listGen2Patterns() {
+  const units = [];
+  for (const group of readdirSync(GEN2_PATTERNS, {
+    withFileTypes: true,
+  })) {
+    if (!group.isDirectory()) {
+      continue;
+    }
+    for (const unit of listGen2Units(join(GEN2_PATTERNS, group.name))) {
+      units.push({ ...unit, group: group.name });
+    }
+  }
+  return units.sort((a, b) => unitSlug(a).localeCompare(unitSlug(b)));
+}
+
+/**
+ * Group-root pattern docs (e.g. `patterns/ai-toolkit/pattern-overview.mdx`): a
+ * `<Meta>`-titled Storybook page with cross-component composition/anatomy
+ * guidance, living beside the unit dirs rather than inside one. No custom
+ * element tag, so no API table. Returns pseudo-units { dir, mdxPath, group }.
+ */
+function listGen2PatternOverviews() {
+  const overviews = [];
+  for (const group of readdirSync(GEN2_PATTERNS, { withFileTypes: true })) {
+    if (!group.isDirectory()) {
+      continue;
+    }
+    const groupDir = join(GEN2_PATTERNS, group.name);
+    for (const file of readdirSync(groupDir)) {
+      if (file.endsWith('.mdx') && !file.endsWith('.internal.mdx')) {
+        overviews.push({
+          dir: file.slice(0, -'.mdx'.length),
+          mdxPath: join(groupDir, file),
+          group: group.name,
+        });
+      }
+    }
+  }
+  return overviews.sort((a, b) => unitSlug(a).localeCompare(unitSlug(b)));
+}
+
+/**
+ * The path/filename segment for a unit's generated reference: namespaced under
+ * its pattern group when it has one, otherwise just the leaf dir name.
+ */
+function unitSlug(unit) {
+  return unit.group ? `${unit.group}/${unit.dir}` : unit.dir;
+}
+
+// ---------------------------------------------------------------------------
+// Custom Elements Manifest → Markdown API tables
+// ---------------------------------------------------------------------------
+
+function loadCem() {
+  if (!existsSync(GEN2_CEM_PATH)) {
+    return null;
+  }
+  try {
+    return JSON.parse(readFileSync(GEN2_CEM_PATH, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+function findCemDeclaration(cem, tagName) {
+  for (const mod of cem.modules ?? []) {
+    for (const decl of mod.declarations ?? []) {
+      if (decl.tagName === tagName) {
+        return decl;
+      }
+    }
+  }
+  return null;
+}
+
+function escapeCell(value) {
+  return String(value ?? '')
+    .replace(/\|/g, '\\|')
+    .replace(/\s*\n+\s*/g, ' ')
+    .trim();
+}
+
+function mdTable(headers, rows) {
+  if (rows.length === 0) {
+    return null;
+  }
+  return [
+    `| ${headers.join(' | ')} |`,
+    `| ${headers.map(() => '---').join(' | ')} |`,
+    ...rows.map((row) => `| ${row.map(escapeCell).join(' | ')} |`),
+  ].join('\n');
+}
+
+const code = (text) => (text ? `\`${text}\`` : '');
+
+/**
+ * CEM analyzer output can include entries with no `name` (artifacts such as an
+ * un-parseable `@fires`) and repeated entries for the same name. Drop nameless
+ * entries (unless `keepNameless`, for the default slot) and dedupe by name —
+ * first occurrence wins, but a later duplicate's non-empty description fills a
+ * missing one — so API tables carry no blank or duplicate rows.
+ */
+function dedupeCemEntries(entries, { keepNameless = false } = {}) {
+  const byName = new Map();
+  for (const entry of entries ?? []) {
+    const name = typeof entry?.name === 'string' ? entry.name.trim() : '';
+    if (!name && !keepNameless) {
+      continue;
+    }
+    const existing = byName.get(name);
+    if (!existing) {
+      byName.set(name, entry);
+    } else if (!existing.description && entry.description) {
+      byName.set(name, entry);
+    }
+  }
+  return [...byName.values()];
+}
+
+/**
+ * Build the Properties/Slots/Events/CSS Custom Properties/CSS Parts tables
+ * for a single custom element tag, mirroring the categories rendered by the
+ * live `<ApiTable />` Storybook block. Returns null if the tag isn't a
+ * declared custom element in the manifest, or has no documentable members.
+ */
+function buildApiTables(tagName, cem, headingLevel) {
+  const component = findCemDeclaration(cem, tagName);
+  if (!component) {
+    return null;
+  }
+
+  const attrByField = new Map(
+    (component.attributes ?? [])
+      .filter((attr) => attr.fieldName)
+      .map((attr) => [attr.fieldName, attr])
+  );
+
+  const props = dedupeCemEntries(
+    (component.members ?? []).filter(
+      (m) =>
+        m.kind === 'field' &&
+        m.privacy !== 'private' &&
+        m.privacy !== 'protected' &&
+        !m.static
+    )
+  );
+
+  const sections = [
+    [
+      'Properties',
+      mdTable(
+        ['Property', 'Attribute', 'Type', 'Default', 'Description'],
+        props.map((prop) => {
+          const attr = attrByField.get(prop.name);
+          return [
+            code(prop.name),
+            attr ? code(attr.name) + (prop.reflects ? ' (reflects)' : '') : '-',
+            code(prop.type?.text),
+            prop.default != null ? code(prop.default) : '-',
+            prop.description,
+          ];
+        })
+      ),
+    ],
+    [
+      'Slots',
+      mdTable(
+        ['Name', 'Description'],
+        dedupeCemEntries(component.slots, { keepNameless: true }).map(
+          (slot) => [code(slot.name || '(default)'), slot.description]
+        )
+      ),
+    ],
+    [
+      'Events',
+      mdTable(
+        ['Name', 'Description'],
+        dedupeCemEntries(component.events).map((event) => [
+          code(event.name),
+          event.description,
+        ])
+      ),
+    ],
+    [
+      'CSS custom properties',
+      mdTable(
+        ['Name', 'Default', 'Description'],
+        dedupeCemEntries(component.cssProperties).map((prop) => [
+          code(prop.name),
+          prop.default != null ? code(prop.default) : '-',
+          prop.description,
+        ])
+      ),
+    ],
+    [
+      'CSS parts',
+      mdTable(
+        ['Name', 'Description'],
+        dedupeCemEntries(component.cssParts).map((part) => [
+          code(part.name),
+          part.description,
+        ])
+      ),
+    ],
+  ].filter(([, table]) => table);
+
+  if (sections.length === 0) {
+    return null;
+  }
+
+  return sections
+    .map(([title, table]) => `${headingLevel} ${title}\n\n${table}`)
+    .join('\n\n');
+}
+
+/**
+ * Multi-element units (e.g. accordion, tabs) declare sibling element tags via
+ * `parameters.additionalApiTables` in their stories.ts meta, so DocsFooter
+ * renders one API table per tag instead of just the unit's own tag. Extract
+ * that array with a regex rather than a full TS parse — the value is always
+ * a static string-literal array.
+ */
+const storiesSourceCache = new Map();
+
+function readStoriesSource(storiesPath) {
+  if (!existsSync(storiesPath)) {
+    return null;
+  }
+  if (!storiesSourceCache.has(storiesPath)) {
+    storiesSourceCache.set(storiesPath, readFileSync(storiesPath, 'utf8'));
+  }
+  return storiesSourceCache.get(storiesPath);
+}
+
+function readAdditionalApiTags(unit) {
+  const storiesPath = join(
+    dirname(unit.mdxPath),
+    'stories',
+    `${unit.dir}.stories.ts`
+  );
+  const source = readStoriesSource(storiesPath);
+  if (source === null) {
+    return [];
+  }
+  const match = source.match(/additionalApiTables:\s*\[([^\]]*)\]/);
+  if (!match) {
+    return [];
+  }
+  return [...match[1].matchAll(/['"`]([^'"`]+)['"`]/g)].map((m) => m[1]);
+}
+
+/**
+ * Build a Markdown `## API` section for a unit, covering its own tag plus any
+ * `additionalApiTables` siblings declared in its stories.ts (see
+ * `readAdditionalApiTags`). Returns null when the CEM is unavailable or the
+ * tag isn't a declared custom element (e.g. controllers, which hand-author
+ * their own API section).
+ */
+function buildApiSection(unit, cem) {
+  if (!cem) {
+    return null;
+  }
+  const additionalTags = readAdditionalApiTags(unit);
+  const isMultiElement = additionalTags.length > 0;
+  const headingLevel = isMultiElement ? '####' : '###';
+
+  const blocks = [unit.tagName, ...additionalTags]
+    .map((tag) => {
+      const tables = buildApiTables(tag, cem, headingLevel);
+      if (!tables) {
+        return null;
+      }
+      return isMultiElement ? `### ${tag}\n\n${tables}` : tables;
+    })
+    .filter(Boolean);
+
+  if (blocks.length === 0) {
+    return null;
+  }
+
+  return '## API\n\n' + blocks.join('\n\n');
+}
+
+/**
+ * Read the fields off a unit's stories.ts meta object that `<DocsHeader />`
+ * renders: `title`, `parameters.docs.subtitle`, `parameters.docs.packagePath`,
+ * `tags`, and the meta-level JSDoc description (the block comment immediately
+ * above `const meta`). Extracted with regexes rather than a full TS parse,
+ * scoped to the text between `const meta` and the first `export const` so
+ * story-level `tags`/`title`-like text further down the file can't match.
+ */
+function readStoriesMeta(unit) {
+  const storiesPath = join(
+    dirname(unit.mdxPath),
+    'stories',
+    `${unit.dir}.stories.ts`
+  );
+  const source = readStoriesSource(storiesPath);
+  if (source === null) {
+    return null;
+  }
+
+  // Match the meta declaration in either form — `const meta` or `export const
+  // meta` — and start at the keyword so the JSDoc slice below ends at the
+  // comment's `*/` rather than a dangling `export ` (which dropped the
+  // description for the `export const meta` form).
+  const metaDecl = source.match(/(?:export\s+)?const meta\b/);
+  if (!metaDecl) {
+    return null;
+  }
+  const metaStart = metaDecl.index;
+  const nextExport = source.slice(metaStart).match(/\nexport const /);
+  const metaBlock = nextExport
+    ? source.slice(metaStart, metaStart + nextExport.index)
+    : source.slice(metaStart);
+
+  const titleMatch = metaBlock.match(/title:\s*['"`]([^'"`]+)['"`]/);
+  const subtitleMatch = metaBlock.match(/subtitle:\s*['"`]([^'"`]*)['"`]/);
+  const packagePathMatch = metaBlock.match(
+    /packagePath:\s*['"`]([^'"`]*)['"`]/
+  );
+  const tagsMatch = metaBlock.match(/tags:\s*\[([^\]]*)\]/);
+  const tags = tagsMatch
+    ? [...tagsMatch[1].matchAll(/['"`]([^'"`]+)['"`]/g)].map((m) => m[1])
+    : [];
+
+  // Meta-level JSDoc: the block comment immediately preceding `const meta`,
+  // guarded against matching an earlier comment (e.g. the copyright header)
+  // by disallowing `*/` inside the captured content.
+  const jsdocMatch = source
+    .slice(0, metaStart)
+    .match(/\/\*\*((?:(?!\*\/)[\s\S])*)\*\/\s*$/);
+  const description = jsdocMatch
+    ? jsdocMatch[1]
+        .split('\n')
+        .map((line) => line.replace(/^\s*\*\s?/, ''))
+        .join('\n')
+        .trim()
+    : null;
+
+  return {
+    title: titleMatch ? titleMatch[1] : null,
+    subtitle: subtitleMatch ? subtitleMatch[1].trim() : null,
+    packagePath: packagePathMatch ? packagePathMatch[1] : null,
+    tags,
+    description,
+  };
+}
+
+const toPascalCase = (kebab) =>
+  kebab
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join('');
+
+/**
+ * Rebuild the `## Getting started` block that `<GettingStarted />` renders,
+ * mirroring its utility and migrated branches from
+ * .storybook/blocks/GettingStarted.tsx. Controllers are internal (not a public
+ * surface), so their branch is intentionally omitted.
+ */
+function buildGettingStarted(unit, meta) {
+  if (meta.tags.includes('utility')) {
+    return null;
+  }
+
+  const packageName = unit.dir;
+  const baseClassName = toPascalCase(packageName);
+
+  if (meta.tags.includes('migrated')) {
+    const tagName = unit.tagName ?? `swc-${packageName}`;
+    const resolvedPackagePath = meta.packagePath || `components/${packageName}`;
+
+    return `## Getting started
+
+Add the package to your project:
+
+\`\`\`zsh
+yarn add @adobe/spectrum-wc
+\`\`\`
+
+Import the side effectful registration of \`<${tagName}>\` via:
+
+\`\`\`typescript
+import '@adobe/spectrum-wc/${resolvedPackagePath}/${tagName}.js';
+\`\`\`
+
+To reference the \`${baseClassName}\` type, import it as a type-only import:
+
+\`\`\`typescript
+import type { ${baseClassName} } from '@adobe/spectrum-wc/${resolvedPackagePath}';
+\`\`\`
+
+> The class is exposed primarily for type purposes. Extending it is possible, but the internal shape is not part of the public API — if you choose to subclass, you do so at your own risk and may need to adjust your code between releases.
+`;
+  }
+
+  return null;
+}
+
+/**
+ * Rebuild the top-of-page Markdown that `<DocsHeader />` renders: title,
+ * subtitle, description, and getting-started instructions. `<StatusBadge />`
+ * and `<OverviewStory />` are visual-only (a badge, a live canvas) with no
+ * textual equivalent, so they're skipped. Returns null when the unit's
+ * stories.ts meta can't be read (readStoriesMeta already warned).
+ */
+function buildDocsHeader(unit, meta) {
+  if (!meta) {
+    return null;
+  }
+
+  const title = meta.title?.split('/').pop() ?? unit.dir;
+  const blocks = [`# ${title}`];
+  if (meta.subtitle) {
+    blocks.push(meta.subtitle);
+  }
+  if (meta.description) {
+    blocks.push(meta.description);
+  }
+  const gettingStarted = buildGettingStarted(unit, meta);
+  if (gettingStarted) {
+    blocks.push(gettingStarted);
+  }
+
+  return blocks.join('\n\n');
+}
+
 // ---------------------------------------------------------------------------
 // Token resolution
 // ---------------------------------------------------------------------------
@@ -477,6 +990,14 @@ function buildMigrationComponentList(components) {
   return components
     .map(
       (c) => `- [${c.componentDir}](references/components/${c.componentDir}.md)`
+    )
+    .join('\n');
+}
+
+function buildGen2UnitList(units, subdir) {
+  return units
+    .map(
+      (u) => `- [${u.tagName ?? u.dir}](references/${subdir}/${unitSlug(u)}.md)`
     )
     .join('\n');
 }
@@ -581,6 +1102,199 @@ function buildMigrationSkill(skillDir) {
   );
 }
 
+const DOCS_SITE = 'https://spectrum-web-components.adobe.com';
+
+/**
+ * Storybook derives a docs-page id from a meta `title` by lowercasing and
+ * replacing runs of non-alphanumerics with `-` (e.g. 'Components/Action button'
+ * → 'components-action-button'); the docs page id appends '--docs'.
+ */
+function storybookDocSlug(title) {
+  return (
+    title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') + '--docs'
+  );
+}
+
+/**
+ * Rewrite Storybook doc links (`/docs/<id>`, `?path=/docs/<id>`,
+ * `../?path=/docs/<id>`, with an optional `#anchor`) that break once the skill
+ * is read as loose Markdown. Targets that resolve to a generated unit doc
+ * become a relative `.md` link; the rest become absolute links to the live docs
+ * site. `selfRef` and the `slugToRef` values are paths relative to `references/`.
+ */
+function rewriteDocLinks(content, selfRef, slugToRef) {
+  return content.replace(/(\]\()([^)\s]+)(\))/g, (whole, open, href, close) => {
+    const m = href.match(/\/docs\/([a-z0-9-]+)(#[^)]*)?$/i);
+    if (!m) {
+      return whole;
+    }
+    const [, slug, anchor = ''] = m;
+    const targetRef = slugToRef.get(slug);
+    if (targetRef) {
+      let rel = relative(dirname(selfRef), targetRef);
+      if (!rel.startsWith('.')) {
+        rel = './' + rel;
+      }
+      return `${open}${rel}${anchor}${close}`;
+    }
+    return `${open}${DOCS_SITE}/?path=/docs/${slug}${anchor}${close}`;
+  });
+}
+
+/**
+ * Fail generation if the emitted Markdown has broken references: an unresolved
+ * Storybook doc link, a relative `.md` link with no target file, a table row
+ * with a blank name, or a duplicate name within one table. Guards the link
+ * rewriting and CEM de-duplication above against silent regressions.
+ */
+function assertGeneratedDocsValid(refsDir) {
+  const problems = [];
+  for (const rel of collectFiles(refsDir)) {
+    if (!rel.endsWith('.md')) {
+      continue;
+    }
+    const file = join(refsDir, rel);
+    const md = readFileSync(file, 'utf8');
+
+    for (const [, href] of md.matchAll(/\]\(([^)\s]+)\)/g)) {
+      if (/^(https?:|mailto:|#)/i.test(href)) {
+        continue;
+      }
+      if (/\/docs\//i.test(href)) {
+        problems.push(`${rel}: unresolved Storybook link (${href})`);
+      } else if (href.split('#')[0].endsWith('.md')) {
+        if (!existsSync(join(dirname(file), href.split('#')[0]))) {
+          problems.push(`${rel}: broken relative link (${href})`);
+        }
+      }
+    }
+
+    let inFence = false;
+    let names = null;
+    for (const line of md.split('\n')) {
+      if (/^\s*```/.test(line)) {
+        inFence = !inFence;
+        names = null;
+        continue;
+      }
+      if (inFence || !/^\s*\|.*\|\s*$/.test(line)) {
+        names = null;
+        continue;
+      }
+      if (/^\s*\|(?:\s*:?-+:?\s*\|)+\s*$/.test(line)) {
+        names = new Set();
+        continue;
+      }
+      if (names === null) {
+        continue;
+      }
+      const name = (line.split('|')[1] ?? '').replace(/`/g, '').trim();
+      if (!name) {
+        problems.push(`${rel}: blank table row name`);
+      } else if (names.has(name)) {
+        problems.push(`${rel}: duplicate table row (${name})`);
+      } else {
+        names.add(name);
+      }
+    }
+  }
+  if (problems.length > 0) {
+    throw new Error(
+      `Generated spectrum-wc docs failed validation:\n  ${problems.join('\n  ')}`
+    );
+  }
+}
+
+function buildGen2DocsSkill(skillDir) {
+  const refsDir = join(skillDir, 'references');
+  mkdirSync(join(refsDir, 'components'), { recursive: true });
+  mkdirSync(join(refsDir, 'patterns'), { recursive: true });
+
+  const cem = loadCem();
+  if (!cem) {
+    console.warn(
+      '  ⚠ dist/custom-elements.json not found — run `yarn workspace @adobe/spectrum-wc build` first. API tables will be omitted.'
+    );
+  }
+
+  const components = listGen2Units(GEN2_COMPONENTS);
+  const patterns = listGen2Patterns();
+  const patternOverviews = listGen2PatternOverviews();
+
+  // Map each unit's Storybook docs id → its generated reference path, so
+  // in-skill cross-links can be rewritten to relative files (see rewriteDocLinks).
+  // Storybook prepends a per-directory `titlePrefix` (see .storybook/main.ts) to
+  // each story's bare `title`, so the docs id is kebab(`<section>/<title>`).
+  const slugToRef = new Map();
+  for (const [units, subdir, section] of [
+    [components, 'components', 'Components'],
+    [patterns, 'patterns', 'Patterns'],
+  ]) {
+    for (const unit of units) {
+      const meta = readStoriesMeta(unit);
+      if (meta?.title) {
+        slugToRef.set(
+          storybookDocSlug(`${section}/${meta.title}`),
+          `${subdir}/${unitSlug(unit)}.md`
+        );
+      }
+    }
+  }
+
+  const sourceMd = readFileSync(
+    join(SKILL_SOURCE_DIR, 'spectrum-wc-skill', 'SKILL.md'),
+    'utf8'
+  );
+  writeFileSync(
+    join(skillDir, 'SKILL.md'),
+    resolveTokens(sourceMd, {
+      GEN2_COMPONENT_NAMES: components
+        .map((c) => `\`${c.tagName}\``)
+        .join(', '),
+      GEN2_COMPONENT_LIST: buildGen2UnitList(components, 'components'),
+      GEN2_PATTERN_NAMES: patterns.map((c) => `\`${c.tagName}\``).join(', '),
+      GEN2_PATTERN_LIST: buildGen2UnitList(
+        [...patternOverviews, ...patterns],
+        'patterns'
+      ),
+    })
+  );
+
+  function writeUnitDocs(units, subdir) {
+    for (const unit of units) {
+      const meta = readStoriesMeta(unit);
+      let content = stripMdx(readFileSync(unit.mdxPath, 'utf8'));
+      const header = buildDocsHeader(unit, meta);
+      if (header) {
+        content = header + '\n\n' + content;
+      }
+      const api = unit.tagName ? buildApiSection(unit, cem) : null;
+      if (api) {
+        content = content.trimEnd() + '\n\n' + api + '\n';
+      }
+      const ref = `${subdir}/${unitSlug(unit)}.md`;
+      content = rewriteDocLinks(content, ref, slugToRef);
+      const outPath = join(refsDir, ref);
+      mkdirSync(dirname(outPath), { recursive: true });
+      writeFileSync(outPath, content);
+    }
+    return units.length;
+  }
+
+  const componentCount = writeUnitDocs(components, 'components');
+  const patternCount = writeUnitDocs(patterns, 'patterns');
+  const overviewCount = writeUnitDocs(patternOverviews, 'patterns');
+
+  assertGeneratedDocsValid(refsDir);
+
+  console.log(
+    `  spectrum-wc: ${componentCount} components + ${patternCount} patterns + ${overviewCount} pattern overviews`
+  );
+}
+
 // ---------------------------------------------------------------------------
 // Skill dispatch
 // ---------------------------------------------------------------------------
@@ -602,6 +1316,14 @@ const SKILL_CONFIGS = [
       'Spectrum 1 to Spectrum 2 web components.',
     kind: 'migration',
     buildFn: buildMigrationSkill,
+  },
+  {
+    name: 'spectrum-wc',
+    description:
+      'Build UIs with Spectrum 2 Web Components (swc-* elements, @adobe/spectrum-wc). ' +
+      'Use when developers are working with the @adobe/spectrum-wc package or swc-* ' +
+      'custom elements. Includes component and pattern API references and usage guidance.',
+    buildFn: buildGen2DocsSkill,
   },
 ];
 

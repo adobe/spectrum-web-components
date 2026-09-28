@@ -48,3 +48,10 @@ button[data-action="collapse-root"] {
 .docblock-argstable-body td textarea {
   max-inline-size: 192px;
 }
+
+/* Storybook always renders a separator ahead of the global toolbar controls.
+   On docs pages no tool precedes it, which leaves it dangling at the start
+   of the bar, so hide it whenever nothing comes before it. */
+.sb-bar [role="toolbar"] > div > span:first-child:empty {
+  display: none;
+}
