@@ -889,27 +889,32 @@ export const FormBehaviorTest: Story = {
     });
 
     await step(
-      'submit is blocked while the required field is empty',
+      // `novalidate` on the form means submission is no longer natively
+      // blocked, so the field's own invalid presentation (icon + error text)
+      // is what signals the empty required field instead.
+      'invalid submission surfaces the field-level invalid state',
       async () => {
-        let submitCount = 0;
-        form.addEventListener('submit', () => submitCount++);
         field.value = '';
+        field.invalid = false;
         await field.updateComplete;
         form.requestSubmit();
-        expect(submitCount).toBe(0);
+        await field.updateComplete;
+        expect(field.invalid).toBe(true);
+        expect(
+          field.shadowRoot?.querySelector('.swc-TextField-invalidIcon')
+        ).toBeTruthy();
+        expect(output.textContent?.trim()).toBe(
+          'Submit the form to see its data.'
+        );
       }
     );
 
     await step('submit includes the field value when valid', async () => {
-      let submitCount = 0;
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        submitCount++;
-      });
       field.value = 'Submitted';
       await field.updateComplete;
       form.requestSubmit();
-      expect(submitCount).toBe(1);
+      await field.updateComplete;
+      expect(field.invalid).toBe(false);
       expect(new FormData(form).get('username')).toBe('Submitted');
       expect(output.textContent?.trim()).toBe('username: Submitted');
     });
