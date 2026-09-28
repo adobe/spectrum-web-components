@@ -24,6 +24,7 @@
 
 :host {
   --swc-form-field-row-gap: token("form-item-gap-medium");
+  --swc-form-field-necessity-gap: token("base-gap-medium");
 }
 
 .swc-FormField {
@@ -42,6 +43,7 @@
   --swc-form-field-label-font-size: token("font-size-75");
   --swc-form-field-description-font-size: token("font-size-75");
   --swc-form-field-row-gap: token("form-item-gap-small");
+  --swc-form-field-necessity-gap: token("base-gap-small");
 }
 
 :host([size="m"]) {
@@ -53,12 +55,14 @@
   --swc-form-field-label-font-size: token("font-size-200");
   --swc-form-field-description-font-size: token("font-size-200");
   --swc-form-field-row-gap: token("form-item-gap-large");
+  --swc-form-field-necessity-gap: token("base-gap-large");
 }
 
 :host([size="xl"]) {
   --swc-form-field-label-font-size: token("font-size-300");
   --swc-form-field-description-font-size: token("font-size-300");
   --swc-form-field-row-gap: token("form-item-gap-extra-large");
+  --swc-form-field-necessity-gap: token("base-gap-extra-large");
 }
 
 .swc-FormFieldLabel {
@@ -74,11 +78,16 @@
   color: token("neutral-subdued-content-color-default");
 
   /* Progressive enhancement: keep the necessity indicator with the last word on
-     wrap. Combined with an adjacent `<span>` sibling (no whitespace text node)
-     and a `&nbsp;` between them, this avoids leaving the indicator alone on a
-     line. Unsupported browsers (e.g. Firefox) fall back to normal wrapping. */
+     wrap. Combined with an adjacent `<span>` sibling (no whitespace text node
+     between them), this avoids leaving the indicator alone on a line.
+     Unsupported browsers (e.g. Firefox) fall back to normal wrapping. */
   text-wrap: pretty;
   overflow-wrap: break-word;
+}
+
+.swc-FormFieldLabel-necessityLabel,
+.swc-FormFieldLabel-requiredIndicator {
+  margin-inline-start: var(--swc-form-field-necessity-gap);
 }
 
 .swc-FormFieldLabel-requiredIndicator swc-ui-icon {

@@ -64,9 +64,10 @@ export interface RenderFieldLabelOptions {
  * style fragment theming the `swc-FormFieldLabel` class it emits.
  *
  * The `<slot>` and the necessity indicator `<span>` are rendered adjacent (no
- * whitespace text node between them). Combined with a leading `&nbsp;` inside
- * the span, this removes the wrap-break opportunity that would otherwise
- * orphan the indicator on its own line when the label wraps.
+ * whitespace text node between them), removing the wrap-break opportunity
+ * that would otherwise orphan the indicator on its own line when the label
+ * wraps. The gap from the label text is CSS `margin-inline-start` on the
+ * indicator, not a literal space character.
  */
 export function renderFieldLabel({
   hasLabelSlotContent,
@@ -91,9 +92,9 @@ export function renderFieldLabel({
 
 /**
  * The `aria-hidden` necessity indicator span; see `necessityIndicator` for the
- * icon-vs-label behavior. The leading `&nbsp;` (non-breaking space) sets the
- * gap from the label text and — with no whitespace text node between the slot
- * and this span — keeps the indicator on the same wrap line as the last word.
+ * icon-vs-label behavior. With no whitespace text node between the slot and
+ * this span, the indicator stays on the same wrap line as the last word; its
+ * gap from the label text is applied by CSS, not a literal space character.
  */
 function renderNecessityIndicator({
   indicator,
@@ -108,11 +109,11 @@ function renderNecessityIndicator({
 }): RenderFieldLabelResult {
   if (indicator === 'label' && labels) {
     // prettier-ignore
-    return html`<span class="swc-FormFieldLabel-necessityLabel" aria-hidden="true">&nbsp;${required ? labels.required : labels.optional}</span>`;
+    return html`<span class="swc-FormFieldLabel-necessityLabel" aria-hidden="true">${required ? labels.required : labels.optional}</span>`;
   }
   if (!required || !icon) {
     return nothing;
   }
   // prettier-ignore
-  return html`<span class="swc-FormFieldLabel-requiredIndicator" aria-hidden="true">&nbsp;${icon}</span>`;
+  return html`<span class="swc-FormFieldLabel-requiredIndicator" aria-hidden="true">${icon}</span>`;
 }
