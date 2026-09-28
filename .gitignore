@@ -1,3 +1,6 @@
+# Generated Cursor rules are tracked, even when a global gitignore excludes .cursor/
+!/.cursor/
+
 # logging / private config
 .cursor/mcp.json
 .cursor/handoffs

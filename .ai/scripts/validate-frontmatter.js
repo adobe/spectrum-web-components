@@ -15,7 +15,8 @@
  * every generated Copilot, Claude, and Cursor file loads the way the source intends.
  *
  * Instructions (`.ai/rules/*.md`, and `.ai/memory/*.md` once they have frontmatter):
- *   - `description` (required) and `paths` (required, quoted YAML list); optional `excludeAgent`
+ *   - `description` (required, a plain one-line YAML value so Cursor parses it) and `paths`
+ *     (required, quoted YAML list); optional `excludeAgent`
  *   - no `globs`, `alwaysApply`, `applyTo`, or `name`
  *   - every `paths` glob matches at least one tracked file (GitHub `applyTo` semantics)
  *   - warns above 12 KB, which dilutes always-loaded context
@@ -33,6 +34,7 @@
 
 import { existsSync, readdirSync, readFileSync } from 'fs';
 import path from 'path';
+import { parse as parseYaml } from 'yaml';
 
 import {
   AI_DIR,
@@ -70,6 +72,19 @@ const TOOL_WORDING_ALLOWLIST = [
 ];
 const FORBIDDEN_ALLOWED_TOOLS = /^(shell|bash|\*)(\(|$)/i;
 
+/**
+ * Cursor's frontmatter is written unquoted (see sync.js), so the collapsed description
+ * must parse back to itself as a plain YAML scalar.
+ */
+function isPlainYamlScalar(description) {
+  const value = description.replace(/\s+/g, ' ').trim();
+  try {
+    return parseYaml(`description: ${value}`)?.description === value;
+  } catch {
+    return false;
+  }
+}
+
 function validateInstruction(source, errors, warnings) {
   const where = source.rel;
   if (source.error) {
@@ -100,6 +115,10 @@ function validateInstruction(source, errors, warnings) {
 
   if (typeof data.description !== 'string' || !data.description.trim()) {
     errors.push(`${where}: \`description\` must be a non-empty string`);
+  } else if (!isPlainYamlScalar(data.description)) {
+    errors.push(
+      `${where}: \`description\` must stay a plain YAML value on one line for Cursor; avoid \`: \`, \` #\`, and leading quotes or YAML symbols`
+    );
   }
 
   if (
