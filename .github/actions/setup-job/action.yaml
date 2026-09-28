@@ -1,5 +1,10 @@
 name: Setup Job
 description: Common setup for all jobs
+inputs:
+  build-command:
+    description: 'Build command to run after install. Gen2-only jobs pass `yarn build:gen2` to skip the 1st-gen build.'
+    required: false
+    default: 'yarn build'
 runs:
   using: 'composite'
   steps:
@@ -20,4 +25,4 @@ runs:
 
     - name: Build the project
       shell: bash
-      run: yarn build
+      run: ${{ inputs.build-command }}

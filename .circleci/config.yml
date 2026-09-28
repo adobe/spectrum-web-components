@@ -41,12 +41,12 @@ jobs:
               else
                 # Paths that don't affect either gen: docs, AI rules, changesets,
                 # linter config, scripts, root-level markdown, and LICENSE.
-                DOCS_PATTERN="^(CONTRIBUTOR-DOCS/|\.ai/|(1st-gen|2nd-gen)/\.changeset/|linters/|scripts/|[^/]+\.md$|LICENSE$)"
+                DOCS_PATTERN="^(CONTRIBUTOR-DOCS/|\.ai/|(1st-gen|gen2)/\.changeset/|linters/|scripts/|[^/]+\.md$|LICENSE$)"
 
                 # A gen is affected if a changed file is outside the other gen
                 # and isn't docs. Root files (package.json, yarn.lock) match
                 # neither exclusion, so they flag both gens.
-                REL_GEN1=$(echo "$CHANGED" | grep -v '^2nd-gen/' | grep -vE "$DOCS_PATTERN" || true)
+                REL_GEN1=$(echo "$CHANGED" | grep -v '^gen2/' | grep -vE "$DOCS_PATTERN" || true)
                 REL_GEN2=$(echo "$CHANGED" | grep -v '^1st-gen/' | grep -vE "$DOCS_PATTERN" || true)
 
                 [ -n "$REL_GEN1" ] && RUN_GEN1=true || RUN_GEN1=false

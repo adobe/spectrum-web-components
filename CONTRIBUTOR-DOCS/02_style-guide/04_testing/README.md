@@ -26,7 +26,7 @@
 
 <!-- Document content (editable) -->
 
-This guide explains how to write tests for 2nd-gen components. Good tests catch bugs before users see them, make sure components are accessible, document how components should work, and give you confidence when changing code.
+This guide explains how to write tests for gen2 components. Good tests catch bugs before users see them, make sure components are accessible, document how components should work, and give you confidence when changing code.
 
 We use three types of tests:
 

@@ -106,7 +106,7 @@
 ### DOM Structure changes
 
 <details>
-<summary>Spectrum Web Components (2nd-gen target):</summary>
+<summary>Spectrum Web Components (gen2 target):</summary>
 
 ```html
 <!-- shadow root -->
@@ -226,7 +226,7 @@ When `accessibleLabel` is set and no label slot content is present, `aria-label=
 
 1. **Size class adjustment**: Changed default size class from `spectrum-Meter--sizeL` to `spectrum-Meter--sizeM`. In S2, size options were expanded (although SWC already supported S/M/L/XL). In Spectrum 1, the meter component extended the default medium-sized progress bar with `.spectrum-ProgressBar--sizeM`, as well as set the default meter size to `.spectrum-Meter--sizeL`. In Spectrum 2, you'll notice the `.spectrum-ProgressBar--sizeM` modifier is removed since that t-shirt size is not needed for default progress bars and/or meters.
 
-2. **Description slot integration**: Added optional `.spectrum-ProgressBar-helptext` container with `.spectrum-HelpText-text` wrapper for displaying additional text below the meter. In SWC 2nd-gen this maps to a `description` slot — not a "help text" slot, since meter is not a form field.
+2. **Description slot integration**: Added optional `.spectrum-ProgressBar-helptext` container with `.spectrum-HelpText-text` wrapper for displaying additional text below the meter. In SWC gen2 this maps to a `description` slot — not a "help text" slot, since meter is not a form field.
 
 </details>
 
@@ -268,7 +268,7 @@ When `accessibleLabel` is set and no label slot content is present, `aria-label=
 
 ### CSS Spectrum 2 changes
 
-The CSS Spectrum 2 meter DOM includes the addition of an optional `.spectrum-ProgressBar-helptext` container below the bar. In the SWC 2nd-gen implementation this maps to a `description` slot (not "help text", since meter is not a form field). Otherwise the structure remains the same: the meter extends the progress bar with semantic color variants (positive, negative, notice) and uses the same underlying bar and track styling.
+The CSS Spectrum 2 meter DOM includes the addition of an optional `.spectrum-ProgressBar-helptext` container below the bar. In the SWC gen2 implementation this maps to a `description` slot (not "help text", since meter is not a form field). Otherwise the structure remains the same: the meter extends the progress bar with semantic color variants (positive, negative, notice) and uses the same underlying bar and track styling.
 
 ## Resources
 

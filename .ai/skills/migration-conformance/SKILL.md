@@ -1,6 +1,6 @@
 ---
 name: migration-conformance
-description: Sub-task after Phase 6 of 1st-gen to 2nd-gen component migration. Use to verify all migrated files conform to the project style guides, run linters, and surface any guideline gaps as PR comment notes.
+description: Sub-task after Phase 6 of 1st-gen to gen2 component migration. Use to verify all migrated files conform to the project style guides, run linters, and surface any guideline gaps as PR comment notes.
 ---
 
 # Migration conformance (sub-task after Phase 6)
@@ -19,7 +19,7 @@ When the code is correct and appropriate but the guideline does not cover it, su
 
 - Phase 6 (migration-testing) is complete and all tests pass
 - The user asks to "check code conformance for [component]", "run conformance checks for [component]", or "style guide review for [component]"
-- The user refers to the conformance sub-task of the 2nd-gen component migration workstream
+- The user refers to the conformance sub-task of the gen2 component migration workstream
 
 ## When NOT to use
 
@@ -49,8 +49,8 @@ yarn lint
 yarn lint:css
 
 # Prettier — scoped to the migrated component
-yarn prettier --check "2nd-gen/packages/**/components/[component]/**"
-yarn prettier --write "2nd-gen/packages/**/components/[component]/**"
+yarn prettier --check "gen2/packages/**/components/[component]/**"
+yarn prettier --write "gen2/packages/**/components/[component]/**"
 ```
 
 Resolve every error before moving to the manual review.
@@ -63,17 +63,17 @@ That skill is the authoritative source for what to check in each domain and whic
 
 **Files in scope for this component:**
 
-| Domain     | Files                                                                        |
-| ---------- | ---------------------------------------------------------------------------- |
-| TypeScript | `2nd-gen/packages/core/components/[component]/[Component].base.ts`           |
-|            | `2nd-gen/packages/core/components/[component]/[Component].types.ts`          |
-|            | `2nd-gen/packages/swc/components/[component]/[Component].ts`                 |
-|            | Any mixins, controllers, or directives added for this component              |
-| CSS        | `2nd-gen/packages/swc/components/[component]/[component].css`                |
-| Tests      | `2nd-gen/packages/swc/components/[component]/test/[component].test.ts`       |
-|            | `2nd-gen/packages/swc/components/[component]/test/[component].a11y.spec.ts`  |
-|            | Play functions within the stories file                                       |
-| Stories    | `2nd-gen/packages/swc/components/[component]/stories/[component].stories.ts` |
+| Domain     | Files                                                                     |
+| ---------- | ------------------------------------------------------------------------- |
+| TypeScript | `gen2/packages/core/components/[component]/[Component].base.ts`           |
+|            | `gen2/packages/core/components/[component]/[Component].types.ts`          |
+|            | `gen2/packages/swc/components/[component]/[Component].ts`                 |
+|            | Any mixins, controllers, or directives added for this component           |
+| CSS        | `gen2/packages/swc/components/[component]/[component].css`                |
+| Tests      | `gen2/packages/swc/components/[component]/test/[component].test.ts`       |
+|            | `gen2/packages/swc/components/[component]/test/[component].a11y.spec.ts`  |
+|            | Play functions within the stories file                                    |
+| Stories    | `gen2/packages/swc/components/[component]/stories/[component].stories.ts` |
 
 ### Step 3: Surface any guideline gaps
 

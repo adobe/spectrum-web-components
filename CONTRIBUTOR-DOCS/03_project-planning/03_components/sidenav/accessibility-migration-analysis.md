@@ -40,7 +40,7 @@
 
 ## Overview
 
-This doc describes how **`swc-sidenav`**, **`swc-sidenav-item`**, and **`swc-sidenav-heading`** should behave for accessibility in 2nd-gen, targeting **WCAG 2.2 Level AA**. It aligns with the [APG disclosure navigation example](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/) (vertical orientation) and prescribes use of `FocusgroupNavigationController` for arrow-key navigation.
+This doc describes how **`swc-sidenav`**, **`swc-sidenav-item`**, and **`swc-sidenav-heading`** should behave for accessibility in gen2, targeting **WCAG 2.2 Level AA**. It aligns with the [APG disclosure navigation example](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/) (vertical orientation) and prescribes use of `FocusgroupNavigationController` for arrow-key navigation.
 
 ### Also read
 
@@ -158,7 +158,7 @@ Category items map to the same concept as `swc-sidenav-heading` — they provide
 
 **Do not use the proxy click pattern for items with `href`.**
 
-In 1st-gen (`sp-sidenav-item`), the anchor `href` renders as a real `<a>` element and `handleClick` prevents default only when the item has no `href`. This is correct behavior. In 2nd-gen, the same constraint applies and must be treated as a hard requirement:
+In 1st-gen (`sp-sidenav-item`), the anchor `href` renders as a real `<a>` element and `handleClick` prevents default only when the item has no `href`. This is correct behavior. In gen2, the same constraint applies and must be treated as a hard requirement:
 
 - Items with `href` **must** render a real `<a href="...">` element in shadow DOM.
 - The `<a>` must be the element that receives focus and keyboard activation (Enter) for navigation.
@@ -263,7 +263,7 @@ list (aria-labelledby → heading id)
 
 #### Vertical arrow navigation via `FocusgroupNavigationController`
 
-Use `FocusgroupNavigationController` (from `2nd-gen/packages/core/controllers/focusgroup-navigation-controller/`) with `direction: 'vertical'` on the `swc-sidenav` host. This adds Up/Down arrow navigation between items as a keyboard efficiency enhancement on top of the base tab-order navigation from the APG model.
+Use `FocusgroupNavigationController` (from `gen2/packages/core/controllers/focusgroup-navigation-controller/`) with `direction: 'vertical'` on the `swc-sidenav` host. This adds Up/Down arrow navigation between items as a keyboard efficiency enhancement on top of the base tab-order navigation from the APG model.
 
 **Controller configuration:**
 

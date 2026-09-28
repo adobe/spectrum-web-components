@@ -120,6 +120,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
     },
     elements: () => this.swatches,
     isFocusableElement: (el: Swatch) => !el.disabled,
+    mirrorHorizontalInRTL: true,
   });
 
   public override focus(options?: FocusOptions): void {

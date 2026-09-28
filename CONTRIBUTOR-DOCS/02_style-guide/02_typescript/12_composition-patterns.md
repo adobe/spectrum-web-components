@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-gen TypeScript](README.md) / Composition patterns
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 TypeScript](README.md) / Composition patterns
 
 <!-- Document title (editable) -->
 
@@ -24,11 +24,11 @@
 
 <!-- Document content (editable) -->
 
-This guide explains when to use each composition pattern in 2nd-gen. There are four ways to share behavior between components: **mixins**, **controllers**, **directives**, and **interfaces**.
+This guide explains when to use each composition pattern in gen2. There are four ways to share behavior between components: **mixins**, **controllers**, **directives**, and **interfaces**.
 
 ## Overview
 
-| Pattern | What it does | Adds to class hierarchy? | Example in 2nd-gen |
+| Pattern | What it does | Adds to class hierarchy? | Example in gen2 |
 |---------|-------------|--------------------------|---------------------|
 | **Mixin** | Adds properties, methods, and lifecycle to a class | Yes | `SizedMixin`, `ObserveSlotText`, `ObserveSlotPresence` |
 | **Controller** | Attaches optional behavior to a host element | No | `LanguageResolutionController` |
@@ -47,7 +47,7 @@ Use a mixin when the shared behavior needs to **become part of the class**. Mixi
 - Lifecycle behavior that runs automatically (e.g. observing slot text changes)
 - Behavior that subclasses may need to override
 
-**Examples in 2nd-gen:**
+**Examples in gen2:**
 
 - `SizedMixin` — adds a `size` property with validation and default values
 - `ObserveSlotText` — observes slotted text content and sets `slotHasContent`
@@ -63,13 +63,13 @@ Use a controller when the behavior is **optional and self-contained**. Controlle
 - External service integration (e.g. language/locale resolution)
 - Behavior that should not affect the class's type signature
 
-**Examples in 2nd-gen:**
+**Examples in gen2:**
 
 - `LanguageResolutionController` — resolves the component's language from `<html lang>`, browser settings, or a provider
 
 ### Directive
 
-Use a directive when the shared logic is **template rendering logic**. Directives transform values in `html` templates. Lit provides many built-in directives; custom directives are possible but not currently used in 2nd-gen.
+Use a directive when the shared logic is **template rendering logic**. Directives transform values in `html` templates. Lit provides many built-in directives; custom directives are possible but not currently used in gen2.
 
 **Good for:**
 
@@ -78,7 +78,7 @@ Use a directive when the shared logic is **template rendering logic**. Directive
 - Dynamic styles (`styleMap`)
 - Handling undefined attribute values (`ifDefined`)
 
-**Examples in 2nd-gen (all built-in Lit directives):**
+**Examples in gen2 (all built-in Lit directives):**
 
 - `classMap` — builds a class string from an object
 - `when` — conditionally renders content
@@ -95,7 +95,7 @@ Use an interface when you need to define the **shape** of an object without addi
 - Defining callback signatures and config objects
 - Augmenting global types (e.g. `HTMLElementTagNameMap`)
 
-**Examples in 2nd-gen:**
+**Examples in gen2:**
 
 - `SizedElementInterface` — describes the public API of `SizedMixin`
 - `SlotTextObservingInterface` — describes the public API of `ObserveSlotText`

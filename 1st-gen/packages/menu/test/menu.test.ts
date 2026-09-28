@@ -302,6 +302,37 @@ describe('Menu', () => {
     );
   });
 
+  it('skips [hidden] menu items when navigating with the keyboard', async () => {
+    const el = await fixture<Menu>(html`
+      <sp-menu>
+        <sp-menu-item>First</sp-menu-item>
+        <sp-menu-item hidden>Hidden</sp-menu-item>
+        <sp-menu-item>Last</sp-menu-item>
+      </sp-menu>
+    `);
+
+    await waitUntil(
+      () => el.childItems.length == 3,
+      'expected menu to manage 3 items'
+    );
+    await elementUpdated(el);
+
+    const firstItem = el.querySelector(
+      'sp-menu-item:first-of-type'
+    ) as MenuItem;
+    const lastItem = el.querySelector('sp-menu-item:last-of-type') as MenuItem;
+
+    el.focus();
+    await elementUpdated(el);
+    expect(document.activeElement).to.equal(firstItem);
+
+    await sendKeys({ press: 'ArrowDown' });
+    expect(document.activeElement).to.equal(lastItem);
+
+    await sendKeys({ press: 'ArrowUp' });
+    expect(document.activeElement).to.equal(firstItem);
+  });
+
   it('handles hover and keyboard input', async () => {
     const el = await fixture<Menu>(html`
       <sp-menu>

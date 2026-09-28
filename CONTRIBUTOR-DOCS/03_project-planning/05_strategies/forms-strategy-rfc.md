@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Project planning](../README.md) / Strategies / Forms Strategy: 2nd-Gen Proposal
+[CONTRIBUTOR-DOCS](../../README.md) / [Project planning](../README.md) / Strategies / Forms Strategy: gen2 Proposal
 
 <!-- Document title (editable) -->
 
-# Forms Strategy: 2nd-Gen Proposal
+# Forms Strategy: gen2 Proposal
 
 <!-- Generated TOC - DO NOT EDIT -->
 
@@ -23,6 +23,7 @@
     - [3.2 Where ARIA roles live](#32-where-aria-roles-live)
     - [3.3 IDREF strategy: label, help text, and errors](#33-idref-strategy-label-help-text-and-errors)
     - [3.4 axe-core policy](#34-axe-core-policy)
+    - [3.5 Testing form participation](#35-testing-form-participation)
 - [4. Naming table](#4-naming-table)
 - [5. Migration path](#5-migration-path)
 - [6. Open questions](#6-open-questions)
@@ -34,7 +35,7 @@
 
 ## Summary
 
-This proposal records the team's recommended direction for **2nd-gen form fields** (text field, checkbox, radio, picker, combobox) before scaling migration. It synthesizes the proof-of-concept findings for text field and combobox as form-associated custom elements, plus the cross-root ARIA `referenceTarget` shim research. The core decisions are: form fields participate in forms through the **ElementInternals / form-associated custom element (FACE)** API; ARIA roles default to the **shadow DOM**, with an explicit host-role exception for button-like and radio-like controls (see [§3.2](#32-where-aria-roles-live)); label, help text, and error text associate through **IDREF relationships** that use a cross-root-safe pattern; and **axe-core** exclusions are documented, not silent.
+This proposal records the team's recommended direction for **gen2 form fields** (text field, checkbox, radio, picker, combobox) before scaling migration. It synthesizes the proof-of-concept findings for text field and combobox as form-associated custom elements, plus the cross-root ARIA `referenceTarget` shim research. The core decisions are: form fields participate in forms through the **ElementInternals / form-associated custom element (FACE)** API; ARIA roles default to the **shadow DOM**, with an explicit host-role exception for button-like and radio-like controls (see [§3.2](#32-where-aria-roles-live)); label, help text, and error text associate through **IDREF relationships** that use a cross-root-safe pattern; and **axe-core** exclusions are documented, not silent.
 
 
 > **Scope:** Form-field API and accessibility direction only. This proposal does **not** implement the shared controllers or migrate a production component; those are follow-up work.
@@ -65,7 +66,7 @@ This proposal records the team's recommended direction for **2nd-gen form fields
 
 ## 1. Why Change?
 
-1st-gen form controls vary in how they participate in forms, where roles live, and how label/help/error text is associated. Some rely on a nested light-DOM `<input>`; some manage validity by hand; cross-root ARIA relationships are inconsistent. Scaling 2nd-gen migration without a single agreed direction would multiply that inconsistency across every field. This proposal fixes the direction once so contributors do not re-litigate it per component.
+1st-gen form controls vary in how they participate in forms, where roles live, and how label/help/error text is associated. Some rely on a nested light-DOM `<input>`; some manage validity by hand; cross-root ARIA relationships are inconsistent. Scaling gen2 migration without a single agreed direction would multiply that inconsistency across every field. This proposal fixes the direction once so contributors do not re-litigate it per component.
 
 ---
 
@@ -81,7 +82,7 @@ This proposal records the team's recommended direction for **2nd-gen form fields
 
 ### 3.1 Form participation: ElementInternals / FACE
 
-2nd-gen form fields are **form-associated custom elements**: set `static formAssociated = true`, attach internals with `this.attachInternals()`, and mirror value through `setFormValue()`. Do not nest a hidden light-DOM `<input>` to participate in forms. A `setValidity()` pass-through on `FieldAssociationController` is proposed but not yet implemented (*pending research*); see [§6](#6-open-questions) before hand-rolling validity per component.
+gen2 form fields are **form-associated custom elements**: set `static formAssociated = true`, attach internals with `this.attachInternals()`, and mirror value through `setFormValue()`. Do not nest a hidden light-DOM `<input>` to participate in forms. A `setValidity()` pass-through on `FieldAssociationController` is proposed but not yet implemented (*pending research*); see [§6](#6-open-questions) before hand-rolling validity per component.
 
 - **Decision:** yes, adopt ElementInternals/FACE for form fields. The value is submitted via `internals.setFormValue(value)` on change, and the `formDisabledCallback(disabled)` lifecycle hook receives cascades from an ancestor `<fieldset disabled>` or an owning form.
 - **Shared controller:** a **`FieldAssociationController`** wraps `ElementInternals` to handle value submission, the disabled cascade, and form reset once, so text field, checkbox, and combobox do not each reimplement it.
@@ -104,16 +105,16 @@ A textbox or combobox exposes a **live value** to assistive technology, and that
 
 Hosts do **not** expose the raw `aria-label` / `aria-labelledby` attributes. Because of cross-root ARIA issues, and so consumers get one consistent API across every field instead of setting `aria-label` on the components that happen to support it (and then reaching for it on the ones that do not), fields expose the established **`accessible-label`** attribute for a string name, and the proposed **`accessible-labelledby`** / **`accessible-describedby`** attributes (properties `accessibleLabelledby` / `accessibleDescribedby`) for ID references to a name and a description respectively. This holds even for host-role controls (button-like, radio-like); see [§3.2](#32-where-aria-roles-live).
 
-A **`LabellingController`** (in flight as part of the text field epic; *pending research*) owns the wiring so fields do not hand-roll it: it watches the shadow DOM slots, shows or hides the internal label element based on slot content presence, and keeps the ARIA relationships in sync as content changes. Help text and error text associate through `aria-describedby` and `aria-errormessage`.
+A **`LabellingMixin`** owns the label wiring so fields do not hand-roll it: it watches the shadow DOM slots, shows or hides the internal label element based on slot content presence, and keeps the ARIA relationships in sync as content changes. **`HelpTextMixin`** owns help and error text rendering and association; its current invalid-state behavior replaces help text with error text. Components that need both a persistent description and an error must define that coexistence explicitly rather than assuming both remain associated. Use `aria-errormessage` only where the receiving role supports it, and retain `aria-describedby` for compatibility because browser and screen reader support for `aria-errormessage` remains inconsistent ([support is improving but incomplete](https://cerovac.com/a11y/2024/06/support-for-aria-errormessage-is-getting-better-but-still-not-there-yet/), [current support data](https://a11ysupport.io/tech/aria/aria-errormessage)).
 
 Two complementary sources feed the accessible name and description:
 
 - **Slotted content** (`slot="label"` / `slot="description"`) projects into the shadow DOM and wires through **same-root** `aria-labelledby` / `aria-describedby` pointing at the shadow-internal elements. This is a plain IDREF because both ends live in the same root.
-- **Light-DOM siblings** wire through the `accessible-labelledby` and `accessible-describedby` attributes, which resolve element IDs and, via the `LabellingController`, set the **cross-root element-reference properties** `ariaLabelledByElements` / `ariaDescribedByElements`, rather than raw IDREFs that cannot cross the shadow boundary.
+- **Light-DOM siblings** wire through the `accessible-labelledby` and `accessible-describedby` attributes, which resolve element IDs and, via the `LabellingMixin`, set the **cross-root element-reference properties** `ariaLabelledByElements` / `ariaDescribedByElements`, rather than raw IDREFs that cannot cross the shadow boundary.
 
 When both sources exist, the shadow-internal label appears first in the merged element-reference list. Error text associates the same way through `aria-errormessage`.
 
-- **Reference:** [semantic HTML and ARIA guide](../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx).
+- **Reference:** [semantic HTML and ARIA guide](../../../gen2/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx).
 
 ### 3.4 axe-core policy
 
@@ -132,7 +133,20 @@ Browsers currently lack a standardized path for axe-core to read ARIA relationsh
 - Add a **story-level or test-level exclusion with a written rationale**, not a silent global disable.
 - Include a `// reason:` comment linking the relevant upstream Deque / axe-core issue, and remove the exclusion once that issue ships a fix (review on a quarterly cadence).
 - Verify exposure with manual AT testing, particularly in **Firefox**, which handles `ElementInternals` ARIA less consistently than Chromium and Safari.
-- Align with the [Storybook test-runner axe usage](https://github.com/adobe/spectrum-web-components/blob/main/2nd-gen/packages/swc/.storybook/test-runner.ts). The [ElementInternals and axe-core guide](../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/element_internals_axe_core.mdx) in the [accessibility guides](../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/) is the detailed reference for axe-core's current `ElementInternals` support and known gaps.
+- Align with the [Storybook test-runner axe usage](https://github.com/adobe/spectrum-web-components/blob/main/gen2/packages/swc/.storybook/test-runner.ts). The [ElementInternals and axe-core guide](../../../gen2/packages/swc/.storybook/guides/accessibility-guides/element_internals_axe_core.mdx) in the [accessibility guides](../../../gen2/packages/swc/.storybook/guides/accessibility-guides/) is the detailed reference for axe-core's current `ElementInternals` support and known gaps.
+
+### 3.5 Testing form participation
+
+Every form-associated component (text field, checkbox, checkbox group, radio group, picker, combobox, and any future field) must **prove** its form participation, not just its ARIA. Because the whole point of FACE is behaving like a native control inside a real form, both the stories and the automated tests must exercise the component **inside a native `<form>`** (use a native `<form>` for now; move to a dedicated form component once one exists). This is a requirement for all such components, not a per-component choice.
+
+Every form-associated component's story set and test suite must cover the full form lifecycle:
+
+- **Value on submit:** submitting the form yields the expected `FormData`. A control contributes its `name`/`value` when it has a value and contributes nothing when it does not (an unchecked checkbox, an empty field). Grouped multi-select controls (checkbox group) contribute one entry per selected item under the shared `name`; single-value controls (radio group, picker) contribute one entry.
+- **Validation:** a `required` (or otherwise constrained) control blocks submission and reports validity (`:invalid`/`:user-invalid`, `checkValidity()`/`reportValidity()`), and the invalid state clears once the constraint is satisfied. Validate at the level the constraint lives (per item for a standalone required checkbox; at the group for "select at least one" or "choose exactly one").
+- **Reset:** `form.reset()` restores every control to its default value via `formResetCallback()`.
+- **Getting the value:** the value read on submit matches the value read programmatically, across the checked/selected, unchecked/empty, and post-reset states.
+
+A single story that renders the component in a `<form>` with a submit button and a reset button doubles as the consumer-facing example and the fixture these tests drive. Use **native** `<button type="submit">` and `<button type="reset">` for now: hold off on a Spectrum button for the submit/reset controls until the clear-button component ships and the button form-association fast-follow is complete (the button-activation open question in [§6](#6-open-questions)). The field under test is the form-associated 2nd-gen component; the surrounding submit/reset controls stay native until then.
 
 ---
 
@@ -145,16 +159,16 @@ The canonical surface for form fields. Contributors align Phase 3 (API) and Phas
 | Form participation | `static formAssociated = true` + `attachInternals()`, wrapped by `FieldAssociationController` | Value submitted via `internals.setFormValue(value)`. |
 | Label surface (visible) | Default slot when the label is the component's only or primary content; named `slot="label"` when it is supplementary to other primary content | Primary-vs-supplementary rule; pending the slot-API research decision. |
 | Accessible name (no visible label) | `accessible-label` attribute | Established convention; do **not** expose raw `aria-label` on the host. |
-| Help / description surface | `slot="description"`, wired by `LabellingController` | Associates via `aria-describedby`. |
-| Error text surface | Error text wired by `LabellingController` | Associates via `aria-errormessage`. |
+| Help / description surface | `slot="description"`, wired by `HelpTextMixin` | Associates through a role-appropriate ARIA description relationship. |
+| Error text surface | Error text wired by `HelpTextMixin` | Associates through a role-appropriate ARIA description/error relationship; retain `aria-describedby` when using `aria-errormessage` for compatibility. |
 | Disabled cascade | `formDisabledCallback(disabled)` | Receives cascade from ancestor `<fieldset disabled>` or owning form. |
 | Reset | `formResetCallback()` | Restores the field to its default value on form reset. |
-| Cross-root name from light DOM | `accessible-labelledby` attribute (property `accessibleLabelledby`) → `ariaLabelledByElements` via `LabellingController` *(pending research)* | Element references, not raw IDREFs; do **not** expose raw `aria-labelledby`. |
-| Cross-root description from light DOM | `accessible-describedby` attribute (property `accessibleDescribedby`) → `ariaDescribedByElements` via `LabellingController` *(pending research)* | Element references, not raw IDREFs; do **not** expose raw `aria-describedby`. |
+| Cross-root name from light DOM | `accessible-labelledby` attribute (property `accessibleLabelledby`) → `ariaLabelledByElements` via `LabellingMixin` | Element references, not raw IDREFs; do **not** expose raw `aria-labelledby`. |
+| Cross-root description from light DOM | `accessible-describedby` attribute (property `accessibleDescribedby`) → `ariaDescribedByElements` via `LabellingMixin` | Element references, not raw IDREFs; do **not** expose raw `aria-describedby`. |
 
 | Component class | Role placement | Internals (FACE) | IDREF approach | axe note |
 |-----------------|----------------|------------------|----------------|----------|
-| Text-like (text field) | inner control in shadow DOM | `FieldAssociationController` | `LabellingController` (slotted same-root + light-DOM element refs) | `label` false positive on host |
+| Text-like (text field) | inner control in shadow DOM | `FieldAssociationController` | `LabellingMixin` (slotted same-root + light-DOM element refs) | `label` false positive on host |
 | Button-like (clear / submit) | **host**, via `ElementInternals` (see [§3.2 exception](#32-where-aria-roles-live)) | `ButtonAssociationController` *(pending research)* | n/a | verify role and activation exposure manually |
 | Grouped selection — group container (radio group) | **host**, via `ElementInternals` (see [§3.2 exception](#32-where-aria-roles-live)): `role="radiogroup"` | group-level validity (required/invalid), coordinated by `RadioGroupController` *(pending research)* | host-attached labelling (no native container element to anchor a same-root IDREF to) | verify group semantics manually |
 | Grouped selection — item (radio) | **shadow DOM**, the general rule, not the host exception: a native `<input type="radio">` inside the item's own shadow root | per-item `FieldAssociationController` | same-root labelling, anchored to the inner input (matches text-like fields) | verify `aria-checked` and per-item labelling manually |
@@ -165,8 +179,9 @@ The canonical surface for form fields. Contributors align Phase 3 (API) and Phas
 
 Contributors migrating a form field follow the washing machine workflow with these additions:
 
-- **Phase 3 (API):** wire form participation and name the API from the [naming table](#4-naming-table). See [Washing machine workflow, Phase 3](../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-3-api-migration).
-- **Phase 4 (accessibility):** wire label, help text, and errors per [§3.3](#33-idref-strategy-label-help-text-and-errors), and satisfy the axe policy in [§3.4](#34-axe-core-policy). See [Washing machine workflow, Phase 4](../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-4-accessibility).
+- **Phase 3 (API):** wire form participation and name the API from the [naming table](#4-naming-table). See [Washing machine workflow, Phase 3](../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-3-api-migration).
+- **Phase 4 (accessibility):** wire label, help text, and errors per [§3.3](#33-idref-strategy-label-help-text-and-errors), and satisfy the axe policy in [§3.4](#34-axe-core-policy). See [Washing machine workflow, Phase 4](../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-4-accessibility).
+- **Phase 6 (testing):** add stories and tests that exercise the component inside a native `<form>` and cover the full form lifecycle (value on submit, validation, reset, getting the value) per [§3.5](#35-testing-form-participation). See [Washing machine workflow, Phase 6](../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-6-testing).
 
 ---
 
@@ -177,7 +192,7 @@ These are active research spikes; their outcomes finalize the *pending research*
 - **Button activation:** whether a dedicated `ButtonAssociationController` is needed for button-like fields (clear button, a future submit button), or whether a native inner `<button>` already covers keyboard activation, role, and focusability.
 - **Grouped selection:** whether a dedicated `RadioGroupController` is needed for radio group (composing `SelectionController`, `FocusgroupNavigationController`, and `SlotAttributePropagationController`), or whether those primitives are composed inline.
 - **Label slot rule:** confirming the primary-vs-supplementary rule for default slot vs named `slot="label"` holds across all migrated components, and how it relates to the `accessible-label` attribute used for no-visible-label cases.
-- **`accessible-labelledby` / `accessible-describedby` and `LabellingController`:** the cross-root name and description mappings are part of the in-flight text field epic and not yet in the codebase; the exact API and whether the controller wiring lands separately from the attributes is still under discussion.
+- **`accessible-labelledby` / `accessible-describedby` and `LabellingMixin`:** the cross-root name and description mappings are implemented through the shared mixin; components must still verify the exact role-specific association behavior and avoid prescribing unsupported ARIA states.
 
 ---
 
@@ -186,5 +201,5 @@ These are active research spikes; their outcomes finalize the *pending research*
 The form-strategy proof-of-concept documents the controllers and the axe policy this proposal is based on:
 
 - Repository: [web-component-form-strategy-demos](https://github.com/nikkimk/web-component-form-strategy-demos).
-- Controllers: `FieldAssociationController`, `LabellingController`, `ButtonAssociationController`, `RadioGroupController` (composing `SelectionController`, `FocusgroupNavigationController`, `SlotAttributePropagationController`).
+- Controllers and mixins: `FieldAssociationController`, `LabellingMixin`, `HelpTextMixin`, `ButtonAssociationController`, `RadioGroupController` (composing `SelectionController`, `FocusgroupNavigationController`, `SlotAttributePropagationController`).
 - axe-core policy and `ElementInternals` gaps: see the repository's [axe-core policy section](https://github.com/nikkimk/web-component-form-strategy-demos/tree/main#axe-core-policy-and-elementinternals).
