@@ -1,6 +1,6 @@
 {
   "name": "@adobe/spectrum-wc-core",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0-beta.4",
   "description": "Abstract base classes for Spectrum Web Components",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -278,6 +278,14 @@
     "./controllers/slot-text-controller/index.js": {
       "types": "./dist/controllers/slot-text-controller/index.d.ts",
       "import": "./dist/controllers/slot-text-controller/index.js"
+    },
+    "./controllers/trigger-press-controller": {
+      "types": "./dist/controllers/trigger-press-controller/index.d.ts",
+      "import": "./dist/controllers/trigger-press-controller/index.js"
+    },
+    "./controllers/trigger-press-controller/index.js": {
+      "types": "./dist/controllers/trigger-press-controller/index.d.ts",
+      "import": "./dist/controllers/trigger-press-controller/index.js"
     },
     "./directives": {
       "types": "./dist/directives/index.d.ts",
@@ -562,6 +570,12 @@
       ],
       "controllers/slot-text-controller/index.js": [
         "dist/controllers/slot-text-controller/index.d.ts"
+      ],
+      "controllers/trigger-press-controller": [
+        "dist/controllers/trigger-press-controller/index.d.ts"
+      ],
+      "controllers/trigger-press-controller/index.js": [
+        "dist/controllers/trigger-press-controller/index.d.ts"
       ],
       "directives": [
         "dist/directives/index.d.ts"

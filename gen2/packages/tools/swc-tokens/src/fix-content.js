@@ -24,7 +24,7 @@
  * @param {string} content - CSS source to transform
  * @param {Record<string, string>} renamed - deprecated+renamed token map { old → new }
  * @param {Record<string, string | null>} deleted - curated deleted token map
- * @returns {{ result: string, replacements: Array<{kind: string, from: string, to?: string}> }}
+ * @returns {{ result: string, replacements: Array<{kind: string, from: string, to?: string}> }} The transformed CSS and the list of replacements applied.
  */
 export function fixContent(content, renamed, deleted) {
   const re = /token\(\s*(['"])([\w-]+)\1\s*\)/g;

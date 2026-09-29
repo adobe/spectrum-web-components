@@ -122,7 +122,9 @@ jobs:
       - name: Version gen1 packages (snapshot)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: (cd 1st-gen && yarn changeset version --snapshot ${{ steps.extract-tag.outputs.tag }})
+        run: |
+          (cd 1st-gen && yarn changeset version --snapshot ${{ steps.extract-tag.outputs.tag }})
+          node scripts/generate-versions.js --gen=1st-gen
 
       - name: Capture released versions
         id: versions
@@ -247,6 +249,7 @@ jobs:
         run: |
           yarn workspace @spectrum-web-components/1st-gen changelog:1st-gen
           (cd 1st-gen && yarn changeset version)
+          node scripts/generate-versions.js --gen=1st-gen
           yarn install --refresh-lockfile
 
       - name: Open or update the gen1 Version PR

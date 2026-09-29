@@ -230,7 +230,6 @@ export const Orientation: Story = {
   },
   tags: ['options'],
 };
-Orientation.storyName = 'Orientation';
 
 /** Same prose for each horizontal thickness so snapshots emphasize divider weight only. */
 const STATIC_COLORS_HORIZONTAL_COPY = {

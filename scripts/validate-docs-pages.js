@@ -108,7 +108,7 @@ const SECTION_TAGS = ['anatomy', 'options', 'states', 'behaviors', 'a11y'];
  *   requireMeta: boolean,
  *   requireCanvasForTaggedStories: boolean,
  *   storiesGlob: string | null,
- * }}
+ * }} The resolved genre and validation rules for the file.
  */
 function classify(relPath) {
   // Internal components (exclude migration guides that happen to use the

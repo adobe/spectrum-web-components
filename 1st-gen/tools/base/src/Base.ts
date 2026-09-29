@@ -12,7 +12,7 @@
 
 import { LitElement, ReactiveElement } from 'lit';
 
-import { coreVersion, version } from './version.js';
+import { version } from './version.js';
 
 type Constructor<T = Record<string, unknown>> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -86,11 +86,6 @@ export class SpectrumElement extends SpectrumMixin(LitElement) {
    * The version of the 1st-gen Spectrum Web Components library.
    */
   static VERSION = version;
-
-  /**
-   * The version of the core base package.
-   */
-  static CORE_VERSION = coreVersion;
 
   public override get dir(): CSSStyleDeclaration['direction'] {
     return getComputedStyle(this).direction ?? 'ltr';
