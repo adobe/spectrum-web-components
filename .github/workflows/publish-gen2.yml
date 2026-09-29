@@ -48,7 +48,25 @@ jobs:
         run: |
           # Independent of 1st-gen in every trigger - this workflow never reads
           # 1st-gen/.changeset/.
-          COUNT=$(find gen2/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
+          # In pre mode `changeset version` leaves consumed changesets on disk and lists
+          # them in pre.json, so only files missing from that list are still pending.
+          # Counting every *.md would never reach 0 after a release PR merges, leaving
+          # the publish job permanently skipped.
+          COUNT=$(node -e "
+            const fs = require('fs');
+            const dir = 'gen2/.changeset';
+            const preFile = dir + '/pre.json';
+            const consumed = new Set(
+              fs.existsSync(preFile)
+                ? JSON.parse(fs.readFileSync(preFile, 'utf8')).changesets
+                : []
+            );
+            const pending = fs
+              .readdirSync(dir)
+              .filter((f) => f.endsWith('.md') && f !== 'README.md')
+              .filter((f) => !consumed.has(f.replace(/\.md\$/, '')));
+            console.log(pending.length);
+          ")
 
           if [ "$COUNT" -ne 0 ]; then
             echo "has_changesets=true" >> $GITHUB_OUTPUT
