@@ -647,18 +647,18 @@ Planned rendering shape:
 
 ### Testing
 
-- [ ] Port applicable coverage from [`1st-gen/packages/menu/test/menu.test.ts`](../../../../1st-gen/packages/menu/test/menu.test.ts) (core `Menu` behavior — child registration, focus management, close-on-select for non-selects items)
+- [x] Port applicable coverage from [`1st-gen/packages/menu/test/menu.test.ts`](../../../../1st-gen/packages/menu/test/menu.test.ts) (core `Menu` behavior — child registration, focus management, close-on-select for non-selects items) — `2nd-gen/packages/swc/components/menu/test/menu.test.ts`
 - [ ] *(Phase C, not this pass)* [`menu-selects.test.ts`](../../../../1st-gen/packages/menu/test/menu-selects.test.ts) coverage ports when selection ships; track as a follow-up ticket alongside the deferred selection work (decided to stay Additive, [Q5](#blockers-and-open-questions))
 - [ ] *(Phase B, not this pass)* [`submenu.test.ts`](../../../../1st-gen/packages/menu/test/submenu.test.ts) coverage (open/close, deep-tree focus) ports when submenus ship; drop the `mobile view` and `touch interactions` describe blocks regardless, or track them against [A8](#deferred-to-later-phases)
 - [ ] Do **not** port [`menu-memory.test.ts`](../../../../1st-gen/packages/menu/test/menu-memory.test.ts) coverage as-is if it exercises the mobile drilldown/projection paths being dropped; re-scope to whatever memory-leak surface remains
-- [ ] Add Playwright `menu.a11y.spec.ts` with `toMatchAriaSnapshot`
+- [x] Add Playwright `menu.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Behavior
 
-- [ ] Open/close from trigger (press, and per the a11y analysis's `MenuTrigger`-equivalent `trigger` modes if adopted from React Spectrum S2)
-- [ ] Arrow key / Home / End movement via `FocusgroupNavigationController` (`direction: 'vertical'`, `wrap: true`); wrap-around at first/last item covered explicitly, not just linear movement
-- [ ] Escape closes and returns focus to the trigger
-- [ ] Disabled item is focusable but not activatable
+- [x] Open/close from trigger (press); `MenuTrigger`-equivalent `trigger` modes not adopted this pass
+- [x] Arrow key / Home / End movement via `FocusgroupNavigationController` (`direction: 'vertical'`, `wrap: true`); wrap-around at first/last item covered explicitly, not just linear movement
+- [x] Escape closes and returns focus to the trigger
+- [ ] Disabled item is focusable but not activatable — blocked on `swc-menu-item` shipping
 - [ ] *(Not this pass — `swc-menu-link`, unscheduled)* Link item activates via native anchor semantics only (no duplicate `change`); tracked under [Q17](#cross-component-follow-ups-not-blocking-swc-menu), not `swc-menu-item`'s own test coverage
 - [ ] *(Phase B, not this pass)* Submenu open/close and nested keyboard behavior, once `swc-menu-item`'s submenu exists (no `swc-popover` dependency — see [Architecture](#architecture-core-vs-swc-split))
 
