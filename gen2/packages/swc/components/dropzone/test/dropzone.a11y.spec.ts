@@ -91,20 +91,7 @@ test.describe('Drop Zone - ARIA snapshots', () => {
     `);
   });
 
-  test('host element is not keyboard focusable', async ({ page }) => {
-    const root = await gotoStory(
-      page,
-      'components-drop-zone--overview',
-      'swc-dropzone'
-    );
-    const dropzone = root.locator('swc-dropzone');
-    await expect(dropzone).not.toBeFocused();
-    // Tab once; focus should not land on the host.
-    await page.keyboard.press('Tab');
-    await expect(dropzone).not.toBeFocused();
-  });
-
-  test('browse button is the first keyboard-focusable element', async ({
+  test('browse button is first in the tab order and the host is not a tab stop', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -112,8 +99,12 @@ test.describe('Drop Zone - ARIA snapshots', () => {
       'components-drop-zone--overview',
       'swc-dropzone'
     );
+    const dropzone = root.locator('swc-dropzone');
     const browseButton = root.locator('swc-button');
+    await expect(dropzone).not.toHaveAttribute('tabindex');
     await page.keyboard.press('Tab');
     await expect(browseButton).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(dropzone).not.toBeFocused();
   });
 });

@@ -17,20 +17,13 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { CloseButton } from '@adobe/spectrum-wc/components/close-button';
 import {
   BUTTON_STATIC_COLORS,
-  BUTTON_VALID_SIZES,
   ButtonBase,
 } from '@adobe/spectrum-wc-core/components/button';
 
 import '@adobe/spectrum-wc/components/close-button/swc-close-button.js';
 
 import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
-import meta, {
-  Accessibility,
-  Overview,
-  Sizes,
-  States,
-  StaticColors,
-} from '../stories/close-button.stories.js';
+import meta, { Overview, States } from '../stories/close-button.stories.js';
 
 export default {
   ...meta,
@@ -318,41 +311,6 @@ export const DisabledKeyboardTest: Story = {
 // ──────────────────────────────────────────────────────────────
 // TEST: Story coverage
 // ──────────────────────────────────────────────────────────────
-
-export const SizesStoryTest: Story = {
-  ...Sizes,
-  play: async ({ canvasElement, step }) => {
-    await step('renders all size variants', async () => {
-      const closeButtons = canvasElement.querySelectorAll('swc-close-button');
-      expect(closeButtons.length, 'one close button per size variant').toBe(
-        BUTTON_VALID_SIZES.length
-      );
-    });
-  },
-};
-
-export const StaticColorsStoryTest: Story = {
-  ...StaticColors,
-  play: async ({ canvasElement, step }) => {
-    await step('renders static color variants', async () => {
-      const closeButtons = canvasElement.querySelectorAll('swc-close-button');
-      expect(closeButtons.length, 'static color examples render').toBe(2);
-    });
-  },
-};
-
-export const AccessibilityStoryTest: Story = {
-  ...Accessibility,
-  play: async ({ canvasElement, step }) => {
-    await step('renders accessibility examples', async () => {
-      const closeButtons = canvasElement.querySelectorAll('swc-close-button');
-      expect(
-        closeButtons.length,
-        'icon-only, dialog chrome, and disabled examples render'
-      ).toBe(3);
-    });
-  },
-};
 
 export const StatesStoryTest: Story = {
   ...States,

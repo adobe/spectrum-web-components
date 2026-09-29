@@ -438,7 +438,7 @@ export const LocaleFormattingTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Reflected attributes from shared stories
+// TEST: Size and variant rendering from shared stories
 // ──────────────────────────────────────────────────────────────
 
 export const SizesTest: Story = {
@@ -446,11 +446,17 @@ export const SizesTest: Story = {
   play: async ({ canvasElement, step }) => {
     const meters = await getComponents<Meter>(canvasElement, 'swc-meter');
 
-    await step('each meter reflects a valid size attribute', () => {
-      meters.forEach((meter) => {
-        const size = meter.getAttribute('size');
-        expect(['s', 'm', 'l', 'xl']).toContain(size);
-      });
+    await step('renders every size with increasing track thickness', () => {
+      expect(meters.map((meter) => meter.size)).toEqual(['s', 'm', 'l', 'xl']);
+      const thicknesses = meters.map((meter) =>
+        parseFloat(getComputedStyle(getFillEl(meter)).blockSize)
+      );
+      expect(
+        thicknesses.every(
+          (thickness, index) =>
+            thickness > 0 && (index === 0 || thickness > thicknesses[index - 1])
+        )
+      ).toBe(true);
     });
   },
 };
@@ -460,21 +466,25 @@ export const VariantsTest: Story = {
   play: async ({ canvasElement, step }) => {
     const meters = await getComponents<Meter>(canvasElement, 'swc-meter');
 
-    await step('each meter reflects a valid variant attribute', () => {
-      meters.forEach((meter) => {
-        const variant = meter.getAttribute('variant');
-        expect(['informative', 'positive', 'notice', 'negative']).toContain(
-          variant
-        );
-      });
+    await step('renders every variant with a distinct fill color', () => {
+      expect(meters.map((meter) => meter.variant)).toEqual([
+        'informative',
+        'positive',
+        'notice',
+        'negative',
+      ]);
+      const colors = meters.map(
+        (meter) => getComputedStyle(getFillEl(meter)).backgroundColor
+      );
+      expect(new Set(colors).size).toBe(4);
     });
   },
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Static-color reflection (restores coverage for the
-// `!test` StaticColors story, which axe cannot evaluate against
-// the decorator gradient).
+// TEST: Static-color styling and property mutation.
+// The `!test` docs story and this .test.ts story are excluded from the
+// ci-a11y Storybook build, so this does not provide axe coverage.
 // ──────────────────────────────────────────────────────────────
 
 export const StaticColorsTest: Story = {
@@ -490,9 +500,34 @@ export const StaticColorsTest: Story = {
   play: async ({ canvasElement, step }) => {
     const meters = await getComponents<Meter>(canvasElement, 'swc-meter');
 
-    await step('each meter reflects its static-color attribute', () => {
-      const colors = meters.map((meter) => meter.getAttribute('static-color'));
-      expect(colors).toEqual(['white', 'black']);
-    });
+    await step(
+      'applies white and black static-color text and fill',
+      async () => {
+        expect(meters).toHaveLength(2);
+        const [white, black] = meters as [Meter, Meter];
+        const textColor = (meter: Meter) =>
+          getComputedStyle(
+            getRoleEl(meter).querySelector<HTMLElement>(
+              '.swc-LinearProgress-value'
+            )!
+          ).color;
+        const fillColor = (meter: Meter) =>
+          getComputedStyle(getFillEl(meter)).backgroundColor;
+
+        expect(textColor(white)).toBe('rgb(255, 255, 255)');
+        expect(textColor(black)).toBe('rgb(0, 0, 0)');
+        const blackFill = fillColor(black);
+        expect(fillColor(white)).not.toBe(blackFill);
+
+        white.staticColor = 'black';
+        await white.updateComplete;
+        expect(white.getAttribute('static-color')).toBe('black');
+        expect(textColor(white)).toBe(textColor(black));
+        expect(fillColor(white)).toBe(blackFill);
+
+        white.staticColor = 'white';
+        await white.updateComplete;
+      }
+    );
   },
 };

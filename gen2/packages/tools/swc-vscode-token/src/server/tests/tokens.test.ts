@@ -67,7 +67,7 @@ describe('TokenStore', () => {
     ]);
   });
 
-  it('clears suggestion candidates when load fails', () => {
+  it('clears token metadata when load fails', () => {
     const store = new TokenStore({
       tokens: {
         'accent-color': 'var(--swc-accent-color)',
@@ -75,16 +75,29 @@ describe('TokenStore', () => {
       renamed: {
         'legacy-accent': 'accent-color',
       },
+      deleted: {
+        'removed-accent': null,
+      },
+      deprecatedComments: {
+        'removed-accent': 'Use another color.',
+      },
     });
 
     const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'token-store-'));
     const brokenJsonPath = path.join(tmpDir, 'broken.json');
     fs.writeFileSync(brokenJsonPath, '{invalid-json', 'utf8');
 
-    store.load(brokenJsonPath);
+    try {
+      store.load(brokenJsonPath);
 
-    expect(store.all()).toEqual([]);
-    expect(store.candidates()).toEqual([]);
-    expect(store.replacementFor('legacy-accent')).toBeUndefined();
+      expect(store.all()).toEqual([]);
+      expect(store.candidates()).toEqual([]);
+      expect(store.replacementFor('legacy-accent')).toBeUndefined();
+      expect(store.isDeleted('removed-accent')).toBe(false);
+      expect(store.deletionReplacementFor('removed-accent')).toBeUndefined();
+      expect(store.commentFor('removed-accent')).toBeUndefined();
+    } finally {
+      fs.rmSync(tmpDir, { recursive: true });
+    }
   });
 });

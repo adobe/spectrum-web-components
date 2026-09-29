@@ -400,20 +400,25 @@ export const AgenticApiTest: Story = {
       }
     );
 
-    await step('updates rendered steps when step status changes', async () => {
-      const stepEl = el.querySelector('swc-response-status-step') as
-        | (HTMLElement & { updateComplete?: Promise<boolean> })
-        | null;
+    await step('step status change renders the stopped icon', async () => {
+      const stepEl = el.querySelector<ResponseStatusStep>(
+        'swc-response-status-step'
+      );
       stepEl?.setAttribute('status', 'stopped');
       await stepEl?.updateComplete;
 
       await waitFor(
         () => {
-          const statuses = Array.from(
-            el.querySelectorAll('swc-response-status-step')
-          ).map((renderedStep) => renderedStep.getAttribute('status'));
-
-          expect(statuses).toEqual(['stopped', 'active', 'complete']);
+          expect(
+            stepEl?.shadowRoot?.querySelector(
+              '.swc-ResponseStatusStep-icon--stopped'
+            )
+          ).toBeTruthy();
+          expect(
+            stepEl?.shadowRoot?.querySelector(
+              '.swc-ResponseStatusStep-icon--active'
+            )
+          ).toBeNull();
         },
         { timeout: 2000 }
       );

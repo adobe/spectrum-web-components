@@ -131,7 +131,18 @@ test.describe('ButtonGroup - Keyboard Interactions', () => {
     const firstButton = page.locator('swc-button').first();
     await firstButton.focus();
     await expect(firstButton).toBeFocused();
+    await firstButton.evaluate((el) => {
+      const button = el as HTMLElement & { __clickCount: number };
+      button.__clickCount = 0;
+      button.addEventListener('click', () => button.__clickCount++);
+    });
     await page.keyboard.press('Enter');
+    expect(
+      await firstButton.evaluate(
+        (el) => (el as HTMLElement & { __clickCount: number }).__clickCount
+      ),
+      'Enter activates the slotted button'
+    ).toBe(1);
   });
 
   test('button is activatable via Space key', async ({ page }) => {
@@ -144,7 +155,18 @@ test.describe('ButtonGroup - Keyboard Interactions', () => {
     const firstButton = page.locator('swc-button').first();
     await firstButton.focus();
     await expect(firstButton).toBeFocused();
+    await firstButton.evaluate((el) => {
+      const button = el as HTMLElement & { __clickCount: number };
+      button.__clickCount = 0;
+      button.addEventListener('click', () => button.__clickCount++);
+    });
     await page.keyboard.press('Space');
+    expect(
+      await firstButton.evaluate(
+        (el) => (el as HTMLElement & { __clickCount: number }).__clickCount
+      ),
+      'Space activates the slotted button'
+    ).toBe(1);
   });
 });
 

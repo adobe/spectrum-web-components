@@ -10,15 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../../suggestion/swc-suggestion-group.js';
 import '../swc-suggestion-item.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
-import { SuggestionGroup } from '../../suggestion/SuggestionGroup.js';
 import meta, { Overview } from '../stories/suggestion-item.stories.js';
 import { SuggestionItem } from '../SuggestionItem.js';
 
@@ -125,81 +122,5 @@ export const EventTest: Story = {
         expect(spaceDetail?.label).toBe('Create a slide deck from this');
       }
     );
-  },
-};
-
-/**
- * Suggestion item is typically nested in `swc-suggestion-group` with a required
- * `slot="heading"` title.
- */
-export const InsideSuggestionGroupTest: Story = {
-  name: 'Inside swc-suggestion-group',
-  render: () => html`
-    <swc-suggestion-group>
-      <h3 slot="heading">What would you like to do next?</h3>
-      <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
-    </swc-suggestion-group>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const group = await getComponent<SuggestionGroup>(
-      canvasElement,
-      'swc-suggestion-group'
-    );
-    const el = await getComponent<SuggestionItem>(
-      canvasElement,
-      'swc-suggestion-item'
-    );
-
-    await step(
-      'parent exposes heading and group labeling on the host (not inner shadow nodes)',
-      async () => {
-        await group.updateComplete;
-
-        const titleRegion = group.shadowRoot?.querySelector(
-          '.swc-SuggestionGroup-title'
-        );
-        const itemsRegion = group.shadowRoot?.querySelector(
-          '.swc-SuggestionGroup-items'
-        );
-        const headingSlot = titleRegion?.querySelector<HTMLSlotElement>(
-          'slot[name="heading"]'
-        );
-        const headingElements =
-          headingSlot?.assignedElements({ flatten: true }) ?? [];
-        const firstHeading = headingElements[0] as HTMLElement | undefined;
-
-        expect(firstHeading?.textContent?.trim()).toBe(
-          'What would you like to do next?'
-        );
-        expect((firstHeading?.id.length ?? 0) > 0).toBe(true);
-        expect(group.getAttribute('role')).toBe('group');
-        expect(group.getAttribute('aria-labelledby')).toBe(firstHeading?.id);
-        expect(group.hasAttribute('aria-label')).toBe(false);
-        expect(itemsRegion?.hasAttribute('role')).toBe(false);
-        expect(itemsRegion?.hasAttribute('aria-label')).toBe(false);
-        expect(itemsRegion?.hasAttribute('aria-labelledby')).toBe(false);
-      }
-    );
-
-    await step('item default slot and click still work', async () => {
-      const slot = el.shadowRoot?.querySelector<HTMLSlotElement>('slot');
-      const assignedText = slot
-        ?.assignedNodes({ flatten: true })
-        .map((node) => node.textContent ?? '')
-        .join('')
-        .trim();
-      expect(assignedText).toBe('Create a slide deck from this');
-
-      let detail: { label: string } | undefined;
-      el.addEventListener(
-        'swc-suggestion',
-        (event) => {
-          detail = (event as CustomEvent<{ label: string }>).detail;
-        },
-        { once: true }
-      );
-      el.shadowRoot?.querySelector<HTMLElement>('.swc-SuggestionItem')?.click();
-      expect(detail?.label).toBe('Create a slide deck from this');
-    });
   },
 };

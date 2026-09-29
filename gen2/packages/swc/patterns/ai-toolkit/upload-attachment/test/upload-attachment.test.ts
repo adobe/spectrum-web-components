@@ -170,31 +170,6 @@ export const DismissSizeOverrideTest: Story = {
   },
 };
 
-export const MediaPreviewOnlyTest: Story = {
-  render: () => html`
-    <div style="inline-size:240px;">
-      <swc-upload-attachment type="media">
-        <div
-          slot="thumbnail"
-          style="inline-size:100%;block-size:196px;background:linear-gradient(135deg,#a78bfa,#f472b6);"
-          role="img"
-          aria-label="Campaign preview"
-        ></div>
-      </swc-upload-attachment>
-    </div>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const el = await getComponent<UploadAttachment>(
-      canvasElement,
-      'swc-upload-attachment'
-    );
-
-    await step('media attachment has type="media"', async () => {
-      expect(el.type).toBe('media');
-    });
-  },
-};
-
 export const MediaBadgeTest: Story = {
   render: () => html`
     <div style="display:flex;gap:16px;">

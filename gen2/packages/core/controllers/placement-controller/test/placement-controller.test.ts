@@ -176,20 +176,50 @@ export const StopOnDisconnect: Story = {
       canvasElement,
       'demo-placement-test-fixture'
     );
-    await waitFor(() => expect(host.floatingEl.style.translate).not.toBe(''));
-    const before = host.floatingEl.style.translate;
-
-    await step('disconnect freezes translate', () => {
-      host.remove();
-      // `disconnectedCallback` fires synchronously, so by the time this
-      // line returns the controller has called `stop()` (autoUpdate
-      // listeners removed, session nulled). A subsequent in-flight
-      // `computePlacement` would still bail at the session check before
-      // writing — so dispatching a resize here is a no-op, kept only as
-      // documentation of intent.
-      window.dispatchEvent(new Event('resize'));
-      expect(host.floatingEl.style.translate).toBe(before);
+    const trigger = document.createElement('button');
+    Object.assign(trigger.style, {
+      position: 'fixed',
+      left: '200px',
+      top: '150px',
+      width: '40px',
+      height: '40px',
     });
+    const floating = document.createElement('div');
+    Object.assign(floating.style, {
+      position: 'fixed',
+      width: '80px',
+      height: '40px',
+    });
+    canvasElement.append(trigger, floating);
+
+    try {
+      const placements: string[] = [];
+      host.controller.start(trigger, floating, {
+        placement: 'bottom',
+        shouldFlip: false,
+        onPlacementChange: (placement) => placements.push(placement),
+      });
+      await waitFor(() => expect(placements).toEqual(['bottom']));
+
+      await step('disconnect invalidates an in-flight compute', async () => {
+        // Keep both measured elements connected: removing the host alone
+        // must not make a stale compute harmless by giving it zero-size boxes.
+        host.controller.recompute();
+        host.remove();
+        floating.style.translate = '999px 999px';
+        const count = placements.length;
+
+        await new Promise<void>((resolve) =>
+          requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+        );
+        expect(host.controller.actualPlacement).toBeNull();
+        expect(floating.style.translate).toBe('999px 999px');
+        expect(placements.length).toBe(count);
+      });
+    } finally {
+      trigger.remove();
+      floating.remove();
+    }
   },
 };
 
@@ -379,15 +409,37 @@ export const RapidStartReplacesPriorSession: Story = {
       canvasElement,
       'demo-placement-test-fixture'
     );
-    host.shouldFlip = false;
-    await waitFor(() => expect(host.actualPlacement).toBe('bottom'));
+    await waitFor(() => expect(host.floatingEl.style.translate).not.toBe(''));
 
-    await step('final placement wins after a burst of changes', async () => {
-      host.placement = 'top';
-      host.placement = 'left';
-      host.placement = 'right';
-      host.placement = 'bottom-end';
-      await waitFor(() => expect(host.actualPlacement).toBe('bottom-end'));
+    await step('the newer start wins over an in-flight compute', async () => {
+      const firstPlacements: string[] = [];
+      const secondPlacements: string[] = [];
+      const { triggerEl, floatingEl, controller } = host;
+
+      controller.start(triggerEl, floatingEl, {
+        placement: 'top',
+        shouldFlip: false,
+        onPlacementChange: (placement) => firstPlacements.push(placement),
+      });
+      // Force a first-session compute to be pending at its font-ready await
+      // even if autoUpdate defers its initial callback.
+      controller.recompute();
+      controller.start(triggerEl, floatingEl, {
+        placement: 'bottom',
+        shouldFlip: false,
+        onPlacementChange: (placement) => secondPlacements.push(placement),
+      });
+
+      await waitFor(() => expect(secondPlacements).toEqual(['bottom']));
+      await new Promise<void>((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+      );
+      expect(firstPlacements).toEqual([]);
+      expect(controller.actualPlacement).toBe('bottom');
+      const [, y] = readTranslate(floatingEl);
+      expect(
+        Math.abs(y - triggerEl.getBoundingClientRect().bottom)
+      ).toBeLessThanOrEqual(2);
     });
   },
 };

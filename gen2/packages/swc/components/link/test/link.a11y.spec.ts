@@ -93,14 +93,22 @@ test.describe('Link - ARIA Snapshots', () => {
     `);
   });
 
-  test('links are keyboard focusable', async ({ page }) => {
+  test('links are reached by Tab in document order', async ({ page }) => {
     const root = await gotoStory(
       page,
       'components-link--standalone',
       'a[href]'
     );
     const anchor = root.locator('a[href]').first();
-    await anchor.focus();
+    await anchor.evaluate((element) => {
+      const start = document.createElement('button');
+      start.type = 'button';
+      start.setAttribute('data-testid', 'tab-start');
+      element.before(start);
+      start.focus();
+    });
+    await expect(root.getByTestId('tab-start')).toBeFocused();
+    await page.keyboard.press('Tab');
     await expect(anchor).toBeFocused();
     await page.keyboard.press('Tab');
     await expect(anchor).not.toBeFocused();

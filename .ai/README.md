@@ -227,6 +227,13 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: Reviewing or auditing gen2 TypeScript, CSS, test, or Storybook story files for style conformance
 - Provides: Per-domain review checklists (TypeScript, CSS, tests, stories) with style-guide links, lint commands to run first, guideline-gap reporting format
 
+#### Test audit
+
+- **purpose**: Gate new or changed tests against duplicate and implementation-coupled assertions, or audit existing tests and test-only production seams
+- **How to invoke**: Say "run test-audit in gen2", "audit these tests", or "review test value"
+- Use when: Writing, changing, or auditing tests in any package; use the campaign checklist only for an entire owner subsystem
+- Provides: Candidate evidence, retention criteria, focused audit and campaign workflows, and repository-specific validation in [the test-audit skill](./skills/test-audit/SKILL.md)
+
 #### Consistency pass
 
 - **purpose**: Run a consistency and validity self-audit on changed files and the migration plan

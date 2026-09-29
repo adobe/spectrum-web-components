@@ -183,11 +183,10 @@ export const InvalidSizeFallbackTest: Story = {
           codeEl?.className,
           'code element has base swc-Code class'
         ).toContain('swc-Code');
-        // Size M does not add a --sizeXXXL class; fallback renders with no size suffix
         expect(
           codeEl?.className,
-          'code element has no --sizeXXXL class'
-        ).not.toContain('sizeXXXL');
+          'invalid size falls back to the default M class without a size suffix'
+        ).toBe('swc-Code');
       }
     );
   },

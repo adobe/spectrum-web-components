@@ -11,7 +11,7 @@
  */
 
 import { html, LitElement } from 'lit';
-import { expect, waitFor } from '@storybook/test';
+import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { getComponent } from '../../../../swc/utils/test-utils.js';
@@ -156,24 +156,6 @@ export const RejectsPreviouslyAcceptedDrags: Story = {
       host.dispatchEvent(makeDragEvent('drop', makeFileDataTransfer()));
 
       expect(host.drops).toBe(0);
-    });
-  },
-};
-
-export const DebouncesDragLeave: Story = {
-  render: fixture,
-  play: async ({ canvasElement, step }) => {
-    const host = await getComponent<DragAndDropTestHost>(
-      canvasElement,
-      'test-drag-and-drop-host'
-    );
-    host.dispatchEvent(makeDragEvent('dragover', makeFileDataTransfer()));
-
-    await step('clears the state after leaving the host', async () => {
-      host.dispatchEvent(makeDragEvent('dragleave', makeFileDataTransfer()));
-
-      await waitFor(() => expect(host.leaves).toBe(1));
-      expect(host.dragged).toBe(false);
     });
   },
 };

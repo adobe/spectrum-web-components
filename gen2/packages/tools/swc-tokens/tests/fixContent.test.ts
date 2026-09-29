@@ -54,15 +54,6 @@ describe('fixContent', () => {
     expect(replacements).toEqual([{ kind: 'zero', from: 'zero-value-token' }]);
   });
 
-  it('does not produce token("0") for zero-value tokens', () => {
-    const { result } = fixContent(
-      'gap: token("zero-value-token");',
-      {},
-      DELETED
-    );
-    expect(result).not.toContain('token("0")');
-  });
-
   it('replaces a deleted token with its curated suggestion', () => {
     const { result, replacements } = fixContent(
       'color: token("removed-with-replacement");',

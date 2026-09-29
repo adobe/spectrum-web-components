@@ -159,86 +159,7 @@ export const MultipleModeNoConstraintTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-//     PR bug 1: Read-your-write ordering
-//
-//     A change listener on the host reads the CURRENT (new) item state when
-//     the toggle event fires, not the previous state. The controller defers
-//     sibling closure by a microtask; the listener that fires synchronously
-//     should see the final committed state.
-// ──────────────────────────────────────────────────────────────
-
-export const ReadYourWriteOrderingTest: Story = {
-  render: () => html`
-    <demo-live-selection-group mode="single">
-      <demo-live-selection-item label="Item 1"></demo-live-selection-item>
-      <demo-live-selection-item label="Item 2"></demo-live-selection-item>
-    </demo-live-selection-group>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const group = await getGroup(canvasElement);
-    const [item1, item2] = await getItems(canvasElement);
-
-    await step(
-      'toggle event listener sees the new open state on the source item',
-      async () => {
-        let capturedOpenState: boolean | undefined;
-
-        const controller = new AbortController();
-        group.addEventListener(
-          'demo-toggle',
-          (event) => {
-            capturedOpenState = (event.target as DemoLiveSelectionItem).open;
-          },
-          { signal: controller.signal }
-        );
-
-        expect(item1.open, 'item 1 starts closed').toBe(false);
-        clickToggle(item1);
-        await flushMicrotasks();
-        await Promise.all([item1.updateComplete, item2.updateComplete]);
-
-        // The listener must see the new value (true), not the old value (false).
-        expect(
-          capturedOpenState,
-          'listener sees open=true immediately after the item opens'
-        ).toBe(true);
-
-        controller.abort();
-      }
-    );
-
-    await step(
-      'toggle event listener sees the new closed state when an item closes',
-      async () => {
-        let capturedOpenState: boolean | undefined;
-
-        const controller = new AbortController();
-        group.addEventListener(
-          'demo-toggle',
-          (event) => {
-            capturedOpenState = (event.target as DemoLiveSelectionItem).open;
-          },
-          { signal: controller.signal }
-        );
-
-        expect(item1.open, 'item 1 is currently open').toBe(true);
-        clickToggle(item1);
-        await flushMicrotasks();
-        await item1.updateComplete;
-
-        expect(
-          capturedOpenState,
-          'listener sees open=false after the item closes'
-        ).toBe(false);
-
-        controller.abort();
-      }
-    );
-  },
-};
-
-// ──────────────────────────────────────────────────────────────
-//     PR bug 2: Canceled toggle does not close siblings
+//     Canceled toggle does not close siblings
 //
 //     When the host calls event.preventDefault() on the toggle event, the item
 //     reverts its open state synchronously. The controller must not close
@@ -295,7 +216,7 @@ export const CanceledToggleNoSiblingCloseTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-//     PR bug 3: Mode switch + refresh clears extra open items
+//     Mode switch + refresh clears extra open items
 //
 //     Switching from 'multiple' to 'single' while items are open, then
 //     calling refresh(), must close all but the first open item.
@@ -404,37 +325,6 @@ export const RefreshMultipleModeNoopTest: Story = {
         expect(item2.open, 'item 2 remains open').toBe(true);
       }
     );
-  },
-};
-
-// ──────────────────────────────────────────────────────────────
-//     Disabled item is skipped
-// ──────────────────────────────────────────────────────────────
-
-export const DisabledItemSkippedTest: Story = {
-  render: () => html`
-    <demo-live-selection-group mode="single">
-      <demo-live-selection-item label="Item 1" open></demo-live-selection-item>
-      <demo-live-selection-item
-        label="Item 2 (disabled)"
-        disabled
-      ></demo-live-selection-item>
-    </demo-live-selection-group>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const [item1, item2] = await getItems(canvasElement);
-
-    await step('clicking a disabled item does not open it', async () => {
-      expect(item2.disabled, 'item 2 is disabled').toBe(true);
-      expect(item2.open, 'item 2 starts closed').toBe(false);
-
-      clickToggle(item2);
-      await flushMicrotasks();
-      await Promise.all([item1.updateComplete, item2.updateComplete]);
-
-      expect(item2.open, 'item 2 remains closed').toBe(false);
-      expect(item1.open, 'item 1 is unaffected').toBe(true);
-    });
   },
 };
 

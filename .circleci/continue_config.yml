@@ -396,6 +396,17 @@ jobs:
       - store_test_results:
           path: /root/project/gen2/packages/swc/test-results
 
+  # Token and global CSS tooling use Node Vitest, not the Storybook browser project.
+  test-gen2-tools:
+    executor: node
+    steps:
+      - setup-node-dependencies
+      - run:
+          name: Run gen2 tooling tests
+          command: |
+            yarn tokens:test &&
+              yarn workspace @adobe/vite-global-elements-css test
+
   # gen2 coverage — Chromium only, base=main only. It stays in the gen2 workflow
   # (not a separate is_base_main-gated one) so it can attach the shared
   # build-gen2 workspace; workspaces can't cross workflows. On a non-main base
@@ -765,6 +776,7 @@ workflows:
           matrix:
             parameters:
               browser: [chromium, firefox, webkit]
+      - test-gen2-tools
       - test-gen2-coverage:
           requires: [build-gen2]
       - test-gen2-a11y:
@@ -782,6 +794,7 @@ workflows:
             - test-gen2-browser-chromium
             - test-gen2-browser-firefox
             - test-gen2-browser-webkit
+            - test-gen2-tools
             - test-gen2-coverage
             - test-gen2-a11y
             - test-gen2-axe

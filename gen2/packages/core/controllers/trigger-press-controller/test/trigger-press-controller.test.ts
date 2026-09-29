@@ -175,38 +175,104 @@ export const DoublePressStartTest: Story = {
     let toggleCount = 0;
     controller.attach(trigger, { onToggle: () => toggleCount++ });
 
-    await step(
-      'a dismissal noted during a touchstart+pointerdown press is still consumed by the trailing click',
-      () => {
-        trigger.dispatchEvent(
-          new Event('touchstart', { bubbles: true, composed: true })
-        );
-        trigger.dispatchEvent(
-          new PointerEvent('pointerdown', { bubbles: true, composed: true })
-        );
-        controller.noteNativeDismiss();
-        trigger.dispatchEvent(
-          new PointerEvent('pointerup', { bubbles: true, composed: true })
-        );
-        trigger.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-
-        expect(
-          toggleCount,
-          'onToggle is not called for the click that closed the surface'
-        ).toBe(0);
+    // Track live document cancellation listeners while forwarding all calls to
+    // the browser; a leaked listener has no immediate visible toggle effect.
+    const activeCancelListeners = new Set<EventListenerOrEventListenerObject>();
+    const originalAdd = document.addEventListener;
+    const originalRemove = document.removeEventListener;
+    document.addEventListener = ((
+      type: string,
+      listener: EventListenerOrEventListenerObject | null,
+      options?: boolean | AddEventListenerOptions
+    ) => {
+      if (
+        type === 'pointercancel' &&
+        listener &&
+        !activeCancelListeners.has(listener)
+      ) {
+        const trackedListener = listener;
+        activeCancelListeners.add(trackedListener);
+        if (typeof options === 'object') {
+          options.signal?.addEventListener(
+            'abort',
+            () => activeCancelListeners.delete(trackedListener),
+            { once: true }
+          );
+        }
       }
-    );
+      Reflect.apply(originalAdd, document, [type, listener, options]);
+    }) as typeof document.addEventListener;
+    document.removeEventListener = ((
+      type: string,
+      listener: EventListenerOrEventListenerObject | null,
+      options?: boolean | EventListenerOptions
+    ) => {
+      if (type === 'pointercancel' && listener) {
+        activeCancelListeners.delete(listener);
+      }
+      Reflect.apply(originalRemove, document, [type, listener, options]);
+    }) as typeof document.removeEventListener;
 
-    await step('a normal gesture right after still toggles normally', () => {
-      click(trigger);
-      expect(
-        toggleCount,
-        'the double press-start does not affect the next, unrelated gesture'
-      ).toBe(1);
-    });
+    try {
+      await step(
+        'a dismissal noted during a touchstart+pointerdown press is still consumed by the trailing click',
+        () => {
+          trigger.dispatchEvent(
+            new Event('touchstart', { bubbles: true, composed: true })
+          );
+          trigger.dispatchEvent(
+            new PointerEvent('pointerdown', { bubbles: true, composed: true })
+          );
+          controller.noteNativeDismiss();
+          trigger.dispatchEvent(
+            new PointerEvent('pointerup', { bubbles: true, composed: true })
+          );
+          trigger.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 
-    controller.detach();
-    trigger.remove();
+          expect(
+            toggleCount,
+            'onToggle is not called for the click that closed the surface'
+          ).toBe(0);
+          expect(
+            activeCancelListeners.size,
+            'no orphaned document cancellation listener remains'
+          ).toBe(0);
+        }
+      );
+
+      await step('a normal gesture right after still toggles normally', () => {
+        click(trigger);
+        expect(toggleCount).toBe(1);
+      });
+
+      await step(
+        'a subsequent cancelled press does not swallow the next click',
+        () => {
+          trigger.dispatchEvent(
+            new PointerEvent('pointerdown', { bubbles: true, composed: true })
+          );
+          controller.noteNativeDismiss();
+          trigger.dispatchEvent(
+            new PointerEvent('pointercancel', { bubbles: true, composed: true })
+          );
+          click(trigger);
+          expect(toggleCount).toBe(2);
+          expect(activeCancelListeners.size).toBe(0);
+        }
+      );
+    } finally {
+      document.addEventListener = originalAdd;
+      document.removeEventListener = originalRemove;
+      for (const listener of activeCancelListeners) {
+        Reflect.apply(originalRemove, document, [
+          'pointercancel',
+          listener,
+          true,
+        ]);
+      }
+      controller.detach();
+      trigger.remove();
+    }
   },
 };
 

@@ -147,26 +147,40 @@ export const PropertyMutationTest: Story = {
 
 export const VariantAndDensityValuesTest: Story = {
   render: () => html`
-    <swc-card></swc-card>
+    <swc-card>
+      <span slot="title">Card title</span>
+    </swc-card>
   `,
   play: async ({ canvasElement, step }) => {
     const card = await getComponent<Card>(canvasElement, 'swc-card');
+    const content = card.renderRoot.querySelector('.swc-CardBase-content')!;
 
-    await step('accepts every valid variant', async () => {
+    await step('reflects every valid variant', async () => {
       for (const variant of CARD_VARIANTS) {
         card.variant = variant;
         await card.updateComplete;
-        expect(card.variant, `variant property is "${variant}"`).toBe(variant);
+        expect(card.getAttribute('variant')).toBe(variant);
       }
     });
 
-    await step('accepts every valid density', async () => {
-      for (const density of CARD_DENSITIES) {
-        card.density = density;
+    await step(
+      'reflects every density and changes content spacing',
+      async () => {
+        card.variant = 'primary';
         await card.updateComplete;
-        expect(card.density, `density property is "${density}"`).toBe(density);
+        const paddings: number[] = [];
+        for (const density of CARD_DENSITIES) {
+          card.density = density;
+          await card.updateComplete;
+          expect(card.getAttribute('density')).toBe(density);
+          paddings.push(
+            parseFloat(getComputedStyle(content).paddingInlineStart)
+          );
+        }
+        expect(paddings[0]).toBeLessThan(paddings[1]);
+        expect(paddings[1]).toBeLessThan(paddings[2]);
       }
-    });
+    );
   },
 };
 
@@ -188,33 +202,43 @@ export const AnatomyTest: Story = {
   play: async ({ canvasElement, step }) => {
     const card = await getComponent<Card>(canvasElement, 'swc-card');
 
-    await step('renders assigned content for every shared slot', async () => {
-      expect(
-        card.querySelector('[slot="preview"]'),
-        'preview slot content'
-      ).toBeTruthy();
-      expect(
-        card.querySelector('[slot="title"]'),
-        'title slot content'
-      ).toBeTruthy();
-      expect(
-        card.querySelector('[slot="actions"]'),
-        'actions slot content'
-      ).toBeTruthy();
-      expect(
-        card.querySelector('[slot="description"]'),
-        'description slot content'
-      ).toBeTruthy();
-      expect(
-        card.querySelector('[slot="footer"]'),
-        'footer slot content'
-      ).toBeTruthy();
-      const defaultSlotContent = card.querySelectorAll(':scope > :not([slot])');
-      expect(
-        defaultSlotContent.length,
-        'default slot child count'
-      ).toBeGreaterThan(0);
-    });
+    await step(
+      'assigns and displays content in every shared slot',
+      async () => {
+        const assigned = (name?: string): Element[] => {
+          const selector = name ? `slot[name="${name}"]` : 'slot:not([name])';
+          const slot = card.renderRoot.querySelector<HTMLSlotElement>(selector);
+          expect(slot, `${name ?? 'default'} slot is rendered`).toBeTruthy();
+          return slot?.assignedElements() ?? [];
+        };
+
+        expect(assigned('preview')[0]).toBeInstanceOf(HTMLImageElement);
+        expect(assigned('title')[0]?.textContent).toBe('Card title');
+        expect(assigned('actions')[0]?.textContent).toBe('Edit');
+        expect(assigned('description')[0]?.textContent).toBe('Supporting text');
+        expect(assigned('footer')[0]?.textContent).toBe('Footer');
+        expect(assigned()[0]?.textContent).toBe('Default body content');
+        for (const name of [
+          'preview',
+          'title',
+          'actions',
+          'description',
+          'footer',
+        ]) {
+          expect(
+            assigned(name)[0]?.getBoundingClientRect().height,
+            `${name} content is displayed`
+          ).toBeGreaterThan(0);
+        }
+        expect(assigned()[0]?.getBoundingClientRect().height).toBeGreaterThan(
+          0
+        );
+
+        const footer = card.renderRoot.querySelector('.swc-CardBase-footer')!;
+        expect(getComputedStyle(footer).display).not.toBe('none');
+        expect(footer.getBoundingClientRect().height).toBeGreaterThan(0);
+      }
+    );
   },
 };
 

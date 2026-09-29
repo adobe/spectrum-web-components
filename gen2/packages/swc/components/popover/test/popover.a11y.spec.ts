@@ -114,8 +114,19 @@ test.describe('Popover - native dismissal', () => {
 
     await page.locator('#anatomy-trigger').click();
     await expect(popover).toHaveJSProperty('open', true);
-    // A trusted pointer press in the empty top-left corner is outside the popover
-    // and its trigger, so it light-dismisses.
+    // Before async positioning completes, the open but transparent top-layer
+    // surface still occupies (0, 0), so a corner click would hit the popover.
+    await expect(popover).toHaveAttribute('actual-placement', /.+/);
+    expect(
+      await page.evaluate(() => {
+        const target = document.elementFromPoint(2, 2);
+        return (
+          target !== null &&
+          !document.querySelector('swc-popover')?.contains(target) &&
+          !document.querySelector('#anatomy-trigger')?.contains(target)
+        );
+      })
+    ).toBe(true);
     await page.mouse.click(2, 2);
     await expect(popover).toHaveJSProperty('open', false);
     expect(await readCloseSource(page)).toBe('outside');

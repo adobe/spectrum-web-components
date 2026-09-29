@@ -23,6 +23,7 @@ Coding agents working in this repository should treat **`.ai/`** as the canonica
 
 - **Rules** are **path-scoped**: each `.ai/rules/*.md` file carries a `paths:` list, so tools load it only when a matching file is in context, deterministically rather than by guessing intent. `yarn ai:sync` generates the tool copies in `.github/instructions/` and `.cursor/rules/`, and `.claude/rules` is a symlink to `.ai/rules/`. See [`.ai/README.md`](./.ai/README.md) for the full catalog.
 - **Skills** are **on-demand** playbooks for guidance with no natural file-path scope — task or intent-driven work (for example jira-ticket, code-conformance, explain-code, test-driven development, session handoff). A skill has no glob/paths auto-trigger; it must be matched to the task by description, or invoked explicitly. When the user's request fits a skill's description, **read that skill's `SKILL.md`** before doing the work.
+- For test authoring and test audits, load [the test-audit skill](./.ai/skills/test-audit/SKILL.md).
 
 ## IDE-specific folders
 

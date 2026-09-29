@@ -192,7 +192,19 @@ export const LabelTogglingTest: Story = {
 // TEST: RTL mirroring
 // ──────────────────────────────────────────────────────────────
 
-// Adding an icon to UI_ICONS without deciding whether it belongs in DIRECTIONAL_UI_ICONS now fails this test immediately instead of silently shipping an icon nobody made a mirroring decision for.
+const MIRRORING_DECISIONS = {
+  add: false,
+  arrow: true,
+  asterisk: false,
+  checkmark: false,
+  chevron: true,
+  'corner-triangle': true,
+  cross: false,
+  dash: false,
+  'drag-handle': false,
+  'link-out': false,
+} as const satisfies Record<UiIconName, boolean>;
+
 export const DirectionalMirroringTest: Story = {
   render: () => html`
     <div id="rtl-wrapper" dir="rtl">
@@ -221,6 +233,18 @@ export const DirectionalMirroringTest: Story = {
   play: async ({ canvasElement, step }) => {
     await getComponent<UiIcon>(canvasElement, 'swc-ui-icon');
 
+    await step('every icon has an explicit mirroring decision', () => {
+      expect(Object.keys(MIRRORING_DECISIONS).sort()).toEqual(
+        Object.keys(UI_ICONS).sort()
+      );
+      expect([...DIRECTIONAL_UI_ICONS].sort()).toEqual(
+        Object.entries(MIRRORING_DECISIONS)
+          .filter(([, mirrors]) => mirrors)
+          .map(([name]) => name)
+          .sort()
+      );
+    });
+
     const rtlWrapper = canvasElement.querySelector(
       '#rtl-wrapper'
     ) as HTMLElement;
@@ -233,7 +257,7 @@ export const DirectionalMirroringTest: Story = {
       async () => {
         for (const name of Object.keys(UI_ICONS) as UiIconName[]) {
           const icon = rtlWrapper.querySelector(`[data-icon="${name}"]`)!;
-          const expected = DIRECTIONAL_UI_ICONS.has(name) ? '-1 1' : 'none';
+          const expected = MIRRORING_DECISIONS[name] ? '-1 1' : 'none';
           expect(getComputedStyle(icon).scale, `${name} under RTL`).toBe(
             expected
           );

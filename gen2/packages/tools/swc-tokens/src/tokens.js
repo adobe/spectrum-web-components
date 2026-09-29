@@ -816,5 +816,4 @@ export const __test__ = {
   extractRenamedTokenValues,
   extractDeprecatedComments,
   deriveZeroValueEntries,
-  lookupToken,
 };
