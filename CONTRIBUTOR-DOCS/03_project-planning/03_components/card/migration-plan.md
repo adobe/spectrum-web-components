@@ -45,7 +45,7 @@
 ## TL;DR
 
 - **Scope:** three concrete components — `swc-card` (regular/collection/gallery), `swc-user-card`, `swc-product-card`. No dedicated `swc-asset-card`; that need is folded into `swc-card` until the gen2 `Asset` component ships.
-- **Architecture, already built:** `CardBase` (core, behavior only) + `renderCardTemplate()` (shared SWC render function) + `card-template.css` (shared, implemented). `swc-card` is complete through all migration phases (API, styling, accessibility, tests, VRT, and documentation) and in review; `swc-user-card`/`swc-product-card` have not started.
+- **Architecture, already built:** `CardBase` (core, behavior only) + `renderCardTemplate()` (shared SWC render function) + `card-template.css` (shared, implemented). `swc-card` and `swc-user-card` are complete through all migration phases (API, styling, accessibility, tests, VRT, and documentation) and in review; `swc-product-card` has not started.
 - **API:** `variant` is a pure style axis, independent of layout (layout is driven entirely by slot presence). `swc-user-card`/`swc-product-card` don't support `quiet`. `title`/`description` are slot-only.
 - **Clickable card, no `href` on Card:** the consumer supplies their own link in the `title` slot; `title-as-link` extends its hit area, `selectable` independently makes the card focusable and dispatches a click event. Both are implemented and tested on `CardBase`.
 - **Labeling (avatar/thumbnail vs. title) is consumer documentation, not code** — Card doesn't validate or bridge accessible names that consumers already fully control.
@@ -120,7 +120,7 @@ Already implemented (prior scaffold ticket); this plan governs the three concret
 | Core | `gen2/packages/core/components/card/` | `CardBase` — `size` (via `SizedMixin`), `variant`, `density`, and their validation only. No rendering. |
 | SWC (shared template) | `gen2/packages/swc/components/card/card-template.ts` | `renderCardTemplate()` — shared anatomy function called from every concrete card's `render()`, following the same shared-function pattern as `renderPendingSpinner()` (`swc/components/button/pending-spinner.ts`). |
 | SWC (shared styles) | `gen2/packages/swc/stylesheets/_lit-styles/card-template.css` | Shared structural rules for the `.swc-CardBase`/`.swc-CardBase-*` classes; imported into every concrete card's `styles()` array. |
-| SWC (concrete, not started) | `gen2/packages/swc/components/{card,user-card,product-card}/` | Each extends `CardBase` directly — sibling-inheritance pattern, same shape as `ButtonBase` extended independently by `Button` and `ActionButton`. Each owns its own `render()`, styles, glyph slot (if any), stories, and tests. |
+| SWC (concrete) | `gen2/packages/swc/components/{card,user-card,product-card}/` | Each extends `CardBase` directly — sibling-inheritance pattern, same shape as `ButtonBase` extended independently by `Button` and `ActionButton`. Each owns its own `render()`, styles, glyph slot (if any), stories, and tests. `swc-card`/`swc-user-card` implemented; `swc-product-card` not started. |
 
 
 ## gen2 API decisions
@@ -333,7 +333,14 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
   - [x] VRT: `test/vrt/card.vrt.ts` (Permutations + ForcedColors) and `test/vrt/card-custom-properties.vrt.ts` (all 17 documented custom properties, CEM-coverage-verified)
   - [x] Documentation: per-component `card.mdx` (Anatomy, Options, Behaviors, Accessibility, Upcoming features); Accessibility story added; Playground dropped `autodocs`; `Card.ts` `@cssprop` completed (added `--swc-card-gallery-preview-aspect-ratio`); Options prose kept to verifiable facts (no invented "when to use" guidance)
   - [x] Consumer migration guide: `migration-guide.mdx` (1st-gen `sp-card` → `swc-card`), authored separately from the docs page per the `consumer-migration-guide` skill; scoped to `swc-card` only
-- **`swc-user-card`** — Epic SWC-2367, not started
+- **`swc-user-card`** — Epic SWC-2367, in review:
+  - [x] Setup: `UserCard.ts`, `swc-user-card.ts`, `index.ts`, `user-card.css`, stories file scaffolded
+  - [x] API: extends `CardBase` directly; adds the `avatar` glyph slot; `primary`/`secondary`/`tertiary` variants only (no `quiet`)
+  - [x] Styling: `user-card.css` layers the avatar-overlap grid rows on top of the shared `card-template.css`; fixed `3/1` preview aspect ratio; avatar `size`/`outline` propagation via `SlotAttributePropagationController`
+  - [x] Testing: `test/user-card.test.ts` (13 play-function tests) and `test/user-card.a11y.spec.ts` (4 Playwright tests) — all passing
+  - [x] VRT: `test/vrt/user-card.vrt.ts`
+  - [x] Documentation: `user-card.mdx` (Anatomy, Options, Behaviors, Accessibility, Upcoming features)
+  - No consumer migration guide: no 1st-gen equivalent exists to migrate from
 - **`swc-product-card`** — Epic SWC-2372, not started
 
 

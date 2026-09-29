@@ -106,8 +106,18 @@ const avatarGlyph = (size = '300') => html`
   ></swc-avatar>
 `;
 
+const avatarGlyphDecorative = (size = '300') => html`
+  <swc-avatar
+    slot="avatar"
+    size=${size}
+    src="./images/avatar-preview.png"
+    alt=""
+    decorative
+  ></swc-avatar>
+`;
+
 const previewImage = () => html`
-  <swc-asset slot="preview" aspect-ratio="16 / 9">
+  <swc-asset slot="preview" decorative>
     <img src="./images/card-preview.jpg" alt="" />
   </swc-asset>
 `;
@@ -128,7 +138,7 @@ export const Playground: Story = {
     density: 'regular',
     size: 'm',
     'preview-slot':
-      '<swc-asset slot="preview" aspect-ratio="16 / 9"><img src="./images/card-preview.jpg" alt="" /></swc-asset>',
+      '<swc-asset slot="preview" decorative><img src="./images/card-preview.jpg" alt="" /></swc-asset>',
     'avatar-slot':
       '<swc-avatar slot="avatar" size="300" src="./images/avatar-preview.png" alt="Jane Doe"></swc-avatar>',
     'title-slot': 'Jane Doe',
@@ -295,6 +305,15 @@ export const Selectable: Story = {
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-  render: (args) => template(args, basicSlots),
+  render: (args) => html`
+    ${template(
+      args,
+      html`
+        ${avatarGlyphDecorative()}
+        <span slot="title">Jane Doe</span>
+        <span slot="description">Product designer</span>
+      `
+    )}
+  `,
   tags: ['a11y'],
 };

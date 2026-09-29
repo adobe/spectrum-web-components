@@ -66,13 +66,16 @@ Identical to [Card](../?path=/docs/components-card--docs)'s `selectable`: makes 
 
 ### Best practices
 
-- When the avatar depicts the same person named in `title`, link them with `aria-labelledby` instead of giving the avatar its own `alt`, so a screen reader doesn't announce the name twice: `<span slot="title" id="jane">Jane Doe</span>` alongside `<swc-avatar slot="avatar" aria-labelledby="jane">`. Both elements are consumer-authored light-DOM content, so the `id` reference resolves normally with no cross-root complexity.
+- When the avatar depicts the same person named in `title`, pass `alt=""` and set `decorative` on the avatar instead of giving it its own name, so a screen reader doesn't announce the name twice: `<swc-avatar slot="avatar" alt="" decorative>` alongside `<span slot="title">Jane Doe</span>`. This matches [Avatar](../?path=/docs/components-avatar--docs)'s own guidance for a name that already appears in adjacent context.
 - For `title-as-link` and `selectable` usage guidance, see [Card](../?path=/docs/components-card--docs)'s Accessibility section.
 
 <Canvas of={Stories.Accessibility} />
 
 ## Upcoming features
 
-Deferred items are shared with [Card](../?path=/docs/components-card--docs): hover/disabled states and a standalone `selected` property both wait on a future CardView container. See Card's Upcoming features section for the full list.
+Shared with [Card](../?path=/docs/components-card--docs):
+
+- A horizontal card orientation is planned, alongside today's vertical layout.
+- Multi-card selection will be handled by a future CardView container. The `selectable` attribute is the per-card groundwork for it: on its own it makes a card focusable and dispatches `swc-card-click`, but it does not render a "checked" selected state.
 
 <DocsFooter />
