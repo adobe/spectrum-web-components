@@ -364,12 +364,21 @@ export const TriggerAriaWiringSwcButtonTest: Story = {
       'wires aria-haspopup and aria-expanded onto the inner shadow button',
       async () => {
         expect(innerButton, 'swc-button has an inner button').toBeTruthy();
-        expect(innerButton?.getAttribute('aria-haspopup')).toBe('menu');
-        expect(innerButton?.getAttribute('aria-expanded')).toBe('false');
+        expect(
+          innerButton?.getAttribute('aria-haspopup'),
+          'inner button aria-haspopup'
+        ).toBe('menu');
+        expect(
+          innerButton?.getAttribute('aria-expanded'),
+          'inner button aria-expanded before open'
+        ).toBe('false');
 
         menu.open = true;
         await menu.updateComplete;
-        expect(innerButton?.getAttribute('aria-expanded')).toBe('true');
+        expect(
+          innerButton?.getAttribute('aria-expanded'),
+          'inner button aria-expanded after open'
+        ).toBe('true');
 
         menu.open = false;
         await menu.updateComplete;
@@ -440,7 +449,10 @@ export const TriggerSwapClearsOldAriaTest: Story = {
     ) as HTMLButtonElement;
 
     await step('wires the initial for target', async () => {
-      expect(oldTrigger.getAttribute('aria-haspopup')).toBe('menu');
+      expect(
+        oldTrigger.getAttribute('aria-haspopup'),
+        'initial trigger aria-haspopup'
+      ).toBe('menu');
     });
 
     await step(
@@ -596,7 +608,10 @@ export const FocusManagementTest: Story = {
         timeout: 1000,
       });
       await waitFor(
-        () => expect(document.activeElement).toBe(getItems(canvasElement)[0]),
+        () =>
+          expect(document.activeElement, 'focus moves to the first row').toBe(
+            getItems(canvasElement)[0]
+          ),
         { timeout: 1000 }
       );
     });
@@ -666,7 +681,10 @@ export const TabTrapAndEnterActivateTest: Story = {
     await step('opens and focuses the first row', async () => {
       await userEvent.click(trigger);
       await waitFor(
-        () => expect(document.activeElement).toBe(getItems(canvasElement)[0]),
+        () =>
+          expect(document.activeElement, 'focus moves to the first row').toBe(
+            getItems(canvasElement)[0]
+          ),
         { timeout: 1000 }
       );
     });
@@ -711,7 +729,10 @@ export const ArrowKeyNavigationTest: Story = {
     await step('opens and focuses the first row', async () => {
       await userEvent.click(trigger);
       await waitFor(
-        () => expect(document.activeElement).toBe(getItems(canvasElement)[0]),
+        () =>
+          expect(document.activeElement, 'focus moves to the first row').toBe(
+            getItems(canvasElement)[0]
+          ),
         { timeout: 1000 }
       );
     });
