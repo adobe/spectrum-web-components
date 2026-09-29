@@ -76,8 +76,8 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Build all generations
-        run: yarn build
+      - name: Build gen2
+        run: yarn build:gen2
 
       - name: Generate Custom Elements Manifest
         run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
