@@ -280,11 +280,7 @@ Both branches (`titleAsLink`'s proxy-click and `selectable`'s event dispatch) ru
 | Checkbox-based selection UI | A `CardView` feature, not an individual card feature. |
 | A standalone `selected` property (complementing `selectable`) | Resolved: deferred to a future `CardView` rather than added to `CardBase` now. |
 | `swc-product-card` "side" title position | Deferred per the prior scaffold ticket. |
-<<<<<<< HEAD
 | Dedicated `swc-asset-card` component | Folded into `swc-card`, composed with the (now-shipped) `Asset` component; no dedicated component planned (see Scope). |
-=======
-| Dedicated `swc-asset-card` component | Folded into `swc-card` for now; revisit once the gen2 `Asset` component ships (see Scope). |
->>>>>>> aziz/user-card-migration
 
 
 ## Test coverage
