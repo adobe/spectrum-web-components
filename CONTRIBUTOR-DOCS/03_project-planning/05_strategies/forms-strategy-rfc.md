@@ -87,6 +87,7 @@ gen2 form fields are **form-associated custom elements**: set `static formAssoci
 - **Decision:** yes, adopt ElementInternals/FACE for form fields. The value is submitted via `internals.setFormValue(value)` on change, and the `formDisabledCallback(disabled)` lifecycle hook receives cascades from an ancestor `<fieldset disabled>` or an owning form.
 - **Shared controller:** a **`FieldAssociationController`** wraps `ElementInternals` to handle value submission, the disabled cascade, and form reset once, so text field, checkbox, and combobox do not each reimplement it.
 - **Browser / AT notes:** Chromium and Safari expose `ElementInternals` ARIA more consistently than Firefox; verify exposure manually in Firefox (see [§3.4](#34-axe-core-policy)).
+- **Attribute applicability by input type:** before relying on a native form-related HTML attribute (`readonly`, `minlength`, `maxlength`, `pattern`, `step`, `size`, `multiple`, and similar), confirm it actually applies to the underlying `<input>` type. The HTML Standard's [table of attributes that do not apply to certain input types](https://html.spec.whatwg.org/multipage/input.html#do-not-apply) is the canonical reference; for example, `readonly` does not apply to `checkbox` or `radio` inputs, so a checkbox-based or radio-based component cannot use the native attribute and needs a documented ARIA-based workaround instead.
 
 ### 3.2 Where ARIA roles live
 
