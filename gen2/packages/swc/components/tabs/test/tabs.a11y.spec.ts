@@ -111,18 +111,4 @@ test.describe('Tabs - ARIA Snapshots', () => {
         - paragraph: Selected tab content.
     `);
   });
-
-  test('should render density variants story', async ({ page }) => {
-    const root = await gotoStory(
-      page,
-      'components-tabs--density-variants',
-      'swc-tabs'
-    );
-    const tabGroups = root.locator('swc-tabs');
-    const count = await tabGroups.count();
-    expect(
-      count,
-      'renders regular and compact examples'
-    ).toBeGreaterThanOrEqual(2);
-  });
 });

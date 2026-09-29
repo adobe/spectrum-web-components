@@ -156,6 +156,48 @@ test.describe('ActionGroup - Keyboard Interactions', () => {
     await expect(buttons.nth(2)).not.toBeFocused();
   });
 
+  test('Tab and Shift+Tab restore the last focused action on re-entry', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-action-group--accessibility',
+      'swc-action-group'
+    );
+    const preceding = root
+      .locator('swc-action-group[accessible-label="Image adjustments"]')
+      .locator('swc-action-button')
+      .first();
+    const toolbar = root.locator(
+      '[role="toolbar"][aria-label="Document actions"]'
+    );
+    const buttons = toolbar
+      .locator('swc-action-group[accessible-label="Edit actions"]')
+      .locator('swc-action-button');
+    const following = toolbar
+      .locator('swc-action-group[accessible-label="View actions"]')
+      .locator('swc-action-button')
+      .first();
+
+    await page.keyboard.press('Tab');
+    await expect(preceding).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(buttons.nth(0)).toBeFocused();
+
+    await page.keyboard.press('ArrowRight');
+    await expect(buttons.nth(1)).toBeFocused();
+
+    await page.keyboard.press('Tab');
+    await expect(following).toBeFocused();
+    await page.keyboard.press('Shift+Tab');
+    await expect(buttons.nth(1)).toBeFocused();
+
+    await page.keyboard.press('Shift+Tab');
+    await expect(preceding).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(buttons.nth(1)).toBeFocused();
+  });
+
   test('ArrowRight moves focus among children, ArrowLeft wraps to the last', async ({
     page,
   }) => {
@@ -227,7 +269,18 @@ test.describe('ActionGroup - Keyboard Interactions', () => {
     const firstButton = page.locator('swc-action-button').first();
     await firstButton.focus();
     await expect(firstButton).toBeFocused();
+    await firstButton.evaluate((el) => {
+      const button = el as HTMLElement & { __clickCount: number };
+      button.__clickCount = 0;
+      button.addEventListener('click', () => button.__clickCount++);
+    });
     await page.keyboard.press('Enter');
+    expect(
+      await firstButton.evaluate(
+        (el) => (el as HTMLElement & { __clickCount: number }).__clickCount
+      ),
+      'Enter activates the slotted action button'
+    ).toBe(1);
   });
 
   test('button is activatable via Space key', async ({ page }) => {
@@ -240,7 +293,18 @@ test.describe('ActionGroup - Keyboard Interactions', () => {
     const firstButton = page.locator('swc-action-button').first();
     await firstButton.focus();
     await expect(firstButton).toBeFocused();
+    await firstButton.evaluate((el) => {
+      const button = el as HTMLElement & { __clickCount: number };
+      button.__clickCount = 0;
+      button.addEventListener('click', () => button.__clickCount++);
+    });
     await page.keyboard.press('Space');
+    expect(
+      await firstButton.evaluate(
+        (el) => (el as HTMLElement & { __clickCount: number }).__clickCount
+      ),
+      'Space activates the slotted action button'
+    ).toBe(1);
   });
 });
 

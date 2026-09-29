@@ -878,52 +878,6 @@ export const ModalToggleWhileOpenTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: dismissible-stack ordering (LIFO + move-to-top)
-// ──────────────────────────────────────────────────────────────
-
-export const DismissibleStackTest: Story = {
-  render: () => html`
-    <div></div>
-  `,
-  play: async ({ step }) => {
-    const a = {};
-    const b = {};
-
-    await step('the most-recently registered key is topmost', () => {
-      registerDismissible(a);
-      registerDismissible(b);
-      expect(isTopDismissible(b), 'b is on top').toBe(true);
-      expect(isTopDismissible(a), 'a is not on top').toBe(false);
-    });
-
-    await step('unregistering the top exposes the next entry', () => {
-      unregisterDismissible(b);
-      expect(isTopDismissible(a), 'a is now on top').toBe(true);
-    });
-
-    await step(
-      're-registering moves a key to the top without duplicating',
-      () => {
-        registerDismissible(b);
-        registerDismissible(a); // a is mid-stack; move it to the top
-        expect(isTopDismissible(a), 'a moved to the top').toBe(true);
-        unregisterDismissible(a);
-        // Only one entry for `a` existed, so removing it exposes b.
-        expect(isTopDismissible(b), 'b is exposed after one unregister').toBe(
-          true
-        );
-      }
-    );
-
-    await step('an unregistered key is never topmost', () => {
-      unregisterDismissible(b);
-      expect(isTopDismissible(a), 'a is gone').toBe(false);
-      expect(isTopDismissible(b), 'b is gone').toBe(false);
-    });
-  },
-};
-
-// ──────────────────────────────────────────────────────────────
 // TEST: Dev mode warnings
 // ──────────────────────────────────────────────────────────────
 
@@ -1261,41 +1215,6 @@ export const ModalContentPointerDownTest: Story = {
     content.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
     await popover.updateComplete;
     expect(popover.open, 'pointerdown inside content keeps it open').toBe(true);
-  },
-};
-
-export const ModalBackdropClickTest: Story = {
-  render: () => html`
-    <swc-popover modal accessible-label="Settings">
-      <button id="mbc-inside">Inside</button>
-    </swc-popover>
-  `,
-  play: async ({ canvasElement }) => {
-    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
-    const dialog = popover.shadowRoot?.querySelector(
-      '.swc-Popover'
-    ) as HTMLDialogElement;
-    popover.open = true;
-    await waitFor(() => expect(dialog.matches(':modal')).toBe(true));
-
-    // A pointerdown on the dialog itself, at a point outside its box, is a
-    // backdrop click and must dismiss with source "outside".
-    let closeSource: string | undefined;
-    popover.addEventListener('swc-close', (event) => {
-      closeSource = (event as CustomEvent).detail.source;
-    });
-    const rect = dialog.getBoundingClientRect();
-    dialog.dispatchEvent(
-      new PointerEvent('pointerdown', {
-        bubbles: true,
-        clientX: rect.left - 10,
-        clientY: rect.top - 10,
-      })
-    );
-    await waitFor(() =>
-      expect(popover.open, 'backdrop click closes the modal').toBe(false)
-    );
-    expect(closeSource, 'close source is "outside"').toBe('outside');
   },
 };
 

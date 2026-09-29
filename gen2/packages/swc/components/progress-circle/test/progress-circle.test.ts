@@ -78,11 +78,10 @@ export const SizesTest: Story = {
       'swc-progress-circle'
     );
 
-    await step('renders expected size attributes', async () => {
-      circles.forEach((circle) => {
-        const size = circle.getAttribute('size');
-        expect(size, `progress circle has a size attribute`).toBeTruthy();
-      });
+    await step('renders every size example', async () => {
+      expect(
+        circles.map((circle) => circle.getAttribute('size')).sort()
+      ).toEqual(['l', 'm', 's']);
     });
   },
 };
@@ -95,18 +94,21 @@ export const StaticColorsTest: Story = {
       'swc-progress-circle[static-color]'
     );
 
-    await step('reflects expected static-color attribute values', async () => {
-      circles.forEach((circle) => {
-        const staticColor = circle.getAttribute('static-color');
-        expect(
-          staticColor,
-          'progress circle has a static-color attribute'
-        ).toBeTruthy();
-        expect(
-          ['white', 'black'],
-          `static-color "${staticColor}" is a valid value`
-        ).toContain(staticColor);
-      });
+    await step('renders both static colors at every size', async () => {
+      const combinations = circles
+        .map(
+          (circle) =>
+            `${circle.getAttribute('static-color')}:${circle.getAttribute('size')}`
+        )
+        .sort();
+      expect(combinations).toEqual([
+        'black:l',
+        'black:m',
+        'black:s',
+        'white:l',
+        'white:m',
+        'white:s',
+      ]);
     });
   },
 };

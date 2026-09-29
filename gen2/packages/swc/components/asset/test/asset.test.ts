@@ -815,20 +815,28 @@ export const LoadStateCachedImageTimingGuaranteeTest: Story = {
         const asset = document.createElement('swc-asset') as Asset;
         asset.appendChild(preloaded);
 
+        let loadCount = 0;
         const loadFired = new Promise<void>((resolve) => {
-          asset.addEventListener('swc-asset-load', () => resolve(), {
-            once: true,
+          asset.addEventListener('swc-asset-load', () => {
+            loadCount++;
+            resolve();
           });
         });
 
         canvasElement.querySelector('div')?.appendChild(asset);
         await asset.updateComplete;
         await loadFired;
+        asset.requestUpdate();
+        await asset.updateComplete;
+        await new Promise<void>((resolve) =>
+          requestAnimationFrame(() => resolve())
+        );
 
         expect(
           asset.loadState,
           'loadState resolves to loaded for the pre-loaded image'
         ).toBe('loaded');
+        expect(loadCount, 'cached image dispatches one load event').toBe(1);
       }
     );
   },

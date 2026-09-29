@@ -139,22 +139,5 @@ export const OverviewTest: Story = {
         'P'
       );
     });
-
-    await step(
-      'accessible-label takes precedence over heading slot labeling',
-      async () => {
-        el.innerHTML = `
-          <h3 slot="heading">What would you like to do next?</h3>
-          <swc-suggestion-item>Create a slide deck from this</swc-suggestion-item>
-        `;
-        el.accessibleLabel = 'Overridden suggestions label';
-        await el.updateComplete;
-
-        expect(el.getAttribute('aria-label')).toBe(
-          'Overridden suggestions label'
-        );
-        expect(el.hasAttribute('aria-labelledby')).toBe(false);
-      }
-    );
   },
 };

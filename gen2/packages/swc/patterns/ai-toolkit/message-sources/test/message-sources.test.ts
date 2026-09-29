@@ -31,25 +31,6 @@ export default {
 } as Meta;
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Defaults
-// ──────────────────────────────────────────────────────────────
-
-export const OverviewTest: Story = {
-  ...Overview,
-  play: async ({ canvasElement, step }) => {
-    const el = await getComponent<MessageSources>(
-      canvasElement,
-      'swc-message-sources'
-    );
-
-    await step('renders with open state in overview', async () => {
-      expect(el.open).toBe(true);
-      expect(el.label).toBe('Sources');
-    });
-  },
-};
-
-// ──────────────────────────────────────────────────────────────
 // TEST: State mutation
 // ──────────────────────────────────────────────────────────────
 

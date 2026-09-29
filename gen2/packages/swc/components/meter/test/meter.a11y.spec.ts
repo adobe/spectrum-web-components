@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 import { gotoStory } from '../../../utils/a11y-helpers.js';
@@ -19,9 +20,9 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  *
  * ARIA snapshot tests validate the accessibility tree structure. The WAI-ARIA
  * `meter` role lives on the shadow `.swc-LinearProgress` wrapper; the host
- * carries no ARIA role. aXe WCAG compliance and color contrast validation are
- * run via test-storybook (see .storybook/test-runner.ts). Both are included in
- * the `test:a11y` command.
+ * carries no ARIA role. Eligible stories receive axe checks via test-storybook
+ * (see .storybook/test-runner.ts). The StaticColors story is excluded there;
+ * the focused check below covers ARIA semantics, not gradient color contrast.
  */
 
 test.describe('Meter - ARIA Snapshots', () => {
@@ -120,5 +121,34 @@ test.describe('Meter - ARIA Snapshots', () => {
     await expect(meter).not.toBeFocused();
     await page.keyboard.press('Tab');
     await expect(meter).not.toBeFocused();
+  });
+});
+
+test.describe('Meter - static-color accessibility semantics', () => {
+  test('static-color examples expose named meters with required ARIA attributes', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-meter--static-colors',
+      'swc-meter'
+    );
+    await expect(root.locator('swc-meter')).toHaveCount(2);
+
+    // Axe marks the gradient panels as incomplete for color contrast (bgGradient).
+    // This scan excludes that rule; it is not a contrast assessment.
+    const results = await new AxeBuilder({ page })
+      .include('#storybook-root')
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .disableRules(['color-contrast'])
+      .analyze();
+
+    expect(results.violations).toEqual([]);
+    expect(
+      results.passes.find(({ id }) => id === 'aria-meter-name')?.nodes
+    ).toHaveLength(2);
+    expect(
+      results.passes.find(({ id }) => id === 'aria-required-attr')?.nodes
+    ).toHaveLength(2);
   });
 });

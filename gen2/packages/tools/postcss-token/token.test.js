@@ -66,6 +66,27 @@ describe('postcss-token plugin', () => {
     );
   });
 
+  it('resolves a composite drop-shadow token', async () => {
+    await run(
+      `a { box-shadow: token('drop-shadow-emphasized'); }`,
+      `a { box-shadow: var(--${prefix}-drop-shadow-emphasized); }`
+    );
+  });
+
+  it('resolves a custom animation token', async () => {
+    await run(
+      `a { animation-duration: token('animation-duration-300'); }`,
+      `a { animation-duration: 190ms; }`
+    );
+  });
+
+  it('preserves a custom token configured to skip resolution', async () => {
+    await run(
+      `a { font-family: token('serif-font'); }`,
+      `a { font-family: var(--${prefix}-serif-font-family-stack); }`
+    );
+  });
+
   it('replaces token() inside a partial value', async () => {
     await run(
       `a { min-block-size: var(--${prefix}-badge-height, token('component-height-100')); }`,

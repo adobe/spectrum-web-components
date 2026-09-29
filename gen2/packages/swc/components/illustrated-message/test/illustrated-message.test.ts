@@ -183,31 +183,24 @@ export const DefaultSlotIllustrationTest: Story = {
       'swc-illustrated-message'
     );
 
-    await step('renders illustration content in the default slot', async () => {
-      const svg = illustratedMessage.querySelector('svg');
-      expect(svg, 'svg element present in default slot').not.toBeNull();
-    });
-
     await step(
-      'verifies decorative illustration is hidden from assistive tech',
+      'displays the illustration assigned to the default slot',
       async () => {
-        const svg = illustratedMessage.querySelector('svg');
-        expect(
-          svg?.getAttribute('aria-hidden'),
-          'aria-hidden on decorative svg'
-        ).toBe('true');
-      }
-    );
+        const slot =
+          illustratedMessage.shadowRoot?.querySelector<HTMLSlotElement>(
+            'slot:not([name])'
+          );
+        expect(slot, 'default slot is rendered').toBeTruthy();
+        expect(slot?.assignedElements()[0]).toBeInstanceOf(SVGSVGElement);
 
-    await step(
-      'reveals the illustration wrapper when an illustration is slotted',
-      async () => {
         const wrapper = illustratedMessage.shadowRoot?.querySelector(
           '.swc-IllustratedMessage-illustration'
         );
-        expect(wrapper?.hasAttribute('hidden'), 'wrapper has [hidden]').toBe(
-          false
-        );
+        expect(wrapper?.hasAttribute('hidden')).toBe(false);
+        expect(getComputedStyle(wrapper!).display).not.toBe('none');
+        expect(
+          slot?.assignedElements()[0]?.getBoundingClientRect().height
+        ).toBeGreaterThan(0);
       }
     );
   },
@@ -252,13 +245,19 @@ export const DescriptionSlotTest: Story = {
       'swc-illustrated-message'
     );
 
-    await step('renders description slot content', async () => {
-      const slotted = illustratedMessage.querySelector('[slot="description"]');
-      expect(slotted, 'description slot element').not.toBeNull();
-      expect(slotted?.textContent?.trim(), 'description text').toBe(
-        'Description text here.'
-      );
-    });
+    await step(
+      'displays content assigned to the description slot',
+      async () => {
+        const slot =
+          illustratedMessage.shadowRoot?.querySelector<HTMLSlotElement>(
+            'slot[name="description"]'
+          );
+        expect(slot, 'description slot is rendered').toBeTruthy();
+        const [description] = slot?.assignedElements() ?? [];
+        expect(description?.textContent?.trim()).toBe('Description text here.');
+        expect(description?.getBoundingClientRect().height).toBeGreaterThan(0);
+      }
+    );
   },
 };
 
@@ -297,26 +296,6 @@ export const HeadingSlotValidElementsTest: Story = {
 // TEST: Actions slot
 // ──────────────────────────────────────────────────────────────
 
-export const ActionsSlotTest: Story = {
-  render: () => html`
-    <swc-illustrated-message>
-      <h2 slot="heading">Heading</h2>
-      <swc-button slot="actions" variant="accent">Browse files</swc-button>
-    </swc-illustrated-message>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const illustratedMessage = await getComponent<IllustratedMessage>(
-      canvasElement,
-      'swc-illustrated-message'
-    );
-
-    await step('renders content in the actions slot', async () => {
-      const button = illustratedMessage.querySelector('[slot="actions"]');
-      expect(button, 'action element present in light DOM').not.toBeNull();
-    });
-  },
-};
-
 export const ActionsSizePropagationTest: Story = {
   render: () => html`
     <swc-illustrated-message size="l">
@@ -349,29 +328,37 @@ export const ActionsSizeChangeTest: Story = {
       canvasElement,
       'swc-illustrated-message'
     );
+    expect(elements.length).toBeGreaterThan(0);
 
-    for (const el of elements) {
-      const expectedSize = el.getAttribute('size') as string;
+    for (const size of IllustratedMessage.VALID_SIZES) {
       await step(
-        `propagates size="${expectedSize}" to slotted action element`,
+        `propagates size="${size}" to slotted action element`,
         async () => {
-          const button = el.querySelector('[slot="actions"]');
+          const el = elements.find(
+            (item) => item.getAttribute('size') === size
+          );
+          expect(el, `message with size="${size}"`).toBeDefined();
+          const button = el?.querySelector('[slot="actions"]');
           expect(
             button?.getAttribute('size'),
-            `button size reflects "${expectedSize}"`
-          ).toBe(expectedSize);
+            `button size reflects "${size}"`
+          ).toBe(size);
         }
       );
     }
 
+    await step('propagates size to every action example', async () => {
+      for (const el of elements) {
+        const action = el.querySelector('[slot="actions"]');
+        expect(action, 'slotted action is present').not.toBeNull();
+        expect(action?.getAttribute('size')).toBe(el.size);
+      }
+    });
+
     await step(
       'updates slotted action element when size property changes',
       async () => {
-        const [first] = elements;
-        if (!first) {
-          return;
-        }
-
+        const first = elements[0]!;
         const button = first.querySelector('[slot="actions"]');
 
         for (const size of IllustratedMessage.VALID_SIZES) {

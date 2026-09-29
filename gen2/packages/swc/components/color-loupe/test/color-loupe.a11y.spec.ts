@@ -19,15 +19,15 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  *
  * The color loupe is a purely visual, non-interactive component.
  * Its SVG carries aria-hidden="true" so the loupe graphic is fully
- * hidden from the accessibility tree. These tests assert that
+ * hidden from the accessibility tree. This test asserts that
  * attribute directly rather than using toMatchAriaSnapshot, which
  * does not accept an empty string even when the tree is legitimately
  * empty. aXe WCAG compliance and color contrast validation are run
  * via test-storybook (see .storybook/test-runner.ts).
  */
 
-test.describe('ColorLoupe - ARIA Snapshots', () => {
-  test('should hide SVG from the accessibility tree for overview', async ({
+test.describe('ColorLoupe - ARIA', () => {
+  test('hides the decorative SVG and leaves the host unnamed', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -35,29 +35,13 @@ test.describe('ColorLoupe - ARIA Snapshots', () => {
       'components-color-loupe--overview',
       'swc-color-loupe'
     );
-    await expect(root.locator('svg').first()).toHaveAttribute(
+    const loupe = root.locator('swc-color-loupe').first();
+    await expect(loupe.locator('svg').first()).toHaveAttribute(
       'aria-hidden',
       'true'
     );
-    await expect(root).not.toHaveAttribute('aria-label');
-    await expect(root).not.toHaveAttribute('aria-labelledby');
-    await expect(root).not.toHaveAttribute('role');
-  });
-
-  test('should hide SVG from the accessibility tree for accessibility story', async ({
-    page,
-  }) => {
-    const root = await gotoStory(
-      page,
-      'components-color-loupe--accessibility',
-      'swc-color-loupe'
-    );
-    await expect(root.locator('svg').first()).toHaveAttribute(
-      'aria-hidden',
-      'true'
-    );
-    await expect(root).not.toHaveAttribute('aria-label');
-    await expect(root).not.toHaveAttribute('aria-labelledby');
-    await expect(root).not.toHaveAttribute('role');
+    await expect(loupe).not.toHaveAttribute('aria-label');
+    await expect(loupe).not.toHaveAttribute('aria-labelledby');
+    await expect(loupe).not.toHaveAttribute('role');
   });
 });

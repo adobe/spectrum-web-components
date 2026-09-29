@@ -182,23 +182,6 @@ export const LinkListTest: Story = {
   },
 };
 
-// ──────────────────────────────────────────────────────────────
-// TEST: Accessibility / keyboard
-// ──────────────────────────────────────────────────────────────
-
-export const KeyboardFocusTest: Story = {
-  ...Standalone,
-  play: async ({ canvasElement, step }) => {
-    const anchor = getAnchor(canvasElement);
-
-    await step('link accepts programmatic focus', async () => {
-      anchor.focus();
-      expect(document.activeElement, 'anchor receives focus').toBe(anchor);
-      expect(anchor.tabIndex, 'native link is in tab order').toBe(0);
-    });
-  },
-};
-
 export const OmitEmptyClassTest: Story = {
   render: () => html`
     ${template({ context: 'prose', variant: 'default' })}

@@ -526,10 +526,10 @@ export const TextPrefixFocusNavigation: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// Memory: Tab re-entry remembers last focused item (#25)
+// Memory: leaving the group preserves the last-focused tab stop (#25)
 // ──────────────────────────────────────────────────────────────
 
-export const MemoryTabReentry: Story = {
+export const MemoryKeepsTabStopAfterFocusLeaves: Story = {
   ...HorizontalToolbar,
   play: async ({ canvasElement, step }) => {
     const host = await getComponent<HTMLElement>(
@@ -542,7 +542,7 @@ export const MemoryTabReentry: Story = {
     );
 
     await step(
-      'after navigating to third item, tabindex=0 remains on that item when focus leaves',
+      'navigating to the third item makes it the only tab stop',
       async () => {
         buttons[0].focus();
         expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Bold');
@@ -553,8 +553,6 @@ export const MemoryTabReentry: Story = {
         keydown(shadowActiveButton(host)!, 'ArrowRight');
         expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Underline');
 
-        (document.activeElement as HTMLElement)?.blur();
-
         const tabbable = buttons.filter((b) => b.tabIndex === 0);
         expect(tabbable.length).toBe(1);
         expect(tabbable[0].textContent?.trim()).toBe('Underline');
@@ -562,17 +560,19 @@ export const MemoryTabReentry: Story = {
     );
 
     await step(
-      'Tab re-entry to the group lands on the remembered item',
+      'focus leaving the group preserves the remembered tab stop',
       async () => {
-        const remembered = buttons.find((b) => b.tabIndex === 0);
-        expect(remembered).toBeTruthy();
-        remembered!.focus();
-        expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Underline');
-
-        keydown(shadowActiveButton(host)!, 'ArrowRight');
-        expect(shadowActiveButton(host)?.textContent?.trim()).toBe(
-          'Strikethrough'
-        );
+        const before = document.createElement('button');
+        before.textContent = 'Before toolbar';
+        host.insertAdjacentElement('beforebegin', before);
+        try {
+          before.focus();
+          expect(document.activeElement).toBe(before);
+          expect(shadowActiveButton(host)).toBeNull();
+          expect(buttons.filter((b) => b.tabIndex === 0)).toEqual([buttons[2]]);
+        } finally {
+          before.remove();
+        }
       }
     );
   },

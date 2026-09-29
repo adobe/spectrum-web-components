@@ -48,6 +48,8 @@ export class TokenStore {
     } catch {
       this.tokens = {};
       this.renamed = {};
+      this.deleted = {};
+      this.deprecatedComments = {};
       this.rebuildCandidates();
     }
   }

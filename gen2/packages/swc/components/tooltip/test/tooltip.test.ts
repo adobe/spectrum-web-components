@@ -834,56 +834,6 @@ export const PlacementsTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// VRT: Visual regression tests
-// ──────────────────────────────────────────────────────────────
-
-export const ForcedColorsOpenTest: Story = {
-  render: () => html`
-    <swc-button id="tt-forced-colors-trigger">Action</swc-button>
-    <swc-tooltip for="tt-forced-colors-trigger" placement="top">
-      Save your changes
-    </swc-tooltip>
-  `,
-  parameters: {
-    chromatic: { forcedColors: 'active' },
-  },
-  play: async ({ canvasElement }) => {
-    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
-    await openTooltip(tooltip);
-  },
-};
-
-export const CJKLineHeightTest: Story = {
-  render: () => html`
-    <swc-button id="tt-cjk-trigger">Action</swc-button>
-    <swc-tooltip for="tt-cjk-trigger" placement="top" lang="ja">
-      変更内容を保存する
-    </swc-tooltip>
-  `,
-  play: async ({ canvasElement }) => {
-    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
-    await openTooltip(tooltip);
-  },
-};
-
-export const LogicalPlacementRTLTest: Story = {
-  render: () => html`
-    <swc-button id="tt-rtl-trigger">Action</swc-button>
-    <swc-tooltip for="tt-rtl-trigger" placement="start" dir="rtl">
-      Appears at start (right in RTL)
-    </swc-tooltip>
-  `,
-  play: async ({ canvasElement }) => {
-    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
-    await openTooltip(tooltip);
-  },
-};
-
-// ──────────────────────────────────────────────────────────────
-// TEST: Dev mode warnings
-// ──────────────────────────────────────────────────────────────
-
-// ──────────────────────────────────────────────────────────────
 // TEST: HoverController integration
 // ──────────────────────────────────────────────────────────────
 

@@ -25,6 +25,7 @@ import {
   theme,
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
+import linkDocumentation from '../../link.mdx?raw';
 
 // Metadata
 
@@ -37,20 +38,9 @@ export default meta;
 
 // Helpers
 
-// Link is CSS-only, so it has no custom-elements-manifest declaration and the
-// manifest-driven verifyCustomPropertyCoverage() (used by the component
-// custom-property VRTs) can't read a documented list to check cases against.
-// DOCUMENTED_LINK_PROPERTIES is the manual equivalent: it must stay in sync
-// with the "CSS custom properties" table in link.mdx, and verifyLinkCustom-
-// PropertyCoverage() below fails if a case is missing, duplicated, or covers a
-// property that isn't in this list — the same safety net, minus the manifest.
-const DOCUMENTED_LINK_PROPERTIES = [
-  '--swc-link-focus-indicator-color',
-  '--swc-link-text-color-default',
-  '--swc-link-text-color-down',
-  '--swc-link-text-color-focus',
-  '--swc-link-text-color-hover',
-] as const;
+// Link is CSS-only, so it has no custom-elements-manifest declaration for
+// verifyCustomPropertyCoverage(). Compare these visual cases against the
+// independently authored public custom-property table in link.mdx instead.
 
 // Each color property only resolves in the interaction state it names, so the
 // state-scoped ones carry a forceState that's applied to both the reference
@@ -101,21 +91,26 @@ const modLinkProperty = (
 
 const coveredLinkProperties = coveredCustomProperties(LINK_PROPERTY_CASES);
 
-// Manual stand-in for verifyCustomPropertyCoverage(): no duplicate cases, and
-// the covered set matches link.mdx's documented list exactly (both are sorted,
-// so an extra or missing property trips the equality check).
-const verifyLinkCustomPropertyCoverage = async () => {
-  await expect(coveredLinkProperties).toHaveLength(
+const verifyLinkCustomPropertyCoverage = () => {
+  const documentedProperties = [
+    ...linkDocumentation.matchAll(/^\|\s*`(--swc-link-[\w-]+)`\s*\|/gm),
+  ]
+    .map(([, property]) => property)
+    .sort();
+
+  expect(documentedProperties.length).toBeGreaterThan(0);
+  expect(documentedProperties).toHaveLength(new Set(documentedProperties).size);
+  expect(coveredLinkProperties).toHaveLength(
     new Set(coveredLinkProperties).size
   );
-  await expect(coveredLinkProperties).toEqual([...DOCUMENTED_LINK_PROPERTIES]);
+  expect(coveredLinkProperties).toEqual(documentedProperties);
 };
 
 const forceStatesAndVerifyCoverage = async (
   context: Parameters<ReturnType<typeof forcePseudoStates>>[0]
 ) => {
   await forcePseudoStates('.swc-Link[data-force-state]')(context);
-  await verifyLinkCustomPropertyCoverage();
+  verifyLinkCustomPropertyCoverage();
 };
 
 // VRT stories

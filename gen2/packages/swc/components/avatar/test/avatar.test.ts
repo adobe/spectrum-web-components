@@ -113,22 +113,6 @@ export const SizeReflectionTest: Story = {
       );
       expect(avatar.size, 'size property after mutation').toBe(300);
     });
-
-    await step(
-      'does not trigger update when size is set to its current value',
-      async () => {
-        // This step exercises the early-return guard in the size setter
-        // (`if (this._size === validSize) return`). The assertion verifies
-        // the final state is unchanged; branch coverage is confirmed by the
-        // coverage tool rather than a behavioral distinction.
-        const sizeBefore = avatar.size;
-        avatar.size = sizeBefore;
-        await avatar.updateComplete;
-        expect(avatar.size, 'size unchanged after same-value set').toBe(
-          sizeBefore
-        );
-      }
-    );
   },
 };
 

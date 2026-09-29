@@ -56,3 +56,38 @@ test.describe('PromptField - ARIA Snapshots', () => {
     `);
   });
 });
+
+test.describe('PromptField - Keyboard Navigation', () => {
+  test('Tab enters the attachment strip on its first tile', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'patterns-ai-toolkit-prompt-field--attachment',
+      'swc-prompt-field'
+    );
+    const attachments = root
+      .locator('swc-prompt-field')
+      .first()
+      .locator('swc-upload-attachment');
+
+    await expect(attachments.first()).toHaveAttribute('tabindex', '0');
+    await expect(attachments.nth(1)).toHaveAttribute('tabindex', '-1');
+
+    await root.evaluate((element) => {
+      const precedingButton = document.createElement('button');
+      precedingButton.type = 'button';
+      precedingButton.textContent = 'Before attachments';
+      element.prepend(precedingButton);
+    });
+
+    const precedingButton = root.getByRole('button', {
+      name: 'Before attachments',
+    });
+    await page.keyboard.press('Tab');
+    await expect(precedingButton).toBeFocused();
+
+    await page.keyboard.press('Tab');
+    await expect(attachments.first()).toBeFocused();
+  });
+});

@@ -269,6 +269,11 @@ export const CooldownCancelledByReenter: Story = {
         // Re-enter immediately — cooldown should be cancelled.
         pointerEnter(triggerA);
         expect(hostA.matches(':popover-open')).toBe(true);
+        await wait(350);
+        expect(
+          hostA.matches(':popover-open'),
+          'the earlier cooldown did not close the re-entered popover'
+        ).toBe(true);
       }
     );
 
@@ -429,7 +434,15 @@ export const FocusCancelsWarmupTimer: Story = {
       }
     );
 
-    trigger.blur();
+    await step(
+      'the cancelled warmup cannot reopen after focus leaves',
+      async () => {
+        trigger.blur();
+        expect(host.matches(':popover-open')).toBe(false);
+        await wait(1600);
+        expect(host.matches(':popover-open')).toBe(false);
+      }
+    );
   },
 };
 FocusCancelsWarmupTimer.storyName = 'Keyboard focus cancels warmup timer';

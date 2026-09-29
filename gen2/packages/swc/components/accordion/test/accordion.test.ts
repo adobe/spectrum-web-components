@@ -1048,6 +1048,7 @@ export const ToggleEventTest: Story = {
       'swc-accordion-item'
     );
     const header = getHeader(item);
+    const stateAtToggle: { property: boolean; attribute: boolean }[] = [];
 
     await step(
       'swc-accordion-item-toggle fires on open, targets the item, and bubbles/composes to the accordion',
@@ -1063,6 +1064,10 @@ export const ToggleEventTest: Story = {
             fired = true;
             eventTarget = event.target;
             bubblesAndComposes = event.bubbles && event.composed;
+            stateAtToggle.push({
+              property: item.open,
+              attribute: item.hasAttribute('open'),
+            });
           },
           { once: true }
         );
@@ -1073,6 +1078,10 @@ export const ToggleEventTest: Story = {
         expect(fired, 'swc-accordion-item-toggle was dispatched').toBe(true);
         expect(eventTarget, 'event target is the accordion item').toBe(item);
         expect(bubblesAndComposes, 'event bubbles and is composed').toBe(true);
+        expect(
+          stateAtToggle,
+          'toggle listener reads the open property and attribute before returning'
+        ).toEqual([{ property: true, attribute: true }]);
       }
     );
 
@@ -1082,6 +1091,10 @@ export const ToggleEventTest: Story = {
         SWC_ACCORDION_ITEM_TOGGLE_EVENT,
         () => {
           fired = true;
+          stateAtToggle.push({
+            property: item.open,
+            attribute: item.hasAttribute('open'),
+          });
         },
         { once: true }
       );
@@ -1092,6 +1105,13 @@ export const ToggleEventTest: Story = {
       expect(fired, 'swc-accordion-item-toggle was dispatched on close').toBe(
         true
       );
+      expect(
+        stateAtToggle,
+        'toggle listener reads the closed property and attribute before returning'
+      ).toEqual([
+        { property: true, attribute: true },
+        { property: false, attribute: false },
+      ]);
     });
   },
 };
@@ -1153,6 +1173,11 @@ export const AfterEventsTest: Story = {
       'swc-accordion-item'
     );
     const header = getHeader(item);
+    const panel = getContentPanel(item);
+
+    panel.style.cssText =
+      'display: block; height: 0px; overflow: hidden; transition: height 150ms linear;';
+    panel.getBoundingClientRect();
 
     const waitForEvent = (eventName: string, timeout = 2000): Promise<void> =>
       new Promise<void>((resolve, reject) => {
@@ -1171,23 +1196,64 @@ export const AfterEventsTest: Story = {
         );
       });
 
-    await step('swc-after-open fires after the item opens', async () => {
-      // Register the listener before clicking so synchronous dispatch is captured
-      const afterOpenPromise = waitForEvent(
-        SWC_ACCORDION_ITEM_AFTER_OPEN_EVENT
+    const verifyAfterTransition = async (
+      startEvent: string,
+      afterEvent: string,
+      nextHeight: string,
+      expectedOpen: boolean
+    ) => {
+      const events: string[] = [];
+      item.addEventListener(startEvent, () => events.push('start'), {
+        once: true,
+      });
+      panel.addEventListener(
+        'transitionend',
+        (event) => {
+          if (event.target === panel && event.propertyName === 'height') {
+            events.push('transitionend');
+          }
+        },
+        { capture: true, once: true }
       );
+      const afterPromise = waitForEvent(afterEvent);
+      item.addEventListener(afterEvent, () => events.push('after'), {
+        once: true,
+      });
+
       header.click();
       await item.updateComplete;
-      await afterOpenPromise;
+      expect(events, 'after event has not fired before the transition').toEqual(
+        ['start']
+      );
+
+      panel.style.height = nextHeight;
+      await afterPromise;
+      expect(item.open, 'item has reached the requested state').toBe(
+        expectedOpen
+      );
+      expect(events, 'after event follows the real height transition').toEqual([
+        'start',
+        'transitionend',
+        'after',
+      ]);
+    };
+
+    await step('swc-after-open follows the height transition', async () => {
+      await verifyAfterTransition(
+        SWC_ACCORDION_ITEM_OPEN_EVENT,
+        SWC_ACCORDION_ITEM_AFTER_OPEN_EVENT,
+        '120px',
+        true
+      );
     });
 
-    await step('swc-after-close fires after the item closes', async () => {
-      const afterClosePromise = waitForEvent(
-        SWC_ACCORDION_ITEM_AFTER_CLOSE_EVENT
+    await step('swc-after-close follows the height transition', async () => {
+      await verifyAfterTransition(
+        SWC_ACCORDION_ITEM_CLOSE_EVENT,
+        SWC_ACCORDION_ITEM_AFTER_CLOSE_EVENT,
+        '0px',
+        false
       );
-      header.click();
-      await item.updateComplete;
-      await afterClosePromise;
     });
   },
 };

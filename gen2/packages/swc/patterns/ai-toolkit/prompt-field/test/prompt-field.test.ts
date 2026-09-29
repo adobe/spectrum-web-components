@@ -104,8 +104,15 @@ export const OverviewTest: Story = {
       await Promise.resolve();
       await el.updateComplete;
 
-      const footer = el.shadowRoot?.querySelector('.swc-PromptField-footer');
+      const footer = el.shadowRoot?.querySelector<HTMLElement>(
+        '.swc-PromptField-footer'
+      );
       expect(footer).toBeTruthy();
+      const legal = footer
+        ?.querySelector<HTMLSlotElement>('slot[name="legal"]')
+        ?.assignedElements({ flatten: true })[0];
+      expect(legal?.textContent?.trim()).toBe('Custom legal from slot.');
+      expect(legal?.getBoundingClientRect().height).toBeGreaterThan(0);
     });
   },
 };
@@ -571,7 +578,7 @@ export const AttachmentFocusOrderTest: Story = {
       }
     );
 
-    await step('first Tab reaches the first tile directly', async () => {
+    await step('the first tile accepts programmatic focus', async () => {
       textarea?.blur();
       attachments[0]?.focus();
       expect(getActiveElement()).toBe(attachments[0]);

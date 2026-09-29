@@ -37,48 +37,20 @@ test.describe('Divider - ARIA Snapshots', () => {
     `);
   });
 
-  test('should handle anatomy story', async ({ page }) => {
-    const root = await gotoStory(
-      page,
-      'components-divider--anatomy',
-      'swc-divider'
-    );
-    await expect(root).toMatchAriaSnapshot(`
-      - separator
-    `);
-  });
-
-  test('should handle different sizes', async ({ page }) => {
-    const root = await gotoStory(
-      page,
-      'components-divider--sizes',
-      'swc-divider'
-    );
-    await expect(root).toMatchAriaSnapshot(`
-      - separator
-    `);
-  });
-
-  test('should handle vertical orientation', async ({ page }) => {
+  test('should expose vertical separators with vertical orientation', async ({
+    page,
+  }) => {
     const root = await gotoStory(
       page,
       'components-divider--vertical',
       'swc-divider'
     );
-    await expect(root).toMatchAriaSnapshot(`
-      - separator
-    `);
-  });
-
-  test('should handle static colors', async ({ page }) => {
-    const root = await gotoStory(
-      page,
-      'components-divider--static-colors',
-      'swc-divider'
-    );
-    await expect(root).toMatchAriaSnapshot(`
-      - separator
-    `);
+    const dividers = root.locator('swc-divider[vertical]');
+    await expect(dividers.first()).toBeVisible();
+    for (const divider of await dividers.all()) {
+      await expect(divider).toHaveAttribute('role', 'separator');
+      await expect(divider).toHaveAttribute('aria-orientation', 'vertical');
+    }
   });
 
   test('should not be keyboard focusable', async ({ page }) => {

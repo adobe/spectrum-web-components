@@ -158,6 +158,26 @@ export const DynamicContentTest: Story = {
       expect(host.shadowRoot?.querySelector('.label--empty')).toBeNull();
     });
 
+    await step(
+      'editing an assigned text node updates content in place',
+      async () => {
+        const text = host.firstChild as Text;
+        text.data = '   ';
+        await flush();
+        await host.updateComplete;
+
+        expect(host.hasContent).toBe(false);
+        expect(host.shadowRoot?.querySelector('.label--empty')).toBeTruthy();
+
+        text.data = 'Restored';
+        await flush();
+        await host.updateComplete;
+
+        expect(host.hasContent).toBe(true);
+        expect(host.shadowRoot?.querySelector('.label--empty')).toBeNull();
+      }
+    );
+
     await step('removing the text returns to empty', async () => {
       host.textContent = '';
       await flush();

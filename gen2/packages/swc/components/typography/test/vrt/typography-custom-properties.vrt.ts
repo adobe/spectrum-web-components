@@ -21,6 +21,7 @@ import {
   theme,
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
+import typographyDocumentation from '../../typography.mdx?raw';
 
 // Metadata
 
@@ -33,11 +34,9 @@ export default meta;
 
 // Helpers
 
-// Typography has no custom-elements-manifest, so DOCUMENTED_TYPOGRAPHY_PROPERTIES
-// is the manual equivalent: it must stay in sync with the "CSS custom
-// properties" table in typography.mdx, and
-// verifyTypographyCustomPropertyCoverage() below fails if a case is
-// missing, duplicated, or undocumented.
+// Typography is CSS-only, with no custom element declaration to pass to
+// verifyCustomPropertyCoverage(). Read its documented API table directly
+// instead of keeping a second, test-local copy of that inventory.
 //
 // Scope: margin-top/bottom multiplier variables are internal plumbing
 // (not consumer-set) and excluded. CJK font-size/line-height/letter-spacing
@@ -65,64 +64,6 @@ const casesFor = (prefix: string): readonly CustomPropertyCase[] =>
     property: `--swc-${prefix}-${suffix}`,
     value,
   }));
-
-// Mirrors typography.mdx's "CSS custom properties" table exactly (sorted,
-// to match coveredCustomProperties()'s own sort), so an addition or removal
-// on either side trips verifyTypographyCustomPropertyCoverage() below.
-const DOCUMENTED_TYPOGRAPHY_PROPERTIES = [
-  '--swc-body-cjk-font-size',
-  '--swc-body-cjk-letter-spacing',
-  '--swc-body-cjk-line-height',
-  '--swc-body-font-color',
-  '--swc-body-font-family',
-  '--swc-body-font-size',
-  '--swc-body-font-weight',
-  '--swc-body-letter-spacing',
-  '--swc-body-line-height',
-  '--swc-body-margin-bottom',
-  '--swc-body-margin-top',
-  '--swc-detail-cjk-letter-spacing',
-  '--swc-detail-cjk-line-height',
-  '--swc-detail-font-color',
-  '--swc-detail-font-family',
-  '--swc-detail-font-size',
-  '--swc-detail-font-weight',
-  '--swc-detail-letter-spacing',
-  '--swc-detail-line-height',
-  '--swc-detail-margin-bottom',
-  '--swc-detail-margin-top',
-  '--swc-heading-cjk-font-size',
-  '--swc-heading-cjk-letter-spacing',
-  '--swc-heading-cjk-line-height',
-  '--swc-heading-font-color',
-  '--swc-heading-font-family',
-  '--swc-heading-font-size',
-  '--swc-heading-font-weight',
-  '--swc-heading-letter-spacing',
-  '--swc-heading-line-height',
-  '--swc-heading-margin-bottom',
-  '--swc-heading-margin-top',
-  '--swc-monospace-cjk-line-height',
-  '--swc-monospace-font-color',
-  '--swc-monospace-font-family',
-  '--swc-monospace-font-size',
-  '--swc-monospace-font-weight',
-  '--swc-monospace-letter-spacing',
-  '--swc-monospace-line-height',
-  '--swc-monospace-margin-bottom',
-  '--swc-monospace-margin-top',
-  '--swc-title-cjk-font-size',
-  '--swc-title-cjk-letter-spacing',
-  '--swc-title-cjk-line-height',
-  '--swc-title-font-color',
-  '--swc-title-font-family',
-  '--swc-title-font-size',
-  '--swc-title-font-weight',
-  '--swc-title-letter-spacing',
-  '--swc-title-line-height',
-  '--swc-title-margin-bottom',
-  '--swc-title-margin-top',
-] as const;
 
 const HEADING_PROPERTY_CASES = casesFor('heading');
 const TITLE_PROPERTY_CASES = casesFor('title');
@@ -290,17 +231,21 @@ const coveredTypographyProperties = coveredCustomProperties([
   ...CODE_CJK_PROPERTY_CASES,
 ]);
 
-// Manual stand-in for verifyCustomPropertyCoverage(): no duplicate cases
-// (e.g. from calling casesFor() twice for the same prefix), and the covered
-// set matches typography.mdx's documented list exactly (both are sorted, so
-// an extra or missing property trips the equality check).
 const verifyTypographyCustomPropertyCoverage = async () => {
+  const documentedProperties = [
+    ...typographyDocumentation.matchAll(/^\|\s*`(--swc-[\w-]+)`\s*\|/gm),
+  ]
+    .map(([, property]) => property)
+    .sort();
+
+  await expect(documentedProperties.length).toBeGreaterThan(0);
+  await expect(documentedProperties).toHaveLength(
+    new Set(documentedProperties).size
+  );
   await expect(coveredTypographyProperties).toHaveLength(
     new Set(coveredTypographyProperties).size
   );
-  await expect(coveredTypographyProperties).toEqual([
-    ...DOCUMENTED_TYPOGRAPHY_PROPERTIES,
-  ]);
+  await expect(coveredTypographyProperties).toEqual(documentedProperties);
 };
 
 // VRT stories
