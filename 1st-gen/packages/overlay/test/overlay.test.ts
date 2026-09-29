@@ -15,6 +15,7 @@ import {
   html,
   nextFrame,
   oneEvent,
+  waitUntil,
 } from '@open-wc/testing';
 import { setViewport } from '@web/test-runner-commands';
 import { sendKeys } from '@web/test-runner-commands';
@@ -1162,6 +1163,53 @@ describe('Overlay should correctly trap focus', () => {
     // press tab to focus on button2
     await sendTabKey();
     expect(document.activeElement).to.equal(button2);
+  });
+  it('does not keep a focus trap when a modal overlay closes while opening', async () => {
+    const el = await fixture<HTMLDivElement>(html`
+      <div>
+        <sp-button id="outside">Outside</sp-button>
+        <sp-overlay type="modal">
+          <sp-dialog>
+            <sp-button>Inside</sp-button>
+          </sp-dialog>
+        </sp-overlay>
+      </div>
+    `);
+    const outside = el.querySelector('#outside') as Button;
+    const overlay = el.querySelector('sp-overlay') as Overlay;
+    await elementUpdated(overlay);
+
+    // Close at several microtask depths after the opening transition starts,
+    // including while the lazy focus-trap import is still pending.
+    for (let depth = 0; depth < 8; depth++) {
+      overlay.addEventListener(
+        'beforetoggle',
+        () => {
+          let close = (): void => {
+            overlay.open = false;
+          };
+          for (let i = 0; i < depth; i++) {
+            const next = close;
+            close = () => queueMicrotask(next);
+          }
+          queueMicrotask(close);
+        },
+        { once: true }
+      );
+      overlay.open = true;
+      await waitUntil(
+        () => !overlay.open && overlay.state === 'closed',
+        `overlay closed at depth ${depth}`
+      );
+      await nextFrame();
+      await nextFrame();
+    }
+
+    const clickSpy = spy();
+    outside.addEventListener('click', clickSpy);
+    outside.click();
+
+    expect(clickSpy.callCount).to.equal(1);
   });
   it('should not trap focus when the overlay type is auto', async () => {
     const el = await fixture<HTMLDivElement>(html`

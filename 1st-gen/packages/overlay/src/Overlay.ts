@@ -596,6 +596,9 @@ export class Overlay extends ComputedOverlayBase {
     }
     if (targetOpenState) {
       const focusTrap = await import('focus-trap');
+      if (this.open !== targetOpenState) {
+        return;
+      }
       // When `receives-focus="false"`, pass `initialFocus: false` so the trap
       // still captures Tab but does not move focus on activation. Without this,
       // focus-trap would move focus before `applyFocus` runs, bypassing the
