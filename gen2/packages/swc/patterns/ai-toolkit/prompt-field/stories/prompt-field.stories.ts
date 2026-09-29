@@ -659,7 +659,11 @@ class PromptFieldBehaviorDemo extends LitElement {
                 `
               : html`
                   <swc-asset slot="thumbnail">
-                    <svg role="img" aria-label=${attachment.fileName} viewBox="0 0 100 100">
+                    <svg
+                      role="img"
+                      aria-label=${attachment.fileName}
+                      viewBox="0 0 100 100"
+                    >
                       <rect width="100" height="100" fill="#f3f3f3"></rect>
                     </svg>
                   </swc-asset>

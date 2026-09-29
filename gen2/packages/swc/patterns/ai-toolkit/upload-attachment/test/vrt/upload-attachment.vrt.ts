@@ -155,9 +155,7 @@ const forceDismissButtonStates = ({
       'swc-upload-attachment[data-force-dismiss-state]'
     )
     .forEach((host) => {
-      const state = host.dataset.forceDismissState as
-        | ForcedState
-        | undefined;
+      const state = host.dataset.forceDismissState as ForcedState | undefined;
       const dismissButton = host.shadowRoot?.querySelector<HTMLElement>(
         '.swc-UploadAttachment-dismiss'
       );
