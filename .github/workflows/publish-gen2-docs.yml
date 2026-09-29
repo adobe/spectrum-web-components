@@ -22,6 +22,7 @@ on:
 
 permissions:
   contents: read
+  actions: read # lets the workflow_run path read the upstream run's job results
 
 concurrency:
   group: publish-gen2-docs
@@ -116,6 +117,27 @@ jobs:
             --from-to LocalBlob
           echo "Deployed to https://swcpreviews.z13.web.core.windows.net/docs-staging/"
 
+      # A workflow_run for Publish Packages (gen2) concludes `success` even when its
+      # `publish` job was skipped (for example the run that only opened or updated the
+      # Version PR, or one where the release gate didn't open). Only the `publish` job
+      # actually succeeding means a release shipped, so read it from the upstream run.
+      - name: Check the upstream release actually published
+        id: released
+        if: github.event_name == 'workflow_run'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          UPSTREAM_RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          CONCLUSION=$(gh api "repos/${{ github.repository }}/actions/runs/$UPSTREAM_RUN_ID/jobs" \
+            --jq '.jobs[] | select(.name == "publish") | .conclusion')
+          echo "Upstream publish job conclusion: ${CONCLUSION:-<not found>}"
+          if [ "$CONCLUSION" = "success" ]; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+            echo "No release was published by the upstream run - skipping production deploy"
+          fi
+
       - name: Deploy to production
         # spectrum-web-components.adobe.com maps to the /docs path in the storage
         # container, so deploying to $web/docs/ IS the domain root. The generated
@@ -126,10 +148,12 @@ jobs:
         # successfully-concluded upstream runs, so by the time we're here a
         # workflow_run event is already known-safe - this only needs to check
         # for the #gen2-publish keyword, to skip a run that merely opened/
-        # updated the Version PR with no real publish.
+        # updated the Version PR with no real publish, and that the upstream `publish`
+        # job actually succeeded (see the check above).
         if: >-
           github.event_name == 'workflow_dispatch' ||
-          contains(github.event.workflow_run.head_commit.message, '#gen2-publish')
+          (contains(github.event.workflow_run.head_commit.message, '#gen2-publish') &&
+          steps.released.outputs.published == 'true')
         env:
           AZCOPY_AUTO_LOGIN_TYPE: SPN
           AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZURE_CLIENT_ID }}
