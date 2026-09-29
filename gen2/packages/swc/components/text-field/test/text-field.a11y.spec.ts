@@ -131,6 +131,15 @@ test.describe('Text field - ARIA Snapshots', () => {
       - textbox "Email address"
       - textbox "Email address"
     `);
+    const fields = root.locator('swc-text-field');
+    await expect(fields.nth(0).locator('input')).toHaveAttribute(
+      'required',
+      ''
+    );
+    await expect(fields.nth(1).locator('input')).toHaveAttribute(
+      'required',
+      ''
+    );
   });
 
   test('names each textbox with a leading prefix affix', async ({ page }) => {
@@ -159,7 +168,7 @@ test.describe('Text field - ARIA Snapshots', () => {
       - text: Default
       - textbox "Default"
       - text: Full name
-      - textbox "Full name"
+      - textbox "Full name" [required]
       - textbox "Read-only": Read-only value
       - text: Disabled
       - textbox "Disabled" [disabled]: Disabled value
@@ -169,6 +178,9 @@ test.describe('Text field - ARIA Snapshots', () => {
       - textbox "Email address" [disabled]
       - text: We'll never share your email.
     `);
+    await expect(
+      root.locator('swc-text-field').nth(1).locator('input')
+    ).toHaveAttribute('required', '');
   });
 
   test('associates description text via aria-describedby', async ({ page }) => {
@@ -178,10 +190,25 @@ test.describe('Text field - ARIA Snapshots', () => {
       'swc-text-field'
     );
     await expect(root).toMatchAriaSnapshot(`
+      - text: Slotted
+      - code: description
       - textbox "Comments"
+      - text: Optional; visible to your team only.
+      - code: accessible-describedby
+      - text: ": described by another element"
       - paragraph: Describe the issue in as much detail as possible.
       - textbox "Issue details"
     `);
+    const describedByIds = await root
+      .locator('swc-text-field')
+      .nth(1)
+      .locator('input')
+      .evaluate((input) =>
+        (input as HTMLInputElement).ariaDescribedByElements?.map(
+          (element) => element.id
+        )
+      );
+    expect(describedByIds).toEqual(['accessibility-external-description']);
   });
 });
 

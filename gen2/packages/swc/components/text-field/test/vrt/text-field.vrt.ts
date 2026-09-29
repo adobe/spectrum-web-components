@@ -51,83 +51,20 @@ export default meta;
 //    HELPERS
 // ────────────────
 
-// Text field draws its keyboard focus ring off a custom `:state(keyboard-focused)`
-// element-internals state, not `:host(:focus-visible)`, because text inputs match
-// `:focus-visible` on pointer click. The shared `forcePseudoStates` helper only
-// mirrors `:hover`/`:focus-visible`/`:active`, so mirror the keyboard-focused
-// rule separately: rewrite `:host(:state(keyboard-focused))` as
-// `:host([data-forced-focus-visible])` in the shadow root's adopted sheets.
-const KEYBOARD_FOCUSED_SELECTOR = ':host(:state(keyboard-focused))';
-const KEYBOARD_FOCUSED_MIRROR = ':host([data-forced-focus-visible])';
-
-const mirrorCache = new WeakMap<CSSStyleSheet, CSSStyleSheet | null>();
-const augmentedRoots = new WeakSet<ShadowRoot>();
-
-const mirrorKeyboardFocusedRules = (
-  sheet: CSSStyleSheet
-): CSSStyleSheet | null => {
-  const rules: string[] = [];
-  for (const rule of sheet.cssRules) {
-    if (
-      rule instanceof CSSStyleRule &&
-      rule.cssText.includes(KEYBOARD_FOCUSED_SELECTOR)
-    ) {
-      rules.push(
-        rule.cssText
-          .split(KEYBOARD_FOCUSED_SELECTOR)
-          .join(KEYBOARD_FOCUSED_MIRROR)
-      );
-    }
-  }
-  if (!rules.length) {
-    return null;
-  }
-  const mirror = new CSSStyleSheet();
-  rules.forEach((cssText, index) => mirror.insertRule(cssText, index));
-  return mirror;
-};
-
-const augmentKeyboardFocused = (root: ShadowRoot): void => {
-  if (augmentedRoots.has(root)) {
-    return;
-  }
-  augmentedRoots.add(root);
-  const mirrors = root.adoptedStyleSheets
-    .map((sheet) => {
-      if (!mirrorCache.has(sheet)) {
-        mirrorCache.set(sheet, mirrorKeyboardFocusedRules(sheet));
-      }
-      return mirrorCache.get(sheet) ?? null;
-    })
-    .filter((sheet): sheet is CSSStyleSheet => sheet !== null);
-  if (mirrors.length) {
-    root.adoptedStyleSheets = [...root.adoptedStyleSheets, ...mirrors];
-  }
-};
-
 const forceTextFieldStates = async ({
   canvasElement,
 }: {
   canvasElement: HTMLElement;
 }) => {
-  // Shared helper covers `:hover` on the internal control wrapper.
+  // Hover and focus-within target the internal control; keyboard focus targets
+  // the host's custom state.
   await forcePseudoStates(
-    'swc-text-field[data-force-state]',
+    'swc-text-field[data-force-state="hover"], swc-text-field[data-force-state="focus-within"]',
     '.swc-TextField-control'
   )({ canvasElement });
-
-  // Custom mirror for the keyboard-focused ring on hosts tagged focus-visible.
-  canvasElement
-    .querySelectorAll<HTMLElement>(
-      'swc-text-field[data-force-state="focus-visible"]'
-    )
-    .forEach((host) => {
-      if (!host.shadowRoot) {
-        return;
-      }
-      augmentKeyboardFocused(host.shadowRoot);
-      host.setAttribute('data-forced-focus-visible', '');
-    });
+  await forcePseudoStates('swc-text-field[data-force-state="focus-visible"]')({
+    canvasElement,
+  });
 };
 
 type TextFieldCase = {
@@ -147,7 +84,7 @@ type TextFieldCase = {
   invalid?: boolean;
   extraStyle?: string;
   lang?: string;
-  forceState?: 'hover' | 'focus-visible';
+  forceState?: 'hover' | 'focus-visible' | 'focus-within';
 };
 
 const renderCase = ({
@@ -331,22 +268,39 @@ const permutationContent = () => html`
   )}
   ${row(
     [
-      renderCase({ label: 'Hover', forceState: 'hover' }),
-      renderCase({ label: 'Focus-visible', forceState: 'focus-visible' }),
+      renderCase({ label: 'Default', forceState: 'hover' }),
       renderCase({
-        label: 'Invalid hover',
+        label: 'Invalid',
         invalid: true,
         errorText: 'Enter a valid value',
         forceState: 'hover',
       }),
+    ],
+    'Hover'
+  )}
+  ${row(
+    [
+      renderCase({ label: 'Default', forceState: 'focus-within' }),
       renderCase({
-        label: 'Invalid focus-visible',
+        label: 'Invalid',
+        invalid: true,
+        errorText: 'Enter a valid value',
+        forceState: 'focus-within',
+      }),
+    ],
+    'Focus within'
+  )}
+  ${row(
+    [
+      renderCase({ label: 'Default', forceState: 'focus-visible' }),
+      renderCase({
+        label: 'Invalid',
         invalid: true,
         errorText: 'Enter a valid value',
         forceState: 'focus-visible',
       }),
     ],
-    'Forced pseudo-states'
+    'Keyboard focus'
   )}
   ${row(
     [
