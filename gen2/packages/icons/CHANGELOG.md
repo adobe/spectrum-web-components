@@ -15,7 +15,7 @@
 
 ### Minor Changes
 
-- [#6562](https://github.com/adobe/spectrum-web-components/pull/6562) [`f927ec3`](https://github.com/adobe/spectrum-web-components/commit/f927ec347b6a46f9857759b6830679d4cfdc5c14) Add `@adobe/spectrum-wc-icons`, a new public package delivering the Spectrum 2 **workflow icons** (the icons consumers pick: star, folder, arrows, and the like). It depends only on `@adobe/spectrum-wc-core`.
+- [#6562](https://github.com/adobe/spectrum-web-components/pull/6562) [`f927ec3`](https://github.com/adobe/spectrum-web-components/commit/f927ec347b6a46f9857759b6830679d4cfdc5c14) Add `@adobe/spectrum-wc-icons`, a new public package delivering the Spectrum 2 **workflow icons** (the icons consumers pick: star, folder, arrows, and the like).
   - **Two outputs per icon, neither coupling a consumer to Lit**: a per-icon custom element (`<swc-icon-star>`) that renders in any framework with zero ceremony, and a per-icon SVG-string function (`Icon_Star()`) as the framework-agnostic, tree-shakeable substrate (usable via `innerHTML`, React `dangerouslySetInnerHTML`, Vue `v-html`, or Lit `unsafeSVG`).
   - **API**: every element extends `IconBase`, so it carries `size` (`xs`–`xl`) and host-owned accessibility (`accessible-label` sets `role="img"` + `aria-label`; empty is decorative `aria-hidden`). Color follows CSS `color` with a `--swc-icon-color` override.
   - **Tree-shaking**: per-icon subpath exports (`@adobe/spectrum-wc-icons/swc-icon-star.js`, `@adobe/spectrum-wc-icons/Star.js`) mean an app ships only the icons it imports; a register-all `elements.js` and a `manifest.js` (name + tag list) are provided for galleries and pickers.

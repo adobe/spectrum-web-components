@@ -95,10 +95,6 @@
 
   **feat(prompt-field):** Adopt the new `opacity-*` tokens for the surface transparencies that map exactly to the scale (`--_swc-prompt-field-inset-shadow-color` → `opacity-100`, outer recede stop → `opacity-50`). No visual change.
 
-- [#6764](https://github.com/adobe/spectrum-web-components/pull/6764) [`9868ebc`](https://github.com/adobe/spectrum-web-components/commit/9868ebce9fba688f48ce5090daff841db892e469) - **feat(core):** Added `TriggerPressController`, a Lit reactive controller for click-to-toggle triggers on light-dismissible surfaces (`popover="auto"`, a non-modal `<dialog>`).
-
-  Pressing the trigger again while the surface is open light-dismisses it before the trailing click fires, so a naive `open = !open` handler reads `open` as already `false` and reopens the surface on the click that should have closed it. `Popover.base.ts` (and `<swc-popover>` transitively) now composes this controller instead of carrying its own copy of the fix. Also fixes a related edge case where a native dismissal noted during a press that then ends without a click (for example the platform reinterprets it as a scroll) could get stuck and silently swallow the next, unrelated click on the trigger.
-
 ### Patch Changes
 
 - [#6518](https://github.com/adobe/spectrum-web-components/pull/6518) [`36052f3`](https://github.com/adobe/spectrum-web-components/commit/36052f305622ad8f46b44bf5d71e2b02ebd8229c) - Fix inaccurate API reference tables for several gen2 components by documenting CSS custom properties and JSDoc property descriptions that were missing from the generated Custom Elements Manifest.
@@ -150,7 +146,7 @@
 
   `getValue` may now return `null` to remove the propagated attribute from assigned elements instead of setting it to an empty string. The `hostUpdated()` no-op guard now only records a value as applied once the slot actually resolves, so a slot that resolves after an earlier unsuccessful attempt with the same value is no longer skipped forever.
 
-  `SlotAttributePropagationController` is also now a public export (`@spectrum-web-components/core/controllers/slot-attribute-propagation-controller.js`), alongside dedicated tests and a Storybook controller docs page. Existing consumers (`<swc-button-group>`, `<swc-illustrated-message>`) are unaffected aside from benefiting from the propagation-guard fix.
+  Existing consumers (`<swc-button-group>`, `<swc-illustrated-message>`) are unaffected aside from benefiting from the propagation-guard fix.
 
 - [#6587](https://github.com/adobe/spectrum-web-components/pull/6587) [`4a30997`](https://github.com/adobe/spectrum-web-components/commit/4a309978f86b9d050cb54ed03db7418e40cb464a) - **fix(slot-text-controller):** `SlotTextController` no longer counts comment nodes as label content. A `${cond ? nothing : label}` binding leaves a Lit child-part marker (a comment node with non-empty data) in the default slot; its data was previously misread as label text during the controller's initial `host.childNodes` scan.
 
