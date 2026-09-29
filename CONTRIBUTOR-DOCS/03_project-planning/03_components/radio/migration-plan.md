@@ -366,9 +366,9 @@ Planned rendering shape:
 
 ### Setup
 
-- [ ] Create `gen2/packages/core/components/radio/`
-- [ ] Create `gen2/packages/swc/components/radio/`
-- [ ] Wire exports in both `package.json` files
+- [x] Create `gen2/packages/core/components/radio/` — lives at `gen2/packages/core/components/radio-group/Radio.base.ts` instead: consolidated into the shared `radio-group` directory alongside `RadioGroup.base.ts`, mirroring the `accordion`/`accordion-item` pattern (the item cannot ship independently of the group)
+- [x] Create `gen2/packages/swc/components/radio/` — same consolidation: `gen2/packages/swc/components/radio-group/Radio.ts`
+- [x] Wire exports in both `package.json` files — core exports `./components/radio-group` (covers both classes); SWC's wildcard `./components/*` needs no per-component entry
 - [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
 - [ ] Confirm the shared feature branch for combined `swc-radio`/`swc-radio-group` delivery exists before opening implementation PRs against it
 
@@ -376,15 +376,15 @@ Planned rendering shape:
 
 #### Naming and public surface
 
-- [ ] `Radio.types.ts`: define the `size` union (`s`/`m`/`l`/`xl`, explicit default `m`); export public types
-- [ ] `Radio.base.ts`: implement `value`, `checked`, `disabled`, `emphasized`, `size`, `autofocus`
-- [ ] Remove `invalid`, `readonly` from the item surface (B1, B2)
-- [ ] Do not add `accessible-label`/`accessible-labelledby`/`accessible-describedby` (deferred — see A4, [Decision log](#decision-log))
-- [ ] Rename the label slot from default to named `label` (B14); update stories/tests accordingly
-- [ ] Implement label association via a real `<label for="…">` targeting the inner input's generated `id`, wrapping the `label` slot's content (no `LabellingController` dependency)
-- [ ] Gate the optional `description` slot/`aria-describedby` with `SlotPresenceController`
-- [ ] Implement the standalone-usage dev-mode warning (B15)
-- [ ] Do not propagate `name` onto the inner input (B12)
+- [x] `Radio.types.ts`: define the `size` union (`s`/`m`/`l`/`xl`, explicit default `m`); export public types — lives in the merged `RadioGroup.types.ts` (`RADIO_VALID_SIZES`/`RadioSize`, shared with the group)
+- [x] `Radio.base.ts`: implement `value`, `checked`, `disabled`, `emphasized`, `size`, `autofocus`
+- [x] Remove `invalid`, `readonly` from the item surface (B1, B2)
+- [x] Do not add `accessible-label`/`accessible-labelledby`/`accessible-describedby` (deferred — see A4, [Decision log](#decision-log))
+- [x] Rename the label slot from default to named `label` (B14); update stories/tests accordingly
+- [ ] Implement label association via a real `<label for="…">` targeting the inner input's generated `id`, wrapping the `label` slot's content (no `LabellingController` dependency) — blocked on the native `<input type="radio">` (Styling/rendering phase); `swc-radio` still renders only the `label`/`description` slots
+- [ ] Gate the optional `description` slot/`aria-describedby` with `SlotPresenceController` — partially done: `Radio.base.ts` wires `SlotPresenceController` and `swc-radio` conditionally renders the `description` slot on `hasDescription`; the `aria-describedby` half needs the inner input to target
+- [x] Implement the standalone-usage dev-mode warning (B15)
+- [ ] Do not propagate `name` onto the inner input (B12) — moot until the inner input exists; nothing propagates it today
 
 #### Alignment checks
 
@@ -395,7 +395,7 @@ Planned rendering shape:
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] Add `.swc-Radio` to the internal semantic wrapper in `render()`; keep styling off `:host`
+- [x] Add `.swc-Radio` to the internal semantic wrapper in `render()`; keep styling off `:host`
 - [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `radio.css` as baseline
 - [ ] Author `radio.css` directly; do not consume the shared `form-fields` `_lit-styles/` fragment or a shared render template (resolved — see [Decision log](#decision-log))
 
@@ -420,8 +420,8 @@ Planned rendering shape:
 
 - [ ] `checked`/`aria-checked` come from the native inner input; never emits `"mixed"`
 - [ ] `disabled` reflects onto the inner input's native `disabled` rather than a hand-written `aria-disabled`
-- [ ] No per-item `readonly` or `invalid`/`aria-invalid` remains on `swc-radio`
-- [ ] `swc-radio` has no `ElementInternals`/form-value participation of its own; `FieldAssociationController` lives entirely on `swc-radio-group`
+- [x] No per-item `readonly` or `invalid`/`aria-invalid` remains on `swc-radio`
+- [x] `swc-radio` has no `ElementInternals`/form-value participation of its own; `FieldAssociationController` lives entirely on `swc-radio-group`
 - [ ] `name` is not propagated onto the item's inner input (B12)
 - [ ] Receiving focus via Tab or `.focus()` never auto-selects; receiving focus via the group's arrow-key roving always does
 

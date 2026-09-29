@@ -369,21 +369,21 @@ Planned rendering shape:
 
 ### Setup
 
-- [ ] Create `gen2/packages/core/components/radio-group/`
-- [ ] Create `gen2/packages/swc/components/radio-group/`
-- [ ] Wire exports in both `package.json` files
+- [x] Create `gen2/packages/core/components/radio-group/`
+- [x] Create `gen2/packages/swc/components/radio-group/`
+- [x] Wire exports in both `package.json` files
 - [ ] Confirm this component lands on the shared `swc-radio`/`swc-radio-group` feature branch (see [`radio/migration-plan.md`](../radio/migration-plan.md#related-components-and-ordering-notes))
-- [ ] Confirm `FieldAssociationController`, `LabellingController`, and the shared `form-fields` stylesheet/template are available to depend on, or coordinate scheduling with the `swc-text-field` work building them
+- [x] Confirm `FieldAssociationController`, `LabellingController`, and the shared `form-fields` stylesheet/template are available to depend on, or coordinate scheduling with the `swc-text-field` work building them — `FieldAssociationController` is already merged onto this branch (proven out via `swc-text-field`'s work) and is now wired on `RadioGroupBase`; `LabellingController` shipped split into `LabellingMixin`/`FieldDescriptionMixin` (both composed onto `RadioGroupBase` in host-attachment mode); the shared `form-fields` stylesheet exists but `radio-group.css` doesn't consume it yet
 
 ### API
 
 #### Naming and public surface
 
-- [ ] `RadioGroup.types.ts`: define the `label-position` union (`top`/`side`, default `top`); export public types
-- [ ] `RadioGroup.base.ts`: implement `name`, `selected`, `invalid`, `required`, `readonly`, `label-position`, `accessible-label`/`accessible-labelledby`/`accessible-describedby`
-- [ ] Rename `help-text`/`negative-help-text` slots to `description`/`error-text` (B2)
-- [ ] Implement the `orientation` enum property (`horizontal`/`vertical`, default `vertical`), replacing 1st-gen's boolean pair (B13)
-- [ ] Implement the dev-mode duplicate-`value` warning (B14)
+- [x] `RadioGroup.types.ts`: define the `label-position` union (`top`/`side`, default `top`); export public types
+- [x] `RadioGroup.base.ts`: implement `name`, `selected`, `invalid`, `required`, `readonly`, `label-position`, `accessible-label`/`accessible-labelledby`/`accessible-describedby` — the `accessible-*` properties come from `LabellingMixin`/`FieldDescriptionMixin`, not hand-declared
+- [x] Rename `help-text`/`negative-help-text` slots to `description`/`error-text` (B2) — `FieldDescriptionMixin` already names them `description`/`error-text`; no `help-text` naming was ever introduced in gen2
+- [x] Implement the `orientation` enum property (`horizontal`/`vertical`, default `vertical`), replacing 1st-gen's boolean pair (B13)
+- [x] Implement the dev-mode duplicate-`value` warning (B14)
 
 #### Alignment checks
 
@@ -394,7 +394,7 @@ Planned rendering shape:
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] Add `.swc-RadioGroup` to the internal semantic wrapper in `render()`; keep styling off `:host`
+- [x] Add `.swc-RadioGroup` to the internal semantic wrapper in `render()`; keep styling off `:host`
 - [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `components/fieldgroup/index.css` (not `/dist`) into `radio-group.css` as baseline for the item-stacking/label-position layout
 - [ ] Consume the shared `form-fields` `_lit-styles/` fragment and render template once available (B5); do not author a parallel implementation while waiting
 
@@ -409,21 +409,21 @@ Planned rendering shape:
 
 #### Naming and semantics
 
-- [ ] `role="radiogroup"` set via `ElementInternals` on the host, fixed and never author-overridable
-- [ ] Accessible name/description/error resolve through `LabellingController`, attached to the host (not an inner control)
+- [x] `role="radiogroup"` set via `ElementInternals` on the host, fixed and never author-overridable
+- [x] Accessible name/description/error resolve through `LabellingController`, attached to the host (not an inner control) — via `LabellingMixin`/`FieldDescriptionMixin` composed onto `RadioGroupBase`, both overriding `labelInternals`/`describedByInternals` to the host's own `ElementInternals`
 - [ ] `aria-invalid` added when `invalid` (B7, real 1st-gen gap fix)
 - [ ] `aria-required`/`aria-readonly` implemented at the group level
 
 #### State verification
 
 - [ ] Exactly one item ever exposes `aria-checked="true"` after any selection change
-- [ ] `FieldAssociationController` handles both `setFormValue` and validity from one instance (B9); does not set `internals.role`
-- [ ] `disabled`/`size`/`emphasized` propagate to every slotted radio via `SlotAttributePropagationController`; `name` does not
+- [x] `FieldAssociationController` handles both `setFormValue` and validity from one instance (B9); does not set `internals.role` — `setFormValue` wired (driven by `selected`, excluded when disabled or unselected) with `form`/`validity`/`checkValidity`/`reportValidity` passthroughs; constraint validity for `required` (`internals.setValidity`) is not yet set — left as a follow-up since it depends on the not-yet-built group/item selection-sync behavior
+- [x] `disabled`/`size`/`emphasized` propagate to every slotted radio via `SlotAttributePropagationController`; `name` does not
 - [ ] Arrow/Home/End movement always selects; Tab-entry and programmatic `.focus()` never do (reacting only to `source: 'keyboard'`)
 - [ ] Disabled items are fully skipped by both Tab-entry and arrow movement
-- [ ] Coordinated reset restores the default-checked item, not just an empty selection
+- [ ] Coordinated reset restores the default-checked item, not just an empty selection — `formResetCallback` currently just restores the authored `selected` attribute; restoring a slotted item's own declarative `checked` awaits selection-sync
 - [ ] Help/error container does not default to `aria-live="assertive"` (B12)
-- [ ] Duplicate `value`s among slotted radios trigger the dev-mode console warning (B14)
+- [x] Duplicate `value`s among slotted radios trigger the dev-mode console warning (B14)
 
 ### Testing
 

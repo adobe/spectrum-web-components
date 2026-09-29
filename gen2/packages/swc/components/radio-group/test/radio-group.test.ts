@@ -44,5 +44,11 @@ export const OverviewTest: Story = {
     );
 
     expect(radioGroup, 'renders a swc-radio-group').toBeInstanceOf(RadioGroup);
+    expect(radioGroup.orientation, 'default orientation is vertical').toBe(
+      'vertical'
+    );
+    expect(radioGroup.labelPosition, 'default label-position is top').toBe(
+      'top'
+    );
   },
 };

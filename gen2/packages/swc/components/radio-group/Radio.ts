@@ -10,14 +10,14 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 
 import { RadioBase } from '@adobe/spectrum-wc-core/components/radio-group';
 
 import styles from './radio.css';
 
 /**
- * A single selectable option within a `swc-radio-group`.
+ * A single selectable option within `swc-radio-group`.
  *
  * @element swc-radio
  * @since 2.0.0-beta.5
@@ -32,7 +32,14 @@ export class Radio extends RadioBase {
 
   protected override render(): TemplateResult {
     return html`
-      <slot name="label"></slot>
+      <div class="swc-Radio">
+        <slot name="label"></slot>
+        ${this.hasDescription
+          ? html`
+              <slot name="description"></slot>
+            `
+          : nothing}
+      </div>
     `;
   }
 }

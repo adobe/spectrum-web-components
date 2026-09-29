@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 
 import { RadioGroupBase } from '@adobe/spectrum-wc-core/components/radio-group';
 
@@ -36,8 +36,24 @@ export class RadioGroup extends RadioGroupBase {
   }
 
   protected override render(): TemplateResult {
+    // No native `for` target exists on this host-role component (no rendered
+    // control the visible label could point at), so the label is rendered
+    // directly rather than through `LabellingMixin`'s `renderLabel()`
+    // (which always emits a `<label for>`). The accessible name still comes
+    // from `LabellingMixin`, wired onto `labelInternals` independent of this
+    // markup.
     return html`
-      <slot></slot>
+      <div class="swc-RadioGroup">
+        ${this.hasLabelSlotContent
+          ? html`
+              <span class="swc-FormFieldLabel"><slot name="label"></slot></span>
+            `
+          : nothing}
+        <div class="swc-RadioGroup-items">
+          <slot></slot>
+        </div>
+        ${this.renderFieldDescription({ invalid: this.invalid })}
+      </div>
     `;
   }
 }

@@ -62,9 +62,17 @@ export class Radio extends SizedMixin(
   @property({ type: Boolean, reflect: true })
   public emphasized = false;
 
+  /**
+   * @deprecated The `invalid` property is deprecated and will be removed in
+   * a future release.
+   */
   @property({ type: Boolean, reflect: true })
   public invalid = false;
 
+  /**
+   * @deprecated The `readonly` property is deprecated and will be removed in
+   * a future release.
+   */
   @property({ type: Boolean, reflect: true })
   public readonly = false;
 
@@ -131,6 +139,24 @@ export class Radio extends SizedMixin(
 
   protected override updated(changes: PropertyValues): void {
     super.updated(changes);
+    if (window.__swc?.DEBUG) {
+      if (changes.has('invalid') && this.invalid) {
+        window.__swc.warn(
+          this,
+          `The "invalid" property on <${this.localName}> has been deprecated and will be removed in a future release.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/radio/',
+          { level: 'deprecation' }
+        );
+      }
+      if (changes.has('readonly') && this.readonly) {
+        window.__swc.warn(
+          this,
+          `The "readonly" property on <${this.localName}> has been deprecated and will be removed in a future release.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/radio/',
+          { level: 'deprecation' }
+        );
+      }
+    }
     if (changes.has('invalid')) {
       if (this.invalid) {
         this.setAttribute('aria-invalid', 'true');
