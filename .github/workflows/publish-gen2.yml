@@ -34,11 +34,14 @@ jobs:
     if: github.ref == 'refs/heads/main'
     outputs:
       has_changesets: ${{ steps.check.outputs.has_changesets }}
+      needs_publish: ${{ steps.check.outputs.needs_publish }}
     steps:
       # Always main (this job is gated to main above), so the changeset count reflects the
       # release path. The feature-branch snapshot job does its own checkout.
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # need tags so the needs_publish idempotency check below can see them
 
       - name: Check for gen2 changesets
         id: check
@@ -48,7 +51,8 @@ jobs:
           # In pre mode `changeset version` leaves consumed changesets on disk and lists
           # them in pre.json, so only files missing from that list are still pending.
           # Counting every *.md would never reach 0 after a release PR merges, so the
-          # version-pr job would keep re-running with nothing left to version.
+          # version-pr job would keep re-running with nothing left to version, and the
+          # publish job would never see a clean state.
           COUNT=$(node -e "
             const fs = require('fs');
             const dir = 'gen2/.changeset';
@@ -71,6 +75,20 @@ jobs:
           else
             echo "has_changesets=false" >> $GITHUB_OUTPUT
             echo "No pending gen2 changesets"
+          fi
+
+          # Mirror the publish job's git-tag guard here so the npm-publish environment
+          # only parks for reviewer approval when there's genuinely a new release to
+          # ship. The environment gate fires before the publish job's first step runs,
+          # so an in-step guard can't stop the approval prompt - any push to gen2/** that
+          # doesn't need a release would otherwise ping reviewers for one that just no-ops.
+          RELEASED_VERSION=$(node -p "require('./gen2/packages/swc/package.json').version")
+          if git rev-parse "gen2-$RELEASED_VERSION" >/dev/null 2>&1; then
+            echo "needs_publish=false" >> $GITHUB_OUTPUT
+            echo "gen2-$RELEASED_VERSION already released - no publish approval needed"
+          else
+            echo "needs_publish=true" >> $GITHUB_OUTPUT
+            echo "gen2-$RELEASED_VERSION not yet released - publish approval will be requested"
           fi
 
   # Throwaway snapshot publish under the `snapshot` dist-tag. Manual dispatch only - never
@@ -130,89 +148,44 @@ jobs:
           echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
           echo "Using npm tag: $WORKFLOW_TAG"
 
-      - name: Verify NPM authentication
-        id: npm-auth
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
-        run: npm whoami --registry=https://registry.npmjs.org
+      - name: Publish snapshot
+        uses: ./.github/actions/gen2-snapshot
+        with:
+          tag: ${{ steps.extract-tag.outputs.tag }}
+          npm-token: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Leave pre mode for this runner only
-        run: |
-          # Ephemeral by construction: this checkout is discarded when the job ends and
-          # nothing below commits or pushes. Removing the file locally is the only thing
-          # that lets `changeset version --snapshot` run at all while gen2 is in pre mode.
-          rm -f gen2/.changeset/pre.json
+  # Automatic snapshot of every gen2 push to main, published under the `next` dist-tag
+  # with no reviewer approval. Same steps as `snapshot` above (shared through the
+  # gen2-snapshot action); the only differences are the trigger, the fixed `next` tag, and
+  # that this job has no `environment`, so it never waits on the npm-publish approval that
+  # gates the real beta publish. It still never commits, pushes, tags, or opens a PR.
+  # ADOBE_BOT_NPM_TOKEN is an org-level secret, not scoped to the npm-publish environment,
+  # so the token is available without one.
+  snapshot-main:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # snapshot never writes back - no commit, tag, or PR
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Ensure a changeset exists
-        run: |
-          # `changeset version --snapshot` exits without versioning when nothing is
-          # pending. So a branch can be snapshotted regardless of changesets, synthesize a
-          # throwaway one when none exist. It patches the linked lead package, which bumps
-          # the whole `@adobe/spectrum-wc(-core|-icons)` group together. Ephemeral checkout,
-          # never committed.
-          if [ -z "$(find gen2/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' -print -quit)" ]; then
-            printf -- "---\n'@adobe/spectrum-wc': patch\n---\n\nThrowaway snapshot build (no pending changesets)\n" \
-              > gen2/.changeset/zzz-snapshot-tmp.md
-            echo "No pending changesets - synthesized a temporary one so the snapshot has a version to publish."
-          fi
+      - name: Setup job and install dependencies
+        uses: ./.github/actions/setup-job
+        with:
+          build-command: yarn build:gen2
 
-      - name: Version gen2 packages (snapshot)
-        working-directory: gen2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn changeset version --snapshot ${{ steps.extract-tag.outputs.tag }}
-
-      - name: Capture snapshot versions
-        id: versions
-        run: |
-          CORE_VERSION=$(node -p "require('./gen2/packages/core/package.json').version")
-          SWC_VERSION=$(node -p "require('./gen2/packages/swc/package.json').version")
-          ICONS_VERSION=$(node -p "require('./gen2/packages/icons/package.json').version")
-          echo "core=$CORE_VERSION" >> $GITHUB_OUTPUT
-          echo "swc=$SWC_VERSION" >> $GITHUB_OUTPUT
-          echo "icons=$ICONS_VERSION" >> $GITHUB_OUTPUT
-
-      - name: Refresh lockfile and rebuild
-        run: |
-          yarn install --refresh-lockfile
-          yarn build:gen2
-
-      - name: Publish gen2 packages (snapshot)
-        id: publish
-        if: steps.npm-auth.outcome == 'success'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
-        working-directory: gen2
-        run: yarn changeset publish --no-git-tag --tag ${{ steps.extract-tag.outputs.tag }}
-
-      - name: Snapshot summary
-        if: always()
-        env:
-          TAG: ${{ steps.extract-tag.outputs.tag }}
-          TARGET_REF: ${{ github.ref_name }}
-          SWC_VERSION: ${{ steps.versions.outputs.swc }}
-          CORE_VERSION: ${{ steps.versions.outputs.core }}
-          ICONS_VERSION: ${{ steps.versions.outputs.icons }}
-          # The actual publish result, not just the auth check - so a failed publish
-          # doesn't get reported as a success.
-          PUBLISH_OUTCOME: ${{ steps.publish.outcome }}
-        run: |
-          echo "## Snapshot summary (gen2)" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-
-          if [ "$PUBLISH_OUTCOME" == "success" ]; then
-            echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
-            echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
-            echo "| **Snapshotted branch** | \`${TARGET_REF}\` |" >> $GITHUB_STEP_SUMMARY
-            echo "| **NPM tag** | \`${TAG}\` |" >> $GITHUB_STEP_SUMMARY
-            [ -n "$SWC_VERSION" ] && echo "| **@adobe/spectrum-wc** | \`${SWC_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
-            [ -n "$CORE_VERSION" ] && echo "| **@adobe/spectrum-wc-core** | \`${CORE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
-            [ -n "$ICONS_VERSION" ] && echo "| **@adobe/spectrum-wc-icons** | \`${ICONS_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "✅ Snapshot published. Install the exact version above (e.g. \`@adobe/spectrum-wc@${SWC_VERSION}\`), not \`@${TAG}\` - the \`${TAG}\` tag is shared and moves with the next snapshot. The \`beta\` channel and its pre-release state are unchanged." >> $GITHUB_STEP_SUMMARY
-          else
-            echo "❌ Snapshot did not publish (publish outcome: \`${PUBLISH_OUTCOME:-skipped}\`). Check the job logs." >> $GITHUB_STEP_SUMMARY
-          fi
+      - name: Publish snapshot
+        uses: ./.github/actions/gen2-snapshot
+        with:
+          tag: next
+          npm-token: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   # Version-then-PR for the persistent pre-release version format (2.0.0-beta.N). No
   # npm-publish environment gate here - nothing is published yet, just a bot-authored PR
@@ -279,7 +252,9 @@ jobs:
   publish:
     needs: check-changesets
     # Main-only - a snapshot runs from a feature branch, so the ref check keeps them apart.
-    if: github.ref == 'refs/heads/main'
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      needs.check-changesets.outputs.needs_publish == 'true'
     runs-on: ubuntu-latest
     environment: npm-publish
     permissions:
