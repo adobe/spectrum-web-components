@@ -1,3 +1,6 @@
+# Generated Cursor rules are tracked, even when a global gitignore excludes .cursor/
+!/.cursor/
+
 # logging / private config
 .cursor/mcp.json
 .cursor/handoffs
@@ -5,6 +8,7 @@
 .claude/handoffs
 .claude/settings.local.json
 .claude/worktrees
+.github/copilot/settings.local.json
 mcp-server.log
 
 # deep-understanding skill artifact (planning doc, not source)
