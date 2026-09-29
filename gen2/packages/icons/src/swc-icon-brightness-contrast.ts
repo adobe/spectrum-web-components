@@ -37,7 +37,7 @@ export class IconBrightnessContrast extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_BrightnessContrast())}</span>
+      ${unsafeSVG(Icon_BrightnessContrast())}
     `;
   }
 }

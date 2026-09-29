@@ -37,7 +37,7 @@ export class IconRadioButton extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_RadioButton())}</span>
+      ${unsafeSVG(Icon_RadioButton())}
     `;
   }
 }

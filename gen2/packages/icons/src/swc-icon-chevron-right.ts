@@ -37,7 +37,7 @@ export class IconChevronRight extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_ChevronRight())}</span>
+      ${unsafeSVG(Icon_ChevronRight())}
     `;
   }
 }

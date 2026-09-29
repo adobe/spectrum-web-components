@@ -37,7 +37,7 @@ export class IconUnlinkHoriz extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_UnlinkHoriz())}</span>
+      ${unsafeSVG(Icon_UnlinkHoriz())}
     `;
   }
 }

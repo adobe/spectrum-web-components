@@ -45,9 +45,7 @@ export class Icon extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">
-        <slot></slot>
-      </span>
+      <slot></slot>
     `;
   }
 }

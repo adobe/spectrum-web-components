@@ -37,7 +37,7 @@ export class IconSimilar extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Similar())}</span>
+      ${unsafeSVG(Icon_Similar())}
     `;
   }
 }

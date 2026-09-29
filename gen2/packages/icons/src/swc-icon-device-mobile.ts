@@ -37,7 +37,7 @@ export class IconDeviceMobile extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_DeviceMobile())}</span>
+      ${unsafeSVG(Icon_DeviceMobile())}
     `;
   }
 }

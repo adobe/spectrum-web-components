@@ -37,7 +37,7 @@ export class IconCloudStatePaused extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_CloudStatePaused())}</span>
+      ${unsafeSVG(Icon_CloudStatePaused())}
     `;
   }
 }

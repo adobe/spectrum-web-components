@@ -37,7 +37,7 @@ export class IconMaskDisable extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_MaskDisable())}</span>
+      ${unsafeSVG(Icon_MaskDisable())}
     `;
   }
 }

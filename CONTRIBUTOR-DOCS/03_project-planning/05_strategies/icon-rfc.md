@@ -315,7 +315,7 @@ export class Icon extends IconBase {
   static styles = [iconBaseCss]; // shared _lit-styles/icon-base.css
   render() {
     return html`
-      <span class="swc-Icon"><slot></slot></span>
+      <slot></slot>
     `;
   }
 }
@@ -343,7 +343,7 @@ export class IconStar extends IconBase {
   static styles = [iconBaseCss];
   render() {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Star())}</span>
+      ${unsafeSVG(Icon_Star())}
     `; // baked in
   }
 }
@@ -368,7 +368,7 @@ export class UiIcon extends IconBase {
   render() {
     // size selects the optical step; icon selects the set.
     return html`
-      <span class="swc-Icon">${UI_ICONS[this.icon][uiStepFor(this.size)]}</span>
+      ${UI_ICONS[this.icon][uiStepFor(this.size)]}
     `;
   }
 }

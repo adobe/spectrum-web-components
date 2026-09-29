@@ -37,7 +37,7 @@ export class IconBinoculars extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Binoculars())}</span>
+      ${unsafeSVG(Icon_Binoculars())}
     `;
   }
 }

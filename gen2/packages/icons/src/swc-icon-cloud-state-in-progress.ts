@@ -37,7 +37,7 @@ export class IconCloudStateInProgress extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_CloudStateInProgress())}</span>
+      ${unsafeSVG(Icon_CloudStateInProgress())}
     `;
   }
 }

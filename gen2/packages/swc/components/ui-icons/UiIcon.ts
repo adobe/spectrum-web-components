@@ -31,7 +31,7 @@ import uiIconSizeStyles from './ui-icon-sizes.css';
  * controls and available directly from `@adobe/spectrum-wc`.
  *
  * @element swc-ui-icon
- * @since 2.0.0-beta.4
+ * @since 2.0.0-beta.5
  *
  * @example
  * <swc-ui-icon icon="chevron" size="m" accessible-label="Expand"></swc-ui-icon>
@@ -66,7 +66,7 @@ export class UiIcon extends IconBase {
     // nearest available step when a logical icon does not ship every step.
     const art = resolveUiIconArt(UI_ICONS[this.icon], this.size);
     return html`
-      <span class="swc-Icon">${art}</span>
+      ${art}
     `;
   }
 }

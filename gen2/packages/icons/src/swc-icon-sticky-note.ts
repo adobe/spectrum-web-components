@@ -37,7 +37,7 @@ export class IconStickyNote extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_StickyNote())}</span>
+      ${unsafeSVG(Icon_StickyNote())}
     `;
   }
 }

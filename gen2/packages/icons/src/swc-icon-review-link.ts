@@ -37,7 +37,7 @@ export class IconReviewLink extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_ReviewLink())}</span>
+      ${unsafeSVG(Icon_ReviewLink())}
     `;
   }
 }

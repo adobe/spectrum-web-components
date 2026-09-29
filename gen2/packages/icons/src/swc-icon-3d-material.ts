@@ -37,7 +37,7 @@ export class Icon3DMaterial extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_3DMaterial())}</span>
+      ${unsafeSVG(Icon_3DMaterial())}
     `;
   }
 }

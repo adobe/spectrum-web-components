@@ -37,7 +37,7 @@ export class IconPause extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Pause())}</span>
+      ${unsafeSVG(Icon_Pause())}
     `;
   }
 }

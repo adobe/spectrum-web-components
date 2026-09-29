@@ -37,7 +37,7 @@ export class IconUserEdit extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_UserEdit())}</span>
+      ${unsafeSVG(Icon_UserEdit())}
     `;
   }
 }
