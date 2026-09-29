@@ -121,7 +121,7 @@ See popover's `test/vrt/popover.vrt.ts` and `test/vrt/vrt-helpers.ts` (`stack`, 
 ## Tips for reliable VRT
 
 - Use deterministic content (no random data, no timestamps)
-- Use static image IDs from picsum.photos (see stories format guide)
+- Use checked-in local image assets from the component package rather than third-party image services
 - Disable animations in test mode (Playwright config sets `reducedMotion: 'reduce'`)
 - Keep stories focused by concern; split large files into permutations, global styles, and custom properties
 - For custom properties, compare covered cases against `.storybook/custom-elements.json` so API-table docs and VRT coverage do not drift

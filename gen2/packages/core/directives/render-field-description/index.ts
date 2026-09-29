@@ -11,7 +11,7 @@
  */
 
 export {
-  renderFieldHelpText,
-  type RenderFieldHelpTextOptions,
-  type RenderFieldHelpTextResult,
-} from './src/render-help-text.js';
+  renderFieldDescription,
+  type RenderFieldDescriptionOptions,
+  type RenderFieldDescriptionResult,
+} from './src/render-field-description.js';

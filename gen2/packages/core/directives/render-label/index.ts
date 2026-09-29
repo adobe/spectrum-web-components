@@ -12,6 +12,7 @@
 
 export {
   renderFieldLabel,
+  type NecessityIndicatorText,
   type RenderFieldLabelOptions,
   type RenderFieldLabelResult,
 } from './src/render-label.js';

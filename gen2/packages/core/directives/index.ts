@@ -19,12 +19,13 @@ export {
   type PendingSpinnerResult,
 } from './pending-spinner/index.js';
 export {
-  renderFieldHelpText,
-  type RenderFieldHelpTextOptions,
-  type RenderFieldHelpTextResult,
-} from './render-help-text/index.js';
+  renderFieldDescription,
+  type RenderFieldDescriptionOptions,
+  type RenderFieldDescriptionResult,
+} from './render-field-description/index.js';
 export {
   renderFieldLabel,
+  type NecessityIndicatorText,
   type RenderFieldLabelOptions,
   type RenderFieldLabelResult,
 } from './render-label/index.js';

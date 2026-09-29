@@ -124,7 +124,7 @@ Reference: [Linting tools](../../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-t
 - `flexLayout: 'row-wrap'` is used for multi-item stories
 - Internal DOM attributes the component writes itself via `setAttribute` (not declared `@property`, e.g. Tooltip's `actual-placement`) are declared in `argTypes` with `{ table: { disable: true }, control: false }`; otherwise the Storybook helper's attribute observer round-trips them through `args` and re-applies stale values via its `spread` directive, clobbering the component's own state
 - All examples use accessible, meaningful content: no placeholder text, no missing labels
-- Image assets use `picsum.photos` with static IDs
+- Image assets use checked-in local assets rather than third-party services
 
 **What to check (`<unit>.mdx`):**
 

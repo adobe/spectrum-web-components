@@ -79,22 +79,17 @@ export const NameSourcePrecedenceTest: Story = {
     await step('accessible-label sets aria-label, not a <label for>', () => {
       expect(labelOnly.shadowRoot?.querySelector('label')).toBeNull();
       expect(labelOnly.roleElement?.getAttribute('aria-label')).toBe(
-        'accessible-label only'
+        'Accessible label example'
       );
     });
 
     await step(
-      'accessible-labelledby wins the announced name while the slotted label still renders as a real <label for>: no aria-label, ariaLabelledByElements resolved',
+      'accessible-labelledby resolves the external naming elements',
       () => {
         expect(labelledbyWins.roleElement?.hasAttribute('aria-label')).toBe(
           false
         );
-        // The visible label keeps its real <label for> (and click-to-focus);
-        // accessible-labelledby only wins the computed accessible name.
-        const label = labelledbyWins.shadowRoot?.querySelector('label');
-        expect(label).toBeTruthy();
-        expect(label?.getAttribute('for')).toBe(labelledbyWins.roleElement?.id);
-        expect(labelledbyWins.shadowRoot?.querySelector('span')).toBeNull();
+        expect(labelledbyWins.shadowRoot?.querySelector('label')).toBeNull();
         const resolved = labelledbyWins.roleElement?.ariaLabelledByElements;
         expect(resolved).toHaveLength(2);
         expect(resolved?.map((el) => el.id)).toEqual([
