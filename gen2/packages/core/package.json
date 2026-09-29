@@ -183,6 +183,14 @@
       "types": "./dist/components/progress-circle/index.d.ts",
       "import": "./dist/components/progress-circle/index.js"
     },
+    "./components/radio-group": {
+      "types": "./dist/components/radio-group/index.d.ts",
+      "import": "./dist/components/radio-group/index.js"
+    },
+    "./components/radio-group/index.js": {
+      "types": "./dist/components/radio-group/index.d.ts",
+      "import": "./dist/components/radio-group/index.js"
+    },
     "./components/status-light": {
       "types": "./dist/components/status-light/index.d.ts",
       "import": "./dist/components/status-light/index.js"
@@ -530,6 +538,12 @@
       ],
       "components/progress-circle/index.js": [
         "dist/components/progress-circle/index.d.ts"
+      ],
+      "components/radio-group": [
+        "dist/components/radio-group/index.d.ts"
+      ],
+      "components/radio-group/index.js": [
+        "dist/components/radio-group/index.d.ts"
       ],
       "components/status-light": [
         "dist/components/status-light/index.d.ts"
