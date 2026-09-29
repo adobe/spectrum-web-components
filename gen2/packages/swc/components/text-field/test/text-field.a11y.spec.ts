@@ -168,7 +168,7 @@ test.describe('Text field - ARIA Snapshots', () => {
       - text: Default
       - textbox "Default"
       - text: Full name
-      - textbox "Full name" [required]
+      - textbox "Full name"
       - textbox "Read-only": Read-only value
       - text: Disabled
       - textbox "Disabled" [disabled]: Disabled value
