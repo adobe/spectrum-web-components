@@ -34,14 +34,11 @@ jobs:
     if: github.ref == 'refs/heads/main'
     outputs:
       has_changesets: ${{ steps.check.outputs.has_changesets }}
-      needs_publish: ${{ steps.check.outputs.needs_publish }}
     steps:
+      # Always main (this job is gated to main above), so the changeset count reflects the
+      # release path. The feature-branch snapshot job does its own checkout.
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          # Always main (this job is gated to main below), so the changeset count reflects
-          # the release path. The feature-branch snapshot job does its own checkout.
-          fetch-depth: 0 # need tags so the needs_publish idempotency check below can see them
 
       - name: Check for gen2 changesets
         id: check
@@ -50,8 +47,8 @@ jobs:
           # 1st-gen/.changeset/.
           # In pre mode `changeset version` leaves consumed changesets on disk and lists
           # them in pre.json, so only files missing from that list are still pending.
-          # Counting every *.md would never reach 0 after a release PR merges, leaving
-          # the publish job permanently skipped.
+          # Counting every *.md would never reach 0 after a release PR merges, so the
+          # version-pr job would keep re-running with nothing left to version.
           COUNT=$(node -e "
             const fs = require('fs');
             const dir = 'gen2/.changeset';
@@ -70,25 +67,10 @@ jobs:
 
           if [ "$COUNT" -ne 0 ]; then
             echo "has_changesets=true" >> $GITHUB_OUTPUT
-            echo "needs_publish=false" >> $GITHUB_OUTPUT
             echo "Found $COUNT gen2 changeset(s)"
-            exit 0
-          fi
-
-          echo "has_changesets=false" >> $GITHUB_OUTPUT
-
-          # Mirror the publish job's git-tag guard here so the npm-publish environment
-          # only parks for reviewer approval when there's genuinely a new release to
-          # ship. The environment gate fires before the publish job's first step runs,
-          # so an in-step guard can't stop the approval prompt - any changeset-less push
-          # to gen2/** would otherwise ping reviewers for a "release" that just no-ops.
-          RELEASED_VERSION=$(node -p "require('./gen2/packages/swc/package.json').version")
-          if git rev-parse "gen2-$RELEASED_VERSION" >/dev/null 2>&1; then
-            echo "needs_publish=false" >> $GITHUB_OUTPUT
-            echo "gen2-$RELEASED_VERSION already released - no publish approval needed"
           else
-            echo "needs_publish=true" >> $GITHUB_OUTPUT
-            echo "gen2-$RELEASED_VERSION not yet released - publish approval will be requested"
+            echo "has_changesets=false" >> $GITHUB_OUTPUT
+            echo "No pending gen2 changesets"
           fi
 
   # Throwaway snapshot publish under the `snapshot` dist-tag. Manual dispatch only - never
@@ -297,10 +279,7 @@ jobs:
   publish:
     needs: check-changesets
     # Main-only - a snapshot runs from a feature branch, so the ref check keeps them apart.
-    if: >-
-      github.ref == 'refs/heads/main' &&
-      needs.check-changesets.outputs.has_changesets == 'false' &&
-      needs.check-changesets.outputs.needs_publish == 'true'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: npm-publish
     permissions:
