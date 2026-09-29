@@ -46,8 +46,8 @@ const sizeLabels = {
   xl: 'Extra-large',
 } as const satisfies Record<InfieldButtonSize, string>;
 
-// S2 UI chevron (right-pointing) rotated 90° clockwise to point down for picker disclosure.
-const chevronIconSvg = `<swc-ui-icon slot="icon" icon="chevron" style="rotate: 90deg;"></swc-ui-icon>`;
+// @TODO - Request down chevron from icons team or some other solution but needs to meet this use case: S2 UI chevron (right-pointing) rotated 90° clockwise to point down for picker disclosure.
+const chevronIconSvg = `<swc-ui-icon slot="icon" icon="chevron"></swc-ui-icon>`;
 const addIconSvg = `<swc-ui-icon slot="icon" icon="add"></swc-ui-icon>`;
 const removeIconSvg = `<swc-ui-icon slot="icon" icon="dash"></swc-ui-icon>`;
 const crossIconSvg = `<swc-ui-icon slot="icon" icon="cross"></swc-ui-icon>`;
