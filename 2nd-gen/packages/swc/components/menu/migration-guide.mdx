@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Menu migration guide
 
-Replace `<sp-menu>` with `<swc-menu>`, update the import, and author a real trigger element for `swc-menu` to reference; this guide covers the menu host only, since `sp-menu-item`, `sp-menu-group`, and `sp-menu-divider` have not migrated and menus that rely on submenus, selection, link items, or the mobile drilldown tray cannot migrate yet (see [Removed in Spectrum 2](#removed-in-spectrum-2)).
+Replace `<sp-menu>` with `<swc-menu>`, update the import, and author a real trigger element for `swc-menu` to reference; this guide covers the menu host only, since `sp-menu-item`, `sp-menu-group`, and `sp-menu-divider` have not migrated yet.
 
 ## Installation
 
@@ -52,17 +52,16 @@ import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 
 ### Removed in Spectrum 2
 
-| Removed                                                                                                                                  | Replacement                                                                                                                                 |
-| ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `label` property                                                                                                                         | No replacement on the menu itself. Add an accessible name to your trigger element instead, see [step 2](#2-author-and-reference-a-trigger). |
-| `ignore` property                                                                                                                        | No replacement.                                                                                                                             |
-| `getNeighboringFocusableElement()` method                                                                                                | No public replacement; arrow-key navigation is handled internally.                                                                          |
-| `role="menu"` on the host element                                                                                                        | Moved to the shadow-internal surface. Do not select `sp-menu[role="menu"]`-style host selectors.                                            |
-| `mobile-view` / `mobile-back-label` (mobile drilldown tray)                                                                              | No replacement. Not currently planned.                                                                                                      |
-| `selects` / `value` / `selectedItems` / `selectOrToggleItem()` / `change` event (selection)                                              | Not yet available in Spectrum 2.                                                                                                            |
-| Submenus, including `handleSubmenuOpened()` / `handleSubmenuClosed()` and the `sp-menu-submenu-opened` / `sp-menu-submenu-closed` events | Not yet available in Spectrum 2. Submenus are being rebuilt on a different model, so neither the methods nor the events have equivalents.   |
-| Link items (`href`, `target`, `download`, `rel`, `referrerpolicy` on menu items)                                                         | Not yet available. A dedicated link-row component is planned but has not shipped.                                                           |
-| `--mod-menu-*` custom properties                                                                                                         | No replacement; `<swc-menu>` currently exposes no public CSS custom properties (see [Styling](#styling)).                                   |
+| Removed                                                                                     | Replacement                                                                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label` property                                                                            | No replacement on the menu itself. Add an accessible name to your trigger element instead, see [step 2](#2-author-and-reference-a-trigger). |
+| `ignore` property                                                                           | No replacement.                                                                                                                             |
+| `getNeighboringFocusableElement()` method                                                   | No public replacement; arrow-key navigation is handled internally.                                                                          |
+| `role="menu"` on the host element                                                           | Moved to the shadow-internal surface. Do not select `sp-menu[role="menu"]`-style host selectors.                                            |
+| `mobile-view` / `mobile-back-label` (mobile drilldown tray)                                 | No replacement. Not currently planned.                                                                                                      |
+| `selects` / `value` / `selectedItems` / `selectOrToggleItem()` / `change` event (selection) | Not yet available in Spectrum 2.                                                                                                            |
+| Link items (`href`, `target`, `download`, `rel`, `referrerpolicy` on menu items)            | Not yet available. A dedicated link-row component is planned but has not shipped.                                                           |
+| `--mod-menu-*` custom properties                                                            | No replacement; `<swc-menu>` currently exposes no public CSS custom properties (see [Styling](#styling)).                                   |
 
 ## Update your code
 
@@ -164,5 +163,4 @@ menu.addEventListener('swc-close', () => {
 - [ ] Move the accessible name from `label` to the trigger element
 - [ ] Replace `close` event listeners with `swc-close`
 - [ ] Remove any `--mod-menu-*` overrides
-- [ ] Remove any `sp-menu-submenu-opened` / `sp-menu-submenu-closed` listeners and `handleSubmenuOpened()` / `handleSubmenuClosed()` calls
-- [ ] Hold off migrating menus that use submenus, selection, link items, or the mobile drilldown tray; none of these have shipped in Spectrum 2 yet
+- [ ] Hold off migrating menus that use selection, link items, or the mobile drilldown tray; none of these have shipped in Spectrum 2 yet
