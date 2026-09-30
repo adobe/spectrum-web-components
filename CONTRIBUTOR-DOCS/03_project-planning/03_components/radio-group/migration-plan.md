@@ -250,7 +250,7 @@ Do not duplicate any of the three above inside `swc-radio-group` while waiting; 
 | B9 | Form value **and** validity, both on the group | Not applicable (no `ElementInternals` at all in 1st-gen) | Single `FieldAssociationController` instance handles `setFormValue` (driven by `selected`) and `setValidity`/`checkValidity` together (Q12-simplified; source: [Decision log](#decision-log)) | None for basic forms; gains real `FormData` participation and native constraint validation. |
 | B10 | `disabled` propagation via `SlotAttributePropagationController` | Ad hoc `slotchange` loop propagated `name`; no `disabled` propagation at all | `disabled` propagated automatically via the shared controller, alongside `size`/`emphasized` (already recommended in the item's plan); `name` is dropped (serves no purpose on items, see [Decision log](#decision-log)) | None; propagation is automatic. |
 | B11 | Keyboard model ports to `FocusgroupNavigationController` | `RovingTabindexController`, already APG-correct | Same behavior (`direction: 'both'`, `wrap: true`, `skipDisabled: true`, reacting only to `source: 'keyboard'`), different controller | None (internal implementation change; behavior-for-behavior port). |
-| B12 | Help/error container: no default `aria-live` | Defaults to `aria-live="assertive"` unconditionally | No default live region for the common case (already-associated `aria-describedby`/`aria-errormessage` covers it); `polite` only if a genuine focus-elsewhere case is found | None. |
+| B12 | Help/error container: no default `aria-live` | Defaults to `aria-live="assertive"` unconditionally | No default live region for the common case (already-associated `aria-describedby` covers it); `polite` only if a genuine focus-elsewhere case is found | None. |
 | B14 | Dev-mode warning for duplicate `value`s among slotted radios | No detection; selection matching by `value` (see [Behavioral semantics](#behavioral-semantics)) silently breaks mutual exclusion if two items share a `value` | Console warning, dev-mode only, when two or more slotted `swc-radio` items share the same `value` | None (dev-time only; no behavior change). |
 
 ### Additive — ships when ready, zero breakage for consumers already on gen2
@@ -309,7 +309,7 @@ Additional Figma-confirmed presentation notes:
 | default | The `swc-radio` items to manage | **Confirmed.** Unchanged in kind from 1st-gen (default slot for items), though naming/rendering of label and description move to named slots (see below). |
 | `label` | Visible group label | **Confirmed.** Named slot, rendered by `LabellingController` via the shared `form-fields` template — see B1. |
 | `description` | Group-level guidance text | **Confirmed (renamed).** Was 1st-gen `help-text`; renamed to match `swc-text-field` and the shared template's class naming (see B2). |
-| `error-text` | Error message shown when `invalid` | **Confirmed (renamed).** Was 1st-gen `negative-help-text` (see B2). Also targeted by `aria-errormessage` when invalid. |
+| `error-text` | Error message shown when `invalid` | **Confirmed (renamed).** Was 1st-gen `negative-help-text` (see B2). Associated via `aria-describedby` only — no `aria-errormessage` (see [Decision log](#decision-log)). |
 
 #### CSS custom properties (gen2)
 
@@ -365,14 +365,14 @@ Planned rendering shape:
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] gen2 API decisions drafted
-- [ ] Plan reviewed by at least one other engineer
+- [x] Plan reviewed by at least one other engineer
 
 ### Setup
 
 - [x] Create `gen2/packages/core/components/radio-group/`
 - [x] Create `gen2/packages/swc/components/radio-group/`
 - [x] Wire exports in both `package.json` files
-- [ ] Confirm this component lands on the shared `swc-radio`/`swc-radio-group` feature branch (see [`radio/migration-plan.md`](../radio/migration-plan.md#related-components-and-ordering-notes))
+- [x] Confirm this component lands on the shared `swc-radio`/`swc-radio-group` feature branch (see [`radio/migration-plan.md`](../radio/migration-plan.md#related-components-and-ordering-notes))
 - [x] Confirm `FieldAssociationController`, `LabellingController`, and the shared `form-fields` stylesheet/template are available to depend on, or coordinate scheduling with the `swc-text-field` work building them — `FieldAssociationController` is already merged onto this branch (proven out via `swc-text-field`'s work) and is now wired on `RadioGroupBase`; `LabellingController` shipped split into `LabellingMixin`/`FieldDescriptionMixin` (both composed onto `RadioGroupBase` in host-attachment mode); the shared `form-fields` stylesheet exists but `radio-group.css` doesn't consume it yet
 
 ### API
@@ -411,17 +411,17 @@ Planned rendering shape:
 
 - [x] `role="radiogroup"` set via `ElementInternals` on the host, fixed and never author-overridable
 - [x] Accessible name/description/error resolve through `LabellingController`, attached to the host (not an inner control) — via `LabellingMixin`/`FieldDescriptionMixin` composed onto `RadioGroupBase`, both overriding `labelInternals`/`describedByInternals` to the host's own `ElementInternals`
-- [ ] `aria-invalid` added when `invalid` (B7, real 1st-gen gap fix)
-- [ ] `aria-required`/`aria-readonly` implemented at the group level
+- [x] `aria-invalid` added when `invalid` (B7, real 1st-gen gap fix)
+- [x] `aria-required`/`aria-readonly` implemented at the group level — no `aria-errormessage`: dropped by the same decision `FieldDescriptionMixin` made while building `swc-text-field` (insufficient assistive-technology support), not an oversight here (see [Decision log](#decision-log))
 
 #### State verification
 
-- [ ] Exactly one item ever exposes `aria-checked="true"` after any selection change
-- [x] `FieldAssociationController` handles both `setFormValue` and validity from one instance (B9); does not set `internals.role` — `setFormValue` wired (driven by `selected`, excluded when disabled or unselected) with `form`/`validity`/`checkValidity`/`reportValidity` passthroughs; constraint validity for `required` (`internals.setValidity`) is not yet set — left as a follow-up since it depends on the not-yet-built group/item selection-sync behavior
+- [x] Exactly one item ever exposes `aria-checked="true"` after any selection change — `syncCheckedState` sets each item's `checked` from `selected`, so at most one native input is ever checked
+- [x] `FieldAssociationController` handles both `setFormValue` and validity from one instance (B9); does not set `internals.role` — `setFormValue` wired (driven by `selected`, excluded when disabled or unselected) with `form`/`validity`/`checkValidity`/`reportValidity` passthroughs; `required` now sets `internals.setValidity({ valueMissing: true }, ...)` when nothing is selected, cleared once `selected` is set
 - [x] `disabled`/`size`/`emphasized` propagate to every slotted radio via `SlotAttributePropagationController`; `name` does not
-- [ ] Arrow/Home/End movement always selects; Tab-entry and programmatic `.focus()` never do (reacting only to `source: 'keyboard'`)
-- [ ] Disabled items are fully skipped by both Tab-entry and arrow movement
-- [ ] Coordinated reset restores the default-checked item, not just an empty selection — `formResetCallback` currently just restores the authored `selected` attribute; restoring a slotted item's own declarative `checked` awaits selection-sync
+- [x] Arrow/Home/End movement always selects; Tab-entry and programmatic `.focus()` never do (reacting only to `source: 'keyboard'`) — `FocusgroupNavigationController` wired (`direction: 'both'`, `wrap: true`); `handleNavigationActiveChange` filters on `source === 'keyboard'`
+- [x] Disabled items are fully skipped by both Tab-entry and arrow movement — `skipDisabled: true` on the controller
+- [ ] Coordinated reset restores the default-checked item, not just an empty selection — `formResetCallback` currently just restores the authored `selected` attribute; restoring a slotted item's own declarative `checked` awaits confirming that behavior
 - [ ] Help/error container does not default to `aria-live="assertive"` (B12)
 - [x] Duplicate `value`s among slotted radios trigger the dev-mode console warning (B14)
 
@@ -516,6 +516,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 | — | `name` does not propagate from `swc-radio-group` onto its slotted items. | Same rationale as the item plan: native radio-button-group scoping is per-tree, so cross-shadow-root `name` matching between item inputs never produces native mutual exclusion, and `ElementInternals` fully provides form participation without it. Propagating it would be purely cosmetic with no functional benefit, so it's dropped rather than added for parity's sake alongside `disabled`/`size`/`emphasized`. |
 | B14 | Duplicate-`value` misuse is mitigated with a dev-mode console warning, not a runtime error or auto-dedup. | Matches this repo's existing dev-warning pattern for accessibility/correctness safety nets on misuse patterns (e.g. the item plan's B15 standalone-usage warning). The condition is a consumer authoring mistake, not a state a running app should ever hit in production; warning (rather than throwing or silently renaming/ignoring the duplicate) surfaces it during development without changing runtime behavior for anyone not hitting the bug. |
 | Q1 | Horizontal item stacking remains supported, confirmed via React Spectrum's identical `orientation` prop even though the supplied Figma reference only shows vertical stacking. | 1st-gen's two independent `horizontal`/`vertical` booleans are merged into a single `orientation: 'horizontal' \| 'vertical'` property (default `vertical`), matching `label-position`'s enum pattern and React Spectrum's own naming (B13). |
+| — | No `aria-errormessage` on `swc-radio-group`; `aria-describedby` alone associates the error text. | Decided while implementing `swc-text-field`: `FieldDescriptionMixin` does not wire `aria-errormessage` because assistive-technology support for it is still insufficiently consistent, while `aria-describedby` is universally read. `swc-radio-group` consumes that same mixin and inherits the same decision — not a gap specific to this component. |
 
 ---
 

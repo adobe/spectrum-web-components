@@ -13,6 +13,11 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { FieldAssociationController } from '@adobe/spectrum-wc-core/controllers/field-association-controller/index.js';
+import {
+  focusgroupNavigationActiveChange,
+  type FocusgroupNavigationActiveChangeDetail,
+  FocusgroupNavigationController,
+} from '@adobe/spectrum-wc-core/controllers/focusgroup-navigation-controller/index.js';
 import { SlotAttributePropagationController } from '@adobe/spectrum-wc-core/controllers/slot-attribute-propagation-controller/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
@@ -78,6 +83,10 @@ export abstract class RadioGroupBase extends SizedMixin(
   constructor() {
     super();
     this.internals.role = 'radiogroup';
+    // Items dispatch a composed `change` when their own native input is
+    // activated; this is the group's single point of sibling discovery for
+    // proposed selection changes (see `handleItemChange`).
+    this.addEventListener('change', this.handleItemChange);
   }
 
   public override get labelInternals(): ElementInternals | null {
@@ -200,8 +209,9 @@ export abstract class RadioGroupBase extends SizedMixin(
    * Restores the authored `selected` attribute on native form reset.
    *
    * @todo Full coordinated reset (re-deriving `selected` from a slotted
-   *   item's own declarative `checked`, per the item plan's checked-state-flow
-   *   section) awaits the group/item selection-sync behavior, not yet built.
+   *   item's own declarative `checked`, matching the initial-render
+   *   adoption in `firstUpdated`) awaits confirming that behavior against
+   *   the item plan's checked-state-flow section.
    */
   public formResetCallback(): void {
     this.selected = this.getAttribute('selected') ?? '';
@@ -244,6 +254,109 @@ export abstract class RadioGroupBase extends SizedMixin(
     }
   );
 
+  /**
+   * Proposes a selection change: adopts `value` unless it's already
+   * selected, dispatching the group's own cancelable `change` and reverting
+   * on `preventDefault()`. Shared by item-initiated activation
+   * (`handleItemChange`) and keyboard-driven roving-tabindex movement
+   * (`handleNavigationActiveChange`), since both represent the same public
+   * "selection changed" contract.
+   */
+  private proposeSelection(value: string): void {
+    if (value === this.selected) {
+      return;
+    }
+    const previous = this.selected;
+    this.selected = value;
+    const applyDefault = this.dispatchEvent(
+      new Event('change', { cancelable: true, bubbles: true, composed: true })
+    );
+    if (!applyDefault) {
+      this.selected = previous;
+    }
+  }
+
+  /**
+   * Proposed selection changes from a slotted item's own native input.
+   * `readonly` reverts the item's own `checked` back to the group's current
+   * `selected` instead of adopting the change, blocking the selection half
+   * of the interaction while leaving focus/Tab behavior untouched.
+   */
+  private readonly handleItemChange = (event: Event): void => {
+    const target = event.target;
+    if (!(target instanceof RadioBase)) {
+      return;
+    }
+    event.stopPropagation();
+    if (this.readonly) {
+      target.checked = target.value === this.selected;
+      return;
+    }
+    this.proposeSelection(target.value);
+  };
+
+  /**
+   * Composite keyboard navigation across slotted `swc-radio` items: all four
+   * arrow keys move a single linear roving tab stop (`direction: 'both'`),
+   * wrapping at the ends, skipping disabled items entirely.
+   */
+  private readonly navigation = new FocusgroupNavigationController(this, {
+    direction: 'both',
+    wrap: true,
+    skipDisabled: true,
+    getItems: () => this.assignedItems(),
+  });
+
+  /**
+   * Only keyboard-driven movement (arrow keys, Home, End) selects the newly
+   * active item; Tab-entry and a bare `.focus()` call land on it without
+   * changing the selection (matches the APG radio pattern).
+   */
+  private readonly handleNavigationActiveChange = (event: Event): void => {
+    const { activeElement, source } = (
+      event as CustomEvent<FocusgroupNavigationActiveChangeDetail>
+    ).detail;
+    if (
+      source !== 'keyboard' ||
+      this.readonly ||
+      !(activeElement instanceof RadioBase)
+    ) {
+      return;
+    }
+    this.proposeSelection(activeElement.value);
+  };
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener(
+      focusgroupNavigationActiveChange,
+      this.handleNavigationActiveChange
+    );
+  }
+
+  public override disconnectedCallback(): void {
+    this.removeEventListener(
+      focusgroupNavigationActiveChange,
+      this.handleNavigationActiveChange
+    );
+    super.disconnectedCallback();
+  }
+
+  /** Sets every slotted item's `checked` from the group's own `selected`, and
+   * keeps the roving tab stop on the checked item so Tab-entry lands there. */
+  private syncCheckedState(): void {
+    let checkedItem: RadioBase | undefined;
+    for (const item of this.assignedItems()) {
+      item.checked = this.selected !== '' && item.value === this.selected;
+      if (item.checked) {
+        checkedItem = item;
+      }
+    }
+    if (checkedItem) {
+      this.navigation.setActiveItem(checkedItem);
+    }
+  }
+
   private warnDuplicateValues(): void {
     const seen = new Set<string>();
     for (const item of this.assignedItems()) {
@@ -270,6 +383,7 @@ export abstract class RadioGroupBase extends SizedMixin(
     this.emphasizedPropagation.propagate();
     this.disabledPropagation.propagate();
     this.warnDuplicateValues();
+    this.navigation.refresh();
   }
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
@@ -278,6 +392,14 @@ export abstract class RadioGroupBase extends SizedMixin(
       ?.querySelector('slot:not([name])')
       ?.addEventListener('slotchange', this.handleSlotchange);
     this.syncSlottedItems();
+    // A slotted item's own declarative `checked` takes precedence over the
+    // group's `selected` attribute on first render only (matches 1st-gen's
+    // `willUpdate`).
+    const preChecked = this.assignedItems().find((item) => item.checked);
+    if (preChecked) {
+      this.selected = preChecked.value;
+    }
+    this.syncCheckedState();
   }
 
   protected override update(changedProperties: PropertyValues): void {
@@ -294,6 +416,19 @@ export abstract class RadioGroupBase extends SizedMixin(
       url: DOCS_URL,
     });
     super.update(changedProperties);
+    if (changedProperties.has('selected')) {
+      this.syncCheckedState();
+    }
+    this.internals.ariaRequired = this.required ? 'true' : null;
+    this.internals.ariaInvalid = this.invalid ? 'true' : null;
+    this.internals.ariaReadOnly = this.readonly ? 'true' : null;
+    // Constraint validity: a required group with nothing selected is
+    // `valueMissing`, mirroring a native required radio set.
+    if (this.required && !this.selected) {
+      this.internals.setValidity({ valueMissing: true });
+    } else {
+      this.internals.setValidity({});
+    }
     // Push the current selection into the form; exclude it when nothing is
     // selected or the group is disabled, matching an unchecked native radio set.
     this.fieldAssoc.setValue(

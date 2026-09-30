@@ -362,15 +362,15 @@ Planned rendering shape:
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] gen2 API decisions drafted
-- [ ] Plan reviewed by at least one other engineer
+- [x] Plan reviewed by at least one other engineer
 
 ### Setup
 
 - [x] Create `gen2/packages/core/components/radio/` — lives at `gen2/packages/core/components/radio-group/Radio.base.ts` instead: consolidated into the shared `radio-group` directory alongside `RadioGroup.base.ts`, mirroring the `accordion`/`accordion-item` pattern (the item cannot ship independently of the group)
 - [x] Create `gen2/packages/swc/components/radio/` — same consolidation: `gen2/packages/swc/components/radio-group/Radio.ts`
 - [x] Wire exports in both `package.json` files — core exports `./components/radio-group` (covers both classes); SWC's wildcard `./components/*` needs no per-component entry
-- [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
-- [ ] Confirm the shared feature branch for combined `swc-radio`/`swc-radio-group` delivery exists before opening implementation PRs against it
+- [x] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
+- [x] Confirm the shared feature branch for combined `swc-radio`/`swc-radio-group` delivery exists before opening implementation PRs against it
 
 ### API
 
@@ -381,10 +381,10 @@ Planned rendering shape:
 - [x] Remove `invalid`, `readonly` from the item surface (B1, B2)
 - [x] Do not add `accessible-label`/`accessible-labelledby`/`accessible-describedby` (deferred — see A4, [Decision log](#decision-log))
 - [x] Rename the label slot from default to named `label` (B14); update stories/tests accordingly
-- [ ] Implement label association via a real `<label for="…">` targeting the inner input's generated `id`, wrapping the `label` slot's content (no `LabellingController` dependency) — blocked on the native `<input type="radio">` (Styling/rendering phase); `swc-radio` still renders only the `label`/`description` slots
-- [ ] Gate the optional `description` slot/`aria-describedby` with `SlotPresenceController` — partially done: `Radio.base.ts` wires `SlotPresenceController` and `swc-radio` conditionally renders the `description` slot on `hasDescription`; the `aria-describedby` half needs the inner input to target
+- [x] Implement label association via a real `<label for="…">` targeting the inner input's generated `id`, wrapping the `label` slot's content (no `LabellingController` dependency)
+- [x] Gate the optional `description` slot/`aria-describedby` with `SlotPresenceController`
 - [x] Implement the standalone-usage dev-mode warning (B15)
-- [ ] Do not propagate `name` onto the inner input (B12) — moot until the inner input exists; nothing propagates it today
+- [x] Do not propagate `name` onto the inner input (B12)
 
 #### Alignment checks
 
@@ -411,19 +411,19 @@ Planned rendering shape:
 
 #### Naming and semantics
 
-- [ ] `swc-radio` sets no `role` on its own host; the real, native `<input type="radio">` inside its shadow DOM supplies `role="radio"`
-- [ ] Shadow root uses `delegatesFocus: true` so Tab and programmatic focus land on the inner input
-- [ ] Accessible name comes from a real, same-root `<label for="…">` around the slotted label content, targeting the inner input's generated `id` (no `LabellingController` dependency — see [Decision log](#decision-log))
-- [ ] Per-item `description` wired via same-root `aria-describedby`, gated by `SlotPresenceController` and set only when content is present
+- [x] `swc-radio` sets no `role` on its own host; the real, native `<input type="radio">` inside its shadow DOM supplies `role="radio"`
+- [x] Shadow root uses `delegatesFocus: true` so Tab and programmatic focus land on the inner input
+- [x] Accessible name comes from a real, same-root `<label for="…">` around the slotted label content, targeting the inner input's generated `id` (no `LabellingController` dependency — see [Decision log](#decision-log))
+- [x] Per-item `description` wired via same-root `aria-describedby`, gated by `SlotPresenceController` and set only when content is present
 
 #### State verification
 
-- [ ] `checked`/`aria-checked` come from the native inner input; never emits `"mixed"`
-- [ ] `disabled` reflects onto the inner input's native `disabled` rather than a hand-written `aria-disabled`
+- [x] `checked`/`aria-checked` come from the native inner input; never emits `"mixed"`
+- [x] `disabled` reflects onto the inner input's native `disabled` rather than a hand-written `aria-disabled`
 - [x] No per-item `readonly` or `invalid`/`aria-invalid` remains on `swc-radio`
 - [x] `swc-radio` has no `ElementInternals`/form-value participation of its own; `FieldAssociationController` lives entirely on `swc-radio-group`
-- [ ] `name` is not propagated onto the item's inner input (B12)
-- [ ] Receiving focus via Tab or `.focus()` never auto-selects; receiving focus via the group's arrow-key roving always does
+- [x] `name` is not propagated onto the item's inner input (B12)
+- [x] Receiving focus via Tab or `.focus()` never auto-selects; receiving focus via the group's arrow-key roving always does — `FocusgroupNavigationController` (on `RadioGroupBase`) filters its `handleNavigationActiveChange` on `source === 'keyboard'`; Tab-entry lands on the checked item via `syncCheckedState`'s `setActiveItem` call without changing selection
 
 ### Testing
 

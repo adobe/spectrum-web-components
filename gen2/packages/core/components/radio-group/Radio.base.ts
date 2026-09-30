@@ -32,6 +32,15 @@ const DOCS_URL =
  */
 export abstract class RadioBase extends SpectrumElement {
   /**
+   * Routes host focus to the internal native `<input>` so the item is a
+   * single Tab stop with focus landing on the real control.
+   */
+  static override shadowRootOptions: ShadowRootInit = {
+    ...SpectrumElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
+
+  /**
    * Identifies this option within the group's shared `name`. Plain content
    * attribute, not ARIA.
    */

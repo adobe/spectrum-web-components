@@ -32,7 +32,7 @@ const meta: Meta = {
   render: (args) => html`
     ${template({
       ...args,
-      slot: html`
+      'default-slot': `
         <swc-radio value="1"><span slot="label">Option 1</span></swc-radio>
         <swc-radio value="2"><span slot="label">Option 2</span></swc-radio>
       `,
@@ -43,7 +43,7 @@ const meta: Meta = {
       handles: events,
     },
   },
-  tags: ['!autodocs'],
+  tags: ['migrated', '!autodocs'],
 };
 
 export default meta;
@@ -52,4 +52,6 @@ export default meta;
 //    PLAYGROUND STORY
 // ────────────────────
 
-export const Playground: Story = {};
+export const Playground: Story = {
+  tags: ['dev'],
+};
