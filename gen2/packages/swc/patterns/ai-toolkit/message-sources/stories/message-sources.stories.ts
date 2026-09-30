@@ -25,27 +25,6 @@ const { args, argTypes, template } = getStorybookHelpers('swc-message-sources');
 const defaultListItems =
   '<a href="#">Adobe Experience Manager documentation</a><a href="#">Creative Cloud release notes 2026</a><a href="#">Firefly API getting started guide</a>';
 
-delete (args as Record<string, unknown>).state;
-delete (argTypes as Record<string, unknown>).state;
-
-argTypes.open = {
-  ...argTypes.open,
-  control: { type: 'boolean' },
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'false' },
-  },
-};
-
-argTypes.label = {
-  ...argTypes.label,
-  control: { type: 'text' },
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'Sources' },
-  },
-};
-
 /**
  * A collapsible list of sources that informed an AI response.
  * Slot `<a>` elements into the default slot; they will be numbered automatically.
@@ -55,8 +34,6 @@ const meta: Meta = {
   component: 'swc-message-sources',
   args: {
     ...args,
-    open: false,
-    label: 'Sources',
     'default-slot': defaultListItems,
   },
   argTypes,
