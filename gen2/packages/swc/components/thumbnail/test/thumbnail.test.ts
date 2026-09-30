@@ -470,8 +470,13 @@ export const MissingAltWarningTest: Story = {
         const thumbnail = document.createElement('swc-thumbnail') as Thumbnail;
         thumbnail.innerHTML = '<img src="a.png" />';
         canvasElement.appendChild(thumbnail);
+        const slotChanged = new Promise((resolve) =>
+          thumbnail.shadowRoot!.addEventListener('slotchange', resolve, {
+            once: true,
+          })
+        );
         await thumbnail.updateComplete;
-        await new Promise((resolve) => setTimeout(resolve, 50));
+        await slotChanged;
 
         expect(warnCalls.length, 'warns exactly once').toBe(1);
       })
