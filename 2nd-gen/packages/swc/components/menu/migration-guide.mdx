@@ -4,9 +4,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Menu migration guide
 
-Replace `<sp-menu>` with `<swc-menu>`, update the import, and author a real trigger element for `swc-menu` to reference; this guide covers the menu host only, since `sp-menu-item`, `sp-menu-group`, and `sp-menu-divider` have not migrated yet.
-
-Before you start, check whether your menu uses submenus, selection, link items, or the mobile drilldown tray. None of those have shipped in Spectrum 2, so a menu that depends on them is not migratable yet; see [Removed in Spectrum 2](#removed-in-spectrum-2).
+Replace `<sp-menu>` with `<swc-menu>`, update the import, and author a real trigger element for `swc-menu` to reference; this guide covers the menu host only, since `sp-menu-item`, `sp-menu-group`, and `sp-menu-divider` have not migrated and menus that rely on submenus, selection, link items, or the mobile drilldown tray cannot migrate yet (see [Removed in Spectrum 2](#removed-in-spectrum-2)).
 
 ## Installation
 
