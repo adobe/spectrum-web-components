@@ -28,6 +28,7 @@ import styles from './menu.css';
  * overrides.
  *
  * @element swc-menu
+ * @since 2.0.0-beta.4
  *
  * @example
  * <swc-menu>

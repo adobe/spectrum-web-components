@@ -153,13 +153,9 @@ export const PropertyMutationTest: Story = {
 
     await step('reflects open attribute after mutation', async () => {
       menu.open = true;
-      await waitFor(() => expect(menu.hasAttribute('open')).toBe(true), {
-        timeout: 1000,
-      });
+      await waitFor(() => expect(menu.hasAttribute('open')).toBe(true));
       menu.open = false;
-      await waitFor(() => expect(menu.hasAttribute('open')).toBe(false), {
-        timeout: 1000,
-      });
+      await waitFor(() => expect(menu.hasAttribute('open')).toBe(false));
     });
 
     await step('renders in every valid size', async () => {
@@ -256,9 +252,7 @@ export const StartsOpenNoPhantomEventTest: Story = {
         mount.appendChild(menu);
 
         await menu.updateComplete;
-        await waitFor(() => expect(isMenuOpen(menu)).toBe(true), {
-          timeout: 1000,
-        });
+        await waitFor(() => expect(isMenuOpen(menu)).toBe(true));
         expect(
           openFired,
           'swc-open does not fire on the very first render'
@@ -286,17 +280,13 @@ export const ClickToToggleTest: Story = {
 
     await step('clicking the trigger opens the menu', async () => {
       await userEvent.click(trigger);
-      await waitFor(() => expect(isMenuOpen(menu)).toBe(true), {
-        timeout: 1000,
-      });
+      await waitFor(() => expect(isMenuOpen(menu)).toBe(true));
       expect(menu.open, 'open is true after trigger click').toBe(true);
     });
 
     await step('clicking the trigger again closes the menu', async () => {
       await userEvent.click(trigger);
-      await waitFor(() => expect(isMenuOpen(menu)).toBe(false), {
-        timeout: 1000,
-      });
+      await waitFor(() => expect(isMenuOpen(menu)).toBe(false));
       expect(menu.open, 'open is false after second trigger click').toBe(false);
     });
   },
@@ -423,9 +413,7 @@ export const TriggerElementOverrideTest: Story = {
       'click on the triggerElement target toggles the menu',
       async () => {
         await userEvent.click(correct);
-        await waitFor(() => expect(isMenuOpen(menu)).toBe(true), {
-          timeout: 1000,
-        });
+        await waitFor(() => expect(isMenuOpen(menu)).toBe(true));
         menu.open = false;
         await menu.updateComplete;
       }
@@ -580,9 +568,7 @@ export const ShadowRootScopeTest: Story = {
         ).toBe('menu');
 
         menu.open = true;
-        await waitFor(() => expect(isMenuOpen(menu)).toBe(true), {
-          timeout: 1000,
-        });
+        await waitFor(() => expect(isMenuOpen(menu)).toBe(true));
         menu.open = false;
         await menu.updateComplete;
       }
@@ -604,23 +590,17 @@ export const FocusManagementTest: Story = {
 
     await step('opening moves focus to the first row', async () => {
       await userEvent.click(trigger);
-      await waitFor(() => expect(isMenuOpen(menu)).toBe(true), {
-        timeout: 1000,
-      });
-      await waitFor(
-        () =>
-          expect(document.activeElement, 'focus moves to the first row').toBe(
-            getItems(canvasElement)[0]
-          ),
-        { timeout: 1000 }
+      await waitFor(() => expect(isMenuOpen(menu)).toBe(true));
+      await waitFor(() =>
+        expect(document.activeElement, 'focus moves to the first row').toBe(
+          getItems(canvasElement)[0]
+        )
       );
     });
 
     await step('closing restores focus to the trigger', async () => {
       menu.open = false;
-      await waitFor(() => expect(isMenuOpen(menu)).toBe(false), {
-        timeout: 1000,
-      });
+      await waitFor(() => expect(isMenuOpen(menu)).toBe(false));
       expect(document.activeElement, 'focus returns to the trigger').toBe(
         trigger
       );
@@ -644,9 +624,7 @@ export const FocusNotStolenOnCloseTest: Story = {
       'does not move focus to the trigger when focus was not inside the menu at close',
       async () => {
         menu.open = true;
-        await waitFor(() => expect(isMenuOpen(menu)).toBe(true), {
-          timeout: 1000,
-        });
+        await waitFor(() => expect(isMenuOpen(menu)).toBe(true));
 
         elsewhere.focus();
         expect(document.activeElement, 'focus moved to elsewhere').toBe(
@@ -654,9 +632,7 @@ export const FocusNotStolenOnCloseTest: Story = {
         );
 
         menu.open = false;
-        await waitFor(() => expect(isMenuOpen(menu)).toBe(false), {
-          timeout: 1000,
-        });
+        await waitFor(() => expect(isMenuOpen(menu)).toBe(false));
         expect(
           document.activeElement,
           'focus remains on the externally-focused element'
@@ -680,12 +656,10 @@ export const TabTrapAndEnterActivateTest: Story = {
 
     await step('opens and focuses the first row', async () => {
       await userEvent.click(trigger);
-      await waitFor(
-        () =>
-          expect(document.activeElement, 'focus moves to the first row').toBe(
-            getItems(canvasElement)[0]
-          ),
-        { timeout: 1000 }
+      await waitFor(() =>
+        expect(document.activeElement, 'focus moves to the first row').toBe(
+          getItems(canvasElement)[0]
+        )
       );
     });
 
@@ -709,9 +683,7 @@ export const TabTrapAndEnterActivateTest: Story = {
       let closeCount = 0;
       menu.addEventListener('swc-close', () => closeCount++);
       await userEvent.keyboard('{Enter}');
-      await waitFor(() => expect(isMenuOpen(menu)).toBe(false), {
-        timeout: 1000,
-      });
+      await waitFor(() => expect(isMenuOpen(menu)).toBe(false));
       expect(menu.open, 'menu closes on Enter').toBe(false);
       expect(closeCount, 'swc-close fires exactly once').toBe(1);
     });
@@ -728,12 +700,10 @@ export const ArrowKeyNavigationTest: Story = {
 
     await step('opens and focuses the first row', async () => {
       await userEvent.click(trigger);
-      await waitFor(
-        () =>
-          expect(document.activeElement, 'focus moves to the first row').toBe(
-            getItems(canvasElement)[0]
-          ),
-        { timeout: 1000 }
+      await waitFor(() =>
+        expect(document.activeElement, 'focus moves to the first row').toBe(
+          getItems(canvasElement)[0]
+        )
       );
     });
 
@@ -830,9 +800,7 @@ export const ClickActivationTest: Story = {
       'clicking inside the menu but not on a row does not close it',
       async () => {
         await userEvent.click(trigger);
-        await waitFor(() => expect(isMenuOpen(menu)).toBe(true), {
-          timeout: 1000,
-        });
+        await waitFor(() => expect(isMenuOpen(menu)).toBe(true));
 
         await userEvent.click(menu);
         await menu.updateComplete;
@@ -845,9 +813,7 @@ export const ClickActivationTest: Story = {
 
     await step('clicking a row closes the menu', async () => {
       await userEvent.click(getItems(canvasElement)[1]);
-      await waitFor(() => expect(isMenuOpen(menu)).toBe(false), {
-        timeout: 1000,
-      });
+      await waitFor(() => expect(isMenuOpen(menu)).toBe(false));
       expect(menu.open, 'menu closes after clicking a row').toBe(false);
     });
 
@@ -943,24 +909,18 @@ export const PlacementControllerIntegrationTest: Story = {
       'applies translate positioning via PlacementController when opened',
       async () => {
         menu.open = true;
-        await waitFor(() => expect(isMenuOpen(menu)).toBe(true), {
-          timeout: 1000,
-        });
-        await waitFor(() => expect(surface()?.style.translate).toBeTruthy(), {
-          timeout: 1000,
-        });
+        await waitFor(() => expect(isMenuOpen(menu)).toBe(true));
+        await waitFor(() => expect(surface()?.style.translate).toBeTruthy());
       }
     );
 
     await step(
       'sets the actual-placement attribute to a valid physical side',
       async () => {
-        await waitFor(
-          () =>
-            expect(['top', 'bottom', 'left', 'right']).toContain(
-              menu.getAttribute('actual-placement')
-            ),
-          { timeout: 1000 }
+        await waitFor(() =>
+          expect(['top', 'bottom', 'left', 'right']).toContain(
+            menu.getAttribute('actual-placement')
+          )
         );
       }
     );
@@ -992,21 +952,17 @@ export const ReanchorOnPlacementChangeTest: Story = {
       'reruns positioning when placement changes while open',
       async () => {
         menu.open = true;
-        await waitFor(() => expect(isMenuOpen(menu)).toBe(true), {
-          timeout: 1000,
-        });
-        await waitFor(
-          () => expect(menu.getAttribute('actual-placement')).toBeTruthy(),
-          { timeout: 1000 }
+        await waitFor(() => expect(isMenuOpen(menu)).toBe(true));
+        await waitFor(() =>
+          expect(menu.getAttribute('actual-placement')).toBeTruthy()
         );
 
         menu.removeAttribute('actual-placement');
         menu.placement = 'top-end';
         await menu.updateComplete;
 
-        await waitFor(
-          () => expect(menu.getAttribute('actual-placement')).toBeTruthy(),
-          { timeout: 1000 }
+        await waitFor(() =>
+          expect(menu.getAttribute('actual-placement')).toBeTruthy()
         );
 
         menu.open = false;
@@ -1038,24 +994,20 @@ export const ReanchorOnPlacementChangeTest: Story = {
         };
 
         menu.open = true;
-        await waitFor(() => expect(isMenuOpen(menu)).toBe(true), {
-          timeout: 1000,
-        });
+        await waitFor(() => expect(isMenuOpen(menu)).toBe(true));
 
         menu.removeAttribute('actual-placement');
         menu.shouldFlip = false;
         await menu.updateComplete;
-        await waitFor(
-          () => expect(menu.getAttribute('actual-placement')).toBeTruthy(),
-          { timeout: 1000 }
+        await waitFor(() =>
+          expect(menu.getAttribute('actual-placement')).toBeTruthy()
         );
 
         menu.removeAttribute('actual-placement');
         menu.for = 'reanchor-trigger-2';
         await menu.updateComplete;
-        await waitFor(
-          () => expect(menu.getAttribute('actual-placement')).toBeTruthy(),
-          { timeout: 1000 }
+        await waitFor(() =>
+          expect(menu.getAttribute('actual-placement')).toBeTruthy()
         );
         expect(
           surfaceDistanceTo(trigger2),
@@ -1065,9 +1017,8 @@ export const ReanchorOnPlacementChangeTest: Story = {
         menu.removeAttribute('actual-placement');
         menu.triggerElement = trigger1;
         await menu.updateComplete;
-        await waitFor(
-          () => expect(menu.getAttribute('actual-placement')).toBeTruthy(),
-          { timeout: 1000 }
+        await waitFor(() =>
+          expect(menu.getAttribute('actual-placement')).toBeTruthy()
         );
         expect(
           surfaceDistanceTo(trigger1),
@@ -1144,9 +1095,7 @@ export const NativeCloseReconciliationTest: Story = {
       'syncs the open property down when the surface closes without open being set first',
       async () => {
         menu.open = true;
-        await waitFor(() => expect(isMenuOpen(menu)).toBe(true), {
-          timeout: 1000,
-        });
+        await waitFor(() => expect(isMenuOpen(menu)).toBe(true));
 
         // Simulates the surface closing on its own (e.g. native light-dismiss)
         // by calling hidePopover() directly instead of going through the
@@ -1155,7 +1104,7 @@ export const NativeCloseReconciliationTest: Story = {
         // trusted Escape/outside-click would (covered end-to-end with real
         // trusted input in menu.a11y.spec.ts).
         surface().hidePopover();
-        await waitFor(() => expect(menu.open).toBe(false), { timeout: 1000 });
+        await waitFor(() => expect(menu.open).toBe(false));
         expect(isMenuOpen(menu), 'surface is closed').toBe(false);
       }
     );
@@ -1171,9 +1120,7 @@ export const KeydownWhileClosedTest: Story = {
       'a keydown that arrives just as the menu closes is a no-op',
       async () => {
         menu.open = true;
-        await waitFor(() => expect(isMenuOpen(menu)).toBe(true), {
-          timeout: 1000,
-        });
+        await waitFor(() => expect(isMenuOpen(menu)).toBe(true));
 
         // Setting `open` updates the property synchronously; the document
         // keydown listener isn't removed until the deferred close reaction
@@ -1195,9 +1142,7 @@ export const KeydownWhileClosedTest: Story = {
           'Tab is not trapped once the menu has closed'
         ).toBe(false);
 
-        await waitFor(() => expect(isMenuOpen(menu)).toBe(false), {
-          timeout: 1000,
-        });
+        await waitFor(() => expect(isMenuOpen(menu)).toBe(false));
       }
     );
   },
@@ -1219,7 +1164,10 @@ export const TriggerBecomesUnresolvedTest: Story = {
     ) as HTMLButtonElement;
 
     await step('wires the initial valid trigger', async () => {
-      expect(oldTrigger.getAttribute('aria-haspopup')).toBe('menu');
+      expect(
+        oldTrigger.getAttribute('aria-haspopup'),
+        'initial trigger aria-haspopup'
+      ).toBe('menu');
     });
 
     await step(
@@ -1264,9 +1212,7 @@ export const OpensWithNoItemsTest: Story = {
       let threw = false;
       try {
         menu.open = true;
-        await waitFor(() => expect(isMenuOpen(menu)).toBe(true), {
-          timeout: 1000,
-        });
+        await waitFor(() => expect(isMenuOpen(menu)).toBe(true));
       } catch {
         threw = true;
       }
@@ -1289,9 +1235,7 @@ export const DismissibleStackTest: Story = {
 
     await step('registers as the top dismissible while open', async () => {
       menu.open = true;
-      await waitFor(() => expect(isMenuOpen(menu)).toBe(true), {
-        timeout: 1000,
-      });
+      await waitFor(() => expect(isMenuOpen(menu)).toBe(true));
       expect(
         isTopDismissible(menu),
         'menu is the top dismissible while open'
@@ -1300,9 +1244,7 @@ export const DismissibleStackTest: Story = {
 
     await step('unregisters once closed', async () => {
       menu.open = false;
-      await waitFor(() => expect(isMenuOpen(menu)).toBe(false), {
-        timeout: 1000,
-      });
+      await waitFor(() => expect(isMenuOpen(menu)).toBe(false));
       expect(
         isTopDismissible(menu),
         'menu is no longer a dismissible once closed'
@@ -1335,7 +1277,10 @@ export const DisconnectCleanupTest: Story = {
     await menu.updateComplete;
 
     await step('wires the trigger while connected', async () => {
-      expect(trigger.getAttribute('aria-haspopup')).toBe('menu');
+      expect(
+        trigger.getAttribute('aria-haspopup'),
+        'trigger aria-haspopup'
+      ).toBe('menu');
     });
 
     await step('disconnects while closed', async () => {
@@ -1374,9 +1319,7 @@ export const DisconnectCleanupTest: Story = {
         await menu2.updateComplete;
 
         menu2.open = true;
-        await waitFor(() => expect(isMenuOpen(menu2)).toBe(true), {
-          timeout: 1000,
-        });
+        await waitFor(() => expect(isMenuOpen(menu2)).toBe(true));
         expect(
           isTopDismissible(menu2),
           'menu2 is the top dismissible while open'
