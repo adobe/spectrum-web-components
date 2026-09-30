@@ -307,21 +307,9 @@
       "types": "./dist/element/index.d.ts",
       "import": "./dist/element/index.js"
     },
-    "./element/define-element.js": {
-      "types": "./dist/element/define-element.d.ts",
-      "import": "./dist/element/define-element.js"
-    },
     "./element/index.js": {
       "types": "./dist/element/index.d.ts",
       "import": "./dist/element/index.js"
-    },
-    "./element/spectrum-element.js": {
-      "types": "./dist/element/spectrum-element.d.ts",
-      "import": "./dist/element/spectrum-element.js"
-    },
-    "./element/version.js": {
-      "types": "./dist/element/version.d.ts",
-      "import": "./dist/element/version.js"
     },
     "./mixins": {
       "types": "./dist/mixins/index.d.ts",
@@ -331,33 +319,13 @@
       "types": "./dist/mixins/index.d.ts",
       "import": "./dist/mixins/index.js"
     },
-    "./mixins/sized-mixin.js": {
-      "types": "./dist/mixins/sized-mixin.d.ts",
-      "import": "./dist/mixins/sized-mixin.js"
-    },
     "./utils": {
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.js"
     },
-    "./utils/capitalize.js": {
-      "types": "./dist/utils/capitalize.d.ts",
-      "import": "./dist/utils/capitalize.js"
-    },
-    "./utils/dismissible-stack.js": {
-      "types": "./dist/utils/dismissible-stack.d.ts",
-      "import": "./dist/utils/dismissible-stack.js"
-    },
-    "./utils/get-label-from-slot.js": {
-      "types": "./dist/utils/get-label-from-slot.d.ts",
-      "import": "./dist/utils/get-label-from-slot.js"
-    },
     "./utils/index.js": {
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.js"
-    },
-    "./utils/resolve-trigger.js": {
-      "types": "./dist/utils/resolve-trigger.d.ts",
-      "import": "./dist/utils/resolve-trigger.js"
     }
   },
   "files": [
