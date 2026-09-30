@@ -73,7 +73,7 @@ const meta: Meta = {
 export default meta;
 
 // ────────────────────
-//    PLAYGROUND STORY
+//    HELPERS
 // ────────────────────
 
 // Placeholders for `swc-menu-item`, which doesn't exist yet; matches its
@@ -83,6 +83,10 @@ const defaultItems = html`
   <swc-menu-item role="menuitem" tabindex="-1">Copy</swc-menu-item>
   <swc-menu-item role="menuitem" tabindex="-1">Paste</swc-menu-item>
 `;
+
+// ────────────────────
+//    PLAYGROUND STORY
+// ────────────────────
 
 export const Playground: Story = {
   args: {
@@ -272,6 +276,7 @@ export const TriggerElement: Story = {
     `;
   },
 };
+TriggerElement.storyName = 'Trigger element';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
