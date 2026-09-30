@@ -120,7 +120,7 @@ Not a replacement for critical error messaging or decisions requiring mandatory 
 
 The `aria-labelledby` on the host (`role="alertdialog"`) must reference an ID that resolves from the host's perspective. Notification text lives in the default slot, which is light DOM authored by the consumer. As long as the ID is on a light DOM element (or the component sets `aria-label` dynamically from the slot text), no shadow boundary is crossed. If the component attempts to use `aria-labelledby` to reference an ID on an element inside the shadow root, that reference will not resolve for the host element — this is the standard cross-root ARIA limitation for non-`aria-owns` relationships. The implementation must avoid this: either use light DOM IDs from the slot content, or derive the label programmatically and apply it as `aria-label` on the host.
 
-The inner `role="alert"` element and its contents are entirely within the shadow DOM. The `aria-atomic` attribute and the live region behavior of that element do not require any cross-shadow ID references; the browser detects the `role="alert"` element becoming visible or its content changing and fires the announcement.
+The inner `role="alert"` element and its contents are entirely within the shadow DOM. The `aria-atomic` attribute and the live region behavior of that element do not require any cross-shadow ID references. However, the announcement will only fire reliably if the element is already present, empty, in the accessibility tree before its content is set: setting the message text in the same step that creates or reveals the node is unreliable and can be silently skipped.
 
 The action slot is light DOM; the author-provided button and its label do not create cross-root ARIA concerns.
 
