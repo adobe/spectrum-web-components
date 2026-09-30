@@ -11,7 +11,7 @@
  */
 
 import { html } from 'lit';
-import { expect, waitFor } from '@storybook/test';
+import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../swc-response-status.js';
@@ -138,6 +138,17 @@ export const StatusApiTest: Story = {
       );
     });
 
+    await step('settled labels without steps are not buttons', async () => {
+      const row = el.shadowRoot?.querySelector('.swc-ResponseStatus-row');
+      expect(row?.querySelector('button')).toBeNull();
+      expect(row?.querySelector('[role="status"]')).toBeNull();
+
+      el.status = 'stopped';
+      await el.updateComplete;
+      expect(row?.querySelector('button')).toBeNull();
+      expect(row?.querySelector('[role="status"]')).toBeNull();
+    });
+
     await step(
       'coerces unsupported host status to active behavior',
       async () => {
@@ -189,6 +200,62 @@ export const StatusApiTest: Story = {
         ).toBe('mega');
       }
     );
+  },
+};
+
+export const FirstStepTransitionTest: Story = {
+  render: () => html`
+    <swc-response-status status="active">
+      <span slot="label">Generating response</span>
+    </swc-response-status>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+    const header = el.shadowRoot?.querySelector<HTMLElement>(
+      '.swc-ResponseStatus-row'
+    );
+    const loader = el.shadowRoot?.querySelector('swc-pixel-loader');
+
+    await step('a status without steps is not a button', async () => {
+      expect(header?.querySelector('[role="status"]')).toBeTruthy();
+      expect(header?.querySelector('button')).toBeNull();
+      expect(header?.hasAttribute('tabindex')).toBe(false);
+      expect(loader).toBeTruthy();
+    });
+
+    await step('the first step preserves the header and loader', async () => {
+      el.appendChild(document.createElement('swc-response-status-step'));
+      await waitFor(() => {
+        expect(
+          header
+            ?.querySelector('button.swc-ResponseStatus-headerTrail')
+            ?.getAttribute('aria-expanded')
+        ).toBe('false');
+      });
+
+      expect(el.shadowRoot?.querySelector('.swc-ResponseStatus-row')).toBe(
+        header
+      );
+      expect(el.shadowRoot?.querySelector('swc-pixel-loader')).toBe(loader);
+      expect(
+        header?.querySelector('button')?.getAttribute('aria-controls')
+      ).toBe(el.shadowRoot?.querySelector('.swc-ResponseStatus-panel')?.id);
+    });
+
+    await step('Enter and Space toggle the disclosure', async () => {
+      const button = header?.querySelector('button');
+      button?.focus();
+      await userEvent.keyboard('{Enter}');
+      await el.updateComplete;
+      expect(el.open).toBe(true);
+
+      await userEvent.keyboard(' ');
+      await el.updateComplete;
+      expect(el.open).toBe(false);
+    });
   },
 };
 
@@ -426,7 +493,7 @@ export const AgenticApiTest: Story = {
       });
 
       const button = el.shadowRoot?.querySelector<HTMLButtonElement>(
-        '.swc-ResponseStatus-row--button'
+        '.swc-ResponseStatus-headerTrail--button'
       );
       button?.click();
       await el.updateComplete;
@@ -666,7 +733,7 @@ export const DetailOverflowVisibilityTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Settled header label wraps instead of overflowing
+// TEST: Completed header label remains readable at narrow widths
 // ──────────────────────────────────────────────────────────────
 
 export const HeaderLabelWrapTest: Story = {
@@ -675,8 +742,8 @@ export const HeaderLabelWrapTest: Story = {
       <swc-response-status status="complete">
         <span slot="label">
           A deliberately long status label written to exceed two full lines of
-          wrapped text at this width so the multi-line clamp has something real
-          to bound instead of just happening to fit
+          wrapped text at this width so completed responses can still be read in
+          full without expanding a panel
         </span>
       </swc-response-status>
     </div>
@@ -688,7 +755,7 @@ export const HeaderLabelWrapTest: Story = {
     );
 
     await step(
-      'wraps and clamps the settled label without leaking past the row',
+      'wraps the complete label without hiding the end of the text',
       async () => {
         await waitFor(
           () => {
@@ -711,12 +778,7 @@ export const HeaderLabelWrapTest: Story = {
             );
             const labelHeight = label?.getBoundingClientRect().height ?? 0;
 
-            // Wrapped to more than one line...
-            expect(labelHeight).toBeGreaterThan(lineHeight * 1.5);
-            // ...but clamped rather than unbounded: stays within the default
-            // 2-line cap (`--swc-response-status-label-max-lines`) even
-            // though the text alone would wrap to more lines at this width.
-            expect(labelHeight).toBeLessThanOrEqual(lineHeight * 2 + 1);
+            expect(labelHeight).toBeGreaterThan(lineHeight * 2 + 1);
 
             // The row grows to fit the wrapped label instead of staying a
             // fixed single-line height and letting the extra lines spill past
@@ -731,5 +793,18 @@ export const HeaderLabelWrapTest: Story = {
         );
       }
     );
+
+    await step('allows consumers to cap long labels explicitly', async () => {
+      el.style.setProperty('--swc-response-status-label-max-lines', '2');
+      const label = el.shadowRoot?.querySelector<HTMLElement>(
+        '.swc-ResponseStatus-headerTrailLine .swc-ResponseStatus-label'
+      );
+      const lineHeight = parseFloat(
+        getComputedStyle(label as HTMLElement).lineHeight || '0'
+      );
+      expect(label?.getBoundingClientRect().height).toBeLessThanOrEqual(
+        lineHeight * 2 + 1
+      );
+    });
   },
 };
