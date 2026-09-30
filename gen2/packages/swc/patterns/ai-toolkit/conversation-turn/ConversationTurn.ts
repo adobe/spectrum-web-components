@@ -23,8 +23,8 @@ import styles from './conversation-turn.css';
  *
  * Slot **`swc-user-message`** or **`swc-system-message`** inside each turn
  * Multiple slotted messages are stacked automatically.
- * User-message widths are applied by layout context (full screen, split rail,
- * panel) while system content remains full width.
+ * User content is capped at 75% of the column, with a 25ch minimum where
+ * space permits and a 536px maximum. System content remains full width.
  *
  * The inner layout root is exposed as **`role="group"`** with an **`aria-label`**
  * derived from **`type`** (**"User message"** / **"System message"**) so assistive
