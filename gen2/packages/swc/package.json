@@ -39,14 +39,6 @@
     "./patterns/*.js": {
       "types": "./dist/patterns/*.d.ts",
       "default": "./dist/patterns/*.js"
-    },
-    "./patterns/*/index.js": {
-      "types": "./dist/patterns/*/index.d.ts",
-      "import": "./dist/patterns/*/index.js"
-    },
-    "./utils/id": {
-      "types": "./dist/utils/id.d.ts",
-      "import": "./dist/utils/id.js"
     }
   },
   "files": [
