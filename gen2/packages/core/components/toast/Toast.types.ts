@@ -17,4 +17,6 @@ export const TOAST_VARIANTS = [
   'negative',
 ] as const;
 
+export const SWC_TOAST_ACTION_EVENT = 'swc-toast-action' as const;
+
 export type ToastVariant = (typeof TOAST_VARIANTS)[number];
