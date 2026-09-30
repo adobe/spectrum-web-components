@@ -153,7 +153,7 @@ Common additional labels include:
 
 ### Pull request template
 
-**Note:** All pull requests should include the `ready-for-review` label.
+**Note:** All pull requests should include the `Status:Ready for review` label.
 
 **When returning the template, check off the author requirements in the Author's checklist section. Do not check off the Manual review test cases or Device review sections as these are for reviewers to complete. Fill in the **Accessibility testing checklist** with concrete steps; leave its checkboxes unchecked unless the user confirms testing is done.**
 

@@ -1,0 +1,29 @@
+{
+  "problemMatcher": [
+    {
+      "owner": "tsc",
+      "pattern": [
+        {
+          "code": 5,
+          "column": 3,
+          "file": 1,
+          "line": 2,
+          "message": 6,
+          "regexp": "^(.+?)\\((\\d+),(\\d+)\\): (error|warning) (TS\\d+): (.+)$",
+          "severity": 4
+        }
+      ]
+    },
+    {
+      "owner": "tsc-build",
+      "pattern": [
+        {
+          "code": 2,
+          "message": 3,
+          "regexp": "^(error|warning) (TS\\d+): (.+)$",
+          "severity": 1
+        }
+      ]
+    }
+  ]
+}

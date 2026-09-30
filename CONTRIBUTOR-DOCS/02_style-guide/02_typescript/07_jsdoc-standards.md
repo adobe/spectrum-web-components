@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-gen TypeScript](README.md) / JSDoc standards
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 TypeScript](README.md) / JSDoc standards
 
 <!-- Document title (editable) -->
 
@@ -32,7 +32,7 @@
 
 <!-- Document content (editable) -->
 
-This guide explains when and how to write JSDoc comments in 2nd-gen components. JSDoc serves two purposes: it documents the code for humans and agents, and it feeds the **Custom Elements Manifest** (CEM) that tools like Storybook use.
+This guide explains when and how to write JSDoc comments in gen2 components. JSDoc serves two purposes: it documents the code for humans and agents, and it feeds the **Custom Elements Manifest** (CEM) that tools like Storybook use.
 
 ## When JSDoc is required
 
@@ -345,7 +345,7 @@ static readonly VARIANTS_COLOR: readonly string[];
  */
 ```
 
-The convention in 2nd-gen is to put `@internal` first, then a blank line, then the description.
+The convention in gen2 is to put `@internal` first, then a blank line, then the description.
 
 ### @todo
 

@@ -2,9 +2,9 @@
 
 # Spectrum consumer migration guide prompt
 
-For the **[COMPONENT_NAME]** component(s), create one consumer-facing migration guide per component at `2nd-gen/packages/swc/components/[component-name]/migration-guide.mdx`.
+For the **[COMPONENT_NAME]** component(s), create one consumer-facing migration guide per component at `gen2/packages/swc/components/[component-name]/migration-guide.mdx`.
 
-The file must be **MDX**, not plain Markdown. Storybook's config (`2nd-gen/packages/swc/.storybook/main.ts`) picks up `**/*.mdx` under `../components` with `titlePrefix: 'Components'`, so the guide renders at `Components/[Component name]/Migration guide`.
+The file must be **MDX**, not plain Markdown. Storybook's config (`gen2/packages/swc/.storybook/main.ts`) picks up `**/*.mdx` under `../components` with `titlePrefix: 'Components'`, so the guide renders at `Components/[Component name]/Migration guide`.
 
 The guide ships alongside the Spectrum 2 component source. Do **not** create or move this file under `CONTRIBUTOR-DOCS/`.
 
@@ -31,7 +31,7 @@ Keep the guide **short, direct, and scannable**. A consumer should be able to co
 - `::part()` shadow parts unless a part is explicitly public API
 - Maintainer-facing migration rationale or sequencing
 - **Links to `CONTRIBUTOR-DOCS/` project-planning docs.** Those are maintainer-facing. Do not include them in the guide.
-- **Unshipped features** — do not include any feature that is not present in the 2nd-gen source, regardless of how it is categorized in the migration plan. Migration plan categories (Must-ship, Additive, Deferred) reflect planning intent; the source is the final authority on what shipped.
+- **Unshipped features** — do not include any feature that is not present in the gen2 source, regardless of how it is categorized in the migration plan. Migration plan categories (Must-ship, Additive, Deferred) reflect planning intent; the source is the final authority on what shipped.
 
 ### Structure steps logically
 
@@ -42,7 +42,7 @@ In "Update your code", present **numbered steps in the order the consumer perfor
 Before writing, verify claims against:
 
 - `1st-gen/packages/[component-name]/README.md` and public element files (`sp-*.ts`)
-- `2nd-gen/packages/swc/components/[component-name]/`, stories, and tests
+- `gen2/packages/swc/components/[component-name]/`, stories, and tests
 
 If a claim is not confirmed by source, omit it.
 
@@ -50,7 +50,7 @@ If a claim is not confirmed by source, omit it.
 
 When sources disagree, follow this order of authority:
 
-1. **The shipped Spectrum 2 source** (`2nd-gen/packages/swc/components/[component-name]/` and `2nd-gen/packages/core/components/[component-name]/`) — ground truth for what the component actually does.
+1. **The shipped Spectrum 2 source** (`gen2/packages/swc/components/[component-name]/` and `gen2/packages/core/components/[component-name]/`) — ground truth for what the component actually does.
 2. **The CSS style guide** (`CONTRIBUTOR-DOCS/02_style-guide/` and `.ai/rules/styles.md`) — recommendations here **outweigh** anything in a component's `rendering-and-styling-migration-analysis.md`. The analysis docs are early, component-specific planning artifacts; the style guide is the canonical, cross-component rule set and supersedes them when they conflict (for example on custom-property naming, prefixing, and public-vs-private boundaries).
 3. **`rendering-and-styling-migration-analysis.md`** and other maintainer-facing analysis docs — use only for context and rationale. If an analysis doc suggests a public API shape that the Spectrum 2 source or the CSS style guide contradicts, trust the source and the style guide, not the analysis.
 
@@ -111,7 +111,7 @@ Replace `<sp-badge>` with `<swc-badge>` and update the import. The public API is
 Use up to three `###` sub-section tables — **only include a sub-section if it has entries**. Each sub-section is a table focused on one kind of change:
 
 - **`### Renamed`** — tag, import path, property prefixes, or other 1:1 renames. Columns: `Area | Spectrum 1 | Spectrum 2`.
-- **`### Added in Spectrum 2`** — new attributes, variants, slots, or custom properties confirmed present in the shipped 2nd-gen source that the consumer may adopt. Columns: `Addition | Notes`. Verify each entry against the source — migration plan categories (Additive, Deferred) reflect planning intent and may not match final state.
+- **`### Added in Spectrum 2`** — new attributes, variants, slots, or custom properties confirmed present in the shipped gen2 source that the consumer may adopt. Columns: `Addition | Notes`. Verify each entry against the source — migration plan categories (Additive, Deferred) reflect planning intent and may not match final state.
 - **`### Removed in Spectrum 2`** — removed public API with replacement guidance. Columns: `Removed | Replacement`.
 
 Do **not** include an `### Unchanged` sub-section. Unchanged API requires no consumer action and adds noise.
@@ -135,7 +135,7 @@ Bulleted list of consumer-facing actions. **Do not duplicate code examples that 
 
 ### `## Styling`
 
-Document the **Spectrum 2 component's actual public custom properties** — not Spectrum 1's. The Spectrum 2 implementation supersedes Spectrum 1: verify the real property names, prefixes, and behavior directly in `2nd-gen/packages/swc/components/[component-name]/[component].css` and `2nd-gen/packages/core/components/[component-name]/`. Do **not** carry over Spectrum 1 `--mod-*` names unless the Spectrum 2 CSS actually uses them.
+Document the **Spectrum 2 component's actual public custom properties** — not Spectrum 1's. The Spectrum 2 implementation supersedes Spectrum 1: verify the real property names, prefixes, and behavior directly in `gen2/packages/swc/components/[component-name]/[component].css` and `gen2/packages/core/components/[component-name]/`. Do **not** carry over Spectrum 1 `--mod-*` names unless the Spectrum 2 CSS actually uses them.
 
 Cover only:
 

@@ -1,0 +1,35 @@
+# Block the push if the generated Copilot and Cursor instructions are out of sync with
+# .ai/ sources. sync.js reads the working tree, so run it only when the sources and
+# generated folders match HEAD; otherwise warn and leave it to CI (`lint:ai`). When it
+# updates files, they aren't in this push, so stop and let the author commit them.
+AI_PATHS=".ai/rules .ai/memory .github/instructions .cursor/rules"
+GENERATED_PATHS=".github/instructions .cursor/rules"
+if git diff HEAD --quiet -- $AI_PATHS &&
+  [ -z "$(git ls-files --others --exclude-standard -- $AI_PATHS)" ]; then
+  sync_output=$(node .ai/scripts/sync.js 2>&1) || {
+    echo "$sync_output" >&2
+    exit 1
+  }
+  if ! git diff --quiet -- $GENERATED_PATHS ||
+    [ -n "$(git ls-files --others --exclude-standard -- $GENERATED_PATHS)" ]; then
+    echo "✖ yarn ai:sync updated generated files. Commit them and push again:" >&2
+    git status --short -- $GENERATED_PATHS >&2
+    exit 1
+  fi
+else
+  echo "⚠ Skipped the ai:sync check: .ai/ sources or generated files have uncommitted changes." >&2
+fi
+
+# Comprehensive gen2 check before pushing: lint (ESLint, Stylelint,
+# Prettier, AI tooling), TypeScript (`tsc -b`), and Lit-template analysis.
+#
+# This is the catch-all net. Unlike the per-file lint-staged globs on
+# pre-commit, it runs the real lint commands over the whole gen2 tree, so
+# it covers every file type and any new directory without curated patterns —
+# nothing slips through. Slower, but push is infrequent and results are
+# cached, so re-runs are fast.
+#
+# Non-blocking while the existing backlog is cleared — the report prints but
+# the push proceeds. Once `yarn check:gen2` is green, drop the `|| true`
+# below to gate pushes.
+yarn check:gen2 || true

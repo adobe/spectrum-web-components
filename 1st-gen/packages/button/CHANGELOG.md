@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.12.4
+
+### Patch Changes
+
+- Updated dependencies [[`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b), [`bcd9ce0`](https://github.com/adobe/spectrum-web-components/commit/bcd9ce09097a89ff37b87e9e2de1e9b4a2001af8), [`eb29944`](https://github.com/adobe/spectrum-web-components/commit/eb299448d6896370b65d04b0b8a8c642599a88b3)]:
+  - @spectrum-web-components/base@1.12.4
+  - @spectrum-web-components/reactive-controllers@1.12.4
+  - @spectrum-web-components/shared@1.12.4
+  - @spectrum-web-components/clear-button@1.12.4
+  - @spectrum-web-components/close-button@1.12.4
+  - @spectrum-web-components/icon@1.12.4
+  - @spectrum-web-components/icons-ui@1.12.4
+  - @spectrum-web-components/progress-circle@1.12.4
+
 ## 1.12.2
 
 ### Patch Changes
@@ -44,10 +58,10 @@
 
   The fix checks if the anchor element is already in the click event's composed path before triggering a proxy click. When the user clicks directly on the button, the absolutely-positioned anchor naturally receives the click, so no proxy is needed. The proxy click is now only triggered for keyboard activation and VoiceOver, where the anchor isn't in the click path.
 
-- [#6254](https://github.com/adobe/spectrum-web-components/pull/6254) [`38a463f`](https://github.com/adobe/spectrum-web-components/commit/38a463f7f4745373d143cdb08c7d87ba932cf1dd) Thanks [@5t3ph](https://github.com/5t3ph)! - **deprecate(button):** Mark 1st-gen `sp-button` properties and exports as deprecated ahead of 2nd-gen migration.
+- [#6254](https://github.com/adobe/spectrum-web-components/pull/6254) [`38a463f`](https://github.com/adobe/spectrum-web-components/commit/38a463f7f4745373d143cdb08c7d87ba932cf1dd) Thanks [@5t3ph](https://github.com/5t3ph)! - **deprecate(button):** Mark 1st-gen `sp-button` properties and exports as deprecated ahead of gen2 migration.
   - `quiet` property: deprecated with `@deprecated` JSDoc and runtime `window.__swc.warn()`; use `treatment="outline"` instead
-  - `treatment` property: deprecated with `@deprecated` JSDoc; use `fill-style` in 2nd-gen
-  - `no-wrap` property: deprecated with `@deprecated` JSDoc; use `truncate` in 2nd-gen
+  - `treatment` property: deprecated with `@deprecated` JSDoc; use `fill-style` in gen2
+  - `no-wrap` property: deprecated with `@deprecated` JSDoc; use `truncate` in gen2
   - Type and const exports deprecated: `ButtonVariants`, `ButtonTreatments`, `ButtonStaticColors`, `DeprecatedButtonVariants`, `VALID_VARIANTS`, `VALID_STATIC_COLORS`
 
 - Updated dependencies [[`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`f9e0896`](https://github.com/adobe/spectrum-web-components/commit/f9e0896d7b3863f3ce45228e5868214d4939ee85), [`dc6a8e8`](https://github.com/adobe/spectrum-web-components/commit/dc6a8e8db1b08080373c3664babc1feebde8f6c6), [`90c3010`](https://github.com/adobe/spectrum-web-components/commit/90c30101391d4d78922575e9f0bb407e02d9c2d5), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0), [`7b153b5`](https://github.com/adobe/spectrum-web-components/commit/7b153b5433a8f6d47850f8939b058f7bc431c48c)]:

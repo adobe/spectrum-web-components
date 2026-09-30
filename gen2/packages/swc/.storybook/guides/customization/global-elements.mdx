@@ -1,0 +1,214 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Customization/Global element styling" />
+
+# Global element styling
+
+Optional styling is available for **global elements**, such as native links styled as buttons, in order to retain native semantics and default accessibility benefits.
+
+For global element styles to be fully available to slotted elements, you must include the stylesheet for `@adobe/spectrum-wc/global-elements.css` at the application level and ensure that it's processed by your bundler to resolve the relative imports.
+
+To use global element styles within the shadow DOM of extended and custom components, ensure their stylesheet also imports the global stylesheet.
+
+Individual stylesheets are also available as `global-[component].css` instead of the comprehensive index.
+
+## Customizing global elements
+
+There are two ways to provide style customizations to global elements:
+
+### Custom properties
+
+The preferred method is to pass overrides to the exposed custom properties.
+
+```css
+.swc-Button {
+  --swc-button-max-inline-size: 120px;
+}
+```
+
+### Overrides cascade layer
+
+If you need to modify properties that aren't exposed through custom properties, you can pass your additions to the global element by including styles within the `swc-global-element-overrides` layer.
+
+```css
+@layer swc-global-element-overrides {
+  .swc-Button {
+    color: blue;
+  }
+}
+```
+
+## Button styles
+
+You may use Button styling for either native links or button elements. Classes use BEM-style naming, and require the `swc-Button` class in addition to any variant classes.
+
+> **Note:** Button-styled native links do not support disabled or pending states.
+
+{/* prettier-ignore */}
+<a href="#" class="swc-Button">As Link</a>
+{/* prettier-ignore */}
+<button type="button" class="swc-Button">As Button</button>
+
+```html
+<a href="#" class="swc-Button">As Link</a>
+<button type="button" class="swc-Button">As Button</button>
+```
+
+Links and buttons support variant styles using associated modifier classes.
+
+{/* prettier-ignore */}
+<a href="#" class="swc-Button swc-Button--secondary">As Link (Secondary)</a>
+<a href="#" class="swc-Button swc-Button--accent">As Link (Accent)</a>
+<a href="#" class="swc-Button swc-Button--primary swc-Button--outline">As Link (Outlined)</a>
+<button class="swc-Button swc-Button--staticBlack">As Button (Static Black)</button>
+
+```html
+<a href="#" class="swc-Button swc-Button--secondary">As Link (Secondary)</a>
+<a href="#" class="swc-Button swc-Button--accent">As Link (Accent)</a>
+<a href="#" class="swc-Button swc-Button--primary swc-Button--outline">
+  As Link (Outlined)
+</a>
+<button class="swc-Button swc-Button--staticBlack">
+  As Button (Static Black)
+</button>
+```
+
+Buttons support `disabled` state styles.
+
+{/* prettier-ignore */}
+<button type="button" class="swc-Button" disabled>As Button (Disabled)</button>
+
+```html
+<button type="button" class="swc-Button" disabled>As Button (Disabled)</button>
+```
+
+Using a wrapper around the label with class `swc-Button-label` is recommended to best support text wrapping. It is required for truncation.
+
+{/* prettier-ignore */}
+<button type="button" class="swc-Button" style={{ '--swc-button-max-inline-size': '120px' }}><span class="swc-Button-label">Submit to stakeholders</span></button>
+<button type="button" class="swc-Button swc-Button--truncate" style={{ '--swc-button-max-inline-size': '120px' }}><span class="swc-Button-label">Submit to stakeholders</span></button>
+
+```html
+<button
+  type="button"
+  class="swc-Button"
+  style="--swc-button-max-inline-size: 120px"
+>
+  <span class="swc-Button-label">Submit to stakeholders</span>
+</button>
+<button
+  type="button"
+  class="swc-Button swc-Button--truncate"
+  style="--swc-button-max-inline-size: 120px"
+>
+  <span class="swc-Button-label">Submit to stakeholders</span>
+</button>
+```
+
+Icons in buttons or icon-only variants are supported, with the assumption that the icon is represented as an SVG with the class `swc-Button-icon`. For the best text wrapping support, add `swc-Button--hasIcon` to the base element.
+
+Icon-only should include the class `swc-Button--iconOnly` on the base element, and provide a label via `aria-label`.
+
+{/* prettier-ignore */}
+<button type="button" class="swc-Button swc-Button--hasIcon">
+  <svg class="swc-Button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"/></svg>
+  <span class="swc-Button-label">With Icon</span>
+</button>
+<button type="button" class="swc-Button swc-Button--iconOnly" aria-label="icon-only">
+  <svg class="swc-Button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"/></svg>
+</button>
+
+```html
+<button type="button" class="swc-Button swc-Button--hasIcon">
+  <svg class="swc-Button-icon" aria-hidden="true" focusable="false">
+    <!-- ... -->
+  </svg>
+  <span class="swc-Button-label">With Icon</span>
+</button>
+
+<button
+  type="button"
+  class="swc-Button swc-Button--iconOnly"
+  aria-label="icon-only"
+>
+  <svg class="swc-Button-icon" aria-hidden="true" focusable="false">
+    <!-- ... -->
+  </svg>
+</button>
+```
+
+## Action button styles
+
+You may use Action button styling for either native links or button elements. Classes use BEM-style naming, and require the `swc-ActionButton` class.
+
+> **Note:** Action-button-styled native links do not support disabled or pending states.
+
+{/* prettier-ignore */}
+<a href="#" class="swc-ActionButton">As Link</a>
+{/* prettier-ignore */}
+<button type="button" class="swc-ActionButton">As Button</button>
+
+```html
+<a href="#" class="swc-ActionButton">As Link</a>
+<button type="button" class="swc-ActionButton">As Button</button>
+```
+
+The quiet variant removes the default background.
+
+{/* prettier-ignore */}
+<a href="#" class="swc-ActionButton swc-ActionButton--quiet">As Link (Quiet)</a>
+{/* prettier-ignore */}
+<button type="button" class="swc-ActionButton swc-ActionButton--quiet">As Button (Quiet)</button>
+
+```html
+<a href="#" class="swc-ActionButton swc-ActionButton--quiet">As Link (Quiet)</a>
+<button type="button" class="swc-ActionButton swc-ActionButton--quiet">
+  As Button (Quiet)
+</button>
+```
+
+Action buttons support `disabled` state styles via the native `disabled` attribute, as well as via `aria-disabled="true"` for group-level disabling (for example, when disabled as part of a `swc-action-group`) where the button must remain focusable and in the tab order.
+
+{/* prettier-ignore */}
+<button type="button" class="swc-ActionButton" disabled>As Button (Disabled)</button>
+{/* prettier-ignore */}
+<button type="button" class="swc-ActionButton" aria-disabled="true">As Button (aria-disabled)</button>
+
+```html
+<button type="button" class="swc-ActionButton" disabled>
+  As Button (Disabled)
+</button>
+<button type="button" class="swc-ActionButton" aria-disabled="true">
+  As Button (aria-disabled)
+</button>
+```
+
+Icons are supported with the class `swc-ActionButton-icon`. Add `swc-ActionButton--hasIcon` when combining an icon with a label, or `swc-ActionButton--iconOnly` with `aria-label` for icon-only variants.
+
+{/* prettier-ignore */}
+<button type="button" class="swc-ActionButton swc-ActionButton--hasIcon">
+  <svg class="swc-ActionButton-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M33.567 8.2 27.8 2.432a1.215 1.215 0 0 0-.866-.353H26.9a1.371 1.371 0 0 0-.927.406L5.084 23.372a.99.99 0 0 0-.251.422L2.055 33.1c-.114.377.459.851.783.851a.251.251 0 0 0 .062-.007c.276-.063 7.866-2.344 9.311-2.778a.972.972 0 0 0 .414-.249l20.888-20.889a1.372 1.372 0 0 0 .4-.883 1.221 1.221 0 0 0-.346-.945ZM11.4 29.316c-2.161.649-4.862 1.465-6.729 2.022l2.009-6.73Z"/></svg><span class="swc-ActionButton-label">Edit</span>
+</button>
+{/* prettier-ignore */}
+<button type="button" class="swc-ActionButton swc-ActionButton--iconOnly" aria-label="Edit">
+  <svg class="swc-ActionButton-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M33.567 8.2 27.8 2.432a1.215 1.215 0 0 0-.866-.353H26.9a1.371 1.371 0 0 0-.927.406L5.084 23.372a.99.99 0 0 0-.251.422L2.055 33.1c-.114.377.459.851.783.851a.251.251 0 0 0 .062-.007c.276-.063 7.866-2.344 9.311-2.778a.972.972 0 0 0 .414-.249l20.888-20.889a1.372 1.372 0 0 0 .4-.883 1.221 1.221 0 0 0-.346-.945ZM11.4 29.316c-2.161.649-4.862 1.465-6.729 2.022l2.009-6.73Z"/></svg>
+</button>
+
+```html
+<button type="button" class="swc-ActionButton swc-ActionButton--hasIcon">
+  <svg class="swc-ActionButton-icon" aria-hidden="true" focusable="false">
+    <!-- ... -->
+  </svg>
+  <span class="swc-ActionButton-label">Edit</span>
+</button>
+
+<button
+  type="button"
+  class="swc-ActionButton swc-ActionButton--iconOnly"
+  aria-label="Edit"
+>
+  <svg class="swc-ActionButton-icon" aria-hidden="true" focusable="false">
+    <!-- ... -->
+  </svg>
+</button>
+```

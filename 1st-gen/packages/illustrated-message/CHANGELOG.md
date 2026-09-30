@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.12.4
+
+### Patch Changes
+
+- Updated dependencies [[`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b), [`bcd9ce0`](https://github.com/adobe/spectrum-web-components/commit/bcd9ce09097a89ff37b87e9e2de1e9b4a2001af8)]:
+  - @spectrum-web-components/base@1.12.4
+  - @spectrum-web-components/styles@1.12.4
+
 ## 1.12.2
 
 ### Patch Changes
@@ -20,8 +28,8 @@
 
 ### Minor Changes
 
-- [#6207](https://github.com/adobe/spectrum-web-components/pull/6207) [`3956705`](https://github.com/adobe/spectrum-web-components/commit/3956705c5a1b44ee8af7369a84ad905c1bcc8ed8) Thanks [@miwha-adobe](https://github.com/miwha-adobe)! - Migrated `<sp-illustrated-message>` to Spectrum 2 (2nd-gen) architecture.
-  - **Added**: 2nd-gen `<swc-illustrated-message>` component with Spectrum 2 design tokens and styling
+- [#6207](https://github.com/adobe/spectrum-web-components/pull/6207) [`3956705`](https://github.com/adobe/spectrum-web-components/commit/3956705c5a1b44ee8af7369a84ad905c1bcc8ed8) Thanks [@miwha-adobe](https://github.com/miwha-adobe)! - Migrated `<sp-illustrated-message>` to Spectrum 2 (gen2) architecture.
+  - **Added**: gen2 `<swc-illustrated-message>` component with Spectrum 2 design tokens and styling
   - **Added**: `size` attribute (`s`, `m`, `l`) for controlling component size
   - **Added**: `orientation` attribute (`vertical`, `horizontal`) for layout control
   - **Added**: `heading` slot as the preferred API for providing heading content

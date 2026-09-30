@@ -26,9 +26,11 @@ export default {
     'node scripts/generate-versions.js',
     'yarn constraints --fix',
     'yarn install --refresh-lockfile',
-    'git add 1st-gen/tools/base/src/version.ts 2nd-gen/packages/core/element/version.ts yarn.lock',
+    'git add 1st-gen/tools/base/src/version.ts gen2/packages/core/element/version.ts yarn.lock',
   ],
-  '.changeset/*.md': ['node 1st-gen/scripts/escape-changelog-tags.js'],
+  '{1st-gen,gen2}/.changeset/*.md': [
+    'node 1st-gen/scripts/escape-changelog-tags.js',
+  ],
   '!(*.css|*.ts)': [
     'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
   ],

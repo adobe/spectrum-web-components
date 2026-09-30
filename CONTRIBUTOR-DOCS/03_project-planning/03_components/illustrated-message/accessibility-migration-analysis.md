@@ -53,7 +53,7 @@ The component cannot know which `h2`–`h6` level is correct for the page; autho
 
 Do not use `h1` for the illustrated message title. `h1` is for the primary page (or dialog / sheet title outside this block). This component exposes `h2`–`h6` only via `heading-level` (`2`–`6`).
 
-2nd-gen must implement:
+gen2 must implement:
 
 - `heading-level` property (attribute `heading-level`): integers `2`–`6`, default `2`. The shadow tree renders exactly one `<h2>` … `<h6>` matching that value. Values outside `2`–`6` (including `1`) must be clamped or coerced to `2`–`6` (for example `1` → `2`), or rejected in types with a documented default—pick one policy and document it in Storybook.
 - `heading` slot: accepts a `span` only (or equivalent documented phrasing: a single `span` wrapper as the slotted node). Do not allow slotted `<h1>`–`<h6>`; authors must not put heading elements in light DOM for this slot. Implementation may validate in dev and warn or ignore invalid slotted tags.
@@ -105,7 +105,7 @@ Bottom line: Authors choose `heading-level` (`2`–`6`, i.e. `h2`–`h6`) to mat
 
 ### Shadow DOM and cross-root ARIA issues
 
-- If `aria-labelledby` / `aria-describedby` reference slotted ids, confirm 2nd-gen id forwarding or document limitations. Heading `id` for region labeling should live on the shadow `<h2>`–`<h6>` if needed.
+- If `aria-labelledby` / `aria-describedby` reference slotted ids, confirm gen2 id forwarding or document limitations. Heading `id` for region labeling should live on the shadow `<h2>`–`<h6>` if needed.
 
 ### Accessibility tree expectations
 
@@ -125,7 +125,7 @@ Typical open state
 ## Known 1st-gen issues
 
 - `sp-illustrated-message` always wraps the heading slot in `<h2 id="heading">` ([`IllustratedMessage.ts`](https://github.com/adobe/spectrum-web-components/blob/main/1st-gen/packages/illustrated-message/src/IllustratedMessage.ts)) with no `heading-level` API—authors cannot match outline when the block should be `h3`–`h6`.
-- The slot accepts any node; slotted heading elements would nest incorrectly inside `<h2>`. 2nd-gen fixes this by owning the heading tag and restricting the slot to `span` only.
+- The slot accepts any node; slotted heading elements would nest incorrectly inside `<h2>`. gen2 fixes this by owning the heading tag and restricting the slot to `span` only.
 
 ---
 

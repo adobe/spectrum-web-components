@@ -27,13 +27,10 @@ module.exports = defineConfig({
      * Fetch a list of all the component workspaces using a glob pattern
      * @type {string[]} components
      */
-    const components = fg.sync(
-      '{1st-gen/{packages,tools},2nd-gen/packages}/*',
-      {
-        cwd: __dirname,
-        onlyDirectories: true,
-      }
-    );
+    const components = fg.sync('{1st-gen/{packages,tools},gen2/packages}/*', {
+      cwd: __dirname,
+      onlyDirectories: true,
+    });
 
     /**
      * This function checks the workspace for any local package references
@@ -104,29 +101,36 @@ module.exports = defineConfig({
      * to simplify into a readable set of operations
      * @param {Workspace} workspace
      * @param {string} folderName
-     * @param {boolean} is2ndGen
+     * @param {boolean} isGen2
      * @returns {void}
      */
     function validateComponentPackageJson(
       workspace,
       folderName,
-      is2ndGen = false
+      isGen2 = false
     ) {
       // Only update the homepage if it does not already exist
       if (!workspace.manifest.homepage) {
-        workspace.set(
-          'homepage',
-          `https://opensource.adobe.com/spectrum-web-components/components/${folderName}`
-        );
+        if (isGen2) {
+          workspace.set(
+            'homepage',
+            `https://spectrum-web-components.adobe.com/components/${folderName}`
+          );
+        } else {
+          workspace.set(
+            'homepage',
+            `https://opensource.adobe.com/spectrum-web-components/components/${folderName}`
+          );
+        }
       }
 
       workspace.set('type', 'module');
       workspace.set('publishConfig.access', 'public');
       workspace.set('keywords', keywords(['component', 'css']));
 
-      // 2nd-gen packages use different entry points
-      if (is2ndGen) {
-        // 2nd-gen uses dist folder for builds
+      // gen2 packages use different entry points
+      if (isGen2) {
+        // gen2 uses dist folder for builds
         workspace.set('main', './dist/index.js');
         workspace.set('module', './dist/index.js');
       } else {
@@ -156,12 +160,12 @@ module.exports = defineConfig({
       // Enforce consistency within 1st-gen only
       enforceConsistencyForWorkspaceGroup(
         { Yarn },
-        (workspace) => !workspace.cwd.startsWith('2nd-gen/')
+        (workspace) => !workspace.cwd.startsWith('gen2/')
       );
 
-      // Enforce consistency within 2nd-gen only
+      // Enforce consistency within gen2 only
       enforceConsistencyForWorkspaceGroup({ Yarn }, (workspace) =>
-        workspace.cwd.startsWith('2nd-gen/')
+        workspace.cwd.startsWith('gen2/')
       );
     }
 
@@ -245,6 +249,8 @@ module.exports = defineConfig({
         'https://github.com/adobe/spectrum-web-components/issues'
       );
 
+      const isGen2 = workspace.cwd.startsWith('gen2/');
+
       /**
        * -------------- COMPONENTS --------------
        * Process the components workspaces with component-specific configuration
@@ -252,8 +258,7 @@ module.exports = defineConfig({
       if (isComponent) {
         // Get the last part of the path (e.g., 'button' from '1st-gen/packages/button')
         const folderName = workspace.cwd?.split('/').pop();
-        const is2ndGen = workspace.cwd.startsWith('2nd-gen/');
-        validateComponentPackageJson(workspace, folderName, is2ndGen);
+        validateComponentPackageJson(workspace, folderName, isGen2);
         validateLocalPackages(workspace);
       } else {
         /**
@@ -265,10 +270,17 @@ module.exports = defineConfig({
         }
 
         if (!workspace.manifest.homepage) {
-          workspace.set(
-            'homepage',
-            'https://opensource.adobe.com/spectrum-web-components/'
-          );
+          if (isGen2) {
+            workspace.set(
+              'homepage',
+              'https://spectrum-web-components.adobe.com/'
+            );
+          } else {
+            workspace.set(
+              'homepage',
+              'https://opensource.adobe.com/spectrum-web-components/'
+            );
+          }
         }
       }
     }

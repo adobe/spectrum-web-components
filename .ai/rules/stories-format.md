@@ -1,32 +1,30 @@
 ---
-description: Enforces consistent file structure, section separators, meta configuration, story tags, and layout parameters for 2nd-gen Storybook stories files. Story prose lives in per-unit MDX; the stories file is definitions-only.
-globs: 2nd-gen/packages/swc/components/*/stories/**, 2nd-gen/packages/swc/patterns/*/*/stories/**, 2nd-gen/packages/core/controllers/*/stories/**
+description: Enforces consistent file structure, section separators, meta configuration, story tags, and layout parameters for gen2 Storybook stories files. Story prose lives in per-unit MDX; the stories file is definitions-only.
 paths:
-  - '2nd-gen/packages/swc/components/*/stories/**'
-  - '2nd-gen/packages/swc/patterns/*/*/stories/**'
-  - '2nd-gen/packages/core/controllers/*/stories/**'
-alwaysApply: false
+  - 'gen2/packages/swc/components/*/stories/**'
+  - 'gen2/packages/swc/patterns/*/*/stories/**'
+  - 'gen2/packages/core/controllers/*/stories/**'
 ---
 
 # Storybook stories format standards
 
-Enforce consistent formatting and technical structure for Storybook stories files in 2nd-gen components, patterns, and controllers.
+Enforce consistent formatting and technical structure for Storybook stories files in gen2 components, patterns, and controllers.
 
 **See also**: `.ai/rules/stories-documentation.md` for guidance on WHAT to author in the per-unit MDX (content, patterns, examples).
 
 ## When to apply
 
-- Authoring or reviewing a `.stories.ts` file for a 2nd-gen component, pattern, or controller
-- Applies automatically when Claude reads a file matching the globs below (Cursor: via `globs`; Claude Code: via `paths`)
+- Authoring or reviewing a `.stories.ts` file for a gen2 component, pattern, or controller
+- Loads automatically when you work on a file matching the paths below
 - Adding a new story (Playground, Options, States, Behaviors, Accessibility, etc.) and needing the right tags, layout parameters, or naming convention
 
 ## Scope
 
 Apply to all `.stories.ts` files in:
 
-- `2nd-gen/packages/swc/components/*/stories/` (components)
-- `2nd-gen/packages/swc/patterns/*/*/stories/` (patterns)
-- `2nd-gen/packages/core/controllers/*/stories/` (controllers)
+- `gen2/packages/swc/components/*/stories/` (components)
+- `gen2/packages/swc/patterns/*/*/stories/` (patterns)
+- `gen2/packages/core/controllers/*/stories/` (controllers)
 
 ## Source of truth: per-unit MDX, not JSDoc
 
@@ -236,12 +234,12 @@ These rules apply to every `title` field in meta objects and every `<Meta title=
 - **No filename as label.** Never use a bare filename (`README`, `CHANGELOG`) as a Storybook title or page name. Use a descriptive label: `'Pattern overview'`, `'Migration guide'`.
 - **Flatten single-component groups.** If a Storybook group contains only one component, do not nest it. Use a flat title (`'Color loupe'`) rather than a group path (`'Color components/Color loupe'`).
 
-| ❌ Don't                         | ✅ Do                                  |
-| -------------------------------- | -------------------------------------- |
-| `'Color components/Color loupe'` | `'Color loupe'` (flattened)            |
-| `'Conversational AI/README'`     | `'Conversational AI/Pattern overview'` |
-| `'Badge/Migration Guide'`        | `'Badge/Migration guide'`              |
-| `'Pattern Overview'`             | `'Pattern overview'`                   |
+| ❌ Don't                         | ✅ Do                           |
+| -------------------------------- | ------------------------------- |
+| `'Color components/Color loupe'` | `'Color loupe'` (flattened)     |
+| `'AI Toolkit/README'`            | `'AI Toolkit/Pattern overview'` |
+| `'Badge/Migration Guide'`        | `'Badge/Migration guide'`       |
+| `'Pattern Overview'`             | `'Pattern overview'`            |
 
 ## Layout and decorators
 

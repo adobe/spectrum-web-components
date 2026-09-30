@@ -1,0 +1,108 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../swc/.storybook/blocks';
+
+import * as Stories from './stories/drag-and-drop-controller.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Usage
+
+`DragAndDropController` wires native `dragover`, `dragleave`, and `drop` events to a Lit host. The host owns its dragged state and decides how to handle the dropped data. `Dropzone` and `PromptField` use this controller for shared drag-and-drop timing.
+
+### Basic usage
+
+1. Construct the controller in the host's constructor.
+2. Return the host's current dragged state from `isDragged`.
+3. Update that state from `onDragEnter` and `onDragLeave`.
+4. Handle accepted drops in `onDrop`.
+
+```typescript
+import { LitElement } from 'lit';
+import { DragAndDropController } from '@adobe/spectrum-wc-core/controllers/drag-and-drop-controller.js';
+
+class MyDropTarget extends LitElement {
+  private dragged = false;
+
+  private readonly dragAndDrop = new DragAndDropController(this, {
+    isDragged: () => this.dragged,
+    shouldAccept: (event) =>
+      event.dataTransfer?.types.includes('Files') ?? false,
+    onDragEnter: () => {
+      this.dragged = true;
+    },
+    onDragLeave: () => {
+      this.dragged = false;
+    },
+    onDrop: (event) => this.handleFiles(event.dataTransfer?.files),
+  });
+}
+```
+
+The controller registers its listeners when the host connects and removes them when the host disconnects. It does not dispatch events or keep a second copy of the host's dragged state.
+
+## Behaviors
+
+### Accepted and rejected payloads
+
+`shouldAccept` is called on every native `dragover` tick. Return `false` to reject the current payload; the controller sets `dataTransfer.dropEffect` to `none` and does not enter the dragged state. If an accepted drag becomes rejected, `onDragLeave` clears the host's dragged state. Accepted payloads use the configured `dropEffect`, which defaults to `copy`.
+
+<Canvas of={Stories.AcceptedFileDrops} />
+
+Drag the text below the demo to see a rejected non-file payload. A real file can be dragged from the desktop into the drop target.
+
+<Canvas of={Stories.RejectedPayloads} />
+
+### Single entry callback
+
+`onDragEnter` runs once for an accepted hover session, even though the browser may emit many `dragover` events. The controller clears a pending leave when another accepted `dragover` arrives.
+
+### Debounced leave
+
+`dragleave` is ignored when the pointer moves between descendants of the host. For a real leave, `onDragLeave` runs after a 100 ms debounce so child-boundary transitions do not flicker the host's state. If an accepted drag becomes rejected, it runs immediately. The controller captures `clientX`, `clientY`, and `relatedTarget` synchronously and passes them as a `DragLeaveSnapshot`.
+
+### Drop handling
+
+The controller calls `preventDefault()` for `dragover` and `drop`. `onDrop` runs only when `isDragged()` is still `true`, then the host should clear its dragged state as part of handling the drop.
+
+## Accessibility
+
+The controller has no direct accessibility surface. The host owns the drop target's semantics and visual state.
+
+### Best practices
+
+- Give the drop target an accessible name and expose status changes through an appropriate live region when a drop changes the UI.
+- Provide a keyboard-accessible alternative, such as a file input or browse button, because native drag-and-drop is pointer-driven.
+- Keep payload validation in `shouldAccept` and make the accepted type clear in the accessible instructions.
+
+<Canvas of={Stories.Accessibility} />
+
+## API
+
+### Constructor
+
+`new DragAndDropController(host, options)` — registers the controller on the host.
+
+### Options (`DragAndDropControllerOptions`)
+
+| Option         | Type                                    | Default       | Description                                                                                                            |
+| -------------- | --------------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `isDragged`    | `() => boolean`                         | (required)    | Returns the host's current dragged state. The controller reads it on every native event and never stores its own copy. |
+| `shouldAccept` | `(event: DragEvent) => boolean`         | always accept | Called on every `dragover`. Return `false` to set `dropEffect` to `none` and reject the payload.                       |
+| `onDragEnter`  | `(event: DragEvent) => void`            | —             | Called once when an accepted drag enters.                                                                              |
+| `onDragLeave`  | `(snapshot: DragLeaveSnapshot) => void` | —             | Called after the 100 ms leave debounce, or immediately when an accepted drag becomes rejected.                         |
+| `onDrop`       | `(event: DragEvent) => void`            | —             | Called when a drop occurs while `isDragged()` is `true`.                                                               |
+| `dropEffect`   | `() => DataTransfer['dropEffect']`      | `'copy'`      | Returns the OS cursor feedback for an accepted drag.                                                                   |
+
+### `DragLeaveSnapshot`
+
+`DragLeaveSnapshot` contains the native event data that remains useful after the debounce:
+
+| Member          | Type                  | Description                                  |
+| --------------- | --------------------- | -------------------------------------------- |
+| `clientX`       | `number`              | Pointer X coordinate at the time of leaving. |
+| `clientY`       | `number`              | Pointer Y coordinate at the time of leaving. |
+| `relatedTarget` | `EventTarget \| null` | The element the pointer moved toward.        |
+
+<DocsFooter />

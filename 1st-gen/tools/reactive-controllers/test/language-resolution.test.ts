@@ -29,7 +29,10 @@ if (!customElements.get('test-lang-host')) {
 }
 
 /**
- * Flush MutationObserver callbacks by yielding a microtask.
+ * Flush MutationObserver callbacks by yielding a macrotask. A macrotask
+ * (rather than a bare microtask) is scheduled only after the browser's
+ * microtask queue, including any pending MutationObserver callback, has
+ * fully drained, guaranteeing it has already fired.
  */
 const flushObserver = (): Promise<void> =>
   new Promise((resolve) => setTimeout(resolve, 0));

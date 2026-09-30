@@ -286,6 +286,7 @@
   font-size: var(--mod-combobox-font-size, var(--spectrum-combobox-font-size));
   font-style: var(--mod-combobox-font-style, var(--spectrum-combobox-font-style));
   line-height: var(--mod-combobox-line-height, var(--spectrum-combobox-line-height));
+  unicode-bidi: plaintext;
   backface-visibility: hidden;
 }
 

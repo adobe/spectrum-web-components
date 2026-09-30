@@ -38,7 +38,7 @@
     - [Asset component plan](asset/component-plan.md)
 - Avatar
     - [Avatar accessibility migration analysis](avatar/accessibility-migration-analysis.md)
-    - [Avatar — 2nd-Gen Migration Plan](avatar/migration-plan.md)
+    - [Avatar — gen2 Migration Plan](avatar/migration-plan.md)
     - [Avatar accessibility migration analysis](avatar/rendering-and-styling-migration-analysis.md)
 - Badge
     - [Badge accessibility migration analysis](badge/accessibility-migration-analysis.md)
@@ -54,7 +54,10 @@
 - Card
     - [Card family plan](card/migration-plan.md)
 - Checkbox
+    - [Checkbox accessibility migration analysis](checkbox/accessibility-migration-analysis.md)
     - [Checkbox migration roadmap](checkbox/rendering-and-styling-migration-analysis.md)
+- Checkbox Group
+    - [Checkbox group accessibility migration analysis](checkbox-group/accessibility-migration-analysis.md)
 - Close Button
     - [Close button accessibility migration analysis](close-button/accessibility-migration-analysis.md)
     - [Close button migration plan](close-button/migration-plan.md)
@@ -69,6 +72,8 @@
     - [Color loupe accessibility migration analysis](color-loupe/accessibility-migration-analysis.md)
     - [Color loupe migration checklist](color-loupe/migration-checklist.md)
     - [Color loupe migration analysis](color-loupe/rendering-and-styling-migration-analysis.md)
+- Combobox
+    - [Combobox accessibility migration analysis](combobox/accessibility-migration-analysis.md)
 - Divider
     - [Divider accessibility migration analysis](divider/accessibility-migration-analysis.md)
     - [Divider migration roadmap](divider/rendering-and-styling-migration-analysis.md)
@@ -121,6 +126,10 @@
     - [Opacity checkerboard accessibility migration analysis](opacity-checkerboard/accessibility-migration-analysis.md)
     - [Opacity Checkerboard migration plan](opacity-checkerboard/migration-plan.md)
     - [Opacity Checkerboard migration roadmap](opacity-checkerboard/rendering-and-styling-migration-analysis.md)
+- Option
+    - [Option accessibility migration analysis](option/accessibility-migration-analysis.md)
+- Option Group
+    - [Option group accessibility migration analysis](option-group/accessibility-migration-analysis.md)
 - Picker Button
     - [Picker button migration roadmap](picker-button/rendering-and-styling-migration-analysis.md)
 - Popover
@@ -135,7 +144,12 @@
     - [Progress circle accessibility migration analysis](progress-circle/accessibility-migration-analysis.md)
     - [Progress Circle migration roadmap](progress-circle/rendering-and-styling-migration-analysis.md)
 - Radio
+    - [Radio accessibility migration analysis](radio/accessibility-migration-analysis.md)
+    - [Radio migration plan](radio/migration-plan.md)
     - [Radio migration roadmap](radio/rendering-and-styling-migration-analysis.md)
+- Radio Group
+    - [Radio group accessibility migration analysis](radio-group/accessibility-migration-analysis.md)
+    - [Radio group migration plan](radio-group/migration-plan.md)
 - Search
     - [Search migration roadmap](search/rendering-and-styling-migration-analysis.md)
 - Sidenav
@@ -152,6 +166,7 @@
 - Swatch Group
     - [Swatch Group migration roadmap](swatch-group/rendering-and-styling-migration-analysis.md)
 - Switch
+    - [Switch accessibility migration analysis](switch/accessibility-migration-analysis.md)
     - [Switch migration roadmap](switch/rendering-and-styling-migration-analysis.md)
 - Tabs
     - [Tabs accessibility migration analysis](tabs/accessibility-migration-analysis.md)
@@ -169,9 +184,11 @@
     - [Textfield and Textarea migration roadmap](textfield/rendering-and-styling-migration-analysis.md)
 - Thumbnail
     - [Thumbnail accessibility migration analysis](thumbnail/accessibility-migration-analysis.md)
+    - [Thumbnail migration plan](thumbnail/migration-plan.md)
     - [Thumbnail migration roadmap](thumbnail/rendering-and-styling-migration-analysis.md)
 - Toast
     - [Toast accessibility migration analysis](toast/accessibility-migration-analysis.md)
+    - [Toast migration plan](toast/migration-plan.md)
 - Tooltip
     - [Tooltip accessibility migration analysis](tooltip/accessibility-migration-analysis.md)
     - [Tooltip migration plan](tooltip/migration-plan.md)
@@ -189,4 +206,4 @@ Each component has its own folder (kebab-case). Inside you'll find analysis and 
 
 For a workstream-centric view of the same work, see [Workstreams](../02_workstreams/README.md). For how the two views fit together, see the [Project planning overview](../README.md).
 
-When migrating a **form field** (text field, checkbox, radio, picker, combobox, and similar), start from the canonical [forms strategy](../05_strategies/forms-strategy-rfc.md): it defines the ElementInternals/FACE decision, the label/help/error pattern, IDREF and cross-root rules, and the axe policy that Phase 3 and Phase 4 of the [washing machine workflow](../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md) depend on.
+When migrating a **form field** (text field, checkbox, radio, picker, combobox, and similar), start from the canonical [forms strategy](../05_strategies/forms-strategy-rfc.md): it defines the ElementInternals/FACE decision, the label/help/error pattern, IDREF and cross-root rules, and the axe policy that Phase 3 and Phase 4 of the [washing machine workflow](../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md) depend on.

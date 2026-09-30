@@ -3,11 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.4](https://github.com/adobe/spectrum-web-components/compare/gen1-1.12.3...gen1-1.12.4) (2026-09-24)
+
+## Patch Changes
+
+**sp-combobox**, **sp-breadcrumbs**, **reactive-controllers**:
+
+- Propagate `lang`/`dir` for a single item's language without breaking layout:
+  - Combobox: forwards `lang`/`dir` from slotted `<sp-menu-item>` (or `.options` data) onto the rendered popover `<sp-menu-item>`, and syncs the input's own `lang` to the committed option's language for correct pronunciation.
+  - Breadcrumbs: forwards the same `lang`/`dir` propagation to the "More items" overflow menu.
+  - `BreadcrumbItem` now forwards `lang`/`dir` to `#item-link` only, so a single item's language does not flip its own layout or mirror its separator's chevron; the separator tracks the ambient direction (nearest ancestor `dir`, or the document default) instead of the host's own `dir` attribute, including live updates when an ancestor's `dir` changes after mount.
+  - As a side effect, `sp-breadcrumb-item`'s `dir` JS property (via `SpectrumElement`'s computed-direction getter) now reflects the item's ambient direction rather than its own authored `dir` attribute; consumer code that reads `.dir` on an `sp-breadcrumb-item` should use `getAttribute('dir')` instead to see the authored value.
+
+**reactive-controllers**, **sp-action-group**, **sp-tabs**, **sp-radio-group**, **sp-swatch**, **sp-swatch-group**, **sp-tags**, **sp-grid**, **sp-radio**:
+
+`FocusGroupController` mapped <kbd>ArrowRight</kbd> to the next element and <kbd>ArrowLeft</kbd> to the previous one in DOM order, without checking the text direction. Under `dir="rtl"`, focus therefore moved away from the arrow the user pressed. This affected `sp-swatch-group`, `sp-action-group`, `sp-tabs`, `sp-radio-group` and `sp-tags`.
+
+<kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> now swap when the host's computed direction is `rtl` and the host lays out its elements in a row. A new `mirrorHorizontalInRTL` config option tells the controller whether that is the case. It accepts a boolean, or a callback for hosts that can render as either a row or a column. It defaults to `true` only for `direction: 'horizontal'`.
+
+- `sp-action-group` and `sp-tabs` mirror unless they render vertically.
+- `sp-radio-group` mirrors only with `horizontal`, because it renders as a column by default.
+- `sp-swatch-group` and `sp-tags` always mirror.
+- `sp-grid` never mirrors, because it positions items with physical offsets that do not follow the text direction.
+
+In a column, <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> keep following DOM order, so they stay consistent with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd>.
+
+**sp-menu**:
+
+- Fixed `sp-menu-item` selection toggling on and immediately back off when pressed via <kbd>Space</kbd> or <kbd>Enter</kbd>.
+  - The keydown handler called `focusElement.click()`, which already dispatches a click that flows through `handleClick` → `handlePointerBasedSelection` → `selectOrToggleItem`, and then called `selectOrToggleItem` a second time explicitly. The redundant second call toggled the item's selection state back off in the same tick, so keyboard users saw two `change` events and no visible selection, most noticeably with `selects="multiple"` where the final selected value reverted to empty.
+
+- Fixed keyboard navigation in `sp-menu` landing on `sp-menu-item` elements that have the `hidden` attribute. Hidden items are now skipped the same way disabled items are, including when pressing ArrowDown from the back row in the mobile drill-down view.
+
+- Fixed `sp-menu-item` submenus opening from a touch tap's `pointerup` in mobile view, bypassing the drill-down navigation.
+  - `handlePointerdown`'s touch fast-path lacked an `!this.isMobileView` guard, so a touch `pointerup` on a menu item with a submenu triggered the desktop-style overlay-opening logic even when `mobile-view` was set. This left `currentMobileSubmenu` unset while the overlay-based submenu was also open, corrupting the drill-down bookkeeping and causing the next touch-driven submenu open to fail intermittently. In mobile view, submenus now open only via the click that follows a touch tap, consistent with the drill-down navigation model.
+
+- Reset the `mobile-view` drill-down when the containing `<sp-tray>` is dismissed.
+
+Previously, drilling into a submenu and then dismissing the tray (click-outside, Escape, or programmatic close) kept the submenu state, so reopening the tray showed the stale submenu instead of the top-level menu. While drilled in, `<sp-menu mobile-view>` now listens for the containing tray's `close` event and resets the stack on dismiss. Desktop flyout submenus are unaffected.
+
+**sp-overlay**:
+
+- Removed the `./src/OverlayDialog.js` entry from the package `exports` map. The file does not exist, so importing that path always failed to resolve.
+
+- Fixed `[type="auto"]` `sp-overlay` incorrectly closing when clicking inside its own content, if the trigger and the overlay share a focusable ancestor (e.g. a `tabindex="0"` wrapper). Fixes [#5731](https://github.com/adobe/spectrum-web-components/issues/5731).
+
+**sp-picker**:
+
+- the mobile Tray now reopens after being dismissed by an outside tap. When the overlay closed externally with `preventNextToggle === 'no'`, `handleBeforetoggle` set the host's `open` to `false` but left the interaction controller's `open` state stale at `true`, so the next tap set `preventNextToggle = 'yes'` and skipped the toggle. The controller state is now synced on external close, matching the sibling branch.
+
 # [1.12.2](https://github.com/adobe/spectrum-web-components/compare/v1.12.1...v1.12.2) (2026-07-06)
 
 ## Patch Changes
 
-**sp-accordion**: **feat(accordion):** Add 2nd-gen `<swc-accordion>` and `<swc-accordion-item>` with Spectrum 2-oriented behavior. Key changes from 1st-gen `<sp-accordion>` / `<sp-accordion-item>`:
+**sp-accordion**: **feat(accordion):** Add gen2 `<swc-accordion>` and `<swc-accordion-item>` with Spectrum 2-oriented behavior. Key changes from 1st-gen `<sp-accordion>` / `<sp-accordion-item>`:
 
 - Core `AccordionBase` / `AccordionItemBase` with public API: `allow-multiple`, `level`, `size`, `density`, `quiet`, host `disabled`, item `open` / `disabled`, slotted heading (`slot="label"`), optional `slot="actions"`, and cancellable `swc-accordion-item-toggle`
 - APG-aligned accessibility: `<h*>` wrapping a native header `<button>`, `aria-expanded` / `aria-controls`, `role="region"` + `aria-labelledby`, closed panels use `aria-hidden="true"` plus CSS collapse (not HTML `hidden`; supports `calc-size()` height animation), disabled items use `aria-disabled` on the header and `inert` on the panel (no roving `tabindex` or arrow-key header navigation)
@@ -75,7 +124,7 @@ In build systems that alias `@spectrum-web-components/*` packages (for example U
 - **Added**: New exports `ELEMENT_SIZES` and `DEFAULT_ELEMENT_SIZES` for typed size arrays
 - **Deprecated**: `ElementSizes` record is now deprecated in favor of `ELEMENT_SIZES`. The export is preserved for backward compatibility but will be removed in a future major release.
 
-**@spectrum-web-components/core (2nd-gen)**
+**@spectrum-web-components/core (gen2)**
 
 - **Changed**: Replaced `ElementSizes` record with `ELEMENT_SIZES` const array and `DEFAULT_ELEMENT_SIZES`
 - **Changed**: `VALID_SIZES` arrays are now typed as `readonly ElementSize[]` for better type safety
@@ -92,7 +141,7 @@ In build systems that alias `@spectrum-web-components/*` packages (for example U
 - **Added**: New exports `ELEMENT_SIZES` and `DEFAULT_ELEMENT_SIZES` for typed size arrays
 - **Deprecated**: `ElementSizes` record is now deprecated in favor of `ELEMENT_SIZES`. The export is preserved for backward compatibility but will be removed in a future major release.
 
-**@spectrum-web-components/core (2nd-gen)**
+**@spectrum-web-components/core (gen2)**
 
 - **Changed**: Replaced `ElementSizes` record with `ELEMENT_SIZES` const array and `DEFAULT_ELEMENT_SIZES`
 - **Changed**: `VALID_SIZES` arrays are now typed as `readonly ElementSize[]` for better type safety
@@ -154,11 +203,11 @@ In build systems that alias `@spectrum-web-components/*` packages (for example U
 
 **Breaking**: `<swc-status-light>` migration removes the deprecated `disabled` attribute, removes the `accent` variant, and updates default behavior (`variant="neutral"` when omitted). `--mod-status-light-*` hooks are removed, and `--swc-status-light-*` hooks are **not** a strict 1:1 replacement for every previous override pattern. `StatusLightSize` is exported from core for typed usage. See the status light consumer migration guide.
 
-**sp-core**: **feat(tabs):** Add 2nd-gen tabs (`swc-tabs`, `swc-tab`, `swc-tab-panel`) with Spectrum 2 styling, selection indicator, and WAI-ARIA tabs keyboard behavior. A single side-effect import `@adobe/spectrum-wc/components/tabs/swc-tabs.js` registers all three elements. See `components/tabs/migration.md` for migration from 1st-gen `sp-tabs`.
+**sp-core**: **feat(tabs):** Add gen2 tabs (`swc-tabs`, `swc-tab`, `swc-tab-panel`) with Spectrum 2 styling, selection indicator, and WAI-ARIA tabs keyboard behavior. A single side-effect import `@adobe/spectrum-wc/components/tabs/swc-tabs.js` registers all three elements. See `components/tabs/migration.md` for migration from 1st-gen `sp-tabs`.
 
-**sp-illustrated-message**: Migrated `<sp-illustrated-message>` to Spectrum 2 (2nd-gen) architecture.
+**sp-illustrated-message**: Migrated `<sp-illustrated-message>` to Spectrum 2 (gen2) architecture.
 
-- **Added**: 2nd-gen `<swc-illustrated-message>` component with Spectrum 2 design tokens and styling
+- **Added**: gen2 `<swc-illustrated-message>` component with Spectrum 2 design tokens and styling
 - **Added**: `size` attribute (`s`, `m`, `l`) for controlling component size
 - **Added**: `orientation` attribute (`vertical`, `horizontal`) for layout control
 - **Added**: `heading` slot as the preferred API for providing heading content
@@ -374,11 +423,11 @@ The fix checks if the anchor element is already in the click event's composed pa
 
 - Added internal property `describeTrigger` (`'auto' | 'none'`, default `'auto'`). When set to `'none'`, the overlay does not set `aria-describedby` on the trigger when open (handled in `HoverController` and `LongpressController`), avoiding double announcement for screen readers when the overlay content duplicates the trigger (e.g. truncated-value tooltips). Textfield’s truncated-value tooltip uses this so the tooltip is visual-only for a11y.
 
-**sp-button**: **deprecate(button):** Mark 1st-gen `sp-button` properties and exports as deprecated ahead of 2nd-gen migration.
+**sp-button**: **deprecate(button):** Mark 1st-gen `sp-button` properties and exports as deprecated ahead of gen2 migration.
 
 - `quiet` property: deprecated with `@deprecated` JSDoc and runtime `window.__swc.warn()`; use `treatment="outline"` instead
-- `treatment` property: deprecated with `@deprecated` JSDoc; use `fill-style` in 2nd-gen
-- `no-wrap` property: deprecated with `@deprecated` JSDoc; use `truncate` in 2nd-gen
+- `treatment` property: deprecated with `@deprecated` JSDoc; use `fill-style` in gen2
+- `no-wrap` property: deprecated with `@deprecated` JSDoc; use `truncate` in gen2
 - Type and const exports deprecated: `ButtonVariants`, `ButtonTreatments`, `ButtonStaticColors`, `DeprecatedButtonVariants`, `VALID_VARIANTS`, `VALID_STATIC_COLORS`
 
 **sp-switch**: **Added**: New switch component tokens and styles were mapped to bring more fidelity for Spectrum 2 foundations theme. Switch now uses system theme tokens for track and handle border colors, handle background, and themed border width; S1 and Express handle border colors are preserved. Users can hook into `--mod-switch-border-width-themed` to adjust the switch input border; `--mod-switch-border-color-*` to modify the switch input border color; `--mod-switch-handle-border-color-*` to change the handle/thumb border color.
@@ -630,7 +679,7 @@ Adds required ARIA attributes to associate the trigger button with popover conte
 
 **sp-base**: No customer-facing changes.
 
-Introduced architectural changes to support side-by-side development of 1st-gen and 2nd-gen components.
+Introduced architectural changes to support side-by-side development of 1st-gen and gen2 components.
 
 # [1.9.1](https://github.com/adobe/spectrum-web-components/compare/v1.9.0...v1.9.1) (2025-11-05)
 

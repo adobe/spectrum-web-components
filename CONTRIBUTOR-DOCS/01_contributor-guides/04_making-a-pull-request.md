@@ -42,7 +42,7 @@ Quality and stability are important. We require writing tests for any fixes or f
 - New features work as intended for all users.
 - Overall library reliability remains high.
 
-For 1st-gen testing guidance, see the [1st-gen README.md](../../1st-gen/README.md). Testing guidance for 2nd-gen is forthcoming.
+For 1st-gen testing guidance, see the [1st-gen README.md](../../1st-gen/README.md). Testing guidance for gen2 is forthcoming.
 
 If you're unsure how to write tests for certain parts of the library, don't hesitate to ask maintainers for guidance. We appreciate every effort to keep the code solid!
 
@@ -119,7 +119,7 @@ When writing changesets:
 
 For detailed examples and best practices, see the [Writing Changesets guide](https://opensource.adobe.com/spectrum-web-components/guides/writing-changesets/#writing-changesets).
 
-For the 2nd-gen changelog format and changeset template, see the [Changelog strategy](15_changelog-strategy.md).
+For the gen2 changelog format and changeset template, see the [Changelog strategy](15_changelog-strategy.md).
 
 
 ### Conventional commits

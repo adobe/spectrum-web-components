@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-Gen CSS](README.md) / Styling Anti-Patterns (What to Avoid)
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 CSS](README.md) / Styling Anti-Patterns (What to Avoid)
 
 <!-- Document title (editable) -->
 
@@ -88,11 +88,11 @@
 
 <!-- Document content (editable) -->
 
-This appendix lists **common mistakes encountered when adopting the 2nd-gen SWC styling model**, why they happen, and what to do instead.
+This appendix lists **common mistakes encountered when adopting the gen2 SWC styling model**, why they happen, and what to do instead.
 
 Each anti-pattern is grounded in real Spectrum source patterns. **Badge** and **Status Light** are reference implementations for correct patterns.
 
-📖 **Reference implementations**: [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css) · [Status Light](../../../2nd-gen/packages/swc/components/status-light/status-light.css) · [Reference Migration: Badge](04_spectrum-swc-migration.md#reference-migration-badge)
+📖 **Reference implementations**: [Badge](../../../gen2/packages/swc/components/badge/badge.css) · [Status Light](../../../gen2/packages/swc/components/status-light/status-light.css) · [Reference Migration: Badge](04_spectrum-swc-migration.md#reference-migration-badge)
 
 ## 1. Leaving Visual Styles on `:host`
 
@@ -292,7 +292,7 @@ Badge size, variant, subtle, and outline states are all expressed via `:host()` 
 ```
 
 🔎 **Badge reference:**  
-[badge.css](../../../2nd-gen/packages/swc/components/badge/badge.css) uses `.swc-Badge--subtle:where(.swc-Badge--gray)` for compounded variants. [Divider](../../../2nd-gen/packages/swc/components/divider/divider.css) uses the same pattern for static color + size.
+[badge.css](../../../gen2/packages/swc/components/badge/badge.css) uses `.swc-Badge--subtle:where(.swc-Badge--gray)` for compounded variants. [Divider](../../../gen2/packages/swc/components/divider/divider.css) uses the same pattern for static color + size.
 
 📖 See: *Component CSS Style Guide → [Managing Specificity](01_component-css.md#managing-specificity)*
 
@@ -396,7 +396,7 @@ Badge exposes a minimal, intentional surface and uses `_swc-*` properties for de
 ```
 
 🔎 **Status Light reference:**  
-[status-light.css](../../../2nd-gen/packages/swc/components/status-light/status-light.css) overrides `--swc-status-light-content-color` and adds a border to the dot pseudo-element so it stays visible in high-contrast mode.
+[status-light.css](../../../gen2/packages/swc/components/status-light/status-light.css) overrides `--swc-status-light-content-color` and adds a border to the dot pseudo-element so it stays visible in high-contrast mode.
 
 📖 See: *Component CSS Style Guide → [Forced colors requirements](01_component-css.md#forced-colors-requirements)*
 
@@ -630,7 +630,7 @@ The quick test: if the component has no background color and no border on its ou
 During migration, this removal may affect alignment of accessories (ex. status light dot, checkbox input). A line-height based alignment strategy may be an appropriate replacement, as used for status light.
 
 🔎 **Status light reference:**
-[status-light.css](../../../2nd-gen/packages/swc/components/status-light/status-light.css) sets only `font-size` and `line-height` per size; `min-block-size` and `padding-block` are absent.
+[status-light.css](../../../gen2/packages/swc/components/status-light/status-light.css) sets only `font-size` and `line-height` per size; `min-block-size` and `padding-block` are absent.
 
 ## 13. Missing `box-sizing` on Sized `::slotted()` Rules
 
@@ -669,7 +669,7 @@ Add `box-sizing: border-box` directly to every `::slotted()` rule that sets one 
 }
 ```
 
-🔎 **Reference implementations:** [card.css](../../../2nd-gen/packages/swc/components/card/card.css) and [card-template.css](../../../2nd-gen/packages/swc/stylesheets/_lit-styles/card-template.css) both declare `box-sizing: border-box` on their sized `::slotted()` rules.
+🔎 **Reference implementations:** [card.css](../../../gen2/packages/swc/components/card/card.css) and [card-template.css](../../../gen2/packages/swc/stylesheets/_lit-styles/card-template.css) both declare `box-sizing: border-box` on their sized `::slotted()` rules.
 
 ## Final Reminder
 

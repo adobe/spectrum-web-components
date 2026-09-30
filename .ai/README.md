@@ -12,22 +12,26 @@ All rules and skills now live in **`.ai/`** — a tool-agnostic, plain-markdown 
 - No sync step, no duplication, no drift between tools
 - New contributors or tools start from `AGENTS.md` at the repo root, which bootstraps everything
 
-### Rules carry both `globs:` and `paths:` frontmatter
+### Rules carry `paths:` frontmatter; tool copies are generated
 
-Rule files use Cursor-style `globs` / `alwaysApply` frontmatter, which Cursor honors live via its per-file `.mdc` symlinks. Claude Code does **not** read `globs` — it has its own path-scoping mechanism, a `paths:` frontmatter field (YAML list of glob patterns) on files under `.claude/rules/`. A rule file without `paths:` loads unconditionally into every session; a rule file with `paths:` loads only when Claude reads a file matching one of those patterns — this works through the `.claude/rules → ../.ai/rules` directory symlink too, since Claude Code resolves symlinked paths when matching.
+Every rule in `.ai/rules/` has a `description` and a quoted `paths:` list of globs. `yarn ai:sync` (`.ai/scripts/sync.js`) generates the tool-specific copies from that one source:
 
-Every rule file in `.ai/rules/` that has a Cursor `globs:` value also carries an equivalent `paths:` list, so both tools apply the same conditional loading — this includes `styles.md`, whose `alwaysApply: true` makes it always-active in Cursor regardless of file type, but which still gets `paths: ['*.css']` so Claude Code (which doesn't read `alwaysApply`) only loads it for CSS files instead of every session. `branch-naming` is the one rule with no natural file-path scope at all — no `globs:`/`paths:`, unconditional in both tools, as intended.
+- `.github/instructions/<name>.instructions.md` with `applyTo` for GitHub Copilot (CLI, app, VS Code, cloud agent, and code review)
+- `.cursor/rules/<name>.mdc` with `globs` for Cursor
+- Claude Code reads `.ai/rules/` directly through the `.claude/rules` symlink, because `paths:` is its own key
+
+Glob semantics follow GitHub's `applyTo`: `*` stays within one directory and `**` crosses directories, so `*.css` matches only root-level files and `**/*.css` matches CSS anywhere. `yarn lint:ai` fails when a glob matches no tracked file, and when a generated file doesn't match its source. The pre-commit hook runs `yarn ai:sync` whenever `.ai/` or an `AGENTS.md` file is staged. It skips the sync with a warning if `.ai/rules/` or `.ai/memory/` has unstaged changes, and the pre-push hook regenerates any out-of-date files and blocks the push until you commit them.
 
 ### Rules vs. skills: how to choose
 
-- **Path-scoped rule** — the guidance is tied to a specific set of file paths (e.g. "when editing a `.stories.ts` file" or "when editing a component README"). Give it both `globs:` (Cursor) and `paths:` (Claude) so it loads deterministically whenever a matching file is in context, in either tool — no risk of it going unread just because a task's intent wasn't explicit.
+- **Path-scoped rule** — the guidance is tied to a specific set of file paths (e.g. "when editing a `.stories.ts` file" or "when editing a component README"). Give it a `paths:` list so it loads deterministically whenever a matching file is in context, in every tool — no risk of it going unread just because a task's intent wasn't explicit.
 - **Skill** — the guidance is tied to a task or intent, not a file path (e.g. "draft a Jira ticket", "run a consistency pass"). There's no glob to scope it by, so it's invoked on demand: the agent matches the task to the skill's description, or the user names it explicitly.
 
 Getting this wrong in either direction has a real cost: forcing task-scoped guidance into a rule with no natural `paths:` value means it's either always-inlined (wasting tokens) or never triggers; forcing file-scoped guidance into a skill loses the deterministic trigger a path-scoped rule gives you and depends on the agent guessing intent.
 
 ## CI integration
 
-- `yarn lint:ai` runs `.ai/scripts/validate.js`, which checks story tags, AGENTS.md paths, config schema, symlinks, and per-unit MDX docs pages. Catches broken internal links, symlinks, misconfigured rules, and structural drift in `<unit>.mdx` files before merge
+- `yarn lint:ai` runs `.ai/scripts/validate.js`, which checks story tags, links, config schema, instruction and skill frontmatter, symlinks, generated files, and per-unit MDX docs pages. The header of `validate.js` lists each check.
 - `yarn lint:docs-pages` runs the per-unit MDX docs-page check in isolation. Use during authoring to catch missing `<Canvas>` references, unknown `##` section headings, or out-of-order sections in a single component / pattern / controller MDX
 - Pre-commit hook runs the contributor docs nav script to keep breadcrumbs and TOCs in sync automatically
 
@@ -53,9 +57,9 @@ See [Config-based rules](#when-rules-and-skills-are-activated) below for the ful
 
 ### Available rules
 
-Two rules are always-active (`alwaysApply: true`, no `paths:`). Everything else with a natural file-path scope is a **path-scoped rule** — it carries both `globs:` (Cursor) and `paths:` (Claude) so it loads only when a matching file is in context, in either tool. Guidance with no natural file-path scope is a skill instead — see [Available skills](#available-skills).
+Every rule is a **path-scoped rule**: it carries a `paths:` list so it loads only when a matching file is in context, in every tool. Guidance with no natural file-path scope is a skill instead — see [Available skills](#available-skills). `branch-naming` and `storybook-mdx-conversion` were rules and are now skills.
 
-#### Always-active rules
+#### Path-scoped rules
 
 ##### Styles
 
@@ -65,17 +69,7 @@ Two rules are always-active (`alwaysApply: true`, no `paths:`). Everything else 
 - **custom_properties**: Never rename without prompting for approval first
 - **media_queries**: Sort high-contrast and other media queries to the bottom of the file
 - **duplicate_properties**: Warn about or suggest fixes; keep the definition that honors the CSS cascade
-- Applies to: `*.css` files
-
-##### Branch naming
-
-- **branch_format**: Recommends `username/type-description[-swc-XXX]` format
-  - Uses conventional commit types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`
-  - Commit type list and validation pattern: `.ai/config.json` (`git.types`, `validationPattern`). When adding or removing a type, update both `types` and `validationPattern` together.
-  - Lowercase letters and numbers only, words separated by dashes
-  - Severity: Warning (recommended, not required)
-
-#### Path-scoped rules
+- Applies to: `**/*.css`
 
 ##### Text formatting
 
@@ -84,18 +78,18 @@ Two rules are always-active (`alwaysApply: true`, no `paths:`). Everything else 
 
 ##### Storybook stories (documentation + format)
 
-These two rules share the same glob/path set (`2nd-gen/**/stories/**` and `2nd-gen/**/*.mdx` respectively) and work as a pair: `stories-documentation` defines _what_ to document, `stories-format` defines _how_ to structure the file.
+These two rules share the same glob/path set (`gen2/**/stories/**` and `gen2/**/*.mdx` respectively) and work as a pair: `stories-documentation` defines _what_ to document, `stories-format` defines _how_ to structure the file.
 
 - **stories-documentation**: Content patterns for each documentation section
   - Sections: overview, anatomy, options, states, behaviors, accessibility
-  - 1st-gen to 2nd-gen comparison guidance
+  - 1st-gen to gen2 comparison guidance
   - Verification process to prevent hallucinated attributes, slots, or ARIA claims
-  - Applies to: `2nd-gen/packages/swc/components/*/*.mdx`, `2nd-gen/packages/swc/patterns/*/*/*.mdx`, `2nd-gen/packages/core/controllers/*/*.mdx`
+  - Applies to: `gen2/packages/swc/components/*/*.mdx`, `gen2/packages/swc/patterns/*/*/*.mdx`, `gen2/packages/core/controllers/*/*.mdx`
 - **stories-format**: File structure and technical conventions
   - Visual separators, meta configuration, required tags, layout parameters
   - `render` vs `args` patterns, `flexLayout` usage
   - Static color single-story pattern, image asset conventions
-  - Applies to: `2nd-gen/packages/swc/components/*/stories/**`, `2nd-gen/packages/swc/patterns/*/*/stories/**`, `2nd-gen/packages/core/controllers/*/stories/**`
+  - Applies to: `gen2/packages/swc/components/*/stories/**`, `gen2/packages/swc/patterns/*/*/stories/**`, `gen2/packages/core/controllers/*/stories/**`
 
 ##### Component README
 
@@ -113,20 +107,10 @@ These two rules share the same glob/path set (`2nd-gen/**/stories/**` and `2nd-g
 - Applies to: `CONTRIBUTOR-DOCS/**`
 - Points to the `contributor-docs-nav` skill for the full Operator/Maintainer workflow
 
-##### Storybook MDX conversion
-
-- **imports**: Add `Meta` import from `@storybook/addon-docs/blocks`
-- **meta_tag**: Add `<Meta title="..." />` matching the document's main heading
-- **comments**: Convert all `<!-- -->` HTML comments to `{/* */}` JSX comments
-- **preserve_content**: Keep all markdown syntax, HTML elements, links, and formatting unchanged
-- Applies to: `**/*.md`, `**/*.mdx`
-- For manual, one-off conversions only — the automated `yarn generate:contributor-docs` script already converts all of `CONTRIBUTOR-DOCS/` and shouldn't be hand-duplicated; see the rule file for the full distinction
-
 ### When rules and skills are activated
 
-**Always-active rules:** `branch-naming` has no `globs:`/`paths:` at all — always in context in both tools. `styles` uses `alwaysApply: true` and is always-active in Cursor regardless of file type, but also carries `paths: ['*.css']` so Claude Code (which ignores `alwaysApply`) only loads it for CSS files.
-**Path-scoped rules:** `text-formatting`, `stories-documentation`, `stories-format`, `component-readme`, `contributor-doc-update`, `storybook-mdx-conversion` carry both `globs:` (Cursor) and `paths:` (Claude) — loaded only when a matching file is in context, deterministically, in both tools.
-**Skills:** Guidance with no natural file-path scope — `jira-ticket`, `github-description`, `code-conformance`, `consistency-pass`, `deep-understanding`, `migration-phase-awareness`, `contributor-docs-nav`, and the rest of the [Available skills](#available-skills) catalog — invoked on demand by the agent matching task intent, or by explicit request.
+**Path-scoped rules:** `styles`, `text-formatting`, `stories-documentation`, `stories-format`, `component-readme`, and `contributor-doc-update` carry a `paths:` list — loaded only when a matching file is in context, deterministically, in every tool. Always-on guidance belongs in `AGENTS.md`, not in a rule.
+**Skills:** Guidance with no natural file-path scope — `branch-naming`, `storybook-mdx-conversion`, `jira-ticket`, `github-description`, `code-conformance`, `consistency-pass`, `deep-understanding`, `migration-phase-awareness`, `contributor-docs-nav`, and the rest of the [Available skills](#available-skills) catalog — invoked on demand by the agent matching task intent, or by explicit request.
 **Config-based rules:** The `config.json` also defines structured validation for editors and other tooling to verify branch names, Jira ticket drafts, text-formatting, etc.:
 
 - **text_formatting.headings**: Sentence case enforcement with technical term exceptions
@@ -143,14 +127,14 @@ These two rules share the same glob/path set (`2nd-gen/**/stories/**` and `2nd-g
 
 | Rule/skill                     | Always active | Path-scoped rule | Skill (on-demand) | Config-based | Glob / paths                      |
 | ------------------------------ | :-----------: | :--------------: | :---------------: | :----------: | --------------------------------- |
-| branch-naming                  |       x       |                  |                   |              | —                                 |
-| styles                         |       x       |                  |                   |              | `*.css`                           |
+| branch-naming                  |               |                  |         x         |              | —                                 |
+| styles                         |               |        x         |                   |              | `**/*.css`                        |
 | text-formatting                |               |        x         |                   |              | `**/*.md`, `**/*.txt`, `**/*.mdx` |
-| stories-documentation          |               |        x         |                   |              | `2nd-gen/**/*.mdx`                |
-| stories-format                 |               |        x         |                   |              | `2nd-gen/**/stories/**`           |
+| stories-documentation          |               |        x         |                   |              | `gen2/packages/…/*.mdx` (3 globs) |
+| stories-format                 |               |        x         |                   |              | `gen2/packages/…/stories/**` (3)  |
 | component-readme               |               |        x         |                   |              | `1st-gen/packages/*/README.md`    |
 | contributor-doc-update         |               |        x         |                   |              | `CONTRIBUTOR-DOCS/**`             |
-| storybook-mdx-conversion       |               |        x         |                   |              | `**/*.md`, `**/*.mdx`             |
+| storybook-mdx-conversion       |               |                  |         x         |              | —                                 |
 | contributor-docs-nav           |               |                  |         x         |              | —                                 |
 | deep-understanding             |               |                  |         x         |              | —                                 |
 | code-conformance               |               |                  |         x         |              | —                                 |
@@ -195,8 +179,8 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 #### Accessibility migration analysis
 
-- **purpose**: Create accessibility migration analysis docs for the "analyze accessibility" step of 2nd-gen component migration
-- **How to invoke**: Say "create accessibility analysis for [component]", "analyze accessibility for [component]", or "accessibility migration for [component]". Also invoked when you refer to the "analyze accessibility" step in the 2nd-gen component migration workstream.
+- **purpose**: Create accessibility migration analysis docs for the "analyze accessibility" step of gen2 component migration
+- **How to invoke**: Say "create accessibility analysis for [component]", "analyze accessibility for [component]", or "accessibility migration for [component]". Also invoked when you refer to the "analyze accessibility" step in the gen2 component migration workstream.
 - Use when: On the analyze-accessibility step for one or more components; creating one markdown file per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/accessibility-migration-analysis.md`
 - Applies to: `CONTRIBUTOR-DOCS/**/accessibility-migration-analysis.md`
 - Provides: Required section order, ARIA recommendations structure, Shadow DOM guidance, keyboard and focus conventions, testing table format, reference examples
@@ -238,9 +222,9 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 #### Code conformance
 
-- **purpose**: Review 2nd-gen component files against project style guides, run linters, and surface guideline gaps
+- **purpose**: Review gen2 component files against project style guides, run linters, and surface guideline gaps
 - **How to invoke**: Say "check code conformance", "audit this component's style", or as part of the `migration-conformance` sub-task
-- Use when: Reviewing or auditing 2nd-gen TypeScript, CSS, test, or Storybook story files for style conformance
+- Use when: Reviewing or auditing gen2 TypeScript, CSS, test, or Storybook story files for style conformance
 - Provides: Per-domain review checklists (TypeScript, CSS, tests, stories) with style-guide links, lint commands to run first, guideline-gap reporting format
 
 #### Consistency pass
@@ -259,16 +243,16 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 #### Component migration (rendering and styling)
 
-- **purpose**: Create rendering-and-styling migration analysis docs for the “analyze rendering and styling” step of 2nd-gen component migration
-- **How to invoke**: Say “create migration analysis for [component]”, “analyze rendering and styling for [component]”, or “rendering and styling migration for [component]”. Also invoked when you refer to the “analyze rendering and styling” step in the 2nd-gen component migration workstream.
+- **purpose**: Create rendering-and-styling migration analysis docs for the “analyze rendering and styling” step of gen2 component migration
+- **How to invoke**: Say “create migration analysis for [component]”, “analyze rendering and styling for [component]”, or “rendering and styling migration for [component]”. Also invoked when you refer to the “analyze rendering and styling” step in the gen2 component migration workstream.
 - Use when: On the analyze-rendering-and-styling step for one or more components; creating one markdown file per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/rendering-and-styling-migration-analysis.md`
-- Provides: Workflow summary (specs from CSS + SWC, three-way DOM comparison, CSS⇒SWC mapping table, summary). Full instructions in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_analyze-rendering-and-styling/cursor_prompt.md`
+- Provides: Workflow summary (specs from CSS + SWC, three-way DOM comparison, CSS⇒SWC mapping table, summary). Full instructions in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/02_step-by-step/01_analyze-rendering-and-styling/cursor_prompt.md`
 
 #### Consumer migration guide
 
-- **purpose**: Create per-component migration guides for application developers upgrading from 1st-gen Spectrum Web Components to 2nd-gen components
-- **How to invoke**: Say “create a consumer migration guide for [component]”, “write an upgrade guide for [component]”, or “document how consumers migrate [component] from 1st-gen to 2nd-gen”.
-- Use when: Writing one Storybook-renderable MDX file per component at `2nd-gen/packages/swc/components/[component-name]/migration-guide.mdx` with code updates, styling guidance, accessibility notes, and rollout advice
+- **purpose**: Create per-component migration guides for application developers upgrading from 1st-gen Spectrum Web Components to gen2 components
+- **How to invoke**: Say “create a consumer migration guide for [component]”, “write an upgrade guide for [component]”, or “document how consumers migrate [component] from 1st-gen to gen2”.
+- Use when: Writing one Storybook-renderable MDX file per component at `gen2/packages/swc/components/[component-name]/migration-guide.mdx` with code updates, styling guidance, accessibility notes, and rollout advice
 - Provides: Workflow summary (verified source inputs, required section order, before/after examples, migration checklist, rollout guidance). Full instructions in `.ai/skills/consumer-migration-guide/references/consumer-migration-guide-prompt.md`
 
 #### Washing machine migration workflow
@@ -277,21 +261,21 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 - **purpose**: Understand the component, critically assess the current API and behavior, plan breaking changes, and define migration scope before any refactoring begins
 - **How to invoke**: Say "start migration prep for [component]", "plan the migration for [component]", "create a migration plan for [component]", "draft the Phase 1 plan for [component]", or "phase 1 migration for [component]"
-- Use when: Beginning a 1st-gen → 2nd-gen component migration; before any files are created or code is moved
+- Use when: Beginning a 1st-gen → gen2 component migration; before any files are created or code is moved
 - Provides: Template-backed migration plan workflow, research checklist (1st-gen API, usage, tests, analyses, React/Figma references), breaking-change analysis, source-confidence and contradiction checks, path/link verification, and staff-level API/naming review with explicit escalation for inconsistencies
 
 #### Migration — phase 2: setup (`migration-setup`)
 
-- **purpose**: Create the 2nd-gen file and folder structure, wire up exports, and confirm the build passes before implementation begins
-- **How to invoke**: Say "set up 2nd-gen structure for [component]", "create the file structure for [component]", or "phase 2 migration for [component]"
+- **purpose**: Create the gen2 file and folder structure, wire up exports, and confirm the build passes before implementation begins
+- **How to invoke**: Say "set up gen2 structure for [component]", "create the file structure for [component]", or "phase 2 migration for [component]"
 - Use when: After prep is complete and the approved `migration-plan.md` is available; creating the scaffolding a component needs before any logic is ported
 - Provides: File/folder creation checklist, export wiring steps, build-passes verification, and plan-aligned naming/structure setup
 
 #### Migration — phase 3: API (`migration-api`)
 
-- **purpose**: Move properties, methods, and types from 1st-gen to 2nd-gen while maintaining a clear public API
+- **purpose**: Move properties, methods, and types from 1st-gen to gen2 while maintaining a clear public API
 - **How to invoke**: Say "migrate the API for [component]", "port properties and methods for [component]", or "phase 3 migration for [component]"
-- Use when: Scaffolding is in place and the approved `migration-plan.md` defines the intended public contract for 2nd-gen
+- Use when: Scaffolding is in place and the approved `migration-plan.md` defines the intended public contract for gen2
 - Provides: Property/method porting workflow, type definition guidance, API contract review, and drift detection against the approved migration plan
 
 #### Migration — phase 4: accessibility (`migration-a11y`)
@@ -303,9 +287,9 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 #### Migration — phase 5: styling (`migration-styling`)
 
-- **purpose**: Migrate CSS to the 2nd-gen structure, apply Spectrum 2 tokens, and ensure stylelint passes
+- **purpose**: Migrate CSS to the gen2 structure, apply Spectrum 2 tokens, and ensure stylelint passes
 - **How to invoke**: Say "migrate styling for [component]", "port CSS for [component]", or "phase 5 migration for [component]"
-- Use when: Accessibility is complete and the approved `migration-plan.md` defines the intended visual scope; translating 1st-gen CSS to 2nd-gen with Spectrum 2 design tokens
+- Use when: Accessibility is complete and the approved `migration-plan.md` defines the intended visual scope; translating 1st-gen CSS to gen2 with Spectrum 2 design tokens
 - Provides: CSS migration checklist, token mapping guidance, stylelint validation steps, and checks against approved visual scope and custom-property decisions
 
 #### Migration — phase 6: testing (`migration-testing`)
@@ -317,7 +301,7 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 #### VRT authoring (`vrt-authoring`)
 
-- **purpose**: Author dedicated Storybook visual regression stories for 2nd-gen components
+- **purpose**: Author dedicated Storybook visual regression stories for gen2 components
 - **How to invoke**: Say "add VRT for [component]", "write visual regression stories", or mention `.vrt.ts`, Chromatic, forced-colors VRT, global styles VRT, or custom-property VRT
 - Use when: Adding or reviewing `test/vrt/*.vrt.ts` files during migration or test cleanup
 - Provides: Dedicated VRT file shape, shared helper usage, pseudo-state/forced-colors patterns, and custom-property coverage checks against the generated API metadata
@@ -332,7 +316,7 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 #### Migration — phase 7: documentation (`migration-documentation`)
 
 - **purpose**: Author the per-component MDX docs page and finalize Storybook stories + public-API JSDoc so the component is usable and understandable by others
-- **How to invoke**: Say "write docs for [component] migration", "document [component] for 2nd-gen", or "phase 7 migration for [component]"
+- **How to invoke**: Say "write docs for [component] migration", "document [component] for gen2", or "phase 7 migration for [component]"
 - Use when: Tests pass and the approved `migration-plan.md` can be used as the source of truth for migration notes and rationale
 - Provides: per-component MDX authoring (`<component>.mdx`), public-API JSDoc guidelines on `Component.ts`, stories file finalization (drop `'autodocs'` from Playground, complete Accessibility story), documentation checklist, and plan-aligned migration-note guidance
 
@@ -361,7 +345,7 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 - **purpose**: Follow Adobe content writing standards when writing documentation
 - **How to invoke**: Use when writing or editing docs — e.g. per-unit MDX docs pages (`<unit>.mdx`), public-API JSDoc in `Component.ts`, the meta-level JSDoc in `.stories.ts`, README/changeset/Jira/PR (`.md`, `.mdx`), or when you say “write the PR description”, “draft the Jira ticket”, “write the docs for this component”.
-- Use when: Authoring 2nd-gen docs pages, writing 1st-gen docs, changesets, Jira tickets, or PR descriptions
+- Use when: Authoring gen2 docs pages, writing 1st-gen docs, changesets, Jira tickets, or PR descriptions
 - Provides: Voice and tone, grammar and mechanics, markdown/JSDoc reference, links to Spectrum design system content guidelines
 
 #### Explain code
@@ -408,42 +392,39 @@ Workflows are reference documents that support agent and contributor workflows. 
 
 Canonical content lives in **`.ai/`** (this directory). Tool-specific directories (`.cursor/`, `.claude/`) are thin adapters that point back here via symlinks — edit files in `.ai/`, never in the adapter directories.
 
-### Current symlink structure
+### Current adapter structure
 
 ```text
 .ai/rules/
-└── *.md                          ← canonical, tool-agnostic source of truth
+└── *.md                          ← canonical, tool-agnostic source of truth (edit these)
 
 .ai/skills/
-└── <skill-name>/SKILL.md         ← canonical, tool-agnostic source of truth
+└── <skill-name>/SKILL.md         ← canonical, tool-agnostic source of truth (edit these)
+
+.github/instructions/
+└── *.instructions.md             GENERATED by `yarn ai:sync` (Copilot reads `applyTo`)
 
 .cursor/rules/
-└── *.mdc → ../../.ai/rules/*.md  (per-file symlinks; Cursor expects .mdc; reads `globs`/`alwaysApply`)
+└── *.mdc                         GENERATED by `yarn ai:sync` (Cursor reads `globs`)
 .cursor/skills/ → ../.ai/skills/  (directory symlink)
 
-.claude/rules/ → ../.ai/rules/    (directory symlink; Claude Code reads .md; reads `paths`/`alwaysApply`, not `globs`)
-.claude/skills/ → ../.ai/skills/  (directory symlink)
+.claude/rules/ → ../.ai/rules/    (directory symlink; Claude Code reads `paths`)
+.claude/skills/ → ../.ai/skills/  (directory symlink; also how Copilot discovers skills)
 ```
 
-Editing any `.ai/rules/*.md` file immediately updates what both Cursor and Claude Code see — no sync step required. Each tool reads its own frontmatter key for path-scoping (`globs` for Cursor, `paths` for Claude Code), so a rule meant to be conditional in both needs both keys set to equivalent patterns.
+Edit only `.ai/`. Generated files start with a `GENERATED by .ai/scripts/sync.js` comment; `yarn lint:ai` fails if one is edited by hand or falls out of date.
 
 ### Adding a new rule
 
-> Before adding a rule, decide whether the guidance has a natural file-path scope. If it does, give it both `globs:` and `paths:` so it loads deterministically in Cursor and Claude Code alike (see [Rules vs. skills: how to choose](#rules-vs-skills-how-to-choose)). If it doesn't — the guidance is about a task or intent, not a file path — write it as a skill instead.
+> Before adding a rule, decide whether the guidance has a natural file-path scope. If it does, give it a `paths:` list so it loads deterministically in every tool (see [Rules vs. skills: how to choose](#rules-vs-skills-how-to-choose)). If it doesn't — the guidance is about a task or intent, not a file path — write it as a skill instead. Guidance that must always apply goes in [`AGENTS.md`](../AGENTS.md).
 
 1. Create `rule-name.md` in `.ai/rules/` with YAML frontmatter:
-   - `globs:` — Cursor's glob pattern(s), comma-separated in one string if there are several
-   - `paths:` — the same patterns as a YAML list, one item per glob, for Claude Code. **Quote each item** — an unquoted value starting with `*` (e.g. `**/*.mdx`) parses as an invalid YAML alias, not a literal string
-   - `alwaysApply: false` (omit `globs`/`paths` entirely and set `alwaysApply: true` instead if the rule should always be in context)
-2. Add one per-file symlink for Cursor (required — Cursor needs `.mdc` extension):
-
-   ```sh
-   ln -s "../../.ai/rules/rule-name.md" ".cursor/rules/rule-name.mdc"
-   ```
-
-   `.claude/rules/` is a directory symlink pointing at `.ai/rules/`, so it picks up the new file automatically — no extra step needed. Claude Code resolves `paths:` matches through that symlink.
-
-3. Register it in the tables in this README (rules catalog) and in [`AGENTS.md`](../AGENTS.md).
+   - `description:` — what the rule covers
+   - `paths:` — a YAML list of globs, one item per glob. **Quote each item** — an unquoted value starting with `*` (e.g. `**/*.mdx`) parses as an invalid YAML alias, not a literal string. Use `**/` to match in any directory; `*` alone stays in one directory
+   - `excludeAgent:` — optional; `code-review` or `cloud-agent` when that GitHub agent shouldn't use the rule
+2. Run `yarn ai:sync` to generate `.github/instructions/rule-name.instructions.md` and `.cursor/rules/rule-name.mdc`, and commit them with the source. The pre-commit hook does this for you unless the rule has unstaged changes.
+3. Run `yarn lint:ai`. It fails if a glob matches no tracked file.
+4. Register it in the tables in this README (rules catalog).
 
 ### Adding a new skill
 
@@ -453,55 +434,20 @@ Editing any `.ai/rules/*.md` file immediately updates what both Cursor and Claud
 
 ### Symlink setup
 
-The symlinks in `.cursor/` and `.claude/` are committed to the repo, so **no setup is required after cloning**. Rules and skills should work automatically for all contributors.
+The three directory symlinks (`.claude/rules`, `.claude/skills`, and `.cursor/skills`) are committed to the repo, so **no setup is required after cloning**. Cursor rules are generated files, not symlinks.
 
 #### Recreating broken symlinks
 
-If a symlink is accidentally deleted or broken (e.g. after a file was deleted and recreated rather than edited in place), recreate it with the commands below.
-
-##### Claude Code
+If a symlink is accidentally deleted or broken, recreate it from the repository root:
 
 ```sh
-mkdir -p .claude
+mkdir -p .claude .cursor
 ln -s ../.ai/rules .claude/rules
 ln -s ../.ai/skills .claude/skills
-```
-
-Claude Code reads `.md` files, so directory-level symlinks work directly. Verify:
-
-```sh
-ls -la .claude/
-# rules -> ../.ai/rules
-# skills -> ../.ai/skills
-```
-
-##### Cursor
-
-> **Cursor requires per-file symlinks for rules.** Cursor expects `.mdc` files and does not follow a directory symlink that contains `.md` files. Each rule needs its own symlink with the `.mdc` extension pointing back to the `.md` source.
-
-```sh
-mkdir -p .cursor/rules
-for f in .ai/rules/*.md; do
-  name=$(basename "$f" .md)
-  ln -s "../../.ai/rules/${name}.md" ".cursor/rules/${name}.mdc"
-done
-
 ln -s ../.ai/skills .cursor/skills
 ```
 
-Verify:
-
-```sh
-ls -la .cursor/rules/
-# branch-naming.mdc -> ../../.ai/rules/branch-naming.md
-# styles.mdc -> ../../.ai/rules/styles.md
-# ... one entry per file in .ai/rules/
-
-ls -la .cursor/
-# skills -> ../.ai/skills
-```
-
-If Cursor does not pick up the rules after symlinking, reload the window: `Cmd+Shift+P` → "Developer: Reload Window".
+Verify with `ls -la .claude/ .cursor/`, then run `yarn lint:ai`. If Cursor rules are missing or stale, run `yarn ai:sync`. If Cursor doesn't pick up changes, reload the window: `Cmd+Shift+P` → "Developer: Reload Window".
 
 ### Using rules and skills in other environments
 
