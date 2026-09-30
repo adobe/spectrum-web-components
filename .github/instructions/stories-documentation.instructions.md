@@ -407,7 +407,7 @@ export const SemanticVariants: Story = {
 SemanticVariants.storyName = 'Semantic variants';
 ```
 
-**Pattern for static color**: sourced from Spectrum's static color usage guidance (e.g. [Button](https://spectrum.adobe.com/page/button/#Static-color)). The component's color pins to the chosen value regardless of the active theme, and the choice of value depends on the background it sits over.
+**Pattern for static color**: sourced from Spectrum's static color usage guidance (e.g. [Button - Usage Guidelines](https://spectrum.adobe.com/web/swc/components/button#usage-guidelines)). The component's color pins to the chosen value regardless of the active theme, and the choice of value depends on the background it sits over. More details are provided in Spectrum's [Foundation - Color](https://spectrum.adobe.com/foundations/color/colors) documentation.
 
 ```mdx
 Use `static-color` when the component-name needs to sit on top of a photo or colored background. It pins the component-name's color to the chosen value regardless of the active color theme:

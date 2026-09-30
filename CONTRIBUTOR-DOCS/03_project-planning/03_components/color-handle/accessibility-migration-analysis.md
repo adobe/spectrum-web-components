@@ -62,7 +62,7 @@ This doc explains how **`swc-color-handle`** should work for **accessibility**. 
 
 - A **circular thumb** that marks the **current color** on a **color area**, **color slider**, or **color wheel** track.
 - It shows the **picked fill** (with an **opacity checkerboard** when **`color`** is transparent), optional **inner** / **outer** borders, and an enlarged **focused** size when the **parent** color widget has keyboard focus.
-- On **touch** input, it can set **`open`** so an embedded **`swc-color-loupe`** appears above the thumb so the finger does not hide the sample ([S2 color handle](https://s2.spectrum.corp.adobe.com/page/color-handle/)).
+- On **touch** input, it can set **`open`** so an embedded **`swc-color-loupe`** appears above the thumb so the finger does not hide the sample ([S2 color handle](https://spectrum.adobe.com/web/swc/components/color-handle)).
 
 ### When to use something else
 
@@ -431,7 +431,7 @@ For gen2, evaluate whether strict mode should be the default based on how often 
 - [Color handle migration roadmap](./rendering-and-styling-migration-analysis.md)
 - [Color loupe accessibility migration analysis](../color-loupe/accessibility-migration-analysis.md)
 - [Opacity checkerboard accessibility migration analysis](../opacity-checkerboard/accessibility-migration-analysis.md)
-- [S2 color handle documentation](https://s2.spectrum.corp.adobe.com/page/color-handle/)
+- [S2 color handle documentation](https://spectrum.adobe.com/web/swc/components/color-handle)
 - [S2 color handle — Figma (Web Desktop scale)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13065-162)
 - [RSP-2021](https://jira.corp.adobe.com/browse/RSP-2021) (Adobe internal Jira — adaptive border contrast specification for color handle)
 - [SDS-16402](https://jira.corp.adobe.com/browse/SDS-16402) (Adobe internal Jira — Spectrum Design System adaptive border specification)

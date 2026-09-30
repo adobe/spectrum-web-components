@@ -229,7 +229,7 @@ argTypes['internal-attribute'] = {
 
 These rules apply to every `title` field in meta objects and every `<Meta title="..." />` in MDX files.
 
-- **Use sentence case — including component names**, matching Spectrum's own docs (e.g. [Action bar](https://spectrum.adobe.com/page/action-bar/), [Color loupe](https://spectrum.adobe.com/page/color-loupe/)). Capitalize only the first word plus any proper nouns/acronyms: `'Action button'`, `'Illustrated message'`, `'Color loupe'`. Page labels, section names, and group names follow the same rule: `'Pattern overview'`, `'Migration guide'`.
+- **Use sentence case — including component names**, matching Spectrum's own docs (e.g. [Button](https://spectrum.adobe.com/web/swc/components/button), [Popover](https://spectrum.adobe.com/web/swc/components/popover)). Capitalize only the first word plus any proper nouns/acronyms: `'Action button'`, `'Illustrated message'`, `'Color loupe'`. Page labels, section names, and group names follow the same rule: `'Pattern overview'`, `'Migration guide'`.
 - **No filename as label.** Never use a bare filename (`README`, `CHANGELOG`) as a Storybook title or page name. Use a descriptive label: `'Pattern overview'`, `'Migration guide'`.
 - **Flatten single-component groups.** If a Storybook group contains only one component, do not nest it. Use a flat title (`'Color loupe'`) rather than a group path (`'Color components/Color loupe'`).
 

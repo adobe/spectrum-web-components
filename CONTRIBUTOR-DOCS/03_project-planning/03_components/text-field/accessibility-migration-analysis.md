@@ -217,7 +217,7 @@ Component tag may change until API freeze. `swc-text-field` covers only the sing
 - [WAI-ARIA](https://www.w3.org/TR/wai-aria-1.2/), [WCAG 2.2](https://www.w3.org/TR/WCAG22/), [APG: read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [React Spectrum: TextField](https://react-spectrum.adobe.com/TextField), [React Spectrum FAQ: tooltips and TextField](https://github.com/adobe/react-spectrum/wiki/Frequently-Asked-Questions-(FAQs)) (why truncated values use a native `title`, not a custom tooltip)
 - [`renderPendingSpinner` (this repo)](../../../../gen2/packages/core/directives/pending-spinner/src/pending-spinner.ts) — the shared-directive structural precedent `LabellingController` follows
-- [Spectrum 2: Text field](https://s2.spectrum.corp.adobe.com/page/text-field/), [Spectrum 2: Field label](https://s2.spectrum.corp.adobe.com/page/field-label/) (internal, SSO-gated — verify directly if you have access; not independently fetchable while drafting this doc)
+- [Spectrum 2: Text field](https://spectrum.adobe.com/web/swc/components/text-field), [Spectrum 2: Field label](https://spectrum.adobe.com/web/swc/components/field-label)
 - 1st-gen: [`sp-textfield`](../../../../1st-gen/packages/textfield/README.md), [`sp-field-label`](../../../../1st-gen/packages/field-label/README.md), [`sp-help-text`](../../../../1st-gen/packages/help-text/README.md)
 - [Textfield and Textarea migration roadmap (this repo)](../textfield/rendering-and-styling-migration-analysis.md)
 - [Text area accessibility migration analysis (this repo)](../text-area/accessibility-migration-analysis.md)

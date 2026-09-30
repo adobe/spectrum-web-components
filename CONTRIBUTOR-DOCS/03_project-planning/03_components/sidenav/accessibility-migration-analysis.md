@@ -352,6 +352,6 @@ Items hidden by a collapsed parent must be **excluded** from `getItems()`. Re-ev
 - [WAI-ARIA 1.2: `aria-disabled`](https://www.w3.org/TR/wai-aria-1.2/#aria-disabled)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
 - [Spectrum 2 side navigation design (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=21993-665&p=f&m=dev)
-- [Spectrum 2 side navigation documentation](https://s2.spectrum.corp.adobe.com/page/side-navigation/)
+- [Spectrum 2 side navigation documentation](https://spectrum.adobe.com/web/swc/components/side-navigation)
 - [SWC Focusgroup navigation controller (PR #6129)](https://github.com/adobe/spectrum-web-components/pull/6129)
 - [Side navigation migration roadmap](./rendering-and-styling-migration-analysis.md)

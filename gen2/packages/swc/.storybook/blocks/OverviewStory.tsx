@@ -30,7 +30,7 @@ export const OverviewStory = () => {
       title: 'Read Spectrum Design Guidance',
       onClick: () => {
         window.open(
-          `https://s2.spectrum.corp.adobe.com/page/${componentName}/`
+          `https://spectrum.adobe.com/web/swc/components/${componentName}/`
         );
       },
     });
