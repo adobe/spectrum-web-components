@@ -46,6 +46,16 @@ export const OverviewTest: Story = {
       expect(el.open).toBe(true);
       expect(el.label).toBe('Sources');
     });
+
+    await step('spaces the first source within the list', async () => {
+      const firstSource = el.shadowRoot?.querySelector(
+        '.swc-MessageSources-item'
+      );
+      expect(firstSource).toBeTruthy();
+      expect(
+        parseFloat(getComputedStyle(firstSource as Element).marginBlockStart)
+      ).toBeGreaterThan(0);
+    });
   },
 };
 
