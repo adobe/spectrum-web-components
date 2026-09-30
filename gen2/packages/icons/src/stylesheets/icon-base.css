@@ -28,7 +28,8 @@
   --swc-icon-inline-size: token("workflow-icon-medium");
   --swc-icon-block-size: token("workflow-icon-medium");
 
-  display: inline-flex;
+  box-sizing: border-box;
+  display: block;
   inline-size: var(--swc-icon-inline-size);
   block-size: var(--swc-icon-block-size);
   color: var(--swc-icon-color, currentColor);
@@ -59,16 +60,9 @@
   --swc-icon-block-size: token("workflow-icon-extra-large");
 }
 
-.swc-Icon {
+svg {
   display: block;
   inline-size: 100%;
   block-size: 100%;
-}
-
-svg,
-.swc-Icon > svg {
-  display: block;
-  inline-size: 100%;
-  block-size: 100%;
-  fill: currentcolor;
+  fill: var(--swc-icon-color, currentColor);
 }

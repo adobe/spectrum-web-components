@@ -37,7 +37,7 @@ export class IconTextSize extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_TextSize())}</span>
+      ${unsafeSVG(Icon_TextSize())}
     `;
   }
 }

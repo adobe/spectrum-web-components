@@ -37,7 +37,7 @@ export class IconZoomOut extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_ZoomOut())}</span>
+      ${unsafeSVG(Icon_ZoomOut())}
     `;
   }
 }

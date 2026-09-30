@@ -37,7 +37,7 @@ export class IconColorHarmony extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_ColorHarmony())}</span>
+      ${unsafeSVG(Icon_ColorHarmony())}
     `;
   }
 }

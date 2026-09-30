@@ -37,7 +37,7 @@ export class IconRuler extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Ruler())}</span>
+      ${unsafeSVG(Icon_Ruler())}
     `;
   }
 }

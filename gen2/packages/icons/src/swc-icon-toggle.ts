@@ -37,7 +37,7 @@ export class IconToggle extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Toggle())}</span>
+      ${unsafeSVG(Icon_Toggle())}
     `;
   }
 }

@@ -37,7 +37,7 @@ export class IconCheckmark extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Checkmark())}</span>
+      ${unsafeSVG(Icon_Checkmark())}
     `;
   }
 }

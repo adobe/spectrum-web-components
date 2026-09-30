@@ -37,7 +37,7 @@ export class IconTransformPerspective extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_TransformPerspective())}</span>
+      ${unsafeSVG(Icon_TransformPerspective())}
     `;
   }
 }

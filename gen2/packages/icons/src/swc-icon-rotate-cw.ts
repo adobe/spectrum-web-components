@@ -37,7 +37,7 @@ export class IconRotateCW extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_RotateCW())}</span>
+      ${unsafeSVG(Icon_RotateCW())}
     `;
   }
 }

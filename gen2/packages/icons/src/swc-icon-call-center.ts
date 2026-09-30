@@ -37,7 +37,7 @@ export class IconCallCenter extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_CallCenter())}</span>
+      ${unsafeSVG(Icon_CallCenter())}
     `;
   }
 }

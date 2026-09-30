@@ -37,7 +37,7 @@ export class IconStampClone extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_StampClone())}</span>
+      ${unsafeSVG(Icon_StampClone())}
     `;
   }
 }

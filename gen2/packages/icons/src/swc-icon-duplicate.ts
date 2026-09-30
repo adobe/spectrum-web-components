@@ -37,7 +37,7 @@ export class IconDuplicate extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Duplicate())}</span>
+      ${unsafeSVG(Icon_Duplicate())}
     `;
   }
 }

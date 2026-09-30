@@ -37,7 +37,7 @@ export class IconPolygon6 extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Polygon6())}</span>
+      ${unsafeSVG(Icon_Polygon6())}
     `;
   }
 }

@@ -37,7 +37,7 @@ export class IconPinOn extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_PinOn())}</span>
+      ${unsafeSVG(Icon_PinOn())}
     `;
   }
 }
