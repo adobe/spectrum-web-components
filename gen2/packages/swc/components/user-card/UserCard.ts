@@ -56,7 +56,7 @@ const AVATAR_SIZE_BY_CARD_SIZE = {
  *
  * @example
  * <swc-user-card>
- *   <img slot="preview" src="/path/to/banner.jpg" alt="" />
+ *   <swc-asset slot="preview" src="/path/to/banner.jpg" alt="" />
  *   <swc-avatar slot="avatar" src="/path/to/avatar.jpg" alt="Jane Doe"></swc-avatar>
  *   <span slot="title">Jane Doe</span>
  *   <span slot="description">Product designer</span>

@@ -67,8 +67,17 @@ const avatarGlyph = (): ReturnType<typeof html> => html`
   ></swc-avatar>
 `;
 
+const avatarGlyphDecorative = (): ReturnType<typeof html> => html`
+  <swc-avatar
+    slot="avatar"
+    src="./images/avatar-preview.png"
+    alt=""
+    decorative
+  ></swc-avatar>
+`;
+
 const previewImage = (): ReturnType<typeof html> => html`
-  <swc-asset slot="preview" aspect-ratio="16 / 9">
+  <swc-asset slot="preview">
     <img src="./images/card-preview.jpg" alt="" />
   </swc-asset>
 `;
@@ -90,7 +99,7 @@ const actionButton = (): ReturnType<typeof html> => html`
 `;
 
 const standardSlots = html`
-  ${avatarGlyph()}
+  ${avatarGlyphDecorative()}
   <span slot="title">Jane Doe</span>
   <span slot="description">Product designer</span>
 `;
@@ -218,7 +227,7 @@ const renderInteractiveCard = (permutation: UserCardCase) =>
     permutation,
     permutation['title-as-link']
       ? html`
-          ${avatarGlyph()} ${linkTitle}
+          ${avatarGlyphDecorative()} ${linkTitle}
           <span slot="description">Product designer</span>
         `
       : standardSlots

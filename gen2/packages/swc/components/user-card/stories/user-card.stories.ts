@@ -97,19 +97,17 @@ const densityLabels = {
   spacious: 'Spacious',
 } as const satisfies Record<CardDensity, string>;
 
-const avatarGlyph = (size = '300') => html`
+const avatarGlyph = () => html`
   <swc-avatar
     slot="avatar"
-    size=${size}
     src="./images/avatar-preview.png"
     alt="Jane Doe"
   ></swc-avatar>
 `;
 
-const avatarGlyphDecorative = (size = '300') => html`
+const avatarGlyphDecorative = () => html`
   <swc-avatar
     slot="avatar"
-    size=${size}
     src="./images/avatar-preview.png"
     alt=""
     decorative
@@ -123,7 +121,7 @@ const previewImage = () => html`
 `;
 
 const basicSlots = html`
-  ${avatarGlyph()}
+  ${avatarGlyphDecorative()}
   <span slot="title">Jane Doe</span>
   <span slot="description">Product designer</span>
 `;
@@ -140,7 +138,7 @@ export const Playground: Story = {
     'preview-slot':
       '<swc-asset slot="preview" decorative><img src="./images/card-preview.jpg" alt="" /></swc-asset>',
     'avatar-slot':
-      '<swc-avatar slot="avatar" size="300" src="./images/avatar-preview.png" alt="Jane Doe"></swc-avatar>',
+      '<swc-avatar slot="avatar" src="./images/avatar-preview.png" alt="" decorative></swc-avatar>',
     'title-slot': 'Jane Doe',
     'description-slot': 'Product designer',
   },
@@ -157,7 +155,7 @@ export const Overview: Story = {
     ${template(
       args,
       html`
-        ${previewImage()} ${avatarGlyph()}
+        ${previewImage()} ${avatarGlyphDecorative()}
         <span slot="title">Jane Doe</span>
         <span slot="description">Product designer</span>
       `
@@ -176,7 +174,7 @@ export const Anatomy: Story = {
     ${template(
       args,
       html`
-        ${previewImage()} ${avatarGlyph()}
+        ${previewImage()} ${avatarGlyphDecorative()}
         <span slot="title">Jane Doe</span>
         <swc-action-button slot="actions" quiet accessible-label="More actions">
           <svg
@@ -236,7 +234,7 @@ export const Variants: Story = {
     )}
   `,
   tags: ['options'],
-  parameters: { flexLayout: 'column-center' },
+  parameters: { flexLayout: 'row-wrap' },
 };
 
 export const Density: Story = {
@@ -253,7 +251,7 @@ export const Density: Story = {
     )}
   `,
   tags: ['options'],
-  parameters: { flexLayout: 'column-center' },
+  parameters: { flexLayout: 'row-wrap' },
 };
 
 export const WithPreview: Story = {
@@ -261,7 +259,7 @@ export const WithPreview: Story = {
     ${template(
       args,
       html`
-        ${previewImage()} ${avatarGlyph()}
+        ${previewImage()} ${avatarGlyphDecorative()}
         <span slot="title">Jane Doe</span>
         <span slot="description">Product designer</span>
       `
@@ -281,7 +279,7 @@ export const TitleAsLink: Story = {
     ${template(
       { ...args, 'title-as-link': true },
       html`
-        ${avatarGlyph()}
+        ${avatarGlyphDecorative()}
         <a slot="title" href="#">Jane Doe</a>
         <span slot="description">
           Clicking anywhere on the card activates this link.
