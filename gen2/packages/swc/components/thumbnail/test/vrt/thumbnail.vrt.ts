@@ -23,6 +23,7 @@ import {
 import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
 import {
+  captioned,
   forcedColorsVrtParameters,
   row,
   theme,
@@ -54,16 +55,6 @@ const renderThumbnail = (
   <swc-thumbnail size=${ifDefined(size)} fit=${ifDefined(fit)}>
     <img src=${src} alt="Preview" />
   </swc-thumbnail>
-`;
-
-// Sizes are unidentifiable in a snapshot without a caption.
-const captioned = (content: unknown, label: string) => html`
-  <div
-    style="display: flex; flex-direction: column; align-items: center; gap: var(--swc-spacing-100);"
-  >
-    ${content}
-    <span class="swc-Detail swc-Detail--sizeM">${label}</span>
-  </div>
 `;
 
 const renderSizedThumbnail = (size: ThumbnailSize) =>

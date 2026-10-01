@@ -20,12 +20,15 @@
 }
 
 .swc-Thumbnail {
+  --_swc-thumbnail-size: var(--swc-thumbnail-size, token("thumbnail-size-500"));
+  --_swc-opacity-checkerboard-square-size: token("thumbnail-opacity-checkerboard-square-size");
+
   display: flex;
   position: relative;
   align-items: center;
   justify-content: center;
-  inline-size: var(--swc-thumbnail-size, var(--_swc-thumbnail-size, token("thumbnail-size-500")));
-  block-size: var(--swc-thumbnail-size, var(--_swc-thumbnail-size, token("thumbnail-size-500")));
+  inline-size: var(--_swc-thumbnail-size);
+  block-size: var(--_swc-thumbnail-size);
   border-radius: token("thumbnail-corner-radius");
   overflow: hidden;
 }
@@ -43,62 +46,68 @@
 /* ── Size variants ──────────────────────────────────────── */
 
 :host([size="50"]) {
-  --_swc-thumbnail-size: token("thumbnail-size-50");
+  --swc-thumbnail-size: token("thumbnail-size-50");
 }
 
 :host([size="75"]) {
-  --_swc-thumbnail-size: token("thumbnail-size-75");
+  --swc-thumbnail-size: token("thumbnail-size-75");
 }
 
 :host([size="100"]) {
-  --_swc-thumbnail-size: token("thumbnail-size-100");
+  --swc-thumbnail-size: token("thumbnail-size-100");
 }
 
 :host([size="200"]) {
-  --_swc-thumbnail-size: token("thumbnail-size-200");
+  --swc-thumbnail-size: token("thumbnail-size-200");
 }
 
 :host([size="300"]) {
-  --_swc-thumbnail-size: token("thumbnail-size-300");
+  --swc-thumbnail-size: token("thumbnail-size-300");
 }
 
 :host([size="400"]) {
-  --_swc-thumbnail-size: token("thumbnail-size-400");
+  --swc-thumbnail-size: token("thumbnail-size-400");
 }
 
 :host([size="500"]) {
-  --_swc-thumbnail-size: token("thumbnail-size-500");
+  --swc-thumbnail-size: token("thumbnail-size-500");
 }
 
 :host([size="600"]) {
-  --_swc-thumbnail-size: token("thumbnail-size-600");
+  --swc-thumbnail-size: token("thumbnail-size-600");
 }
 
 :host([size="700"]) {
-  --_swc-thumbnail-size: token("thumbnail-size-700");
+  --swc-thumbnail-size: token("thumbnail-size-700");
 }
 
 :host([size="800"]) {
-  --_swc-thumbnail-size: token("thumbnail-size-800");
+  --swc-thumbnail-size: token("thumbnail-size-800");
 }
 
 :host([size="900"]) {
-  --_swc-thumbnail-size: token("thumbnail-size-900");
+  --swc-thumbnail-size: token("thumbnail-size-900");
 }
 
 :host([size="1000"]) {
-  --_swc-thumbnail-size: token("thumbnail-size-1000");
+  --swc-thumbnail-size: token("thumbnail-size-1000");
 }
 
 /* ── Slotted image ──────────────────────────────────────── */
 
+::slotted(:not(img)) {
+  display: none;
+}
+
 ::slotted(*) {
+  box-sizing: border-box;
   max-inline-size: 100%;
   max-block-size: 100%;
   object-fit: contain;
 }
 
 :host([fit="cover"]) ::slotted(*) {
+  box-sizing: border-box;
   inline-size: 100%;
   block-size: 100%;
   object-fit: cover;

@@ -68,12 +68,12 @@ The [APG](https://www.w3.org/WAI/ARIA/apg/) does not list a thumbnail widget. A 
 
 | Idea | Plain meaning |
 |------|----------------|
-| [Non-text content (WCAG 1.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html) | The slotted `<img>` must have a meaningful `alt` attribute, or the thumbnail must be marked `decorative`. The component emits a DEBUG warning when neither condition is met. |
+| [Non-text content (WCAG 1.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html) | The slotted `<img>` needs a text alternative: a meaningful `alt` (or `aria-label`/`aria-labelledby`), or `alt=""` when surrounding text already describes it. Alternatively, mark the thumbnail `decorative`. The component emits a DEBUG warning when the image has none of these and `decorative` is not set. |
 | [Use of color (WCAG 1.4.1)](https://www.w3.org/TR/WCAG22/#use-of-color) | Color alone must not convey state meaning. Visual states (disabled, focused, selected) applied to the thumbnail by a parent component must also be communicated via the parent's ARIA, not by color on the thumbnail alone. |
-| [Non-text contrast (WCAG 1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | The thumbnail border (inset box-shadow) is a graphical element and must meet 3:1 contrast with adjacent colors. |
+| [Non-text contrast (WCAG 1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | Not required for the thumbnail border (inset box-shadow). It's a decorative frame rather than a graphical object needed to understand the content, and the thumbnail isn't an interactive component. An interactive parent's own focus and selected indicators do need 3:1. In forced-colors mode the border switches to `CanvasText`. See the [migration plan decision log](./migration-plan.md#decision-log) (C9). |
 | [Name, role, value (WCAG 4.1.2)](https://www.w3.org/WAI/WCAG22/#name-role-value) | The slotted `<img>` provides role and name. The host carries no ARIA role. Shadow DOM wrappers are decorative and not exposed to AT. |
 
-**Bottom line:** The slotted `<img>` is the semantic surface. Require a meaningful `alt` on it, or mark the thumbnail `decorative`. The component is not interactive and does not enter the Tab order.
+**Bottom line:** The slotted `<img>` is the semantic surface. Require a text alternative on it (a meaningful `alt`, or `alt=""` when surrounding text describes it), or mark the thumbnail `decorative`. The component is not interactive and does not enter the Tab order.
 
 ---
 
@@ -95,7 +95,7 @@ The [APG](https://www.w3.org/WAI/ARIA/apg/) does not list a thumbnail widget. A 
 | Topic | What to do |
 |-------|------------|
 | **Host role** | No `role` attribute on `:host`. The slotted `<img>` already carries an implicit `img` role. Do **not** add `role="img"` to the host. |
-| **Slotted `<img>` alt (required)** | When `decorative` is not set: the slotted `<img>` must have a meaningful `alt` attribute (for example `alt="Layer 1 preview"`). The accessible name flows naturally from the `<img>` in light DOM. |
+| **Slotted `<img>` alt (required)** | When `decorative` is not set: give the slotted `<img>` a meaningful `alt` (for example `alt="Layer 1 preview"`), or `alt=""` when surrounding text already describes it. The accessible name flows naturally from the `<img>` in light DOM. |
 | **Decorative** | When `decorative` is set: the host receives `aria-hidden="true"`, removing the entire thumbnail — including the slotted `<img>` — from the accessibility tree. Additionally, if the slotted `<img>` has no `alt` defined, the component sets `alt=""` on it. Use when the image content is already described by surrounding context. |
 | **Neither `alt` nor `decorative`** | When `decorative` is not set and the slotted `<img>` has no `alt`, `aria-label`, or `aria-labelledby`: emit a **DEBUG warning** directing the author to add `alt` on the `<img>` or set `decorative` on the thumbnail. An `<img>` without a text alternative fails [WCAG 1.1.1](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html). An explicit `alt=""` does not warn: it marks the image as described by surrounding context. |
 | **`disabled` visual state** | **Do not** expose `disabled` as a property or attribute on `swc-thumbnail`. The reduced-opacity appearance is applied by the parent component that is disabled. The parent carries `aria-disabled="true"` or `disabled`; the thumbnail contributes only its slotted image and name. |
@@ -131,20 +131,18 @@ img ""                         ← slotted <img>, no accessible name
 #### Thumbnail embedded inside a disabled parent
 
 ```
-button "Upload file" (disabled)
-  img "File preview"           ← slotted <img> is part of the button subtree
+button "Upload file" (disabled)   ← decorative thumbnail; the button's text is its name
 ```
 
-The slotted image's role and name are still present. The parent button carries `aria-disabled="true"` or `disabled`; the thumbnail does not change its own semantics.
+The parent button carries `aria-disabled="true"` or `disabled`; the thumbnail does not change its own semantics. Because the button's text already names it, the thumbnail is `decorative`. A thumbnail with a meaningful `alt` would add that `alt` to the button's name ("File preview Upload file").
 
 #### Thumbnail embedded inside a selected parent
 
 ```
-option "Layer 2" (selected)
-  img "Layer 2 preview"        ← slotted <img> is part of the option subtree
+option "Layer 2" (selected)       ← decorative thumbnail; the option's text is its name
 ```
 
-The selected state belongs to the parent. The thumbnail contributes only its slotted image name.
+The selected state belongs to the parent. As with the disabled parent, the thumbnail is `decorative` when the parent's text already names the item.
 
 ### Keyboard and focus
 
@@ -164,7 +162,7 @@ The selected state belongs to the parent. The thumbnail contributes only its slo
 | **Unit — DEBUG warnings** | Missing `alt` on slotted `<img>` (no `decorative`) → warning fires. Setting `decorative` suppresses it. |
 | **aXe + Storybook** | Run WCAG 2.x rules on all thumbnail stories: labeled, decorative, and embedded-in-button patterns. |
 | **Playwright ARIA snapshots** | Add `thumbnail.a11y.spec.ts` for gen2. Cover thumbnail with a labeled `<img>`, decorative thumbnail, and thumbnail embedded in a disabled parent. |
-| **Contrast** | Border (inset box-shadow) meets 3:1 against adjacent background in default and high-contrast modes. |
+| **Contrast** | The border is exempt from 3:1 (see [Guidelines that apply](#guidelines-that-apply)). Check that a parent's focus and selected indicators meet 3:1, and that the border uses `CanvasText` in forced-colors mode. |
 
 ### Manual screen reader testing
 

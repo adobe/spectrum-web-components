@@ -19,7 +19,6 @@ import {
   THUMBNAIL_DEFAULT_FIT,
   THUMBNAIL_DEFAULT_SIZE,
   THUMBNAIL_VALID_FITS,
-  THUMBNAIL_VALID_SIZES,
 } from '@adobe/spectrum-wc-core/components/thumbnail/index.js';
 
 import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
@@ -59,20 +58,18 @@ export const PlaygroundTest: Story = {
     );
 
     await step('renders and registers as a swc-thumbnail element', async () => {
-      expect(thumbnail).toBeTruthy();
-      expect(thumbnail).toBeInstanceOf(Thumbnail);
+      expect(thumbnail, 'swc-thumbnail element').toBeTruthy();
+      expect(thumbnail, 'swc-thumbnail class instance').toBeInstanceOf(
+        Thumbnail
+      );
     });
 
     await step('renders the slotted image', async () => {
       const image = thumbnail.querySelector('img');
-      expect(image).toBeTruthy();
+      expect(image, 'slotted image').toBeTruthy();
     });
   },
 };
-
-// ──────────────────────────────────────────────────────────────
-// TEST: Properties / Attributes
-// ──────────────────────────────────────────────────────────────
 
 export const SizeAttributeSetByFirstUpdatedTest: Story = {
   ...Overview,
@@ -98,6 +95,54 @@ export const SizeAttributeSetByFirstUpdatedTest: Story = {
     );
   },
 };
+
+export const FitAttributeSetByFirstUpdatedTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step(
+      'sets fit attribute to default when not passed as attribute',
+      async () => {
+        expect(thumbnail.hasAttribute('fit'), 'fit attribute present').toBe(
+          true
+        );
+        expect(thumbnail.getAttribute('fit'), 'fit attribute value').toBe(
+          THUMBNAIL_DEFAULT_FIT
+        );
+        expect(thumbnail.fit, 'fit property value').toBe(THUMBNAIL_DEFAULT_FIT);
+      }
+    );
+  },
+};
+
+export const DefaultAttributesReflectTest: Story = {
+  render: () => '',
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'reflects default size and fit on an element created without attributes',
+      async () => {
+        const thumbnail = document.createElement('swc-thumbnail') as Thumbnail;
+        canvasElement.appendChild(thumbnail);
+        await thumbnail.updateComplete;
+
+        expect(thumbnail.getAttribute('size'), 'size attribute').toBe(
+          String(THUMBNAIL_DEFAULT_SIZE)
+        );
+        expect(thumbnail.getAttribute('fit'), 'fit attribute').toBe(
+          THUMBNAIL_DEFAULT_FIT
+        );
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Properties / Attributes
+// ──────────────────────────────────────────────────────────────
 
 export const SizeReflectionTest: Story = {
   ...Overview,
@@ -126,6 +171,12 @@ export const SizeInvalidFallbackTest: Story = {
       canvasElement,
       'swc-thumbnail'
     );
+    // Start from a non-default size so the fallback is a real change.
+    thumbnail.size = 300;
+    await thumbnail.updateComplete;
+    expect(thumbnail.getAttribute('size'), 'starting size attribute').toBe(
+      '300'
+    );
 
     await step(
       'falls back to the default size and warns on an invalid value',
@@ -146,29 +197,6 @@ export const SizeInvalidFallbackTest: Story = {
             'warning count for invalid size'
           ).toBeGreaterThan(0);
         })
-    );
-  },
-};
-
-export const FitAttributeSetByFirstUpdatedTest: Story = {
-  ...Overview,
-  play: async ({ canvasElement, step }) => {
-    const thumbnail = await getComponent<Thumbnail>(
-      canvasElement,
-      'swc-thumbnail'
-    );
-
-    await step(
-      'sets fit attribute to default when not passed as attribute',
-      async () => {
-        expect(thumbnail.hasAttribute('fit'), 'fit attribute present').toBe(
-          true
-        );
-        expect(thumbnail.getAttribute('fit'), 'fit attribute value').toBe(
-          THUMBNAIL_DEFAULT_FIT
-        );
-        expect(thumbnail.fit, 'fit property value').toBe(THUMBNAIL_DEFAULT_FIT);
-      }
     );
   },
 };
@@ -208,6 +236,12 @@ export const FitInvalidFallbackTest: Story = {
     const thumbnail = await getComponent<Thumbnail>(
       canvasElement,
       'swc-thumbnail'
+    );
+    // Start from a non-default fit so the fallback is a real change.
+    thumbnail.fit = 'cover';
+    await thumbnail.updateComplete;
+    expect(thumbnail.getAttribute('fit'), 'starting fit attribute').toBe(
+      'cover'
     );
 
     await step(
@@ -286,6 +320,37 @@ export const DroppedLegacyPropertiesTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Slots
+// ──────────────────────────────────────────────────────────────
+
+export const NonImageContentHiddenTest: Story = {
+  render: () => html`
+    <swc-thumbnail>
+      <img src="a.png" alt="Preview" />
+      <span>Caption</span>
+    </swc-thumbnail>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step('hides slotted elements other than an image', async () => {
+      const image = thumbnail.querySelector('img') as HTMLImageElement;
+      const caption = thumbnail.querySelector('span') as HTMLSpanElement;
+      expect(getComputedStyle(image).display, 'slotted image display').not.toBe(
+        'none'
+      );
+      expect(
+        getComputedStyle(caption).display,
+        'slotted non-image display'
+      ).toBe('none');
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Variants / States
 // ──────────────────────────────────────────────────────────────
 
@@ -300,10 +365,10 @@ export const SizesTest: Story = {
     await step('renders all valid sizes', async () => {
       expect(
         thumbnails.length,
-        'number of thumbnails matching THUMBNAIL_VALID_SIZES'
-      ).toBe(THUMBNAIL_VALID_SIZES.length);
+        'number of thumbnails matching Thumbnail.VALID_SIZES'
+      ).toBe(Thumbnail.VALID_SIZES.length);
 
-      for (const size of THUMBNAIL_VALID_SIZES) {
+      for (const size of Thumbnail.VALID_SIZES) {
         const thumbnail = canvasElement.querySelector(
           `swc-thumbnail[size="${size}"]`
         ) as Thumbnail | null;
@@ -379,14 +444,52 @@ export const DecorativeToggleTest: Story = {
     );
 
     await step('applies aria-hidden when decorative', async () => {
-      expect(thumbnail.getAttribute('aria-hidden')).toBe('true');
+      expect(
+        thumbnail.getAttribute('aria-hidden'),
+        'aria-hidden while decorative'
+      ).toBe('true');
     });
 
     await step('removes aria-hidden once decorative is unset', async () => {
       thumbnail.decorative = false;
       await thumbnail.updateComplete;
-      expect(thumbnail.hasAttribute('aria-hidden')).toBe(false);
+      expect(
+        thumbnail.hasAttribute('aria-hidden'),
+        'aria-hidden after decorative is unset'
+      ).toBe(false);
     });
+  },
+};
+
+export const DecorativeRetoggleTest: Story = {
+  render: () => html`
+    <swc-thumbnail decorative><img src="a.png" alt="" /></swc-thumbnail>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step(
+      'still removes its aria-hidden after decorative is toggled within one update',
+      async () => {
+        thumbnail.decorative = false;
+        thumbnail.decorative = true;
+        await thumbnail.updateComplete;
+        expect(
+          thumbnail.getAttribute('aria-hidden'),
+          'aria-hidden while decorative'
+        ).toBe('true');
+
+        thumbnail.decorative = false;
+        await thumbnail.updateComplete;
+        expect(
+          thumbnail.hasAttribute('aria-hidden'),
+          'aria-hidden after decorative is unset'
+        ).toBe(false);
+      }
+    );
   },
 };
 
@@ -408,6 +511,89 @@ export const DecorativeAltFallbackTest: Story = {
           image.getAttribute('alt'),
           'alt attribute defaults to empty string'
         ).toBe('');
+      }
+    );
+  },
+};
+
+export const DecorativeToggleRemovesAppliedAltTest: Story = {
+  render: () => html`
+    <swc-thumbnail decorative><img src="a.png" /></swc-thumbnail>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+    const img = thumbnail.querySelector('img');
+
+    await step(
+      'removes the alt="" it added once decorative is unset',
+      async () => {
+        expect(img?.getAttribute('alt'), 'alt applied').toBe('');
+        thumbnail.decorative = false;
+        await thumbnail.updateComplete;
+        expect(img?.hasAttribute('alt'), 'alt removed').toBe(false);
+      }
+    );
+  },
+};
+
+export const DecorativeToggleKeepsConsumerAltTest: Story = {
+  render: () => html`
+    <swc-thumbnail decorative><img src="a.png" /></swc-thumbnail>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+    const img = thumbnail.querySelector('img') as HTMLImageElement;
+
+    await step(
+      'keeps an alt the consumer set over the fallback once decorative is unset',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          expect(img.getAttribute('alt'), 'fallback alt applied').toBe('');
+
+          // A template that names the image and unsets `decorative` in the
+          // same render writes both before the thumbnail updates.
+          img.setAttribute('alt', 'Layer 1 preview');
+          thumbnail.decorative = false;
+          await thumbnail.updateComplete;
+
+          expect(img.getAttribute('alt'), 'consumer alt kept').toBe(
+            'Layer 1 preview'
+          );
+          expect(warnCalls.length, 'no missing-name warning').toBe(0);
+        })
+    );
+  },
+};
+
+export const DecorativeImageSwapKeepsConsumerAltTest: Story = {
+  render: () => html`
+    <swc-thumbnail decorative><img src="a.png" /></swc-thumbnail>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step(
+      'does not strip a consumer alt from a swapped-in image when decorative is unset',
+      async () => {
+        const next = document.createElement('img');
+        next.src = 'b.png';
+        next.alt = '';
+        thumbnail.replaceChildren(next);
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+
+        thumbnail.decorative = false;
+        await thumbnail.updateComplete;
+
+        expect(next.getAttribute('alt'), 'consumer alt kept').toBe('');
       }
     );
   },
@@ -484,25 +670,29 @@ export const MissingAltWarningTest: Story = {
   },
 };
 
-export const DecorativeToggleRemovesAppliedAltTest: Story = {
-  render: () => html`
-    <swc-thumbnail decorative><img src="a.png" /></swc-thumbnail>
-  `,
+export const DecorativeNoWarningTest: Story = {
+  render: () => '',
   play: async ({ canvasElement, step }) => {
-    const thumbnail = await getComponent<Thumbnail>(
-      canvasElement,
-      'swc-thumbnail'
-    );
-    const img = thumbnail.querySelector('img');
-
     await step(
-      'removes the alt="" it added once decorative is unset',
-      async () => {
-        expect(img?.getAttribute('alt'), 'alt applied').toBe('');
-        thumbnail.decorative = false;
-        await thumbnail.updateComplete;
-        expect(img?.hasAttribute('alt'), 'alt removed').toBe(false);
-      }
+      'does not warn for a decorative thumbnail whose image has no alt',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const thumbnail = document.createElement(
+            'swc-thumbnail'
+          ) as Thumbnail;
+          thumbnail.decorative = true;
+          thumbnail.innerHTML = '<img src="a.png" />';
+          canvasElement.appendChild(thumbnail);
+          const slotChanged = new Promise((resolve) =>
+            thumbnail.shadowRoot!.addEventListener('slotchange', resolve, {
+              once: true,
+            })
+          );
+          await thumbnail.updateComplete;
+          await slotChanged;
+
+          expect(warnCalls.length, 'no missing-name warning').toBe(0);
+        })
     );
   },
 };
@@ -517,12 +707,42 @@ export const SizeRemovedNoWarningTest: Story = {
       'swc-thumbnail'
     );
 
-    await step('falls back to the default without warning', () =>
+    await step('falls back to the default size without warning', () =>
       withWarningSpy(async (warnCalls) => {
         thumbnail.removeAttribute('size');
         await thumbnail.updateComplete;
-        expect(thumbnail.size).toBe(THUMBNAIL_DEFAULT_SIZE);
-        expect(warnCalls.length).toBe(0);
+        expect(thumbnail.size, 'size after the attribute is removed').toBe(
+          THUMBNAIL_DEFAULT_SIZE
+        );
+        expect(
+          warnCalls.length,
+          'no warning for a removed size attribute'
+        ).toBe(0);
+      })
+    );
+  },
+};
+
+export const FitRemovedNoWarningTest: Story = {
+  render: () => html`
+    <swc-thumbnail fit="cover"><img src="a.png" alt="Preview" /></swc-thumbnail>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step('falls back to the default fit without warning', () =>
+      withWarningSpy(async (warnCalls) => {
+        thumbnail.removeAttribute('fit');
+        await thumbnail.updateComplete;
+        expect(thumbnail.fit, 'fit after the attribute is removed').toBe(
+          THUMBNAIL_DEFAULT_FIT
+        );
+        expect(warnCalls.length, 'no warning for a removed fit attribute').toBe(
+          0
+        );
       })
     );
   },
@@ -594,7 +814,7 @@ export const AccessibleNameNoWarningTest: Story = {
         markup: '<img src="a.png" aria-labelledby="ext-label" />',
         // `aria-labelledby` resolves an IDREF, so the referenced element must
         // actually exist in the document for the image to have a computed
-        // accessible name — an absent ID would leave the image unnamed.
+        // accessible name; an absent ID would leave the image unnamed.
         externalLabel: `<span id="ext-label">${expectedName}</span>`,
       },
     ];
@@ -627,54 +847,5 @@ export const AccessibleNameNoWarningTest: Story = {
           })
       );
     }
-  },
-};
-
-export const DefaultAttributesReflectTest: Story = {
-  render: () => '',
-  play: async ({ canvasElement, step }) => {
-    await step(
-      'reflects default size and fit on an element created without attributes',
-      async () => {
-        const thumbnail = document.createElement('swc-thumbnail') as Thumbnail;
-        canvasElement.appendChild(thumbnail);
-        await thumbnail.updateComplete;
-
-        expect(thumbnail.getAttribute('size'), 'size attribute').toBe(
-          String(THUMBNAIL_DEFAULT_SIZE)
-        );
-        expect(thumbnail.getAttribute('fit'), 'fit attribute').toBe(
-          THUMBNAIL_DEFAULT_FIT
-        );
-      }
-    );
-  },
-};
-
-export const DecorativeImageSwapKeepsConsumerAltTest: Story = {
-  render: () => html`
-    <swc-thumbnail decorative><img src="a.png" /></swc-thumbnail>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const thumbnail = await getComponent<Thumbnail>(
-      canvasElement,
-      'swc-thumbnail'
-    );
-
-    await step(
-      'does not strip a consumer alt from a swapped-in image when decorative is unset',
-      async () => {
-        const next = document.createElement('img');
-        next.src = 'b.png';
-        next.alt = '';
-        thumbnail.replaceChildren(next);
-        await new Promise((resolve) => requestAnimationFrame(resolve));
-
-        thumbnail.decorative = false;
-        await thumbnail.updateComplete;
-
-        expect(next.getAttribute('alt'), 'consumer alt kept').toBe('');
-      }
-    );
   },
 };

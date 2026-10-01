@@ -10,9 +10,10 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import type { Args, Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import { Thumbnail } from '@adobe/spectrum-wc/thumbnail';
 import {
   THUMBNAIL_VALID_FITS,
   THUMBNAIL_VALID_SIZES,
@@ -30,7 +31,7 @@ const { args, argTypes, template } = getStorybookHelpers('swc-thumbnail');
 argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
-  options: THUMBNAIL_VALID_SIZES.map(String),
+  options: Thumbnail.VALID_SIZES.map(String),
 };
 
 argTypes.fit = {
@@ -74,6 +75,71 @@ export default meta;
 const PLACEHOLDER_SRC = './images/avatar-preview.png';
 
 const LANDSCAPE_SRC = './images/landscape-asset.jpg';
+
+// Consumer-owned styles: each parent control's own state drives the
+// treatment applied to the thumbnail it contains.
+const consumerStateStyles = html`
+  <style>
+    .thumbnail-action {
+      --swc-action-button-icon-size: var(--swc-thumbnail-size-100);
+    }
+
+    .thumbnail-action[disabled] swc-thumbnail {
+      opacity: var(--swc-thumbnail-opacity-disabled);
+    }
+
+    .thumbnail-layers {
+      display: flex;
+      flex-direction: column;
+      gap: var(--swc-spacing-100);
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .thumbnail-layers label {
+      display: flex;
+      align-items: center;
+      gap: var(--swc-spacing-100);
+    }
+
+    .thumbnail-layers label:has(:checked) swc-thumbnail {
+      border-radius: var(--swc-thumbnail-corner-radius);
+      outline: var(--swc-border-width-200) solid var(--swc-accent-color-800);
+    }
+  </style>
+`;
+
+// The control's own text names it, so the thumbnail inside is decorative.
+const controlThumbnail = (args: Args, attributes: Args = {}) =>
+  template({
+    ...args,
+    ...attributes,
+    size: 100,
+    decorative: true,
+    'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="" />`,
+  });
+
+const thumbnailActionButton = (
+  args: Args,
+  label: string,
+  { disabled = false } = {}
+) => html`
+  <swc-action-button class="thumbnail-action" ?disabled=${disabled}>
+    ${controlThumbnail(args, { slot: 'icon' })} ${label}
+  </swc-action-button>
+`;
+
+const thumbnailLayerOption = (
+  args: Args,
+  label: string,
+  { checked = false } = {}
+) => html`
+  <label>
+    <input type="radio" name="thumbnail-layer" ?checked=${checked} />
+    ${controlThumbnail(args)} ${label}
+  </label>
+`;
 
 // ────────────────────
 //    PLAYGROUND STORY
@@ -148,34 +214,13 @@ export const Fit: Story = {
 
 export const ConsumerStyledStates: Story = {
   render: (args) => html`
-    <style>
-      .thumbnail-action {
-        --swc-action-button-icon-size: var(--swc-thumbnail-size-100);
-      }
-
-      .disabled-thumbnail {
-        opacity: var(--swc-thumbnail-opacity-disabled);
-      }
-    </style>
-    <swc-action-button class="thumbnail-action">
-      ${template({
-        ...args,
-        size: 100,
-        slot: 'icon',
-        'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview" />`,
-      })}
-      Layer 1
-    </swc-action-button>
-    <swc-action-button class="thumbnail-action" disabled>
-      ${template({
-        ...args,
-        size: 100,
-        slot: 'icon',
-        class: 'disabled-thumbnail',
-        'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview" />`,
-      })}
-      Layer 2
-    </swc-action-button>
+    ${consumerStateStyles} ${thumbnailActionButton(args, 'Layer 1')}
+    ${thumbnailActionButton(args, 'Layer 2', { disabled: true })}
+    <fieldset class="thumbnail-layers">
+      <legend>Active layer</legend>
+      ${thumbnailLayerOption(args, 'Background', { checked: true })}
+      ${thumbnailLayerOption(args, 'Text')}
+    </fieldset>
   `,
   parameters: { flexLayout: 'row-wrap' },
   tags: ['states'],
@@ -197,20 +242,8 @@ export const Accessibility: Story = {
       decorative: true,
       'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="" />`,
     })}
-    <style>
-      .thumbnail-action {
-        --swc-action-button-icon-size: var(--swc-thumbnail-size-100);
-      }
-    </style>
-    <swc-action-button class="thumbnail-action" disabled>
-      ${template({
-        ...args,
-        size: 100,
-        slot: 'icon',
-        'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="File preview" />`,
-      })}
-      Upload file
-    </swc-action-button>
+    ${consumerStateStyles}
+    ${thumbnailActionButton(args, 'Upload file', { disabled: true })}
   `,
   parameters: { flexLayout: 'row-wrap' },
   tags: ['a11y'],

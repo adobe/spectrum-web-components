@@ -41,7 +41,7 @@ Thumbnails come in 12 sizes, from `50` (16 px) to `1000` (64 px). The default si
 
 ### Consumer-styled states
 
-A thumbnail has no built-in `disabled` or `selected` state. The interactive parent that wraps it owns that state and applies its own visual treatment directly to the `<swc-thumbnail>` element. In the example below, an [Action button](../?path=/docs/components-action-button--docs) holds the thumbnail in its `icon` slot and dims it with `--swc-thumbnail-opacity-disabled` when disabled.
+A thumbnail has no built-in `disabled` or `selected` state. The interactive parent that wraps it owns that state and applies its own visual treatment directly to the `<swc-thumbnail>` element. In the example below, an [Action button](../?path=/docs/components-action-button--docs) holds a thumbnail in its `icon` slot and dims it with `--swc-thumbnail-opacity-disabled` when disabled, and a radio group outlines the thumbnail of its checked option. Each thumbnail is `decorative`, because its control's text already names it.
 
 > **Note**: Spectrum 1's `disabled`, `focused`, `selected`, and `layer` attributes are not part of the Spectrum 2 API. See the [migration guide](?path=/docs/components-thumbnail-migration-guide--docs).
 
@@ -68,6 +68,7 @@ The `<swc-thumbnail>` element implements several accessibility features:
 
 - Always set `alt` on the slotted image, or mark the thumbnail `decorative`: a missing accessible name triggers a DEBUG-mode warning
 - Use `decorative` only when the image content is already identified by surrounding text
+- Mark a thumbnail `decorative` when it sits next to the text label of a button or other control; a meaningful `alt` would be added to the control's name (for example "File preview Upload file")
 - Give the wrapping element its own `disabled` or `aria-disabled` attribute; the thumbnail does not expose one itself
 
 <Canvas of={ThumbnailStories.Accessibility} />

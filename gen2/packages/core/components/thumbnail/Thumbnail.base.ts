@@ -27,6 +27,40 @@ import {
 const DOCS_URL =
   'https://spectrum-web-components.adobe.com/?path=/docs/components-thumbnail--docs';
 
+/**
+ * Resolves an incoming `size` or `fit` value to one of its valid options,
+ * warning in DEBUG mode and returning `fallback` when the value is invalid.
+ * A removed attribute arrives as `null`, so an unset value falls back
+ * without a warning.
+ */
+function resolveOption<T extends string | number>(
+  element: HTMLElement,
+  prop: string,
+  value: unknown,
+  valid: readonly T[],
+  fallback: T
+): T {
+  if (value === null || value === undefined) {
+    return fallback;
+  }
+  validateEnum(element, {
+    prop,
+    value: String(value),
+    valid: valid.map(String),
+    url: DOCS_URL,
+  });
+  return valid.find((option) => String(option) === String(value)) ?? fallback;
+}
+
+/**
+ * Base class for the thumbnail component.
+ *
+ * Provides the `size`, `fit`, and `decorative` API and keeps the slotted
+ * image's text alternative in step with `decorative`. Concrete classes supply
+ * the stylesheet and render template.
+ *
+ * @slot - Image element to present in the thumbnail. Other slotted elements are hidden.
+ */
 export abstract class ThumbnailBase extends SpectrumElement {
   // ─────────────────────────
   //     STATIC
@@ -35,7 +69,7 @@ export abstract class ThumbnailBase extends SpectrumElement {
   /**
    * @internal
    *
-   * Valid numeric size values, exposed for validation, stories, and tests.
+   * Valid numeric size values, exposed for stories and tests.
    */
   static readonly VALID_SIZES: readonly ThumbnailSize[] = THUMBNAIL_VALID_SIZES;
 
@@ -54,31 +88,17 @@ export abstract class ThumbnailBase extends SpectrumElement {
   }
 
   public set size(value: ThumbnailSize) {
-    // A removed attribute arrives as `null`; fall back silently.
-    const isUnset = value === null || value === undefined;
-    const isValid = (THUMBNAIL_VALID_SIZES as readonly number[]).includes(
-      Number(value)
-    );
-    const validSize = isValid
-      ? (Number(value) as ThumbnailSize)
-      : THUMBNAIL_DEFAULT_SIZE;
-
-    if (!isUnset) {
-      validateEnum(this, {
-        prop: 'size',
-        value: String(value),
-        valid: THUMBNAIL_VALID_SIZES.map(String),
-        url: DOCS_URL,
-      });
-    }
-
-    if (this._size === validSize) {
-      return;
-    }
-
     const oldSize = this._size;
-    this._size = validSize;
-    this.requestUpdate('size', oldSize);
+    this._size = resolveOption(
+      this,
+      'size',
+      value,
+      THUMBNAIL_VALID_SIZES,
+      THUMBNAIL_DEFAULT_SIZE
+    );
+    if (this._size !== oldSize) {
+      this.requestUpdate('size', oldSize);
+    }
   }
 
   private _size: ThumbnailSize = THUMBNAIL_DEFAULT_SIZE;
@@ -99,23 +119,17 @@ export abstract class ThumbnailBase extends SpectrumElement {
   }
 
   public set fit(value: ThumbnailFit) {
-    const isValid = (THUMBNAIL_VALID_FITS as readonly string[]).includes(value);
-    const validFit = isValid ? value : THUMBNAIL_DEFAULT_FIT;
-
-    validateEnum(this, {
-      prop: 'fit',
-      value,
-      valid: THUMBNAIL_VALID_FITS,
-      url: DOCS_URL,
-    });
-
-    if (this._fit === validFit) {
-      return;
-    }
-
     const oldFit = this._fit;
-    this._fit = validFit;
-    this.requestUpdate('fit', oldFit);
+    this._fit = resolveOption(
+      this,
+      'fit',
+      value,
+      THUMBNAIL_VALID_FITS,
+      THUMBNAIL_DEFAULT_FIT
+    );
+    if (this._fit !== oldFit) {
+      this.requestUpdate('fit', oldFit);
+    }
   }
 
   private _fit: ThumbnailFit = THUMBNAIL_DEFAULT_FIT;
@@ -136,29 +150,9 @@ export abstract class ThumbnailBase extends SpectrumElement {
   //     IMPLEMENTATION
   // ──────────────────────
 
-  protected override updated(changes: PropertyValues): void {
-    super.updated(changes);
-    if (changes.has('decorative')) {
-      this._syncAriaHidden();
-      this.syncSlottedImageAlt();
-    }
-  }
-
-  // Only clear `aria-hidden` if this instance set it, so a consumer's own
-  // attribute survives.
+  // Whether this instance added the host's `aria-hidden`, so a consumer's own
+  // value is never claimed or removed.
   private _appliedAriaHidden = false;
-
-  private _syncAriaHidden(): void {
-    if (this.decorative) {
-      this._appliedAriaHidden = !this.hasAttribute('aria-hidden');
-      this.setAttribute('aria-hidden', 'true');
-      return;
-    }
-    if (this._appliedAriaHidden) {
-      this.removeAttribute('aria-hidden');
-      this._appliedAriaHidden = false;
-    }
-  }
 
   // Tracks the last (image, decorative) pair already synced so the
   // `updated()` and `slotchange` triggers, which can both fire for the same
@@ -169,6 +163,14 @@ export abstract class ThumbnailBase extends SpectrumElement {
   // The image this instance added `alt=""` to, so the fallback can be removed
   // when `decorative` is unset without touching a consumer's own `alt`.
   private _appliedAltImg: HTMLImageElement | null = null;
+
+  protected override updated(changes: PropertyValues): void {
+    super.updated(changes);
+    if (changes.has('decorative')) {
+      this.syncAriaHidden();
+      this.syncSlottedImageAlt();
+    }
+  }
 
   /**
    * Applies the decorative `alt=""` fallback to the slotted image, or warns
@@ -203,7 +205,11 @@ export abstract class ThumbnailBase extends SpectrumElement {
     }
 
     if (this._appliedAltImg === img) {
-      img.removeAttribute('alt');
+      // A consumer may have replaced the fallback while decorative, for
+      // example a template that sets `alt` and unsets `decorative` together.
+      if (img.getAttribute('alt') === '') {
+        img.removeAttribute('alt');
+      }
       this._appliedAltImg = null;
     }
 
@@ -226,5 +232,19 @@ export abstract class ThumbnailBase extends SpectrumElement {
         ],
       }
     );
+  }
+
+  private syncAriaHidden(): void {
+    if (this.decorative) {
+      if (!this.hasAttribute('aria-hidden')) {
+        this.setAttribute('aria-hidden', 'true');
+        this._appliedAriaHidden = true;
+      }
+      return;
+    }
+    if (this._appliedAriaHidden) {
+      this.removeAttribute('aria-hidden');
+      this._appliedAriaHidden = false;
+    }
   }
 }

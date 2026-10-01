@@ -48,21 +48,25 @@ test.describe('Thumbnail - ARIA Snapshots', () => {
     const decorative = root.locator('swc-thumbnail[decorative]');
     await expect(
       decorative,
-      'decorative host is marked aria-hidden'
-    ).toHaveAttribute('aria-hidden', 'true');
+      'standalone and in-button decorative thumbnails'
+    ).toHaveCount(2);
+    for (const thumbnail of await decorative.all()) {
+      await expect(
+        thumbnail,
+        'decorative host is marked aria-hidden'
+      ).toHaveAttribute('aria-hidden', 'true');
+    }
 
     // `toMatchAriaSnapshot` matches a subset. Absence is covered by the
     // `aria-hidden` and count assertions.
     await expect(
       root.getByRole('img'),
-      'only non-decorative thumbnails are exposed'
-    ).toHaveCount(2);
+      'only the non-decorative thumbnail is exposed'
+    ).toHaveCount(1);
 
     await expect(root).toMatchAriaSnapshot(`
       - img "Preview"
-      - button "File preview Upload file" [disabled]:
-        - img "File preview"
-        - text: Upload file
+      - button "Upload file" [disabled]
     `);
   });
 
@@ -98,11 +102,10 @@ test.describe('Thumbnail - ARIA Snapshots', () => {
       'components-thumbnail--accessibility',
       'swc-thumbnail'
     );
+    // The decorative thumbnail keeps its preview out of the button's name.
     const button = root.locator('button');
     await expect(button).toMatchAriaSnapshot(`
-      - button "File preview Upload file" [disabled]:
-        - img "File preview"
-        - text: Upload file
+      - button "Upload file" [disabled]
     `);
   });
 
@@ -118,7 +121,7 @@ test.describe('Thumbnail - ARIA Snapshots', () => {
     `);
   });
 
-  test('should remain in the accessibility tree when a consumer applies its own disabled styling', async ({
+  test('should leave disabled and selected states to the parent controls', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -126,13 +129,17 @@ test.describe('Thumbnail - ARIA Snapshots', () => {
       'components-thumbnail--consumer-styled-states',
       'swc-thumbnail'
     );
+    await expect(
+      root.getByRole('img'),
+      'thumbnails inside the controls are decorative'
+    ).toHaveCount(0);
+
     await expect(root).toMatchAriaSnapshot(`
-      - button "Preview Layer 1":
-        - img "Preview"
-        - text: Layer 1
-      - button "Preview Layer 2" [disabled]:
-        - img "Preview"
-        - text: Layer 2
+      - button "Layer 1"
+      - button "Layer 2" [disabled]
+      - group "Active layer":
+        - radio "Background" [checked]
+        - radio "Text"
     `);
   });
 
@@ -152,25 +159,30 @@ test.describe('Thumbnail - ARIA Snapshots', () => {
     }
   });
 
-  test('should be skipped entirely when tabbing through a story with focusable siblings', async ({
+  test('should be skipped when tabbing through the controls that contain it', async ({
     page,
   }) => {
-    const root = await gotoStory(
+    await gotoStory(
       page,
-      'components-thumbnail--accessibility',
+      'components-thumbnail--consumer-styled-states',
       'swc-thumbnail'
     );
-    const thumbnails = root.locator('swc-thumbnail');
-    const count = await thumbnails.count();
 
-    for (let i = 0; i < count + 5; i++) {
+    const focusedTags: string[] = [];
+    for (let i = 0; i < 5; i++) {
       await page.keyboard.press('Tab');
-      const focusedIsThumbnail = await page.evaluate(
-        () => document.activeElement?.tagName.toLowerCase() === 'swc-thumbnail'
-      );
-      expect(focusedIsThumbnail, 'focus never lands on a thumbnail').toBe(
-        false
+      focusedTags.push(
+        await page.evaluate(
+          () => document.activeElement?.tagName.toLowerCase() ?? ''
+        )
       );
     }
+
+    expect(focusedTags, 'focus reaches the enabled controls').toEqual(
+      expect.arrayContaining(['swc-action-button', 'input'])
+    );
+    expect(focusedTags, 'focus never lands on a thumbnail').not.toContain(
+      'swc-thumbnail'
+    );
   });
 });

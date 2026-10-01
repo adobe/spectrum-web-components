@@ -21,9 +21,7 @@ import styles from './thumbnail.css';
  * panel, in a consistent checkerboard-backed frame.
  *
  * @element swc-thumbnail
- * @since 2.0.0-beta.1
- *
- * @slot - Image element to present in the thumbnail.
+ * @since 2.0.0-beta.5
  *
  * @cssprop --swc-thumbnail-size - Size (inline and block) of the thumbnail. Defaults to the token matching the `size` attribute.
  *
@@ -41,18 +39,10 @@ export class Thumbnail extends ThumbnailBase {
     return [opacityCheckerboardStyles, styles];
   }
 
-  // ──────────────────────
-  //     IMPLEMENTATION
-  // ──────────────────────
-
-  private _handleSlotChange = (): void => {
-    this.syncSlottedImageAlt();
-  };
-
   protected override render(): TemplateResult {
     return html`
       <div class="swc-Thumbnail swc-OpacityCheckerboard">
-        <slot @slotchange=${this._handleSlotChange}></slot>
+        <slot @slotchange=${this.syncSlottedImageAlt}></slot>
       </div>
     `;
   }
