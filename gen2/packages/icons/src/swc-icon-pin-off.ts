@@ -37,7 +37,7 @@ export class IconPinOff extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_PinOff())}</span>
+      ${unsafeSVG(Icon_PinOff())}
     `;
   }
 }

@@ -37,7 +37,7 @@ export class IconGlobeGrid extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_GlobeGrid())}</span>
+      ${unsafeSVG(Icon_GlobeGrid())}
     `;
   }
 }

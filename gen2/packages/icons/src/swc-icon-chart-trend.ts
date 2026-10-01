@@ -37,7 +37,7 @@ export class IconChartTrend extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_ChartTrend())}</span>
+      ${unsafeSVG(Icon_ChartTrend())}
     `;
   }
 }

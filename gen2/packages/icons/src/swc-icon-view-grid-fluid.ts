@@ -37,7 +37,7 @@ export class IconViewGridFluid extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_ViewGridFluid())}</span>
+      ${unsafeSVG(Icon_ViewGridFluid())}
     `;
   }
 }

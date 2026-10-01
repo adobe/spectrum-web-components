@@ -37,7 +37,7 @@ export class IconTemperature extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Temperature())}</span>
+      ${unsafeSVG(Icon_Temperature())}
     `;
   }
 }

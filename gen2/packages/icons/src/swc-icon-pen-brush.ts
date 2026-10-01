@@ -37,7 +37,7 @@ export class IconPenBrush extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_PenBrush())}</span>
+      ${unsafeSVG(Icon_PenBrush())}
     `;
   }
 }

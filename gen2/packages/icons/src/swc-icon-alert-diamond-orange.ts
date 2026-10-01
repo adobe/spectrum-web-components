@@ -37,7 +37,7 @@ export class IconAlertDiamondOrange extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_AlertDiamondOrange())}</span>
+      ${unsafeSVG(Icon_AlertDiamondOrange())}
     `;
   }
 }

@@ -37,7 +37,7 @@ export class IconFilter extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Filter())}</span>
+      ${unsafeSVG(Icon_Filter())}
     `;
   }
 }

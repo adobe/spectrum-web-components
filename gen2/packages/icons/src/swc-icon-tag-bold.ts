@@ -37,7 +37,7 @@ export class IconTagBold extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_TagBold())}</span>
+      ${unsafeSVG(Icon_TagBold())}
     `;
   }
 }

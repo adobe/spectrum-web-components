@@ -37,7 +37,7 @@ export class IconFolderClock extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_FolderClock())}</span>
+      ${unsafeSVG(Icon_FolderClock())}
     `;
   }
 }

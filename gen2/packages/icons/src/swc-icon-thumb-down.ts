@@ -37,7 +37,7 @@ export class IconThumbDown extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_ThumbDown())}</span>
+      ${unsafeSVG(Icon_ThumbDown())}
     `;
   }
 }

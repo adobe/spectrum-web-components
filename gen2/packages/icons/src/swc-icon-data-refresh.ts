@@ -37,7 +37,7 @@ export class IconDataRefresh extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_DataRefresh())}</span>
+      ${unsafeSVG(Icon_DataRefresh())}
     `;
   }
 }
