@@ -40,7 +40,7 @@
 
 ## Overview
 
-This analysis defines the accessibility requirements for `swc-card-view`, targeting WCAG 2.2 Level AA. Card view presents a collection of related cards with keyboard navigation, optional selection, and bulk actions. It replaces the planned public `swc-grid` component: grid is being deprecated, and Cord will not use card-view. These recommendations are a proposed contract, not a claim that card-view is implemented.
+This analysis defines the accessibility requirements for `swc-card-view`, targeting WCAG 2.2 Level AA. Card view presents a collection of related cards with keyboard navigation, optional selection, and bulk actions. It replaces the planned public `swc-grid` component: grid is being deprecated, and Card will not use card-view. These recommendations are a proposed contract, not a claim that card-view is implemented.
 
 ### Also read
 
