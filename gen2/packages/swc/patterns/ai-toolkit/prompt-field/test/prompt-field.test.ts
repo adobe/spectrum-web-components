@@ -466,8 +466,13 @@ export const AttachmentScrollRTLTest: Story = {
 
 /**
  * Resolves once the strip's horizontal scroll comes to rest (smooth paging has
- * stopped). Built on `waitFor`, so it inherits its polling and timeout instead
- * of a hand-tuned frame budget; it only reports "settled" after motion has been
+ * stopped). Mirrors `PromptField`'s own `_handleAttachmentScroll` fallback
+ * (three consecutive stable `requestAnimationFrame` ticks) instead of
+ * `waitFor`'s coarser ~50ms polling interval: late in a smooth-scroll's
+ * ease-out, two samples 50ms apart can land on the same `scrollLeft` well
+ * before the animation actually finishes, which let assertions run against a
+ * not-yet-settled position (this was SWC-2528's root cause, not just a
+ * WebKit/Firefox quirk). It only reports "settled" after motion has been
  * observed, so it never resolves early at the pre-animation start position.
  */
 async function waitForScrollSettled(
@@ -476,16 +481,30 @@ async function waitForScrollSettled(
   if (!scrollEl) {
     return;
   }
-  let previous = Number.NaN;
-  let moved = false;
-  await waitFor(() => {
-    const current = scrollEl.scrollLeft;
-    if (!Number.isNaN(previous) && current !== previous) {
-      moved = true;
-    }
-    const settled = moved && current === previous;
-    previous = current;
-    expect(settled, 'scroll position has come to rest').toBe(true);
+  await new Promise<void>((resolve, reject) => {
+    let lastScrollLeft = scrollEl.scrollLeft;
+    let stableFrames = 0;
+    let moved = false;
+    let frames = 0;
+    const maxFrames = 240; // ~4s at 60fps, generous headroom over an actual paging animation.
+    const poll = (): void => {
+      if (++frames > maxFrames) {
+        reject(
+          new Error('Timed out waiting for the attachment strip to settle')
+        );
+        return;
+      }
+      if (scrollEl.scrollLeft !== lastScrollLeft) {
+        lastScrollLeft = scrollEl.scrollLeft;
+        stableFrames = 0;
+        moved = true;
+      } else if (moved && ++stableFrames >= 3) {
+        resolve();
+        return;
+      }
+      requestAnimationFrame(poll);
+    };
+    requestAnimationFrame(poll);
   });
 }
 
@@ -705,17 +724,9 @@ export const AttachmentFocusOrderTest: Story = {
   },
 };
 
-/**
- * @todo SWC-2528 Flaky on Firefox (smooth-scroll focus-settle timing); skipped there until fixed.
- */
 export const AttachmentChevronPagingFocusTest: Story = {
   render: () => '',
   play: async ({ canvasElement, step }) => {
-    // Skip on Firefox pending SWC-2528.
-    if (navigator.userAgent.includes('Firefox')) {
-      return;
-    }
-
     renderMultiAttachmentPromptField(canvasElement);
 
     const el = await getComponent<PromptField>(
