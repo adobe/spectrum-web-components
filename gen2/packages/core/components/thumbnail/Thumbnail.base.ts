@@ -24,6 +24,9 @@ import {
   type ThumbnailSize,
 } from './Thumbnail.types.js';
 
+const DOCS_URL =
+  'https://spectrum-web-components.adobe.com/?path=/docs/components-thumbnail--docs';
+
 export abstract class ThumbnailBase extends SpectrumElement {
   // ─────────────────────────
   //     STATIC
@@ -51,6 +54,8 @@ export abstract class ThumbnailBase extends SpectrumElement {
   }
 
   public set size(value: ThumbnailSize) {
+    // A removed attribute arrives as `null`; fall back silently.
+    const isUnset = value === null || value === undefined;
     const isValid = (THUMBNAIL_VALID_SIZES as readonly number[]).includes(
       Number(value)
     );
@@ -58,13 +63,14 @@ export abstract class ThumbnailBase extends SpectrumElement {
       ? (Number(value) as ThumbnailSize)
       : THUMBNAIL_DEFAULT_SIZE;
 
-    warnIf(
-      this,
-      !isValid,
-      `<${this.localName}> expects "size" to be one of: ${THUMBNAIL_VALID_SIZES.join(', ')}. Received "${value}".`,
-      'https://spectrum-web-components.adobe.com/?path=/docs/components-thumbnail--docs',
-      { issues: [`size="${value}"`] }
-    );
+    if (!isUnset) {
+      validateEnum(this, {
+        prop: 'size',
+        value: String(value),
+        valid: THUMBNAIL_VALID_SIZES.map(String),
+        url: DOCS_URL,
+      });
+    }
 
     if (this._size === validSize) {
       return;
@@ -100,7 +106,7 @@ export abstract class ThumbnailBase extends SpectrumElement {
       prop: 'fit',
       value,
       valid: THUMBNAIL_VALID_FITS,
-      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-thumbnail--docs',
+      url: DOCS_URL,
     });
 
     if (this._fit === validFit) {
@@ -120,8 +126,8 @@ export abstract class ThumbnailBase extends SpectrumElement {
 
   /**
    * Marks the thumbnail as decorative, hiding it (and its slotted image)
-   * from assistive technology via `aria-hidden`. The `Thumbnail` class
-   * additionally gives the slotted image `alt=""` when unset.
+   * from assistive technology via `aria-hidden`, and gives the slotted image
+   * `alt=""` when unset.
    */
   @property({ type: Boolean, reflect: true })
   public decorative = false;
@@ -144,6 +150,7 @@ export abstract class ThumbnailBase extends SpectrumElement {
     super.updated(changes);
     if (changes.has('decorative')) {
       this._syncAriaHidden();
+      this.syncSlottedImageAlt();
     }
   }
 
@@ -161,5 +168,73 @@ export abstract class ThumbnailBase extends SpectrumElement {
       this.removeAttribute('aria-hidden');
       this._appliedAriaHidden = false;
     }
+  }
+
+  // Tracks the last (image, decorative) pair already synced so the
+  // `updated()` and `slotchange` triggers, which can both fire for the same
+  // state on first render, don't double up on the alt fallback or warning.
+  private _lastSyncedImg: HTMLImageElement | null = null;
+  private _lastSyncedDecorative: boolean | null = null;
+
+  // The image this instance added `alt=""` to, so the fallback can be removed
+  // when `decorative` is unset without touching a consumer's own `alt`.
+  private _appliedAltImg: HTMLImageElement | null = null;
+
+  /**
+   * Applies the decorative `alt=""` fallback to the slotted image, or warns
+   * when a non-decorative image has no accessible name. Subclasses call this
+   * when slotted content changes.
+   */
+  protected syncSlottedImageAlt(): void {
+    const img = this.querySelector('img');
+    if (!img) {
+      return;
+    }
+
+    if (
+      img === this._lastSyncedImg &&
+      this.decorative === this._lastSyncedDecorative
+    ) {
+      return;
+    }
+    this._lastSyncedImg = img;
+    this._lastSyncedDecorative = this.decorative;
+
+    if (this._appliedAltImg && this._appliedAltImg !== img) {
+      this._appliedAltImg = null;
+    }
+
+    if (this.decorative) {
+      if (!img.hasAttribute('alt')) {
+        img.setAttribute('alt', '');
+        this._appliedAltImg = img;
+      }
+      return;
+    }
+
+    if (this._appliedAltImg === img) {
+      img.removeAttribute('alt');
+      this._appliedAltImg = null;
+    }
+
+    const hasAccessibleName =
+      img.hasAttribute('alt') ||
+      !!img.getAttribute('aria-label') ||
+      !!img.getAttribute('aria-labelledby');
+
+    warnIf(
+      this,
+      !hasAccessibleName,
+      `<${this.localName}> requires an accessible name on its slotted image.`,
+      DOCS_URL,
+      {
+        type: 'accessibility',
+        issues: [
+          'add an `alt` attribute (an empty string is valid when the image is already described by surrounding context) to the slotted `<img>`, or',
+          'add `aria-label` or `aria-labelledby` to the slotted `<img>`, or',
+          'set `decorative` on the thumbnail if the image is purely presentational.',
+        ],
+      }
+    );
   }
 }
