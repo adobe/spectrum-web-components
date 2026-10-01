@@ -11,16 +11,10 @@
  */
 
 import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
-import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { RadioBase } from '@adobe/spectrum-wc-core/components/radio-group';
 
 import styles from './radio.css';
-
-/** The `<input>`'s `id`, referenced by the rendered `<label for>`. */
-const INPUT_ID = 'input';
-/** The description container's `id`, referenced by the input's `aria-describedby`. */
-const DESCRIPTION_ID = 'description';
 
 /**
  * A single selectable option within `swc-radio-group`.
@@ -36,37 +30,20 @@ export class Radio extends RadioBase {
     return [styles];
   }
 
-  /**
-   * Re-dispatch `change` from the host: the native `change` event is
-   * `composed: false`, so it never crosses the shadow boundary and the
-   * enclosing `swc-radio-group` (or a consumer's own listener) would
-   * otherwise never see it.
-   */
-  private handleChange(event: Event): void {
-    this.checked = (event.target as HTMLInputElement).checked;
-    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
-  }
-
   protected override render(): TemplateResult {
     return html`
       <div class="swc-Radio">
-        <input
-          id=${INPUT_ID}
-          type="radio"
-          .checked=${this.checked}
-          .value=${this.value}
-          ?disabled=${this.disabled}
-          aria-describedby=${ifDefined(
-            this.hasDescription ? DESCRIPTION_ID : undefined
-          )}
-          @change=${this.handleChange}
-        />
-        <label for=${INPUT_ID}><slot name="label"></slot></label>
-        ${this.hasDescription
-          ? html`
-              <span id=${DESCRIPTION_ID}><slot name="description"></slot></span>
-            `
-          : nothing}
+        <span class="swc-Radio-button" aria-hidden="true"></span>
+        <div class="swc-Radio-content">
+          <span class="swc-Radio-label"><slot name="label"></slot></span>
+          ${this.hasDescription
+            ? html`
+                <span class="swc-Radio-description">
+                  <slot name="description"></slot>
+                </span>
+              `
+            : nothing}
+        </div>
       </div>
     `;
   }

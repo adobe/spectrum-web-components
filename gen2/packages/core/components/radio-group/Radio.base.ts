@@ -24,6 +24,15 @@ const DOCS_URL =
 /**
  * A single selectable option within a `swc-radio-group`. Rendering lives in `swc-radio`.
  *
+ * `role="radio"`, `aria-checked`, `aria-disabled`, and `aria-posinset`/
+ * `aria-setsize` all live on the host via its own `ElementInternals` rather
+ * than a nested native `<input>`: each item has its own shadow root, so a
+ * native radio input's implicit semantics (grouping, posinset/setsize)
+ * can't span across items. No `aria-describedby` is set for the slotted
+ * description: it renders as plain content inside this host's own
+ * accessible subtree, so it already contributes to the accessible name
+ * computation alongside the label.
+ *
  * @attribute {RadioSize} size - Size of the item. Inherited from the parent
  *   `swc-radio-group`.
  *
@@ -31,17 +40,18 @@ const DOCS_URL =
  * @slot description - Optional secondary/help text for this item.
  */
 export abstract class RadioBase extends SpectrumElement {
-  /**
-   * Routes host focus to the internal native `<input>` so the item is a
-   * single Tab stop with focus landing on the real control.
-   */
-  static override shadowRootOptions: ShadowRootInit = {
-    ...SpectrumElement.shadowRootOptions,
-    delegatesFocus: true,
-  };
+  private readonly internals = this.attachInternals();
+
+  constructor() {
+    super();
+    this.internals.role = 'radio';
+    this.addEventListener('click', this.handleActivate);
+    this.addEventListener('keydown', this.handleKeydown);
+    this.addEventListener('keyup', this.handleKeyup);
+  }
 
   /**
-   * Identifies this option within the group's shared `name`. Plain content
+   * Identifies this option as the group's selected value. Plain content
    * attribute, not ARIA.
    */
   @property({ type: String, reflect: true })
@@ -54,7 +64,7 @@ export abstract class RadioBase extends SpectrumElement {
   public checked = false;
 
   /**
-   * Reflected onto the inner input's native `disabled`.
+   * Reflected onto `aria-disabled`; also guards activation.
    */
   @property({ type: Boolean, reflect: true })
   public disabled = false;
@@ -72,14 +82,29 @@ export abstract class RadioBase extends SpectrumElement {
   public size?: RadioSize;
 
   /**
-   * When set, focuses this control automatically on render.
+   * This item's 1-based position among its siblings, for `aria-posinset`.
+   * Set directly by the enclosing `swc-radio-group`: each item has its own
+   * shadow root, so the browser can't compute a native radio-button-group
+   * size/position across them the way it would for same-root
+   * `<input type="radio">` elements sharing a `name`.
+   *
+   * @internal
    */
-  @property({ type: Boolean })
-  public override autofocus = false;
+  @property({ type: Number })
+  public posInSet = 1;
+
+  /**
+   * The total number of items in the enclosing group, for `aria-setsize`.
+   * See `posInSet`.
+   *
+   * @internal
+   */
+  @property({ type: Number })
+  public setSize = 1;
 
   /**
    * Whether the `description` slot has content. Consumed by `swc-radio`'s
-   * `render()` to gate the description container and its `aria-describedby`.
+   * `render()` to gate the description container.
    *
    * @internal
    */
@@ -92,8 +117,34 @@ export abstract class RadioBase extends SpectrumElement {
     return this.descriptionPresence.isPresent;
   }
 
+  private readonly handleActivate = (): void => {
+    if (this.disabled) {
+      return;
+    }
+    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+  };
+
+  // Space scrolls the page on keydown; there is no native input to prevent it.
+  private readonly handleKeydown = (event: KeyboardEvent): void => {
+    if (event.key === ' ') {
+      event.preventDefault();
+    }
+  };
+
+  // Activate on keyup, matching native radio behavior.
+  private readonly handleKeyup = (event: KeyboardEvent): void => {
+    if (event.key === ' ') {
+      this.handleActivate();
+    }
+  };
+
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
+    if (!this.hasAttribute('tabindex')) {
+      // Roving tabindex is owned by the enclosing group's
+      // `FocusgroupNavigationController`, which assigns 0/-1 directly.
+      this.tabIndex = -1;
+    }
     warnIf(
       this,
       this.parentElement?.localName !== 'swc-radio-group',
@@ -101,5 +152,13 @@ export abstract class RadioBase extends SpectrumElement {
       DOCS_URL,
       { type: 'api' }
     );
+  }
+
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+    this.internals.ariaChecked = this.checked ? 'true' : 'false';
+    this.internals.ariaDisabled = this.disabled ? 'true' : null;
+    this.internals.ariaPosInSet = String(this.posInSet);
+    this.internals.ariaSetSize = String(this.setSize);
   }
 }

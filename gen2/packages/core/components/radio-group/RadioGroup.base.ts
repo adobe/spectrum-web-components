@@ -68,11 +68,12 @@ export abstract class RadioGroupBase extends SizedMixin(
   static formAssociated = true;
 
   /**
-   * `role="radiogroup"` on the host via `ElementInternals`, fixed and never
-   * author-overridable: the group has no native container element to render
-   * the role on instead (the forms strategy RFC's host-role exception).
-   * Shared by `LabellingMixin`/`FieldDescriptionMixin` for the same reason
-   * (no inner role element to wire the accessible name/description onto).
+   * Host `ElementInternals`, used only for native form participation
+   * (`FieldAssociationController`, `setValidity`), not for `role` or ARIA
+   * state. `role="radiogroup"` lives on a rendered element (see
+   * {@link roleElement}) because, depending on the browser/AT combination,
+   * item positioning or group labeling can fail when the role is on the
+   * host via `ElementInternals`.
    */
   private readonly internals = this.attachInternals();
 
@@ -82,19 +83,9 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   constructor() {
     super();
-    this.internals.role = 'radiogroup';
-    // Items dispatch a composed `change` when their own native input is
-    // activated; this is the group's single point of sibling discovery for
-    // proposed selection changes (see `handleItemChange`).
+    // Items dispatch a composed `change` when activated; the group handles
+    // proposed selection changes through `handleItemChange`.
     this.addEventListener('change', this.handleItemChange);
-  }
-
-  public override get labelInternals(): ElementInternals | null {
-    return this.internals;
-  }
-
-  public override get describedByInternals(): ElementInternals | null {
-    return this.internals;
   }
 
   /**
@@ -116,8 +107,7 @@ export abstract class RadioGroupBase extends SizedMixin(
   public disabled = false;
 
   /**
-   * The form control name submitted with the group's selected value. Not
-   * propagated onto items' inner inputs.
+   * The form control name submitted with the group's selected value.
    */
   @property({ type: String, reflect: true })
   public name = '';
@@ -277,8 +267,8 @@ export abstract class RadioGroupBase extends SizedMixin(
   }
 
   /**
-   * Proposed selection changes from a slotted item's own native input.
-   * `readonly` reverts the item's own `checked` back to the group's current
+   * Proposed selection changes from a slotted item's activation.
+   * `readonly` keeps the item's `checked` aligned with the group's current
    * `selected` instead of adopting the change, blocking the selection half
    * of the interaction while leaving focus/Tab behavior untouched.
    */
@@ -374,6 +364,22 @@ export abstract class RadioGroupBase extends SizedMixin(
     }
   }
 
+  /**
+   * Sets each item's 1-based `posInSet`/`setSize` for `aria-posinset`/
+   * `aria-setsize`. Each `swc-radio` has its own shadow root, so the browser
+   * can't compute a native radio-button-group size/position across them the
+   * way it does for same-root `<input type="radio">` siblings sharing a
+   * `name` — without this, AT (e.g. VoiceOver) announces every item as
+   * "1 of 1".
+   */
+  private syncItemPositions(): void {
+    const items = this.assignedItems();
+    items.forEach((item, index) => {
+      item.posInSet = index + 1;
+      item.setSize = items.length;
+    });
+  }
+
   private readonly handleSlotchange = (): void => {
     this.syncSlottedItems();
   };
@@ -383,6 +389,7 @@ export abstract class RadioGroupBase extends SizedMixin(
     this.emphasizedPropagation.propagate();
     this.disabledPropagation.propagate();
     this.warnDuplicateValues();
+    this.syncItemPositions();
     this.navigation.refresh();
   }
 
@@ -419,9 +426,6 @@ export abstract class RadioGroupBase extends SizedMixin(
     if (changedProperties.has('selected')) {
       this.syncCheckedState();
     }
-    this.internals.ariaRequired = this.required ? 'true' : null;
-    this.internals.ariaInvalid = this.invalid ? 'true' : null;
-    this.internals.ariaReadOnly = this.readonly ? 'true' : null;
     // Constraint validity: a required group with nothing selected is
     // `valueMissing`, mirroring a native required radio set.
     if (this.required && !this.selected) {

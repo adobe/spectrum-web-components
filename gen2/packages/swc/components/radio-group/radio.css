@@ -11,5 +11,26 @@
  */
 
 :host {
-  display: inline-flex;
+  display: block;
+}
+
+.swc-Radio {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5lh;
+}
+
+.swc-Radio-button {
+  width: 1lh;
+  height: 1lh;
+  border: 1px solid;
+  border-radius: 50%;
+}
+
+:host([checked]) .swc-Radio-button {
+  background-color: currentcolor;
+}
+
+.swc-Radio-content {
+  display: grid;
 }

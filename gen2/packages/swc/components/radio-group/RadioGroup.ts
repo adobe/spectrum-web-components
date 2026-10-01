@@ -10,7 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
+import {
+  CSSResultArray,
+  html,
+  nothing,
+  PropertyValues,
+  TemplateResult,
+} from 'lit';
 
 import { RadioGroupBase } from '@adobe/spectrum-wc-core/components/radio-group';
 
@@ -35,18 +41,48 @@ export class RadioGroup extends RadioGroupBase {
     return [styles];
   }
 
+  public override get roleElement(): Element | null {
+    return this.renderRoot.querySelector('.swc-RadioGroup');
+  }
+
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+    // Must run after `super.updated()`: the labelling mixin resets
+    // `ariaLabelledByElements` on every update, so the slotted-label fallback
+    // is re-applied here each time.
+    const target = this.roleElement as
+      | (Element & {
+          ariaLabelledByElements: Element[] | null;
+        })
+      | null;
+    if (
+      !target ||
+      target.ariaLabelledByElements?.length ||
+      this.accessibleLabel
+    ) {
+      return;
+    }
+    const label = this.renderRoot.querySelector('.swc-FormFieldLabel');
+    target.ariaLabelledByElements = label ? [label] : null;
+  }
+
   protected override render(): TemplateResult {
-    // No native `for` target exists on this host-role component (no rendered
-    // control the visible label could point at), so the label is rendered
-    // directly rather than through `LabellingMixin`'s `renderLabel()`
-    // (which always emits a `<label for>`). The accessible name still comes
-    // from `LabellingMixin`, wired onto `labelInternals` independent of this
-    // markup.
+    // The group role contains its label, items, and description. A radiogroup
+    // div cannot use native `<label for>` association, so `updated()` wires
+    // the slotted label after the mixin resolves programmatic name sources.
     return html`
-      <div class="swc-RadioGroup">
+      <div
+        class="swc-RadioGroup"
+        role="radiogroup"
+        aria-required=${this.required ? 'true' : 'false'}
+        aria-invalid=${this.invalid ? 'true' : 'false'}
+        aria-readonly=${this.readonly ? 'true' : 'false'}
+      >
         ${this.hasLabelSlotContent
           ? html`
-              <span class="swc-FormFieldLabel"><slot name="label"></slot></span>
+              <span class="swc-FormFieldLabel">
+                <slot name="label"></slot>
+              </span>
             `
           : nothing}
         <div class="swc-RadioGroup-items">

@@ -32,6 +32,8 @@ const meta: Meta = {
   render: (args) => html`
     ${template({
       ...args,
+      'label-slot': 'Example radios',
+      'description-slot': 'This is the description for the radio group.',
       'default-slot': `
         <swc-radio value="1"><span slot="label">Option 1</span></swc-radio>
         <swc-radio value="2"><span slot="label">Option 2</span></swc-radio>
@@ -53,5 +55,26 @@ export default meta;
 // ────────────────────
 
 export const Playground: Story = {
+  tags: ['dev'],
+};
+
+export const WithItemDescription: Story = {
+  render: (args) => html`
+    ${template({
+      ...args,
+      'label-slot': 'Example radios',
+      'description-slot': 'This is the description for the radio group.',
+      'default-slot': `
+        <swc-radio value="1">
+          <span slot="label">Option 1</span>
+          <span slot="description">Description for option 1</span>
+        </swc-radio>
+        <swc-radio value="2">
+          <span slot="label">Option 2</span>
+          <span slot="description">Description for option 2</span>
+        </swc-radio>
+      `,
+    })}
+  `,
   tags: ['dev'],
 };
