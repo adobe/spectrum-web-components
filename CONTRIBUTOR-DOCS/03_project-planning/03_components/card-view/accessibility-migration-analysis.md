@@ -67,7 +67,7 @@ Follow RSP's logical collection structure: one `row` per card and one `gridcell`
 
 ### RSP reference and deliberate differences
 
-The full [CardView documentation](https://react-spectrum.adobe.com/CardView) was read through its Markdown counterpart. Its collection API covers static and dynamic items, grid and waterfall layouts, single and multiple selection, selected keys, disabled items, async loading, empty states, actions, and bulk action bars. These are reference capabilities, not confirmed gen2 API names. The [RSP selection guide](https://react-spectrum.adobe.com/selection) also distinguishes selection, item actions, and disabling only selection versus all interaction.
+[React Spectrum's CardView documentation's](https://react-spectrum.adobe.com/CardView) collection API covers static and dynamic items, grid and waterfall layouts, single and multiple selection, selected keys, disabled items, async loading, empty states, actions, and bulk action bars. These are reference capabilities, not confirmed gen2 API names. The [RSP selection guide](https://react-spectrum.adobe.com/selection) also distinguishes selection, item actions, and disabling only selection versus all interaction.
 
 Browser inspection on 2026-09-30 found `grid` with `aria-colcount="1"`, one indexed `row` per card, and a `gridcell` inside each row. In the Links example, the Collections grid contained `div[role="row"]` cards with `data-href`, but no `a[href]` or link-role elements. Do not copy that rendering: a destination stored as data does not expose a native link or its browser interactions. This is a verified DOM gap, not a completed screen-reader audit of RSP.
 
@@ -75,7 +75,7 @@ This request supersedes the existing card migration plan's no-`href` direction f
 
 ### When to use something else
 
-Use ordinary document markup for a small static collection without composite keyboard navigation. Use a listbox for options without nested interactive content, a table for read-only tabular data, and a data-grid component for editable or sortable tabular data. Card-view does not change its host role to represent those patterns.
+Use ordinary document markup for a small static collection without composite keyboard navigation. Use a listbox for options without nested interactive content, a table for read-only tabular data, and the swc-table component for editable or sortable tabular data. Card-view does not change its host role to represent those patterns.
 
 ---
 
