@@ -195,16 +195,12 @@ export abstract class RadioGroupBase extends SizedMixin(
     return this.fieldAssoc.reportValidity();
   }
 
-  /**
-   * Restores the authored `selected` attribute on native form reset.
-   *
-   * @todo Full coordinated reset (re-deriving `selected` from a slotted
-   *   item's own declarative `checked`, matching the initial-render
-   *   adoption in `firstUpdated`) awaits confirming that behavior against
-   *   the item plan's checked-state-flow section.
-   */
+  /** The initial selection (pre-checked item or `selected`), restored on form reset. */
+  private defaultSelected = '';
+
+  /** Restores the initial selection on native form reset. */
   public formResetCallback(): void {
-    this.selected = this.getAttribute('selected') ?? '';
+    this.selected = this.defaultSelected;
   }
 
   /** Delegates the ancestor form / fieldset disabled cascade to the controller. */
@@ -399,14 +395,29 @@ export abstract class RadioGroupBase extends SizedMixin(
       ?.querySelector('slot:not([name])')
       ?.addEventListener('slotchange', this.handleSlotchange);
     this.syncSlottedItems();
-    // A slotted item's own declarative `checked` takes precedence over the
-    // group's `selected` attribute on first render only (matches 1st-gen's
-    // `willUpdate`).
-    const preChecked = this.assignedItems().find((item) => item.checked);
-    if (preChecked) {
-      this.selected = preChecked.value;
-    }
     this.syncCheckedState();
+  }
+
+  protected override willUpdate(changedProperties: PropertyValues): void {
+    super.willUpdate(changedProperties);
+    if (!this.hasUpdated) {
+      // A slotted item's own declarative `checked` takes precedence over the
+      // group's `selected` attribute on first render only (matches 1st-gen's
+      // `willUpdate`). Items may not be upgraded, or may have `checked` set as
+      // a property that has not reflected yet, so check both.
+      const preChecked = Array.from(this.children).find((child) =>
+        child instanceof RadioBase
+          ? child.checked
+          : child.hasAttribute('checked')
+      );
+      if (preChecked) {
+        this.selected =
+          (preChecked instanceof RadioBase
+            ? preChecked.value
+            : preChecked.getAttribute('value')) ?? '';
+      }
+      this.defaultSelected = this.selected;
+    }
   }
 
   protected override update(changedProperties: PropertyValues): void {
@@ -427,9 +438,10 @@ export abstract class RadioGroupBase extends SizedMixin(
       this.syncCheckedState();
     }
     // Constraint validity: a required group with nothing selected is
-    // `valueMissing`, mirroring a native required radio set.
+    // `valueMissing`, mirroring a native required radio set. The message is
+    // required by `setValidity` (it throws if empty); the UI is rendered elsewhere.
     if (this.required && !this.selected) {
-      this.internals.setValidity({ valueMissing: true });
+      this.internals.setValidity({ valueMissing: true }, 'error');
     } else {
       this.internals.setValidity({});
     }
