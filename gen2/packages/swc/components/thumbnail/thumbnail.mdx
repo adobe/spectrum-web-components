@@ -41,7 +41,7 @@ Thumbnails come in 12 sizes, from `50` (16 px) to `1000` (64 px). The default si
 
 ### Consumer-styled states
 
-A thumbnail has no built-in `disabled` or `selected` state. A parent component applies its own visual treatment (for example, reduced opacity or an outline) directly to the `<swc-thumbnail>` element.
+A thumbnail has no built-in `disabled` or `selected` state. The interactive parent that wraps it owns that state and applies its own visual treatment directly to the `<swc-thumbnail>` element. In the example below, an [Action button](../?path=/docs/components-action-button--docs) holds the thumbnail in its `icon` slot and dims it with `--swc-thumbnail-opacity-disabled` when disabled.
 
 > **Note**: Spectrum 1's `disabled`, `focused`, `selected`, and `layer` attributes are not part of the Spectrum 2 API. See the [migration guide](?path=/docs/components-thumbnail-migration-guide--docs).
 

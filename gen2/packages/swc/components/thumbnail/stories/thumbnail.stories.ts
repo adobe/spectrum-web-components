@@ -18,6 +18,7 @@ import {
   THUMBNAIL_VALID_SIZES,
 } from '@adobe/spectrum-wc-core/components/thumbnail/index.js';
 
+import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
 // ────────────────
@@ -148,33 +149,33 @@ export const Fit: Story = {
 export const ConsumerStyledStates: Story = {
   render: (args) => html`
     <style>
+      .thumbnail-action {
+        --swc-action-button-icon-size: var(--swc-thumbnail-size-100);
+      }
+
       .disabled-thumbnail {
         opacity: var(--swc-thumbnail-opacity-disabled);
       }
-
-      .selected-thumbnail {
-        outline: var(--swc-focus-indicator-thickness) solid
-          var(--swc-focus-indicator-color);
-        outline-offset: var(--swc-focus-ring-gap);
-        border-radius: var(--swc-corner-radius-75);
-      }
     </style>
-    <button type="button" disabled>
+    <swc-action-button class="thumbnail-action">
       ${template({
         ...args,
-        class: 'disabled-thumbnail',
+        size: 100,
+        slot: 'icon',
         'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview" />`,
       })}
       Layer 1
-    </button>
-    <button type="button" aria-pressed="true">
+    </swc-action-button>
+    <swc-action-button class="thumbnail-action" disabled>
       ${template({
         ...args,
-        class: 'selected-thumbnail',
+        size: 100,
+        slot: 'icon',
+        class: 'disabled-thumbnail',
         'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview" />`,
       })}
       Layer 2
-    </button>
+    </swc-action-button>
   `,
   parameters: { flexLayout: 'row-wrap' },
   tags: ['states'],
@@ -196,13 +197,20 @@ export const Accessibility: Story = {
       decorative: true,
       'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="" />`,
     })}
-    <button type="button" disabled>
+    <style>
+      .thumbnail-action {
+        --swc-action-button-icon-size: var(--swc-thumbnail-size-100);
+      }
+    </style>
+    <swc-action-button class="thumbnail-action" disabled>
       ${template({
         ...args,
+        size: 100,
+        slot: 'icon',
         'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="File preview" />`,
       })}
       Upload file
-    </button>
+    </swc-action-button>
   `,
   parameters: { flexLayout: 'row-wrap' },
   tags: ['a11y'],
