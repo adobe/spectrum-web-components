@@ -96,6 +96,9 @@ export class ResponseStatus extends SpectrumElement {
    */
   private static readonly LABEL_ROLL_DURATION_MS = 350;
 
+  /** How long the loader holds its static frame before it starts animating. */
+  private static readonly LOADER_START_DELAY_MS = 300;
+
   private readonly panelId = uniqueId('swc-response-status-panel');
 
   /** Whether at least one `<swc-response-status-step>` is currently slotted. */
@@ -135,6 +138,17 @@ export class ResponseStatus extends SpectrumElement {
 
   @state()
   private _rollEngaged = false;
+
+  // Holds the loader on its settled frame for one frame when `status`
+  // becomes `active`, so it visibly starts static before animating instead
+  // of snapping straight into motion. Mirrors the label roll's "engage on
+  // the next frame" technique above.
+  @state()
+  private _loaderPaused = false;
+
+  private _loaderStartRaf: number | null = null;
+
+  private _loaderStartTimer: number | null = null;
 
   /** Whole response lifecycle status. */
   @property({ type: String, reflect: true })
@@ -206,12 +220,25 @@ export class ResponseStatus extends SpectrumElement {
     this._syncStepsMeta();
   }
 
-  protected override willUpdate(_changed: PropertyValues<this>): void {
+  protected override willUpdate(changed: PropertyValues<this>): void {
     this._applyLabelRoll();
+
+    // Restart the "hold on the settled frame, then animate" beat whenever
+    // `status` or `loader` changes while active (e.g. swapping presets/icons
+    // live in Storybook controls), so the paused-first frame reads correctly
+    // every time, not just on initial load.
+    if (
+      this._resolvedStatus === 'active' &&
+      (changed.has('status') || changed.has('loader'))
+    ) {
+      this._loaderPaused = true;
+      this._engageLoader();
+    }
   }
 
   public override disconnectedCallback(): void {
     this._clearLabelRollTimers();
+    this._clearLoaderStartRaf();
     super.disconnectedCallback();
   }
 
@@ -416,6 +443,30 @@ export class ResponseStatus extends SpectrumElement {
     }
   }
 
+  private _clearLoaderStartRaf(): void {
+    if (this._loaderStartRaf !== null) {
+      window.cancelAnimationFrame(this._loaderStartRaf);
+      this._loaderStartRaf = null;
+    }
+    if (this._loaderStartTimer !== null) {
+      window.clearTimeout(this._loaderStartTimer);
+      this._loaderStartTimer = null;
+    }
+  }
+
+  private _engageLoader(): void {
+    this._clearLoaderStartRaf();
+    // Paint the static frame first (rAF), then hold it for a beat before
+    // starting the animation, so the pause actually reads as a pause.
+    this._loaderStartRaf = window.requestAnimationFrame(() => {
+      this._loaderStartRaf = null;
+      this._loaderStartTimer = window.setTimeout(() => {
+        this._loaderStartTimer = null;
+        this._loaderPaused = false;
+      }, ResponseStatus.LOADER_START_DELAY_MS);
+    });
+  }
+
   private _prefersReducedMotion(): boolean {
     return (
       typeof window.matchMedia === 'function' &&
@@ -560,6 +611,8 @@ export class ResponseStatus extends SpectrumElement {
         class="swc-ResponseStatus-loader"
         preset=${ifDefined(preset)}
         icon=${ifDefined(icon)}
+        ?random=${preset === 'mega'}
+        ?paused=${this._loaderPaused}
         aria-hidden="true"
       ></swc-pixel-loader>
     `;

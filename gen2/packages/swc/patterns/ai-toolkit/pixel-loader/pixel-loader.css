@@ -42,6 +42,13 @@
      Grid placement, translate/scale and border-radius are per-cell and set
      inline; see PixelLoader.ts. */
   transform-origin: center;
+
+  /* Promotes each cell to its own GPU layer up front. Without this, a fully
+     rounded cell (the isolated points of an icon, with border-radius on
+     every corner) can rasterize once on a lower-fidelity path when its
+     `scale`/`translate` animation first starts, then sharpen a moment later
+     — visible as the shape looking briefly thin before filling in solid. */
+  will-change: translate, scale;
 }
 
 @media (forced-colors: active) {
