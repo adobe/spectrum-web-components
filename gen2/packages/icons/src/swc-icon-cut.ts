@@ -37,7 +37,7 @@ export class IconCut extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Cut())}</span>
+      ${unsafeSVG(Icon_Cut())}
     `;
   }
 }

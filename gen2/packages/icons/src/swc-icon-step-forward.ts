@@ -37,7 +37,7 @@ export class IconStepForward extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_StepForward())}</span>
+      ${unsafeSVG(Icon_StepForward())}
     `;
   }
 }

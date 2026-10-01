@@ -37,7 +37,7 @@ export class IconErase extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Erase())}</span>
+      ${unsafeSVG(Icon_Erase())}
     `;
   }
 }

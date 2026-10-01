@@ -37,7 +37,7 @@ export class IconSelectMulti extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_SelectMulti())}</span>
+      ${unsafeSVG(Icon_SelectMulti())}
     `;
   }
 }

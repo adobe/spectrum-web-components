@@ -67,7 +67,7 @@ export type ResponseStatusStatus = (typeof RESPONSE_STATUSES)[number];
  * Detail: `{ open: boolean }`
  * @fires swc-response-status-step-toggle - Dispatched when the user expands or collapses
  * a step's description. Detail: `{ open: boolean, index: number }`
- * @cssprop --swc-response-status-label-max-lines - Maximum number of lines the settled header label wraps to before ellipsing. Defaults to 2.
+ * @cssprop --swc-response-status-label-max-lines - Maximum number of lines for a settled header label. Defaults to 2 when active or stopped; completed labels show in full unless a cap is set.
  * @since 2.0.0-beta.3
  */
 export class ResponseStatus extends SpectrumElement {
@@ -614,10 +614,7 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _renderHeader(showDisclosure: boolean): TemplateResult {
-    const label = this._currentVisibleLabel();
     const status = this._resolvedStatus;
-    const statusRole =
-      !showDisclosure && status === 'active' ? 'status' : undefined;
     const rowClass = [
       'swc-ResponseStatus-row',
       showDisclosure ? 'swc-ResponseStatus-row--button' : '',
@@ -628,30 +625,36 @@ export class ResponseStatus extends SpectrumElement {
       .filter(Boolean)
       .join(' ');
 
-    const rowContent = html`
-      ${this._renderLeadingIcon()}
-      <span class="swc-ResponseStatus-headerTrail">
-        ${this._renderLabel()}
-        ${showDisclosure ? this._renderChevron(this.open) : nothing}
-      </span>
+    const trailContent = html`
+      ${this._renderLabel()}
+      ${showDisclosure ? this._renderChevron(this.open) : nothing}
     `;
 
-    if (showDisclosure) {
-      return html`
-        <button
-          class=${rowClass}
-          aria-label=${label}
-          aria-expanded=${this.open}
-          aria-controls=${this.panelId}
-          @click=${this._handleToggle}
-        >
-          ${rowContent}
-        </button>
-      `;
-    }
-
+    // The row keeps the loader mounted while only its trailing control changes.
     return html`
-      <div class=${rowClass} role=${ifDefined(statusRole)}>${rowContent}</div>
+      <div class=${rowClass}>
+        ${this._renderLeadingIcon()}
+        ${showDisclosure
+          ? html`
+              <button
+                type="button"
+                class="swc-ResponseStatus-headerTrail swc-ResponseStatus-headerTrail--button"
+                aria-expanded=${this.open}
+                aria-controls=${this.panelId}
+                @click=${this._handleToggle}
+              >
+                ${trailContent}
+              </button>
+            `
+          : html`
+              <span
+                class="swc-ResponseStatus-headerTrail"
+                role=${ifDefined(status === 'active' ? 'status' : undefined)}
+              >
+                ${trailContent}
+              </span>
+            `}
+      </div>
     `;
   }
 

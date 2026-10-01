@@ -37,7 +37,7 @@ export class IconUndo extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Undo())}</span>
+      ${unsafeSVG(Icon_Undo())}
     `;
   }
 }

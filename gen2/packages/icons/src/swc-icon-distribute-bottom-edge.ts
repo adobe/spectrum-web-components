@@ -37,7 +37,7 @@ export class IconDistributeBottomEdge extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_DistributeBottomEdge())}</span>
+      ${unsafeSVG(Icon_DistributeBottomEdge())}
     `;
   }
 }

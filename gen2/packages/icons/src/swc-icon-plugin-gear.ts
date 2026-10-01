@@ -37,7 +37,7 @@ export class IconPluginGear extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_PluginGear())}</span>
+      ${unsafeSVG(Icon_PluginGear())}
     `;
   }
 }

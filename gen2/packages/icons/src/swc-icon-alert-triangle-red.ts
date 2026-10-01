@@ -37,7 +37,7 @@ export class IconAlertTriangleRed extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_AlertTriangleRed())}</span>
+      ${unsafeSVG(Icon_AlertTriangleRed())}
     `;
   }
 }

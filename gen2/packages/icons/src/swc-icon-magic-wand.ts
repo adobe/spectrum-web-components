@@ -37,7 +37,7 @@ export class IconMagicWand extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_MagicWand())}</span>
+      ${unsafeSVG(Icon_MagicWand())}
     `;
   }
 }

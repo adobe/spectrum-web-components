@@ -37,7 +37,7 @@ export class IconMicrophone extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Microphone())}</span>
+      ${unsafeSVG(Icon_Microphone())}
     `;
   }
 }

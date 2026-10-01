@@ -37,7 +37,7 @@ export class IconInvert extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Invert())}</span>
+      ${unsafeSVG(Icon_Invert())}
     `;
   }
 }

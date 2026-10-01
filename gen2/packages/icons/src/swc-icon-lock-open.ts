@@ -37,7 +37,7 @@ export class IconLockOpen extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_LockOpen())}</span>
+      ${unsafeSVG(Icon_LockOpen())}
     `;
   }
 }
