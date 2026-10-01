@@ -51,7 +51,7 @@ const RUNTIME_PATHS = ['.ai/handoffs'];
 
 // Links inside quoted writing samples, which resolve from the sampled document, not here.
 const SAMPLE_LINKS = new Set([
-  '.ai/skills/documentation/SKILL.md ../accordion-item/',
+  '.ai/skills/documentation-standards/SKILL.md ../accordion-item/',
 ]);
 
 /**
