@@ -188,7 +188,7 @@ When asked to reorganize a README, follow this process:
 
 - [Documentation standards](https://opensource.adobe.com/spectrum-web-components/guides/adding-component/#documentation-standards)
 - [Documentation structure](https://opensource.adobe.com/spectrum-web-components/guides/adding-component/#documentation-structure)
-- [Spectrum Design System](https://spectrum.adobe.com/) for consistent language
+- [Spectrum Design System](https://spectrum.adobe.com) for consistent language
 
 ## Example component READMEs
 
