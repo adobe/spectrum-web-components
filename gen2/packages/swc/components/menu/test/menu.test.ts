@@ -1334,5 +1334,49 @@ export const DisconnectCleanupTest: Story = {
         ).toBe(false);
       }
     );
+
+    // Closing arms a deferred `swc-after-close` (with an allow-discrete
+    // fallback timer). Removing the menu before that settles must cancel it,
+    // or the timer outlives the element and fires from a detached node.
+    await step(
+      'removing a closing menu cancels its pending after-event',
+      async () => {
+        const trigger3 = document.createElement('button');
+        trigger3.id = 'disconnect-trigger-3';
+        trigger3.textContent = 'Edit 3';
+        canvasElement.appendChild(trigger3);
+
+        const menu3 = document.createElement('swc-menu') as Menu;
+        menu3.setAttribute('for', 'disconnect-trigger-3');
+        menu3.innerHTML =
+          '<swc-menu-item role="menuitem" tabindex="-1">Cut</swc-menu-item>';
+        canvasElement.appendChild(menu3);
+        await menu3.updateComplete;
+
+        menu3.open = true;
+        await waitFor(() => expect(isMenuOpen(menu3)).toBe(true));
+
+        let afterCloseFired = false;
+        menu3.addEventListener('swc-after-close', () => {
+          afterCloseFired = true;
+        });
+
+        // Wait for swc-close so `_dispatchClose` has actually armed the
+        // deferred after-event, then remove while it is still pending.
+        const closePromise = waitForEvent(menu3, 'swc-close');
+        menu3.open = false;
+        await closePromise;
+        menu3.remove();
+
+        // Longer than the surface's 200ms transition plus runAfterTransition's
+        // 100ms fallback buffer, so a surviving timer would have fired by now.
+        await new Promise((r) => setTimeout(r, 500));
+
+        expect(
+          afterCloseFired,
+          'no swc-after-close from a menu removed mid-close'
+        ).toBe(false);
+      }
+    );
   },
 };

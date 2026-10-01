@@ -533,6 +533,12 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.placementController.stop();
+    // Drops the pending after-event armed by the last open/close cycle,
+    // including its allow-discrete fallback timer. Without this, removing a
+    // menu mid-transition leaves a timer that outlives the element and
+    // dispatches `swc-after-close` from a detached node (matches
+    // `Popover.base.ts`'s own disconnect cleanup).
+    this._cancelAfterTransition?.();
     this.clearTriggerAria();
     this._trigger = null;
     unregisterDismissible(this);
