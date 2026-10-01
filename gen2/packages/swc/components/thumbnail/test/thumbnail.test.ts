@@ -366,3 +366,47 @@ export const MissingAltWarningTest: Story = {
     });
   },
 };
+
+export const DecorativeToggleRemovesAppliedAltTest: Story = {
+  render: () => html`
+    <swc-thumbnail decorative><img src="a.png" /></swc-thumbnail>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+    const img = thumbnail.querySelector('img');
+
+    await step(
+      'removes the alt="" it added once decorative is unset',
+      async () => {
+        expect(img?.getAttribute('alt'), 'alt applied').toBe('');
+        thumbnail.decorative = false;
+        await thumbnail.updateComplete;
+        expect(img?.hasAttribute('alt'), 'alt removed').toBe(false);
+      }
+    );
+  },
+};
+
+export const SizeRemovedNoWarningTest: Story = {
+  render: () => html`
+    <swc-thumbnail size="100"><img src="a.png" alt="Preview" /></swc-thumbnail>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step('falls back to the default without warning', () =>
+      withWarningSpy(async (warnCalls) => {
+        thumbnail.removeAttribute('size');
+        await thumbnail.updateComplete;
+        expect(thumbnail.size).toBe(THUMBNAIL_DEFAULT_SIZE);
+        expect(warnCalls.length).toBe(0);
+      })
+    );
+  },
+};
