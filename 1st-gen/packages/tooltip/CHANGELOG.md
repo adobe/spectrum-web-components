@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.12.5
+
+### Patch Changes
+
+- Updated dependencies [[`a114e6e`](https://github.com/adobe/spectrum-web-components/commit/a114e6e5b9e950d42f103ac721653025a1f63e09)]:
+  - @spectrum-web-components/overlay@1.12.5
+  - @spectrum-web-components/base@1.12.5
+  - @spectrum-web-components/reactive-controllers@1.12.5
+  - @spectrum-web-components/shared@1.12.5
+
 ## 1.12.4
 
 ### Patch Changes
