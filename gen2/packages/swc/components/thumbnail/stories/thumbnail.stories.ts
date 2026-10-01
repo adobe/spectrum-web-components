@@ -57,7 +57,7 @@ const meta: Meta = {
       url: 'https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9392-43644&p=f&t=l3GqsDFoOZJvv8ZC-0',
     },
     stackblitz: {
-      url: 'https://stackblitz.com/edit/vitejs-vite-p4qyy5j2?file=package.json',
+      url: 'https://stackblitz.com/edit/vitejs-vite-k2bpbhqi?file=package.json',
     },
     flexLayout: 'row-wrap',
   },
