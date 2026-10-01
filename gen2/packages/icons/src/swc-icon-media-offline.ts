@@ -37,7 +37,7 @@ export class IconMediaOffline extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_MediaOffline())}</span>
+      ${unsafeSVG(Icon_MediaOffline())}
     `;
   }
 }

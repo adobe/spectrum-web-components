@@ -37,7 +37,7 @@ export class IconMenuHamburger extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_MenuHamburger())}</span>
+      ${unsafeSVG(Icon_MenuHamburger())}
     `;
   }
 }

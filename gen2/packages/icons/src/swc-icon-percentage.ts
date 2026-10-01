@@ -37,7 +37,7 @@ export class IconPercentage extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Percentage())}</span>
+      ${unsafeSVG(Icon_Percentage())}
     `;
   }
 }

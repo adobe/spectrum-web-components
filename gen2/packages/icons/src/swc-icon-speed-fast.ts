@@ -37,7 +37,7 @@ export class IconSpeedFast extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_SpeedFast())}</span>
+      ${unsafeSVG(Icon_SpeedFast())}
     `;
   }
 }

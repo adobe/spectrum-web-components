@@ -37,7 +37,7 @@ export class IconMaximize extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Maximize())}</span>
+      ${unsafeSVG(Icon_Maximize())}
     `;
   }
 }

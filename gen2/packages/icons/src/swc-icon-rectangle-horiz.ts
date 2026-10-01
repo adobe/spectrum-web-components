@@ -37,7 +37,7 @@ export class IconRectangleHoriz extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_RectangleHoriz())}</span>
+      ${unsafeSVG(Icon_RectangleHoriz())}
     `;
   }
 }

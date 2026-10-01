@@ -37,7 +37,7 @@ export class IconDeviceTablet extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_DeviceTablet())}</span>
+      ${unsafeSVG(Icon_DeviceTablet())}
     `;
   }
 }

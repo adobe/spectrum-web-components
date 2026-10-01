@@ -37,7 +37,7 @@ export class IconEyedropper extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Eyedropper())}</span>
+      ${unsafeSVG(Icon_Eyedropper())}
     `;
   }
 }

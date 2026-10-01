@@ -37,7 +37,7 @@ export class IconStopProcessing extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_StopProcessing())}</span>
+      ${unsafeSVG(Icon_StopProcessing())}
     `;
   }
 }

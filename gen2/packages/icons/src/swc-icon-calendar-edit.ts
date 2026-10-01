@@ -37,7 +37,7 @@ export class IconCalendarEdit extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_CalendarEdit())}</span>
+      ${unsafeSVG(Icon_CalendarEdit())}
     `;
   }
 }

@@ -37,7 +37,7 @@ export class IconFile extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_File())}</span>
+      ${unsafeSVG(Icon_File())}
     `;
   }
 }
