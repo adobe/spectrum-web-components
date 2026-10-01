@@ -1,6 +1,11 @@
 ---
 name: test-driven-development
-description: Use when implementing any feature or bugfix, before writing implementation code
+description: Use when implementing any feature or bugfix, before writing implementation code. Enforces red-green-refactor, watching each test fail for the right reason, and running the full relevant test suite before calling the change done.
+license: MIT
+metadata:
+  source: obra/superpowers
+  source-path: skills/test-driven-development
+  source-sha: 5bf4e78011075bcfc0dc295f0724994cd123ee71
 ---
 
 # Test-Driven Development (TDD)
@@ -26,7 +31,7 @@ Write the test first. Watch it fail. Write minimal code to pass.
 - Refactoring
 - Behavior changes
 
-**Exceptions (ask your human partner):**
+**Exceptions (ask the user):**
 
 - Throwaway prototypes
 - Generated code
@@ -80,6 +85,7 @@ digraph tdd_cycle {
 Write one minimal test showing what should happen.
 
 <Good>
+
 ```typescript
 test('retries failed operations 3 times', async () => {
   let attempts = 0;
@@ -89,29 +95,33 @@ test('retries failed operations 3 times', async () => {
     return 'success';
   };
 
-const result = await retryOperation(operation);
+  const result = await retryOperation(operation);
 
-expect(result).toBe('success');
-expect(attempts).toBe(3);
+  expect(result).toBe('success');
+  expect(attempts).toBe(3);
 });
+```
 
-````
 Clear name, tests real behavior, one thing
+
 </Good>
 
 <Bad>
+
 ```typescript
 test('retry works', async () => {
-  const mock = jest.fn()
+  const mock = vi
+    .fn()
     .mockRejectedValueOnce(new Error())
     .mockRejectedValueOnce(new Error())
     .mockResolvedValueOnce('success');
   await retryOperation(mock);
   expect(mock).toHaveBeenCalledTimes(3);
 });
-````
+```
 
 Vague name, tests mock not code
+
 </Bad>
 
 **Requirements:**
@@ -125,7 +135,7 @@ Vague name, tests mock not code
 **MANDATORY. Never skip.**
 
 ```bash
-npm test path/to/test.test.ts
+yarn workspace @adobe/spectrum-wc test components/<name>
 ```
 
 Confirm:
@@ -143,6 +153,7 @@ Confirm:
 Write simplest code to pass the test.
 
 <Good>
+
 ```typescript
 async function retryOperation<T>(fn: () => Promise<T>): Promise<T> {
   for (let i = 0; i < 3; i++) {
@@ -155,10 +166,13 @@ async function retryOperation<T>(fn: () => Promise<T>): Promise<T> {
   throw new Error('unreachable');
 }
 ```
+
 Just enough to pass
+
 </Good>
 
 <Bad>
+
 ```typescript
 async function retryOperation<T>(
   fn: () => Promise<T>,
@@ -171,7 +185,9 @@ async function retryOperation<T>(
   // YAGNI
 }
 ```
+
 Over-engineered
+
 </Bad>
 
 Don't add features, refactor other code, or "improve" beyond the test.
@@ -181,7 +197,7 @@ Don't add features, refactor other code, or "improve" beyond the test.
 **MANDATORY.**
 
 ```bash
-npm test path/to/test.test.ts
+yarn workspace @adobe/spectrum-wc test components/<name>
 ```
 
 Confirm:
@@ -193,6 +209,8 @@ Confirm:
 **Test fails?** Fix code, not test.
 
 **Other tests fail?** Fix now.
+
+**"Other tests" means the project's suite, not just your file.** A green run of the test you wrote is not a green suite. Before you call the change done, run the suite for every package you touched (`yarn test:gen2`, `yarn test:1st-gen`, or `yarn test` for both) even when your task named only one test file. A scope statement in your task bounds the deliverable, not your verification. Any failure that run shows, including one you didn't cause, goes in your report by name; a red test you watched scroll past and didn't mention is a report falsified by omission. See [verification-before-completion](../verification-before-completion/SKILL.md).
 
 ### REFACTOR - Clean Up
 
@@ -215,6 +233,13 @@ Next failing test for next feature.
 | **Minimal**      | One thing. "and" in name? Split it. | `test('validates email and domain and whitespace')` |
 | **Clear**        | Name describes behavior             | `test('test1')`                                     |
 | **Shows intent** | Demonstrates desired API            | Obscures what code should do                        |
+
+When writing or changing any test, read [writing-good-tests.md](writing-good-tests.md) for the rules that keep tests honest:
+
+- Name the production change that would make the test fail — before writing it
+- Assert on real behavior, never on mock behavior
+- Keep test-only code in test utilities, out of production classes
+- Understand a dependency's side effects before mocking it
 
 ## Why Order Matters
 
@@ -320,7 +345,7 @@ test('rejects empty email', async () => {
 **Verify RED**
 
 ```bash
-$ npm test
+$ yarn workspace @adobe/spectrum-wc test components/<name>
 FAIL: expected 'Email required', got undefined
 ```
 
@@ -338,7 +363,7 @@ function submitForm(data: FormData) {
 **Verify GREEN**
 
 ```bash
-$ npm test
+$ yarn workspace @adobe/spectrum-wc test components/<name>
 PASS
 ```
 
@@ -353,7 +378,7 @@ Before marking work complete:
 - [ ] Watched each test fail before implementing
 - [ ] Each test failed for expected reason (feature missing, not typo)
 - [ ] Wrote minimal code to pass each test
-- [ ] All tests pass
+- [ ] All tests pass, including the full suite for each package you touched
 - [ ] Output pristine (no errors, warnings)
 - [ ] Tests use real code (mocks only if unavoidable)
 - [ ] Edge cases and errors covered
@@ -362,12 +387,12 @@ Can't check all boxes? You skipped TDD. Start over.
 
 ## When Stuck
 
-| Problem                | Solution                                                             |
-| ---------------------- | -------------------------------------------------------------------- |
-| Don't know how to test | Write wished-for API. Write assertion first. Ask your human partner. |
-| Test too complicated   | Design too complicated. Simplify interface.                          |
-| Must mock everything   | Code too coupled. Use dependency injection.                          |
-| Test setup huge        | Extract helpers. Still complex? Simplify design.                     |
+| Problem                | Solution                                                   |
+| ---------------------- | ---------------------------------------------------------- |
+| Don't know how to test | Write wished-for API. Write assertion first. Ask the user. |
+| Test too complicated   | Design too complicated. Simplify interface.                |
+| Must mock everything   | Code too coupled. Use dependency injection.                |
+| Test setup huge        | Extract helpers. Still complex? Simplify design.           |
 
 ## Debugging Integration
 
@@ -377,7 +402,7 @@ Never fix bugs without a test.
 
 ## Testing Anti-Patterns
 
-When adding mocks or test utilities, read @testing-anti-patterns.md to avoid common pitfalls:
+When adding mocks or test utilities, read [testing-anti-patterns.md](testing-anti-patterns.md) to avoid common pitfalls:
 
 - Testing mock behavior instead of real behavior
 - Adding test-only methods to production classes
@@ -390,4 +415,8 @@ Production code → test exists and failed first
 Otherwise → not TDD
 ```
 
-No exceptions without your human partner's permission.
+No exceptions without the user's permission.
+
+## Source and License
+
+Adapted from `skills/test-driven-development` in [obra/superpowers](https://github.com/obra/superpowers) (MIT). `writing-good-tests.md` is copied from the same commit; `testing-anti-patterns.md` predates this import and matches an earlier version of the same upstream skill. See `.ai/THIRD-PARTY-NOTICES.md`.

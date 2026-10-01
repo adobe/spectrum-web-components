@@ -10,7 +10,8 @@
 | Path-scoped rules      | [`.ai/rules/`](./.ai/rules/)                                          | Loaded when a matching file is in context                         |
 | Lessons learned        | [`.ai/memory/`](./.ai/memory/)                                        | Loaded as path-scoped instructions                                |
 | Skills                 | [`.ai/skills/`](./.ai/skills/) (`<name>/SKILL.md`)                    | Loaded when a task matches a skill's description, or by name      |
-| Generated tool copies  | `.github/instructions/`, `.cursor/rules/`                             | Written by `yarn ai:sync`; never edit these                       |
+| Custom agents          | [`.ai/agents/`](./.ai/agents/) (`<name>.agent.md`)                    | Copilot only; selected by name or delegated to                    |
+| Generated tool copies  | `.github/instructions/`, `.github/agents/`, `.cursor/rules/`          | Written by `yarn ai:sync`; never edit these                       |
 
 Edit only `.ai/` sources. The pre-commit hook runs `yarn ai:sync`; run `yarn lint:ai` before you push.
 
@@ -18,6 +19,7 @@ Edit only `.ai/` sources. The pre-commit hook runs `yarn ai:sync`; run `yarn lin
 
 - **Branch names:** follow the `branch-naming` skill (`<username>/<type>-<description>[-swc-<issue>]`). Branches that the Copilot app creates for its own sessions are exempt.
 - **Commits:** conventional commits with a lowercase subject, enforced by commitlint. See the `conventional-commit` skill.
+- **Integration:** integrate changes only through pull requests. Don't merge branches locally or push directly to `main`.
 
 ## Non-trivial changes
 
