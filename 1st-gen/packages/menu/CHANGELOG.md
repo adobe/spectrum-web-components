@@ -1,5 +1,34 @@
 # Change Log
 
+## 1.12.4
+
+### Patch Changes
+
+- [#6735](https://github.com/adobe/spectrum-web-components/pull/6735) [`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b) Thanks [@blunteshwar](https://github.com/blunteshwar)! - **fix(menu):** Fixed `sp-menu-item` selection toggling on and immediately back off when pressed via <kbd>Space</kbd> or <kbd>Enter</kbd>.
+
+  The keydown handler called `focusElement.click()`, which already dispatches a click that flows through `handleClick` → `handlePointerBasedSelection` → `selectOrToggleItem`, and then called `selectOrToggleItem` a second time explicitly. The redundant second call toggled the item's selection state back off in the same tick, so keyboard users saw two `change` events and no visible selection, most noticeably with `selects="multiple"` where the final selected value reverted to empty.
+
+- [#6796](https://github.com/adobe/spectrum-web-components/pull/6796) [`9fae25e`](https://github.com/adobe/spectrum-web-components/commit/9fae25e33b8e085771776b4855c9087d5c2789cc) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(menu):** Fixed keyboard navigation in `sp-menu` landing on `sp-menu-item` elements that have the `hidden` attribute. Hidden items are now skipped the same way disabled items are, including when pressing ArrowDown from the back row in the mobile drill-down view.
+
+- [#6657](https://github.com/adobe/spectrum-web-components/pull/6657) [`bc6a084`](https://github.com/adobe/spectrum-web-components/commit/bc6a0847c98bbc50fc8478b21525c562060fbd49) Thanks [@briluu](https://github.com/briluu)! - **fix(menu):** Fixed `sp-menu-item` submenus opening from a touch tap's `pointerup` in mobile view, bypassing the drill-down navigation.
+
+  `handlePointerdown`'s touch fast-path lacked an `!this.isMobileView` guard, so a touch `pointerup` on a menu item with a submenu triggered the desktop-style overlay-opening logic even when `mobile-view` was set. This left `currentMobileSubmenu` unset while the overlay-based submenu was also open, corrupting the drill-down bookkeeping and causing the next touch-driven submenu open to fail intermittently. In mobile view, submenus now open only via the click that follows a touch tap, consistent with the drill-down navigation model.
+
+- [#6750](https://github.com/adobe/spectrum-web-components/pull/6750) [`b09b13e`](https://github.com/adobe/spectrum-web-components/commit/b09b13e147c25de82660f92a0f7af4417f98aee5) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(menu):** Reset the `mobile-view` drill-down when the containing `<sp-tray>` is dismissed.
+
+  Previously, drilling into a submenu and then dismissing the tray (click-outside, Escape, or programmatic close) kept the submenu state, so reopening the tray showed the stale submenu instead of the top-level menu. While drilled in, `<sp-menu mobile-view>` now listens for the containing tray's `close` event and resets the stack on dismiss. Desktop flyout submenus are unaffected.
+
+- Updated dependencies [[`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b), [`bcd9ce0`](https://github.com/adobe/spectrum-web-components/commit/bcd9ce09097a89ff37b87e9e2de1e9b4a2001af8), [`eb29944`](https://github.com/adobe/spectrum-web-components/commit/eb299448d6896370b65d04b0b8a8c642599a88b3), [`38890d6`](https://github.com/adobe/spectrum-web-components/commit/38890d68cc1a9383bd992a037f6d08a8543e18ec), [`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b)]:
+  - @spectrum-web-components/base@1.12.4
+  - @spectrum-web-components/reactive-controllers@1.12.4
+  - @spectrum-web-components/shared@1.12.4
+  - @spectrum-web-components/overlay@1.12.4
+  - @spectrum-web-components/action-button@1.12.4
+  - @spectrum-web-components/divider@1.12.4
+  - @spectrum-web-components/icon@1.12.4
+  - @spectrum-web-components/icons-ui@1.12.4
+  - @spectrum-web-components/popover@1.12.4
+
 ## 1.12.2
 
 ### Patch Changes

@@ -1,22 +1,18 @@
 ---
-description: Converts contributor documentation from Markdown to MDX for Storybook rendering — adds imports, Meta tag, and converts HTML comments to JSX comments without altering any other content.
-globs: '**/*.md,**/*.mdx'
-paths:
-  - '**/*.md'
-  - '**/*.mdx'
-alwaysApply: false
+name: storybook-mdx-conversion
+description: Converts a standalone Markdown document to Storybook MDX by adding the imports and Meta tag and converting HTML comments to JSX comments, without altering any other content. Use when asked to convert a .md file to .mdx by hand, outside the automated contributor-docs pipeline.
 ---
 
 # Storybook MDX conversion
 
 Converts markdown files to MDX format compatible with Storybook rendering.
 
-> **Relationship to `generate-contributor-docs.mjs`:** the entire `CONTRIBUTOR-DOCS/` tree is already converted to Storybook `.mdx` automatically by `yarn generate:contributor-docs` (`gen2/packages/swc/.storybook/scripts/generate-contributor-docs.mjs`), which also runs before every `yarn storybook` / `yarn storybook:build`. That script's output is regenerated wholesale and not meant to be hand-edited. This rule is for everything that script doesn't cover: converting a standalone `.md` file to `.mdx` by hand (e.g. a one-off doc outside `CONTRIBUTOR-DOCS/`, or manual spot-conversion during authoring) using the same conventions.
+> **Relationship to `generate-contributor-docs.mjs`:** the entire `CONTRIBUTOR-DOCS/` tree is already converted to Storybook `.mdx` automatically by `yarn generate:contributor-docs` (`gen2/packages/swc/.storybook/scripts/generate-contributor-docs.mjs`), which also runs before every `yarn storybook` / `yarn storybook:build`. That script's output is regenerated wholesale and not meant to be hand-edited. This skill is for everything that script doesn't cover: converting a standalone `.md` file to `.mdx` by hand (e.g. a one-off doc outside `CONTRIBUTOR-DOCS/`, or manual spot-conversion during authoring) using the same conventions.
 
 ## When to apply
 
 - Converting a standalone `.md` file to `.mdx` by hand, outside the automated `generate-contributor-docs.mjs` pipeline
-- Applies automatically when Claude reads a matching `.md`/`.mdx` file (Cursor: via `globs`; Claude Code: via `paths`); ask explicitly ("convert this doc to MDX") to apply it outside that trigger
+- Asked explicitly, for example "convert this doc to MDX"
 
 ## Conversion steps
 

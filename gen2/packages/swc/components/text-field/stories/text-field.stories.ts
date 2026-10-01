@@ -173,7 +173,8 @@ export const Labelling: Story = {
     a11y: {
       // axe-core false positive: it can't read the `ariaLabelledByElements`
       // reflection LabellingMixin uses for `accessible-labelledby`, so it flags
-      // a missing label that resolves fine in browsers/AT.
+      // a missing label that resolves fine in browsers/AT. See the forms-strategy
+      // RFC axe-core policy (CONTRIBUTOR-DOCS, "3.4 axe-core policy").
       exclude: {
         label: ['#labelling-labelledby-field'],
       },
@@ -361,13 +362,13 @@ export const LabelOverflow: Story = {
       </swc-text-field>
       <swc-text-field label-position="side" placeholder="My favorite book">
         <span slot="label">
-          This side label wraps and the input shrinks toward a square
+          This side label wraps and pushes over the input
         </span>
       </swc-text-field>
       <swc-text-field
         label-position="side"
         placeholder="My favorite book"
-        style="--swc-field-label-max-inline-size: 120px;"
+        style="--swc-field-label-max-inline-size: 80px;"
       >
         <span slot="label">Tightly capped label wraps early</span>
       </swc-text-field>
@@ -377,15 +378,25 @@ export const LabelOverflow: Story = {
 };
 LabelOverflow.storyName = 'Label overflow';
 
-const showFormData = (event: SubmitEvent): void => {
+// `novalidate` on the form (below) suppresses the native validation bubble, so
+// submission no longer natively blocks on an invalid field either. Mirror that
+// blocking decision here and surface it through the field's own invalid
+// presentation (icon + error text) instead.
+const handleSubmit = (event: SubmitEvent): void => {
   event.preventDefault();
   const form = event.currentTarget as HTMLFormElement;
+  const field = form.querySelector('swc-text-field');
   const output = form.querySelector<HTMLOutputElement>('[data-form-data]');
-  if (output) {
-    output.textContent = [...new FormData(form)]
-      .map(([name, value]) => `${name}: ${value}`)
-      .join('\n');
+  if (!field || !output) {
+    return;
   }
+  field.invalid = !field.checkValidity();
+  if (field.invalid) {
+    return;
+  }
+  output.textContent = [...new FormData(form)]
+    .map(([name, value]) => `${name}: ${value}`)
+    .join('\n');
 };
 
 const showValidity = (event: Event): void => {
@@ -408,48 +419,32 @@ const showValidity = (event: Event): void => {
   }
 };
 
-const reportValidity = (event: Event): void => {
-  const form = (event.currentTarget as HTMLElement).closest('form');
-  const field = form?.querySelector('swc-text-field');
-  field?.reportValidity();
-};
-
-const toggleFieldsetDisabled = (event: Event): void => {
-  const fieldset = (event.currentTarget as HTMLElement)
-    .closest('form')
-    ?.querySelector<HTMLFieldSetElement>('[data-cascade-fieldset]');
-  if (fieldset) {
-    fieldset.disabled = !fieldset.disabled;
-  }
-};
-
 export const FormBehavior: Story = {
   render: () => html`
     <form
-      style="display: flex; flex-direction: column; gap: 16px; inline-size: 260px;"
-      @submit=${showFormData}
+      novalidate
+      style="display: flex; flex-direction: column; gap: 16px; inline-size: 220px;"
+      @submit=${handleSubmit}
     >
-      <swc-text-field name="username" value="Initial" required>
+      <swc-text-field name="username" required>
         <span slot="label">Username</span>
+        <span slot="error-text">Enter a username.</span>
       </swc-text-field>
-      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-        <button type="submit">Submit</button>
-        <button type="reset">Reset</button>
-        <button type="button" @click=${showValidity}>Check validity</button>
-        <button type="button" @click=${reportValidity}>Report validity</button>
-      </div>
-      <fieldset
-        data-cascade-fieldset
-        style="display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 12px; border: 1px solid CanvasText;"
-      >
-        <legend>fieldset[disabled] cascade</legend>
-        <swc-text-field name="nested" value="Cascade demo">
-          <span slot="label">Nested field</span>
-        </swc-text-field>
-        <button type="button" @click=${toggleFieldsetDisabled}>
-          Toggle fieldset disabled
+      <div style="display: flex; gap: 8px;">
+        <button type="submit" class="swc-Button">
+          <span class="swc-Button-label">Submit</span>
         </button>
-      </fieldset>
+        <button type="reset" class="swc-Button swc-Button--secondary">
+          <span class="swc-Button-label">Reset</span>
+        </button>
+        <button
+          type="button"
+          class="swc-Button swc-Button--secondary"
+          @click=${showValidity}
+        >
+          <span class="swc-Button-label">Check validity</span>
+        </button>
+      </div>
       <section aria-labelledby="submitted-form-data-label">
         <div id="submitted-form-data-label">Submitted form data</div>
         <output
@@ -467,8 +462,7 @@ export const FormBehavior: Story = {
           aria-live="polite"
           style="display: block; min-block-size: 3lh; white-space: pre-wrap;"
         >
-          Click Check validity to inspect the field and form validity. Click
-          Report validity to show the browser's native constraint prompt.
+          Click Check validity to inspect the field and form validity.
         </output>
       </section>
     </form>
@@ -482,27 +476,30 @@ FormBehavior.storyName = 'Native form behavior';
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-  render: () => html`
-    <div
-      style="display: flex; flex-direction: column; gap: 24px; max-inline-size: 44ch;"
-    >
-      ${captioned(
-        html`
-          Slotted
-          <code>description</code>
-        `,
-        html`
+  render: () => {
+    // Muted captions so each external describedby element reads as part of its
+    // own example.
+    const caption =
+      'margin-block-end: 8px; font-size: 0.75rem; color: #6e6e6e;';
+    return html`
+      <div
+        style="display: flex; flex-direction: column; gap: 24px; max-inline-size: 44ch;"
+      >
+        <div>
+          <div style=${caption}>
+            Slotted
+            <code>description</code>
+          </div>
           <swc-text-field accessible-label="Comments">
             <span slot="description">Optional; visible to your team only.</span>
           </swc-text-field>
-        `
-      )}
-      ${captioned(
-        html`
-          <code>accessible-describedby</code>
-          : described by another element
-        `,
-        html`
+        </div>
+
+        <div>
+          <div style=${caption}>
+            <code>accessible-describedby</code>
+            : described by another element
+          </div>
           <p
             id="accessibility-external-description"
             style="margin-block: 0 8px;"
@@ -513,26 +510,9 @@ export const Accessibility: Story = {
             accessible-label="Issue details"
             accessible-describedby="accessibility-external-description"
           ></swc-text-field>
-        `
-      )}
-      ${captioned(
-        html`
-          <code>error-text</code>
-          : replaces
-          <code>description</code>
-          while
-          <code>invalid</code>
-        `,
-        html`
-          <swc-text-field accessible-label="Email address" invalid>
-            <span slot="description">
-              We'll use this to send order updates.
-            </span>
-            <span slot="error-text">Enter a valid email address.</span>
-          </swc-text-field>
-        `
-      )}
-    </div>
-  `,
+        </div>
+      </div>
+    `;
+  },
   tags: ['a11y'],
 };
