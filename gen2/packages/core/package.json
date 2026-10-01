@@ -151,6 +151,14 @@
       "types": "./dist/components/infield-button/index.d.ts",
       "import": "./dist/components/infield-button/index.js"
     },
+    "./components/menu": {
+      "types": "./dist/components/menu/index.d.ts",
+      "import": "./dist/components/menu/index.js"
+    },
+    "./components/menu/index.js": {
+      "types": "./dist/components/menu/index.d.ts",
+      "import": "./dist/components/menu/index.js"
+    },
     "./components/meter": {
       "types": "./dist/components/meter/index.d.ts",
       "import": "./dist/components/meter/index.js"
@@ -474,6 +482,12 @@
       ],
       "components/infield-button/index.js": [
         "dist/components/infield-button/index.d.ts"
+      ],
+      "components/menu": [
+        "dist/components/menu/index.d.ts"
+      ],
+      "components/menu/index.js": [
+        "dist/components/menu/index.d.ts"
       ],
       "components/meter": [
         "dist/components/meter/index.d.ts"

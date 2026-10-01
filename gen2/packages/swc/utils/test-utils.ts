@@ -134,6 +134,43 @@ export async function getComponents<T extends HTMLElement>(
 }
 
 /**
+ * Awaits a DOM event dispatched on the given element, resolving with the event
+ * object. Rejects after `timeout` ms so a missing event fails fast with a
+ * message naming the event, instead of hanging the test indefinitely.
+ *
+ * @example
+ * ```ts
+ * const afterOpenPromise = waitForEvent(menu, 'swc-after-open');
+ * menu.open = true;
+ * await afterOpenPromise;
+ * ```
+ *
+ * @param el - The element the event is dispatched on
+ * @param eventName - The event name to wait for
+ * @param timeout - Milliseconds to wait before rejecting (default 1000)
+ * @returns Promise that resolves with the event, or rejects on timeout
+ */
+export function waitForEvent<T extends Event>(
+  el: EventTarget,
+  eventName: string,
+  timeout = 1000
+): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(() => {
+      el.removeEventListener(eventName, handler);
+      reject(
+        new Error(`Timed out after ${timeout}ms waiting for "${eventName}"`)
+      );
+    }, timeout);
+    const handler = (event: Event): void => {
+      clearTimeout(timer);
+      resolve(event as T);
+    };
+    el.addEventListener(eventName, handler, { once: true });
+  });
+}
+
+/**
  * Helper to render a Lit template and return the first element.
  *
  * @example
