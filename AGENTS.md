@@ -1,6 +1,6 @@
 # Agent instructions
 
-`.ai/` is the canonical, tool-agnostic source for this repository's AI rules, skills, and lessons. Coding agents read it through native discovery paths, symlinks, and generated files, so there's nothing to load by hand. See [`.ai/README.md`](./.ai/README.md) for the catalog and the authoring guide.
+`.ai/` is the canonical, tool-agnostic source for this repository's AI rules, skills, and lessons. Coding agents read it through native discovery paths, symlinks, and generated files, so there's nothing to load by hand. See [`.ai/README.md`](./.ai/README.md) for the catalog and the authoring guide, and [`.ai/ai-system.html`](./.ai/ai-system.html) for a visual overview.
 
 ## Where things live
 
