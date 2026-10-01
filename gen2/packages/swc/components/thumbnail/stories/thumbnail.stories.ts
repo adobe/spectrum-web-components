@@ -18,6 +18,7 @@ import {
   THUMBNAIL_VALID_SIZES,
 } from '@adobe/spectrum-wc-core/components/thumbnail/index.js';
 
+import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
 // ────────────────
@@ -52,6 +53,13 @@ const meta: Meta = {
     docs: {
       subtitle: `Displays a small preview of an image, such as a layer or asset thumbnail.`,
     },
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9392-43644&p=f&t=l3GqsDFoOZJvv8ZC-0',
+    },
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-k2bpbhqi?file=package.json',
+    },
     flexLayout: 'row-wrap',
   },
   tags: ['migrated'],
@@ -73,9 +81,9 @@ const LANDSCAPE_SRC = './images/landscape-asset.jpg';
 
 export const Playground: Story = {
   args: {
-    'default-slot': '<img src="./images/avatar-preview.png" alt="Preview" />',
+    'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview" />`,
   },
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
 };
 
 // ──────────────────────────
@@ -83,11 +91,9 @@ export const Playground: Story = {
 // ──────────────────────────
 
 export const Overview: Story = {
-  render: () => html`
-    <swc-thumbnail>
-      <img src=${PLACEHOLDER_SRC} alt="Preview" />
-    </swc-thumbnail>
-  `,
+  args: {
+    'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview" />`,
+  },
   tags: ['overview'],
 };
 
@@ -96,11 +102,10 @@ export const Overview: Story = {
 // ──────────────────────────
 
 export const Anatomy: Story = {
-  render: () => html`
-    <swc-thumbnail>
-      <img src=${PLACEHOLDER_SRC} alt="Preview" />
-    </swc-thumbnail>
-  `,
+  args: {
+    size: 1000,
+    'default-slot': `<img src="${LANDSCAPE_SRC}" alt="Mountain landscape" />`,
+  },
   tags: ['anatomy'],
 };
 
@@ -109,13 +114,13 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 export const Sizes: Story = {
-  render: () => html`
-    ${THUMBNAIL_VALID_SIZES.map(
-      (size) => html`
-        <swc-thumbnail size=${size}>
-          <img src=${PLACEHOLDER_SRC} alt="Preview, size ${size}" />
-        </swc-thumbnail>
-      `
+  render: (args) => html`
+    ${THUMBNAIL_VALID_SIZES.map((size) =>
+      template({
+        ...args,
+        size,
+        'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview, size ${size}" />`,
+      })
     )}
   `,
   parameters: { flexLayout: 'row-wrap' },
@@ -123,13 +128,14 @@ export const Sizes: Story = {
 };
 
 export const Fit: Story = {
-  render: () => html`
-    ${THUMBNAIL_VALID_FITS.map(
-      (fit) => html`
-        <swc-thumbnail size="1000" fit=${fit}>
-          <img src=${LANDSCAPE_SRC} alt="Preview, fit ${fit}" />
-        </swc-thumbnail>
-      `
+  render: (args) => html`
+    ${THUMBNAIL_VALID_FITS.map((fit) =>
+      template({
+        ...args,
+        size: 1000,
+        fit,
+        'default-slot': `<img src="${LANDSCAPE_SRC}" alt="Preview, fit ${fit}" />`,
+      })
     )}
   `,
   parameters: { flexLayout: 'row-wrap' },
@@ -137,52 +143,74 @@ export const Fit: Story = {
 };
 
 // ──────────────────────────────
-//    BEHAVIORS STORIES
+//    STATES STORIES
 // ──────────────────────────────
 
 export const ConsumerStyledStates: Story = {
-  render: () => html`
+  render: (args) => html`
     <style>
+      .thumbnail-action {
+        --swc-action-button-icon-size: var(--swc-thumbnail-size-100);
+      }
+
       .disabled-thumbnail {
         opacity: var(--swc-thumbnail-opacity-disabled);
       }
-
-      .selected-thumbnail {
-        outline: var(--swc-focus-indicator-thickness) solid
-          var(--swc-focus-indicator-color);
-        outline-offset: var(--swc-focus-ring-gap);
-        border-radius: var(--swc-corner-radius-75);
-      }
     </style>
-    <swc-thumbnail class="disabled-thumbnail">
-      <img src=${PLACEHOLDER_SRC} alt="Disabled preview" />
-    </swc-thumbnail>
-    <swc-thumbnail class="selected-thumbnail">
-      <img src=${PLACEHOLDER_SRC} alt="Selected preview" />
-    </swc-thumbnail>
+    <swc-action-button class="thumbnail-action">
+      ${template({
+        ...args,
+        size: 100,
+        slot: 'icon',
+        'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview" />`,
+      })}
+      Layer 1
+    </swc-action-button>
+    <swc-action-button class="thumbnail-action" disabled>
+      ${template({
+        ...args,
+        size: 100,
+        slot: 'icon',
+        class: 'disabled-thumbnail',
+        'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview" />`,
+      })}
+      Layer 2
+    </swc-action-button>
   `,
   parameters: { flexLayout: 'row-wrap' },
-  tags: ['behaviors'],
+  tags: ['states'],
 };
+ConsumerStyledStates.storyName = 'Consumer-styled states';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-  render: () => html`
-    <swc-thumbnail>
-      <img src=${PLACEHOLDER_SRC} alt="Preview" />
-    </swc-thumbnail>
-    <swc-thumbnail decorative>
-      <img src=${PLACEHOLDER_SRC} alt="" />
-    </swc-thumbnail>
-    <button disabled>
-      <swc-thumbnail>
-        <img src=${PLACEHOLDER_SRC} alt="File preview" />
-      </swc-thumbnail>
+  render: (args) => html`
+    ${template({
+      ...args,
+      'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview" />`,
+    })}
+    ${template({
+      ...args,
+      decorative: true,
+      'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="" />`,
+    })}
+    <style>
+      .thumbnail-action {
+        --swc-action-button-icon-size: var(--swc-thumbnail-size-100);
+      }
+    </style>
+    <swc-action-button class="thumbnail-action" disabled>
+      ${template({
+        ...args,
+        size: 100,
+        slot: 'icon',
+        'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="File preview" />`,
+      })}
       Upload file
-    </button>
+    </swc-action-button>
   `,
   parameters: { flexLayout: 'row-wrap' },
   tags: ['a11y'],

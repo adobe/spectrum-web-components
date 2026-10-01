@@ -553,6 +553,32 @@ export const NoSlottedImageWarningTest: Story = {
   },
 };
 
+// An explicit `alt=""` passes the check because only the attribute's presence
+// is tested, so no warning fires even without `decorative`. Contrast
+// MissingAltWarningTest, where `alt` is absent.
+export const EmptyAltNoWarningTest: Story = {
+  render: () => '',
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'does not warn when a non-decorative image has an explicit empty alt',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const thumbnail = document.createElement(
+            'swc-thumbnail'
+          ) as Thumbnail;
+          thumbnail.innerHTML = '<img src="a.png" alt="" />';
+          canvasElement.appendChild(thumbnail);
+          await thumbnail.updateComplete;
+
+          expect(
+            warnCalls.length,
+            'no warning is emitted for an explicit empty alt'
+          ).toBe(0);
+        })
+    );
+  },
+};
+
 export const AccessibleNameNoWarningTest: Story = {
   render: () => '',
   play: async ({ canvasElement, step }) => {

@@ -118,7 +118,7 @@ test.describe('Thumbnail - ARIA Snapshots', () => {
     `);
   });
 
-  test('should remain in the accessibility tree when a consumer applies its own disabled/selected styling', async ({
+  test('should remain in the accessibility tree when a consumer applies its own disabled styling', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -127,8 +127,12 @@ test.describe('Thumbnail - ARIA Snapshots', () => {
       'swc-thumbnail'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - img "Disabled preview"
-      - img "Selected preview"
+      - button "Preview Layer 1":
+        - img "Preview"
+        - text: Layer 1
+      - button "Preview Layer 2" [disabled]:
+        - img "Preview"
+        - text: Layer 2
     `);
   });
 
