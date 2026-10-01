@@ -266,6 +266,7 @@ jobs:
           branch: changeset-release/1st-gen
           base: main
           delete-branch: true
+          labels: skip_vrt
           add-paths: |
             1st-gen
             yarn.lock
