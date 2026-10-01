@@ -54,7 +54,7 @@
 
 <!-- Document content (editable) -->
 
-> **Epic [SWC-2263](https://jira.corp.adobe.com/browse/SWC-2263)** · Planning output. Must be reviewed before implementation begins.
+> **Epic SWC-2263** · Planning output. Must be reviewed before implementation begins.
 >
 > Copy this template into `CONTRIBUTOR-DOCS/03_project-planning/03_components/split-view/migration-plan.md` before editing so the relative links, breadcrumbs, and generated sections resolve correctly.
 >
@@ -66,14 +66,13 @@
 
 - Split view is a **unique component with no React Spectrum S2 equivalent and no Figma `S2 / Web` component frame** (confirmed by requester). It also has no gen2 shared base to extend from and nothing else in gen2 currently depends on it — it can proceed as a standalone migration.
 - **Confirms the ticket's framing:** `spectrum-css` (`spectrum-two` branch) has a `splitview` component (`components/splitview/`), but its Storybook metadata tags it `"unmigrated"` — the CSS is the 1st-gen visual spec re-pointed at S2 token names, not a redesigned S2 visual. This matches the ticket's own prediction that the work is close to "updating to S2 colours." Treat it as the interim structural/token baseline. See `B4`/`Q1`. The internal design-guidance page (`Q8` in the [Decision log](#decision-log)) is a 2020, pre-S2 stub with no defined behaviors — consistent with "no design specs."
-- 1st-gen's API surface (`vertical`, `resizable`, `collapsible`, `primary-min/max`, `primary-size`, `secondary-min/max`, `splitter-pos`, `label`, `change` event) is small, coherent, and has no RSP/Figma source to reconcile against — recommend carrying it forward close to as-is, with the accessibility gaps below layered in.
-- **Accessibility is must-ship** per the existing [accessibility migration analysis](./accessibility-migration-analysis.md): `aria-valuemin`/`aria-valuemax`, a confirmed `aria-orientation` convention, and `aria-controls` moved onto the element-reference IDL pattern (`ariaControlsElements`, precedented on `Popover.base.ts`). See `B5`–`B7`.
-- Pointer-drag/keyboard event handling and the `label` naming question are resolved via gen2 precedent — see `Q2`, `Q5`, `Q6` in the [Decision log](#decision-log).
+- 1st-gen's API surface (`vertical`, `resizable`, `collapsible`, `primary-min/max`, `primary-size`, `secondary-min/max`, `splitter-pos`, `label`, `change` event) is small, coherent, and has no RSP/Figma source to reconcile against — recommend carrying it forward close to as-is, with three renames to match gen2 conventions (`label` to `accessible-label`, `vertical` to `orientation`, positional panes to named `primary`/`secondary` slots; see `B2`, `B10`, `B11`) and the accessibility gaps below layered in.
+- **Accessibility is must-ship** per the existing [accessibility migration analysis](./accessibility-migration-analysis.md): `aria-valuemin`/`aria-valuemax`, the `aria-orientation` convention preserved and verified, and `aria-controls` moved onto the element-reference IDL pattern (`ariaControlsElements`, precedented on `Popover.base.ts`). See `B5`–`B7`.
+- Pointer-drag/keyboard event handling and the naming questions are resolved via gen2 precedent — see `Q2`, `Q3`, `Q5`, `Q6`, `Q9`, `Q10` in the [Decision log](#decision-log).
 - No gen1 issues are currently tracked for this component (confirmed by requester); no breaking-change tickets exist yet — breaking-change scope should be derived from the API/accessibility diff in this plan.
 
 ### Most blocking open questions
 
-- **Q3** in [Architecture and behavior](#architecture-and-behavior): confirm the `aria-orientation` convention against real assistive technology before finalizing `B6`.
 - **Q4** in [Architecture and behavior](#architecture-and-behavior): whether the element-reference `aria-controls` relationship (`B7`, mechanism confirmed via `Popover.base.ts`'s `ariaControlsElements`) should reference only the primary pane (matching 1st-gen) or both panes — a scope-only decision now, not an implementation-risk question.
 
 ---
@@ -88,7 +87,7 @@
 
 | Property | Type | Default | Attribute | Notes |
 | -------- | ---- | ------- | --------- | ----- |
-| `vertical` | `boolean` | `false` | `vertical`, reflected | Stacks panes top/bottom instead of side by side. |
+| `vertical` | `boolean` | `false` | `vertical`, reflected | Stacks panes top/bottom instead of side by side. Replaced by `orientation` in gen2, see `B10`. |
 | `resizable` | `boolean` | `false` | `resizable`, reflected | Makes the splitter draggable and keyboard-focusable. |
 | `collapsible` | `boolean` | `false` | `collapsible`, reflected | Requires `resizable`. Ignores primary/secondary min/max at the collapse extremes. |
 | `primaryMin` | `number` | `0` | `primary-min` | Minimum size of the primary (first) pane. |
@@ -97,7 +96,7 @@
 | `secondaryMin` | `number` | `0` | `secondary-min` | Minimum size of the secondary (second) pane. |
 | `secondaryMax` | `number` | `3840` (`DEFAULT_MAX_SIZE`) | `secondary-max` | Maximum size of the secondary pane. |
 | `splitterPos` | `number \| undefined` | `undefined` | `splitter-pos`, reflected | Current splitter position in pixels; author- and program-settable. |
-| `label` | `string \| undefined` | `undefined` | `label` | Sets `aria-label` on the splitter. Defaults to `"Resize the panels"` when `resizable` and unset ([SWC-276](https://jira.corp.adobe.com/browse/SWC-276) fix). See naming question `Q2`. |
+| `label` | `string \| undefined` | `undefined` | `label` | Sets `aria-label` on the splitter. Defaults to `"Resize the panels"` when `resizable` and unset (SWC-276 fix). Renamed to `accessible-label` in gen2, see `Q2`. |
 | `controlledEl` | `HTMLElement \| undefined` | `undefined` | — (`@state`, private-ish) | First slotted child; internal, not part of the public contract. |
 | `firstPaneSize` | `string` | `'auto'` | — (private) | Internal render-only state driving the `--spectrum-split-view-first-pane-size` CSS variable. |
 | `enoughChildren` | `boolean` | `false` | — (private) | Whether \>1 child is slotted; gates whether the splitter renders at all. |
@@ -128,7 +127,7 @@ None public. All resize/position math (`updateMinMax`, `updatePosition`, `getLim
 - `--spectrum-splitview-gripper-border-radius`
 - `--spectrum-split-view-first-pane-size` — internal render-driven variable (not meant for author use), set inline on the `<slot>` per render.
 
-This full modifier surface will not be carried forward to gen2. See [CSS custom properties (gen2)](#css-custom-properties-gen2).
+This full modifier surface will not be carried forward to gen2. See [Public API](#public-api) (CSS custom properties).
 
 ### Shadow DOM output (rendered HTML)
 
@@ -180,10 +179,7 @@ No 1st-gen shared base class, mixin, or reactive controller is used beyond `Spec
 
 ## Open gen1 issues
 
-Confirmed with the ticket requester: **no gen1 (`sp-*`) issues are currently tracked** for split-view outside of the accessibility fix already captured in the [accessibility migration analysis](./accessibility-migration-analysis.md#related-1st-gen-accessibility-jira) ([SWC-276](https://jira.corp.adobe.com/browse/SWC-276), already `Done` and excluded from this table by the `a11y`-adjacent exclusion rule).
-
-| Jira | Type | Status (snapshot) | Summary |
-| ---- | ---- | ----------------- | ------- |
+Confirmed with the ticket requester: **no gen1 (`sp-*`) issues are currently tracked** for split-view outside of the accessibility fix already captured in the [accessibility migration analysis](./accessibility-migration-analysis.md) (SWC-276, already `Done`).
 
 ## Migration sequencing and prerequisites
 
@@ -224,25 +220,27 @@ The one shared-resource question worth flagging: pointer-drag + keyboard-resize 
 
 | #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ------------- | ----------------------- |
-| **B1** | Keep the full property set (`vertical`, `resizable`, `collapsible`, `primary-min/max`, `primary-size`, `secondary-min/max`, `splitter-pos`, `label`) as-is, kebab-case attributes unchanged. | Same set. | Same set. | No change for consumers; not a breaking change. Recorded here because it is the baseline the rest of this table diffs against. |
-| **B2** | `label` behavior carried forward unchanged, see `Q2` in the [Decision log](#decision-log). | `label` string sets `aria-label` on the internal splitter. | Same behavior, same property name; no rename. | None — no breaking change. |
+| **B1** | Keep the property set (`resizable`, `collapsible`, `primary-min/max`, `primary-size`, `secondary-min/max`, `splitter-pos`) as-is, kebab-case attributes unchanged. `label` and `vertical` are renamed, see `B2` and `B10`. | Same set. | Same set, with `label` renamed to `accessible-label` and `vertical` replaced by `orientation`. | No change for consumers beyond `B2` and `B10`. Recorded here because it is the baseline the rest of this table diffs against. |
+| **B2** | Rename `label` to `accessible-label` to match the established gen2 accessible-name API (for example, icons), see `Q2` in the [Decision log](#decision-log). | `label` string sets `aria-label` on the internal splitter. | `accessible-label` string sets `aria-label` on the internal splitter; same behavior. | Replace `label="…"` with `accessible-label="…"` (property: `accessibleLabel`). |
 | **B3** | Replace the internal `WithSWCResizeObserver`/`SWCResizeObserver` custom typings in `types.ts` with the standard DOM `ResizeObserver` type. | Custom fallback typing, likely written for older TS lib support. | Use `ResizeObserver` directly from `lib.dom.d.ts`. | Internal-only; no consumer-facing change. |
+| **B10** | Replace boolean `vertical` with `orientation` (`'horizontal' \| 'vertical'`) to match the established gen2 orientation API (for example, `swc-action-group`). Note that `orientation` describes the **pane layout**; the splitter's `aria-orientation` is the opposite value (see `B6`). | `vertical` boolean; absent means side-by-side panes. | `orientation="horizontal"` (default) or `orientation="vertical"`. | Replace `vertical` with `orientation="vertical"`; remove nothing for the default layout. |
+| **B11** | Replace positional default-slot panes with named `primary` and `secondary` slots, so pane assignment is explicit and `render()` can template each pane. Slot names match the existing `primary-*`/`secondary-*` properties. | First two default-slot children are the panes; extras are hidden via `::slotted(:nth-child(n + 3))`. | Panes go in `slot="primary"` and `slot="secondary"`; no child counting. | Add `slot="primary"` to the first pane and `slot="secondary"` to the second. Remove any extra children, which no longer render. |
 
 #### Styling and visuals
 
 | #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ------------- | ----------------------- |
-| **B4** | Adopt `spectrum-css` `splitview` (`spectrum-two` branch) structural classes/tokens as the styling baseline, **with the caveat that this CSS is tagged `"unmigrated"`** (no confirmed S2 visual redesign exists yet). See `Q1`. | 1st-gen bespoke CSS (`split-view.css`, `spectrum-split-view.css`, `split-view-overrides.css`) mapped to "system" tokens. | `--swc-*` custom properties per gen2 convention (background, handle/gripper color, gripper radius); `forced-colors` support carried forward from the spectrum-css source. | Visual-only; author-facing `--mod-*` properties are dropped per standard gen2 policy (see [Must ship](#must-ship--breaking-or-a11y-required) framing above and [CSS custom properties (gen2)](#css-custom-properties-gen2)). |
+| **B4** | Adopt `spectrum-css` `splitview` (`spectrum-two` branch) structural classes/tokens as the styling baseline, **with the caveat that this CSS is tagged `"unmigrated"`** (no confirmed S2 visual redesign exists yet). See `Q1`. | 1st-gen bespoke CSS (`split-view.css`, `spectrum-split-view.css`, `split-view-overrides.css`) mapped to "system" tokens. | `--swc-*` custom properties per gen2 convention (background, handle/gripper color, gripper radius); `forced-colors` support carried forward from the spectrum-css source. | Visual-only; author-facing `--mod-*` properties are dropped per standard gen2 policy (see [Must ship](#must-ship--breaking-or-a11y-required) framing above and [Public API](#public-api) (CSS custom properties)). |
 
 #### Accessibility and behavior
 
 | #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ------------- | ----------------------- |
 | **B5** | Add `aria-valuemin="0"` / `aria-valuemax="100"` alongside the existing `aria-valuenow` whenever `resizable`. | `aria-valuenow` only. | `aria-valuemin`/`aria-valuemax` always paired with `aria-valuenow`. | None; additive attribute, not observable as an API change. |
-| **B6** | Confirm and document the `aria-orientation` convention (line orientation vs. axis of motion) against real screen reader output; keep or correct the mapping per that finding. | Sets `aria-orientation` to describe the divider **line's** visual orientation. | Same, unless manual AT testing during the accessibility phase indicates the mapping should invert. | None if unchanged; if inverted, this is a behavior correction, not an author-facing API change. |
+| **B6** | Keep the 1st-gen `aria-orientation` mapping: it describes the divider **line's** orientation, not the axis of motion, per the [ARIA separator role](https://www.w3.org/TR/wai-aria-1.2/#separator) and the [APG window splitter pattern](https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/). Verify in the screen reader pass. | Sets `aria-orientation` to describe the divider **line's** visual orientation. | Same. | None. |
 | **B7** | Move `aria-controls` off a plain ID string crossing the shadow boundary onto the project's element-reference IDL pattern (`ariaControlsElements`), per the accessibility migration analysis, reusing the shape from `Popover.base.ts`. Scope (primary pane only vs. both) remains open, see `Q4`. | `aria-controls="<id>"` referencing a light-DOM child's `id`, assigned by the component itself. | Element-reference IDL property in addition to (or instead of) the ID string. | None for consumers using the public attribute/property surface; internal wiring change only. |
-| **B8** | Preserve the [SWC-276](https://jira.corp.adobe.com/browse/SWC-276) fix: default `aria-label` ("Resize the panels") whenever `resizable` and no `label` is set. Never ship a focusable, unnamed divider. | Fixed in 1st-gen. | Same behavior, unit-tested as a regression guard. | None. |
-| **B9** | Preserve the full keyboard map (Arrow keys, Page Up/Down, Home, End, Tab/Shift+Tab; RTL- and `vertical`-aware) and the pointer-drag resize/collapse behavior 1:1, including nested split views (each divider is an independent tab stop). | Implemented via `streamingListener` + private math methods. | Same behavior; math logic re-homed into `core/components/split-view/` per the [Architecture](#architecture-core-vs-swc-split) recommendation. | None; purely internal architecture. |
+| **B8** | Preserve the SWC-276 fix: default `aria-label` ("Resize the panels") whenever `resizable` and no `accessible-label` is set. Never ship a focusable, unnamed divider. | Fixed in 1st-gen. | Same behavior, unit-tested as a regression guard. | None. |
+| **B9** | Preserve the full keyboard map (Arrow keys, Page Up/Down, Home, End, Tab/Shift+Tab; RTL- and `orientation`-aware) and the pointer-drag resize/collapse behavior 1:1, including nested split views (each divider is an independent tab stop). | Implemented via `streamingListener` + private math methods. | Same behavior; math logic re-homed into `core/components/split-view/` per the [Architecture](#architecture-core-vs-swc-split) recommendation. | None; purely internal architecture. |
 
 ### Additive — ships when ready, zero breakage for consumers already on gen2
 
@@ -252,6 +250,7 @@ The one shared-resource question worth flagging: pointer-drag + keyboard-resize 
 | **A2** | <kbd>Enter</kbd> key binding to toggle the primary pane's collapsed state directly (parity with some external implementations, e.g. Nord Health's resizable handle). | 1st-gen has no such binding; purely additive, no regression risk. |
 | **A3** | Expand `aria-controls` (or its element-reference IDL equivalent) to reference **both** panes instead of only the primary one. | The accessibility migration analysis flags this as worth considering since dragging affects both panes' sizes, not only the primary one. |
 | **A4** | Promote the drag/resize calculation logic to a shared, cross-component core controller. | Deferred until a second real consumer exists; premature now (see [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites)). |
+| **A5** | <kbd>Shift</kbd> + Arrow key moves the splitter double the arrow-key step (20px instead of 10px). | Matches common design-tool behavior and Nord Health's resizable handle. 1st-gen ignores <kbd>Shift</kbd>; purely additive. Ships with the initial gen2 migration, not deferred. <kbd>Page Up</kbd>/<kbd>Page Down</kbd> stays at 50px. |
 
 ---
 
@@ -271,24 +270,25 @@ Use lightweight confidence labels where helpful:
 
 | Property | Type | Default | Attribute | Notes |
 | -------- | ---- | ------- | --------- | ----- |
-| `vertical` | `boolean` | `false` | `vertical`, reflected | **Confirmed.** Unchanged from 1st-gen. |
+| `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | `orientation`, reflected | **Confirmed.** Replaces 1st-gen `vertical`, see `B10`. `vertical` stacks panes top/bottom. |
 | `resizable` | `boolean` | `false` | `resizable`, reflected | **Confirmed.** Unchanged from 1st-gen. |
 | `collapsible` | `boolean` | `false` | `collapsible`, reflected | **Confirmed.** Unchanged from 1st-gen; still requires `resizable`. |
 | `primaryMin` / `primaryMax` | `number` | `0` / `3840` | `primary-min` / `primary-max` | **Confirmed.** Unchanged from 1st-gen. |
 | `primarySize` | `string \| undefined` | `undefined` | `primary-size` | **Confirmed.** Unchanged from 1st-gen (pixel/percentage/`"auto"`). |
 | `secondaryMin` / `secondaryMax` | `number` | `0` / `3840` | `secondary-min` / `secondary-max` | **Confirmed.** Unchanged from 1st-gen. |
 | `splitterPos` | `number \| undefined` | `undefined` | `splitter-pos`, reflected | **Confirmed.** Unchanged from 1st-gen. |
-| `label` (name **open**, see `Q2`) | `string \| undefined` | `undefined` | `label` (or renamed, e.g. `resize-label`) | **Open question.** Behavior (default `"Resize the panels"` accessible name, override via this property) is confirmed; the property **name** is not. |
+| `accessibleLabel` | `string \| undefined` | `undefined` | `accessible-label` | Sets the splitter's accessible name. Defaults to `"Resize the panels"` when `resizable` and unset. Renamed from 1st-gen `label`, see `B2` and `Q2`. |
 
 #### Visual matrix (gen2)
 
-**N/A.** Split view has no color/fill/variant family — its only visual axes are `orientation` (`horizontal`/`vertical`, via `vertical`) and interaction state classes (`is-resized-start/end`, `is-collapsed-start/end`, hover/active/focus-visible) driven by the splitter's own state, not an author-facing variant property. There is no Figma component frame and no RSP implementation to cross-check a variant matrix against (confirmed by requester); the only visual source is the `spectrum-css` `splitview` component, itself tagged `"unmigrated"` (see `Q1`).
+**N/A.** Split view has no color/fill/variant family — its only visual axes are `orientation` (`horizontal`/`vertical`, via the `orientation` property) and interaction state classes (`is-resized-start/end`, `is-collapsed-start/end`, hover/active/focus-visible) driven by the splitter's own state, not an author-facing variant property. There is no Figma component frame and no RSP implementation to cross-check a variant matrix against (confirmed by requester); the only visual source is the `spectrum-css` `splitview` component, itself tagged `"unmigrated"` (see `Q1`).
 
 #### Slots (gen2)
 
 | Slot | Content | Notes |
 | ---- | ------- | ----- |
-| default | Exactly two child elements: primary (first) and secondary (second) pane. | **Confirmed.** Unchanged from 1st-gen. Third-and-beyond children remain hidden via CSS, not removed, matching 1st-gen. |
+| `primary` | The first (start or top) pane. | **Confirmed.** Replaces positional default-slot content, see `B11`. |
+| `secondary` | The second (end or bottom) pane. | **Confirmed.** Replaces positional default-slot content, see `B11`. The splitter renders only when both slots have content. |
 
 #### CSS custom properties (gen2)
 
@@ -300,7 +300,7 @@ Initial expectation for Split View is a small reviewed set, likely limited to sp
 
 ### Behavioral semantics
 
-- **Two-pane-only slotting.** Only the first two slotted children are laid out; anything beyond that is hidden via `::slotted(:nth-child(n + 3))`, not removed from the DOM. Preserve this rather than throwing or truncating, to avoid a breaking change for any consumer currently (perhaps unintentionally) relying on it.
+- **Named pane slots.** Panes are assigned explicitly through the `primary` and `secondary` slots instead of counting default-slot children. Each slot is templated in `render()`, and the splitter renders only when both slots have content. Children without a matching `slot` are not rendered. See `B11`.
 - **`resizable`/`collapsible` coupling.** `collapsible` has no effect unless `resizable` is also set. Preserve this dependency; do not make `collapsible` independently meaningful as part of this migration (would be a scope-expanding behavior change, not a like-for-like port).
 - **Nested split views.** Each `sp-split-view` (or its gen2 equivalent) instance manages its own splitter and tab stop independently; nesting one inside a pane of another is supported today purely through normal slot composition, with no special-cased code. Confirm this composition still works unmodified once the render moves to the `spectrum-css`-based class structure.
 - **`primarySize: "auto"` timing.** 1st-gen's `calcStartPos()` awaits a slotted `LitElement` child's `updateComplete` before measuring, to avoid racing a Lit child's own first render. Preserve this await; dropping it would reintroduce a layout race that 1st-gen already fixed.
@@ -312,7 +312,7 @@ Initial expectation for Split View is a small reviewed set, likely limited to sp
 See the [accessibility migration analysis](./accessibility-migration-analysis.md) for the full rationale; must-ship items are folded into `B5`–`B9` above. In summary for gen2:
 
 - Non-resizable: `role="separator"`, no name, no value attributes, not focusable.
-- Resizable: `role="separator"` behaving as a range widget — `tabindex="0"`, a name (default or `label`-equivalent), `aria-valuenow`/`aria-valuemin`/`aria-valuemax`, `aria-orientation` (convention to be confirmed against real screen readers, `Q3` — not just carried over unexamined), and an `aria-controls` relationship wired through the element-reference IDL pattern rather than a plain cross-shadow-boundary ID string (`B7`).
+- Resizable: `role="separator"` behaving as a range widget — `tabindex="0"`, a name (default or `accessible-label`), `aria-valuenow`/`aria-valuemin`/`aria-valuemax`, `aria-orientation` describing the divider line's orientation (`B6`), and an `aria-controls` relationship wired through the element-reference IDL pattern rather than a plain cross-shadow-boundary ID string (`B7`).
 
 ---
 
@@ -326,7 +326,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_gen2-component-mi
 
 | Layer    | Path                                         | Contains                                                                                                                                                                                                                                          |
 | -------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Core** | `gen2/packages/core/components/split-view/`  | `SplitView.base.ts`, `SplitView.types.ts`: default/min/max/collapse-threshold constants, position/collapse math (`getLimitedPosition`, `updateMinMax`-equivalent, `calcStartPos`-equivalent), keyboard-direction resolution (RTL/`vertical`-aware), the pointer-drag/keyboard event listeners themselves (mirroring `ColorHandleBase`'s `addEventListener('pointerdown', ...)` pattern), accessible-name default resolution ([SWC-276](https://jira.corp.adobe.com/browse/SWC-276) fix), and `aria-valuenow`/`aria-valuemin`/`aria-valuemax` value computation. No rendering, no CSS, no element registration. |
+| **Core** | `gen2/packages/core/components/split-view/`  | `SplitView.base.ts`, `SplitView.types.ts`: default/min/max/collapse-threshold constants, position/collapse math (`getLimitedPosition`, `updateMinMax`-equivalent, `calcStartPos`-equivalent), keyboard-direction resolution (RTL/`orientation`-aware), the pointer-drag/keyboard event listeners themselves (mirroring `ColorHandleBase`'s `addEventListener('pointerdown', ...)` pattern), accessible-name default resolution (SWC-276 fix), and `aria-valuenow`/`aria-valuemin`/`aria-valuemax` value computation. No rendering, no CSS, no element registration. |
 | **SWC**  | `gen2/packages/swc/components/split-view/`   | `SplitView.ts`, `split-view.css`, element registration, stories, tests. Owns `render()` (the `spectrum-css`-based `<slot>`/splitter/gripper markup), the `@query`-resolved DOM references core needs to attach listeners to, and the element-reference IDL wiring for `aria-controls` (`B7`, same `ariaControlsElements` property as `Popover.base.ts`). |
 
 Planned rendering shape:
@@ -359,8 +359,8 @@ See `Q5`/`Q6` in the [Decision log](#decision-log) for the precedent resolving t
 
 #### Naming and public surface
 
-- [ ] `SplitView.types.ts`: define the property/attribute shape from [Properties / attributes (gen2)](#properties--attributes-gen2), including the resolved name for the `label`/`resize-label` property once `Q2` is settled
-- [ ] `SplitView.base.ts`: retain `vertical`, `resizable`, `collapsible`, `primaryMin`/`primaryMax`/`primarySize`, `secondaryMin`/`secondaryMax`, `splitterPos`; port the pure position/collapse math and accessible-name/value-attribute resolution described in [Architecture](#architecture-core-vs-swc-split)
+- [ ] `SplitView.types.ts`: define the property/attribute shape from [Public API](#public-api) (properties / attributes), including `accessible-label` (see `Q2`)
+- [ ] `SplitView.base.ts`: add `orientation`; retain `resizable`, `collapsible`, `primaryMin`/`primaryMax`/`primarySize`, `secondaryMin`/`secondaryMax`, `splitterPos`; port the pure position/collapse math and accessible-name/value-attribute resolution described in [Architecture](#architecture-core-vs-swc-split)
 
 #### Alignment checks
 
@@ -393,36 +393,37 @@ See `Q5`/`Q6` in the [Decision log](#decision-log) for the precedent resolving t
 - [ ] Non-resizable divider: `role="separator"`, no name, no value attributes, not focusable (`B` baseline, no gap)
 - [ ] Resizable divider: `role="separator"`, `tabindex="0"`, name (default `"Resize the panels"` or override), `aria-valuenow` + new `aria-valuemin`/`aria-valuemax` (`B5`), `aria-orientation` (`B6`)
 - [ ] Wire `aria-controls` via the element-reference IDL pattern instead of a plain cross-shadow-boundary ID string (`B7`)
-- [ ] Preserve the [SWC-276](https://jira.corp.adobe.com/browse/SWC-276) default-name fix as a regression-guarded unit test (`B8`)
+- [ ] Preserve the SWC-276 default-name fix as a regression-guarded unit test (`B8`)
 
 #### State verification
 
-- [ ] Manual screen reader pass confirming the actual announced `aria-orientation` convention (`B6`/`Q3`)
-- [ ] Manual screen reader pass re-testing the mobile/touch scenario from [SWC-276](https://jira.corp.adobe.com/browse/SWC-276) so it does not resurface
+- [ ] Manual screen reader pass verifying the `aria-orientation` announcement matches the line-orientation mapping (`B6`)
+- [ ] Manual screen reader pass re-testing the mobile/touch scenario from SWC-276 so it does not resurface
 - [ ] Non-text contrast (WCAG 1.4.11) verified for the divider line and gripper in default, hover, focus-visible, and `forced-colors` states
 - [ ] Touch/pointer target size for the drag handle confirmed or documented as an accepted exception (WCAG 2.5.8)
 
 ### Testing
 
 - [ ] Port `1st-gen/packages/split-view/test/split-view.test.ts` coverage that still applies (see full list of 1st-gen test names in [References](#references))
-- [ ] Add Playwright `split-view.a11y.spec.ts` with `toMatchAriaSnapshot` covering non-resizable, resizable, collapsible, vertical, and custom-label stories
-- [ ] Run `aXe` (WCAG 2.x rule set) against Storybook stories for default, `resizable`, `collapsible`, `vertical`, and nested split-view cases, per the [accessibility migration analysis](./accessibility-migration-analysis.md#testing)
+- [ ] Add Playwright `split-view.a11y.spec.ts` with `toMatchAriaSnapshot` covering non-resizable, resizable, collapsible, `orientation="vertical"`, and custom-label stories
+- [ ] Run `aXe` (WCAG 2.x rule set) against Storybook stories for default, `resizable`, `collapsible`, `orientation="vertical"`, and nested split-view cases, per the [accessibility migration analysis](./accessibility-migration-analysis.md#testing)
 
 #### Behavior
 
-- [ ] Pointer-drag resize in `ltr` and `rtl`, horizontal and `vertical`
-- [ ] Keyboard resize: Arrow keys, Page Up/Down, Home, End, in `ltr`/`rtl` and horizontal/`vertical`
-- [ ] Collapse-to-extreme behavior via drag and via Home/End, horizontal and `vertical`
+- [ ] Pointer-drag resize in `ltr` and `rtl`, both orientations
+- [ ] Keyboard resize: Arrow keys, Page Up/Down, Home, End, in `ltr`/`rtl` and both orientations
+- [ ] <kbd>Shift</kbd> + Arrow keys move double the arrow-key step, in `ltr`/`rtl` and both orientations (`A5`)
+- [ ] Collapse-to-extreme behavior via drag and via Home/End, both orientations
 - [ ] `change` event fires only when `splitterPos` actually changes (not on every pointer move)
 - [ ] `primarySize` variants: pixel, percentage, `"auto"` (including the `updateComplete` await for a slotted `LitElement` child)
 - [ ] Splitter position is preserved when panes are removed/re-added
 - [ ] Single-child case renders no splitter; 3rd-and-beyond children are hidden, not removed
 - [ ] Nested split views: each divider is an independent tab stop, no roving-tabindex interference
-- [ ] Custom `label` overrides the default accessible name; default name is present whenever `resizable` with no `label` set
+- [ ] Custom `accessible-label` overrides the default accessible name; default name is present whenever `resizable` with no `accessible-label` set
 
 #### Visual regression
 
-- [ ] Add VRT coverage for horizontal/`vertical`, `resizable`, `collapsible`, and collapsed-start/collapsed-end states
+- [ ] Add VRT coverage for both orientations, `resizable`, `collapsible`, and collapsed-start/collapsed-end states
 - [ ] Add focus-visible regression coverage for the splitter's focus-visible state
 - [ ] Add `forced-colors: active` coverage mirroring the `spectrum-css` `WithForcedColors` story
 
@@ -431,12 +432,14 @@ See `Q5`/`Q6` in the [Decision log](#decision-log) for the precedent resolving t
 #### General
 
 - [ ] JSDoc on all public props (including `@fires change`) and the exposed `--swc-*` CSS custom properties
-- [ ] Storybook stories for: default (horizontal), `resizable`, `resizable` + `collapsible`, `vertical` variants of each, and a nested/multi-level example (mirroring 1st-gen's README demos)
+- [ ] Storybook stories for: default (horizontal), `resizable`, `resizable` + `collapsible`, `orientation="vertical"` variants of each, and a nested/multi-level example (mirroring 1st-gen's README demos)
 - [ ] State plainly (per the [accessibility migration analysis](./accessibility-migration-analysis.md#recommendations-swc-split-view)) that the divider is non-interactive and nameless by default, and becomes a named, focusable, valued widget the moment `resizable` is set — there is no in-between state
 
 #### Breaking changes
 
-- [ ] No `label` rename — `Q2` resolved to keep the property as-is (see [Decision log](#decision-log)); no consumer migration note needed for this item
+- [ ] Document the `label` to `accessible-label` rename in the consumer migration guide (see `B2` and `Q2`)
+- [ ] Document the `vertical` to `orientation` replacement (see `B10` and `Q9`)
+- [ ] Document the move to named `primary` and `secondary` slots (see `B11` and `Q10`)
 
 ### Review
 
@@ -445,7 +448,7 @@ See `Q5`/`Q6` in the [Decision log](#decision-log) for the precedent resolving t
 
 - [ ] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
 - [ ] Status table in workstream doc updated
-- [ ] PR created with description referencing Epic [SWC-2263](https://jira.corp.adobe.com/browse/SWC-2263)
+- [ ] PR created with description referencing Epic SWC-2263
 - [ ] Peer engineer sign-off
 
 ---
@@ -479,7 +482,7 @@ No open design blockers — see `Q1` in the [Decision log](#decision-log).
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| **Q3** | Confirm the `aria-orientation` convention (line orientation vs. axis of motion) against real assistive technology before finalizing `B6`; do not just carry over the 1st-gen mapping unexamined. | Yes, for a11y sign-off, not for prep | Open — scheduled for accessibility migration phase | Accessibility reviewer |
+| **Q3** | Confirm the `aria-orientation` convention (line orientation vs. axis of motion). | No | Resolved: line orientation, per the ARIA separator role, the APG window splitter pattern, and Nord; see `B6` | Accessibility reviewer |
 | **Q4** | Should `aria-controls` (element-reference IDL, `B7`) reference only the primary pane (matching 1st-gen) or both panes (per `A3`, since dragging affects both sizes)? Recommend: primary-only at baseline (matches 1st-gen behavior, avoids scope creep), expand to both under `A3` if reviewers agree it's warranted. | Yes, for finalizing `B7`'s scope | Open — needs accessibility reviewer confirmation | Accessibility reviewer |
 
 ### Scope and prerequisites
@@ -491,7 +494,7 @@ No open design blockers — see `Q1` in the [Decision log](#decision-log).
 <!-- Where possible, include the next action in the Item text or Status so reviewers know how to resolve the question. -->
 <!-- Final-state deferred-ticket table columns: `Ticket`, `Deferred item`, `Why deferred`, `Related plan section`. -->
 
-**Deferred-ticket table (out-of-scope work to file under the epic):** Not yet created. Per the acceptance criteria, Jira tickets should be filed under [SWC-2263](https://jira.corp.adobe.com/browse/SWC-2263) with the `deferred` label for: `A1` (localized `aria-valuetext`), `A2` (Enter-to-collapse keyboard shortcut), `A3` (dual-pane `aria-controls`), and `A4` (promote drag/resize math to a shared core controller, if/when a second consumer appears). This agent cannot create Jira tickets directly — see [What to provide next](#what-to-provide-next) in the review prompt below.
+**Deferred-ticket table (out-of-scope work to file under the epic):** Not yet created. Per the acceptance criteria, tickets should be filed under SWC-2263 with the `deferred` label for: `A1` (localized `aria-valuetext`), `A2` (Enter-to-collapse keyboard shortcut), `A3` (dual-pane `aria-controls`), and `A4` (promote drag/resize math to a shared core controller, if/when a second consumer appears).
 
 ---
 
@@ -511,10 +514,12 @@ Rules:
 | Ref | Decision | Rationale / context |
 | --- | -------- | ------------------- |
 | **Q1** | Ship the `spectrum-css` "unmigrated" `splitview` CSS as the interim styling baseline; do not hold for a formal Design review. | No design specs or S2 visual redesign exist for split-view (confirmed by requester and by `Q8`), so there is no design owner to gate on. The ticket's own expectation ("should be as simple as updating to S2 colours") matches this baseline's actual shape (1st-gen visual, S2 token names). Revisit only if Design produces a real S2 visual pass later. |
-| **Q2** | Keep the property name `label` as-is; no rename to `resize-label`. | `ProgressCircle.base.ts` (`gen2/packages/core/components/progress-circle/`) already uses `label` as an accessible-name-only property — same shape as split-view's `label`, contradicting the gen2 vocabulary note that `label` always means visible content. Renaming would create inconsistency with `progress-circle`, not resolve it. |
+| **Q2** | Rename `label` to `accessible-label`. | Matches the accessible-name-only API already established in gen2 (for example, icons use `accessible-label`). In gen2, `label` is reserved for visible content. |
 | **Q5** | Pointer-drag and keyboard event listeners live in `core/components/split-view/SplitView.base.ts`, alongside the position/collapse math — not confined to pure, DOM-ref-free logic. | `ColorHandle.base.ts` (`gen2/packages/core/components/color-handle/`) registers `pointerdown`/`pointerup`/`pointercancel` listeners directly in `firstUpdated()`; its [migration plan](../color-handle/migration-plan.md#architecture-core-vs-swc-split) states "Core owns API normalization, pointer/touch state, and the contrast-decision helper." Core's `AGENTS.md` bars rendering/CSS/registration, not event listeners. |
 | **Q6** | No shared cross-component controller for pointer-drag resize logic. Author it directly in `SplitView.base.ts`. | Same `color-handle` precedent as `Q5` — interactive components own their pointer logic in their own base class, not a shared `core/controllers/` entry. Revisit only if a second resizable-panel-style consumer emerges. |
 | **Q8** | The internal "Drag bars and thumbs" guidelines page (linked from `spectrum-css`'s `splitview` `package.json`) adds no API or behavior guidance. | 2020, pre-S2 Adobe XD stub (`beta` slug) with `defined_behaviors`, `keyboard_interactions`, `usage_guidelines`, and `spectrum_web_components` all `"no"`, and "For Position Only" placeholder sections. Confirms the ticket's "no design specs" framing at the guidance level, despite the separate `spectrum-css` CSS artifact (`Q1`). |
+| **Q9** | Replace `vertical` with `orientation`. | Matches the orientation API already established in gen2 (for example, `swc-action-group` uses `orientation`). See `B10`. |
+| **Q10** | Use named `primary` and `secondary` slots instead of positional default-slot children. | Explicit assignment is less implicit than counting children and lets `render()` template each pane. Names align with `primary-size`, `primary-min/max`, and `secondary-min/max`. See `B11`. |
 
 ---
 
@@ -534,5 +539,5 @@ Rules:
 - [Spectrum CSS — `splitview` component, `spectrum-two` branch](https://github.com/adobe/spectrum-css/tree/spectrum-two/components/splitview) — structural/token reference only; Storybook-tagged `"unmigrated"` (no confirmed S2 visual redesign). Reviewed source: `spectrum-css/components/splitview/index.css` and `stories/template.js` from a sibling checkout on **`spectrum-two`**. See the [Setup](#setup) checklist and `Q1`.
 - [Drag bars and thumbs (beta) — Spectrum Contributions](https://spectrum-contributions.corp.adobe.com/page/drag-bars-thumbs-beta/) — internal design-guidance stub linked from the `spectrum-css` `splitview` `package.json`; confirmed to be a 2020, pre-S2, Adobe XD-based "For Position Only" placeholder with no defined behaviors, keyboard interactions, or SWC/RSP guidance. See `Q8` in the [Decision log](#decision-log).
 - [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
-- Epic: [SWC-2263](https://jira.corp.adobe.com/browse/SWC-2263) — Split View epic
-- [SWC-276](https://jira.corp.adobe.com/browse/SWC-276) — [a11y] SplitView is entirely ignored by screen readers on mobile (Done; fix preserved per `B8`)
+- Epic: SWC-2263 (Split View epic)
+- SWC-276: [a11y] SplitView is entirely ignored by screen readers on mobile (Done; fix preserved per `B8`)
