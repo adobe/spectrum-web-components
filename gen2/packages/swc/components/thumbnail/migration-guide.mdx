@@ -47,13 +47,13 @@ import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
 ### Removed in Spectrum 2
 
-| Removed                | Replacement                                                                                                                                                                                       |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `background` attribute | None. The frame's opacity checkerboard covers any background set on `<swc-thumbnail>` or a wrapper, so it never shows. For a custom background or letterboxing, compose your own preview element. |
-| `layer` attribute      | Apply your own border styling directly to `<swc-thumbnail>` or a wrapping element.                                                                                                                |
-| `disabled` attribute   | Apply your own dimmed/opacity styling to `<swc-thumbnail>` from the parent component that is actually disabled.                                                                                   |
-| `focused` attribute    | The parent interactive element that wraps the thumbnail draws its own focus ring.                                                                                                                 |
-| `selected` attribute   | Apply your own selected-state styling (for example an outline) to `<swc-thumbnail>` from the parent component.                                                                                    |
+| Removed                                         | Replacement                                                                                                                                                                                       |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `background` attribute                          | None. The frame's opacity checkerboard covers any background set on `<swc-thumbnail>` or a wrapper, so it never shows. For a custom background or letterboxing, compose your own preview element. |
+| `layer` attribute                               | Apply your own border styling directly to `<swc-thumbnail>` or a wrapping element.                                                                                                                |
+| `disabled` attribute (CSS-only, no JS property) | Apply your own dimmed/opacity styling to `<swc-thumbnail>` from the parent component that is actually disabled.                                                                                   |
+| `focused` attribute (CSS-only, no JS property)  | The parent interactive element that wraps the thumbnail draws its own focus ring.                                                                                                                 |
+| `selected` attribute (CSS-only, no JS property) | Apply your own selected-state styling (for example an outline) to `<swc-thumbnail>` from the parent component.                                                                                    |
 
 ## Update your code
 

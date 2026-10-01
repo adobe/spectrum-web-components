@@ -90,11 +90,9 @@ export const Playground: Story = {
 // ──────────────────────────
 
 export const Overview: Story = {
-  render: () => html`
-    <swc-thumbnail>
-      <img src=${PLACEHOLDER_SRC} alt="Preview" />
-    </swc-thumbnail>
-  `,
+  args: {
+    'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview" />`,
+  },
   tags: ['overview'],
 };
 
@@ -103,11 +101,9 @@ export const Overview: Story = {
 // ──────────────────────────
 
 export const Anatomy: Story = {
-  render: () => html`
-    <swc-thumbnail>
-      <img src=${PLACEHOLDER_SRC} alt="Preview" />
-    </swc-thumbnail>
-  `,
+  args: {
+    'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview" />`,
+  },
   tags: ['anatomy'],
 };
 
@@ -116,13 +112,13 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 export const Sizes: Story = {
-  render: () => html`
-    ${THUMBNAIL_VALID_SIZES.map(
-      (size) => html`
-        <swc-thumbnail size=${size}>
-          <img src=${PLACEHOLDER_SRC} alt="Preview, size ${size}" />
-        </swc-thumbnail>
-      `
+  render: (args) => html`
+    ${THUMBNAIL_VALID_SIZES.map((size) =>
+      template({
+        ...args,
+        size,
+        'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview, size ${size}" />`,
+      })
     )}
   `,
   parameters: { flexLayout: 'row-wrap' },
@@ -130,13 +126,14 @@ export const Sizes: Story = {
 };
 
 export const Fit: Story = {
-  render: () => html`
-    ${THUMBNAIL_VALID_FITS.map(
-      (fit) => html`
-        <swc-thumbnail size="1000" fit=${fit}>
-          <img src=${LANDSCAPE_SRC} alt="Preview, fit ${fit}" />
-        </swc-thumbnail>
-      `
+  render: (args) => html`
+    ${THUMBNAIL_VALID_FITS.map((fit) =>
+      template({
+        ...args,
+        size: 1000,
+        fit,
+        'default-slot': `<img src="${LANDSCAPE_SRC}" alt="Preview, fit ${fit}" />`,
+      })
     )}
   `,
   parameters: { flexLayout: 'row-wrap' },
@@ -148,7 +145,7 @@ export const Fit: Story = {
 // ──────────────────────────────
 
 export const ConsumerStyledStates: Story = {
-  render: () => html`
+  render: (args) => html`
     <style>
       .disabled-thumbnail {
         opacity: var(--swc-thumbnail-opacity-disabled);
@@ -162,15 +159,19 @@ export const ConsumerStyledStates: Story = {
       }
     </style>
     <button type="button" disabled>
-      <swc-thumbnail class="disabled-thumbnail">
-        <img src=${PLACEHOLDER_SRC} alt="Preview" />
-      </swc-thumbnail>
+      ${template({
+        ...args,
+        class: 'disabled-thumbnail',
+        'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview" />`,
+      })}
       Layer 1
     </button>
     <button type="button" aria-pressed="true">
-      <swc-thumbnail class="selected-thumbnail">
-        <img src=${PLACEHOLDER_SRC} alt="Preview" />
-      </swc-thumbnail>
+      ${template({
+        ...args,
+        class: 'selected-thumbnail',
+        'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview" />`,
+      })}
       Layer 2
     </button>
   `,
@@ -184,17 +185,21 @@ ConsumerStyledStates.storyName = 'Consumer-styled states';
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-  render: () => html`
-    <swc-thumbnail>
-      <img src=${PLACEHOLDER_SRC} alt="Preview" />
-    </swc-thumbnail>
-    <swc-thumbnail decorative>
-      <img src=${PLACEHOLDER_SRC} alt="" />
-    </swc-thumbnail>
-    <button disabled>
-      <swc-thumbnail>
-        <img src=${PLACEHOLDER_SRC} alt="File preview" />
-      </swc-thumbnail>
+  render: (args) => html`
+    ${template({
+      ...args,
+      'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview" />`,
+    })}
+    ${template({
+      ...args,
+      decorative: true,
+      'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="" />`,
+    })}
+    <button type="button" disabled>
+      ${template({
+        ...args,
+        'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="File preview" />`,
+      })}
       Upload file
     </button>
   `,
