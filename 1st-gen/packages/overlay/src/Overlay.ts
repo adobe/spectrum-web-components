@@ -437,6 +437,9 @@ export class Overlay extends ComputedOverlayBase {
    */
   private _focusTrap: FocusTrap | null = null;
 
+  /** Identifies the latest call to `managePopoverOpen()`. */
+  private popoverOperation = 0;
+
   /**
    * Provides an instance of the `ElementResolutionController` for managing the element
    * that the overlay should be associated with. If the instance does not already exist,
@@ -561,16 +564,21 @@ export class Overlay extends ComputedOverlayBase {
     super.managePopoverOpen();
 
     const targetOpenState = this.open;
+    // Invalidate earlier open or close work, so it cannot resume after the
+    // overlay closes and reopens during one of the awaits below.
+    const operation = ++this.popoverOperation;
+    const isStale = (): boolean =>
+      operation !== this.popoverOperation || this.open !== targetOpenState;
 
     // Ensure the open state has not changed before proceeding.
-    if (this.open !== targetOpenState) {
+    if (isStale()) {
       return;
     }
 
     // Manage any delays before opening the popover.
     await this.manageDelay(targetOpenState);
 
-    if (this.open !== targetOpenState) {
+    if (isStale()) {
       return;
     }
 
@@ -584,19 +592,20 @@ export class Overlay extends ComputedOverlayBase {
     // Ensure the popover is in the DOM before proceeding.
     await this.ensureOnDOM(targetOpenState);
 
-    if (this.open !== targetOpenState) {
+    if (isStale()) {
       return;
     }
 
     // Make any necessary transitions for opening the popover.
     const focusEl = await this.makeTransition(targetOpenState);
 
-    if (this.open !== targetOpenState) {
+    if (isStale()) {
       return;
     }
     if (targetOpenState) {
       const focusTrap = await import('focus-trap');
-      if (this.open !== targetOpenState) {
+      // A pressed longpress can keep a removed overlay logically open.
+      if (isStale() || !this.isConnected) {
         return;
       }
       // When `receives-focus="false"`, pass `initialFocus: false` so the trap
