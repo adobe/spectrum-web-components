@@ -553,11 +553,9 @@ export const NoSlottedImageWarningTest: Story = {
   },
 };
 
-// A non-decorative image with an explicit empty `alt=""` satisfies the
-// presence-based accessible-name check, so no warning fires. The empty string
-// signals "described by surrounding context" and is intentionally accepted
-// without requiring `decorative`. Contrast MissingAltWarningTest, where the
-// `alt` attribute is absent entirely.
+// An explicit `alt=""` passes the check because only the attribute's presence
+// is tested, so no warning fires even without `decorative`. Contrast
+// MissingAltWarningTest, where `alt` is absent.
 export const EmptyAltNoWarningTest: Story = {
   render: () => '',
   play: async ({ canvasElement, step }) => {
