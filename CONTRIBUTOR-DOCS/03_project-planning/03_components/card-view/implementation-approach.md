@@ -28,7 +28,7 @@
     - [Behavior](#behavior)
     - [Accessibility](#accessibility)
     - [Dependencies](#dependencies)
-- [Phase 3: loadingState](#phase-3-loadingstate)
+- [Phase 3: virtualization and loadingState](#phase-3-virtualization-and-loadingstate)
     - [Goal](#goal)
     - [Public API](#public-api)
     - [Behavior](#behavior)
@@ -51,10 +51,10 @@
 - `swc-card-view` is a new gen2 component. It displays a group of related cards, with support for selection and loading states.
 - [React Spectrum S2 CardView](https://react-spectrum.adobe.com/CardView) is the source of truth for API, behavior, and layout metrics. Deviations are allowed only where web component conventions require them, and each deviation is documented.
 - Work ships in three phases. Each phase is releasable on its own:
-    1. **Phase 1:** `layout`, `variant`, `size`, and `density`, on a virtualized grid.
+    1. **Phase 1:** `layout`, `variant`, `size`, and `density`, on a non-virtualized collection.
     2. **Phase 2:** `selectionMode` and `selectionStyle`.
-    3. **Phase 3:** `loadingState`, including skeleton cards and load-more.
-- Virtualization is part of Phase 1. CardView uses `@lit-labs/virtualizer` internally.
+    3. **Phase 3:** virtualization and `loadingState`, including skeleton cards and load-more.
+- Phase 3 adds `@lit-labs/virtualizer` internally without changing the consumer-facing collection API.
 - `swc-card-view` composes the existing gen2 `swc-card` family. It does not re-implement card visuals.
 
 ## Reference implementation
@@ -63,6 +63,7 @@ React Spectrum S2 `CardView` ([docs](https://react-spectrum.adobe.com/CardView),
 
 - A React Aria `GridList` with `layout="grid"`. This gives the collection 2D arrow-key navigation and `grid` semantics.
 - A `Virtualizer` that uses `GridLayout` (uniform rows) or `WaterfallLayout` (masonry columns), depending on `layout`.
+- Gen2 defers virtualized rendering to Phase 3. Phase 1 and Phase 2 render the full collection while establishing the API and behavior that virtualization will preserve.
 - A context that passes `size` and `variant` to every card. Density is not passed to cards. In CardView, density controls only the space between cards.
 - A responsive size clamp. The rendered size is the smaller of the requested `size` and the largest size that still fits two columns in the available width.
 - Selection through `selectionMode` and `selectionStyle`. `selectionStyle="checkbox"` maps to toggle selection behavior. `selectionStyle="highlight"` maps to replace selection behavior.
@@ -84,16 +85,16 @@ Where Spectrum tokens exist for these values, the gen2 implementation uses the t
 
 ## Scope and component boundaries
 
-- **In scope:** the `swc-card-view` container, its layouts, how it passes properties to child cards, virtualization, keyboard navigation, selection, and loading states.
+- **In scope:** the `swc-card-view` container, its layouts, how it passes properties to child cards, keyboard navigation, selection, virtualization in Phase 3, and loading states.
 - **Owned by `swc-card` (existing):** card visuals, slots, the `variant`, `size`, and `density` styling of a single card, `title-as-link`, and `selectable`.
 - **Owned by other components (dependencies):** the gen2 checkbox for Phase 2, and skeleton support for Phase 3.
-- **Relationship to the planned `swc-grid`:** the [grid accessibility analysis](../grid/accessibility-migration-analysis.md) proposes that CardView compose a shared `swc-grid`. For this effort, CardView owns its virtualization directly through `@lit-labs/virtualizer`. The keyboard and ARIA contract follows the grid analysis, so a later move to a shared `swc-grid` does not change consumer-facing behavior.
+- **Relationship to the planned `swc-grid`:** the [grid accessibility analysis](../grid/accessibility-migration-analysis.md) proposes that CardView compose a shared `swc-grid`. Phase 3 adds virtualization directly through `@lit-labs/virtualizer`. The keyboard and ARIA contract follows the grid analysis, so a later move to a shared `swc-grid` does not change consumer-facing behavior.
 
 ## Architecture
 
 - **Core and SWC split:** follow the existing gen2 pattern. A core base class holds properties, types, validation, and behavior. The SWC package holds rendering, styles, stories, tests, and docs. `swc-card` uses the same pattern.
-- **Data-driven API:** virtualization requires CardView to control which cards are in the DOM. Because of this, the primary API is data-driven. The consumer passes an `items` array and a render function that returns a card for each item. This is the web component equivalent of the React Spectrum dynamic collection. Support for static, slotted cards is an open question (see [open questions](#open-questions-and-risks)).
-- **Item identity:** every item has a stable key. Phase 1 uses the key for virtualizer reuse and focus restoration. Phase 2 uses the same key for selection.
+- **Data-driven API:** the consumer passes an `items` array and a render function that returns a card for each item. This is the web component equivalent of the React Spectrum dynamic collection and provides stable item identity for selection and Phase 3 virtualization. Support for static, slotted cards is an open question (see [open questions](#open-questions-and-risks)).
+- **Item identity:** every item has a stable key. Phase 2 uses the key for selection, and Phase 3 uses it for virtualizer reuse and focus restoration.
 - **Property propagation:** CardView passes the resolved `size` and `variant` to every rendered card. The resolved `size` is the value after the responsive clamp. CardView does not pass `density` to cards, which matches React Spectrum.
 - **Scroll container:** CardView is its own scroll container. The consumer gives CardView a height, and CardView scrolls its content vertically.
 
@@ -101,7 +102,7 @@ Where Spectrum tokens exist for these values, the gen2 implementation uses the t
 
 ### Goal
 
-Render a virtualized, keyboard-accessible collection of cards. The collection supports two layouts, four variants, five sizes, and three densities, and matches React Spectrum visually and behaviorally.
+Render a keyboard-accessible, non-virtualized collection of cards. The collection supports two layouts, four variants, five sizes, and three densities, and matches React Spectrum visually and behaviorally. The collection API and layout behavior must support adding virtualization in Phase 3 without a consumer-facing change.
 
 ### Public API
 
@@ -116,8 +117,8 @@ Size values are lowercase to match the existing gen2 `swc-card` size values. The
 
 ### Behavior
 
-- **Grid layout:** map `layout="grid"` to the `@lit-labs/virtualizer` grid layout. Configure the layout with the gap and the minimum and maximum item sizes from the metrics table. Columns fill the available width.
-- **Waterfall layout:** map `layout="waterfall"` to the `@lit-labs/virtualizer` masonry layout. Masonry needs each item's aspect ratio before render. Define how CardView gets the aspect ratio (for example, from item data or from the preview image dimensions), and document the consumer requirement.
+- **Grid layout:** render all items in a regular grid. Configure the layout with the gap and the minimum and maximum item sizes from the metrics table. Columns fill the available width.
+- **Waterfall layout:** render all items in a masonry layout. Define a non-virtualized layout strategy for this phase. Masonry needs each item's aspect ratio before layout; define how CardView gets the aspect ratio (for example, from item data or from the preview image dimensions), and document the consumer requirement.
 - **Responsive size clamp:** observe the width of the scroll container. Compute the largest size where at least two columns fit, using the same formula as React Spectrum: two minimum item widths plus three gaps. Render at the smaller of this size and the requested `size`.
 - **Variant:** pass `variant` to every card. The quiet variant changes how selection looks in Phase 2, so keep the variant visible to selection logic.
 - **Density:** change only the gap between cards and the scroll padding. Do not change the card's own `density`.
@@ -127,14 +128,13 @@ Size values are lowercase to match the existing gen2 `swc-card` size values. The
 - The host exposes `grid` semantics, following the [grid accessibility analysis](../grid/accessibility-migration-analysis.md). Each card is a row with one grid cell.
 - An accessible name is required. Warn in development when the name is missing.
 - The collection is one tab stop. Arrow keys move focus between cards in two dimensions. Home, End, Page Up, and Page Down follow the grid contract.
-- Focus survives virtualization. When the focused card scrolls out of the rendered range, CardView keeps the focus target and restores focus when the card renders again.
-- Expose the total item count and each item's position (`aria-rowcount`, `aria-rowindex`, or the equivalent) so that assistive technology reports position correctly while most items are not in the DOM.
+- All cards remain in the DOM in this phase, so focus and item positions follow the standard grid behavior without virtualizer-specific restoration.
 
 ### Deliverables
 
 - Core base class, types, and SWC element with exports.
 - Styles that use Spectrum 2 tokens and pass stylelint.
-- Storybook stories for each layout, size, variant, and density, plus a large dataset story.
+- Storybook stories for each layout, size, variant, and density, including responsive and larger collection examples.
 - Unit tests, accessibility tests, and VRT stories.
 - A per-component MDX docs page.
 
@@ -164,7 +164,7 @@ Supporting API, aligned with React Spectrum:
 - **Checkbox style (toggle behavior):** each card shows a checkbox. Clicking a card or pressing Space toggles that card and leaves the other selected cards unchanged. For the quiet variant, the checkbox renders inside the card preview, not on the card surface. The checkbox is not in the tab order. The card is the focus target.
 - **Highlight style (replace behavior):** no checkbox renders. Clicking a card replaces the selection with that card. Ctrl or Cmd plus click adds or removes a card. Shift plus click selects a range. Selected cards show a highlight selection indicator.
 - **Selected state visuals:** selected cards use the elevated or selected treatment from React Spectrum for each variant.
-- **Virtualization:** selection state belongs to CardView and is keyed by item key, so selection persists when cards scroll out of the rendered range.
+- **Selection identity:** selection state belongs to CardView and is keyed by item key, so Phase 3 can preserve selection when cards scroll out of the rendered range.
 - **Integration with `swc-card`:** CardView uses the card's existing `selectable` behavior and `swc-card-click` event as the input signal. This phase resolves the deferred card role question (Q4 in the [Card family plan](../card/migration-plan.md)).
 
 ### Accessibility
@@ -178,11 +178,11 @@ Supporting API, aligned with React Spectrum:
 
 - A gen2 checkbox component is required for the checkbox style.
 
-## Phase 3: loadingState
+## Phase 3: virtualization and loadingState
 
 ### Goal
 
-Communicate loading and support incremental loading (infinite scroll) with skeleton placeholder cards.
+Render large collections efficiently through virtualization, then communicate loading and support incremental loading (infinite scroll) with skeleton placeholder cards. Preserve the consumer-facing API and interaction behavior established in Phases 1 and 2.
 
 ### Public API
 
@@ -197,9 +197,12 @@ Supporting API:
 
 ### Behavior
 
-- **`loading`:** the initial load. Show a full view of skeleton cards and disable scrolling on the collection.
+- **Virtualized rendering:** use `@lit-labs/virtualizer` to render only visible items and a nearby buffer. Support both the grid and waterfall layouts, retaining their Phase 1 metrics and responsive size clamp.
+- **Focus and item positions:** restore focus when a focused card leaves and re-enters the rendered range. Expose the total item count and each item's position (`aria-rowcount`, `aria-rowindex`, or the equivalent) so assistive technology reports positions correctly when most items are not in the DOM.
+- **Selection continuity:** retain selected keys when selected cards leave the rendered range and restore their selected visuals when they render again.
+- **`loading`:** the initial load. Show skeleton cards across the viewport and disable scrolling on the collection.
 - **`loadingMore`:** append skeleton cards after the loaded cards, and keep the loaded cards interactive.
-- **Load-more trigger:** place a sentinel after the last item. When the sentinel comes near the viewport and CardView is not already loading, fire the load-more event.
+- **Load-more trigger:** use a sentinel after the last item in the virtualized collection. When it comes near the viewport and CardView is not already loading, fire the load-more event.
 - **Skeleton cards:** skeleton cards are inert. They cannot receive focus, cannot be selected, and are hidden from assistive technology as items.
 - **Other states:** define the visual and behavioral treatment for `sorting`, `filtering`, and `error` to match React Spectrum. Document any state that has no visual change.
 
@@ -207,10 +210,11 @@ Supporting API:
 
 - Set `aria-busy` on the grid while loading.
 - Announce loading and load completion through a polite live region. Do not announce each skeleton card.
-- Keep focus stable when new items append during `loadingMore`.
+- Keep focus stable when new items append during `loadingMore` and when the focused item is recycled by virtualization.
 
 ### Dependencies
 
+- `@lit-labs/virtualizer` grid and masonry layouts are required for this phase.
 - Skeleton support for `swc-card` (a skeleton state or skeleton wrapper) is required.
 
 ## Deferred and out of scope
@@ -228,35 +232,36 @@ These React Spectrum features are not part of the three phases. Each one needs i
 
 - **Static children:** should CardView also accept slotted cards for small, non-virtualized collections? If yes, define how the two APIs coexist.
 - **Waterfall aspect ratio:** the masonry layout needs the aspect ratio before render. Decide whether consumers supply it through item data, or whether CardView measures it.
-- **Virtualizer maturity:** confirm that the `@lit-labs/virtualizer` grid and masonry layouts support the gap, minimum size, and maximum size behavior that React Spectrum uses. Spike this at the start of Phase 1.
-- **Focus with virtualization:** confirm that focus restoration and position semantics work with screen readers when most items are not in the DOM.
+- **Non-virtualized waterfall:** confirm the Phase 1 masonry strategy supports the required item sizing and responsive metrics before selecting an implementation.
+- **Virtualizer maturity:** in Phase 3, confirm that the `@lit-labs/virtualizer` grid and masonry layouts support the gap, minimum size, and maximum size behavior that React Spectrum uses.
+- **Focus with virtualization:** in Phase 3, confirm that focus restoration and position semantics work with screen readers when most items are not in the DOM.
 - **Future `swc-grid`:** if a shared `swc-grid` ships later, plan a refactor that keeps the CardView API unchanged.
-- **Dependencies:** the Phase 2 checkbox and the Phase 3 skeleton must be available, or the affected tickets are blocked.
+- **Dependencies:** the Phase 2 checkbox and the Phase 3 virtualizer and skeleton support must be available, or the affected tickets are blocked.
 
 ## Ticket breakdown
 
-All tickets are children of the `CardView Component` epic ([SWC-2606](https://jira.corp.adobe.com/browse/SWC-2606)). Each phase is split into four tickets.
+All tickets are children of the `CardView Component` epic. Each phase is split into four tickets.
 
 ### Phase 1
 
-1. [SWC-2607](https://jira.corp.adobe.com/browse/SWC-2607): Scaffold `swc-card-view` with a virtualized grid layout.
-2. [SWC-2608](https://jira.corp.adobe.com/browse/SWC-2608): Add the waterfall layout.
-3. [SWC-2609](https://jira.corp.adobe.com/browse/SWC-2609): Add size, variant, and density, with the responsive size clamp.
-4. [SWC-2610](https://jira.corp.adobe.com/browse/SWC-2610): Add grid keyboard navigation and accessibility, and complete Phase 1 docs.
+1. Scaffold `swc-card-view` with a non-virtualized grid layout.
+2. Add the waterfall layout.
+3. Add size, variant, and density, with the responsive size clamp.
+4. Add grid keyboard navigation and accessibility, and complete Phase 1 docs.
 
 ### Phase 2
 
-1. [SWC-2611](https://jira.corp.adobe.com/browse/SWC-2611): Add the `selectionMode` and selection state API.
-2. [SWC-2612](https://jira.corp.adobe.com/browse/SWC-2612): Add the checkbox selection style.
-3. [SWC-2613](https://jira.corp.adobe.com/browse/SWC-2613): Add the highlight selection style.
-4. [SWC-2614](https://jira.corp.adobe.com/browse/SWC-2614): Add selection keyboard interactions and accessibility, and complete Phase 2 docs.
+1. Add the `selectionMode` and selection state API.
+2. Add the checkbox selection style.
+3. Add the highlight selection style.
+4. Add selection keyboard interactions and accessibility, and complete Phase 2 docs.
 
 ### Phase 3
 
-1. [SWC-2615](https://jira.corp.adobe.com/browse/SWC-2615): Add the `loadingState` API and state handling.
-2. [SWC-2616](https://jira.corp.adobe.com/browse/SWC-2616): Add skeleton cards for the loading states.
-3. [SWC-2617](https://jira.corp.adobe.com/browse/SWC-2617): Add the load-more event for infinite scrolling.
-4. [SWC-2618](https://jira.corp.adobe.com/browse/SWC-2618): Add loading accessibility announcements, and complete Phase 3 docs.
+1. Add the `loadingState` API and state handling.
+2. Add skeleton cards for the loading states.
+3. Add virtualized rendering and the load-more event for infinite scrolling.
+4. Add loading accessibility announcements, and complete Phase 3 docs.
 
 ## References
 
