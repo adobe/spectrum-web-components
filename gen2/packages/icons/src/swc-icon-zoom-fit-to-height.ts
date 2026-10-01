@@ -37,7 +37,7 @@ export class IconZoomFitToHeight extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_ZoomFitToHeight())}</span>
+      ${unsafeSVG(Icon_ZoomFitToHeight())}
     `;
   }
 }

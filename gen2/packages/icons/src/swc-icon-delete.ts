@@ -37,7 +37,7 @@ export class IconDelete extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Delete())}</span>
+      ${unsafeSVG(Icon_Delete())}
     `;
   }
 }

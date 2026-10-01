@@ -37,7 +37,7 @@ export class IconSearch extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Search())}</span>
+      ${unsafeSVG(Icon_Search())}
     `;
   }
 }

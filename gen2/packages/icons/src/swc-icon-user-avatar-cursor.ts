@@ -37,7 +37,7 @@ export class IconUserAvatarCursor extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_UserAvatarCursor())}</span>
+      ${unsafeSVG(Icon_UserAvatarCursor())}
     `;
   }
 }

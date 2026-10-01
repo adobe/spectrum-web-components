@@ -37,7 +37,7 @@ export class IconCornerRadiusBottomRight extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_CornerRadiusBottomRight())}</span>
+      ${unsafeSVG(Icon_CornerRadiusBottomRight())}
     `;
   }
 }

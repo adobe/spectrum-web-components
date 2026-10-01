@@ -37,7 +37,7 @@ export class IconAudioWave extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_AudioWave())}</span>
+      ${unsafeSVG(Icon_AudioWave())}
     `;
   }
 }

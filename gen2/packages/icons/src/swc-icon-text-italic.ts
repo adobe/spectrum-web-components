@@ -37,7 +37,7 @@ export class IconTextItalic extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_TextItalic())}</span>
+      ${unsafeSVG(Icon_TextItalic())}
     `;
   }
 }

@@ -37,7 +37,7 @@ export class IconGridTypeDots extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_GridTypeDots())}</span>
+      ${unsafeSVG(Icon_GridTypeDots())}
     `;
   }
 }

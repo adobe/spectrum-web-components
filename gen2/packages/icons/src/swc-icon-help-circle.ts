@@ -37,7 +37,7 @@ export class IconHelpCircle extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_HelpCircle())}</span>
+      ${unsafeSVG(Icon_HelpCircle())}
     `;
   }
 }

@@ -131,7 +131,7 @@ const captioned = (content: unknown, label: string) => html`
 
 const forceDisclosureRowStates = forcePseudoStates(
   'swc-response-status[data-force-state]',
-  '.swc-ResponseStatus-row--button'
+  '.swc-ResponseStatus-headerTrail--button'
 );
 
 const forceStepToggleStates = forcePseudoStates(

@@ -9,18 +9,16 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { html, type TemplateResult } from 'lit';
-import { styleMap } from 'lit/directives/style-map.js';
+import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { ICON_VALID_SIZES } from '@adobe/spectrum-wc-core/components/icon';
+import {
+  ICON_VALID_SIZES,
+  type IconSize,
+} from '@adobe/spectrum-wc-core/components/icon';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
-
-import { SIZE_LABELS } from '../../../.storybook/helpers/index.js';
-import { Chevron100Icon } from '../elements/index.js';
-import * as iconElements from '../elements/index.js';
 
 // ────────────────
 //    METADATA
@@ -35,10 +33,11 @@ argTypes.size = {
 };
 
 /**
- * **Internal-only component.**
- *
- * The `<swc-icon>` element renders icons from shared inline SVG templates.
- * Use shared templates from `../elements/index.js` for consistent rendering and avoid duplicating SVG markup in each component.
+ * The `<swc-icon>` frame renders a custom, non-Spectrum SVG that you slot in,
+ * giving it the same size box, color, and accessibility handling as a Spectrum
+ * icon. Reach for it only when the drawing is your own: for Spectrum's own art,
+ * use a workflow icon from `@adobe/spectrum-wc-icons`, and inside a control, a
+ * [UI icon](../?path=/docs/components-ui-icons--docs).
  */
 const meta: Meta = {
   title: 'Icon',
@@ -48,7 +47,7 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      subtitle: `Internal icon renderer for shared SVG templates.`,
+      subtitle: `Frame for a custom SVG: size box, color, and accessibility.`,
     },
   },
   tags: ['migrated'],
@@ -60,16 +59,27 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-const iconSvg = Chevron100Icon();
+// A custom, non-Spectrum drawing — the frame's intended use. It follows the
+// slotted-SVG contract: a single `<svg>` with a `viewBox`, no `width`/`height`,
+// `fill="currentColor"`, and no ARIA (the host owns accessibility). Using plain
+// literal markup here keeps the frame's demos and VRT goldens independent of the
+// icon packages, exactly as the docs tell consumers to author their own art.
+const renderIcon = () => html`
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+      fill="currentColor"
+    />
+  </svg>
+`;
 
-const iconCardStyles = {
-  display: 'inline-flex',
-  'flex-direction': 'column',
-  'align-items': 'center',
-  gap: '8px',
-  'min-inline-size': '120px',
-  padding: '8px',
-} as const;
+const sizeLabels = {
+  xs: 'Extra small',
+  s: 'Small',
+  m: 'Medium',
+  l: 'Large',
+  xl: 'Extra large',
+} as const satisfies Record<IconSize, string>;
 
 // ────────────────────
 //    PLAYGROUND STORY
@@ -77,9 +87,9 @@ const iconCardStyles = {
 
 export const Playground: Story = {
   tags: ['dev'],
-  render: (args) => template(args, iconSvg),
+  render: (args) => template(args, renderIcon()),
   args: {
-    'accessible-label': 'Search',
+    'accessible-label': 'Favorite',
     size: 'm',
   },
 };
@@ -90,9 +100,9 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   tags: ['overview'],
-  render: (args) => template(args, iconSvg),
+  render: (args) => template(args, renderIcon()),
   args: {
-    'accessible-label': 'Search',
+    'accessible-label': 'Favorite',
     size: 'm',
   },
 };
@@ -106,9 +116,9 @@ export const Anatomy: Story = {
     template(
       {
         ...args,
-        'accessible-label': args['accessible-label'] || 'Chevron icon',
+        'accessible-label': args['accessible-label'] || 'Favorite icon',
       },
-      iconSvg
+      renderIcon()
     ),
   tags: ['anatomy'],
 };
@@ -123,10 +133,10 @@ export const Sizes: Story = {
       template(
         {
           ...args,
-          'accessible-label': args['accessible-label'] || SIZE_LABELS[size],
+          'accessible-label': args['accessible-label'] || sizeLabels[size],
           size,
         },
-        iconSvg
+        renderIcon()
       )
     )}
   `,
@@ -136,74 +146,44 @@ export const Sizes: Story = {
   },
 };
 
-export const Sources: Story = {
-  render: (args) =>
-    template(
-      {
-        ...args,
-        'accessible-label': args['accessible-label'] || 'Chevron icon',
-      },
-      iconSvg
-    ),
-  tags: ['options'],
-};
-
-export const SharedTemplates: Story = {
-  render: (args) =>
-    template(
-      { ...args, 'accessible-label': args['accessible-label'] || 'Chevron' },
-      Chevron100Icon()
-    ),
-  tags: ['options'],
-};
-SharedTemplates.storyName = 'Shared templates';
-
-export const AvailableIcons: Story = {
-  render: (args) => {
-    const catalog = Object.entries(iconElements)
-      .filter(
-        ([name, iconFactory]) =>
-          name.endsWith('Icon') && typeof iconFactory === 'function'
-      )
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([name, iconFactory]) => ({
-        name,
-        icon: (iconFactory as () => TemplateResult)(),
-      }));
-    return html`
-      ${catalog.map(
-        (entry) => html`
-          <div style=${styleMap(iconCardStyles)}>
-            ${template(
-              {
-                ...args,
-                'accessible-label': args['accessible-label'] || entry.name,
-              },
-              entry.icon
-            )}
-            <code>${entry.name}</code>
-          </div>
-        `
+export const Color: Story = {
+  render: (args) => html`
+    ${template(
+      { ...args, size: 'l', 'accessible-label': 'Inherits text color' },
+      renderIcon()
+    )}
+    <div style="color: #d7373f">
+      ${template(
+        { ...args, size: 'l', 'accessible-label': 'Colored via CSS color' },
+        renderIcon()
       )}
-    `;
-  },
+    </div>
+    <div style="--swc-icon-color: #0d66d0">
+      ${template(
+        {
+          ...args,
+          size: 'l',
+          'accessible-label': 'Colored via --swc-icon-color',
+        },
+        renderIcon()
+      )}
+    </div>
+  `,
   tags: ['options'],
   parameters: {
-    docs: {
-      canvas: {
-        sourceState: 'none',
-      },
-    },
     flexLayout: 'row-wrap',
   },
 };
-AvailableIcons.storyName = 'Available icons';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-  render: (args) => template(args, iconSvg),
+  render: (args) => template(args, renderIcon()),
   tags: ['a11y'],
+  args: {
+    'accessible-label': 'Favorite',
+    size: 'm',
+  },
 };

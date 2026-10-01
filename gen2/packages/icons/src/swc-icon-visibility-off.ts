@@ -37,7 +37,7 @@ export class IconVisibilityOff extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_VisibilityOff())}</span>
+      ${unsafeSVG(Icon_VisibilityOff())}
     `;
   }
 }

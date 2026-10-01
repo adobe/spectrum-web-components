@@ -37,7 +37,7 @@ export class IconClose extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Close())}</span>
+      ${unsafeSVG(Icon_Close())}
     `;
   }
 }

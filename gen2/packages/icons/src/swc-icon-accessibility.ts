@@ -37,7 +37,7 @@ export class IconAccessibility extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Accessibility())}</span>
+      ${unsafeSVG(Icon_Accessibility())}
     `;
   }
 }
