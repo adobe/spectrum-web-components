@@ -20,7 +20,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
-- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
+- [Related grid issues (Jira)](#related-grid-issues-jira)
 - [Recommendations: `<swc-card-view>`](#recommendations-swc-card-view)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -30,6 +30,7 @@
     - [Keyboard and focus](#keyboard-and-focus)
 - [Testing](#testing)
     - [Automated tests](#automated-tests)
+    - [Issue-linked regression coverage](#issue-linked-regression-coverage)
     - [Manual screen reader testing](#manual-screen-reader-testing)
 - [Summary checklist](#summary-checklist)
 - [References](#references)
@@ -111,11 +112,20 @@ Use the [APG Grid pattern](https://www.w3.org/WAI/ARIA/apg/patterns/grid/) and [
 
 ---
 
-## Related 1st-gen accessibility (Jira)
+## Related grid issues (Jira)
 
-| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Pending issue IDs | Not available | Not verified | Not verified | Carry forward eligible 1st-gen grid accessibility issues rather than create duplicate card-view issues; address navigation, selection, and virtualization defects in card-view. | The checked-in grid analysis has an empty issue table. Jira retrieval on 2026-09-30 failed certificate validation, so IDs, labels, status, and resolution could not be verified. This is a research limitation, not a Jira issue. |
+These grid issues provide historical context for card-view. Tickets labeled `gen2` are migration program work, not 1st-gen accessibility defects. Completed grid tickets do not establish that card-view is implemented or verified.
+
+| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
+| --- | --- | --- | --- | --- |
+| [SWC-203](https://jira.corp.adobe.com/browse/SWC-203) | Bug | To Do | Unresolved | Bug(grid): Needs semantic structure to improve a11y |
+| [SWC-1083](https://jira.corp.adobe.com/browse/SWC-1083) | Bug | To Do | Unresolved | [Bug]: docs: sp-grid toggle card usage in docs site is not working #5582 |
+| [SWC-204](https://jira.corp.adobe.com/browse/SWC-204) | Bug | Done | Won't Fix | bug(grid): sp-grid select checkbox pointer target too small |
+| [SWC-882](https://jira.corp.adobe.com/browse/SWC-882) | Epic | Done | Done | Docs: Review documentation for Tools |
+| [SWC-172](https://jira.corp.adobe.com/browse/SWC-172) | Story | Done | Deferred | test(grid): refactor test structure |
+| [SWC-958](https://jira.corp.adobe.com/browse/SWC-958) | Bug | Done | Fixed | Bug(Grid): Card example in Grid docs README loses focus during keyboard navigation |
+| [SWC-427](https://jira.corp.adobe.com/browse/SWC-427) | Story | Done | Done | docs(grid): Audit documentation |
+| [SWC-250](https://jira.corp.adobe.com/browse/SWC-250) | Bug | Done | Fixed | FocusGroup won't set the tabindex=0 on the item focused using mouse |
 
 ---
 
@@ -200,6 +210,8 @@ For a cell with only one link or simple action control, make that control the ro
 
 Nested buttons, checkboxes, and menus retain their own semantics and keyboard behavior. A pointer press on those controls must not also trigger the card's primary link or selection handler. Native link gestures remain navigation gestures even when selection is enabled; selection uses a separate control or cell-navigation command. Touch users must have a visible selection control rather than needing to discover a long press.
 
+When a pointer focuses an eligible navigation target, update the remembered active item and its roving tab stop. Subsequent arrow navigation starts from that item, and page Tab re-entry returns to it without creating another collection Tab stop. Pointer interaction with a nested control must preserve its native behavior and the card's interaction-mode contract.
+
 Maintain the focused item by stable key rather than mounted index. Before moving to an unmounted target, mount it, update semantic indices, scroll it into view, then focus it. Keep a focused card mounted during ordinary scrolling, or deliberately transfer focus before recycling its DOM node. Never recycle a focused element to represent a different card.
 
 After removal, choose the next eligible logical item, then the previous item, and finally an explicit empty-state or collection fallback if no items remain. Filtering, resizing, appending items, or showing an action bar must not move focus unexpectedly. An empty grid may temporarily be the fallback focus target, but must not add a second page Tab stop while populated. Keep focused content visible above sticky action bars.
@@ -222,6 +234,18 @@ After removal, choose the next eligible logical item, then the previous item, an
 | aXe/Storybook | Static/dynamic collections, link-only/rich cards, single/multiple selection, disabled states, grid/waterfall/RTL layouts, virtualized loading, empty/error states, and bulk actions. Automated checks do not prove the keyboard or screen-reader contract. |
 | Visual and responsive checks | Text/non-text contrast, selection versus focus, forced colors, reduced motion, zoom/reflow, target sizes, and focus not hidden by a sticky action bar. |
 | Status and bulk actions | No per-card live announcements, busy state cleared on success/failure, keyboard-accessible retry, action-bar focus behavior, and deterministic focus recovery after deletion. |
+
+### Issue-linked regression coverage
+
+Use the historical grid issues below to trace requirements to future regression tests. These are proposed checks based on the supplied issue summaries, not verified reproductions or completed tests. Confirm the original reproduction details before claiming that a test resolves an issue. Completed migration stories and broad audit or documentation epics do not establish additional card-view behavior.
+
+| Jira | Requirement and regression check |
+| --- | --- |
+| [SWC-250](https://jira.corp.adobe.com/browse/SWC-250) | Pointer-to-keyboard focus handoff: focus an eligible navigation target with a pointer, then verify that arrow navigation starts there, Tab re-entry returns there, and exactly one navigation target retains `tabindex="0"`. |
+| [SWC-958](https://jira.corp.adobe.com/browse/SWC-958) | Virtualized keyboard focus: reproduce the historical card-example focus loss and verify focus survives mounting, scrolling, and controller refresh, including navigation beyond the mounted range. Track the logical item by stable key. |
+| [SWC-1083](https://jira.corp.adobe.com/browse/SWC-1083) | Selectable-card example: provide a working Storybook example with a play test for pointer and keyboard selection toggling, synchronized row and checkbox states, and no accidental link activation. Confirm the original toggle-card defect details before defining its exact regression test. |
+| [SWC-204](https://jira.corp.adobe.com/browse/SWC-204) | Selection-control target size: verify the effective checkbox pointer target across supported card sizes and densities against [WCAG 2.5.8: Target size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html), including any documented exception. The legacy Won't Fix resolution does not waive the gen2 requirement. |
+| [SWC-203](https://jira.corp.adobe.com/browse/SWC-203) | Semantic ownership: verify the named grid owns one row and one gridcell per card in accessibility-tree snapshots, including virtualized ranges and shadow-DOM rendering. Reuse the structure checks above rather than treating CSS layout as semantic evidence. |
 
 ### Manual screen reader testing
 
@@ -247,6 +271,7 @@ Use the [screen reader testing guide](../../../../gen2/packages/swc/.storybook/g
 - [ ] Loading and bulk operations avoid noisy live regions; the loading-design review is completed when Figma access is available.
 - [ ] Focus, selection, contrast, reflow, target sizes, and forced-colors behavior meet the applicable WCAG criteria.
 - [ ] Grid Jira issues are verified and carried forward without duplicate tickets.
+- [ ] Historical semantic, pointer-focus, virtualized-focus, selection-example, and checkbox-target defects have explicit regression coverage; original reproduction details are confirmed before claiming resolution.
 - [ ] Card-view rendering analysis and migration plan are supplied before implementation.
 
 ## References
