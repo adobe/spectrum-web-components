@@ -31,6 +31,7 @@ import {
   Placement,
   VirtualTrigger,
 } from '@spectrum-web-components/overlay';
+import { overlayStack } from '@spectrum-web-components/overlay/src/OverlayStack.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { isFirefox } from '@spectrum-web-components/shared/src/platform.js';
 import { Theme } from '@spectrum-web-components/theme';
@@ -1257,6 +1258,67 @@ describe('Overlay should correctly trap focus', () => {
     await elementUpdated(overlay);
     overlay.open = true;
     await elementUpdated(overlay);
+    await overlayWorkSettled();
+
+    overlay.open = false;
+    await elementUpdated(overlay);
+    await overlayWorkSettled();
+
+    const clickSpy = spy();
+    outside.addEventListener('click', clickSpy);
+    outside.click();
+
+    expect(clickSpy.callCount).to.equal(1);
+  });
+  it('removes a modal overlay from the overlay stack after quick toggles', async () => {
+    const el = await fixture<HTMLDivElement>(html`
+      <div>
+        <sp-overlay type="modal">
+          <sp-dialog>
+            <sp-button>Inside</sp-button>
+          </sp-dialog>
+        </sp-overlay>
+      </div>
+    `);
+    const overlay = el.querySelector('sp-overlay') as Overlay;
+    await elementUpdated(overlay);
+    const overlayWorkSettled = trackOverlayWork(overlay);
+
+    for (const open of [true, false, true, false]) {
+      overlay.open = open;
+      await elementUpdated(overlay);
+    }
+    await overlayWorkSettled();
+    await waitUntil(() => overlay.state === 'closed', 'overlay closed');
+    await nextFrame();
+    await nextFrame();
+
+    // A stale modal stack entry also keeps page scrolling disabled.
+    expect(overlayStack.stack.includes(overlay), 'overlay in stack').to.be
+      .false;
+  });
+  it('keeps one focus trap when a modal overlay restarts opening', async () => {
+    const el = await fixture<HTMLDivElement>(html`
+      <div>
+        <sp-button id="outside">Outside</sp-button>
+        <sp-overlay type="modal">
+          <sp-dialog>
+            <sp-button>Inside</sp-button>
+          </sp-dialog>
+        </sp-overlay>
+      </div>
+    `);
+    const outside = el.querySelector('#outside') as Button;
+    const overlay = el.querySelector('sp-overlay') as Overlay;
+    await elementUpdated(overlay);
+    const overlayWorkSettled = trackOverlayWork(overlay);
+
+    overlay.open = true;
+    await elementUpdated(overlay);
+    await overlayWorkSettled();
+
+    // Restart opening after the first focus trap is active.
+    overlay.manuallyKeepOpen();
     await overlayWorkSettled();
 
     overlay.open = false;

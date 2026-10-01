@@ -2,6 +2,6 @@
 '@spectrum-web-components/overlay': patch
 ---
 
-**fix(overlay):** Do not activate a stale focus trap while a modal overlay is opening.
+**fix(overlay):** Do not leave an orphaned focus trap after a modal overlay closes, reopens, or is removed while opening.
 
-Previously, a modal overlay could create a focus trap after it was closed, reopened, or removed during a longpress while opening. That orphaned trap could then block later clicks elsewhere on the page. Each open or close operation now stops if a newer operation starts, and the overlay creates a focus trap only while it is connected.
+Previously, a modal overlay could create its focus trap after it closed or was removed during the lazy `focus-trap` import. It could also replace an active trap without deactivating it when opening restarted. The orphaned trap then blocked later clicks elsewhere on the page. The overlay now creates a trap only while it is still open and connected, and reuses its existing trap when opening restarts.
