@@ -84,6 +84,8 @@ A non-null value is submitted under the field's `name` and appears in `new FormD
 
 A native reset calls the host's `formResetCallback`, which restores the field to its authored `value` attribute. The reset target lives on the host, not the controller: it is field-shaped (a string here, a boolean `checked` for a checkbox or radio), and reading the attribute lazily keeps a reset that fires before first render from wiping the declared default.
 
+This relies on the attribute not being reflected from the property. If the host reflects its value (a radio group's `selected`, for example), the attribute tracks the current value and a reset would restore nothing, so capture the initial value on first update and restore that instead.
+
 <Canvas of={Stories.DefaultValueReset} />
 
 ### Disabled cascade
@@ -95,6 +97,8 @@ A `<fieldset disabled>` or disabled form disables descendant fields via `formDis
 ### Validity pass-throughs
 
 The validity members read straight off `ElementInternals`; writing validity stays with the host (`internals.setValidity`). A `required` field left empty reports `checkValidity()` as `false`. A disabled field reports `willValidate` as `false` and is skipped by validation entirely.
+
+`internals.setValidity()` throws a `TypeError` when any flag is `true` and the message is empty. A host with a native control copies the control's `validationMessage` (as `swc-text-field` does). A host with no native control, such as a radio group, must pass a non-empty message itself. Otherwise the call throws inside the host's `update()`. That render still happens, but `firstUpdated()` and `updated()` are skipped for that update, `updateComplete` rejects with the `TypeError`, and it repeats on every update while the invalid state holds. Any post-render work in those hooks (for example accessible-name wiring) silently does not run. The message is not rendered by the controller; it only surfaces if the host calls `reportValidity()`.
 
 <Canvas of={Stories.Validity} />
 
