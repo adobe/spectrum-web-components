@@ -37,7 +37,7 @@ export class IconOrientationLandscape extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_OrientationLandscape())}</span>
+      ${unsafeSVG(Icon_OrientationLandscape())}
     `;
   }
 }

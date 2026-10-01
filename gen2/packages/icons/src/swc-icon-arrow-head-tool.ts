@@ -37,7 +37,7 @@ export class IconArrowHeadTool extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_ArrowHeadTool())}</span>
+      ${unsafeSVG(Icon_ArrowHeadTool())}
     `;
   }
 }

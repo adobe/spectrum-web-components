@@ -37,7 +37,7 @@ export class IconSortUp extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_SortUp())}</span>
+      ${unsafeSVG(Icon_SortUp())}
     `;
   }
 }

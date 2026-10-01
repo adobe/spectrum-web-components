@@ -37,7 +37,7 @@ export class IconDeviceMultiscreen extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_DeviceMultiscreen())}</span>
+      ${unsafeSVG(Icon_DeviceMultiscreen())}
     `;
   }
 }

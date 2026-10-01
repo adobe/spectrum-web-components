@@ -1,5 +1,32 @@
 # Change Log
 
+## 1.12.4
+
+### Patch Changes
+
+- [#6735](https://github.com/adobe/spectrum-web-components/pull/6735) [`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b) Thanks [@blunteshwar](https://github.com/blunteshwar)! - **Fixed**: Propagate `lang`/`dir` for a single item's language without breaking layout:
+  - Combobox: forwards `lang`/`dir` from slotted `<sp-menu-item>` (or `.options` data) onto the rendered popover `<sp-menu-item>`, and syncs the input's own `lang` to the committed option's language for correct pronunciation
+  - Breadcrumbs: forwards the same `lang`/`dir` propagation to the "More items" overflow menu
+  - `BreadcrumbItem` now forwards `lang`/`dir` to `#item-link` only, so a single item's language does not flip its own layout or mirror its separator's chevron; the separator tracks the ambient direction (nearest ancestor `dir`, or the document default) instead of the host's own `dir` attribute, including live updates when an ancestor's `dir` changes after mount
+  - As a side effect, `sp-breadcrumb-item`'s `dir` JS property (via `SpectrumElement`'s computed-direction getter) now reflects the item's ambient direction rather than its own authored `dir` attribute; consumer code that reads `.dir` on an `sp-breadcrumb-item` should use `getAttribute('dir')` instead to see the authored value
+
+- [#6780](https://github.com/adobe/spectrum-web-components/pull/6780) [`eb29944`](https://github.com/adobe/spectrum-web-components/commit/eb299448d6896370b65d04b0b8a8c642599a88b3) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(reactive-controllers):** Fixed arrow keys moving focus opposite to the visual layout in a right-to-left context.
+
+  `FocusGroupController` mapped <kbd>ArrowRight</kbd> to the next element and <kbd>ArrowLeft</kbd> to the previous one in DOM order, without checking the text direction. Under `dir="rtl"`, focus therefore moved away from the arrow the user pressed. This affected `sp-swatch-group`, `sp-action-group`, `sp-tabs`, `sp-radio-group` and `sp-tags`.
+
+  <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> now swap when the host's computed direction is `rtl` and the host lays out its elements in a row. A new `mirrorHorizontalInRTL` config option tells the controller whether that is the case. It accepts a boolean, or a callback for hosts that can render as either a row or a column. It defaults to `true` only for `direction: 'horizontal'`.
+  - `sp-action-group` and `sp-tabs` mirror unless they render vertically.
+  - `sp-radio-group` mirrors only with `horizontal`, because it renders as a column by default.
+  - `sp-swatch-group` and `sp-tags` always mirror.
+  - `sp-grid` never mirrors, because it positions items with physical offsets that do not follow the text direction.
+
+  In a column, <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> keep following DOM order, so they stay consistent with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd>.
+
+  **fix(grid):** Fixed <kbd>Home</kbd> and <kbd>End</kbd> being swapped in `sp-grid`. <kbd>Home</kbd> now moves focus to the first item and <kbd>End</kbd> to the last, as in every other focus group.
+
+- Updated dependencies []:
+  - @spectrum-web-components/progress-circle@1.12.4
+
 ## 1.12.2
 
 ### Patch Changes

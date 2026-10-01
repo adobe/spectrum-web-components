@@ -37,7 +37,7 @@ export class IconSelectAndMove extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_SelectAndMove())}</span>
+      ${unsafeSVG(Icon_SelectAndMove())}
     `;
   }
 }

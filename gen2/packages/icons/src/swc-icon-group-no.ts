@@ -37,7 +37,7 @@ export class IconGroupNo extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_GroupNo())}</span>
+      ${unsafeSVG(Icon_GroupNo())}
     `;
   }
 }

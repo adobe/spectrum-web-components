@@ -37,7 +37,7 @@ export class IconCornerRadiusEach extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_CornerRadiusEach())}</span>
+      ${unsafeSVG(Icon_CornerRadiusEach())}
     `;
   }
 }

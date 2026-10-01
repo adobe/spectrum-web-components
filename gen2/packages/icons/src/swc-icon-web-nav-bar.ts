@@ -37,7 +37,7 @@ export class IconWebNavBar extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_WebNavBar())}</span>
+      ${unsafeSVG(Icon_WebNavBar())}
     `;
   }
 }

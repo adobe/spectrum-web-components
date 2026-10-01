@@ -37,7 +37,7 @@ export class IconRedo extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Redo())}</span>
+      ${unsafeSVG(Icon_Redo())}
     `;
   }
 }

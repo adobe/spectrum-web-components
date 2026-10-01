@@ -59,6 +59,7 @@ Use these existing docs when matching structure, headings, tables, and phrasing:
 ### Important
 
 - Verify behavior and ARIA in **gen2 source** before stating what the component exposes — do not document ARIA the code does not set
+- **React Spectrum references:** Treat **RSP** as shorthand for **React Spectrum**. When the user supplies a React Spectrum component URL such as `https://react-spectrum.adobe.com/ComponentName`, include that URL as the link in the migration document. Before using the reference, read the full API from its LLM-friendly counterpart at `https://react-spectrum.adobe.com/ComponentName.md`; use the `.md` page for research, but do not replace the user-facing component link with the `.md` URL. Apply this rule to every supplied React Spectrum component URL.
 - Ask clarifying questions for uncertain mappings instead of guessing
 - **Dual or conditional host roles:** When 1st-gen source, RSP/Figma, or migration notes show the **same component** taking **more than one host `role`** (for example `toolbar` vs `radiogroup`, or a property that swaps roles), **stop and prompt the user** before writing Recommendations. A component that legitimately serves **two or more ARIA roles** should **most likely be two distinct components**—not one element whose role changes. Do not document multiple host roles as acceptable without an explicit product decision; see [Dual or conditional ARIA roles](#dual-or-conditional-aria-roles) in **Full instructions**.
 - When the doc covers **progress**, **loading**, **busy**, or **spinner** UX, align guidance with Adobe’s Figma file **Loading animation discovery** ([Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery)); if you cite or rely on it in the doc body, **also** list that link under **`## References`**
@@ -209,6 +210,7 @@ Use a **single** `### Keyboard and focus` subsection under `## Recommendations`.
 ### Automated tests
 
 - Table: **Kind of test** | **What to check** (unit, aXe/Storybook, Playwright ARIA snapshots, contrast, etc.—match what the repo actually uses for that component).
+- **Form-associated components:** if the component participates in a `<form>` (text field, checkbox, checkbox group, radio group, picker, combobox, and similar), the Automated tests table **must** include a form-participation row and the doc **must** state that stories demonstrate the component inside a native `<form>` (native `<form>` for now; a dedicated form component later). Cover the full form lifecycle required for every form-associated component by [forms strategy RFC §3.5](../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/forms-strategy-rfc.md#35-testing-form-participation): value on submit (`FormData`), validation of required/constrained state at the level the constraint lives, reset (`formResetCallback`), and getting the value. Add a matching **Summary checklist** item.
 
 ### Manual screen reader testing (non-focusable components)
 

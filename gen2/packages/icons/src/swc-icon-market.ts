@@ -37,7 +37,7 @@ export class IconMarket extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Market())}</span>
+      ${unsafeSVG(Icon_Market())}
     `;
   }
 }

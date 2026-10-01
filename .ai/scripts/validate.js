@@ -13,14 +13,18 @@
  */
 
 /**
- * Entry point for AI tooling CI validation.
+ * Entry point for AI tooling CI validation (`yarn lint:ai`).
  *
- * Runs five checks:
- *   1. Story tags — valid tags in gen2 *.stories.ts files
- *   2. AGENTS.md paths — relative links in AGENTS.md files resolve to real files
- *   3. Config schema — .ai/config.json structure and regex validity
- *   4. Symlinks — .cursor/ and .claude/ adapter symlinks point to .ai/ sources
- *   5. Docs pages — per-unit MDX docs pages for gen2 components, internal
+ * Runs seven checks:
+ *   1. Story tags: valid tags in gen2 *.stories.ts files
+ *   2. Links: relative links in AGENTS.md files and `.ai/` Markdown resolve to real files
+ *   3. Config schema: .ai/config.json structure and regex validity
+ *   4. Frontmatter: `.ai/` instruction and skill metadata matches the canonical schema,
+ *      `paths` globs match tracked files, skill names and descriptions load in Copilot,
+ *      and generated folders hold only generated files
+ *   5. Symlinks: the .claude/ and .cursor/ directory symlinks point to .ai/ sources
+ *   6. Generated files: .github/instructions/ and .cursor/rules/ match `yarn ai:sync`
+ *   7. Docs pages: per-unit MDX docs pages for gen2 components, internal
  *      components, patterns, and controllers conform to the per-unit MDX
  *      authoring standards in `.ai/rules/stories-documentation.md`
  *
@@ -31,8 +35,10 @@
  */
 
 import { validateDocsPages } from '../../scripts/validate-docs-pages.js';
-import { validateAgentsPaths } from './validate-agents-paths.js';
+import { syncAi } from './sync.js';
 import { validateConfigSchema } from './validate-config-schema.js';
+import { validateFrontmatter } from './validate-frontmatter.js';
+import { validateLinks } from './validate-links.js';
 import { validateStoryTags } from './validate-story-tags.js';
 import { validateSymlinks } from './validate-symlinks.js';
 
@@ -68,10 +74,15 @@ const tags = validateStoryTags();
 totalErrors += tags.errors.length;
 printSection('Story tags', tags.errors, [], tags.fileCount);
 
-// 2. AGENTS.md paths
-const agents = validateAgentsPaths();
-totalErrors += agents.errors.length;
-printSection('AGENTS.md paths', agents.errors, [], agents.fileCount);
+// 2. Links
+const links = validateLinks();
+totalErrors += links.errors.length;
+printSection(
+  'Links (AGENTS.md and .ai/)',
+  links.errors,
+  links.warnings,
+  links.fileCount
+);
 
 // 3. Config schema
 const config = validateConfigSchema();
@@ -83,7 +94,17 @@ printSection(
   1
 );
 
-// 4. Symlinks
+// 4. Frontmatter
+const frontmatter = validateFrontmatter();
+totalErrors += frontmatter.errors.length;
+printSection(
+  'Instruction and skill frontmatter (.ai/)',
+  frontmatter.errors,
+  frontmatter.warnings,
+  frontmatter.fileCount
+);
+
+// 5. Symlinks
 const symlinks = validateSymlinks();
 totalErrors += symlinks.errors.length;
 printSection(
@@ -93,7 +114,17 @@ printSection(
   symlinks.fileCount
 );
 
-// 5. Docs pages
+// 6. Generated files
+const generated = await syncAi({ write: false });
+totalErrors += generated.errors.length;
+printSection(
+  'Generated files (yarn ai:sync --check)',
+  generated.errors,
+  [],
+  generated.fileCount
+);
+
+// 7. Docs pages
 const docsPages = validateDocsPages();
 totalErrors += docsPages.errors.length;
 printSection(

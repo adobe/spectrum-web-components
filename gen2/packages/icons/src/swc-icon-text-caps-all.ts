@@ -37,7 +37,7 @@ export class IconTextCapsAll extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_TextCapsAll())}</span>
+      ${unsafeSVG(Icon_TextCapsAll())}
     `;
   }
 }

@@ -14,14 +14,6 @@ import { css, html, LitElement } from 'lit';
 import { STORY_CHANGED } from '@storybook/core-events';
 import { addons } from '@storybook/manager-api';
 
-// Import Spectrum Web Components
-import '@spectrum-web-components/switch/sp-switch.js';
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/spectrum-two/themes-core-tokens.js';
-import '@spectrum-web-components/textfield/sp-textfield.js';
-import '@spectrum-web-components/help-text/sp-help-text.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-
 import ScreenReader from '../screen-reader/screenReader.js';
 
 interface ScreenReaderTextEvent extends CustomEvent {
@@ -38,7 +30,7 @@ export class ScreenReaderPanel extends LitElement {
     text: { type: Boolean },
     isActive: { type: Boolean },
     screenReaderText: { type: String },
-    themeColor: { type: String },
+    themeColor: { type: String, attribute: 'color', reflect: true },
   };
 
   // Use 'declare' to avoid class field definition overriding Lit's reactive properties
@@ -57,24 +49,133 @@ export class ScreenReaderPanel extends LitElement {
     :host {
       display: block;
       padding: 16px;
+
+      /* Token fallbacks keep the panel usable in the 1st-gen Storybook
+         manager, which does not load the gen2 token stylesheet. */
+      color-scheme: light;
+      --panel-text-color: var(--swc-neutral-content-color-default, #292929);
+      --panel-muted-color: var(
+        --swc-neutral-subdued-content-color-default,
+        #505050
+      );
+      --panel-border-color: var(--swc-gray-400, #c6c6c6);
+      --panel-surface-color: var(--swc-gray-25, #fff);
+      --panel-track-color: var(--swc-gray-500, #8f8f8f);
+      --panel-accent-color: var(--swc-accent-background-color-default, #2680eb);
+      --panel-focus-color: var(--swc-focus-indicator-color, #1473e6);
+      --panel-handle-color: var(--swc-gray-25, #fff);
+      --panel-corner-radius: var(--swc-corner-radius-100, 4px);
+
+      color: var(--panel-text-color);
+      font-size: 13px;
+    }
+
+    :host([color='dark']) {
+      color-scheme: dark;
+      --panel-text-color: var(--swc-neutral-content-color-default, #dbdbdb);
+      --panel-muted-color: var(
+        --swc-neutral-subdued-content-color-default,
+        #afafaf
+      );
+      --panel-border-color: var(--swc-gray-400, #444);
+      --panel-surface-color: var(--swc-gray-25, #111);
+      --panel-track-color: var(--swc-gray-500, #6d6d6d);
+      --panel-accent-color: var(--swc-accent-background-color-default, #378ef0);
+      --panel-focus-color: var(--swc-focus-indicator-color, #378ef0);
+      --panel-handle-color: var(--swc-gray-25, #111);
     }
 
     .toggle-row {
-      display: flex;
-      align-items: center;
       margin-bottom: 12px;
+    }
+
+    .switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .switch input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .switch-track {
+      position: relative;
+      flex: none;
+      inline-size: 26px;
+      block-size: 14px;
+      border-radius: 7px;
+      background-color: var(--panel-track-color);
+      transition:
+        background-color 130ms ease-in-out,
+        box-shadow 130ms ease-in-out;
+    }
+
+    .switch-track::after {
+      content: '';
+      position: absolute;
+      inset-block-start: 2px;
+      inset-inline-start: 2px;
+      inline-size: 10px;
+      block-size: 10px;
+      border-radius: 50%;
+      background-color: var(--panel-handle-color);
+      transition: inset-inline-start 130ms ease-in-out;
+    }
+
+    .switch input:checked + .switch-track {
+      background-color: var(--panel-accent-color);
+    }
+
+    .switch input:checked + .switch-track::after {
+      inset-inline-start: 14px;
+    }
+
+    .switch input:focus-visible + .switch-track {
+      box-shadow:
+        0 0 0 2px var(--panel-surface-color),
+        0 0 0 4px var(--panel-focus-color);
     }
 
     .output-section {
       margin-top: 16px;
     }
 
-    sp-textfield {
-      width: 100%;
+    .field-label {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--panel-muted-color);
+      font-size: 12px;
     }
 
-    sp-help-text {
+    textarea {
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 32px;
+      padding: 6px 8px;
+      border: 1px solid var(--panel-border-color);
+      border-radius: var(--panel-corner-radius);
+      background-color: var(--panel-surface-color);
+      color: var(--panel-text-color);
+      font-family: inherit;
+      font-size: inherit;
+      resize: vertical;
+    }
+
+    textarea:focus-visible {
+      outline: 2px solid var(--panel-focus-color);
+      outline-offset: -1px;
+    }
+
+    .help-text {
+      display: block;
       margin-top: 12px;
+      color: var(--panel-muted-color);
+      font-size: 12px;
     }
   `;
 
@@ -269,45 +370,54 @@ export class ScreenReaderPanel extends LitElement {
 
   override render() {
     return html`
-      <sp-theme scale="medium" color=${this.themeColor} system="spectrum-two">
-        <div class="toggle-row">
-          <sp-switch ?checked=${this.voice} @change=${this.handleVoiceToggle}>
-            Voice Reader
-          </sp-switch>
-        </div>
+      <div class="toggle-row">
+        <label class="switch">
+          <input
+            type="checkbox"
+            .checked=${this.voice}
+            @change=${this.handleVoiceToggle}
+          />
+          <span class="switch-track" aria-hidden="true"></span>
+          <span>Voice Reader</span>
+        </label>
+      </div>
 
-        <div class="toggle-row">
-          <sp-switch ?checked=${this.text} @change=${this.handleTextToggle}>
-            Text Reader
-          </sp-switch>
-        </div>
+      <div class="toggle-row">
+        <label class="switch">
+          <input
+            type="checkbox"
+            .checked=${this.text}
+            @change=${this.handleTextToggle}
+          />
+          <span class="switch-track" aria-hidden="true"></span>
+          <span>Text Reader</span>
+        </label>
+      </div>
 
-        ${this.text
-          ? html`
-              <div class="output-section">
-                <sp-field-label for="screen-reader-output">
-                  Screen reader output
-                </sp-field-label>
-                <sp-textfield
-                  id="screen-reader-output"
-                  multiline
-                  readonly
-                  rows="1"
-                  placeholder="Navigate to hear announcements..."
-                  .value=${this.screenReaderText}
-                ></sp-textfield>
-              </div>
-            `
-          : ''}
-        ${this.isActive
-          ? html`
-              <sp-help-text>
-                Use Tab or arrow keys to navigate. Focus changes will be
-                announced.
-              </sp-help-text>
-            `
-          : ''}
-      </sp-theme>
+      ${this.text
+        ? html`
+            <div class="output-section">
+              <label class="field-label" for="screen-reader-output">
+                Screen reader output
+              </label>
+              <textarea
+                id="screen-reader-output"
+                readonly
+                rows="1"
+                placeholder="Navigate to hear announcements..."
+                .value=${this.screenReaderText}
+              ></textarea>
+            </div>
+          `
+        : ''}
+      ${this.isActive
+        ? html`
+            <span class="help-text">
+              Use Tab or arrow keys to navigate. Focus changes will be
+              announced.
+            </span>
+          `
+        : ''}
     `;
   }
 }

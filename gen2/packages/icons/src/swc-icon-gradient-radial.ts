@@ -37,7 +37,7 @@ export class IconGradientRadial extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_GradientRadial())}</span>
+      ${unsafeSVG(Icon_GradientRadial())}
     `;
   }
 }

@@ -37,7 +37,7 @@ export class IconPaste extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Paste())}</span>
+      ${unsafeSVG(Icon_Paste())}
     `;
   }
 }

@@ -37,7 +37,7 @@ export class IconStrokeSolid extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_StrokeSolid())}</span>
+      ${unsafeSVG(Icon_StrokeSolid())}
     `;
   }
 }

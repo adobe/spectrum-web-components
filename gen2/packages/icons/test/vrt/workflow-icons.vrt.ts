@@ -40,7 +40,7 @@ import { WORKFLOW_ICONS } from '../../src/manifest.js';
 // Metadata
 
 const meta: Meta = {
-  title: 'Workflow icons VRT',
+  title: 'Workflow Icons/Workflow icons VRT',
   tags: ['dev'],
 };
 

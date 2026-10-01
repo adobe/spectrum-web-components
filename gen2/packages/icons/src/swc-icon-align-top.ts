@@ -37,7 +37,7 @@ export class IconAlignTop extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_AlignTop())}</span>
+      ${unsafeSVG(Icon_AlignTop())}
     `;
   }
 }

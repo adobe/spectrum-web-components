@@ -37,7 +37,7 @@ export class IconLassoSelect extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_LassoSelect())}</span>
+      ${unsafeSVG(Icon_LassoSelect())}
     `;
   }
 }
