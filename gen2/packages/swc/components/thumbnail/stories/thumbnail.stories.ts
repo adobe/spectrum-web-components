@@ -63,7 +63,9 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-const PLACEHOLDER_SRC = 'https://picsum.photos/id/56/80/80';
+const PLACEHOLDER_SRC = './images/avatar-preview.png';
+
+const LANDSCAPE_SRC = './images/landscape-asset.jpg';
 
 // ────────────────────
 //    PLAYGROUND STORY
@@ -125,10 +127,7 @@ export const Fit: Story = {
     ${THUMBNAIL_VALID_FITS.map(
       (fit) => html`
         <swc-thumbnail size="1000" fit=${fit}>
-          <img
-            src="https://picsum.photos/id/823/160/80"
-            alt="Preview, fit ${fit}"
-          />
+          <img src=${LANDSCAPE_SRC} alt="Preview, fit ${fit}" />
         </swc-thumbnail>
       `
     )}
@@ -178,6 +177,12 @@ export const Accessibility: Story = {
     <swc-thumbnail decorative>
       <img src=${PLACEHOLDER_SRC} alt="" />
     </swc-thumbnail>
+    <button disabled>
+      <swc-thumbnail>
+        <img src=${PLACEHOLDER_SRC} alt="File preview" />
+      </swc-thumbnail>
+      Upload file
+    </button>
   `,
   parameters: { flexLayout: 'row-wrap' },
   tags: ['a11y'],
