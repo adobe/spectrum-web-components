@@ -80,6 +80,7 @@ export interface StoryArgs {
   variant?: string;
   tickStep?: number;
   labelVisibility?: string;
+  hapticFeedback?: boolean;
   onInput?: (val: string) => void;
   onChange?: (val: string) => void;
   min?: number;
@@ -141,6 +142,30 @@ export const Default = (args: StoryArgs = {}): TemplateResult => {
     </div>
   `;
 };
+
+export const WebHaptics = (args: StoryArgs = {}): TemplateResult => {
+  return html`
+    <div style="width: 500px; margin-inline: 20px;">
+      <p style="font-size: 14px; margin-bottom: 12px;">
+        Haptic feedback fires when you commit a value (release after drag, or
+        change via keyboard), same as combobox on selection (iOS 18+ Safari or
+        Android Vibration API).
+      </p>
+      <sp-slider
+        label="Volume"
+        max="100"
+        min="0"
+        value="50"
+        step="1"
+        ?haptic-feedback=${args.hapticFeedback ?? true}
+        @input=${handleEvent(args)}
+        @change=${handleEvent(args)}
+        ...=${spreadProps(args)}
+      ></sp-slider>
+    </div>
+  `;
+};
+WebHaptics.args = { hapticFeedback: true };
 
 export const Filled = (args: StoryArgs = {}): TemplateResult => {
   return html`
