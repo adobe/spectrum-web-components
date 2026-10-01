@@ -629,3 +629,52 @@ export const AccessibleNameNoWarningTest: Story = {
     }
   },
 };
+
+export const DefaultAttributesReflectTest: Story = {
+  render: () => '',
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'reflects default size and fit on an element created without attributes',
+      async () => {
+        const thumbnail = document.createElement('swc-thumbnail') as Thumbnail;
+        canvasElement.appendChild(thumbnail);
+        await thumbnail.updateComplete;
+
+        expect(thumbnail.getAttribute('size'), 'size attribute').toBe(
+          String(THUMBNAIL_DEFAULT_SIZE)
+        );
+        expect(thumbnail.getAttribute('fit'), 'fit attribute').toBe(
+          THUMBNAIL_DEFAULT_FIT
+        );
+      }
+    );
+  },
+};
+
+export const DecorativeImageSwapKeepsConsumerAltTest: Story = {
+  render: () => html`
+    <swc-thumbnail decorative><img src="a.png" /></swc-thumbnail>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const thumbnail = await getComponent<Thumbnail>(
+      canvasElement,
+      'swc-thumbnail'
+    );
+
+    await step(
+      'does not strip a consumer alt from a swapped-in image when decorative is unset',
+      async () => {
+        const next = document.createElement('img');
+        next.src = 'b.png';
+        next.alt = '';
+        thumbnail.replaceChildren(next);
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+
+        thumbnail.decorative = false;
+        await thumbnail.updateComplete;
+
+        expect(next.getAttribute('alt'), 'consumer alt kept').toBe('');
+      }
+    );
+  },
+};

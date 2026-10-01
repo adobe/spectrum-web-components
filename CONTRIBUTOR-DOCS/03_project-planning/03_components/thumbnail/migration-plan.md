@@ -276,7 +276,7 @@ Thumbnail adds one public property, `--swc-thumbnail-size` (see A1). No `--mod-t
 
 **Size validation and fallback (Core-owned).** Mirror `AvatarBase`'s numeric getter/setter pattern: validate the incoming value against `THUMBNAIL_VALID_SIZES`, fall back to `THUMBNAIL_DEFAULT_SIZE` (`500`) on an invalid value, reflect the resolved value to the `size` attribute, and surface a `warnIf` dev-mode warning on invalid input (1st-gen falls back silently with no warning).
 
-**`decorative` / alt handling.** When `decorative` is set: apply `aria-hidden="true"` to the host; if the slotted `<img>` has no `alt`, set `alt=""` on it. When `decorative` is not set and the slotted `<img>` has no meaningful `alt`: emit a DEBUG-mode warning via the shared `window.__swc.warn` / `warnIf` utility directing the author to add `alt` or set `decorative`. The `aria-hidden` half of this is Core-owned, same as `AvatarBase`. The alt-detection half is **not** a direct mirror of `AvatarBase`: Avatar checks its own reactive `alt` property, but Thumbnail's `alt` lives on a slotted light-DOM `<img>`, which Core can't see without rendering of its own. This needs slot introspection (`slotchange` plus `assignedElements()` on the slot SWC renders); see [Architecture: core vs SWC split](#architecture-core-vs-swc-split) for the open question on exactly where that logic lives.
+**`decorative` / alt handling.** When `decorative` is set: apply `aria-hidden="true"` to the host; if the slotted `<img>` has no `alt`, set `alt=""` on it, and remove that `alt` again when `decorative` is unset. When `decorative` is not set and the slotted `<img>` has no `alt`, `aria-label`, or `aria-labelledby`: emit a DEBUG-mode warning via the shared `warnIf` utility directing the author to add a name or set `decorative`. Both halves are Core-owned in `ThumbnailBase`; SWC only re-runs the alt sync from its `slotchange` listener. See [Architecture: core vs SWC split](#architecture-core-vs-swc-split).
 
 **`fit` (renamed from `cover`, component-owned).** Replaces 1st-gen's `cover` boolean with a `'cover' | 'contain'` enum, mirroring Asset's `AssetFit` naming, DEBUG-warning-on-invalid-value pattern, and Core placement (Asset hosts `fit` on `Asset.base.ts`). Thumbnail's default is `'contain'`, not Asset's `'cover'`, to preserve 1st-gen's existing non-cover default behavior. Implemented purely via `:host()` attribute selectors on the slotted content (e.g. `::slotted(*) { object-fit: contain; }` by default, `:host([fit="cover"]) ::slotted(*) { object-fit: cover; }` as the override), exactly like 1st-gen's `cover` was, no separate render() branch is needed. See [Decision log](#decision-log) C8.
 
@@ -403,9 +403,9 @@ Rendering shape (implemented in the API/accessibility phases):
 
 ### Review
 
-- [ ] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
-- [ ] Status table in workstream doc updated
-- [ ] PR created with description referencing Epic SWC-2195
+- [x] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
+- [x] Status table in workstream doc updated
+- [x] PR created with description referencing Epic SWC-2195
 - [ ] Peer engineer sign-off
 
 ---
