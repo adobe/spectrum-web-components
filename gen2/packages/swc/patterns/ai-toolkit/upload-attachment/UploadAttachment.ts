@@ -10,14 +10,22 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
-import { property, query, queryAssignedElements } from 'lit/decorators.js';
+import {
+  CSSResultArray,
+  html,
+  nothing,
+  PropertyValues,
+  TemplateResult,
+} from 'lit';
+import { property, query } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { getLabelFromSlot } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
+import '@adobe/spectrum-wc/components/card/swc-card.js';
+import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 
 import { CrossIcon } from '../utils/icons/index.js';
 
@@ -40,28 +48,36 @@ import styles from './upload-attachment.css';
  *   <span slot="title">Brief.pdf</span>
  * </swc-upload-attachment>
  *
- * @slot thumbnail - Shared visual slot for icon/thumbnail/preview image.
- * @slot badge - Optional file-type badge rendered over `type="media"` previews (for example, "PDF").
+ * @example
+ * <swc-upload-attachment type="media" dismissible progress="42">
+ *   <swc-asset slot="thumbnail">
+ *     <img src="photo.jpg" alt="Campaign still" />
+ *   </swc-asset>
+ * </swc-upload-attachment>
+ *
+ * @slot thumbnail - Shared visual slot for icon/thumbnail/preview image. When slotting `swc-asset`, it defaults to a square aspect ratio; pass `aspect-ratio` on it to override.
+ * @slot badge - Optional file-type badge rendered over `type="media"` previews (for example, "PDF"). Use only at `size="l"` and above; it crowds the default `size="m"` (64px) preview.
  * @slot title - Primary text label.
  * @slot subtitle - Secondary text label.
  * @slot actions - Optional trailing actions.
  * @fires swc-upload-attachment-dismiss - Dispatched when the dismiss button is pressed.
  * Detail: `{ attachment: this }`
  *
- * @cssprop --swc-upload-attachment-focus-indicator-color - Focus ring color for the tile and its dismiss button. Defaults to a dedicated ring color pending a matching design token.
+ * @cssprop --swc-upload-attachment-focus-indicator-color - Focus ring color for the tile and its dismiss button. Defaults to the themed static focus indicator (black on light, white on dark).
  * @cssprop --swc-upload-attachment-card-min-block-size - Minimum block size of the surface for `type="card"`. Defaults to 72px.
- * @cssprop --swc-upload-attachment-card-thumbnail-inline-size - Thumbnail inline size for `type="card"`. Defaults to 48px.
- * @cssprop --swc-upload-attachment-card-thumbnail-block-size - Thumbnail block size for `type="card"`. Defaults to 48px.
- * @cssprop --swc-upload-attachment-preview-size - Inline and block size of the tile for `type="media"`. Defaults to 72px.
+ * @cssprop --swc-upload-attachment-card-thumbnail-size - Inline and block size of the thumbnail for `type="card"`. Defaults to 48px.
  * @cssprop --swc-upload-attachment-dismiss-visual-size - Rendered size of the dismiss button's circular hit area. Defaults to 20px.
- * @cssprop --swc-upload-attachment-dismiss-icon-inline-size - Inline size of the dismiss icon. Defaults to 8px.
- * @cssprop --swc-upload-attachment-dismiss-icon-block-size - Block size of the dismiss icon. Defaults to 8px.
+ * @cssprop --swc-upload-attachment-dismiss-icon-size - Inline and block size of the dismiss icon. Defaults to 8px.
  * @since 2.0.0-beta.3
  */
 export class UploadAttachment extends SpectrumElement {
   /** Visual treatment type for this attachment. */
   @property({ type: String, reflect: true })
   public type: 'card' | 'media' = 'card';
+
+  /** Tile size for `type="media"` (64px `m`, 96px `l`). Has no effect on `type="card"`. */
+  @property({ type: String, reflect: true })
+  public size: 'm' | 'l' = 'm';
 
   /** When `true`, show a dismiss affordance and emit `swc-upload-attachment-dismiss` on click. */
   @property({ type: Boolean, reflect: true })
@@ -82,13 +98,28 @@ export class UploadAttachment extends SpectrumElement {
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = '';
 
-  @queryAssignedElements({ slot: 'badge', flatten: true })
-  private _assignedBadge!: HTMLElement[];
+  /**
+   * Upload progress percentage (0-100), shown as a `swc-progress-circle`
+   * overlay on the `type="media"` preview. Hidden when unset or at 100
+   * (complete); update as the upload advances to show it mid-transfer.
+   * The overlay itself is delayed by 1s after upload starts, so a fast
+   * upload doesn't flash the loading state.
+   */
+  @property({ type: Number, reflect: true })
+  public progress?: number;
 
   @query('slot[name="title"]')
   private _titleSlot?: HTMLSlotElement;
 
   private _titleObserver = new MutationObserver(() => this.requestUpdate());
+
+  /** Whether the delayed progress-circle visual is currently shown; see {@link _syncProgressVisibility}. */
+  private _progressVisible = false;
+
+  /** Tracks the last-seen `_shouldShowProgress()` value so `_syncProgressVisibility` only reacts to transitions. */
+  private _wasLoading = false;
+
+  private _progressTimer: ReturnType<typeof setTimeout> | null = null;
 
   public static override get styles(): CSSResultArray {
     return [styles, visuallyHiddenStyles];
@@ -109,10 +140,12 @@ export class UploadAttachment extends SpectrumElement {
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
     this._titleObserver.disconnect();
+    this._clearProgressTimer();
   }
 
   protected override willUpdate(_changed: PropertyValues<this>): void {
     this._syncHostAccessibleLabel();
+    this._syncProgressVisibility();
   }
 
   private _titleText(): string {
@@ -174,14 +207,6 @@ export class UploadAttachment extends SpectrumElement {
     this.requestUpdate();
   }
 
-  private _handleBadgeSlotChange(): void {
-    this.requestUpdate();
-  }
-
-  private _hasBadgeContent(): boolean {
-    return (this._assignedBadge?.length ?? 0) > 0;
-  }
-
   private _handleDismissClick(): void {
     this.dispatchEvent(
       new CustomEvent('swc-upload-attachment-dismiss', {
@@ -212,40 +237,76 @@ export class UploadAttachment extends SpectrumElement {
     `;
   }
 
-  private _renderBadge(): TemplateResult {
-    if (!this._hasBadgeContent()) {
-      return html`
-        <slot
-          name="badge"
-          hidden
-          @slotchange=${this._handleBadgeSlotChange}
-        ></slot>
-      `;
-    }
+  private _shouldShowProgress(): boolean {
+    return typeof this.progress === 'number' && this.progress < 100;
+  }
 
-    return html`
-      <div class="swc-UploadAttachment-badge">
-        <slot name="badge" @slotchange=${this._handleBadgeSlotChange}></slot>
-      </div>
-    `;
+  /**
+   * Delays showing the progress circle for 1s after an upload starts, so a
+   * fast upload doesn't flash the loading state (mirrors the delayed busy
+   * visual used for `pending` buttons). Only reacts to transitions, so
+   * progress updates during an already-armed delay don't restart the timer.
+   */
+  private _syncProgressVisibility(): void {
+    const loading = this._shouldShowProgress();
+    if (loading === this._wasLoading) {
+      return;
+    }
+    this._wasLoading = loading;
+    this._clearProgressTimer();
+    if (loading) {
+      this._progressTimer = setTimeout(() => {
+        this._progressTimer = null;
+        // Guard against the upload finishing after the timer fired but
+        // before this callback ran.
+        if (!this._shouldShowProgress()) {
+          return;
+        }
+        this._progressVisible = true;
+        this.requestUpdate();
+      }, 1000);
+    } else {
+      this._progressVisible = false;
+    }
+  }
+
+  private _clearProgressTimer(): void {
+    if (this._progressTimer !== null) {
+      clearTimeout(this._progressTimer);
+      this._progressTimer = null;
+    }
   }
 
   private _renderMediaSurface(): TemplateResult {
+    const loading = this._progressVisible;
     return html`
-      <div class="swc-UploadAttachment-surface">
-        <div class="swc-UploadAttachment-thumbnail">
-          <slot name="thumbnail"></slot>
-        </div>
-        ${this._renderBadge()}
-        <div class="swc-UploadAttachment-actions">
-          <slot name="actions"></slot>
-        </div>
-        <slot
-          name="title"
-          hidden
-          @slotchange=${this._handleTitleSlotChange}
-        ></slot>
+      <swc-card class="swc-UploadAttachment-surface" variant="quiet">
+        ${loading
+          ? nothing
+          : html`
+              <slot name="thumbnail" slot="preview"></slot>
+            `}
+        ${loading
+          ? html`
+              <swc-progress-circle
+                class="swc-UploadAttachment-progress"
+                slot="media"
+                size="s"
+                progress=${this.progress}
+                label="Uploading"
+              ></swc-progress-circle>
+            `
+          : nothing}
+        <slot name="badge" slot="media"></slot>
+      </swc-card>
+      <div class="swc-UploadAttachment-actions">
+        <slot name="actions"></slot>
       </div>
+      <slot
+        name="title"
+        hidden
+        @slotchange=${this._handleTitleSlotChange}
+      ></slot>
     `;
   }
 
@@ -255,9 +316,9 @@ export class UploadAttachment extends SpectrumElement {
     );
     return html`
       <div class="swc-UploadAttachment-surface">
-        <div class="swc-UploadAttachment-thumbnail">
-          <slot name="thumbnail"></slot>
-        </div>
+        <swc-card class="swc-UploadAttachment-thumbnail" variant="quiet">
+          <slot name="thumbnail" slot="preview"></slot>
+        </swc-card>
         <div class="swc-UploadAttachment-meta">
           <div class="swc-UploadAttachment-title">
             <span class="swc-UploadAttachment-title-start" aria-hidden="true">
