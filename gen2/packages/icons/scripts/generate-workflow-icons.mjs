@@ -14,67 +14,69 @@
  * Generates the public workflow icon art for the `@adobe/spectrum-wc-icons` package from
  * the A4U source SVGs. This generator is workflow-specific (it parses the workflow
  * filename form and emits two outputs per icon); the family-agnostic pieces it uses (SVG
- * cleanup, kebab casing, license and banner) live in `icon-source/utils/`, shared with
- * the UI generator.
- *
- * The source SVGs and shared utilities live in swc, so the generator lives here too; it
- * writes its output into the sibling icons package (swc devDepends on icons, so
- * swc -> icons is the correct direction). Two outputs per icon:
+ * cleanup, kebab casing, license and banner) live in `@adobe/spectrum-wc-core`'s
+ * `tools/icons/`, shared with the UI generator in swc. Two outputs per icon:
  *
  *   - `<Name>.ts`            -> `Icon_<Name>()`, a framework-agnostic SVG-string function
  *   - `swc-icon-<kebab>.ts`  -> `Icon<Name>`, a custom element extending `IconBase`
  *
- * plus two generated barrels:
+ * plus three generated aggregates:
  *
  *   - `index.ts`    -> re-exports every `Icon_<Name>` function (tree-shakeable substrate)
  *   - `elements.ts` -> side-effect imports that register every `<swc-icon-*>` tag
+ *   - `manifest.ts` -> `WORKFLOW_ICONS`, the logical name and tag of every icon
  *
- * Input:  icon-source/workflow/S2_Icon_<Name>_20_N.svg
- * Output: ../icons/src/<Name>.ts, ../icons/src/swc-icon-<kebab>.ts, index.ts, elements.ts
+ * Input:  icon-source/S2_Icon_<Name>_20_N.svg
+ * Output: src/<Name>.ts, src/swc-icon-<kebab>.ts, src/index.ts, src/elements.ts,
+ *         src/manifest.ts
  *
- * Run with `yarn generate:workflow-icons`. Regenerate whenever the source SVGs change.
+ * Run with `yarn generate:workflow-icons` (from this package or the repo root). That
+ * command also re-copies the shared stylesheet (`yarn generate:icon-styles`). Regenerate
+ * whenever the source SVGs change. See ../icon-source/README.md.
  */
 import { globSync } from 'glob';
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// Build-time helpers shared with the UI generator. Imported by path: core publishes only
+// dist/, so these are not package exports.
 import {
   generatedBanner,
   LICENSE,
   toKebab,
-} from '../icon-source/utils/format.mjs';
-import { cleanSvg } from '../icon-source/utils/svg.mjs';
+} from '../../core/tools/icons/format.mjs';
+import { cleanSvg } from '../../core/tools/icons/svg.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
-const swcRoot = path.resolve(scriptDir, '..');
-const sourceDir = path.join(swcRoot, 'icon-source', 'workflow');
-// The generated art lives in the sibling icons package, flat under src/ so each icon
-// publishes as a top-level subpath (e.g. `@adobe/spectrum-wc-icons/Star.js`).
-const outDir = path.resolve(swcRoot, '..', 'icons', 'src');
+const packageRoot = path.resolve(scriptDir, '..');
+const sourceDir = path.join(packageRoot, 'icon-source');
+// Generated art lives flat under src/ so each icon publishes as a top-level subpath
+// (e.g. `@adobe/spectrum-wc-icons/Star.js`).
+const outDir = path.join(packageRoot, 'src');
 
 // A4U workflow source filename: one drawing per icon, scaled to the 20px token box, no
-// optical step. See icon-source/README.md ("Workflow icons").
+// optical step. See icon-source/README.md.
 const SOURCE_NAME = /^S2_Icon_(?<name>.+?)_20_N\.svg$/;
 
-// The `@since` version for generated elements, read from the icons package.json so it
+// The `@since` version for generated elements, read from this package.json so it
 // tracks the package version (bumped by changesets) rather than a hand-maintained
 // constant. All gen2 packages are version-locked, so this matches the core version
 // exported from core/element/version.ts too.
 const SINCE = JSON.parse(
-  readFileSync(path.resolve(swcRoot, '..', 'icons', 'package.json'), 'utf8')
+  readFileSync(path.join(packageRoot, 'package.json'), 'utf8')
 ).version;
 
 const GENERATED_BANNER = generatedBanner(
   'yarn generate:workflow-icons',
-  'icon-source/workflow/'
+  'icon-source/'
 );
 
 // Collect: logical PascalCase name -> cleaned svg string.
 const icons = new Map();
 const files = globSync('*.svg', { cwd: sourceDir }).sort();
 
-// Refuse to run without source SVGs. The source folder is git-ignored, so on a clean
+// Refuse to run without source SVGs. The raw SVGs are git-ignored, so on a clean
 // checkout this would otherwise delete the committed art and write empty barrels,
 // breaking every consumer.
 if (files.length === 0) {
@@ -115,7 +117,7 @@ for (const name of names) {
 
 // Ensure the output directory exists, then remove previously generated modules so
 // deletions in source propagate. Only the flat generated `.ts` files at src/ root are
-// cleared; hand-authored assets (stylesheets/) live in subfolders and are untouched.
+// cleared; src/stylesheets/ (the copied icon-base.css) is a subfolder and is untouched.
 mkdirSync(outDir, { recursive: true });
 for (const stale of globSync('*.ts', { cwd: outDir, ignore: '*.d.ts' })) {
   rmSync(path.join(outDir, stale));
