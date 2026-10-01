@@ -140,7 +140,7 @@ Do not write "when to use" guidance without a verified source. Limit description
 
 ### Other formatting rules
 
-Em dashes, Jira ticket references, and filler closing sentences are prohibited by the shared formatting rules in `.ai/rules/text-formatting.md` and `.ai/rules/stories-documentation.md`. Those rules are active in context — apply them here.
+Em dashes, Jira ticket references, and filler closing sentences are prohibited by the shared formatting rule in `.ai/rules/text-formatting.md` and by the `stories-documentation` skill (`.ai/skills/stories-documentation/SKILL.md`, General guidelines). The rule is active in context; load the skill for the rest — apply them here.
 
 ---
 
