@@ -102,7 +102,8 @@ export const Overview: Story = {
 
 export const Anatomy: Story = {
   args: {
-    'default-slot': `<img src="${PLACEHOLDER_SRC}" alt="Preview" />`,
+    size: 1000,
+    'default-slot': `<img src="${LANDSCAPE_SRC}" alt="Mountain landscape" />`,
   },
   tags: ['anatomy'],
 };
