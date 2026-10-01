@@ -37,7 +37,7 @@ export class IconContextualTaskBar extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_ContextualTaskBar())}</span>
+      ${unsafeSVG(Icon_ContextualTaskBar())}
     `;
   }
 }

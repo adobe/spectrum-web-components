@@ -25,6 +25,7 @@ import '@adobe/spectrum-wc/components/card/swc-card.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 
 import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
+import { renderCardTemplate } from '../card-template.js';
 
 // Tests for the concrete swc-card. This is the sole automated coverage for
 // the card family's shared behavior (CardBase) and shared template
@@ -1251,6 +1252,34 @@ export const ActionsUnsupportedSizeEmptyNoWarningTest: Story = {
             'no warnings are emitted when the actions slot has no content'
           ).toBe(0);
         })
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Shared template defaults
+// ──────────────────────────────────────────────────────────────
+
+// swc-card always supplies renderCollection/renderMedia, so the shared
+// template's default `() => nothing` callbacks are never exercised through the
+// element. Rendering the shared helper directly with only the required option
+// covers those defaults; swc-user-card / swc-product-card will exercise them
+// through real elements once they land.
+export const SharedTemplateDefaultsTest: Story = {
+  render: () => renderCardTemplate({ cardClass: 'Card' }),
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'renders the shared card scaffold when the optional slot callbacks are omitted',
+      async () => {
+        expect(
+          canvasElement.querySelector('.swc-CardBase'),
+          'card base scaffold rendered'
+        ).toBeTruthy();
+        expect(
+          canvasElement.querySelector('.swc-CardBase-media'),
+          'media region rendered with default empty collection and overlay'
+        ).toBeTruthy();
+      }
     );
   },
 };

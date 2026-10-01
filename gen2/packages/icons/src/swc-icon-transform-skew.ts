@@ -37,7 +37,7 @@ export class IconTransformSkew extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_TransformSkew())}</span>
+      ${unsafeSVG(Icon_TransformSkew())}
     `;
   }
 }

@@ -37,7 +37,7 @@ export class IconFolderMoveTo extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_FolderMoveTo())}</span>
+      ${unsafeSVG(Icon_FolderMoveTo())}
     `;
   }
 }

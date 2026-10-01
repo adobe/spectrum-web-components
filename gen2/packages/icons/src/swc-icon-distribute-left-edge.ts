@@ -37,7 +37,7 @@ export class IconDistributeLeftEdge extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_DistributeLeftEdge())}</span>
+      ${unsafeSVG(Icon_DistributeLeftEdge())}
     `;
   }
 }

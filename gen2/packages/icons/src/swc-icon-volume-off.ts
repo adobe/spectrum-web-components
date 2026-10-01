@@ -37,7 +37,7 @@ export class IconVolumeOff extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_VolumeOff())}</span>
+      ${unsafeSVG(Icon_VolumeOff())}
     `;
   }
 }

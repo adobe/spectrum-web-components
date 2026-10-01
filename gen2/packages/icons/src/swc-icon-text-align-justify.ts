@@ -37,7 +37,7 @@ export class IconTextAlignJustify extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_TextAlignJustify())}</span>
+      ${unsafeSVG(Icon_TextAlignJustify())}
     `;
   }
 }
