@@ -1,5 +1,30 @@
 # @adobe/spectrum-wc
 
+## 2.0.0-beta.5
+
+### Minor Changes
+
+- [#6733](https://github.com/adobe/spectrum-web-components/pull/6733) [`a452024`](https://github.com/adobe/spectrum-web-components/commit/a452024db3b745563105463b91384f1fad2fe1c8) Thanks [@caseyisonit](https://github.com/caseyisonit)! - Publish consumer documentation for the Spectrum 2 icon families and make UI icons deliverable.
+  - **UI icons are now deliverable.** `<swc-ui-icon>` (chevrons, checkmarks, arrows, and other control internals) ships from `@adobe/spectrum-wc` with its own consumer docs page next to workflow icons, rather than being internal-only.
+  - **Custom SVG contract documented.** The `<swc-icon>` frame now has a public docs page describing the contract for a slotted SVG: a single `<svg>` with a `viewBox`, no `width`/`height`, and `fill="currentColor"` so it follows text color and `--swc-icon-color`.
+  - **Per-family usage docs** for UI icons and the `<swc-icon>` frame, plus the 1st-gen icon migration guide, are now part of the published Storybook build (previously excluded as internal-only pages).
+  - **Removed the `elements/*` shared-template catalog.** `@adobe/spectrum-wc/icon` no longer re-exports the `elements/*` `TemplateResult` helpers. Slot a workflow icon (as its custom element) or your own SVG into `<swc-icon>` instead.
+  - **Removed `--swc-close-button-icon-size` (breaking).** This documented `@cssprop` is gone from `<swc-close-button>`. The cross icon now sizes from the button's `size` attribute (forwarded to `<swc-ui-icon>`), keeping the box and the optical step in sync. Remove any `--swc-close-button-icon-size` override; use `size` to change the icon, and `--swc-close-button-size` to size the button box.
+  - **Icon hosts now render `display: block` (breaking).** `<swc-icon>`, `<swc-ui-icon>`, and every workflow icon element previously rendered `inline-flex`. If you relied on an icon flowing inline with text, place it inside an inline or flex container.
+  - **New workflow icons.** `AIMark` (`<swc-icon-ai-mark>`, `Icon_AIMark`) and `MoreVertical` (`<swc-icon-more-vertical>`, `Icon_MoreVertical`) ship from `@adobe/spectrum-wc-icons`, pulled from S2 Icon Global Set Open Source 7.2.0. The `Tag` icon artwork updates to match that set.
+
+  The `@adobe/spectrum-wc-icons` change also moves the ambient `*.css` module declaration into `src/` so the package's generated type declarations resolve icon stylesheet imports cleanly.
+
+### Patch Changes
+
+- [#6782](https://github.com/adobe/spectrum-web-components/pull/6782) [`85081e7`](https://github.com/adobe/spectrum-web-components/commit/85081e7788d063ed8ff09af43db6fc2058a388bd) Thanks [@aramos-adobe](https://github.com/aramos-adobe)! - **fix(pixel-loader):** `<swc-pixel-loader>`'s `prefers-reduced-motion: reduce` state now fades the whole grid in and out together instead of revealing it row by row, so the reduced-motion cadence reads as a single fade rather than a staggered build.
+
+- [#6770](https://github.com/adobe/spectrum-web-components/pull/6770) [`efc2738`](https://github.com/adobe/spectrum-web-components/commit/efc27387caf47f884db6c36f53afa68468e81188) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(ai-toolkit):** Accessibility and layout fixes across the response-status and conversation patterns.
+  - `<swc-response-status>` keeps its row and pixel loader mounted when the first step arrives. Without steps, active labels are status text rather than inert buttons; with steps, a native disclosure button spans the row's hit area. Completed labels wrap in full unless a line cap is set. The row spans the column, and toggle padding and focus rings are corrected.
+  - `<swc-conversation-turn>` aligns turns and gives user messages a responsive reading-width cap: 75% of the column, at least 25ch where space permits, and at most 536px. The thread gap uses spacing-400.
+  - `<swc-message-sources>` spaces the first source inside the list without leaving an empty gap when closed. `<swc-user-message>` spacing is also corrected.
+  - Response-status steps have tighter icon spacing and an updated label shimmer animation.
+
 ## 2.0.0-beta.4
 
 ### Minor Changes
