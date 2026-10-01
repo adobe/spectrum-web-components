@@ -19,19 +19,17 @@ import { warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
 import type { RadioSize } from './RadioGroup.types.js';
 
 const DOCS_URL =
-  'https://spectrum-web-components.adobe.com/?path=/docs/components-radio--docs';
+  'https://spectrum-web-components.adobe.com/?path=/docs/components-radio-group--docs';
 
 /**
  * A single selectable option within a `swc-radio-group`. Rendering lives in `swc-radio`.
  *
- * `role="radio"`, `aria-checked`, `aria-disabled`, and `aria-posinset`/
- * `aria-setsize` all live on the host via its own `ElementInternals` rather
- * than a nested native `<input>`: each item has its own shadow root, so a
- * native radio input's implicit semantics (grouping, posinset/setsize)
- * can't span across items. No `aria-describedby` is set for the slotted
- * description: it renders as plain content inside this host's own
- * accessible subtree, so it already contributes to the accessible name
- * computation alongside the label.
+ * Role and state (`role="radio"`, `aria-checked`, `aria-disabled`,
+ * `aria-posinset`/`aria-setsize`) live on the host via `ElementInternals`, not
+ * a nested `<input type="radio">` because each item has its own shadow root, so a
+ * native input never successfully announces a real group position.
+ * Do not add `aria-describedby` for the `description` slot; it is already part
+ * of the accessible name.
  *
  * @attribute {RadioSize} size - Size of the item. Inherited from the parent
  *   `swc-radio-group`.
@@ -82,11 +80,8 @@ export abstract class RadioBase extends SpectrumElement {
   public size?: RadioSize;
 
   /**
-   * This item's 1-based position among its siblings, for `aria-posinset`.
-   * Set directly by the enclosing `swc-radio-group`: each item has its own
-   * shadow root, so the browser can't compute a native radio-button-group
-   * size/position across them the way it would for same-root
-   * `<input type="radio">` elements sharing a `name`.
+   * This item's 1-based position, for `aria-posinset`. Set by the enclosing
+   * group because the browser can't compute it across separate shadow roots.
    *
    * @internal
    */

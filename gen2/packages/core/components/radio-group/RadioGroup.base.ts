@@ -68,12 +68,10 @@ export abstract class RadioGroupBase extends SizedMixin(
   static formAssociated = true;
 
   /**
-   * Host `ElementInternals`, used only for native form participation
-   * (`FieldAssociationController`, `setValidity`), not for `role` or ARIA
-   * state. `role="radiogroup"` lives on a rendered element (see
-   * {@link roleElement}) because, depending on the browser/AT combination,
-   * item positioning or group labeling can fail when the role is on the
-   * host via `ElementInternals`.
+   * Form participation only. Do not move `role="radiogroup"` or ARIA state
+   * here: on the host via `ElementInternals`, item positions and the group
+   * name fail to announce in some browser/AT combinations (see
+   * {@link roleElement}).
    */
   private readonly internals = this.attachInternals();
 
@@ -83,8 +81,7 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   constructor() {
     super();
-    // Items dispatch a composed `change` when activated; the group handles
-    // proposed selection changes through `handleItemChange`.
+    // Items dispatch a composed `change` on activation.
     this.addEventListener('change', this.handleItemChange);
   }
 
@@ -241,12 +238,9 @@ export abstract class RadioGroupBase extends SizedMixin(
   );
 
   /**
-   * Proposes a selection change: adopts `value` unless it's already
-   * selected, dispatching the group's own cancelable `change` and reverting
-   * on `preventDefault()`. Shared by item-initiated activation
-   * (`handleItemChange`) and keyboard-driven roving-tabindex movement
-   * (`handleNavigationActiveChange`), since both represent the same public
-   * "selection changed" contract.
+   * Adopts `value` unless already selected, dispatching a cancelable `change`
+   * and reverting on `preventDefault()`. Shared by item activation and
+   * keyboard navigation.
    */
   private proposeSelection(value: string): void {
     if (value === this.selected) {
@@ -263,10 +257,8 @@ export abstract class RadioGroupBase extends SizedMixin(
   }
 
   /**
-   * Proposed selection changes from a slotted item's activation.
-   * `readonly` keeps the item's `checked` aligned with the group's current
-   * `selected` instead of adopting the change, blocking the selection half
-   * of the interaction while leaving focus/Tab behavior untouched.
+   * Proposed selection changes from item activation. When `readonly`, reverts
+   * the item's `checked` so focus still moves but selection does not.
    */
   private readonly handleItemChange = (event: Event): void => {
     const target = event.target;
@@ -282,9 +274,8 @@ export abstract class RadioGroupBase extends SizedMixin(
   };
 
   /**
-   * Composite keyboard navigation across slotted `swc-radio` items: all four
-   * arrow keys move a single linear roving tab stop (`direction: 'both'`),
-   * wrapping at the ends, skipping disabled items entirely.
+   * Arrow keys move a single roving tab stop, wrapping and skipping disabled
+   * items.
    */
   private readonly navigation = new FocusgroupNavigationController(this, {
     direction: 'both',
@@ -294,9 +285,8 @@ export abstract class RadioGroupBase extends SizedMixin(
   });
 
   /**
-   * Only keyboard-driven movement (arrow keys, Home, End) selects the newly
-   * active item; Tab-entry and a bare `.focus()` call land on it without
-   * changing the selection (matches the APG radio pattern).
+   * Only keyboard movement (arrows, Home, End) selects the active item;
+   * Tab-entry and `.focus()` do not.
    */
   private readonly handleNavigationActiveChange = (event: Event): void => {
     const { activeElement, source } = (
@@ -328,8 +318,7 @@ export abstract class RadioGroupBase extends SizedMixin(
     super.disconnectedCallback();
   }
 
-  /** Sets every slotted item's `checked` from the group's own `selected`, and
-   * keeps the roving tab stop on the checked item so Tab-entry lands there. */
+  /** Sets each item's `checked` from `selected` and keeps the roving tab stop on the checked item. */
   private syncCheckedState(): void {
     let checkedItem: RadioBase | undefined;
     for (const item of this.assignedItems()) {
@@ -361,12 +350,9 @@ export abstract class RadioGroupBase extends SizedMixin(
   }
 
   /**
-   * Sets each item's 1-based `posInSet`/`setSize` for `aria-posinset`/
-   * `aria-setsize`. Each `swc-radio` has its own shadow root, so the browser
-   * can't compute a native radio-button-group size/position across them the
-   * way it does for same-root `<input type="radio">` siblings sharing a
-   * `name` — without this, AT (e.g. VoiceOver) announces every item as
-   * "1 of 1".
+   * Sets each item's `posInSet`/`setSize`. Items have separate shadow roots,
+   * so the browser can't compute position; without this, some AT
+   * announces every item as "1 of 1".
    */
   private syncItemPositions(): void {
     const items = this.assignedItems();
@@ -401,10 +387,9 @@ export abstract class RadioGroupBase extends SizedMixin(
   protected override willUpdate(changedProperties: PropertyValues): void {
     super.willUpdate(changedProperties);
     if (!this.hasUpdated) {
-      // A slotted item's own declarative `checked` takes precedence over the
-      // group's `selected` attribute on first render only (matches 1st-gen's
-      // `willUpdate`). Items may not be upgraded, or may have `checked` set as
-      // a property that has not reflected yet, so check both.
+      // A pre-checked item takes precedence over `selected` on first render.
+      // Check the attribute and the property: items may be un-upgraded, or have
+      // `checked` set as a property that has not reflected yet.
       const preChecked = Array.from(this.children).find((child) =>
         child instanceof RadioBase
           ? child.checked

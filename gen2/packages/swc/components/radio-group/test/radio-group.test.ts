@@ -61,7 +61,7 @@ export const OverviewTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: role="radiogroup" lives on an internal element, not the host
+// TEST: role="radiogroup" lives on the rendered outer element, not the host
 // ──────────────────────────────────────────────────────────────
 
 export const RoleWiringTest: Story = {
@@ -148,9 +148,8 @@ export const GroupLabelWiringTest: Story = {
       '#slotted-label'
     );
     const slottedRole = slotted.roleElement as ReflectedAriaElement | null;
-    // The referenced element is the rendered wrapper span (same shadow root
-    // as the role element), which itself projects the slotted light-DOM
-    // label content — not the slotted element directly.
+    // The referenced element is the wrapper span in the role element's shadow
+    // root, not the slotted element itself.
     const renderedLabelSpan = slotted.shadowRoot?.querySelector(
       '.swc-FormFieldLabel'
     );

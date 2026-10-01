@@ -47,9 +47,8 @@ export class RadioGroup extends RadioGroupBase {
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
-    // Must run after `super.updated()`: the labelling mixin resets
-    // `ariaLabelledByElements` on every update, so the slotted-label fallback
-    // is re-applied here each time.
+    // Must run after `super.updated()`: the mixin resets `ariaLabelledByElements`
+    // each update, so the slotted-label fallback is re-applied here.
     const target = this.roleElement as
       | (Element & {
           ariaLabelledByElements: Element[] | null;
@@ -67,9 +66,10 @@ export class RadioGroup extends RadioGroupBase {
   }
 
   protected override render(): TemplateResult {
-    // The group role contains its label, items, and description. A radiogroup
-    // div cannot use native `<label for>` association, so `updated()` wires
-    // the slotted label after the mixin resolves programmatic name sources.
+    // Keep `role="radiogroup"` on this outer element: other placements break
+    // item position or group name announcements in some browser/AT
+    // combinations. A `div` can't use `<label for>`, so `updated()` wires the
+    // slotted label.
     return html`
       <div
         class="swc-RadioGroup"
