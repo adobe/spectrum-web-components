@@ -773,9 +773,6 @@ export const NoSlottedImageWarningTest: Story = {
   },
 };
 
-// An explicit `alt=""` passes the check because only the attribute's presence
-// is tested, so no warning fires even without `decorative`. Contrast
-// MissingAltWarningTest, where `alt` is absent.
 export const EmptyAltNoWarningTest: Story = {
   render: () => '',
   play: async ({ canvasElement, step }) => {

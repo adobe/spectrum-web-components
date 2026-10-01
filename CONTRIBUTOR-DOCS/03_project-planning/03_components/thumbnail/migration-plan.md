@@ -216,7 +216,7 @@ Migrate Thumbnail now, independently. It has no unmigrated prerequisite dependen
 | #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ----------------- | ----------------- | ------------------------ |
 | **B4** | New `decorative` property | Not present | `decorative` (reflected boolean); sets `aria-hidden="true"` on the host and forces `alt=""` on the slotted `<img>` if unset | Set `decorative` on thumbnails whose image content is already described by surrounding context. Additive, non-breaking. |
-| **B5** | New missing-`alt` DEBUG warning | No warning | Emits a DEBUG-mode warning when `decorative` is unset and the slotted `<img>` has no `alt`, `aria-label`, or `aria-labelledby`; an explicit `alt=""` counts as described by surrounding context | Dev-mode only; no consumer-facing runtime change. |
+| **B5** | New missing-`alt` DEBUG warning | No warning | Emits a DEBUG-mode warning when `decorative` is unset and the slotted `<img>` has no text alternative (see [Decision log](#decision-log) C10) | Dev-mode only; no consumer-facing runtime change. |
 | **B6** | Formalize "not interactive" contract | No `role`, not focusable (true today, but not tested/documented) | Same behavior, explicitly tested: no ARIA role on host, never part of the tab order | No consumer action; existing behavior, now covered by tests. |
 
 ### Additive — ships when ready, zero breakage for consumers already on gen2
@@ -276,7 +276,7 @@ Thumbnail adds one public property, `--swc-thumbnail-size` (see A1). No `--mod-t
 
 **Size validation and fallback (Core-owned).** Mirror `AvatarBase`'s numeric getter/setter pattern: validate the incoming value against `THUMBNAIL_VALID_SIZES`, fall back to `THUMBNAIL_DEFAULT_SIZE` (`500`) on an invalid value, reflect the resolved value to the `size` attribute, and surface a `warnIf` dev-mode warning on invalid input (1st-gen falls back silently with no warning).
 
-**`decorative` / alt handling.** When `decorative` is set: apply `aria-hidden="true"` to the host if it has none, and remove it again when `decorative` is unset; a consumer's own `aria-hidden` is left alone. If the slotted `<img>` has no `alt`, set `alt=""` on it, and remove that `alt` again when `decorative` is unset unless the consumer has since replaced it. When `decorative` is not set and the slotted `<img>` has no `alt`, `aria-label`, or `aria-labelledby`: emit a DEBUG-mode warning via the shared `warnIf` utility directing the author to add a name or set `decorative`. Both halves are Core-owned in `ThumbnailBase`; SWC only re-runs the alt sync from its `slotchange` listener. See [Architecture: core vs SWC split](#architecture-core-vs-swc-split).
+**`decorative` / alt handling.** When `decorative` is set: apply `aria-hidden="true"` to the host if it has none, and remove it again when `decorative` is unset; a consumer's own `aria-hidden` is left alone. If the slotted `<img>` has no `alt`, set `alt=""` on it, and remove that `alt` again when `decorative` is unset unless the consumer has since replaced it. When `decorative` is not set and the image has no text alternative, emit a DEBUG-mode warning (see [Decision log](#decision-log) C10). Both halves live in core; see Q5.
 
 **`fit` (renamed from `cover`, component-owned).** Replaces 1st-gen's `cover` boolean with a `'cover' | 'contain'` enum, mirroring Asset's `AssetFit` naming, DEBUG-warning-on-invalid-value pattern, and Core placement (Asset hosts `fit` on `Asset.base.ts`). Thumbnail's default is `'contain'`, not Asset's `'cover'`, to preserve 1st-gen's existing non-cover default behavior. Implemented purely via `:host()` attribute selectors on the slotted content (e.g. `::slotted(*) { object-fit: contain; }` by default, `:host([fit="cover"]) ::slotted(*) { object-fit: cover; }` as the override), exactly like 1st-gen's `cover` was, no separate render() branch is needed. See [Decision log](#decision-log) C8.
 
@@ -308,7 +308,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_gen2-component-mi
 Rendering shape (implemented in the API/accessibility phases):
 
 - Core owns API normalization (`size` and `fit` validation/reflection) and the `decorative`/`aria-hidden` reflection
-- **Resolved:** the alt-fallback and missing-`alt` DEBUG warning logic lives in core as `ThumbnailBase.syncSlottedImageAlt()`. It reads the slotted `<img>` with `this.querySelector('img')`, which needs no rendered `<slot>`, and runs from `updated()` when `decorative` changes. SWC only binds the method as the `slotchange` listener on its rendered `<slot>`, since core has no `render()`. The method removes the `alt=""` it added when `decorative` is unset, unless the consumer has since replaced it. See [Decision log](#decision-log) Q5.
+- **Resolved:** the alt fallback and missing-name warning live in core; see [Decision log](#decision-log) Q5.
 - SWC renders a single shadow-DOM structure, not per-property variant markup, per plan-review feedback:
 
   ```html
@@ -344,7 +344,7 @@ Rendering shape (implemented in the API/accessibility phases):
 #### Naming and public surface
 
 - [x] `Thumbnail.types.ts`: define `ThumbnailSize`, `THUMBNAIL_VALID_SIZES`, `THUMBNAIL_DEFAULT_SIZE` (500), `ThumbnailFit` (`'cover' | 'contain'`)
-- [x] `Thumbnail.base.ts`: numeric `size` getter/setter with `validateEnum` validation (B2); `fit` getter/setter with `validateEnum` validation on invalid values, default `'contain'` (B10); `decorative` property with `aria-hidden` reflection (B4). The alt fallback and DEBUG warning (B4/B5) also live in core as `syncSlottedImageAlt()`; SWC calls it from `slotchange`. See [Architecture: core vs SWC split](#architecture-core-vs-swc-split) and [Decision log](#decision-log) Q5. `background`/`layer` are not implemented, per B7/B8.
+- [x] `Thumbnail.base.ts`: numeric `size` getter/setter with `validateEnum` validation (B2); `fit` getter/setter with `validateEnum` validation on invalid values, default `'contain'` (B10); `decorative` property with `aria-hidden` reflection (B4). The alt fallback and DEBUG warning (B4/B5) also live in core (see [Decision log](#decision-log) Q5). `background`/`layer` are not implemented, per B7/B8.
 
 ### Styling
 
@@ -367,7 +367,7 @@ Rendering shape (implemented in the API/accessibility phases):
 
 - [x] No `role` attribute on `:host`
 - [x] `decorative` applies `aria-hidden="true"` to host and `alt=""` fallback to the slotted `<img>` when unset
-- [x] DEBUG warning fires when `decorative` is unset and the slotted `<img>` has no `alt`, `aria-label`, or `aria-labelledby` (see [Decision log](#decision-log) C10)
+- [x] DEBUG warning fires when `decorative` is unset and the slotted `<img>` has no text alternative (see [Decision log](#decision-log) C10)
 - [x] `disabled`/`focused`/`selected`/`layer` are not implemented as `swc-thumbnail` attributes at all; verify no residual CSS hooks exist for them (see [Decision log](#decision-log) C6, C7)
 - [x] The `.swc-OpacityCheckerboard` wrapper does **not** get `aria-hidden`, since it directly contains the slotted `<img>` (see [Accessibility semantics notes](#accessibility-semantics-notes-gen2))
 
@@ -379,7 +379,7 @@ Rendering shape (implemented in the API/accessibility phases):
 ### Testing
 
 - [x] Port `1st-gen/packages/thumbnail/test/thumbnail.test.ts` coverage that still applies (accessible load, size, `cover`→`fit` rendering, checkerboard slot rendering)
-- [ ] Port `1st-gen/packages/thumbnail/test/thumbnail-memory.test.ts` memory-leak coverage: not carried forward; it depends on the 1st-gen-only `testForMemoryLeaks` helper, and no gen2 component test suite (Badge, Avatar, Link) has an equivalent, since gen2's testing conventions cover interaction, accessibility, and visual regression only, not memory-leak testing
+- [ ] Port `1st-gen/packages/thumbnail/test/thumbnail-memory.test.ts` memory-leak coverage: not carried forward; it needs the 1st-gen-only `testForMemoryLeaks` helper, and gen2 has no memory-leak tests
 - [x] Add unit tests for `decorative`, the missing-`alt` DEBUG warning, and the numeric `size` `warnIf` validation
 - [x] Add Playwright `thumbnail.a11y.spec.ts` with `toMatchAriaSnapshot`, covering: labeled `<img>`, `decorative`, and embedded-in-a-consumer-styled-disabled-parent
 

@@ -66,10 +66,8 @@ The `<swc-thumbnail>` element implements several accessibility features:
 
 ### Best practices
 
-- Always set `alt` on the slotted image, or mark the thumbnail `decorative`: a missing accessible name triggers a DEBUG-mode warning
-- Use `decorative` only when the image content is already identified by surrounding text
-- Mark a thumbnail `decorative` when it sits next to the text label of a button or other control; a meaningful `alt` would be added to the control's name (for example "File preview Upload file")
-- Give the wrapping element its own `disabled` or `aria-disabled` attribute; the thumbnail does not expose one itself
+- Set `alt` on every slotted image, or mark the thumbnail `decorative`; a missing accessible name triggers a DEBUG-mode warning
+- Inside a button or other control with its own text label, mark the thumbnail `decorative` so its `alt` doesn't join the control's name
 
 <Canvas of={ThumbnailStories.Accessibility} />
 
