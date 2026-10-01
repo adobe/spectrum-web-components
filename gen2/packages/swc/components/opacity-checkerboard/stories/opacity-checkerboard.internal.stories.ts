@@ -31,7 +31,7 @@ import opacityCheckerboardStyles from '../../../stylesheets/_lit-styles/opacity-
  * elements rendered inside this element's `renderRoot`. The checkerboard is purely
  * decorative: it sits behind the color fill, is marked `aria-hidden`, and is never a
  * tab stop. The accessible name and opacity are carried by the host (`role="img"` +
- * `aria-label`), mirroring the guidance in the accessibility migration analysis.
+ * `aria-label`), mirroring the guidance in the accessibility specification.
  *
  * Intentionally not exported: CSF treats every export as a story, and exporting
  * the class would require `excludeStories`, whose spread into the default export

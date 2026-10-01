@@ -363,7 +363,7 @@ Planned rendering shape:
 
 ### Accessibility
 
-<!-- Accessibility checklist items should be sourced from the `accessibility-migration-analysis.md` which is a pre-requisite to this migration plan. If it is not available, include a checklist item/open question requiring it before this plan is considered complete. -->
+<!-- Accessibility checklist items should be sourced from the `component-a11y-spec.md` which is a pre-requisite to this migration plan. If it is not available, include a checklist item/open question requiring it before this plan is considered complete. -->
 
 #### Naming and semantics
 
@@ -477,7 +477,7 @@ Rules:
 
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md) - include only if available, otherwise mark as TODO and leave as plain text
+- [Accessibility specification](./component-a11y-spec.md) - include only if available, otherwise mark as TODO and leave as plain text
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)

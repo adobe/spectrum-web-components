@@ -70,7 +70,7 @@
 
 ## TL;DR
 
-> **Amendment (dialog surface, both modes).** Later in the migration, `<swc-popover>` was made a **dialog in both modes**: the default-mode `<div popover>` carries `role="dialog"`, forwards `accessible-label` as `aria-label`, is focusable (`tabindex="-1"`), and moves focus into the surface on open (restoring to the trigger on close); the trigger carries `aria-haspopup="dialog"` in both modes, and a missing name is dev-warned in both. This was possible because `menu` / `listbox` / `combobox` do **not** wrap the `<swc-popover>` component — they build on the shared `PlacementController` with their own roles — so the surface no longer needs to be a roleless host. Where statements below describe the default-mode surface as roleless / focus as consumer-managed / `aria-haspopup` as modal-only, this amendment supersedes them. Full rationale: [accessibility-migration-analysis.md](./accessibility-migration-analysis.md#gen2-design-update-amends-this-analysis--q4).
+> **Amendment (dialog surface, both modes).** Later in the migration, `<swc-popover>` was made a **dialog in both modes**: the default-mode `<div popover>` carries `role="dialog"`, forwards `accessible-label` as `aria-label`, is focusable (`tabindex="-1"`), and moves focus into the surface on open (restoring to the trigger on close); the trigger carries `aria-haspopup="dialog"` in both modes, and a missing name is dev-warned in both. This was possible because `menu` / `listbox` / `combobox` do **not** wrap the `<swc-popover>` component — they build on the shared `PlacementController` with their own roles — so the surface no longer needs to be a roleless host. Where statements below describe the default-mode surface as roleless / focus as consumer-managed / `aria-haspopup` as modal-only, this amendment supersedes them. Full rationale: [component-a11y-spec.md](./component-a11y-spec.md#gen2-design-update-amends-this-analysis--q4).
 
 The 1st-gen `<sp-popover>` is a 75-line, styles-only component. Open/close, positioning, focus trap, dismissal, and ARIA were all delegated to `<sp-overlay>` or to the consumer. In gen2, `<swc-popover>` becomes an **opinionated, self-contained component** that renders an internal `<div popover="auto">` for non-modal behavior and an internal `<dialog>` for modal behavior, selecting the element and open method from the `modal` attribute. Native top-layer, light-dismiss (in default mode), anchored positioning, and trigger-side ARIA wiring all come out of the box.
 
@@ -197,7 +197,7 @@ This migration also ships shared primitives — `PlacementController`, `resolveT
 
 The architectural decisions were resolved with the user during planning. The most consequential confirmations needed before implementation:
 
-- Default mode (`popover="auto"`) preserves 1st-gen UX semantics. Modal mode (`modal` attribute opt-in) introduces `<dialog>`-based blocking semantics that the [existing accessibility analysis](./accessibility-migration-analysis.md) needs to be amended for. Q4 in [Blockers](#architecture-and-behavior) tracks the analysis amendment.
+- Default mode (`popover="auto"`) preserves 1st-gen UX semantics. Modal mode (`modal` attribute opt-in) introduces `<dialog>`-based blocking semantics that the [existing accessibility analysis](./component-a11y-spec.md) needs to be amended for. Q4 in [Blockers](#architecture-and-behavior) tracks the analysis amendment.
 - D5 (no external light-DOM composition) — external authors use first-party gen2 components or `<swc-popover>` directly; first-party shadow use of `<swc-popover>` vs shared primitives is decided per downstream migration. The [Consumer migration guide ticket SWC-2003](https://jira.corp.adobe.com/browse/SWC-2003) must reflect that 1st-gen `<sp-overlay>` + `<sp-popover>` does not map one-for-one to light-DOM `<swc-popover>`.
 - Backdrop-click-to-close policy resolved during planning as option (b): light-dismiss is wired by default in modal mode. No strict-modal opt-out — that pattern belongs to `<swc-dialog>`, a separate component for modal dialogs, not to `<swc-popover>` (which is anchored UI).
 
@@ -269,7 +269,7 @@ The architectural decisions were resolved with the user during planning. The mos
 
 ## gen2 API decisions
 
-These are derived from the 1st-gen implementation, the [rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md), the [accessibility migration analysis](./accessibility-migration-analysis.md), the [Overlay strategy RFC](#references), the Figma `S2 / Web (Desktop scale)` Popover frame, and React Spectrum's `Popover`. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
+These are derived from the 1st-gen implementation, the [rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md), the [accessibility specification](./component-a11y-spec.md), the [Overlay strategy RFC](#references), the Figma `S2 / Web (Desktop scale)` Popover frame, and React Spectrum's `Popover`. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
 
 - **Confirmed**: directly supported by source material
 - **Inferred**: recommended based on multiple signals, not one authoritative source
@@ -545,7 +545,7 @@ The computed placement is **not** exposed as a public, writable property — the
 ### Accessibility semantics notes (gen2)
 
 - **Modal mode only — native dialog semantics:** When the consumer sets `modal`, the internal `<dialog>` opened via `showModal()` provides `role="dialog"` automatically. Default (auto) mode has no inherent role — consumer slot content owns semantics. If a consumer wants `role="alertdialog"` semantics on a popover surface, that belongs in a separate `<swc-alert-dialog>` component, not as a popover variant.
-- **The original [accessibility-migration-analysis.md](./accessibility-migration-analysis.md) needs an amendment (Q4):** that analysis was written assuming a role-free host. The default (auto) mode is consistent with that assumption — `popover="auto"` has no inherent role, consumer-managed semantics. Modal mode adds the `<dialog>` `role="dialog"` semantics, focus trap, and inert behavior; the amendment must document this branch separately.
+- **The original [component-a11y-spec.md](./component-a11y-spec.md) needs an amendment (Q4):** that analysis was written assuming a role-free host. The default (auto) mode is consistent with that assumption — `popover="auto"` has no inherent role, consumer-managed semantics. Modal mode adds the `<dialog>` `role="dialog"` semantics, focus trap, and inert behavior; the amendment must document this branch separately.
 - **Modal-mode focus trap:** In modal mode, whatever interactive elements are inside the popover are the user's only navigation surface until close. Consumers must ensure something focusable exists (or use `autofocus`). Auto mode does not trap focus.
 - **Accessible name (modal mode):** the internal `<dialog>` is in the popover's shadow root, so a host `aria-label` / `aria-labelledby` does not reach it. The component exposes an **`accessible-label`** attribute (the standard `accessibleLabel` pattern) and forwards it as `aria-label` onto the internal `<dialog>`; consumers set it to name the dialog. Applies in modal mode only — the default-mode surface is a roleless container. A modal popover opened without `accessible-label` is dev-warned; a nameless dialog is an authoring bug.
 - **`<dialog>.showModal()` on iOS Safari** is the known performance concern from the [Overlay strategy RFC](#references). Q3 in [Blockers](#architecture-and-behavior) tracks the benchmark step that must complete before downstream Picker / Action Menu migrations adopt the same lifecycle pattern in product code.
@@ -620,7 +620,7 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 - [x] gen2 API decisions drafted
 - [ ] Plan reviewed by at least one other engineer
 - [ ] Figma `S2 / Web (Desktop scale)` Popover frame captured as PNG and added to this folder
-- [ ] Accessibility migration analysis amended for D2 (modal-mode host semantics) — see Q4
+- [ ] Accessibility specification amended for D2 (modal-mode host semantics) — see Q4
 
 ### Setup
 
@@ -713,7 +713,7 @@ CSS targets the internal `.swc-Popover` element regardless of mode. `popover.css
 
 ### Accessibility
 
-> Cross-reference [`accessibility-migration-analysis.md`](./accessibility-migration-analysis.md). The Q4 amendment is **done** (see the "gen2 design update — Q4" section there).
+> Cross-reference [`component-a11y-spec.md`](./component-a11y-spec.md). The Q4 amendment is **done** (see the "gen2 design update — Q4" section there).
 
 > **Implemented in the combined Phase 4+5 branch:** trigger resolution via `resolveTrigger()` (real `for=` / `trigger-element` resolution + open-shadow inner-`<button>` discovery); durable `ariaControlsElements = [popover]` on the resolved interactive element; `aria-expanded` toggled on open/close; `aria-haspopup="dialog"` while `modal`; teardown on disconnect / trigger change. Default mode relies on native `popover="auto"` light-dismiss (Escape + click-outside) with no focus trap; modal mode uses the native `<dialog>` focus trap, `role="dialog"`, and `cancel`-based Escape, plus wired backdrop-click. `swc-close.detail.source` reports `escape` / `outside` / `programmatic` (escape detected via a top-of-`dismissibleStack` keydown listener in default mode; via `cancel` in modal). Checkboxes below left as the original spec; this note is the completion record.
 
@@ -853,7 +853,7 @@ During drafting, this section tracks active blockers and open questions. None ar
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
 | Q3  | **iOS Safari `<dialog>.showModal()` benchmark** for the modal opt-in path on representative gen2 consumer DOMs. Only relevant when modal mode is used; default mode doesn't use `showModal()`. Per the Overlay strategy RFC. Smoke test in this migration is sufficient; full benchmark by the first first-party migration that adopts modal mode. | No (for Popover) | Pending | Performance reviewer |
-| Q4  | **Amend [`accessibility-migration-analysis.md`](./accessibility-migration-analysis.md)** to reflect both modes: default `popover="auto"` (no host role; consumer-managed semantics) and `modal` (`<dialog>` provides `role="dialog"`, focus trap, inert). The original analysis assumed a role-free host — accurate for default mode, needs an amendment for modal mode. | No (this migration); confirmed-direction decision | **Resolved** (amended in the "gen2 design update — Q4" section: both modes, trigger-side ARIA, keyboard/focus per mode) | Accessibility reviewer |
+| Q4  | **Amend [`component-a11y-spec.md`](./component-a11y-spec.md)** to reflect both modes: default `popover="auto"` (no host role; consumer-managed semantics) and `modal` (`<dialog>` provides `role="dialog"`, focus trap, inert). The original analysis assumed a role-free host — accurate for default mode, needs an amendment for modal mode. | No (this migration); confirmed-direction decision | **Resolved** (amended in the "gen2 design update — Q4" section: both modes, trigger-side ARIA, keyboard/focus per mode) | Accessibility reviewer |
 | Q5  | **React Spectrum / Design alignment on the modal opt-in.** Specific UX requirements for modal popovers, whether modal popover should look visually distinct from auto popover, whether some downstream consumers (e.g. coachmark) actually need modal mode at all. Tooltip's `popover="auto"` vs `popover="manual"` question is also part of this conversation (impacts auto-stack pollution when hovering background buttons while a picker is open). | No | Pending — multi-team conversation in progress | Ruben Carvalho |
 | Q6  | **Coachmark inheritance vs composition.** 1st-gen `Coachmark extends Popover`. Decide during the coachmark migration whether gen2 `<swc-coachmark>` embeds `<swc-popover>` or wires `PlacementController` + shared styles directly — same case-by-case choice as other first-party consumers. | No | Deferred | Coachmark migration owner |
 | Q7  | **Modal-mode scroll lock.** Resolved: `<swc-popover modal>` locks page scroll in JS. On open it sets `overflow: hidden` on `documentElement` (saving the prior inline value, restored on close), because a component's shadow stylesheet cannot reach `html`. The popover surface also uses `overscroll-behavior: contain` (CSS) to prevent scroll chaining out of internal scroll regions. No iOS-specific workarounds in v1. Default (auto) mode does NOT lock page scroll (consistent with `popover="auto"` semantics). | No | **Resolved** (JS overflow lock + CSS overscroll-behavior; implemented in Phase 4+5) | Ruben Carvalho |
@@ -872,7 +872,7 @@ During drafting, this section tracks active blockers and open questions. None ar
 
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md) — needs amendment per Q4
+- [Accessibility specification](./component-a11y-spec.md) — needs amendment per Q4
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [Tooltip migration plan](../tooltip/migration-plan.md) — architectural reference for native top-layer + `swc-*` event lifecycle + inner-button ARIA wiring patterns
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)

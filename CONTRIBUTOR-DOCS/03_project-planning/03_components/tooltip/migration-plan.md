@@ -985,7 +985,7 @@ Decisions made after the initial plan was approved and implementation had begun.
 
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Accessibility specification](./component-a11y-spec.md)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)

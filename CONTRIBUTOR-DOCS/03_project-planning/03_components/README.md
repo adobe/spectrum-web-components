@@ -19,68 +19,68 @@
 <summary><strong>Beneath this doc</strong></summary>
 
 - Accordion
-    - [Accordion accessibility migration analysis](accordion/accessibility-migration-analysis.md)
+    - [Accordion accessibility specification](accordion/component-a11y-spec.md)
     - [Accordion migration plan](accordion/migration-plan.md)
 - Action Button
-    - [Action button accessibility migration analysis](action-button/accessibility-migration-analysis.md)
+    - [Action button accessibility specification](action-button/component-a11y-spec.md)
     - [Action button migration plan](action-button/migration-plan.md)
     - [Action button migration roadmap](action-button/rendering-and-styling-migration-analysis.md)
 - Action Group
-    - [Action group accessibility migration analysis](action-group/accessibility-migration-analysis.md)
+    - [Action group accessibility specification](action-group/component-a11y-spec.md)
     - [Action group migration plan](action-group/migration-plan.md)
     - [Action group migration roadmap](action-group/rendering-and-styling-migration-analysis.md)
 - Action Menu
-    - [Action menu accessibility migration analysis](action-menu/accessibility-migration-analysis.md)
+    - [Action menu accessibility specification](action-menu/component-a11y-spec.md)
     - [Action menu migration roadmap](action-menu/rendering-and-styling-migration-analysis.md)
 - Alert Banner
     - [Alert Banner migration roadmap](alert-banner/rendering-and-styling-migration-analysis.md)
 - Asset
     - [Asset component plan](asset/component-plan.md)
 - Avatar
-    - [Avatar accessibility migration analysis](avatar/accessibility-migration-analysis.md)
+    - [Avatar accessibility specification](avatar/component-a11y-spec.md)
     - [Avatar — gen2 Migration Plan](avatar/migration-plan.md)
-    - [Avatar accessibility migration analysis](avatar/rendering-and-styling-migration-analysis.md)
+    - [Avatar accessibility specification](avatar/rendering-and-styling-migration-analysis.md)
 - Badge
-    - [Badge accessibility migration analysis](badge/accessibility-migration-analysis.md)
+    - [Badge accessibility specification](badge/component-a11y-spec.md)
     - [Badge migration roadmap](badge/rendering-and-styling-migration-analysis.md)
 - Button
-    - [Button accessibility migration analysis](button/accessibility-migration-analysis.md)
+    - [Button accessibility specification](button/component-a11y-spec.md)
     - [Button Migration Plan](button/migration-plan.md)
     - [Button migration roadmap](button/rendering-and-styling-migration-analysis.md)
 - Button Group
-    - [Button group accessibility migration analysis](button-group/accessibility-migration-analysis.md)
+    - [Button group accessibility specification](button-group/component-a11y-spec.md)
     - [Button group migration plan](button-group/migration-plan.md)
     - [Button Group migration roadmap](button-group/rendering-and-styling-migration-analysis.md)
 - Card
     - [Card family plan](card/migration-plan.md)
 - Card View
-    - [Card view: accessibility migration analysis](card-view/accessibility-migration-analysis.md)
+    - [Card view: accessibility specification](card-view/component-a11y-spec.md)
 - Checkbox
-    - [Checkbox accessibility migration analysis](checkbox/accessibility-migration-analysis.md)
+    - [Checkbox accessibility specification](checkbox/component-a11y-spec.md)
     - [Checkbox migration roadmap](checkbox/rendering-and-styling-migration-analysis.md)
 - Checkbox Group
-    - [Checkbox group accessibility migration analysis](checkbox-group/accessibility-migration-analysis.md)
+    - [Checkbox group accessibility specification](checkbox-group/component-a11y-spec.md)
 - Close Button
-    - [Close button accessibility migration analysis](close-button/accessibility-migration-analysis.md)
+    - [Close button accessibility specification](close-button/component-a11y-spec.md)
     - [Close button migration plan](close-button/migration-plan.md)
     - [Close button migration roadmap](close-button/rendering-and-styling-migration-analysis.md)
 - Color Field
     - [Color field migration roadmap](color-field/rendering-and-styling-migration-analysis.md)
 - Color Handle
-    - [Color handle accessibility migration analysis](color-handle/accessibility-migration-analysis.md)
+    - [Color handle accessibility specification](color-handle/component-a11y-spec.md)
     - [Color Handle migration plan](color-handle/migration-plan.md)
     - [Color handle migration roadmap](color-handle/rendering-and-styling-migration-analysis.md)
 - Color Loupe
-    - [Color loupe accessibility migration analysis](color-loupe/accessibility-migration-analysis.md)
+    - [Color loupe accessibility specification](color-loupe/component-a11y-spec.md)
     - [Color loupe migration checklist](color-loupe/migration-checklist.md)
     - [Color loupe migration analysis](color-loupe/rendering-and-styling-migration-analysis.md)
 - Combobox
-    - [Combobox accessibility migration analysis](combobox/accessibility-migration-analysis.md)
+    - [Combobox accessibility specification](combobox/component-a11y-spec.md)
 - Divider
-    - [Divider accessibility migration analysis](divider/accessibility-migration-analysis.md)
+    - [Divider accessibility specification](divider/component-a11y-spec.md)
     - [Divider migration roadmap](divider/rendering-and-styling-migration-analysis.md)
 - Dropzone
-    - [Dropzone accessibility migration analysis](dropzone/accessibility-migration-analysis.md)
+    - [Dropzone accessibility specification](dropzone/component-a11y-spec.md)
     - [Dropzone migration plan](dropzone/migration-plan.md)
     - [Dropzone migration roadmap](dropzone/rendering-and-styling-migration-analysis.md)
 - Field Group
@@ -88,90 +88,90 @@
 - Field Label
     - [Field label migration roadmap](field-label/rendering-and-styling-migration-analysis.md)
 - Grid
-    - [Grid accessibility migration analysis](grid/accessibility-migration-analysis.md)
+    - [Grid accessibility specification](grid/component-a11y-spec.md)
     - [Grid migration roadmap](grid/rendering-and-styling-migration-analysis.md)
 - Help Text
     - [Help text migration roadmap](help-text/rendering-and-styling-migration-analysis.md)
 - Icon
-    - [Icon accessibility migration analysis](icon/accessibility-migration-analysis.md)
+    - [Icon accessibility specification](icon/component-a11y-spec.md)
 - Illustrated Message
-    - [Illustrated message accessibility migration analysis](illustrated-message/accessibility-migration-analysis.md)
+    - [Illustrated message accessibility specification](illustrated-message/component-a11y-spec.md)
     - [`sp-illustrated-message` Migration Plan](illustrated-message/migration-plan.md)
     - [Illustrated message migration roadmap](illustrated-message/rendering-and-styling-migration-analysis.md)
 - Infield Button
-    - [Infield button accessibility migration analysis](infield-button/accessibility-migration-analysis.md)
+    - [Infield button accessibility specification](infield-button/component-a11y-spec.md)
     - [Infield Button migration plan](infield-button/migration-plan.md)
     - [In-field button migration roadmap](infield-button/rendering-and-styling-migration-analysis.md)
 - Infield Progress Circle
     - [In-field progress circle migration roadmap](infield-progress-circle/rendering-and-styling-migration-analysis.md)
 - Link
-    - [Link accessibility migration analysis](link/accessibility-migration-analysis.md)
+    - [Link accessibility specification](link/component-a11y-spec.md)
     - [Link migration plan](link/migration-plan.md)
     - [Link migration roadmap](link/rendering-and-styling-migration-analysis.md)
 - Menu
-    - [Menu accessibility migration analysis](menu/accessibility-migration-analysis.md)
+    - [Menu accessibility specification](menu/component-a11y-spec.md)
     - [Menu migration plan](menu/migration-plan.md)
     - [Menu migration roadmap](menu/rendering-and-styling-migration-analysis.md)
 - Menu Group
-    - [Menu group accessibility migration analysis](menu-group/accessibility-migration-analysis.md)
+    - [Menu group accessibility specification](menu-group/component-a11y-spec.md)
 - Menu Item
-    - [Menu item accessibility migration analysis](menu-item/accessibility-migration-analysis.md)
+    - [Menu item accessibility specification](menu-item/component-a11y-spec.md)
 - Menu Separator
-    - [Menu separator accessibility migration analysis](menu-separator/accessibility-migration-analysis.md)
+    - [Menu separator accessibility specification](menu-separator/component-a11y-spec.md)
 - Meter
-    - [Meter accessibility migration analysis](meter/accessibility-migration-analysis.md)
+    - [Meter accessibility specification](meter/component-a11y-spec.md)
     - [Meter migration plan](meter/migration-plan.md)
     - [Meter migration roadmap](meter/rendering-and-styling-migration-analysis.md)
 - Number Field
     - [Number field migration roadmap](number-field/rendering-and-styling-migration-analysis.md)
 - Opacity Checkerboard
-    - [Opacity checkerboard accessibility migration analysis](opacity-checkerboard/accessibility-migration-analysis.md)
+    - [Opacity checkerboard accessibility specification](opacity-checkerboard/component-a11y-spec.md)
     - [Opacity Checkerboard migration plan](opacity-checkerboard/migration-plan.md)
     - [Opacity Checkerboard migration roadmap](opacity-checkerboard/rendering-and-styling-migration-analysis.md)
 - Option
-    - [Option accessibility migration analysis](option/accessibility-migration-analysis.md)
+    - [Option accessibility specification](option/component-a11y-spec.md)
 - Option Group
-    - [Option group accessibility migration analysis](option-group/accessibility-migration-analysis.md)
+    - [Option group accessibility specification](option-group/component-a11y-spec.md)
 - Picker Button
     - [Picker button migration roadmap](picker-button/rendering-and-styling-migration-analysis.md)
 - Popover
-    - [Popover accessibility migration analysis](popover/accessibility-migration-analysis.md)
+    - [Popover accessibility specification](popover/component-a11y-spec.md)
     - [Popover migration plan](popover/migration-plan.md)
     - [Popover migration roadmap](popover/rendering-and-styling-migration-analysis.md)
 - Progress Bar
-    - [Progress bar accessibility migration analysis](progress-bar/accessibility-migration-analysis.md)
+    - [Progress bar accessibility specification](progress-bar/component-a11y-spec.md)
     - [Progress bar migration plan](progress-bar/migration-plan.md)
     - [Progress bar migration roadmap](progress-bar/rendering-and-styling-migration-analysis.md)
 - Progress Circle
-    - [Progress circle accessibility migration analysis](progress-circle/accessibility-migration-analysis.md)
+    - [Progress circle accessibility specification](progress-circle/component-a11y-spec.md)
     - [Progress Circle migration roadmap](progress-circle/rendering-and-styling-migration-analysis.md)
 - Radio
-    - [Radio accessibility migration analysis](radio/accessibility-migration-analysis.md)
+    - [Radio accessibility specification](radio/component-a11y-spec.md)
     - [Radio migration plan](radio/migration-plan.md)
     - [Radio migration roadmap](radio/rendering-and-styling-migration-analysis.md)
 - Radio Group
-    - [Radio group accessibility migration analysis](radio-group/accessibility-migration-analysis.md)
+    - [Radio group accessibility specification](radio-group/component-a11y-spec.md)
     - [Radio group migration plan](radio-group/migration-plan.md)
 - Search
     - [Search migration roadmap](search/rendering-and-styling-migration-analysis.md)
 - Sidenav
-    - [Side navigation accessibility migration analysis](sidenav/accessibility-migration-analysis.md)
+    - [Side navigation accessibility specification](sidenav/component-a11y-spec.md)
 - Slider
     - [Slider migration roadmap](slider/rendering-and-styling-migration-analysis.md)
 - Split View
-    - [Split view accessibility migration analysis](split-view/accessibility-migration-analysis.md)
+    - [Split view accessibility specification](split-view/component-a11y-spec.md)
 - Status Light
-    - [Status light accessibility migration analysis](status-light/accessibility-migration-analysis.md)
+    - [Status light accessibility specification](status-light/component-a11y-spec.md)
     - [Status Light migration roadmap](status-light/rendering-and-styling-migration-analysis.md)
 - Swatch
     - [Swatch migration roadmap](swatch/rendering-and-styling-migration-analysis.md)
 - Swatch Group
     - [Swatch Group migration roadmap](swatch-group/rendering-and-styling-migration-analysis.md)
 - Switch
-    - [Switch accessibility migration analysis](switch/accessibility-migration-analysis.md)
+    - [Switch accessibility specification](switch/component-a11y-spec.md)
     - [Switch migration roadmap](switch/rendering-and-styling-migration-analysis.md)
 - Tabs
-    - [Tabs accessibility migration analysis](tabs/accessibility-migration-analysis.md)
+    - [Tabs accessibility specification](tabs/component-a11y-spec.md)
     - [Tabs migration plan](tabs/migration-plan.md)
     - [Tabs migration roadmap](tabs/rendering-and-styling-migration-analysis.md)
 - Tag
@@ -179,20 +179,20 @@
 - Tags
     - [Tags migration roadmap](tags/rendering-and-styling-migration-analysis.md)
 - Text Area
-    - [Text area accessibility migration analysis](text-area/accessibility-migration-analysis.md)
+    - [Text area accessibility specification](text-area/component-a11y-spec.md)
 - Text Field
-    - [Text field accessibility migration analysis](text-field/accessibility-migration-analysis.md)
+    - [Text field accessibility specification](text-field/component-a11y-spec.md)
 - Textfield
     - [Textfield and Textarea migration roadmap](textfield/rendering-and-styling-migration-analysis.md)
 - Thumbnail
-    - [Thumbnail accessibility migration analysis](thumbnail/accessibility-migration-analysis.md)
+    - [Thumbnail accessibility specification](thumbnail/component-a11y-spec.md)
     - [Thumbnail migration plan](thumbnail/migration-plan.md)
     - [Thumbnail migration roadmap](thumbnail/rendering-and-styling-migration-analysis.md)
 - Toast
-    - [Toast accessibility migration analysis](toast/accessibility-migration-analysis.md)
+    - [Toast accessibility specification](toast/component-a11y-spec.md)
     - [Toast migration plan](toast/migration-plan.md)
 - Tooltip
-    - [Tooltip accessibility migration analysis](tooltip/accessibility-migration-analysis.md)
+    - [Tooltip accessibility specification](tooltip/component-a11y-spec.md)
     - [Tooltip migration plan](tooltip/migration-plan.md)
     - [Tooltip migration roadmap](tooltip/rendering-and-styling-migration-analysis.md)
 

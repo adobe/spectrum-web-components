@@ -261,7 +261,7 @@ The `orientation` property controls CSS flex-direction (row vs column). The defa
 
 ### Accessibility semantics notes (gen2)
 
-Sourced from the [accessibility migration analysis](./accessibility-migration-analysis.md):
+Sourced from the [accessibility specification](./component-a11y-spec.md):
 
 - **Host role:** `role="group"` (never `radiogroup` or `toolbar`)
 - **No `aria-orientation`:** This attribute is only valid for roles that manage arrow-key navigation direction (e.g. `toolbar`, `listbox`). Since button-group does not implement focus group behavior, `aria-orientation` is not set.
@@ -416,7 +416,7 @@ Planned rendering shape:
 
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Accessibility specification](./component-a11y-spec.md)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
@@ -431,5 +431,5 @@ Planned rendering shape:
 - [WAI-ARIA APG: Keyboard navigation inside components](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents)
 - [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - [Button migration plan](../button/migration-plan.md)
-- [Button accessibility migration analysis](../button/accessibility-migration-analysis.md)
+- [Button accessibility specification](../button/component-a11y-spec.md)
 - Epic: SWC-2071 - Button group epic

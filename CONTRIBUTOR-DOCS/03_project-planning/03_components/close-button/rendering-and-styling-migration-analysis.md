@@ -99,7 +99,7 @@ Current behavior and structure:
 
 - `1st-gen/packages/button/src/CloseButton.ts`
 - `1st-gen/packages/button/test/close-button.test.ts`
-- `CONTRIBUTOR-DOCS/03_project-planning/03_components/close-button/accessibility-migration-analysis.md`
+- `CONTRIBUTOR-DOCS/03_project-planning/03_components/close-button/component-a11y-spec.md`
 - `CONTRIBUTOR-DOCS/03_project-planning/03_components/button/migration-plan.md`
 - [S2 Web Desktop scale (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=125265-577&t=99qlf018hYjRXRft-4)
 - [S2 close-button anatomy](https://s2.spectrum.corp.adobe.com/page/close-button/#anatomy)

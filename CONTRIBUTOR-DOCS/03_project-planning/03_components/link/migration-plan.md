@@ -64,7 +64,7 @@
 
 ## TL;DR
 
-- **Atypical migration.** The approved [accessibility migration analysis](./accessibility-migration-analysis.md) positions gen2 **default** link delivery as **Spectrum link styles on native `<a href>`** in the light DOM (especially inside prose / typography), **not** a per-sentence `<sp-link>` custom element. **Q2 (resolved):** **CSS + native `<a>` only** — no transitional `sp-link` compatibility CE in scope for this migration.
+- **Atypical migration.** The approved [accessibility specification](./component-a11y-spec.md) positions gen2 **default** link delivery as **Spectrum link styles on native `<a href>`** in the light DOM (especially inside prose / typography), **not** a per-sentence `<sp-link>` custom element. **Q2 (resolved):** **CSS + native `<a>` only** — no transitional `sp-link` compatibility CE in scope for this migration.
 - **Styling / S2 parity.** Spectrum CSS may use internal selectors (e.g. `.spectrum-Link--inline`) while mapping S2; **authors do not get an “inline” variant** in the sense 1st-gen `variant` attributes worked. Default `<a>` styles should **inherit surrounding typography** and “blend in” inside paragraphs; Storybook demonstrates links **in body copy** without treating inline as a separate consumer-facing variant ([rendering analysis](./rendering-and-styling-migration-analysis.md) remains the CSS source reference).
 - **A11y-required corrections.** Remove or deprecate **`disabled` on navigational links** ([SWC-966](https://jira.corp.adobe.com/browse/SWC-966)); align contrast and “link vs body text” presentation with WCAG expectations ([SWC-1160](https://jira.corp.adobe.com/browse/SWC-1160)); document **quiet** links for **section-scoped** patterns (e.g. footers), not undifferentiated body prose (per accessibility analysis).
 - **Consumer migration.** Track global native-anchor styling and API deprecation direction ([SWC-926](https://jira.corp.adobe.com/browse/SWC-926), [SWC-1428](https://jira.corp.adobe.com/browse/SWC-1428)) in the written migration path for teams still on `sp-link`.
@@ -208,7 +208,7 @@ Engineering review on [PR 6304](https://github.com/adobe/spectrum-web-components
 
 | # | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
-| **B5** | **Quiet** usage scope | README warns but attribute is global | Docs + design guidance: quiet styles only where section context makes links obvious | Restrict quiet styling to approved patterns (footer-like regions) per [accessibility analysis](./accessibility-migration-analysis.md) |
+| **B5** | **Quiet** usage scope | README warns but attribute is global | Docs + design guidance: quiet styles only where section context makes links obvious | Restrict quiet styling to approved patterns (footer-like regions) per [accessibility analysis](./component-a11y-spec.md) |
 | **B6** | Avoid **double-activation** architectures | Ecosystem issues referenced in analysis | Single real target for `href` + router | Follow [SWC-923](https://jira.corp.adobe.com/browse/SWC-923), [SWC-921](https://jira.corp.adobe.com/browse/SWC-921) patterns in docs |
 
 ### Additive — ships when ready, zero breakage for consumers already on gen2
@@ -223,7 +223,7 @@ Engineering review on [PR 6304](https://github.com/adobe/spectrum-web-components
 
 ## gen2 API decisions
 
-These are derived from 1st-gen, the [rendering roadmap](./rendering-and-styling-migration-analysis.md), the [accessibility analysis](./accessibility-migration-analysis.md), and [React Spectrum Link](https://react-spectrum.adobe.com/Link). **Q1** (Figma), **Q2** (native `<a>` only), **Q3** (Epic), and **Q4** (packaging — [PR 6304](https://github.com/adobe/spectrum-web-components/pull/6304) review) are **resolved** for planning purposes. Remaining work is **implementation** plus **additive** **A3** coordination.
+These are derived from 1st-gen, the [rendering roadmap](./rendering-and-styling-migration-analysis.md), the [accessibility analysis](./component-a11y-spec.md), and [React Spectrum Link](https://react-spectrum.adobe.com/Link). **Q1** (Figma), **Q2** (native `<a>` only), **Q3** (Epic), and **Q4** (packaging — [PR 6304](https://github.com/adobe/spectrum-web-components/pull/6304) review) are **resolved** for planning purposes. Remaining work is **implementation** plus **additive** **A3** coordination.
 
 ### Public API
 
@@ -261,7 +261,7 @@ Initial expectation for **Link** is a **small reviewed set** (likely tied to typ
 
 ### Accessibility semantics notes (gen2)
 
-Follow the [accessibility migration analysis](./accessibility-migration-analysis.md) as the controlling document: implicit **link** role from `<a href>`, no `role="link"` on non-anchors, no `disabled` on anchors, icon-only links need discoverable name, focus-visible must remain perceivable.
+Follow the [accessibility specification](./component-a11y-spec.md) as the controlling document: implicit **link** role from `<a href>`, no `role="link"` on non-anchors, no `disabled` on anchors, icon-only links need discoverable name, focus-visible must remain perceivable.
 
 ---
 
@@ -330,7 +330,7 @@ Planned rendering shape (native-`<a>` model — **preferred**):
 
 #### Naming and semantics
 
-- [x] Ship docs + examples per [accessibility migration analysis](./accessibility-migration-analysis.md) checklist (native `<a>`, quiet scope, no `disabled` on links)
+- [x] Ship docs + examples per [accessibility specification](./component-a11y-spec.md) checklist (native `<a>`, quiet scope, no `disabled` on links)
 - [x] Cross-link [Semantic HTML and ARIA](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx) from Typography / Link docs
 
 #### State verification
@@ -406,7 +406,7 @@ Planned rendering shape (native-`<a>` model — **preferred**):
 
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Accessibility specification](./component-a11y-spec.md)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)

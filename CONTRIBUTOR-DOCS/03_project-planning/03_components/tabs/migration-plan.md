@@ -455,7 +455,7 @@ This full modifier surface will not be carried forward to gen2. Consumers must m
 
 ### ARIA and keyboard contract
 
-> **Full details:** See the [Accessibility migration analysis](./accessibility-migration-analysis.md) for the complete ARIA contract, keyboard mapping, accessibility tree expectations, and testing requirements. This section provides a summary to avoid duplication.
+> **Full details:** See the [Accessibility specification](./component-a11y-spec.md) for the complete ARIA contract, keyboard mapping, accessibility tree expectations, and testing requirements. This section provides a summary to avoid duplication.
 
 The [Tabs pattern (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) is the normative reference. gen2 follows both the [automatic activation](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/examples/tabs-automatic/) and [manual activation](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/examples/tabs-manual/) examples.
 

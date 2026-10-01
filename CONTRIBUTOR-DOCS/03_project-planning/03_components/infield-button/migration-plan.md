@@ -328,7 +328,7 @@ The component does not pick a default size; the parent field host must set `size
 
 ### Accessibility semantics notes (gen2)
 
-Full details are in the [accessibility migration analysis](./accessibility-migration-analysis.md). Key decisions for implementation:
+Full details are in the [accessibility specification](./component-a11y-spec.md). Key decisions for implementation:
 
 | Topic | Decision |
 | ----- | -------- |
@@ -555,7 +555,7 @@ html`
 
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Accessibility specification](./component-a11y-spec.md)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
@@ -564,7 +564,7 @@ html`
 - [1st-gen README](../../../../1st-gen/packages/infield-button/README.md)
 - [gen2 `ButtonBase`](../../../../gen2/packages/core/components/button/Button.base.ts)
 - [Button migration plan](../button/migration-plan.md)
-- [Button accessibility migration analysis](../button/accessibility-migration-analysis.md)
+- [Button accessibility specification](../button/component-a11y-spec.md)
 - [Number-field rendering and styling migration analysis](../number-field/rendering-and-styling-migration-analysis.md)
 - [Spectrum CSS — `spectrum-two` branch `infieldbutton` component](https://github.com/adobe/spectrum-css/tree/spectrum-two/components/infieldbutton) — `components/infieldbutton/index.css` is the confirmed S2 CSS baseline (Q2 resolved)
 - [S2 / Web (Desktop scale) — In-field button (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=126176-34080) — component design spec (primary visual source)

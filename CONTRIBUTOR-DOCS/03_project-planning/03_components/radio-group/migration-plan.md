@@ -57,7 +57,7 @@
 >
 > This plan covers **`swc-radio-group`, the coordinating container, only.** `swc-radio` (the individual item) has its own migration plan, [`radio/migration-plan.md`](../radio/migration-plan.md), already reviewed and largely resolved.
 >
-> **Source priority: `radio/migration-plan.md`'s resolved decisions take priority over `radio-group/accessibility-migration-analysis.md`** wherever the two conflict. The a11y analysis was authored before the item's plan resolved Q12, and it describes a split that Q12 supersedes: it says value submission happens through each radio's own `FieldAssociationController` and the group needs only a separate, lighter validity-only wiring. Q12, **officially signed off by the a11y SME** (item plan), instead puts **all** form-value participation on `swc-radio-group` alone. This plan treats that resolution as settled fact, not something to re-derive.
+> **Source priority: `radio/migration-plan.md`'s resolved decisions take priority over `radio-group/component-a11y-spec.md`** wherever the two conflict. The a11y analysis was authored before the item's plan resolved Q12, and it describes a split that Q12 supersedes: it says value submission happens through each radio's own `FieldAssociationController` and the group needs only a separate, lighter validity-only wiring. Q12, **officially signed off by the a11y SME** (item plan), instead puts **all** form-value participation on `swc-radio-group` alone. This plan treats that resolution as settled fact, not something to re-derive.
 >
 > No dedicated rendering-and-styling migration analysis was produced for this component, and none is needed: `swc-radio-group` reuses the shared `form-fields` styles and render template built for `swc-text-field` rather than authoring its own CSS mapping from scratch. A Figma reference **was** supplied for this plan (size × top/side-label × default/error/disabled state matrix) and is treated as satisfying the Figma requirement. Everything visual-matrix-related below is sourced from that image plus the `spectrum-css` `fieldgroup` component (reviewed directly, since no dedicated `radio-group` CSS component exists); nothing here is invented.
 
@@ -184,7 +184,7 @@ gen2 (planned; host-role exception via `ElementInternals`, `LabellingController`
 
 <!-- Queried live: `project = SWC AND component = "Radio" AND type in (Bug, Story) AND status != Done` (no distinct "Radio Group" Jira component exists; group-related issues, e.g. SWC-1178, are filed under "Radio"). Every open, non-Done result carries an `a11y` or `gen2` label, so none qualify for this table. -->
 
-**None found** outside of ones carrying the `a11y` label. [SWC-1178](https://jira.corp.adobe.com/browse/SWC-1178), "visible group label missing," is the one relevant a11y-labelled issue and is already tracked in this doc's own [Related 1st-gen accessibility (Jira)](../radio-group/accessibility-migration-analysis.md#related-1st-gen-accessibility-jira) table in the a11y analysis — no action needed here.
+**None found** outside of ones carrying the `a11y` label. [SWC-1178](https://jira.corp.adobe.com/browse/SWC-1178), "visible group label missing," is the one relevant a11y-labelled issue and is already tracked in this doc's own [Related 1st-gen accessibility (Jira)](../radio-group/component-a11y-spec.md#related-1st-gen-accessibility-jira) table in the a11y analysis — no action needed here.
 
 ## Migration sequencing and prerequisites
 
@@ -263,7 +263,7 @@ Do not duplicate any of the three above inside `swc-radio-group` while waiting; 
 
 ## gen2 API decisions
 
-These are derived from the 1st-gen implementation, `radio/migration-plan.md` (priority source per the banner), the [accessibility migration analysis](./accessibility-migration-analysis.md), the `spectrum-css` `fieldgroup` component, the Figma reference supplied for this plan, the approved forms strategy (SWC-1888), and React Spectrum. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
+These are derived from the 1st-gen implementation, `radio/migration-plan.md` (priority source per the banner), the [accessibility specification](./component-a11y-spec.md), the `spectrum-css` `fieldgroup` component, the Figma reference supplied for this plan, the approved forms strategy (SWC-1888), and React Spectrum. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
 
 - **Confirmed**: directly supported by source material
 - **Inferred**: recommended based on multiple signals, but not explicitly specified in one authoritative source
@@ -331,7 +331,7 @@ Initial expectation for Radio Group is a minimal set, likely limited to inter-it
 
 ### Accessibility semantics notes (gen2)
 
-Authoritative source: [accessibility migration analysis](./accessibility-migration-analysis.md), read together with `radio/migration-plan.md`'s Q12 resolution where the two differ (see banner). Key points: `role="radiogroup"` is host-role-exception via `ElementInternals` (no native element exists to hang it on, unlike the item); accessible name/description/error resolve through `LabellingController` in precedence order `accessible-labelledby` > `accessible-label` > slotted label, all attached to the host; `aria-invalid`/`aria-required`/`aria-readonly` are all new-or-fixed group-level states; form value **and** validity both live on the group's single `FieldAssociationController` instance; keyboard model is a direct, behavior-preserving port to `FocusgroupNavigationController`.
+Authoritative source: [accessibility specification](./component-a11y-spec.md), read together with `radio/migration-plan.md`'s Q12 resolution where the two differ (see banner). Key points: `role="radiogroup"` is host-role-exception via `ElementInternals` (no native element exists to hang it on, unlike the item); accessible name/description/error resolve through `LabellingController` in precedence order `accessible-labelledby` > `accessible-label` > slotted label, all attached to the host; `aria-invalid`/`aria-required`/`aria-readonly` are all new-or-fixed group-level states; form value **and** validity both live on the group's single `FieldAssociationController` instance; keyboard model is a direct, behavior-preserving port to `FocusgroupNavigationController`.
 
 ---
 
@@ -405,7 +405,7 @@ Planned rendering shape:
 
 ### Accessibility
 
-<!-- Sourced from accessibility-migration-analysis.md summary checklist, reconciled with radio/migration-plan.md's Q12 per the banner. -->
+<!-- Sourced from component-a11y-spec.md summary checklist, reconciled with radio/migration-plan.md's Q12 per the banner. -->
 
 #### Naming and semantics
 
@@ -506,7 +506,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 
 | Ref | Decision | Rationale / context |
 | --- | -------- | -------------------- |
-| — | `radio/migration-plan.md`'s resolved decisions take priority over `radio-group/accessibility-migration-analysis.md` wherever they conflict. | Explicit direction. The a11y doc predates the item plan's Q12 resolution and describes a value/validity split Q12 supersedes (all form-value participation moves to the group; see the next entry). **Q12 is now officially signed off by the a11y SME.** `radio/accessibility-migration-analysis.md` (the item's own doc) has already been corrected to match, as precedent; this doc's own per-item-value language (see [Related recommendations: `<swc-radio-group>`](../radio-group/accessibility-migration-analysis.md#recommendations-swc-radio-group)) has been corrected to match as well. |
+| — | `radio/migration-plan.md`'s resolved decisions take priority over `radio-group/component-a11y-spec.md` wherever they conflict. | Explicit direction. The a11y doc predates the item plan's Q12 resolution and describes a value/validity split Q12 supersedes (all form-value participation moves to the group; see the next entry). **Q12 is now officially signed off by the a11y SME.** `radio/component-a11y-spec.md` (the item's own doc) has already been corrected to match, as precedent; this doc's own per-item-value language (see [Related recommendations: `<swc-radio-group>`](../radio-group/component-a11y-spec.md#recommendations-swc-radio-group)) has been corrected to match as well. |
 | — | `FieldAssociationController` on `swc-radio-group` handles both form value (`setFormValue`, from `selected`) and constraint validity (`setValidity`/`checkValidity`) from one instance, not a split between per-item value and group-only validity. | Direct consequence of the item plan's Q12: since the item no longer participates in form value at all, the a11y doc's originally-proposed "lighter, validity-only" group wiring is no longer lighter than anything — it's the *only* wiring, so it may as well be the full controller. |
 | — | `LabellingController` is a confirmed dependency for `swc-radio-group`, despite being rejected for `swc-radio` itself. | The group has no native "radiogroup" equivalent at all, so `ElementInternals`-based host attachment is the only mechanism available for its accessible name/description/error, which is exactly what `LabellingController` is being built to provide. Why the item rejected it: [`radio/migration-plan.md`](../radio/migration-plan.md#decision-log) (Q5/B5); that reasoning doesn't transfer here since it depended on a native element the group doesn't have. |
 | — | `swc-radio-group` is confirmed as the shared `form-fields` `_lit-styles/` stylesheet and render template's second consumer, resolving that fragment's ownership question by precedent. `swc-radio` (the item) explicitly remains a non-consumer. | Explicit direction for this plan. The `spectrum-css` `fieldgroup` component's own `--toplabel`/`--sidelabel` modifiers independently confirm the group's layout need matches the shared template's `label-position` axis, not a coincidence being forced onto the component. |
@@ -523,7 +523,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md) — authored before Q12; see banner and [Decision log](#decision-log) for where this plan supersedes it
+- [Accessibility specification](./component-a11y-spec.md) — authored before Q12; see banner and [Decision log](#decision-log) for where this plan supersedes it
 - [Radio migration plan](../radio/migration-plan.md) — the coordinated item's plan; priority source for this plan per the banner
 - [Text field migration plan](../text-field/migration-plan.md) — source of `FieldAssociationController`/`LabellingController` sequencing and the shared `form-fields` stylesheet/template this plan consumes as second confirmed consumer (not yet merged at time of drafting)
 - [`FocusgroupNavigationController`](../../../../gen2/packages/core/controllers/focusgroup-navigation-controller/focusgroup-navigation-controller.mdx) — already-built controller this plan uses for roving tabindex and arrow navigation
@@ -543,4 +543,4 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 - SWC-2548, research spike deciding whether `swc-field-group`'s migration is scoped with the Checkbox epic (SWC-2340) — see [Related components and ordering notes](#related-components-and-ordering-notes)
 - SWC-2466, `LabellingController` — confirmed dependency for this component (see [Decision log](#decision-log))
 - SWC-2467, `FieldAssociationController` — confirmed dependency for this component, now handling both value and validity (see [Decision log](#decision-log))
-- SWC-1178, open a11y bug: visible group label missing — already tracked in the [accessibility migration analysis](./accessibility-migration-analysis.md#related-1st-gen-accessibility-jira)
+- SWC-1178, open a11y bug: visible group label missing — already tracked in the [accessibility specification](./component-a11y-spec.md#related-1st-gen-accessibility-jira)

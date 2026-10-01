@@ -495,7 +495,7 @@ Allowed differences:
 
 #### Naming and semantics
 
-- [x] Align Button implementation with the approved `accessibility-migration-analysis.md` — analysis doc exists; full alignment verification requires AT testing (see state verification below)
+- [x] Align Button implementation with the approved `component-a11y-spec.md` — analysis doc exists; full alignment verification requires AT testing (see state verification below)
 - [x] Ensure icon-only usage has a reliable accessible name via `accessible-label` — `ButtonBase.update()` emits a `{ type: 'accessibility', level: 'high' }` debug warning when an icon-only button is missing `accessible-label`
 - [x] Pending state must set `aria-disabled="true"` because the control cannot be activated while pending (`SWC-459`) — implemented in `Button.ts` render template
 - [x] Pending state must use a descriptive default accessible label based on the resolved non-busy accessible name plus a busy suffix, not bare `"Pending"` (`SWC-459`) — `ButtonBase.getPendingAccessibleName()` derives `"${resolvedName}, busy"`
@@ -616,9 +616,9 @@ These items require manual assistive-technology (AT) verification and cannot be 
 ## References
 
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Accessibility specification](./component-a11y-spec.md)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
-- [PR #6177 — Button accessibility migration analysis](https://github.com/adobe/spectrum-web-components/pull/6177)
+- [PR #6177 — Button accessibility specification](https://github.com/adobe/spectrum-web-components/pull/6177)
 - [PR #6120 — core/shared migration and LikeAnchor removal](https://github.com/adobe/spectrum-web-components/pull/6120)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)

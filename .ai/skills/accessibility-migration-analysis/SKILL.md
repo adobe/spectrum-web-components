@@ -1,7 +1,7 @@
 ---
 name: accessibility-migration-analysis
-description: Create accessibility migration analysis docs for gen2 component migration. Use when on the "analyze accessibility" step for one or more components.
-globs: CONTRIBUTOR-DOCS/**/accessibility-migration-analysis.md
+description: Create accessibility specification docs for gen2 component migration. Use when on the "analyze accessibility" step for one or more components.
+globs: CONTRIBUTOR-DOCS/**/component-a11y-spec.md
 alwaysApply: false
 ---
 
@@ -9,7 +9,7 @@ alwaysApply: false
 
 Create comprehensive accessibility documentation for the **analyze accessibility** step of gen2 component migration.
 One markdown file per component, following a fixed structure (ARIA context, recommendations, testing, checklist,
-references). Use this when **creating or updating** `accessibility-migration-analysis.md` under `CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/`.
+references). Use this when **creating or updating** `component-a11y-spec.md` under `CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/`.
 
 ## Mindset
 
@@ -20,7 +20,7 @@ When source or design suggests **more than one host ARIA role** for the same com
 ## When to use this skill
 
 - You are on the "analyze accessibility" step of the gen2 component migration workstream
-- The user asks to create an accessibility migration analysis for one or more components
+- The user asks to create an accessibility specification for one or more components
 - The user asks to analyze accessibility for a component (e.g. "analyze accessibility for button", "create accessibility analysis for dialog")
 
 ## How to invoke
@@ -33,7 +33,7 @@ When source or design suggests **more than one host ARIA role** for the same com
 ### Output
 
 - **One markdown file per component** at:
-  `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/accessibility-migration-analysis.md`
+  `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/component-a11y-spec.md`
 - **Pairing:** Link to `./rendering-and-styling-migration-analysis.md` from **Overview → Also read**
 - **Nav:** After adding the file or changing `##` / `###` headings, run `node update-nav.js` from `CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs`. Register the doc in `03_components/README.md` when introducing a new component folder.
 - **Non-focusable** components: include `### Manual screen reader testing` under `## Testing` (see [Testing](#testing) in **Full instructions**), with **browse mode** and a link to `gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx`.
@@ -42,16 +42,16 @@ When source or design suggests **more than one host ARIA role** for the same com
 
 Use these existing docs when matching structure, headings, tables, and phrasing:
 
-- `CONTRIBUTOR-DOCS/03_project-planning/03_components/badge/accessibility-migration-analysis.md`
-- `CONTRIBUTOR-DOCS/03_project-planning/03_components/divider/accessibility-migration-analysis.md`
-- `CONTRIBUTOR-DOCS/03_project-planning/03_components/progress-circle/accessibility-migration-analysis.md`
-- `CONTRIBUTOR-DOCS/03_project-planning/03_components/meter/accessibility-migration-analysis.md` (non-focusable component with `### Manual screen reader testing`—**browse mode** and Storybook guide)
-- `CONTRIBUTOR-DOCS/03_project-planning/03_components/status-light/accessibility-migration-analysis.md`
-- `CONTRIBUTOR-DOCS/03_project-planning/03_components/popover/accessibility-migration-analysis.md` (subheadings for **template** subsections that **do not apply**, with **Does not apply** / **Intentionally omitted** explanations)
+- `CONTRIBUTOR-DOCS/03_project-planning/03_components/badge/component-a11y-spec.md`
+- `CONTRIBUTOR-DOCS/03_project-planning/03_components/divider/component-a11y-spec.md`
+- `CONTRIBUTOR-DOCS/03_project-planning/03_components/progress-circle/component-a11y-spec.md`
+- `CONTRIBUTOR-DOCS/03_project-planning/03_components/meter/component-a11y-spec.md` (non-focusable component with `### Manual screen reader testing`—**browse mode** and Storybook guide)
+- `CONTRIBUTOR-DOCS/03_project-planning/03_components/status-light/component-a11y-spec.md`
+- `CONTRIBUTOR-DOCS/03_project-planning/03_components/popover/component-a11y-spec.md` (subheadings for **template** subsections that **do not apply**, with **Does not apply** / **Intentionally omitted** explanations)
 
 ## File location and discovery
 
-- **Path:** `CONTRIBUTOR-DOCS/03_project-planning/03_components/<component-name>/accessibility-migration-analysis.md`
+- **Path:** `CONTRIBUTOR-DOCS/03_project-planning/03_components/<component-name>/component-a11y-spec.md`
 - **Pairing:** Link to `./rendering-and-styling-migration-analysis.md` from **Overview → Also read**.
 - **Nav:** After adding a file or changing `##` / `###` headings, run `node update-nav.js` from `CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs` (see **contributor-doc-update** rule). Register the doc in `03_components/README.md` when introducing a new component folder.
 - **Non-focusable** components: add `### Manual screen reader testing` (browse mode + `gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx`)—see **Full instructions** under `## Testing`.
@@ -83,14 +83,14 @@ Under **`## Recommendations`**, use these **`###` subsections** in order:
 1. `### ARIA roles, states, and properties`
 2. `### Shadow DOM and cross-root ARIA Issues`
 3. `### Accessibility tree expectations`
-4. **Optional (when product guidance needs it):** e.g. `### Assistive technology, live regions`—place **after** accessibility tree expectations and **before** keyboard and focus. For **motion** (WCAG 2.2.2, reduced motion, Spectrum tokens), add rows to **Guidelines that apply** and the **Recommendations** table instead of a separate `### Motion` section—see **`progress-circle/accessibility-migration-analysis.md`**. For **loading / progress** design intent (variants, motion), align with Figma **Loading animation discovery** ([Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery)) and **list it under `## References`** whenever the contributor doc cites it.
+4. **Optional (when product guidance needs it):** e.g. `### Assistive technology, live regions`—place **after** accessibility tree expectations and **before** keyboard and focus. For **motion** (WCAG 2.2.2, reduced motion, Spectrum tokens), add rows to **Guidelines that apply** and the **Recommendations** table instead of a separate `### Motion` section—see **`progress-circle/component-a11y-spec.md`**. For **loading / progress** design intent (variants, motion), align with Figma **Loading animation discovery** ([Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery)) and **list it under `## References`** whenever the contributor doc cites it.
 5. `### Keyboard and focus`
 
 Separate major sections with a horizontal rule (`---`) where existing docs use it (after Overview, after ARIA and WCAG context, after Related 1st-gen accessibility (Jira) before Recommendations, after Recommendations block before Testing).
 
 ### `###` subsections that do not apply (keep the heading)
 
-The **H2** list above is mandatory. **Within Recommendations** and **Testing**, the skill and **peer** docs (for example `CONTRIBUTOR-DOCS/03_project-planning/03_components/button/accessibility-migration-analysis.md` and `popover/accessibility-migration-analysis.md`) use additional **`###` subsections**—form association, live regions, motion, extra keyboard boilerplate, Playwright or manual test expectations, and similar.
+The **H2** list above is mandatory. **Within Recommendations** and **Testing**, the skill and **peer** docs (for example `CONTRIBUTOR-DOCS/03_project-planning/03_components/button/component-a11y-spec.md` and `popover/component-a11y-spec.md`) use additional **`###` subsections**—form association, live regions, motion, extra keyboard boilerplate, Playwright or manual test expectations, and similar.
 
 - **If a template subsection does not apply** to the component, **do not delete the topic**: keep the same **`###` heading** the peer doc or this skill would use, and set the **body** to a short **Does not apply** (or **Intentionally omitted**) explanation: **what** the subsection would normally cover, and **why** it does not apply (wrong interaction model, out of scope, concern already covered only under **Guidelines that apply** or elsewhere).
 - This keeps the **In this doc** table of contents and **side-by-side** reading across components **aligned**, so reviewers are not left wondering whether a topic was forgotten or out of scope.
@@ -131,7 +131,7 @@ Body text under each `###` is normal paragraphs and/or bullets.
   - **Labels:** Do **not** list issues that carry Jira labels **`gen2`** or **`gen-2`** (match your project’s spelling and casing). This section tracks **1st-gen** (`sp-*`) accessibility work, not gen2 program-only tickets.
   - **Audit:** Do **not** list **audit** issues whose **summary begins with Audit and improve** (usually **Epics** for cross-cutting accessibility audits—e.g. primitive components, card and meter). Track those in Jira or program views, not in per-component tables.
   - **Migration consultation:** Do **not** list **stories** whose summary follows **Migration (YYYY-MM-DD): Accessibility consultation for gen2 migration** (program-level gen2 consultation; track in migration/program views, not per-component tables).
-- **Reference:** See **`badge/accessibility-migration-analysis.md`** (and sibling component docs) for a full example table. **Avatar** currently documents the Jira block in **`avatar/rendering-and-styling-migration-analysis.md`** alongside other accessibility migration content—prefer splitting to **`avatar/accessibility-migration-analysis.md`** when that file is added.
+- **Reference:** See **`badge/component-a11y-spec.md`** (and sibling component docs) for a full example table. **Avatar** currently documents the Jira block in **`avatar/rendering-and-styling-migration-analysis.md`** alongside other accessibility migration content—prefer splitting to **`avatar/component-a11y-spec.md`** when that file is added.
 
 ### Dual or conditional ARIA roles
 
@@ -191,7 +191,7 @@ When the component or its docs touch **live regions** or **frequent** status upd
 
 For **progress**, **loading**, **busy**, or **spinner** UX (including motion, variants, and when which treatment applies), **consult** Adobe’s Figma file **Loading animation discovery**: [Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery). Align written guidance with that source where the doc covers those states; **add the same link under `## References`** in the contributor doc whenever you cite or rely on it.
 
-See **`CONTRIBUTOR-DOCS/03_project-planning/03_components/progress-circle/accessibility-migration-analysis.md`** for a full example.
+See **`CONTRIBUTOR-DOCS/03_project-planning/03_components/progress-circle/component-a11y-spec.md`** for a full example.
 
 ### Keyboard and focus
 
@@ -203,7 +203,7 @@ Use a **single** `### Keyboard and focus` subsection under `## Recommendations`.
 
 - **If the component is focusable or has a keyboard pattern:** put Tab order, keys, roving tabindex, focus trap, and related guidance in the same `### Keyboard and focus` subsection. Do **not** paste the divider-style “Not focusable. …” one-liner, and do **not** add a paragraph arguing that line “does not apply”—that text is only for **non-focusable** decorative hosts.
 
-- **If that one-sentence “Not focusable” block does not fit** (for example a shell or positioning host with no default keyboard contract, but not static decoration like a divider): still use one `### Keyboard and focus`; add a short paragraph that describes what applies for _this_ host (see `CONTRIBUTOR-DOCS/03_project-planning/03_components/popover/accessibility-migration-analysis.md`). Never split that explanation out under a nested `### “Not focusable”` heading.
+- **If that one-sentence “Not focusable” block does not fit** (for example a shell or positioning host with no default keyboard contract, but not static decoration like a divider): still use one `### Keyboard and focus`; add a short paragraph that describes what applies for _this_ host (see `CONTRIBUTOR-DOCS/03_project-planning/03_components/popover/component-a11y-spec.md`). Never split that explanation out under a nested `### “Not focusable”` heading.
 
 ## Testing
 
@@ -218,13 +218,13 @@ Use a **single** `### Keyboard and focus` subsection under `## Recommendations`.
 
 **What to write:** Explain that manual testers using a **screen reader** need **browse mode** (document or scan mode) to encounter the control in **content order**; **forms** / **application**-style **focus navigation** alone will **not Tab** to a **non-focusable widget**, so **browse mode** is required to verify **name**, **role**, and **relevant state** in the **reading order**.
 
-**Reference (required in the contributor doc when this subsection exists):** Link to the gen2 Storybook accessibility guide in the repo. From `CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/accessibility-migration-analysis.md`, the relative path is:
+**Reference (required in the contributor doc when this subsection exists):** Link to the gen2 Storybook accessibility guide in the repo. From `CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/component-a11y-spec.md`, the relative path is:
 
 `../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx`
 
 In the **body**, point to the **Browse mode (document/scan mode)** section. Add the same link (or a short line such as “gen2 Storybook: Screen reader testing” pointing to that file) under **`## References`**. Add a **summary checklist** item that **manual SR testing** uses **browse mode** per that guide.
 
-**See:** `CONTRIBUTOR-DOCS/03_project-planning/03_components/meter/accessibility-migration-analysis.md` for a full example.
+**See:** `CONTRIBUTOR-DOCS/03_project-planning/03_components/meter/component-a11y-spec.md` for a full example.
 
 ## Summary checklist
 
@@ -234,7 +234,7 @@ In the **body**, point to the **Browse mode (document/scan mode)** section. Add 
 ## References
 
 - Include WAI-ARIA, WCAG 2.2, APG “Read me first” (or equivalent), and the component rendering-and-styling migration link at minimum. Add APG pattern links when used in the doc.
-- When the doc includes `### Manual screen reader testing` for a non-focusable component, add the gen2 Storybook screen reader testing guide: `gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx` (in contributor docs, link with `../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx` from `03_components/<component>/accessibility-migration-analysis.md`; adjust if the file moves).
+- When the doc includes `### Manual screen reader testing` for a non-focusable component, add the gen2 Storybook screen reader testing guide: `gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx` (in contributor docs, link with `../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx` from `03_components/<component>/component-a11y-spec.md`; adjust if the file moves).
 - When the doc discusses progress, loading, busy, or spinner behavior and you point authors at the Loading animation discovery Figma file in the body, list it again here: [Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery).
 
 ## Writing style
@@ -279,7 +279,7 @@ When the user asks to mark the PR as ready for review, apply all of the followin
 ```markdown
 ## Description
 
-In spectrum-web-components/CONTRIBUTOR-DOCS/03_project-planning/03_components/{{component-name}}/accessibility-migration-analysis.md:
+In spectrum-web-components/CONTRIBUTOR-DOCS/03_project-planning/03_components/{{component-name}}/component-a11y-spec.md:
 
 - Documented recommendations for ARIA roles, states, and properties for the gen2 {{component-readable-name}}
 - Shadow DOM and cross-root ARIA considerations documented, including any limitations or required workarounds (e.g., ElementInternals, cross-root ARIA delegation)
@@ -322,7 +322,7 @@ The gen2 migration is an opportunity to address known accessibility gaps, align 
 
 ### Manual review test cases
 
-Review the [{{component-readable-name}} accessibility migration analysis](https://github.com/adobe/spectrum-web-components/blob/{{branch-name}}/CONTRIBUTOR-DOCS/03_project-planning/03_components/{{component-name}}/accessibility-migration-analysis.md)
+Review the [{{component-readable-name}} accessibility specification](https://github.com/adobe/spectrum-web-components/blob/{{branch-name}}/CONTRIBUTOR-DOCS/03_project-planning/03_components/{{component-name}}/component-a11y-spec.md)
 
 - [ ] ARIA roles, states, and properties covered
 - [ ] Shadow DOM and cross-root ARIA considerations covered

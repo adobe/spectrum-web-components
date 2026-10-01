@@ -131,7 +131,7 @@ Rendered by `Meter.render()`:
 </div>
 ```
 
-Plus the host receives `role="meter progressbar"` (invalid combined ARIA role string — see [Known 1st-gen issues](./accessibility-migration-analysis.md#known-1st-gen-issues)).
+Plus the host receives `role="meter progressbar"` (invalid combined ARIA role string — see [Known 1st-gen issues](./component-a11y-spec.md#known-1st-gen-issues)).
 
 ---
 
@@ -217,8 +217,8 @@ None outstanding. All architecture and dependency decisions are settled per dire
 
 | #  | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | -- | ------------ | ---------------- | ---------------- | ----------------------- |
-| **B9** | ARIA role placement. _(Source: [accessibility-migration-analysis.md § Role and value attributes](./accessibility-migration-analysis.md#role-and-value-attributes); [WAI-ARIA 1.2 `meter`](https://www.w3.org/TR/wai-aria-1.2/#meter); [APG meter pattern](https://www.w3.org/WAI/ARIA/apg/patterns/meter/); initiative leads a11y direction.)_ | `role="meter progressbar"` (invalid combined ARIA role token) set on the host. | `role="meter"` only, set on the shadow `.swc-Meter` element (not the host). All `aria-value*`, `aria-label`, `aria-labelledby`, `aria-describedby` for the meter live on that role element. Nothing role-related is set on the host. | None — AT-only. Tests/snapshots that assert the combined string or host-level ARIA update. |
-| **B10** | Value attributes. _(Source: [accessibility-migration-analysis.md § ARIA roles, states, and properties](./accessibility-migration-analysis.md#aria-roles-states-and-properties); React Spectrum S2 Meter API.)_ | Only `aria-valuenow` is set; no `aria-valuemin`/`aria-valuemax`/`aria-valuetext`. | `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<value>`, and `aria-valuetext=<formatted value>` (formatted via `Intl.NumberFormat` using `formatOptions` and the resolved locale). | None — AT-only. |
+| **B9** | ARIA role placement. _(Source: [component-a11y-spec.md § Role and value attributes](./component-a11y-spec.md#role-and-value-attributes); [WAI-ARIA 1.2 `meter`](https://www.w3.org/TR/wai-aria-1.2/#meter); [APG meter pattern](https://www.w3.org/WAI/ARIA/apg/patterns/meter/); initiative leads a11y direction.)_ | `role="meter progressbar"` (invalid combined ARIA role token) set on the host. | `role="meter"` only, set on the shadow `.swc-Meter` element (not the host). All `aria-value*`, `aria-label`, `aria-labelledby`, `aria-describedby` for the meter live on that role element. Nothing role-related is set on the host. | None — AT-only. Tests/snapshots that assert the combined string or host-level ARIA update. |
+| **B10** | Value attributes. _(Source: [component-a11y-spec.md § ARIA roles, states, and properties](./component-a11y-spec.md#aria-roles-states-and-properties); React Spectrum S2 Meter API.)_ | Only `aria-valuenow` is set; no `aria-valuemin`/`aria-valuemax`/`aria-valuetext`. | `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<value>`, and `aria-valuetext=<formatted value>` (formatted via `Intl.NumberFormat` using `formatOptions` and the resolved locale). | None — AT-only. |
 | **B11** | Accessible-name model. _(Source: initiative leads a11y direction.)_ | `aria-label` mirrors the `label` property; slot text hoists into `label`. Six inputs total (`label`, default slot, `aria-label`, `aria-labelledby`, `aria-describedby`, `aria-details`). | Three inputs: **`label` named slot** (visible label, `aria-labelledby`-referenced by the role element); **`accessibleLabel` JS property / `accessible-label` attribute** (rare-case a11y fallback when there is no visible label, e.g. a data grid of meters — sets `aria-label` on the role element); **`description` named slot** (additional text below the meter, `aria-describedby`-referenced by the role element). Raw `aria-label`/`aria-labelledby`/`aria-describedby`/`aria-details` passthroughs are not part of the public API. DEBUG dev-mode warning when no accessible name is provable (neither `label` slot content nor `accessibleLabel` is set). | Consumers using `label="..."` move text into the `label` slot (or set `accessibleLabel` when the meter has no visible label). Consumers using `aria-*` passthroughs use the matching slot. |
 
 ### Additive — ships when ready, zero breakage for consumers already on gen2
@@ -234,7 +234,7 @@ None outstanding. All architecture and dependency decisions are settled per dire
 
 ## gen2 API decisions
 
-These are derived from the 1st-gen implementation, the rendering and styling roadmap, the accessibility migration analysis, the `spectrum-css` `spectrum-two` source, and the React S2 implementation. Confidence labels:
+These are derived from the 1st-gen implementation, the rendering and styling roadmap, the accessibility specification, the `spectrum-css` `spectrum-two` source, and the React S2 implementation. Confidence labels:
 
 - **Confirmed**: directly supported by source material.
 - **Inferred**: recommended based on multiple signals; not explicitly specified in one authoritative source.
@@ -298,7 +298,7 @@ The earlier `--swc-meter-min-width`, `--swc-meter-max-width`, `--swc-meter-descr
 
 ### Accessibility semantics notes (gen2)
 
-Sourced from [`accessibility-migration-analysis.md`](./accessibility-migration-analysis.md) and the React Spectrum S2 Meter API:
+Sourced from [`component-a11y-spec.md`](./component-a11y-spec.md) and the React Spectrum S2 Meter API:
 
 - `role="meter"` is set on the shadow `.swc-Meter` element in the render template — not on the host. The host carries no ARIA role. Fixed; not author-overridable.
 - `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<value>` (clamped), `aria-valuetext=<formatted value>` are declared on the `.swc-Meter` role element in the template. Re-rendered on every relevant property change and on locale change.
@@ -519,7 +519,7 @@ All drafting-time questions are resolved. Resolutions:
 
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Accessibility specification](./component-a11y-spec.md)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)

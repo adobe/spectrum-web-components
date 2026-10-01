@@ -22,8 +22,8 @@
 
 This file is a **placeholder** for **`swc-action-menu`**, **`swc-menu`**, and related **gen2** rendering, CSS, and DOM migration planning. Until it is expanded, treat **`1st-gen/packages/action-menu/src/ActionMenu.ts`** (`<sp-action-menu>`) and **`1st-gen/packages/menu`** as references.
 
-For **accessibility** targets, APG alignment, and **menu** vs **navigation** patterns, see [Action menu accessibility migration analysis](./accessibility-migration-analysis.md).
+For **accessibility** targets, APG alignment, and **menu** vs **navigation** patterns, see [Action menu accessibility specification](./component-a11y-spec.md).
 
 ## Resources
 
-- [Action menu accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Action menu accessibility specification](./component-a11y-spec.md)

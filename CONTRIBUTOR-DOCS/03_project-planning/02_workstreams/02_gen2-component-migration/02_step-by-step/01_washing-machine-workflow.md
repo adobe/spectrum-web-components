@@ -120,7 +120,7 @@ Use this doc for **what order** to do things and **what to check**; use the link
 | **1. Preparation** | Uses output of **Step 1: Analyze rendering and styling** (read the component analysis). Plan breaking changes and scope. |
 | **2. Setup** | **Steps 2–3** — study 1st-gen structure, create base class in core — then create gen2 core/SWC layout per Phase 2. |
 | **3. API migration** | **Step 4: Formalize Spectrum data model** + **Step 5: Add gen2 SWC** (API overrides/additions). |
-| **4. Accessibility** | Use the **accessibility migration analysis** (`03_components/<component>/accessibility-migration-analysis.md`). |
+| **4. Accessibility** | Use the **accessibility specification** (`03_components/<component>/component-a11y-spec.md`). |
 | **5. Styling** | **Step 6: Migrate rendering & styles from Spectrum CSS**. |
 | **6. Testing** | (Mentioned in steps as "confirm tests pass" — this guide makes it a full phase.) |
 | **7. Documentation** | **Step 7: Add stories for gen2 component** + per-component MDX docs page + public-API JSDoc on `Component.ts`. |
@@ -421,11 +421,11 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 
 ## Phase 4: Accessibility
 
-**Goal:** Implement the accessibility requirements defined in the component's **accessibility migration analysis** (`CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/accessibility-migration-analysis.md`). That document is the source of truth for this phase — implement exactly what it specifies, cross-referencing the repo’s [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide and the PR template’s accessibility checklist.
+**Goal:** Implement the accessibility requirements defined in the component's **accessibility specification** (`CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/component-a11y-spec.md`). That document is the source of truth for this phase — implement exactly what it specifies, cross-referencing the repo’s [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide and the PR template’s accessibility checklist.
 
 ### What to do
 
-1. **Read the component's accessibility migration analysis** — `CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/accessibility-migration-analysis.md`. The analysis defines the APG pattern (if any), required ARIA roles/states/properties, shadow DOM considerations, accessibility tree shape, keyboard and focus behavior, and the testing checklist. **Everything you implement in this phase flows from that document.**  
+1. **Read the component's accessibility specification** — `CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/component-a11y-spec.md`. The analysis defines the APG pattern (if any), required ARIA roles/states/properties, shadow DOM considerations, accessibility tree shape, keyboard and focus behavior, and the testing checklist. **Everything you implement in this phase flows from that document.**  
 2. **Follow the [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide** and the PR template checklist.
 3. **Use gen2 Storybook accessibility guides:** `gen2/packages/swc/.storybook/guides/accessibility-guides/` — codebase-specific a11y patterns and docs surfaced in Storybook (complement the contributor guide and APG).
 4. **Identify the APG pattern** for your component type (e.g. button, combobox) — [WCAG ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/).
@@ -437,7 +437,7 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 
 ### What to check
 
-- [ ] The component's accessibility migration analysis doc exists and has been read in full.
+- [ ] The component's accessibility specification doc exists and has been read in full.
 - [ ] All requirements in the analysis are implemented.
 - [ ] ARIA and semantics match the chosen APG pattern that the analysis identified.
 - [ ] Component behaves as expected with screen reader.
@@ -462,7 +462,7 @@ Prefer native events when they give the right semantics (e.g. `click`). Add cust
 
 ### Quality gate
 
-- [ ] Component's accessibility migration analysis doc exists and all its requirements are implemented.
+- [ ] Component's accessibility specification doc exists and all its requirements are implemented.
 - [ ] Keyboard and ARIA implemented per the analysis.
 - [ ] APG pattern identified and linked
 - [ ] Keyboard and ARIA implemented

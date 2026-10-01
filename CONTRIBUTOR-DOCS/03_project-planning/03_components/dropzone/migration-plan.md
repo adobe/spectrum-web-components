@@ -268,7 +268,7 @@ No sequencing, shared-base, or inheritance decisions require explicit user confi
 
 ## gen2 API decisions
 
-These are derived from the 1st-gen source, the accessibility migration analysis, the spectrum-css `spectrum-two` branch, and the rendering-and-styling migration analysis. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
+These are derived from the 1st-gen source, the accessibility specification, the spectrum-css `spectrum-two` branch, and the rendering-and-styling migration analysis. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
 
 Use lightweight confidence labels:
 
@@ -357,7 +357,7 @@ The 100 ms drag-leave debounce must be cancelled in `disconnectedCallback` to pr
 
 ### Accessibility semantics notes (gen2)
 
-Sourced from [accessibility-migration-analysis.md](./accessibility-migration-analysis.md). Full requirements are there; summary below.
+Sourced from [component-a11y-spec.md](./component-a11y-spec.md). Full requirements are there; summary below.
 
 | Topic | gen2 behavior |
 | ----- | ---------------- |
@@ -626,7 +626,7 @@ No `DropzoneEventDetail` alias is exported. gen2 is a clean break from 1st-gen (
 
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Accessibility specification](./component-a11y-spec.md)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)

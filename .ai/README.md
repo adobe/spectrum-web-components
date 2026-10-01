@@ -177,12 +177,12 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 
 ### Available skills
 
-#### Accessibility migration analysis
+#### Accessibility specification
 
-- **purpose**: Create accessibility migration analysis docs for the "analyze accessibility" step of gen2 component migration
+- **purpose**: Create accessibility specification docs for the "analyze accessibility" step of gen2 component migration
 - **How to invoke**: Say "create accessibility analysis for [component]", "analyze accessibility for [component]", or "accessibility migration for [component]". Also invoked when you refer to the "analyze accessibility" step in the gen2 component migration workstream.
-- Use when: On the analyze-accessibility step for one or more components; creating one markdown file per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/accessibility-migration-analysis.md`
-- Applies to: `CONTRIBUTOR-DOCS/**/accessibility-migration-analysis.md`
+- Use when: On the analyze-accessibility step for one or more components; creating one markdown file per component at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component-name]/component-a11y-spec.md`
+- Applies to: `CONTRIBUTOR-DOCS/**/component-a11y-spec.md`
 - Provides: Required section order, ARIA recommendations structure, Shadow DOM guidance, keyboard and focus conventions, testing table format, reference examples
 
 #### Accessibility compliance

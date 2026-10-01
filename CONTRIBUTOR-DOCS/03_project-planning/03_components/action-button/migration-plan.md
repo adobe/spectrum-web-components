@@ -234,7 +234,7 @@ Phase 5 (styling) requires `spectrum-css` checked out at the `spectrum-two` bran
 | **A1** | Explicit `--swc-action-button-*` custom properties | Only expose properties justified by the CSS custom-property guide; do not recreate the old modifier matrix. |
 | **A2** | Playwright accessibility snapshots | Strengthen regression coverage without changing the public API. |
 | **A3** | Future cross-root ARIA mapping | Deferred until the cross-root semantics approach is settled. |
-| **A4** | `hold-affordance` / `longpress` (future) | When eventually implemented, use `longpress-enabled` / `longpress-help-text` per [Action button accessibility migration analysis](./accessibility-migration-analysis.md). |
+| **A4** | `hold-affordance` / `longpress` (future) | When eventually implemented, use `longpress-enabled` / `longpress-help-text` per [Action button accessibility specification](./component-a11y-spec.md). |
 | **A5** | `staticColor="auto"` from React Spectrum S2 | Not part of initial scope. |
 | **A6** | Badge slot — corner badge lockup | Matches React Spectrum S2 support for `swc-badge` slotted inside an action button. Icon+Badge and Avatar+Badge produce a distinct corner-overlay lockup vs. inline content. Badge content (e.g. a count) may contribute to the button's accessible name; requires a11y review before shipping. Tracked in SWC-2042 follow-up. |
 | **A7** | Avatar slot — avatar lockup | Matches React Spectrum S2 support for `swc-avatar` slotted inside an action button. Avatar is mutually exclusive with the `icon` slot; it replaces the icon. Avatar+Badge is a specific compound lockup. The avatar's accessible name and its relationship to the button's accessible name must be reviewed before shipping. Tracked in SWC-2042 follow-up. |
@@ -243,7 +243,7 @@ Phase 5 (styling) requires `spectrum-css` checked out at the `spectrum-two` bran
 
 ## gen2 API decisions
 
-These decisions are derived from the 1st-gen implementation, the current deprecations, the [Spectrum 2 Action button Figma spec](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=702-2877), the [accessibility migration analysis](./accessibility-migration-analysis.md), and the [rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md). Confirmed items are marked; deferred follow-up work is tracked in [Blockers and open questions](#blockers-and-open-questions).
+These decisions are derived from the 1st-gen implementation, the current deprecations, the [Spectrum 2 Action button Figma spec](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=702-2877), the [accessibility specification](./component-a11y-spec.md), and the [rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md). Confirmed items are marked; deferred follow-up work is tracked in [Blockers and open questions](#blockers-and-open-questions).
 
 **Scope note:** this plan is for `swc-action-button` only. `swc-toggle-button`, `swc-toggle-button-group`, `swc-segmented-control`, and `swc-action-group` are separate migration efforts that must not block this plan.
 
@@ -265,7 +265,7 @@ These decisions are derived from the 1st-gen implementation, the current depreca
 | `toggles` | removed | n/a | removed | **Confirmed removal.** Toggle UX moves to `swc-toggle-button` / `swc-toggle-button-group`. |
 | `selected` | removed | n/a | removed | **Confirmed removal.** Selection state belongs on `swc-toggle-button` / `swc-toggle-button-group`. |
 | `emphasized` | removed | n/a | removed | **Confirmed removal.** Only applied to the selected state, which is removed. |
-| `holdAffordance` | deferred | n/a | deferred | **Deferred (A4).** See [Hold affordance and alternatives to synthesized longpress](./accessibility-migration-analysis.md#hold-affordance-and-alternatives-to-synthesized-longpress) in the a11y analysis. |
+| `holdAffordance` | deferred | n/a | deferred | **Deferred (A4).** See [Hold affordance and alternatives to synthesized longpress](./component-a11y-spec.md#hold-affordance-and-alternatives-to-synthesized-longpress) in the a11y analysis. |
 | `role` | removed | n/a | removed | **Confirmed removal.** `swc-action-button` is always `role="button"`. No consumer-controlled role override. |
 | `href`, `target`, `download`, `referrerpolicy`, `rel` | removed | n/a | removed | **Confirmed removal.** Navigation uses native anchors. |
 | `type` | removed | n/a | removed | **Confirmed removal.** `swc-action-button` is not form-associated; the internal `<button type="button">` is hardcoded. `submit` / `reset` are not applicable to an action button. |
@@ -296,7 +296,7 @@ Initial candidates (to be confirmed during Phase 5):
 
 ### Visual matrix
 
-> **Provisional** — this matrix is inferred from the [accessibility migration analysis](./accessibility-migration-analysis.md) and [rendering and styling analysis](./rendering-and-styling-migration-analysis.md). A Figma PNG from `S2 / Web (Desktop scale)` has not been provided (Q1); confirm before Phase 5 (styling).
+> **Provisional** — this matrix is inferred from the [accessibility specification](./component-a11y-spec.md) and [rendering and styling analysis](./rendering-and-styling-migration-analysis.md). A Figma PNG from `S2 / Web (Desktop scale)` has not been provided (Q1); confirm before Phase 5 (styling).
 
 Based on the [Spectrum 2 Action button Figma spec](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=702-2877), the supported visual combinations in gen2 are:
 
@@ -347,7 +347,7 @@ Pending is a new feature for `swc-action-button` (not present in 1st-gen) that m
 
 ### Deferred semantics note (gen2)
 
-Cross-root `aria-labelledby` / `aria-describedby` and form-associated `submit` / `reset` behavior are deferred, matching `swc-button`. Hold affordance is deferred until a dedicated engineering effort schedules it after the initial gen2 release. See [Action button accessibility migration analysis](./accessibility-migration-analysis.md) for `longpress-enabled` / `longpress-help-text` spec when hold eventually ships.
+Cross-root `aria-labelledby` / `aria-describedby` and form-associated `submit` / `reset` behavior are deferred, matching `swc-button`. Hold affordance is deferred until a dedicated engineering effort schedules it after the initial gen2 release. See [Action button accessibility specification](./component-a11y-spec.md) for `longpress-enabled` / `longpress-help-text` spec when hold eventually ships.
 
 ---
 
@@ -468,7 +468,7 @@ What `swc-action-button` adds on top of `ButtonBase`:
 
 #### Naming and semantics
 
-- [x] Align implementation with [Action button accessibility migration analysis](./accessibility-migration-analysis.md)
+- [x] Align implementation with [Action button accessibility specification](./component-a11y-spec.md)
 - [x] Icon-only usage requires `accessible-label`; emit `__swc.warn()` when absent (inherited from `ButtonBase.update()`)
 - [x] Pending state: `aria-disabled="true"` on inner `<button>`, focusable, busy-suffix accessible name (inherited from `ButtonBase`)
 - [x] Pending state: animated icon only, never `swc-progress-circle` for inline pending (Phase 5 replaced the placeholder `<span>` with a conditional inline SVG spinner matching `swc-button`; no `swc-progress-circle` in the template)
@@ -656,10 +656,10 @@ Manual verification steps for each breaking change. Run against the component's 
 ## References
 
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
-- [Action button accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Action button accessibility specification](./component-a11y-spec.md)
 - [Action button rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [Button migration plan](../button/migration-plan.md)
-- [Button accessibility migration analysis](../button/accessibility-migration-analysis.md)
+- [Button accessibility specification](../button/component-a11y-spec.md)
 - [1st-gen source](../../../../1st-gen/packages/action-button/src/ActionButton.ts)
 - [1st-gen tests](../../../../1st-gen/packages/action-button/test/action-button.test.ts)
 - [1st-gen README](../../../../1st-gen/packages/action-button/README.md)
@@ -676,6 +676,6 @@ Manual verification steps for each breaking change. Run against the component's 
 - [WAI-ARIA APG: Toolbar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [Figma: Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery)
-- [Progress circle accessibility migration analysis](../progress-circle/accessibility-migration-analysis.md)
-- [Tooltip accessibility migration analysis](../tooltip/accessibility-migration-analysis.md)
+- [Progress circle accessibility specification](../progress-circle/component-a11y-spec.md)
+- [Tooltip accessibility specification](../tooltip/component-a11y-spec.md)
 - [PR #6276 — action-button a11y migration doc review](https://github.com/adobe/spectrum-web-components/pull/6276#pullrequestreview-4284644939)

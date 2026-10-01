@@ -25,7 +25,7 @@ This doc will capture **rendering**, **layout**, **virtualization**, and **styli
 
 **Primary consumer:** planned **`swc-card-view`** (aligned with [React Spectrum CardView](https://react-spectrum.adobe.com/CardView))—a virtualized collection of cards with selection, async loading, and bulk actions.
 
-**Accessibility:** [Grid accessibility migration analysis](./accessibility-migration-analysis.md) (**`role="grid"`**, **`FocusgroupNavigationController`** with **`direction: 'grid'`**, virtualization + focus, selection).
+**Accessibility:** [Grid accessibility specification](./component-a11y-spec.md) (**`role="grid"`**, **`FocusgroupNavigationController`** with **`direction: 'grid'`**, virtualization + focus, selection).
 
 **Design source:** No Spectrum 2 Figma file for **`swc-grid`** at planning time; layout metrics will come from **CardView** / card child specs when available.
 
@@ -40,6 +40,6 @@ This doc will capture **rendering**, **layout**, **virtualization**, and **styli
 
 ## Also read
 
-- [Grid accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Grid accessibility specification](./component-a11y-spec.md)
 - [Focus management (contributor guide)](../../../01_contributor-guides/14_focus-management.md)
 - [Tools vs packages](../../../01_contributor-guides/12_tools-vs-packages.md)

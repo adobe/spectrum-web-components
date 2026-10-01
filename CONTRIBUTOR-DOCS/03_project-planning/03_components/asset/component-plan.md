@@ -132,7 +132,7 @@ Out of scope for v1: responsive/adaptive sizing (`srcset`/`sizes`-equivalent, in
 | ----------------------------------------- | ------------------------------------------------------------------------------------------- | --------- |
 | `gen2/packages/swc/stylesheets/_lit-styles/opacity-checkerboard.css` | Shared `.swc-OpacityCheckerboard` fragment; import directly for the checkerboard background option | No — already exists |
 | `swc-card` (SWC-2566, merged) | Primary intended **consumer** once Asset ships; not a build dependency of Asset itself | No — independent timelines, only the aspect-ratio weak-sync contract needed to line up |
-| `swc-thumbnail` (migration not started)   | Sibling visual primitive; a11y model reference only (see [accessibility-migration-analysis.md](../thumbnail/accessibility-migration-analysis.md)) | No |
+| `swc-thumbnail` (migration not started)   | Sibling visual primitive; a11y model reference only (see [component-a11y-spec.md](../thumbnail/component-a11y-spec.md)) | No |
 | `gen2/packages/core/controllers/pending-controller` | Considered and **not** reused as-is for the loading state (see [Decision log](#decision-log)) — scope mismatch between a whole-control busy state and a per-image loading state. Its readable-property-plus-transition pattern (`pendingActive`) informed the `loadState` design, though. | No |
 
 No prerequisite migration or shared-base relationship blocks this work. Asset does not need to
@@ -686,7 +686,7 @@ checklist](#implementation-checklist).
 
 ## References
 
-- [Thumbnail accessibility migration analysis](../thumbnail/accessibility-migration-analysis.md) — a11y model reference (decorative, no disabled/focused/selected, host has no ARIA role)
+- [Thumbnail accessibility specification](../thumbnail/component-a11y-spec.md) — a11y model reference (decorative, no disabled/focused/selected, host has no ARIA role)
 - [1st-gen source](../../../../1st-gen/packages/asset/src/Asset.ts)
 - [gen2 source (core)](../../../../gen2/packages/core/components/asset/Asset.base.ts)
 - [gen2 source (SWC)](../../../../gen2/packages/swc/components/asset/Asset.ts)

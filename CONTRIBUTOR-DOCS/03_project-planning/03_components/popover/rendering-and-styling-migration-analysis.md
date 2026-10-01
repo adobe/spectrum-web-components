@@ -31,9 +31,9 @@ gen2 is planned to separate concerns clearly:
 
 ### Planned consumers (gen2)
 
-The new **`swc-popover` host** is the common **anchored** surface for **dropdown menus** in **action menu**, for **listbox** popups in **combobox**, and for **tooltip** UI. **Modals and dialogs** are **out of scope** for that **host**; they do not use **anchor**-relative positioning. They may still use **shared** **popover** **styles** on the **dialog** **surface** (see **Overview** **above**). **Tooltips** are intended to move off 1st-gen [Overlay](../../../../1st-gen/packages/overlay/README.md) orchestration toward this **popover**-based **positioning**; see [Tooltip migration roadmap](../tooltip/rendering-and-styling-migration-analysis.md). ARIA, focus, and keyboard stay the responsibility of action menu, combobox, tooltip, and (separately) modal or dialog. This roadmap and the [a11y analysis](./accessibility-migration-analysis.md) cover the shared **chrome** and **geometry** for `swc-popover` and **styles** only.
+The new **`swc-popover` host** is the common **anchored** surface for **dropdown menus** in **action menu**, for **listbox** popups in **combobox**, and for **tooltip** UI. **Modals and dialogs** are **out of scope** for that **host**; they do not use **anchor**-relative positioning. They may still use **shared** **popover** **styles** on the **dialog** **surface** (see **Overview** **above**). **Tooltips** are intended to move off 1st-gen [Overlay](../../../../1st-gen/packages/overlay/README.md) orchestration toward this **popover**-based **positioning**; see [Tooltip migration roadmap](../tooltip/rendering-and-styling-migration-analysis.md). ARIA, focus, and keyboard stay the responsibility of action menu, combobox, tooltip, and (separately) modal or dialog. This roadmap and the [a11y analysis](./component-a11y-spec.md) cover the shared **chrome** and **geometry** for `swc-popover` and **styles** only.
 
-[Popover accessibility migration analysis](./accessibility-migration-analysis.md) describes accessibility expectations for the gen2 positioning host and the style layer.
+[Popover accessibility specification](./component-a11y-spec.md) describes accessibility expectations for the gen2 positioning host and the style layer.
 
 ### Consumer migration and deprecation
 

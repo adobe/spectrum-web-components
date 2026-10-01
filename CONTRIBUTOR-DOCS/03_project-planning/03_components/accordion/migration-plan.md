@@ -60,13 +60,13 @@
 ## TL;DR
 
 - **gen2 accordion** ships under `gen2/packages/core/.../accordion` and `gen2/packages/swc/.../accordion` (Setup complete on the migration branch).
-- **Accessibility migration analysis** is the behavioral contract for WCAG 2.2 AA; gen2 diverges from 1st-gen on keyboard (no `FocusGroupController` arrow/Home/End on the host, no roving `tabindex` between item hosts), disabled header semantics (`aria-disabled` + panel `inert`), closed-panel hiding (**`aria-hidden`** + CSS collapse, not HTML **`hidden`**; see [Closed panel hiding (B5)](#closed-panel-hiding-b5)), heading **API** (**slotted** heading text **only** — **no** string **`label`**, clean break vs 1st-gen), and **Space** handling (**SWC-1487**).
+- **Accessibility specification** is the behavioral contract for WCAG 2.2 AA; gen2 diverges from 1st-gen on keyboard (no `FocusGroupController` arrow/Home/End on the host, no roving `tabindex` between item hosts), disabled header semantics (`aria-disabled` + panel `inert`), closed-panel hiding (**`aria-hidden`** + CSS collapse, not HTML **`hidden`**; see [Closed panel hiding (B5)](#closed-panel-hiding-b5)), heading **API** (**slotted** heading text **only** — **no** string **`label`**, clean break vs 1st-gen), and **Space** handling (**SWC-1487**).
 - **React Spectrum S2 parity (planning):** Align public surface where authors expect cross-product parity — **`quiet`** on the accordion (from RS **`isQuiet`**) and **`disabled`** on the accordion host (**accordion-wide** disable, from RS **`isDisabled`** on **`Accordion`**), in addition to per-item **`disabled`**. Details: [React Spectrum alignment considerations](#react-spectrum-alignment-considerations).
 - **Severity:** **Normal** for migration planning. Escalate to **Major** only if Spectrum 2 accordion CSS is missing or core infrastructure blocks a core/SWC split (not observed today).
 
 ### Most blocking open questions
 
-None for **starting** implementation. **`label` vs slot** is **decided:** slotted heading only — **no** gen2 **`label`** (see [accessibility migration analysis](./accessibility-migration-analysis.md)). **`swc-accordion-item-toggle`** is the gen2 toggle event name. Still resolve **final slot names** (heading vs panel) before API freeze (see [Open — API and scope](#open--api-and-scope)).
+None for **starting** implementation. **`label` vs slot** is **decided:** slotted heading only — **no** gen2 **`label`** (see [accessibility specification](./component-a11y-spec.md)). **`swc-accordion-item-toggle`** is the gen2 toggle event name. Still resolve **final slot names** (heading vs panel) before API freeze (see [Open — API and scope](#open--api-and-scope)).
 
 ---
 
@@ -169,7 +169,7 @@ Inherited: `SizedMixin(Focusable)` — `tabIndex` / `focus` / `blur` / `click` d
 
 **`sp-accordion`:** default `<slot>` only; no shadow children beyond the slot.
 
-**gen2 slot model (planned):** Today **1st-gen** puts **panel** content in the item’s **default** slot and header text in the **`label`** attribute. **gen2** moves **header text** into **light DOM slotted** content projected into the shadow **`<button>`** so the real **`<h*>` > `<button>`** tree can take an accessible name from authored nodes (phrasing, emphasis) per [accessibility migration analysis](./accessibility-migration-analysis.md). **Yes — the visible heading / header label is slotted**, not only the panel body. Exact **slot names** (e.g. **heading** vs **default** for the label vs **`content`** for the panel) are an **API-freeze** decision; the migration guide must show clear before/after examples.
+**gen2 slot model (planned):** Today **1st-gen** puts **panel** content in the item’s **default** slot and header text in the **`label`** attribute. **gen2** moves **header text** into **light DOM slotted** content projected into the shadow **`<button>`** so the real **`<h*>` > `<button>`** tree can take an accessible name from authored nodes (phrasing, emphasis) per [accessibility specification](./component-a11y-spec.md). **Yes — the visible heading / header label is slotted**, not only the panel body. Exact **slot names** (e.g. **heading** vs **default** for the label vs **`content`** for the panel) are an **API-freeze** decision; the migration guide must show clear before/after examples.
 
 ---
 
@@ -192,7 +192,7 @@ Inherited: `SizedMixin(Focusable)` — `tabIndex` / `focus` / `blur` / `click` d
 | Topic | Assessment |
 |---|---|
 | **Upstream gen2 components** | Accordion does not require another incomplete gen2 composite; it uses **core** + **base** + **icons** patterns. Follow the [badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) for core/SWC layout. |
-| **Cross-component API alignment** | **`level`** / heading naming should stay aligned with **illustrated message** and **card** when those specs exist ([accessibility migration analysis](./accessibility-migration-analysis.md)). **`quiet`** / host **`disabled`** naming should match other gen2 components that expose the same Spectrum concepts ([React Spectrum alignment considerations](#react-spectrum-alignment-considerations)). |
+| **Cross-component API alignment** | **`level`** / heading naming should stay aligned with **illustrated message** and **card** when those specs exist ([accessibility specification](./component-a11y-spec.md)). **`quiet`** / host **`disabled`** naming should match other gen2 components that expose the same Spectrum concepts ([React Spectrum alignment considerations](#react-spectrum-alignment-considerations)). |
 | **Step 1 (analyze rendering and styling)** | Complete — key findings and DOM changes are captured in this plan. |
 
 ---
@@ -209,8 +209,8 @@ Inherited: `SizedMixin(Focusable)` — `tabIndex` / `focus` / `blur` / `click` d
 | # | What changes | 1st-gen behavior | gen2 / target behavior | Consumer migration path |
 |---|---|---|---|---|
 | **B1** | Tags and package | `sp-*`, `@spectrum-web-components/accordion` | `swc-*`, gen2 package layout | Update imports and tag names. |
-| **B2** | Heading label API | String `label` only; default slot = **panel** | Slotted **header** label only — **no** gen2 **`label`** attribute (clean break; see [accessibility migration analysis](./accessibility-migration-analysis.md)) | Migrate **`label="…"`** to slotted heading text; separate **panel** slot if the default slot becomes heading-only. |
-| **B3** | Keyboard — headers | `FocusGroupController`: ArrowUp/Down, Home, End with `preventDefault`; roving `tabindex` on item hosts | Tab / Shift+Tab through all focusables; no default header-only arrows; see [Why we omit roving tabindex…](./accessibility-migration-analysis.md#why-we-omit-roving-tabindex-and-optional-header-only-arrows) | Remove reliance on arrow keys between headers. |
+| **B2** | Heading label API | String `label` only; default slot = **panel** | Slotted **header** label only — **no** gen2 **`label`** attribute (clean break; see [accessibility specification](./component-a11y-spec.md)) | Migrate **`label="…"`** to slotted heading text; separate **panel** slot if the default slot becomes heading-only. |
+| **B3** | Keyboard — headers | `FocusGroupController`: ArrowUp/Down, Home, End with `preventDefault`; roving `tabindex` on item hosts | Tab / Shift+Tab through all focusables; no default header-only arrows; see [Why we omit roving tabindex…](./component-a11y-spec.md#why-we-omit-roving-tabindex-and-optional-header-only-arrows) | Remove reliance on arrow keys between headers. |
 | **B4** | Disabled item | Native `disabled` on shadow `<button>` + host `aria-disabled` | Prefer `aria-disabled` on header, `inert` on panel; do not fake disabled with `tabindex="-1"` on header | Tests and SR workflows that assumed native disabled-only behavior. |
 | **B5** | Closed panel | `display: none` on `#content` | **`aria-hidden="true"`** on `#content` when closed, plus CSS collapse (`display: none` by default; **`height: 0`** + **`overflow: hidden`** where **`calc-size()`** height animation is supported). **Not** the HTML **`hidden`** attribute: **`hidden`** removes the panel from layout and **breaks** open/close height transitions. **`aria-hidden`** hides the closed panel from the accessibility tree while the animated path keeps **`display: block`** for **`calc-size()`**. See [Closed panel hiding (B5)](#closed-panel-hiding-b5). | Usually none; AT exposure matches APG intent when closed. |
 | **B6** | Space / scroll | Scroll quirks in overflow (**SWC-1487**) | `preventDefault` on Space for activation on header | Verify nested scroll layouts after upgrade. |
@@ -239,10 +239,10 @@ No gen2 package yet — this section records **planned** decisions from analysis
 | Accordion | `allow-multiple` (or aligned name), **public** **`level`** (`2`–`6`), **`density`**, `size` | **`level`** is the **only** author-facing control for heading depth for all items. **`size`** propagates to assigned items (same as 1st-gen). See **`density`** row. |
 | Accordion — `density` | Reflected string **`compact`** \| **`regular`** \| **`spacious`** | Align with [React Spectrum **`density`**](https://react-spectrum.adobe.com/Accordion) and S2: **`regular`** is the default spacing (1st-gen **omitted** / legacy default maps here). **TypeScript** and docs should list **all three** values even though **`regular`** is default. **Dev warning** when the attribute is **omitted** is **recommended** (same spirit as Badge **`variant`**) so authors stay explicit—confirm at API freeze. Host-only (1st-gen does **not** assign **`density`** on **`AccordionItem`** in script). |
 | Accordion — `quiet` | Boolean; reflected attribute **`quiet`** | Parity with [React Spectrum **`isQuiet`**](https://react-spectrum.adobe.com/Accordion). **Accordion host only** — propagate effective quiet styling to assigned items internally. **Do not** expose **per-item** **`quiet`**: mixing default and quiet items is **visually incompatible**; the quiet hover state uses rounded corners, which creates corner gaps when placed inside a default accordion that uses dividers. Prefer one style family per accordion instance. |
-| Accordion — `disabled` | Boolean; reflected attribute **`disabled`** | Parity with RS **`isDisabled`** on **`Accordion`**: **accordion-wide** disable — every item non-interactive (no expand/collapse), same **a11y** posture as item-level disable ([accessibility migration analysis](./accessibility-migration-analysis.md): header **`aria-disabled`**, panel **`inert`**). When the host is **`disabled`**, that gate **wins** over per-item **`disabled`** being false. When the host clears **`disabled`**, each item’s own **`disabled`** applies again unchanged. For **visual** disabled state on descendants, prefer **container queries** or host-driven styling so you do **not** reflect host **`disabled`** onto every child **solely** for CSS—only use per-item flags where behavior or a11y requires it. |
+| Accordion — `disabled` | Boolean; reflected attribute **`disabled`** | Parity with RS **`isDisabled`** on **`Accordion`**: **accordion-wide** disable — every item non-interactive (no expand/collapse), same **a11y** posture as item-level disable ([accessibility specification](./component-a11y-spec.md): header **`aria-disabled`**, panel **`inert`**). When the host is **`disabled`**, that gate **wins** over per-item **`disabled`** being false. When the host clears **`disabled`**, each item’s own **`disabled`** applies again unchanged. For **visual** disabled state on descendants, prefer **container queries** or host-driven styling so you do **not** reflect host **`disabled`** onto every child **solely** for CSS—only use per-item flags where behavior or a11y requires it. |
 | Item | `open`, `disabled` | Same semantics as today unless renamed for consistency. **No** public **`quiet`** on the item. |
 | Item (implementation) | **`protected` `heading`** (`2`–`6`) | **Not** public API—not reflected, not set by consumers. Parent **`level`** assigns **`heading`** on each slotted item (core/SWC lifecycle). |
-| Heading text | Slotted (see [Shadow DOM output](#shadow-dom-output-rendered-html)) | **Rationale:** a string **`label`** cannot mirror phrasing content (`<strong>`, `<code>`) into the header’s accessible name the way slotted light DOM can; matches [accessibility migration analysis](./accessibility-migration-analysis.md). **Breaking** vs 1st-gen **`label`**: **clean break** — gen2 does **not** expose **`label`**; authors migrate markup to the heading slot only. |
+| Heading text | Slotted (see [Shadow DOM output](#shadow-dom-output-rendered-html)) | **Rationale:** a string **`label`** cannot mirror phrasing content (`<strong>`, `<code>`) into the header’s accessible name the way slotted light DOM can; matches [accessibility specification](./component-a11y-spec.md). **Breaking** vs 1st-gen **`label`**: **clean break** — gen2 does **not** expose **`label`**; authors migrate markup to the heading slot only. |
 | Events | Renamed toggle event | **`swc-accordion-item-toggle`**; also **`swc-open`**, **`swc-close`**, **`swc-after-open`**, **`swc-after-close`**. |
 | Direct actions (item header affordances) | `slot="actions"` on `swc-accordion-item`; open-ended, any content may be slotted | Rendered as a **sibling to the `<h*>` element** (not inside it). **`ObserveSlotPresence`** hides the actions container when the slot is empty. Toggle is bound **only** to the header **`<button>`**, not the row; action clicks **do not** reach the toggle handler, so **`stopPropagation`** on the actions container is **not required** with the current DOM (see [Direct actions — interaction](#direct-actions--interaction)). |
 | `noInlinePadding` modifier | Not a public attribute | S2 modifier `.spectrum-Accordion--noInlinePadding` removes **header** inline padding. **Not** exposed as an API attribute. Parity is via **`--swc-accordion-item-edge-to-content-area: 0`** on `swc-accordion-item`. Documented in **`@cssprop`** JSDoc only; **no** dedicated Storybook story (intentional; edge-to-edge is a token override, not a product variant). |
@@ -261,7 +261,7 @@ No gen2 package yet — this section records **planned** decisions from analysis
 
 ### ARIA and keyboard contract
 
-- **`aria-expanded`**, **`aria-controls`**, **`role="region"`** + **`aria-labelledby`** on the panel; **`<h*>` > `<button>`** in shadow ([accessibility migration analysis](./accessibility-migration-analysis.md)). The `<h2>`–`<h6>` tag follows **`protected` `heading`**, which the parent sets from public **`level`**.
+- **`aria-expanded`**, **`aria-controls`**, **`role="region"`** + **`aria-labelledby`** on the panel; **`<h*>` > `<button>`** in shadow ([accessibility specification](./component-a11y-spec.md)). The `<h2>`–`<h6>` tag follows **`protected` `heading`**, which the parent sets from public **`level`**.
 - **Tab** only between headers and in-panel focusables; **Space** / **Enter** on header; **Space** uses **`preventDefault()`** where required (**SWC-1487**).
 - **No** roving `tabindex` on headers; **no** default Arrow/Home/End handlers on headers that **`preventDefault()`** vertical arrows (scroll vs “next header” conflict).
 
@@ -281,7 +281,7 @@ For **`allow-multiple` false**, the parent must keep **at most one** item **`ope
 
 | Document | Use |
 |---|---|
-| [Accessibility migration analysis](./accessibility-migration-analysis.md) | WCAG 2.2 AA target, disabled matrix, keyboard, testing expectations. |
+| [Accessibility specification](./component-a11y-spec.md) | WCAG 2.2 AA target, disabled matrix, keyboard, testing expectations. |
 | [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md) | Phase order and quality gates. |
 
 ---
@@ -449,7 +449,7 @@ Gates align with [01_washing-machine-workflow.md](../../02_workstreams/02_gen2-c
 - [React Spectrum S2 — Accordion](https://react-spectrum.adobe.com/Accordion) (`isQuiet`, `isDisabled` on **`Accordion`**, item-level flags)
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [Migration project planning (epics / tickets)](../../02_workstreams/02_gen2-component-migration/03_migration-project-planning.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Accessibility specification](./component-a11y-spec.md)
 - [1st-gen source — `Accordion.ts`](../../../../1st-gen/packages/accordion/src/Accordion.ts)
 - [1st-gen source — `AccordionItem.ts`](../../../../1st-gen/packages/accordion/src/AccordionItem.ts)
 - [1st-gen tests directory](../../../../1st-gen/packages/accordion/test/)

@@ -49,7 +49,7 @@
 This checklist tracks the full gen2 migration of the **`<sp-color-loupe>`** component. It is derived from the acceptance criteria in [SWC-1783](https://jira.corp.adobe.com/browse/SWC-1783) and the component analysis documented in:
 
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Accessibility specification](./component-a11y-spec.md)
 
 **API summary:**
 - Properties: `open` (boolean, reflects to attribute), `color` (string)
@@ -88,7 +88,7 @@ This checklist tracks the full gen2 migration of the **`<sp-color-loupe>`** comp
 - [ ] SVG bugs identified for fix in gen2
   - Double-Z path bug (`61.575ZZ` → `61.575Z`)
   - Mask ID mismatch (`#path` → `#loupe-path`)
-- [ ] Accessibility analysis reviewed and incorporated into plan (see [SWC-1782](https://jira.corp.adobe.com/browse/SWC-1782) and [accessibility migration analysis](./accessibility-migration-analysis.md))
+- [ ] Accessibility analysis reviewed and incorporated into plan (see [SWC-1782](https://jira.corp.adobe.com/browse/SWC-1782) and [accessibility specification](./component-a11y-spec.md))
 - [ ] Factor assessment: `SKIP_FACTOR` confirmed — component has no extractable state logic; total logic under 40 lines
 - [ ] Plan linked as comment on parent epic [SWC-1781](https://jira.corp.adobe.com/browse/SWC-1781)
 - [ ] Any blockers or open questions flagged
@@ -159,7 +159,7 @@ This checklist tracks the full gen2 migration of the **`<sp-color-loupe>`** comp
 
 ## Phase 4: Accessibility implementation (SWC-1786)
 
-> Goal: Implement WCAG 2.2 Level AA accessibility requirements per the [accessibility migration analysis](./accessibility-migration-analysis.md).
+> Goal: Implement WCAG 2.2 Level AA accessibility requirements per the [accessibility specification](./component-a11y-spec.md).
 
 ### ARIA
 
@@ -334,7 +334,7 @@ This checklist tracks the full gen2 migration of the **`<sp-color-loupe>`** comp
 - [SWC-1781 — Migration of the color-loupe (epic)](https://jira.corp.adobe.com/browse/SWC-1781)
 - [SWC-1783 — Analyze component and create migration plan](https://jira.corp.adobe.com/browse/SWC-1783)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Accessibility specification](./component-a11y-spec.md)
 - [SWC-1193 — Non-text contrast / realistic constraints for color loupe](https://jira.corp.adobe.com/browse/SWC-1193)
 - [Washing machine workflow guide](../../../01_contributor-guides/README.md)
 - [WCAG 2.2 SC 1.4.11 — Non-text contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast)

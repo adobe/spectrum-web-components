@@ -170,7 +170,7 @@ None of the shared core resources above are sequenced dependencies; all are alre
 
 Already-fixed gen1 bugs whose behavior must not regress in gen2 (not listed as rows since they're Done/Closed, not open work; evidence is cross-referenced where it's already used elsewhere in this plan):
 
-- SWC-281, SWC-280 (Done): screen-reader announcement on toast add, and icon alt-text override. Both already required by [accessibility-migration-analysis.md](./accessibility-migration-analysis.md).
+- SWC-281, SWC-280 (Done): screen-reader announcement on toast add, and icon alt-text override. Both already required by [component-a11y-spec.md](./component-a11y-spec.md).
 - SWC-475 (Done), duplicate of SWC-213 ([GH #4587](https://github.com/adobe/spectrum-web-components/issues/4587)): long unbroken words overflow the toast bounds. Fix carried into the [Styling](#styling) checklist.
 - SWC-603 (Closed, Won't fix), [GH #4931](https://github.com/adobe/spectrum-web-components/issues/4931): `error`/`warning`/`success` marked `// deprecated` in code but never formally documented. Confirms those variants were already stale in 1st-gen.
 
@@ -247,7 +247,7 @@ Whether the queue's countdown construct belongs in a shared, cross-component loc
 
 ## gen2 API decisions
 
-Derived from the 1st-gen implementation, the accessibility migration analysis, the Figma `S2 / Web` Toast frame, and React Spectrum S2 (`@react-spectrum/s2/src/Toast.tsx`, `react-aria/src/toast/useToast.ts`). Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
+Derived from the 1st-gen implementation, the accessibility specification, the Figma `S2 / Web` Toast frame, and React Spectrum S2 (`@react-spectrum/s2/src/Toast.tsx`, `react-aria/src/toast/useToast.ts`). Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
 
 - **Confirmed**: directly supported by source material
 - **Inferred**: recommended based on multiple signals, but not explicitly specified in one authoritative source
@@ -313,7 +313,7 @@ No properties are exposed in the initial set. Add a `--swc-toast-*` property onl
 
 ### Accessibility semantics notes (gen2)
 
-See [Toast accessibility migration analysis](./accessibility-migration-analysis.md) for the full spec.
+See [Toast accessibility specification](./component-a11y-spec.md) for the full spec.
 
 - `role="alertdialog"` + `aria-modal="false"` on host; opening never moves focus.
 - `tabindex="0"` on host always, per the a11y doc; opening a toast does not move focus there. It makes the host a normal tab stop, matching RSP.
@@ -418,7 +418,7 @@ Planned rendering shape:
 
 ### Accessibility
 
-Checklist items sourced from [accessibility-migration-analysis.md](./accessibility-migration-analysis.md); resolve Q1, Q2, Q7, Q9 before treating this section as final.
+Checklist items sourced from [component-a11y-spec.md](./component-a11y-spec.md); resolve Q1, Q2, Q7, Q9 before treating this section as final.
 
 #### Naming and semantics
 
@@ -513,7 +513,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 
 | Ref | Decision | Rationale / context |
 | --- | -------- | -------------------- |
-| Q4 | `tabindex="0"` on host always, not conditional on container presence. Opening a toast does not move focus there. | The accessibility migration analysis previously recommended conditional `tabindex` and focus-on-open; both were corrected after checking the real RSP S2 source, which sets `tabIndex: 0` unconditionally but never autofocuses a toast on open. `tabindex="0"` makes the host a normal tab stop, matching RSP. |
+| Q4 | `tabindex="0"` on host always, not conditional on container presence. Opening a toast does not move focus there. | The accessibility specification previously recommended conditional `tabindex` and focus-on-open; both were corrected after checking the real RSP S2 source, which sets `tabIndex: 0` unconditionally but never autofocuses a toast on open. `tabindex="0"` makes the host a normal tab stop, matching RSP. |
 | Q6 | `swc-toast` ships alongside a first-party container/queue in this migration, rather than standalone with the container deferred. | Settled via team sync. Only "whether to build it in this cycle" is resolved; the container's shape and API (peek stack, expand/collapse, focus management, `clear()`, and related accessibility behavior) remain open and are being worked out incrementally across this plan. If built, `placement` (RSP precedent: `top`/`bottom`/`top end`/`bottom end`) belongs on the container, not on `swc-toast` itself. |
 
 ---
@@ -522,7 +522,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Accessibility specification](./component-a11y-spec.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [1st-gen source](../../../../1st-gen/packages/toast/src/Toast.ts)
 - [1st-gen tests](../../../../1st-gen/packages/toast/test/toast.test.ts)

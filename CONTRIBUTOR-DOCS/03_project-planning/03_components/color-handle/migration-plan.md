@@ -227,7 +227,7 @@ color-handle should **compose `swc-color-loupe` internally** and **import the sh
 
 ## gen2 API decisions
 
-These are derived from the 1st-gen implementation, SWC-2295, the migrated `color-loupe` pattern, `spectrum-css@spectrum-two`, the Figma **`S2 / Web (Desktop scale)`** Color Handle spec (Published; updated Jun 4 2025, Miruna S.), and the color-handle [accessibility migration analysis](./accessibility-migration-analysis.md).
+These are derived from the 1st-gen implementation, SWC-2295, the migrated `color-loupe` pattern, `spectrum-css@spectrum-two`, the Figma **`S2 / Web (Desktop scale)`** Color Handle spec (Published; updated Jun 4 2025, Miruna S.), and the color-handle [accessibility specification](./component-a11y-spec.md).
 
 > **Figma vs. web-API mapping.** The Figma spec describes *design* variants, which do not map 1:1 to web-component attributes. Figma exposes `State` (Default / Disabled), `Show handle fill` (default True), and `Show color loupe` (default False); it does **not** show `color` (a runtime value) or the focus visual. The web API keeps the behavioral attribute names (`disabled`, `open`, `focused`) rather than the design labels; `Show handle fill` maps to a new `fill` boolean shipping in this migration (B7); the parent-set focus visual stays `focused` (unchanged from 1st-gen).
 
@@ -287,7 +287,7 @@ Initial expectation for Color Handle is a small reviewed set (likely none at lau
 
 - color-handle is **not focusable on its own and exposes no ARIA role/name**; it is a visual indicator. Accessibility (label, value, keyboard) is owned by the parent color-area/slider/wheel. Mirror the `color-loupe` stance: keep the graphic decorative, do not trap focus when closed.
 - The **only** net-new a11y obligation in this migration is **WCAG 1.4.11 non-text contrast** via the adaptive border (B6). This is a genuine improvement over 1st-gen, which accepted the gap (SWC-1134 "working as designed").
-- The full adaptive dual-border algorithm (ring sampling, minimum-α search, additive white-separator check, edge mode) is specified in the [accessibility migration analysis](./accessibility-migration-analysis.md) per RSP-2021 and SDS-16402; implement from there in Phase 5.
+- The full adaptive dual-border algorithm (ring sampling, minimum-α search, additive white-separator check, edge mode) is specified in the [accessibility specification](./component-a11y-spec.md) per RSP-2021 and SDS-16402; implement from there in Phase 5.
 - The `focused` attribute name matches the accessibility analysis and 1st-gen; no terminology divergence.
 
 ---
@@ -332,7 +332,7 @@ Planned rendering shape:
 #### Naming and public surface
 
 - [x] `ColorHandle.types.ts`: define the public property contract (`color: string`, `disabled/open/focused/fill: boolean`) via the `ColorHandleProperties` interface; `ColorHandleBase implements` it so class/interface drift is caught at compile time.
-- [x] `ColorHandle.base.ts`: retains `color`, `disabled`, `open`, `focused` as reflected properties; `fill` added (default `true`, B7); pointer/touch open-close behavior carried from 1st-gen. _Adaptive-contrast helper deferred to Phase 5 (algorithm is specified in the accessibility migration analysis and implemented with styling), not Phase 3._
+- [x] `ColorHandle.base.ts`: retains `color`, `disabled`, `open`, `focused` as reflected properties; `fill` added (default `true`, B7); pointer/touch open-close behavior carried from 1st-gen. _Adaptive-contrast helper deferred to Phase 5 (algorithm is specified in the accessibility specification and implemented with styling), not Phase 3._
 - [ ] `ColorHandle.ts` (`swc-color-handle`): render inner swatch + built-in `swc-color-loupe`; apply S2 styling. _(render stub in place from Phase 2; S2 styling is Phase 5.)_
 
 > **No static `readonly` arrays, no `window.__swc.warn()` validation, and no 1st-gen deprecation notices in Phase 3.** Color Handle has no variant/size/treatment enums and no invalid-property-combination rules, so there is nothing to validate. 1st-gen `color-handle` exports only the `ColorHandle` class (no types/consts) and renames no properties (`color`/`disabled`/`focused`/`open` unchanged; `fill` is additive), so there is no 1st-gen surface to deprecate. The tag rename (`sp-` → `swc-`) and `--mod-*` removal are inherent gen2 changes, not per-property deprecations.
@@ -361,16 +361,16 @@ Planned rendering shape:
 
 ### Accessibility
 
-<!-- Sourced from ./accessibility-migration-analysis.md (present) + SWC-2295. Finalize against the real gen2 source in Phase 4. -->
+<!-- Sourced from ./component-a11y-spec.md (present) + SWC-2295. Finalize against the real gen2 source in Phase 4. -->
 
 #### Naming and semantics
 
-- [x] Confirmed: the handle sets no host `role`, no `aria-label`, and no `tabindex` (verified by absence in `ColorHandle.base.ts` / `ColorHandle.ts`); a11y owned by parent color components (per the accessibility migration analysis). `disabled`/`focused`/`open` are reflected visual states, not ARIA states.
+- [x] Confirmed: the handle sets no host `role`, no `aria-label`, and no `tabindex` (verified by absence in `ColorHandle.base.ts` / `ColorHandle.ts`); a11y owned by parent color components (per the accessibility specification). `disabled`/`focused`/`open` are reflected visual states, not ARIA states.
 - [x] Confirmed: decorative graphics stay out of the accessibility tree. The built-in `swc-color-loupe` renders its SVG with `aria-hidden="true"` (mirrors color-loupe); the handle adds no graphic role of its own. No cross-root ARIA, no live regions.
 
 #### State verification
 
-> Implemented in Phase 5 (Styling): the adaptive white-first dual-border and grow-on-focus now exist (`color-contrast.ts` + `color-handle.css`). The algorithm follows the accessibility migration analysis (RSP-2021, SDS-16402). Numeric ≥3:1 verification across the spectrum is a Phase 6 test/VRT task.
+> Implemented in Phase 5 (Styling): the adaptive white-first dual-border and grow-on-focus now exist (`color-contrast.ts` + `color-handle.css`). The algorithm follows the accessibility specification (RSP-2021, SDS-16402). Numeric ≥3:1 verification across the spectrum is a Phase 6 test/VRT task.
 
 - [x] Adaptive border α logic verified by unit tests (`computeBorderAlpha`/`findMinAlpha`/`contrastRatio`): white-first holds the floor when white carries 3:1, escalates otherwise, and never returns below the floor. Full ≥3:1-across-the-spectrum confirmation over real gradients is a VRT task once a parent picker is migrated.
 - [x] Default appearance on mid/dark colors is unchanged: white-first keeps α at the 0.42 floor whenever the white separator already carries 3:1, so the border strengthens only where needed.
@@ -440,7 +440,7 @@ During drafting, this section tracks active blockers and open questions. In the 
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q4  | ~~No color-handle `accessibility-migration-analysis.md`.~~ **Resolved**: present and substantial; the a11y checklist and the adaptive dual-border algorithm (RSP-2021, SDS-16402) are sourced from it. | No | Resolved | Accessibility reviewer |
+| Q4  | ~~No color-handle `component-a11y-spec.md`.~~ **Resolved**: present and substantial; the a11y checklist and the adaptive dual-border algorithm (RSP-2021, SDS-16402) are sourced from it. | No | Resolved | Accessibility reviewer |
 | Q5  | ~~Epic number unknown.~~ **Resolved**: Epic is **SWC-2137**. | No | Resolved | Ticket owner |
 | Q6  | ~~Is the color-loupe half of SWC-2295 sequenced separately?~~ **Resolved (team): kept separate**; ships as a **fast-follow PR** for color-loupe. Out of scope for this migration. | No | Resolved | Ticket owner |
 
@@ -452,9 +452,9 @@ During drafting, this section tracks active blockers and open questions. In the 
 
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md): present; includes the full adaptive dual-border algorithm (RSP-2021, SDS-16402).
+- [Accessibility specification](./component-a11y-spec.md): present; includes the full adaptive dual-border algorithm (RSP-2021, SDS-16402).
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md): present but currently a stub ("full analysis in progress"); expand before Phase 5.
-- [Sibling reference: color-loupe accessibility migration analysis](../color-loupe/accessibility-migration-analysis.md)
+- [Sibling reference: color-loupe accessibility specification](../color-loupe/component-a11y-spec.md)
 - [Sibling reference: color-loupe rendering and styling migration analysis](../color-loupe/rendering-and-styling-migration-analysis.md)
 - [CSS style guide: Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [1st-gen source](../../../../1st-gen/packages/color-handle/src/ColorHandle.ts)

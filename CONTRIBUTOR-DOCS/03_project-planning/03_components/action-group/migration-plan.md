@@ -211,8 +211,8 @@ This full modifier surface will not be carried forward to gen2.
 
 | # | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
-| **B6** | Host role fixed to `role="group"` | Default `role="toolbar"`; switches to `role="radiogroup"` when `selects="single"` | Always `role="group"`; not author-overridable | Remove any `role="toolbar"` or `role="radiogroup"` on `<sp-action-group>`. Move `role="toolbar"` to a parent wrapper element. Source: [accessibility migration analysis](./accessibility-migration-analysis.md). |
-| **B7** | Child roles fixed to `role="button"` | `selects="single"` assigns `role="radio"` + `aria-checked`; `selects="multiple"` assigns `role="checkbox"` + `aria-checked` | Children always `role="button"`; `selects` and `selected` are dropped; selection UX moves to `swc-toggle-button-group` / `swc-segmented-control` | Remove any consumer code that relied on child `role="radio"`/`role="checkbox"` or on action-group's `selects`/`selected` API. Source: [accessibility migration analysis](./accessibility-migration-analysis.md), [action button accessibility migration analysis](../action-button/accessibility-migration-analysis.md). |
+| **B6** | Host role fixed to `role="group"` | Default `role="toolbar"`; switches to `role="radiogroup"` when `selects="single"` | Always `role="group"`; not author-overridable | Remove any `role="toolbar"` or `role="radiogroup"` on `<sp-action-group>`. Move `role="toolbar"` to a parent wrapper element. Source: [accessibility specification](./component-a11y-spec.md). |
+| **B7** | Child roles fixed to `role="button"` | `selects="single"` assigns `role="radio"` + `aria-checked`; `selects="multiple"` assigns `role="checkbox"` + `aria-checked` | Children always `role="button"`; `selects` and `selected` are dropped; selection UX moves to `swc-toggle-button-group` / `swc-segmented-control` | Remove any consumer code that relied on child `role="radio"`/`role="checkbox"` or on action-group's `selects`/`selected` API. Source: [accessibility specification](./component-a11y-spec.md), [action button accessibility specification](../action-button/component-a11y-spec.md). |
 | **B8** | `RovingTabindexController` → `FocusgroupNavigationController` | `RovingTabindexController` with `hostDelegatesFocus: true` | `FocusgroupNavigationController`; direction tied to `orientation`; `delegatesFocus: true` preserved | No consumer-visible change; keyboard behavior is equivalent |
 | **B9** | Focus stacking z-index fixed | Focused button's z-index may hide focus indicator (SWC-1342) | Focus indicator always visible | No consumer action required |
 
@@ -229,7 +229,7 @@ This full modifier surface will not be carried forward to gen2.
 
 ## gen2 API decisions
 
-These are derived from the 1st-gen implementation, the [accessibility migration analysis](./accessibility-migration-analysis.md), the [rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md), Figma (`S2 / Web (Desktop scale)`, action-group frame), and the React Spectrum S2 `ActionButtonGroup`.
+These are derived from the 1st-gen implementation, the [accessibility specification](./component-a11y-spec.md), the [rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md), Figma (`S2 / Web (Desktop scale)`, action-group frame), and the React Spectrum S2 `ActionButtonGroup`.
 
 **Decision status key:**
 
@@ -311,7 +311,7 @@ On each slot change and on changes to `quiet`, `size`, `staticColor`, `disabled`
 
 ### Accessibility semantics notes (gen2)
 
-Source: [accessibility migration analysis](./accessibility-migration-analysis.md)
+Source: [accessibility specification](./component-a11y-spec.md)
 
 - **Host role:** `role="group"` is prescribed and fixed in all modes. Not author-overridable. A page-level `role="toolbar"` landmark goes on an outer wrapper, never on `swc-action-group`.
 - **Child roles:** `swc-action-button` stays `role="button"` only. No `role="radio"` or `role="checkbox"` on children.
@@ -495,7 +495,7 @@ No `_lit-styles/` fragment needed — action-group renders only a slot; all layo
 - [x] PR created with description referencing Epic SWC-2212
 - [x] Peer engineer sign-off — satisfied when this PR is approved and mergeable (SWC-2219 finalize)
 - [x] All `TODO` comments added to code during implementation are audited and filed as follow-up Jira tickets under Epic SWC-2212 (see Deferred implementation tickets below). Remaining in-source markers: `action-button.css` outline transition (`SWC-2308`, pre-existing). Action-group `swc-action-menu` deferrals are tracked in Deferred implementation tickets and PR follow-up tickets (SWC-2464, SWC-2509); compact open-trigger stacking note removed from `action-group.css` (see that section).
-- [x] Reconcile stale `selects`/`selected` guidance in `accessibility-migration-analysis.md` to match B7 (Dropped). `rendering-and-styling-migration-analysis.md` documents only 1st-gen's existing CSS-to-WC mapping and carried no stale gen2 claims, so it's left as-is. Full consolidation of both docs into this plan is not required for this migration; it's a documentation-architecture cleanup, not a correctness fix, and isn't worth the added review surface at this stage.
+- [x] Reconcile stale `selects`/`selected` guidance in `component-a11y-spec.md` to match B7 (Dropped). `rendering-and-styling-migration-analysis.md` documents only 1st-gen's existing CSS-to-WC mapping and carried no stale gen2 claims, so it's left as-is. Full consolidation of both docs into this plan is not required for this migration; it's a documentation-architecture cleanup, not a correctness fix, and isn't worth the added review surface at this stage.
 
 ---
 
@@ -522,7 +522,7 @@ Create these tickets before this migration PR closes. Link each to Epic SWC-2212
 
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Accessibility specification](./component-a11y-spec.md)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
@@ -531,10 +531,10 @@ Create these tickets before this migration PR closes. Link each to Epic SWC-2212
 - [1st-gen README](../../../../1st-gen/packages/action-group/README.md)
 - [Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md)
 - [FocusgroupNavigationController source](../../../../gen2/packages/core/controllers/focusgroup-navigation-controller/src/)
-- [Action button accessibility migration analysis](../action-button/accessibility-migration-analysis.md)
+- [Action button accessibility specification](../action-button/component-a11y-spec.md)
 - [Action button migration plan — B7 `label` → `accessible-label` rename rationale](../action-button/migration-plan.md#must-ship--breaking-or-a11y-required)
-- [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md)
-- [Button group accessibility migration analysis](../button-group/accessibility-migration-analysis.md)
+- [Action menu accessibility specification](../action-menu/component-a11y-spec.md)
+- [Button group accessibility specification](../button-group/component-a11y-spec.md)
 - [React Spectrum S2 ActionButtonGroup](https://react-spectrum.adobe.com/s2/ActionButtonGroup.html)
 - [Spectrum CSS — `spectrum-two` branch](https://github.com/adobe/spectrum-css/tree/spectrum-two) — S2 styling source of truth; check out `spectrum-css/components/action-group/index.css` from sibling directory at `spectrum-two` branch (not `/dist`)
 - [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)

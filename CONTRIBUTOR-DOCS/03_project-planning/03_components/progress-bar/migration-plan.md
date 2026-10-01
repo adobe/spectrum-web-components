@@ -210,10 +210,10 @@ Progress bar **proceeds independently and now** — its only shared prerequisite
 
 | #       | What changes                       | 1st-gen behavior                                                                  | gen2 behavior                                                                                                            | Consumer migration path                                  |
 | ------- | ---------------------------------- | --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| **B9**  | ARIA role placement. _(Source: [accessibility-migration-analysis.md](./accessibility-migration-analysis.md); [WAI-ARIA 1.2 `progressbar`](https://www.w3.org/TR/wai-aria-1.2/#progressbar); alignment with `<swc-meter>` B9.)_ | `role="progressbar"` set on the host. | `role="progressbar"` set on the shadow `.swc-LinearProgress` element (not the host). All `aria-value*`/naming attributes live there. Host carries no ARIA. | None — AT-only. Tests/snapshots asserting host-level ARIA update. |
-| **B10** | Determinate value attributes. _(Source: accessibility-migration-analysis.md; React S2 API.)_ | Only `aria-valuenow` (+ `aria-valuetext`) set; no `aria-valuemin`/`max`. | When determinate: `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<value>`, `aria-valuetext=<formatted value>` on the role element. | None — AT-only. |
-| **B11** | Indeterminate value suppression. _(Source: accessibility-migration-analysis.md; APG progressbar pattern.)_ | Removes `aria-valuemin`/`max`/`now`/`text` when indeterminate (correct). | Same intent, preserved: all four attributes **fully omitted** (via `nothing`, not empty strings) when `indeterminate`; visible value text also omitted. | None — AT-only. |
-| **B12** | Accessible-name model + warning fix. _(Source: accessibility-migration-analysis.md § Known 1st-gen issues; alignment with `<swc-meter>` B11.)_ | `aria-label` mirrors `label`; slot text hoists into `label`. DEBUG warning incorrectly lists `<sp-progress-circle>` in one bullet. | Two inputs: **`label` named slot** (`aria-labelledby`) and **`accessibleLabel`** fallback (`aria-label`). DEBUG warning fires when neither resolves a name, with **correct progress-bar copy and docs URL** (see Q1). | Consumers move `label="…"` into the `label` slot, or set `accessible-label`. |
+| **B9**  | ARIA role placement. _(Source: [component-a11y-spec.md](./component-a11y-spec.md); [WAI-ARIA 1.2 `progressbar`](https://www.w3.org/TR/wai-aria-1.2/#progressbar); alignment with `<swc-meter>` B9.)_ | `role="progressbar"` set on the host. | `role="progressbar"` set on the shadow `.swc-LinearProgress` element (not the host). All `aria-value*`/naming attributes live there. Host carries no ARIA. | None — AT-only. Tests/snapshots asserting host-level ARIA update. |
+| **B10** | Determinate value attributes. _(Source: component-a11y-spec.md; React S2 API.)_ | Only `aria-valuenow` (+ `aria-valuetext`) set; no `aria-valuemin`/`max`. | When determinate: `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<value>`, `aria-valuetext=<formatted value>` on the role element. | None — AT-only. |
+| **B11** | Indeterminate value suppression. _(Source: component-a11y-spec.md; APG progressbar pattern.)_ | Removes `aria-valuemin`/`max`/`now`/`text` when indeterminate (correct). | Same intent, preserved: all four attributes **fully omitted** (via `nothing`, not empty strings) when `indeterminate`; visible value text also omitted. | None — AT-only. |
+| **B12** | Accessible-name model + warning fix. _(Source: component-a11y-spec.md § Known 1st-gen issues; alignment with `<swc-meter>` B11.)_ | `aria-label` mirrors `label`; slot text hoists into `label`. DEBUG warning incorrectly lists `<sp-progress-circle>` in one bullet. | Two inputs: **`label` named slot** (`aria-labelledby`) and **`accessibleLabel`** fallback (`aria-label`). DEBUG warning fires when neither resolves a name, with **correct progress-bar copy and docs URL** (see Q1). | Consumers move `label="…"` into the `label` slot, or set `accessible-label`. |
 
 ### Additive — ships when ready, zero breakage for consumers already on gen2
 
@@ -228,7 +228,7 @@ Progress bar **proceeds independently and now** — its only shared prerequisite
 
 ## gen2 API decisions
 
-These are derived from the 1st-gen implementation, the [rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md), the [accessibility migration analysis](./accessibility-migration-analysis.md), the shipped `<swc-meter>` implementation (shared-surface source of truth), `spectrum-css` `spectrum-two`, and the React S2 implementation. Confidence labels:
+These are derived from the 1st-gen implementation, the [rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md), the [accessibility specification](./component-a11y-spec.md), the shipped `<swc-meter>` implementation (shared-surface source of truth), `spectrum-css` `spectrum-two`, and the React S2 implementation. Confidence labels:
 
 - **Confirmed**: directly supported by source material (including the shipped shared mixin/CSS).
 - **Inferred**: recommended based on multiple signals; not explicitly specified in one authoritative source.
@@ -302,7 +302,7 @@ No progress-bar-only custom property is planned. The indeterminate animation rea
 
 ### Accessibility semantics notes (gen2)
 
-Sourced from [`accessibility-migration-analysis.md`](./accessibility-migration-analysis.md), the React Spectrum S2 ProgressBar API, and the shipped `<swc-progress-circle>` ARIA pattern:
+Sourced from [`component-a11y-spec.md`](./component-a11y-spec.md), the React Spectrum S2 ProgressBar API, and the shipped `<swc-progress-circle>` ARIA pattern:
 
 - `role="progressbar"` is set on the shadow `.swc-LinearProgress` element in the render template — never on the host, never author-overridable. (B9; the 1st-gen "accepts user `role`" behavior is intentionally dropped — progress bar satisfies exactly one semantic role.)
 - **Determinate:** `aria-valuemin=<minValue>`, `aria-valuemax=<maxValue>`, `aria-valuenow=<clamped value>`, `aria-valuetext=<formatted value>` on the role element; re-rendered on relevant property changes and on locale change. (B10)
@@ -556,7 +556,7 @@ Exact keyframe geometry, duration token, and fallback width are **Q2** — to be
 
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Accessibility specification](./component-a11y-spec.md)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [Meter migration plan](../meter/migration-plan.md) — sibling reference; defines the shared `LinearProgressMixin` and `linear-progress-base.css` contract
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)

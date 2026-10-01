@@ -266,7 +266,7 @@ The checkerboard is **decorative**. Responsibility stays with the *consuming* el
 - Opacity value must be conveyed textually by the consumer (e.g. live region / label), not inferred from the visual pattern.
 - `forced-color-adjust: none` under `forced-colors: active` is retained so the pattern remains visible in high-contrast mode (B4).
 
-> No `accessibility-migration-analysis.md` exists for this unit. Given the utility is decorative and has no interactive surface, the README guidance above is likely sufficient — but confirm whether the separate a11y workstream needs to sign off.
+> No `component-a11y-spec.md` exists for this unit. Given the utility is decorative and has no interactive surface, the README guidance above is likely sufficient — but confirm whether the separate a11y workstream needs to sign off.
 
 ---
 
@@ -369,7 +369,7 @@ None.
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| **Q1** | Does the separate accessibility workstream need to produce/sign off an `accessibility-migration-analysis.md`, given the utility is decorative? | No | Open | Accessibility reviewer |
+| **Q1** | Does the separate accessibility workstream need to produce/sign off an `component-a11y-spec.md`, given the utility is decorative? | No | Open | Accessibility reviewer |
 
 ---
 
@@ -378,7 +378,7 @@ None.
 - [Tools vs packages: where code lives](../../../../CONTRIBUTOR-DOCS/01_contributor-guides/12_tools-vs-packages.md) — **authoritative** for the reclassification target (CSS utility, no custom element)
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
-- Accessibility migration analysis — **TODO / not present** for this unit (see Scope and prerequisites)
+- Accessibility specification — **TODO / not present** for this unit (see Scope and prerequisites)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [1st-gen source (CSS)](../../../../1st-gen/tools/opacity-checkerboard/src/opacity-checkerboard.css)

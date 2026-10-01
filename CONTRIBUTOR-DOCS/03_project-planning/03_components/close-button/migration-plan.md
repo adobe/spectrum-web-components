@@ -195,7 +195,7 @@ Prerequisite dependency:
 
 ### Accessibility semantics notes (gen2)
 
-- Apply recommendations in `accessibility-migration-analysis.md` for role/name/keyboard/focus.
+- Apply recommendations in `component-a11y-spec.md` for role/name/keyboard/focus.
 - Do not duplicate host `role="button"` if inner button is the real focus target.
 
 ---
@@ -211,7 +211,7 @@ Prerequisite dependency:
 ## Migration checklist
 
 ### Preparation (this ticket)
-- [x] Accessibility migration analysis exists.
+- [x] Accessibility specification exists.
 - [x] Rendering and styling migration analysis exists.
 - [x] Migration plan exists and is reviewable.
 
@@ -277,7 +277,7 @@ Prerequisite dependency:
 
 - [`1st-gen/packages/button/src/CloseButton.ts`](../../../../1st-gen/packages/button/src/CloseButton.ts)
 - [`1st-gen/packages/button/test/close-button.test.ts`](../../../../1st-gen/packages/button/test/close-button.test.ts)
-- [Close button accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Close button accessibility specification](./component-a11y-spec.md)
 - [Button migration plan](../button/migration-plan.md)
 - [Button migration roadmap](../button/rendering-and-styling-migration-analysis.md)
 - [S2 Web Desktop scale (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=125265-577&t=99qlf018hYjRXRft-4)
