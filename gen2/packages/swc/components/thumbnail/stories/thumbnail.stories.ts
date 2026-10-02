@@ -224,7 +224,7 @@ export const ConsumerStyledStates: Story = {
       ${thumbnailLayerOption(args, 'Option 2')}
     </fieldset>
   `,
-  parameters: { flexLayout: 'row-wrap' },
+  parameters: { flexLayout: 'column-center' },
   tags: ['states'],
 };
 ConsumerStyledStates.storyName = 'Consumer-styled states';
