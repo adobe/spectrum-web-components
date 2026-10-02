@@ -153,6 +153,10 @@ export abstract class ThumbnailBase extends SpectrumElement {
   // Whether this instance added the host's `aria-hidden`, so a consumer's own
   // value is never claimed or removed.
   private _appliedAriaHidden = false;
+  private readonly _ariaHiddenObserver = new MutationObserver(() => {
+    this._appliedAriaHidden = false;
+    this._ariaHiddenObserver.disconnect();
+  });```
 
   // Tracks the last (image, decorative) pair already synced so the
   // `updated()` and `slotchange` triggers, which can both fire for the same
