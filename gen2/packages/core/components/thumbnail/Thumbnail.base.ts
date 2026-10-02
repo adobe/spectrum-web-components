@@ -253,5 +253,26 @@ export abstract class ThumbnailBase extends SpectrumElement {
       this.removeAttribute('aria-hidden');
       this._appliedAriaHidden = false;
     }
+  private syncAriaHidden(): void {
+    if (this._ariaHiddenObserver.takeRecords().length > 0) {
+      this._appliedAriaHidden = false;
+      this._ariaHiddenObserver.disconnect();
+    }
+    if (this.decorative) {
+      if (!this.hasAttribute('aria-hidden')) {
+        this.setAttribute('aria-hidden', 'true');
+        this._appliedAriaHidden = true;
+        this._ariaHiddenObserver.observe(this, {
+          attributes: true,
+          attributeFilter: ['aria-hidden'],
+        });
+      }
+      return;
+    }
+    if (this._appliedAriaHidden) {
+      this._ariaHiddenObserver.disconnect();
+      this.removeAttribute('aria-hidden');
+      this._appliedAriaHidden = false;
+    }
   }
 }
