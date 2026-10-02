@@ -43,6 +43,9 @@ argTypes.fit = {
 /**
  * Wraps a slotted image, such as an asset preview or a layer in a layers
  * panel, in a consistent checkerboard-backed frame.
+ *
+ * For more flexibly sized images, SVG support, and loading events, see
+ * [Asset](../?path=/docs/components-asset--docs).
  */
 const meta: Meta = {
   title: 'Thumbnail',
