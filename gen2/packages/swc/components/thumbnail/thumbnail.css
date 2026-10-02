@@ -103,8 +103,8 @@
   box-sizing: border-box;
   max-inline-size: 100%;
   max-block-size: 100%;
-  object-fit: contain;
   color: token("static-black-text-color"); /* Ensures contrast over checkerboard in our "dark" theme */
+  object-fit: contain;
 }
 
 :host([fit="cover"]) ::slotted(*) {
