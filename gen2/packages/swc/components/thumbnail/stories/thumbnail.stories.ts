@@ -215,11 +215,11 @@ export const Fit: Story = {
 export const ConsumerStyledStates: Story = {
   render: (args) => html`
     ${consumerStateStyles} ${thumbnailActionButton(args, 'Layer 1')}
-    ${thumbnailActionButton(args, 'Layer 2', { disabled: true })}
+    ${thumbnailActionButton(args, 'Consumer-styled focus example', { disabled: true })}
     <fieldset class="thumbnail-layers">
       <legend>Active layer</legend>
-      ${thumbnailLayerOption(args, 'Background', { checked: true })}
-      ${thumbnailLayerOption(args, 'Text')}
+      ${thumbnailLayerOption(args, 'Option 1', { checked: true })}
+      ${thumbnailLayerOption(args, 'Option 2')}
     </fieldset>
   `,
   parameters: { flexLayout: 'row-wrap' },
