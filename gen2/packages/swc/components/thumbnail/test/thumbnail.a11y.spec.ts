@@ -136,10 +136,10 @@ test.describe('Thumbnail - ARIA Snapshots', () => {
 
     await expect(root).toMatchAriaSnapshot(`
       - button "Layer 1"
-      - button "Layer 2" [disabled]
+      - button "Consumer-styled focus example" [disabled]
       - group "Active layer":
-        - radio "Background" [checked]
-        - radio "Text"
+        - radio "Option 1" [checked]
+        - radio "Option 2"
     `);
   });
 
