@@ -35,7 +35,7 @@ test.describe('User card - roles and names', () => {
     await expect(host).not.toHaveAttribute('role');
   });
 
-  test('exposes the avatar, title, and description as readable content', async ({
+  test('does not expose a redundant avatar name when the title names the person', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -43,7 +43,7 @@ test.describe('User card - roles and names', () => {
       'components-card-user-card--overview',
       'swc-user-card'
     );
-    await expect(root.getByRole('img', { name: 'Jane Doe' })).toBeVisible();
+    await expect(root.getByRole('img', { name: 'Jane Doe' })).toHaveCount(0);
     await expect(root.getByText('Jane Doe')).toBeVisible();
     await expect(root.getByText('Product designer')).toBeVisible();
   });

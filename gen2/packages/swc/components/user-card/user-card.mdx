@@ -11,9 +11,9 @@ import * as Stories from './stories/user-card.stories';
 
 A user card shares `preview`, `title`, `description`, the default slot, and `footer` with [Card](../?path=/docs/components-card--docs). It adds one slot:
 
-- **`avatar`**: the person's avatar, shown between the preview and the content. Expects an [Avatar](../?path=/docs/components-avatar--docs) element
+- **`avatar`** (required): the person's avatar, shown between the preview and the content. Expects an [Avatar](../?path=/docs/components-avatar--docs) element.
 
-The card manages the avatar's size (matching the card's own size) and outline attributes, overwriting any other set values.
+The card manages the avatar's size (matching the card's own size) and outline attributes, overwriting any other set values. Use [Asset](../?path=/docs/components-asset--docs) for `preview` content instead of a plain `<img>`, same as [Card](../?path=/docs/components-card--docs).
 
 <Canvas of={Stories.Anatomy} />
 
@@ -61,14 +61,21 @@ Identical to [Card](../?path=/docs/components-card--docs)'s `selectable`: makes 
 
 ### Features
 
-- **`avatar`** expects an [Avatar](../?path=/docs/components-avatar--docs) element, which owns its own `alt`/`decorative` labeling contract; the card does not add or manage its accessible name.
+- The **`avatar`** slot expects an [Avatar](../?path=/docs/components-avatar--docs) element, which owns its own `alt`/`decorative` labeling contract; see its Accessibility section for that contract. The card does not add or manage the avatar's accessible name.
 - **`title-as-link`** and **`selectable`** behave identically to [Card](../?path=/docs/components-card--docs); see its Accessibility section for details.
 
 ### Best practices
 
-- Provide a meaningful `alt` on the slotted avatar, or mark it `decorative` if the person's name is already announced by the adjacent `title` content, to avoid the avatar repeating the same name a second time.
+- When the avatar depicts the same person named in `title`, pass `alt=""` and set `decorative` on the avatar instead of giving it its own name, so a screen reader doesn't announce the name twice: `<swc-avatar slot="avatar" alt="" decorative>` alongside `<span slot="title">Jane Doe</span>`. This matches [Avatar](../?path=/docs/components-avatar--docs)'s own guidance for a name that already appears in adjacent context.
 - For `title-as-link` and `selectable` usage guidance, see [Card](../?path=/docs/components-card--docs)'s Accessibility section.
 
 <Canvas of={Stories.Accessibility} />
+
+## Upcoming features
+
+Shared with [Card](../?path=/docs/components-card--docs):
+
+- A horizontal card orientation is planned, alongside today's vertical layout.
+- Multi-card selection will be handled by a future CardView container. The `selectable` attribute is the per-card groundwork for it: on its own it makes a card focusable and dispatches `swc-card-click`, but it does not render a "checked" selected state.
 
 <DocsFooter />

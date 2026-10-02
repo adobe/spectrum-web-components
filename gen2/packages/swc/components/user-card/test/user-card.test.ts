@@ -26,8 +26,7 @@ import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
 // Tests scoped to what swc-user-card adds on top of the shared CardBase
 // behavior, which is already fully covered through swc-card
 // (test/card.test.ts). This is also the first concrete card to exercise the
-// renderCardTemplate() glyph callback, per the card family plan's
-// "Untestable at this phase" table.
+// renderCardTemplate() glyph callback.
 export default {
   title: 'Card/User card/Tests',
   component: 'swc-user-card',

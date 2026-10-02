@@ -24,6 +24,7 @@ import type { UserCardVariant } from '@adobe/spectrum-wc-core/components/user-ca
 import { USER_CARD_VARIANTS } from '@adobe/spectrum-wc-core/components/user-card';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
+import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 import '@adobe/spectrum-wc/components/user-card/swc-user-card.js';
 import '../../avatar/swc-avatar';
 
@@ -96,17 +97,31 @@ const densityLabels = {
   spacious: 'Spacious',
 } as const satisfies Record<CardDensity, string>;
 
-const avatarGlyph = (size = '300') => html`
+const avatarGlyph = () => html`
   <swc-avatar
     slot="avatar"
-    size=${size}
     src="./images/avatar-preview.png"
     alt="Jane Doe"
   ></swc-avatar>
 `;
 
+const avatarGlyphDecorative = () => html`
+  <swc-avatar
+    slot="avatar"
+    src="./images/avatar-preview.png"
+    alt=""
+    decorative
+  ></swc-avatar>
+`;
+
+const previewImage = () => html`
+  <swc-asset slot="preview" decorative>
+    <img src="./images/card-preview.jpg" />
+  </swc-asset>
+`;
+
 const basicSlots = html`
-  ${avatarGlyph()}
+  ${avatarGlyphDecorative()}
   <span slot="title">Jane Doe</span>
   <span slot="description">Product designer</span>
 `;
@@ -121,9 +136,9 @@ export const Playground: Story = {
     density: 'regular',
     size: 'm',
     'preview-slot':
-      '<img slot="preview" src="./images/card-preview.jpg" alt="" />',
+      '<swc-asset slot="preview" decorative><img src="./images/card-preview.jpg" /></swc-asset>',
     'avatar-slot':
-      '<swc-avatar slot="avatar" size="300" src="./images/avatar-preview.png" alt="Jane Doe"></swc-avatar>',
+      '<swc-avatar slot="avatar" src="./images/avatar-preview.png" alt="" decorative></swc-avatar>',
     'title-slot': 'Jane Doe',
     'description-slot': 'Product designer',
   },
@@ -140,8 +155,7 @@ export const Overview: Story = {
     ${template(
       args,
       html`
-        <img slot="preview" src="./images/card-preview.jpg" alt="" />
-        ${avatarGlyph()}
+        ${previewImage()} ${avatarGlyphDecorative()}
         <span slot="title">Jane Doe</span>
         <span slot="description">Product designer</span>
       `
@@ -160,8 +174,7 @@ export const Anatomy: Story = {
     ${template(
       args,
       html`
-        <img slot="preview" src="./images/card-preview.jpg" alt="" />
-        ${avatarGlyph()}
+        ${previewImage()} ${avatarGlyphDecorative()}
         <span slot="title">Jane Doe</span>
         <swc-action-button slot="actions" quiet accessible-label="More actions">
           <svg
@@ -221,7 +234,7 @@ export const Variants: Story = {
     )}
   `,
   tags: ['options'],
-  parameters: { flexLayout: 'column-center' },
+  parameters: { flexLayout: 'row-wrap' },
 };
 
 export const Density: Story = {
@@ -238,7 +251,7 @@ export const Density: Story = {
     )}
   `,
   tags: ['options'],
-  parameters: { flexLayout: 'column-center' },
+  parameters: { flexLayout: 'row-wrap' },
 };
 
 export const WithPreview: Story = {
@@ -246,8 +259,7 @@ export const WithPreview: Story = {
     ${template(
       args,
       html`
-        <img slot="preview" src="./images/card-preview.jpg" alt="" />
-        ${avatarGlyph()}
+        ${previewImage()} ${avatarGlyphDecorative()}
         <span slot="title">Jane Doe</span>
         <span slot="description">Product designer</span>
       `
@@ -267,7 +279,7 @@ export const TitleAsLink: Story = {
     ${template(
       { ...args, 'title-as-link': true },
       html`
-        ${avatarGlyph()}
+        ${avatarGlyphDecorative()}
         <a slot="title" href="#">Jane Doe</a>
         <span slot="description">
           Clicking anywhere on the card activates this link.
@@ -291,6 +303,15 @@ export const Selectable: Story = {
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-  render: (args) => template(args, basicSlots),
+  render: (args) => html`
+    ${template(
+      args,
+      html`
+        ${avatarGlyphDecorative()}
+        <span slot="title">Jane Doe</span>
+        <span slot="description">Product designer</span>
+      `
+    )}
+  `,
   tags: ['a11y'],
 };
