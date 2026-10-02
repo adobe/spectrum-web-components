@@ -156,7 +156,7 @@ export abstract class ThumbnailBase extends SpectrumElement {
   private readonly _ariaHiddenObserver = new MutationObserver(() => {
     this._appliedAriaHidden = false;
     this._ariaHiddenObserver.disconnect();
-  });```
+  });
 
   // Tracks the last (image, decorative) pair already synced so the
   // `updated()` and `slotchange` triggers, which can both fire for the same
@@ -241,18 +241,6 @@ export abstract class ThumbnailBase extends SpectrumElement {
     );
   }
 
-  private syncAriaHidden(): void {
-    if (this.decorative) {
-      if (!this.hasAttribute('aria-hidden')) {
-        this.setAttribute('aria-hidden', 'true');
-        this._appliedAriaHidden = true;
-      }
-      return;
-    }
-    if (this._appliedAriaHidden) {
-      this.removeAttribute('aria-hidden');
-      this._appliedAriaHidden = false;
-    }
   private syncAriaHidden(): void {
     if (this._ariaHiddenObserver.takeRecords().length > 0) {
       this._appliedAriaHidden = false;
