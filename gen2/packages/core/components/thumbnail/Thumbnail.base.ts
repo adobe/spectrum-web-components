@@ -183,10 +183,17 @@ export abstract class ThumbnailBase extends SpectrumElement {
    */
   protected syncSlottedImageAlt(): void {
     const img = this.querySelector('img');
+    if (this._appliedAltImg && this._appliedAltImg !== img) {
+      if (this._appliedAltImg.getAttribute('alt') === '') {
+        this._appliedAltImg.removeAttribute('alt');
+      }
+      this._appliedAltImg = null;
+    }
     if (!img) {
+      this._lastSyncedImg = null;
+      this._lastSyncedDecorative = null;
       return;
     }
-
     if (
       img === this._lastSyncedImg &&
       this.decorative === this._lastSyncedDecorative
@@ -195,10 +202,6 @@ export abstract class ThumbnailBase extends SpectrumElement {
     }
     this._lastSyncedImg = img;
     this._lastSyncedDecorative = this.decorative;
-
-    if (this._appliedAltImg && this._appliedAltImg !== img) {
-      this._appliedAltImg = null;
-    }
 
     if (this.decorative) {
       if (!img.hasAttribute('alt')) {
