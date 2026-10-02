@@ -86,11 +86,6 @@ const permutationContent = () => html`
   ${fitContent()}
 `;
 
-// Large size so the checkerboard and inset border read.
-const chromeContent = () => html`
-  ${row([captioned(renderThumbnail(1000), 'checkerboard + border')], 'Chrome')}
-`;
-
 // VRT stories
 
 // Both axes, one snapshot.
@@ -98,14 +93,14 @@ export const Permutations: Story = {
   render: () => html`
     ${theme(
       html`
-        ${permutationContent()}${chromeContent()}
+        ${permutationContent()}
       `,
       'light',
       'ltr'
     )}
     ${theme(
       html`
-        ${permutationContent()}${chromeContent()}
+        ${permutationContent()}
       `,
       'dark',
       'rtl'
