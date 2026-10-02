@@ -27,6 +27,7 @@ import {
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 import '@adobe/spectrum-wc/components/card/swc-card.js';
+import '@adobe/spectrum-wc/components/user-card/swc-user-card.js';
 import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 import '@adobe/spectrum-wc-icons/swc-icon-more.js';
 import '../../status-light/swc-status-light';
@@ -603,6 +604,23 @@ export const Selectable: Story = {
   `,
   tags: ['behaviors'],
 };
+
+export const UserCard: Story = {
+  render: () => html`
+    <swc-user-card>
+      <img slot="preview" src="./images/card-preview.jpg" alt="" />
+      <swc-avatar
+        slot="avatar"
+        src="./images/avatar-preview.png"
+        alt="Jane Doe"
+      ></swc-avatar>
+      <span slot="title">Jane Doe</span>
+      <span slot="description">Product designer</span>
+    </swc-user-card>
+  `,
+  tags: ['behaviors'],
+};
+UserCard.storyName = 'User card';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
