@@ -77,8 +77,8 @@ const avatarGlyphDecorative = (): ReturnType<typeof html> => html`
 `;
 
 const previewImage = (): ReturnType<typeof html> => html`
-  <swc-asset slot="preview">
-    <img src="./images/card-preview.jpg" alt="" />
+  <swc-asset slot="preview" decorative>
+    <img src="./images/card-preview.jpg" />
   </swc-asset>
 `;
 

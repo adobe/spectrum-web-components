@@ -116,7 +116,7 @@ const avatarGlyphDecorative = () => html`
 
 const previewImage = () => html`
   <swc-asset slot="preview" decorative>
-    <img src="./images/card-preview.jpg" alt="" />
+    <img src="./images/card-preview.jpg" />
   </swc-asset>
 `;
 
@@ -136,7 +136,7 @@ export const Playground: Story = {
     density: 'regular',
     size: 'm',
     'preview-slot':
-      '<swc-asset slot="preview" decorative><img src="./images/card-preview.jpg" alt="" /></swc-asset>',
+      '<swc-asset slot="preview" decorative><img src="./images/card-preview.jpg" /></swc-asset>',
     'avatar-slot':
       '<swc-avatar slot="avatar" src="./images/avatar-preview.png" alt="" decorative></swc-avatar>',
     'title-slot': 'Jane Doe',
