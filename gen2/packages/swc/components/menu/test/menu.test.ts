@@ -378,10 +378,18 @@ export const TriggerAriaWiringSwcButtonTest: Story = {
     // no `label` of its own, so without this the `role="menu"` surface reaches
     // assistive tech unnamed.
     await step('names the role="menu" surface after its trigger', async () => {
-      const surface = menu.shadowRoot?.querySelector('.swc-Menu');
-      expect(surface?.getAttribute('aria-label'), 'surface aria-label').toBe(
-        'Edit'
-      );
+      const surface = menu.shadowRoot?.querySelector('.swc-Menu') as
+        | (HTMLElement & { ariaLabelledByElements?: readonly Element[] | null })
+        | null;
+      // Asserts the wiring, not the computed name: the name comes from an
+      // element reference, which Chromium resolves (CDP reports the menu
+      // node as `name: "Edit"`) but Playwright's own accessible-name
+      // computation cannot see. `tooltip.test.ts` asserts its own
+      // `ariaLabelledByElements` the same way.
+      expect(
+        [...(surface?.ariaLabelledByElements ?? [])],
+        'surface is labelled by the trigger'
+      ).toContain(swcTrigger);
     });
   },
 };

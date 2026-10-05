@@ -47,6 +47,13 @@ interface ARIAControlsElements {
   ariaControlsElements?: readonly Element[] | null;
 }
 
+// `aria-labelledby` as an element reference, so the shadow-internal
+// `role="menu"` surface can be named by a trigger in another tree root
+// (an IDREF cannot cross that boundary).
+interface ARIALabelledByElements {
+  ariaLabelledByElements?: readonly Element[] | null;
+}
+
 const DOCS_URL =
   'https://spectrum-web-components.adobe.com/?path=/docs/components-menu--docs';
 
@@ -249,27 +256,27 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   // has no `label` of its own by design, so without this the surface reaches
   // assistive tech unnamed.
   //
-  // Mirrors the name as `aria-label` rather than referencing the trigger.
-  // Neither reference form reaches it: an IDREF cannot leave this shadow
-  // root, and `ariaLabelledByElements` is silently dropped in this direction
-  // (the referenced element has to be in the same tree or one this surface
-  // contains, not an ancestor one), so setting it leaves the surface
-  // unnamed. `swc-tooltip` uses that IDL the other way round, on the
-  // light-DOM trigger pointing at the light-DOM tooltip, which is why it
-  // works there.
+  // Uses the element-reference IDL rather than an IDREF because the surface
+  // lives in this shadow root and the trigger does not. Points at the outer
+  // trigger, not `resolveTrigger`'s `interactiveElement`: that is the inner
+  // `<button>` of a shadow-rendered trigger like `swc-button`, which sits in
+  // a sibling shadow tree and is dropped from the reference (it reads back
+  // as an empty list).
+  //
+  // Playwright cannot observe this. It computes accessible names from DOM
+  // attributes, so an IDL-only reference is invisible to `getByRole`
+  // and `toMatchAriaSnapshot`, which still report the surface as unnamed.
+  // Chromium's own accessibility tree does resolve it: via CDP the node
+  // reports `name: "Edit"` sourced from `relatedElement`. Assert the wiring
+  // rather than the computed name, the way `swc-tooltip` does.
   private labelSurfaceByTrigger(trigger: HTMLElement | null): void {
-    const surface = this.surfaceElement;
+    const surface = this.surfaceElement as
+      | (HTMLElement & ARIALabelledByElements)
+      | null;
     if (!surface) {
       return;
     }
-    const name = trigger
-      ? (trigger.getAttribute('aria-label') ?? trigger.textContent?.trim())
-      : undefined;
-    if (name) {
-      surface.setAttribute('aria-label', name);
-    } else {
-      surface.removeAttribute('aria-label');
-    }
+    surface.ariaLabelledByElements = trigger ? [trigger] : null;
   }
 
   // Resolves for/triggerElement, wires ARIA, and keeps the click listener in
