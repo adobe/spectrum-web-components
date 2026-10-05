@@ -373,6 +373,16 @@ export const TriggerAriaWiringSwcButtonTest: Story = {
         await menu.updateComplete;
       }
     );
+
+    // The menu-button pattern names the menu after its button. `swc-menu` has
+    // no `label` of its own, so without this the `role="menu"` surface reaches
+    // assistive tech unnamed.
+    await step('names the role="menu" surface after its trigger', async () => {
+      const surface = menu.shadowRoot?.querySelector('.swc-Menu');
+      expect(surface?.getAttribute('aria-label'), 'surface aria-label').toBe(
+        'Edit'
+      );
+    });
   },
 };
 

@@ -241,6 +241,35 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     stale.removeAttribute('aria-expanded');
     stale.removeAttribute('aria-haspopup');
     this._interactiveElement = null;
+    this.labelSurfaceByTrigger(null);
+  }
+
+  // Names the `role="menu"` surface after its trigger, the menu-button
+  // pattern's `aria-labelledby` from the menu back to its button. `swc-menu`
+  // has no `label` of its own by design, so without this the surface reaches
+  // assistive tech unnamed.
+  //
+  // Mirrors the name as `aria-label` rather than referencing the trigger.
+  // Neither reference form reaches it: an IDREF cannot leave this shadow
+  // root, and `ariaLabelledByElements` is silently dropped in this direction
+  // (the referenced element has to be in the same tree or one this surface
+  // contains, not an ancestor one), so setting it leaves the surface
+  // unnamed. `swc-tooltip` uses that IDL the other way round, on the
+  // light-DOM trigger pointing at the light-DOM tooltip, which is why it
+  // works there.
+  private labelSurfaceByTrigger(trigger: HTMLElement | null): void {
+    const surface = this.surfaceElement;
+    if (!surface) {
+      return;
+    }
+    const name = trigger
+      ? (trigger.getAttribute('aria-label') ?? trigger.textContent?.trim())
+      : undefined;
+    if (name) {
+      surface.setAttribute('aria-label', name);
+    } else {
+      surface.removeAttribute('aria-label');
+    }
   }
 
   // Resolves for/triggerElement, wires ARIA, and keeps the click listener in
@@ -271,6 +300,11 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       target.setAttribute('aria-expanded', String(this.open));
       target.setAttribute('aria-haspopup', 'menu');
     }
+    // The outer trigger, not `target`: `resolveTrigger` resolves `target` to
+    // the AT-facing inner element, which for a shadow-rendered trigger like
+    // `swc-button` is its internal `<button>`. That node holds only a slot,
+    // so its text is empty; the name lives on the host's light DOM.
+    this.labelSurfaceByTrigger(trigger);
 
     // `attach` is a no-op for an unchanged trigger.
     this._pressGuard.attach(trigger, {

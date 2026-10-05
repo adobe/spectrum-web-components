@@ -50,12 +50,16 @@ test.describe('Menu - ARIA snapshots', () => {
     await page.getByRole('button', { name: 'Edit' }).click();
     await expect(page.locator('swc-menu')).toHaveJSProperty('open', true);
     await expect(root).toMatchAriaSnapshot(`
-      - button "Edit"
-      - menu:
+      - button "Edit" [expanded]
+      - menu "Edit":
         - menuitem "Cut"
         - menuitem "Copy"
         - menuitem "Paste"
     `);
+    // `toMatchAriaSnapshot` matches by containment, so an unnamed `- menu:`
+    // template would still pass against a named one. Assert the name
+    // directly: it is the whole point of the menu-button labelling.
+    await expect(root.getByRole('menu', { name: 'Edit' })).toHaveCount(1);
   });
 
   test('the trigger exposes aria-haspopup="menu" and aria-expanded', async ({
