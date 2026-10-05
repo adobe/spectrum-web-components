@@ -47,9 +47,9 @@ export default {
 // Placeholders for `swc-menu-item`, which doesn't exist yet; matches its
 // eventual tag name and `role="menuitem"` so tests stay aXe-clean.
 const defaultItems = html`
-  <swc-menu-item role="menuitem" tabindex="-1">Cut</swc-menu-item>
-  <swc-menu-item role="menuitem" tabindex="-1">Copy</swc-menu-item>
-  <swc-menu-item role="menuitem" tabindex="-1">Paste</swc-menu-item>
+  <swc-menu-item role="menuitem">Cut</swc-menu-item>
+  <swc-menu-item role="menuitem">Copy</swc-menu-item>
+  <swc-menu-item role="menuitem">Paste</swc-menu-item>
 `;
 
 const getItems = (canvasElement: HTMLElement): HTMLElement[] =>
@@ -247,8 +247,7 @@ export const StartsOpenNoPhantomEventTest: Story = {
         menu.addEventListener('swc-open', () => (openFired = true));
         menu.setAttribute('for', 'starts-open-trigger');
         menu.open = true;
-        menu.innerHTML =
-          '<swc-menu-item role="menuitem" tabindex="-1">Cut</swc-menu-item>';
+        menu.innerHTML = '<swc-menu-item role="menuitem">Cut</swc-menu-item>';
         mount.appendChild(menu);
 
         await menu.updateComplete;
@@ -549,8 +548,7 @@ export const ShadowRootScopeTest: Story = {
     trigger.textContent = 'Trigger';
 
     const menu = document.createElement('swc-menu') as Menu;
-    menu.innerHTML =
-      '<swc-menu-item role="menuitem" tabindex="-1">Cut</swc-menu-item>';
+    menu.innerHTML = '<swc-menu-item role="menuitem">Cut</swc-menu-item>';
 
     shadow.append(trigger, menu);
 
@@ -646,7 +644,7 @@ export const FocusNotStolenOnCloseTest: Story = {
 // TEST: Keyboard interactions
 // ──────────────────────────────────────────────────────────────
 
-export const TabTrapAndEnterActivateTest: Story = {
+export const TabTrapAndEnterClosesTest: Story = {
   ...OpenAndClose,
   play: async ({ canvasElement, step }) => {
     const menu = await getComponent<Menu>(canvasElement, 'swc-menu');
@@ -1271,8 +1269,7 @@ export const DisconnectCleanupTest: Story = {
     ) as HTMLElement;
     const menu = document.createElement('swc-menu') as Menu;
     menu.setAttribute('for', 'disconnect-trigger');
-    menu.innerHTML =
-      '<swc-menu-item role="menuitem" tabindex="-1">Cut</swc-menu-item>';
+    menu.innerHTML = '<swc-menu-item role="menuitem">Cut</swc-menu-item>';
     mount.appendChild(menu);
     await menu.updateComplete;
 
@@ -1313,8 +1310,7 @@ export const DisconnectCleanupTest: Story = {
 
         const menu2 = document.createElement('swc-menu') as Menu;
         menu2.setAttribute('for', 'disconnect-trigger-2');
-        menu2.innerHTML =
-          '<swc-menu-item role="menuitem" tabindex="-1">Cut</swc-menu-item>';
+        menu2.innerHTML = '<swc-menu-item role="menuitem">Cut</swc-menu-item>';
         canvasElement.appendChild(menu2);
         await menu2.updateComplete;
 
@@ -1348,8 +1344,7 @@ export const DisconnectCleanupTest: Story = {
 
         const menu3 = document.createElement('swc-menu') as Menu;
         menu3.setAttribute('for', 'disconnect-trigger-3');
-        menu3.innerHTML =
-          '<swc-menu-item role="menuitem" tabindex="-1">Cut</swc-menu-item>';
+        menu3.innerHTML = '<swc-menu-item role="menuitem">Cut</swc-menu-item>';
         canvasElement.appendChild(menu3);
         await menu3.updateComplete;
 

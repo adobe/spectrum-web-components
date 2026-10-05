@@ -79,9 +79,9 @@ export default meta;
 // Placeholders for `swc-menu-item`, which doesn't exist yet; matches its
 // eventual tag name and `role="menuitem"` so the story stays aXe-clean.
 const defaultItems = html`
-  <swc-menu-item role="menuitem" tabindex="-1">Cut</swc-menu-item>
-  <swc-menu-item role="menuitem" tabindex="-1">Copy</swc-menu-item>
-  <swc-menu-item role="menuitem" tabindex="-1">Paste</swc-menu-item>
+  <swc-menu-item role="menuitem">Cut</swc-menu-item>
+  <swc-menu-item role="menuitem">Copy</swc-menu-item>
+  <swc-menu-item role="menuitem">Paste</swc-menu-item>
 `;
 
 // ────────────────────

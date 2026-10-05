@@ -92,7 +92,9 @@ When no CSS transition is active (for example when `prefers-reduced-motion` remo
 - <kbd>Home</kbd> / <kbd>End</kbd>: move focus to the first or last row.
 - <kbd>Tab</kbd> / <kbd>Shift</kbd> + <kbd>Tab</kbd>: trapped on the active row
   while the menu is open.
-- <kbd>Enter</kbd>: activates the focused row and closes the menu.
+- <kbd>Enter</kbd>: closes the menu. Running the row's own action is
+  `swc-menu-item`'s responsibility and arrives with it; <kbd>Space</kbd> is not
+  handled yet for the same reason.
 - <kbd>Escape</kbd>: closes the menu and returns focus to the trigger.
 
 ### Best practices

@@ -188,8 +188,11 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     return event.composedPath().some((node) => items.has(node as HTMLElement));
   }
 
-  // Traps Tab/Shift+Tab on the active row; Enter activates it like a click.
-  // Escape is handled by the native popover light-dismiss, not here.
+  // Traps Tab/Shift+Tab on the active row, and closes on Enter. Row
+  // activation itself is not handled here: it belongs to `swc-menu-item`,
+  // which has not shipped, so this only dismisses the menu. Space is
+  // likewise unhandled for now; it activates alongside Enter once rows own
+  // activation. Escape closes via the native popover light-dismiss.
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
     if (!this.open) {
       return;
@@ -205,6 +208,10 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       event.preventDefault();
       this.open = false;
     }
+    // No Space branch: per the menu-button pattern Space activates a row
+    // the same way Enter does, but activation lives on `swc-menu-item`.
+    // Add it there rather than closing from the host on a key that cannot
+    // yet activate anything.
   };
 
   // Closes the menu when a slotted row is clicked; no submenus/selection to
