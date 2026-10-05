@@ -19,7 +19,14 @@ import {
   validateEnum,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
-import { TOAST_VARIANTS, type ToastVariant } from './Toast.types.js';
+import {
+  SWC_TOAST_AFTER_CLOSE_EVENT,
+  SWC_TOAST_AFTER_OPEN_EVENT,
+  SWC_TOAST_CLOSE_EVENT,
+  SWC_TOAST_OPEN_EVENT,
+  TOAST_VARIANTS,
+  type ToastVariant,
+} from './Toast.types.js';
 
 /**
  * Abstract base class for toast. Owns shared API and behavior; rendering lives in SWC.
@@ -81,6 +88,9 @@ export abstract class ToastBase extends SpectrumElement {
 
   public override connectedCallback(): void {
     super.connectedCallback();
+    this.setAttribute('role', 'alertdialog');
+    this.setAttribute('aria-modal', 'false');
+    this.requestUpdate();
     this._contentObserver.observe(this, {
       childList: true,
       characterData: true,
@@ -91,15 +101,25 @@ export abstract class ToastBase extends SpectrumElement {
   public override disconnectedCallback(): void {
     this._contentObserver.disconnect();
     this._cancelAfterTransition?.();
+    this._cancelAfterTransition = undefined;
     this._cancelContentReveal?.();
+    this._cancelContentReveal = undefined;
+    this._contentRevealed = true;
+    this._closeEventDispatched = false;
     super.disconnectedCallback();
   }
 
   /**
-   * Closes the toast.
+   * Closes the toast unless the synchronous `swc-close` event is canceled.
+   *
+   * Assigning `open = false` directly still dispatches `swc-close` during the
+   * update cycle.
    */
   public close(): void {
-    this.open = false;
+    if (!this.open) {
+      return;
+    }
+    this.requestClose();
   }
 
   /**
@@ -109,7 +129,7 @@ export abstract class ToastBase extends SpectrumElement {
    */
   protected readonly requestClose = (): void => {
     const accepted = this.dispatchEvent(
-      new CustomEvent('swc-close', {
+      new CustomEvent(SWC_TOAST_CLOSE_EVENT, {
         bubbles: true,
         cancelable: true,
         composed: true,
@@ -119,7 +139,7 @@ export abstract class ToastBase extends SpectrumElement {
       return;
     }
     this._closeEventDispatched = true;
-    this.close();
+    this.open = false;
   };
 
   protected override willUpdate(changedProperties: PropertyValues): void {
@@ -127,7 +147,10 @@ export abstract class ToastBase extends SpectrumElement {
     if (this.open && changedProperties.get('open') === false) {
       this._contentRevealed = false;
       this.dispatchEvent(
-        new CustomEvent('swc-open', { bubbles: true, composed: true })
+        new CustomEvent(SWC_TOAST_OPEN_EVENT, {
+          bubbles: true,
+          composed: true,
+        })
       );
     } else if (
       !this.open &&
@@ -135,7 +158,7 @@ export abstract class ToastBase extends SpectrumElement {
       !this._closeEventDispatched
     ) {
       const accepted = this.dispatchEvent(
-        new CustomEvent('swc-close', {
+        new CustomEvent(SWC_TOAST_CLOSE_EVENT, {
           bubbles: true,
           cancelable: true,
           composed: true,
@@ -155,13 +178,13 @@ export abstract class ToastBase extends SpectrumElement {
       valid: TOAST_VARIANTS,
       url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-toast--docs',
     });
-    this.setAttribute('role', 'alertdialog');
-    this.setAttribute('aria-modal', 'false');
-    this.setAttribute('tabindex', '0');
-    if (this.open) {
-      this.removeAttribute('aria-hidden');
-    } else {
-      this.setAttribute('aria-hidden', 'true');
+    if (!this.hasUpdated || changedProperties.has('open')) {
+      this.setAttribute('tabindex', '0');
+      if (this.open) {
+        this.removeAttribute('aria-hidden');
+      } else {
+        this.setAttribute('aria-hidden', 'true');
+      }
     }
     this.updateAccessibleName();
     super.update(changedProperties);
@@ -182,13 +205,13 @@ export abstract class ToastBase extends SpectrumElement {
         return;
       }
       this.scheduleContentReveal();
-      this.dispatchAfterTransition('swc-after-open');
+      this.dispatchAfterTransition(SWC_TOAST_AFTER_OPEN_EVENT);
       return;
     }
 
     this._cancelContentReveal?.();
     this._closeEventDispatched = false;
-    this.dispatchAfterTransition('swc-after-close');
+    this.dispatchAfterTransition(SWC_TOAST_AFTER_CLOSE_EVENT);
   }
 
   private updateAccessibleName(): void {

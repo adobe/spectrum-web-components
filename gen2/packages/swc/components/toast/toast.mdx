@@ -18,6 +18,24 @@ A toast consists of:
 
 <Canvas of={ToastStories.Anatomy} />
 
+## Behaviors
+
+### Methods
+
+When the toast is open, call `close()` to request dismissal. It dispatches the cancelable `swc-close` event synchronously. If a listener cancels the event, `open` remains `true`.
+
+Assigning `open = false` directly dispatches `swc-close` during the update cycle. If canceled, the property is restored to `true` during that update.
+
+```javascript
+const toast = document.querySelector('swc-toast');
+
+toast?.addEventListener('swc-close', (event) => {
+  event.preventDefault();
+});
+
+toast?.close();
+```
+
 ## Accessibility
 
 ### Features

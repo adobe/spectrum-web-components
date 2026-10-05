@@ -61,7 +61,7 @@ export class Toast extends ToastBase {
         <div class="swc-Toast-body" role="alert" aria-atomic="true">
           <div
             class="swc-Toast-content"
-            aria-hidden=${this.contentRevealed ? nothing : 'true'}
+            aria-hidden=${this.contentRevealed ? 'false' : 'true'}
           >
             ${this.renderIcon()}
             <div class="swc-Toast-text"><slot></slot></div>
