@@ -38,25 +38,13 @@ export default meta;
 
 // Helpers
 //
-// `size` is deliberately not an axis here. `menu.css` has no size-dependent
-// rules; `size` only forwards to `swc-menu-item`, which has not shipped, so
-// a size row would render four identical surfaces. Add it with the row
-// component that actually styles against it.
-//
-// `prefers-reduced-motion` is likewise skipped: it only zeroes the entry
-// transition, and a settled open menu looks the same either way in a still
-// capture.
+// No `size` axis: menu.css has no size-dependent rules, so all four would
+// render identically. No reduced-motion axis: it only zeroes the entry
+// transition, invisible in a still.
 
-// Open surfaces sit in the top layer and do not expand their ancestor's
-// box, so rows need generous in-flow spacing to keep adjacent menus from
-// overlapping in the snapshot.
-//
-// Groups lay their items out *horizontally*. Stacking them vertically
-// pushed later triggers below the initial viewport, and floating-ui's
-// `shift` then clamped every side-placed surface onto the same visible
-// band: `left-bottom`, `right-top` and `right-bottom` all landed at the
-// same y and overlapped. A horizontal row keeps every trigger on screen,
-// which is what the side placements need to resolve honestly.
+// Top-layer surfaces don't expand their ancestor, hence the wide gaps.
+// Groups run horizontally: stacking pushed triggers off-viewport, where
+// `shift` clamped every side placement onto one band and they overlapped.
 const GROUP_GAP = 152;
 const ITEM_GAP = 120;
 const WIDE_ROW_GAP = 360;
@@ -130,10 +118,8 @@ const vrtPage = (children: unknown) => html`
 // them makes that offset the obvious difference within a row.
 type PlacementBase = 'start' | 'end' | 'left' | 'right' | 'top' | 'bottom';
 
-// Side placements first: floating-ui's `shift` clamps the cross axis against
-// the visual viewport, and for side placements that axis is vertical, so they
-// are the ones that drift if pushed down a long page. See the VRT testing
-// guide's "Positioned overlay components" section.
+// Side placements first: `shift` clamps their cross axis (vertical) against
+// the viewport, so they're the ones that drift down a long page.
 const PLACEMENT_BASES = [
   'start',
   'end',
@@ -158,12 +144,8 @@ const placementGroup = (base: PlacementBase, prefix: string) => {
 const placementRows = (prefix: string) =>
   PLACEMENT_BASES.map((base) => placementGroup(base, prefix));
 
-// `.swc-Menu` caps inline size at 320px and block size at 90vb with
-// `overflow: auto`. The long label has to be long enough to actually wrap
-// against that inline cap; a label that merely looks long still fits on one
-// line and proves nothing. The block cap is viewport-relative, so the long
-// list demonstrates list rendering rather than guaranteeing a scrollbar at
-// every capture height.
+// The label must be long enough to actually wrap at the 320px cap; one that
+// merely looks long still fits on a line and proves nothing.
 const LONG_LABEL_ROWS = html`
   <swc-menu-item role="menuitem">
     Export the current selection as a flattened layered composite file with
@@ -196,11 +178,8 @@ const MANY_ROWS = html`
   )}
 `;
 
-// Lives in its own story rather than appended to the placement page: the
-// tall case needs real space below its trigger. PlacementController feeds
-// the remaining viewport height into `--swc-placement-available-height`, and
-// `.swc-Menu` caps `max-block-size` against it, so the same markup at the
-// bottom of a long page collapsed to ~100px instead of showing the scroll.
+// Own story: `--swc-placement-available-height` is the remaining viewport,
+// so at the bottom of a long page the tall case collapsed to ~100px.
 const overflowRow = (prefix: string) =>
   row(
     [
@@ -208,27 +187,20 @@ const overflowRow = (prefix: string) =>
       renderMenu('bottom-start', `${prefix}-overflow-tall`, MANY_ROWS),
     ],
     'Content overflow (inline cap, long list)',
-    // `bottom-start` left-aligns each surface to its trigger, so the
-    // inline-capped (320px) case needs more than its own width of clearance
-    // before the next trigger or the two surfaces overlap.
+    // `bottom-start` left-aligns to the trigger, so the 320px case needs
+    // more than its own width of clearance.
     WIDE_ROW_GAP
   );
 
-// Native `popover="auto"` light-dismisses every other open auto popover, so
-// only one menu could be open at a time in a real page. Flipping each
-// shadow-internal surface to `popover="manual"` before opening lets the whole
-// matrix render open in one snapshot. VRT-only: it changes nothing about how
-// the component behaves for consumers.
+// `popover="auto"` light-dismisses the others, so only one could be open at
+// a time. Flipping to `manual` renders the whole matrix. VRT-only.
 const openManyMenusForVrt: NonNullable<Story['play']> = async ({
   canvasElement,
 }) => {
   const menus = [...canvasElement.querySelectorAll<Menu>('swc-menu')];
   await Promise.all(menus.map((menu) => menu.updateComplete));
   menus.forEach((menu) => {
-    // Set the property, not the attribute: `should-flip` is a presence-based
-    // boolean, so `should-flip="false"` still reads as true. A real flip
-    // would make the snapshot depend on viewport space rather than the
-    // placement under test.
+    // Property, not attribute: `should-flip="false"` still reads as true.
     menu.shouldFlip = false;
     menu.shadowRoot
       ?.querySelector('.swc-Menu')
@@ -245,10 +217,8 @@ const openManyMenusForVrt: NonNullable<Story['play']> = async ({
       waitFor(() => expect(menu.hasAttribute('actual-placement')).toBe(true))
     )
   );
-  // Every open menu moves focus to its own first row, so with a matrix open
-  // at once the winner of that race is arbitrary and would park a focus ring
-  // on a different item between runs. Dropping focus keeps the snapshot
-  // deterministic.
+  // Each menu focuses its first row, so the race winner is arbitrary and
+  // would park a focus ring somewhere different each run.
   (document.activeElement as HTMLElement | null)?.blur();
 };
 
@@ -274,11 +244,8 @@ export const ContentOverflow: Story = {
 };
 ContentOverflow.storyName = 'Content overflow';
 
-// `start`/`end` resolve against writing direction, and `menu.css` has
-// direction-specific entry-transform rules for them
-// (`:host([placement^="end"]:dir(rtl))`). Running every base here, not just
-// the logical ones, confirms the physical sides stay put rather than
-// assuming it.
+// menu.css has `:dir()`-specific transforms for `start`/`end`. Runs every
+// base, not just the logical ones, to confirm the physical sides stay put.
 export const PermutationsRtl: Story = {
   render: () =>
     theme(
@@ -293,13 +260,9 @@ export const PermutationsRtl: Story = {
 };
 PermutationsRtl.storyName = 'Permutations (RTL)';
 
-// `forced-colors` replaces the whole page palette, so it needs its own
-// snapshot. `top` is listed before `bottom` for the same reason the main
-// page orders them that way: `top` opens upward and `bottom` downward, so
-// in that order the two groups diverge. Reversed, they both open into the
-// gap between them and overlap. A representative subset is enough to confirm the
-// `@media (forced-colors: active)` rule's `border-color: CanvasText` reaches
-// the surface.
+// Forced colors replaces the whole palette, so it needs its own snapshot.
+// `top` before `bottom` so the groups open away from each other; reversed,
+// they open into the gap between them and overlap.
 export const ForcedColors: Story = {
   render: () =>
     theme(

@@ -181,11 +181,8 @@ export const LifecycleEventsTest: Story = {
     const menu = await getComponent<Menu>(canvasElement, 'swc-menu');
 
     await step('fires swc-open and swc-after-open when opened', async () => {
-      // swc-after-open only fires once the enter transition settles, which
-      // can land either side of the popover-open state flip depending on
-      // transition timing in a given browser/CI environment. Await the
-      // events directly rather than racing a boolean flag against an
-      // unrelated `isMenuOpen` poll.
+      // swc-after-open waits on the transition, so it can land either side
+      // of the popover-open flip. Await the events, don't poll around them.
       const openPromise = waitForEvent(menu, 'swc-open');
       const afterOpenPromise = waitForEvent(menu, 'swc-after-open');
 
@@ -381,11 +378,8 @@ export const TriggerAriaWiringSwcButtonTest: Story = {
       const surface = menu.shadowRoot?.querySelector('.swc-Menu') as
         | (HTMLElement & { ariaLabelledByElements?: readonly Element[] | null })
         | null;
-      // Asserts the wiring, not the computed name: the name comes from an
-      // element reference, which Chromium resolves (CDP reports the menu
-      // node as `name: "Edit"`) but Playwright's own accessible-name
-      // computation cannot see. `tooltip.test.ts` asserts its own
-      // `ariaLabelledByElements` the same way.
+      // Wiring, not the computed name: Chromium resolves the reference but
+      // Playwright can't see IDL-only ones. Same shape as tooltip.test.ts.
       expect(
         [...(surface?.ariaLabelledByElements ?? [])],
         'surface is labelled by the trigger'
@@ -995,11 +989,8 @@ export const ReanchorOnPlacementChangeTest: Story = {
         const trigger2 = canvasElement.querySelector(
           '#reanchor-trigger-2'
         ) as HTMLElement;
-        // `actual-placement` coming back only proves positioning reran, not
-        // which trigger it anchored to (re-anchoring to the previous trigger
-        // would also set it). Compare the surface's horizontal distance to
-        // each trigger instead, since it should be closer to whichever one
-        // is actually resolved.
+        // `actual-placement` returning only proves positioning reran, not
+        // which trigger it hit; compare distance to each instead.
         const surfaceDistanceTo = (target: HTMLElement): number => {
           const surfaceRect = menu.shadowRoot
             ?.querySelector('.swc-Menu')
@@ -1113,12 +1104,8 @@ export const NativeCloseReconciliationTest: Story = {
         menu.open = true;
         await waitFor(() => expect(isMenuOpen(menu)).toBe(true));
 
-        // Simulates the surface closing on its own (e.g. native light-dismiss)
-        // by calling hidePopover() directly instead of going through the
-        // `open` setter. hidePopover() always fires a real beforetoggle
-        // event, so this exercises the same _syncOpen reconciliation that a
-        // trusted Escape/outside-click would (covered end-to-end with real
-        // trusted input in menu.a11y.spec.ts).
+        // hidePopover() fires a real beforetoggle, so this hits the same
+        // _syncOpen path a trusted Escape would.
         surface().hidePopover();
         await waitFor(() => expect(menu.open).toBe(false));
         expect(isMenuOpen(menu), 'surface is closed').toBe(false);
@@ -1138,13 +1125,9 @@ export const KeydownWhileClosedTest: Story = {
         menu.open = true;
         await waitFor(() => expect(isMenuOpen(menu)).toBe(true));
 
-        // Setting `open` updates the property synchronously; the document
-        // keydown listener isn't removed until the deferred close reaction
-        // runs. Dispatching in this same synchronous window, from a row (so
-        // `isMenuItemEventTarget` sees it in the composed path, the same as
-        // a real trusted keydown would), exercises handleKeyDown's own
-        // `!this.open` guard rather than relying on the listener already
-        // being gone.
+        // The listener outlives the synchronous `open = false`, so
+        // dispatching here (from a row, so it's in the composed path) hits
+        // handleKeyDown's own `!this.open` guard.
         const row = getItems(canvasElement)[0];
         menu.open = false;
         const event = new KeyboardEvent('keydown', {
@@ -1314,10 +1297,8 @@ export const DisconnectCleanupTest: Story = {
       ).toBe(false);
     });
 
-    // Removing an already-closed menu only exercises part of
-    // disconnectedCallback's cleanup; removing one that's still open also
-    // has to drop the document keydown listener, unregister from the
-    // dismissible stack, and stop placement.
+    // Removing while open also has to drop the keydown listener, unregister
+    // from the dismissible stack, and stop placement.
     await step(
       'disconnects while open and unregisters from the dismissible stack',
       async () => {

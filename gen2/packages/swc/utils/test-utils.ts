@@ -134,21 +134,8 @@ export async function getComponents<T extends HTMLElement>(
 }
 
 /**
- * Awaits a DOM event dispatched on the given element, resolving with the event
- * object. Rejects after `timeout` ms so a missing event fails fast with a
- * message naming the event, instead of hanging the test indefinitely.
- *
- * @example
- * ```ts
- * const afterOpenPromise = waitForEvent(menu, 'swc-after-open');
- * menu.open = true;
- * await afterOpenPromise;
- * ```
- *
- * @param el - The element the event is dispatched on
- * @param eventName - The event name to wait for
- * @param timeout - Milliseconds to wait before rejecting (default 1000)
- * @returns Promise that resolves with the event, or rejects on timeout
+ * Awaits a DOM event, rejecting after `timeout` ms so a missing event fails
+ * with the event name rather than hanging.
  */
 export function waitForEvent<T extends Event>(
   el: EventTarget,

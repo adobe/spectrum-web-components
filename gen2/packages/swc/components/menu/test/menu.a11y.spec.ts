@@ -49,12 +49,8 @@ test.describe('Menu - ARIA snapshots', () => {
     );
     await page.getByRole('button', { name: 'Edit' }).click();
     await expect(page.locator('swc-menu')).toHaveJSProperty('open', true);
-    // The surface is named after its trigger via `ariaLabelledByElements`.
-    // Chromium resolves that (its own accessibility tree reports the menu
-    // node as `name: "Edit"`, sourced from `relatedElement`), but Playwright
-    // computes accessible names from DOM attributes and cannot see an
-    // IDL-only element reference, so it still reports the menu unnamed here.
-    // The wiring itself is asserted in `menu.test.ts`.
+    // Shows unnamed because Playwright can't see `ariaLabelledByElements`;
+    // Chromium resolves it to "Edit". Wiring asserted in menu.test.ts.
     await expect(root).toMatchAriaSnapshot(`
       - button "Edit" [expanded]
       - menu:

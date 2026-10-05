@@ -195,23 +195,18 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     return event.composedPath().some((node) => items.has(node as HTMLElement));
   }
 
-  // Traps Tab/Shift+Tab on the active row, and closes on Enter. Row
-  // activation itself is not handled here: it belongs to `swc-menu-item`,
-  // which has not shipped, so this only dismisses the menu. Space is
-  // likewise unhandled for now; it activates alongside Enter once rows own
-  // activation. Escape closes via the native popover light-dismiss.
+  // Traps Tab on the active row; Enter only closes. Row activation (and
+  // Space) belong to `swc-menu-item`, unshipped. Escape is native.
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
     if (!this.open) {
       return;
     }
     if (event.key === 'Tab' && this.isMenuItemEventTarget(event)) {
-      // Arrow keys are the only way to move among rows while open.
       event.preventDefault();
       return;
     }
     if (event.key === 'Enter' && this.isMenuItemEventTarget(event)) {
-      // Suppresses the browser's own Enter default-action, which would
-      // otherwise re-activate whatever has focus once it resolves.
+      // Else the deferred default-action re-activates the refocused trigger.
       event.preventDefault();
       this.open = false;
     }
@@ -251,24 +246,11 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this.labelSurfaceByTrigger(null);
   }
 
-  // Names the `role="menu"` surface after its trigger, the menu-button
-  // pattern's `aria-labelledby` from the menu back to its button. `swc-menu`
-  // has no `label` of its own by design, so without this the surface reaches
-  // assistive tech unnamed.
-  //
-  // Uses the element-reference IDL rather than an IDREF because the surface
-  // lives in this shadow root and the trigger does not. Points at the outer
-  // trigger, not `resolveTrigger`'s `interactiveElement`: that is the inner
-  // `<button>` of a shadow-rendered trigger like `swc-button`, which sits in
-  // a sibling shadow tree and is dropped from the reference (it reads back
-  // as an empty list).
-  //
-  // Playwright cannot observe this. It computes accessible names from DOM
-  // attributes, so an IDL-only reference is invisible to `getByRole`
-  // and `toMatchAriaSnapshot`, which still report the surface as unnamed.
-  // Chromium's own accessibility tree does resolve it: via CDP the node
-  // reports `name: "Edit"` sourced from `relatedElement`. Assert the wiring
-  // rather than the computed name, the way `swc-tooltip` does.
+  // `swc-menu` has no `label`, so the menu-button pattern names the surface
+  // after its button. Element reference, not an IDREF, to cross the shadow
+  // boundary; the outer trigger, since `interactiveElement` sits in a
+  // sibling shadow tree and gets dropped. Playwright cannot see IDL-only
+  // references, so tests assert the wiring, not the name.
   private labelSurfaceByTrigger(trigger: HTMLElement | null): void {
     const surface = this.surfaceElement as
       | (HTMLElement & ARIALabelledByElements)
@@ -367,13 +349,9 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     });
   }
 
-  // Run `callback` once the surface's CSS transition settles (or
-  // immediately when none will run). Each call supersedes the previous
-  // open/close cycle's pending run, so a rapid close-then-reopen never
-  // dispatches a spurious `swc-after-close` after reopening. `fallback` arms
-  // the allow-discrete safety timer (default true; the close path relies on
-  // it to always tear down positioning). Matches `Popover.base.ts`'s own
-  // `_afterTransition`.
+  // Each call supersedes the last, so a rapid close-then-reopen never fires
+  // a stale `swc-after-close`. `fallback` arms the allow-discrete timer,
+  // which the close path needs to guarantee teardown.
   private _afterTransition(callback: () => void, fallback = true): void {
     this._cancelAfterTransition?.();
     const element = this.surfaceElement;
@@ -391,11 +369,8 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     );
   }
 
-  // Clears the now-stale `actual-placement` attribute once the exit
-  // transition finishes, so the discrete transition doesn't snap to its
-  // default mid-fade. Guarded by `!this.open` so a rapid reopen during the
-  // fade keeps its positioning (matches `Popover.base.ts`'s own
-  // `_stopPositioningWhenClosed`).
+  // Clearing `actual-placement` mid-fade would snap the surface to its
+  // default, so this waits for the exit and bails if a reopen beat it.
   private _stopPositioningWhenClosed(): void {
     if (this.open) {
       return;
@@ -446,11 +421,8 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       capture: true,
     });
     this.startPlacement();
-    // `startPlacement()` no-ops without a resolved trigger, which leaves
-    // `actual-placement` unset and the surface invisible (menu.css gates
-    // `opacity` on it). Without this guard the menu would still move focus
-    // into that invisible surface (e.g. `open` set with a missing or
-    // mistyped `for`).
+    // Without a trigger the surface never gets `actual-placement` and stays
+    // invisible (menu.css gates opacity on it); don't focus into that.
     if (this._hasCompletedFirstUpdate && this._trigger) {
       // Forces the first item active rather than trusting the controller's
       // own memory-preferring refresh(); every normal open lands on row one.
@@ -462,11 +434,8 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
           firstItem) ||
         this.focusNavigation.getActiveItem();
       if (active) {
-        // Deferred so the browser doesn't move focus back to the trigger
-        // after the click handler that set `open` returns. `preventScroll`
-        // because this fires before PlacementController's async compute has
-        // applied the real position, so an unguarded focus() would scroll
-        // the page to this item's temporary, not-yet-positioned location.
+        // Deferred past the click handler, which would otherwise refocus the
+        // trigger. `preventScroll`: the real position lands asynchronously.
         queueMicrotask(() => active.focus({ preventScroll: true }));
       }
     }
@@ -501,22 +470,16 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     if (event.newState === 'open') {
       return;
     }
-    // A press on the trigger while open light-dismisses the surface (an
-    // "outside" click from the popover's perspective) before the trailing
-    // click fires; correlate that dismissal here so the trailing click reads
-    // as the close rather than a reopen (see `TriggerPressController`).
-    // `this.open` is still `true` here for a genuine native dismiss; a
-    // programmatic close (e.g. `_hide()`) already set it `false` before this
-    // fires.
+    // A trigger press light-dismisses before its own click lands; record
+    // that so the trailing click reads as the close, not a reopen. `open` is
+    // still true only for a native dismiss, which is what distinguishes it.
     if (this.open) {
       this._pressGuard.noteNativeDismiss();
     }
     const restoreFocusToTrigger = this.isFocusWithin();
     this._syncOpen(false);
-    // Freeze positioning at the current location the moment the close
-    // begins: `stop()` tears down the `autoUpdate` loop but leaves
-    // `actual-placement` in place until `_stopPositioningWhenClosed`, so the
-    // surface fades out from where it is instead of snapping mid-fade.
+    // Freeze where it is for the fade: `stop()` ends `autoUpdate` but leaves
+    // `actual-placement` until `_stopPositioningWhenClosed`.
     this.placementController.stop();
     if (this._hasCompletedFirstUpdate) {
       this._dispatchClose();
@@ -581,11 +544,8 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.placementController.stop();
-    // Drops the pending after-event armed by the last open/close cycle,
-    // including its allow-discrete fallback timer. Without this, removing a
-    // menu mid-transition leaves a timer that outlives the element and
-    // dispatches `swc-after-close` from a detached node (matches
-    // `Popover.base.ts`'s own disconnect cleanup).
+    // Else a menu removed mid-transition leaves a timer that outlives it and
+    // fires `swc-after-close` from a detached node.
     this._cancelAfterTransition?.();
     this.clearTriggerAria();
     this._trigger = null;
