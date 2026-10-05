@@ -117,35 +117,3 @@ function renderNecessityIndicator({
   // prettier-ignore
   return html`<span class="swc-FormFieldLabel-requiredIndicator" aria-hidden="true">${icon}</span>`;
 }
-
-/**
- * The `aria-hidden` necessity indicator span; see `necessityIndicator` for the
- * icon-vs-label behavior. The leading `&nbsp;` sets the gap from the label text.
- */
-function renderNecessityIndicator({
-  indicator,
-  required,
-  labels,
-  icon,
-}: {
-  indicator: 'icon' | 'label';
-  required: boolean;
-  labels: NecessityIndicatorText | undefined;
-  icon: TemplateResult | undefined;
-}): RenderFieldLabelResult {
-  if (indicator === 'label' && labels) {
-    return html`
-      <span class="swc-FormFieldLabel-necessityLabel" aria-hidden="true">
-        &nbsp;${required ? labels.required : labels.optional}
-      </span>
-    `;
-  }
-  if (!required || !icon) {
-    return nothing;
-  }
-  return html`
-    <span class="swc-FormFieldLabel-requiredIndicator" aria-hidden="true">
-      &nbsp;${icon}
-    </span>
-  `;
-}

@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { TextField } from '@adobe/spectrum-wc/text-field';
@@ -307,154 +307,6 @@ export const StatesTest: Story = {
     });
   },
 };
-
-// ──────────────────────────────────────────────────────────────
-// TEST: necessity indicator: icon vs label, required vs optional
-// ──────────────────────────────────────────────────────────────
-
-export const NecessityIndicatorTest: Story = {
-  ...NecessityIndicator,
-  play: async ({ canvasElement, step }) => {
-    const fields = await getComponents<TextField>(
-      canvasElement,
-      'swc-text-field'
-    );
-    const [requiredIcon, requiredLabel, optionalLabel] = fields;
-
-    await step('icon mode renders the asterisk indicator', () => {
-      expect(
-        requiredIcon.shadowRoot?.querySelector(
-          '.swc-FormFieldLabel-requiredIndicator'
-        )
-      ).toBeTruthy();
-    });
-
-    await step('label mode marks a required field "(required)"', () => {
-      const label = requiredLabel.shadowRoot?.querySelector(
-        '.swc-FormFieldLabel-necessityLabel'
-      );
-      expect(label?.textContent?.trim()).toBe('(required)');
-      expect(label?.getAttribute('aria-hidden')).toBe('true');
-    });
-
-    await step('label mode marks an optional field "(optional)"', () => {
-      const label = optionalLabel.shadowRoot?.querySelector(
-        '.swc-FormFieldLabel-necessityLabel'
-      );
-      expect(label?.textContent?.trim()).toBe('(optional)');
-    });
-
-    await step(
-      'icon mode shows no indicator on an optional field',
-      async () => {
-        const field = await fixture<TextField>(html`
-          <swc-text-field necessity-indicator="icon">
-            <span slot="label">Optional field</span>
-          </swc-text-field>
-        `);
-        await field.updateComplete;
-        expect(
-          field.shadowRoot?.querySelector(
-            '.swc-FormFieldLabel-requiredIndicator'
-          )
-        ).toBeNull();
-        expect(
-          field.shadowRoot?.querySelector('.swc-FormFieldLabel-necessityLabel')
-        ).toBeNull();
-        field.parentElement?.remove();
-      }
-    );
-  },
-};
-
-// ──────────────────────────────────────────────────────────────
-// TEST: prefix slot renders as a leading affix inside the control
-// ──────────────────────────────────────────────────────────────
-
-export const PrefixTest: Story = {
-  render: () => html`
-    <swc-text-field accessible-label="Amount">
-      <swc-avatar slot="prefix" alt=""></swc-avatar>
-    </swc-text-field>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const field = await getComponent<TextField>(
-      canvasElement,
-      'swc-text-field'
-    );
-
-    await step('prefix content is assigned to the prefix slot', () => {
-      const slot = field.shadowRoot?.querySelector<HTMLSlotElement>(
-        'slot[name="prefix"]'
-      );
-      const assigned = slot?.assignedElements() ?? [];
-      expect(assigned).toHaveLength(1);
-      expect(assigned[0]?.localName).toBe('swc-avatar');
-    });
-
-    await step('the prefix avatar follows the field size', async () => {
-      const avatar = field.querySelector('swc-avatar');
-      expect(avatar?.getAttribute('size')).toBe('75');
-      field.size = 's';
-      await field.updateComplete;
-      expect(avatar?.getAttribute('size')).toBe('50');
-      field.size = 'l';
-      await field.updateComplete;
-      expect(avatar?.getAttribute('size')).toBe('200');
-      field.size = 'xl';
-      await field.updateComplete;
-      expect(avatar?.getAttribute('size')).toBe('300');
-    });
-
-    await step('prefix and input share the bordered control wrapper', () => {
-      const control = field.shadowRoot?.querySelector('.swc-TextField-control');
-      const input = field.shadowRoot?.querySelector('.swc-TextField-input');
-      const slot = field.shadowRoot?.querySelector('slot[name="prefix"]');
-      expect(control).toBeTruthy();
-      // The prefix slot precedes the input inside the control.
-      expect(control?.contains(input ?? null)).toBe(true);
-      expect(control?.contains(slot ?? null)).toBe(true);
-      const nodes = [...(control?.children ?? [])];
-      expect(nodes.indexOf(slot as Element)).toBeLessThan(
-        nodes.indexOf(input as Element)
-      );
-    });
-  },
-};
-PrefixTest.storyName = 'Prefix';
-
-// ──────────────────────────────────────────────────────────────
-// TEST: host selection API delegates to the native input
-// ──────────────────────────────────────────────────────────────
-
-export const SelectionTest: Story = {
-  render: () => html`
-    <swc-text-field
-      accessible-label="Selection"
-      value="hello world"
-    ></swc-text-field>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const field = await getComponent<TextField>(
-      canvasElement,
-      'swc-text-field'
-    );
-    const input = field.shadowRoot?.querySelector('input');
-
-    await step('select() selects all text through the host', () => {
-      field.select();
-      expect(input?.selectionStart).toBe(0);
-      expect(input?.selectionEnd).toBe('hello world'.length);
-    });
-
-    await step('setSelectionRange() sets a range on the native input', () => {
-      field.setSelectionRange(0, 5);
-      expect(input?.selectionStart).toBe(0);
-      expect(input?.selectionEnd).toBe(5);
-    });
-  },
-};
-SelectionTest.storyName = 'Selection';
 
 // ──────────────────────────────────────────────────────────────
 // TEST: necessity indicator: icon vs label, required vs optional
@@ -1066,6 +918,34 @@ export const FormBehaviorTest: Story = {
       expect(new FormData(form).get('username')).toBe('Submitted');
       expect(output.textContent?.trim()).toBe('username: Submitted');
     });
+
+    await step(
+      'the fieldset toggle can disable and re-enable the field',
+      async () => {
+        const fieldset = form.querySelector('fieldset');
+        const toggleButton = form.querySelector<HTMLButtonElement>(
+          '[data-toggle-fieldset]'
+        );
+        expect(fieldset).toBeTruthy();
+        expect(toggleButton).toBeTruthy();
+        if (!fieldset || !toggleButton) {
+          throw new Error('fieldset or toggle button not found');
+        }
+
+        expect(fieldset.contains(toggleButton)).toBe(false);
+        await userEvent.click(toggleButton);
+        await field.updateComplete;
+        expect(fieldset.disabled).toBe(true);
+        expect(input.disabled).toBe(true);
+        expect(toggleButton).toBeEnabled();
+
+        await userEvent.click(toggleButton);
+        await field.updateComplete;
+        expect(fieldset.disabled).toBe(false);
+        expect(input.disabled).toBe(false);
+        expect(toggleButton).toBeEnabled();
+      }
+    );
   },
 };
 FormBehaviorTest.storyName = 'Native form behavior';
