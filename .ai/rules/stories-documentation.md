@@ -12,7 +12,7 @@ Authoring guide for the per-unit MDX file that powers each Storybook Docs page. 
 
 **See also**: `.ai/rules/stories-format.md` for the stories file (`.stories.ts`) structure and conventions.
 
-This rule holds the constraints that apply whenever you edit a per-unit MDX docs page. The full procedure (documentation structure, the Helpers section, section patterns, 1st-gen to gen2 comparison, verification and accuracy, and general guidelines) lives in the `stories-documentation` skill at `.ai/skills/stories-documentation/SKILL.md`. Load it when you write or review a docs page, and always follow its **Verification and accuracy** steps before you document an attribute, slot, event, or ARIA behavior.
+This rule holds the constraints that apply whenever you edit a per-unit MDX docs page, excluding any `migration-guide.mdx`. The full procedure (documentation structure, the Helpers section, section patterns, 1st-gen to gen2 comparison, verification and accuracy, and general guidelines) lives in the `stories-documentation` skill at `.ai/skills/stories-documentation/SKILL.md`. Load it when you write or review a docs page, and always follow its **Verification and accuracy** steps before you document an attribute, slot, event, or ARIA behavior.
 
 ## When to apply
 
