@@ -15,11 +15,12 @@
  *
  * Processes 1st-gen changeset files and updates 1st-gen/CHANGELOG.md.
  *
- * Extracts major, minor, and patch changes from changesets and formats them
- * into organized changelog entries.
+ * Extracts major, minor, and patch changes from changesets and groups them by
+ * component: each changeset is listed once, under the set of components it
+ * releases, with its PR and commit links and its body kept intact.
  */
 
-import { execSync } from 'child_process';
+import { execFileSync, execSync } from 'child_process';
 import fs from 'fs';
 import { promises as fsPromises } from 'fs';
 import path from 'path';
@@ -28,8 +29,17 @@ import { fileURLToPath } from 'url';
 
 import { version as currentVersion } from '@spectrum-web-components/base/src/version.js';
 
+import {
+  buildChangelogEntry,
+  extractChangelogHeader,
+  groupChangesets,
+  parseChangeset,
+  parseCommitLog,
+  REPO_URL as repoUrl,
+  toComponentLabel,
+} from './changelog-utils.js';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const repoUrl = 'https://github.com/adobe/spectrum-web-components';
 
 /**
  * Validates that the current version exists and has a corresponding git tag
@@ -70,90 +80,68 @@ function validateCurrentVersion() {
 }
 
 /**
- * Extracts changes from frontmatter using a pattern and categorizes by type
+ * Looks up the commit that added a changeset file and the PR it was merged in.
+ * Returns an empty object when git has no record of the file (for example, a
+ * changeset that is not committed yet), so the entry renders without links.
  *
- * @param {string} frontmatter - The frontmatter content to parse
- * @param {string} description - The description of the change
- * @param {RegExp} pattern - The regex pattern to match package changes
- * @param {string} prefix - Optional prefix to add to the entry (e.g., 'sp-')
- * @returns {object} Object containing major, minor, and patch changes
+ * @param {string} filePath - Absolute path to the changeset file
+ * @returns {{ commit?: string, pr?: string }} Commit hash and PR number, when found
  */
-function extractChanges(frontmatter, description, pattern, prefix = '') {
-  const changes = { major: [], minor: [], patch: [] };
-  for (const match of frontmatter.matchAll(pattern)) {
-    // Handle two different regex patterns:
-    // 1. @spectrum-web-components/button: patch
-    //    → match: [full, 'button', 'patch'] (has component name)
-    // 2. @spectrum-web-components/core: minor
-    //    → match: [full, 'minor'] (no component name)
-    const hasName = match.length > 2;
-    const name = hasName ? match[1] : null;
-    const type = hasName ? match[2] : match[1];
-    const entry =
-      prefix && name
-        ? `**${prefix}${name}**: ${description.trim()}\n\n`
-        : `${description.trim()}\n\n`;
-    changes[type].push(entry);
+function getChangesetCommit(filePath) {
+  try {
+    const output = execFileSync(
+      'git',
+      ['log', '--diff-filter=A', '--format=%H%x09%s', '-1', '--', filePath],
+      { cwd: path.dirname(filePath), encoding: 'utf8' }
+    );
+    return parseCommitLog(output);
+  } catch {
+    return {};
   }
-  return changes;
 }
 
 /**
- * Processes changeset files and categorizes 1st-gen changes by type
+ * Reads the pending 1st-gen changesets and groups them by bump type and
+ * component.
  *
- * @returns {Promise<object>} Object containing categorized 1st-gen changes
+ * @returns {Promise<object>} Grouped major, minor, and patch changes
  */
 async function processChangesets() {
   const changesetDir = path.resolve(__dirname, '../.changeset');
+  const packagesDir = path.resolve(__dirname, '../packages');
 
-  // Use non-blocking I/O for directory read
-  const files = await fsPromises.readdir(changesetDir);
-  const markdownFiles = files.filter(
-    (f) => f.endsWith('.md') && f !== 'README.md'
-  );
+  // Sorted so the generated entry is stable regardless of file system order.
+  const files = (await fsPromises.readdir(changesetDir))
+    .filter((f) => f.endsWith('.md') && f !== 'README.md')
+    .sort();
 
-  // Read all files concurrently
-  const fileContents = await Promise.all(
-    markdownFiles.map((file) =>
-      fsPromises.readFile(path.join(changesetDir, file), 'utf8')
-    )
-  );
-
-  // Prepare change container
-  const firstGen = { majorChanges: [], minorChanges: [], patchChanges: [] };
-
-  for (const content of fileContents) {
-    const frontmatterMatch = content.match(/---\n([\s\S]*?)\n---\n([\s\S]*)/);
-    if (!frontmatterMatch) {
+  const changesets = [];
+  for (const file of files) {
+    const filePath = path.join(changesetDir, file);
+    const parsed = parseChangeset(await fsPromises.readFile(filePath, 'utf8'));
+    if (!parsed || !parsed.releases.length) {
       continue;
     }
-
-    const [, frontmatter, description] = frontmatterMatch;
-    const cleanDescription = description.trim();
-
-    // Extract 1st-gen (@spectrum-web-components/*) changes
-    const swcChanges = extractChanges(
-      frontmatter,
-      cleanDescription,
-      /['"]@spectrum-web-components\/([^'"]+)['"]:\s*(major|minor|patch)/g,
-      'sp-'
-    );
-
-    // Merge results into categorized buckets
-    firstGen.majorChanges.push(...swcChanges.major);
-    firstGen.minorChanges.push(...swcChanges.minor);
-    firstGen.patchChanges.push(...swcChanges.patch);
+    changesets.push({ ...parsed, ...getChangesetCommit(filePath) });
   }
 
-  return { firstGen };
+  const componentDirs = new Set(
+    (await fsPromises.readdir(packagesDir, { withFileTypes: true }))
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name)
+  );
+
+  return groupChangesets(changesets, (name) =>
+    toComponentLabel(name, componentDirs)
+  );
 }
 
 /**
  * Calculates the next version based on change types
  *
  * @param {string} currentVersion - Current version string
- * @param {Array} majorChanges - Array of major changes
- * @param {Array} minorChanges - Array of minor changes
+ * @param {Array} majorChanges - Major change groups
+ * @param {Array} minorChanges - Minor change groups
  * @returns {string} Next version string
  */
 function calculateNextVersion(currentVersion, majorChanges, minorChanges) {
@@ -167,76 +155,13 @@ function calculateNextVersion(currentVersion, majorChanges, minorChanges) {
 }
 
 /**
- * Extracts and preserves the header from an existing changelog
- *
- * @param {string} changelogContent - The existing changelog content
- * @returns {object} Object with headerText and remaining content
- */
-function extractChangelogHeader(changelogContent) {
-  let headerText = '';
-  let remainingContent = changelogContent;
-
-  const headerMatch = changelogContent.match(
-    /^(# ChangeLog\n\n[\s\S]+?(?=\n\n# \[))/
-  );
-  if (headerMatch) {
-    headerText = headerMatch[1];
-    remainingContent = changelogContent.substring(headerMatch[0].length);
-  } else if (changelogContent.startsWith('# Change Log')) {
-    const simpleHeaderMatch = changelogContent.match(
-      /^(# Change Log\n\n[\s\S]+?)(?=\n\n|$)/
-    );
-    if (simpleHeaderMatch) {
-      headerText = simpleHeaderMatch[1];
-      remainingContent = changelogContent.substring(headerText.length);
-    }
-  }
-
-  return { headerText, remainingContent };
-}
-
-/**
- * Builds a changelog entry with categorized changes
- *
- * @param {string} version - Version string
- * @param {string} compareUrl - URL for comparing versions
- * @param {string} date - Date string
- * @param {object} changes - Object containing major, minor, and patch changes
- * @param {string} headerLevel - Header level for change sections (## or ###)
- * @returns {string} Formatted changelog entry
- */
-function buildChangelogEntry(
-  version,
-  compareUrl,
-  date,
-  changes,
-  headerLevel = '##'
-) {
-  const { majorChanges, minorChanges, patchChanges } = changes;
-  let entry = `# [${version}](${compareUrl}) (${date})\n\n`;
-
-  if (majorChanges.length) {
-    entry += `${headerLevel} Major Changes\n\n${majorChanges.join('\n')}\n\n`;
-  }
-  if (minorChanges.length) {
-    entry += `${headerLevel} Minor Changes\n\n${minorChanges.join('\n')}\n\n`;
-  }
-  if (patchChanges.length) {
-    entry += `${headerLevel} Patch Changes\n\n${patchChanges.join('\n')}\n\n`;
-  }
-
-  return entry;
-}
-
-/**
  * Updates a changelog file with a new entry
  *
  * @param {string} changelogPath - Path to the changelog file
  * @param {string} version - Version string
  * @param {string} compareUrl - URL for comparing versions
  * @param {string} date - Date string
- * @param {object} changes - Object containing categorized changes
- * @param {string} headerLevel - Header level for change sections
+ * @param {object} changes - Grouped major, minor, and patch changes
  * @param {string} versionPattern - Regex pattern for version entries
  * @param {string} skipMessage - Message to show when skipping update
  * @param {string} successMessage - Message to show when update succeeds
@@ -247,7 +172,6 @@ function updateChangelogFile(
   compareUrl,
   date,
   changes,
-  headerLevel = '##',
   versionPattern,
   skipMessage,
   successMessage
@@ -262,19 +186,13 @@ function updateChangelogFile(
     return;
   }
 
-  const { majorChanges, minorChanges, patchChanges } = changes;
-  if (!majorChanges.length && !minorChanges.length && !patchChanges.length) {
+  const { major, minor, patch } = changes;
+  if (!major.length && !minor.length && !patch.length) {
     console.log('🚫 No changes to add to the changelog.');
     process.exit(0);
   }
 
-  const newEntry = buildChangelogEntry(
-    version,
-    compareUrl,
-    date,
-    changes,
-    headerLevel
-  );
+  const newEntry = buildChangelogEntry(version, compareUrl, date, changes);
   const { headerText, remainingContent } =
     extractChangelogHeader(existingChangelog);
 
@@ -289,8 +207,8 @@ function updateChangelogFile(
 /**
  * Creates or updates 1st-gen/CHANGELOG.md based on 1st-gen changeset files.
  *
- * Reads changeset files and categorizes changes by type (major/minor/patch)
- * before writing the changelog entry.
+ * Reads changeset files and groups changes by type (major/minor/patch) and
+ * component before writing the changelog entry.
  *
  * Should be run during the release process before changeset version.
  *
@@ -299,13 +217,13 @@ function updateChangelogFile(
  */
 async function createChangelog() {
   const currentTag = validateCurrentVersion();
-  const { firstGen } = await processChangesets();
+  const firstGen = await processChangesets();
 
   // Early exit if no changes detected
   if (
-    !firstGen.majorChanges.length &&
-    !firstGen.minorChanges.length &&
-    !firstGen.patchChanges.length
+    !firstGen.major.length &&
+    !firstGen.minor.length &&
+    !firstGen.patch.length
   ) {
     console.log(
       '🚫 No new changesets detected. Skipping changelog generation.'
@@ -315,8 +233,8 @@ async function createChangelog() {
 
   const nextVersion = calculateNextVersion(
     currentVersion,
-    firstGen.majorChanges,
-    firstGen.minorChanges
+    firstGen.major,
+    firstGen.minor
   );
   const nextTag = `gen1-${nextVersion}`;
   const date = new Date().toLocaleDateString('en-CA', {
@@ -335,7 +253,6 @@ async function createChangelog() {
     compareUrl,
     date,
     firstGen,
-    '##',
     `# \\[${nextVersion.replace(/\./g, '\\.')}\\]`,
     `⚠️ Version ${nextVersion} already has an entry in the CHANGELOG. Skipping changelog update.`,
     `✅ CHANGELOG updated for ${nextVersion}`
