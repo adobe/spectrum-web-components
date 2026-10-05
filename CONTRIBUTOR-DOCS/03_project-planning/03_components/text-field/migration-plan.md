@@ -483,9 +483,9 @@ Planned rendering shape:
 
 #### Visual regression
 
-- [x] Add VRT coverage for size × state combinations (default/hover/focus/keyboard-focus/disabled/readonly/invalid/valid) across both `label-position` modes (`top`/`side`)
+- [x] Add representative VRT coverage across all sizes for invalid state, text and avatar prefixes, keyboard focus, side labels with help text, long placeholders, and long invalid values; show enabled and invalid+disabled values in standard and forced-colors captures, and keep hover and other non-size-sensitive states at one size
 - [x] Add focus-visible regression coverage for the keyboard ring (B12)
-- [x] Add forced-colors (high-contrast) coverage for invalid/valid and focus states
+- [x] Add forced-colors coverage for disabled labels and descriptions, invalid/valid states, and focus
 
 ### Documentation
 

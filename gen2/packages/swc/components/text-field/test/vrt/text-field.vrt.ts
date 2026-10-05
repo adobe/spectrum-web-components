@@ -190,7 +190,7 @@ const permutationContent = () => html`
   )}
   ${row(
     [
-      renderCase({ label: 'Default' }),
+      renderCase({ label: 'Default', value: 'Sample value' }),
       renderCase({
         label: 'Read-only',
         readonly: true,
@@ -216,6 +216,7 @@ const permutationContent = () => html`
         label: 'Invalid + disabled',
         invalid: true,
         disabled: true,
+        value: 'Disabled invalid value',
         description: 'Field help text',
         errorText: 'Enter a valid value',
       }),
@@ -265,6 +266,97 @@ const permutationContent = () => html`
       }),
     ],
     'Prefix'
+  )}
+  ${row(
+    TEXT_FIELD_VALID_SIZES.map((size) =>
+      renderCase({
+        size,
+        label: `Invalid · ${SIZE_LABELS[size]}`,
+        value: 'Invalid value',
+        invalid: true,
+        description: 'Field help text',
+        errorText: 'Enter a valid value',
+      })
+    ),
+    'Invalid by size'
+  )}
+  ${row(
+    TEXT_FIELD_VALID_SIZES.map((size) =>
+      renderCase({
+        size,
+        label: `URL · ${SIZE_LABELS[size]}`,
+        placeholder: 'example.com',
+        prefix: html`
+          <span slot="prefix">https://</span>
+        `,
+      })
+    ),
+    'Text prefix by size'
+  )}
+  ${row(
+    TEXT_FIELD_VALID_SIZES.map((size) =>
+      renderCase({
+        size,
+        label: `User · ${SIZE_LABELS[size]}`,
+        placeholder: 'Username',
+        prefix: html`
+          <swc-avatar
+            slot="prefix"
+            src="./images/avatar-preview.png"
+            alt=""
+          ></swc-avatar>
+        `,
+      })
+    ),
+    'Avatar prefix by size'
+  )}
+  ${row(
+    TEXT_FIELD_VALID_SIZES.map((size) =>
+      renderCase({
+        size,
+        label: `Keyboard focus · ${SIZE_LABELS[size]}`,
+        placeholder: 'Sample value',
+        forceState: 'focus-visible',
+      })
+    ),
+    'Keyboard focus by size'
+  )}
+  ${row(
+    TEXT_FIELD_VALID_SIZES.map((size) =>
+      renderCase({
+        size,
+        labelPosition: 'side',
+        label: `Side label · ${SIZE_LABELS[size]}`,
+        description: 'Help text aligns with the input.',
+        placeholder: 'Sample value',
+        extraStyle: 'inline-size: 360px;',
+      })
+    ),
+    'Side label with help text by size'
+  )}
+  ${row(
+    TEXT_FIELD_VALID_SIZES.map((size) =>
+      renderCase({
+        size,
+        label: `Placeholder · ${SIZE_LABELS[size]}`,
+        placeholder:
+          'A very long placeholder that should truncate with an ellipsis',
+      })
+    ),
+    'Long placeholder by size'
+  )}
+  ${row(
+    TEXT_FIELD_VALID_SIZES.map((size) =>
+      renderCase({
+        size,
+        label: `Invalid value · ${SIZE_LABELS[size]}`,
+        value:
+          'A very long invalid value that should truncate with an ellipsis',
+        invalid: true,
+        errorText: 'Enter a valid value',
+      })
+    ),
+    'Long invalid value by size'
   )}
   ${row(
     [
