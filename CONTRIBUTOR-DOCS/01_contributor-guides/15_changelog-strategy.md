@@ -28,7 +28,7 @@
 
 ## Core principle
 
-**What you write in the changeset is what appears in the CHANGELOG.** Changesets reads your body verbatim, prepends a bullet, groups entries by bump type, and auto-appends a PR link and commit reference. No custom scripts, no post-processing — we use `@changesets/changelog-github` directly.
+**What you write in the changeset is what appears in the CHANGELOG.** Changesets reads your body verbatim, prepends a bullet, groups entries by bump type, and auto-appends a PR link and commit reference. A small post-processing step (`scripts/group-gen2-changelog.js`) then nests entries under the component they touch, so a component that changed in several PRs appears once per bump type. It never rewrites your text.
 
 ## The format
 
@@ -39,6 +39,8 @@ Every changelog entry — whether in a `.changeset/*.md` file or in the final `C
 ```
 
 That's it. Component name in backticks, em dash, consumer-facing description. You do not need to add a PR link — `@changesets/changelog-github` auto-prepends the PR link and commit reference at release time.
+
+The leading component name is how the release tooling groups your entry. A conventional commit scope also works (`fix(menu): Fixed…` or `**fix(menu):** Fixed…`). Entries that start with neither stay in an ungrouped list below the component groups, so always lead with the component.
 
 > Breaking changes are not expected until the full component set is migrated. If one does arise, prefix with `BREAKING:` in the changeset body and coordinate with the team before merging.
 
@@ -151,7 +153,7 @@ Bump types follow [semantic versioning](https://semver.org/) — the version num
 
 ## CHANGELOG output
 
-At release time, changesets collates entries under a version heading, grouped by bump type (`### Minor Changes`, `### Patch Changes`). The output is fully automated — no manual editing required.
+At release time, changesets collates entries under a version heading, grouped by bump type (`### Minor Changes`, `### Patch Changes`). The grouping step then nests each entry under its component, sorted alphabetically. Entries without a recognizable component follow the groups unchanged. The output is fully automated — no manual editing required.
 
 **Typical release** — a minor feature and a patch fix in the same release:
 
@@ -160,11 +162,15 @@ At release time, changesets collates entries under a version heading, grouped by
 
 ### Minor Changes
 
-- [#6210](https://github.com/adobe/spectrum-web-components/pull/6210) [`a1b2c3d`](https://github.com/adobe/spectrum-web-components/commit/a1b2c3d) - `Button` — Added wiggle radius to button.
+- **button**:
+  - [#6210](https://github.com/adobe/spectrum-web-components/pull/6210) [`a1b2c3d`](https://github.com/adobe/spectrum-web-components/commit/a1b2c3d) - `Button` — Added wiggle radius to button.
 
 ### Patch Changes
 
-- [#6285](https://github.com/adobe/spectrum-web-components/pull/6285) [`e4f5g6h`](https://github.com/adobe/spectrum-web-components/commit/e4f5g6h) - `Badge` — Fixed contrast ratio in dark theme for `notice` variant.
+- **badge**:
+  - [#6285](https://github.com/adobe/spectrum-web-components/pull/6285) [`e4f5g6h`](https://github.com/adobe/spectrum-web-components/commit/e4f5g6h) - `Badge` — Fixed contrast ratio in dark theme for `notice` variant.
+
+  - [#6291](https://github.com/adobe/spectrum-web-components/pull/6291) [`f6a7b8c`](https://github.com/adobe/spectrum-web-components/commit/f6a7b8c) - `Badge` — Fixed truncation of long labels.
 ```
 
 Each entry is automatically prefixed with the PR link and commit reference by `@changesets/changelog-github`. The body you wrote in the changeset follows the dash.
@@ -173,7 +179,14 @@ Each entry is automatically prefixed with the PR link and commit reference by `@
 
 `gen2/.changeset/config.json` uses `@changesets/changelog-github` with `disableThanks: true`. This is the standard changesets GitHub changelog generator — it auto-prepends the PR link and commit reference to each entry, groups entries by bump type (`### Minor Changes`, `### Patch Changes`), and handles version headings. The `disableThanks` option suppresses the `Thanks @author!` attribution so entries stay focused on the change itself.
 
-No custom scripts are involved. The changeset body you write is preserved as-is; changesets handles all formatting and collation.
+After `yarn changeset version`, the release workflow (`.github/workflows/publish-gen2.yml`) runs `node scripts/group-gen2-changelog.js`. For each gen2 `CHANGELOG.md`, the script:
+
+- Touches only version sections that are not yet on the base branch, so released history is never rewritten.
+- Groups top-level entries under each bump type by component and sorts the groups alphabetically. Ungrouped entries and `Updated dependencies` entries keep their original order after the groups.
+- Drops an entry whose commit is already listed in an older section, so a change cannot reappear in a later `beta.N` entry.
+- Skips sections that are already grouped, so re-running the script is safe.
+
+Run `yarn test:changelog` to test the gen1 and gen2 changelog scripts.
 
 ## Gen1's changelog rollup
 
@@ -181,9 +194,11 @@ No custom scripts are involved. The changeset body you write is preserved as-is;
 
 On top of that, gen1 runs one additional step: `yarn workspace @spectrum-web-components/1st-gen changelog:1st-gen` (`1st-gen/scripts/update-changelog.js`), which rolls up the currently pending `1st-gen/.changeset/*.md` files into a single dated entry at the top of the root `1st-gen/CHANGELOG.md`. It builds this entry independently, straight from the changeset frontmatter and body text, rather than from `@changesets/changelog-github`'s output.
 
+Within each bump type, the rollup groups changesets by the components listed in their frontmatter (for example, `**sp-menu**:` or `**sp-overlay**, **sp-picker**:`), sorted alphabetically. Each entry links to the PR and commit that added the changeset, looked up from git history. Multi-line changeset bodies are kept intact, indented under their entry.
+
 This script must run before `yarn changeset version`, since `changeset version` deletes each `.changeset/*.md` file once it folds it into the per-package changelogs. In the release workflow (`.github/workflows/publish.yml`), both steps run in the same job, so the resulting `1st-gen/CHANGELOG.md` rollup entry and the per-package `CHANGELOG.md` updates land in the same Version PR commit for review.
 
-Gen2 has no equivalent rollup script; it relies solely on `@changesets/changelog-github`.
+Gen2 has no equivalent rollup script; it relies on `@changesets/changelog-github` plus the grouping step described in [How it works](#how-it-works).
 
 ## Gen2's pre-release versioning
 
