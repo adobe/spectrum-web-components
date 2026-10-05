@@ -11,13 +11,13 @@ description: Phase 7 of 1st-gen to gen2 component migration. Use to author the
 
 See also:
 
-- [`documentation`](../documentation/SKILL.md) — Adobe content writing standards
-- [`stories-format`](../../rules/stories-format.md) — stories file structure
-- [`stories-documentation`](../../rules/stories-documentation.md) — per-unit MDX authoring patterns
+- [`documentation-standards`](../documentation-standards/SKILL.md) — Adobe content writing standards
+- [`stories-format`](../stories-format/SKILL.md) — stories file structure
+- [`stories-documentation`](../stories-documentation/SKILL.md) — per-unit MDX authoring patterns
 
 ## Mindset
 
-You are writing for the next contributor, not for yourself. Every MDX section and JSDoc line on a public API member should answer the question a new engineer would ask six months from now. Avoid restating the implementation. Explain the intent and the constraints. Follow the `documentation` skill for writing style and content expectations.
+You are writing for the next contributor, not for yourself. Every MDX section and JSDoc line on a public API member should answer the question a new engineer would ask six months from now. Avoid restating the implementation. Explain the intent and the constraints. Follow the `documentation-standards` skill for writing style and content expectations.
 
 **Where prose lives**: long-form documentation for Storybook is authored in the **per-component MDX file** (`gen2/packages/swc/components/[component]/[component].mdx`), not in JSDoc comments above story exports. JSDoc above story exports is not used in gen2. The only JSDoc retained in the stories file is the meta-level JSDoc above `const meta: Meta = { ... }`, which is rendered by the `<Description />` block at the top of the docs page.
 
@@ -64,7 +64,7 @@ If no source is available at authoring time, limit the prose to technically veri
 
 If Phase 5 (migration-styling) was completed, `gen2/packages/swc/components/[component]/stories/[component].stories.ts` likely already exists with Playground, Overview, Anatomy, Options, States, and Behaviors stories — all structurally correct, no story-level JSDoc, and the Accessibility story body left as a `// TODO` comment. Phase 7's job is to:
 
-1. Create (or augment) `gen2/packages/swc/components/[component]/[component].mdx` as the per-component docs page — see [`stories-documentation`](../../rules/stories-documentation.md) for the full template, including the canonical section order, required imports, `<DocsHeader />` / `<DocsFooter />` placement, and per-section authoring patterns.
+1. Create (or augment) `gen2/packages/swc/components/[component]/[component].mdx` as the per-component docs page — see the [`stories-documentation` rule](../../rules/stories-documentation.md) for the file template, canonical section order, required imports, and `<DocsHeader />` / `<DocsFooter />` placement, and the [`stories-documentation` skill](../stories-documentation/SKILL.md) for per-section authoring patterns.
 2. Author the prose for each section (`## Anatomy`, `## Options`, `## States`, `## Behaviors`, `## Accessibility`) in the per-component MDX, with a `<Canvas of={Stories.StoryName} />` reference under each `### Story Title` heading (for `hideTitle=false` sections) or directly under the `## Section` heading (for `hideTitle=true` sections like Anatomy and Accessibility).
 3. Complete the Accessibility story body in the stories file — it was left as a `// TODO` in Phase 5. Add the Features / Best practices prose into `## Accessibility` in the MDX.
 4. Add any stories that were deferred or were not CSS-visible enough to include in Phase 5. For each new story, add a `<Canvas>` reference and accompanying prose to the MDX.
