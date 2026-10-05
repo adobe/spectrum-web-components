@@ -650,6 +650,7 @@
   "devDependencies": {
     "glob": "11.0.3",
     "rimraf": "6.0.1",
+    "svgo": "4.0.0",
     "typescript": "5.9.2",
     "vite": "8.0.8",
     "vite-plugin-dts": "4.5.4"
