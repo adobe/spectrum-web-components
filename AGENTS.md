@@ -17,7 +17,7 @@ Edit only `.ai/` sources. The pre-commit hook runs `yarn ai:sync`; run `yarn lin
 ## Conventions
 
 - **Branch names:** follow the `branch-naming` skill (`<username>/<type>-<description>[-swc-<issue>]`). Branches that the Copilot app creates for its own sessions are exempt.
-- **Commits:** conventional commits with a lowercase subject, enforced by commitlint. See the `conventional-commit` skill.
+- **Commits:** conventional commits with a lowercase subject, enforced by commitlint. See the `conventional-commits` skill.
 
 ## Non-trivial changes
 
