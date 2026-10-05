@@ -418,7 +418,12 @@ See `Q5`/`Q6` in the [Decision log](#decision-log) for the precedent resolving t
 - [ ] `change` event fires only when `splitterPos` actually changes (not on every pointer move)
 - [ ] `primarySize` variants: pixel, percentage, `"auto"` (including the `updateComplete` await for a slotted `LitElement` child)
 - [ ] Splitter position is preserved when panes are removed/re-added
-- [ ] Single-child case renders no splitter; 3rd-and-beyond children are hidden, not removed
+- [ ] Slot assignment, not DOM order, decides each pane: `slot="secondary"` before `slot="primary"` in the DOM still renders and sizes the panes correctly
+- [ ] Missing pane: with only one of `primary` or `secondary` filled, no splitter renders
+- [ ] Unmatched children (no `slot` or an unknown slot name) do not render and do not affect layout
+- [ ] Duplicate assignment: when a slot receives more than one element, the behavior matches the `Q12` decision
+- [ ] `primarySize="auto"` measures the element assigned to `primary` (per `Q12`), not the first DOM child
+- [ ] `aria-controls` references the element assigned to `primary` (per `Q12` and `Q4`), not the first DOM child
 - [ ] Nested split views: each divider is an independent tab stop, no roving-tabindex interference
 - [ ] Custom `accessible-label` overrides the default accessible name; default name is present whenever `resizable` with no `accessible-label` set
 
@@ -486,6 +491,7 @@ No open design blockers — see `Q1` in the [Decision log](#decision-log).
 | **Q3** | Confirm the `aria-orientation` convention (line orientation vs. axis of motion). | No | Resolved: line orientation, per the ARIA separator role, the APG window splitter pattern, and Nord; see `B6` | Accessibility reviewer |
 | **Q4** | Should `aria-controls` (element-reference IDL, `B7`) reference only the primary pane (matching 1st-gen) or both panes (per `A3`, since dragging affects both sizes)? Recommend: primary-only at baseline (matches 1st-gen behavior, avoids scope creep), expand to both under `A3` if reviewers agree it's warranted. | Yes, for finalizing `B7`'s scope | Open — needs accessibility reviewer confirmation | Accessibility reviewer |
 | **Q11** | How does split-view meet WCAG 2.5.7 (`B12`)? Option 1: built-in click/tap controls (for example, collapse/expand buttons on the divider and click-to-step resizing). Option 2: a documented consumer integration (for example, public methods or properties that consumer buttons drive), with a working example in the docs. | Yes, for finalizing `B12`'s scope | Open; needs accessibility and design input | Accessibility reviewer |
+| **Q12** | Does each named slot (`B11`) accept one root element or several? Recommend: one root per slot, so `primarySize="auto"` measures that root and `aria-controls` references it. Duplicate assignments use the first assigned element, hide the rest, and log a dev-mode warning. Consumers who need several elements wrap them in one container. | Yes, for finalizing `B11` and the slot tests | Open; needs reviewer confirmation | Ticket owner |
 
 ### Scope and prerequisites
 
