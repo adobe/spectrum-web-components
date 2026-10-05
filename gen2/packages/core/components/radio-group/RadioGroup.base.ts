@@ -117,7 +117,7 @@ export abstract class RadioGroupBase extends SizedMixin(
   public selected = '';
 
   /**
-   * Marks the group's current selection as invalid.
+   * Marks the group's current selection as invalid and blocks form submission.
    */
   @property({ type: Boolean, reflect: true })
   public invalid = false;
@@ -156,7 +156,7 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   /**
    * The host's own `disabled` OR the cascaded form / `<fieldset disabled>`
-   * state. Propagated to every slotted item via `disabledPropagation`.
+   * state. Cascaded to every slotted item while preserving its own disabled state.
    */
   protected get effectiveDisabled(): boolean {
     return this.disabled || this.fieldAssoc.formDisabled;
@@ -229,13 +229,31 @@ export abstract class RadioGroupBase extends SizedMixin(
       getValue: () => (this.emphasized ? '' : null),
     });
 
-  private readonly disabledPropagation = new SlotAttributePropagationController(
-    this,
-    {
-      attribute: 'disabled',
-      getValue: () => (this.effectiveDisabled ? '' : null),
+  private readonly disabledItemStates = new Map<RadioBase, boolean>();
+
+  private syncDisabledState(): boolean {
+    const items = this.assignedItems();
+    const assigned = new Set(items);
+    let changed = false;
+    for (const [item, disabled] of this.disabledItemStates) {
+      if (!this.effectiveDisabled || !assigned.has(item)) {
+        changed ||= item.disabled !== disabled;
+        item.disabled = disabled;
+        this.disabledItemStates.delete(item);
+      }
     }
-  );
+    if (!this.effectiveDisabled) {
+      return changed;
+    }
+    for (const item of items) {
+      if (!this.disabledItemStates.has(item)) {
+        this.disabledItemStates.set(item, item.disabled);
+      }
+      changed ||= !item.disabled;
+      item.disabled = true;
+    }
+    return changed;
+  }
 
   /**
    * Adopts `value` unless already selected, dispatching a cancelable `change`
@@ -369,10 +387,11 @@ export abstract class RadioGroupBase extends SizedMixin(
   private syncSlottedItems(): void {
     this.sizePropagation.propagate();
     this.emphasizedPropagation.propagate();
-    this.disabledPropagation.propagate();
+    this.syncDisabledState();
     this.warnDuplicateValues();
     this.syncItemPositions();
     this.navigation.refresh();
+    this.syncCheckedState();
   }
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
@@ -381,7 +400,6 @@ export abstract class RadioGroupBase extends SizedMixin(
       ?.querySelector('slot:not([name])')
       ?.addEventListener('slotchange', this.handleSlotchange);
     this.syncSlottedItems();
-    this.syncCheckedState();
   }
 
   protected override willUpdate(changedProperties: PropertyValues): void {
@@ -390,11 +408,25 @@ export abstract class RadioGroupBase extends SizedMixin(
       // A pre-checked item takes precedence over `selected` on first render.
       // Check the attribute and the property: items may be un-upgraded, or have
       // `checked` set as a property that has not reflected yet.
-      const preChecked = Array.from(this.children).find((child) =>
-        child instanceof RadioBase
-          ? child.checked
-          : child.hasAttribute('checked')
+      const checkedItems = Array.from(this.children)
+        .filter(
+          (child) =>
+            (child instanceof RadioBase || child.localName === 'swc-radio') &&
+            !child.getAttribute('slot')
+        )
+        .filter((child) =>
+          child instanceof RadioBase
+            ? child.checked
+            : child.hasAttribute('checked')
+        );
+      warnIf(
+        this,
+        checkedItems.length > 1,
+        'Multiple <swc-radio> items are initially checked; the first checked item takes precedence.',
+        DOCS_URL,
+        { type: 'api' }
       );
+      const preChecked = checkedItems[0];
       if (preChecked) {
         this.selected =
           (preChecked instanceof RadioBase
@@ -419,17 +451,21 @@ export abstract class RadioGroupBase extends SizedMixin(
       url: DOCS_URL,
     });
     super.update(changedProperties);
-    if (changedProperties.has('selected')) {
+    const disabledChanged = this.syncDisabledState();
+    if (disabledChanged) {
+      this.navigation.refresh();
+    }
+    if (disabledChanged || changedProperties.has('selected')) {
       this.syncCheckedState();
     }
     // Constraint validity: a required group with nothing selected is
-    // `valueMissing`, mirroring a native required radio set. The message is
+    // `valueMissing`; an invalid selection is `customError`. The message is
     // required by `setValidity` (it throws if empty); the UI is rendered elsewhere.
-    if (this.required && !this.selected) {
-      this.internals.setValidity({ valueMissing: true }, 'error');
-    } else {
-      this.internals.setValidity({});
-    }
+    const valueMissing = this.required && !this.selected;
+    this.internals.setValidity(
+      { valueMissing, customError: this.invalid },
+      valueMissing || this.invalid ? 'error' : ''
+    );
     // Push the current selection into the form; exclude it when nothing is
     // selected or the group is disabled, matching an unchecked native radio set.
     this.fieldAssoc.setValue(
