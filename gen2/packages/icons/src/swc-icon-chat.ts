@@ -37,7 +37,7 @@ export class IconChat extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Chat())}</span>
+      ${unsafeSVG(Icon_Chat())}
     `;
   }
 }

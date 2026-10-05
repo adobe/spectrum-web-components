@@ -37,7 +37,7 @@ export class IconColorFill extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_ColorFill())}</span>
+      ${unsafeSVG(Icon_ColorFill())}
     `;
   }
 }

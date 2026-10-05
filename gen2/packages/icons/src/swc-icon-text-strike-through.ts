@@ -37,7 +37,7 @@ export class IconTextStrikeThrough extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_TextStrikeThrough())}</span>
+      ${unsafeSVG(Icon_TextStrikeThrough())}
     `;
   }
 }

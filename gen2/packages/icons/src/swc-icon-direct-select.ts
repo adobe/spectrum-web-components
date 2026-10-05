@@ -37,7 +37,7 @@ export class IconDirectSelect extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_DirectSelect())}</span>
+      ${unsafeSVG(Icon_DirectSelect())}
     `;
   }
 }

@@ -37,7 +37,7 @@ export class IconShuffle extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Shuffle())}</span>
+      ${unsafeSVG(Icon_Shuffle())}
     `;
   }
 }

@@ -37,7 +37,7 @@ export class IconKeyboard extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Keyboard())}</span>
+      ${unsafeSVG(Icon_Keyboard())}
     `;
   }
 }

@@ -37,7 +37,7 @@ export class IconOrderBottom extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_OrderBottom())}</span>
+      ${unsafeSVG(Icon_OrderBottom())}
     `;
   }
 }

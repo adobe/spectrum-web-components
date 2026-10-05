@@ -14,6 +14,7 @@
   },
   "type": "module",
   "scripts": {
+    "ai:sync": "node .ai/scripts/sync.js",
     "build": "run-s build:gen2 build:1st-gen",
     "build:1st-gen": "yarn workspace @spectrum-web-components/1st-gen build",
     "build:gen2": "yarn workspace @spectrum-web-components/gen2 build",
@@ -113,6 +114,7 @@
     "stylelint-order": "7.0.1",
     "typescript": "5.9.2",
     "typescript-eslint": "8.54.0",
+    "yaml": "2.8.1",
     "yargs": "17.7.2"
   },
   "keywords": [

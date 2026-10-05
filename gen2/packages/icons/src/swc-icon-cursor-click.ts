@@ -37,7 +37,7 @@ export class IconCursorClick extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_CursorClick())}</span>
+      ${unsafeSVG(Icon_CursorClick())}
     `;
   }
 }

@@ -37,7 +37,7 @@ export class IconBlur extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Blur())}</span>
+      ${unsafeSVG(Icon_Blur())}
     `;
   }
 }

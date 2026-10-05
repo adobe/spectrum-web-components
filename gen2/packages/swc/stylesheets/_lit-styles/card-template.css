@@ -140,9 +140,16 @@
   display: block;
   grid-area: preview;
   inline-size: 100%;
-  aspect-ratio: var(--swc-card-base-preview-aspect-ratio, 3/2);
   pointer-events: none;
+}
+
+::slotted(img[slot="preview"]) {
+  aspect-ratio: var(--swc-card-base-preview-aspect-ratio, 3/2);
   object-fit: cover;
+}
+
+::slotted(swc-asset[slot="preview"]) {
+  --swc-asset-aspect-ratio: var(--swc-card-base-preview-aspect-ratio, 3/2);
 }
 
 /* Hide preview items after the first one */

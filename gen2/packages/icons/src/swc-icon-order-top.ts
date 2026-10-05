@@ -37,7 +37,7 @@ export class IconOrderTop extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_OrderTop())}</span>
+      ${unsafeSVG(Icon_OrderTop())}
     `;
   }
 }

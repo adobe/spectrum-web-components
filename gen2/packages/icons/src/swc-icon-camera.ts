@@ -37,7 +37,7 @@ export class IconCamera extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Camera())}</span>
+      ${unsafeSVG(Icon_Camera())}
     `;
   }
 }

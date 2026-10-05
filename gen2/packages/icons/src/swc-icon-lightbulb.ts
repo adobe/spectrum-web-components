@@ -37,7 +37,7 @@ export class IconLightbulb extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Lightbulb())}</span>
+      ${unsafeSVG(Icon_Lightbulb())}
     `;
   }
 }

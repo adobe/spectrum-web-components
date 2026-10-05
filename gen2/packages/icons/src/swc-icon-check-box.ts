@@ -37,7 +37,7 @@ export class IconCheckBox extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_CheckBox())}</span>
+      ${unsafeSVG(Icon_CheckBox())}
     `;
   }
 }

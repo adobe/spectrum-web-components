@@ -37,7 +37,7 @@ export class IconRibbon extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Ribbon())}</span>
+      ${unsafeSVG(Icon_Ribbon())}
     `;
   }
 }

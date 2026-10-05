@@ -37,7 +37,7 @@ export class IconSort extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Sort())}</span>
+      ${unsafeSVG(Icon_Sort())}
     `;
   }
 }

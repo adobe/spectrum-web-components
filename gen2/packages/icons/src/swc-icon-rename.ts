@@ -37,7 +37,7 @@ export class IconRename extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Rename())}</span>
+      ${unsafeSVG(Icon_Rename())}
     `;
   }
 }

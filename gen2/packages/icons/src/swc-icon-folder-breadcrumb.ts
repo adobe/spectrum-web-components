@@ -37,7 +37,7 @@ export class IconFolderBreadcrumb extends IconBase {
 
   protected override render(): TemplateResult {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_FolderBreadcrumb())}</span>
+      ${unsafeSVG(Icon_FolderBreadcrumb())}
     `;
   }
 }

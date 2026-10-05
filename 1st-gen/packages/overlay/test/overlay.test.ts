@@ -15,6 +15,7 @@ import {
   html,
   nextFrame,
   oneEvent,
+  waitUntil,
 } from '@open-wc/testing';
 import { setViewport } from '@web/test-runner-commands';
 import { sendKeys } from '@web/test-runner-commands';
@@ -30,6 +31,7 @@ import {
   Placement,
   VirtualTrigger,
 } from '@spectrum-web-components/overlay';
+import { overlayStack } from '@spectrum-web-components/overlay/src/OverlayStack.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { isFirefox } from '@spectrum-web-components/shared/src/platform.js';
 import { Theme } from '@spectrum-web-components/theme';
@@ -1074,6 +1076,29 @@ describe('Overlay - Interactive Content', () => {
   });
 });
 
+/**
+ * Records every open or close task that the overlay starts. The returned
+ * function resolves after those tasks finish, including the lazy
+ * `focus-trap` import.
+ */
+function trackOverlayWork(overlay: Overlay): () => Promise<void> {
+  const work: Promise<void>[] = [];
+  const instance = overlay as unknown as {
+    managePopoverOpen(): Promise<void>;
+  };
+  const managePopoverOpen = instance.managePopoverOpen;
+  instance.managePopoverOpen = function (this: Overlay): Promise<void> {
+    const task = managePopoverOpen.call(this);
+    work.push(task);
+    return task;
+  };
+  return async () => {
+    while (work.length) {
+      await Promise.all(work.splice(0));
+    }
+  };
+}
+
 describe('Overlay should correctly trap focus', () => {
   it('should trap focus when the overlay type is modal', async () => {
     const el = await fixture<HTMLDivElement>(html`
@@ -1162,6 +1187,193 @@ describe('Overlay should correctly trap focus', () => {
     // press tab to focus on button2
     await sendTabKey();
     expect(document.activeElement).to.equal(button2);
+  });
+  it('does not keep a focus trap when a modal overlay closes while opening', async () => {
+    const el = await fixture<HTMLDivElement>(html`
+      <div>
+        <sp-button id="outside">Outside</sp-button>
+        <sp-overlay type="modal">
+          <sp-dialog>
+            <sp-button>Inside</sp-button>
+          </sp-dialog>
+        </sp-overlay>
+      </div>
+    `);
+    const outside = el.querySelector('#outside') as Button;
+    const overlay = el.querySelector('sp-overlay') as Overlay;
+    await elementUpdated(overlay);
+    const overlayWorkSettled = trackOverlayWork(overlay);
+
+    // Close at several microtask depths after the opening transition starts,
+    // including while the lazy focus-trap import is still pending.
+    for (let depth = 0; depth < 8; depth++) {
+      overlay.addEventListener(
+        'beforetoggle',
+        () => {
+          let close = (): void => {
+            overlay.open = false;
+          };
+          for (let i = 0; i < depth; i++) {
+            const next = close;
+            close = () => queueMicrotask(next);
+          }
+          queueMicrotask(close);
+        },
+        { once: true }
+      );
+      overlay.open = true;
+      await waitUntil(
+        () => !overlay.open && overlay.state === 'closed',
+        `overlay closed at depth ${depth}`
+      );
+      await overlayWorkSettled();
+    }
+
+    const clickSpy = spy();
+    outside.addEventListener('click', clickSpy);
+    outside.click();
+
+    expect(clickSpy.callCount).to.equal(1);
+  });
+  it('does not keep a stale focus trap when a modal overlay closes and reopens while opening', async () => {
+    const el = await fixture<HTMLDivElement>(html`
+      <div>
+        <sp-button id="outside">Outside</sp-button>
+        <sp-overlay type="modal">
+          <sp-dialog>
+            <sp-button>Inside</sp-button>
+          </sp-dialog>
+        </sp-overlay>
+      </div>
+    `);
+    const outside = el.querySelector('#outside') as Button;
+    const overlay = el.querySelector('sp-overlay') as Overlay;
+    await elementUpdated(overlay);
+    const overlayWorkSettled = trackOverlayWork(overlay);
+
+    // Close and reopen before the first opening task resumes.
+    overlay.open = true;
+    await elementUpdated(overlay);
+    overlay.open = false;
+    await elementUpdated(overlay);
+    overlay.open = true;
+    await elementUpdated(overlay);
+    await overlayWorkSettled();
+
+    overlay.open = false;
+    await elementUpdated(overlay);
+    await overlayWorkSettled();
+
+    const clickSpy = spy();
+    outside.addEventListener('click', clickSpy);
+    outside.click();
+
+    expect(clickSpy.callCount).to.equal(1);
+  });
+  it('removes a modal overlay from the overlay stack after quick toggles', async () => {
+    const el = await fixture<HTMLDivElement>(html`
+      <div>
+        <sp-overlay type="modal">
+          <sp-dialog>
+            <sp-button>Inside</sp-button>
+          </sp-dialog>
+        </sp-overlay>
+      </div>
+    `);
+    const overlay = el.querySelector('sp-overlay') as Overlay;
+    await elementUpdated(overlay);
+    const overlayWorkSettled = trackOverlayWork(overlay);
+
+    for (const open of [true, false, true, false]) {
+      overlay.open = open;
+      await elementUpdated(overlay);
+    }
+    await overlayWorkSettled();
+    await waitUntil(() => overlay.state === 'closed', 'overlay closed');
+    await nextFrame();
+    await nextFrame();
+
+    // A stale modal stack entry also keeps page scrolling disabled.
+    expect(overlayStack.stack.includes(overlay), 'overlay in stack').to.be
+      .false;
+  });
+  it('keeps one focus trap when a modal overlay restarts opening', async () => {
+    const el = await fixture<HTMLDivElement>(html`
+      <div>
+        <sp-button id="outside">Outside</sp-button>
+        <sp-overlay type="modal">
+          <sp-dialog>
+            <sp-button>Inside</sp-button>
+          </sp-dialog>
+        </sp-overlay>
+      </div>
+    `);
+    const outside = el.querySelector('#outside') as Button;
+    const overlay = el.querySelector('sp-overlay') as Overlay;
+    await elementUpdated(overlay);
+    const overlayWorkSettled = trackOverlayWork(overlay);
+
+    overlay.open = true;
+    await elementUpdated(overlay);
+    await overlayWorkSettled();
+
+    // Restart opening after the first focus trap is active.
+    overlay.manuallyKeepOpen();
+    await overlayWorkSettled();
+
+    overlay.open = false;
+    await elementUpdated(overlay);
+    await overlayWorkSettled();
+
+    const clickSpy = spy();
+    outside.addEventListener('click', clickSpy);
+    outside.click();
+
+    expect(clickSpy.callCount).to.equal(1);
+  });
+  it('does not keep a focus trap when a modal overlay is removed during a longpress', async () => {
+    const el = await fixture<HTMLDivElement>(html`
+      <div>
+        <sp-button id="outside">Outside</sp-button>
+        <sp-button id="trigger">Trigger</sp-button>
+        <sp-overlay trigger="trigger@longpress" type="modal">
+          <sp-popover>
+            <sp-button>Inside</sp-button>
+          </sp-popover>
+        </sp-overlay>
+      </div>
+    `);
+    const outside = el.querySelector('#outside') as Button;
+    const trigger = el.querySelector('#trigger') as Button;
+    const overlay = el.querySelector('sp-overlay') as Overlay;
+    await elementUpdated(overlay);
+    const overlayWorkSettled = trackOverlayWork(overlay);
+
+    // A pressed longpress keeps the overlay logically open on disconnect.
+    overlay.addEventListener('beforetoggle', () => overlay.remove(), {
+      once: true,
+    });
+    trigger.dispatchEvent(
+      new CustomEvent('longpress', {
+        bubbles: true,
+        composed: true,
+        detail: { source: 'pointer' },
+      })
+    );
+    await waitUntil(() => !overlay.isConnected, 'overlay removed');
+    await overlayWorkSettled();
+
+    const clickSpy = spy();
+    outside.addEventListener('click', clickSpy);
+    outside.click();
+
+    // Finish the longpress so cleanup can close the removed overlay.
+    overlay.strategy?.shouldCompleteOpen();
+    overlay.open = false;
+    await elementUpdated(overlay);
+    await overlayWorkSettled();
+
+    expect(clickSpy.callCount).to.equal(1);
   });
   it('should not trap focus when the overlay type is auto', async () => {
     const el = await fixture<HTMLDivElement>(html`
