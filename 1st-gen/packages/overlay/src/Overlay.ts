@@ -596,26 +596,34 @@ export class Overlay extends ComputedOverlayBase {
     }
     if (targetOpenState) {
       const focusTrap = await import('focus-trap');
+      // The overlay can close, reopen, or be removed during the import. A
+      // pressed longpress can keep a removed overlay open.
+      if (this.open !== targetOpenState || !this.isConnected) {
+        return;
+      }
       // When `receives-focus="false"`, pass `initialFocus: false` so the trap
       // still captures Tab but does not move focus on activation. Without this,
       // focus-trap would move focus before `applyFocus` runs, bypassing the
       // `receivesFocus === 'false'` guard there.
       const initialFocus =
         this.receivesFocus === 'false' ? false : focusEl || undefined;
-      this._focusTrap = focusTrap.createFocusTrap(this.dialogEl, {
-        initialFocus,
-        tabbableOptions: {
-          getShadowRoot: true,
-        },
-        fallbackFocus: () => {
-          // set tabIndex to -1 allow the focus-trap to still be applied
-          this.dialogEl.setAttribute('tabIndex', '-1');
-          return this.dialogEl;
-        },
-        // disable escape key capture to close the overlay, the focus-trap library captures it otherwise
-        escapeDeactivates: false,
-        allowOutsideClick: this.allowOutsideClick,
-      });
+      // Reuse the trap when opening restarts, so close deactivates every trap.
+      this._focusTrap =
+        this._focusTrap ||
+        focusTrap.createFocusTrap(this.dialogEl, {
+          initialFocus,
+          tabbableOptions: {
+            getShadowRoot: true,
+          },
+          fallbackFocus: () => {
+            // set tabIndex to -1 allow the focus-trap to still be applied
+            this.dialogEl.setAttribute('tabIndex', '-1');
+            return this.dialogEl;
+          },
+          // disable escape key capture to close the overlay, the focus-trap library captures it otherwise
+          escapeDeactivates: false,
+          allowOutsideClick: this.allowOutsideClick,
+        });
 
       if (this.type === 'modal' || this.type === 'page') {
         this._focusTrap.activate();
