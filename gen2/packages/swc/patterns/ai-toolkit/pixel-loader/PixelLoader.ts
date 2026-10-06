@@ -18,6 +18,7 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { validateEnum } from '@adobe/spectrum-wc-core/utils';
 
 import {
+  buildCompleteMsFor,
   cellScaleKeyframes,
   cellTranslateKeyframes,
   durationForCells,
@@ -96,7 +97,8 @@ export class PixelLoader extends SpectrumElement {
 
   /**
    * Cycles through a themed sequence of icons, one per loop, instead of a
-   * single `icon`.
+   * single `icon`. The `mega` preset shuffles its sequence per instance while
+   * keeping `aiLogo` first and the Adobe letter icons in order.
    */
   @property({ type: String, reflect: true })
   public preset?: PixelLoaderPresetName;
@@ -120,6 +122,11 @@ export class PixelLoader extends SpectrumElement {
   // paths). Invalidated in `updated` since a new icon/preset re-renders cells.
   private _containerCache: HTMLElement | null = null;
   private _cellElsCache: HTMLElement[] | null = null;
+
+  // The mega shuffle stays stable across re-renders and ticker steps instead
+  // of reshuffling on every read.
+  private _shuffledPresetIcons: PixelLoaderIconName[] | null = null;
+  private _shuffledPresetKey: PixelLoaderPresetName | undefined;
 
   private _ticker: number | null = null;
 
@@ -257,14 +264,30 @@ export class PixelLoader extends SpectrumElement {
       this._cellElsCache = null;
     }
 
+    // Coming off `paused` already shows the fully-assembled, settled frame
+    // (see `_playCells`'s static branch); replaying the entry drop from
+    // scratch would visibly rebuild an icon that is already built. Skip
+    // straight to the hold/exit that follows instead — both here and in the
+    // ticker interval below, so the next preset step fires when the
+    // fast-forwarded animation actually finishes rather than a full cycle
+    // later. Computed once (rather than separately in `_syncTicker` and
+    // `_playCells`) since both need the same value for the same transition.
+    const justUnpaused = changed.get('paused') === true && !this.paused;
+    const skipEntryMs =
+      justUnpaused && this._animationMode === 'full'
+        ? buildCompleteMsFor(this._activeCells.cells)
+        : 0;
+
     // Resync the ticker on `paused` (freeze stops cycling) and on each
     // `_presetIndex` step, since every icon's cycle duration differs.
+    // The mega preset's shuffled order can change the icon at the current
+    // index, which can change that icon's own cycle duration too.
     if (
       changed.has('preset') ||
       changed.has('paused') ||
       changed.has('_presetIndex')
     ) {
-      this._syncTicker();
+      this._syncTicker(skipEntryMs);
     }
 
     // A single-icon change willUpdate did not commit means a build is in
@@ -279,7 +302,7 @@ export class PixelLoader extends SpectrumElement {
       changed.has('_presetIndex') ||
       (changed.has('_displayedIcon') && !this._resolvedPreset)
     ) {
-      this._playCells();
+      this._playCells(skipEntryMs);
     }
   }
 
@@ -330,7 +353,47 @@ export class PixelLoader extends SpectrumElement {
 
   private _presetIcons(): PixelLoaderIconName[] | undefined {
     const preset = this._resolvedPreset;
-    return preset ? PRESETS[preset] : undefined;
+    if (!preset) {
+      return undefined;
+    }
+
+    const icons = PRESETS[preset];
+    if (preset !== 'mega') {
+      return icons;
+    }
+
+    if (this._shuffledPresetKey !== preset || !this._shuffledPresetIcons) {
+      // The preset's first icon (its opening "brand" frame, e.g. `aiLogo`)
+      // always leads; only the rest of the sequence shuffles.
+      const [first, ...rest] = icons;
+      const shuffled = this._shuffled(rest);
+      if (preset === 'mega') {
+        const brandIcons = rest.filter((icon) => icon.startsWith('adobe'));
+        let brandIndex = 0;
+        this._shuffledPresetIcons = [
+          first,
+          ...shuffled.map((icon) =>
+            icon.startsWith('adobe') ? brandIcons[brandIndex++] : icon
+          ),
+        ];
+      } else {
+        this._shuffledPresetIcons = [first, ...shuffled];
+      }
+      this._shuffledPresetKey = preset;
+    }
+    return this._shuffledPresetIcons;
+  }
+
+  /** Fisher-Yates shuffle; does not mutate `icons`. */
+  private _shuffled(
+    icons: readonly PixelLoaderIconName[]
+  ): PixelLoaderIconName[] {
+    const shuffled = [...icons];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
   }
 
   /** Cells for a named icon, guarding against an unknown name. */
@@ -356,7 +419,7 @@ export class PixelLoader extends SpectrumElement {
     };
   }
 
-  private _syncTicker(): void {
+  private _syncTicker(skipMs = 0): void {
     this._stopTicker();
 
     // Reduced motion still cycles (the fade communicates activity); only the
@@ -372,9 +435,18 @@ export class PixelLoader extends SpectrumElement {
     // list already resolved above rather than re-resolving the preset via
     // `_activeCells`.
     const cells = this._cellsForIcon(icons[this._presetIndex % icons.length]);
-    this._ticker = window.setInterval(() => {
-      this._presetIndex = (this._presetIndex + 1) % icons.length;
-    }, this._cycleDuration(cells));
+    const duration = this._cycleDuration(cells);
+
+    // `_playCells(skipMs)` fast-forwards this same icon's animation past its
+    // entry when coming off `paused`; shorten this one interval by the same
+    // amount so the next step fires when that animation actually finishes
+    // instead of a full cycle later.
+    this._ticker = window.setInterval(
+      () => {
+        this._presetIndex = (this._presetIndex + 1) % icons.length;
+      },
+      Math.max(0, duration - skipMs)
+    );
   }
 
   private _stopTicker(): void {
@@ -462,7 +534,7 @@ export class PixelLoader extends SpectrumElement {
     });
   }
 
-  private _playCells(): void {
+  private _playCells(skipMs = 0): void {
     this._cancelAnimations();
 
     const cellEls = this._cellEls();
@@ -547,12 +619,22 @@ export class PixelLoader extends SpectrumElement {
         container.animate(groupOpacityKeyframes(total), options)
       );
     }
+
+    if (skipMs > 0) {
+      this._animations.forEach((animation) => {
+        animation.currentTime = skipMs;
+      });
+    }
   }
 
   private _renderCell(cell: Cell, radii: CornerRadii): TemplateResult {
+    const fullyRounded =
+      radii.topLeft && radii.topRight && radii.bottomRight && radii.bottomLeft;
     return html`
       <div
-        class="swc-PixelLoader-cell"
+        class=${fullyRounded
+          ? 'swc-PixelLoader-cell swc-PixelLoader-cell--fully-rounded'
+          : 'swc-PixelLoader-cell'}
         style=${styleMap({
           'grid-column': String(cell.col + 1),
           'grid-row': String(cell.row + 1),
