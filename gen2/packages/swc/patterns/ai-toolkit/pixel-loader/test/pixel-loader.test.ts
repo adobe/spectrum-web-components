@@ -522,3 +522,27 @@ export const ValidPresetNoWarningTest: Story = {
     );
   },
 };
+
+export const MegaRandomBrandOrderTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement }) => {
+    const el = await getComponent<PixelLoader>(
+      canvasElement,
+      'swc-pixel-loader'
+    );
+    el.preset = 'mega';
+    el.random = true;
+    await el.updateComplete;
+
+    const icons = (
+      el as unknown as { _presetIcons: () => string[] }
+    )._presetIcons();
+    expect(icons.filter((icon) => icon.startsWith('adobe'))).toEqual([
+      'adobeA',
+      'adobeD',
+      'adobeO',
+      'adobeB',
+      'adobeE',
+    ]);
+  },
+};

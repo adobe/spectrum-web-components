@@ -379,7 +379,19 @@ export class PixelLoader extends SpectrumElement {
       // The preset's first icon (its opening "brand" frame, e.g. `aiLogo`)
       // always leads; only the rest of the sequence shuffles.
       const [first, ...rest] = icons;
-      this._shuffledPresetIcons = [first, ...this._shuffled(rest)];
+      const shuffled = this._shuffled(rest);
+      if (preset === 'mega') {
+        const brandIcons = rest.filter((icon) => icon.startsWith('adobe'));
+        let brandIndex = 0;
+        this._shuffledPresetIcons = [
+          first,
+          ...shuffled.map((icon) =>
+            icon.startsWith('adobe') ? brandIcons[brandIndex++] : icon
+          ),
+        ];
+      } else {
+        this._shuffledPresetIcons = [first, ...shuffled];
+      }
       this._shuffledPresetKey = preset;
     }
     return this._shuffledPresetIcons;

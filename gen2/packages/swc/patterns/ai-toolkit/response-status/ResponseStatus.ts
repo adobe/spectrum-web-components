@@ -452,10 +452,12 @@ export class ResponseStatus extends SpectrumElement {
       window.clearTimeout(this._loaderStartTimer);
       this._loaderStartTimer = null;
     }
+    this._loaderPaused = false;
   }
 
   private _engageLoader(): void {
     this._clearLoaderStartRaf();
+    this._loaderPaused = true;
     // Paint the static frame first (rAF), then hold it for a beat before
     // starting the animation, so the pause actually reads as a pause.
     this._loaderStartRaf = window.requestAnimationFrame(() => {
