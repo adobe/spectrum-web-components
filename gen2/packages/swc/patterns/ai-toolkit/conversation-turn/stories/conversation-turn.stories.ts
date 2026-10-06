@@ -60,7 +60,11 @@ export const Playground: Story = {
       </swc-conversation-turn>
       <swc-conversation-turn type="system">
         <swc-system-message>
-          <swc-response-status slot="status" status="complete">
+          <swc-response-status
+            slot="status"
+            status="complete"
+            style="--swc-response-status-label-max-lines: 1;"
+          >
             <span slot="label">
               I mapped your request to a concise executive narrative and grouped
               the response by audience and channel themes.
@@ -93,7 +97,11 @@ export const Overview: Story = {
       </swc-conversation-turn>
       <swc-conversation-turn type="system">
         <swc-system-message>
-          <swc-response-status slot="status" status="complete">
+          <swc-response-status
+            slot="status"
+            status="complete"
+            style="--swc-response-status-label-max-lines: 1;"
+          >
             <span slot="label">
               I prioritized campaign outcomes, segmented messaging pillars, and
               next-step actions to keep the summary presentation-ready.

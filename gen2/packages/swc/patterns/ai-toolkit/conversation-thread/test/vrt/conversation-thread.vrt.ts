@@ -72,8 +72,15 @@ const systemTurn = (text: string, withChrome = false) => html`
     <swc-system-message>
       ${withChrome
         ? html`
-            <swc-response-status slot="status" status="complete">
-              <span slot="label">Response complete</span>
+            <swc-response-status
+              slot="status"
+              status="complete"
+              style="--swc-response-status-label-max-lines: 1;"
+            >
+              <span slot="label">
+                Response complete: reviewed the source material, verified the
+                findings, and prepared the final response
+              </span>
             </swc-response-status>
           `
         : nothing}
@@ -176,5 +183,14 @@ export const Permutations: Story = {
     ${theme(permutationContent(), 'light', 'ltr')}
     ${theme(permutationContent(), 'dark', 'rtl')}
   `,
-  parameters: vrtParameters,
+  parameters: {
+    ...vrtParameters,
+    chromatic: {
+      modes: {
+        mobile: { viewport: { width: 320, height: 800 } },
+        tablet: { viewport: { width: 500, height: 900 } },
+        desktop: { viewport: { width: 1280, height: 1000 } },
+      },
+    },
+  },
 };

@@ -863,7 +863,7 @@ export const AgenticWidthTest: Story = {
     >
       <swc-response-status
         status="active"
-        style="max-inline-size: 320px;"
+        style="inline-size: 100%;"
       ></swc-response-status>
     </div>
   `,
