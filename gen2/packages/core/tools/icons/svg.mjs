@@ -10,6 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
+/*
+ * Build-time SVG cleanup shared by the icon generators in swc and the icons package.
+ * Not built or published; see ./README.md.
+ */
 import { optimize } from 'svgo';
 
 // A4U fills paths with its own token; rewrite to the SWC icon color contract.

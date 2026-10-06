@@ -14,45 +14,48 @@
  * Generates the internal UI-icon art bundles for `<swc-ui-icon>` from the A4U source
  * SVGs. This generator is UI-specific (it parses the UI filename form and emits Lit
  * `TemplateResult` bundles); the family-agnostic pieces it uses (SVG cleanup, kebab
- * casing, license and banner) live in `icon-source/utils/` so the future workflow
- * generator can reuse them.
+ * casing, license and banner) live in `@adobe/spectrum-wc-core`'s `tools/icons/`, shared
+ * with the workflow generator in `@adobe/spectrum-wc-icons`.
  *
- * Input:  icon-source/ui/S2_Icon_UI<Name>_Size<step>_N.svg
+ * Input:  components/ui-icons/icon-source/S2_Icon_UI<Name>_Size<step>_N.svg
  * Output: components/ui-icons/icon-set/<Name>.ts  (numeral step -> Lit `html` template)
  *         components/ui-icons/icon-set/index.ts   (the UI_ICONS registry + UiIconName type)
  *
- * Run with `yarn generate:ui-icons`. Regenerate whenever the source SVGs change.
+ * Run with `yarn generate:ui-icons` (from swc or the repo root). Regenerate whenever the
+ * source SVGs change. See ../icon-source/README.md.
  */
 import { globSync } from 'glob';
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// Build-time helpers shared with the workflow generator. Imported by path: core
+// publishes only dist/, so these are not package exports.
 import {
   generatedBanner,
   LICENSE,
   toKebab,
-} from '../icon-source/utils/format.mjs';
-import { cleanSvg } from '../icon-source/utils/svg.mjs';
+} from '../../../../core/tools/icons/format.mjs';
+import { cleanSvg } from '../../../../core/tools/icons/svg.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
-const packageRoot = path.resolve(scriptDir, '..');
-const sourceDir = path.join(packageRoot, 'icon-source', 'ui');
-const outDir = path.join(packageRoot, 'components', 'ui-icons', 'icon-set');
+const componentDir = path.resolve(scriptDir, '..');
+const sourceDir = path.join(componentDir, 'icon-source');
+const outDir = path.join(componentDir, 'icon-set');
 
 // A4U source filename: S2_Icon_UI<LogicalName>_Size<numeralStep>_N.svg
 const SOURCE_NAME = /^S2_Icon_UI(?<name>.+?)_Size(?<step>\d+)_N\.svg$/;
 
 const GENERATED_BANNER = generatedBanner(
   'yarn generate:ui-icons',
-  'icon-source/ui/'
+  'components/ui-icons/icon-source/'
 );
 
 // Collect: logical name -> { step -> cleaned svg string }.
 const icons = new Map();
 const files = globSync('*.svg', { cwd: sourceDir }).sort();
 
-// Refuse to run without source SVGs. The source folders are git-ignored, so on a clean
+// Refuse to run without source SVGs. The raw SVGs are git-ignored, so on a clean
 // checkout this would otherwise delete the committed icon-set and write an empty
 // registry, breaking every consumer.
 if (files.length === 0) {
