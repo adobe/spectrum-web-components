@@ -57,8 +57,8 @@ export abstract class ToastBase extends SpectrumElement {
   /**
    * An accessible label for the semantic variant icon.
    *
-   * Set to an empty string when the message text already communicates the
-   * variant and the icon should be decorative.
+   * When omitted or empty, the icon is decorative, so the message text must
+   * communicate the variant. Set a nonempty label to expose the icon.
    */
   @property({ type: String, attribute: 'icon-label' })
   public iconLabel?: string;
@@ -70,10 +70,11 @@ export abstract class ToastBase extends SpectrumElement {
   public actionLabel?: string;
 
   /**
-   * Whether the message content is exposed to the accessibility tree.
+   * Whether the message content is rendered inside the live region.
    *
-   * Prototype for Q11: false for one paint after opening so the live region
-   * is announced reliably (Q10), then set true on the following frame.
+   * False for two frames after opening so the live region is exposed empty
+   * first (Q10); content is then added as a DOM change, which both Safari and
+   * Chrome announce (Q11).
    *
    * @internal
    */
@@ -251,7 +252,8 @@ export abstract class ToastBase extends SpectrumElement {
   }
 
   /**
-   * Waits two frames, then exposes the message content (Q10/Q11 prototype).
+   * Waits two frames, then renders the message content into the live region
+   * (Q10/Q11).
    */
   private scheduleContentReveal(): void {
     this._cancelContentReveal?.();

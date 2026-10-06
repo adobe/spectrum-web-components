@@ -53,7 +53,8 @@ The first example uses bare text. The second uses an ID-bearing `<span>`. Inspec
 
 - Use bare text when the message does not need its own element.
 - Use one ID-bearing message element when the message already has stable light-DOM markup that the host can reference.
-- Set `icon-label=""` when the message already communicates the variant and announcing the icon label would be redundant.
+- Write a message that communicates the variant on its own, because the variant icon is decorative by default and screen readers do not announce it.
+- Set `icon-label` only when the icon needs its own announcement; a label can repeat meaning the message already carries.
 - Set `actionLabel` to render the optional action button.
 - Provide a descriptive `actionLabel` for the optional action button.
 - Listen for the bubbling, composed `swc-toast-action` event to handle action activation. Toast does not close itself; the queue owns the callback and optional close-on-action behavior.

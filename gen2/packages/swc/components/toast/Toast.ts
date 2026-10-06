@@ -59,12 +59,13 @@ export class Toast extends ToastBase {
         })}
       >
         <div class="swc-Toast-body" role="alert" aria-atomic="true">
-          <div
-            class="swc-Toast-content"
-            aria-hidden=${this.contentRevealed ? 'false' : 'true'}
-          >
-            ${this.renderIcon()}
-            <div class="swc-Toast-text"><slot></slot></div>
+          <div class="swc-Toast-content">
+            ${this.contentRevealed
+              ? html`
+                  ${this.renderIcon()}
+                  <div class="swc-Toast-text"><slot></slot></div>
+                `
+              : nothing}
           </div>
         </div>
         ${this.actionLabel
@@ -97,7 +98,7 @@ export class Toast extends ToastBase {
   };
 
   private renderIcon(): TemplateResult | typeof nothing {
-    const accessibleLabel = this.resolvedIconLabel;
+    const accessibleLabel = this.iconLabel || undefined;
     switch (this.variant) {
       case 'info':
         return html`
@@ -125,22 +126,6 @@ export class Toast extends ToastBase {
         `;
       default:
         return nothing;
-    }
-  }
-
-  private get resolvedIconLabel(): string | undefined {
-    if (this.iconLabel !== undefined) {
-      return this.iconLabel || undefined;
-    }
-    switch (this.variant) {
-      case 'info':
-        return 'Information';
-      case 'positive':
-        return 'Success';
-      case 'negative':
-        return 'Error';
-      default:
-        return undefined;
     }
   }
 }
