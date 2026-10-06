@@ -1,5 +1,85 @@
 # Change Log
 
+## 1.12.4
+
+### Patch Changes
+
+- Updated dependencies [[`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b), [`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b), [`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b), [`bcd9ce0`](https://github.com/adobe/spectrum-web-components/commit/bcd9ce09097a89ff37b87e9e2de1e9b4a2001af8), [`eb29944`](https://github.com/adobe/spectrum-web-components/commit/eb299448d6896370b65d04b0b8a8c642599a88b3), [`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b), [`9fae25e`](https://github.com/adobe/spectrum-web-components/commit/9fae25e33b8e085771776b4855c9087d5c2789cc), [`bc6a084`](https://github.com/adobe/spectrum-web-components/commit/bc6a0847c98bbc50fc8478b21525c562060fbd49), [`38890d6`](https://github.com/adobe/spectrum-web-components/commit/38890d68cc1a9383bd992a037f6d08a8543e18ec), [`c4b0b45`](https://github.com/adobe/spectrum-web-components/commit/c4b0b457651a820729700ec93299c1fb9254a48b), [`0f19244`](https://github.com/adobe/spectrum-web-components/commit/0f19244b6c3ca7220d07d742eed48143525ff9be), [`b09b13e`](https://github.com/adobe/spectrum-web-components/commit/b09b13e147c25de82660f92a0f7af4417f98aee5), [`bef2c80`](https://github.com/adobe/spectrum-web-components/commit/bef2c80335f77c770f8154b9a9a75ddefe28a2c4)]:
+  - @spectrum-web-components/action-group@1.12.4
+  - @spectrum-web-components/combobox@1.12.4
+  - @spectrum-web-components/breadcrumbs@1.12.4
+  - @spectrum-web-components/base@1.12.4
+  - @spectrum-web-components/reactive-controllers@1.12.4
+  - @spectrum-web-components/shared@1.12.4
+  - @spectrum-web-components/dropzone@1.12.4
+  - @spectrum-web-components/theme@1.12.4
+  - @spectrum-web-components/radio@1.12.4
+  - @spectrum-web-components/tabs@1.12.4
+  - @spectrum-web-components/swatch@1.12.4
+  - @spectrum-web-components/tags@1.12.4
+  - @spectrum-web-components/grid@1.12.4
+  - @spectrum-web-components/menu@1.12.4
+  - @spectrum-web-components/overlay@1.12.4
+  - @spectrum-web-components/picker@1.12.4
+  - @spectrum-web-components/progress-bar@1.12.4
+  - @spectrum-web-components/action-bar@1.12.4
+  - @spectrum-web-components/accordion@1.12.4
+  - @spectrum-web-components/action-button@1.12.4
+  - @spectrum-web-components/action-menu@1.12.4
+  - @spectrum-web-components/alert-banner@1.12.4
+  - @spectrum-web-components/asset@1.12.4
+  - @spectrum-web-components/avatar@1.12.4
+  - @spectrum-web-components/badge@1.12.4
+  - @spectrum-web-components/button@1.12.4
+  - @spectrum-web-components/button-group@1.12.4
+  - @spectrum-web-components/card@1.12.4
+  - @spectrum-web-components/checkbox@1.12.4
+  - @spectrum-web-components/clear-button@1.12.4
+  - @spectrum-web-components/close-button@1.12.4
+  - @spectrum-web-components/coachmark@1.12.4
+  - @spectrum-web-components/color-area@1.12.4
+  - @spectrum-web-components/color-field@1.12.4
+  - @spectrum-web-components/color-handle@1.12.4
+  - @spectrum-web-components/color-loupe@1.12.4
+  - @spectrum-web-components/color-slider@1.12.4
+  - @spectrum-web-components/color-wheel@1.12.4
+  - @spectrum-web-components/contextual-help@1.12.4
+  - @spectrum-web-components/dialog@1.12.4
+  - @spectrum-web-components/divider@1.12.4
+  - @spectrum-web-components/field-group@1.12.4
+  - @spectrum-web-components/field-label@1.12.4
+  - @spectrum-web-components/help-text@1.12.4
+  - @spectrum-web-components/icon@1.12.4
+  - @spectrum-web-components/icons@1.12.4
+  - @spectrum-web-components/icons-ui@1.12.4
+  - @spectrum-web-components/icons-workflow@1.12.4
+  - @spectrum-web-components/iconset@1.12.4
+  - @spectrum-web-components/illustrated-message@1.12.4
+  - @spectrum-web-components/infield-button@1.12.4
+  - @spectrum-web-components/link@1.12.4
+  - @spectrum-web-components/meter@1.12.4
+  - @spectrum-web-components/modal@1.12.4
+  - @spectrum-web-components/number-field@1.12.4
+  - @spectrum-web-components/picker-button@1.12.4
+  - @spectrum-web-components/popover@1.12.4
+  - @spectrum-web-components/progress-circle@1.12.4
+  - @spectrum-web-components/search@1.12.4
+  - @spectrum-web-components/sidenav@1.12.4
+  - @spectrum-web-components/slider@1.12.4
+  - @spectrum-web-components/split-view@1.12.4
+  - @spectrum-web-components/status-light@1.12.4
+  - @spectrum-web-components/switch@1.12.4
+  - @spectrum-web-components/table@1.12.4
+  - @spectrum-web-components/textfield@1.12.4
+  - @spectrum-web-components/thumbnail@1.12.4
+  - @spectrum-web-components/toast@1.12.4
+  - @spectrum-web-components/tooltip@1.12.4
+  - @spectrum-web-components/top-nav@1.12.4
+  - @spectrum-web-components/tray@1.12.4
+  - @spectrum-web-components/underlay@1.12.4
+  - @spectrum-web-components/styles@1.12.4
+  - @spectrum-web-components/truncated@1.12.4
+
 ## 1.12.2
 
 ### Patch Changes

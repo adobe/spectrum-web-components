@@ -72,3 +72,27 @@ export const OverviewTest: Story = {
     });
   },
 };
+
+export const NarrowUserTurnTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const turn = canvasElement.querySelector<ConversationTurn>(
+      'swc-conversation-turn[type="user"]'
+    );
+    const slot = turn?.shadowRoot?.querySelector('slot');
+
+    await step('keeps user content readable in a narrow column', async () => {
+      expect(turn).toBeTruthy();
+      expect(slot).toBeTruthy();
+
+      turn!.style.inlineSize = '160px';
+      expect(slot!.getBoundingClientRect().width).toBeGreaterThan(160 * 0.75);
+
+      turn!.style.inlineSize = '80px';
+      expect(slot!.getBoundingClientRect().width).toBeLessThanOrEqual(80);
+
+      turn!.style.inlineSize = '1000px';
+      expect(slot!.getBoundingClientRect().width).toBeLessThanOrEqual(536);
+    });
+  },
+};

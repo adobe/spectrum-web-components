@@ -64,6 +64,9 @@ const events = ['swc-asset-load', 'swc-asset-error'];
 /**
  * A general image/media primitive that displays a single slotted `<img>` or
  * `<svg>` element, sized and fit to the space provided.
+ *
+ * For consistently sized image-only previews, such as for layer panels, see
+ * [Thumbnail](../?path=/docs/components-thumbnail--docs).
  */
 const meta: Meta = {
   title: 'Asset',
