@@ -2,8 +2,6 @@
 
 `.ai/` is the single, tool-agnostic source for this repository's AI rules, skills, and lessons. Coding agents start from [`AGENTS.md`](../AGENTS.md) at the repository root. GitHub Copilot (CLI, app, VS Code, cloud agent, and code review), Claude Code, and Cursor read `.ai/` through native discovery paths, symlinks, and generated files, so nobody has to load anything by hand.
 
-For a visual overview of the whole system (sources, targets, formats, and which surface reads what), open [`ai-system.html`](./ai-system.html) in a browser.
-
 ## How it works
 
 | Concept                | Edit here                           | Tools read it from                                                                                                  |
