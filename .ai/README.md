@@ -78,7 +78,7 @@ Every rule is a **path-scoped rule**: it carries a `paths:` list so it loads onl
 
 ##### Storybook stories (documentation + format)
 
-These two rules share the same glob/path set (`gen2/**/stories/**` and `gen2/**/*.mdx` respectively) and work as a pair: `stories-documentation` defines _what_ to document, `stories-format` defines _how_ to structure the file.
+These two rules work as a pair: `stories-documentation` defines _what_ to document, `stories-format` defines _how_ to structure the file. Each rule keeps the constraints that apply to every matching file and points to a skill of the same name for the full procedure (`.ai/skills/stories-documentation/SKILL.md` and `.ai/skills/stories-format/SKILL.md`), so the always-loaded part stays under 12 KB.
 
 - **stories-documentation**: Content patterns for each documentation section
   - Sections: overview, anatomy, options, states, behaviors, accessibility
@@ -107,9 +107,18 @@ These two rules share the same glob/path set (`gen2/**/stories/**` and `gen2/**/
 - Applies to: `CONTRIBUTOR-DOCS/**`
 - Points to the `contributor-docs-nav` skill for the full Operator/Maintainer workflow
 
+##### Pointer rules
+
+- **accessibility-migration-analysis**: Loads for `CONTRIBUTOR-DOCS/**/accessibility-migration-analysis.md` and points to the skill of the same name
+- **consumer-migration-guide**: Loads for `gen2/packages/swc/components/*/migration-guide.mdx` and points to the skill of the same name
+
+##### Lessons (memory)
+
+- Files in `.ai/memory/` use the same frontmatter as rules and are generated as `memory-<name>` instructions. `agnostic-lessons` applies to all files (`**`) and is excluded from code review; `css-styling-lessons` applies to `**/*.css`.
+
 ### When rules and skills are activated
 
-**Path-scoped rules:** `styles`, `text-formatting`, `stories-documentation`, `stories-format`, `component-readme`, and `contributor-doc-update` carry a `paths:` list — loaded only when a matching file is in context, deterministically, in every tool. Always-on guidance belongs in `AGENTS.md`, not in a rule.
+**Path-scoped rules:** `styles`, `text-formatting`, `stories-documentation`, `stories-format`, `component-readme`, `contributor-doc-update`, `accessibility-migration-analysis`, `consumer-migration-guide`, and the two lessons files in `.ai/memory/` carry a `paths:` list — loaded only when a matching file is in context, deterministically, in every tool. Always-on guidance belongs in `AGENTS.md`, not in a rule.
 **Skills:** Guidance with no natural file-path scope — `branch-naming`, `storybook-mdx-conversion`, `jira-ticket`, `github-description`, `code-conformance`, `consistency-pass`, `deep-understanding`, `migration-phase-awareness`, `contributor-docs-nav`, and the rest of the [Available skills](#available-skills) catalog — invoked on demand by the agent matching task intent, or by explicit request.
 **Config-based rules:** The `config.json` also defines structured validation for editors and other tooling to verify branch names, Jira ticket drafts, text-formatting, etc.:
 
@@ -125,34 +134,38 @@ These two rules share the same glob/path set (`gen2/**/stories/**` and `gen2/**/
 - **jira_tickets.labels**: Validates allowed label values
 - **jira_tickets.issue_types**: Ensures correct issue type selection
 
-| Rule/skill                     | Always active | Path-scoped rule | Skill (on-demand) | Config-based | Glob / paths                      |
-| ------------------------------ | :-----------: | :--------------: | :---------------: | :----------: | --------------------------------- |
-| branch-naming                  |               |                  |         x         |              | —                                 |
-| styles                         |               |        x         |                   |              | `**/*.css`                        |
-| text-formatting                |               |        x         |                   |              | `**/*.md`, `**/*.txt`, `**/*.mdx` |
-| stories-documentation          |               |        x         |                   |              | `gen2/packages/…/*.mdx` (3 globs) |
-| stories-format                 |               |        x         |                   |              | `gen2/packages/…/stories/**` (3)  |
-| component-readme               |               |        x         |                   |              | `1st-gen/packages/*/README.md`    |
-| contributor-doc-update         |               |        x         |                   |              | `CONTRIBUTOR-DOCS/**`             |
-| storybook-mdx-conversion       |               |                  |         x         |              | —                                 |
-| contributor-docs-nav           |               |                  |         x         |              | —                                 |
-| deep-understanding             |               |                  |         x         |              | —                                 |
-| code-conformance               |               |                  |         x         |              | —                                 |
-| consistency-pass               |               |                  |         x         |              | —                                 |
-| migration-phase-awareness      |               |                  |         x         |              | —                                 |
-| github-description             |               |                  |         x         |              | —                                 |
-| jira-ticket                    |               |                  |         x         |              | —                                 |
-| text_formatting.headings       |               |                  |                   |      x       | —                                 |
-| text_formatting.patterns       |               |                  |                   |      x       | —                                 |
-| git.validationPattern          |               |                  |                   |      x       | —                                 |
-| git.validationMessage          |               |                  |                   |      x       | —                                 |
-| git.branchNameTemplate         |               |                  |                   |      x       | —                                 |
-| git.types                      |               |                  |                   |      x       | —                                 |
-| jira_tickets.title_format      |               |                  |                   |      x       | —                                 |
-| jira_tickets.required_sections |               |                  |                   |      x       | —                                 |
-| jira_tickets.templates         |               |                  |                   |      x       | —                                 |
-| jira_tickets.labels            |               |                  |                   |      x       | —                                 |
-| jira_tickets.issue_types       |               |                  |                   |      x       | —                                 |
+| Rule/skill                       | Always active | Path-scoped rule | Skill (on-demand) | Config-based | Glob / paths                                              |
+| -------------------------------- | :-----------: | :--------------: | :---------------: | :----------: | --------------------------------------------------------- |
+| branch-naming                    |               |                  |         x         |              | —                                                         |
+| styles                           |               |        x         |                   |              | `**/*.css`                                                |
+| text-formatting                  |               |        x         |                   |              | `**/*.md`, `**/*.txt`, `**/*.mdx`                         |
+| stories-documentation            |               |        x         |         x         |              | `gen2/packages/…/*.mdx` (3 globs)                         |
+| stories-format                   |               |        x         |         x         |              | `gen2/packages/…/stories/**` (3)                          |
+| component-readme                 |               |        x         |                   |              | `1st-gen/packages/*/README.md`                            |
+| contributor-doc-update           |               |        x         |                   |              | `CONTRIBUTOR-DOCS/**`                                     |
+| accessibility-migration-analysis |               |        x         |         x         |              | `CONTRIBUTOR-DOCS/**/accessibility-migration-analysis.md` |
+| consumer-migration-guide         |               |        x         |         x         |              | `gen2/packages/swc/components/*/migration-guide.mdx`      |
+| memory: agnostic-lessons         |               |        x         |                   |              | `**`                                                      |
+| memory: css-styling-lessons      |               |        x         |                   |              | `**/*.css`                                                |
+| storybook-mdx-conversion         |               |                  |         x         |              | —                                                         |
+| contributor-docs-nav             |               |                  |         x         |              | —                                                         |
+| deep-understanding               |               |                  |         x         |              | —                                                         |
+| code-conformance                 |               |                  |         x         |              | —                                                         |
+| consistency-pass                 |               |                  |         x         |              | —                                                         |
+| migration-phase-awareness        |               |                  |         x         |              | —                                                         |
+| github-description               |               |                  |         x         |              | —                                                         |
+| jira-ticket                      |               |                  |         x         |              | —                                                         |
+| text_formatting.headings         |               |                  |                   |      x       | —                                                         |
+| text_formatting.patterns         |               |                  |                   |      x       | —                                                         |
+| git.validationPattern            |               |                  |                   |      x       | —                                                         |
+| git.validationMessage            |               |                  |                   |      x       | —                                                         |
+| git.branchNameTemplate           |               |                  |                   |      x       | —                                                         |
+| git.types                        |               |                  |                   |      x       | —                                                         |
+| jira_tickets.title_format        |               |                  |                   |      x       | —                                                         |
+| jira_tickets.required_sections   |               |                  |                   |      x       | —                                                         |
+| jira_tickets.templates           |               |                  |                   |      x       | —                                                         |
+| jira_tickets.labels              |               |                  |                   |      x       | —                                                         |
+| jira_tickets.issue_types         |               |                  |                   |      x       | —                                                         |
 
 ### Usage
 
@@ -192,7 +205,7 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: Auditing accessibility, implementing ARIA patterns, building for screen readers, or ensuring inclusive user experiences
 - Provides: WCAG checklist, ARIA patterns (e.g. button, dialog, form), contrast requirements, testing tools
 
-#### Ask questions
+#### Ask questions (`ask-questions-if-underspecified`)
 
 - **purpose**: Clarify requirements before implementing when the request is underspecified or ambiguous
 - **How to invoke**: Agent-triggered when it detects multiple plausible interpretations or missing key details (scope, constraints, “done”). You can also say “I’m not sure about X” or “clarify before you start” to encourage it.
@@ -320,6 +333,20 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: Tests pass and the approved `migration-plan.md` can be used as the source of truth for migration notes and rationale
 - Provides: per-component MDX authoring (`<component>.mdx`), public-API JSDoc guidelines on `Component.ts`, stories file finalization (drop `'autodocs'` from Playground, complete Accessibility story), documentation checklist, and plan-aligned migration-note guidance
 
+#### Stories format (`stories-format`)
+
+- **purpose**: Full reference for structuring gen2 Storybook stories files
+- **How to invoke**: Say "write stories for [component]", "review the stories file", or "migrate the stories for [component]". The `stories-format` rule loads automatically for files under `stories/` and points here.
+- Use when: Writing, migrating, or reviewing a gen2 `.stories.ts` file
+- Provides: File structure and section separators, meta configuration, layout and decorators, story naming and ordering, tags, story types, JSDoc, accessibility requirements, and image assets
+
+#### Stories documentation (`stories-documentation`)
+
+- **purpose**: Full authoring procedure for the per-unit MDX docs page of gen2 components, internal components, patterns, and controllers
+- **How to invoke**: Say "write the docs page for [component]" or "review [component].mdx". The `stories-documentation` rule loads automatically for per-unit MDX files and points here.
+- Use when: Writing, migrating, or reviewing a gen2 `<unit>.mdx` docs page
+- Provides: Documentation structure, the Helpers section, section patterns, 1st-gen to gen2 comparison, verification against source, and general writing guidelines
+
 #### Migration — phase 8: review (`migration-review`)
 
 - **purpose**: Run final checks, verify lint/tests/build/Storybook, update the workstream status table, and open a PR
@@ -341,7 +368,7 @@ Skills are used on-demand. When a task matches a skill’s purpose, the agent re
 - Use when: Committing code changes, writing commit messages, or formatting git history
 - Provides: Format (type(scope): subject, body, footer), type list (feat, fix, docs, etc.), examples including breaking changes
 
-#### Documentation
+#### Documentation (`documentation-standards`)
 
 - **purpose**: Follow Adobe content writing standards when writing documentation
 - **How to invoke**: Use when writing or editing docs — e.g. per-unit MDX docs pages (`<unit>.mdx`), public-API JSDoc in `Component.ts`, the meta-level JSDoc in `.stories.ts`, README/changeset/Jira/PR (`.md`, `.mdx`), or when you say “write the PR description”, “draft the Jira ticket”, “write the docs for this component”.
@@ -413,6 +440,8 @@ Canonical content lives in **`.ai/`** (this directory). Tool-specific directorie
 ```
 
 Edit only `.ai/`. Generated files start with a `GENERATED by .ai/scripts/sync.js` comment; `yarn lint:ai` fails if one is edited by hand or falls out of date.
+
+Removing a symlink with `rm` removes only the link, not its target, so it's safe for cleaning up an adapter.
 
 ### Adding a new rule
 
