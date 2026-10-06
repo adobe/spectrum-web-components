@@ -76,7 +76,7 @@ Use the `session-retrospective` skill, or add a bullet to the matching `.ai/memo
 
 ### Validate
 
-- `yarn lint:ai` runs `.ai/scripts/validate.js`: story tags, links, commit and branch conventions (against commitlint), instruction and skill frontmatter, symlinks, generated files, and per-unit MDX docs pages. The header of `validate.js` describes each check.
+- `yarn lint:ai` runs `.ai/scripts/validate.js`: story tags, links, commit and branch conventions (against commitlint), instruction and skill frontmatter, symlinks, generated files, and per-unit MDX docs pages. The header of `validate.js` describes each check. The `.ai/` checks read only files git tracks, including staged new files, so untracked or ignored local files such as tool caches and `.ai/handoffs/` notes never fail it.
 - `yarn lint:docs-pages` runs the per-unit MDX docs-page check on its own.
 - To confirm what Copilot loads, run `copilot instruction list` and `copilot skill list --json` from the repository root. In VS Code, run **Chat: Open Customizations** with the Copilot harness selected.
 

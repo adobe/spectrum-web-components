@@ -27,7 +27,8 @@
  *
  * Usage:
  *   node .ai/scripts/sync.js          Write generated files (`yarn ai:sync`)
- *   node .ai/scripts/sync.js --check  Report drift without writing; exits 1 on drift
+ *   node .ai/scripts/sync.js --check  Report drift without writing; exits 1 on drift.
+ *                                     Checks only git-tracked sources and generated files.
  */
 
 import {
@@ -48,6 +49,7 @@ import { stringify as stringifyYaml } from 'yaml';
 import {
   AI_DIR,
   GENERATED_MARKER,
+  isTracked,
   listInstructionSources,
   listSkills,
   rel,
@@ -158,8 +160,11 @@ function renderCatalog(sources, skills) {
 export async function syncAi({ write = false } = {}) {
   const errors = [];
   const changes = [];
+  // `--check` sees only tracked files, as CI does. Writing also covers untracked sources so
+  // a new rule generates before it's staged.
+  const inScope = (file) => write || isTracked(file);
   const sources = listInstructionSources().filter(
-    (s) => s.data && !s.error && Array.isArray(s.data.paths)
+    (s) => inScope(s.file) && s.data && !s.error && Array.isArray(s.data.paths)
   );
 
   const expected = new Map();
@@ -176,7 +181,9 @@ export async function syncAi({ write = false } = {}) {
     const start = current.indexOf(CATALOG_START);
     const end = current.indexOf(CATALOG_END);
     if (start !== -1 && end > start) {
-      const skills = listSkills().filter((s) => s.data && !s.error);
+      const skills = listSkills().filter(
+        (s) => inScope(s.file) && s.data && !s.error
+      );
       const replaced =
         current.slice(0, start) +
         renderCatalog(sources, skills) +
@@ -214,7 +221,7 @@ export async function syncAi({ write = false } = {}) {
     }
     for (const name of readdirSync(dir)) {
       const filepath = path.join(dir, name);
-      if (expected.has(filepath) || !isOwned(filepath)) {
+      if (expected.has(filepath) || !inScope(filepath) || !isOwned(filepath)) {
         continue;
       }
       changes.push(`${rel(filepath)}: orphaned (source removed)`);
