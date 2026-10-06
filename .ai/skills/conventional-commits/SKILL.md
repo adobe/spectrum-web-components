@@ -27,10 +27,10 @@ If you're on `main` or `master`, create a new branch first:
 
 ```bash
 # Create and switch to a new branch
-git checkout -b <type>/<short-description>
+git checkout -b <username>/<type>-<description>
 ```
 
-Branch naming should follow the pattern: `<type>/<short-description>` where type matches the commit type (e.g., `feat/add-user-auth`, `fix/null-pointer-error`, `refactor/extract-validation`).
+Name the branch with the `branch-naming` skill: `<username>/<type>-<description>[-swc-<issue>]`, where type matches the commit type (e.g., `janedoe/feat-add-user-auth`). Branches the Copilot app creates for its own sessions are exempt.
 
 ## Format
 
@@ -46,7 +46,7 @@ The header is required. Scope is optional. All lines must stay under 100 charact
 
 ## Commit Types
 
-Use the types defined in `.ai/config.json` under `git.types`.
+Use the types allowed by `@commitlint/config-conventional`, which `commitlint.config.cjs` extends and the `commit-msg` hook enforces.
 
 | Type       | Purpose                                       |
 | ---------- | --------------------------------------------- |
@@ -62,7 +62,7 @@ Use the types defined in `.ai/config.json` under `git.types`.
 | `style`    | Code style and formatting                     |
 | `test`     | Tests added, updated or improved              |
 
-Source list: `.ai/config.json` → `git.types`.
+Source list: `@commitlint/config-conventional` (see `commitlint.config.cjs`).
 
 ## Subject Line Rules
 
