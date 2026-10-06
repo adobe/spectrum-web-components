@@ -97,6 +97,7 @@ type StatusCase = {
   open?: boolean;
   steps?: unknown;
   forceState?: ForcedState;
+  maxInlineSize?: string;
 };
 
 const renderStatus = ({
@@ -106,6 +107,7 @@ const renderStatus = ({
   open = false,
   steps,
   forceState,
+  maxInlineSize = '320px',
 }: StatusCase) => html`
   <swc-response-status
     status=${status}
@@ -113,7 +115,7 @@ const renderStatus = ({
     accessible-label="Execution steps"
     data-force-state=${forceState ?? nothing}
     lang=${lang ?? nothing}
-    style="max-inline-size: 320px;"
+    style="max-inline-size: ${maxInlineSize};"
   >
     <span slot="label">${label ?? statusLabels[status]}</span>
     ${steps ?? nothing}
@@ -426,4 +428,64 @@ export const ForcedColors: Story = {
   render: () => theme(permutationContent(), 'light', 'ltr'),
   parameters: forcedColorsVrtParameters,
   play: forceAll,
+};
+
+const containerWidths = [240, 320, 640];
+const LONG_CONTAINER_TEXT =
+  'Reviewed the supplied source material, compared each relevant detail against the original references, and checked the results for consistency before preparing the final response. '.repeat(
+    3
+  );
+const completeSteps = html`
+  ${renderStep({
+    status: 'complete',
+    label: `Reviewed the source material and verified the key findings across all references`,
+    description: LONG_CONTAINER_TEXT,
+  })}
+  ${renderStep({
+    status: 'complete',
+    label:
+      'Compared the findings and resolved conflicting details across sources',
+    description: LONG_CONTAINER_TEXT,
+  })}
+  ${renderStep({
+    status: 'complete',
+    label: 'Composed the response and prepared supporting recommendations',
+    description: LONG_CONTAINER_TEXT,
+  })}
+`;
+
+export const ContainerWidths: Story = {
+  render: () =>
+    theme(
+      html`
+        <div
+          style="display: flex; flex-direction: column; align-items: start; gap: var(--swc-spacing-400);"
+        >
+          ${containerWidths.map(
+            (width) => html`
+              ${captioned(
+                html`
+                  <div
+                    style="inline-size: min(${width}px, 100%); outline: 1px dashed currentColor;"
+                  >
+                    ${renderStatus({
+                      status: 'complete',
+                      label:
+                        'Response complete: all requested source material has been reviewed and the findings are ready',
+                      maxInlineSize: '100%',
+                      open: true,
+                      steps: completeSteps,
+                    })}
+                  </div>
+                `,
+                `Parent max width: ${width}px`
+              )}
+            `
+          )}
+        </div>
+      `,
+      'light',
+      'ltr'
+    ),
+  parameters: vrtParameters,
 };
