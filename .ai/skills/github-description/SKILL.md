@@ -95,7 +95,7 @@ Examples:
 
 ## Labels
 
-Use the following labels to categorize pull requests. Only use labels that exist in the repository. GitHub labels are separate from Jira labels; for Jira tickets use the jira-ticket skill and `config.json`.
+Use the following labels to categorize pull requests. Only use labels that exist in the repository. GitHub labels are separate from Jira labels; for Jira tickets use the jira-ticket skill.
 
 ### Priority and release labels
 

@@ -31,7 +31,7 @@ Getting this wrong in either direction has a real cost: forcing task-scoped guid
 
 ## CI integration
 
-- `yarn lint:ai` runs `.ai/scripts/validate.js`, which checks story tags, links, config schema, instruction and skill frontmatter, symlinks, generated files, and per-unit MDX docs pages. The header of `validate.js` lists each check.
+- `yarn lint:ai` runs `.ai/scripts/validate.js`, which checks story tags, links, branch and commit types against commitlint, instruction and skill frontmatter, symlinks, generated files, and per-unit MDX docs pages. The header of `validate.js` lists each check.
 - `yarn lint:docs-pages` runs the per-unit MDX docs-page check in isolation. Use during authoring to catch missing `<Canvas>` references, unknown `##` section headings, or out-of-order sections in a single component / pattern / controller MDX
 - Pre-commit hook runs the contributor docs nav script to keep breadcrumbs and TOCs in sync automatically
 
