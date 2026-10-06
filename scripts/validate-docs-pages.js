@@ -44,8 +44,9 @@
  * Or as part of the umbrella lint suite (runs in CI and the pre-commit hook):
  *   yarn lint:ai
  *
- * See `.ai/rules/stories-documentation.md` for the per-unit MDX authoring
- * standards this check enforces.
+ * See `.ai/rules/stories-documentation.md` (constraints) and
+ * `.ai/skills/stories-documentation/SKILL.md` (full procedure) for the per-unit
+ * MDX authoring standards this check enforces.
  */
 
 import fs from 'fs';
@@ -377,7 +378,7 @@ function resolveStoriesPath(mdxAbsPath, importSource) {
  *
  * The parser is regex-based and intentionally tolerant — it does not try to
  * cover every TypeScript edge case, just the conventions documented in
- * `.ai/rules/stories-format.md`.
+ * `.ai/skills/stories-format/SKILL.md`.
  */
 function parseStoryTags(storiesPath) {
   const content = fs.readFileSync(storiesPath, 'utf8');
