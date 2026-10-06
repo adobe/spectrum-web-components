@@ -140,28 +140,25 @@
   text-overflow: ellipsis;
 }
 
-/* Settled: allow the label to wrap across multiple lines instead of
-   truncating to one, since a narrow container or a longer translation can
-   easily exceed one line's width. Mid-roll (no `--settled` class) keeps the
-   single line + ellipsis the cross-fade geometry above depends on. */
+/* Settled labels stay on one line and truncate at the available width. */
 .swc-ResponseStatus-headerTrailLine--settled {
   block-size: auto;
   white-space: normal;
 }
 
-/* Active and stopped labels default to two lines. */
+/* Disclosure labels default to one line. */
 .swc-ResponseStatus-headerTrailLine--settled .swc-ResponseStatus-label {
   -webkit-box-orient: vertical;
   display: -webkit-box;
   white-space: normal;
   overflow: hidden;
-  -webkit-line-clamp: var(--swc-response-status-label-max-lines, 2);
-  line-clamp: var(--swc-response-status-label-max-lines, 2);
+  -webkit-line-clamp: var(--swc-response-status-label-max-lines, 1);
+  line-clamp: var(--swc-response-status-label-max-lines, 1);
 }
 
 /* A completed label has no disclosure if there are no steps, so keep its
    full text visible unless the consumer explicitly sets a line cap. */
-.swc-ResponseStatus-row--complete .swc-ResponseStatus-headerTrailLine--settled .swc-ResponseStatus-label {
+.swc-ResponseStatus-row--complete:not(.swc-ResponseStatus-row--button) .swc-ResponseStatus-headerTrailLine--settled .swc-ResponseStatus-label {
   -webkit-line-clamp: var(--swc-response-status-label-max-lines, unset);
   line-clamp: var(--swc-response-status-label-max-lines, unset);
 }
@@ -239,6 +236,7 @@
 
 .swc-ResponseStatus--agentic {
   inline-size: 100%;
+  max-inline-size: clamp(65%, calc(168px + 47.5%), 100%);
 }
 
 .swc-ResponseStatus-row--processing {

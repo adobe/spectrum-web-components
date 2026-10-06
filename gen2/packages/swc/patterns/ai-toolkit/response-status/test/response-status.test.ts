@@ -808,3 +808,101 @@ export const HeaderLabelWrapTest: Story = {
     });
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Completed disclosure labels truncate at one line
+// ──────────────────────────────────────────────────────────────
+
+export const CompletedDisclosureLabelTest: Story = {
+  render: () => html`
+    <div style="inline-size: 240px;">
+      <swc-response-status status="complete" open>
+        <span slot="label">
+          A deliberately long completed response status label that should be
+          clamped at the available width when the execution steps disclosure is
+          present
+        </span>
+        <swc-response-status-step status="complete">
+          <span slot="label">Reviewed the source material</span>
+        </swc-response-status-step>
+      </swc-response-status>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+
+    await step('clamps the disclosure label to one line', async () => {
+      const label = el.shadowRoot?.querySelector<HTMLElement>(
+        '.swc-ResponseStatus-headerTrailLine--settled .swc-ResponseStatus-label'
+      );
+      expect(label).toBeTruthy();
+
+      const lineHeight = parseFloat(getComputedStyle(label!).lineHeight);
+      await waitFor(() => {
+        expect(label!.getBoundingClientRect().height).toBeLessThanOrEqual(
+          lineHeight + 1
+        );
+        expect(label!.scrollHeight).toBeGreaterThan(label!.clientHeight);
+      });
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Agentic status width scales with its parent container
+// ──────────────────────────────────────────────────────────────
+
+export const AgenticWidthTest: Story = {
+  render: () => html`
+    <div
+      class="width-test-container"
+      style="display: flex; inline-size: 320px;"
+    >
+      <swc-response-status
+        status="active"
+        style="inline-size: 100%;"
+      ></swc-response-status>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const container = canvasElement.querySelector<HTMLElement>(
+      '.width-test-container'
+    );
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+    const content = el.shadowRoot?.querySelector<HTMLElement>(
+      '.swc-ResponseStatus'
+    );
+
+    await step(
+      'fills a narrow container and interpolates down to 65% in a wide one',
+      async () => {
+        expect(container).toBeTruthy();
+        expect(content).toBeTruthy();
+        expect(el.getBoundingClientRect().width).toBe(320);
+        expect(content!.getBoundingClientRect().width).toBe(320);
+
+        el.style.maxInlineSize = 'none';
+        el.style.inlineSize = '100%';
+        for (const [width, expected] of [
+          [240, 240],
+          [320, 320],
+          [640, 472],
+          [960, 624],
+          [1280, 832],
+        ]) {
+          container!.style.inlineSize = `${width}px`;
+          expect(content!.getBoundingClientRect().width).toBeCloseTo(
+            expected,
+            0
+          );
+        }
+      }
+    );
+  },
+};

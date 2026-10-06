@@ -97,6 +97,7 @@ type StatusCase = {
   open?: boolean;
   steps?: unknown;
   forceState?: ForcedState;
+  maxInlineSize?: string;
 };
 
 const renderStatus = ({
@@ -106,6 +107,7 @@ const renderStatus = ({
   open = false,
   steps,
   forceState,
+  maxInlineSize = '320px',
 }: StatusCase) => html`
   <swc-response-status
     status=${status}
@@ -113,7 +115,7 @@ const renderStatus = ({
     accessible-label="Execution steps"
     data-force-state=${forceState ?? nothing}
     lang=${lang ?? nothing}
-    style="max-inline-size: 320px;"
+    style="max-inline-size: ${maxInlineSize};"
   >
     <span slot="label">${label ?? statusLabels[status]}</span>
     ${steps ?? nothing}
