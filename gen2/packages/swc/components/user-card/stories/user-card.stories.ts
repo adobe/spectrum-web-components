@@ -161,7 +161,10 @@ export const Overview: Story = {
       html`
         ${previewImage()} ${avatarGlyphDecorative()}
         <span slot="title">Jane Doe</span>
-        <span slot="description">Product designer</span>
+        <span slot="description">
+          Art Director at Luma Creative Studios. Visual storyteller and coffee
+          enthusiast.
+        </span>
         <span slot="footer">
           <swc-status-light variant="positive" size="s">
             Available

@@ -321,7 +321,7 @@
    COMBINED STATES
    ───────────────────────────────────────────────────────────────────────────── */
 
-:host(:is([title-as-link], [selectable]):not([variant="tertiary"]):is(:hover, :focus-visible)) {
+:host(:is([title-as-link], [selectable]):not([variant="tertiary"], [variant="quiet"]):is(:hover, :focus-visible)) {
   --swc-card-base-box-shadow: token("drop-shadow-emphasized-hover");
 }
 

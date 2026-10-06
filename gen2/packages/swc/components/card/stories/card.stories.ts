@@ -612,7 +612,8 @@ export const UserCard: Story = {
       <swc-avatar
         slot="avatar"
         src="./images/avatar-preview.png"
-        alt="Jane Doe"
+        alt=""
+        decorative
       ></swc-avatar>
       <span slot="title">Jane Doe</span>
       <span slot="description">
