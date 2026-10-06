@@ -224,7 +224,7 @@ The one shared-resource question worth flagging: pointer-drag + keyboard-resize 
 | **B2** | Rename `label` to `accessible-label` to match the established gen2 accessible-name API (for example, icons), see `Q2` in the [Decision log](#decision-log). | `label` string sets `aria-label` on the internal splitter. | `accessible-label` string sets `aria-label` on the internal splitter; same behavior. | Replace `label="…"` with `accessible-label="…"` (property: `accessibleLabel`). |
 | **B3** | Replace the internal `WithSWCResizeObserver`/`SWCResizeObserver` custom typings in `types.ts` with the standard DOM `ResizeObserver` type. | Custom fallback typing, likely written for older TS lib support. | Use `ResizeObserver` directly from `lib.dom.d.ts`. | Internal-only; no consumer-facing change. |
 | **B10** | Replace boolean `vertical` with `orientation` (`'horizontal' \| 'vertical'`) to match the established gen2 orientation API (for example, `swc-action-group`). Note that `orientation` describes the **pane layout**; the splitter's `aria-orientation` is the opposite value (see `B6`). | `vertical` boolean; absent means side-by-side panes. | `orientation="horizontal"` (default) or `orientation="vertical"`. | Replace `vertical` with `orientation="vertical"`; remove nothing for the default layout. |
-| **B11** | Replace positional default-slot panes with named `primary` and `secondary` slots, so pane assignment is explicit and `render()` can template each pane. Slot names match the existing `primary-*`/`secondary-*` properties. | First two default-slot children are the panes; extras are hidden via `::slotted(:nth-child(n + 3))`. | Panes go in `slot="primary"` and `slot="secondary"`; no child counting. | Add `slot="primary"` to the first pane and `slot="secondary"` to the second. Remove any extra children, which no longer render. |
+| **B11** | Replace positional default-slot panes with named `primary` and `secondary` slots, so pane assignment is explicit and `render()` can template each pane. Slot names match the existing `primary-*`/`secondary-*` properties. Each slot takes one root element; the first assigned element is the pane, and extras are hidden with a dev-mode warning (see `Q12`). | First two default-slot children are the panes; extras are hidden via `::slotted(:nth-child(n + 3))`. | Panes go in `slot="primary"` and `slot="secondary"`; no child counting. | Add `slot="primary"` to the first pane and `slot="secondary"` to the second. Remove any extra children, which no longer render. |
 
 #### Styling and visuals
 
@@ -301,7 +301,7 @@ Initial expectation for Split View is a small reviewed set, likely limited to sp
 
 ### Behavioral semantics
 
-- **Named pane slots.** Panes are assigned explicitly through the `primary` and `secondary` slots instead of counting default-slot children. Each slot is templated in `render()`, and the splitter renders only when both slots have content. Children without a matching `slot` are not rendered. See `B11`.
+- **Named pane slots.** Panes are assigned explicitly through the `primary` and `secondary` slots instead of counting default-slot children. Each slot is templated in `render()`, and the splitter renders only when both slots have content. Children without a matching `slot` are not rendered. Each slot takes one root element: the first assigned element is the pane, so `primarySize="auto"` measures it and `aria-controls` references it. Further elements in the same slot are hidden and log a dev-mode warning; consumers who need several elements wrap them in one container. See `B11` and `Q12`.
 - **`resizable`/`collapsible` coupling.** `collapsible` has no effect unless `resizable` is also set. Preserve this dependency; do not make `collapsible` independently meaningful as part of this migration (would be a scope-expanding behavior change, not a like-for-like port).
 - **Nested split views.** Each `sp-split-view` (or its gen2 equivalent) instance manages its own splitter and tab stop independently; nesting one inside a pane of another is supported today purely through normal slot composition, with no special-cased code. Confirm this composition still works unmodified once the render moves to the `spectrum-css`-based class structure.
 - **`primarySize: "auto"` timing.** 1st-gen's `calcStartPos()` awaits a slotted `LitElement` child's `updateComplete` before measuring, to avoid racing a Lit child's own first render. Preserve this await; dropping it would reintroduce a layout race that 1st-gen already fixed.
@@ -421,9 +421,9 @@ See `Q5`/`Q6` in the [Decision log](#decision-log) for the precedent resolving t
 - [ ] Slot assignment, not DOM order, decides each pane: `slot="secondary"` before `slot="primary"` in the DOM still renders and sizes the panes correctly
 - [ ] Missing pane: with only one of `primary` or `secondary` filled, no splitter renders
 - [ ] Unmatched children (no `slot` or an unknown slot name) do not render and do not affect layout
-- [ ] Duplicate assignment: when a slot receives more than one element, the behavior matches the `Q12` decision
-- [ ] `primarySize="auto"` measures the element assigned to `primary` (per `Q12`), not the first DOM child
-- [ ] `aria-controls` references the element assigned to `primary` (per `Q12` and `Q4`), not the first DOM child
+- [ ] Duplicate assignment: when a slot receives more than one element, the first assigned element renders as the pane, the rest are hidden, and a dev-mode warning is logged (per `Q12`)
+- [ ] `primarySize="auto"` measures the first element assigned to `primary` (per `Q12`), not the first DOM child
+- [ ] `aria-controls` references the first element assigned to `primary` (per `Q12` and `Q4`), not the first DOM child
 - [ ] Nested split views: each divider is an independent tab stop, no roving-tabindex interference
 - [ ] Custom `accessible-label` overrides the default accessible name; default name is present whenever `resizable` with no `accessible-label` set
 
@@ -491,7 +491,6 @@ No open design blockers — see `Q1` in the [Decision log](#decision-log).
 | **Q3** | Confirm the `aria-orientation` convention (line orientation vs. axis of motion). | No | Resolved: line orientation, per the ARIA separator role, the APG window splitter pattern, and Nord; see `B6` | Accessibility reviewer |
 | **Q4** | Should `aria-controls` (element-reference IDL, `B7`) reference only the primary pane (matching 1st-gen) or both panes (per `A3`, since dragging affects both sizes)? Recommend: primary-only at baseline (matches 1st-gen behavior, avoids scope creep), expand to both under `A3` if reviewers agree it's warranted. | Yes, for finalizing `B7`'s scope | Open — needs accessibility reviewer confirmation | Accessibility reviewer |
 | **Q11** | How does split-view meet WCAG 2.5.7 (`B12`)? Option 1: built-in click/tap controls (for example, collapse/expand buttons on the divider and click-to-step resizing). Option 2: a documented consumer integration (for example, public methods or properties that consumer buttons drive), with a working example in the docs. | Yes, for finalizing `B12`'s scope | Open; needs accessibility and design input | Accessibility reviewer |
-| **Q12** | Does each named slot (`B11`) accept one root element or several? Recommend: one root per slot, so `primarySize="auto"` measures that root and `aria-controls` references it. Duplicate assignments use the first assigned element, hide the rest, and log a dev-mode warning. Consumers who need several elements wrap them in one container. | Yes, for finalizing `B11` and the slot tests | Open; needs reviewer confirmation | Ticket owner |
 
 ### Scope and prerequisites
 
@@ -528,6 +527,7 @@ Rules:
 | **Q8** | The internal "Drag bars and thumbs" guidelines page (linked from `spectrum-css`'s `splitview` `package.json`) adds no API or behavior guidance. | 2020, pre-S2 Adobe XD stub (`beta` slug) with `defined_behaviors`, `keyboard_interactions`, `usage_guidelines`, and `spectrum_web_components` all `"no"`, and "For Position Only" placeholder sections. Confirms the ticket's "no design specs" framing at the guidance level, despite the separate `spectrum-css` CSS artifact (`Q1`). |
 | **Q9** | Replace `vertical` with `orientation`. | Matches the orientation API already established in gen2 (for example, `swc-action-group` uses `orientation`). See `B10`. |
 | **Q10** | Use named `primary` and `secondary` slots instead of positional default-slot children. | Explicit assignment is less implicit than counting children and lets `render()` template each pane. Names align with `primary-size`, `primary-min/max`, and `secondary-min/max`. See `B11`. |
+| **Q12** | Each named slot accepts one root element. The first element assigned to a slot is the pane; any further elements in that slot are hidden and trigger a dev-mode warning. Consumers who need several elements wrap them in one container. | Gives `primarySize="auto"` one element to measure and `aria-controls` one element to reference. Mirrors 1st-gen, which renders only the first two children and hides extras. Confirmed by the ticket owner. See `B11`. |
 
 ---
 

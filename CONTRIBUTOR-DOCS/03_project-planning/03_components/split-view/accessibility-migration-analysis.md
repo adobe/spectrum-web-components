@@ -22,6 +22,7 @@
 - [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
 - [Recommendations: `<swc-split-view>`](#recommendations-swc-split-view)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
+    - [Single-pointer alternative (WCAG 2.5.7)](#single-pointer-alternative-wcag-257)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
     - [Accessibility tree expectations](#accessibility-tree-expectations)
     - [Keyboard and focus](#keyboard-and-focus)
@@ -78,6 +79,7 @@ This doc explains how **`swc-split-view`** should work for **accessibility**. It
 | [Focus visible (WCAG 2.4.7)](https://www.w3.org/TR/WCAG22/#focus-visible) | The divider needs a visible focus indicator distinct from its hover/active styling. |
 | [Non-text contrast (WCAG 1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | The divider line and its gripper affordance are graphical objects and need at least 3:1 contrast with adjacent colors, in both the resting and `forced-colors` states. |
 | [Target size (WCAG 2.5.8)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html) | The draggable hit area is visually thin (a couple of pixels wide, widened by a small gripper). Confirm the **pointer/touch** hit target meets the minimum target size guidance or qualifies for an exception; this is the same class of issue [SWC-276](https://jira.corp.adobe.com/browse/SWC-276)'s "ignored on mobile" title points at, even though that specific bug was a missing-name issue rather than a target-size one. |
+| [Dragging movements (WCAG 2.5.7)](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html) | Every action done by dragging the divider (moving the split, collapsing a pane) must also work with a single pointer and no drag, such as a click or tap. Keyboard support (2.1.1) does not satisfy this criterion: it targets pointer users who cannot hold and move a pointer. Resizing is not an essential drag, so the exception does not apply. 1st-gen offers no single-pointer alternative. |
 | [Use of color (WCAG 1.4.1)](https://www.w3.org/TR/WCAG22/#use-of-color) | Resized/collapsed states (`is-resized-start`, `is-collapsed-end`, etc.) are currently communicated only through cursor and color changes; the `aria-valuenow` percentage is the non-visual equivalent and must stay accurate at the collapsed extremes (0 and 100%). |
 
 **Bottom line:** Ship the divider as a **prescribed, single `separator` role** that is a plain non-focusable divider by default and becomes a focusable range widget — with a name, orientation, and value attributes — whenever `resizable` is set. Do not let the "ignored on mobile" regression from [SWC-276](https://jira.corp.adobe.com/browse/SWC-276) reappear in gen2: a resizable divider without an accessible name is not an acceptable state.
@@ -108,6 +110,23 @@ This doc explains how **`swc-split-view`** should work for **accessibility**. It
 | **`collapsible` and its effect on value** | When `collapsible` drives `aria-valuenow` to 0 or 100, that is enough for a screen reader user to infer "collapsed," but it is not explicit. Consider naming the collapsed state directly in `aria-valuetext` when this feature is implemented (e.g. "0% — First panel (collapsed)") rather than relying on the bare number. |
 | **`vertical`, `primary-min/max`, `secondary-min/max`, `primary-size`, `splitter-pos`** | Layout-only; no independent ARIA mapping beyond feeding the computed `aria-valuenow`/`min`/`max` described above. |
 | **Docs** | State plainly that the divider is non-interactive and nameless by default, and becomes a named, focusable, valued widget the moment `resizable` is added — there is no in-between state. |
+
+### Single-pointer alternative (WCAG 2.5.7)
+
+A resizable split view with only drag and keyboard input does not meet [WCAG 2.5.7](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html). There are two ways to close the gap:
+
+| Option | What ships | Trade-off |
+|--------|------------|-----------|
+| **Built-in controls** | The component renders its own click/tap controls, for example collapse/expand buttons on the divider or click-to-step resizing. | Conforms out of the box. Adds new UI, labels, focus stops, and design work that 1st-gen and `spectrum-css` do not have. |
+| **Consumer integration** | The component exposes the split position and collapse state through public properties, and the docs include a working example where labeled buttons drive them. | Keeps 1st-gen parity and matches the [When to use something else](#when-to-use-something-else) guidance that panel toggling belongs on a labeled button. Conformance depends on the consumer adding the controls. |
+
+**Recommendation:** consumer integration for the gen2 baseline, with these conditions:
+
+- The public API can reach every drag outcome without a drag: set any position (`splitter-pos`), and collapse or expand either pane.
+- The docs state plainly that a `resizable` split view does not meet WCAG 2.5.7 alone, and show a labeled-button example that does.
+- Built-in controls stay an option if design adds them to a future S2 spec.
+
+An accessibility reviewer must confirm this before the migration plan treats it as settled.
 
 ### Shadow DOM and cross-root ARIA Issues
 
@@ -174,6 +193,7 @@ No key currently exists to toggle collapse without moving to an extreme (1st-gen
 - [ ] Keyboard map (arrows, Page Up/Down, Home, End, Tab/Shift+Tab) matches 1st-gen and is RTL- and `vertical`-aware.
 - [ ] Non-text contrast for the divider/gripper passes in default, hover, focus-visible, and `forced-colors` states.
 - [ ] Touch/pointer target size for the drag handle is confirmed or documented as an accepted exception.
+- [ ] Every drag action has a single-pointer alternative ([WCAG 2.5.7](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html)), either built in or through the public API and a documented button example.
 - [ ] `aXe` (WCAG 2.x tags) runs on default, resizable, collapsible, vertical, and nested stories.
 - [ ] ARIA snapshot tests cover non-resizable, resizable, collapsible, vertical, and custom-`label` stories.
 - [ ] Manual screen reader pass specifically re-tests the mobile/touch scenario from [SWC-276](https://jira.corp.adobe.com/browse/SWC-276).
