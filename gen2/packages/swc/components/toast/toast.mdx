@@ -40,21 +40,14 @@ toast?.close();
 
 ### Features
 
-The `<swc-toast>` host has `role="alertdialog"`, `aria-modal="false"`, and `tabindex="0"`. An inner wrapper has `role="alert"` and `aria-atomic="true"` so the message can be announced without moving focus when the toast opens.
+The `<swc-toast>` host has `role="alertdialog"`, `aria-modal="false"`, and `tabindex="0"`. An inner wrapper has `role="alert"` and `aria-atomic="true"` so the message can be announced without moving focus when the toast opens. Toast adds the message to the live region two frames after `open` changes from `false` to `true`, so screen readers announce it reliably. A toast that renders already open does not use this delay.
 
-The host's accessible name depends on the default-slot content:
-
-- Bare message text produces an `aria-label` derived from that text.
-- A single light-DOM message element with an `id` is referenced by `aria-labelledby`.
-
-The first example uses bare text. The second uses an ID-bearing `<span>`. Inspect each `<swc-toast>` host to compare the resulting attributes.
+The host's accessible name comes from the message in the default slot.
 
 ### Best practices
 
-- Use bare text when the message does not need its own element.
-- Use one ID-bearing message element when the message already has stable light-DOM markup that the host can reference.
 - Write a message that communicates the variant on its own, because the variant icon is decorative by default and screen readers do not announce it.
-- Set `icon-label` only when the icon needs its own announcement; a label can repeat meaning the message already carries.
+- Set `icon-label` only when the icon needs its own announcement. If the message already states the status, a label makes screen readers say it twice.
 - Set `actionLabel` to render the optional action button.
 - Provide a descriptive `actionLabel` for the optional action button.
 - Listen for the bubbling, composed `swc-toast-action` event to handle action activation. Toast does not close itself; the queue owns the callback and optional close-on-action behavior.

@@ -35,6 +35,7 @@ import {
  */
 export abstract class ToastBase extends SpectrumElement {
   private _cancelAfterTransition?: () => void;
+  // True once `swc-close` has fired, so the next update must not dispatch it again.
   private _closeEventDispatched = false;
   private _contentRevealed = true;
   private _cancelContentReveal?: () => void;
@@ -73,8 +74,8 @@ export abstract class ToastBase extends SpectrumElement {
    * Whether the message content is rendered inside the live region.
    *
    * False for two frames after opening so the live region is exposed empty
-   * first (Q10); content is then added as a DOM change, which both Safari and
-   * Chrome announce (Q11).
+   * first; content is then added as a DOM change, which both Safari and
+   * Chrome announce.
    *
    * @internal
    */
@@ -91,7 +92,6 @@ export abstract class ToastBase extends SpectrumElement {
     super.connectedCallback();
     this.setAttribute('role', 'alertdialog');
     this.setAttribute('aria-modal', 'false');
-    this.requestUpdate();
     this._contentObserver.observe(this, {
       childList: true,
       characterData: true,
@@ -117,9 +117,6 @@ export abstract class ToastBase extends SpectrumElement {
    * update cycle.
    */
   public close(): void {
-    if (!this.open) {
-      return;
-    }
     this.requestClose();
   }
 
@@ -129,6 +126,9 @@ export abstract class ToastBase extends SpectrumElement {
    * @internal
    */
   protected readonly requestClose = (): void => {
+    if (!this.open) {
+      return;
+    }
     const accepted = this.dispatchEvent(
       new CustomEvent(SWC_TOAST_CLOSE_EVENT, {
         bubbles: true,
@@ -211,6 +211,7 @@ export abstract class ToastBase extends SpectrumElement {
     }
 
     this._cancelContentReveal?.();
+    this._contentRevealed = true;
     this._closeEventDispatched = false;
     this.dispatchAfterTransition(SWC_TOAST_AFTER_CLOSE_EVENT);
   }
@@ -227,6 +228,7 @@ export abstract class ToastBase extends SpectrumElement {
       // slot attribute at all.
       return !(node as Element).getAttribute('slot');
     });
+    // Prefers aria-labelledby when the message is one element with an id; SWC-2567 settles the final naming path with the container.
     const idTarget =
       messageNodes.length === 1 && messageNodes[0] instanceof HTMLElement
         ? messageNodes[0].id
@@ -252,8 +254,7 @@ export abstract class ToastBase extends SpectrumElement {
   }
 
   /**
-   * Waits two frames, then renders the message content into the live region
-   * (Q10/Q11).
+   * Waits two frames, then renders the message content into the live region.
    */
   private scheduleContentReveal(): void {
     this._cancelContentReveal?.();
