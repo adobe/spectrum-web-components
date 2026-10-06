@@ -24,6 +24,7 @@ import { SlotAttributePropagationController } from '@adobe/spectrum-wc-core/cont
 import {
   isDebug,
   validateRequiredSlot,
+  warnIf,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import { renderCardTemplate } from '../card/card-template.js';
@@ -45,7 +46,7 @@ const AVATAR_SIZE_BY_CARD_SIZE = {
 
 /**
  * @element swc-user-card
- * @since 2.0.0-beta.4
+ * @since 2.0.0-beta.5
  *
  * @example
  * <swc-user-card>
@@ -56,8 +57,8 @@ const AVATAR_SIZE_BY_CARD_SIZE = {
  *
  * @example
  * <swc-user-card>
- *   <swc-asset slot="preview" decorative />
- *       <img src="/path/to/banner.jpg" />
+ *   <swc-asset slot="preview" decorative>
+ *       <img src="/path/to/banner.jpg" alt="" />
  *   </swc-asset>
  *   <swc-avatar slot="avatar" src="/path/to/avatar.jpg" alt="Jane Doe"></swc-avatar>
  *   <span slot="title">Jane Doe</span>
@@ -110,6 +111,19 @@ export class UserCard extends CardBase {
       ?.querySelector('slot[name="avatar"]')
       ?.addEventListener('slotchange', this._handleAvatarSlotChange);
     this._checkAvatarSlot();
+  }
+
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+    if (changedProperties.has('variant')) {
+      warnIf(
+        this,
+        this.variant === 'quiet',
+        `<${this.localName}> does not support the "quiet" variant.`,
+        'https://spectrum-web-components.adobe.com/?path=/docs/components-card-user-card--docs',
+        { level: 'medium', issues: ['variant="quiet"'] }
+      );
+    }
   }
 
   private readonly _handleAvatarSlotChange = (): void => {

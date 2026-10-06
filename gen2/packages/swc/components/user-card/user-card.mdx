@@ -67,15 +67,9 @@ Identical to [Card](../?path=/docs/components-card--docs)'s `selectable`: makes 
 ### Best practices
 
 - When the avatar depicts the same person named in `title`, pass `alt=""` and set `decorative` on the avatar instead of giving it its own name, so a screen reader doesn't announce the name twice: `<swc-avatar slot="avatar" alt="" decorative>` alongside `<span slot="title">Jane Doe</span>`. This matches [Avatar](../?path=/docs/components-avatar--docs)'s own guidance for a name that already appears in adjacent context.
+- Give an informative preview image meaningful alternative text. If the preview is purely decorative, set `decorative` on its [Asset](../?path=/docs/components-asset--docs) so the asset and its image are hidden from the accessibility tree.
 - For `title-as-link` and `selectable` usage guidance, see [Card](../?path=/docs/components-card--docs)'s Accessibility section.
 
 <Canvas of={Stories.Accessibility} />
-
-## Upcoming features
-
-Shared with [Card](../?path=/docs/components-card--docs):
-
-- A horizontal card orientation is planned, alongside today's vertical layout.
-- Multi-card selection will be handled by a future CardView container. The `selectable` attribute is the per-card groundwork for it: on its own it makes a card focusable and dispatches `swc-card-click`, but it does not render a "checked" selected state.
 
 <DocsFooter />

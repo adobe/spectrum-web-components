@@ -26,6 +26,8 @@ import { USER_CARD_VARIANTS } from '@adobe/spectrum-wc-core/components/user-card
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 import '@adobe/spectrum-wc/components/user-card/swc-user-card.js';
+import '@adobe/spectrum-wc-icons/swc-icon-more.js';
+import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
 import '../../avatar/swc-avatar';
 
 // ────────────────
@@ -65,7 +67,7 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      subtitle: 'Card variant that identifies a person.',
+      subtitle: 'Card variant that represents a user profile.',
     },
   },
   tags: ['migrated'],
@@ -141,6 +143,8 @@ export const Playground: Story = {
       '<swc-avatar slot="avatar" src="./images/avatar-preview.png" alt="" decorative></swc-avatar>',
     'title-slot': 'Jane Doe',
     'description-slot': 'Product designer',
+    'footer-slot':
+      '<swc-status-light variant="positive" size="s">Available</swc-status-light>',
   },
   render: (args) => template(args),
   tags: ['dev'],
@@ -158,6 +162,11 @@ export const Overview: Story = {
         ${previewImage()} ${avatarGlyphDecorative()}
         <span slot="title">Jane Doe</span>
         <span slot="description">Product designer</span>
+        <span slot="footer">
+          <swc-status-light variant="positive" size="s">
+            Available
+          </swc-status-light>
+        </span>
       `
     )}
   `,
@@ -177,21 +186,14 @@ export const Anatomy: Story = {
         ${previewImage()} ${avatarGlyphDecorative()}
         <span slot="title">Jane Doe</span>
         <swc-action-button slot="actions" quiet accessible-label="More actions">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            viewBox="0 0 20 18"
-            slot="icon"
-          >
-            <circle cx="10" cy="10" r="1.5" />
-            <path d="M10 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3" />
-            <circle cx="4" cy="10" r="1.5" />
-            <circle cx="4" cy="10" r="1.5" />
-            <circle cx="16" cy="10" r="1.5" />
-            <circle cx="16" cy="10" r="1.5" />
-          </svg>
+          <swc-icon-more slot="icon"></swc-icon-more>
         </swc-action-button>
         <span slot="description">Product designer</span>
+        <span slot="footer">
+          <swc-status-light variant="positive" size="s">
+            Available
+          </swc-status-light>
+        </span>
       `
     )}
   `,
@@ -279,7 +281,7 @@ export const TitleAsLink: Story = {
     ${template(
       { ...args, 'title-as-link': true },
       html`
-        ${avatarGlyphDecorative()}
+        ${previewImage()} ${avatarGlyphDecorative()}
         <a slot="title" href="#">Jane Doe</a>
         <span slot="description">
           Clicking anywhere on the card activates this link.
@@ -293,7 +295,14 @@ TitleAsLink.storyName = 'Title as link';
 
 export const Selectable: Story = {
   render: (args) => html`
-    ${template({ ...args, selectable: true }, basicSlots)}
+    ${template(
+      { ...args, selectable: true },
+      html`
+        ${previewImage()} ${avatarGlyphDecorative()}
+        <span slot="title">Jane Doe</span>
+        <span slot="description">Product designer</span>
+      `
+    )}
   `,
   tags: ['behaviors'],
 };
@@ -307,7 +316,7 @@ export const Accessibility: Story = {
     ${template(
       args,
       html`
-        ${avatarGlyphDecorative()}
+        ${previewImage()} ${avatarGlyphDecorative()}
         <span slot="title">Jane Doe</span>
         <span slot="description">Product designer</span>
       `

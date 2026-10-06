@@ -219,7 +219,15 @@
       "types": "./dist/components/tooltip/index.d.ts",
       "import": "./dist/components/tooltip/index.js"
     },
+    "./components/tooltip/index.js": {
+      "types": "./dist/components/tooltip/index.d.ts",
+      "import": "./dist/components/tooltip/index.js"
+    },
     "./components/user-card": {
+      "types": "./dist/components/user-card/index.d.ts",
+      "import": "./dist/components/user-card/index.js"
+    },
+    "./components/user-card/index.js": {
       "types": "./dist/components/user-card/index.d.ts",
       "import": "./dist/components/user-card/index.js"
     },

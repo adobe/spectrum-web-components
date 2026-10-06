@@ -117,10 +117,38 @@ export const InvalidVariantWarningTest: Story = {
             'at least one warning is emitted for the unsupported "quiet" variant'
           ).toBeGreaterThan(0);
           expect(
-            String(warnCalls[0]?.[1] || ''),
-            'warning message references variant'
-          ).toContain('variant');
+            warnCalls.some((call) =>
+              String(call[1] || '').includes(
+                'does not support the "quiet" variant'
+              )
+            ),
+            'warning explains that the quiet variant is unsupported'
+          ).toBe(true);
         })
+    );
+  },
+};
+
+export const UnsupportedQuietVariantStylesTest: Story = {
+  render: () => html`
+    <swc-user-card>${avatarGlyph()}</swc-user-card>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const card = await getComponent<UserCard>(canvasElement, 'swc-user-card');
+
+    await step('does not apply card-only quiet styles', () =>
+      withWarningSpy(async () => {
+        card.variant = 'quiet' as unknown as UserCard['variant'];
+        await card.updateComplete;
+
+        const content = card.renderRoot.querySelector(
+          '.swc-CardBase-content'
+        ) as HTMLElement;
+        expect(
+          parseFloat(getComputedStyle(content).paddingInlineStart),
+          'unsupported quiet variant retains the user card content padding'
+        ).toBeGreaterThan(0);
+      })
     );
   },
 };
