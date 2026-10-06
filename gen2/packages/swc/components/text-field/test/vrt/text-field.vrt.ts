@@ -12,6 +12,7 @@
 
 import { html, nothing, type TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import {
@@ -28,6 +29,7 @@ import '@adobe/spectrum-wc-icons/swc-icon-mention.js';
 
 import {
   forcedColorsVrtParameters,
+  forcePseudoState,
   forcePseudoStates,
   row,
   SIZE_LABELS,
@@ -65,6 +67,18 @@ const forceTextFieldStates = async ({
   await forcePseudoStates('swc-text-field[data-force-state="focus-visible"]')({
     canvasElement,
   });
+  const keyboardFocusFields = canvasElement.querySelectorAll<HTMLElement>(
+    'swc-text-field[data-force-state="keyboard-focus"]'
+  );
+  expect(keyboardFocusFields.length).toBeGreaterThan(0);
+  for (const field of keyboardFocusFields) {
+    forcePseudoState(field, 'focus-within', '.swc-TextField-control');
+    forcePseudoState(field, 'focus-visible');
+    expect(
+      field.shadowRoot?.querySelector('.swc-TextField-control')
+    ).toHaveAttribute('data-forced-focus-within');
+    expect(field).toHaveAttribute('data-forced-focus-visible');
+  }
 };
 
 type TextFieldCase = {
@@ -84,7 +98,7 @@ type TextFieldCase = {
   invalid?: boolean;
   extraStyle?: string;
   lang?: string;
-  forceState?: 'hover' | 'focus-visible' | 'focus-within';
+  forceState?: 'hover' | 'focus-visible' | 'focus-within' | 'keyboard-focus';
 };
 
 const renderCase = ({
@@ -393,6 +407,14 @@ const permutationContent = () => html`
       }),
     ],
     'Keyboard focus'
+  )}
+  ${row(
+    renderCase({
+      label: 'Keyboard focus with focused border',
+      placeholder: 'Sample value',
+      forceState: 'keyboard-focus',
+    }),
+    'Keyboard focus with focus-within'
   )}
   ${row(
     [

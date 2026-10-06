@@ -11,6 +11,7 @@
  */
 
 import { html, nothing } from 'lit';
+import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
@@ -67,9 +68,6 @@ const renderModPropertyCase = (
   { property }: TextFieldPropertyCase,
   overrideStyle?: string
 ) => {
-  const style = overrideStyle
-    ? `inline-size: 240px; ${overrideStyle}`
-    : 'inline-size: 240px;';
   const showsPrefix = property === '--swc-text-field-affix-gap';
   const showsError = property === '--swc-text-field-validation-icon-size';
   const label =
@@ -77,8 +75,13 @@ const renderModPropertyCase = (
       ? 'A long label wraps sooner when the label column is tightly capped'
       : 'Field label';
   return html`
-    <div style=${style}>
-      <swc-text-field value="Sample value" ?invalid=${showsError}>
+    <div style="inline-size: 240px;">
+      <swc-text-field
+        style=${overrideStyle}
+        value="Sample value"
+        ?invalid=${showsError}
+        label-position="side"
+      >
         <span slot="label">${label}</span>
         ${showsPrefix
           ? html`
@@ -102,13 +105,30 @@ const modPropertiesContent = () =>
 const coveredTextFieldCustomProperties =
   coveredCustomProperties(MOD_PROPERTY_CASES);
 
-const verifyCoverage = async () => {
+const verifyCoverage = async ({
+  canvasElement,
+}: {
+  canvasElement: HTMLElement;
+}) => {
   await verifyCustomPropertyCoverage({
     customElementsManifest,
     modulePath: 'components/text-field/TextField.ts',
     declarationName: 'TextField',
     coveredProperties: coveredTextFieldCustomProperties,
   });
+
+  const fields = canvasElement.querySelectorAll<HTMLElement>(
+    'swc-text-field[style*="--swc-"]'
+  );
+  expect(fields).toHaveLength(MOD_PROPERTY_CASES.length);
+  for (const field of fields) {
+    const property = [...field.style].find((name) => name.startsWith('--swc-'));
+    expect(property, 'each override case sets a custom property').toBeDefined();
+    expect(
+      getComputedStyle(field).getPropertyValue(property ?? ''),
+      `${property} override reaches the text field`
+    ).toBe(field.style.getPropertyValue(property ?? ''));
+  }
 };
 
 // ────────────────
