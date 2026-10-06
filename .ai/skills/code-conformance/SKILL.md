@@ -110,8 +110,8 @@ Reference: [Linting tools](../../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-t
 
 **Authoring guidelines:**
 
-- Stories format: `.ai/rules/stories-format.md` — file structure, meta, tags, layout, visual separators
-- Stories documentation: `.ai/rules/stories-documentation.md` — per-unit MDX authoring (section content, anatomy, options, states, behaviors, accessibility)
+- Stories format: `.ai/rules/stories-format.md` (constraints) and `.ai/skills/stories-format/SKILL.md` (full reference) — file structure, meta, tags, layout, visual separators
+- Stories documentation: `.ai/rules/stories-documentation.md` (constraints) and `.ai/skills/stories-documentation/SKILL.md` (full procedure) — per-unit MDX authoring (section content, anatomy, options, states, behaviors, accessibility)
 
 **What to check (`<unit>.stories.ts`):**
 
