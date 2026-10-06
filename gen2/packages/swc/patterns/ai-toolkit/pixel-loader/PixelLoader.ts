@@ -97,7 +97,8 @@ export class PixelLoader extends SpectrumElement {
 
   /**
    * Cycles through a themed sequence of icons, one per loop, instead of a
-   * single `icon`.
+   * single `icon`. The `mega` preset shuffles its sequence per instance while
+   * keeping `aiLogo` first and the Adobe letter icons in order.
    */
   @property({ type: String, reflect: true })
   public preset?: PixelLoaderPresetName;
@@ -105,16 +106,6 @@ export class PixelLoader extends SpectrumElement {
   /** Renders the fully-settled, non-animating appearance. */
   @property({ type: Boolean, reflect: true })
   public paused = false;
-
-  /**
-   * Shuffles `preset`'s icon order once, instead of always cycling the fixed
-   * sequence defined in `PRESETS`. The preset's first icon still always leads
-   * (e.g. `aiLogo`); only the icons after it shuffle. The shuffle is stable
-   * for as long as `preset` stays the same; changing `preset` reshuffles.
-   * Ignored in single-icon mode.
-   */
-  @property({ type: Boolean, reflect: true })
-  public random = false;
 
   /** Accessible label for the loading indicator. */
   @property({ type: String, reflect: true })
@@ -132,9 +123,8 @@ export class PixelLoader extends SpectrumElement {
   private _containerCache: HTMLElement | null = null;
   private _cellElsCache: HTMLElement[] | null = null;
 
-  // The `random` shuffle, cached so it stays stable across re-renders and
-  // ticker steps instead of reshuffling on every read. Keyed to the preset it
-  // was generated for so a `preset` change regenerates it.
+  // The mega shuffle stays stable across re-renders and ticker steps instead
+  // of reshuffling on every read.
   private _shuffledPresetIcons: PixelLoaderIconName[] | null = null;
   private _shuffledPresetKey: PixelLoaderPresetName | undefined;
 
@@ -268,8 +258,7 @@ export class PixelLoader extends SpectrumElement {
     if (
       changed.has('_displayedIcon') ||
       changed.has('preset') ||
-      changed.has('_presetIndex') ||
-      changed.has('random')
+      changed.has('_presetIndex')
     ) {
       this._containerCache = null;
       this._cellElsCache = null;
@@ -291,13 +280,12 @@ export class PixelLoader extends SpectrumElement {
 
     // Resync the ticker on `paused` (freeze stops cycling) and on each
     // `_presetIndex` step, since every icon's cycle duration differs.
-    // `random` reshuffles which icon sits at the current index, which can
-    // change that icon's own cycle duration too.
+    // The mega preset's shuffled order can change the icon at the current
+    // index, which can change that icon's own cycle duration too.
     if (
       changed.has('preset') ||
       changed.has('paused') ||
-      changed.has('_presetIndex') ||
-      changed.has('random')
+      changed.has('_presetIndex')
     ) {
       this._syncTicker(skipEntryMs);
     }
@@ -312,7 +300,6 @@ export class PixelLoader extends SpectrumElement {
       changed.has('preset') ||
       changed.has('paused') ||
       changed.has('_presetIndex') ||
-      changed.has('random') ||
       (changed.has('_displayedIcon') && !this._resolvedPreset)
     ) {
       this._playCells(skipEntryMs);
@@ -371,7 +358,7 @@ export class PixelLoader extends SpectrumElement {
     }
 
     const icons = PRESETS[preset];
-    if (!this.random) {
+    if (preset !== 'mega') {
       return icons;
     }
 
@@ -641,9 +628,13 @@ export class PixelLoader extends SpectrumElement {
   }
 
   private _renderCell(cell: Cell, radii: CornerRadii): TemplateResult {
+    const fullyRounded =
+      radii.topLeft && radii.topRight && radii.bottomRight && radii.bottomLeft;
     return html`
       <div
-        class="swc-PixelLoader-cell"
+        class=${fullyRounded
+          ? 'swc-PixelLoader-cell swc-PixelLoader-cell--fully-rounded'
+          : 'swc-PixelLoader-cell'}
         style=${styleMap({
           'grid-column': String(cell.col + 1),
           'grid-row': String(cell.row + 1),

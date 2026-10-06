@@ -139,10 +139,9 @@ export class ResponseStatus extends SpectrumElement {
   @state()
   private _rollEngaged = false;
 
-  // Holds the loader on its settled frame for one frame when `status`
-  // becomes `active`, so it visibly starts static before animating instead
-  // of snapping straight into motion. Mirrors the label roll's "engage on
-  // the next frame" technique above.
+  // Holds the loader on its settled frame briefly when `status` becomes
+  // `active`, so it visibly starts static before animating instead of
+  // snapping straight into motion.
   @state()
   private _loaderPaused = false;
 
@@ -613,7 +612,6 @@ export class ResponseStatus extends SpectrumElement {
         class="swc-ResponseStatus-loader"
         preset=${ifDefined(preset)}
         icon=${ifDefined(icon)}
-        ?random=${preset === 'mega'}
         ?paused=${this._loaderPaused}
         aria-hidden="true"
       ></swc-pixel-loader>

@@ -523,26 +523,59 @@ export const ValidPresetNoWarningTest: Story = {
   },
 };
 
-export const MegaRandomBrandOrderTest: Story = {
+export const MegaPresetRandomOrderTest: Story = {
   ...Overview,
   play: async ({ canvasElement }) => {
     const el = await getComponent<PixelLoader>(
       canvasElement,
       'swc-pixel-loader'
     );
-    el.preset = 'mega';
-    el.random = true;
-    await el.updateComplete;
 
-    const icons = (
-      el as unknown as { _presetIcons: () => string[] }
-    )._presetIcons();
-    expect(icons.filter((icon) => icon.startsWith('adobe'))).toEqual([
-      'adobeA',
-      'adobeD',
-      'adobeO',
-      'adobeB',
-      'adobeE',
-    ]);
+    const originalRandom = Math.random;
+    Math.random = () => 0;
+    try {
+      el.preset = 'mega';
+      await el.updateComplete;
+
+      const icons = (
+        el as unknown as { _presetIcons: () => string[] }
+      )._presetIcons();
+      expect(icons).not.toEqual(PRESETS.mega);
+      expect(icons.filter((icon) => icon.startsWith('adobe'))).toEqual([
+        'adobeA',
+        'adobeD',
+        'adobeO',
+        'adobeB',
+        'adobeE',
+      ]);
+    } finally {
+      Math.random = originalRandom;
+    }
+  },
+};
+
+export const RoundedCellLayerPromotionTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement }) => {
+    const el = await getComponent<PixelLoader>(
+      canvasElement,
+      'swc-pixel-loader'
+    );
+    const fullyRoundedCells = cells(el).filter((cell) =>
+      cell.style.borderRadius.split(' ').every((radius) => radius === '30%')
+    );
+    const otherCells = cells(el).filter(
+      (cell) => !fullyRoundedCells.includes(cell)
+    );
+
+    expect(fullyRoundedCells.length).toBeGreaterThan(0);
+    expect(
+      fullyRoundedCells.every(
+        (cell) => getComputedStyle(cell).willChange === 'translate, scale'
+      )
+    ).toBe(true);
+    expect(
+      otherCells.every((cell) => getComputedStyle(cell).willChange === 'auto')
+    ).toBe(true);
   },
 };
