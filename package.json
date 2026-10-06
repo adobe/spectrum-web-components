@@ -47,7 +47,7 @@
     "test:a11y:gen2": "playwright test --config=playwright.a11y.gen2.config.ts",
     "test:a11y:report": "playwright show-report gen2/test/playwright-a11y/report",
     "test:a11y:ui": "playwright test --config=playwright.a11y.config.ts --ui",
-    "test:changelog": "node --test 1st-gen/scripts/changelog-utils.test.js gen2/.changeset/changelog-grouped.test.cjs",
+    "test:changelog": "node --test 1st-gen/scripts/update-changelog.test.js gen2/.changeset/changelog-grouped.test.cjs",
     "test:gen2": "yarn workspace @spectrum-web-components/gen2 test",
     "tokens:diff": "yarn workspace @adobe/swc-tokens diff:versions",
     "tokens:fix": "yarn workspace @adobe/swc-tokens fix:tokens",

@@ -21,7 +21,7 @@ import {
   parseCommitLog,
   renderGroups,
   toComponentLabel,
-} from './changelog-utils.js';
+} from './update-changelog.js';
 
 const REPO = 'https://github.com/adobe/spectrum-web-components';
 const componentDirs = new Set(['menu', 'picker', 'tabs']);
