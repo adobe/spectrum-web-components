@@ -30,15 +30,26 @@ import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
 import { RadioBase } from './Radio.base.js';
 import {
   RADIO_GROUP_LABEL_POSITIONS,
+  RADIO_GROUP_NECESSITY_INDICATORS,
   RADIO_GROUP_ORIENTATIONS,
   RADIO_VALID_SIZES,
   type RadioGroupLabelPosition,
+  type RadioGroupNecessityIndicator,
   type RadioGroupOrientation,
   type RadioSize,
 } from './RadioGroup.types.js';
 
 const DOCS_URL =
   'https://spectrum-web-components.adobe.com/?path=/docs/components-radio-group--docs';
+
+const READONLY_BLOCKED_KEYS: ReadonlySet<string> = new Set([
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+  'Home',
+  'End',
+]);
 
 /**
  * Coordinates a set of `swc-radio` items as a single mutually-exclusive selection.
@@ -83,6 +94,7 @@ export abstract class RadioGroupBase extends SizedMixin(
     super();
     // Items dispatch a composed `change` on activation.
     this.addEventListener('change', this.handleItemChange);
+    this.addEventListener('keydown', this.handleReadonlyKeydown);
   }
 
   /**
@@ -149,6 +161,20 @@ export abstract class RadioGroupBase extends SizedMixin(
    */
   @property({ type: String, reflect: true })
   public orientation: RadioGroupOrientation = 'vertical';
+
+  /**
+   * How the group's necessity is marked in the visible label. `icon` shows an
+   * asterisk only when `required`. `label` appends `(required)` when required
+   * and `(optional)` when not required. Requires a visible label to show.
+   *
+   * @default icon
+   */
+  @property({
+    type: String,
+    reflect: true,
+    attribute: 'necessity-indicator',
+  })
+  public necessityIndicator: RadioGroupNecessityIndicator = 'icon';
 
   // ──────────────────────
   //     IMPLEMENTATION
@@ -276,7 +302,7 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   /**
    * Proposed selection changes from item activation. When `readonly`, reverts
-   * the item's `checked` so focus still moves but selection does not.
+   * the item's `checked` so selection does not change.
    */
   private readonly handleItemChange = (event: Event): void => {
     const target = event.target;
@@ -292,8 +318,25 @@ export abstract class RadioGroupBase extends SizedMixin(
   };
 
   /**
+   * With navigation suspended, the keys it would handle fall through to page
+   * scroll; prevent that so a readonly group behaves like a native radio set.
+   */
+  private readonly handleReadonlyKeydown = (event: KeyboardEvent): void => {
+    if (
+      this.readonly &&
+      !event.defaultPrevented &&
+      !event.altKey &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      READONLY_BLOCKED_KEYS.has(event.key)
+    ) {
+      event.preventDefault();
+    }
+  };
+
+  /**
    * Arrow keys move a single roving tab stop, wrapping and skipping disabled
-   * items.
+   * items. Suspended while `readonly`.
    */
   private readonly navigation = new FocusgroupNavigationController(this, {
     direction: 'both',
@@ -404,6 +447,9 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   protected override willUpdate(changedProperties: PropertyValues): void {
     super.willUpdate(changedProperties);
+    if (changedProperties.has('readonly')) {
+      this.navigation.setOptions({ enabled: !this.readonly });
+    }
     if (!this.hasUpdated) {
       // A pre-checked item takes precedence over `selected` on first render.
       // Check the attribute and the property: items may be un-upgraded, or have
@@ -448,6 +494,12 @@ export abstract class RadioGroupBase extends SizedMixin(
       prop: 'orientation',
       value: this.orientation,
       valid: (this.constructor as typeof RadioGroupBase).ORIENTATIONS,
+      url: DOCS_URL,
+    });
+    validateEnum(this, {
+      prop: 'necessity-indicator',
+      value: this.necessityIndicator,
+      valid: RADIO_GROUP_NECESSITY_INDICATORS,
       url: DOCS_URL,
     });
     super.update(changedProperties);

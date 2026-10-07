@@ -27,6 +27,8 @@ export const RADIO_GROUP_LABEL_POSITIONS = ['top', 'side'] as const;
 
 export const RADIO_GROUP_ORIENTATIONS = ['horizontal', 'vertical'] as const;
 
+export const RADIO_GROUP_NECESSITY_INDICATORS = ['icon', 'label'] as const;
+
 // ──────────────────
 //     TYPES
 // ──────────────────
@@ -35,3 +37,5 @@ export type RadioSize = (typeof RADIO_VALID_SIZES)[number];
 export type RadioGroupLabelPosition =
   (typeof RADIO_GROUP_LABEL_POSITIONS)[number];
 export type RadioGroupOrientation = (typeof RADIO_GROUP_ORIENTATIONS)[number];
+export type RadioGroupNecessityIndicator =
+  (typeof RADIO_GROUP_NECESSITY_INDICATORS)[number];

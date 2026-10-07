@@ -395,13 +395,13 @@ Planned rendering shape:
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
 - [x] Add `.swc-RadioGroup` to the internal semantic wrapper in `render()`; keep styling off `:host`
-- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `components/fieldgroup/index.css` (not `/dist`) into `radio-group.css` as baseline for the item-stacking/label-position layout
-- [ ] Consume the shared `form-fields` `_lit-styles/` fragment and render template once available (B5); do not author a parallel implementation while waiting
+- [x] Copy S2 source from `spectrum-css` `spectrum-two` branch `components/fieldgroup/index.css` (not `/dist`) into `radio-group.css` as baseline for the item-stacking/label-position layout — item stacking only; label-position layout comes from the shared fragment
+- [x] Consume the shared `form-fields` `_lit-styles/` fragment and render template once available (B5); do not author a parallel implementation while waiting — fragment added to `static styles`, `swc-FormField` added to the render root, items placed in the `input` grid area
 
 #### Visual model and regressions
 
-- [ ] Add `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-*` property
-- [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
+- [x] Add `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-*` property
+- [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility
 
@@ -524,6 +524,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 | — | No `aria-errormessage` on `swc-radio-group`; `aria-describedby` alone associates the error text. | Decided while implementing `swc-text-field`: `FieldDescriptionMixin` does not wire `aria-errormessage` because assistive-technology support for it is still insufficiently consistent, while `aria-describedby` is universally read. `swc-radio-group` consumes that same mixin and inherits the same decision — not a gap specific to this component. |
 | — | **Supersedes the `ElementInternals` host-role decisions above.** `role="radiogroup"`, `aria-required`, `aria-invalid`, and `aria-readonly` live on the rendered outer `.swc-RadioGroup` element, which contains the label, the role-free `.swc-RadioGroup-items` layout wrapper, and the description. `labelInternals`/`describedByInternals` (host `ElementInternals`) are no longer overridden; `roleElement` is overridden instead, pointing at `.swc-RadioGroup`. Accessible name/description still resolve via `ariaLabelledByElements`/`ariaDescribedByElements`, now assigned directly to that element. The rendering class wires the slotted group label onto `roleElement.ariaLabelledByElements` in `updated()`, after the mixins synchronize naming and description. | A dedicated cross-browser/AT test matrix (VoiceOver with Chrome and Safari, NVDA, JAWS with Chrome and Firefox) found that placing `role="radiogroup"` on the host via `ElementInternals` can break item positioning or group labeling associations, or both, depending on the browser/AT combination. A rendered role element was the most compatible across combinations. JAWS with Firefox announced positioning but had a group-labeling gap; that gap was not independently root-caused. `ariaLabelledByElements`/`ariaDescribedByElements` element reflection is confirmed to work on connected elements without `ElementInternals` and to resolve across the shadow boundary (verified via Chromium's real accessibility tree, not just the JS property readback), so moving off `ElementInternals` retains accessible-name support. A `div` with `role="radiogroup"` cannot use native `<label for>` association, so the slotted-label fallback applies only when the mixin supplies neither resolved external label references nor an `accessible-label`; unresolved external IDs do not suppress a valid slotted label. |
 | — | `swc-radio` no longer sets `aria-describedby` on itself for its own slotted `description`. | The description renders as plain content inside the item's own accessible subtree (no shadow boundary to cross, unlike the group's label/description), so it already contributes to the item's accessible name computation alongside the label. Adding `aria-describedby` on top caused VoiceOver to re-announce the same text a second time as a "description". |
+| B5 | Phase 5: label, description, error text, and the `label-position` grid are reused from the shared `form-fields` fragment; `radio-group.css` only lays out the items. | Follows the planned style reuse: the render root now carries `swc-FormField` and the items wrapper sits in the `input` area, so label position, description, error text, and disabled label colors need no group-specific CSS. |
 
 ---
 

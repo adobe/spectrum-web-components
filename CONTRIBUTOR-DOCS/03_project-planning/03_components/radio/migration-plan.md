@@ -317,7 +317,7 @@ No `--mod-*` properties will be exposed. New `--swc-*` component-level propertie
 
 Each exposed `--swc-*` property must be documented with a `@cssprop` JSDoc tag on the primary SWC component class. Storybook picks these up and surfaces them in the API docs panel automatically.
 
-Initial expectation for Radio is a small reviewed set (likely control size and focus-indicator thickness, mirroring the 1st-gen modifiers most likely to see real override requests).
+The exposed set follows the custom property guidelines: one property per size-driven value (`--swc-radio-control-size`, `--swc-radio-text-to-control`, `--swc-radio-font-size`) and one per native state for the border and label colors (`--swc-radio-border-color-*` and `--swc-radio-content-color-*`, each with `default`, `hover`, `down`, `focus`, and `disabled`). `emphasized` overrides the border color set. The focus ring is defined directly on the state selector, so its thickness is not exposed. See the [Decision log](#decision-log).
 
 ### Behavioral semantics
 
@@ -403,14 +403,14 @@ Planned rendering shape:
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
 - [x] Add `.swc-Radio` to the internal semantic wrapper in `render()`; keep styling off `:host`
-- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `radio.css` as baseline
-- [ ] Author `radio.css` directly; do not consume the shared `form-fields` `_lit-styles/` fragment or a shared render template (resolved — see [Decision log](#decision-log))
+- [x] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `radio.css` as baseline — translated onto `token()` with `--mod-*`/`--highcontrast-*` indirection dropped; the Spectrum CSS-to-SWC differences are being reviewed manually
+- [x] Author `radio.css` directly; do not consume the shared `form-fields` `_lit-styles/` fragment or a shared render template (resolved — see [Decision log](#decision-log))
 
 #### Visual model and regressions
 
-- [ ] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) present in the S2 source
-- [ ] Add `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-*` property (e.g. `@cssprop --swc-radio-height - Block size of the radio.`)
-- [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
+- [x] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) present in the S2 source — present; ported as `:host(:lang(…))` CJK line-height
+- [x] Add `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-*` property — `--swc-radio-control-size`, `--swc-radio-text-to-control`, `--swc-radio-font-size`, and the per-state `--swc-radio-border-color-*` and `--swc-radio-content-color-*` properties
+- [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility
 

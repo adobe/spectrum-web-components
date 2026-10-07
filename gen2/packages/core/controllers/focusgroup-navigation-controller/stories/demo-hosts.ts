@@ -121,6 +121,7 @@ export class DemoFocusgroupPlayground extends LitElement {
     memory: { type: Boolean },
     skipDisabled: { type: Boolean, attribute: 'skip-disabled' },
     pageStep: { type: Number, attribute: 'page-step' },
+    enabled: { type: Boolean },
   };
 
   declare direction: FocusgroupDirection;
@@ -128,6 +129,7 @@ export class DemoFocusgroupPlayground extends LitElement {
   declare memory: boolean;
   declare skipDisabled: boolean;
   declare pageStep: number;
+  declare enabled: boolean;
 
   constructor() {
     super();
@@ -136,6 +138,7 @@ export class DemoFocusgroupPlayground extends LitElement {
     this.memory = true;
     this.skipDisabled = false;
     this.pageStep = 0;
+    this.enabled = true;
   }
 
   private readonly navigation = new FocusgroupNavigationController(this, {
@@ -159,6 +162,7 @@ export class DemoFocusgroupPlayground extends LitElement {
       memory: this.memory,
       skipDisabled: this.skipDisabled,
       pageStep: this.pageStep || undefined,
+      enabled: this.enabled,
     });
     this.navigation.refresh();
   }
@@ -171,6 +175,7 @@ export class DemoFocusgroupPlayground extends LitElement {
       'memory',
       'skipDisabled',
       'pageStep',
+      'enabled',
     ] as const;
     if (relevant.some((k) => changedProperties.has(k))) {
       this.navigation.setOptions({
@@ -179,6 +184,7 @@ export class DemoFocusgroupPlayground extends LitElement {
         memory: this.memory,
         skipDisabled: this.skipDisabled,
         pageStep: this.pageStep || undefined,
+        enabled: this.enabled,
       });
     }
   }

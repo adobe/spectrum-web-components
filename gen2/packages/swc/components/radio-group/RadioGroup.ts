@@ -10,17 +10,20 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-  CSSResultArray,
-  html,
-  nothing,
-  PropertyValues,
-  TemplateResult,
-} from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 
 import { RadioGroupBase } from '@adobe/spectrum-wc-core/components/radio-group';
 
+import '@adobe/spectrum-wc-icons/swc-icon-alert-triangle.js';
+import '../ui-icons/swc-ui-icon.js';
+
+import formFieldStyles from '../../stylesheets/_lit-styles/form-fields.css';
 import styles from './radio-group.css';
+
+const NECESSITY_INDICATOR_TEXT = {
+  required: '(required)',
+  optional: '(optional)',
+};
 
 /**
  * Coordinates a set of `swc-radio` items as a single mutually-exclusive selection.
@@ -33,12 +36,21 @@ import styles from './radio-group.css';
  * @slot description - Group-level guidance text.
  * @slot error-text - Error message shown when `invalid`.
  *
+ * @cssprop --swc-radio-group-item-gap - Space between radio button items.
+ * @cssprop --swc-radio-group-side-label-gap - Space between the radio items and the side label.
+ * @cssprop --swc-radio-group-row-gap - Space between the labels and group of radio items.
+ * @cssprop --swc-field-label-max-inline-size - `label-position="side"` only: max inline size of the label's grid column. Defaults to 25ch.
+ * @cssprop --swc-form-field-label-font-size - Font size of the visible group label. Defaults to the group size typography scale.
+ * @cssprop --swc-form-field-description-font-size - Font size of the description and error text. Defaults to the group size typography scale.
+ * @cssprop --swc-form-field-necessity-gap - Space between the label text and the necessity indicator. Changes by size.
+ * @cssprop --swc-form-field-invalid-icon-gap - Space between the error icon and the error message. Changes by size.
+ *
  * @example
  * <swc-radio-group><swc-radio value="1"></swc-radio></swc-radio-group>
  */
 export class RadioGroup extends RadioGroupBase {
   public static override get styles(): CSSResultArray {
-    return [styles];
+    return [formFieldStyles, styles];
   }
 
   public override get roleElement(): Element | null {
@@ -72,23 +84,29 @@ export class RadioGroup extends RadioGroupBase {
     // slotted label.
     return html`
       <div
-        class="swc-RadioGroup"
+        class="swc-FormField swc-RadioGroup"
         role="radiogroup"
         aria-required=${this.required ? 'true' : 'false'}
         aria-invalid=${this.invalid ? 'true' : 'false'}
         aria-readonly=${this.readonly ? 'true' : 'false'}
       >
-        ${this.hasLabelSlotContent
-          ? html`
-              <span class="swc-FormFieldLabel">
-                <slot name="label"></slot>
-              </span>
-            `
-          : nothing}
+        ${this.renderLabel(undefined, {
+          required: this.required,
+          necessityIndicator: this.necessityIndicator,
+          necessityIndicatorText: NECESSITY_INDICATOR_TEXT,
+          necessityIcon: html`
+            <swc-ui-icon icon="asterisk" size=${this.size}></swc-ui-icon>
+          `,
+        })}
         <div class="swc-RadioGroup-items">
           <slot></slot>
         </div>
-        ${this.renderFieldDescription({ invalid: this.invalid })}
+        ${this.renderFieldDescription({
+          invalid: this.invalid,
+          errorIcon: html`
+            <swc-icon-alert-triangle></swc-icon-alert-triangle>
+          `,
+        })}
       </div>
     `;
   }

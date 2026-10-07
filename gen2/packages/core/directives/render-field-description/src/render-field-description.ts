@@ -28,6 +28,13 @@ export interface RenderFieldDescriptionOptions {
   onDescriptionElement: (element: Element | undefined) => void;
   /** Called with the rendered error-text element (or `undefined` on removal). */
   onErrorTextElement: (element: Element | undefined) => void;
+
+  /**
+   * Decorative icon rendered before the error message. Supplied by the consumer
+   * because this `core` directive can't import a `swc` icon. Omit when the
+   * control already shows its own invalid icon (e.g. a text field's input).
+   */
+  errorIcon?: TemplateResult;
 }
 
 /**
@@ -47,6 +54,7 @@ export function renderFieldDescription({
   invalid,
   onDescriptionElement,
   onErrorTextElement,
+  errorIcon,
 }: RenderFieldDescriptionOptions): RenderFieldDescriptionResult {
   const showError = invalid && hasErrorTextSlotContent;
   if (!hasDescriptionSlotContent && !showError) {
@@ -63,7 +71,16 @@ export function renderFieldDescription({
     ${showError
       ? html`
           <span class="swc-FormFieldErrorText" ${ref(onErrorTextElement)}>
-            <slot name="error-text"></slot>
+            ${errorIcon
+              ? html`
+                  <span class="swc-FormFieldErrorText-icon" aria-hidden="true">
+                    ${errorIcon}
+                  </span>
+                `
+              : nothing}
+            <span class="swc-FormFieldErrorText-text">
+              <slot name="error-text"></slot>
+            </span>
           </span>
         `
       : nothing}

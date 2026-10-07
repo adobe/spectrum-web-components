@@ -19,7 +19,12 @@ import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
 import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
 
 import { fixture, getComponent } from '../../../utils/test-utils.js';
-import meta, { Playground } from '../stories/radio-group.stories.js';
+import meta, {
+  Invalid,
+  NecessityIndicator,
+  Playground,
+  ReadOnly,
+} from '../stories/radio-group.stories.js';
 
 /** An element carrying the ARIA element-reflection properties this file asserts on. */
 type ReflectedAriaElement = Element & {
@@ -30,7 +35,7 @@ type ReflectedAriaElement = Element & {
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
   ...meta,
-  title: 'Radio Group/Tests',
+  title: 'Radio group/Tests',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
@@ -234,6 +239,60 @@ export const GroupLabelLifecycleTest: Story = {
     await waitFor(() => {
       expect(target.ariaLabelledByElements).toBeNull();
     });
+  },
+};
+
+export const NecessityIndicatorTest: Story = {
+  ...NecessityIndicator,
+  play: async ({ canvasElement }) => {
+    const [requiredIcon, requiredLabel, optionalLabel] =
+      canvasElement.querySelectorAll<RadioGroup>('swc-radio-group');
+    await Promise.all(
+      [requiredIcon, requiredLabel, optionalLabel].map(
+        (group) => group.updateComplete
+      )
+    );
+
+    const indicator = requiredIcon.shadowRoot?.querySelector(
+      '.swc-FormFieldLabel-requiredIndicator'
+    );
+    expect(indicator?.getAttribute('aria-hidden')).toBe('true');
+    expect(
+      requiredLabel.shadowRoot
+        ?.querySelector('.swc-FormFieldLabel-necessityLabel')
+        ?.textContent?.trim()
+    ).toBe('(required)');
+    expect(
+      optionalLabel.shadowRoot
+        ?.querySelector('.swc-FormFieldLabel-necessityLabel')
+        ?.textContent?.trim()
+    ).toBe('(optional)');
+
+    // The label stays a non-`<label>` element wired by `aria-labelledby`.
+    expect(requiredIcon.shadowRoot?.querySelector('label')).toBeNull();
+  },
+};
+
+export const ErrorIconTest: Story = {
+  ...Invalid,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const icon = group.shadowRoot?.querySelector(
+      '.swc-FormFieldErrorText-icon'
+    );
+    expect(icon?.getAttribute('aria-hidden')).toBe('true');
+    expect(
+      (group.roleElement as ReflectedAriaElement).ariaDescribedByElements
+    ).toEqual([group.shadowRoot?.querySelector('.swc-FormFieldErrorText')]);
+
+    group.invalid = false;
+    await group.updateComplete;
+    expect(
+      group.shadowRoot?.querySelector('.swc-FormFieldErrorText-icon')
+    ).toBeNull();
   },
 };
 
@@ -483,6 +542,55 @@ export const InitialCheckedRadioTest: Story = {
     group.formResetCallback();
     await group.updateComplete;
     expect(group.selected).toBe('2');
+  },
+};
+
+export const ReadOnlyNavigationTest: Story = {
+  ...ReadOnly,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+    items[1].focus();
+
+    for (const key of [
+      'ArrowRight',
+      'ArrowLeft',
+      'ArrowDown',
+      'ArrowUp',
+      'Home',
+      'End',
+    ]) {
+      const notPrevented = items[1].dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key,
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })
+      );
+      expect(notPrevented, `${key} does not scroll the page`).toBe(false);
+      expect(document.activeElement, `${key} keeps focus in place`).toBe(
+        items[1]
+      );
+      expect(group.selected).toBe('2');
+      expect(items.map((item) => item.tabIndex)).toEqual([-1, 0, -1]);
+    }
+
+    group.readonly = false;
+    await group.updateComplete;
+    items[1].dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'ArrowRight',
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
+    );
+    expect(document.activeElement).toBe(items[2]);
+    expect(group.selected).toBe('3');
   },
 };
 

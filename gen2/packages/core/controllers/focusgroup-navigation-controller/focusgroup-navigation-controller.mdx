@@ -26,6 +26,7 @@ import * as FocusgroupNavigationControllerStories from './stories/focusgroup-nav
 - **`wrap`**: end wraps to start (and vice versa), similar to `wrap` concepts in the `focusgroup` proposal.
 - **`memory`**: <kbd>Tab</kbd> returns to the last focused item instead of resetting, similar to the `nomemory` concepts in the `focusgroup` proposal.
 - **`skipDisabled`**: when `true`, elements with `disabled` or `aria-disabled="true"` are excluded from the roving tab stop and arrow navigation.
+- **`enabled`**: when `false`, key navigation is suspended and `keydown` is left untouched, so the host decides what the keys do instead. The roving tab stop stays in place, so <kbd>Tab</kbd> still enters and leaves the group. Defaults to `true`; toggle with `setOptions`. Radio group in `readonly` state is an example of when this might be used.
 - **`pageStep`**: non-zero positive integer enables <kbd>Page Up</kbd> / <kbd>Page Down</kbd> movement.
 
 ### Programmatic API
