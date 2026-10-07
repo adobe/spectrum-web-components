@@ -151,6 +151,14 @@
       "types": "./dist/components/infield-button/index.d.ts",
       "import": "./dist/components/infield-button/index.js"
     },
+    "./components/menu": {
+      "types": "./dist/components/menu/index.d.ts",
+      "import": "./dist/components/menu/index.js"
+    },
+    "./components/menu/index.js": {
+      "types": "./dist/components/menu/index.d.ts",
+      "import": "./dist/components/menu/index.js"
+    },
     "./components/meter": {
       "types": "./dist/components/meter/index.d.ts",
       "import": "./dist/components/meter/index.js"
@@ -198,6 +206,14 @@
     "./components/tabs/index.js": {
       "types": "./dist/components/tabs/index.d.ts",
       "import": "./dist/components/tabs/index.js"
+    },
+    "./components/thumbnail": {
+      "types": "./dist/components/thumbnail/index.d.ts",
+      "import": "./dist/components/thumbnail/index.js"
+    },
+    "./components/thumbnail/index.js": {
+      "types": "./dist/components/thumbnail/index.d.ts",
+      "import": "./dist/components/thumbnail/index.js"
     },
     "./components/tooltip": {
       "types": "./dist/components/tooltip/index.d.ts",
@@ -475,6 +491,12 @@
       "components/infield-button/index.js": [
         "dist/components/infield-button/index.d.ts"
       ],
+      "components/menu": [
+        "dist/components/menu/index.d.ts"
+      ],
+      "components/menu/index.js": [
+        "dist/components/menu/index.d.ts"
+      ],
       "components/meter": [
         "dist/components/meter/index.d.ts"
       ],
@@ -510,6 +532,12 @@
       ],
       "components/tabs/index.js": [
         "dist/components/tabs/index.d.ts"
+      ],
+      "components/thumbnail": [
+        "dist/components/thumbnail/index.d.ts"
+      ],
+      "components/thumbnail/index.js": [
+        "dist/components/thumbnail/index.d.ts"
       ],
       "components/tooltip": [
         "dist/components/tooltip/index.d.ts"
@@ -636,6 +664,7 @@
   "devDependencies": {
     "glob": "11.0.3",
     "rimraf": "6.0.1",
+    "svgo": "4.0.0",
     "typescript": "5.9.2",
     "vite": "8.0.8",
     "vite-plugin-dts": "4.5.4"
