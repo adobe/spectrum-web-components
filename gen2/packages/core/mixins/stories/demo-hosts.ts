@@ -106,6 +106,17 @@ export class DemoLabellingHost extends LabellingMixin(LitElement) {
     return 'demo-labelling-host-input';
   }
 
+  /**
+   * Optional placeholder forwarded to the inner `<input>`. Exposed so stories
+   * can demonstrate the mixin's placeholder-only-name dev-mode warning.
+   */
+  @property({ type: String })
+  public placeholder?: string;
+
+  public override get placeholderText(): string | undefined {
+    return this.placeholder;
+  }
+
   public override get roleElement(): HTMLInputElement | null {
     return this.renderRoot.querySelector('input');
   }
@@ -113,7 +124,7 @@ export class DemoLabellingHost extends LabellingMixin(LitElement) {
   protected override render(): TemplateResult {
     return html`
       ${this.renderLabel(this._inputId)}
-      <input id=${this._inputId} />
+      <input id=${this._inputId} placeholder=${ifDefined(this.placeholder)} />
     `;
   }
 }

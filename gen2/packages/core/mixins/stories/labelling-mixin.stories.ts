@@ -126,10 +126,8 @@ export const NameSourcePrecedence: Story = {
       // `accessible-labelledby`. It only inspects attributes, so it reports a
       // false "Form element does not have a label" ("label" rule) violation
       // on this host even though the name resolves correctly in real
-      // browsers and assistive technology. See the forms-strategy RFC's
-      // axe-core policy (CONTRIBUTOR-DOCS, "3.4 axe-core policy") for the
-      // documented false-positive list. Remove once axe-core adds ARIAMixin
-      // element-reference support (review quarterly).
+      // browsers and assistive technology. Remove once axe-core adds
+      // ARIAMixin element-reference support (review quarterly).
       exclude: {
         label: ['#labelling-mixin-labelledby-host'],
       },
@@ -188,6 +186,102 @@ export const ConflictingLabelSources: Story = {
   },
 };
 ConflictingLabelSources.storyName = 'Conflicting label sources';
+
+export const OtherDevWarnings: Story = {
+  render: () => html`
+    <div style="display: grid; gap: 20px;">
+      <section>
+        <p style="margin: 0 0 8px;">
+          <strong>No accessible name</strong>
+          <br />
+          No label slot,
+          <code>accessible-label</code>
+          , or
+          <code>accessible-labelledby</code>
+          is set. Open the console.
+        </p>
+        <demo-labelling-host
+          id="labelling-mixin-warn-missing-name"
+        ></demo-labelling-host>
+      </section>
+
+      <section>
+        <p style="margin: 0 0 8px;">
+          <strong>Placeholder-only name</strong>
+          <br />
+          A
+          <code>placeholder</code>
+          is not a reliable accessible name; the mixin warns when it is the only
+          source.
+        </p>
+        <demo-labelling-host
+          id="labelling-mixin-warn-placeholder-only"
+          placeholder="Search"
+        ></demo-labelling-host>
+      </section>
+
+      <section>
+        <p style="margin: 0 0 8px;">
+          <strong>
+            Host
+            <code>aria-label</code>
+            is ignored
+          </strong>
+          <br />
+          <code>aria-label</code>
+          /
+          <code>aria-labelledby</code>
+          on the host do not name the field (the accessible name is applied to
+          the role element, not the host). Use
+          <code>accessible-label</code>
+          or
+          <code>accessible-labelledby</code>
+          instead.
+        </p>
+        <demo-labelling-host
+          id="labelling-mixin-warn-host-aria"
+          aria-label="Ignored host aria-label"
+        ></demo-labelling-host>
+      </section>
+
+      <section>
+        <p style="margin: 0 0 8px;">
+          <strong>
+            Unresolved
+            <code>accessible-labelledby</code>
+          </strong>
+          <br />
+          The referenced
+          <code>id</code>
+          does not exist in the field's root, so the accessible name never
+          resolves.
+        </p>
+        <demo-labelling-host
+          id="labelling-mixin-warn-unresolved-labelledby"
+          accessible-labelledby="labelling-mixin-missing-id"
+        ></demo-labelling-host>
+      </section>
+    </div>
+  `,
+  tags: ['behaviors'],
+  parameters: {
+    a11y: {
+      // reason: each example intentionally triggers a `LabellingMixin`
+      // dev-mode warning, so axe-core's "Form element does not have a label"
+      // rule fires by design. The stories exist to surface those warnings;
+      // scope the axe exclusion to just these hosts.
+      exclude: {
+        label: [
+          '#labelling-mixin-warn-missing-name',
+          '#labelling-mixin-warn-placeholder-only',
+          '#labelling-mixin-warn-host-aria',
+          '#labelling-mixin-warn-unresolved-labelledby',
+        ],
+      },
+    },
+  },
+};
+OtherDevWarnings.storyName = 'Other dev-mode warnings';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

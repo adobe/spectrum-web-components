@@ -419,6 +419,15 @@ const showValidity = (event: Event): void => {
   }
 };
 
+const toggleFieldsetDisabled = (event: Event): void => {
+  const button = event.currentTarget as HTMLButtonElement;
+  const fieldset = button.form?.querySelector('fieldset');
+  if (fieldset) {
+    fieldset.disabled = !fieldset.disabled;
+    button.setAttribute('aria-pressed', String(fieldset.disabled));
+  }
+};
+
 export const FormBehavior: Story = {
   render: () => html`
     <form
@@ -426,10 +435,13 @@ export const FormBehavior: Story = {
       style="display: flex; flex-direction: column; gap: 16px; inline-size: 220px;"
       @submit=${handleSubmit}
     >
-      <swc-text-field name="username" required>
-        <span slot="label">Username</span>
-        <span slot="error-text">Enter a username.</span>
-      </swc-text-field>
+      <fieldset style="margin: 0; min-inline-size: 0;">
+        <legend>Account details</legend>
+        <swc-text-field name="username" required>
+          <span slot="label">Username</span>
+          <span slot="error-text">Enter a username.</span>
+        </swc-text-field>
+      </fieldset>
       <div style="display: flex; gap: 8px;">
         <button type="submit" class="swc-Button">
           <span class="swc-Button-label">Submit</span>
@@ -445,6 +457,15 @@ export const FormBehavior: Story = {
           <span class="swc-Button-label">Check validity</span>
         </button>
       </div>
+      <button
+        type="button"
+        class="swc-Button swc-Button--secondary"
+        data-toggle-fieldset
+        aria-pressed="false"
+        @click=${toggleFieldsetDisabled}
+      >
+        <span class="swc-Button-label">Toggle fieldset disabled</span>
+      </button>
       <section aria-labelledby="submitted-form-data-label">
         <div id="submitted-form-data-label">Submitted form data</div>
         <output
