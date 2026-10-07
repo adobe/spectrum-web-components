@@ -33,11 +33,6 @@ argTypes.variant = {
   options: TOAST_VARIANTS,
 };
 
-// Placeholder contrast until Phase 5 styling lands; toast.css has no background yet.
-const preview = (content: unknown) => html`
-  <div style="background-color: #292929; color: white;">${content}</div>
-`;
-
 /**
  * A toast displays a temporary notification in response to a user action or system event.
  */
@@ -46,7 +41,7 @@ const meta: Meta = {
   component: 'swc-toast',
   args,
   argTypes,
-  render: (args) => preview(template(args)),
+  render: (args) => template(args),
   parameters: {
     docs: {
       subtitle:
@@ -76,15 +71,18 @@ export const Playground: Story = {
       }
     };
 
-    return preview(html`
+    return html`
       <swc-button variant="secondary" @click=${onToggle}>
         Toggle toast
       </swc-button>
       ${template(args)}
-    `);
+    `;
   },
   args: {
     open: false,
+  },
+  parameters: {
+    flexLayout: 'column-center',
   },
   tags: ['dev'],
 };
@@ -106,16 +104,93 @@ export const Overview: Story = {
 
 export const Anatomy: Story = {
   render: (args) =>
-    preview(
+    template({
+      ...args,
+      open: true,
+      variant: 'info',
+      'default-slot': 'File archived',
+      'action-label': 'Undo',
+    }),
+  tags: ['anatomy'],
+};
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+export const Variants: Story = {
+  render: (args) => html`
+    ${TOAST_VARIANTS.map((variant) =>
       template({
         ...args,
         open: true,
-        variant: 'info',
-        'default-slot': 'File archived',
-        'action-label': 'Undo',
+        variant,
+        'default-slot': `${variant[0].toUpperCase()}${variant.slice(1)} message`,
       })
-    ),
-  tags: ['anatomy'],
+    )}
+  `,
+  parameters: { flexLayout: 'column-stretch' },
+  tags: ['options'],
+};
+
+export const Action: Story = {
+  render: (args) => html`
+    ${template({
+      ...args,
+      open: true,
+      variant: 'positive',
+      'default-slot': 'Your changes have been saved.',
+      'action-label': 'Undo',
+    })}
+    ${template({
+      ...args,
+      open: true,
+      variant: 'neutral',
+      'default-slot': 'Your changes have been saved.',
+      'action-label': 'Undo',
+    })}
+  `,
+  parameters: { flexLayout: 'column-stretch' },
+  tags: ['options'],
+};
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+export const TextWrapping: Story = {
+  render: (args) => html`
+    ${template({
+      ...args,
+      open: true,
+      'default-slot':
+        'Your changes to the project have been saved and shared with everyone who has access to it.',
+      'action-label': 'Undo',
+    })}
+    ${template({
+      ...args,
+      open: true,
+      'default-slot': 'Supercalifragilisticexpialidocious'.repeat(4),
+    })}
+    ${template({
+      ...args,
+      open: true,
+      variant: 'positive',
+      'default-slot':
+        'The updated report is ready to review and has been shared with your team, including the latest changes to the project.',
+      'action-label': 'Undo',
+    })}
+    ${template({
+      ...args,
+      open: true,
+      variant: 'info',
+      'default-slot':
+        'The updated report is ready to review and has been shared with your team, including the latest changes to the project.',
+      'action-label': undefined,
+    })}
+  `,
+  parameters: { flexLayout: 'column-stretch' },
+  tags: ['behaviors'],
 };
 
 // ────────────────────────────────
@@ -124,15 +199,13 @@ export const Anatomy: Story = {
 
 export const Accessibility: Story = {
   render: (args) => html`
-    ${preview(template({ ...args, open: true, 'default-slot': 'File saved' }))}
-    ${preview(
-      template({
-        ...args,
-        open: true,
-        'default-slot':
-          '<span id="toast-labelled-message">Upload complete</span>',
-      })
-    )}
+    ${template({ ...args, open: true, 'default-slot': 'File saved' })}
+    ${template({
+      ...args,
+      open: true,
+      'default-slot':
+        '<span id="toast-labelled-message">Upload complete</span>',
+    })}
   `,
   parameters: { flexLayout: 'row-wrap' },
   tags: ['a11y'],

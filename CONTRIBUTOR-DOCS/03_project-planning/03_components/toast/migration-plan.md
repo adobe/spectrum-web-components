@@ -587,5 +587,6 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 - [React Aria `useToastRegion`](https://github.com/adobe/react-spectrum/blob/main/packages/react-aria/src/toast/useToastRegion.ts) — region-wide `pauseAll()`/`resumeAll()`, focus management on toast removal, `role="region"` landmark
 - [React Spectrum: Toast (docs)](https://react-spectrum.adobe.com/react-spectrum/Toast.html)
 - [Figma: S2 / Web — Toast](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9908-3216&m=dev)
+- [Figma: deprecated S2 / Web Toast guidelines](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/%F0%9F%9A%AB-S2---Web--Deprecated-?node-id=112398-1373&m=dev): Design approves these additional guidelines as a source of truth alongside the current spec, particularly for the container's stacking and expanded behaviors.
 - [Spectrum CSS — `spectrum-two` branch, Toast component](https://github.com/adobe/spectrum-css/tree/spectrum-two/components/toast)
 - [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)

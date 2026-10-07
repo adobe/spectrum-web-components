@@ -11,7 +11,6 @@
  */
 
 import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
-import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
@@ -52,36 +51,35 @@ export class Toast extends ToastBase {
 
   protected override render(): TemplateResult {
     return html`
-      <div
-        class=${classMap({
-          'swc-Toast': true,
-          [`swc-Toast--${this.variant}`]: true,
-        })}
-      >
-        <div class="swc-Toast-body" role="alert" aria-atomic="true">
-          <div class="swc-Toast-content">
-            ${this.contentRevealed
-              ? html`
-                  ${this.renderIcon()}
-                  <div class="swc-Toast-text"><slot></slot></div>
-                `
-              : nothing}
+      <div class="swc-Toast">
+        <div class="swc-Toast-main">
+          <div class="swc-Toast-body" role="alert" aria-atomic="true">
+            <div class="swc-Toast-content">
+              ${this.contentRevealed
+                ? html`
+                    ${this.renderIcon()}
+                    <div class="swc-Toast-text"><slot></slot></div>
+                  `
+                : nothing}
+            </div>
           </div>
+          ${this.actionLabel
+            ? html`
+                <swc-button
+                  class="swc-Toast-action"
+                  size="m"
+                  variant="secondary"
+                  fill-style="outline"
+                  static-color="white"
+                  @click=${this.requestAction}
+                >
+                  ${this.actionLabel}
+                </swc-button>
+              `
+            : nothing}
         </div>
-        ${this.actionLabel
-          ? html`
-              <swc-button
-                size="m"
-                variant="secondary"
-                fill-style="outline"
-                static-color="white"
-                @click=${this.requestAction}
-              >
-                ${this.actionLabel}
-              </swc-button>
-            `
-          : nothing}
         <swc-close-button
+          class="swc-Toast-close"
           size="m"
           static-color="white"
           accessible-label="Close"
