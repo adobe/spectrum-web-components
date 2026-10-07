@@ -42,15 +42,6 @@ import {
 const DOCS_URL =
   'https://spectrum-web-components.adobe.com/?path=/docs/components-radio-group--docs';
 
-const READONLY_BLOCKED_KEYS: ReadonlySet<string> = new Set([
-  'ArrowUp',
-  'ArrowDown',
-  'ArrowLeft',
-  'ArrowRight',
-  'Home',
-  'End',
-]);
-
 /**
  * Coordinates a set of `swc-radio` items as a single mutually-exclusive selection.
  * Rendering lives in `swc-radio-group`.
@@ -94,7 +85,6 @@ export abstract class RadioGroupBase extends SizedMixin(
     super();
     // Items dispatch a composed `change` on activation.
     this.addEventListener('change', this.handleItemChange);
-    this.addEventListener('keydown', this.handleReadonlyKeydown);
   }
 
   /**
@@ -302,7 +292,7 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   /**
    * Proposed selection changes from item activation. When `readonly`, reverts
-   * the item's `checked` so selection does not change.
+   * the item's `checked` so focus still moves but selection does not.
    */
   private readonly handleItemChange = (event: Event): void => {
     const target = event.target;
@@ -318,25 +308,8 @@ export abstract class RadioGroupBase extends SizedMixin(
   };
 
   /**
-   * With navigation suspended, the keys it would handle fall through to page
-   * scroll; prevent that so a readonly group behaves like a native radio set.
-   */
-  private readonly handleReadonlyKeydown = (event: KeyboardEvent): void => {
-    if (
-      this.readonly &&
-      !event.defaultPrevented &&
-      !event.altKey &&
-      !event.ctrlKey &&
-      !event.metaKey &&
-      READONLY_BLOCKED_KEYS.has(event.key)
-    ) {
-      event.preventDefault();
-    }
-  };
-
-  /**
    * Arrow keys move a single roving tab stop, wrapping and skipping disabled
-   * items. Suspended while `readonly`.
+   * items.
    */
   private readonly navigation = new FocusgroupNavigationController(this, {
     direction: 'both',
@@ -447,9 +420,6 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   protected override willUpdate(changedProperties: PropertyValues): void {
     super.willUpdate(changedProperties);
-    if (changedProperties.has('readonly')) {
-      this.navigation.setOptions({ enabled: !this.readonly });
-    }
     if (!this.hasUpdated) {
       // A pre-checked item takes precedence over `selected` on first render.
       // Check the attribute and the property: items may be un-upgraded, or have

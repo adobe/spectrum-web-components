@@ -49,14 +49,13 @@ type KeydownOptions = {
  * @param target - Element to dispatch from (typically the focused control inside the host).
  * @param key - `KeyboardEvent.key` value.
  * @param options - Optional modifier keys.
- * @returns False when a listener called `preventDefault()`.
  */
 function keydown(
   target: HTMLElement,
   key: string,
   options?: KeydownOptions
-): boolean {
-  return target.dispatchEvent(
+): void {
+  target.dispatchEvent(
     new KeyboardEvent('keydown', {
       key,
       bubbles: true,
@@ -891,45 +890,6 @@ export const SetOptionsDirectionChange: Story = {
         expect(afterDown).toBe('Italic');
       }
     );
-  },
-};
-
-// ──────────────────────────────────────────────────────────────
-// enabled: false suspends key navigation without clearing the tab stop
-// ──────────────────────────────────────────────────────────────
-
-export const EnabledFalseSuspendsNavigation: Story = {
-  render: () => html`
-    <demo-focusgroup-playground
-      .direction=${'both'}
-      .wrap=${true}
-      .enabled=${false}
-    ></demo-focusgroup-playground>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const host = await getComponent<DemoFocusgroupPlayground>(
-      canvasElement,
-      'demo-focusgroup-playground'
-    );
-    const root = host.shadowRoot!;
-    const first = root.querySelector<HTMLButtonElement>('button')!;
-    first.focus();
-
-    await step('arrow, Home, and End keys do not move focus', async () => {
-      for (const key of ['ArrowRight', 'ArrowDown', 'End', 'Home']) {
-        const notPrevented = keydown(first, key);
-        expect(notPrevented, `${key} is left untouched`).toBe(true);
-        expect(shadowActiveButton(host)?.textContent?.trim(), key).toBe('Bold');
-      }
-      expect(first.tabIndex).toBe(0);
-    });
-
-    await step('re-enabling restores navigation', async () => {
-      host.enabled = true;
-      await host.updateComplete;
-      keydown(first, 'ArrowRight');
-      expect(shadowActiveButton(host)?.textContent?.trim()).toBe('Italic');
-    });
   },
 };
 

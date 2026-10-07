@@ -302,7 +302,7 @@ Additional Figma-confirmed presentation notes:
 
 - The Emphasized row is only visually distinct once checked, matching 1st-gen's CSS scoping of `--emphasized` selectors to `:checked`; there is no separate "emphasized + unchecked" treatment.
 - Label text wrap is a CSS behavior confirmation (the label must wrap correctly at every size), not a new boolean property — no 1st-gen or Figma evidence supports a truncation mode.
-- Focus-visible, invalid, and readonly are **not** shown in this matrix because they are not item-level states in gen2 (invalid/readonly move to the group; focus-visible is a keyboard-only ring layered on top of any of the above rather than a distinct row).
+- Focus-visible, invalid, and readonly are **not** shown in this matrix because they are not item-level states in gen2 (invalid/readonly move to the group; focus-visible is a keyboard-only ring layered on top of any of the above rather than a distinct row). The item still reacts visually to the group's `readonly` state: its pressed (`:active`) transform is suppressed through the private `--_swc-radio-group-is-readonly` signal.
 
 #### Slots (gen2)
 
@@ -317,7 +317,7 @@ No `--mod-*` properties will be exposed. New `--swc-*` component-level propertie
 
 Each exposed `--swc-*` property must be documented with a `@cssprop` JSDoc tag on the primary SWC component class. Storybook picks these up and surfaces them in the API docs panel automatically.
 
-The exposed set follows the custom property guidelines: one property per size-driven value (`--swc-radio-control-size`, `--swc-radio-text-to-control`, `--swc-radio-font-size`) and one per native state for the border and label colors (`--swc-radio-border-color-*` and `--swc-radio-content-color-*`, each with `default`, `hover`, `down`, `focus`, and `disabled`). `emphasized` overrides the border color set. The focus ring is defined directly on the state selector, so its thickness is not exposed. See the [Decision log](#decision-log).
+The exposed set follows the custom property guidelines: size-driven values (control size, text-to-control gap, label and description font sizes) and per-state border and label colors each get a `--swc-radio-*` property. `emphasized` and the group's `invalid` state override the border colors. The focus ring is defined directly on the state selector, so its thickness is not exposed. Notably, the group's `readonly` state reaches the item through the private `--_swc-radio-group-is-readonly`, which a container style query uses to suppress the press transform. See the [Decision log](#decision-log).
 
 ### Behavioral semantics
 
@@ -409,8 +409,9 @@ Planned rendering shape:
 #### Visual model and regressions
 
 - [x] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) present in the S2 source — present; ported as `:host(:lang(…))` CJK line-height
-- [x] Add `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-*` property — `--swc-radio-control-size`, `--swc-radio-text-to-control`, `--swc-radio-font-size`, and the per-state `--swc-radio-border-color-*` and `--swc-radio-content-color-*` properties
+- [x] Add `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-*` property
 - [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
+- [x] Add forced-colors overrides for the control border (default, hover, checked, focus-visible, disabled) and disabled text
 
 ### Accessibility
 
@@ -536,7 +537,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [Radio group accessibility migration analysis](../radio-group/accessibility-migration-analysis.md) — the coordinating parent; separate plan
 - [Forms strategy RFC (SWC-1888)](../../05_strategies/forms-strategy-rfc.md)
-- [Text field migration plan](../text-field/migration-plan.md) — the first form-field-related gen2 implementation; source of the `FieldAssociationController` sequencing `swc-radio-group`'s plan depends on, and of the `LabellingController`/shared `form-fields` stylesheet this plan deliberately does not depend on (see [Decision log](#decision-log)) (not yet merged at time of drafting)
+- [Text field migration plan](../text-field/migration-plan.md) — the first form-field-related gen2 implementation; source of the `FieldAssociationController` sequencing `swc-radio-group`'s plan depends on, and of the `LabellingController`/shared `form-fields` stylesheet this plan deliberately does not depend on (see [Decision log](#decision-log)) (since built)
 - [`SlotPresenceController`](../../../../gen2/packages/core/controllers/slot-presence-controller/slot-presence-controller.mdx) — already-built controller this plan uses to gate the `description` slot/`aria-describedby`
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [1st-gen source](../../../../1st-gen/packages/radio/src/Radio.ts)

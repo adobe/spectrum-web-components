@@ -545,7 +545,7 @@ export const InitialCheckedRadioTest: Story = {
   },
 };
 
-export const ReadOnlyNavigationTest: Story = {
+export const ReadOnlySelectionTest: Story = {
   ...ReadOnly,
   play: async ({ canvasElement }) => {
     const group = await getComponent<RadioGroup>(
@@ -553,17 +553,8 @@ export const ReadOnlyNavigationTest: Story = {
       'swc-radio-group'
     );
     const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
-    items[1].focus();
-
-    for (const key of [
-      'ArrowRight',
-      'ArrowLeft',
-      'ArrowDown',
-      'ArrowUp',
-      'Home',
-      'End',
-    ]) {
-      const notPrevented = items[1].dispatchEvent(
+    const press = (target: Radio, key: string) =>
+      target.dispatchEvent(
         new KeyboardEvent('keydown', {
           key,
           bubbles: true,
@@ -571,25 +562,22 @@ export const ReadOnlyNavigationTest: Story = {
           cancelable: true,
         })
       );
-      expect(notPrevented, `${key} does not scroll the page`).toBe(false);
-      expect(document.activeElement, `${key} keeps focus in place`).toBe(
-        items[1]
-      );
-      expect(group.selected).toBe('2');
-      expect(items.map((item) => item.tabIndex)).toEqual([-1, 0, -1]);
-    }
+    items[1].focus();
+
+    // Focus moves with the keys, but selection does not follow it.
+    press(items[1], 'ArrowRight');
+    expect(document.activeElement, 'ArrowRight moves focus').toBe(items[2]);
+    press(items[2], 'Home');
+    expect(document.activeElement, 'Home moves focus').toBe(items[0]);
+    expect(group.selected).toBe('2');
+    expect(items.map((item) => item.checked)).toEqual([false, true, false]);
 
     group.readonly = false;
     await group.updateComplete;
-    items[1].dispatchEvent(
-      new KeyboardEvent('keydown', {
-        key: 'ArrowRight',
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-      })
-    );
-    expect(document.activeElement).toBe(items[2]);
+    press(items[0], 'ArrowRight');
+    expect(document.activeElement).toBe(items[1]);
+    expect(group.selected).toBe('2');
+    press(items[1], 'ArrowRight');
     expect(group.selected).toBe('3');
   },
 };

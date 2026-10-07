@@ -78,17 +78,6 @@ export type FocusgroupNavigationOptions = {
   skipDisabled?: boolean;
 
   /**
-   * When false, keyboard navigation (arrows, Home, End, Page Up/Down) is
-   * suspended and `keydown` is left untouched, so hosts decide what the keys
-   * do instead. The roving `tabindex` and focus tracking keep working, so
-   * Tab still enters and leaves the group at the current item. Toggle at
-   * runtime with `setOptions`.
-   *
-   * Defaults to true.
-   */
-  enabled?: boolean;
-
-  /**
    * Invoked after the active item changes and `tabindex` values are synchronized.
    * The argument is the new active element, or null when the group has no eligible items.
    */
@@ -118,7 +107,6 @@ const DEFAULT_OPTIONS = {
   wrap: false,
   memory: true,
   skipDisabled: false,
-  enabled: true,
 } as const;
 
 /**
@@ -875,11 +863,7 @@ export class FocusgroupNavigationController implements ReactiveController {
    * @param event - Keyboard event from the focused element inside the host.
    */
   private handleKeydown(event: KeyboardEvent): void {
-    if (
-      this.options.enabled === false ||
-      event.defaultPrevented ||
-      event.altKey
-    ) {
+    if (event.defaultPrevented || event.altKey) {
       return;
     }
 
