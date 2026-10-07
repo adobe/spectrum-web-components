@@ -14,7 +14,7 @@
  * Validates `.ai/` instruction and skill frontmatter against the canonical schema, so
  * every generated Copilot, Claude, and Cursor file loads the way the source intends.
  *
- * Instructions (`.ai/rules/*.md`, and `.ai/memory/*.md` once they have frontmatter):
+ * Instructions (`.ai/rules/*.md` and `.ai/memory/*.md`):
  *   - `description` (required, a plain one-line YAML value so Cursor parses it) and `paths`
  *     (required, quoted YAML list); optional `excludeAgent`
  *   - no `globs`, `alwaysApply`, `applyTo`, or `name`
@@ -56,9 +56,9 @@ import {
 
 /**
  * Skill layout problems (nesting, a name that differs from its directory, rule-style keys)
- * are warnings until every existing skill is normalized; then this becomes true.
+ * are errors now that every skill is normalized.
  */
-const STRICT_SKILL_LAYOUT = false;
+const STRICT_SKILL_LAYOUT = true;
 
 const INSTRUCTION_SIZE_WARNING = 12 * 1024;
 const SKILL_NAME = /^[a-z0-9]+(-[a-z0-9]+)*$/;
@@ -92,13 +92,7 @@ function validateInstruction(source, errors, warnings) {
     return;
   }
   if (!source.data) {
-    if (source.kind === 'memory') {
-      warnings.push(
-        `${where}: no frontmatter, so it isn't generated as an instruction yet`
-      );
-    } else {
-      errors.push(`${where}: missing frontmatter (description, paths)`);
-    }
+    errors.push(`${where}: missing frontmatter (description, paths)`);
     return;
   }
   const data = source.data;

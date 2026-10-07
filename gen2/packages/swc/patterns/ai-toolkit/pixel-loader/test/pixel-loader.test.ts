@@ -346,20 +346,21 @@ export const ReducedMotionTest: Story = {
     };
     internals._reducedMotionQuery = query;
 
-    const opacityOffsets = (cellEl: HTMLElement): number[] =>
-      (cellEl.getAnimations()[0].effect as KeyframeEffect)
-        .getKeyframes()
-        .map((frame) => frame.computedOffset);
-
-    await step('reduced motion fades in place, one row at a time', async () => {
+    await step('reduced motion fades the whole grid in place', async () => {
       query.matches = true;
       internals._handleReducedMotionChange();
       await el.updateComplete;
 
       const cellEls = cells(el);
-      const [first] = cellEls;
-      const anims = first.getAnimations();
-      // A single opacity track per cell: no falling or scaling transform.
+      // Cells hold the settled frame; no per-cell animation or transform.
+      expect(cellEls[0].getAnimations()).toHaveLength(0);
+      expect(cellEls[0].style.opacity).toBe('1');
+      expect(cellEls[0].style.translate).toBe('0px');
+      expect(cellEls[0].style.scale).toBe('1');
+
+      // A single opacity track on the container: no falling or scaling
+      // transform, and no per-row stagger.
+      const anims = container(el).getAnimations();
       expect(anims).toHaveLength(1);
       const props = new Set(
         (anims[0].effect as KeyframeEffect)
@@ -369,13 +370,6 @@ export const ReducedMotionTest: Story = {
       expect(props.has('opacity')).toBe(true);
       expect(props.has('translate')).toBe(false);
       expect(props.has('scale')).toBe(false);
-
-      // Timed by row: aiLogo cells 1 and 2 share row 5, so they fade together,
-      // while cell 0 (row 6) fades on a different beat.
-      expect(opacityOffsets(cellEls[1])).toEqual(opacityOffsets(cellEls[2]));
-      expect(opacityOffsets(cellEls[0])).not.toEqual(
-        opacityOffsets(cellEls[1])
-      );
     });
 
     await step(
@@ -526,5 +520,62 @@ export const ValidPresetNoWarningTest: Story = {
         expect(warnCalls.length, 'no warnings for a valid preset').toBe(0);
       })
     );
+  },
+};
+
+export const MegaPresetRandomOrderTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement }) => {
+    const el = await getComponent<PixelLoader>(
+      canvasElement,
+      'swc-pixel-loader'
+    );
+
+    const originalRandom = Math.random;
+    Math.random = () => 0;
+    try {
+      el.preset = 'mega';
+      await el.updateComplete;
+
+      const icons = (
+        el as unknown as { _presetIcons: () => string[] }
+      )._presetIcons();
+      expect(icons).not.toEqual(PRESETS.mega);
+      expect(icons.filter((icon) => icon.startsWith('adobe'))).toEqual([
+        'adobeA',
+        'adobeD',
+        'adobeO',
+        'adobeB',
+        'adobeE',
+      ]);
+    } finally {
+      Math.random = originalRandom;
+    }
+  },
+};
+
+export const RoundedCellLayerPromotionTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement }) => {
+    const el = await getComponent<PixelLoader>(
+      canvasElement,
+      'swc-pixel-loader'
+    );
+    const fullyRoundedCells = cells(el).filter((cell) =>
+      cell.style.borderRadius.split(' ').every((radius) => radius === '30%')
+    );
+    const otherCells = cells(el).filter(
+      (cell) => !fullyRoundedCells.includes(cell)
+    );
+
+    expect(fullyRoundedCells.length).toBeGreaterThan(0);
+    expect(
+      fullyRoundedCells.every(
+        (cell) => getComputedStyle(cell).willChange === 'translate, scale'
+      )
+    ).toBe(true);
+    expect(
+      otherCells.every((cell) => getComputedStyle(cell).willChange === 'auto')
+    ).toBe(true);
   },
 };

@@ -22,7 +22,7 @@ If the plan is missing, stale, or intentionally incomplete, derive the needed co
 
 With that context established, read [`references/tldr-component-css-guidelines.md`](references/tldr-component-css-guidelines.md) — a TL;DR of the most critical rules from `CONTRIBUTOR-DOCS/02_style-guide/` with correct/incorrect code examples and links to the full docs for each rule. This is the CSS rules authority for this phase; follow it in preference to any conflicting guidance in the rendering analysis doc.
 
-Then use the `rendering-and-styling-migration-analysis.md` file for the component-specific technical detail of what to migrate. When a token you need does not exist, use the `ask-questions` skill to flag it with the user.
+Then use the `rendering-and-styling-migration-analysis.md` file for the component-specific technical detail of what to migrate. When a token you need does not exist, use the `ask-questions-if-underspecified` skill to flag it with the user.
 
 ## When to use this skill
 
