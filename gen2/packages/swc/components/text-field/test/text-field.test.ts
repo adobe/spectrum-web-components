@@ -61,13 +61,18 @@ export const LabellingTest: Story = {
     await step('slotted label renders as a real <label for>', () => {
       const label = slotOnly.shadowRoot?.querySelector('label');
       const input = slotOnly.shadowRoot?.querySelector('input');
-      expect(label).toBeTruthy();
-      expect(label?.getAttribute('for')).toBe(input?.id);
+      expect(label, 'slotted label renders').toBeTruthy();
+      expect(label?.getAttribute('for'), 'label references the input id').toBe(
+        input?.id
+      );
     });
 
     await step('accessible-label sets aria-label on the input', () => {
       const input = labelOnly.shadowRoot?.querySelector('input');
-      expect(input?.getAttribute('aria-label')).toBe('Email address');
+      expect(
+        input?.getAttribute('aria-label'),
+        'accessible-label is set on the input'
+      ).toBe('Email address');
     });
 
     await step(
@@ -75,11 +80,11 @@ export const LabellingTest: Story = {
       () => {
         const input = labelledbyWins.shadowRoot?.querySelector('input');
         const resolved = input?.ariaLabelledByElements;
-        expect(resolved).toHaveLength(2);
-        expect(resolved?.map((el) => el.id)).toEqual([
-          'labelling-row-header',
-          'labelling-col-header',
-        ]);
+        expect(resolved, 'both labelledby references resolve').toHaveLength(2);
+        expect(
+          resolved?.map((el) => el.id),
+          'labelledby references preserve row-then-column order'
+        ).toEqual(['labelling-row-header', 'labelling-col-header']);
       }
     );
   },
@@ -104,7 +109,8 @@ export const SizesTest: Story = {
             '.swc-TextField-control'
           );
           return control ? getComputedStyle(control).maxInlineSize : null;
-        })
+        }),
+        'each size uses its default control width'
       ).toEqual(['192px', '208px', '224px', '240px']);
     });
 
@@ -114,7 +120,10 @@ export const SizesTest: Story = {
       const label = field.shadowRoot?.querySelector<HTMLElement>(
         '.swc-FormFieldLabel'
       );
-      expect(label && getComputedStyle(label).fontSize).toBe('30px');
+      expect(
+        label && getComputedStyle(label).fontSize,
+        'consumer label font-size override applies'
+      ).toBe('30px');
     });
   },
 };
@@ -162,16 +171,22 @@ export const InvalidWidthTest: Story = {
         const invalidControlRect = control?.getBoundingClientRect();
         const invalidInputRect = input?.getBoundingClientRect();
 
-        expect(invalidControlRect?.width).toBe(validControlRect?.width);
-        expect(invalidInputRect?.width).toBeLessThan(
-          validInputRect?.width ?? 0
-        );
-        expect(invalidInputRect?.left).toBeGreaterThanOrEqual(
-          invalidControlRect?.left ?? 0
-        );
-        expect(invalidInputRect?.right).toBeLessThanOrEqual(
-          invalidControlRect?.right ?? 0
-        );
+        expect(
+          invalidControlRect?.width,
+          'invalid state does not change control width'
+        ).toBe(validControlRect?.width);
+        expect(
+          invalidInputRect?.width,
+          'input width shrinks to reserve space for the invalid icon'
+        ).toBeLessThan(validInputRect?.width ?? 0);
+        expect(
+          invalidInputRect?.left,
+          'input stays within the control left edge'
+        ).toBeGreaterThanOrEqual(invalidControlRect?.left ?? 0);
+        expect(
+          invalidInputRect?.right,
+          'input stays within the control right edge'
+        ).toBeLessThanOrEqual(invalidControlRect?.right ?? 0);
       }
     );
 
@@ -197,8 +212,14 @@ export const InvalidWidthTest: Story = {
         const controlRect = narrowControl?.getBoundingClientRect();
         const inputRect = narrowInput?.getBoundingClientRect();
 
-        expect(inputRect?.left).toBeGreaterThanOrEqual(controlRect?.left ?? 0);
-        expect(inputRect?.right).toBeLessThanOrEqual(controlRect?.right ?? 0);
+        expect(
+          inputRect?.left,
+          'long input value stays inside the control left edge'
+        ).toBeGreaterThanOrEqual(controlRect?.left ?? 0);
+        expect(
+          inputRect?.right,
+          'long input value stays inside the control right edge'
+        ).toBeLessThanOrEqual(controlRect?.right ?? 0);
       }
     );
   },
@@ -220,29 +241,51 @@ export const StatesTest: Story = {
     const input = invalidField.shadowRoot?.querySelector('input');
 
     await step('invalid input carries aria-invalid', () => {
-      expect(input?.getAttribute('aria-invalid')).toBe('true');
+      expect(
+        input?.getAttribute('aria-invalid'),
+        'invalid field sets aria-invalid'
+      ).toBe('true');
     });
+
+    await step(
+      'invalid input never carries aria-errormessage (decision B9, describedby only)',
+      () => {
+        // Decision B9 in accessibility-migration-analysis.md: gen2 associates
+        // the error via aria-describedby only, because AT support for
+        // aria-errormessage is inconsistent while aria-describedby is universal.
+        expect(
+          input?.getAttribute('aria-errormessage'),
+          'invalid field omits aria-errormessage'
+        ).toBeNull();
+      }
+    );
 
     await step(
       'disabled invalid fields suppress invalid presentation and association',
       () => {
         const disabledInput =
           disabledInvalidField.shadowRoot?.querySelector('input');
-        expect(disabledInput?.getAttribute('aria-invalid')).toBeNull();
+        expect(
+          disabledInput?.getAttribute('aria-invalid'),
+          'disabled invalid field omits aria-invalid'
+        ).toBeNull();
         expect(
           disabledInvalidField.shadowRoot?.querySelector(
             '.swc-FormFieldErrorText'
-          )
+          ),
+          'disabled invalid field hides error text'
         ).toBeNull();
         expect(
           disabledInvalidField.shadowRoot?.querySelector(
             '.swc-TextField-invalidIcon'
-          )
+          ),
+          'disabled invalid field hides validation icon'
         ).toBeNull();
         expect(
           disabledInput?.ariaDescribedByElements?.some((element) =>
             element.className.includes('swc-FormFieldErrorText')
-          )
+          ),
+          'disabled invalid field omits error text from describedby'
         ).toBe(false);
       }
     );
@@ -252,16 +295,21 @@ export const StatesTest: Story = {
       await disabledInvalidField.updateComplete;
       const reenabledInput =
         disabledInvalidField.shadowRoot?.querySelector('input');
-      expect(reenabledInput?.getAttribute('aria-invalid')).toBe('true');
+      expect(
+        reenabledInput?.getAttribute('aria-invalid'),
+        're-enabled invalid field restores aria-invalid'
+      ).toBe('true');
       expect(
         disabledInvalidField.shadowRoot?.querySelector(
           '.swc-FormFieldErrorText'
-        )
+        ),
+        're-enabled invalid field restores error text'
       ).toBeTruthy();
       expect(
         disabledInvalidField.shadowRoot?.querySelector(
           '.swc-TextField-invalidIcon'
-        )
+        ),
+        're-enabled invalid field restores validation icon'
       ).toBeTruthy();
     });
 
@@ -269,10 +317,17 @@ export const StatesTest: Story = {
       'error text replaces the description in ariaDescribedByElements while invalid',
       () => {
         const resolved = input?.ariaDescribedByElements ?? [];
-        expect(resolved).toHaveLength(1);
-        expect(resolved[0]?.className).toContain('swc-FormFieldErrorText');
         expect(
-          invalidField.shadowRoot?.querySelector('.swc-FormFieldDescription')
+          resolved,
+          'invalid field has one describedby reference'
+        ).toHaveLength(1);
+        expect(
+          resolved[0]?.className,
+          'invalid field describes the error text'
+        ).toContain('swc-FormFieldErrorText');
+        expect(
+          invalidField.shadowRoot?.querySelector('.swc-FormFieldDescription'),
+          'invalid field removes the normal description'
         ).toBeNull();
       }
     );
@@ -280,7 +335,10 @@ export const StatesTest: Story = {
     await step('required is reflected onto the native input', () => {
       const requiredField = fields[1];
       const requiredInput = requiredField.shadowRoot?.querySelector('input');
-      expect(requiredInput?.required).toBe(true);
+      expect(
+        requiredInput?.required,
+        'required property reaches the input'
+      ).toBe(true);
     });
 
     await step(
@@ -289,8 +347,11 @@ export const StatesTest: Story = {
         const indicator = fields[1].shadowRoot?.querySelector(
           '.swc-FormFieldLabel-requiredIndicator'
         );
-        expect(indicator).toBeTruthy();
-        expect(indicator?.getAttribute('aria-hidden')).toBe('true');
+        expect(indicator, 'required label renders its asterisk').toBeTruthy();
+        expect(
+          indicator?.getAttribute('aria-hidden'),
+          'required asterisk is hidden from assistive technology'
+        ).toBe('true');
       }
     );
 
@@ -298,11 +359,15 @@ export const StatesTest: Story = {
       const icon = invalidField.shadowRoot?.querySelector(
         '.swc-TextField-invalidIcon'
       );
-      expect(icon).toBeTruthy();
-      expect(icon?.getAttribute('aria-hidden')).toBe('true');
+      expect(icon, 'invalid field renders its validation icon').toBeTruthy();
+      expect(
+        icon?.getAttribute('aria-hidden'),
+        'validation icon is hidden from assistive technology'
+      ).toBe('true');
       // A valid field renders no validation icon.
       expect(
-        fields[0].shadowRoot?.querySelector('.swc-TextField-invalidIcon')
+        fields[0].shadowRoot?.querySelector('.swc-TextField-invalidIcon'),
+        'valid field omits the validation icon'
       ).toBeNull();
     });
   },
@@ -325,7 +390,8 @@ export const NecessityIndicatorTest: Story = {
       expect(
         requiredIcon.shadowRoot?.querySelector(
           '.swc-FormFieldLabel-requiredIndicator'
-        )
+        ),
+        'required icon mode renders the asterisk'
       ).toBeTruthy();
     });
 
@@ -333,15 +399,22 @@ export const NecessityIndicatorTest: Story = {
       const label = requiredLabel.shadowRoot?.querySelector(
         '.swc-FormFieldLabel-necessityLabel'
       );
-      expect(label?.textContent?.trim()).toBe('(required)');
-      expect(label?.getAttribute('aria-hidden')).toBe('true');
+      expect(label?.textContent?.trim(), 'required label is shown').toBe(
+        '(required)'
+      );
+      expect(
+        label?.getAttribute('aria-hidden'),
+        'necessity label is hidden from assistive technology'
+      ).toBe('true');
     });
 
     await step('label mode marks an optional field "(optional)"', () => {
       const label = optionalLabel.shadowRoot?.querySelector(
         '.swc-FormFieldLabel-necessityLabel'
       );
-      expect(label?.textContent?.trim()).toBe('(optional)');
+      expect(label?.textContent?.trim(), 'optional label is shown').toBe(
+        '(optional)'
+      );
     });
 
     await step(
@@ -356,10 +429,12 @@ export const NecessityIndicatorTest: Story = {
         expect(
           field.shadowRoot?.querySelector(
             '.swc-FormFieldLabel-requiredIndicator'
-          )
+          ),
+          'optional field omits the required asterisk'
         ).toBeNull();
         expect(
-          field.shadowRoot?.querySelector('.swc-FormFieldLabel-necessityLabel')
+          field.shadowRoot?.querySelector('.swc-FormFieldLabel-necessityLabel'),
+          'optional icon mode omits the necessity label'
         ).toBeNull();
         field.parentElement?.remove();
       }
@@ -388,36 +463,56 @@ export const PrefixTest: Story = {
         'slot[name="prefix"]'
       );
       const assigned = slot?.assignedElements() ?? [];
-      expect(assigned).toHaveLength(1);
-      expect(assigned[0]?.localName).toBe('swc-avatar');
+      expect(assigned, 'prefix slot receives one element').toHaveLength(1);
+      expect(assigned[0]?.localName, 'prefix slot receives the avatar').toBe(
+        'swc-avatar'
+      );
     });
 
     await step('the prefix avatar follows the field size', async () => {
       const avatar = field.querySelector('swc-avatar');
-      expect(avatar?.getAttribute('size')).toBe('75');
+      expect(
+        avatar?.getAttribute('size'),
+        'medium field propagates its avatar size'
+      ).toBe('75');
       field.size = 's';
       await field.updateComplete;
-      expect(avatar?.getAttribute('size')).toBe('50');
+      expect(
+        avatar?.getAttribute('size'),
+        'small field propagates its avatar size'
+      ).toBe('50');
       field.size = 'l';
       await field.updateComplete;
-      expect(avatar?.getAttribute('size')).toBe('200');
+      expect(
+        avatar?.getAttribute('size'),
+        'large field propagates its avatar size'
+      ).toBe('200');
       field.size = 'xl';
       await field.updateComplete;
-      expect(avatar?.getAttribute('size')).toBe('300');
+      expect(
+        avatar?.getAttribute('size'),
+        'extra-large field propagates its avatar size'
+      ).toBe('300');
     });
 
     await step('prefix and input share the bordered control wrapper', () => {
       const control = field.shadowRoot?.querySelector('.swc-TextField-control');
       const input = field.shadowRoot?.querySelector('.swc-TextField-input');
       const slot = field.shadowRoot?.querySelector('slot[name="prefix"]');
-      expect(control).toBeTruthy();
+      expect(control, 'control wrapper renders').toBeTruthy();
       // The prefix slot precedes the input inside the control.
-      expect(control?.contains(input ?? null)).toBe(true);
-      expect(control?.contains(slot ?? null)).toBe(true);
-      const nodes = [...(control?.children ?? [])];
-      expect(nodes.indexOf(slot as Element)).toBeLessThan(
-        nodes.indexOf(input as Element)
+      expect(control?.contains(input ?? null), 'input is inside control').toBe(
+        true
       );
+      expect(
+        control?.contains(slot ?? null),
+        'prefix slot is inside control'
+      ).toBe(true);
+      const nodes = [...(control?.children ?? [])];
+      expect(
+        nodes.indexOf(slot as Element),
+        'prefix slot precedes the input in the control'
+      ).toBeLessThan(nodes.indexOf(input as Element));
     });
   },
 };
@@ -443,14 +538,25 @@ export const SelectionTest: Story = {
 
     await step('select() selects all text through the host', () => {
       field.select();
-      expect(input?.selectionStart).toBe(0);
-      expect(input?.selectionEnd).toBe('hello world'.length);
+      expect(
+        input?.selectionStart,
+        'select() updates the selection start'
+      ).toBe(0);
+      expect(input?.selectionEnd, 'select() updates the selection end').toBe(
+        'hello world'.length
+      );
     });
 
     await step('setSelectionRange() sets a range on the native input', () => {
       field.setSelectionRange(0, 5);
-      expect(input?.selectionStart).toBe(0);
-      expect(input?.selectionEnd).toBe(5);
+      expect(
+        input?.selectionStart,
+        'setSelectionRange() sets the selection start'
+      ).toBe(0);
+      expect(
+        input?.selectionEnd,
+        'setSelectionRange() sets the selection end'
+      ).toBe(5);
     });
   },
 };
@@ -472,8 +578,10 @@ export const AccessibilityTest: Story = {
 
     await step('accessible-describedby resolves the external paragraph', () => {
       const resolved = input?.ariaDescribedByElements ?? [];
-      expect(resolved).toHaveLength(1);
-      expect(resolved[0]?.id).toBe('accessibility-external-description');
+      expect(resolved, 'external description resolves once').toHaveLength(1);
+      expect(resolved[0]?.id, 'input references the external description').toBe(
+        'accessibility-external-description'
+      );
     });
   },
 };
@@ -484,7 +592,10 @@ export const AccessibilityTest: Story = {
 
 export const BindingsTest: Story = {
   render: () => html`
-    <swc-text-field accessible-label="Username"></swc-text-field>
+    <swc-text-field
+      accessible-label="Username"
+      placeholder="Enter your username"
+    ></swc-text-field>
   `,
   play: async ({ canvasElement, step }) => {
     const field = await getComponent<TextField>(
@@ -495,18 +606,43 @@ export const BindingsTest: Story = {
       field.shadowRoot?.querySelector('input') as HTMLInputElement;
 
     await step('readonly reflects onto the native input', async () => {
-      expect(input().readOnly).toBe(false);
+      expect(input().readOnly, 'input starts editable').toBe(false);
       field.readonly = true;
       await field.updateComplete;
-      expect(input().readOnly).toBe(true);
+      expect(input().readOnly, 'readonly property reaches the input').toBe(
+        true
+      );
     });
 
     await step('invalid sets aria-invalid on the native input', async () => {
-      expect(input().getAttribute('aria-invalid')).toBe(null);
+      expect(
+        input().getAttribute('aria-invalid'),
+        'valid input omits aria-invalid'
+      ).toBe(null);
       field.invalid = true;
       await field.updateComplete;
-      expect(input().getAttribute('aria-invalid')).toBe('true');
+      expect(
+        input().getAttribute('aria-invalid'),
+        'invalid property sets aria-invalid'
+      ).toBe('true');
     });
+
+    await step(
+      'placeholder passes through natively, not as aria-placeholder',
+      () => {
+        // accessibility-migration-analysis.md (placeholder section): the
+        // browser exposes native `placeholder` to the a11y tree, so gen2 does
+        // not duplicate via `aria-placeholder`.
+        expect(
+          input().placeholder,
+          'placeholder reaches the native input'
+        ).toBe('Enter your username');
+        expect(
+          input().getAttribute('aria-placeholder'),
+          'placeholder is not duplicated as aria-placeholder'
+        ).toBeNull();
+      }
+    );
 
     await step('typing round-trips the native value back to the host', () => {
       // The @input handler is the only path that syncs user edits onto
@@ -514,14 +650,19 @@ export const BindingsTest: Story = {
       // drift from what the user sees.
       input().value = 'typed by user';
       input().dispatchEvent(new Event('input'));
-      expect(field.value).toBe('typed by user');
+      expect(field.value, 'host value reflects typed input').toBe(
+        'typed by user'
+      );
     });
 
     await step('focusing the host delegates to the native input', () => {
       // delegatesFocus makes the field a single tab stop with focus
       // landing on the real control rather than the host wrapper.
       field.focus();
-      expect(field.shadowRoot?.activeElement).toBe(input());
+      expect(
+        field.shadowRoot?.activeElement,
+        'host focus lands on the internal input'
+      ).toBe(input());
     });
   },
 };
@@ -546,7 +687,10 @@ export const EnumValidationTest: Story = {
         `);
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-        expect(messages.some((m) => m.includes('expects "type"'))).toBe(true);
+        expect(
+          messages.some((m) => m.includes('expects "type"')),
+          'warning names the unsupported type value'
+        ).toBe(true);
         field.parentElement?.remove();
       })
     );
@@ -562,7 +706,8 @@ export const EnumValidationTest: Story = {
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
         expect(
-          messages.some((m) => m.includes('expects "label-position"'))
+          messages.some((m) => m.includes('expects "label-position"')),
+          'warning names the unsupported label position'
         ).toBe(true);
         field.parentElement?.remove();
       })
@@ -581,7 +726,8 @@ export const EnumValidationTest: Story = {
           await field.updateComplete;
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
           expect(
-            messages.some((m) => m.includes('expects "necessity-indicator"'))
+            messages.some((m) => m.includes('expects "necessity-indicator"')),
+            'warning names the unsupported necessity indicator'
           ).toBe(true);
           field.parentElement?.remove();
         })
@@ -606,7 +752,10 @@ export const MissingAccessibleNameTest: Story = {
         `);
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-        expect(messages.some((m) => m.includes('accessible name'))).toBe(true);
+        expect(
+          messages.some((m) => m.includes('accessible name')),
+          'warning requests an accessible name'
+        ).toBe(true);
         field.parentElement?.remove();
       })
     );
@@ -630,11 +779,13 @@ export const PlaceholderOnlyNameTest: Story = {
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
         expect(
-          messages.some((m) => m.includes('named only by its placeholder'))
+          messages.some((m) => m.includes('named only by its placeholder')),
+          'warning identifies the placeholder-only name'
         ).toBe(true);
         // The generic missing-name warning is suppressed in favor of this one.
         expect(
-          messages.some((m) => m.includes('requires an accessible name'))
+          messages.some((m) => m.includes('requires an accessible name')),
+          'placeholder-only warning replaces generic missing-name warning'
         ).toBe(false);
         field.parentElement?.remove();
       })
@@ -650,7 +801,10 @@ export const PlaceholderOnlyNameTest: Story = {
         `);
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-        expect(messages.some((m) => m.includes('placeholder'))).toBe(false);
+        expect(
+          messages.some((m) => m.includes('placeholder')),
+          'named field has no placeholder warning'
+        ).toBe(false);
         field.parentElement?.remove();
       })
     );
@@ -674,7 +828,10 @@ export const HostAriaLabelWarningTest: Story = {
         `);
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-        expect(messages.some((m) => m.includes('set on the host'))).toBe(true);
+        expect(
+          messages.some((m) => m.includes('set on the host')),
+          'warning explains aria-label belongs on the input'
+        ).toBe(true);
         field.parentElement?.remove();
       })
     );
@@ -716,7 +873,8 @@ export const LabelConflictTest: Story = {
           expect(
             messages.some(
               (m) => m.includes(CONFLICT_PHRASE) && m.includes(IGNORED_PHRASE)
-            )
+            ),
+            'warning identifies conflicting accessible name sources'
           ).toBe(true);
           field.parentElement?.remove();
         })
@@ -733,7 +891,10 @@ export const LabelConflictTest: Story = {
           `);
           await field.updateComplete;
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-          expect(messages.some((m) => m.includes(CONFLICT_PHRASE))).toBe(false);
+          expect(
+            messages.some((m) => m.includes(CONFLICT_PHRASE)),
+            'visible label with accessible-label is allowed'
+          ).toBe(false);
           field.parentElement?.remove();
         })
     );
@@ -752,7 +913,10 @@ export const LabelConflictTest: Story = {
           `);
           await field.updateComplete;
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-          expect(messages.some((m) => m.includes(CONFLICT_PHRASE))).toBe(false);
+          expect(
+            messages.some((m) => m.includes(CONFLICT_PHRASE)),
+            'visible label with accessible-labelledby is allowed'
+          ).toBe(false);
           field.parentElement?.remove();
         })
     );
@@ -764,7 +928,10 @@ export const LabelConflictTest: Story = {
         `);
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-        expect(messages.some((m) => m.includes(CONFLICT_PHRASE))).toBe(false);
+        expect(
+          messages.some((m) => m.includes(CONFLICT_PHRASE)),
+          'accessible-label alone does not trigger a conflict warning'
+        ).toBe(false);
         field.parentElement?.remove();
       })
     );
@@ -796,7 +963,10 @@ export const FormParticipationTest: Story = {
     }
 
     await step('value participates in FormData', () => {
-      expect(new FormData(form).get('username')).toBe('Example');
+      expect(
+        new FormData(form).get('username'),
+        'initial username is included in FormData'
+      ).toBe('Example');
       expect(field.form, 'form pass-through resolves to the owning form').toBe(
         form
       );
@@ -805,10 +975,16 @@ export const FormParticipationTest: Story = {
     await step('disabling excludes it, re-enabling recovers', async () => {
       field.disabled = true;
       await field.updateComplete;
-      expect(new FormData(form).has('username')).toBe(false);
+      expect(
+        new FormData(form).has('username'),
+        'disabled field is excluded from FormData'
+      ).toBe(false);
       field.disabled = false;
       await field.updateComplete;
-      expect(new FormData(form).get('username')).toBe('Example');
+      expect(
+        new FormData(form).get('username'),
+        're-enabled field is restored to FormData'
+      ).toBe('Example');
     });
 
     await step(
@@ -816,13 +992,19 @@ export const FormParticipationTest: Story = {
       async () => {
         field.value = 'Updated';
         await field.updateComplete;
-        expect(new FormData(form).get('username')).toBe('Updated');
+        expect(
+          new FormData(form).get('username'),
+          'updated username is included in FormData'
+        ).toBe('Updated');
         form.reset();
         await field.updateComplete;
         expect(field.value, 'value restored to the initial attribute').toBe(
           'Example'
         );
-        expect(new FormData(form).get('username')).toBe('Example');
+        expect(
+          new FormData(form).get('username'),
+          'reset restores the initial username in FormData'
+        ).toBe('Example');
       }
     );
   },
@@ -855,13 +1037,27 @@ export const FormBehaviorTest: Story = {
     await step('required participates in native validation', async () => {
       field.value = '';
       await field.updateComplete;
-      expect(input.required).toBe(true);
-      expect(input.validity.valueMissing).toBe(true);
-      expect(field.validity.valueMissing).toBe(true);
-      expect(field.checkValidity()).toBe(false);
-      expect(form.checkValidity()).toBe(false);
+      expect(input.required, 'native input is required').toBe(true);
+      expect(
+        input.validity.valueMissing,
+        'empty input is missing its value'
+      ).toBe(true);
+      expect(
+        field.validity.valueMissing,
+        'host validity reflects missing value'
+      ).toBe(true);
+      expect(field.checkValidity(), 'empty field fails validity check').toBe(
+        false
+      );
+      expect(
+        form.checkValidity(),
+        'form fails while required field is empty'
+      ).toBe(false);
       checkValidityButton.click();
-      expect(validityOutput.textContent?.trim()).toBe(
+      expect(
+        validityOutput.textContent?.trim(),
+        'validity output reports the empty required field'
+      ).toBe(
         'field.checkValidity(): invalid\n' +
           'form.checkValidity(): invalid\n' +
           'validity.valueMissing: true'
@@ -869,14 +1065,23 @@ export const FormBehaviorTest: Story = {
 
       field.value = 'Filled';
       await field.updateComplete;
-      expect(input.validity.valueMissing).toBe(false);
-      expect(field.validity.valid).toBe(true);
-      expect(field.checkValidity()).toBe(true);
-      expect(form.checkValidity()).toBe(true);
-      checkValidityButton.click();
-      expect(validityOutput.textContent?.trim()).toBe(
-        'field.checkValidity(): valid\nform.checkValidity(): valid'
+      expect(
+        input.validity.valueMissing,
+        'filled input is not missing a value'
+      ).toBe(false);
+      expect(field.validity.valid, 'host validity becomes valid').toBe(true);
+      expect(field.checkValidity(), 'filled field passes validity check').toBe(
+        true
       );
+      expect(
+        form.checkValidity(),
+        'form is valid when required field is filled'
+      ).toBe(true);
+      checkValidityButton.click();
+      expect(
+        validityOutput.textContent?.trim(),
+        'validity output reports the filled field'
+      ).toBe('field.checkValidity(): valid\nform.checkValidity(): valid');
     });
 
     await step('reset restores the initial (empty) value', async () => {
@@ -884,8 +1089,11 @@ export const FormBehaviorTest: Story = {
       await field.updateComplete;
       form.reset();
       await field.updateComplete;
-      expect(field.value).toBe('');
-      expect(new FormData(form).get('username')).toBe('');
+      expect(field.value, 'reset restores the host value to empty').toBe('');
+      expect(
+        new FormData(form).get('username'),
+        'reset submits an empty username'
+      ).toBe('');
     });
 
     await step(
@@ -899,13 +1107,17 @@ export const FormBehaviorTest: Story = {
         await field.updateComplete;
         form.requestSubmit();
         await field.updateComplete;
-        expect(field.invalid).toBe(true);
-        expect(
-          field.shadowRoot?.querySelector('.swc-TextField-invalidIcon')
-        ).toBeTruthy();
-        expect(output.textContent?.trim()).toBe(
-          'Submit the form to see its data.'
+        expect(field.invalid, 'empty submission marks the field invalid').toBe(
+          true
         );
+        expect(
+          field.shadowRoot?.querySelector('.swc-TextField-invalidIcon'),
+          'invalid submission renders the validation icon'
+        ).toBeTruthy();
+        expect(
+          output.textContent?.trim(),
+          'invalid submission does not show submitted form data'
+        ).toBe('Submit the form to see its data.');
       }
     );
 
@@ -914,9 +1126,17 @@ export const FormBehaviorTest: Story = {
       await field.updateComplete;
       form.requestSubmit();
       await field.updateComplete;
-      expect(field.invalid).toBe(false);
-      expect(new FormData(form).get('username')).toBe('Submitted');
-      expect(output.textContent?.trim()).toBe('username: Submitted');
+      expect(field.invalid, 'valid submission clears invalid state').toBe(
+        false
+      );
+      expect(
+        new FormData(form).get('username'),
+        'submitted username is included in FormData'
+      ).toBe('Submitted');
+      expect(
+        output.textContent?.trim(),
+        'output displays the submitted username'
+      ).toBe('username: Submitted');
     });
   },
 };
@@ -947,7 +1167,10 @@ export const DisabledStateTest: Story = {
 
     await step('enabled: not :disabled, value participates', () => {
       expect(field.matches(':disabled'), 'not :disabled').toBe(false);
-      expect(new FormData(form).get('username')).toBe('Example');
+      expect(
+        new FormData(form).get('username'),
+        'enabled field participates in FormData'
+      ).toBe('Example');
     });
 
     await step('own disabled matches native :disabled', async () => {
@@ -956,7 +1179,10 @@ export const DisabledStateTest: Story = {
       expect(field.matches(':disabled'), 'own disabled matches :disabled').toBe(
         true
       );
-      expect(new FormData(form).has('username')).toBe(false);
+      expect(
+        new FormData(form).has('username'),
+        'disabled field is excluded from FormData'
+      ).toBe(false);
       field.disabled = false;
       await field.updateComplete;
     });
@@ -989,7 +1215,10 @@ export const DisabledStateTest: Story = {
           field.matches(':disabled'),
           ':disabled clears when re-enabled'
         ).toBe(false);
-        expect(new FormData(form).get('username')).toBe('Example');
+        expect(
+          new FormData(form).get('username'),
+          'field value returns to FormData when fieldset is enabled'
+        ).toBe('Example');
       }
     );
   },
