@@ -53,6 +53,8 @@ const MOD_PROPERTY_CASES: readonly TextFieldPropertyCase[] = [
   { property: '--swc-text-field-padding-inline', value: '24px' },
   { property: '--swc-text-field-affix-gap', value: '24px' },
   { property: '--swc-form-field-row-gap', value: '24px' },
+  { property: '--swc-form-field-side-label-gap', value: '48px' },
+  { property: '--swc-form-field-necessity-gap', value: '24px' },
   { property: '--swc-text-field-font-size', value: '24px' },
   { property: '--swc-text-field-line-height', value: '2.5' },
   { property: '--swc-text-field-border-radius', value: '20px' },
@@ -61,8 +63,9 @@ const MOD_PROPERTY_CASES: readonly TextFieldPropertyCase[] = [
   { property: '--swc-form-field-description-font-size', value: '20px' },
 ];
 
-// Two properties need extra context to be visible: the affix-gap needs a
-// slotted prefix, and the validation-icon-size needs the invalid state.
+// Three properties need extra context to be visible: the affix-gap needs a
+// slotted prefix, the validation-icon-size needs the invalid state, and the
+// necessity-gap needs a required field's indicator.
 // A long label makes the label-max-inline-size wrap visibly.
 const renderModPropertyCase = (
   { property }: TextFieldPropertyCase,
@@ -70,6 +73,7 @@ const renderModPropertyCase = (
 ) => {
   const showsPrefix = property === '--swc-text-field-affix-gap';
   const showsError = property === '--swc-text-field-validation-icon-size';
+  const showsNecessity = property === '--swc-form-field-necessity-gap';
   const label =
     property === '--swc-field-label-max-inline-size'
       ? 'A long label wraps sooner when the label column is tightly capped'
@@ -80,6 +84,7 @@ const renderModPropertyCase = (
         style=${overrideStyle}
         value="Sample value"
         ?invalid=${showsError}
+        ?required=${showsNecessity}
         label-position="side"
       >
         <span slot="label">${label}</span>
