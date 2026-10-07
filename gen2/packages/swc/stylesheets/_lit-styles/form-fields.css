@@ -143,3 +143,10 @@
 :host(:disabled) .swc-FormFieldDescription {
   color: token("disabled-content-color");
 }
+
+@media (forced-colors: active) {
+  :host(:disabled) .swc-FormFieldLabel,
+  :host(:disabled) .swc-FormFieldDescription {
+    color: GrayText;
+  }
+}
