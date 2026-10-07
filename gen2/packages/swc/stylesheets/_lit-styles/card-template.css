@@ -77,7 +77,7 @@
     "description description"
     "default-slot default-slot";
   grid-template-rows: auto auto 1fr;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: start;
   padding: var(--_swc-card-base-content-padding);
   column-gap: var(--swc-card-base-content-header-gap, token("base-gap-medium"));
@@ -115,6 +115,15 @@
 
 ::slotted(*) {
   margin-block: 0;
+}
+
+/* Let long identifiers wrap within the card without clipping or truncation. */
+::slotted([slot="title"]),
+::slotted([slot="description"]),
+::slotted([slot="footer"]),
+::slotted(:not([slot])) {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
 }
 
 ::slotted(a) {
