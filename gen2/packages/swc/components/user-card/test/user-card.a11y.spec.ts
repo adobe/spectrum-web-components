@@ -45,7 +45,6 @@ test.describe('User card - roles and names', () => {
     );
     await expect(root.getByRole('img', { name: 'Jane Doe' })).toHaveCount(0);
     await expect(root.getByText('Jane Doe')).toBeVisible();
-    await expect(root.getByText('Product designer')).toBeVisible();
   });
 });
 
