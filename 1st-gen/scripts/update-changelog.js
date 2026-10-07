@@ -18,22 +18,20 @@
  * Extracts major, minor, and patch changes from changesets and groups them by
  * component: each changeset is listed once, under the set of components it
  * releases, with its PR and commit links and its body kept intact.
- *
- * The parsing, grouping, and rendering helpers are exported and free of side
- * effects so they can be unit tested (see update-changelog.test.js). The
- * script only runs when executed directly, and loads `semver` and the built
- * base version lazily so importing the helpers needs no install or build.
  */
 
 import { execFileSync, execSync } from 'child_process';
 import fs from 'fs';
 import { promises as fsPromises } from 'fs';
 import path from 'path';
-import { fileURLToPath, pathToFileURL } from 'url';
+import semver from 'semver';
+import { fileURLToPath } from 'url';
+
+import { version as currentVersion } from '@spectrum-web-components/base/src/version.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export const REPO_URL = 'https://github.com/adobe/spectrum-web-components';
+const REPO_URL = 'https://github.com/adobe/spectrum-web-components';
 
 const SWC_SCOPE = '@spectrum-web-components/';
 const BUMP_TYPES = ['major', 'minor', 'patch'];
@@ -45,7 +43,7 @@ const BUMP_TYPES = ['major', 'minor', 'patch'];
  * @returns {{ releases: Array<{ name: string, type: string }>, body: string } | null}
  *   The parsed changeset, or `null` when the file has no frontmatter
  */
-export function parseChangeset(content) {
+function parseChangeset(content) {
   const normalized = content.replace(/\r\n/g, '\n');
   const match = normalized.match(/^---\n([\s\S]*?)\n?---\n([\s\S]*)$/);
   if (!match) {
@@ -75,7 +73,7 @@ export function parseChangeset(content) {
  * @param {Set<string>} componentDirs - Directory names under 1st-gen/packages
  * @returns {string} The component label
  */
-export function toComponentLabel(packageName, componentDirs) {
+function toComponentLabel(packageName, componentDirs) {
   if (!packageName.startsWith(SWC_SCOPE)) {
     return packageName;
   }
@@ -90,7 +88,7 @@ export function toComponentLabel(packageName, componentDirs) {
  * @param {string} logLine - A single `<hash>\t<subject>` line
  * @returns {{ commit?: string, pr?: string }} Commit hash and PR number, when found
  */
-export function parseCommitLog(logLine) {
+function parseCommitLog(logLine) {
   const [commit, subject = ''] = (logLine || '').trim().split('\t');
   if (!/^[0-9a-f]{7,40}$/.test(commit || '')) {
     return {};
@@ -111,7 +109,7 @@ export function parseCommitLog(logLine) {
  * @param {string} [repoUrl] - Repository URL used to build the links
  * @returns {string} The formatted list item
  */
-export function formatEntry(body, meta = {}, repoUrl = REPO_URL) {
+function formatEntry(body, meta = {}, repoUrl = REPO_URL) {
   const links = [];
   if (meta.pr) {
     links.push(`[#${meta.pr}](${repoUrl}/pull/${meta.pr})`);
@@ -154,7 +152,7 @@ const plainLabel = (label) => label.replace(/\*/g, '').toLowerCase();
  * @returns {{ major: Array<{ label: string, entries: string[] }>, minor: Array<{ label: string, entries: string[] }>, patch: Array<{ label: string, entries: string[] }> }}
  *   Sorted groups for each bump type
  */
-export function groupChangesets(changesets, labelFor, repoUrl = REPO_URL) {
+function groupChangesets(changesets, labelFor, repoUrl = REPO_URL) {
   const buckets = { major: new Map(), minor: new Map(), patch: new Map() };
 
   for (const changeset of changesets) {
@@ -196,7 +194,7 @@ export function groupChangesets(changesets, labelFor, repoUrl = REPO_URL) {
  * @param {Array<{ label: string, entries: string[] }>} groups - Sorted groups
  * @returns {string} The rendered groups
  */
-export function renderGroups(groups) {
+function renderGroups(groups) {
   return groups
     .map((group) => `${group.label}:\n\n${group.entries.join('\n\n')}`)
     .join('\n\n');
@@ -212,7 +210,7 @@ export function renderGroups(groups) {
  *   Grouped changes from groupChangesets
  * @returns {string} Formatted changelog entry
  */
-export function buildChangelogEntry(version, compareUrl, date, groups) {
+function buildChangelogEntry(version, compareUrl, date, groups) {
   let entry = `# [${version}](${compareUrl}) (${date})\n\n`;
   const headings = { major: 'Major', minor: 'Minor', patch: 'Patch' };
   for (const type of BUMP_TYPES) {
@@ -229,7 +227,7 @@ export function buildChangelogEntry(version, compareUrl, date, groups) {
  * @param {string} changelogContent - The existing changelog content
  * @returns {{ headerText: string, remainingContent: string }} Header and release entries
  */
-export function extractChangelogHeader(changelogContent) {
+function extractChangelogHeader(changelogContent) {
   let headerText = '';
   let remainingContent = changelogContent;
 
@@ -255,11 +253,10 @@ export function extractChangelogHeader(changelogContent) {
 /**
  * Validates that the current version exists and has a corresponding git tag
  *
- * @param {string} currentVersion - Current 1st-gen version
  * @returns {string} The current git tag
  * @throws {Error} If validation fails
  */
-function validateCurrentVersion(currentVersion) {
+function validateCurrentVersion() {
   if (!currentVersion) {
     console.error('Error: currentVersion is undefined or empty');
     process.exit(1);
@@ -351,18 +348,12 @@ async function processChangesets() {
 /**
  * Calculates the next version based on change types
  *
- * @param {object} semver - The `semver` module
  * @param {string} currentVersion - Current version string
  * @param {Array} majorChanges - Major change groups
  * @param {Array} minorChanges - Minor change groups
  * @returns {string} Next version string
  */
-function calculateNextVersion(
-  semver,
-  currentVersion,
-  majorChanges,
-  minorChanges
-) {
+function calculateNextVersion(currentVersion, majorChanges, minorChanges) {
   if (majorChanges.length > 0) {
     return semver.inc(currentVersion, 'major');
   }
@@ -434,11 +425,7 @@ function updateChangelogFile(
  * @throws {Error} If there's an issue with git tags or file operations
  */
 async function createChangelog() {
-  const { default: semver } = await import('semver');
-  const { version: currentVersion } =
-    await import('@spectrum-web-components/base/src/version.js');
-
-  const currentTag = validateCurrentVersion(currentVersion);
+  const currentTag = validateCurrentVersion();
   const firstGen = await processChangesets();
 
   // Early exit if no changes detected
@@ -454,7 +441,6 @@ async function createChangelog() {
   }
 
   const nextVersion = calculateNextVersion(
-    semver,
     currentVersion,
     firstGen.major,
     firstGen.minor
@@ -481,18 +467,11 @@ async function createChangelog() {
     `✅ CHANGELOG updated for ${nextVersion}`
   );
 }
-
-const isDirectRun =
-  process.argv[1] &&
-  import.meta.url === pathToFileURL(fs.realpathSync(process.argv[1])).href;
-
-if (isDirectRun) {
-  (async () => {
-    try {
-      await createChangelog();
-    } catch (error) {
-      console.error('Error updating changelog:', error);
-      process.exit(1);
-    }
-  })();
-}
+(async () => {
+  try {
+    await createChangelog();
+  } catch (error) {
+    console.error('Error updating changelog:', error);
+    process.exit(1);
+  }
+})();

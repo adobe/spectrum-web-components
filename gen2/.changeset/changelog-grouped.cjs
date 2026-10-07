@@ -198,10 +198,4 @@ function loadChangelogGithub() {
   return changelogGithub.default ?? changelogGithub;
 }
 
-module.exports = {
-  ...createChangelogFunctions(loadChangelogGithub),
-  createChangelogFunctions,
-  getComponentKey,
-  groupEntries,
-  normalizeScope,
-};
+module.exports = createChangelogFunctions(loadChangelogGithub);
