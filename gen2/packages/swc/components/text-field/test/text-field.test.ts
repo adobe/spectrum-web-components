@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { TextField } from '@adobe/spectrum-wc/text-field';
@@ -1138,6 +1138,34 @@ export const FormBehaviorTest: Story = {
         'output displays the submitted username'
       ).toBe('username: Submitted');
     });
+
+    await step(
+      'the fieldset toggle can disable and re-enable the field',
+      async () => {
+        const fieldset = form.querySelector('fieldset');
+        const toggleButton = form.querySelector<HTMLButtonElement>(
+          '[data-toggle-fieldset]'
+        );
+        expect(fieldset).toBeTruthy();
+        expect(toggleButton).toBeTruthy();
+        if (!fieldset || !toggleButton) {
+          throw new Error('fieldset or toggle button not found');
+        }
+
+        expect(fieldset.contains(toggleButton)).toBe(false);
+        await userEvent.click(toggleButton);
+        await field.updateComplete;
+        expect(fieldset.disabled).toBe(true);
+        expect(input.disabled).toBe(true);
+        expect(toggleButton).toBeEnabled();
+
+        await userEvent.click(toggleButton);
+        await field.updateComplete;
+        expect(fieldset.disabled).toBe(false);
+        expect(input.disabled).toBe(false);
+        expect(toggleButton).toBeEnabled();
+      }
+    );
   },
 };
 FormBehaviorTest.storyName = 'Native form behavior';

@@ -51,6 +51,25 @@ declare global {
 export abstract class DemoFieldHostBase extends LitElement {
   static formAssociated = true;
 
+  static override styles = css`
+    :host {
+      font: inherit;
+    }
+    input[type='text'],
+    select {
+      box-sizing: border-box;
+      padding: 6px 8px;
+      font: inherit;
+      border: 1px solid var(--swc-gray-500, #b0b0b0);
+      border-radius: 4px;
+    }
+    input[type='text']:disabled,
+    select:disabled {
+      color: var(--swc-gray-500, #b0b0b0);
+      border-color: var(--swc-gray-300, #d0d0d0);
+    }
+  `;
+
   /** The form control name the value is submitted under. */
   @property({ type: String, reflect: true })
   public name?: string;
