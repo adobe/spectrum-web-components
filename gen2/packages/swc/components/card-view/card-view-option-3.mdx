@@ -8,7 +8,7 @@ import * as Stories from './stories/card-view-option-3.stories';
 
 ## Anatomy
 
-`swc-card-view-option-3` uses a native `ul` and `li` for the collection. Each card preserves its own checkbox, primary button, and Share button. List items expose position and set-size metadata; selection is conveyed by the checkbox rather than `aria-selected` on a list item.
+`swc-card-view-option-3` uses a native `ul` and `li` for the collection. Each card preserves its own checkbox, primary button, and Share button. Each `li` sets `aria-setsize` to the total card count and `aria-posinset` to its one-based position, including disabled cards. Selection is conveyed by the checkbox rather than `aria-selected` on a list item.
 
 ## Options
 

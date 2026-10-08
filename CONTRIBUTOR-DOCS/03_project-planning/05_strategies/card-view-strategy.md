@@ -205,13 +205,15 @@ Do not remove the focused card or active child from the DOM without deliberate f
 
 These comparisons distinguish a historical design contract, current source behavior, and the SWC adaptation. Role metadata and automated checks do not establish equivalent screen reader speech or usability. Verify release versions and assistive technology behavior before treating either mapping as full conformance.
 
+**Baseline drawback:** In observed screen reader output, every card in `swc-card-view` is read as "1 of 1" rather than its position in the full collection. The same drawback applies to options 1 and 2; verify the screen reader and browser combinations in the evaluation matrix rather than treating this observation as universal behavior.
+
 ### Option 1: Retain and repair the RSP layout-grid model
 
 Keep a stable single-column grid with one row per card. Restore or preserve collection-order left/right navigation for both uniform and waterfall layouts, as the original spec recommends. Retain spatial up/down navigation initially as the comparison baseline. Use one active card entry point and make that card's child controls available through Tab.
 
 **Benefits:** Preserves selection, interactive children, efficient collection navigation, and familiarity with RSP's existing model. A sequential route remains independent of geometry.
 
-**Tradeoffs:** The one-column announcement still does not explain spatial up/down movement. Restoring sequential left/right in waterfall may feel visually surprising. Row/index attributes still require assistive technology verification.
+**Tradeoffs:** Every card is read as "1 of 1" in observed screen reader output, so its position in the full collection is not conveyed. The one-column announcement still does not explain spatial up/down movement. Restoring sequential left/right in waterfall may feel visually surprising. Row/index attributes still require assistive technology verification.
 
 **Decision condition:** Users can discover the sequential route, reach every item, understand position, and perform selection and child actions without relying on undocumented screen reader commands.
 
@@ -223,7 +225,7 @@ Option 5 separates the single-row semantic experiment from this wrapping-navigat
 
 **Benefits:** Tests the APG's optional wrapping behavior and reduces the chance that repeated downward navigation stops before users encounter all cards.
 
-**Tradeoffs:** Wrapping can surprise sighted users. Spatial traversal order may differ from collection order, and waterfall lacks clear visual rows. A one-row semantic variant could still conflict with expectations about vertical movement.
+**Tradeoffs:** Every card is read as "1 of 1" in observed screen reader output, so its position in the full collection is not conveyed. Wrapping can surprise sighted users. Spatial traversal order may differ from collection order, and waterfall lacks clear visual rows. A one-row semantic variant could still conflict with expectations about vertical movement.
 
 **Decision condition:** Users understand the boundaries and wrapping, all items are reachable, and the improvement does not introduce unacceptable visual-navigation confusion.
 
@@ -247,7 +249,7 @@ This replaces the earlier listbox prototype proposal. The exploration retains in
 
 **Benefits:** Preserves rich reading structure and independent card controls without row/column framing. Provides a starting point for testing reading-driven loading in a future dynamic content stream.
 
-**Tradeoffs:** A feed represents a content stream, not every selectable asset collection. It uses Page Up/Down rather than four-direction arrows, adds article tab stops, and does not provide composite range selection. A fully loaded prototype cannot verify the feed's dynamic loading contract.
+**Tradeoffs:** A feed represents a content stream, not every selectable asset collection. It uses <kbd>PageUp</kbd> and <kbd>PageDown</kbd> rather than four-direction arrows. Moving one article at a time rather than a page is counterintuitive for sighted users and tedious for navigating large collections. It adds article tab stops and does not provide composite range selection. A fully loaded prototype cannot verify the feed's dynamic loading contract.
 
 **Decision condition:** The collection genuinely fits a reading-oriented feed, and users understand article navigation, selection, child controls, and entry/exit. Dynamic loading requires separate implementation and assistive technology evaluation.
 
@@ -257,9 +259,9 @@ Represent the collection as a `grid` containing one `row`, with one focusable `g
 
 Left/Right traverses enabled cards incrementally in collection order, mirrored for right-to-left layouts. Home/End reaches the first/last enabled card. Up/Down skips to the nearest enabled card visually above/below with horizontal overlap, stopping at visual boundaries. Keep checkbox selection, Space/Enter behavior, keyboard range selection, and Tab access to the active card's controls.
 
-**Benefits:** Aligns horizontal navigation with the announced single-row structure. Provides a complete sequential route in both visual layouts while retaining selection and independently interactive children. Does not regroup semantic rows as the viewport changes.
+**Benefits:** Aligns horizontal navigation with the announced single-row structure. Announces “x of y” in observed screen reader use, communicating each card's position and the collection size. Arrow-key navigation is easy and intuitive for sighted users navigating items. Provides a complete sequential route in both visual layouts while retaining selection and independently interactive children. Does not regroup semantic rows as the viewport changes.
 
-**Tradeoffs:** Announced columns describe collection order rather than visual columns. The single semantic row does not explain spatial Up/Down movement, and sequential waterfall movement can look surprising. Column count/index metadata does not guarantee spoken “x of y”; changing metadata alone is not proof of improved accessibility.
+**Tradeoffs:** Announced columns describe collection order rather than visual columns. Screen reader users expect only one row from the announced structure, so vertical navigation with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd> may be unexpected. Sequential waterfall movement can look surprising. Column count/index metadata does not guarantee spoken “x of y” across browser and screen reader combinations; changing metadata alone is not proof of improved accessibility.
 
 **Decision condition:** Users discover the sequential route, reach every enabled card, understand position and selection, and access child actions without excessive effort. Compare spoken output and sighted keyboard usability with Options 1–3 rather than assuming one-row semantics resolve the mismatch.
 

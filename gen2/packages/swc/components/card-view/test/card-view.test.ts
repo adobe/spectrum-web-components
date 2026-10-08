@@ -323,6 +323,13 @@ export const ListArrowNavigation: StoryObj = {
       await view.updateComplete;
       const root = view.shadowRoot!;
       const entries = [...root.querySelectorAll<HTMLElement>('li')];
+      expect(entries).toHaveLength(view.items.length);
+      entries.forEach((entry, index) => {
+        expect(entry.getAttribute('aria-setsize')).toBe(
+          String(view.items.length)
+        );
+        expect(entry.getAttribute('aria-posinset')).toBe(String(index + 1));
+      });
       const press = async (key: string, shiftKey = false) => {
         root.activeElement!.dispatchEvent(
           new KeyboardEvent('keydown', {
@@ -713,6 +720,17 @@ export const FeedExitAndReflow: StoryObj = {
   play: async ({ canvasElement }) => {
     const view = await mount(canvasElement, 'swc-card-view-option-4');
     const root = view.shadowRoot!;
+    const expectArticleMetadata = () => {
+      const articles = [...root.querySelectorAll<HTMLElement>('article')];
+      expect(articles).toHaveLength(view.items.length);
+      articles.forEach((article, index) => {
+        expect(article.getAttribute('aria-setsize')).toBe(
+          String(view.items.length)
+        );
+        expect(article.getAttribute('aria-posinset')).toBe(String(index + 1));
+      });
+    };
+    expectArticleMetadata();
     const checkbox = root.querySelector<HTMLInputElement>('input')!;
     checkbox.focus();
     checkbox.dispatchEvent(
@@ -751,5 +769,6 @@ export const FeedExitAndReflow: StoryObj = {
       ).toBe(340);
     });
     expect(root.activeElement).toBe(article);
+    expectArticleMetadata();
   },
 };

@@ -43,6 +43,8 @@ Resizing, zooming, and switching layouts update visual geometry without regroupi
 ### Pros
 
 - Aligns horizontal navigation with the announced single-row structure.
+- Announces “x of y” in observed screen reader use, communicating each card's position and the collection size.
+- Arrow-key navigation is easy and intuitive for sighted users navigating items.
 - Provides a stable sequential route through every enabled card in both layouts.
 - Retains selection, a single collection tab stop, and independently interactive children.
 - Avoids semantic restructuring during responsive reflow.
@@ -50,7 +52,7 @@ Resizing, zooming, and switching layouts update visual geometry without regroupi
 ### Cons
 
 - Announced columns do not match visual columns once cards wrap or form a waterfall.
-- Spatial Up/Down follows visual wrapping but is not described by the announced single semantic row.
+- Screen reader users expect only one row from the announced structure, so vertical navigation with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd> may be unexpected.
 - Sequential waterfall movement can look surprising when adjacent collection items are not visual neighbors.
 - Grid semantics still introduce screen reader mode changes and need user testing; column indices do not guarantee useful position announcements.
 

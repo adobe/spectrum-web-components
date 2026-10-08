@@ -8,7 +8,7 @@ import * as Stories from './stories/card-view-option-4.stories';
 
 ## Anatomy
 
-`swc-card-view-option-4` uses a labelled `feed` containing focusable `article` elements with collection position and total metadata. Each article contains a photo, real selection checkbox, primary action, and Share action. This replaces the strategy's earlier listbox proposal because independently interactive checkboxes and actions must remain inside cards.
+`swc-card-view-option-4` uses a labelled `feed` containing focusable `article` elements. Each article sets `aria-setsize` to the total card count and `aria-posinset` to its one-based position. Each article contains a photo, real selection checkbox, primary action, and Share action. This replaces the strategy's earlier listbox proposal because independently interactive checkboxes and actions must remain inside cards.
 
 ## Options
 
@@ -47,7 +47,7 @@ Article semantics preserve rich content and independently interactive children. 
 ### Cons
 
 - A feed describes a content stream, not every selectable file or asset collection.
-- Uses Page Up/Down instead of four-direction arrow navigation and adds article tab stops.
+- Uses <kbd>PageUp</kbd> and <kbd>PageDown</kbd> instead of four-direction arrow navigation and adds article tab stops. Moving one article at a time rather than a page is counterintuitive for sighted users and tedious for navigating large collections.
 - Does not provide composite selection or range selection. Real feed loading and assistive technology interoperability are not demonstrated here.
 
 ### Best practices
