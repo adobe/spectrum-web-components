@@ -18,16 +18,16 @@ import { photos, prototypeMeta } from './story-helpers.js';
 // ────────────────
 
 /**
- * Compares a toolbar of grouped card controls with collection navigation.
+ * Compares native fieldset grouping with checkbox collection navigation.
  */
 const meta: Meta = {
-  ...prototypeMeta('swc-card-view-option-7'),
-  title: 'Card view/Option 7',
+  ...prototypeMeta('swc-card-view-option-8'),
+  title: 'Card view/Option 8',
   parameters: {
-    ...prototypeMeta('swc-card-view-option-7').parameters,
+    ...prototypeMeta('swc-card-view-option-8').parameters,
     docs: {
       subtitle:
-        'Toolbar with checkbox arrow navigation and active-card action tab stops.',
+        'Fieldset with checkbox arrow navigation and active-card action tab stops.',
     },
   },
   tags: ['migrated'],

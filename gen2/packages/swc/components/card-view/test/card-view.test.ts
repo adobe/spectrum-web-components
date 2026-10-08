@@ -21,6 +21,7 @@ import '../swc-card-view-option-4.js';
 import '../swc-card-view-option-5.js';
 import '../swc-card-view-option-6.js';
 import '../swc-card-view-option-7.js';
+import '../swc-card-view-option-8.js';
 
 const tags = [
   'swc-card-view',
@@ -87,7 +88,8 @@ export const MenuAndToolbar: StoryObj = {
         ...root.querySelectorAll<HTMLElement>('[role="menuitemcheckbox"]'),
       ];
       expect(entries).toHaveLength(8);
-      expect(root.querySelector('input, button')).toBeNull();
+      expect(root.querySelector('input')).toBeNull();
+      expect(entries[0].querySelectorAll('button')).toHaveLength(2);
       expect(entries[0].getAttribute('aria-checked')).toBe('false');
       entries[0].focus();
       entries[0].dispatchEvent(
@@ -103,7 +105,7 @@ export const MenuAndToolbar: StoryObj = {
       expect(entries[0].getAttribute('aria-checked')).toBe('true');
       entries[0].dispatchEvent(
         new KeyboardEvent('keydown', {
-          key: 'ArrowDown',
+          key: 'ArrowRight',
           bubbles: true,
           composed: true,
         })
@@ -113,6 +115,22 @@ export const MenuAndToolbar: StoryObj = {
       entries[1].click();
       await menu.updateComplete;
       expect(menu.selected).toEqual(['photo-0', 'photo-1']);
+
+      const open = entries[1].querySelector<HTMLButtonElement>('[data-action="open"]')!;
+      const share = entries[1].querySelector<HTMLButtonElement>('[data-action="share"]')!;
+      expect(open.tabIndex).toBe(0);
+      expect(share.tabIndex).toBe(0);
+      const menuActions: unknown[] = [];
+      menu.addEventListener('swc-card-view-action', event => menuActions.push((event as CustomEvent).detail));
+      open.focus();
+      open.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, composed: true }));
+      expect(root.activeElement).toBe(open);
+      share.click();
+      expect(menuActions).toEqual([{ id: 'photo-1', action: 'share' }]);
+      expect(menu.selected).toEqual(['photo-0', 'photo-1']);
+      open.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, composed: true }));
+      await menu.updateComplete;
+      expect(root.activeElement).toBe(entries[1]);
 
       const toolbar = await mount(
         canvasElement,
@@ -129,7 +147,7 @@ export const MenuAndToolbar: StoryObj = {
       ];
       expect(controls).toHaveLength(24);
       expect(controls.filter((control) => control.tabIndex === 0)).toHaveLength(
-        1
+        3
       );
       controls[0].focus();
       controls[0].dispatchEvent(
@@ -140,10 +158,12 @@ export const MenuAndToolbar: StoryObj = {
         })
       );
       await toolbar.updateComplete;
-      expect(toolbarRoot.activeElement).toBe(controls[1]);
+      expect(toolbarRoot.activeElement).toBe(controls[3]);
       expect(controls[0].tabIndex).toBe(-1);
-      expect(controls[1].tabIndex).toBe(0);
-      controls[1].dispatchEvent(
+      expect(controls[3].tabIndex).toBe(0);
+      expect(controls[4].tabIndex).toBe(0);
+      expect(controls[5].tabIndex).toBe(0);
+      controls[3].dispatchEvent(
         new KeyboardEvent('keydown', {
           key: 'End',
           bubbles: true,
@@ -151,7 +171,7 @@ export const MenuAndToolbar: StoryObj = {
         })
       );
       await toolbar.updateComplete;
-      expect(toolbarRoot.activeElement).toBe(controls[23]);
+      expect(toolbarRoot.activeElement).toBe(controls[21]);
       (controls[0] as HTMLInputElement).click();
       await toolbar.updateComplete;
       expect(toolbar.selected).toEqual(['photo-0']);
@@ -193,14 +213,14 @@ export const CommandNavigationEdges: StoryObj = {
     };
     entries[0].focus();
     await press(menu, 'ArrowDown');
-    expect(root.activeElement).toBe(entries[2]);
+    expect(root.activeElement).toBe(entries[3]);
     await press(menu, 'b');
     expect(root.activeElement).toBe(entries[3]);
     await press(menu, 'End');
     await press(menu, 'ArrowDown');
-    expect(root.activeElement).toBe(entries[0]);
-    await press(menu, 'ArrowUp');
     expect(root.activeElement).toBe(entries[7]);
+    await press(menu, 'ArrowUp');
+    expect(root.activeElement).toBe(entries[4]);
     await press(menu, 'Home');
     expect(root.activeElement).toBe(entries[0]);
     let exits = 0;
@@ -215,18 +235,18 @@ export const CommandNavigationEdges: StoryObj = {
     expect(menu.selected).toEqual(['photo-0']);
     await press(menu, 'ArrowDown');
     await press(menu, 'Enter');
-    expect(menu.selected).toEqual(['photo-2']);
+    expect(menu.selected).toEqual(['photo-3']);
     expect(entries[0].getAttribute('aria-checked')).toBe('false');
     menu.selectionMode = 'none';
     await menu.updateComplete;
-    expect(entries[2].getAttribute('role')).toBe('menuitem');
-    expect(entries[2].hasAttribute('aria-checked')).toBe(false);
+    expect(entries[3].getAttribute('role')).toBe('menuitem');
+    expect(entries[3].hasAttribute('aria-checked')).toBe(false);
     const actions: unknown[] = [];
     menu.addEventListener('swc-card-view-action', (event) =>
       actions.push((event as CustomEvent).detail)
     );
     await press(menu, 'Enter');
-    expect(actions).toEqual([{ id: 'photo-2', action: 'open' }]);
+    expect(actions).toEqual([{ id: 'photo-3', action: 'open' }]);
 
     const toolbar = await mount(
       canvasElement,
@@ -244,15 +264,20 @@ export const CommandNavigationEdges: StoryObj = {
     ];
     controls[2].focus();
     await press(toolbar, 'ArrowRight');
+    expect(toolbarRoot.activeElement).toBe(controls[2]);
+    controls[0].focus();
+    await press(toolbar, 'ArrowRight');
     expect(toolbarRoot.activeElement).toBe(controls[6]);
     expect(toolbar.selected).toEqual([]);
-    await press(toolbar, 'ArrowUp');
+    await press(toolbar, 'Home');
     await press(toolbar, 'ArrowDown');
-    expect(toolbarRoot.activeElement).toBe(controls[6]);
+    expect(toolbarRoot.activeElement).toBe(controls[9]);
+    await press(toolbar, 'ArrowUp');
+    expect(toolbarRoot.activeElement).toBe(controls[0]);
     await press(toolbar, 'Home');
     toolbar.style.direction = 'rtl';
     await press(toolbar, 'ArrowLeft');
-    expect(toolbarRoot.activeElement).toBe(controls[1]);
+    expect(toolbarRoot.activeElement).toBe(controls[6]);
     await press(toolbar, 'ArrowRight');
     expect(toolbarRoot.activeElement).toBe(controls[0]);
     toolbar.selectionMode = 'none';
@@ -262,7 +287,38 @@ export const CommandNavigationEdges: StoryObj = {
       [...toolbarRoot.querySelectorAll<HTMLElement>('button')].filter(
         (control) => control.tabIndex === 0
       )
-    ).toHaveLength(1);
+    ).toHaveLength(2);
+  },
+};
+
+export const FieldsetNavigation: StoryObj = {
+  render: () => html`<div></div>`,
+  play: async ({ canvasElement }) => {
+    for (const layout of ['grid', 'waterfall']) {
+      const view = await mount(canvasElement, 'swc-card-view-option-8', layout);
+      const root = view.shadowRoot!;
+      expect(root.querySelector('fieldset legend')?.textContent).toBe('Photos');
+      expect(root.querySelector('[role="toolbar"], [role="grid"]')).toBeNull();
+      const controls = [...root.querySelectorAll<HTMLElement>('input, button')];
+      controls[0].focus();
+      controls[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, composed: true }));
+      await view.updateComplete;
+      expect(root.activeElement).toBe(controls[3]);
+      expect(controls.slice(3, 6).every(control => control.tabIndex === 0)).toBe(true);
+      expect(controls[0].tabIndex).toBe(-1);
+      controls[3].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, composed: true }));
+      await view.updateComplete;
+      expect(root.activeElement).toBe(controls[0]);
+      controls[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, composed: true }));
+      await view.updateComplete;
+      expect(root.activeElement).toBe(controls[9]);
+      (controls[9] as HTMLInputElement).click();
+      await view.updateComplete;
+      expect(view.selected).toEqual(['photo-3']);
+      controls[10].focus();
+      controls[10].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, composed: true }));
+      expect(root.activeElement).toBe(controls[10]);
+    }
   },
 };
 
@@ -432,7 +488,14 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
       }
       expect([...reverse]).toEqual(['7', '6', '5', '4', '3', '1', '0']);
 
+      await waitFor(() => {
+        const first = cells[0].getBoundingClientRect();
+        const below = cells[3].getBoundingClientRect();
+        expect(Math.abs(below.left - first.left)).toBeLessThan(1);
+        expect(below.top).toBeGreaterThan(first.top);
+      });
       await press('ArrowDown');
+      expect(root.activeElement).toBe(cells[3]);
       await press('ArrowUp');
       expect(root.activeElement).toBe(cells[0]);
       await press('End');

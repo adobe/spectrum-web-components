@@ -27,6 +27,18 @@
   min-inline-size: 0;
 }
 
+fieldset {
+  min-inline-size: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+legend {
+  padding: 0;
+  margin-block-end: 12px;
+}
+
 swc-card {
   --swc-card-base-max-inline-size: 100%;
 

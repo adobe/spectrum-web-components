@@ -10,58 +10,59 @@ import * as Stories from './stories/card-view-option-6.stories';
 
 `swc-card-view-option-6` uses a labelled `menu` with a card-shaped menu item for each photo. Multiple selection uses `menuitemcheckbox`; single selection uses `menuitemradio`; selection disabled uses plain `menuitem`. Each item's accessible name is its photo title. A visual checkbox indicator reflects `aria-checked` but is hidden from assistive technology.
 
-Menu items are commands, not containers for independent controls. This option deliberately removes the nested checkbox, Open button, and Share button. The stories provide separate Open and Share controls outside the menu, enabled when exactly one photo is selected. This changes the workflow rather than changing only a role.
+Open and Share remain real buttons inside each card. This intentionally explores nested interaction inside a menu item rather than the conventional command-only menu pattern. The menu item itself acts as the selection checkbox; its visual indicator is not an independent input.
 
 ## Options
 
 ### Grid
 
-Cards align in visual rows while menu navigation follows collection order, not geometry.
+Cards align in visual rows; arrow navigation follows measured geometry.
 
 <Canvas of={Stories.Grid} />
 
 ### Waterfall
 
-Cards retain varied preview heights and use shortest-column placement. Menu navigation still follows the same logical sequence.
+Cards retain varied preview heights and use shortest-column placement. Arrow navigation follows visual neighbors with overlap on the perpendicular axis.
 
 <Canvas of={Stories.Waterfall} />
 
 ## Behaviors
 
-<kbd>ArrowDown</kbd> and <kbd>ArrowUp</kbd> visit the next/previous enabled menu
-item, wrapping at the ends. <kbd>Home</kbd> and <kbd>End</kbd> reach the
-first/last enabled item. A printable character moves to the next enabled title
-starting with that character, cycling through matches. This prototype supports
-first-character search, not buffered multi-character search.
+<kbd>ArrowDown</kbd>, <kbd>ArrowUp</kbd>, <kbd>ArrowLeft</kbd>, and
+<kbd>ArrowRight</kbd> move to the nearest enabled menu-item checkbox in that
+visual direction, stopping at boundaries. <kbd>Home</kbd> and <kbd>End</kbd>
+reach the first/last enabled item. A printable character moves to the next
+enabled title starting with that character, cycling through matches. This
+prototype supports first-character search, not buffered multi-character search.
 
-Click, <kbd>Space</kbd>, and <kbd>Enter</kbd> toggle a checkbox menu item's checked state. Radio menu items remain checked when activated again and clear the previous selection. When selection is disabled, activation emits the primary Open action. There is no keyboard range selection. <kbd>Tab</kbd> and <kbd>Shift</kbd>+<kbd>Tab</kbd> leave the menu; only the active item is in the tab sequence. <kbd>Escape</kbd> emits `swc-card-view-exit` requesting the host to focus the preceding control; the stories connect it to Photo library. This is a persistent comparison menu, not a popup with an implemented trigger/close lifecycle.
+Click, <kbd>Space</kbd>, and <kbd>Enter</kbd> toggle a checkbox menu item's checked state. Radio menu items remain checked when activated again and clear the previous selection. When selection is disabled, activation emits the primary Open action. There is no keyboard range selection. <kbd>Tab</kbd> enters the active card's Open button, then Share, then leaves the menu. <kbd>Shift</kbd>+<kbd>Tab</kbd> reverses that path. Inactive cards' actions have `tabindex="-1"`. Nested buttons keep native activation and arrow behavior and do not toggle selection. <kbd>Escape</kbd> from a nested action returns to its menu item; from the menu item it emits `swc-card-view-exit` requesting host focus restoration. The stories connect this to Photo library. This is a persistent comparison menu, not a popup with an implemented trigger/close lifecycle.
 
-The menu is vertically oriented. Left/Right is not repurposed for card navigation or submenus. Disabled items are represented with `aria-disabled` and skipped by this prototype's navigation; that differs from menus that intentionally allow focus on disabled commands.
+Four-direction navigation deliberately departs from conventional menu orientation and submenu keys. Disabled items use `aria-disabled` and are skipped; their nested buttons are native disabled.
 
 ## Accessibility
 
 ### Features
 
-The menu exposes checked state rather than `aria-selected`, and has no grid row/column metadata. Focus and checked state are separate. Cards contain no independently interactive descendants. Titles name commands; descriptions and decorative photos are not a rich document-reading surface. Selected-count updates use the shared live status.
+The menu exposes checked state rather than `aria-selected`, and has no grid row/column metadata. Focus and checked state are separate. Titles name menu items and Open buttons; Share buttons have photo-specific names. Selected-count updates use the shared live status. Nested interactive descendants may be reported by automated accessibility checks and need manual assistive technology testing.
 
 <Canvas of={Stories.Accessibility} />
 
 ### Pros
 
-- Provides familiar menu navigation, first-character search, and checked-state commands.
-- Avoids contradictory row/column announcements and preserves a sequential route in both layouts.
-- Uses one tab stop for the menu and separates selection from external actions.
+- Retains checked-state commands and first-character search.
+- Provides spatial navigation without grid row/column announcements.
+- Preserves Open/Share controls and separates their activation from selection.
 
 ### Cons
 
 - A menu represents commands, not a general photo/file collection; users may interpret these cards as command choices rather than content.
-- Independent checkbox and action controls must be removed from cards, changing the original task flow.
-- Rich descendant reading structure and spatial navigation are lost; first-character search is limited.
+- Nested buttons depart from the conventional menu model and may be hidden, merged, or confusing in assistive technology.
+- Tab entering card actions and four-direction movement differ from familiar menu behavior; first-character search remains limited.
 - A persistent multi-column or waterfall menu can conflict with familiar visual menu expectations. Real menu entry/exit and spoken output need user testing.
 
 ### Best practices
 
-Treat this as a semantics experiment, not an approved asset-browser pattern. Compare selection, external actions, disabled items, entry/exit, and reading tasks with the list, grid, and toolbar options. Test NVDA, JAWS, VoiceOver, Narrator, and mobile screen readers. Do not infer reliable collection position announcements from the menu role. Hosts embedding this in a popup must implement trigger semantics, opening focus, dismissal, and focus restoration separately.
+Treat this as a semantics experiment, not an approved asset-browser pattern. Compare selection, nested actions, disabled items, entry/exit, and reading tasks with the list, grid, toolbar, and fieldset options. Test NVDA, JAWS, VoiceOver, Narrator, and mobile screen readers. Do not infer reliable collection position announcements from the menu role. Hosts embedding this in a popup must implement trigger semantics, opening focus, dismissal, and focus restoration separately.
 
 ## Upcoming features
 

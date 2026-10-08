@@ -39,10 +39,11 @@ export abstract class CardViewBase extends SpectrumElement {
   @state()
   protected activeIndex = 0;
 
-  @state()
-  protected toolbarControlIndex = 0;
-
   protected anchorIndex = 0;
+
+  protected get groupedControls(): boolean {
+    return this.model === 'toolbar' || this.model === 'fieldset';
+  }
 
   protected abstract readonly model: CardViewModel;
   protected abstract get positions(): CardViewPosition[];
@@ -105,53 +106,50 @@ export abstract class CardViewBase extends SpectrumElement {
     );
     if (target) {
       this.activeIndex = Number(target.dataset.index);
-      if (this.model === 'toolbar') {
-        this.toolbarControlIndex = this.focusTargets.indexOf(target);
-      }
     }
   }
 
-  protected async focusToolbarControl(index: number): Promise<void> {
-    const target = this.focusTargets[index];
+  protected async focusCardControl(index: number): Promise<void> {
+    const target = this.focusTargets.find(
+      (control) => Number(control.dataset.index) === index
+    );
     if (!target || target.matches(':disabled')) {
       return;
     }
-    this.toolbarControlIndex = index;
-    this.activeIndex = Number(target.dataset.index);
+    this.activeIndex = index;
     await this.updateComplete;
     target.focus({ preventScroll: true });
     target.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   }
 
-  protected handleToolbarKeydown(
+  protected handleGroupedKeydown(
     event: KeyboardEvent,
     target: HTMLElement
   ): void {
-    const controls = this.focusTargets;
-    const current = controls.indexOf(target);
-    if (current < 0) {
+    if (
+      this.selectionMode === 'none'
+        ? target.dataset.action !== 'open'
+        : !target.matches('input[type="checkbox"]')
+    ) {
       return;
     }
-    let direction: number;
+    const current = Number(target.dataset.index);
     let next: number;
     if (event.key === 'Home' || event.key === 'End') {
-      direction = event.key === 'Home' ? 1 : -1;
-      next = event.key === 'Home' ? 0 : controls.length - 1;
+      next = event.key === 'Home'
+        ? this.items.findIndex((item) => !item.disabled)
+        : this.items.map((item) => !item.disabled).lastIndexOf(true);
     } else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
       const rtl = getComputedStyle(this).direction === 'rtl';
-      direction = (event.key === 'ArrowRight' ? 1 : -1) * (rtl ? -1 : 1);
-      next = current + direction;
+      const direction = (event.key === 'ArrowRight' ? 1 : -1) * (rtl ? -1 : 1);
+      next = this.sequential(current, direction);
+    } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+      next = this.spatial(current, event.key);
     } else {
       return;
     }
     event.preventDefault();
-    while (next >= 0 && next < controls.length) {
-      if (!controls[next].matches(':disabled')) {
-        void this.focusToolbarControl(next);
-        return;
-      }
-      next += direction;
-    }
+    void this.focusCardControl(next);
   }
 
   protected handleMenuKeydown(event: KeyboardEvent, index: number): void {
@@ -184,15 +182,8 @@ export abstract class CardViewBase extends SpectrumElement {
       next = this.items.findIndex((item) => !item.disabled);
     } else if (event.key === 'End') {
       next = this.items.map((item) => !item.disabled).lastIndexOf(true);
-    } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-      const direction = event.key === 'ArrowDown' ? 1 : -1;
-      next = this.sequential(index, direction);
-      if (next === index) {
-        next =
-          direction === 1
-            ? this.items.findIndex((item) => !item.disabled)
-            : this.items.map((item) => !item.disabled).lastIndexOf(true);
-      }
+    } else if (['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+      next = this.spatial(index, event.key);
     } else if (
       event.key.length === 1 &&
       !event.ctrlKey &&
@@ -298,11 +289,18 @@ export abstract class CardViewBase extends SpectrumElement {
       return;
     }
     const index = Number(wrapper.dataset.index);
-    if (this.model === 'toolbar') {
-      this.handleToolbarKeydown(event, target);
+    if (this.groupedControls) {
+      this.handleGroupedKeydown(event, target);
       return;
     }
     if (this.model === 'menu') {
+      if (!target.hasAttribute('data-focus')) {
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          void this.focusItem(index);
+        }
+        return;
+      }
       this.handleMenuKeydown(event, index);
       return;
     }
@@ -360,10 +358,6 @@ export abstract class CardViewBase extends SpectrumElement {
           ? this.spatial(index, event.key)
           : this.sequential(index, direction);
     } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-      if (this.model === 'single-row') {
-        event.preventDefault();
-        return;
-      }
       next =
         this.model === 'wrapping'
           ? this.columnStep(index, event.key === 'ArrowDown' ? 1 : -1)

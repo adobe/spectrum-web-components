@@ -9,32 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export type CardViewLayout = 'grid' | 'waterfall';
-export type CardViewModel =
-  | 'baseline'
-  | 'sequential'
-  | 'wrapping'
-  | 'single-row'
-  | 'menu'
-  | 'toolbar'
-  | 'fieldset'
-  | 'list'
-  | 'feed';
-export type CardViewSelectionMode = 'none' | 'single' | 'multiple';
+import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
 
-export interface CardViewItem {
-  id: string;
-  title: string;
-  description?: string;
-  image: string;
-  aspectRatio?: number;
-  disabled?: boolean;
+import { CardViewOption8 } from './CardView.js';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-card-view-option-8': CardViewOption8;
+  }
 }
 
-export interface CardViewPosition {
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-  column: number;
-}
+defineElement('swc-card-view-option-8', CardViewOption8);

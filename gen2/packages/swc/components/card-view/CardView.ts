@@ -85,18 +85,6 @@ export class CardView extends CardViewBase {
     this.renderRoot
       .querySelectorAll('swc-card')
       .forEach((card) => this.observer?.observe(card));
-    if (this.model === 'toolbar') {
-      const controls = this.focusTargets;
-      if (
-        !controls[this.toolbarControlIndex] ||
-        controls[this.toolbarControlIndex].matches(':disabled')
-      ) {
-        this.toolbarControlIndex = Math.max(
-          0,
-          controls.findIndex((control) => !control.matches(':disabled'))
-        );
-      }
-    }
     this.scheduleLayout();
   }
 
@@ -152,11 +140,9 @@ export class CardView extends CardViewBase {
     }
   }
 
-  private childTabIndex(index: number, controlIndex = 0): number {
-    if (this.model === 'toolbar') {
-      const count = this.selectionMode === 'none' ? 2 : 3;
-      return index * count + controlIndex === this.toolbarControlIndex &&
-        !this.items[index].disabled
+  private childTabIndex(index: number): number {
+    if (this.groupedControls) {
+      return index === this.activeIndex && !this.items[index].disabled
         ? 0
         : -1;
     }
@@ -164,6 +150,9 @@ export class CardView extends CardViewBase {
   }
 
   private handleMenuClick(event: Event): void {
+    if ((event.composedPath() as HTMLElement[]).some((element) => element.matches?.('button'))) {
+      return;
+    }
     const index = Number((event.currentTarget as HTMLElement).dataset.index);
     void this.focusItem(index);
     if (this.selectionMode === 'none') {
@@ -218,8 +207,32 @@ export class CardView extends CardViewBase {
                 </span>
               `
             : ''}
-          <span slot="title">${item.title}</span>
+          <button
+            slot="title"
+            type="button"
+            class="title"
+            data-index=${index}
+            data-action="open"
+            tabindex=${this.childTabIndex(index)}
+            ?disabled=${item.disabled}
+            @click=${this.handleAction}
+          >
+            ${item.title}
+          </button>
           <span slot="description">${item.description}</span>
+          <button
+            slot="actions"
+            type="button"
+            class="share"
+            data-index=${index}
+            data-action="share"
+            aria-label=${`Share ${item.title}`}
+            tabindex=${this.childTabIndex(index)}
+            ?disabled=${item.disabled}
+            @click=${this.handleAction}
+          >
+            Share
+          </button>
         </swc-card>
       `;
     }
@@ -247,7 +260,7 @@ export class CardView extends CardViewBase {
                 <input
                   type="checkbox"
                   data-index=${index}
-                  ?data-focus=${this.model === 'toolbar'}
+                  ?data-focus=${this.groupedControls}
                   aria-label=${`Select ${item.title}`}
                   .checked=${selected}
                   ?disabled=${item.disabled}
@@ -263,11 +276,8 @@ export class CardView extends CardViewBase {
           class="title"
           data-index=${index}
           data-action="open"
-          ?data-focus=${this.model === 'toolbar'}
-          tabindex=${this.childTabIndex(
-            index,
-            this.selectionMode === 'none' ? 0 : 1
-          )}
+          ?data-focus=${this.groupedControls}
+          tabindex=${this.childTabIndex(index)}
           ?disabled=${item.disabled}
           @click=${this.handleAction}
         >
@@ -280,12 +290,9 @@ export class CardView extends CardViewBase {
           class="share"
           data-index=${index}
           data-action="share"
-          ?data-focus=${this.model === 'toolbar'}
+          ?data-focus=${this.groupedControls}
           aria-label=${`Share ${item.title}`}
-          tabindex=${this.childTabIndex(
-            index,
-            this.selectionMode === 'none' ? 1 : 2
-          )}
+          tabindex=${this.childTabIndex(index)}
           ?disabled=${item.disabled}
           @click=${this.handleAction}
         >
@@ -336,7 +343,7 @@ export class CardView extends CardViewBase {
         </article>
       `;
     }
-    if (this.model === 'toolbar') {
+    if (this.groupedControls) {
       return html`
         <div
           class="item"
@@ -433,7 +440,7 @@ export class CardView extends CardViewBase {
 
   protected override render(): TemplateResult {
     const grid =
-      this.composite && this.model !== 'menu' && this.model !== 'toolbar';
+      this.composite && this.model !== 'menu' && !this.groupedControls;
     const content = repeat(
       this.items,
       (item) => item.id,
@@ -454,7 +461,21 @@ export class CardView extends CardViewBase {
               ${content}
             </ul>
           `
-        : html`
+        : this.model === 'fieldset'
+          ? html`
+              <fieldset>
+                <legend>${this.label}</legend>
+                <div
+                  class="collection"
+                  style=${height}
+                  @keydown=${this.handleKeydown}
+                  @focusin=${this.handleFocus}
+                >
+                  ${content}
+                </div>
+              </fieldset>
+            `
+          : html`
             <div
               class="collection"
               role=${this.model === 'feed'
@@ -551,4 +572,13 @@ export class CardViewOption6 extends CardView {
  */
 export class CardViewOption7 extends CardView {
   protected override readonly model: CardViewModel = 'toolbar';
+}
+
+/**
+ * Experimental fieldset grouping card selection and action controls.
+ *
+ * @element swc-card-view-option-8
+ */
+export class CardViewOption8 extends CardView {
+  protected override readonly model: CardViewModel = 'fieldset';
 }

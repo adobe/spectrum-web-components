@@ -26,7 +26,7 @@ Cards are placed into the shortest visual column using measured heights. The sem
 
 ## Behaviors
 
-Left/Right moves between enabled cells without cycling past the first or last card. In right-to-left layouts, Left moves forward and Right moves backward. Up/Down does not move focus because there is only one semantic row. Home/End reaches the first/last enabled card.
+Left/Right moves incrementally between enabled cells in collection order without cycling past the first or last card. In right-to-left layouts, Left moves forward and Right moves backward. Up/Down moves spatially to the nearest enabled card above/below with horizontal overlap, skipping cards between them in collection order. Movement stops when no aligned card exists. Home/End reaches the first/last enabled card.
 
 Space toggles selection and Enter opens the focused card. Shift plus Left/Right or Home/End selects a collection-order range, skipping disabled cards. Tab enters the active card's checkbox and actions, then exits the collection. Shift+Tab reverses that path. Only the active card's controls are in the tab order. Child actions do not also select the card, and their arrow keys are not intercepted by collection navigation.
 
@@ -50,7 +50,7 @@ Resizing, zooming, and switching layouts update visual geometry without regroupi
 ### Cons
 
 - Announced columns do not match visual columns once cards wrap or form a waterfall.
-- Up/Down does not provide spatial navigation, which sighted keyboard users may expect.
+- Spatial Up/Down follows visual wrapping but is not described by the announced single semantic row.
 - Sequential waterfall movement can look surprising when adjacent collection items are not visual neighbors.
 - Grid semantics still introduce screen reader mode changes and need user testing; column indices do not guarantee useful position announcements.
 

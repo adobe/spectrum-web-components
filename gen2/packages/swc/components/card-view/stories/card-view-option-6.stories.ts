@@ -26,7 +26,7 @@ const meta: Meta = {
   parameters: {
     ...prototypeMeta('swc-card-view-option-6').parameters,
     docs: {
-      subtitle: 'Menu items with checked-state selection and external actions.',
+      subtitle: 'Spatial menu-item selection with nested card actions.',
     },
   },
   tags: ['migrated'],
