@@ -116,19 +116,37 @@ export const MenuAndToolbar: StoryObj = {
       await menu.updateComplete;
       expect(menu.selected).toEqual(['photo-0', 'photo-1']);
 
-      const open = entries[1].querySelector<HTMLButtonElement>('[data-action="open"]')!;
-      const share = entries[1].querySelector<HTMLButtonElement>('[data-action="share"]')!;
+      const open = entries[1].querySelector<HTMLButtonElement>(
+        '[data-action="open"]'
+      )!;
+      const share = entries[1].querySelector<HTMLButtonElement>(
+        '[data-action="share"]'
+      )!;
       expect(open.tabIndex).toBe(0);
       expect(share.tabIndex).toBe(0);
       const menuActions: unknown[] = [];
-      menu.addEventListener('swc-card-view-action', event => menuActions.push((event as CustomEvent).detail));
+      menu.addEventListener('swc-card-view-action', (event) =>
+        menuActions.push((event as CustomEvent).detail)
+      );
       open.focus();
-      open.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, composed: true }));
+      open.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
+          bubbles: true,
+          composed: true,
+        })
+      );
       expect(root.activeElement).toBe(open);
       share.click();
       expect(menuActions).toEqual([{ id: 'photo-1', action: 'share' }]);
       expect(menu.selected).toEqual(['photo-0', 'photo-1']);
-      open.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, composed: true }));
+      open.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'Escape',
+          bubbles: true,
+          composed: true,
+        })
+      );
       await menu.updateComplete;
       expect(root.activeElement).toBe(entries[1]);
 
@@ -291,8 +309,56 @@ export const CommandNavigationEdges: StoryObj = {
   },
 };
 
+export const ListArrowNavigation: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    for (const layout of ['grid', 'waterfall']) {
+      const view = await mount(canvasElement, 'swc-card-view-option-3', layout);
+      view.items = items.map((item, index) => ({
+        ...item,
+        disabled: index === 2,
+      }));
+      await view.updateComplete;
+      const root = view.shadowRoot!;
+      const entries = [...root.querySelectorAll<HTMLElement>('li')];
+      const press = async (key: string) => {
+        root.activeElement!.dispatchEvent(
+          new KeyboardEvent('keydown', { key, bubbles: true, composed: true })
+        );
+        await view.updateComplete;
+      };
+      entries[0].focus();
+      expect(root.activeElement).toBe(entries[0]);
+      await press('ArrowRight');
+      expect(root.activeElement).toBe(entries[1]);
+      await press('ArrowRight');
+      expect(root.activeElement).toBe(entries[3]);
+      await press('Home');
+      await press('ArrowDown');
+      expect(root.activeElement).toBe(entries[3]);
+      await press('ArrowUp');
+      expect(root.activeElement).toBe(entries[0]);
+      const checkbox = entries[0].querySelector<HTMLInputElement>('input')!;
+      checkbox.focus();
+      await press('ArrowRight');
+      expect(root.activeElement).toBe(checkbox);
+      expect(
+        [
+          ...root.querySelectorAll<HTMLElement>(
+            'input:not(:disabled), button:not(:disabled)'
+          ),
+        ].every((control) => control.tabIndex === 0)
+      ).toBe(true);
+    }
+  },
+};
+
 export const FieldsetNavigation: StoryObj = {
-  render: () => html`<div></div>`,
+  render: () => html`
+    <div></div>
+  `,
   play: async ({ canvasElement }) => {
     for (const layout of ['grid', 'waterfall']) {
       const view = await mount(canvasElement, 'swc-card-view-option-8', layout);
@@ -301,22 +367,48 @@ export const FieldsetNavigation: StoryObj = {
       expect(root.querySelector('[role="toolbar"], [role="grid"]')).toBeNull();
       const controls = [...root.querySelectorAll<HTMLElement>('input, button')];
       controls[0].focus();
-      controls[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, composed: true }));
+      controls[0].dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
+          bubbles: true,
+          composed: true,
+        })
+      );
       await view.updateComplete;
       expect(root.activeElement).toBe(controls[3]);
-      expect(controls.slice(3, 6).every(control => control.tabIndex === 0)).toBe(true);
+      expect(
+        controls.slice(3, 6).every((control) => control.tabIndex === 0)
+      ).toBe(true);
       expect(controls[0].tabIndex).toBe(-1);
-      controls[3].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, composed: true }));
+      controls[3].dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'ArrowLeft',
+          bubbles: true,
+          composed: true,
+        })
+      );
       await view.updateComplete;
       expect(root.activeElement).toBe(controls[0]);
-      controls[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, composed: true }));
+      controls[0].dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'ArrowDown',
+          bubbles: true,
+          composed: true,
+        })
+      );
       await view.updateComplete;
       expect(root.activeElement).toBe(controls[9]);
       (controls[9] as HTMLInputElement).click();
       await view.updateComplete;
       expect(view.selected).toEqual(['photo-3']);
       controls[10].focus();
-      controls[10].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, composed: true }));
+      controls[10].dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
+          bubbles: true,
+          composed: true,
+        })
+      );
       expect(root.activeElement).toBe(controls[10]);
     }
   },

@@ -136,9 +136,10 @@ export abstract class CardViewBase extends SpectrumElement {
     const current = Number(target.dataset.index);
     let next: number;
     if (event.key === 'Home' || event.key === 'End') {
-      next = event.key === 'Home'
-        ? this.items.findIndex((item) => !item.disabled)
-        : this.items.map((item) => !item.disabled).lastIndexOf(true);
+      next =
+        event.key === 'Home'
+          ? this.items.findIndex((item) => !item.disabled)
+          : this.items.map((item) => !item.disabled).lastIndexOf(true);
     } else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
       const rtl = getComputedStyle(this).direction === 'rtl';
       const direction = (event.key === 'ArrowRight' ? 1 : -1) * (rtl ? -1 : 1);
@@ -182,7 +183,9 @@ export abstract class CardViewBase extends SpectrumElement {
       next = this.items.findIndex((item) => !item.disabled);
     } else if (event.key === 'End') {
       next = this.items.map((item) => !item.disabled).lastIndexOf(true);
-    } else if (['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+    } else if (
+      ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key)
+    ) {
       next = this.spatial(index, event.key);
     } else if (
       event.key.length === 1 &&
@@ -332,7 +335,23 @@ export abstract class CardViewBase extends SpectrumElement {
       }
       return;
     }
-    if (!this.composite || !target.hasAttribute('data-focus')) {
+    if (
+      (!this.composite && this.model !== 'list') ||
+      !target.hasAttribute('data-focus')
+    ) {
+      return;
+    }
+    if (
+      this.model === 'list' &&
+      ![
+        'ArrowLeft',
+        'ArrowRight',
+        'ArrowUp',
+        'ArrowDown',
+        'Home',
+        'End',
+      ].includes(event.key)
+    ) {
       return;
     }
     if (event.key === ' ') {

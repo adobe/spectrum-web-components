@@ -142,15 +142,17 @@ export class CardView extends CardViewBase {
 
   private childTabIndex(index: number): number {
     if (this.groupedControls) {
-      return index === this.activeIndex && !this.items[index].disabled
-        ? 0
-        : -1;
+      return index === this.activeIndex && !this.items[index].disabled ? 0 : -1;
     }
     return !this.composite || index === this.activeIndex ? 0 : -1;
   }
 
   private handleMenuClick(event: Event): void {
-    if ((event.composedPath() as HTMLElement[]).some((element) => element.matches?.('button'))) {
+    if (
+      (event.composedPath() as HTMLElement[]).some((element) =>
+        element.matches?.('button')
+      )
+    ) {
       return;
     }
     const index = Number((event.currentTarget as HTMLElement).dataset.index);
@@ -319,6 +321,10 @@ export class CardView extends CardViewBase {
         <li
           class="item"
           data-index=${index}
+          data-focus
+          tabindex=${!item.disabled && index === this.activeIndex ? 0 : -1}
+          aria-label=${item.title}
+          aria-disabled=${ifDefined(item.disabled ? 'true' : undefined)}
           style=${style}
           aria-posinset=${index + 1}
           aria-setsize=${this.items.length}
@@ -456,6 +462,7 @@ export class CardView extends CardViewBase {
               class="collection"
               aria-label=${this.label}
               style=${height}
+              @keydown=${this.handleKeydown}
               @focusin=${this.handleFocus}
             >
               ${content}
@@ -476,54 +483,56 @@ export class CardView extends CardViewBase {
               </fieldset>
             `
           : html`
-            <div
-              class="collection"
-              role=${this.model === 'feed'
-                ? 'feed'
-                : this.model === 'menu'
-                  ? 'menu'
-                  : this.model === 'toolbar'
-                    ? 'toolbar'
-                    : 'grid'}
-              aria-orientation=${ifDefined(
-                this.model === 'menu'
-                  ? 'vertical'
-                  : this.model === 'toolbar'
-                    ? 'horizontal'
+              <div
+                class="collection"
+                role=${this.model === 'feed'
+                  ? 'feed'
+                  : this.model === 'menu'
+                    ? 'menu'
+                    : this.model === 'toolbar'
+                      ? 'toolbar'
+                      : 'grid'}
+                aria-orientation=${ifDefined(
+                  this.model === 'menu'
+                    ? 'vertical'
+                    : this.model === 'toolbar'
+                      ? 'horizontal'
+                      : undefined
+                )}
+                aria-label=${this.label}
+                aria-rowcount=${ifDefined(
+                  grid
+                    ? this.model === 'single-row'
+                      ? 1
+                      : this.items.length
                     : undefined
-              )}
-              aria-label=${this.label}
-              aria-rowcount=${ifDefined(
-                grid
-                  ? this.model === 'single-row'
-                    ? 1
-                    : this.items.length
-                  : undefined
-              )}
-              aria-colcount=${ifDefined(
-                grid
-                  ? this.model === 'single-row'
-                    ? this.items.length
-                    : 1
-                  : undefined
-              )}
-              aria-multiselectable=${ifDefined(
-                grid && this.selectionMode === 'multiple' ? 'true' : undefined
-              )}
-              aria-busy=${ifDefined(
-                this.model === 'feed' ? 'false' : undefined
-              )}
-              style=${height}
-              @keydown=${this.model === 'menu' ? undefined : this.handleKeydown}
-              @focusin=${this.handleFocus}
-            >
-              ${this.model === 'single-row'
-                ? html`
-                    <div role="row" aria-rowindex="1">${content}</div>
-                  `
-                : content}
-            </div>
-          `}
+                )}
+                aria-colcount=${ifDefined(
+                  grid
+                    ? this.model === 'single-row'
+                      ? this.items.length
+                      : 1
+                    : undefined
+                )}
+                aria-multiselectable=${ifDefined(
+                  grid && this.selectionMode === 'multiple' ? 'true' : undefined
+                )}
+                aria-busy=${ifDefined(
+                  this.model === 'feed' ? 'false' : undefined
+                )}
+                style=${height}
+                @keydown=${this.model === 'menu'
+                  ? undefined
+                  : this.handleKeydown}
+                @focusin=${this.handleFocus}
+              >
+                ${this.model === 'single-row'
+                  ? html`
+                      <div role="row" aria-rowindex="1">${content}</div>
+                    `
+                  : content}
+              </div>
+            `}
       <div class="status" role="status" aria-live="polite">
         ${this.selected.length ? `${this.selected.length} selected` : ''}
       </div>
