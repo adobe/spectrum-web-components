@@ -20,6 +20,7 @@
     - [The model originally recommended to RSP](#the-model-originally-recommended-to-rsp)
     - [APG layout grids](#apg-layout-grids)
     - [Expert cautions about layout grids](#expert-cautions-about-layout-grids)
+    - [Observations from Google Docs and Google Drive](#observations-from-google-docs-and-google-drive)
 - [Possible semantics and interaction models](#possible-semantics-and-interaction-models)
 - [Requirements shared by all solutions](#requirements-shared-by-all-solutions)
     - [Reachability, selection, and activation](#reachability-selection-and-activation)
@@ -60,7 +61,7 @@ Screen reader browse commands are not a sufficient substitute for an understanda
 
 RSP reportedly supplies `aria-rowcount` on the grid and `aria-rowindex` on each row, but testers do not consistently hear the current position and total, such as "3 of 10." Without that feedback, a jump over another item may not be apparent.
 
-The discussion also reports changing row-count announcements in some browser/screen reader combinations. Devon reports that the row-count attribute remains consistent and that he cannot reproduce the problem in Safari. Attribute values, accessibility-tree exposure, and spoken output must be checked separately before assigning a cause.
+The discussion reports changing row-count announcements in some browser/screen reader combinations, alongside reports that the row-count attribute remains consistent and that the problem was not reproduced in Safari. Attribute values, accessibility-tree exposure, and spoken output must be checked separately before assigning a cause.
 
 Neither grid attributes nor list position attributes guarantee a particular spoken phrase. Increasing verbosity or using different screen reader commands may help some combinations, but should not be assumed to resolve the default experience.
 
@@ -104,9 +105,9 @@ Its keyboard recommendations deliberately combine sequential and spatial navigat
 | <kbd>Tab</kbd> / <kbd>Shift</kbd> + <kbd>Tab</kbd> | Move through interactive descendants of the focused card. |
 | <kbd>Space</kbd> | Toggle card selection, or activate the focused child control without also toggling card selection. |
 
-Devon describes RSP's implemented tab behavior as moving into the focused card's children, through those children, and then out of the collection. The spec also includes an unusual instruction to make all card containers tabbable when no item has focus; resolve that detail explicitly in a new prototype rather than copying it as a single-tab-stop rule.
+The supplied discussion describes RSP's implemented tab behavior as moving into the focused card's children, through those children, and then out of the collection. The spec also includes an unusual instruction to make all card containers tabbable when no item has focus; resolve that detail explicitly in a new prototype rather than copying it as a single-tab-stop rule.
 
-The spec does not guarantee spoken "x of y" feedback. It includes a historical note that the v2 implementation does not fully conform. In the supplied discussion, Devon acknowledges that spatial left/right navigation in waterfall differs from the specified sequential behavior.
+The spec does not guarantee spoken "x of y" feedback. It includes a historical note that the v2 implementation does not fully conform. The supplied discussion identifies spatial left/right navigation in waterfall as differing from the specified sequential behavior.
 
 ### APG layout grids
 
@@ -125,6 +126,15 @@ These examples include discoverability aids for arrow navigation. They also expl
 [Adrian Roselli's critique](https://adrianroselli.com/2020/07/aria-grid-as-an-anti-pattern.html) cautions against using grid solely to reduce tab stops or match visual layout. Changing expected keyboard behavior can confuse users, particularly keyboard users who do not receive a screen reader's role announcement. Native lists, tables, skip links, and disclosure patterns may solve the underlying problem more simply.
 
 These positions differ from the APG's endorsement of layout grids. The decision needs user evidence, not an assumption that either valid grid markup or native HTML automatically solves every requirement.
+
+### Observations from Google Docs and Google Drive
+
+The supplied observations provide two comparisons for the card view prototypes:
+
+- **Google Docs:** The observed implementation uses a listbox with interactive children. An axe DevTools scan flags this implementation as an accessibility error. This is not evidence that independently interactive children are supported within listbox options.
+- **Google Drive:** The observed implementation uses a grid with a single semantic row. An axe DevTools scan does not flag this pattern as an error. This provides a comparison for option 5's single-row grid model.
+
+These are reported observations, not independently reproduced findings. Automated scans do not establish whether users can reliably navigate, select items, understand their position, or reach child controls. Neither an existing product implementation nor the absence of an axe DevTools error replaces keyboard and screen reader testing.
 
 ## Possible semantics and interaction models
 
