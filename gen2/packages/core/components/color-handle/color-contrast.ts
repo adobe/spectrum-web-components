@@ -100,8 +100,9 @@ export function findMinAlpha(
 function parseToRgb255(color: string): Rgb | null {
   try {
     const [r, g, b] = new Color(color).to('srgb').coords;
-    const clamp = (c: number): number =>
-      Math.max(0, Math.min(255, Math.round(c * 255)));
+    // colorjs.io represents `none` coordinates as `null`.
+    const clamp = (c: number | null): number =>
+      Math.max(0, Math.min(255, Math.round((c ?? 0) * 255)));
     return [clamp(r), clamp(g), clamp(b)];
   } catch {
     return null;

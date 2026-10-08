@@ -31,12 +31,12 @@
     "test:watch": "vitest --watch"
   },
   "dependencies": {
-    "@adobe/spectrum-tokens": "15.2.0",
-    "prettier": "3.8.1",
-    "yargs": "18.0.0"
+    "@adobe/spectrum-tokens": "15.5.0",
+    "prettier": "3.9.9",
+    "yargs": "18.2.0"
   },
   "devDependencies": {
-    "vitest": "4.1.7"
+    "vitest": "5.0.3"
   },
   "keywords": [
     "design-system",
