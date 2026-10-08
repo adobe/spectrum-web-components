@@ -29,6 +29,9 @@
  *   node .ai/scripts/sync.js          Write generated files (`yarn ai:sync`)
  *   node .ai/scripts/sync.js --check  Report drift without writing; exits 1 on drift.
  *                                     Checks only git-tracked sources and generated files.
+ *
+ * Both modes fail when the catalog markers in .ai/README.md are missing, duplicated, or out
+ * of order, so a damaged marker can't silently turn off the catalog check.
  */
 
 import {
@@ -50,6 +53,7 @@ import {
   AI_DIR,
   GENERATED_MARKER,
   isTracked,
+  isVisible,
   listInstructionSources,
   listSkills,
   rel,
@@ -153,16 +157,41 @@ function renderCatalog(sources, skills) {
   return lines.join('\n');
 }
 
+const count = (text, needle) => text.split(needle).length - 1;
+
+/**
+ * Locate the generated catalog block in README text. Returns `{ start, end }`, where `end`
+ * is the index just past the end marker, or `{ error }` unless each marker appears exactly
+ * once with the start marker first.
+ */
+export function findCatalogBlock(text) {
+  const starts = count(text, CATALOG_START);
+  const ends = count(text, CATALOG_END);
+  if (starts !== 1 || ends !== 1) {
+    return {
+      error: `expected one ${CATALOG_START} and one ${CATALOG_END}, found ${starts} and ${ends}`,
+    };
+  }
+  const start = text.indexOf(CATALOG_START);
+  const end = text.indexOf(CATALOG_END);
+  if (end < start) {
+    return { error: `${CATALOG_END} comes before ${CATALOG_START}` };
+  }
+  return { start, end: end + CATALOG_END.length };
+}
+
 /**
  * Compute every generated file and compare it with disk.
  * With `write: true`, update disk to match. Returns `{ errors, changes, fileCount }`.
+ * `readme` overrides the catalog file, for tests.
  */
-export async function syncAi({ write = false } = {}) {
+export async function syncAi({ write = false, readme = README } = {}) {
   const errors = [];
   const changes = [];
   // `--check` sees only tracked files, as CI does. Writing also covers untracked sources so
-  // a new rule generates before it's staged.
-  const inScope = (file) => write || isTracked(file);
+  // a new rule generates before it's staged, but never gitignored ones, which the git hooks
+  // can't see.
+  const inScope = write ? isVisible : isTracked;
   const sources = listInstructionSources().filter(
     (s) => inScope(s.file) && s.data && !s.error && Array.isArray(s.data.paths)
   );
@@ -175,20 +204,24 @@ export async function syncAi({ write = false } = {}) {
     }
   }
 
-  // The README catalog is generated only once the markers exist.
-  if (existsSync(README)) {
-    const current = readFileSync(README, 'utf8');
-    const start = current.indexOf(CATALOG_START);
-    const end = current.indexOf(CATALOG_END);
-    if (start !== -1 && end > start) {
+  if (!existsSync(readme)) {
+    errors.push(`${rel(readme)}: missing, so the catalog can't be checked`);
+  } else {
+    const current = readFileSync(readme, 'utf8');
+    const block = findCatalogBlock(current);
+    if (block.error) {
+      errors.push(
+        `${rel(readme)}: ${block.error}. Restore the catalog markers, then run \`yarn ai:sync\``
+      );
+    } else {
       const skills = listSkills().filter(
         (s) => inScope(s.file) && s.data && !s.error
       );
       const replaced =
-        current.slice(0, start) +
+        current.slice(0, block.start) +
         renderCatalog(sources, skills) +
-        current.slice(end + CATALOG_END.length);
-      expected.set(README, await formatMarkdown(replaced, README));
+        current.slice(block.end);
+      expected.set(readme, await formatMarkdown(replaced, readme));
     }
   }
 
@@ -262,6 +295,10 @@ if (isMain) {
     console.warn(`✔ ${fileCount} generated file(s) up to date`);
   } else {
     changes.forEach((c) => console.warn(`updated ${c}`));
+    if (errors.length) {
+      errors.forEach((error) => console.error(`✖ ${error}`));
+      process.exit(1);
+    }
     console.warn(
       `✔ ${fileCount} generated file(s) in sync (${changes.length} change(s))`
     );

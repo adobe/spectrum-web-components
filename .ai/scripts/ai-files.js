@@ -186,6 +186,25 @@ export function isTracked(file) {
   return trackedSetCache.has(rel(file));
 }
 
+let visibleSetCache = null;
+
+/**
+ * True when the absolute path `file` is tracked or untracked but not ignored by git. These
+ * are the files the git hooks see, so gitignored local files never reach generated output.
+ */
+export function isVisible(file) {
+  visibleSetCache ??= new Set(
+    execFileSync(
+      'git',
+      ['ls-files', '-z', '--cached', '--others', '--exclude-standard'],
+      { cwd: ROOT, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 }
+    )
+      .split('\0')
+      .filter(Boolean)
+  );
+  return visibleSetCache.has(rel(file));
+}
+
 /**
  * Absolute paths of tracked files that pass `filter` (given the repository-relative path)
  * and still exist on disk, so a deletion that isn't staged yet is skipped.
