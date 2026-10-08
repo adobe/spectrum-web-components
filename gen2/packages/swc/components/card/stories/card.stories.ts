@@ -27,6 +27,7 @@ import {
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 import '@adobe/spectrum-wc/components/card/swc-card.js';
+import '@adobe/spectrum-wc/components/user-card/swc-user-card.js';
 import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 import '@adobe/spectrum-wc-icons/swc-icon-more.js';
 import '../../status-light/swc-status-light';
@@ -59,9 +60,7 @@ argTypes.size = {
 
 /**
  * A `<swc-card>` is a flexible container that groups a preview image,
- * title, description, actions, and footer content. Its regular, collection,
- * and gallery layouts are driven entirely by which slots are populated, with
- * no explicit layout attribute.
+ * title, description, actions, and optional footer. Different card presentations are driven entirely by which slots are populated, with no explicit layout attribute.
  */
 const meta: Meta = {
   title: 'Card',
@@ -603,6 +602,34 @@ export const Selectable: Story = {
   `,
   tags: ['behaviors'],
 };
+
+export const UserCard: Story = {
+  render: () => html`
+    <swc-user-card>
+      <swc-asset slot="preview" src="./images/card-preview.jpg" decorative>
+        <img src="./images/card-preview.jpg" alt="" />
+      </swc-asset>
+      <swc-avatar
+        slot="avatar"
+        src="./images/avatar-preview.png"
+        alt=""
+        decorative
+      ></swc-avatar>
+      <span slot="title">Jane Doe</span>
+      <span slot="description">
+        Art Director at Luma Creative Studios. Visual storyteller and coffee
+        enthusiast.
+      </span>
+      <span slot="footer">
+        <swc-status-light variant="positive" size="s">
+          Available
+        </swc-status-light>
+      </span>
+    </swc-user-card>
+  `,
+  tags: ['behaviors'],
+};
+UserCard.storyName = 'User card';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

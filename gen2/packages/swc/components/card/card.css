@@ -206,3 +206,74 @@
     display: none;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   QUIET VARIANT
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host([variant="quiet"]) {
+  --swc-card-base-background-color: transparent;
+  --swc-card-base-box-shadow: none;
+
+  .swc-CardBase-content,
+  .swc-CardBase-footer {
+    padding-inline: 0;
+  }
+
+  .swc-CardBase-footer {
+    padding-block-end: 0;
+  }
+
+  .swc-CardBase-media {
+    border-radius: var(--_swc-card-base-border-radius);
+    box-shadow: var(--_swc-card-base-box-shadow);
+    transition-timing-function: var(--_swc-card-base-transition-timing-function);
+    transition-duration: var(--_swc-card-base-transition-duration);
+    transition-property: outline, box-shadow;
+  }
+}
+
+:host([variant="quiet"]:not(:has([slot="footer"]))) .swc-CardBase-content {
+  padding-block-end: 0;
+}
+
+/* Chromium :host(:has()) support */
+@scope (:host([variant="quiet"])) {
+  :scope:not(:has([slot="footer"])) .swc-CardBase-content {
+    padding-block-end: 0;
+  }
+}
+
+:host([selectable][variant="quiet"]:focus-visible) {
+  outline: none;
+}
+
+:host([selectable][variant="quiet"]:focus-visible) .swc-CardBase-media {
+  position: relative;
+  outline: var(--_swc-card-base-selected-focus-outline);
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: var(--_swc-card-base-border-radius);
+    pointer-events: none;
+    outline: token("focus-indicator-thickness") solid token("transparent-white-600");
+    outline-offset: calc(token("focus-indicator-thickness") * -1);
+    content: "";
+  }
+}
+
+:host(:is([title-as-link], [selectable])[variant="quiet"]:is(:hover, :focus-visible)) .swc-CardBase-media {
+  box-shadow: token("drop-shadow-emphasized-hover");
+}
+
+@media (forced-colors: active) {
+  :host([variant="quiet"]) .swc-CardBase {
+    border: none;
+  }
+
+  :host([selectable][variant="quiet"]:focus-visible) .swc-CardBase-media {
+    outline-offset: 2px;
+  }
+}
