@@ -322,7 +322,7 @@ Planned rendering shape:
 
 - [ ] 1st-gen API surface documented
 - [ ] Dependencies identified
-- [ ] Breaking changes documented
+- [ ] Breaking changes and consumer migration paths documented
 - [ ] gen2 API decisions drafted
 - [ ] Plan reviewed by at least one other engineer
 
