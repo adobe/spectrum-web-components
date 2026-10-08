@@ -240,6 +240,19 @@
   color: token("gray-600");
 }
 
+/* A slotted `<pre>` (e.g. a pasted code sample) gets monospace/code
+   treatment automatically, same as `.swc-Body`/`.swc-Detail` above apply to
+   plain text. Code never wraps; lines longer than the panel scroll
+   horizontally instead, same as a normal code block. */
+.swc-ResponseStatusStep-detail ::slotted(pre) {
+  margin: 0;
+  font-family: var(--swc-monospace-font-family, token("code-font"));
+  font-size: var(--swc-monospace-font-size, token("code-size-s"));
+  line-height: var(--swc-monospace-line-height, token("line-height-font-size-100"));
+  white-space: pre;
+  overflow-x: auto;
+}
+
 /* Per-step disclosure (mirrors the header row + panel mechanics in
    `response-status.css`'s `.swc-ResponseStatus-panel`) */
 
@@ -318,7 +331,7 @@
   box-sizing: content-box;
   inline-size: fit-content;
   max-block-size: var(--swc-response-status-step-detail-max-block-size, 120px);
-  padding-inline-end: token("spacing-700");
+  padding-inline-end: token("spacing-500");
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-color: token("gray-500") transparent;

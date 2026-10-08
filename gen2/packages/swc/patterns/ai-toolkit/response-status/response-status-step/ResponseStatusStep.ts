@@ -50,6 +50,8 @@ export type ResponseStatusStepStatus =
  * `status="active"`.
  * @slot description - Step detail shown in the expanded timeline. Falls back
  * to bare/unslotted children when no `slot="description"` element is present.
+ * A `<pre>` inside this slot (e.g. a pasted code sample) automatically gets
+ * monospace styling; lines never wrap and scroll horizontally instead.
  * @fires swc-response-status-step-open-change - Internal signal consumed by
  * the parent to re-dispatch its public `swc-response-status-step-toggle`
  * event with an index; not intended for external use. Detail:

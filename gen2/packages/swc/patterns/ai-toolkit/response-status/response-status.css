@@ -236,7 +236,7 @@
 
 .swc-ResponseStatus--agentic {
   inline-size: 100%;
-  max-inline-size: clamp(65%, calc(168px + 47.5%), 100%);
+  max-inline-size: clamp(65%, calc(168px + 47.5%), 90%);
 }
 
 .swc-ResponseStatus-row--processing {
