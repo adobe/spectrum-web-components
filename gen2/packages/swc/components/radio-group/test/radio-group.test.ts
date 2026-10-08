@@ -487,6 +487,127 @@ export const InvalidFormSubmissionTest: Story = {
   },
 };
 
+const preventDefault = (event: Event): void => event.preventDefault();
+
+const reportFormValidity = (event: Event): void => {
+  (event.target as HTMLElement).closest('form')?.reportValidity();
+};
+
+export const InvalidSubmitFocusTest: Story = {
+  render: () => html`
+    <form @submit=${preventDefault}>
+      <button type="button" id="before">Before</button>
+      <swc-radio-group name="shipping" required>
+        <span slot="label">Shipping</span>
+        <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+        <swc-radio value="standard">
+          <span slot="label">Standard</span>
+        </swc-radio>
+      </swc-radio-group>
+      <button type="submit" id="submit">Submit</button>
+    </form>
+  `,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const form = canvasElement.querySelector('form')!;
+    const before = canvasElement.querySelector<HTMLButtonElement>('#before')!;
+    const cancel = (event: Event): void => event.preventDefault();
+
+    before.focus();
+    group.addEventListener('invalid', cancel);
+    form.requestSubmit();
+    group.removeEventListener('invalid', cancel);
+    expect(document.activeElement, 'a canceled invalid event keeps focus').toBe(
+      before
+    );
+
+    form.requestSubmit();
+    expect(document.activeElement, 'the group host is the focus target').toBe(
+      group
+    );
+    expect(
+      group.shadowRoot?.activeElement,
+      'focus lands on the radiogroup element'
+    ).toBe(group.roleElement);
+
+    before.focus();
+    group.disabled = true;
+    await group.updateComplete;
+    group.focus();
+    expect(document.activeElement, 'a disabled group ignores focus()').toBe(
+      before
+    );
+  },
+};
+
+// With `novalidate` the browser skips validation on submit, so nothing blocks
+// the submit or moves focus; validity is only reported when called explicitly.
+export const InvalidSubmitNoValidateTest: Story = {
+  render: () => html`
+    <form novalidate @submit=${preventDefault} @reset=${preventDefault}>
+      <button type="button" id="before">Before</button>
+      <swc-radio-group name="shipping" required>
+        <span slot="label">Shipping</span>
+        <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+        <swc-radio value="standard">
+          <span slot="label">Standard</span>
+        </swc-radio>
+      </swc-radio-group>
+      <button type="submit" id="submit">Submit</button>
+      <button type="button" id="report" @click=${reportFormValidity}>
+        Report validity
+      </button>
+    </form>
+  `,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const form = canvasElement.querySelector('form')!;
+    const before = canvasElement.querySelector<HTMLButtonElement>('#before')!;
+    const submit = fn();
+    const invalid = fn();
+    form.addEventListener('submit', submit);
+    group.addEventListener('invalid', invalid);
+    try {
+      before.focus();
+      form.requestSubmit();
+      expect(submit, 'submit is not blocked').toHaveBeenCalledTimes(1);
+      expect(invalid, 'submit fires no invalid event').not.toHaveBeenCalled();
+      expect(document.activeElement, 'submit does not move focus').toBe(before);
+
+      expect(form.checkValidity()).toBe(false);
+      expect(invalid, 'checkValidity fires invalid').toHaveBeenCalledTimes(1);
+      expect(document.activeElement, 'checkValidity is silent').toBe(before);
+
+      const [invalidEvent] = invalid.mock.calls[0] as [Event];
+      expect(invalidEvent.target, 'invalid targets the host').toBe(group);
+      expect(group.matches(':invalid'), 'the host matches :invalid').toBe(true);
+      group.focus();
+      expect(document.activeElement, 'host.focus() reaches the wrapper').toBe(
+        group
+      );
+      expect(
+        group.shadowRoot?.activeElement,
+        'the inner wrapper has focus'
+      ).toBe(group.roleElement);
+      before.focus();
+
+      expect(form.reportValidity()).toBe(false);
+      expect(document.activeElement, 'reportValidity focuses the group').toBe(
+        group
+      );
+    } finally {
+      form.removeEventListener('submit', submit);
+      group.removeEventListener('invalid', invalid);
+    }
+  },
+};
+
 export const LateAddedSelectionTest: Story = {
   render: () => html`
     <swc-radio-group selected="2">

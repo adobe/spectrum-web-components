@@ -208,6 +208,14 @@ export abstract class RadioGroupBase extends SizedMixin(
     return this.fieldAssoc.reportValidity();
   }
 
+  /** Focuses the group (the validation anchor), so `:invalid` hosts are focusable. */
+  public override focus(options?: FocusOptions): void {
+    const target = this.roleElement;
+    if (!this.effectiveDisabled && target instanceof HTMLElement) {
+      target.focus(options);
+    }
+  }
+
   /** The initial selection (pre-checked item or `selected`), restored on form reset. */
   private defaultSelected = '';
 
@@ -483,10 +491,13 @@ export abstract class RadioGroupBase extends SizedMixin(
     // Constraint validity: a required group with nothing selected is
     // `valueMissing`; an invalid selection is `customError`. The message is
     // required by `setValidity` (it throws if empty); the UI is rendered elsewhere.
+    // The role element is the validation anchor, so a blocked submit focuses it.
     const valueMissing = this.required && !this.selected;
+    const anchor = this.roleElement;
     this.internals.setValidity(
       { valueMissing, customError: this.invalid },
-      valueMissing || this.invalid ? 'error' : ''
+      valueMissing || this.invalid ? 'error' : '',
+      anchor instanceof HTMLElement ? anchor : undefined
     );
     // Push the current selection into the form; exclude it when nothing is
     // selected or the group is disabled, matching an unchecked native radio set.

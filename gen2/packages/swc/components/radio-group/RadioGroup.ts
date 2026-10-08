@@ -86,6 +86,7 @@ export class RadioGroup extends RadioGroupBase {
       <div
         class="swc-FormField swc-RadioGroup"
         role="radiogroup"
+        tabindex="-1"
         aria-required=${this.required ? 'true' : 'false'}
         aria-invalid=${this.invalid ? 'true' : 'false'}
         aria-readonly=${this.readonly ? 'true' : 'false'}
