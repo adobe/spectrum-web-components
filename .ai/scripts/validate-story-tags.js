@@ -19,16 +19,16 @@
  * - Every tag value is in the known allowed set
  * - Every stories file has at least one `tags` declaration containing 'migrated'
  *
+ * Only git-tracked stories files are checked (staged new files count).
+ *
  * Usage:
  *   node .ai/scripts/validate-story-tags.js
  */
 
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(__dirname, '../..');
+import { ROOT as repoRoot, trackedFilesOnDisk } from './ai-files.js';
 
 // Tags defined in .ai/skills/stories-format/SKILL.md (Tags section)
 const ALLOWED_TAGS = new Set([
@@ -49,19 +49,12 @@ const ALLOWED_TAGS = new Set([
 ]);
 
 /**
- * Recursively find all *.stories.ts files under a directory.
+ * Every tracked *.stories.ts file under a repository-relative directory.
  */
 function findStoriesFiles(dir) {
-  const results = [];
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      results.push(...findStoriesFiles(full));
-    } else if (entry.isFile() && entry.name.endsWith('.stories.ts')) {
-      results.push(full);
-    }
-  }
-  return results;
+  return trackedFilesOnDisk(
+    (f) => f.startsWith(`${dir}/`) && f.endsWith('.stories.ts')
+  );
 }
 
 /**
@@ -139,13 +132,7 @@ function validateFile(filePath) {
  * Run validation across all stories files. Returns { errors, fileCount }.
  */
 export function validateStoryTags() {
-  const storiesRoot = path.join(repoRoot, 'gen2/packages/swc/components');
-
-  if (!fs.existsSync(storiesRoot)) {
-    return { errors: [], fileCount: 0 };
-  }
-
-  const files = findStoriesFiles(storiesRoot);
+  const files = findStoriesFiles('gen2/packages/swc/components');
   const errors = files.flatMap(validateFile);
 
   return { errors, fileCount: files.length };

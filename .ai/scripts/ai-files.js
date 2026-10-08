@@ -161,8 +161,12 @@ export function listSkills() {
 }
 
 let trackedCache = null;
+let trackedSetCache = null;
 
-/** Every file tracked by git, as repository-relative POSIX paths. */
+/**
+ * Every file tracked by git, as repository-relative POSIX paths. This reads the index, so
+ * staged new files count as tracked and untracked or ignored local files don't.
+ */
 export function trackedFiles() {
   if (!trackedCache) {
     trackedCache = execFileSync('git', ['ls-files', '-z'], {
@@ -175,6 +179,41 @@ export function trackedFiles() {
   }
   return trackedCache;
 }
+
+/** True when the absolute path `file` is tracked by git. */
+export function isTracked(file) {
+  trackedSetCache ??= new Set(trackedFiles());
+  return trackedSetCache.has(rel(file));
+}
+
+let visibleSetCache = null;
+
+/**
+ * True when the absolute path `file` is tracked or untracked but not ignored by git. These
+ * are the files the git hooks see, so gitignored local files never reach generated output.
+ */
+export function isVisible(file) {
+  visibleSetCache ??= new Set(
+    execFileSync(
+      'git',
+      ['ls-files', '-z', '--cached', '--others', '--exclude-standard'],
+      { cwd: ROOT, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 }
+    )
+      .split('\0')
+      .filter(Boolean)
+  );
+  return visibleSetCache.has(rel(file));
+}
+
+/**
+ * Absolute paths of tracked files that pass `filter` (given the repository-relative path)
+ * and still exist on disk, so a deletion that isn't staged yet is skipped.
+ */
+export const trackedFilesOnDisk = (filter) =>
+  trackedFiles()
+    .filter(filter)
+    .map((f) => path.join(ROOT, f))
+    .filter((f) => existsSync(f));
 
 if (typeof path.matchesGlob !== 'function') {
   console.error(
