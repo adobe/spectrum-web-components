@@ -87,6 +87,7 @@
     - [Field label migration roadmap](field-label/rendering-and-styling-migration-analysis.md)
 - Grid
     - [Grid accessibility migration analysis](grid/accessibility-migration-analysis.md)
+    - [Grid migration plan](grid/migration-plan.md)
     - [Grid migration roadmap](grid/rendering-and-styling-migration-analysis.md)
 - Help Text
     - [Help text migration roadmap](help-text/rendering-and-styling-migration-analysis.md)
