@@ -38,9 +38,11 @@
 
 |                |                                                                   |
 | -------------- | ----------------------------------------------------------------- |
-| **Status**     | Accepted: Phases 0–4 implemented (UI icons + public workflow icons) |
+| **Status**     | Accepted: Phases 0–4 implemented (UI icons + public workflow icons); UI icons since made deliverable (see amendment) |
 | **Scope**      | Spectrum 2 (S2) icon delivery for gen2 Spectrum Web Components |
 | **Supersedes** | 1st-gen `icon`, `iconset`, `icons`, `icons-workflow`, `icons-ui`  |
+
+> ⚠️ **Important:** Amendment (2026-09-10): UI icons are now **also deliverable**. Design asked that the UI icon set be usable directly by consumers, not only inside Spectrum controls. The `<swc-ui-icon>` element ships in `@adobe/spectrum-wc` and now has consumer documentation alongside workflow icons. This supersedes the "UI icons are internal / never imported" framing in sections 1, 3, and 4 below: UI icons remain the art Spectrum controls render internally, and are additionally published for direct consumer use. Their package home (swc), size-to-step behavior, and internal `TemplateResult` art are unchanged; only their audience widened.
 
 ## 1. Summary
 
@@ -114,28 +116,30 @@ language:
 - **Workflow icons are the public art you pick.** Star, folder, trash. You import a
   per-icon element (or its function) and drop it in. One drawing per icon, scaled
   to the size box.
-- **UI icons are the private art inside controls.** Chevrons, checkmarks, the arrow
-  in a picker. You never import them; the component renders them for you. Each
-  logical icon has several optically-tuned drawings, and the component picks the
-  right one for its size.
+- **UI icons are the functional art inside controls.** Chevrons, checkmarks, the
+  arrow in a picker. Spectrum components render them for you, and the set also
+  ships as `<swc-ui-icon>` so you can use the same art directly. Each logical icon
+  has several optically-tuned drawings, and the element picks the right one for its
+  size.
 - **`<swc-icon>` is the frame for your own SVG.** When you have a custom
   (non-Spectrum) icon, you slot your `<svg>` into `<swc-icon>` and it gets the same
   size box, color, and accessibility handling as a workflow icon.
 
-So a consumer only ever touches two public things: **workflow icons** and the
-**`<swc-icon>` frame**. UI icons stay behind the component boundary.
+So a consumer can reach for three public things: **workflow icons**, the
+**`<swc-icon>` frame**, and, when the Spectrum set already has the glyph,
+**UI icons**. Components still render UI icons for you; direct use is additive.
 
 |                             | Workflow icons                                                                           | UI icons                                                                                    | `<swc-icon>` frame                      |
 | --------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | --------------------------------------- |
 | **Purpose**                 | Icons consumers choose (star, folder, trash)                                             | Control internals (chevron, checkmark, picker arrow)                                        | Wrapper for a custom, non-Spectrum SVG  |
-| **Audience**                | Public                                                                                   | Internal (components only)                                                                  | Public                                  |
+| **Audience**                | Public                                                                                   | Public (control internals, also deliverable)                                                                  | Public                                  |
 | **Package home**            | `@adobe/spectrum-wc-icons` (icons)                                                       | `@adobe/spectrum-wc` (swc, `components/ui-icons/`)                                          | `@adobe/spectrum-wc` (swc)              |
 | **Art source**              | S2 Icon Global Set Open Source (413, no third-party/brand)                               | S2 UI Icon Global Set                                                                       | Consumer-supplied SVG                   |
-| **Ships as**                | Per-icon element (`<swc-icon-star>`) **and** per-icon SVG-string function (`Icon_Star()`) | Internal `<swc-ui-icon>` element (Lit `TemplateResult`), rendered by components; not public | One generic element                     |
+| **Ships as**                | Per-icon element (`<swc-icon-star>`) **and** per-icon SVG-string function (`Icon_Star()`) | `<swc-ui-icon>` element (Lit `TemplateResult` art), rendered by components and available to consumers | One generic element                     |
 | **Sizing**                  | One asset scaled to a token box; `size` sets the box, CSS resize is safe                 | Discrete optical assets; `size` **selects** the step, do not CSS-resize                     | `size` sets the box; slotted art scales |
-| **Baseline styling**        | In the element's shadow CSS; the function alone is raw SVG                               | Shared via `IconBase` (the internal element)                                                | In the element's shadow CSS             |
+| **Baseline styling**        | In the element's shadow CSS; the function alone is raw SVG                               | Shared via `IconBase` (the UI icon element)                                                | In the element's shadow CSS             |
 | **A11y owner**              | Host element (`accessibleLabel` → `role="img"`; empty → decorative)                      | Consuming component                                                                         | Host element                            |
-| **Consumer Lit dependency** | None (element and function are both Lit-free)                                            | N/A (internal element; Lit `TemplateResult`)                                                | None                                    |
+| **Consumer Lit dependency** | None (element and function are both Lit-free)                                            | None (element is Lit-free to consume)                                                | None                                    |
 
 Sections 5–7 detail each; the table above is the one-screen summary.
 
@@ -311,7 +315,7 @@ export class Icon extends IconBase {
   static styles = [iconBaseCss]; // shared _lit-styles/icon-base.css
   render() {
     return html`
-      <span class="swc-Icon"><slot></slot></span>
+      <slot></slot>
     `;
   }
 }
@@ -339,7 +343,7 @@ export class IconStar extends IconBase {
   static styles = [iconBaseCss];
   render() {
     return html`
-      <span class="swc-Icon">${unsafeSVG(Icon_Star())}</span>
+      ${unsafeSVG(Icon_Star())}
     `; // baked in
   }
 }
@@ -364,7 +368,7 @@ export class UiIcon extends IconBase {
   render() {
     // size selects the optical step; icon selects the set.
     return html`
-      <span class="swc-Icon">${UI_ICONS[this.icon][uiStepFor(this.size)]}</span>
+      ${UI_ICONS[this.icon][uiStepFor(this.size)]}
     `;
   }
 }
@@ -385,6 +389,8 @@ render() {
 > **Implemented.** `IconBase` carries `accessibleLabel` + host-owned a11y (no
 > `render()`, no CSS); the `<swc-icon>` frame and `<swc-ui-icon>` both extend it and
 > both use the shared `stylesheets/_lit-styles/icon-base.css` (identical box styling).
+> The per-icon workflow elements use a generated copy of the same file (see
+> [section 8](#8-source-and-processing)).
 > As part of this the frame's a11y moved from the slotted SVG to the host.
 
 ## 7. Sizing
@@ -442,9 +448,9 @@ can be committed and shipped.
 
 1. **Manual A4U download** (the only human step; no committed code points at the
    gated registry).
-2. **Add the raw SVGs** to a source folder at the swc package root
-   (`icon-source/ui/`; `icon-source/workflow/` for the workflow family). The source
-   folders are git-ignored, so the raw SVGs are transient inputs, not committed.
+2. **Add the raw SVGs** to the family's `icon-source/` folder, which sits next to
+   the family's generator and output (see **Layout**). The raw SVGs are git-ignored,
+   so they are transient inputs, not committed.
 3. **Generator** converts the downloaded SVGs per family: workflow into SVG-string
    functions plus public per-icon elements; UI into Lit `html` `TemplateResult`
    bundles under `components/ui-icons/icon-set/`, consumed by the internal
@@ -454,19 +460,39 @@ can be committed and shipped.
    `var(--iconPrimary, …)` fill to `var(--swc-icon-color, currentColor)`. Files are
    grouped by the logical name parsed from the A4U filename
    `S2_Icon_UI<Name>_Size<step>_N.svg`, keyed by numeral step.
-4. **Record pulled A4U versions** in `icon-source/icon-source.json` (not in
-   `package.json` dependencies).
+4. **Record pulled A4U versions** in the family's `icon-source/icon-source.json`
+   (not in `package.json` dependencies).
 5. **Commit the generated output and metadata**; the raw SVGs stay git-ignored.
    External contributors and public CI build only from the committed art and never
    need A4U access.
 
-**Layout.** UI source SVGs live at `gen2/packages/swc/icon-source/ui/`, with
-`icon-source.json` alongside them in `icon-source/`. The generated bundles and the
-`<swc-ui-icon>` element live at `gen2/packages/swc/components/ui-icons/` (generated
-art in its `icon-set/` subfolder), imported relatively by swc components rather than
-through a public subpath. A dev-only
-Storybook gallery (Internal → UI icons) previews the available icons and their
-optical sizes; internal stories are excluded from the production build.
+**Layout.** Each family's source, generator, and output live together, in the
+directory that owns the output. Both generators run from the repo root or their own
+package.
+
+| Family   | Source SVGs + `icon-source.json`                     | Generator                                                          | Output                                      | Command                        |
+| -------- | ---------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------- | ------------------------------ |
+| UI       | `gen2/packages/swc/components/ui-icons/icon-source/` | `gen2/packages/swc/components/ui-icons/scripts/generate-ui-icons.mjs` | `components/ui-icons/icon-set/` (swc)       | `yarn generate:ui-icons`       |
+| Workflow | `gen2/packages/icons/icon-source/`                   | `gen2/packages/icons/scripts/generate-workflow-icons.mjs`         | `src/` (`@adobe/spectrum-wc-icons`)         | `yarn generate:workflow-icons` |
+
+The family-agnostic helpers (SVG cleanup, fill rewrite, kebab-casing, license and
+banner) live in `gen2/packages/core/tools/icons/`. Both swc and the icons package
+already depend on core, so core is the one place both generators can share. The
+`tools/` folder is build-time only: core's build and `files` exclude it, so it is
+never published. The `<swc-ui-icon>` element lives beside its art in
+`components/ui-icons/`, imported relatively by swc components rather than through a
+public subpath. A dev-only Storybook gallery (Internal → UI icons) previews the
+available icons and their optical sizes; internal stories are excluded from the
+production build.
+
+**Shared stylesheet copy.** The icon box styles live once, in
+`gen2/packages/swc/stylesheets/_lit-styles/icon-base.css`, shared by the
+`<swc-icon>` frame and `<swc-ui-icon>`. The icons package depends only on core, so
+it cannot import that file; instead `yarn generate:icon-styles` writes a verbatim
+copy to `gen2/packages/icons/src/stylesheets/icon-base.css` with a generated banner
+naming the source and the command. The workflow generator re-runs the copy, and the
+icons package build runs `yarn check:icon-styles` first, failing if the copy has
+drifted from the source.
 
 **Styling (function vs element):** the SVG-string function returns markup only; it
 carries no stylesheet. The baseline display and sizing rules that live in today's
@@ -497,7 +523,8 @@ automation lives on the Adobe side.
 ## 9. Phases of work
 
 Sequenced UI-first. Phase 0 extracts the family-agnostic utilities (SVG cleanup, fill
-rewrite, kebab-casing, license and banner) into `icon-source/utils/`, so the workflow
+rewrite, kebab-casing, license and banner) into shared helpers (originally
+`swc/icon-source/utils/`, since moved to `core/tools/icons/`), so the workflow
 generator reuses them; each family keeps its own generator because their outputs differ
 (UI emits Lit `TemplateResult` bundles, workflow emits SVG-string functions and elements).
 
@@ -510,13 +537,13 @@ slots are verified in Phase 7 against workflow icons and custom SVGs.
 
 | Phase                             | Deliverable                                                                                                                                                                                                                                                                   | Exit                                                                                                                            |
 | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| **0. UI icons, internal (foundation)** | Manual UI download + generated icon-set + `icon-source.json`; UI generator plus shared utilities in `icon-source/utils/`; UI art as Lit `TemplateResult`s and the internal `<swc-ui-icon>` element (size-to-step selection); one migrated component (Accordion) converted as a proof of concept. | `<swc-ui-icon>` renders the UI set at the right optical step and a migrated component (Accordion) consumes it, off the 1st-gen packages, with no `unsafeSVG`. |
+| **0. UI icons, internal (foundation)** | Manual UI download + generated icon-set + `icon-source.json`; UI generator plus shared helpers; UI art as Lit `TemplateResult`s and the internal `<swc-ui-icon>` element (size-to-step selection); one migrated component (Accordion) converted as a proof of concept. | `<swc-ui-icon>` renders the UI set at the right optical step and a migrated component (Accordion) consumes it, off the 1st-gen packages, with no `unsafeSVG`. |
 | **1. Repoint components** | Repoint every remaining migrated component that renders a UI icon internally (pickers, menus, accordions, and similar) from the 1st-gen icon packages to `<swc-ui-icon>`. | No migrated component depends on the 1st-gen icon packages for UI icons, and no `unsafeSVG` remains in component code. |
-| **2. Workflow-readiness gate**    | Confirm the shared `icon-source/utils/` utilities, source layout, metadata, and refresh already support a second family and a public-element output mode.                                                                                                                                          | Adding workflow is additive, not a rewrite.                                                                                     |
-| **3. Workflow icons, public**     | Manual workflow download; the `IconBase` + generic `<swc-icon>`; per-icon workflow functions and elements, reusing the shared `icon-source/utils/` utilities.                                                                                                                                        | A workflow icon works as element and function in HTML and a non-Lit framework.                                                  |
+| **2. Workflow-readiness gate**    | Confirm the shared helpers, source layout, metadata, and refresh already support a second family and a public-element output mode.                                                                                                                                          | Adding workflow is additive, not a rewrite.                                                                                     |
+| **3. Workflow icons, public**     | Manual workflow download; the `IconBase` + generic `<swc-icon>`; per-icon workflow functions and elements, reusing the shared helpers.                                                                                                                                        | A workflow icon works as element and function in HTML and a non-Lit framework.                                                  |
 | **4. Packaging and tree-shaking** | Published shapes: the `<swc-icon>` frame in swc, and the per-icon workflow elements and functions in the dedicated **icons** package; per-icon subpath exports for element and function; swc devDepends on the icons package for stories; optional additive Lit entry points. | A 3-icon sample bundle ships only those 3.                                                                                      |
 | **5. Refresh automation**         | Scripted post-download refresh for both families; optional internal scheduled-CI PR.                                                                                                                                                                                          | One documented command refreshes a family (after the manual download).                                                          |
-| **6. Documentation**              | Per-framework usage, the custom-icon SVG contract, and a 1st-gen migration note (including UI icons now internal).                                                                                                                                                            | A developer on any framework can add a workflow icon and a custom icon from the docs.                                           |
+| **6. Documentation**              | Per-family usage (workflow and UI), the custom-icon SVG contract for `<swc-icon>`, and a 1st-gen migration note. UI icons documented as deliverable alongside workflow icons (design pivot; see amendment).                                                                     | A developer on any framework can add a workflow icon, a UI icon, and a custom SVG icon from the docs.                          |
 | **7. Verification and rollout**   | React/Vue/vanilla samples and VRT (including internal UI icons across sizes).                                                                                                                                                                                                 | Samples pass; 1st-gen icon packages deprecated with a pointer to the replacement.                                               |
 
 ## 10. Alternatives considered
@@ -539,6 +566,13 @@ slots are verified in Phase 7 against workflow icons and custom SVGs.
 
 ### Resolved
 
+- **UI icon audience (amended 2026-09-10):** UI icons are now **deliverable**, not
+  internal-only. Design asked that the UI set be usable directly by consumers, so
+  `<swc-ui-icon>` is documented alongside workflow icons and shipped from swc.
+  Everything else about UI icons is unchanged: they still live in swc, still render
+  from `TemplateResult` art, and Spectrum controls still render them internally.
+  Direct consumer use is additive. This resolves the original "two audiences"
+  decision (section 3, decision 1) toward a wider audience for UI icons.
 - **A4U as a dependency:** none. The A4U packages are private and this repo is open
   source, so there is no concept of an A4U dependency here; only the generated art and
   metadata live in the repo.

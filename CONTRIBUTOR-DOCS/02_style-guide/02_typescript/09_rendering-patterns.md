@@ -70,9 +70,14 @@ export class Asset extends AssetBase {
 - Fragment has no parameters
 
 ```ts
-// ✅ Good — complex fragment with parameters
-const icon = (name: string): TemplateResult => html`
-  <svg class="swc-Icon" aria-label=${name}>...</svg>
+// ✅ Good — repeated fragment with parameters (Meter's label and description regions)
+const slotRegion = (
+  id: string,
+  name: 'label' | 'description'
+): TemplateResult => html`
+  <span id=${id} class="swc-LinearProgress-${name}">
+    <slot name=${name}></slot>
+  </span>
 `;
 
 // ❌ Bad — simple fragment that could be inline
@@ -146,7 +151,7 @@ protected override render(): TemplateResult {
 Three kinds of option. Each consumer supplies only the ones it needs:
 
 | Kind | Example | Purpose |
-|---|---|---|
+| --- | --- | --- |
 | Static value | `cardClass: string` | Data the template needs to compute a class name or attribute; supplied by every consumer |
 | Optional render callback | `renderGlyph?: () => TemplateResult \| typeof nothing` | A region only some consumers use; defaults to `() => nothing` so the template doesn't have to branch on whether it was passed |
 | Event handler pass-through | `onDefaultSlotChange?: (event: Event) => void` | Wires up an event listener in the shared markup while the handler logic and state (a controller, a property) stay owned by the calling component |
@@ -255,12 +260,21 @@ const icon = (label: string): TemplateResult => html`
 
 **When to use `aria-hidden`:**
 
-If the SVG is purely decorative and provides no additional meaning (e.g., an icon next to visible text), use `aria-hidden="true"` instead:
+If the SVG is purely decorative and provides no additional meaning (for example, a graphic whose state is already exposed through ARIA on the host), use `aria-hidden="true"` instead. Progress circle draws its ring as an SVG, while the host carries `role="progressbar"` and `aria-valuenow`:
 
 ```ts
-const decorativeIcon = (): TemplateResult => html`
-  <svg class="swc-Icon" aria-hidden="true" viewBox="0 0 24 24">
-    <!-- SVG paths -->
+const progressRing = (radius: string, dashOffset?: number): TemplateResult => html`
+  <svg aria-hidden="true" fill="none" width="100%" height="100%">
+    <circle class="swc-ProgressCircle-track" cx="50%" cy="50%" r=${radius} />
+    <circle
+      class="swc-ProgressCircle-fill"
+      cx="50%"
+      cy="50%"
+      r=${radius}
+      pathLength="100"
+      stroke-dasharray="100 200"
+      stroke-dashoffset=${ifDefined(dashOffset)}
+    />
   </svg>
 `;
 ```
@@ -289,7 +303,7 @@ class=${classMap({
 **Key patterns:**
 
 | Pattern | Example | Use case |
-|---------|---------|----------|
+| --------- | --------- | ---------- |
 | Static class | `['swc-Badge']: true` | Always present |
 | Size modifier | `` [`swc-Badge--size${this.size?.toUpperCase()}`]: this.size != null `` | Size-based styling |
 | Variant modifier | `` [`swc-Badge--${this.variant}`]: this.variant != null `` | Variant-based styling |
@@ -373,6 +387,7 @@ style=${styleMap({
 //    a custom property that the stylesheet consumes explicitly.
 style="background: ${this.color}"
 ```
+
 ## Shadow root customization
 
 To customize shadow root options (e.g., enabling `delegatesFocus`), always use the static `shadowRootOptions` property. **Never override `createRenderRoot()`** to set shadow root options.

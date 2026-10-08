@@ -77,6 +77,19 @@
     "valuenow",
     "valuetext"
   ],
+
+  // ────────────────────────────────────────────────────────────
+  // COPILOT CHAT (local agent; Copilot CLI sessions ignore these)
+  // .github/instructions is generated from .ai/rules; skip .claude/rules
+  // so the same rules don't load twice.
+  // ────────────────────────────────────────────────────────────
+  "chat.instructionsFilesLocations": {
+    ".claude/rules": false,
+    ".github/instructions": true,
+    "~/.claude/rules": true,
+    "~/.copilot/instructions": true
+  },
+  "chat.useNestedAgentsMdFiles": true,
   "css.validate": false,
   "editor.insertSpaces": true,
   "editor.tabSize": 2,

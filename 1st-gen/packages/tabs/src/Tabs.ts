@@ -216,6 +216,8 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
       return firstFocusableElement ? focusInIndex : -1;
     },
     direction: () => 'both',
+    // Matches `[direction^="vertical"]`, which renders the tab list as a column.
+    mirrorHorizontalInRTL: () => !this.direction.startsWith('vertical'),
     elementEnterAction: (el) => {
       if (!this.auto) {
         return;

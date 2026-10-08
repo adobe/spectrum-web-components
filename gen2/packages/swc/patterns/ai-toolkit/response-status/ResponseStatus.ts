@@ -67,7 +67,7 @@ export type ResponseStatusStatus = (typeof RESPONSE_STATUSES)[number];
  * Detail: `{ open: boolean }`
  * @fires swc-response-status-step-toggle - Dispatched when the user expands or collapses
  * a step's description. Detail: `{ open: boolean, index: number }`
- * @cssprop --swc-response-status-label-max-lines - Maximum number of lines the settled header label wraps to before ellipsing. Defaults to 2.
+ * @cssprop --swc-response-status-label-max-lines - Maximum number of lines for a settled header label. Defaults to 2 when active or stopped; completed labels show in full unless a cap is set.
  * @since 2.0.0-beta.3
  */
 export class ResponseStatus extends SpectrumElement {
@@ -95,6 +95,9 @@ export class ResponseStatus extends SpectrumElement {
    * transition to finish before settling. Keep in sync with the CSS.
    */
   private static readonly LABEL_ROLL_DURATION_MS = 350;
+
+  /** How long the loader holds its static frame before it starts animating. */
+  private static readonly LOADER_START_DELAY_MS = 300;
 
   private readonly panelId = uniqueId('swc-response-status-panel');
 
@@ -135,6 +138,16 @@ export class ResponseStatus extends SpectrumElement {
 
   @state()
   private _rollEngaged = false;
+
+  // Holds the loader on its settled frame briefly when `status` becomes
+  // `active`, so it visibly starts static before animating instead of
+  // snapping straight into motion.
+  @state()
+  private _loaderPaused = false;
+
+  private _loaderStartRaf: number | null = null;
+
+  private _loaderStartTimer: number | null = null;
 
   /** Whole response lifecycle status. */
   @property({ type: String, reflect: true })
@@ -206,12 +219,25 @@ export class ResponseStatus extends SpectrumElement {
     this._syncStepsMeta();
   }
 
-  protected override willUpdate(_changed: PropertyValues<this>): void {
+  protected override willUpdate(changed: PropertyValues<this>): void {
     this._applyLabelRoll();
+
+    // Restart the "hold on the settled frame, then animate" beat whenever
+    // `status` or `loader` changes while active (e.g. swapping presets/icons
+    // live in Storybook controls), so the paused-first frame reads correctly
+    // every time, not just on initial load.
+    if (
+      this._resolvedStatus === 'active' &&
+      (changed.has('status') || changed.has('loader'))
+    ) {
+      this._loaderPaused = true;
+      this._engageLoader();
+    }
   }
 
   public override disconnectedCallback(): void {
     this._clearLabelRollTimers();
+    this._clearLoaderStartRaf();
     super.disconnectedCallback();
   }
 
@@ -416,6 +442,32 @@ export class ResponseStatus extends SpectrumElement {
     }
   }
 
+  private _clearLoaderStartRaf(): void {
+    if (this._loaderStartRaf !== null) {
+      window.cancelAnimationFrame(this._loaderStartRaf);
+      this._loaderStartRaf = null;
+    }
+    if (this._loaderStartTimer !== null) {
+      window.clearTimeout(this._loaderStartTimer);
+      this._loaderStartTimer = null;
+    }
+    this._loaderPaused = false;
+  }
+
+  private _engageLoader(): void {
+    this._clearLoaderStartRaf();
+    this._loaderPaused = true;
+    // Paint the static frame first (rAF), then hold it for a beat before
+    // starting the animation, so the pause actually reads as a pause.
+    this._loaderStartRaf = window.requestAnimationFrame(() => {
+      this._loaderStartRaf = null;
+      this._loaderStartTimer = window.setTimeout(() => {
+        this._loaderStartTimer = null;
+        this._loaderPaused = false;
+      }, ResponseStatus.LOADER_START_DELAY_MS);
+    });
+  }
+
   private _prefersReducedMotion(): boolean {
     return (
       typeof window.matchMedia === 'function' &&
@@ -560,6 +612,7 @@ export class ResponseStatus extends SpectrumElement {
         class="swc-ResponseStatus-loader"
         preset=${ifDefined(preset)}
         icon=${ifDefined(icon)}
+        ?paused=${this._loaderPaused}
         aria-hidden="true"
       ></swc-pixel-loader>
     `;
@@ -614,10 +667,7 @@ export class ResponseStatus extends SpectrumElement {
   }
 
   private _renderHeader(showDisclosure: boolean): TemplateResult {
-    const label = this._currentVisibleLabel();
     const status = this._resolvedStatus;
-    const statusRole =
-      !showDisclosure && status === 'active' ? 'status' : undefined;
     const rowClass = [
       'swc-ResponseStatus-row',
       showDisclosure ? 'swc-ResponseStatus-row--button' : '',
@@ -628,30 +678,36 @@ export class ResponseStatus extends SpectrumElement {
       .filter(Boolean)
       .join(' ');
 
-    const rowContent = html`
-      ${this._renderLeadingIcon()}
-      <span class="swc-ResponseStatus-headerTrail">
-        ${this._renderLabel()}
-        ${showDisclosure ? this._renderChevron(this.open) : nothing}
-      </span>
+    const trailContent = html`
+      ${this._renderLabel()}
+      ${showDisclosure ? this._renderChevron(this.open) : nothing}
     `;
 
-    if (showDisclosure) {
-      return html`
-        <button
-          class=${rowClass}
-          aria-label=${label}
-          aria-expanded=${this.open}
-          aria-controls=${this.panelId}
-          @click=${this._handleToggle}
-        >
-          ${rowContent}
-        </button>
-      `;
-    }
-
+    // The row keeps the loader mounted while only its trailing control changes.
     return html`
-      <div class=${rowClass} role=${ifDefined(statusRole)}>${rowContent}</div>
+      <div class=${rowClass}>
+        ${this._renderLeadingIcon()}
+        ${showDisclosure
+          ? html`
+              <button
+                type="button"
+                class="swc-ResponseStatus-headerTrail swc-ResponseStatus-headerTrail--button"
+                aria-expanded=${this.open}
+                aria-controls=${this.panelId}
+                @click=${this._handleToggle}
+              >
+                ${trailContent}
+              </button>
+            `
+          : html`
+              <span
+                class="swc-ResponseStatus-headerTrail"
+                role=${ifDefined(status === 'active' ? 'status' : undefined)}
+              >
+                ${trailContent}
+              </span>
+            `}
+      </div>
     `;
   }
 

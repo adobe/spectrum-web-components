@@ -38,9 +38,9 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 
 | Controller | What it does | Used by |
 | --- | --- | --- |
-| `PlacementController` | Floating UI-based positioning (flip, shift, arrow, size) for anchored surfaces | `tooltip`, `popover` |
+| `PlacementController` | Floating UI-based positioning (flip, shift, arrow, size) for anchored surfaces | `tooltip`, `popover`, `menu` |
 | `HoverController` | Hover and keyboard-focus wiring for native-Popover-API triggers | `tooltip` |
-| `FocusgroupNavigationController` | Roving-tabindex arrow key navigation for composite widgets ([Open UI `focusgroup`](https://open-ui.org/components/focusgroup.explainer/)-aligned). See [Focus management](14_focus-management.md) | `tabs`, `action-group`, `message-feedback`, `conversation-thread`, `prompt-field` |
+| `FocusgroupNavigationController` | Roving-tabindex arrow key navigation for composite widgets ([Open UI `focusgroup`](https://open-ui.org/components/focusgroup.explainer/)-aligned). See [Focus management](14_focus-management.md) | `tabs`, `action-group`, `message-feedback`, `conversation-thread`, `prompt-field`, `menu` |
 | `SlotAttributePropagationController` | Propagates a host attribute (e.g. `size`) to slotted children | `card`, `dropzone`, `illustrated-message`, `button-group` |
 | `SlotPresenceController` | Observes whether slotted content matching a selector is present | `button`, `action-button`, `badge`, `accordion`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
 | `SlotTextController` | Observes whether a slot has meaningful text/element content | `card`, `button`, `action-button`, `illustrated-message`, `badge` |
@@ -55,7 +55,7 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 
 | Mixin | What it does | Used by |
 | --- | --- | --- |
-| `SizedMixin` | Reactive `size` property with per-component valid-size enforcement | `button`, `button-group`, `badge`, `card`, `accordion`, `status-light`, `divider`, `dropzone`, `icon`, `infield-button`, `meter`, `progress-bar`, `progress-circle`, `action-group` |
+| `SizedMixin` | Reactive `size` property with per-component valid-size enforcement | `button`, `button-group`, `badge`, `card`, `accordion`, `status-light`, `divider`, `dropzone`, `icon`, `infield-button`, `meter`, `progress-bar`, `progress-circle`, `action-group`, `menu` |
 | `LinearProgressMixin` | Shared value/label/percent-format logic for linear-progress components | `progress-bar`, `meter` |
 | `PendingMixin` | `pending`/`pending-label` properties, click suppression, built on `PendingController` | `button`, `action-button` |
 | `DisabledMixin` | Reactive `disabled` with `aria-disabled` (not native `disabled`), tabindex/blur handling. See [Focus management](14_focus-management.md#disabledmixin) | none (`button` still hand-rolls `disabled`) |
@@ -64,19 +64,19 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 
 | Utility | What it does | Used by |
 | --- | --- | --- |
-| `resolveTrigger()` | Resolves `for` ID / `triggerElement` to a trigger, and its AT-facing inner `<button>` across shadow boundaries | `tooltip`, `popover` |
-| `getActiveElement()` | Deepest focused element, across shadow boundaries | `popover`, `conversation-thread`, `prompt-field` |
-| `deepContains()` | Shadow-piercing containment check | `popover`, `prompt-field` |
-| `registerDismissible()` / `unregisterDismissible()` / `isTopDismissible()` (`dismissibleStack`) | LIFO stack coordinating Escape handling across top-layer mechanisms | `popover`, `tooltip` |
+| `resolveTrigger()` | Resolves `for` ID / `triggerElement` to a trigger, and its AT-facing inner `<button>` across shadow boundaries | `tooltip`, `popover`, `menu` |
+| `getActiveElement()` | Deepest focused element, across shadow boundaries | `popover`, `conversation-thread`, `prompt-field`, `menu` |
+| `deepContains()` | Shadow-piercing containment check | `popover`, `prompt-field`, `menu` |
+| `registerDismissible()` / `unregisterDismissible()` / `isTopDismissible()` (`dismissibleStack`) | LIFO stack coordinating Escape handling across top-layer mechanisms | `popover`, `tooltip`, `menu` |
 | `warnIf()`, `validateEnum()` | Batched, deduped dev-mode warning framework (see below and [Debug and validation](../02_style-guide/02_typescript/17_debug-validation.md)) | 10+ components, `prompt-field`, `pixel-loader` |
 | `focusableSelector` | Spec-based focusable-element selector. See [Focus management](14_focus-management.md#focusableselector-and-tabbableselector) | `prompt-field` |
 | `tabbableSelector` | Spec-based tabbable-element selector | none |
 | `isFocusVisibleInTree()` | `:focus-visible` check across shadow roots | none |
 | `getLabelFromSlot()` | Derives a text label from slotted content | `upload-artifact` |
-| `validateRequiredSlot()`, `validateAllowedChildren()` | Dev-mode structural validation | `validateAllowedChildren`: `illustrated-message` |
+| `validateRequiredSlot()`, `validateAllowedChildren()` | Dev-mode structural validation | `validateAllowedChildren`: `illustrated-message`, `menu` |
 | `isDebug()` | Whether dev mode is active (the gate `warnIf`/`validateEnum` build on) | `progress-circle`, `card`, `dropzone`, `asset`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
 | `capitalize()` | Capitalizes first character of a string | `progress-circle`, `divider` |
-| `physicalSide()` | Drops alignment suffix from a placement (`bottom-start` to `bottom`) | `popover` |
+| `physicalSide()` | Drops alignment suffix from a placement (`bottom-start` to `bottom`) | `popover`, `menu` |
 | `runAfterTransition()` | Runs a callback once an element's CSS transition settles (or synchronously if none will run); built on `hasActiveTransition()`/`maxTransitionDurationMs()` in the same file | `popover` |
 | `uniqueId()` (`swc/utils/id.ts`, not `core`) | Collision-resistant component ID generation | `prompt-field`, `suggestion`, `response-status`, `message-sources` |
 
@@ -129,7 +129,7 @@ Patterns build directly on core resources and on components, not on their own `*
 - **`quiet`**: reduced-emphasis visual treatment.
 - **`density`**: spacing/compactness.
 - **`static-color`**: fixed `white`/`black` rendering regardless of theme.
-- **`for`**: ID reference to a trigger element, resolved via `resolveTrigger()` (`tooltip`, `popover`).
+- **`for`**: ID reference to a trigger element, resolved via `resolveTrigger()` (`tooltip`, `popover`, `menu`).
 - **`placement`**: anchored-position side/alignment, consumed by `PlacementController`.
 
 **Slots:**

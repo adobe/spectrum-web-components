@@ -87,6 +87,7 @@ gen2 form fields are **form-associated custom elements**: set `static formAssoci
 - **Decision:** yes, adopt ElementInternals/FACE for form fields. The value is submitted via `internals.setFormValue(value)` on change, and the `formDisabledCallback(disabled)` lifecycle hook receives cascades from an ancestor `<fieldset disabled>` or an owning form.
 - **Shared controller:** a **`FieldAssociationController`** wraps `ElementInternals` to handle value submission, the disabled cascade, and form reset once, so text field, checkbox, and combobox do not each reimplement it.
 - **Browser / AT notes:** Chromium and Safari expose `ElementInternals` ARIA more consistently than Firefox; verify exposure manually in Firefox (see [§3.4](#34-axe-core-policy)).
+- **Attribute applicability by input type:** before relying on a native form-related HTML attribute (`readonly`, `minlength`, `maxlength`, `pattern`, `step`, `size`, `multiple`, and similar), confirm it actually applies to the underlying `<input>` type. The HTML Standard's [table of attributes that do not apply to certain input types](https://html.spec.whatwg.org/multipage/input.html#do-not-apply) is the canonical reference; for example, `readonly` does not apply to `checkbox` or `radio` inputs, so a checkbox-based or radio-based component cannot use the native attribute and needs a documented ARIA-based workaround instead.
 
 ### 3.2 Where ARIA roles live
 
@@ -112,7 +113,7 @@ Two complementary sources feed the accessible name and description:
 - **Slotted content** (`slot="label"` / `slot="description"`) projects into the shadow DOM and wires through **same-root** `aria-labelledby` / `aria-describedby` pointing at the shadow-internal elements. This is a plain IDREF because both ends live in the same root.
 - **Light-DOM siblings** wire through `accessible-labelledby` and `accessible-describedby`. `LabellingMixin` resolves name sources into `ariaLabelledByElements`; `FieldDescriptionMixin` resolves description sources into `ariaDescribedByElements`. These **cross-root element-reference properties** replace raw IDREFs that cannot cross the shadow boundary.
 
-When both sources exist, the shadow-internal label appears first in the merged element-reference list. Error text associates the same way through `aria-errormessage`.
+When both sources exist, the shadow-internal label appears first in the merged element-reference list. Error text associates the same way through `aria-describedby`, not `aria-errormessage`.
 
 - **Reference:** [semantic HTML and ARIA guide](../../../gen2/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx).
 
@@ -157,7 +158,7 @@ The canonical surface for form fields. Contributors align Phase 3 (API) and Phas
 | Concern | Name / approach | Notes |
 |---------|-----------------|-------|
 | Form participation | `static formAssociated = true` + `attachInternals()`, wrapped by `FieldAssociationController` | Value submitted via `internals.setFormValue(value)`. |
-| Label surface (visible) | Default slot when the label is the component's only or primary content; named `slot="label"` when it is supplementary to other primary content | Primary-vs-supplementary rule; pending the slot-API research decision. |
+| Label surface (visible) | Named `slot="label"` | Preferred over the default slot so label content is explicit and consistent across fields; pending confirmation across all migrated components. |
 | Accessible name (no visible label) | `accessible-label` attribute | Established convention; do **not** expose raw `aria-label` on the host. |
 | Help / description surface | `slot="description"`, wired by `FieldDescriptionMixin` | Associates through a role-appropriate ARIA description relationship. |
 | Error text surface | Error text wired by `FieldDescriptionMixin` | Associates through a role-appropriate ARIA description/error relationship; retain `aria-describedby` when using `aria-errormessage` for compatibility. |
