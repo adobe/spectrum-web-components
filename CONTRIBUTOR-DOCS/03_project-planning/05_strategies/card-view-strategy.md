@@ -29,7 +29,7 @@
     - [Option 1: Retain and repair the RSP layout-grid model](#option-1-retain-and-repair-the-rsp-layout-grid-model)
     - [Option 2: Add complete forward traversal to the layout grid](#option-2-add-complete-forward-traversal-to-the-layout-grid)
     - [Option 3: Use native list semantics and explicit controls](#option-3-use-native-list-semantics-and-explicit-controls)
-    - [Option 4: Use a listbox and move actions outside the cards](#option-4-use-a-listbox-and-move-actions-outside-the-cards)
+    - [Option 4: Use feed semantics with interactive articles](#option-4-use-feed-semantics-with-interactive-articles)
 - [Evaluation and recommended next steps](#evaluation-and-recommended-next-steps)
     - [Test matrix](#test-matrix)
     - [Test tasks and acceptance criteria](#test-tasks-and-acceptance-criteria)
@@ -208,19 +208,23 @@ Optional arrow shortcuts can enhance navigation where available, but must not re
 
 **Decision condition:** Users can complete reading, opening, selection, and bulk-action tasks with acceptable effort. The usability benefit outweighs the loss of a single-tab-stop collection.
 
-### Option 4: Use a listbox and move actions outside the cards
+### Option 4: Use feed semantics with interactive articles
 
-Use a listbox only if the collection's primary task is choosing objects and the card design can become a non-interactive option. Put secondary actions in a shared toolbar, details panel, or other separately reachable area associated with the selected object. Do not keep tabbable controls inside options.
+Use a labelled `feed` with a focusable `article` for each card. Keep real selection checkboxes, primary actions, and secondary controls inside articles. Navigate sequentially between articles with <kbd>PageDown</kbd> and <kbd>PageUp</kbd>; preserve normal Tab access to article controls. Expose article position and total with `aria-posinset` and `aria-setsize`.
 
-**Benefits:** Provides a standard selection-focused interaction with arrow navigation and positional semantics without the grid's row/column framing.
+This replaces the earlier listbox prototype proposal. The exploration retains independently interactive controls inside cards, which the listbox pattern does not support. Listbox remains a possible product redesign only if actions can move outside the options.
 
-**Tradeoffs:** Changes the product interaction and removes independent controls from each card. Rich card content loses structural semantics within options. Selecting an object and performing its actions becomes a multi-step workflow.
+**Benefits:** Preserves rich reading structure and independent card controls without row/column framing. Provides a starting point for testing reading-driven loading in a future dynamic content stream.
 
-**Decision condition:** The redesigned workflow serves the product and users understand which selected object the external actions affect. This is not a role-only substitution for the existing CardView.
+**Tradeoffs:** A feed represents a content stream, not every selectable asset collection. It uses Page Up/Down rather than four-direction arrows, adds article tab stops, and does not provide composite range selection. A fully loaded prototype cannot verify the feed's dynamic loading contract.
+
+**Decision condition:** The collection genuinely fits a reading-oriented feed, and users understand article navigation, selection, child controls, and entry/exit. Dynamic loading requires separate implementation and assistive technology evaluation.
 
 ## Evaluation and recommended next steps
 
-Start with a fully loaded, uniform card layout to isolate semantics and keyboard behavior. Compare the RSP-style baseline, the wrapping-grid variant, and the native-list variant. Add the listbox variant only if moving actions outside cards is a viable product decision. Test waterfall and virtualization as separate follow-up dimensions.
+Start with a fully loaded, uniform card layout to isolate semantics and keyboard behavior. Compare the PR's default RSP-style baseline, the repaired sequential grid, the wrapping-grid variant, the native-list variant, and the feed/article variant. All five prototypes include waterfall as a follow-up comparison; virtualization remains a separate later dimension.
+
+The Storybook examples live in the card-view component folder as `swc-card-view` and `swc-card-view-option-1` through `swc-card-view-option-4`. Each has grid, waterfall, and accessibility stories, with a dedicated docs page describing its interaction and tradeoffs. The baseline adapts [PR #6798](https://github.com/adobe/spectrum-web-components/pull/6798)'s default RSP model rather than its entire multi-model inspector application.
 
 Use the same content, primary actions, selection tasks, and child controls across comparable prototypes. Record DOM attributes, accessibility-tree structure, spoken output, focus movement, and task completion separately.
 

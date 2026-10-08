@@ -1,0 +1,59 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-option-1.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-option-1` implements the historical RSP recommendation: one semantic row per card, containing a focusable `rowheader`. Each card contains a photo, checkbox, primary action, and Share action. The collection reports one semantic column regardless of visual layout.
+
+## Options
+
+### Grid
+
+Cards align in uniform rows. Left/Right visits enabled cards in collection order; Up/Down uses spatial overlap.
+
+<Canvas of={Stories.Grid} />
+
+### Waterfall
+
+Cards are placed into the shortest column using their measured heights. Left/Right remains sequential even when the next card is not a visual neighbor.
+
+<Canvas of={Stories.Waterfall} />
+
+## Behaviors
+
+Space toggles selection; Enter opens the focused card. Home/End reaches the first/last enabled card. Shift plus an arrow selects a collection-order range. Tab visits the active card's checkbox and actions, then exits the collection. Child actions do not also select the card.
+
+## Accessibility
+
+### Features
+
+Row count and row index describe collection positions, not visual rows. Selected states and a selected-count status communicate selection. Disabled cards are skipped. Resize measurement changes visual positions without changing semantic structure or replacing the focused item.
+
+<Canvas of={Stories.Accessibility} />
+
+### Pros
+
+- Provides a predictable sequential route to every enabled card in both layouts.
+- Retains grid selection and independently interactive children.
+- Closely follows the original RSP keyboard recommendation rather than the waterfall baseline's divergence.
+
+### Cons
+
+- Down still uses geometry and can stop before every card has been visited.
+- The single-column announcement does not convey the visual vertical-navigation model.
+- Sequential horizontal movement in waterfall may look surprising, and position announcements remain screen reader dependent.
+
+### Best practices
+
+This is a testable hypothesis, not an accessibility sign-off. Evaluate whether users discover Left/Right as the complete traversal route without changing screen reader settings. Test Tab and Shift+Tab entry/exit, controls, disabled items, zoom, and position announcements across the documented matrix.
+
+## Upcoming features
+
+Virtualization and production focus/selection API decisions are deferred. The initial prototype is fully loaded.
+
+<DocsFooter />

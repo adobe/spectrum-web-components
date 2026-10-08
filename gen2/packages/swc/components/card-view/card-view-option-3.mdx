@@ -1,0 +1,59 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-option-3.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-option-3` uses a native `ul` and `li` for the collection. Each card preserves its own checkbox, primary button, and Share button. List items expose position and set-size metadata; selection is conveyed by the checkbox rather than `aria-selected` on a list item.
+
+## Options
+
+### Grid
+
+Uniform visual rows do not change the native list's DOM reading order or normal page tab order.
+
+<Canvas of={Stories.Grid} />
+
+### Waterfall
+
+Shortest-column placement changes only visual positions. Focus and reading follow collection order, not visual geometry.
+
+<Canvas of={Stories.Waterfall} />
+
+## Behaviors
+
+Tab and Shift+Tab visit every enabled checkbox and action in normal order. Space operates the focused checkbox or button using its native behavior. There is no collection arrow-key interception, roving tab stop, or custom keyboard range selection. Open and Share never toggle selection.
+
+## Accessibility
+
+### Features
+
+Native list semantics preserve content and independent controls. Selection uses labelled checkboxes. Disabled controls are excluded from the tab sequence by native behavior. Resize does not change DOM order.
+
+<Canvas of={Stories.Accessibility} />
+
+### Pros
+
+- Avoids conflicting row/column announcements and custom spatial navigation.
+- Supports familiar reading and control interaction without relying on screen reader focus mode.
+- Keeps real child actions and explicit selection controls.
+
+### Cons
+
+- Large collections have many tab stops and may be slower for frequent keyboard users.
+- Loses composite arrow navigation and keyboard range selection.
+- Native list counts and position metadata do not guarantee that a focused child control announces "x of y."
+
+### Best practices
+
+Compare task effort against the grid options and consider suitable bypass controls for large collections. Do not remove normal tab access merely to add optional arrow shortcuts. Test positional speech, selection, reading order in waterfall, and mobile exploration before selecting this approach.
+
+## Upcoming features
+
+Virtualized list reading and bypass-link integration are separate experiments. All items are currently rendered.
+
+<DocsFooter />

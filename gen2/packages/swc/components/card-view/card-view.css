@@ -1,0 +1,103 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+  inline-size: 100%;
+}
+
+.collection {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.item {
+  box-sizing: border-box;
+  min-inline-size: 0;
+}
+
+swc-card {
+  --swc-card-base-max-inline-size: 100%;
+
+  display: block;
+  inline-size: 100%;
+}
+
+[data-focus]:focus-visible {
+  outline: 2px solid var(--swc-color-focus-indicator, Highlight);
+  outline-offset: 3px;
+}
+
+swc-card[data-selected="true"] {
+  outline: 2px solid var(--swc-color-focus-indicator, Highlight);
+  outline-offset: 0;
+}
+
+img {
+  display: block;
+  inline-size: 100%;
+}
+
+.selection {
+  align-self: start;
+  justify-self: start;
+  padding: 4px;
+  margin: 8px;
+  background: var(--swc-color-background-layer-2, Canvas);
+  border-radius: 4px;
+}
+
+input {
+  display: block;
+  inline-size: 20px;
+  block-size: 20px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.title,
+.share {
+  font: inherit;
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.title {
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+
+.title:hover {
+  text-decoration: underline;
+}
+
+.share {
+  padding: 4px 8px;
+  background: transparent;
+  border: 1px solid currentcolor;
+  border-radius: 4px;
+}
+
+.status {
+  min-block-size: 24px;
+  margin-block-start: 16px;
+}
+
+@media (forced-colors: active) {
+  swc-card[data-selected="true"] {
+    outline-color: Highlight;
+  }
+}

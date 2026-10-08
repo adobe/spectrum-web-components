@@ -1,0 +1,61 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-option-4.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-option-4` uses a labelled `feed` containing focusable `article` elements with collection position and total metadata. Each article contains a photo, real selection checkbox, primary action, and Share action. This replaces the strategy's earlier listbox proposal because independently interactive checkboxes and actions must remain inside cards.
+
+## Options
+
+### Grid
+
+Articles align visually in uniform rows, but reading and article navigation remain sequential.
+
+<Canvas of={Stories.Grid} />
+
+### Waterfall
+
+Articles use shortest-column placement while keeping the same logical sequence. Page navigation does not depend on visual columns.
+
+<Canvas of={Stories.Waterfall} />
+
+## Behaviors
+
+Page Down moves to the next enabled article; Page Up moves to the previous one, including when a child control has focus. Tab visits articles and their enabled checkbox/action controls normally. Space operates the checkbox or button; Enter operates the focused button. Article focus is distinct from checkbox selection.
+
+Control+Home and Control+End request movement before/after the feed through `swc-card-view-exit`; the stories connect this to their surrounding controls. Applications must provide an appropriate outside target. The collection emits selection-change and action events like the other options.
+
+## Accessibility
+
+### Features
+
+Article semantics preserve rich content and independently interactive children. `aria-posinset` and `aria-setsize` describe the logical sequence, and `aria-busy="false"` describes the current fully loaded state. Focused articles scroll into view.
+
+<Canvas of={Stories.Accessibility} />
+
+### Pros
+
+- Provides a reading-oriented navigation model without row/column framing.
+- Preserves real checkbox and action controls inside each card.
+- Offers a starting point for future experiments coordinating dynamic content loading with screen reader reading.
+
+### Cons
+
+- A feed describes a content stream, not every selectable file or asset collection.
+- Uses Page Up/Down instead of four-direction arrow navigation and adds article tab stops.
+- Does not provide composite selection or range selection. Real feed loading and assistive technology interoperability are not demonstrated here.
+
+### Best practices
+
+Use this as an experimental comparison, not a claim that feed is the right role for all cards. Evaluate reading tasks, selection, child controls, and exit behavior with actual users. Future dynamic loading must coordinate focus, scrolling, article position metadata, and busy states; this fully loaded prototype does not verify that contract.
+
+## Upcoming features
+
+Dynamic article loading and virtualization are deferred until the basic semantics and interaction comparison is complete.
+
+<DocsFooter />

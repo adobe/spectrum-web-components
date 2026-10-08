@@ -1,0 +1,59 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-option-2.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-option-2` retains one semantic row per card and a single-column grid, with the same photo, checkbox, and action controls as Option 1. It changes vertical navigation to traverse every visual column.
+
+## Options
+
+### Grid
+
+Down walks each visual column from top to bottom, then moves to the top of the next column. Up reverses that route. The endpoints do not cycle back to the start.
+
+<Canvas of={Stories.Grid} />
+
+### Waterfall
+
+The same rule follows measured column membership and top positions. Column assignment uses shortest-column placement; navigation remains deterministic for the current measured layout.
+
+<Canvas of={Stories.Waterfall} />
+
+## Behaviors
+
+Left/Right follows collection order. Home/End follows collection order, not column traversal order. Space toggles selection; Enter opens the card. Shift plus an arrow selects a range in collection order, which can differ from the spatial route. Tab reaches the active card's checkbox and actions, then exits.
+
+## Accessibility
+
+### Features
+
+Forward Down traversal and reverse Up traversal can reach every enabled card rather than stopping at a visual column boundary. The semantics and positional metadata remain stable during visual reflow. The column-wrap behavior is an experiment based on the APG's optional layout-grid wrapping.
+
+<Canvas of={Stories.Accessibility} />
+
+### Pros
+
+- Reduces the risk of interpreting the bottom of a visual column as the end of the entire collection.
+- Preserves a separate sequential horizontal route and independent child controls.
+- Defines both forward and reverse wrapping, including waterfall column membership.
+
+### Cons
+
+- Jumping from a column bottom to the next column's top may surprise sighted users.
+- Vertical traversal order differs from the announced collection indices and from horizontal traversal.
+- Resizing may change the next visual target; row count/index still cannot guarantee spoken position feedback.
+
+### Best practices
+
+Test whether wrapping is understood, not only whether every item is technically reachable. Compare repeated Down with repeated Right, check reverse traversal, and evaluate disabled cards, uneven heights, selection ranges, resize, and zoom. Screen reader speech and usability require manual evaluation.
+
+## Upcoming features
+
+The separate single-row semantic experiment mentioned in the strategy is not part of this element. Virtualization and loading remain deferred.
+
+<DocsFooter />

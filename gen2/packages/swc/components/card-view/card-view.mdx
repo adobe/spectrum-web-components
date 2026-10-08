@@ -1,0 +1,62 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view` adapts the default RSP-style model from [PR #6798](https://github.com/adobe/spectrum-web-components/pull/6798). It is a comparison baseline, not a copy of the PR's entire inspector application and not a production-ready CardView.
+
+The collection contains `swc-card` previews, labelled selection checkboxes, primary action buttons, secondary Share buttons, and a selected-count status. Each card is a `gridcell` inside its own semantic row. All cards are loaded.
+
+## Options
+
+### Grid
+
+Uniform rows use equal preview aspect ratios. Left/Right follows collection order; Up/Down follows measured geometry.
+
+<Canvas of={Stories.Grid} />
+
+### Waterfall
+
+Cards retain varied preview aspect ratios and are placed into the shortest column. All arrows use spatial navigation in this baseline, including Left/Right.
+
+<Canvas of={Stories.Waterfall} />
+
+## Behaviors
+
+Space toggles selection when a card cell has focus. Enter activates the primary action. Home/End moves to the first/last enabled card. Shift plus an arrow selects a range in collection order. Checkbox changes do not trigger primary or secondary actions.
+
+Tab enters the active card's checkbox and action controls, then leaves the collection. Only the active card's controls participate in the tab sequence. The story's action output confirms Open and Share events; applications own the actual action.
+
+## Accessibility
+
+### Features
+
+The labelled grid exposes one column, the total row count, row indices, and selected states. Disabled cards are skipped by collection navigation. Focused cards scroll into view, and changing layout does not rebuild semantic rows.
+
+<Canvas of={Stories.Accessibility} />
+
+### Pros
+
+- Preserves selection, child actions, and an efficient composite navigation model.
+- Provides the reported RSP navigation behavior as a consistent baseline for comparison.
+
+### Cons
+
+- A one-column announcement does not explain spatial vertical movement through several visual columns.
+- Repeated Down can stop before users discover every card. Waterfall horizontal navigation can also omit a sequential route.
+- Grid position metadata does not guarantee spoken "x of y" feedback.
+
+### Best practices
+
+Do not treat this example as an approved accessibility solution. Compare the repaired options and test ordinary arrows separately from screen reader cursor commands. Validate entry/exit, selection, child actions, focus at zoom, and positional speech with NVDA, JAWS, VoiceOver, Narrator, and mobile screen readers. The prototype does not simulate or claim verified screen reader output.
+
+## Upcoming features
+
+Virtualization, loading announcements, and production API decisions are outside this initial comparison. The [strategy document](../../../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/card-view-strategy.md) records the evaluation plan.
+
+<DocsFooter />
