@@ -58,7 +58,7 @@
 .swc-PromptField-box {
   --_swc-prompt-field-recede-surface: token("background-layer-2-color");
 
-  /* Receded (subtle idle and focused) contrast treatment: transparent-neutral-125 border and transparent-static-black-75 drop shadow. */
+  /* Receded (subtle idle and focused) contrast treatment: transparent-neutral-125 border and transparent-static-black-75 drop shadow. Built from opacity-* on purpose: the legacy transparent-black-75 token is 5%, not the design's 3%. */
   --_swc-prompt-field-recede-border-color: light-dark(rgb(0 0 0 / token("opacity-125")), rgb(255 255 255 / token("opacity-125")));
   --_swc-prompt-field-recede-shadow-color: rgb(0 0 0 / token("opacity-75"));
   --_swc-prompt-field-border-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), rgb(255 255 255 / 5%));
@@ -369,7 +369,7 @@
   --_swc-prompt-field-container-shadow-color: transparent;
 }
 
-/* Unlike subtle, balanced/prominent never override border-color/drop-shadow-color -- always the box's own base values. */
+/* Unlike subtle, balanced/prominent never override border-color/drop-shadow-color/container-shadow-color -- always the box's own base values. */
 :host([variant="balanced"]:not([generating])) .swc-PromptField-box {
   --_swc-prompt-field-con-hue-opacity: 12.5%;
   --_swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.18% 0.0231 calc(h - 44.5)) 12.5%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 20%));
