@@ -253,6 +253,17 @@ export const Disabled: Story = {
     })}
   `,
   parameters: {
+    a11y: {
+      // WCAG 1.4.3 exempts text that is part of an inactive UI component.
+      // axe cannot infer that these slotted spans belong to the disabled
+      // group, so exclude only their color-contrast result.
+      exclude: {
+        'color-contrast': [
+          'swc-radio-group:nth-child(1) > span[slot="label"]',
+          'swc-radio-group:nth-child(1) > span[slot="description"]',
+        ],
+      },
+    },
     flexLayout: 'row-wrap',
     styles: { gap: 'var(--swc-spacing-500)' },
   },
