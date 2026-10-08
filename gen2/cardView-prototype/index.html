@@ -1,115 +1,108 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>CardView accessibility prototype</title>
-        <link rel="stylesheet" href="./styles.css" />
-    </head>
-    <body>
-        <header class="app-header">
-            <h1>CardView accessibility prototype</h1>
-            <p>
-                Compare collection semantics for <code>swc-card-view</code>.
-                Switch the model, move through the cards with the keyboard,
-                and watch the inspector. Each entry shows what sighted users
-                see and what screen readers are told. Not production code.
-            </p>
-        </header>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CardView accessibility prototype</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>CardView accessibility prototype</h1>
+      <p>
+        Compare collection semantics for
+        <code>swc-card-view</code>
+        . Switch the model, move through the cards with the keyboard, and watch
+        the inspector. Each entry shows what sighted users see and what screen
+        readers are told. Not production code.
+      </p>
+    </header>
 
-        <main class="app">
-            <section class="controls" aria-labelledby="controls-heading">
-                <h2 id="controls-heading">Scenario</h2>
-                <div class="presets" role="group" aria-label="Presets">
-                    <button type="button" data-preset="rsp">
-                        React Spectrum today
-                    </button>
-                    <button type="button" data-preset="apg">
-                        APG layout grid
-                    </button>
-                    <button type="button" data-preset="list">
-                        Recommended: linear list
-                    </button>
-                    <button type="button" data-preset="row-grid">
-                        Fallback: single-row grid
-                    </button>
-                    <button type="button" data-preset="listbox">
-                        Listbox, no card actions
-                    </button>
-                </div>
-                <div class="control-grid" id="control-grid"></div>
-                <div class="width-control">
-                    <label for="width">Collection width</label>
-                    <input
-                        id="width"
-                        type="range"
-                        min="240"
-                        max="1400"
-                        step="10"
-                        value="900"
-                    />
-                    <output id="width-out" for="width">900px</output>
-                    <label class="inline">
-                        <input id="full-width" type="checkbox" />
-                        Fill available width
-                    </label>
-                </div>
-            </section>
+    <main class="app">
+      <section class="controls" aria-labelledby="controls-heading">
+        <h2 id="controls-heading">Scenario</h2>
+        <div class="presets" role="group" aria-label="Presets">
+          <button type="button" data-preset="rsp">React Spectrum today</button>
+          <button type="button" data-preset="apg">APG layout grid</button>
+          <button type="button" data-preset="list">
+            Recommended: linear list
+          </button>
+          <button type="button" data-preset="row-grid">
+            Fallback: single-row grid
+          </button>
+          <button type="button" data-preset="listbox">
+            Listbox, no card actions
+          </button>
+        </div>
+        <div class="control-grid" id="control-grid"></div>
+        <div class="width-control">
+          <label for="width">Collection width</label>
+          <input
+            id="width"
+            type="range"
+            min="240"
+            max="1400"
+            step="10"
+            value="900"
+          />
+          <output id="width-out" for="width">900px</output>
+          <label class="inline">
+            <input id="full-width" type="checkbox" />
+            Fill available width
+          </label>
+        </div>
+      </section>
 
-            <section class="stage" aria-labelledby="stage-heading">
-                <h2 id="stage-heading">Collection</h2>
-                <p id="size-info" class="meta"></p>
-                <button type="button" class="tab-marker">
-                    Focusable element before
-                </button>
-                <div class="frame" id="frame">
-                    <div class="scroller" id="scroller"></div>
-                </div>
-                <button type="button" class="tab-marker">
-                    Focusable element after
-                </button>
-                <div
-                    id="live"
-                    class="visually-hidden"
-                    aria-live="polite"
-                ></div>
-            </section>
+      <section class="stage" aria-labelledby="stage-heading">
+        <h2 id="stage-heading">Collection</h2>
+        <p id="size-info" class="meta"></p>
+        <button type="button" class="tab-marker">
+          Focusable element before
+        </button>
+        <div class="frame" id="frame">
+          <div class="scroller" id="scroller"></div>
+        </div>
+        <button type="button" class="tab-marker">
+          Focusable element after
+        </button>
+        <div id="live" class="visually-hidden" aria-live="polite"></div>
+      </section>
 
-            <aside class="inspector" aria-labelledby="inspector-heading">
-                <h2 id="inspector-heading">What users get</h2>
-                <dl class="current" id="current">
-                    <div>
-                        <dt>Focused</dt>
-                        <dd id="cur-name">Nothing yet. Tab into the collection.</dd>
-                    </div>
-                    <div>
-                        <dt>Likely screen reader output (approximate)</dt>
-                        <dd id="cur-announce">-</dd>
-                    </div>
-                    <div>
-                        <dt>Visual position</dt>
-                        <dd id="cur-visual">-</dd>
-                    </div>
-                    <div>
-                        <dt>Exposed position</dt>
-                        <dd id="cur-exposed">-</dd>
-                    </div>
-                </dl>
+      <aside class="inspector" aria-labelledby="inspector-heading">
+        <h2 id="inspector-heading">What users get</h2>
+        <dl class="current" id="current">
+          <div>
+            <dt>Focused</dt>
+            <dd id="cur-name">Nothing yet. Tab into the collection.</dd>
+          </div>
+          <div>
+            <dt>Likely screen reader output (approximate)</dt>
+            <dd id="cur-announce">-</dd>
+          </div>
+          <div>
+            <dt>Visual position</dt>
+            <dd id="cur-visual">-</dd>
+          </div>
+          <div>
+            <dt>Exposed position</dt>
+            <dd id="cur-exposed">-</dd>
+          </div>
+        </dl>
 
-                <div class="log-heading">
-                    <h3>Move log</h3>
-                    <button type="button" id="clear-log">Clear</button>
-                </div>
-                <ol id="log" class="log"></ol>
+        <div class="log-heading">
+          <h3>Move log</h3>
+          <button type="button" id="clear-log">Clear</button>
+        </div>
+        <ol id="log" class="log"></ol>
 
-                <h3>About this model</h3>
-                <div id="model-notes" class="notes"></div>
+        <h3>About this model</h3>
+        <div id="model-notes" class="notes"></div>
 
-                <h3>Accessibility structure (first items)</h3>
-                <pre id="tree" class="tree"></pre>
-            </aside>
-        </main>
+        <h3>Accessibility structure (first items)</h3>
+        <pre id="tree" class="tree"></pre>
+      </aside>
+    </main>
 
-        <script type="module" src="./main.js"></script>
-    </body>
+    <script type="module" src="./main.js"></script>
+  </body>
 </html>
