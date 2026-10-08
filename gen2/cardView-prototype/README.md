@@ -22,12 +22,13 @@ Then open <http://localhost:4321/>.
 
 The **Semantics model** control switches between:
 
-| Model                   | Structure                                                                                | Arrow keys                  |
-| ----------------------- | ---------------------------------------------------------------------------------------- | --------------------------- |
-| A. React Spectrum grid  | `grid` > one `row` per card > `gridcell`                                                 | Follow the visual 2D layout |
-| C. Single-row grid      | `grid` > one `row` > a `gridcell` per card with `aria-colindex`                          | Move in DOM order           |
-| D. Linear list          | `list` > `listitem` with `aria-posinset` and `aria-setsize`; focus on each card's control | Move in DOM order           |
-| D. Listbox              | `listbox` > `option` with `aria-selected`, `aria-posinset`, and `aria-setsize`           | Move in DOM order           |
+| Model                  | Structure                                                                                 | Arrow keys                                     |
+| ---------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| A. React Spectrum grid | `grid` > one `row` per card > `gridcell`                                                  | Follow the visual 2D layout                    |
+| B. APG layout grid     | `grid` > one `row` per visual row > `gridcell` per card, rebuilt when the columns change  | Move by cell; Right and Left wrap between rows |
+| C. Single-row grid     | `grid` > one `row` > a `gridcell` per card with `aria-colindex`                           | Move in DOM order                              |
+| D. Linear list         | `list` > `listitem` with `aria-posinset` and `aria-setsize`; focus on each card's control | Move in DOM order                              |
+| D. Listbox             | `listbox` > `option` with `aria-selected`, `aria-posinset`, and `aria-setsize`            | Move in DOM order                              |
 
 The inspector shows, for each move:
 
@@ -45,13 +46,15 @@ Other controls cover layout (grid or waterfall), size with the responsive clamp,
 2. Drag **Collection width** narrower and wider. The visual columns change; the exposed structure stays one column.
 3. Switch **Layout** to waterfall. There are no rows to announce.
 4. With card actions revealed on hover and the single tab stop, press <kbd>Tab</kbd>: focus leaves the collection. The actions are reachable only with <kbd>Enter</kbd>, which users have to discover.
-5. Select **Recommended: linear list**. Arrow keys move in reading order, each card reports "N of M", and <kbd>Tab</kbd> reaches the focused card's actions.
-6. Select **Fallback: single-row grid** and compare the column announcements.
-7. Select **Listbox, no card actions** to show reliable selection and position announcements, and why it cannot hold card actions.
-8. Repeat any step with a real screen reader, and at 200% and 400% browser zoom.
+5. Select **APG layout grid** ([APG layout grids](https://www.w3.org/WAI/ARIA/apg/patterns/grid/#layoutgridsforgroupingwidgets)). The announced row and column now match what sighted users see. Drag **Collection width**: the rows are rebuilt in script, and the log flags that the focused card's position changed without notice. Press <kbd>Enter</kbd> or <kbd>F2</kbd> to reach card actions, arrows to move between them, and <kbd>Escape</kbd> or <kbd>F2</kbd> to return. Switch to waterfall to see it fall back to a single row.
+6. Select **Recommended: linear list**. Arrow keys move in reading order, each card reports "N of M", and <kbd>Tab</kbd> reaches the focused card's actions.
+7. Select **Fallback: single-row grid** and compare the column announcements.
+8. Select **Listbox, no card actions** to show reliable selection and position announcements, and why it cannot hold card actions.
+9. Repeat any step with a real screen reader, and at 200% and 400% browser zoom.
 
 ## Keyboard
 
 - Arrow keys, <kbd>Home</kbd>, <kbd>End</kbd>, <kbd>Page Up</kbd>, and <kbd>Page Down</kbd> move between cards. The model sets the direction rules.
 - <kbd>Space</kbd> toggles selection. In multiple mode, <kbd>Shift</kbd> + arrow extends the selection, and <kbd>Ctrl</kbd> + <kbd>A</kbd> or <kbd>Cmd</kbd> + <kbd>A</kbd> selects all. <kbd>Escape</kbd> clears the selection.
 - With the single tab stop model, <kbd>Enter</kbd> moves into the card's actions, and <kbd>Escape</kbd> returns to the card.
+- In the APG layout grid, <kbd>Home</kbd> and <kbd>End</kbd> stay in the row, and <kbd>Ctrl</kbd> + <kbd>Home</kbd> and <kbd>Ctrl</kbd> + <kbd>End</kbd> go to the first and last card. <kbd>Enter</kbd> or <kbd>F2</kbd> moves into the card's actions, arrows move between them, and <kbd>Escape</kbd> or <kbd>F2</kbd> returns.

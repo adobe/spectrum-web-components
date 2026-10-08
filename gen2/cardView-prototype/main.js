@@ -12,6 +12,7 @@ const SIZE_ORDER = ['xs', 's', 'm', 'l', 'xl'];
 
 const MODEL_LABELS = {
     'rsp-grid': 'A. React Spectrum grid (one card per row)',
+    'apg-layout': 'B. APG layout grid (rows match visual rows)',
     'row-grid': 'C. Single-row grid',
     list: 'D. Linear list',
     listbox: 'D. Listbox (no card actions)',
@@ -36,6 +37,7 @@ const CONTROLS = [
 
 const PRESETS = {
     rsp: { model: 'rsp-grid', layout: 'grid', selectionMode: 'multiple', selectionStyle: 'checkbox', actions: 'hover', tabModel: 'single', describePos: false },
+    apg: { model: 'apg-layout', layout: 'grid', selectionMode: 'multiple', selectionStyle: 'checkbox', actions: 'hover', tabModel: 'single', describePos: false },
     list: { model: 'list', layout: 'grid', selectionMode: 'multiple', selectionStyle: 'checkbox', actions: 'hover', tabModel: 'express', describePos: true },
     'row-grid': { model: 'row-grid', layout: 'grid', selectionMode: 'multiple', selectionStyle: 'checkbox', actions: 'hover', tabModel: 'express', describePos: false },
     listbox: { model: 'listbox', layout: 'grid', selectionMode: 'multiple', selectionStyle: 'highlight', actions: 'none', tabModel: 'express', describePos: false },
@@ -93,6 +95,7 @@ let columnCount = 1;
 let lastNav = null;
 let lastKeyName = '';
 let quietFocus = false;
+let rowSignature = '';
 
 const $ = (id) => document.getElementById(id);
 const scroller = $('scroller');
@@ -131,6 +134,10 @@ function writeUrl() {
 const selectable = () => state.selectionMode !== 'none';
 const isMulti = () => state.selectionMode === 'multiple';
 const hasActions = () => state.actions !== 'none' && state.model !== 'listbox';
+const isApg = () => state.model === 'apg-layout';
+const apgRows = () => isApg() && state.layout === 'grid';
+// Card actions are reached with a secondary command (Enter or F2) instead of Tab.
+const cellMode = () => hasActions() && (isApg() || state.tabModel === 'single');
 const isDisabled = (i) => state.disabled && DISABLED_INDICES.has(i);
 const keyName = (e) =>
     [e.ctrlKey && 'Ctrl', e.metaKey && 'Cmd', e.altKey && 'Alt', e.shiftKey && e.key !== 'Shift' && 'Shift', KEY_NAMES[e.key] || e.key]
@@ -209,10 +216,10 @@ function syncControls() {
     }
     $('ctl-selectionStyle').disabled = !selectable();
     $('ctl-actions').disabled = state.model === 'listbox';
-    $('ctl-tabModel').disabled = !hasActions();
+    $('ctl-tabModel').disabled = !hasActions() || isApg();
     $('ctl-describePos').disabled = state.model !== 'list';
     $('ctl-describePos').closest('label').setAttribute('aria-disabled', String(state.model !== 'list'));
-    $('ctl-pageStep').disabled = state.model === 'rsp-grid';
+    $('ctl-pageStep').disabled = state.model === 'rsp-grid' || apgRows();
 }
 
 function syncPresetButtons(active) {
@@ -255,6 +262,7 @@ function render() {
     if (isDisabled(state.focusedIndex)) state.focusedIndex = firstEnabled();
 
     scroller.textContent = '';
+    rowSignature = '';
     root = createRoot();
     const container = state.model === 'row-grid' ? root.querySelector('.row-wrap') : root;
     items.forEach((item, i) => container.append(createBox(item, i)));
@@ -287,6 +295,11 @@ function createRoot() {
     const n = items.length;
     switch (state.model) {
         case 'rsp-grid':
+            el.setAttribute('role', 'grid');
+            if (isMulti()) el.setAttribute('aria-multiselectable', 'true');
+            break;
+        case 'apg-layout':
+            // Rows are built in layout() so they match the visual rows.
             el.setAttribute('role', 'grid');
             if (isMulti()) el.setAttribute('aria-multiselectable', 'true');
             break;
@@ -369,6 +382,9 @@ function createBox(item, i) {
             box.setAttribute('role', 'gridcell');
             box.setAttribute('aria-colindex', String(i + 1));
             box.innerHTML = content;
+        } else if (isApg()) {
+            box.setAttribute('role', 'gridcell');
+            box.innerHTML = content;
         } else {
             box.setAttribute('role', 'option');
             box.setAttribute('aria-posinset', String(i + 1));
@@ -408,7 +424,7 @@ function updateRoving() {
         getBox(i)
             .querySelectorAll('.action')
             .forEach((action) => {
-                action.tabIndex = state.tabModel === 'express' && i === state.focusedIndex ? 0 : -1;
+                action.tabIndex = !cellMode() && state.tabModel === 'express' && i === state.focusedIndex ? 0 : -1;
             });
     });
 }
@@ -483,11 +499,113 @@ function layout() {
         box.style.top = `${positions[i].top}px`;
     });
     root.style.height = `${total}px`;
+    if (isApg()) regroupRows();
 
     const clamp = resolvedSize !== state.size ? ` (clamped from ${state.size.toUpperCase()} so two columns fit)` : '';
     $('size-info').textContent = `Rendered size ${resolvedSize.toUpperCase()}${clamp} · ${columnCount} visual column${
         columnCount === 1 ? '' : 's'
     } · gap ${gap}px · width ${width}px`;
+}
+
+// ---------------------------------------------------------------- APG layout grid rows
+
+// Logical row and column for a card. Grid layout: rows match the visual rows.
+// Waterfall has no rows, so the model falls back to a single row.
+function apgCell(i) {
+    if (!apgRows()) return { row: 0, col: i, rows: 1, cols: items.length };
+    return { row: Math.floor(i / columnCount), col: i % columnCount, rows: Math.ceil(items.length / columnCount), cols: columnCount };
+}
+
+function regroupRows() {
+    const signature = `${state.layout}:${apgRows() ? columnCount : 'single'}:${items.length}`;
+    if (signature === rowSignature) return;
+    const previous = rowSignature;
+    rowSignature = signature;
+
+    const active = document.activeElement;
+    const hadFocus = root.contains(active);
+    const boxes = items.map((_, i) => getBox(i));
+    root.querySelectorAll('.apg-row').forEach((row) => row.remove());
+
+    const { rows, cols } = apgCell(0);
+    root.setAttribute('aria-rowcount', String(rows));
+    root.setAttribute('aria-colcount', String(cols));
+    const rowEls = Array.from({ length: rows }, (_, r) => {
+        const row = document.createElement('div');
+        row.setAttribute('role', 'row');
+        row.setAttribute('aria-rowindex', String(r + 1));
+        row.className = 'apg-row';
+        root.append(row);
+        return row;
+    });
+    boxes.forEach((box, i) => {
+        const cell = apgCell(i);
+        box.setAttribute('aria-colindex', String(cell.col + 1));
+        rowEls[cell.row].append(box);
+    });
+
+    // Moving a focused node drops focus, so restore it without logging a move.
+    if (hadFocus && document.activeElement !== active) {
+        quietFocus = true;
+        active.focus({ preventScroll: true });
+        quietFocus = false;
+    }
+
+    if (previous && previous.split(':')[0] === state.layout) {
+        const cell = apgCell(state.focusedIndex);
+        addLog({
+            key: 'Resize',
+            level: 'warn',
+            text: `Visual columns changed, so the grid rows were rebuilt: now ${rows} rows × ${cols} columns. The focused card is now row ${cell.row + 1}, column ${cell.col + 1}. Screen reader users get no notice that the structure changed.`,
+        });
+        if (hadFocus) showCurrent(state.focusedIndex, describe(state.focusedIndex, false));
+    }
+    if (previous) renderTree();
+}
+
+function apgNav(i, e) {
+    const key = e.key;
+    const rtl = state.dir === 'rtl';
+    const n = items.length;
+    const ctrl = e.ctrlKey || e.metaKey;
+    const { row, cols } = apgCell(i);
+    const rowStart = apgRows() ? row * cols : 0;
+    const rowEnd = apgRows() ? Math.min(n, rowStart + cols) - 1 : n - 1;
+    const firstIn = (a, b) => {
+        for (let j = a; j <= b; j++) if (!isDisabled(j)) return j;
+        return null;
+    };
+    const lastIn = (a, b) => {
+        for (let j = b; j >= a; j--) if (!isDisabled(j)) return j;
+        return null;
+    };
+    const vertical = (dir, rowsToMove = 1) => {
+        if (!apgRows()) return step(i, dir);
+        let j = i;
+        for (let moved = 0; moved < rowsToMove; ) {
+            const next = j + dir * cols;
+            if (next < 0 || next >= n) break;
+            j = next;
+            if (!isDisabled(j)) moved++;
+        }
+        while (j !== i && isDisabled(j)) j -= dir * cols;
+        return j === i ? null : j;
+    };
+    const pick = (j) => (j === null || j === i ? null : j);
+
+    if (key === 'Home') return pick(ctrl ? firstEnabled() : firstIn(rowStart, rowEnd));
+    if (key === 'End') return pick(ctrl ? lastEnabled() : lastIn(rowStart, rowEnd));
+    // Right and Left wrap to the next or previous row, as APG allows for layout grids.
+    if (key === 'ArrowRight') return step(i, rtl ? -1 : 1);
+    if (key === 'ArrowLeft') return step(i, rtl ? 1 : -1);
+    if (key === 'ArrowDown') return vertical(1);
+    if (key === 'ArrowUp') return vertical(-1);
+    if (key === 'PageDown' || key === 'PageUp') {
+        if (!apgRows()) return pageLinear(i, key === 'PageDown' ? 1 : -1);
+        const rowsPerPage = Math.max(1, Math.floor(scroller.clientHeight / positions[i].height) - 1);
+        return vertical(key === 'PageDown' ? 1 : -1, rowsPerPage);
+    }
+    return null;
 }
 
 // ---------------------------------------------------------------- navigation
@@ -657,7 +775,7 @@ function onKeyDown(e) {
     const key = e.key;
     if (['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'PageDown', 'PageUp'].includes(key)) {
         e.preventDefault();
-        const dest = navTarget(i, key);
+        const dest = isApg() ? apgNav(i, e) : navTarget(i, key);
         if (dest === null) {
             addLog({ key: keyName(e), level: 'note', text: 'No card in that direction. Focus stays.' });
             return;
@@ -674,10 +792,10 @@ function onKeyDown(e) {
         return;
     }
 
-    if (key === 'Enter' && state.tabModel === 'single' && hasActions()) {
+    if ((key === 'Enter' || (key === 'F2' && isApg())) && cellMode()) {
         e.preventDefault();
         const action = box.querySelector('.action');
-        lastNav = { key: 'Enter', from: i, base: 'Enter' };
+        lastNav = { key, from: i, base: key };
         action.focus();
         return;
     }
@@ -713,15 +831,19 @@ function onKeyDown(e) {
 function onActionKey(e, i, box) {
     const actions = [...box.querySelectorAll('.action')];
     const index = actions.indexOf(e.target);
-    if (e.key === 'Escape') {
+    if (e.key === 'Escape' || (e.key === 'F2' && isApg())) {
         e.preventDefault();
-        focusIndex(i, { key: 'Escape', from: i, base: 'Escape' });
+        focusIndex(i, { key: e.key, from: i, base: 'Escape' });
         return;
     }
-    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+    const forwardKeys = isApg() ? ['ArrowRight', 'ArrowDown'] : ['ArrowRight'];
+    const backKeys = isApg() ? ['ArrowLeft', 'ArrowUp'] : ['ArrowLeft'];
+    if (forwardKeys.includes(e.key) || backKeys.includes(e.key)) {
         e.preventDefault();
-        const forward = (e.key === 'ArrowRight') !== (state.dir === 'rtl');
+        let forward = forwardKeys.includes(e.key);
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') forward = forward !== (state.dir === 'rtl');
         const next = actions[(index + (forward ? 1 : -1) + actions.length) % actions.length];
+        lastNav = { key: keyName(e), from: i, base: 'action-arrow' };
         next.focus();
     }
 }
@@ -790,11 +912,13 @@ function onFocusIn(e) {
         const said = `${t.getAttribute('aria-label')}, button`;
         $('cur-name').textContent = t.getAttribute('aria-label');
         $('cur-announce').textContent = said;
-        const text =
-            nav?.base === 'Enter'
-                ? 'Moved into card actions with a secondary command (Enter). Users must learn this; Escape returns to the card.'
-                : 'Tab moved into this card\'s actions.';
-        addLog({ key: nav?.key || lastKeyName || 'Focus', level: nav?.base === 'Enter' ? 'note' : 'ok', text, said });
+        const viaCommand = nav?.base === 'Enter' || nav?.base === 'F2';
+        const text = viaCommand
+            ? `Moved into card actions with a secondary command (${nav.base}). Users must learn this; ${isApg() ? 'arrows move between the actions, and Escape or F2 returns' : 'Escape returns'} to the card.`
+            : nav?.base === 'action-arrow'
+              ? 'Moved to the next action in this card.'
+              : 'Tab moved into this card\'s actions.';
+        addLog({ key: nav?.key || lastKeyName || 'Focus', level: viaCommand ? 'note' : 'ok', text, said });
     }
 }
 
@@ -824,6 +948,13 @@ function describe(i, entering) {
             announce = `${item.title}${sel}${dim}, row ${i + 1} of ${n}`;
             exposed = `row ${i + 1} of ${n}, column 1 of 1`;
             break;
+        case 'apg-layout': {
+            const c = apgCell(i);
+            prefix = `grid, Nature photos, ${c.rows} ${c.rows === 1 ? 'row' : 'rows'}, ${c.cols} columns. `;
+            announce = `${item.title}${sel}${dim}, row ${c.row + 1}, column ${c.col + 1}`;
+            exposed = `row ${c.row + 1} of ${c.rows}, column ${c.col + 1} of ${c.cols}${apgRows() ? '' : ' (waterfall falls back to one row)'}`;
+            break;
+        }
         case 'row-grid':
             prefix = `grid, Nature photos, 1 row, ${n} columns. `;
             announce = `${item.title}${sel}${dim}, column ${i + 1} of ${n}`;
@@ -877,6 +1008,25 @@ function judge(nav, to) {
         return { level: 'ok', text: `Row ${from + 1} → row ${to + 1}.` };
     }
 
+    if (isApg()) {
+        const a = apgCell(from);
+        const b = apgCell(to);
+        const where = (c) => `row ${c.row + 1}, column ${c.col + 1}`;
+        if (!apgRows()) {
+            return {
+                level: vertical ? 'note' : 'ok',
+                text: `Column ${a.col + 1} → ${b.col + 1}. Waterfall has no visual rows, so this falls back to a single row.`,
+            };
+        }
+        if (horizontal && a.row !== b.row) {
+            return {
+                level: 'ok',
+                text: `${where(a)} → ${where(b)}. Wrapped to the ${b.row > a.row ? 'next' : 'previous'} row. The announced row changes too, so users can tell why.`,
+            };
+        }
+        return { level: 'ok', text: `${where(a)} → ${where(b)}. Announced position matches what sighted users see.` };
+    }
+
     if (state.model === 'row-grid' && vertical) {
         return {
             level: 'note',
@@ -922,6 +1072,16 @@ const NOTES = {
             <li class="warning">In waterfall there are no rows at all.</li>
             <li>Card actions need a secondary command (Enter, then Escape) when the grid is one tab stop.</li>
         </ul>`,
+    'apg-layout': `
+        <p>The <a href="https://www.w3.org/WAI/ARIA/apg/patterns/grid/#layoutgridsforgroupingwidgets">APG layout grid</a> pattern: <code>grid</code> &gt; one <code>row</code> per visual row &gt; a <code>gridcell</code> per card, with <code>aria-rowindex</code> and <code>aria-colindex</code>. This is option B in the approach doc.</p>
+        <ul>
+            <li>Announced row and column match what sighted users see, so 2D arrow keys make sense to screen reader users.</li>
+            <li>Right and Left Arrow wrap between rows. Home and End stay in the row; Ctrl + Home and Ctrl + End go to the start and end of the grid.</li>
+            <li>Card actions use the APG in-cell convention: Enter or F2 moves into the card, arrows move between its actions, and Escape or F2 returns.</li>
+            <li class="warning">Drag the width slider: every column change rebuilds the rows in script, moving focused nodes, and positions change without notice.</li>
+            <li class="warning">Waterfall has no rows, so this model falls back to a single row there.</li>
+            <li class="warning">APG calls selection "unusual" in a layout grid. Focus lands on the cell, which contains several widgets, rather than on one widget, which is APG's recommended cell design.</li>
+        </ul>`,
     'row-grid': `
         <p>Fallback candidate: <code>grid</code> &gt; one <code>row</code> &gt; a <code>gridcell</code> per card with <code>aria-colindex</code>. Arrow keys move in DOM order.</p>
         <ul>
@@ -948,13 +1108,16 @@ const NOTES = {
 function renderNotes() {
     const keys = state.model === 'rsp-grid'
         ? '<p>Keys: arrows follow the visual layout, Page Up/Down move by a screen of rows, Home/End go to the first and last card.</p>'
-        : `<p>Keys: Right/Down Arrow next, Left/Up Arrow previous (mirrored in right-to-left), Page Up/Down move ${state.pageStep} cards, Home/End go to the first and last card.</p>`;
-    const tab =
-        hasActions() && state.tabModel === 'express'
+        : apgRows()
+          ? '<p>Keys: arrows move by cell (Right/Left wrap between rows, mirrored in right-to-left), Page Up/Down move by a screen of rows, Home/End go to the start and end of the row, Ctrl + Home/End go to the first and last card.</p>'
+          : `<p>Keys: Right/Down Arrow next, Left/Up Arrow previous (mirrored in right-to-left), Page Up/Down move ${state.pageStep} cards, Home/End go to the first and last card.</p>`;
+    const tab = !hasActions()
+        ? ''
+        : isApg()
+          ? '<p>Card actions: one tab stop. Enter or F2 moves into the card, arrows move between actions, Escape or F2 returns.</p>'
+          : state.tabModel === 'express'
             ? '<p>Tab model: Tab moves from the focused card into its actions, then out of the collection.</p>'
-            : hasActions()
-              ? '<p>Tab model: one tab stop. Enter moves into the card actions, Escape returns.</p>'
-              : '';
+            : '<p>Tab model: one tab stop. Enter moves into the card actions, Escape returns.</p>';
     const selection = selectable()
         ? `<p>Selection: Space toggles, ${isMulti() ? 'Shift + arrow extends, Ctrl/Cmd + A selects all, ' : ''}Escape clears.</p>`
         : '';
@@ -988,7 +1151,7 @@ function accName(el) {
 
 function stateText(el) {
     const parts = [];
-    const attrs = ['aria-selected', 'aria-pressed', 'aria-posinset', 'aria-setsize', 'aria-colindex', 'aria-rowcount', 'aria-colcount', 'aria-multiselectable', 'aria-disabled'];
+    const attrs = ['aria-selected', 'aria-pressed', 'aria-posinset', 'aria-setsize', 'aria-rowindex', 'aria-colindex', 'aria-rowcount', 'aria-colcount', 'aria-multiselectable', 'aria-disabled'];
     for (const attr of attrs) if (el.hasAttribute(attr)) parts.push(`${attr.replace('aria-', '')}=${el.getAttribute(attr)}`);
     if (el.type === 'checkbox') parts.push(el.checked ? 'checked' : 'not checked');
     if (el.disabled) parts.push('disabled');
@@ -1001,8 +1164,22 @@ function renderTree() {
     const limit = 3;
     const walk = (el, depth) => {
         if (el.getAttribute('aria-hidden') === 'true') return;
-        if (el.classList.contains('box') && Number(el.dataset.index) >= limit) {
-            if (Number(el.dataset.index) === limit) lines.push(`${'  '.repeat(depth)}… ${items.length - limit} more cards`);
+        const pad = '  '.repeat(depth);
+        if (isApg() && el.classList.contains('apg-row')) {
+            const rowIndex = Number(el.getAttribute('aria-rowindex'));
+            if (rowIndex > 2) {
+                if (rowIndex === 3) lines.push(`${pad}… ${Number(root.getAttribute('aria-rowcount')) - 2} more rows`);
+                return;
+            }
+        }
+        if (isApg() && el.classList.contains('box')) {
+            const col = Number(el.getAttribute('aria-colindex'));
+            if (col > 2) {
+                if (col === 3) lines.push(`${pad}… ${el.parentElement.children.length - 2} more cells in this row`);
+                return;
+            }
+        } else if (el.classList.contains('box') && Number(el.dataset.index) >= limit) {
+            if (Number(el.dataset.index) === limit) lines.push(`${pad}… ${items.length - limit} more cards`);
             return;
         }
         const role = implicitRole(el);
