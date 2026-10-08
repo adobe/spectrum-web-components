@@ -31,7 +31,7 @@
     "test:watch": "vitest --watch"
   },
   "dependencies": {
-    "@adobe/spectrum-tokens": "15.5.0",
+    "@adobe/spectrum-tokens": "15.2.0",
     "prettier": "3.9.9",
     "yargs": "18.2.0"
   },
