@@ -17,4 +17,10 @@ export const TOAST_VARIANTS = [
   'negative',
 ] as const;
 
+export const SWC_TOAST_ACTION_EVENT = 'swc-toast-action' as const;
+export const SWC_TOAST_OPEN_EVENT = 'swc-open' as const;
+export const SWC_TOAST_AFTER_OPEN_EVENT = 'swc-after-open' as const;
+export const SWC_TOAST_CLOSE_EVENT = 'swc-close' as const;
+export const SWC_TOAST_AFTER_CLOSE_EVENT = 'swc-after-close' as const;
+
 export type ToastVariant = (typeof TOAST_VARIANTS)[number];
