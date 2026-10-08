@@ -27,6 +27,7 @@
     - [Position, reading order, and responsive layout](#position-reading-order-and-responsive-layout)
     - [Geometry and virtualization](#geometry-and-virtualization)
 - [Possible solutions](#possible-solutions)
+    - [Mapping the RSP specification and implementation](#mapping-the-rsp-specification-and-implementation)
     - [Option 1: Retain and repair the RSP layout-grid model](#option-1-retain-and-repair-the-rsp-layout-grid-model)
     - [Option 2: Add complete forward traversal to the layout grid](#option-2-add-complete-forward-traversal-to-the-layout-grid)
     - [Option 3: Use native list semantics and explicit controls](#option-3-use-native-list-semantics-and-explicit-controls)
@@ -34,6 +35,7 @@
     - [Option 5: Use one semantic row with a cell per card](#option-5-use-one-semantic-row-with-a-cell-per-card)
     - [Option 6: Use menu items as card-shaped commands](#option-6-use-menu-items-as-card-shaped-commands)
     - [Option 7: Group card controls in a toolbar](#option-7-group-card-controls-in-a-toolbar)
+    - [Option 8: Group card controls in a native fieldset](#option-8-group-card-controls-in-a-native-fieldset)
 - [Evaluation and recommended next steps](#evaluation-and-recommended-next-steps)
     - [Test matrix](#test-matrix)
     - [Test tasks and acceptance criteria](#test-tasks-and-acceptance-criteria)
@@ -187,6 +189,22 @@ Do not remove the focused card or active child from the DOM without deliberate f
 
 ## Possible solutions
 
+### Mapping the RSP specification and implementation
+
+**Original RSP Card accessibility specification maps to option 1.** The [historical specification](https://github.com/adobe/react-spectrum/blob/main/specs/accessibility/Card.mdx) describes a single-column layout grid with one `row` per card and a `rowheader` inside it. Left/Right visits the next/previous enabled card in collection order regardless of layout; Up/Down chooses an adjacent visual row by overlap. Only the active card's interactive descendants are tabbable. Option 1 reproduces these central semantics and navigation rules, but its geometry scoring is a prototype approximation, not an exact implementation of the specification's largest-overlap rule.
+
+**RSP's actual CardView implementation maps most closely to the baseline, `swc-card-view`, not a numbered option.** The [current CardView documentation](https://react-spectrum.adobe.com/CardView) renders a one-column semantic grid with `gridcell` rather than `rowheader`. Its [CardView source](https://github.com/adobe/react-spectrum/blob/main/packages/@react-spectrum/s2/src/CardView.tsx) uses GridLayout for uniform cards and WaterfallLayout for varied-height cards. The baseline adapts this distinction from the PR comparison; it is not a copy of RSP's production component.
+
+| Contract | Original specification | Current RSP implementation | SWC comparison |
+| --- | --- | --- | --- |
+| Card role | `rowheader` inside a `row` | `gridcell` inside a `row`, observed in the documentation examples | Option 1 uses `rowheader`; baseline uses `gridcell`. |
+| Semantic dimensions | One column, one row per card, regardless of visual wrapping | Documentation examples expose `aria-colcount="1"` and one semantic row per card | Both option 1 and baseline retain this framing; neither is option 5's single-row grid. |
+| Left/Right | Sequential next/previous enabled card regardless of layout | Uniform grid follows collection order; [WaterfallLayout](https://github.com/adobe/react-spectrum/blob/main/packages/react-stately/src/layout/WaterfallLayout.ts) overrides Left/Right using geometry and perpendicular overlap | Option 1 stays sequential in both layouts; baseline switches to spatial movement in waterfall. |
+| Waterfall selection range | Sequential horizontal keyboard traversal remains the specified route | WaterfallLayout also overrides range selection to work spatially | The baseline's Shift navigation still selects a collection-order range, so it does not provide exact RSP selection parity. |
+| Rendering scope | Describes the Card/GridView interaction contract | Current CardView uses a Virtualizer with layout-specific measurement | All SWC prototypes are fully loaded; virtualization and production loading behavior are not reproduced. |
+
+These comparisons distinguish a historical design contract, current source behavior, and the SWC adaptation. Role metadata and automated checks do not establish equivalent screen reader speech or usability. Verify release versions and assistive technology behavior before treating either mapping as full conformance.
+
 ### Option 1: Retain and repair the RSP layout-grid model
 
 Keep a stable single-column grid with one row per card. Restore or preserve collection-order left/right navigation for both uniform and waterfall layouts, as the original spec recommends. Retain spatial up/down navigation initially as the comparison baseline. Use one active card entry point and make that card's child controls available through Tab.
@@ -213,7 +231,7 @@ Option 5 separates the single-row semantic experiment from this wrapping-navigat
 
 Represent the collection with a native list and each card as a list item. Provide a link or button for the primary action, a labelled checkbox for selection, and separate child controls. Use normal Tab navigation and screen reader reading commands. Consider skip links or other appropriate bypass mechanisms when the collection has many tab stops.
 
-Optional arrow shortcuts can enhance navigation where available, but must not replace normal access. Keep list position metadata accurate if items are virtualized.
+List items have a roving focus entry point. Left/Right moves sequentially between enabled items (mirrored in RTL); Up/Down moves spatially above/below with horizontal overlap. Home/End reaches the first/last enabled item. Child controls retain normal Tab access and native arrow behavior. These shortcuts supplement rather than replace normal access. Keep list position metadata accurate if items are virtualized.
 
 **Benefits:** Preserves content structure and independent child interactions without claiming that a non-tabular collection is a grid. Selection and activation use familiar controls.
 
@@ -237,42 +255,54 @@ This replaces the earlier listbox prototype proposal. The exploration retains in
 
 Represent the collection as a `grid` containing one `row`, with one focusable `gridcell` per card. Expose `aria-rowcount="1"`, `aria-colcount` equal to the collection size, `aria-rowindex="1"` on the row, and a stable one-based `aria-colindex` on each cell. Preserve this structure across grid and waterfall layouts, resize, and zoom.
 
-Left/Right traverses enabled cards in collection order, mirrored for right-to-left layouts. Home/End reaches the first/last enabled card. Up/Down does not move focus because there is only one semantic row. Keep checkbox selection, Space/Enter behavior, keyboard range selection, and Tab access to the active card's controls.
+Left/Right traverses enabled cards incrementally in collection order, mirrored for right-to-left layouts. Home/End reaches the first/last enabled card. Up/Down skips to the nearest enabled card visually above/below with horizontal overlap, stopping at visual boundaries. Keep checkbox selection, Space/Enter behavior, keyboard range selection, and Tab access to the active card's controls.
 
 **Benefits:** Aligns horizontal navigation with the announced single-row structure. Provides a complete sequential route in both visual layouts while retaining selection and independently interactive children. Does not regroup semantic rows as the viewport changes.
 
-**Tradeoffs:** Announced columns describe collection order rather than visual columns. Sighted keyboard users may expect spatial Up/Down movement, and sequential waterfall movement can look surprising. Column count/index metadata does not guarantee spoken “x of y”; changing metadata alone is not proof of improved accessibility.
+**Tradeoffs:** Announced columns describe collection order rather than visual columns. The single semantic row does not explain spatial Up/Down movement, and sequential waterfall movement can look surprising. Column count/index metadata does not guarantee spoken “x of y”; changing metadata alone is not proof of improved accessibility.
 
 **Decision condition:** Users discover the sequential route, reach every enabled card, understand position and selection, and access child actions without excessive effort. Compare spoken output and sighted keyboard usability with Options 1–3 rather than assuming one-row semantics resolve the mismatch.
 
 ### Option 6: Use menu items as card-shaped commands
 
-Use a labelled `menu` whose cards are `menuitemcheckbox`, `menuitemradio`, or plain `menuitem` depending on selection mode. A visual checkbox indicator mirrors checked state without introducing an independent control. Move Open/Share actions outside the menu rather than nesting buttons inside menu items.
+Use a labelled `menu` whose cards are `menuitemcheckbox`, `menuitemradio`, or plain `menuitem` depending on selection mode. A visual checkbox indicator mirrors checked state without introducing an independent input. Keep Open/Share buttons inside each card as an explicit nested-interaction experiment.
 
-Use sequential Up/Down navigation with wrapping, Home/End, first-character search, and Escape requesting host focus restoration. Tab exits the menu. This persistent comparison is not a popup lifecycle implementation. Disabled items are skipped by the prototype; there is no grid metadata, spatial navigation, or range selection.
+All four arrows move spatially between enabled menu-item checkboxes, stopping at boundaries. Home/End and first-character search remain available. Tab enters the active card's Open and Share buttons, then exits; Shift+Tab reverses the path. Nested actions preserve native keys and do not select the card. Escape returns from an action to its menu item; Escape on a menu item requests host focus restoration. This persistent comparison has no popup lifecycle or range selection.
 
-**Benefits:** Provides checked-state commands, a sequential route in both layouts, familiar menu navigation, and one menu tab stop without row/column announcements.
+**Benefits:** Provides checked-state commands and spatial movement without row/column announcements. Preserves nested actions without requiring selection first.
 
-**Tradeoffs:** Menu semantics describe commands, not arbitrary content collections. Rich reading structure and independent child controls are lost, and external actions change the task flow. Multi-column and waterfall visuals can conflict with familiar menu expectations.
+**Tradeoffs:** Menu semantics describe commands, not arbitrary content collections. Nested buttons and four-direction navigation depart from the conventional menu pattern. Axe-core reports `nested-interactive` for the nested controls; tests retain this exact finding rather than suppressing the rule. Passing the regression suite does not mean this option is accessibility-compliant. Manual screen reader testing is required.
 
-**Decision condition:** The content genuinely represents command choices and users understand checked state, external actions, and entry/exit. This is not an approved role-only replacement for rich interactive cards.
+**Decision condition:** Users understand checked state, spatial movement, nested actions, and entry/exit, and the known accessibility violation is resolved before production adoption. This is not an approved role-only replacement for rich interactive cards.
 
 ### Option 7: Group card controls in a toolbar
 
-Use a labelled horizontal `toolbar` with a labelled `group` per card. Preserve native selection checkboxes and Open/Share buttons, but apply roving focus to the actual controls: Left/Right traverses every enabled control, Home/End reaches the boundaries, and Tab exits. RTL mirrors horizontal movement. Native Space/Enter behavior is preserved; Up/Down and card-level range selection are not added.
+Use a labelled horizontal `toolbar` with a labelled `group` per card. Left/Right moves sequentially between enabled card checkboxes, mirrored in RTL; Up/Down moves to the checkbox spatially above/below. Home/End reaches the first/last enabled checkbox. Tab visits Open and Share within the active card, then exits; Shift+Tab reverses that path. Arrow keys on action buttons remain native. Native Space/Enter activation is preserved. With selection disabled, Open becomes the arrow-navigation entry point.
 
-**Benefits:** Retains independent controls and native activation with one toolbar tab stop. Avoids grid position metadata and semantic restructuring during visual reflow.
+**Benefits:** Retains independent controls and native activation, with efficient checkbox-to-checkbox arrows and active-card action tab stops. Avoids grid position metadata and semantic restructuring during visual reflow.
 
-**Tradeoffs:** A toolbar is a command grouping, not a content-reading or object-collection pattern. Several key presses may be needed to pass each card. Logical control order can differ from visual neighbors in grid and waterfall, and there is no standard card-position announcement.
+**Tradeoffs:** A toolbar is a command grouping, not a content-reading or object-collection pattern. Tab entering card actions and vertical movement depart from the conventional horizontal-toolbar model. Sequential horizontal order can differ from visual neighbors in waterfall, and there is no standard card-position announcement.
 
-**Decision condition:** Command-heavy tasks fit toolbar expectations and users understand that arrows move among controls, not only between cards. Compare content-reading tasks and positional feedback against list/grid models before choosing this approach.
+**Decision condition:** Users understand checkbox arrows and the separate Tab path through card actions. Compare content-reading tasks and positional feedback against list/grid/fieldset models before choosing this approach.
+
+### Option 8: Group card controls in a native fieldset
+
+Use a native `fieldset` with a visible `legend` naming the collection and a labelled `group` per card. Retain real checkboxes and Open/Share buttons. Reuse option 7's checkbox arrow navigation and active-card Tab sequence without assigning toolbar or grid roles. Native selection and action events remain independent.
+
+**Benefits:** Uses native form grouping and a visible collection label. Preserves independent controls without claiming that a content collection is a toolbar or a tabular grid.
+
+**Tradeoffs:** A fieldset does not define arrow navigation, collection positions, or roving tab stops. The custom checkbox shortcuts and inactive-card action tab indices still require discoverability and assistive technology testing. Fieldset/legend names may be repeated by some screen readers.
+
+**Decision condition:** The collection fits a set of related selectable controls, users can discover the arrow/Tab model, and card groups and the legend provide useful context without excessive repetition.
 
 ## Evaluation and recommended next steps
 
 
-Start with a fully loaded, uniform card layout to isolate semantics and keyboard behavior. Compare the PR's default RSP-style baseline, the repaired sequential grid, the wrapping-grid variant, the native-list variant, the feed/article variant, the single-row grid, the menu, and the toolbar. All eight prototypes include waterfall as a follow-up comparison; virtualization remains a separate later dimension.
+Start with a fully loaded, uniform card layout to isolate semantics and keyboard behavior. Compare the PR's default RSP-style baseline, the repaired sequential grid, the wrapping-grid variant, the native-list variant, the feed/article variant, the single-row grid, the menu, the toolbar, and the fieldset. All nine prototypes include waterfall as a follow-up comparison; virtualization remains a separate later dimension.
 
-The Storybook examples live in the card-view component folder as `swc-card-view` and `swc-card-view-option-1` through `swc-card-view-option-7`. Each has grid, waterfall, and accessibility stories, with a dedicated docs page describing its interaction and tradeoffs. The baseline adapts [PR #6798](https://github.com/adobe/spectrum-web-components/pull/6798)'s default RSP model rather than its entire multi-model inspector application.
+The Storybook examples live in the card-view component folder as `swc-card-view` and `swc-card-view-option-1` through `swc-card-view-option-8`. Each has grid, waterfall, and accessibility stories, with a dedicated docs page describing its interaction and tradeoffs. The baseline adapts [PR #6798](https://github.com/adobe/spectrum-web-components/pull/6798)'s default RSP model rather than its entire multi-model inspector application.
+
+Automated Playwright tests scan each prototype in both layouts with axe-core and compare accessibility-tree snapshots in initial, selected, and disabled states. The snapshots describe the browser accessibility tree, not verified screen reader speech. Option 6 explicitly records its known `nested-interactive` finding; other prototypes require no axe violations. Real Tab/Shift+Tab tests verify nested action entry and exit for options 6–8.
 
 Use the same content, primary actions, selection tasks, and child controls across comparable prototypes. Record DOM attributes, accessibility-tree structure, spoken output, focus movement, and task completion separately.
 

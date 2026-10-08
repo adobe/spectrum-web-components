@@ -1,0 +1,72 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-option-8.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-option-8` uses a native `fieldset` with a visible `legend` naming the collection. Each card is a labelled `group` containing a real selection checkbox, Open button, and Share button. The collection has no toolbar, grid, row, or cell roles.
+
+## Options
+
+### Grid
+
+Cards align in uniform visual rows. Horizontal arrows follow collection order; vertical arrows follow aligned cards above/below.
+
+<Canvas of={Stories.Grid} />
+
+### Waterfall
+
+Cards retain varied preview heights and use shortest-column placement. Horizontal arrows remain sequential; vertical arrows use measured geometry.
+
+<Canvas of={Stories.Waterfall} />
+
+## Behaviors
+
+<kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> move between enabled card
+checkboxes in collection order, mirrored in RTL. <kbd>ArrowUp</kbd> and
+<kbd>ArrowDown</kbd> move to the nearest enabled checkbox above/below with
+horizontal overlap. Movement stops at boundaries. <kbd>Home</kbd> and
+<kbd>End</kbd> reach the first/last enabled checkbox.
+
+<kbd>Tab</kbd> enters the active card's checkbox, then Open and Share, then
+leaves the collection. <kbd>Shift</kbd> + <kbd>Tab</kbd> reverses that path.
+Only active-card controls are tabbable. Action buttons retain native arrow and
+activation behavior. Checkboxes use native <kbd>Space</kbd>; action buttons use
+native <kbd>Space</kbd>/<kbd>Enter</kbd>. Actions do not select the card.
+
+Disabled cards' controls are native disabled and skipped by navigation. With selection disabled, Open becomes the arrow-navigation entry point and Tab reaches Share. There is no custom keyboard range selection.
+
+## Accessibility
+
+### Features
+
+The fieldset uses its legend as the accessible collection name. Card groups and controls have photo-specific names. Selection is exposed through native checkbox states, with a live selected-count status. Visual reflow changes geometry without changing semantic grouping.
+
+<Canvas of={Stories.Accessibility} />
+
+### Pros
+
+- Uses native grouping and a visible collection label without toolbar or tabular framing.
+- Preserves independent controls, efficient checkbox arrows, and native activation.
+- Keeps active-card actions accessible through Tab without adding every card's controls to the tab sequence.
+
+### Cons
+
+- Fieldset semantics do not prescribe arrow navigation or roving tab stops; users must discover the supplementary shortcuts.
+- Inactive-card actions are not in the normal Tab sequence, so assistive technology navigation needs verification.
+- Legend and group names may be repeated; there is no standard card-position/total announcement.
+- Sequential waterfall movement can differ from visual neighbors.
+
+### Best practices
+
+Compare this form-grouping model with list, grid, and toolbar alternatives. Test native control activation, disabled cards, RTL, reflow, and Tab entry/exit with keyboard users and screen readers. Axe-core and accessibility-tree snapshots do not establish spoken output or usability.
+
+## Upcoming features
+
+Virtualization, loading, and production assistive technology validation remain separate work. This comparison renders every card.
+
+<DocsFooter />

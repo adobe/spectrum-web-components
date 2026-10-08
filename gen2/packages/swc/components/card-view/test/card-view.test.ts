@@ -323,9 +323,14 @@ export const ListArrowNavigation: StoryObj = {
       await view.updateComplete;
       const root = view.shadowRoot!;
       const entries = [...root.querySelectorAll<HTMLElement>('li')];
-      const press = async (key: string) => {
+      const press = async (key: string, shiftKey = false) => {
         root.activeElement!.dispatchEvent(
-          new KeyboardEvent('keydown', { key, bubbles: true, composed: true })
+          new KeyboardEvent('keydown', {
+            key,
+            shiftKey,
+            bubbles: true,
+            composed: true,
+          })
         );
         await view.updateComplete;
       };
@@ -340,6 +345,9 @@ export const ListArrowNavigation: StoryObj = {
       expect(root.activeElement).toBe(entries[3]);
       await press('ArrowUp');
       expect(root.activeElement).toBe(entries[0]);
+      await press('ArrowRight', true);
+      expect(root.activeElement).toBe(entries[1]);
+      expect(view.selected).toEqual([]);
       const checkbox = entries[0].querySelector<HTMLInputElement>('input')!;
       checkbox.focus();
       await press('ArrowRight');

@@ -23,7 +23,7 @@ const meta: Meta = {
     ...prototypeMeta('swc-card-view-option-3').parameters,
     docs: {
       subtitle:
-        'Native list with normal Tab navigation and explicit selection.',
+        'Native list with list-item arrows and normal child-control Tab access.',
     },
   },
   tags: ['migrated'],

@@ -1,0 +1,63 @@
+- grid "Photo library":
+    - row "Coastal light Afternoon portrait Mountain study Along the shore Studio session Open horizon Evening landscape Profile in daylight Valley view Tideline Portrait archive Summit":
+        - gridcell "Coastal light" [selected]:
+            - checkbox "Select Coastal light" [checked]
+            - button "Coastal light"
+            - button "Share Coastal light"
+            - text: Coast collection · JPG
+        - gridcell "Afternoon portrait":
+            - checkbox "Select Afternoon portrait"
+            - button "Afternoon portrait"
+            - button "Share Afternoon portrait"
+            - text: Portrait collection · JPG
+        - gridcell "Mountain study" [disabled]:
+            - checkbox "Select Mountain study" [disabled]
+            - button "Mountain study" [disabled]
+            - button "Share Mountain study" [disabled]
+            - text: Landscape collection · JPG
+        - gridcell "Along the shore":
+            - checkbox "Select Along the shore"
+            - button "Along the shore"
+            - button "Share Along the shore"
+            - text: Coast collection · JPG
+        - gridcell "Studio session":
+            - checkbox "Select Studio session"
+            - button "Studio session"
+            - button "Share Studio session"
+            - text: Portrait collection · JPG
+        - gridcell "Open horizon":
+            - checkbox "Select Open horizon"
+            - button "Open horizon"
+            - button "Share Open horizon"
+            - text: Landscape collection · JPG
+        - gridcell "Evening landscape":
+            - checkbox "Select Evening landscape"
+            - button "Evening landscape"
+            - button "Share Evening landscape"
+            - text: Landscape collection · JPG
+        - gridcell "Profile in daylight":
+            - checkbox "Select Profile in daylight"
+            - button "Profile in daylight"
+            - button "Share Profile in daylight"
+            - text: Portrait collection · JPG
+        - gridcell "Valley view":
+            - checkbox "Select Valley view"
+            - button "Valley view"
+            - button "Share Valley view"
+            - text: Landscape collection · JPG
+        - gridcell "Tideline":
+            - checkbox "Select Tideline"
+            - button "Tideline"
+            - button "Share Tideline"
+            - text: Coast collection · JPG
+        - gridcell "Portrait archive":
+            - checkbox "Select Portrait archive"
+            - button "Portrait archive"
+            - button "Share Portrait archive"
+            - text: Portrait collection · JPG
+        - gridcell "Summit":
+            - checkbox "Select Summit"
+            - button "Summit"
+            - button "Share Summit"
+            - text: Landscape collection · JPG
+- status: 1 selected

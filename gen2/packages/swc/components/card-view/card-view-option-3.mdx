@@ -20,13 +20,22 @@ Uniform visual rows do not change the native list's DOM reading order or normal 
 
 ### Waterfall
 
-Shortest-column placement changes only visual positions. Focus and reading follow collection order, not visual geometry.
+Shortest-column placement changes visual positions. Reading and Tab order remain sequential; vertical list-item arrows follow measured geometry.
 
 <Canvas of={Stories.Waterfall} />
 
 ## Behaviors
 
-Tab and Shift+Tab visit every enabled checkbox and action in normal order. Space operates the focused checkbox or button using its native behavior. There is no collection arrow-key interception, roving tab stop, or custom keyboard range selection. Open and Share never toggle selection.
+<kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> move sequentially between enabled
+list items, mirrored in RTL. <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd> move
+spatially above/below with horizontal overlap. Movement stops at boundaries;
+<kbd>Home</kbd> and <kbd>End</kbd> reach the first/last enabled item. Only the
+active list item has `tabindex="0"`.
+
+<kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd> still visit every enabled
+checkbox and action in normal order. Child-control arrow keys are not
+intercepted. <kbd>Space</kbd> operates the focused native control. There is no
+custom range selection; Open and Share never toggle selection.
 
 ## Accessibility
 
@@ -38,14 +47,14 @@ Native list semantics preserve content and independent controls. Selection uses 
 
 ### Pros
 
-- Avoids conflicting row/column announcements and custom spatial navigation.
+- Avoids conflicting row/column announcements while providing supplemental list-item arrows.
 - Supports familiar reading and control interaction without relying on screen reader focus mode.
 - Keeps real child actions and explicit selection controls.
 
 ### Cons
 
 - Large collections have many tab stops and may be slower for frequent keyboard users.
-- Loses composite arrow navigation and keyboard range selection.
+- Supplemental arrows and list-item tab stops require discovery; there is no composite keyboard range selection.
 - Native list counts and position metadata do not guarantee that a focused child control announces "x of y."
 
 ### Best practices

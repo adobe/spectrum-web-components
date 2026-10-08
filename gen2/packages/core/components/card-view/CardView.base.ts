@@ -385,7 +385,7 @@ export abstract class CardViewBase extends SpectrumElement {
       return;
     }
     event.preventDefault();
-    if (event.shiftKey && this.selectionMode === 'multiple') {
+    if (this.composite && event.shiftKey && this.selectionMode === 'multiple') {
       const start = Math.min(this.anchorIndex, next);
       const end = Math.max(this.anchorIndex, next);
       this.selected = this.items

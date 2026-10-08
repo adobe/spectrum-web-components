@@ -28,7 +28,7 @@ async function openPrototype(
   const tag = `swc-card-view${suffix}`;
   const root = await gotoStory(
     page,
-    `components-card-view${suffix}--${layout}`,
+    `components-card-view-${prototype}--${layout}`,
     tag
   );
   const view = root.locator(tag);
@@ -120,8 +120,61 @@ for (const prototype of prototypes) {
           body: JSON.stringify(reports, null, 2),
           contentType: 'application/json',
         });
-        expect(reports.flatMap((report) => report.violations)).toEqual([]);
+        const expectedRules =
+          prototype === 'option-6' ? ['nested-interactive'] : [];
+        if (prototype === 'option-6') {
+          testInfo.annotations.push({
+            type: 'known-accessibility-violation',
+            description:
+              'Nested card actions inside menuitemcheckbox intentionally violate the conventional menu pattern.',
+          });
+        }
+        for (const report of reports) {
+          expect(
+            report.violations.map((violation) => violation.id),
+            report.state
+          ).toEqual(expectedRules);
+          for (const violation of report.violations) {
+            for (const node of violation.nodes) {
+              expect(node.html).toContain('role="menuitemcheckbox"');
+            }
+          }
+        }
       });
+
+      if (['option-6', 'option-7', 'option-8'].includes(prototype)) {
+        test('Tab enters the active card actions and exits without a trap', async ({
+          page,
+        }) => {
+          const view = await openPrototype(page, prototype, layout);
+          await page
+            .getByRole('button', { name: 'Photo library', exact: true })
+            .focus();
+          await page.keyboard.press('Tab');
+          const entries = view.getByRole(
+            prototype === 'option-6' ? 'menuitemcheckbox' : 'checkbox'
+          );
+          await expect(entries.first()).toBeFocused();
+          await page.keyboard.press('ArrowRight');
+          await expect(entries.nth(1)).toBeFocused();
+          await page.keyboard.press('Tab');
+          const open = view.locator('[data-index="1"][data-action="open"]');
+          const share = view.locator('[data-index="1"][data-action="share"]');
+          await expect(open).toBeFocused();
+          await page.keyboard.press('Tab');
+          await expect(share).toBeFocused();
+          await page.keyboard.press('Tab');
+          await expect(
+            page.getByRole('button', { name: 'Upload photos', exact: true })
+          ).toBeFocused();
+          await page.keyboard.press('Shift+Tab');
+          await expect(share).toBeFocused();
+          await page.keyboard.press('Shift+Tab');
+          await expect(open).toBeFocused();
+          await page.keyboard.press('Shift+Tab');
+          await expect(entries.nth(1)).toBeFocused();
+        });
+      }
     });
   }
 }
