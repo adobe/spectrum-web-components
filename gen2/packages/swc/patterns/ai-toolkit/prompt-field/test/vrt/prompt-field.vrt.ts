@@ -15,6 +15,8 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../../swc-prompt-field.js';
 import '../../../upload-attachment/swc-upload-attachment.js';
+import '@adobe/spectrum-wc/components/asset/swc-asset.js';
+import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
 import {
   createPermutations,
@@ -81,33 +83,31 @@ const legalDisclaimerSlot = html`
 
 const cardAttachment = (title: string, subtitle: string) => html`
   <swc-upload-attachment slot="attachment" type="card" dismissible>
-    <div slot="thumbnail" role="img" aria-label=${subtitle}></div>
+    <swc-asset slot="thumbnail">
+      <img src="images/landscape-asset.jpg" alt=${subtitle} />
+    </swc-asset>
     <span slot="title">${title}</span>
     <span slot="subtitle">${subtitle}</span>
   </swc-upload-attachment>
 `;
 
-// Static gradients stand in for real thumbnails so VRT snapshots don't depend
-// on a network image request.
-const THUMBNAIL_GRADIENTS: Record<number, string> = {
-  64: 'linear-gradient(135deg, #a78bfa, #f472b6)',
-  56: 'linear-gradient(135deg, #f472b6, #facc15)',
-  823: 'linear-gradient(135deg, #38bdf8, #a78bfa)',
+// Local, network-free images stand in for real thumbnails so VRT snapshots
+// don't depend on an external request. Distinct images keep tiles visually
+// distinguishable in multi-attachment permutations.
+const THUMBNAIL_IMAGES: Record<number, string> = {
+  64: 'images/landscape-asset.jpg',
+  56: 'images/card-preview.jpg',
+  823: 'images/portrait-asset.jpg',
 };
 
 const mediaAttachment = (id: number, alt: string, badge?: string) => html`
   <swc-upload-attachment slot="attachment" type="media" dismissible>
-    <div
-      slot="thumbnail"
-      role="img"
-      aria-label=${alt}
-      style="inline-size: 100%; block-size: 100%; background: ${THUMBNAIL_GRADIENTS[
-        id
-      ]};"
-    ></div>
+    <swc-asset slot="thumbnail">
+      <img src=${THUMBNAIL_IMAGES[id]} alt=${alt} />
+    </swc-asset>
     ${badge
       ? html`
-          <span slot="badge">${badge}</span>
+          <swc-badge slot="badge" size="s" subtle>${badge}</swc-badge>
         `
       : nothing}
   </swc-upload-attachment>
