@@ -257,7 +257,7 @@ Prerequisite dependency:
 
 | # | Item | Blocking? | Status | Owner |
 | --- | --- | --- | --- | --- |
-| Q0 | Visual sign-off sources are confirmed: [S2 Web Desktop scale (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=125265-577&t=99qlf018hYjRXRft-4), [S2 close-button anatomy](https://s2.spectrum.corp.adobe.com/page/close-button/#anatomy), and `spectrum-css` `spectrum-two` `components/closebutton/index.css` | No | Resolved | Design + implementation |
+| Q0 | Visual sign-off sources are confirmed: [S2 Web Desktop scale (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=125265-577&t=99qlf018hYjRXRft-4), [S2 close-button anatomy](https://spectrum.adobe.com/web/swc/components/close-button#anatomy), and `spectrum-css` `spectrum-two` `components/closebutton/index.css` | No | Resolved | Design + implementation |
 
 ### Architecture and behavior
 
@@ -281,6 +281,6 @@ Prerequisite dependency:
 - [Button migration plan](../button/migration-plan.md)
 - [Button migration roadmap](../button/rendering-and-styling-migration-analysis.md)
 - [S2 Web Desktop scale (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=125265-577&t=99qlf018hYjRXRft-4)
-- [S2 close-button anatomy](https://s2.spectrum.corp.adobe.com/page/close-button/#anatomy)
+- [S2 close-button anatomy](https://spectrum.adobe.com/web/swc/components/close-button#anatomy)
 - `spectrum-css` `spectrum-two` `components/closebutton/index.css`
 - `spectrum-css` `spectrum-two` `components/closebutton/dist/metadata.json`

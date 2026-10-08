@@ -170,7 +170,7 @@ const breakWordSection = (key: string) => html`
       id: `${key}-breakword`,
       triggerLabel: 'Long token',
       label:
-        'https://spectrum.adobe.com/page/tooltip/#accessibility-and-keyboard-interactions',
+        'https://spectrum.adobe.com/web/swc/components/tooltip#accessibility',
       placement: 'bottom',
     })}
   </div>

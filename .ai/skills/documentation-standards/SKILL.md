@@ -257,14 +257,14 @@ Data | Data
 
 ## Resources
 
-- [Adobe voice and tone](https://spectrum.adobe.com/page/voice-and-tone/)
-- [Grammar and mechanics](https://spectrum.adobe.com/page/grammar-and-mechanics/)
-- [Inclusive UX writing](https://spectrum.adobe.com/page/inclusive-ux-writing/)
-- [Writing about people](https://spectrum.adobe.com/page/writing-about-people/)
-- [Writing for readability](https://spectrum.adobe.com/page/writing-for-readability/)
-- [Writing with visuals](https://spectrum.adobe.com/page/writing-with-visuals/)
-- [In-product word list](https://spectrum.adobe.com/page/in-product-word-list/)
-- [Writing for errors](https://spectrum.adobe.com/page/writing-for-errors/)
-- [Writing for onboarding](https://spectrum.adobe.com/page/writing-for-onboarding/)
+- [Adobe voice and tone](https://spectrum.adobe.com/content/voice-and-tone)
+- [Grammar and mechanics](https://spectrum.adobe.com/content/grammar-and-mechanics)
+- [Inclusive UX writing](https://spectrum.adobe.com/content/language-and-inclusivity/inclusive-ux-writing)
+- [Writing about people](https://spectrum.adobe.com/content/language-and-inclusivity/writing-about-people)
+- [Writing for readability](https://spectrum.adobe.com/content/language-and-inclusivity/writing-for-readability)
+- [Writing with visuals](https://spectrum.adobe.com/content/language-and-inclusivity/writing-with-visuals)
+- [In-product word list](https://spectrum.adobe.com/content/in-product-word-list)
+- [Writing for errors](https://spectrum.adobe.com/content/writing-for-errors)
+- [Writing for onboarding](https://spectrum.adobe.com/content/writing-for-onboarding)
 - [Writing a changeset (1st-gen)](https://github.com/adobe/spectrum-web-components/blob/main/1st-gen/.changeset/README.md)
 - [Writing a changeset (gen2)](https://github.com/adobe/spectrum-web-components/blob/main/gen2/.changeset/README.md)
