@@ -6,7 +6,7 @@
     "customElements": "custom-elements.json",
     "description": "Templates for generating a Spectrum Web Component package.",
     "devDependencies": {
-        "plop": "4.0.3"
+        "plop": "4.0.5"
     },
     "homepage": "https://opensource.adobe.com/spectrum-web-components/",
     "keywords": [
