@@ -14,6 +14,8 @@ node gen2/cardView-prototype/serve.mjs
 
 Then open <http://localhost:4321/>.
 
+The prototype is also available in the gen2 Storybook as **card-View-prototype**, in local dev mode only (`yarn storybook` from `gen2/`). Production, accessibility CI, and VRT builds exclude it.
+
 - Use a different port with `PORT=5000 node gen2/cardView-prototype/serve.mjs`.
 - To let teammates on the same network open it, run with `HOST=0.0.0.0` and share your machine's address. Only do this on a trusted network.
 - Scenario settings are stored in the URL, so you can share a link to a specific setup.
