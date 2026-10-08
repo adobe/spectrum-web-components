@@ -11,16 +11,17 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [Overview](#overview)
-- [Controllers](#controllers)
-- [Mixins](#mixins)
-- [Utilities](#utilities)
-- [Directives](#directives)
-- [Base class and dev-mode warnings](#base-class-and-dev-mode-warnings)
-- [Not yet adopted](#not-yet-adopted)
-- [Patterns (`swc/patterns/ai-toolkit`)](#patterns-swcpatternsai-toolkit)
-- [Attribute and slot vocabulary](#attribute-and-slot-vocabulary)
-- [Where to go deeper](#where-to-go-deeper)
+- [gen2 shared resources quick reference](#gen2-shared-resources-quick-reference)
+  - [Overview](#overview)
+  - [Controllers](#controllers)
+  - [Mixins](#mixins)
+  - [Utilities](#utilities)
+  - [Directives](#directives)
+  - [Base class and dev-mode warnings](#base-class-and-dev-mode-warnings)
+  - [Not yet adopted](#not-yet-adopted)
+  - [Patterns (`swc/patterns/ai-toolkit`)](#patterns-swcpatternsai-toolkit)
+  - [Attribute and slot vocabulary](#attribute-and-slot-vocabulary)
+  - [Where to go deeper](#where-to-go-deeper)
 
 </details>
 
@@ -77,7 +78,7 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 | `isDebug()` | Whether dev mode is active (the gate `warnIf`/`validateEnum` build on) | `progress-circle`, `card`, `dropzone`, `asset`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
 | `capitalize()` | Capitalizes first character of a string | `progress-circle`, `divider` |
 | `physicalSide()` | Drops alignment suffix from a placement (`bottom-start` to `bottom`) | `popover`, `menu` |
-| `runAfterTransition()` | Runs a callback once an element's CSS transition settles (or synchronously if none will run); built on `hasActiveTransition()`/`maxTransitionDurationMs()` in the same file | `popover` |
+| `runAfterTransition()` | Runs a callback once an element's CSS transition settles (or synchronously if none will run); built on `hasActiveTransition()`/`maxTransitionDurationMs()` in the same file | `popover`, `toast` |
 | `uniqueId()` (`swc/utils/id.ts`, not `core`) | Collision-resistant component ID generation | `prompt-field`, `suggestion`, `response-status`, `message-sources` |
 
 ## Directives

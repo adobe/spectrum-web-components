@@ -15,6 +15,10 @@
   display: block;
 }
 
+:host(:not([open])) {
+  display: none;
+}
+
 .swc-Toast {
   box-sizing: border-box;
 }
