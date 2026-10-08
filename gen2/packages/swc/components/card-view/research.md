@@ -2,7 +2,7 @@
 
 ## Scope
 
-Create a baseline `swc-card-view` and four experimental elements named `swc-card-view-option-1` through `swc-card-view-option-4`. Keep their rendering, registration, stories, tests, and comparison docs together under the card-view component folder. Follow gen2's core/rendering separation for reusable collection behavior.
+Create a baseline `swc-card-view` and seven experimental elements named `swc-card-view-option-1` through `swc-card-view-option-7`. Keep their rendering, registration, stories, tests, and comparison docs together under the card-view component folder. Follow gen2's core/rendering separation for reusable collection behavior.
 
 These are accessibility comparison prototypes, not a completed production CardView migration. The strategy calls for a fully loaded collection before adding virtualization. Each prototype needs a regular grid and a shortest-column waterfall layout, identical card content, checkbox-style selection, and a distinct documented interaction contract.
 
@@ -34,7 +34,7 @@ The PR can guide layout metrics, fixtures, geometry, and interaction comparisons
 | `swc-card-view-option-3` | Native list/list items                                 | Normal Tab navigation; any arrow shortcut remains supplementary                        | Independently tabbable checkbox, primary action, and secondary actions.  |
 | `swc-card-view-option-4` | Feed/articles                                          | Sequential Page Up/Down, normal Tab access                                             | Real checkbox, primary action, and secondary action inside each article. |
 
-Option 2's single-row semantic experiment is a separate optional comparison in the strategy, not its primary wrapping-grid contract. It should not silently replace that contract.
+The single-row semantic experiment is implemented separately as Option 5, not as Option 2's primary wrapping-grid contract. It must not silently replace that contract.
 
 The user replaces the listbox proposal with feed/articles so real checkboxes and child actions remain inside cards. The feed uses sequential Page Up/Down rather than four-direction arrows. Dynamic feed loading is not part of the first fully loaded comparison.
 
@@ -46,9 +46,16 @@ Exercise both layouts with real, unequal-height card images. For wrapping, check
 
 Verify desktop/mobile rendering, resize behavior, focus preservation, and non-overlapping content in the browser. Automated checks can validate DOM semantics and keyboard behavior but do not verify spoken positional announcements; docs must preserve the screen reader testing caveat.
 
-Use five story files and associated MDX docs pages so each prototype has its own inspectable component and grid/waterfall canvases. Include accessibility notes, pros, cons, and the exact navigation model for each.
+Use eight story files and associated MDX docs pages so each prototype has its own inspectable component and grid/waterfall canvases. Include accessibility notes, pros, cons, and the exact navigation model for each.
 
 ## Confirmed scope decisions
+
+- Option 6 uses a persistent vertical menu. Multiple/single/no selection renders checkbox/radio/plain menu items. Item activation operates checked state or the Open command; Up/Down wraps through enabled items, Home/End reaches boundaries, first-character search finds title matches, and Escape requests host focus restoration. Rich independent child controls are deliberately removed; the stories provide external selected-photo actions.
+- Option 7 uses a horizontal toolbar with labelled card groups and native checkbox/Open/Share controls. Only one enabled control is tabbable. Left/Right (mirrored in RTL) and Home/End move across actual controls, not card containers. Native Space/Enter activation is untouched. No grid position metadata, card-level range selection, or spatial arrows are implied by either command model.
+- Both command variants share fully loaded grid/waterfall measurement and preserve the other options. They are experiments in command semantics, not recommendations for generic asset collections; real assistive technology and task testing remains necessary.
+
+- Option 5 adds the separate single-row experiment as `swc-card-view-option-5`: one `row` containing all card `gridcell` elements, with stable column indices in both grid and waterfall layouts. Left/Right is sequential (mirrored in RTL); Home/End reaches collection boundaries. Up/Down does not move because the semantic grid has one row. It reuses active-card child tab stops, checkbox selection, and selection/action events without changing the other models.
+- Option 5's visual cells remain absolutely positioned relative to the collection, so the semantic row does not need its own visual-layout rules. Its column metadata describes collection order rather than responsive visual columns. Real screen reader testing is still required to assess position announcements and discoverability.
 
 - `swc-card-view` adapts the PR's default RSP model, not the entire multi-model comparison application.
 - Option 4 uses feed/articles rather than listbox/options, preserving real checkbox and action controls.

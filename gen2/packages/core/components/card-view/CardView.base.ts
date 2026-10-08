@@ -39,6 +39,9 @@ export abstract class CardViewBase extends SpectrumElement {
   @state()
   protected activeIndex = 0;
 
+  @state()
+  protected toolbarControlIndex = 0;
+
   protected anchorIndex = 0;
 
   protected abstract readonly model: CardViewModel;
@@ -102,7 +105,117 @@ export abstract class CardViewBase extends SpectrumElement {
     );
     if (target) {
       this.activeIndex = Number(target.dataset.index);
+      if (this.model === 'toolbar') {
+        this.toolbarControlIndex = this.focusTargets.indexOf(target);
+      }
     }
+  }
+
+  protected async focusToolbarControl(index: number): Promise<void> {
+    const target = this.focusTargets[index];
+    if (!target || target.matches(':disabled')) {
+      return;
+    }
+    this.toolbarControlIndex = index;
+    this.activeIndex = Number(target.dataset.index);
+    await this.updateComplete;
+    target.focus({ preventScroll: true });
+    target.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  }
+
+  protected handleToolbarKeydown(
+    event: KeyboardEvent,
+    target: HTMLElement
+  ): void {
+    const controls = this.focusTargets;
+    const current = controls.indexOf(target);
+    if (current < 0) {
+      return;
+    }
+    let direction: number;
+    let next: number;
+    if (event.key === 'Home' || event.key === 'End') {
+      direction = event.key === 'Home' ? 1 : -1;
+      next = event.key === 'Home' ? 0 : controls.length - 1;
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      const rtl = getComputedStyle(this).direction === 'rtl';
+      direction = (event.key === 'ArrowRight' ? 1 : -1) * (rtl ? -1 : 1);
+      next = current + direction;
+    } else {
+      return;
+    }
+    event.preventDefault();
+    while (next >= 0 && next < controls.length) {
+      if (!controls[next].matches(':disabled')) {
+        void this.focusToolbarControl(next);
+        return;
+      }
+      next += direction;
+    }
+  }
+
+  protected handleMenuKeydown(event: KeyboardEvent, index: number): void {
+    if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault();
+      if (this.selectionMode === 'none') {
+        this.activate(index, 'open');
+      } else {
+        this.select(
+          index,
+          this.selectionMode === 'single' ||
+            !this.selected.includes(this.items[index].id)
+        );
+      }
+      return;
+    }
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      this.dispatchEvent(
+        new CustomEvent('swc-card-view-exit', {
+          bubbles: true,
+          composed: true,
+          detail: { direction: 'before' },
+        })
+      );
+      return;
+    }
+    let next = index;
+    if (event.key === 'Home') {
+      next = this.items.findIndex((item) => !item.disabled);
+    } else if (event.key === 'End') {
+      next = this.items.map((item) => !item.disabled).lastIndexOf(true);
+    } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      const direction = event.key === 'ArrowDown' ? 1 : -1;
+      next = this.sequential(index, direction);
+      if (next === index) {
+        next =
+          direction === 1
+            ? this.items.findIndex((item) => !item.disabled)
+            : this.items.map((item) => !item.disabled).lastIndexOf(true);
+      }
+    } else if (
+      event.key.length === 1 &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey
+    ) {
+      for (let offset = 1; offset <= this.items.length; offset++) {
+        const candidate = (index + offset) % this.items.length;
+        if (
+          !this.items[candidate].disabled &&
+          this.items[candidate].title
+            .toLocaleLowerCase()
+            .startsWith(event.key.toLocaleLowerCase())
+        ) {
+          next = candidate;
+          break;
+        }
+      }
+    } else {
+      return;
+    }
+    event.preventDefault();
+    void this.focusItem(next);
   }
 
   protected sequential(index: number, direction: number): number {
@@ -185,6 +298,14 @@ export abstract class CardViewBase extends SpectrumElement {
       return;
     }
     const index = Number(wrapper.dataset.index);
+    if (this.model === 'toolbar') {
+      this.handleToolbarKeydown(event, target);
+      return;
+    }
+    if (this.model === 'menu') {
+      this.handleMenuKeydown(event, index);
+      return;
+    }
     if (this.model === 'feed') {
       let next: number | undefined;
       if (event.key === 'PageDown') {
@@ -239,6 +360,10 @@ export abstract class CardViewBase extends SpectrumElement {
           ? this.spatial(index, event.key)
           : this.sequential(index, direction);
     } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      if (this.model === 'single-row') {
+        event.preventDefault();
+        return;
+      }
       next =
         this.model === 'wrapping'
           ? this.columnStep(index, event.key === 'ArrowDown' ? 1 : -1)

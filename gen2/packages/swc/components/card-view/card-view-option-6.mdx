@@ -1,0 +1,70 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-option-6.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-option-6` uses a labelled `menu` with a card-shaped menu item for each photo. Multiple selection uses `menuitemcheckbox`; single selection uses `menuitemradio`; selection disabled uses plain `menuitem`. Each item's accessible name is its photo title. A visual checkbox indicator reflects `aria-checked` but is hidden from assistive technology.
+
+Menu items are commands, not containers for independent controls. This option deliberately removes the nested checkbox, Open button, and Share button. The stories provide separate Open and Share controls outside the menu, enabled when exactly one photo is selected. This changes the workflow rather than changing only a role.
+
+## Options
+
+### Grid
+
+Cards align in visual rows while menu navigation follows collection order, not geometry.
+
+<Canvas of={Stories.Grid} />
+
+### Waterfall
+
+Cards retain varied preview heights and use shortest-column placement. Menu navigation still follows the same logical sequence.
+
+<Canvas of={Stories.Waterfall} />
+
+## Behaviors
+
+<kbd>ArrowDown</kbd> and <kbd>ArrowUp</kbd> visit the next/previous enabled menu
+item, wrapping at the ends. <kbd>Home</kbd> and <kbd>End</kbd> reach the
+first/last enabled item. A printable character moves to the next enabled title
+starting with that character, cycling through matches. This prototype supports
+first-character search, not buffered multi-character search.
+
+Click, <kbd>Space</kbd>, and <kbd>Enter</kbd> toggle a checkbox menu item's checked state. Radio menu items remain checked when activated again and clear the previous selection. When selection is disabled, activation emits the primary Open action. There is no keyboard range selection. <kbd>Tab</kbd> and <kbd>Shift</kbd>+<kbd>Tab</kbd> leave the menu; only the active item is in the tab sequence. <kbd>Escape</kbd> emits `swc-card-view-exit` requesting the host to focus the preceding control; the stories connect it to Photo library. This is a persistent comparison menu, not a popup with an implemented trigger/close lifecycle.
+
+The menu is vertically oriented. Left/Right is not repurposed for card navigation or submenus. Disabled items are represented with `aria-disabled` and skipped by this prototype's navigation; that differs from menus that intentionally allow focus on disabled commands.
+
+## Accessibility
+
+### Features
+
+The menu exposes checked state rather than `aria-selected`, and has no grid row/column metadata. Focus and checked state are separate. Cards contain no independently interactive descendants. Titles name commands; descriptions and decorative photos are not a rich document-reading surface. Selected-count updates use the shared live status.
+
+<Canvas of={Stories.Accessibility} />
+
+### Pros
+
+- Provides familiar menu navigation, first-character search, and checked-state commands.
+- Avoids contradictory row/column announcements and preserves a sequential route in both layouts.
+- Uses one tab stop for the menu and separates selection from external actions.
+
+### Cons
+
+- A menu represents commands, not a general photo/file collection; users may interpret these cards as command choices rather than content.
+- Independent checkbox and action controls must be removed from cards, changing the original task flow.
+- Rich descendant reading structure and spatial navigation are lost; first-character search is limited.
+- A persistent multi-column or waterfall menu can conflict with familiar visual menu expectations. Real menu entry/exit and spoken output need user testing.
+
+### Best practices
+
+Treat this as a semantics experiment, not an approved asset-browser pattern. Compare selection, external actions, disabled items, entry/exit, and reading tasks with the list, grid, and toolbar options. Test NVDA, JAWS, VoiceOver, Narrator, and mobile screen readers. Do not infer reliable collection position announcements from the menu role. Hosts embedding this in a popup must implement trigger semantics, opening focus, dismissal, and focus restoration separately.
+
+## Upcoming features
+
+Popup lifecycle, submenus, buffered typeahead, virtualization, and loading are outside this fully loaded comparison.
+
+<DocsFooter />

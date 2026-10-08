@@ -85,6 +85,18 @@ export class CardView extends CardViewBase {
     this.renderRoot
       .querySelectorAll('swc-card')
       .forEach((card) => this.observer?.observe(card));
+    if (this.model === 'toolbar') {
+      const controls = this.focusTargets;
+      if (
+        !controls[this.toolbarControlIndex] ||
+        controls[this.toolbarControlIndex].matches(':disabled')
+      ) {
+        this.toolbarControlIndex = Math.max(
+          0,
+          controls.findIndex((control) => !control.matches(':disabled'))
+        );
+      }
+    }
     this.scheduleLayout();
   }
 
@@ -140,8 +152,29 @@ export class CardView extends CardViewBase {
     }
   }
 
-  private childTabIndex(index: number): number {
+  private childTabIndex(index: number, controlIndex = 0): number {
+    if (this.model === 'toolbar') {
+      const count = this.selectionMode === 'none' ? 2 : 3;
+      return index * count + controlIndex === this.toolbarControlIndex &&
+        !this.items[index].disabled
+        ? 0
+        : -1;
+    }
     return !this.composite || index === this.activeIndex ? 0 : -1;
+  }
+
+  private handleMenuClick(event: Event): void {
+    const index = Number((event.currentTarget as HTMLElement).dataset.index);
+    void this.focusItem(index);
+    if (this.selectionMode === 'none') {
+      this.activate(index, 'open');
+    } else {
+      this.select(
+        index,
+        this.selectionMode === 'single' ||
+          !this.selected.includes(this.items[index].id)
+      );
+    }
   }
 
   private handleSelection(event: Event): void {
@@ -159,6 +192,37 @@ export class CardView extends CardViewBase {
 
   private renderCard(item: CardViewItem, index: number): TemplateResult {
     const selected = this.selected.includes(item.id);
+    if (this.model === 'menu') {
+      return html`
+        <swc-card
+          variant=${this.variant}
+          density=${this.density}
+          data-selected=${selected}
+        >
+          <img
+            slot="preview"
+            src=${item.image}
+            alt=""
+            style=${styleMap({
+              aspectRatio: String(
+                this.layout === 'waterfall' ? (item.aspectRatio ?? 1) : 1.5
+              ),
+              objectFit: 'cover',
+            })}
+            @load=${this.scheduleLayout}
+          />
+          ${this.selectionMode !== 'none'
+            ? html`
+                <span slot="media" class="selection" aria-hidden="true">
+                  ${selected ? '\u2611' : '\u2610'}
+                </span>
+              `
+            : ''}
+          <span slot="title">${item.title}</span>
+          <span slot="description">${item.description}</span>
+        </swc-card>
+      `;
+    }
     return html`
       <swc-card
         variant=${this.variant}
@@ -183,6 +247,7 @@ export class CardView extends CardViewBase {
                 <input
                   type="checkbox"
                   data-index=${index}
+                  ?data-focus=${this.model === 'toolbar'}
                   aria-label=${`Select ${item.title}`}
                   .checked=${selected}
                   ?disabled=${item.disabled}
@@ -198,7 +263,11 @@ export class CardView extends CardViewBase {
           class="title"
           data-index=${index}
           data-action="open"
-          tabindex=${this.childTabIndex(index)}
+          ?data-focus=${this.model === 'toolbar'}
+          tabindex=${this.childTabIndex(
+            index,
+            this.selectionMode === 'none' ? 0 : 1
+          )}
           ?disabled=${item.disabled}
           @click=${this.handleAction}
         >
@@ -211,8 +280,12 @@ export class CardView extends CardViewBase {
           class="share"
           data-index=${index}
           data-action="share"
+          ?data-focus=${this.model === 'toolbar'}
           aria-label=${`Share ${item.title}`}
-          tabindex=${this.childTabIndex(index)}
+          tabindex=${this.childTabIndex(
+            index,
+            this.selectionMode === 'none' ? 1 : 2
+          )}
           ?disabled=${item.disabled}
           @click=${this.handleAction}
         >
@@ -263,6 +336,68 @@ export class CardView extends CardViewBase {
         </article>
       `;
     }
+    if (this.model === 'toolbar') {
+      return html`
+        <div
+          class="item"
+          role="group"
+          aria-label=${item.title}
+          data-index=${index}
+          style=${style}
+        >
+          ${this.renderCard(item, index)}
+        </div>
+      `;
+    }
+    if (this.model === 'menu') {
+      return html`
+        <div
+          class="item"
+          role=${this.selectionMode === 'none'
+            ? 'menuitem'
+            : this.selectionMode === 'single'
+              ? 'menuitemradio'
+              : 'menuitemcheckbox'}
+          data-focus
+          data-index=${index}
+          aria-label=${item.title}
+          aria-checked=${ifDefined(
+            this.selectionMode === 'none'
+              ? undefined
+              : String(this.selected.includes(item.id))
+          )}
+          aria-disabled=${ifDefined(item.disabled ? 'true' : undefined)}
+          tabindex=${!item.disabled && index === this.activeIndex ? 0 : -1}
+          style=${style}
+          @click=${this.handleMenuClick}
+          @keydown=${this.handleKeydown}
+        >
+          ${this.renderCard(item, index)}
+        </div>
+      `;
+    }
+    if (this.model === 'single-row') {
+      return html`
+        <div
+          class="item"
+          data-focus
+          data-index=${index}
+          role="gridcell"
+          aria-colindex=${index + 1}
+          aria-label=${item.title}
+          aria-selected=${ifDefined(
+            this.selectionMode === 'none'
+              ? undefined
+              : String(this.selected.includes(item.id))
+          )}
+          aria-disabled=${ifDefined(item.disabled ? 'true' : undefined)}
+          tabindex=${!item.disabled && index === this.activeIndex ? 0 : -1}
+          style=${style}
+        >
+          ${this.renderCard(item, index)}
+        </div>
+      `;
+    }
     return html`
       <div
         class="item"
@@ -297,6 +432,8 @@ export class CardView extends CardViewBase {
   }
 
   protected override render(): TemplateResult {
+    const grid =
+      this.composite && this.model !== 'menu' && this.model !== 'toolbar';
     const content = repeat(
       this.items,
       (item) => item.id,
@@ -320,25 +457,50 @@ export class CardView extends CardViewBase {
         : html`
             <div
               class="collection"
-              role=${this.model === 'feed' ? 'feed' : 'grid'}
+              role=${this.model === 'feed'
+                ? 'feed'
+                : this.model === 'menu'
+                  ? 'menu'
+                  : this.model === 'toolbar'
+                    ? 'toolbar'
+                    : 'grid'}
+              aria-orientation=${ifDefined(
+                this.model === 'menu'
+                  ? 'vertical'
+                  : this.model === 'toolbar'
+                    ? 'horizontal'
+                    : undefined
+              )}
               aria-label=${this.label}
               aria-rowcount=${ifDefined(
-                this.composite ? this.items.length : undefined
-              )}
-              aria-colcount=${ifDefined(this.composite ? 1 : undefined)}
-              aria-multiselectable=${ifDefined(
-                this.composite && this.selectionMode === 'multiple'
-                  ? 'true'
+                grid
+                  ? this.model === 'single-row'
+                    ? 1
+                    : this.items.length
                   : undefined
+              )}
+              aria-colcount=${ifDefined(
+                grid
+                  ? this.model === 'single-row'
+                    ? this.items.length
+                    : 1
+                  : undefined
+              )}
+              aria-multiselectable=${ifDefined(
+                grid && this.selectionMode === 'multiple' ? 'true' : undefined
               )}
               aria-busy=${ifDefined(
                 this.model === 'feed' ? 'false' : undefined
               )}
               style=${height}
-              @keydown=${this.handleKeydown}
+              @keydown=${this.model === 'menu' ? undefined : this.handleKeydown}
               @focusin=${this.handleFocus}
             >
-              ${content}
+              ${this.model === 'single-row'
+                ? html`
+                    <div role="row" aria-rowindex="1">${content}</div>
+                  `
+                : content}
             </div>
           `}
       <div class="status" role="status" aria-live="polite">
@@ -362,4 +524,31 @@ export class CardViewOption3 extends CardView {
 
 export class CardViewOption4 extends CardView {
   protected override readonly model: CardViewModel = 'feed';
+}
+
+/**
+ * Experimental card collection with one semantic row and a cell per card.
+ *
+ * @element swc-card-view-option-5
+ */
+export class CardViewOption5 extends CardView {
+  protected override readonly model: CardViewModel = 'single-row';
+}
+
+/**
+ * Experimental menu of card-shaped selection commands.
+ *
+ * @element swc-card-view-option-6
+ */
+export class CardViewOption6 extends CardView {
+  protected override readonly model: CardViewModel = 'menu';
+}
+
+/**
+ * Experimental toolbar grouping each card's selection and action controls.
+ *
+ * @element swc-card-view-option-7
+ */
+export class CardViewOption7 extends CardView {
+  protected override readonly model: CardViewModel = 'toolbar';
 }

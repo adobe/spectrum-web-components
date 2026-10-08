@@ -30,6 +30,9 @@
     - [Option 2: Add complete forward traversal to the layout grid](#option-2-add-complete-forward-traversal-to-the-layout-grid)
     - [Option 3: Use native list semantics and explicit controls](#option-3-use-native-list-semantics-and-explicit-controls)
     - [Option 4: Use feed semantics with interactive articles](#option-4-use-feed-semantics-with-interactive-articles)
+    - [Option 5: Use one semantic row with a cell per card](#option-5-use-one-semantic-row-with-a-cell-per-card)
+    - [Option 6: Use menu items as card-shaped commands](#option-6-use-menu-items-as-card-shaped-commands)
+    - [Option 7: Group card controls in a toolbar](#option-7-group-card-controls-in-a-toolbar)
 - [Evaluation and recommended next steps](#evaluation-and-recommended-next-steps)
     - [Test matrix](#test-matrix)
     - [Test tasks and acceptance criteria](#test-tasks-and-acceptance-criteria)
@@ -188,7 +191,7 @@ Keep a stable single-column grid with one row per card. Restore or preserve coll
 
 Prototype optional up/down column wrapping in a fully loaded uniform layout. Moving down from the bottom of a visual column moves to the top of the next column; reverse navigation mirrors that rule. Keep a collection-order route through left/right navigation. Compare against Option 1 before extending the algorithm to waterfall.
 
-Also consider a separate experimental variant with one stable semantic row and one cell per card, using column count/index metadata. Changing row-based metadata to cell-based metadata may affect announcements, but does not itself solve geometry or discoverability. Do not reflow the semantic structure with visual columns or assume the variant produces better speech.
+Option 5 separates the single-row semantic experiment from this wrapping-navigation contract.
 
 **Benefits:** Tests the APG's optional wrapping behavior and reduces the chance that repeated downward navigation stops before users encounter all cards.
 
@@ -220,11 +223,46 @@ This replaces the earlier listbox prototype proposal. The exploration retains in
 
 **Decision condition:** The collection genuinely fits a reading-oriented feed, and users understand article navigation, selection, child controls, and entry/exit. Dynamic loading requires separate implementation and assistive technology evaluation.
 
+### Option 5: Use one semantic row with a cell per card
+
+Represent the collection as a `grid` containing one `row`, with one focusable `gridcell` per card. Expose `aria-rowcount="1"`, `aria-colcount` equal to the collection size, `aria-rowindex="1"` on the row, and a stable one-based `aria-colindex` on each cell. Preserve this structure across grid and waterfall layouts, resize, and zoom.
+
+Left/Right traverses enabled cards in collection order, mirrored for right-to-left layouts. Home/End reaches the first/last enabled card. Up/Down does not move focus because there is only one semantic row. Keep checkbox selection, Space/Enter behavior, keyboard range selection, and Tab access to the active card's controls.
+
+**Benefits:** Aligns horizontal navigation with the announced single-row structure. Provides a complete sequential route in both visual layouts while retaining selection and independently interactive children. Does not regroup semantic rows as the viewport changes.
+
+**Tradeoffs:** Announced columns describe collection order rather than visual columns. Sighted keyboard users may expect spatial Up/Down movement, and sequential waterfall movement can look surprising. Column count/index metadata does not guarantee spoken “x of y”; changing metadata alone is not proof of improved accessibility.
+
+**Decision condition:** Users discover the sequential route, reach every enabled card, understand position and selection, and access child actions without excessive effort. Compare spoken output and sighted keyboard usability with Options 1–3 rather than assuming one-row semantics resolve the mismatch.
+
+### Option 6: Use menu items as card-shaped commands
+
+Use a labelled `menu` whose cards are `menuitemcheckbox`, `menuitemradio`, or plain `menuitem` depending on selection mode. A visual checkbox indicator mirrors checked state without introducing an independent control. Move Open/Share actions outside the menu rather than nesting buttons inside menu items.
+
+Use sequential Up/Down navigation with wrapping, Home/End, first-character search, and Escape requesting host focus restoration. Tab exits the menu. This persistent comparison is not a popup lifecycle implementation. Disabled items are skipped by the prototype; there is no grid metadata, spatial navigation, or range selection.
+
+**Benefits:** Provides checked-state commands, a sequential route in both layouts, familiar menu navigation, and one menu tab stop without row/column announcements.
+
+**Tradeoffs:** Menu semantics describe commands, not arbitrary content collections. Rich reading structure and independent child controls are lost, and external actions change the task flow. Multi-column and waterfall visuals can conflict with familiar menu expectations.
+
+**Decision condition:** The content genuinely represents command choices and users understand checked state, external actions, and entry/exit. This is not an approved role-only replacement for rich interactive cards.
+
+### Option 7: Group card controls in a toolbar
+
+Use a labelled horizontal `toolbar` with a labelled `group` per card. Preserve native selection checkboxes and Open/Share buttons, but apply roving focus to the actual controls: Left/Right traverses every enabled control, Home/End reaches the boundaries, and Tab exits. RTL mirrors horizontal movement. Native Space/Enter behavior is preserved; Up/Down and card-level range selection are not added.
+
+**Benefits:** Retains independent controls and native activation with one toolbar tab stop. Avoids grid position metadata and semantic restructuring during visual reflow.
+
+**Tradeoffs:** A toolbar is a command grouping, not a content-reading or object-collection pattern. Several key presses may be needed to pass each card. Logical control order can differ from visual neighbors in grid and waterfall, and there is no standard card-position announcement.
+
+**Decision condition:** Command-heavy tasks fit toolbar expectations and users understand that arrows move among controls, not only between cards. Compare content-reading tasks and positional feedback against list/grid models before choosing this approach.
+
 ## Evaluation and recommended next steps
 
-Start with a fully loaded, uniform card layout to isolate semantics and keyboard behavior. Compare the PR's default RSP-style baseline, the repaired sequential grid, the wrapping-grid variant, the native-list variant, and the feed/article variant. All five prototypes include waterfall as a follow-up comparison; virtualization remains a separate later dimension.
 
-The Storybook examples live in the card-view component folder as `swc-card-view` and `swc-card-view-option-1` through `swc-card-view-option-4`. Each has grid, waterfall, and accessibility stories, with a dedicated docs page describing its interaction and tradeoffs. The baseline adapts [PR #6798](https://github.com/adobe/spectrum-web-components/pull/6798)'s default RSP model rather than its entire multi-model inspector application.
+Start with a fully loaded, uniform card layout to isolate semantics and keyboard behavior. Compare the PR's default RSP-style baseline, the repaired sequential grid, the wrapping-grid variant, the native-list variant, the feed/article variant, the single-row grid, the menu, and the toolbar. All eight prototypes include waterfall as a follow-up comparison; virtualization remains a separate later dimension.
+
+The Storybook examples live in the card-view component folder as `swc-card-view` and `swc-card-view-option-1` through `swc-card-view-option-7`. Each has grid, waterfall, and accessibility stories, with a dedicated docs page describing its interaction and tradeoffs. The baseline adapts [PR #6798](https://github.com/adobe/spectrum-web-components/pull/6798)'s default RSP model rather than its entire multi-model inspector application.
 
 Use the same content, primary actions, selection tasks, and child controls across comparable prototypes. Record DOM attributes, accessibility-tree structure, spoken output, focus movement, and task completion separately.
 

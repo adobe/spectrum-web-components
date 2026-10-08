@@ -19,6 +19,9 @@ import '../swc-card-view-option-1.js';
 import '../swc-card-view-option-2.js';
 import '../swc-card-view-option-3.js';
 import '../swc-card-view-option-4.js';
+import '../swc-card-view-option-5.js';
+import '../swc-card-view-option-6.js';
+import '../swc-card-view-option-7.js';
 
 export const photos: CardViewItem[] = [
   {
@@ -152,6 +155,19 @@ export function prototypeMeta(tag: string): Partial<Meta> {
           .selectionMode=${args.selectionMode}
           .variant=${args.variant}
           .density=${args.density}
+          @swc-card-view-selection-change=${(
+            event: CustomEvent<{ selected: string[] }>
+          ) => {
+            if (tag !== 'swc-card-view-option-6') {
+              return;
+            }
+            const wrapper = (event.currentTarget as HTMLElement).parentElement!;
+            wrapper
+              .querySelectorAll<HTMLButtonElement>('[data-menu-action]')
+              .forEach((button) => {
+                button.disabled = event.detail.selected.length !== 1;
+              });
+          }}
           @swc-card-view-action=${(
             event: CustomEvent<{ id: string; action: string }>
           ) => {
@@ -171,6 +187,36 @@ export function prototypeMeta(tag: string): Partial<Meta> {
           }}
         ></${element}>
         <button type="button" style="margin-block-start: 16px;">Upload photos</button>
+        ${
+          tag === 'swc-card-view-option-6'
+            ? staticHtml`
+          <div role="group" aria-label="Selected photo actions" style="display: flex; gap: 8px; margin-block-start: 12px;">
+            ${['open', 'share'].map(
+              (action) => staticHtml`
+              <button type="button" data-menu-action=${action} disabled @click=${(
+                event: Event
+              ) => {
+                const view = (
+                  event.currentTarget as HTMLElement
+                ).parentElement!.parentElement!.querySelector<
+                  HTMLElement & { selected: string[] }
+                >('swc-card-view-option-6')!;
+                if (view.selected.length === 1) {
+                  view.dispatchEvent(
+                    new CustomEvent('swc-card-view-action', {
+                      bubbles: true,
+                      composed: true,
+                      detail: { id: view.selected[0], action },
+                    })
+                  );
+                }
+              }}>${action === 'open' ? 'Open selected photo' : 'Share selected photo'}</button>
+            `
+            )}
+          </div>
+        `
+            : ''
+        }
         <output aria-live="polite" style="display: block; min-height: 24px; margin-block-start: 12px;"></output>
       </div>
     `,
