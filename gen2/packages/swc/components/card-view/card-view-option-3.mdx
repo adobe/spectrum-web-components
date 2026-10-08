@@ -54,8 +54,8 @@ Native list semantics preserve content and independent controls. Selection uses 
 ### Cons
 
 - Large collections have many tab stops and may be slower for frequent keyboard users.
-- Supplemental arrows and list-item tab stops require discovery; there is no composite keyboard range selection.
-- Native list counts and position metadata do not guarantee that a focused child control announces "x of y."
+- Arrow-key navigation is unexpected in a native list, so supplemental arrows and list-item tab stops require discovery; there is no composite keyboard range selection.
+- In observed screen reader use, "x of y" is not announced even with `aria-posinset` and `aria-setsize` on the list items.
 
 ### Best practices
 

@@ -237,7 +237,7 @@ List items have a roving focus entry point. Left/Right moves sequentially betwee
 
 **Benefits:** Preserves content structure and independent child interactions without claiming that a non-tabular collection is a grid. Selection and activation use familiar controls.
 
-**Tradeoffs:** More tab stops, no built-in composite range-selection model, and potentially slower repeated operation in a large application. Reliable virtualized reading and positional speech still need testing.
+**Tradeoffs:** Arrow-key navigation is unexpected in a native list and requires discovery. In observed screen reader use, "x of y" is not announced even with `aria-posinset` and `aria-setsize` on the list items. More tab stops, no built-in composite range-selection model, and potentially slower repeated operation in a large application remain drawbacks. Reliable virtualized reading and positional speech across browser and screen reader combinations still need testing.
 
 **Decision condition:** Users can complete reading, opening, selection, and bulk-action tasks with acceptable effort. The usability benefit outweighs the loss of a single-tab-stop collection.
 
@@ -249,7 +249,7 @@ This replaces the earlier listbox prototype proposal. The exploration retains in
 
 **Benefits:** Preserves rich reading structure and independent card controls without row/column framing. Provides a starting point for testing reading-driven loading in a future dynamic content stream.
 
-**Tradeoffs:** A feed represents a content stream, not every selectable asset collection. It uses <kbd>PageUp</kbd> and <kbd>PageDown</kbd> rather than four-direction arrows. Moving one article at a time rather than a page is counterintuitive for sighted users and tedious for navigating large collections. It adds article tab stops and does not provide composite range selection. A fully loaded prototype cannot verify the feed's dynamic loading contract.
+**Tradeoffs:** A feed represents a content stream, not every selectable asset collection. It uses <kbd>PageUp</kbd> and <kbd>PageDown</kbd> rather than four-direction arrows. Keyboard navigation is both unintuitive and tedious for sighted users because these keys move only one article at a time rather than a page, especially in large collections. It adds article tab stops and does not provide composite range selection. A fully loaded prototype cannot verify the feed's dynamic loading contract.
 
 **Decision condition:** The collection genuinely fits a reading-oriented feed, and users understand article navigation, selection, child controls, and entry/exit. Dynamic loading requires separate implementation and assistive technology evaluation.
 
