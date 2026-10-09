@@ -173,4 +173,8 @@
   :host(:disabled) .swc-FormFieldDescription {
     color: GrayText;
   }
+
+  .swc-FormFieldErrorText-icon {
+    --swc-icon-color: CanvasText;
+  }
 }
