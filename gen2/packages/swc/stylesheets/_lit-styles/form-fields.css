@@ -137,6 +137,8 @@
   --swc-icon-color: token("negative-visual-color");
   --swc-icon-inline-size: 1lh;
   --swc-icon-block-size: 1lh;
+
+  display: flex;
 }
 
 /* ── Side label ───────────────────────────────────── */

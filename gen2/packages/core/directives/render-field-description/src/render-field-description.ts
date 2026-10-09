@@ -67,9 +67,7 @@ export function renderFieldDescription({
   }
   const icon = errorIcon
     ? html`
-        <span class="swc-FormFieldErrorText-icon" aria-hidden="true">
-          ${errorIcon}
-        </span>
+        <span class="swc-FormFieldErrorText-icon">${errorIcon}</span>
       `
     : nothing;
   return html`
