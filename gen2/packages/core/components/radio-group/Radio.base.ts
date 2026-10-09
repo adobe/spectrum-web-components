@@ -29,7 +29,7 @@ const DOCS_URL =
  * Do not add `aria-describedby` for the `description` slot; it is already part
  * of the accessible name.
  *
- * `size`, `emphasized`, and `invalid` styling state is set as attributes by the
+ * `size` and `emphasized` styling state is set as attributes by the
  * enclosing `swc-radio-group`; they are not properties of the item.
  *
  * @slot label - Visible label content.

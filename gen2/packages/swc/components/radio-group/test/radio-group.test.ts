@@ -680,24 +680,26 @@ export const ItemStylingAttributesTest: Story = {
       items.map((item) => [
         item.getAttribute('size'),
         item.hasAttribute('emphasized'),
-        item.hasAttribute('invalid'),
       ]);
 
     expect(attributes(), 'the group propagates its styling state').toEqual([
-      ['l', true, true],
-      ['l', true, true],
+      ['l', true],
+      ['l', true],
     ]);
+    expect(
+      items.some((item) => item.hasAttribute('invalid')),
+      'invalid does not recolor radios, so it is not propagated'
+    ).toBe(false);
 
     group.size = 's';
     group.emphasized = false;
-    group.invalid = false;
     await group.updateComplete;
     expect(attributes(), 'changes and removals propagate').toEqual([
-      ['s', false, false],
-      ['s', false, false],
+      ['s', false],
+      ['s', false],
     ]);
 
-    for (const name of ['size', 'emphasized', 'invalid']) {
+    for (const name of ['size', 'emphasized']) {
       expect(name in items[0], `${name} is not a radio property`).toBe(false);
     }
   },

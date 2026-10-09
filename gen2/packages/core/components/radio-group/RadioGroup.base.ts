@@ -253,14 +253,6 @@ export abstract class RadioGroupBase extends SizedMixin(
       getValue: () => (this.emphasized ? '' : null),
     });
 
-  private readonly invalidPropagation = new SlotAttributePropagationController(
-    this,
-    {
-      attribute: 'invalid',
-      getValue: () => (this.invalid ? '' : null),
-    }
-  );
-
   private readonly disabledItemStates = new Map<RadioBase, boolean>();
 
   private syncDisabledState(): boolean {
@@ -419,7 +411,6 @@ export abstract class RadioGroupBase extends SizedMixin(
   private syncSlottedItems(): void {
     this.sizePropagation.propagate();
     this.emphasizedPropagation.propagate();
-    this.invalidPropagation.propagate();
     this.syncDisabledState();
     this.warnDuplicateValues();
     this.syncItemPositions();

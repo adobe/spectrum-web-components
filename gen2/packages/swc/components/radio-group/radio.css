@@ -91,7 +91,7 @@
 
 /* ── Emphasized ───────────────────────────────────── */
 
-:host([emphasized][checked]:not([invalid])) {
+:host([emphasized][checked]) {
   --swc-radio-border-color-default: token("accent-content-color-default");
   --swc-radio-border-color-hover: token("accent-content-color-hover");
   --swc-radio-border-color-down: token("accent-content-color-down");
@@ -99,13 +99,6 @@
 }
 
 /* ── States ───────────────────────────────────────── */
-
-:host([invalid]) {
-  --swc-radio-border-color-default: token("negative-border-color-default");
-  --swc-radio-border-color-hover: token("negative-border-color-hover");
-  --swc-radio-border-color-down: token("negative-border-color-down");
-  --swc-radio-border-color-focus: token("negative-border-color-key-focus");
-}
 
 /* The selected ring grows inward until only the indicator-sized dot remains. */
 :host([checked]) .swc-Radio-button {
