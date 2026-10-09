@@ -10,15 +10,142 @@
  * governing permissions and limitations under the License.
  */
 
-/* Placeholder — full styles authored in Phase 5 */
 :host {
-  display: block;
+  display: inline-block;
+  place-self: start;
+  max-inline-size: min(token("toast-maximum-width"), 90vw);
+
+  /* Keeps the host rendered until the exit transition on .swc-Toast finishes. */
+  transition: display token("animation-duration-100") allow-discrete;
 }
 
 :host(:not([open])) {
   display: none;
 }
 
-.swc-Toast {
+* {
   box-sizing: border-box;
+}
+
+.swc-Toast {
+  --_swc-toast-animation-distance: token("spacing-75");
+
+  display: flex;
+  gap: token("group-gap-medium");
+  align-items: center;
+  min-block-size: token("toast-height");
+
+  /* TODO: use banner-padding-vertical when available. */
+  padding-block: token("spacing-200");
+
+  /* TODO: use banner-padding-horizontal for inline-start padding when available. */
+  padding-inline: token("spacing-300") token("spacing-100");
+  font-size: token("font-size-100");
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-font-size-100");
+  color: token("white");
+  background-color: var(--swc-toast-background-color, token("neutral-subdued-background-color-default"));
+  border-radius: token("corner-radius-700");
+  opacity: 1;
+  transition:
+    opacity token("animation-duration-100") ease-in-out,
+    transform token("animation-duration-100") ease-in-out;
+
+  &:lang(ja),
+  &:lang(zh),
+  &:lang(ko) {
+    line-height: token("cjk-line-height-100");
+  }
+}
+
+.swc-Toast-main {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+
+  /* TODO: use banner-gap-vertical and banner-gap-horizontal when available. */
+  gap: token("spacing-100") token("spacing-400");
+  align-items: center;
+  min-inline-size: 0;
+}
+
+.swc-Toast-body {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+.swc-Toast-content {
+  display: flex;
+  gap: token("group-gap-medium");
+  align-items: flex-start;
+  text-align: start;
+}
+
+.swc-Toast-typeIcon {
+  flex-shrink: 0;
+
+  /* TODO: re-check against Figma; this is 0 on desktop and ~1px on mobile, so remove it if unneeded. */
+  margin-block: calc((token("line-height-font-size-100") - token("workflow-icon-medium")) / 2);
+}
+
+.swc-Toast-text {
+  min-inline-size: 0;
+  overflow-wrap: break-word;
+}
+
+.swc-Toast-action {
+  margin-inline-start: auto;
+}
+
+.swc-Toast-close {
+  /* TODO: copied from spectrum-css and untested; remove if the close button never shrinks without it. */
+  flex-shrink: 0;
+}
+
+:host([variant="info"]) {
+  --swc-toast-background-color: token("informative-background-color-default");
+}
+
+:host([variant="positive"]) {
+  --swc-toast-background-color: token("positive-background-color-default");
+}
+
+:host([variant="negative"]) {
+  --swc-toast-background-color: token("negative-background-color-default");
+}
+
+/* Closed state is the exit target; `@starting-style` below is the enter origin. */
+:host(:not([open])) .swc-Toast {
+  opacity: 0;
+  transform: translateY(var(--_swc-toast-animation-distance));
+}
+
+/* Two frames of delay keep the empty live region transparent until its message renders.
+   TODO: confirm in a real browser that the region stays transparent for those two frames, and replace the hardcoded 34ms guess if a token fits. */
+:host([open]) .swc-Toast {
+  transition-delay: 34ms;
+}
+
+@starting-style {
+  :host([open]) .swc-Toast {
+    opacity: 0;
+    transform: translateY(var(--_swc-toast-animation-distance));
+  }
+}
+
+:host(:focus-visible) .swc-Toast {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-Toast {
+    --_swc-toast-animation-distance: 0;
+  }
+}
+
+@media (forced-colors: active) {
+  .swc-Toast {
+    border: token("border-width-100") solid CanvasText;
+  }
 }
