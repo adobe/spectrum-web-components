@@ -80,6 +80,14 @@ const group = (args: Record<string, unknown>, overrides = {}) =>
 // ────────────────────
 
 export const Playground: Story = {
+  args: {
+    selected: '1',
+    'label-slot': 'Example radios',
+    'description-slot': 'This is the description for the radio group.',
+    'error-text-slot': 'This option is not available.',
+    'default-slot': ITEMS,
+  },
+  render: (args) => template(args),
   tags: ['dev'],
 };
 
