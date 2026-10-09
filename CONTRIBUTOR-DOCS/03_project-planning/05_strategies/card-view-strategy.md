@@ -33,7 +33,7 @@
     - [Option 3: Use native list semantics and explicit controls](#option-3-use-native-list-semantics-and-explicit-controls)
     - [Option 4: Use feed semantics with interactive articles](#option-4-use-feed-semantics-with-interactive-articles)
     - [Option 5: Use one semantic row with a cell per card](#option-5-use-one-semantic-row-with-a-cell-per-card)
-    - [Option 6: Use menu items as card-shaped commands](#option-6-use-menu-items-as-card-shaped-commands)
+    - [Option 6: Use semantic-order vertical navigation in waterfall](#option-6-use-semantic-order-vertical-navigation-in-waterfall)
     - [Option 7: Group card controls in a toolbar](#option-7-group-card-controls-in-a-toolbar)
     - [Option 8: Group card controls in a native fieldset](#option-8-group-card-controls-in-a-native-fieldset)
 - [Evaluation and recommended next steps](#evaluation-and-recommended-next-steps)
@@ -265,17 +265,17 @@ Left/Right traverses enabled cards incrementally in collection order, mirrored f
 
 **Decision condition:** Users discover the sequential route, reach every enabled card, understand position and selection, and access child actions without excessive effort. Compare spoken output and sighted keyboard usability with Options 1–3 rather than assuming one-row semantics resolve the mismatch.
 
-### Option 6: Use menu items as card-shaped commands
+### Option 6: Use semantic-order vertical navigation in waterfall
 
-Use a labelled `menu` whose cards are `menuitemcheckbox`, `menuitemradio`, or plain `menuitem` depending on selection mode. A visual checkbox indicator mirrors checked state without introducing an independent input. Keep Open/Share buttons inside each card as an explicit nested-interaction experiment.
+Use Option 1's labelled single-column `grid`, with one `row` and `rowheader` per card. Preserve its selection, native checkbox and action controls, range selection, and active-card Tab access. Uniform-grid navigation is identical to Option 1.
 
-All four arrows move spatially between enabled menu-item checkboxes, stopping at boundaries. Home/End and first-character search remain available. Tab enters the active card's Open and Share buttons, then exits; Shift+Tab reverses the path. Nested actions preserve native keys and do not select the card. Escape returns from an action to its menu item; Escape on a menu item requests host focus restoration. This persistent comparison has no popup lifecycle or range selection.
+In waterfall, support only one arrow-navigation axis: <kbd>ArrowDown</kbd> moves to the next enabled card in semantic collection order and <kbd>ArrowUp</kbd> moves to the previous one, regardless of visual geometry. <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> do not navigate. Movement stops at collection boundaries; Home/End still reaches the first/last enabled card.
 
-**Benefits:** Provides checked-state commands and spatial movement without row/column announcements. Preserves nested actions without requiring selection first.
+**Benefits:** Shares Option 5's evaluation goals: useful “x of y” positional feedback, easy and intuitive arrow navigation for sighted users, a complete semantic traversal route, selection and independent child controls, and stable semantics during reflow. Waterfall navigation is easy to follow visually because it uses one predictable semantic traversal sequence. Option 5's observed “x of y” result is not verified for this new Option 1-based variant.
 
-**Tradeoffs:** Menu semantics describe commands, not arbitrary content collections. Nested buttons and four-direction navigation depart from the conventional menu pattern. Axe-core reports `nested-interactive` for the nested controls; tests retain this exact finding rather than suppressing the rule. Passing the regression suite does not mean this option is accessibility-compliant. Manual screen reader testing is required.
+**Tradeoffs:** As with Option 5, semantic dimensions differ from visual layout, sequential waterfall movement can place focus away from the nearest visual neighbor, and grid mode changes and positional speech require screen reader testing. This variant announces one column with multiple rows, not Option 5's single row. Waterfall traversal is slightly more tedious because reaching a distant item requires stepping through intervening items rather than using spatial shortcuts. Metadata alone does not guarantee “x of y” announcements.
 
-**Decision condition:** Users understand checked state, spatial movement, nested actions, and entry/exit, and the known accessibility violation is resolved before production adoption. This is not an approved role-only replacement for rich interactive cards.
+**Decision condition:** Users can follow semantic-order waterfall traversal, understand that horizontal arrows do not navigate in that layout, and reach cards and child controls with acceptable effort. Compare actual positional speech and sighted keyboard usability with Options 1 and 5.
 
 ### Option 7: Group card controls in a toolbar
 
@@ -300,11 +300,11 @@ Use a native `fieldset` with a visible `legend` naming the collection and a labe
 ## Evaluation and recommended next steps
 
 
-Start with a fully loaded, uniform card layout to isolate semantics and keyboard behavior. Compare the PR's default RSP-style baseline, the repaired sequential grid, the wrapping-grid variant, the native-list variant, the feed/article variant, the single-row grid, the menu, the toolbar, and the fieldset. All nine prototypes include waterfall as a follow-up comparison; virtualization remains a separate later dimension.
+Start with a fully loaded, uniform card layout to isolate semantics and keyboard behavior. Compare the PR's default RSP-style baseline, the repaired sequential grid, the wrapping-grid variant, the native-list variant, the feed/article variant, the single-row grid, the semantic-order waterfall grid, the toolbar, and the fieldset. All nine prototypes include waterfall as a follow-up comparison; virtualization remains a separate later dimension.
 
 The Storybook examples live in the card-view component folder as `swc-card-view` and `swc-card-view-option-1` through `swc-card-view-option-8`. Each has grid, waterfall, and accessibility stories, with a dedicated docs page describing its interaction and tradeoffs. The baseline adapts [PR #6798](https://github.com/adobe/spectrum-web-components/pull/6798)'s default RSP model rather than its entire multi-model inspector application.
 
-Automated Playwright tests scan each prototype in both layouts with axe-core and compare accessibility-tree snapshots in initial, selected, and disabled states. The snapshots describe the browser accessibility tree, not verified screen reader speech. Option 6 explicitly records its known `nested-interactive` finding; other prototypes require no axe violations. Real Tab/Shift+Tab tests verify nested action entry and exit for options 6–8.
+Automated Playwright tests scan each prototype in both layouts with axe-core and compare accessibility-tree snapshots in initial, selected, and disabled states. The snapshots describe the browser accessibility tree, not verified screen reader speech. All prototypes require no axe violations. Real Tab/Shift+Tab tests verify grid child-control entry and exit for Option 6 and grouped-control action entry and exit for options 7–8.
 
 Use the same content, primary actions, selection tasks, and child controls across comparable prototypes. Record DOM attributes, accessibility-tree structure, spoken output, focus movement, and task completion separately.
 

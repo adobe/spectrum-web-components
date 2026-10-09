@@ -153,65 +153,6 @@ export abstract class CardViewBase extends SpectrumElement {
     void this.focusCardControl(next);
   }
 
-  protected handleMenuKeydown(event: KeyboardEvent, index: number): void {
-    if (event.key === ' ' || event.key === 'Enter') {
-      event.preventDefault();
-      if (this.selectionMode === 'none') {
-        this.activate(index, 'open');
-      } else {
-        this.select(
-          index,
-          this.selectionMode === 'single' ||
-            !this.selected.includes(this.items[index].id)
-        );
-      }
-      return;
-    }
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      this.dispatchEvent(
-        new CustomEvent('swc-card-view-exit', {
-          bubbles: true,
-          composed: true,
-          detail: { direction: 'before' },
-        })
-      );
-      return;
-    }
-    let next = index;
-    if (event.key === 'Home') {
-      next = this.items.findIndex((item) => !item.disabled);
-    } else if (event.key === 'End') {
-      next = this.items.map((item) => !item.disabled).lastIndexOf(true);
-    } else if (
-      ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key)
-    ) {
-      next = this.spatial(index, event.key);
-    } else if (
-      event.key.length === 1 &&
-      !event.ctrlKey &&
-      !event.metaKey &&
-      !event.altKey
-    ) {
-      for (let offset = 1; offset <= this.items.length; offset++) {
-        const candidate = (index + offset) % this.items.length;
-        if (
-          !this.items[candidate].disabled &&
-          this.items[candidate].title
-            .toLocaleLowerCase()
-            .startsWith(event.key.toLocaleLowerCase())
-        ) {
-          next = candidate;
-          break;
-        }
-      }
-    } else {
-      return;
-    }
-    event.preventDefault();
-    void this.focusItem(next);
-  }
-
   protected sequential(index: number, direction: number): number {
     for (
       let next = index + direction;
@@ -296,17 +237,6 @@ export abstract class CardViewBase extends SpectrumElement {
       this.handleGroupedKeydown(event, target);
       return;
     }
-    if (this.model === 'menu') {
-      if (!target.hasAttribute('data-focus')) {
-        if (event.key === 'Escape') {
-          event.preventDefault();
-          void this.focusItem(index);
-        }
-        return;
-      }
-      this.handleMenuKeydown(event, index);
-      return;
-    }
     if (this.model === 'feed') {
       let next: number | undefined;
       if (event.key === 'PageDown') {
@@ -370,6 +300,9 @@ export abstract class CardViewBase extends SpectrumElement {
     } else if (event.key === 'End') {
       next = this.items.map((item) => !item.disabled).lastIndexOf(true);
     } else if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+      if (this.model === 'vertical' && this.layout === 'waterfall') {
+        return;
+      }
       const rtl = getComputedStyle(this).direction === 'rtl';
       const direction = (event.key === 'ArrowRight' ? 1 : -1) * (rtl ? -1 : 1);
       next =
@@ -378,9 +311,11 @@ export abstract class CardViewBase extends SpectrumElement {
           : this.sequential(index, direction);
     } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       next =
-        this.model === 'wrapping'
-          ? this.columnStep(index, event.key === 'ArrowDown' ? 1 : -1)
-          : this.spatial(index, event.key);
+        this.model === 'vertical' && this.layout === 'waterfall'
+          ? this.sequential(index, event.key === 'ArrowDown' ? 1 : -1)
+          : this.model === 'wrapping'
+            ? this.columnStep(index, event.key === 'ArrowDown' ? 1 : -1)
+            : this.spatial(index, event.key);
     } else {
       return;
     }

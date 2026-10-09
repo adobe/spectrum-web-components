@@ -147,27 +147,6 @@ export class CardView extends CardViewBase {
     return !this.composite || index === this.activeIndex ? 0 : -1;
   }
 
-  private handleMenuClick(event: Event): void {
-    if (
-      (event.composedPath() as HTMLElement[]).some((element) =>
-        element.matches?.('button')
-      )
-    ) {
-      return;
-    }
-    const index = Number((event.currentTarget as HTMLElement).dataset.index);
-    void this.focusItem(index);
-    if (this.selectionMode === 'none') {
-      this.activate(index, 'open');
-    } else {
-      this.select(
-        index,
-        this.selectionMode === 'single' ||
-          !this.selected.includes(this.items[index].id)
-      );
-    }
-  }
-
   private handleSelection(event: Event): void {
     const input = event.currentTarget as HTMLInputElement;
     this.select(Number(input.dataset.index), input.checked);
@@ -183,61 +162,6 @@ export class CardView extends CardViewBase {
 
   private renderCard(item: CardViewItem, index: number): TemplateResult {
     const selected = this.selected.includes(item.id);
-    if (this.model === 'menu') {
-      return html`
-        <swc-card
-          variant=${this.variant}
-          density=${this.density}
-          data-selected=${selected}
-        >
-          <img
-            slot="preview"
-            src=${item.image}
-            alt=""
-            style=${styleMap({
-              aspectRatio: String(
-                this.layout === 'waterfall' ? (item.aspectRatio ?? 1) : 1.5
-              ),
-              objectFit: 'cover',
-            })}
-            @load=${this.scheduleLayout}
-          />
-          ${this.selectionMode !== 'none'
-            ? html`
-                <span slot="media" class="selection" aria-hidden="true">
-                  ${selected ? '\u2611' : '\u2610'}
-                </span>
-              `
-            : ''}
-          <button
-            slot="title"
-            type="button"
-            class="title"
-            data-index=${index}
-            data-action="open"
-            tabindex=${this.childTabIndex(index)}
-            ?disabled=${item.disabled}
-            @click=${this.handleAction}
-          >
-            ${item.title}
-          </button>
-          <span slot="description">${item.description}</span>
-          <button
-            slot="actions"
-            type="button"
-            class="share"
-            data-index=${index}
-            data-action="share"
-            aria-label=${`Share ${item.title}`}
-            tabindex=${this.childTabIndex(index)}
-            ?disabled=${item.disabled}
-            @click=${this.handleAction}
-          >
-            Share
-          </button>
-        </swc-card>
-      `;
-    }
     return html`
       <swc-card
         variant=${this.variant}
@@ -362,33 +286,6 @@ export class CardView extends CardViewBase {
         </div>
       `;
     }
-    if (this.model === 'menu') {
-      return html`
-        <div
-          class="item"
-          role=${this.selectionMode === 'none'
-            ? 'menuitem'
-            : this.selectionMode === 'single'
-              ? 'menuitemradio'
-              : 'menuitemcheckbox'}
-          data-focus
-          data-index=${index}
-          aria-label=${item.title}
-          aria-checked=${ifDefined(
-            this.selectionMode === 'none'
-              ? undefined
-              : String(this.selected.includes(item.id))
-          )}
-          aria-disabled=${ifDefined(item.disabled ? 'true' : undefined)}
-          tabindex=${!item.disabled && index === this.activeIndex ? 0 : -1}
-          style=${style}
-          @click=${this.handleMenuClick}
-          @keydown=${this.handleKeydown}
-        >
-          ${this.renderCard(item, index)}
-        </div>
-      `;
-    }
     if (this.model === 'single-row') {
       return html`
         <div
@@ -445,8 +342,7 @@ export class CardView extends CardViewBase {
   }
 
   protected override render(): TemplateResult {
-    const grid =
-      this.composite && this.model !== 'menu' && !this.groupedControls;
+    const grid = this.composite && !this.groupedControls;
     const content = repeat(
       this.items,
       (item) => item.id,
@@ -487,17 +383,11 @@ export class CardView extends CardViewBase {
                 class="collection"
                 role=${this.model === 'feed'
                   ? 'feed'
-                  : this.model === 'menu'
-                    ? 'menu'
-                    : this.model === 'toolbar'
-                      ? 'toolbar'
-                      : 'grid'}
+                  : this.model === 'toolbar'
+                    ? 'toolbar'
+                    : 'grid'}
                 aria-orientation=${ifDefined(
-                  this.model === 'menu'
-                    ? 'vertical'
-                    : this.model === 'toolbar'
-                      ? 'horizontal'
-                      : undefined
+                  this.model === 'toolbar' ? 'horizontal' : undefined
                 )}
                 aria-label=${this.label}
                 aria-rowcount=${ifDefined(
@@ -521,9 +411,7 @@ export class CardView extends CardViewBase {
                   this.model === 'feed' ? 'false' : undefined
                 )}
                 style=${height}
-                @keydown=${this.model === 'menu'
-                  ? undefined
-                  : this.handleKeydown}
+                @keydown=${this.handleKeydown}
                 @focusin=${this.handleFocus}
               >
                 ${this.model === 'single-row'
@@ -566,12 +454,12 @@ export class CardViewOption5 extends CardView {
 }
 
 /**
- * Experimental menu of card-shaped selection commands.
+ * Experimental layout grid with sequential vertical waterfall navigation.
  *
  * @element swc-card-view-option-6
  */
 export class CardViewOption6 extends CardView {
-  protected override readonly model: CardViewModel = 'menu';
+  protected override readonly model: CardViewModel = 'vertical';
 }
 
 /**

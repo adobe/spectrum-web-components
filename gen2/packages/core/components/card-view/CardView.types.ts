@@ -13,9 +13,9 @@ export type CardViewLayout = 'grid' | 'waterfall';
 export type CardViewModel =
   | 'baseline'
   | 'sequential'
+  | 'vertical'
   | 'wrapping'
   | 'single-row'
-  | 'menu'
   | 'toolbar'
   | 'fieldset'
   | 'list'

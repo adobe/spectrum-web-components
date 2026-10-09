@@ -18,7 +18,7 @@ import { photos, prototypeMeta } from './story-helpers.js';
 // ────────────────
 
 /**
- * Compares card-shaped menu commands with content-collection semantics.
+ * Compares Option 1 with semantic-order vertical waterfall navigation.
  */
 const meta: Meta = {
   ...prototypeMeta('swc-card-view-option-6'),
@@ -26,7 +26,7 @@ const meta: Meta = {
   parameters: {
     ...prototypeMeta('swc-card-view-option-6').parameters,
     docs: {
-      subtitle: 'Spatial menu-item selection with nested card actions.',
+      subtitle: 'Option 1 semantics with vertical-only waterfall traversal.',
     },
   },
   tags: ['migrated'],

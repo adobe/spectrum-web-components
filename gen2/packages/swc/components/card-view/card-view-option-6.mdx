@@ -8,64 +8,69 @@ import * as Stories from './stories/card-view-option-6.stories';
 
 ## Anatomy
 
-`swc-card-view-option-6` uses a labelled `menu` with a card-shaped menu item for each photo. Multiple selection uses `menuitemcheckbox`; single selection uses `menuitemradio`; selection disabled uses plain `menuitem`. Each item's accessible name is its photo title. A visual checkbox indicator reflects `aria-checked` but is hidden from assistive technology.
-
-Open and Share remain real buttons inside each card. This intentionally explores nested interaction inside a menu item rather than the conventional command-only menu pattern. The menu item itself acts as the selection checkbox; its visual indicator is not an independent input.
+`swc-card-view-option-6` uses the same labelled single-column `grid`, `row`, and `rowheader` structure as Option 1, with one semantic row per card. Each card retains its native checkbox, Open button, and Share button. Only waterfall arrow navigation differs from Option 1.
 
 ## Options
 
 ### Grid
 
-Cards align in visual rows; arrow navigation follows measured geometry.
+Uniform cards use Option 1's navigation: Left/Right follows collection order and Up/Down follows visual geometry.
 
 <Canvas of={Stories.Grid} />
 
 ### Waterfall
 
-Cards retain varied preview heights and use shortest-column placement. Arrow navigation follows visual neighbors with overlap on the perpendicular axis.
+Cards retain varied preview heights and use shortest-column placement. Only the vertical arrow axis navigates: Down moves to the next enabled card in semantic order and Up moves to the previous one, regardless of visual placement. Left/Right does not move focus.
 
 <Canvas of={Stories.Waterfall} />
 
 ## Behaviors
 
-<kbd>ArrowDown</kbd>, <kbd>ArrowUp</kbd>, <kbd>ArrowLeft</kbd>, and
-<kbd>ArrowRight</kbd> move to the nearest enabled menu-item checkbox in that
-visual direction, stopping at boundaries. <kbd>Home</kbd> and <kbd>End</kbd>
-reach the first/last enabled item. A printable character moves to the next
-enabled title starting with that character, cycling through matches. This
-prototype supports first-character search, not buffered multi-character search.
+In grid layout, <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> move sequentially between enabled cards, mirrored in RTL. <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd> move spatially above/below with horizontal overlap, as in Option 1.
 
-Click, <kbd>Space</kbd>, and <kbd>Enter</kbd> toggle a checkbox menu item's checked state. Radio menu items remain checked when activated again and clear the previous selection. When selection is disabled, activation emits the primary Open action. There is no keyboard range selection. <kbd>Tab</kbd> enters the active card's Open button, then Share, then leaves the menu. <kbd>Shift</kbd>+<kbd>Tab</kbd> reverses that path. Inactive cards' actions have `tabindex="-1"`. Nested buttons keep native activation and arrow behavior and do not toggle selection. <kbd>Escape</kbd> from a nested action returns to its menu item; from the menu item it emits `swc-card-view-exit` requesting host focus restoration. The stories connect this to Photo library. This is a persistent comparison menu, not a popup with an implemented trigger/close lifecycle.
+In waterfall layout, <kbd>ArrowDown</kbd> and <kbd>ArrowUp</kbd> move forward/backward in semantic collection order. <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> do not navigate. Movement stops at collection boundaries and skips disabled cards; it does not use visual distance or column membership.
 
-Four-direction navigation deliberately departs from conventional menu orientation and submenu keys. Disabled items use `aria-disabled` and are skipped; their nested buttons are native disabled.
+<kbd>Home</kbd> and <kbd>End</kbd> reach the first/last enabled card in both
+layouts. <kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the
+focused card. Shift navigation selects a collection-order range in
+multiple-selection mode. Tab visits the active card's checkbox and actions
+before exiting; Shift+Tab reverses the path. Child actions keep native keys and
+never also select the card.
 
 ## Accessibility
 
 ### Features
 
-The menu exposes checked state rather than `aria-selected`, and has no grid row/column metadata. Focus and checked state are separate. Titles name menu items and Open buttons; Share buttons have photo-specific names. Selected-count updates use the shared live status. Nested interactive descendants may be reported by automated accessibility checks and need manual assistive technology testing.
+The grid reports one column and one row per card. Rows and rowheaders expose stable one-based row indices, and rowheaders expose column index 1. Selection uses `aria-selected` and labelled native checkboxes. The active card is the collection entry point; inactive cards' child controls have `tabindex="-1"`. The live status reports selected count.
+
+The pros and cons below use Option 5's evaluation goals, with the waterfall navigation tradeoff added. Option 5's observed “x of y” speech is not a verified result for this new Option 1-based variant. Its one-column, multiple-row semantics must be tested separately; metadata alone does not guarantee positional announcements.
 
 <Canvas of={Stories.Accessibility} />
 
 ### Pros
 
-- Retains checked-state commands and first-character search.
-- Provides spatial navigation without grid row/column announcements.
-- Preserves Open/Share controls and separates their activation from selection.
+- Aligns navigation with semantic collection order.
+- Targets “x of y” positional feedback for screen reader users, the benefit observed with Option 5; verify it for this variant.
+- Arrow-key navigation provides an easy and intuitive route for sighted users navigating items.
+- Provides a stable sequential route through every enabled card in both layouts.
+- Retains selection, a single collection tab stop, and independently interactive children.
+- Avoids semantic restructuring during responsive reflow.
+- Waterfall navigation is easy to follow visually because it uses one predictable semantic traversal sequence.
 
 ### Cons
 
-- A menu represents commands, not a general photo/file collection; users may interpret these cards as command choices rather than content.
-- Nested buttons depart from the conventional menu model and may be hidden, merged, or confusing in assistive technology.
-- Tab entering card actions and four-direction movement differ from familiar menu behavior; first-character search remains limited.
-- A persistent multi-column or waterfall menu can conflict with familiar visual menu expectations. Real menu entry/exit and spoken output need user testing.
+- Announced grid dimensions do not match visual columns once cards wrap or form a waterfall.
+- As with Option 5, semantic dimensions and visual movement can create different screen reader expectations; this variant announces one column rather than Option 5's one row.
+- Sequential waterfall movement can look surprising when adjacent collection items are not visual neighbors.
+- Grid semantics still introduce screen reader mode changes and need user testing; indices do not guarantee useful position announcements.
+- Waterfall navigation is slightly more tedious because reaching a distant card requires stepping through intervening items instead of taking a spatial shortcut.
 
 ### Best practices
 
-Treat this as a semantics experiment, not an approved asset-browser pattern. Compare selection, nested actions, disabled items, entry/exit, and reading tasks with the list, grid, toolbar, and fieldset options. Test NVDA, JAWS, VoiceOver, Narrator, and mobile screen readers. Do not infer reliable collection position announcements from the menu role. Hosts embedding this in a popup must implement trigger semantics, opening focus, dismissal, and focus restoration separately.
+Compare this variant directly with Options 1 and 5. Test complete forward/reverse waterfall traversal, ignored horizontal arrows, disabled cards, range selection, child controls, RTL, resize, and layout switches. Record actual positional speech and sighted keyboard task effort rather than assuming shared benefits establish accessibility conformance.
 
 ## Upcoming features
 
-Popup lifecycle, submenus, buffered typeahead, virtualization, and loading are outside this fully loaded comparison.
+Virtualization, loading announcements, and production API decisions remain outside this fully loaded comparison.
 
 <DocsFooter />

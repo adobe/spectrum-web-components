@@ -57,12 +57,8 @@ async function openPrototype(
   return view;
 }
 
-async function selectFirst(view: Locator, prototype: string): Promise<void> {
-  if (prototype === 'option-6') {
-    await view.getByRole('menuitemcheckbox').first().press('Space');
-  } else {
-    await view.getByRole('checkbox').first().check();
-  }
+async function selectFirst(view: Locator): Promise<void> {
+  await view.getByRole('checkbox').first().check();
   await expect(view.getByRole('status')).toHaveText('1 selected');
 }
 
@@ -90,7 +86,7 @@ for (const prototype of prototypes) {
         await expect(view).toMatchAriaSnapshot({
           name: `${prototype}-initial.aria.yml`,
         });
-        await selectFirst(view, prototype);
+        await selectFirst(view);
         await expect(view).toMatchAriaSnapshot({
           name: `${prototype}-selected.aria.yml`,
         });
@@ -107,7 +103,7 @@ for (const prototype of prototypes) {
         const reports = [];
         for (const state of ['initial', 'selected', 'disabled']) {
           if (state === 'selected') {
-            await selectFirst(view, prototype);
+            await selectFirst(view);
           } else if (state === 'disabled') {
             await disableThird(view);
           }
@@ -120,29 +116,51 @@ for (const prototype of prototypes) {
           body: JSON.stringify(reports, null, 2),
           contentType: 'application/json',
         });
-        const expectedRules =
-          prototype === 'option-6' ? ['nested-interactive'] : [];
-        if (prototype === 'option-6') {
-          testInfo.annotations.push({
-            type: 'known-accessibility-violation',
-            description:
-              'Nested card actions inside menuitemcheckbox intentionally violate the conventional menu pattern.',
-          });
-        }
         for (const report of reports) {
-          expect(
-            report.violations.map((violation) => violation.id),
-            report.state
-          ).toEqual(expectedRules);
-          for (const violation of report.violations) {
-            for (const node of violation.nodes) {
-              expect(node.html).toContain('role="menuitemcheckbox"');
-            }
-          }
+          expect(report.violations, report.state).toEqual([]);
         }
       });
 
-      if (['option-6', 'option-7', 'option-8'].includes(prototype)) {
+      if (prototype === 'option-6') {
+        test('Tab enters grid child controls and exits without a trap', async ({
+          page,
+        }) => {
+          const view = await openPrototype(page, prototype, layout);
+          await page
+            .getByRole('button', { name: 'Photo library', exact: true })
+            .focus();
+          await page.keyboard.press('Tab');
+          const entries = view.getByRole('rowheader');
+          await expect(entries.first()).toBeFocused();
+          await page.keyboard.press(
+            layout === 'waterfall' ? 'ArrowDown' : 'ArrowRight'
+          );
+          await expect(entries.nth(1)).toBeFocused();
+          await page.keyboard.press('Tab');
+          const checkbox = entries.nth(1).getByRole('checkbox');
+          const open = entries.nth(1).locator('[data-action="open"]');
+          const share = entries.nth(1).locator('[data-action="share"]');
+          await expect(checkbox).toBeFocused();
+          await page.keyboard.press('Tab');
+          await expect(open).toBeFocused();
+          await page.keyboard.press('Tab');
+          await expect(share).toBeFocused();
+          await page.keyboard.press('Tab');
+          await expect(
+            page.getByRole('button', { name: 'Upload photos', exact: true })
+          ).toBeFocused();
+          await page.keyboard.press('Shift+Tab');
+          await expect(share).toBeFocused();
+          await page.keyboard.press('Shift+Tab');
+          await expect(open).toBeFocused();
+          await page.keyboard.press('Shift+Tab');
+          await expect(checkbox).toBeFocused();
+          await page.keyboard.press('Shift+Tab');
+          await expect(entries.nth(1)).toBeFocused();
+        });
+      }
+
+      if (['option-7', 'option-8'].includes(prototype)) {
         test('Tab enters the active card actions and exits without a trap', async ({
           page,
         }) => {
@@ -151,9 +169,7 @@ for (const prototype of prototypes) {
             .getByRole('button', { name: 'Photo library', exact: true })
             .focus();
           await page.keyboard.press('Tab');
-          const entries = view.getByRole(
-            prototype === 'option-6' ? 'menuitemcheckbox' : 'checkbox'
-          );
+          const entries = view.getByRole('checkbox');
           await expect(entries.first()).toBeFocused();
           await page.keyboard.press('ArrowRight');
           await expect(entries.nth(1)).toBeFocused();
