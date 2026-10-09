@@ -75,10 +75,3 @@
 :host([readonly]) {
   --_swc-radio-group-is-readonly: true;
 }
-
-:host([invalid]) {
-  --swc-radio-border-color-default: token("negative-border-color-default");
-  --swc-radio-border-color-hover: token("negative-border-color-hover");
-  --swc-radio-border-color-down: token("negative-border-color-down");
-  --swc-radio-border-color-focus: token("negative-border-color-key-focus");
-}

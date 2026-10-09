@@ -86,7 +86,7 @@
      wrap. Combined with an adjacent `<span>` sibling (no whitespace text node
      between them), this avoids leaving the indicator alone on a line.
      Unsupported browsers (e.g. Firefox) fall back to normal wrapping.
-     Isolated to "top" to reduces instances of extra blank space next to
+     Isolated to "top" to reduce instances of extra blank space next to
      side labels */
   text-wrap: pretty;
 }
@@ -117,14 +117,16 @@
   color: token("neutral-subdued-content-color-default");
 }
 
-.swc-FormFieldErrorText {
+.swc-FormFieldErrorText-text {
   color: token("negative-content-color-default");
 }
 
 /* Optional leading icon for controls with no invalid icon of their own (e.g. a
-   radio group). The icon is one line tall so it aligns with the first line of a
-   wrapping message. */
-.swc-FormFieldErrorText:has(.swc-FormFieldErrorText-icon) {
+   radio group). It sits beside the error text, or the description when there
+   is no error text. The icon is one line tall so it aligns with the first line
+   of a wrapping message. */
+.swc-FormFieldErrorText:has(.swc-FormFieldErrorText-icon),
+.swc-FormFieldDescription:has(.swc-FormFieldErrorText-icon) {
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: start;

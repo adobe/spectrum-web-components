@@ -296,6 +296,60 @@ export const ErrorIconTest: Story = {
   },
 };
 
+export const ErrorIconWithoutErrorTextTest: Story = {
+  render: () => html`
+    <swc-radio-group id="with-description" name="a" invalid>
+      <span slot="label">With description</span>
+      <span slot="description">Choose one.</span>
+      <swc-radio value="1"><span slot="label">Red</span></swc-radio>
+    </swc-radio-group>
+    <swc-radio-group id="bare" name="b" invalid>
+      <span slot="label">No messages</span>
+      <swc-radio value="1"><span slot="label">Red</span></swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement }) => {
+    const withDescription = await getComponent<RadioGroup>(
+      canvasElement,
+      '#with-description'
+    );
+    const bare = await getComponent<RadioGroup>(canvasElement, '#bare');
+    const icon = (group: RadioGroup) =>
+      group.shadowRoot?.querySelector('.swc-FormFieldErrorText-icon');
+    const describedBy = (group: RadioGroup) =>
+      (group.roleElement as ReflectedAriaElement).ariaDescribedByElements ?? [];
+
+    expect(
+      icon(withDescription),
+      'icon shows beside the description'
+    ).toBeTruthy();
+    expect(icon(withDescription)?.getAttribute('aria-hidden')).toBe('true');
+    expect(
+      withDescription.shadowRoot?.querySelector('slot[name="description"]'),
+      'the description stays visible'
+    ).toBeTruthy();
+    expect(describedBy(withDescription)).toEqual([
+      withDescription.shadowRoot?.querySelector('.swc-FormFieldDescription'),
+    ]);
+
+    expect(
+      icon(bare),
+      'icon shows with no description or error text'
+    ).toBeTruthy();
+    expect(icon(bare)?.getAttribute('aria-hidden')).toBe('true');
+    expect(describedBy(bare), 'nothing to describe').toHaveLength(0);
+
+    withDescription.invalid = false;
+    bare.invalid = false;
+    await Promise.all([withDescription.updateComplete, bare.updateComplete]);
+    expect(icon(withDescription)).toBeNull();
+    expect(icon(bare)).toBeNull();
+    expect(
+      withDescription.shadowRoot?.querySelector('slot[name="description"]')
+    ).toBeTruthy();
+  },
+};
+
 export const GroupStateLifecycleTest: Story = {
   render: () => html`
     <swc-radio-group>
@@ -604,6 +658,47 @@ export const InvalidSubmitNoValidateTest: Story = {
     } finally {
       form.removeEventListener('submit', submit);
       group.removeEventListener('invalid', invalid);
+    }
+  },
+};
+
+export const ItemStylingAttributesTest: Story = {
+  render: () => html`
+    <swc-radio-group size="l" emphasized invalid>
+      <span slot="label">Favorite color</span>
+      <swc-radio value="1"><span slot="label">Red</span></swc-radio>
+      <swc-radio value="2"><span slot="label">Green</span></swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+    const attributes = () =>
+      items.map((item) => [
+        item.getAttribute('size'),
+        item.hasAttribute('emphasized'),
+        item.hasAttribute('invalid'),
+      ]);
+
+    expect(attributes(), 'the group propagates its styling state').toEqual([
+      ['l', true, true],
+      ['l', true, true],
+    ]);
+
+    group.size = 's';
+    group.emphasized = false;
+    group.invalid = false;
+    await group.updateComplete;
+    expect(attributes(), 'changes and removals propagate').toEqual([
+      ['s', false, false],
+      ['s', false, false],
+    ]);
+
+    for (const name of ['size', 'emphasized', 'invalid']) {
+      expect(name in items[0], `${name} is not a radio property`).toBe(false);
     }
   },
 };

@@ -19,6 +19,7 @@
 }
 
 .swc-Radio {
+  -webkit-tap-highlight-color: transparent;
   display: grid;
   grid-template-columns: auto 1fr;
   font-size: var(--swc-radio-font-size, token("font-size-100"));
@@ -90,7 +91,7 @@
 
 /* ── Emphasized ───────────────────────────────────── */
 
-:host([emphasized][checked]) {
+:host([emphasized][checked]:not([invalid])) {
   --swc-radio-border-color-default: token("accent-content-color-default");
   --swc-radio-border-color-hover: token("accent-content-color-hover");
   --swc-radio-border-color-down: token("accent-content-color-down");
@@ -98,6 +99,13 @@
 }
 
 /* ── States ───────────────────────────────────────── */
+
+:host([invalid]) {
+  --swc-radio-border-color-default: token("negative-border-color-default");
+  --swc-radio-border-color-hover: token("negative-border-color-hover");
+  --swc-radio-border-color-down: token("negative-border-color-down");
+  --swc-radio-border-color-focus: token("negative-border-color-key-focus");
+}
 
 /* The selected ring grows inward until only the indicator-sized dot remains. */
 :host([checked]) .swc-Radio-button {
