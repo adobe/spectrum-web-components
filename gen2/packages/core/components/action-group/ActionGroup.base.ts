@@ -41,7 +41,7 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
   validSizes: ACTION_GROUP_VALID_SIZES,
   noDefaultSize: true,
 }) {
-  static override shadowRootOptions = {
+  static override shadowRootOptions: ShadowRootInit = {
     ...SpectrumElement.shadowRootOptions,
     delegatesFocus: true,
   };

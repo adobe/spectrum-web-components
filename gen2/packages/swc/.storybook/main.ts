@@ -9,12 +9,12 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { readCsf } from '@storybook/core/csf-tools';
 import type { Indexer } from '@storybook/types';
 import type { StorybookConfig } from '@storybook/web-components-vite';
 import { mkdirSync } from 'fs';
 import { dirname, resolve } from 'path';
 import remarkGfm from 'remark-gfm';
+import { readCsf } from 'storybook/internal/csf-tools';
 import { fileURLToPath } from 'url';
 import { mergeConfig } from 'vite';
 

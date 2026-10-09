@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "moduleResolution": "node",
     "outDir": "../out/client",
     "rootDir": ".",
     "strict": true,

@@ -28,11 +28,11 @@
     "@adobe/swc-tokens": "workspace:*"
   },
   "peerDependencies": {
-    "postcss": "8.5.9"
+    "postcss": "8.5.29"
   },
   "devDependencies": {
-    "postcss": "8.5.9",
-    "vitest": "4.1.7"
+    "postcss": "8.5.29",
+    "vitest": "5.0.3"
   },
   "keywords": [
     "design-system",
