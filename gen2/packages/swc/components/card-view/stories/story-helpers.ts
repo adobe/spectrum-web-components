@@ -24,7 +24,7 @@ import '../swc-card-view-option-6.js';
 import '../swc-card-view-option-7.js';
 import '../swc-card-view-option-8.js';
 
-export const photos: CardViewItem[] = [
+const photoTemplates: CardViewItem[] = [
   {
     id: 'coast',
     title: 'Coastal light',
@@ -111,6 +111,19 @@ export const photos: CardViewItem[] = [
   },
 ];
 
+export const photos: CardViewItem[] = Array.from(
+  { length: 100 },
+  (_, index) => {
+    const photo = photoTemplates[index % photoTemplates.length];
+    const batch = Math.floor(index / photoTemplates.length);
+    return {
+      ...photo,
+      id: batch === 0 ? photo.id : `${photo.id}-${index + 1}`,
+      title: batch === 0 ? photo.title : `${photo.title} ${batch + 1}`,
+    };
+  }
+);
+
 export function prototypeMeta(tag: string): Partial<Meta> {
   const element = unsafeStatic(tag);
   return {
@@ -150,6 +163,7 @@ export function prototypeMeta(tag: string): Partial<Meta> {
       <div style="max-width: 1040px; margin-inline: auto;">
         <button type="button" style="margin-block-end: 16px;">Photo library</button>
         <${element}
+          style="max-height: 60vh; overflow: auto;"
           .items=${args.items}
           .layout=${args.layout}
           .label=${args.label}

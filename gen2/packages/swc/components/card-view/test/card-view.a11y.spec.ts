@@ -32,7 +32,8 @@ async function openPrototype(
     tag
   );
   const view = root.locator(tag);
-  await expect(view.locator('.item')).toHaveCount(12);
+  await expect(view.locator('.item')).toHaveCount(100);
+  await expect(view).toHaveCSS('overflow', 'auto');
   await expect
     .poll(() =>
       view
@@ -54,6 +55,14 @@ async function openPrototype(
         )
     )
     .toBe(true);
+  const dimensions = await view.evaluate((element) => ({
+    height: element.getBoundingClientRect().height,
+    maxHeight: window.innerHeight * 0.6,
+    scrollHeight: element.scrollHeight,
+    clientHeight: element.clientHeight,
+  }));
+  expect(dimensions.height).toBeLessThanOrEqual(dimensions.maxHeight + 1);
+  expect(dimensions.scrollHeight).toBeGreaterThan(dimensions.clientHeight);
   return view;
 }
 
