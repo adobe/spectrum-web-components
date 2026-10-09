@@ -40,13 +40,13 @@
 
 ## Overview
 
-This doc describes how **`swc-grid`** should behave for **accessibility** in gen2, targeting **WCAG 2.2 Level AA**. **`swc-grid`** is a **virtualized layout grid** host (successor to 1st-gen **`sp-grid`** in [`1st-gen/tools/grid`](../../../../1st-gen/tools/grid/)) used to present **many focusable items** in rows and columns with **arrow-key** navigation. The primary product consumer is planned **`swc-card-view`**, modeled on [React Spectrum CardView](https://react-spectrum.adobe.com/CardView) (collections of cards, selection, async **loading**, bulk actions). There is **no** Spectrum 2 Figma file for **`swc-grid`** at planning time—semantics follow the [APG Grid pattern](https://www.w3.org/WAI/ARIA/apg/patterns/grid/) and [Data Grid Examples](https://www.w3.org/WAI/ARIA/apg/patterns/grid/examples/data-grids/).
+This doc records the original accessibility proposal for `swc-grid`, targeting WCAG 2.2 Level AA, and research on 1st-gen `sp-grid` in [`1st-gen/tools/grid`](../../../../1st-gen/tools/grid/). Grid is being deprecated: Card will use card-view instead of grid. The standalone `swc-grid` proposal below is superseded by the [Card view accessibility requirements](../card-view/accessibility-migration-analysis.md). Card-view owns collection navigation, selection, virtualization, and ARIA grid semantics rather than composing `swc-grid`. The ARIA `grid` role remains applicable; deprecating the component does not remove those semantics.
 
-**gen2 direction:** Prescribed host **`role="grid"`** with **roving** **`tabindex`** on **cells** (or **rows**, per layout contract), implemented with **`FocusgroupNavigationController`** and **`direction: 'grid'`** ([Focus management](../../../01_contributor-guides/14_focus-management.md))—**not** 1st-gen **`RovingTabindexController`**. **Virtualization** must keep **logical** row/column position and **focus** stable when items mount and unmount. **Layout** styling (**gap**, **item size**, **grid** vs **waterfall**) is visual only and must not replace grid **roles** or **keyboard** contracts.
+**Original proposal (superseded):** Prescribed host **`role="grid"`** with **roving** **`tabindex`** on **cells** (or **rows**, per layout contract), implemented with **`FocusgroupNavigationController`** and **`direction: 'grid'`** ([Focus management](../../../01_contributor-guides/14_focus-management.md))—**not** 1st-gen **`RovingTabindexController`**. **Virtualization** must keep **logical** row/column position and **focus** stable when items mount and unmount. **Layout** styling (**gap**, **item size**, **grid** vs **waterfall**) is visual only and must not replace grid **roles** or **keyboard** contracts.
 
 ### Also read
 
-[Grid migration roadmap](./rendering-and-styling-migration-analysis.md) (virtualization, layout, 1st-gen **`sp-grid`** API). [Focus management](../../../01_contributor-guides/14_focus-management.md) (**`FocusgroupNavigationController`**). [React Spectrum CardView](https://react-spectrum.adobe.com/CardView) (target collection UX). When **`swc-card-view`** exists, its accessibility doc should reference this file for **grid** keyboard and **ARIA** ownership.
+[Grid migration roadmap](./rendering-and-styling-migration-analysis.md) (historical virtualization, layout, and 1st-gen `sp-grid` research). [Focus management](../../../01_contributor-guides/14_focus-management.md) (`FocusgroupNavigationController`). [React Spectrum CardView](https://react-spectrum.adobe.com/CardView) (target collection UX). [Card view accessibility requirements](../card-view/accessibility-migration-analysis.md) define the current keyboard and ARIA ownership contract; this file is historical context.
 
 ### What it is
 
@@ -68,7 +68,7 @@ This doc describes how **`swc-grid`** should behave for **accessibility** in gen
 - **Not a 1st-gen `RovingTabindexController` host:** gen2 must use **`FocusgroupNavigationController`** (bounding-rect **grid** layout, **Ctrl+Home** / **Ctrl+End**, optional **pageStep**).
 - **Not author-overridable `role`:** **`grid`** is **prescribed**; do not expose **`role="list"`**, **`role="table"`**, or **`role="grid"`** overrides on **`swc-grid`**.
 - **Not free of item semantics:** **`renderItem`** / slotted cards must supply **row** / **gridcell** / **name** / **selected**—the grid does not invent names from images alone.
-- **Not CardView itself:** **`swc-card-view`** composes **`swc-grid`** + **`swc-card`** (and action bar, empty state, etc.); bulk **action bar** keyboard lives on **`swc-action-bar`** / toolbar patterns.
+- **Not a card-view dependency:** `swc-grid` is being deprecated. Card will use card-view instead of grid; `swc-card-view` owns collection semantics rather than composing `swc-grid`. Bulk action bar keyboard behavior belongs to action-bar / toolbar patterns.
 
 ### Program (gen2, Jira snapshot)
 
@@ -95,7 +95,7 @@ Add **`gen2`** program tickets here when filed (**`swc-grid`**, **`swc-card-view
 | [Content on hover or focus (WCAG 1.4.13)](https://www.w3.org/TR/WCAG22/#content-on-hover-or-focus) | Card previews and tooltips inside cells follow overlay rules ([Popover](../popover/accessibility-migration-analysis.md), [Tooltip](../tooltip/accessibility-migration-analysis.md)). |
 | [Status messages (WCAG 4.1.3)](https://www.w3.org/TR/WCAG22/#status-messages) | **Loading more** / **empty** / **selection count** use **`role="status"`** or pattern-appropriate messaging—not **`aria-live="assertive"`** on the grid host for routine loads. |
 
-**Bottom line:** **`swc-grid`** = **labeled** **`role="grid"`** + **`FocusgroupNavigationController`** (**`grid`**) + **virtualization-aware** **indices** + **item**-level **names** and **selection**; **`swc-card-view`** builds on top.
+**Bottom line:** Card-view owns the named `grid`, focus navigation, virtualization-aware indices, and item-level names and selection. These requirements do not depend on a separate `swc-grid` component.
 
 ---
 
