@@ -14,23 +14,178 @@
   display: block;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .swc-Radio {
+  -webkit-tap-highlight-color: transparent;
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 0.5lh;
+  font-size: var(--swc-radio-font-size, token("font-size-100"));
+  font-weight: token("regular-font-weight");
+  line-height: token("line-height-100");
+  cursor: default;
+  column-gap: var(--swc-radio-text-to-control, token("form-item-gap-medium"));
+
+  &:lang(ja),
+  &:lang(zh),
+  &:lang(ko) {
+    line-height: token("cjk-line-height-100");
+  }
 }
 
+/* Radio has no bounding box, so there is no block padding; the control is
+   centered on the label's first line instead. */
 .swc-Radio-button {
-  width: 1lh;
-  height: 1lh;
-  border: 1px solid;
-  border-radius: 50%;
-}
+  --_swc-radio-control-size: var(--swc-radio-control-size, token("radio-button-control-size-medium"));
 
-:host([checked]) .swc-Radio-button {
-  background-color: currentcolor;
+  inline-size: var(--_swc-radio-control-size);
+  block-size: var(--_swc-radio-control-size);
+  margin-block-start: calc((1lh - var(--_swc-radio-control-size)) / 2);
+  background-color: token("gray-25");
+  border: token("border-width-200") solid var(--swc-radio-border-color-default, token("neutral-content-color-default"));
+  border-radius: 50%;
+  transition-duration: token("animation-duration-100");
+  transition-property: border-color, border-width;
 }
 
 .swc-Radio-content {
   display: grid;
+}
+
+.swc-Radio-label,
+.swc-Radio-description {
+  min-inline-size: 0;
+  overflow-wrap: break-word;
+}
+
+.swc-Radio-label {
+  color: var(--swc-radio-content-color-default, token("neutral-content-color-default"));
+  text-align: start;
+  transition-duration: token("animation-duration-100");
+  transition-property: color;
+}
+
+.swc-Radio-description {
+  font-size: var(--swc-radio-description-font-size, token("font-size-75"));
+  color: token("neutral-subdued-content-color-default");
+}
+
+/* ── Size ─────────────────────────────────────────── */
+
+:host([size="s"]) {
+  --swc-radio-control-size: token("radio-button-control-size-small");
+  --swc-radio-text-to-control: token("form-item-gap-small");
+  --swc-radio-font-size: token("font-size-75");
+  --swc-radio-description-font-size: token("font-size-50");
+}
+
+:host([size="l"]) {
+  --swc-radio-control-size: token("radio-button-control-size-large");
+  --swc-radio-text-to-control: token("form-item-gap-large");
+  --swc-radio-font-size: token("font-size-200");
+  --swc-radio-description-font-size: token("font-size-100");
+}
+
+:host([size="xl"]) {
+  --swc-radio-control-size: token("radio-button-control-size-extra-large");
+  --swc-radio-text-to-control: token("form-item-gap-extra-large");
+  --swc-radio-font-size: token("font-size-300");
+  --swc-radio-description-font-size: token("font-size-200");
+}
+
+/* ── Emphasized ───────────────────────────────────── */
+
+:host([emphasized][checked]) {
+  --swc-radio-border-color-default: token("accent-content-color-default");
+  --swc-radio-border-color-hover: token("accent-content-color-hover");
+  --swc-radio-border-color-down: token("accent-content-color-down");
+  --swc-radio-border-color-focus: token("accent-content-color-key-focus");
+}
+
+/* ── States ───────────────────────────────────────── */
+
+/* The selected ring grows inward until only the indicator-sized dot remains. */
+:host([checked]) .swc-Radio-button {
+  border-width: calc((var(--_swc-radio-control-size) / 2) - (token("radio-button-selection-indicator") / 2));
+}
+
+:host(:hover) .swc-Radio-button {
+  border-color: var(--swc-radio-border-color-hover, token("neutral-content-color-hover"));
+}
+
+:host(:hover) .swc-Radio-label {
+  color: var(--swc-radio-content-color-hover, token("neutral-content-color-hover"));
+}
+
+:host(:active) .swc-Radio-button {
+  border-color: var(--swc-radio-border-color-down, token("neutral-content-color-down"));
+
+  @container not style(--_swc-radio-group-is-readonly: true) {
+    transform: perspective(token("component-size-minimum-perspective-down")) translateZ(token("component-size-difference-down"));
+  }
+}
+
+:host(:active) .swc-Radio-label {
+  color: var(--swc-radio-content-color-down, token("neutral-content-color-down"));
+}
+
+/* The host is the focus target, so the ring is drawn on the control instead. */
+:host(:focus-visible) {
+  outline: none;
+}
+
+:host(:focus-visible) .swc-Radio-button {
+  border-color: var(--swc-radio-border-color-focus, token("neutral-content-color-key-focus"));
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
+}
+
+:host(:focus-visible) .swc-Radio-label {
+  color: var(--swc-radio-content-color-focus, token("neutral-content-color-key-focus"));
+}
+
+:host([disabled]) .swc-Radio-button {
+  border-color: var(--swc-radio-border-color-disabled, token("disabled-content-color"));
+  transform: none;
+}
+
+:host([disabled]) .swc-Radio-label,
+:host([disabled]) .swc-Radio-description {
+  color: var(--swc-radio-content-color-disabled, token("disabled-content-color"));
+}
+
+/* ── Forced colors ────────────────────────────────── */
+
+/* The control is a non-semantic span, so its state colors must be restated. */
+@media (forced-colors: active) {
+  .swc-Radio-button {
+    background-color: Canvas;
+    border-color: ButtonText;
+    forced-color-adjust: none;
+  }
+
+  :host(:active) .swc-Radio-button {
+    border-color: ButtonText;
+  }
+
+  :host(:hover) .swc-Radio-button,
+  :host([checked]) .swc-Radio-button,
+  :host(:focus-visible) .swc-Radio-button {
+    border-color: Highlight;
+  }
+
+  :host(:focus-visible) .swc-Radio-button {
+    outline-color: CanvasText;
+  }
+
+  :host([disabled]) .swc-Radio-button {
+    border-color: GrayText;
+  }
+
+  :host([disabled]) .swc-Radio-label,
+  :host([disabled]) .swc-Radio-description {
+    color: GrayText;
+  }
 }

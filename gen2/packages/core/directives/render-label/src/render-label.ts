@@ -28,9 +28,11 @@ export interface RenderFieldLabelOptions {
 
   /**
    * The role element's `id` (e.g. the `<input>`), wired as the rendered
-   * `<label for>` so the label gives native click-to-focus.
+   * `<label for>` so the label gives native click-to-focus. Omit for a group
+   * with no labelable control (e.g. a radio group); a `<span>` renders instead
+   * and the host wires the name via `aria-labelledby`.
    */
-  forId: string;
+  forId?: string;
 
   /**
    * Whether the field is required. The indicator it appends is `aria-hidden`;
@@ -86,6 +88,10 @@ export function renderFieldLabel({
     labels: necessityIndicatorText,
     icon: necessityIcon,
   });
+  if (forId === undefined) {
+    // prettier-ignore
+    return html`<span class="swc-FormFieldLabel"><slot name="label"></slot>${necessity}</span>`;
+  }
   // prettier-ignore
   return html`<label class="swc-FormFieldLabel" for=${forId}><slot name="label"></slot>${necessity}</label>`;
 }

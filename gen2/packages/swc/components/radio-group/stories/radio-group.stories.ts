@@ -25,20 +25,12 @@ const { events, args, argTypes, template } =
   getStorybookHelpers('swc-radio-group');
 
 const meta: Meta = {
-  title: 'Radio Group',
+  title: 'Radio group',
   component: 'swc-radio-group',
   args,
   argTypes,
   render: (args) => html`
-    ${template({
-      ...args,
-      'label-slot': 'Example radios',
-      'description-slot': 'This is the description for the radio group.',
-      'default-slot': `
-        <swc-radio value="1"><span slot="label">Option 1</span></swc-radio>
-        <swc-radio value="2"><span slot="label">Option 2</span></swc-radio>
-      `,
-    })}
+    ${group(args, { selected: '1' })}
   `,
   parameters: {
     actions: {
@@ -50,31 +42,295 @@ const meta: Meta = {
 
 export default meta;
 
+// ────────────────
+//    HELPERS
+// ────────────────
+
+const radio = (
+  value: string,
+  label: string,
+  attributes = '',
+  description = ''
+): string => `
+  <swc-radio value="${value}" ${attributes}>
+    <span slot="label">${label}</span>
+    <span slot="description">${description ? `${description}` : `Description for ${label}`}</span>
+  </swc-radio>
+`;
+
+const ITEMS = [
+  radio('1', 'Option 1'),
+  radio('2', 'Option 2'),
+  radio('3', 'Option 3'),
+].join('');
+
+const SIZES = ['s', 'm', 'l', 'xl'] as const;
+
+const group = (args: Record<string, unknown>, overrides = {}) =>
+  template({
+    ...args,
+    'label-slot': 'Example radios',
+    'description-slot': 'This is the description for the radio group.',
+    'default-slot': ITEMS,
+    ...overrides,
+  });
+
 // ────────────────────
 //    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
+  args: {
+    selected: '1',
+    'label-slot': 'Example radios',
+    'description-slot': 'This is the description for the radio group.',
+    'error-text-slot': 'This option is not available.',
+    'default-slot': ITEMS,
+  },
+  render: (args) => template(args),
+  parameters: {
+    styles: { maxInlineSize: '240px' },
+  },
   tags: ['dev'],
+};
+
+// ──────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────
+
+export const Overview: Story = {
+  tags: ['overview'],
+};
+
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
+
+export const Anatomy: Story = {
+  render: (args) => html`
+    ${group(args, {
+      selected: '1',
+      'default-slot': [
+        radio('1', 'Option 1', ''),
+        radio('2', 'Option 2', ''),
+      ].join(''),
+    })}
+  `,
+  tags: ['anatomy'],
+};
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+export const Sizes: Story = {
+  render: (args) => html`
+    ${SIZES.map(
+      (size) => html`
+        ${group(args, {
+          size,
+          selected: '2',
+          'label-slot': `Size ${size}`,
+        })}
+      `
+    )}
+  `,
+  parameters: {
+    flexLayout: 'column-stretch',
+    styles: {
+      gap: 'var(--swc-spacing-500)',
+    },
+  },
+
+  tags: ['options'],
+};
+
+export const LabelPosition: Story = {
+  render: (args) => html`
+    ${group(args, {
+      'label-position': 'top',
+      'label-slot': 'Top label',
+      selected: '1',
+    })}
+    ${group(args, {
+      'label-position': 'side',
+      'label-slot': 'Side label',
+      selected: '1',
+    })}
+  `,
+  parameters: {
+    flexLayout: 'column-stretch',
+    styles: { gap: 'var(--swc-spacing-500)' },
+  },
+  tags: ['options'],
+};
+
+export const NecessityIndicator: Story = {
+  render: (args) => html`
+    ${group(args, {
+      required: true,
+      'necessity-indicator': 'icon',
+      'label-slot': 'Icon',
+    })}
+    ${group(args, {
+      required: true,
+      'necessity-indicator': 'label',
+      'label-slot': 'Label',
+    })}
+    ${group(args, {
+      'necessity-indicator': 'label',
+      'label-slot': 'Label',
+    })}
+  `,
+  parameters: {
+    flexLayout: 'column-center',
+    styles: { gap: 'var(--swc-spacing-500)' },
+  },
+  tags: ['options'],
+};
+
+export const Orientation: Story = {
+  render: (args) => html`
+    ${group(args, {
+      orientation: 'vertical',
+      'label-slot': 'Vertical',
+      selected: '1',
+    })}
+    ${group(args, {
+      orientation: 'horizontal',
+      'label-slot': 'Horizontal',
+      selected: '1',
+    })}
+  `,
+  parameters: {
+    flexLayout: 'column-stretch',
+    styles: { gap: 'var(--swc-spacing-500)' },
+  },
+  tags: ['options'],
+};
+
+export const Emphasized: Story = {
+  render: (args) => html`
+    ${group(args, { emphasized: true, selected: '1' })}
+  `,
+  tags: ['options'],
 };
 
 export const WithItemDescription: Story = {
   render: (args) => html`
-    ${template({
-      ...args,
-      'label-slot': 'Example radios',
-      'description-slot': 'This is the description for the radio group.',
-      'default-slot': `
-        <swc-radio value="1">
-          <span slot="label">Option 1</span>
-          <span slot="description">Description for option 1</span>
-        </swc-radio>
-        <swc-radio value="2">
-          <span slot="label">Option 2</span>
-          <span slot="description">Description for option 2</span>
-        </swc-radio>
-      `,
+    ${group(args, {
+      selected: '1',
+      'default-slot': [
+        radio('1', 'Option 1', ''),
+        radio('2', 'Option 2', ''),
+      ].join(''),
     })}
   `,
-  tags: ['dev'],
+  tags: ['options'],
 };
+WithItemDescription.storyName = 'Item description';
+
+// ──────────────────────────
+//    STATES STORIES
+// ──────────────────────────
+
+export const Selection: Story = {
+  render: (args) => html`
+    ${group(args, { 'label-slot': 'Nothing selected' })}
+    ${group(args, { 'label-slot': 'Option 2 selected', selected: '2' })}
+  `,
+  parameters: {
+    flexLayout: 'row-wrap',
+    styles: { gap: 'var(--swc-spacing-500)' },
+  },
+  tags: ['states'],
+};
+
+export const Disabled: Story = {
+  render: (args) => html`
+    ${group(args, {
+      disabled: true,
+      'label-slot': 'Disabled group',
+      selected: '2',
+    })}
+    ${group(args, {
+      'label-slot': 'Disabled item',
+      selected: '1',
+      'default-slot': [
+        radio('1', 'Option 1'),
+        radio('2', 'Option 2', 'disabled'),
+        radio('3', 'Option 3'),
+      ].join(''),
+    })}
+  `,
+  parameters: {
+    a11y: {
+      // WCAG 1.4.3 exempts text that is part of an inactive UI component.
+      // axe cannot infer that these slotted spans belong to the disabled
+      // group, so exclude only their color-contrast result.
+      exclude: {
+        'color-contrast': [
+          'swc-radio-group:nth-child(1) > span[slot="label"]',
+          'swc-radio-group:nth-child(1) > span[slot="description"]',
+        ],
+      },
+    },
+    flexLayout: 'row-wrap',
+    styles: { gap: 'var(--swc-spacing-500)' },
+  },
+  tags: ['states'],
+};
+
+export const Invalid: Story = {
+  render: (args) => html`
+    ${group(args, {
+      invalid: true,
+      selected: '1',
+      'error-text-slot': 'This option is not available.',
+    })}
+  `,
+  tags: ['states'],
+};
+
+export const Required: Story = {
+  render: (args) => html`
+    ${group(args, { required: true })}
+  `,
+  tags: ['states'],
+};
+
+export const ReadOnly: Story = {
+  render: (args) => html`
+    ${group(args, { readonly: true, selected: '2' })}
+  `,
+  tags: ['states'],
+};
+ReadOnly.storyName = 'Read-only';
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+export const TextWrapping: Story = {
+  render: (args) => html`
+    ${group(args, {
+      selected: '1',
+      'label-slot': `Text wrapping`,
+      'default-slot': [
+        radio(
+          '1',
+          'A long option label that wraps onto a second line to check alignment of the control and text',
+          '',
+          'A long description that also wraps to confirm spacing between lines'
+        ),
+        radio('2', 'Short option'),
+      ].join(''),
+    })}
+  `,
+  parameters: {
+    flexLayout: 'row-wrap',
+    styles: { 'max-inline-size': '40ch' },
+  },
+  tags: ['behaviors'],
+};
+TextWrapping.storyName = 'Text wrapping';

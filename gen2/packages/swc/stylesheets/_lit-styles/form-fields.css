@@ -22,11 +22,6 @@
 
 /* ── Field template grid ──────────────────────────── */
 
-:host {
-  --swc-form-field-row-gap: token("form-item-gap-medium");
-  --swc-form-field-necessity-gap: token("base-gap-medium");
-}
-
 .swc-FormField {
   display: grid;
   grid-template-areas:
@@ -37,13 +32,16 @@
   --_swc-form-field-font-family: inherit;
   --_swc-form-field-font-weight: token("regular-font-weight");
   --_swc-form-field-line-height: token("line-height-100");
+  --_swc-form-field-row-gap: var(--swc-form-field-row-gap, token("form-item-gap-medium"));
 }
 
 :host([size="s"]) {
   --swc-form-field-label-font-size: token("font-size-75");
   --swc-form-field-description-font-size: token("font-size-75");
   --swc-form-field-row-gap: token("form-item-gap-small");
+  --swc-form-field-side-label-gap: token("form-item-gap-small");
   --swc-form-field-necessity-gap: token("base-gap-small");
+  --swc-form-field-invalid-icon-gap: token("base-gap-small");
 }
 
 :host([size="m"]) {
@@ -55,14 +53,25 @@
   --swc-form-field-label-font-size: token("font-size-200");
   --swc-form-field-description-font-size: token("font-size-200");
   --swc-form-field-row-gap: token("form-item-gap-large");
-  --swc-form-field-necessity-gap: token("base-gap-large");
+  --swc-form-field-side-label-gap: token("form-item-gap-large");
+  --swc-form-field-necessity-gap: token("base-gap-medium");
+  --swc-form-field-invalid-icon-gap: token("base-gap-large");
 }
 
 :host([size="xl"]) {
   --swc-form-field-label-font-size: token("font-size-300");
   --swc-form-field-description-font-size: token("font-size-300");
   --swc-form-field-row-gap: token("form-item-gap-extra-large");
-  --swc-form-field-necessity-gap: token("base-gap-extra-large");
+  --swc-form-field-side-label-gap: token("form-item-gap-extra-large");
+  --swc-form-field-necessity-gap: token("base-gap-large");
+  --swc-form-field-invalid-icon-gap: token("base-gap-extra-large");
+}
+
+.swc-FormFieldLabel,
+.swc-FormFieldDescription,
+.swc-FormFieldErrorText-text {
+  min-inline-size: 0;
+  overflow-wrap: break-word;
 }
 
 .swc-FormFieldLabel {
@@ -70,37 +79,38 @@
 
   /* Space between label and input; only present when the label is rendered so
      no perceived gap remains when the label slot is empty. */
-  margin-block-end: var(--swc-form-field-row-gap);
+  margin-block-end: var(--_swc-form-field-row-gap);
   font-family: var(--_swc-form-field-font-family);
   font-size: var(--swc-form-field-label-font-size, token("font-size-100"));
   font-weight: var(--_swc-form-field-font-weight);
   line-height: var(--_swc-form-field-line-height);
   color: token("neutral-subdued-content-color-default");
+}
 
+:host([label-position="top"]) .swc-FormFieldLabel {
   /* Progressive enhancement: keep the necessity indicator with the last word on
      wrap. Combined with an adjacent `<span>` sibling (no whitespace text node
      between them), this avoids leaving the indicator alone on a line.
-     Unsupported browsers (e.g. Firefox) fall back to normal wrapping. */
+     Unsupported browsers (e.g. Firefox) fall back to normal wrapping.
+     Isolated to "top" to reduce instances of extra blank space next to
+     side labels */
   text-wrap: pretty;
-  overflow-wrap: break-word;
 }
 
 .swc-FormFieldLabel-necessityLabel,
 .swc-FormFieldLabel-requiredIndicator {
-  margin-inline-start: var(--swc-form-field-necessity-gap);
+  margin-inline-start: var(--swc-form-field-necessity-gap, token("base-gap-small"));
 }
 
-.swc-FormFieldLabel-requiredIndicator swc-ui-icon {
-  vertical-align: middle;
+.swc-FormFieldLabel-requiredIndicator {
+  display: inline-flex;
 }
 
 .swc-FormFieldDescription,
 .swc-FormFieldErrorText {
   grid-area: messages;
-
-  /* Space between input and messages; only present when messages are rendered,
-     so an unset description/error slot never creates perceived bottom padding. */
-  margin-block-start: var(--swc-form-field-row-gap);
+  min-inline-size: 0;
+  margin-block-start: var(--_swc-form-field-row-gap);
   font-family: var(--_swc-form-field-font-family);
   font-size: var(--swc-form-field-description-font-size, token("font-size-75"));
   font-weight: var(--_swc-form-field-font-weight);
@@ -111,8 +121,28 @@
   color: token("neutral-subdued-content-color-default");
 }
 
-.swc-FormFieldErrorText {
+.swc-FormFieldErrorText-text {
   color: token("negative-content-color-default");
+}
+
+/* Optional leading icon for controls with no invalid icon of their own (e.g. a
+   radio group). It sits beside the error text, or the description when there
+   is no error text. The icon is one line tall so it aligns with the first line
+   of a wrapping message. */
+.swc-FormFieldErrorText:has(.swc-FormFieldErrorText-icon),
+.swc-FormFieldDescription:has(.swc-FormFieldErrorText-icon) {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  column-gap: var(--swc-form-field-invalid-icon-gap, token("base-gap-medium"));
+}
+
+.swc-FormFieldErrorText-icon {
+  --swc-icon-color: token("negative-visual-color");
+  --swc-icon-inline-size: 1lh;
+  --swc-icon-block-size: 1lh;
+
+  display: flex;
 }
 
 /* ── Side label ───────────────────────────────────── */
@@ -127,8 +157,8 @@
      keeping the CP consumer override. `--swc-field-label-max-inline-size`
      overrides the 50% ceiling. */
   grid-template-columns: fit-content(var(--swc-field-label-max-inline-size, 50%)) 1fr;
-  align-items: baseline;
-  column-gap: token("spacing-200");
+  align-items: var(--swc-form-field-side-label-alignment, baseline);
+  column-gap: var(--swc-form-field-side-label-gap, token("form-item-gap-medium"));
 }
 
 /* Label and input sit on the same row in the side layout, so the vertical
@@ -148,5 +178,9 @@
   :host(:disabled) .swc-FormFieldLabel,
   :host(:disabled) .swc-FormFieldDescription {
     color: GrayText;
+  }
+
+  .swc-FormFieldErrorText-icon {
+    --swc-icon-color: CanvasText;
   }
 }

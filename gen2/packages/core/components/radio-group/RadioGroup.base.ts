@@ -30,9 +30,11 @@ import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
 import { RadioBase } from './Radio.base.js';
 import {
   RADIO_GROUP_LABEL_POSITIONS,
+  RADIO_GROUP_NECESSITY_INDICATORS,
   RADIO_GROUP_ORIENTATIONS,
   RADIO_VALID_SIZES,
   type RadioGroupLabelPosition,
+  type RadioGroupNecessityIndicator,
   type RadioGroupOrientation,
   type RadioSize,
 } from './RadioGroup.types.js';
@@ -150,6 +152,20 @@ export abstract class RadioGroupBase extends SizedMixin(
   @property({ type: String, reflect: true })
   public orientation: RadioGroupOrientation = 'vertical';
 
+  /**
+   * How the group's necessity is marked in the visible label. `icon` shows an
+   * asterisk only when `required`. `label` appends `(required)` when required
+   * and `(optional)` when not required. Requires a visible label to show.
+   *
+   * @default icon
+   */
+  @property({
+    type: String,
+    reflect: true,
+    attribute: 'necessity-indicator',
+  })
+  public necessityIndicator: RadioGroupNecessityIndicator = 'icon';
+
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
@@ -190,6 +206,14 @@ export abstract class RadioGroupBase extends SizedMixin(
   /** Runs constraint validation and reports any problem to the user. */
   public reportValidity(): boolean {
     return this.fieldAssoc.reportValidity();
+  }
+
+  /** Focuses the group (the validation anchor), so `:invalid` hosts are focusable. */
+  public override focus(options?: FocusOptions): void {
+    const target = this.roleElement;
+    if (!this.effectiveDisabled && target instanceof HTMLElement) {
+      target.focus(options);
+    }
   }
 
   /** The initial selection (pre-checked item or `selected`), restored on form reset. */
@@ -450,6 +474,12 @@ export abstract class RadioGroupBase extends SizedMixin(
       valid: (this.constructor as typeof RadioGroupBase).ORIENTATIONS,
       url: DOCS_URL,
     });
+    validateEnum(this, {
+      prop: 'necessity-indicator',
+      value: this.necessityIndicator,
+      valid: RADIO_GROUP_NECESSITY_INDICATORS,
+      url: DOCS_URL,
+    });
     super.update(changedProperties);
     const disabledChanged = this.syncDisabledState();
     if (disabledChanged) {
@@ -461,10 +491,13 @@ export abstract class RadioGroupBase extends SizedMixin(
     // Constraint validity: a required group with nothing selected is
     // `valueMissing`; an invalid selection is `customError`. The message is
     // required by `setValidity` (it throws if empty); the UI is rendered elsewhere.
+    // The role element is the validation anchor, so a blocked submit focuses it.
     const valueMissing = this.required && !this.selected;
+    const anchor = this.roleElement;
     this.internals.setValidity(
       { valueMissing, customError: this.invalid },
-      valueMissing || this.invalid ? 'error' : ''
+      valueMissing || this.invalid ? 'error' : '',
+      anchor instanceof HTMLElement ? anchor : undefined
     );
     // Push the current selection into the form; exclude it when nothing is
     // selected or the group is disabled, matching an unchecked native radio set.

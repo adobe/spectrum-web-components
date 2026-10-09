@@ -59,13 +59,15 @@ export interface LabellingInterface {
   readonly placeholderText: string | undefined;
 
   /**
-   * Renders the visible label as a `<label for>` targeting the role-element `id`.
+   * Renders the visible label as a `<label for>` targeting the role-element `id`
+   * (or a `<span>` when `forId` is `undefined`, for a group with no labelable
+   * control).
    * Options append a decorative necessity indicator: `required` marks the state,
    * and `necessityIndicator` picks the asterisk (`icon`, which needs
    * `necessityIcon` to render) or consumer-provided text (`label`).
    */
   renderLabel(
-    forId: string,
+    forId: string | undefined,
     options?: {
       required?: boolean;
       necessityIndicator?: 'icon' | 'label';
@@ -159,7 +161,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
     }
 
     public renderLabel(
-      forId: string,
+      forId: string | undefined,
       options: {
         required?: boolean;
         necessityIndicator?: 'icon' | 'label';

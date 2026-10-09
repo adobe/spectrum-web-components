@@ -19,7 +19,12 @@ import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
 import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
 
 import { fixture, getComponent } from '../../../utils/test-utils.js';
-import meta, { Playground } from '../stories/radio-group.stories.js';
+import meta, {
+  Invalid,
+  NecessityIndicator,
+  Playground,
+  ReadOnly,
+} from '../stories/radio-group.stories.js';
 
 /** An element carrying the ARIA element-reflection properties this file asserts on. */
 type ReflectedAriaElement = Element & {
@@ -30,7 +35,7 @@ type ReflectedAriaElement = Element & {
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
   ...meta,
-  title: 'Radio Group/Tests',
+  title: 'Radio group/Tests',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
@@ -237,6 +242,114 @@ export const GroupLabelLifecycleTest: Story = {
   },
 };
 
+export const NecessityIndicatorTest: Story = {
+  ...NecessityIndicator,
+  play: async ({ canvasElement }) => {
+    const [requiredIcon, requiredLabel, optionalLabel] =
+      canvasElement.querySelectorAll<RadioGroup>('swc-radio-group');
+    await Promise.all(
+      [requiredIcon, requiredLabel, optionalLabel].map(
+        (group) => group.updateComplete
+      )
+    );
+
+    const indicator = requiredIcon.shadowRoot?.querySelector(
+      '.swc-FormFieldLabel-requiredIndicator'
+    );
+    expect(indicator?.getAttribute('aria-hidden')).toBe('true');
+    expect(
+      requiredLabel.shadowRoot
+        ?.querySelector('.swc-FormFieldLabel-necessityLabel')
+        ?.textContent?.trim()
+    ).toBe('(required)');
+    expect(
+      optionalLabel.shadowRoot
+        ?.querySelector('.swc-FormFieldLabel-necessityLabel')
+        ?.textContent?.trim()
+    ).toBe('(optional)');
+
+    // The label stays a non-`<label>` element wired by `aria-labelledby`.
+    expect(requiredIcon.shadowRoot?.querySelector('label')).toBeNull();
+  },
+};
+
+export const ErrorIconTest: Story = {
+  ...Invalid,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const icon = group.shadowRoot?.querySelector(
+      '.swc-FormFieldErrorText-icon'
+    );
+    expect(icon?.getAttribute('aria-hidden')).toBe('true');
+    expect(
+      (group.roleElement as ReflectedAriaElement).ariaDescribedByElements
+    ).toEqual([group.shadowRoot?.querySelector('.swc-FormFieldErrorText')]);
+
+    group.invalid = false;
+    await group.updateComplete;
+    expect(
+      group.shadowRoot?.querySelector('.swc-FormFieldErrorText-icon')
+    ).toBeNull();
+  },
+};
+
+export const ErrorIconWithoutErrorTextTest: Story = {
+  render: () => html`
+    <swc-radio-group id="with-description" name="a" invalid>
+      <span slot="label">With description</span>
+      <span slot="description">Choose one.</span>
+      <swc-radio value="1"><span slot="label">Red</span></swc-radio>
+    </swc-radio-group>
+    <swc-radio-group id="bare" name="b" invalid>
+      <span slot="label">No messages</span>
+      <swc-radio value="1"><span slot="label">Red</span></swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement }) => {
+    const withDescription = await getComponent<RadioGroup>(
+      canvasElement,
+      '#with-description'
+    );
+    const bare = await getComponent<RadioGroup>(canvasElement, '#bare');
+    const icon = (group: RadioGroup) =>
+      group.shadowRoot?.querySelector('.swc-FormFieldErrorText-icon');
+    const describedBy = (group: RadioGroup) =>
+      (group.roleElement as ReflectedAriaElement).ariaDescribedByElements ?? [];
+
+    expect(
+      icon(withDescription),
+      'icon shows beside the description'
+    ).toBeTruthy();
+    expect(icon(withDescription)?.getAttribute('aria-hidden')).toBe('true');
+    expect(
+      withDescription.shadowRoot?.querySelector('slot[name="description"]'),
+      'the description stays visible'
+    ).toBeTruthy();
+    expect(describedBy(withDescription)).toEqual([
+      withDescription.shadowRoot?.querySelector('.swc-FormFieldDescription'),
+    ]);
+
+    expect(
+      icon(bare),
+      'icon shows with no description or error text'
+    ).toBeTruthy();
+    expect(icon(bare)?.getAttribute('aria-hidden')).toBe('true');
+    expect(describedBy(bare), 'nothing to describe').toHaveLength(0);
+
+    withDescription.invalid = false;
+    bare.invalid = false;
+    await Promise.all([withDescription.updateComplete, bare.updateComplete]);
+    expect(icon(withDescription)).toBeNull();
+    expect(icon(bare)).toBeNull();
+    expect(
+      withDescription.shadowRoot?.querySelector('slot[name="description"]')
+    ).toBeTruthy();
+  },
+};
+
 export const GroupStateLifecycleTest: Story = {
   render: () => html`
     <swc-radio-group>
@@ -428,6 +541,170 @@ export const InvalidFormSubmissionTest: Story = {
   },
 };
 
+const preventDefault = (event: Event): void => event.preventDefault();
+
+const reportFormValidity = (event: Event): void => {
+  (event.target as HTMLElement).closest('form')?.reportValidity();
+};
+
+export const InvalidSubmitFocusTest: Story = {
+  render: () => html`
+    <form @submit=${preventDefault}>
+      <button type="button" id="before">Before</button>
+      <swc-radio-group name="shipping" required>
+        <span slot="label">Shipping</span>
+        <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+        <swc-radio value="standard">
+          <span slot="label">Standard</span>
+        </swc-radio>
+      </swc-radio-group>
+      <button type="submit" id="submit">Submit</button>
+    </form>
+  `,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const form = canvasElement.querySelector('form')!;
+    const before = canvasElement.querySelector<HTMLButtonElement>('#before')!;
+    const cancel = (event: Event): void => event.preventDefault();
+
+    before.focus();
+    group.addEventListener('invalid', cancel);
+    form.requestSubmit();
+    group.removeEventListener('invalid', cancel);
+    expect(document.activeElement, 'a canceled invalid event keeps focus').toBe(
+      before
+    );
+
+    form.requestSubmit();
+    expect(document.activeElement, 'the group host is the focus target').toBe(
+      group
+    );
+    expect(
+      group.shadowRoot?.activeElement,
+      'focus lands on the radiogroup element'
+    ).toBe(group.roleElement);
+
+    before.focus();
+    group.disabled = true;
+    await group.updateComplete;
+    group.focus();
+    expect(document.activeElement, 'a disabled group ignores focus()').toBe(
+      before
+    );
+  },
+};
+
+// With `novalidate` the browser skips validation on submit, so nothing blocks
+// the submit or moves focus; validity is only reported when called explicitly.
+export const InvalidSubmitNoValidateTest: Story = {
+  render: () => html`
+    <form novalidate @submit=${preventDefault} @reset=${preventDefault}>
+      <button type="button" id="before">Before</button>
+      <swc-radio-group name="shipping" required>
+        <span slot="label">Shipping</span>
+        <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+        <swc-radio value="standard">
+          <span slot="label">Standard</span>
+        </swc-radio>
+      </swc-radio-group>
+      <button type="submit" id="submit">Submit</button>
+      <button type="button" id="report" @click=${reportFormValidity}>
+        Report validity
+      </button>
+    </form>
+  `,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const form = canvasElement.querySelector('form')!;
+    const before = canvasElement.querySelector<HTMLButtonElement>('#before')!;
+    const submit = fn();
+    const invalid = fn();
+    form.addEventListener('submit', submit);
+    group.addEventListener('invalid', invalid);
+    try {
+      before.focus();
+      form.requestSubmit();
+      expect(submit, 'submit is not blocked').toHaveBeenCalledTimes(1);
+      expect(invalid, 'submit fires no invalid event').not.toHaveBeenCalled();
+      expect(document.activeElement, 'submit does not move focus').toBe(before);
+
+      expect(form.checkValidity()).toBe(false);
+      expect(invalid, 'checkValidity fires invalid').toHaveBeenCalledTimes(1);
+      expect(document.activeElement, 'checkValidity is silent').toBe(before);
+
+      const [invalidEvent] = invalid.mock.calls[0] as [Event];
+      expect(invalidEvent.target, 'invalid targets the host').toBe(group);
+      expect(group.matches(':invalid'), 'the host matches :invalid').toBe(true);
+      group.focus();
+      expect(document.activeElement, 'host.focus() reaches the wrapper').toBe(
+        group
+      );
+      expect(
+        group.shadowRoot?.activeElement,
+        'the inner wrapper has focus'
+      ).toBe(group.roleElement);
+      before.focus();
+
+      expect(form.reportValidity()).toBe(false);
+      expect(document.activeElement, 'reportValidity focuses the group').toBe(
+        group
+      );
+    } finally {
+      form.removeEventListener('submit', submit);
+      group.removeEventListener('invalid', invalid);
+    }
+  },
+};
+
+export const ItemStylingAttributesTest: Story = {
+  render: () => html`
+    <swc-radio-group size="l" emphasized invalid>
+      <span slot="label">Favorite color</span>
+      <swc-radio value="1"><span slot="label">Red</span></swc-radio>
+      <swc-radio value="2"><span slot="label">Green</span></swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+    const attributes = () =>
+      items.map((item) => [
+        item.getAttribute('size'),
+        item.hasAttribute('emphasized'),
+      ]);
+
+    expect(attributes(), 'the group propagates its styling state').toEqual([
+      ['l', true],
+      ['l', true],
+    ]);
+    expect(
+      items.some((item) => item.hasAttribute('invalid')),
+      'invalid does not recolor radios, so it is not propagated'
+    ).toBe(false);
+
+    group.size = 's';
+    group.emphasized = false;
+    await group.updateComplete;
+    expect(attributes(), 'changes and removals propagate').toEqual([
+      ['s', false],
+      ['s', false],
+    ]);
+
+    for (const name of ['size', 'emphasized']) {
+      expect(name in items[0], `${name} is not a radio property`).toBe(false);
+    }
+  },
+};
+
 export const LateAddedSelectionTest: Story = {
   render: () => html`
     <swc-radio-group selected="2">
@@ -483,6 +760,43 @@ export const InitialCheckedRadioTest: Story = {
     group.formResetCallback();
     await group.updateComplete;
     expect(group.selected).toBe('2');
+  },
+};
+
+export const ReadOnlySelectionTest: Story = {
+  ...ReadOnly,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+    const press = (target: Radio, key: string) =>
+      target.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key,
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })
+      );
+    items[1].focus();
+
+    // Focus moves with the keys, but selection does not follow it.
+    press(items[1], 'ArrowRight');
+    expect(document.activeElement, 'ArrowRight moves focus').toBe(items[2]);
+    press(items[2], 'Home');
+    expect(document.activeElement, 'Home moves focus').toBe(items[0]);
+    expect(group.selected).toBe('2');
+    expect(items.map((item) => item.checked)).toEqual([false, true, false]);
+
+    group.readonly = false;
+    await group.updateComplete;
+    press(items[0], 'ArrowRight');
+    expect(document.activeElement).toBe(items[1]);
+    expect(group.selected).toBe('2');
+    press(items[1], 'ArrowRight');
+    expect(group.selected).toBe('3');
   },
 };
 

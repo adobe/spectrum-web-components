@@ -16,8 +16,6 @@ import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
 
-import type { RadioSize } from './RadioGroup.types.js';
-
 const DOCS_URL =
   'https://spectrum-web-components.adobe.com/?path=/docs/components-radio-group--docs';
 
@@ -31,8 +29,8 @@ const DOCS_URL =
  * Do not add `aria-describedby` for the `description` slot; it is already part
  * of the accessible name.
  *
- * @attribute {RadioSize} size - Size of the item. Inherited from the parent
- *   `swc-radio-group`.
+ * `size` and `emphasized` styling state is set as attributes by the
+ * enclosing `swc-radio-group`; they are not properties of the item.
  *
  * @slot label - Visible label content.
  * @slot description - Optional secondary/help text for this item.
@@ -66,18 +64,6 @@ export abstract class RadioBase extends SpectrumElement {
    */
   @property({ type: Boolean, reflect: true })
   public disabled = false;
-
-  /**
-   * Affects the checked indicator's accent color only.
-   */
-  @property({ type: Boolean, reflect: true })
-  public emphasized = false;
-
-  /**
-   * The size of the item. Inherited from the parent radio group.
-   */
-  @property({ type: String, reflect: true })
-  public size?: RadioSize;
 
   /**
    * This item's 1-based position, for `aria-posinset`. Set by the enclosing

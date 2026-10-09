@@ -55,6 +55,8 @@ const PREFIX_AVATAR_SIZE = {
  * @cssprop --swc-text-field-padding-inline - Horizontal padding of the text-field control. Changes by size.
  * @cssprop --swc-text-field-affix-gap - Gap between the input and affixes. Changes by size.
  * @cssprop --swc-form-field-row-gap - Vertical gap between the label, control, and help text. Changes by size.
+ * @cssprop --swc-form-field-side-label-gap - `label-position="side"` only: space between the label and the control. Changes by size.
+ * @cssprop --swc-form-field-necessity-gap - Space between the label text and the necessity indicator. Changes by size.
  * @cssprop --swc-text-field-font-size - Font size of the input. Changes by size.
  * @cssprop --swc-text-field-line-height - Line height of the input. Defaults to the browser's normal input line height.
  * @cssprop --swc-text-field-border-radius - Corner radius of the text-field control. Changes by size.

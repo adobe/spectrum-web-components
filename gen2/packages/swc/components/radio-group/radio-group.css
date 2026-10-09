@@ -10,6 +10,68 @@
  * governing permissions and limitations under the License.
  */
 
+/*
+ * Label, description, error text, and the `label-position` grid come from the
+ * shared `form-fields` fragment; this file only lays out the radio items.
+ */
+
 :host {
   display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.swc-RadioGroup {
+  --swc-form-field-row-gap: var(--swc-radio-group-row-gap, token("group-gap-medium-spacious"));
+  --swc-form-field-side-label-gap: var(--swc-radio-group-side-label-gap, token("group-gap-medium-spacious"));
+  --swc-form-field-side-label-alignment: start;
+}
+
+/* ── Items wrapper ────────────────────────────────────────── */
+
+.swc-RadioGroup-items {
+  display: flex;
+  flex-flow: column wrap;
+  grid-area: input;
+  gap: var(--swc-radio-group-item-gap, token("group-gap-medium-spacious"));
+}
+
+/* ── Size ─────────────────────────────────────────── */
+
+:host([size="s"]) {
+  --swc-radio-group-item-gap: token("group-gap-small-spacious");
+  --swc-radio-group-row-gap: token("group-gap-small-spacious");
+  --swc-radio-group-side-label-gap: token("group-gap-small-spacious");
+}
+
+:host([size="l"]) {
+  --swc-radio-group-item-gap: token("group-gap-large-spacious");
+  --swc-radio-group-row-gap: token("group-gap-large-spacious");
+  --swc-radio-group-side-label-gap: token("group-gap-large-spacious");
+}
+
+:host([size="xl"]) {
+  --swc-radio-group-item-gap: token("group-gap-extra-large-spacious");
+  --swc-radio-group-row-gap: token("group-gap-extra-large-spacious");
+  --swc-radio-group-side-label-gap: token("group-gap-extra-large-spacious");
+}
+
+/* ── Orientation ──────────────────────────────────── */
+
+:host([orientation="horizontal"]) .swc-RadioGroup-items {
+  flex-direction: row;
+  column-gap: token("group-gap-medium-spacious");
+}
+
+:host([label-position="side"]) .swc-RadioGroup {
+  /* Keeping cp name consistent with the form-fields fragment */
+  grid-template-columns: fit-content(var(--swc-field-label-max-inline-size, 25ch)) minmax(max(50%, 15ch), 1fr);
+}
+
+/* ── States ───────────────────────────────────────── */
+
+:host([readonly]) {
+  --_swc-radio-group-is-readonly: true;
 }
