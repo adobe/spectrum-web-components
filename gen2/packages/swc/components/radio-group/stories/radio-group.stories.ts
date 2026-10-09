@@ -88,6 +88,9 @@ export const Playground: Story = {
     'default-slot': ITEMS,
   },
   render: (args) => template(args),
+  parameters: {
+    styles: { maxInlineSize: '240px' },
+  },
   tags: ['dev'],
 };
 

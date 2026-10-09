@@ -67,6 +67,13 @@
   --swc-form-field-invalid-icon-gap: token("base-gap-extra-large");
 }
 
+.swc-FormFieldLabel,
+.swc-FormFieldDescription,
+.swc-FormFieldErrorText-text {
+  min-inline-size: 0;
+  overflow-wrap: break-word;
+}
+
 .swc-FormFieldLabel {
   grid-area: label;
 
@@ -78,7 +85,6 @@
   font-weight: var(--_swc-form-field-font-weight);
   line-height: var(--_swc-form-field-line-height);
   color: token("neutral-subdued-content-color-default");
-  overflow-wrap: break-word;
 }
 
 :host([label-position="top"]) .swc-FormFieldLabel {
@@ -103,9 +109,7 @@
 .swc-FormFieldDescription,
 .swc-FormFieldErrorText {
   grid-area: messages;
-
-  /* Space between input and messages; only present when messages are rendered,
-     so an unset description/error slot never creates perceived bottom padding. */
+  min-inline-size: 0;
   margin-block-start: var(--_swc-form-field-row-gap);
   font-family: var(--_swc-form-field-font-family);
   font-size: var(--swc-form-field-description-font-size, token("font-size-75"));

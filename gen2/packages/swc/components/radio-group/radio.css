@@ -54,6 +54,12 @@
   display: grid;
 }
 
+.swc-Radio-label,
+.swc-Radio-description {
+  min-inline-size: 0;
+  overflow-wrap: break-word;
+}
+
 .swc-Radio-label {
   color: var(--swc-radio-content-color-default, token("neutral-content-color-default"));
   text-align: start;
