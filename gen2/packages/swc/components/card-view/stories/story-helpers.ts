@@ -160,7 +160,7 @@ export function prototypeMeta(tag: string): Partial<Meta> {
       },
     },
     render: (args) => staticHtml`
-      <div style="max-width: 1040px; margin-inline: auto;">
+      <div style="max-width: 1200px; margin-inline: auto;">
         <button type="button" style="margin-block-end: 16px;">Photo library</button>
         <${element}
           style="max-height: 60vh; overflow: auto;"

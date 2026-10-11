@@ -11,8 +11,11 @@
  */
 
 :host {
+  box-sizing: border-box;
   display: block;
   inline-size: 100%;
+  padding: 12px;
+  scroll-padding: 12px;
 }
 
 .collection {

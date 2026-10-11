@@ -14,21 +14,21 @@ import * as Stories from './stories/card-view-option-5.stories';
 
 ### Grid
 
-Cards align in uniform visual rows. These visual rows do not create additional semantic rows. Left/Right traverses enabled cards in collection order, including across visual line breaks.
+Cards align in uniform visual rows. These visual rows do not create additional semantic rows. All arrow keys follow visual geometry rather than wrapping in collection order.
 
 <Canvas of={Stories.Grid} />
 
 ### Waterfall
 
-Cards are placed into the shortest visual column using measured heights. The semantic row and collection order remain unchanged. Left/Right still reaches every enabled card sequentially, even when the next card is not a visual neighbor.
+Cards fill each visual column from top to bottom in semantic collection order, then continue in the next column to the right (to the left in RTL). Measured heights preserve varied card sizes. The semantic row remains unchanged. All arrow keys move to enabled visual neighbors with overlap on the perpendicular axis.
 
 <Canvas of={Stories.Waterfall} />
 
 ## Behaviors
 
-Left/Right moves incrementally between enabled cells in collection order without cycling past the first or last card. In right-to-left layouts, Left moves forward and Right moves backward. Up/Down moves spatially to the nearest enabled card above/below with horizontal overlap, skipping cards between them in collection order. Movement stops when no aligned card exists. Home/End reaches the first/last enabled card.
+Left/Right moves spatially to the nearest enabled card to the left/right with vertical overlap. Up/Down moves spatially to the nearest enabled card above/below with horizontal overlap, skipping cards between them in collection order. These visual directions also apply in right-to-left layouts. Movement stops when no aligned card exists. Home/End reaches the first/last enabled card.
 
-Space toggles selection and Enter opens the focused card. Shift plus Left/Right or Home/End selects a collection-order range, skipping disabled cards. Tab enters the active card's checkbox and actions, then exits the collection. Shift+Tab reverses that path. Only the active card's controls are in the tab order. Child actions do not also select the card, and their arrow keys are not intercepted by collection navigation.
+Space toggles selection and Enter opens the focused card. Shift plus an arrow key or Home/End selects a collection-order range, skipping disabled cards. Tab enters the active card's checkbox and actions, then exits the collection. Shift+Tab reverses that path. Only the active card's controls are in the tab order. Child actions do not also select the card, and their arrow keys are not intercepted by collection navigation.
 
 ## Accessibility
 
@@ -42,10 +42,10 @@ Resizing, zooming, and switching layouts update visual geometry without regroupi
 
 ### Pros
 
-- Aligns horizontal navigation with the announced single-row structure.
+- Aligns arrow-key navigation with visual geometry in both layouts.
 - Announces “x of y” in observed screen reader use, communicating each card's position and the collection size.
 - Arrow-key navigation is easy and intuitive for sighted users navigating items.
-- Provides a stable sequential route through every enabled card in both layouts.
+- Keeps semantic collection order stable in both layouts.
 - Retains selection, a single collection tab stop, and independently interactive children.
 - Avoids semantic restructuring during responsive reflow.
 
@@ -53,7 +53,7 @@ Resizing, zooming, and switching layouts update visual geometry without regroupi
 
 - Announced columns do not match visual columns once cards wrap or form a waterfall.
 - Screen reader users expect only one row from the announced structure, so vertical navigation with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd> may be unexpected.
-- Sequential waterfall movement can look surprising when adjacent collection items are not visual neighbors.
+- Spatial navigation can skip intervening collection items and does not provide a single-axis route through every card.
 - Grid semantics still introduce screen reader mode changes and need user testing; column indices do not guarantee useful position announcements.
 
 ### Best practices

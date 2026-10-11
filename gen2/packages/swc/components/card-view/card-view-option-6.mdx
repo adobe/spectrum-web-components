@@ -8,27 +8,27 @@ import * as Stories from './stories/card-view-option-6.stories';
 
 ## Anatomy
 
-`swc-card-view-option-6` uses the same labelled single-column `grid`, `row`, and `rowheader` structure as Option 1, with one semantic row per card. Each card retains its native checkbox, Open button, and Share button. Only waterfall arrow navigation differs from Option 1.
+`swc-card-view-option-6` uses the same labelled `grid > row > gridcell` structure as Option 5, with one semantic row containing every card and visual wrapping. Each card retains its native checkbox, Open button, and Share button. The grid reports one row and a column count equal to the collection size.
 
 ## Options
 
 ### Grid
 
-Uniform cards use Option 1's navigation: Left/Right follows collection order and Up/Down follows visual geometry.
+Uniform cards use sequential Left/Right navigation in collection order, including across visual line breaks. Up/Down follows visual geometry, matching Option 5's grid layout.
 
 <Canvas of={Stories.Grid} />
 
 ### Waterfall
 
-Cards retain varied preview heights and use shortest-column placement. Only the vertical arrow axis navigates: Down moves to the next enabled card in semantic order and Up moves to the previous one, regardless of visual placement. Left/Right does not move focus.
+Cards retain varied preview heights and fill each visual column from top to bottom in semantic collection order, then continue in the next column to the right (to the left in RTL). Only the vertical arrow axis navigates: Down moves down the current column, then to the top of the next column. Up reverses that route. Left/Right does not move focus.
 
 <Canvas of={Stories.Waterfall} />
 
 ## Behaviors
 
-In grid layout, <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> move sequentially between enabled cards, mirrored in RTL. <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd> move spatially above/below with horizontal overlap, as in Option 1.
+In grid layout, <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> move one enabled card at a time in collection order, mirrored in RTL. <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd> move spatially above/below with horizontal overlap, as in Option 5's grid layout.
 
-In waterfall layout, <kbd>ArrowDown</kbd> and <kbd>ArrowUp</kbd> move forward/backward in semantic collection order. <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> do not navigate. Movement stops at collection boundaries and skips disabled cards; it does not use visual distance or column membership.
+In waterfall layout, <kbd>ArrowDown</kbd> follows each visual column from top to bottom, then advances to the top of the next column. <kbd>ArrowUp</kbd> reverses that route. This matches semantic collection order. <kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> do not navigate. Movement stops at collection boundaries and skips disabled cards.
 
 <kbd>Home</kbd> and <kbd>End</kbd> reach the first/last enabled card in both
 layouts. <kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the
@@ -41,9 +41,9 @@ never also select the card.
 
 ### Features
 
-The grid reports one column and one row per card. Rows and rowheaders expose stable one-based row indices, and rowheaders expose column index 1. Selection uses `aria-selected` and labelled native checkboxes. The active card is the collection entry point; inactive cards' child controls have `tabindex="-1"`. The live status reports selected count.
+The grid reports one row and a column count equal to the number of cards. The row exposes `aria-rowindex="1"`, and each gridcell exposes its stable one-based collection-order `aria-colindex`. Selection uses `aria-selected` and labelled native checkboxes. The active card is the collection entry point; inactive cards' child controls have `tabindex="-1"`. The live status reports selected count.
 
-The pros and cons below use Option 5's evaluation goals, with the waterfall navigation tradeoff added. Option 5's observed “x of y” speech is not a verified result for this new Option 1-based variant. Its one-column, multiple-row semantics must be tested separately; metadata alone does not guarantee positional announcements.
+The pros and cons below use Option 5's evaluation goals, with the sequential navigation tradeoff added. Although both options use single-row semantics, Option 5's observed “x of y” speech must be verified separately for this variant; metadata alone does not guarantee positional announcements.
 
 <Canvas of={Stories.Accessibility} />
 
@@ -60,8 +60,8 @@ The pros and cons below use Option 5's evaluation goals, with the waterfall navi
 ### Cons
 
 - Announced grid dimensions do not match visual columns once cards wrap or form a waterfall.
-- As with Option 5, semantic dimensions and visual movement can create different screen reader expectations; this variant announces one column rather than Option 5's one row.
-- Sequential waterfall movement can look surprising when adjacent collection items are not visual neighbors.
+- As with Option 5, the announced single row can create different expectations from visual wrapping and vertical movement.
+- Moving between waterfall columns jumps from the bottom of one column to the top of the next.
 - Grid semantics still introduce screen reader mode changes and need user testing; indices do not guarantee useful position announcements.
 - Waterfall navigation is slightly more tedious because reaching a distant card requires stepping through intervening items instead of taking a spatial shortcut.
 

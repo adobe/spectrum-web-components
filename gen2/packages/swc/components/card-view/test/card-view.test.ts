@@ -89,12 +89,12 @@ export const SemanticWaterfallNavigation: StoryObj = {
       await view.updateComplete;
       const root = view.shadowRoot!;
       const entries = [
-        ...root.querySelectorAll<HTMLElement>('[role="rowheader"]'),
+        ...root.querySelectorAll<HTMLElement>('[role="gridcell"]'),
       ];
       expect(entries).toHaveLength(8);
       expect(
         root.querySelector('[role="grid"]')?.getAttribute('aria-colcount')
-      ).toBe('1');
+      ).toBe('8');
       const press = async (key: string, shiftKey = false) => {
         root.activeElement!.dispatchEvent(
           new KeyboardEvent('keydown', {
@@ -136,7 +136,7 @@ export const SemanticWaterfallNavigation: StoryObj = {
         view.style.width = '340px';
         await view.updateComplete;
         await waitFor(() => {
-          expect(entries[2].getBoundingClientRect().width).toBe(340);
+          expect(entries[2].getBoundingClientRect().width).toBe(316);
         });
         expect(root.activeElement).toBe(entries[2]);
         await press('ArrowDown');
@@ -547,44 +547,42 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
       };
 
       cells[0].focus();
-      const visited = new Set<string>();
-      for (let move = 0; move < 8; move++) {
-        visited.add((root.activeElement as HTMLElement).dataset.index!);
-        await press('ArrowRight');
-      }
-      expect([...visited]).toEqual(['0', '1', '3', '4', '5', '6', '7']);
-      expect(root.activeElement).toBe(cells[7]);
-      const reverse = new Set<string>();
-      for (let move = 0; move < 8; move++) {
-        reverse.add((root.activeElement as HTMLElement).dataset.index!);
-        await press('ArrowLeft');
-      }
-      expect([...reverse]).toEqual(['7', '6', '5', '4', '3', '1', '0']);
-
+      const belowIndex = layout === 'waterfall' ? 1 : 3;
+      const activeCell = cells[belowIndex];
+      const rangeSelection =
+        layout === 'waterfall'
+          ? ['photo-0', 'photo-1']
+          : ['photo-0', 'photo-1', 'photo-3'];
       await waitFor(() => {
         const first = cells[0].getBoundingClientRect();
-        const below = cells[3].getBoundingClientRect();
+        const below = activeCell.getBoundingClientRect();
         expect(Math.abs(below.left - first.left)).toBeLessThan(1);
         expect(below.top).toBeGreaterThan(first.top);
       });
+      await press('ArrowRight');
+      expect(root.activeElement).toBe(cells[layout === 'waterfall' ? 3 : 1]);
+      await press('ArrowRight');
+      expect(root.activeElement).toBe(cells[layout === 'waterfall' ? 6 : 1]);
+      await press('Home');
+      await press('ArrowLeft');
+      expect(root.activeElement).toBe(cells[0]);
       await press('ArrowDown');
-      expect(root.activeElement).toBe(cells[3]);
+      expect(root.activeElement).toBe(activeCell);
       await press('ArrowUp');
       expect(root.activeElement).toBe(cells[0]);
       await press('End');
       expect(root.activeElement).toBe(cells[7]);
       await press('Home');
       expect(root.activeElement).toBe(cells[0]);
-      await press('ArrowRight', true);
-      await press('ArrowRight', true);
-      expect(view.selected).toEqual(['photo-0', 'photo-1', 'photo-3']);
-      expect(cells[3].getAttribute('aria-selected')).toBe('true');
+      await press('ArrowDown', true);
+      expect(view.selected).toEqual(rangeSelection);
+      expect(activeCell.getAttribute('aria-selected')).toBe('true');
       await press(' ');
-      expect(view.selected).toEqual(['photo-0', 'photo-1']);
-      expect(cells[3].getAttribute('aria-selected')).toBe('false');
+      expect(view.selected).toEqual(rangeSelection.slice(0, -1));
+      expect(activeCell.getAttribute('aria-selected')).toBe('false');
 
       const activeControls = [
-        ...cells[3].querySelectorAll<HTMLElement>('input, button'),
+        ...activeCell.querySelectorAll<HTMLElement>('input, button'),
       ];
       expect(activeControls.every((control) => control.tabIndex === 0)).toBe(
         true
@@ -600,7 +598,7 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
       expect(root.activeElement).toBe(checkbox);
       checkbox.click();
       await view.updateComplete;
-      expect(view.selected).toEqual(['photo-0', 'photo-1', 'photo-3']);
+      expect(view.selected).toEqual(rangeSelection);
 
       const actions: unknown[] = [];
       view.addEventListener('swc-card-view-action', (event) => {
@@ -608,14 +606,14 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
       });
       (activeControls[2] as HTMLButtonElement).click();
       await view.updateComplete;
-      expect(actions).toEqual([{ id: 'photo-3', action: 'share' }]);
-      expect(view.selected).toEqual(['photo-0', 'photo-1', 'photo-3']);
+      expect(actions).toEqual([{ id: `photo-${belowIndex}`, action: 'share' }]);
+      expect(view.selected).toEqual(rangeSelection);
 
-      cells[3].focus();
+      activeCell.focus();
       await press('Enter');
       expect(actions).toEqual([
-        { id: 'photo-3', action: 'share' },
-        { id: 'photo-3', action: 'open' },
+        { id: `photo-${belowIndex}`, action: 'share' },
+        { id: `photo-${belowIndex}`, action: 'open' },
       ]);
       view.layout = layout === 'grid' ? 'waterfall' : 'grid';
       view.style.width = '360px';
@@ -623,15 +621,17 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
       await waitFor(() => {
         expect(cells[0].getBoundingClientRect().width).toBeGreaterThan(300);
       });
-      expect(root.activeElement).toBe(cells[3]);
+      expect(root.activeElement).toBe(activeCell);
       expect(grid.querySelectorAll('[role="row"]')).toHaveLength(1);
       expect(grid.getAttribute('aria-colcount')).toBe('8');
-      expect(cells[3].getAttribute('aria-colindex')).toBe('4');
+      expect(activeCell.getAttribute('aria-colindex')).toBe(
+        String(belowIndex + 1)
+      );
 
       view.style.direction = 'rtl';
       await press('Home');
       await press('ArrowLeft');
-      expect(root.activeElement).toBe(cells[1]);
+      expect(root.activeElement).toBe(cells[0]);
       await press('ArrowRight');
       expect(root.activeElement).toBe(cells[0]);
     }
@@ -732,7 +732,7 @@ export const FeedExitAndReflow: StoryObj = {
     await waitFor(() => {
       expect(
         root.querySelector<HTMLElement>('.item')!.getBoundingClientRect().width
-      ).toBe(340);
+      ).toBe(316);
     });
     expect(root.activeElement).toBe(article);
     expectArticleMetadata();

@@ -57,6 +57,10 @@ export class CardView extends CardViewBase {
     return this.geometry;
   }
 
+  private get singleRow(): boolean {
+    return this.model === 'single-row' || this.model === 'vertical';
+  }
+
   protected get focusTargets(): HTMLElement[] {
     return [...this.renderRoot.querySelectorAll<HTMLElement>('[data-focus]')];
   }
@@ -94,7 +98,11 @@ export class CardView extends CardViewBase {
   }
 
   private measureLayout(): void {
-    const width = this.getBoundingClientRect().width;
+    const hostStyle = getComputedStyle(this);
+    const width =
+      this.clientWidth -
+      parseFloat(hostStyle.paddingInlineStart) -
+      parseFloat(hostStyle.paddingInlineEnd);
     if (!width) {
       return;
     }
@@ -107,12 +115,15 @@ export class CardView extends CardViewBase {
     ];
     const heights = cards.map((card) => card.getBoundingClientRect().height);
     const columnHeights = Array.from({ length: columns }, () => 0);
+    const itemsPerColumn = Math.ceil(cards.length / columns);
     const rowHeight = Math.max(0, ...heights);
-    const rtl = getComputedStyle(this).direction === 'rtl';
+    const rtl = hostStyle.direction === 'rtl';
     const next = cards.map((_, index) => {
       const column =
         this.layout === 'waterfall'
-          ? columnHeights.indexOf(Math.min(...columnHeights))
+          ? this.singleRow
+            ? Math.floor(index / itemsPerColumn)
+            : columnHeights.indexOf(Math.min(...columnHeights))
           : index % columns;
       const top =
         this.layout === 'waterfall'
@@ -286,7 +297,7 @@ export class CardView extends CardViewBase {
         </div>
       `;
     }
-    if (this.model === 'single-row') {
+    if (this.singleRow) {
       return html`
         <div
           class="item"
@@ -391,18 +402,10 @@ export class CardView extends CardViewBase {
                 )}
                 aria-label=${this.label}
                 aria-rowcount=${ifDefined(
-                  grid
-                    ? this.model === 'single-row'
-                      ? 1
-                      : this.items.length
-                    : undefined
+                  grid ? (this.singleRow ? 1 : this.items.length) : undefined
                 )}
                 aria-colcount=${ifDefined(
-                  grid
-                    ? this.model === 'single-row'
-                      ? this.items.length
-                      : 1
-                    : undefined
+                  grid ? (this.singleRow ? this.items.length : 1) : undefined
                 )}
                 aria-multiselectable=${ifDefined(
                   grid && this.selectionMode === 'multiple' ? 'true' : undefined
@@ -414,7 +417,7 @@ export class CardView extends CardViewBase {
                 @keydown=${this.handleKeydown}
                 @focusin=${this.handleFocus}
               >
-                ${this.model === 'single-row'
+                ${this.singleRow
                   ? html`
                       <div role="row" aria-rowindex="1">${content}</div>
                     `

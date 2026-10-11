@@ -306,13 +306,14 @@ export abstract class CardViewBase extends SpectrumElement {
       const rtl = getComputedStyle(this).direction === 'rtl';
       const direction = (event.key === 'ArrowRight' ? 1 : -1) * (rtl ? -1 : 1);
       next =
-        this.model === 'baseline' && this.layout === 'waterfall'
+        this.model === 'single-row' ||
+        (this.model === 'baseline' && this.layout === 'waterfall')
           ? this.spatial(index, event.key)
           : this.sequential(index, direction);
     } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       next =
         this.model === 'vertical' && this.layout === 'waterfall'
-          ? this.sequential(index, event.key === 'ArrowDown' ? 1 : -1)
+          ? this.columnStep(index, event.key === 'ArrowDown' ? 1 : -1)
           : this.model === 'wrapping'
             ? this.columnStep(index, event.key === 'ArrowDown' ? 1 : -1)
             : this.spatial(index, event.key);

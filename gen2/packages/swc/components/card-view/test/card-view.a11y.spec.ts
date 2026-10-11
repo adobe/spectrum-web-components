@@ -88,6 +88,28 @@ async function disableThird(view: Locator): Promise<void> {
 for (const prototype of prototypes) {
   for (const layout of ['grid', 'waterfall']) {
     test.describe(`CardView ${prototype} ${layout}`, () => {
+      test('collection leaves room for outer focus outlines', async ({
+        page,
+      }) => {
+        const view = await openPrototype(page, prototype, layout);
+        const clearance = await view
+          .locator('.item')
+          .first()
+          .evaluate((item) => {
+            const host = item.getRootNode() as ShadowRoot;
+            const bounds = item.getBoundingClientRect();
+            const container = host.host.getBoundingClientRect();
+            return {
+              left: bounds.left - container.left,
+              right: container.left + host.host.clientWidth - bounds.right,
+              top: bounds.top - container.top,
+            };
+          });
+        expect(clearance.left).toBeGreaterThanOrEqual(8);
+        expect(clearance.right).toBeGreaterThanOrEqual(8);
+        expect(clearance.top).toBeGreaterThanOrEqual(8);
+      });
+
       test('accessibility snapshots preserve initial, selected, and disabled states', async ({
         page,
       }) => {
@@ -130,6 +152,119 @@ for (const prototype of prototypes) {
         }
       });
 
+      if (prototype === 'option-5' || prototype === 'option-6') {
+        test('single semantic row preserves visual arrow navigation', async ({
+          page,
+        }) => {
+          const view = await openPrototype(page, prototype, layout);
+          const grid = view.getByRole('grid');
+          await expect(grid).toHaveAttribute('aria-rowcount', '1');
+          await expect(grid).toHaveAttribute('aria-colcount', '100');
+          await expect(grid.getByRole('row')).toHaveCount(1);
+          const entries = grid.getByRole('gridcell');
+          await expect(entries).toHaveCount(100);
+          await expect(entries.last()).toHaveAttribute('aria-colindex', '100');
+          const positions = await entries.evaluateAll((elements) =>
+            elements.map((element) => {
+              const bounds = element.getBoundingClientRect();
+              return {
+                left: bounds.left,
+                top: bounds.top,
+                width: bounds.width,
+                height: bounds.height,
+                disabled: element.getAttribute('aria-disabled') === 'true',
+              };
+            })
+          );
+          expect(
+            new Set(positions.map((position) => position.left)).size
+          ).toBeGreaterThan(1);
+          if (layout === 'waterfall') {
+            for (let index = 1; index < positions.length; index++) {
+              const previous = positions[index - 1];
+              const current = positions[index];
+              if (current.left === previous.left) {
+                expect(current.top).toBeGreaterThanOrEqual(
+                  previous.top + previous.height
+                );
+              } else {
+                expect(current.left).toBeGreaterThan(previous.left);
+                expect(current.top).toBe(positions[0].top);
+              }
+            }
+          }
+          for (const key of [
+            'ArrowRight',
+            'ArrowLeft',
+            'ArrowDown',
+            'ArrowUp',
+          ]) {
+            const horizontal = key === 'ArrowRight' || key === 'ArrowLeft';
+            const forward = key === 'ArrowRight' || key === 'ArrowDown';
+            const start = positions
+              .map((position, index) => ({ ...position, index }))
+              .filter(
+                (position) =>
+                  !position.disabled && position.top === positions[0].top
+              )
+              .sort((first, second) => second.left - first.left)[0].index;
+            let next = start;
+            if (
+              prototype === 'option-6' &&
+              (horizontal || layout === 'waterfall')
+            ) {
+              if (!(horizontal && layout === 'waterfall')) {
+                next = forward ? start + 1 : start - 1;
+                while (positions[next]?.disabled) {
+                  next += forward ? 1 : -1;
+                }
+              }
+            } else {
+              const current = positions[start];
+              const candidates = positions
+                .map((position, index) => {
+                  const primary = horizontal
+                    ? position.left - current.left
+                    : position.top - current.top;
+                  const overlap = horizontal
+                    ? Math.min(
+                        current.top + current.height,
+                        position.top + position.height
+                      ) - Math.max(current.top, position.top)
+                    : Math.min(
+                        current.left + current.width,
+                        position.left + position.width
+                      ) - Math.max(current.left, position.left);
+                  const secondary = horizontal
+                    ? position.top +
+                      position.height / 2 -
+                      current.top -
+                      current.height / 2
+                    : position.left - current.left;
+                  return {
+                    index,
+                    position,
+                    primary,
+                    overlap,
+                    score: Math.abs(primary) * 1000 + Math.abs(secondary),
+                  };
+                })
+                .filter(
+                  (candidate) =>
+                    !candidate.position.disabled &&
+                    (forward ? candidate.primary : -candidate.primary) >= 1 &&
+                    candidate.overlap > 0
+                )
+                .sort((first, second) => first.score - second.score);
+              next = candidates[0]?.index ?? start;
+            }
+            await entries.nth(start).focus();
+            await page.keyboard.press(key);
+            await expect(entries.nth(next)).toBeFocused();
+          }
+        });
+      }
+
       if (prototype === 'option-6') {
         test('Tab enters grid child controls and exits without a trap', async ({
           page,
@@ -139,7 +274,7 @@ for (const prototype of prototypes) {
             .getByRole('button', { name: 'Photo library', exact: true })
             .focus();
           await page.keyboard.press('Tab');
-          const entries = view.getByRole('rowheader');
+          const entries = view.getByRole('gridcell');
           await expect(entries.first()).toBeFocused();
           await page.keyboard.press(
             layout === 'waterfall' ? 'ArrowDown' : 'ArrowRight'
