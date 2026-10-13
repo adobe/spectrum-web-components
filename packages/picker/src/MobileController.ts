@@ -20,12 +20,14 @@ import { isWebKit } from '@spectrum-web-components/shared';
 export class MobileController extends InteractionController {
     override type = InteractionTypes.mobile;
 
+    // Declared without an initializer: init() runs in the base constructor.
+    private lastInputWasKeyboard!: boolean;
+
     handleClick(): void {
         if (this.host.disabled) {
             return;
         }
         if (this.preventNextToggle == 'no') {
-
             this.host.toggle();
         }
         this.preventNextToggle = 'no';
@@ -66,5 +68,37 @@ export class MobileController extends InteractionController {
         this.target.addEventListener('focusout', () => this.handleFocusOut(), {
             signal,
         });
+        // Track the last input modality so focus returned to the button after
+        // a pointer/touch selection doesn't render as keyboard focus.
+        this.lastInputWasKeyboard = false;
+        const root = this.target.ownerDocument;
+        root.addEventListener(
+            'keydown',
+            (event) => this.handleModalityKeydown(event as KeyboardEvent),
+            { capture: true, signal }
+        );
+        root.addEventListener(
+            'pointerdown',
+            () => (this.lastInputWasKeyboard = false),
+            { capture: true, signal }
+        );
+        this.host.addEventListener('sp-closed', () => this.handleClosed(), {
+            signal,
+        });
+    }
+
+    private handleModalityKeydown(event: KeyboardEvent): void {
+        if (['Shift', 'Control', 'Alt', 'Meta'].includes(event.key)) {
+            return;
+        }
+        this.lastInputWasKeyboard = true;
+        this.target.classList.remove(SAFARI_FOCUS_RING_CLASS);
+    }
+
+    // Runs before the overlay returns focus to the button.
+    private handleClosed(): void {
+        if (!this.lastInputWasKeyboard) {
+            this.target.classList.add(SAFARI_FOCUS_RING_CLASS);
+        }
     }
 }

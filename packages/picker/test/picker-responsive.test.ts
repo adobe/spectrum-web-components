@@ -25,6 +25,7 @@ import '@spectrum-web-components/picker/sync/sp-picker.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { Tray } from '@spectrum-web-components/tray/src/Tray.js';
+import { SAFARI_FOCUS_RING_CLASS } from '../src/InteractionController.js';
 
 describe('Picker, responsive', () => {
     let el: Picker;
@@ -169,6 +170,64 @@ describe('Picker, responsive', () => {
 
             expect(tray, 'tray').to.be.null;
             expect(popover, 'popover').to.not.be.null;
+        });
+    });
+
+    describe('focus ring after close in mobile', () => {
+        beforeEach(async () => {
+            el = await pickerFixture();
+            await elementUpdated(el);
+            // Force the MobileController, as in the Tray test above.
+            el.isMobile.matches = true;
+            el.bindEvents();
+        });
+
+        const pointerdown = (): void => {
+            document.dispatchEvent(
+                new PointerEvent('pointerdown', { bubbles: true })
+            );
+        };
+        const keydown = (key: string): void => {
+            document.dispatchEvent(
+                new KeyboardEvent('keydown', { key, bubbles: true })
+            );
+        };
+        const close = (): void => {
+            el.dispatchEvent(new Event('sp-closed'));
+        };
+
+        it('suppresses the focus ring when the last input was a pointer', () => {
+            pointerdown();
+            close();
+
+            expect(el.button.classList.contains(SAFARI_FOCUS_RING_CLASS)).to.be
+                .true;
+        });
+
+        it('keeps the focus ring when the last input was the keyboard', () => {
+            keydown('Enter');
+            close();
+
+            expect(el.button.classList.contains(SAFARI_FOCUS_RING_CLASS)).to.be
+                .false;
+        });
+
+        it('removes the suppression once the keyboard is used', () => {
+            pointerdown();
+            close();
+            keydown('ArrowDown');
+
+            expect(el.button.classList.contains(SAFARI_FOCUS_RING_CLASS)).to.be
+                .false;
+        });
+
+        it('ignores modifier-only keys', () => {
+            pointerdown();
+            keydown('Shift');
+            close();
+
+            expect(el.button.classList.contains(SAFARI_FOCUS_RING_CLASS)).to.be
+                .true;
         });
     });
 });
