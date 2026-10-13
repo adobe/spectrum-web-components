@@ -29,6 +29,9 @@
  *      components, patterns, and controllers conform to the per-unit MDX
  *      authoring standards in `.ai/rules/stories-documentation.md`
  *
+ * Checks 1 through 6 read only git-tracked files (staged new files count), so untracked or
+ * ignored local files, such as tool caches and `.ai/handoffs/` notes, never fail the run.
+ *
  * Exits with code 1 if any check has errors; warnings are printed but do not fail.
  *
  * Usage:

@@ -24,27 +24,17 @@
  *   code, which hold examples for other documents (error)
  * - Every backticked `.ai/...` path in `.ai/**` Markdown resolves (warning)
  *
+ * Only git-tracked files are scanned (staged new files count), so ignored local notes such
+ * as `.ai/handoffs/` never produce errors or warnings.
+ *
  * Usage:
  *   node .ai/scripts/validate-links.js
  */
 
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(__dirname, '../..');
-const aiDir = path.join(repoRoot, '.ai');
-
-// Directories to skip when searching for AGENTS.md files
-const SKIP_DIRS = new Set([
-  'node_modules',
-  '.git',
-  'dist',
-  '.wireit',
-  'storybook-static',
-  'coverage',
-]);
+import { ROOT as repoRoot, trackedFilesOnDisk } from './ai-files.js';
 
 // Runtime folders that agents create on demand and git ignores.
 const RUNTIME_PATHS = ['.ai/handoffs'];
@@ -55,50 +45,23 @@ const SAMPLE_LINKS = new Set([
 ]);
 
 /**
- * Recursively find all AGENTS.md files under a directory.
+ * Every tracked AGENTS.md file.
  */
-function findAgentsFiles(dir) {
-  const results = [];
-
-  let entries;
-  try {
-    entries = fs.readdirSync(dir, { withFileTypes: true });
-  } catch {
-    return results;
-  }
-
-  for (const entry of entries) {
-    if (entry.isDirectory()) {
-      if (!SKIP_DIRS.has(entry.name)) {
-        results.push(...findAgentsFiles(path.join(dir, entry.name)));
-      }
-    } else if (entry.isFile() && entry.name === 'AGENTS.md') {
-      results.push(path.join(dir, entry.name));
-    }
-  }
-
-  return results;
+function findAgentsFiles() {
+  return trackedFilesOnDisk((f) => path.posix.basename(f) === 'AGENTS.md');
 }
 
 /**
- * Recursively find all Markdown files under `.ai/`.
+ * Every tracked Markdown file under `.ai/`.
  */
-function findAiMarkdown(dir) {
-  const results = [];
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      results.push(...findAiMarkdown(full));
-    } else if (
-      entry.isFile() &&
-      entry.name.endsWith('.md') &&
+function findAiMarkdown() {
+  return trackedFilesOnDisk(
+    (f) =>
+      f.startsWith('.ai/') &&
+      f.endsWith('.md') &&
       // Skill templates hold links that resolve from wherever the template is copied.
-      !full.split(path.sep).includes('assets')
-    ) {
-      results.push(full);
-    }
-  }
-  return results;
+      !f.split('/').includes('assets')
+  );
 }
 
 /**
@@ -218,8 +181,8 @@ function validateAiFile(filePath) {
  * Returns { errors, warnings, fileCount }.
  */
 export function validateLinks() {
-  const agentsFiles = findAgentsFiles(repoRoot);
-  const aiFiles = findAiMarkdown(aiDir);
+  const agentsFiles = findAgentsFiles();
+  const aiFiles = findAiMarkdown();
   const errors = agentsFiles.flatMap(validateFile);
   const warnings = [];
   for (const file of aiFiles) {

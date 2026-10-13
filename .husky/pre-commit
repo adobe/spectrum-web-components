@@ -3,14 +3,16 @@ yarn lint-staged --allow-empty
 # If any .ai/ sources or AGENTS.md files are staged, regenerate the Copilot and Cursor
 # instruction files from them and stage the results (yarn ai:sync).
 if git diff --cached --name-only | grep -qE "^\.ai/|(^|/)AGENTS\.md$"; then
-  # sync.js reads the working tree, so unstaged or untracked rule edits would leak into
+  # sync.js reads the working tree, so unstaged or untracked source edits would leak into
   # the staged output. Skip instead; pre-push and CI (`lint:ai`) catch any drift.
-  if ! git diff --quiet -- .ai/rules .ai/memory ||
-    [ -n "$(git ls-files --others --exclude-standard -- .ai/rules .ai/memory)" ]; then
-    echo "⚠ Skipped yarn ai:sync: .ai/rules or .ai/memory has unstaged changes. Run it before you push." >&2
+  AI_SOURCES=".ai/rules .ai/memory .ai/skills .ai/README.md"
+  if ! git diff --quiet -- $AI_SOURCES ||
+    [ -n "$(git ls-files --others --exclude-standard -- $AI_SOURCES)" ]; then
+    echo "⚠ Skipped yarn ai:sync: .ai/ sources have unstaged changes. Run it before you push." >&2
   else
     node .ai/scripts/sync.js || exit 1
-    git add -A -- .github/instructions .cursor/rules
+    # The README catalog block is generated too.
+    git add -A -- .github/instructions .cursor/rules .ai/README.md
   fi
 fi
 

@@ -29,10 +29,13 @@
  * Also: unique names, no hand-authored files in generated folders, and a warning for
  * tool-specific wording (Claude, Cursor, .mdc) in tool-agnostic sources.
  *
+ * Only git-tracked files are checked (staged new files count), so untracked or ignored
+ * local files, such as tool caches and handoff notes, never fail the run.
+ *
  * Returns { errors, warnings, fileCount } for integration with validate.js.
  */
 
-import { existsSync, readdirSync, readFileSync } from 'fs';
+import { readFileSync } from 'fs';
 import path from 'path';
 import { parse as parseYaml } from 'yaml';
 
@@ -43,15 +46,17 @@ import {
   EXCLUDE_AGENT_VALUES,
   GENERATED_MARKER,
   INSTRUCTION_KEYS,
+  isTracked,
   listInstructionSources,
   listSkills,
   matchesGlob,
   readMarkdown,
   REJECTED_INSTRUCTION_KEYS,
   REJECTED_SKILL_KEYS,
-  ROOT,
+  rel,
   SKILL_KEYS,
   trackedFiles,
+  trackedFilesOnDisk,
 } from './ai-files.js';
 
 /**
@@ -264,14 +269,11 @@ function validateUniqueness(sources, skills, errors) {
     }
   }
 
-  // Generated folders hold only generated files.
+  // Generated folders hold only generated files. Untracked local files, such as tool
+  // caches, are skipped because they never reach the repository.
   for (const dir of ['.github/instructions', '.cursor/rules']) {
-    const full = path.join(ROOT, dir);
-    if (!existsSync(full)) {
-      continue;
-    }
-    for (const name of readdirSync(full)) {
-      const file = path.join(full, name);
+    const inDir = (f) => path.posix.dirname(f) === dir;
+    for (const file of trackedFilesOnDisk(inDir)) {
       let text = '';
       try {
         text = readFileSync(file, 'utf8');
@@ -280,7 +282,7 @@ function validateUniqueness(sources, skills, errors) {
       }
       if (!text.includes(GENERATED_MARKER)) {
         errors.push(
-          `${dir}/${name}: hand-authored file in a generated folder; add it to .ai/ instead`
+          `${rel(file)}: hand-authored file in a generated folder; add it to .ai/ instead`
         );
       }
     }
@@ -315,8 +317,8 @@ export function validateFrontmatter() {
   const errors = [...assertGlobSemantics()];
   const warnings = [];
 
-  const sources = listInstructionSources();
-  const skills = listSkills();
+  const sources = listInstructionSources().filter((s) => isTracked(s.file));
+  const skills = listSkills().filter((s) => isTracked(s.file));
 
   sources.forEach((s) => validateInstruction(s, errors, warnings));
   skills.forEach((s) => validateSkill(s, errors, warnings));
@@ -326,46 +328,24 @@ export function validateFrontmatter() {
     errors
   );
 
-  const agents = [];
-  const walkAgents = (dir) => {
-    for (const entry of readdirSync(dir, { withFileTypes: true })) {
-      if (
-        ['node_modules', '.git', 'dist', 'storybook-static'].includes(
-          entry.name
-        )
-      ) {
-        continue;
-      }
-      const full = path.join(dir, entry.name);
-      if (entry.isDirectory()) {
-        walkAgents(full);
-      } else if (entry.name === 'AGENTS.md') {
-        agents.push(readMarkdown(full));
-      }
-    }
-  };
-  walkAgents(ROOT);
+  const agents = trackedFilesOnDisk(
+    (f) => path.posix.basename(f) === 'AGENTS.md'
+  ).map(readMarkdown);
 
-  const skillSupport = skills.flatMap((skill) => {
-    const dir = path.dirname(skill.file);
-    return readdirSync(dir, { recursive: true })
-      .filter(
-        (f) =>
-          String(f).endsWith('.md') && path.basename(String(f)) !== 'SKILL.md'
-      )
-      .map((f) => readMarkdown(path.join(dir, String(f))));
-  });
+  const skillDirs = skills.map((skill) => `${rel(path.dirname(skill.file))}/`);
+  const skillSupport = trackedFilesOnDisk(
+    (f) =>
+      f.endsWith('.md') &&
+      path.posix.basename(f) !== 'SKILL.md' &&
+      skillDirs.some((dir) => f.startsWith(dir))
+  ).map(readMarkdown);
+
+  const aiDocs = trackedFilesOnDisk(
+    (f) => path.posix.dirname(f) === rel(AI_DIR) && f.endsWith('.md')
+  ).map(readMarkdown);
 
   validateToolWording(
-    [
-      ...sources,
-      ...skills,
-      ...skillSupport,
-      ...agents,
-      ...readdirSync(AI_DIR)
-        .filter((f) => f.endsWith('.md'))
-        .map((f) => readMarkdown(path.join(AI_DIR, f))),
-    ],
+    [...sources, ...skills, ...skillSupport, ...agents, ...aiDocs],
     warnings
   );
 
