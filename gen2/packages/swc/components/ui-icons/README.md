@@ -10,8 +10,10 @@ Contents:
 
 Source and generation:
 
-- `icon-set/` is built from `../../icon-source/ui/` by `yarn generate:ui-icons`.
-- The A4U set version is recorded in `../../icon-source/icon-source.json`.
+- `icon-set/` is built from the raw SVGs in [`icon-source/`](./icon-source/) by [`scripts/generate-ui-icons.mjs`](./scripts/generate-ui-icons.mjs). Run `yarn generate:ui-icons` from the repo root or `gen2/packages/swc`.
+- The A4U set version is recorded in [`icon-source/icon-source.json`](./icon-source/icon-source.json).
+- Refresh steps, naming convention, and the shared helpers are in [`icon-source/README.md`](./icon-source/README.md).
+- Box styling comes from `stylesheets/_lit-styles/icon-base.css`, shared with `<swc-icon>` and copied into `@adobe/spectrum-wc-icons`. After editing it, run `yarn generate:icon-styles`.
 
 Documentation:
 

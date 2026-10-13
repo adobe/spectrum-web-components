@@ -808,3 +808,28 @@ export const HeaderLabelWrapTest: Story = {
     });
   },
 };
+
+export const LoaderReconnectTest: Story = {
+  render: () => html`
+    <swc-response-status status="active"></swc-response-status>
+  `,
+  play: async ({ canvasElement }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+
+    el.loader = 'cc';
+    await el.updateComplete;
+
+    const loader = (): Element | null | undefined =>
+      el.shadowRoot?.querySelector('swc-pixel-loader');
+    expect(loader()?.hasAttribute('paused')).toBe(true);
+
+    el.remove();
+    canvasElement.appendChild(el);
+    await el.updateComplete;
+
+    expect(loader()?.hasAttribute('paused')).toBe(false);
+  },
+};

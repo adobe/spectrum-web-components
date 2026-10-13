@@ -281,6 +281,7 @@ jobs:
           branch: changeset-release/gen2
           base: main
           delete-branch: true
+          labels: skip_vrt
           add-paths: |
             gen2
             yarn.lock
