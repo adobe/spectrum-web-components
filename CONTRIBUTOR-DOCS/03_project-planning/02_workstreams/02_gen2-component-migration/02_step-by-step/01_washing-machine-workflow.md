@@ -72,7 +72,7 @@
 
 <!-- Document content (editable) -->
 
-**Scope:** This guide applies **only** when a **1st-gen Spectrum Web Component already exists** (or 1st-gen is explicitly the package you are migrating—you refactor that surface, move shared logic to core, then add gen2). **Greenfield / net-new** gen2 (no 1st-gen counterpart) is **out of scope** here; see [TODO: Greenfield gen2 contributor guide](../03_migration-project-planning.md#todo-greenfield-gen2-contributor-guide) in [Migration project planning](../03_migration-project-planning.md).
+**Scope:** This guide applies **only** when a **1st-gen Spectrum Web Component already exists** as a reference for a new gen2 component. **Greenfield / net-new** gen2 (no 1st-gen counterpart) is **out of scope** here; see [TODO: Greenfield gen2 contributor guide](../03_migration-project-planning.md#todo-greenfield-gen2-contributor-guide) in [Migration project planning](../03_migration-project-planning.md).
 
 It **orchestrates** the migration: eight phases with checklists and quality gates, plus links to the step-by-step docs and style guides for implementation detail. It does not duplicate those guides—it sequences **what** to do and **when**.
 
@@ -165,7 +165,7 @@ The approach:
 2. **Create the gen2 base class in core** — start from the 1st-gen logic, applying improvements incrementally. Do not speculatively rewrite — changes should be informed by existing bugs, accessibility considerations, or feature disparity.
 3. **Create the gen2 concrete class in SWC** — add rendering, styles, and element registration.
 
-1st-gen remains self-contained. It is **not** updated to import from gen2 core.
+1st-gen remains self-contained and is **not modified** as part of this workflow.
 
 ---
 
@@ -327,59 +327,6 @@ Full worked examples for each category are in
 [Reusable validation helpers](../../../../02_style-guide/02_typescript/17_debug-validation.md#reusable-validation-helpers)
 and [Slot validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#slot-validation).
 
-**Deprecating 1st-gen APIs during migration**
-
-When the gen2 API diverges from 1st-gen — a renamed attribute, a removed prop, a replaced export — mark the 1st-gen surface as deprecated so consumers have a clear migration path before 1st-gen is retired.
-
-Convention: **all 1st-gen deprecations introduced as part of a gen2 migration must surface a runtime notice through the swc warn system** (`window.__swc.warn()` with `level: 'deprecation'`). A `@deprecated` JSDoc tag alone is not enough — types and IDE tooling pick it up, but consumers building against compiled output won't see it. The warn system fires once per element/type/level in dev mode, is silent in production, and routes through the existing `ignoreWarning*` filters so consumers can opt out.
-
-Apply this to:
-
-- **Renamed or replaced attributes/properties** — fire the warning from the setter when the deprecated value is assigned.
-- **Type and const exports** — prefer statics on the custom element class (`Component.VARIANTS`, etc.) over package-level exports; deprecate the standalone exports and document migration to inference from the element (e.g. `typeof Badge.prototype.variant`, `typeof Badge.FIXED_VALUES`). See `@deprecated` JSDoc on exports in `1st-gen/packages/badge/src/Badge.ts`.
-- **Removed APIs** — warn from the getter/setter or method body (e.g. `update()`, `connectedCallback()`, or other instance methods) before falling back to the new behavior.
-
-**Example: `over-background` → `static-color="white"` on `sp-progress-bar`**
-
-`1st-gen/packages/progress-bar/src/ProgressBar.ts`:
-
-```ts
-/**
- * @deprecated Use "static-color='white'" instead.
- */
-@property({ type: Boolean, attribute: 'over-background' })
-public get overBackground(): boolean {
-    return this._overBackground ? true : false;
-}
-
-public set overBackground(overBackground: boolean) {
-    if (overBackground === true) {
-        this.removeAttribute('over-background');
-        this.staticColor = 'white';
-
-        if (window.__swc?.DEBUG) {
-            window.__swc.warn(
-                this,
-                `The "over-background" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='white'" instead.`,
-                'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/#variants',
-                {
-                    level: 'deprecation',
-                }
-            );
-        }
-    }
-}
-```
-
-Notes on the pattern:
-
-- `@deprecated` JSDoc on the property documents the deprecation for IDEs and the CEM.
-- The setter forwards to the new API (`this.staticColor = 'white'`) so behavior is preserved.
-- The warn is gated on `window.__swc?.DEBUG` so production bundles are unaffected.
-- The message names the element (`<${this.localName}>`), states what is deprecated, and points at the replacement.
-- The URL links to the component docs section that describes the new API.
-- `level: 'deprecation'` sorts the warning under the deprecation channel and lets consumers silence the whole class via `window.__swc.ignoreWarningLevels.deprecation = true`.
-
 ### Form participation (form fields only)
 
 Applies when the component is a **form field** (text field, checkbox, radio, picker, combobox). Skip this for non-form components.
@@ -408,13 +355,13 @@ Wire the field per the approved [forms strategy](../../../05_strategies/forms-st
 <details>
 <summary>**Stop and ask:** Breaking API changes</summary>
 
-If you are renaming or removing a public prop or attribute, confirm with the team and plan deprecation or a migration path for consumers.
+If the gen2 API renames or omits any 1st-gen public API, verify that the difference and consumer migration path match an approved numbered breaking-change entry in the migration plan. If it is missing or differs, update the plan and align with the team before proceeding.
 </details>
 
 ### Quality gate
 
 - [ ] Public API is documented; types are in core; base holds behavior; SWC holds rendering.
-- [ ] Static readonly pattern, debug warnings, and 1st-gen deprecation notices align with Badge (or equivalent) and TypeScript conventions.
+- [ ] Static readonly patterns, debug warnings, and dev-mode validation align with Badge (or equivalent) and TypeScript conventions.
 - [ ] Dev-warning validation uses the shared `core/utils` helpers for every applicable category (see table above), not hand-rolled checks.
 
 ---
