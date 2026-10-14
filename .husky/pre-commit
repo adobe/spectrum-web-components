@@ -5,14 +5,19 @@ yarn lint-staged --allow-empty
 if git diff --cached --name-only | grep -qE "^\.ai/|(^|/)AGENTS\.md$"; then
   # sync.js reads the working tree, so unstaged or untracked source edits would leak into
   # the staged output. Skip instead; pre-push and CI (`lint:ai`) catch any drift.
-  AI_SOURCES=".ai/rules .ai/memory .ai/skills .ai/README.md"
+  AI_SOURCES=".ai/rules .ai/memory .ai/skills .ai/agents .ai/licenses .ai/README.md"
   if ! git diff --quiet -- $AI_SOURCES ||
     [ -n "$(git ls-files --others --exclude-standard -- $AI_SOURCES)" ]; then
     echo "⚠ Skipped yarn ai:sync: .ai/ sources have unstaged changes. Run it before you push." >&2
   else
     node .ai/scripts/sync.js || exit 1
-    # The README catalog block is generated too.
-    git add -A -- .github/instructions .cursor/rules .ai/README.md
+    # The README catalog block and third-party notices are generated too. `git add` fails
+    # on a path that neither exists nor is tracked, so skip those.
+    for generated in .github/instructions .github/agents .cursor/rules .ai/README.md .ai/THIRD-PARTY-NOTICES.md; do
+      if [ -e "$generated" ] || [ -n "$(git ls-files -- "$generated")" ]; then
+        git add -A -- "$generated"
+      fi
+    done
   fi
 fi
 
