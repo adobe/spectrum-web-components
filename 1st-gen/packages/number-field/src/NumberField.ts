@@ -96,6 +96,17 @@ const chevronIcon: Record<string, (dir: 'Down' | 'Up') => TemplateResult> = {
   `,
 };
 
+const digitsAfterDecimalOf = (value?: number): number => {
+  if (!value) {
+    return 0;
+  }
+  const [significand, exponent = '0'] = value.toString().split('e');
+  return Math.max(
+    0,
+    (significand.split('.')[1]?.length ?? 0) - Number(exponent)
+  );
+};
+
 /**
  * @element sp-number-field
  * @slot help-text - default or non-negative help text to associate to your form element
@@ -591,24 +602,16 @@ export class NumberField extends TextfieldBase {
 
   private validateInput(value: number): number {
     value = this.valueWithLimits(value);
-    const signMultiplier = value < 0 ? -1 : 1; // 'signMultiplier' adjusts 'value' for 'validateInput' and reverts it before returning.
-    value *= signMultiplier;
 
-    // Step shouldn't validate when 0...
-    if (this.step) {
-      const min = typeof this.min !== 'undefined' ? this.min : 0;
-      const moduloStep = parseFloat(
-        this.valueFormatter.format((value - min) % this.step)
-      );
-      const fallsOnStep = moduloStep === 0;
-      if (!fallsOnStep) {
-        const overUnder = Math.round(moduloStep / this.step);
-        if (overUnder === 1) {
-          value += this.step - moduloStep;
-        } else {
-          value -= moduloStep;
-        }
-      }
+    // A non-positive step cannot define a grid.
+    if (this.step && this.step > 0) {
+      // The step grid starts at `min`, or at 0 when there is no `min`.
+      const anchor = typeof this.min !== 'undefined' ? this.min : 0;
+      const offset = value - anchor;
+      // Snap to the nearest step, with ties away from the anchor. The epsilon
+      // absorbs float noise such as 2.4999999999999996 for 0.25 / 0.1.
+      const stepCount = Math.round(Math.abs(offset) / this.step + 1e-9);
+      value = anchor + Math.sign(offset) * stepCount * this.step;
       if (typeof this.max !== 'undefined') {
         while (value > this.max) {
           value -= this.step;
@@ -616,7 +619,6 @@ export class NumberField extends TextfieldBase {
       }
       value = parseFloat(this.valueFormatter.format(value));
     }
-    value *= signMultiplier;
     return value;
   }
 
@@ -675,16 +677,21 @@ export class NumberField extends TextfieldBase {
     this._valueFormatter = undefined;
   }
   protected get valueFormatter(): NumberFormatter {
-    if (!this._valueFormatter) {
-      const digitsAfterDecimal = this.step
-        ? this.step != Math.floor(this.step)
-          ? this.step.toString().split('.')[1].length
-          : 0
-        : 0;
+    // Values on the step grid (`min + n * step`) need the precision of both
+    // `step` and `min`, or a fractional `min` gets rounded past itself.
+    const digitsAfterDecimal = Math.max(
+      digitsAfterDecimalOf(this.step),
+      digitsAfterDecimalOf(this.min)
+    );
+    if (
+      !this._valueFormatter ||
+      this._valueFormatterDigits !== digitsAfterDecimal
+    ) {
       this._valueFormatter = new NumberFormatter('en', {
         useGrouping: false,
         maximumFractionDigits: digitsAfterDecimal,
       });
+      this._valueFormatterDigits = digitsAfterDecimal;
     }
 
     return this._valueFormatter;
@@ -692,6 +699,7 @@ export class NumberField extends TextfieldBase {
   private _numberFormatter?: NumberFormatter;
   private _numberFormatterFocused?: NumberFormatter;
   private _valueFormatter?: NumberFormatter;
+  private _valueFormatterDigits?: number;
   protected get numberParser(): NumberParser {
     if (!this._numberParser || !this._numberParserFocused) {
       const {
