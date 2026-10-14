@@ -22,6 +22,17 @@ The tile's own accessible name and its Close button's accessible name ("Remove [
 
 ## Options
 
+### Sizes
+
+`type="media"` tiles come in two sizes:
+
+- **Medium (`m`, default)**: 64px square, for compact attachment strips
+- **Large (`l`)**: 96px square, for a more prominent preview
+
+Has no effect on `type="card"`.
+
+<Canvas of={UploadAttachmentStories.Sizes} />
+
 ### Multi card
 
 Several card attachments in one strip, similar width to the prompt-field composer attachment region.
@@ -42,13 +53,15 @@ Card type uses a compact thumbnail with horizontal text layout.
 
 ### Media
 
-Media type uses a larger preview region without title and subtitle text.
+Media type uses a larger preview region without title and subtitle text. Slot an [Asset](../?path=/docs/asset--docs) into `thumbnail` to get image loading, fit, and background handling for free.
 
 <Canvas of={UploadAttachmentStories.Media} />
 
 ### Media with badge
 
-Use `type="media"` with an optional `badge` slot when the preview needs a file-type label (for example, a document thumbnail with a bottom-left "PDF" tag).
+Use `type="media"` with an optional `badge` slot when the preview needs a file-type label (for example, a document thumbnail with a bottom-left "PDF" tag). Slot a [Badge](../?path=/docs/badge--docs) rather than plain text; it gets default corner placement automatically.
+
+Use `badge` only at `size="l"` and above; at the default `size="m"` (64px), the chip crowds the preview.
 
 <Canvas of={UploadAttachmentStories.MediaWithBadge} />
 
@@ -57,5 +70,13 @@ Use `type="media"` with an optional `badge` slot when the preview needs a file-t
 Subtitle truncates with a trailing ellipsis when the attachment is narrower than the text. On `type="card"`, the title truncates in the middle instead: the start shortens with an ellipsis while the last few characters and file extension stay pinned, so the file type stays visible even when the name is clipped.
 
 <Canvas of={UploadAttachmentStories.TextOverflow} />
+
+## Behaviors
+
+### Upload progress
+
+Set `progress` (0-100) on a `type="media"` tile to show a progress-circle overlay on the preview while an upload is in flight. It's hidden when `progress` is unset or reaches 100.
+
+<Canvas of={UploadAttachmentStories.UploadProgress} />
 
 <DocsFooter />

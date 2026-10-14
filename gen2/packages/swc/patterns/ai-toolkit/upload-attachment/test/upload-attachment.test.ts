@@ -205,7 +205,7 @@ export const MediaBadgeTest: Story = {
           alt="Tagged preview"
           style="inline-size:100%;block-size:100%;object-fit:cover;"
         />
-        <span slot="badge">PDF</span>
+        <swc-badge slot="badge">PDF</swc-badge>
       </swc-upload-attachment>
       <swc-upload-attachment type="media" dismissible>
         <img
@@ -221,29 +221,29 @@ export const MediaBadgeTest: Story = {
     const attachments = canvasElement.querySelectorAll('swc-upload-attachment');
 
     await step(
-      'badge slot renders a bottom-left overlay when content is provided',
+      'badge slot forwards content into the card media slot when provided',
       async () => {
         const withBadge = attachments[0] as UploadAttachment;
         await withBadge.updateComplete;
 
-        const badge = withBadge.shadowRoot?.querySelector(
-          '.swc-UploadAttachment-badge'
-        );
-        expect(badge).toBeTruthy();
+        const badgeSlot = withBadge.shadowRoot?.querySelector(
+          'slot[name="badge"]'
+        ) as HTMLSlotElement | null;
+        expect(badgeSlot?.assignedElements().length).toBeGreaterThan(0);
         expect(
           withBadge.querySelector('[slot="badge"]')?.textContent?.trim()
         ).toBe('PDF');
       }
     );
 
-    await step('badge overlay is omitted when the slot is empty', async () => {
+    await step('badge slot has no assigned content when empty', async () => {
       const withoutBadge = attachments[1] as UploadAttachment;
       await withoutBadge.updateComplete;
 
-      const badge = withoutBadge.shadowRoot?.querySelector(
-        '.swc-UploadAttachment-badge'
-      );
-      expect(badge).toBeNull();
+      const badgeSlot = withoutBadge.shadowRoot?.querySelector(
+        'slot[name="badge"]'
+      ) as HTMLSlotElement | null;
+      expect(badgeSlot?.assignedElements().length ?? 0).toBe(0);
     });
   },
 };

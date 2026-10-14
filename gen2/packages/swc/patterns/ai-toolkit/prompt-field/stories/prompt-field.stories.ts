@@ -18,6 +18,8 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '../../upload-attachment/swc-upload-attachment.js';
+import '@adobe/spectrum-wc/components/asset/swc-asset.js';
+import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 import '../swc-prompt-field.js';
 
 // ────────────────
@@ -302,12 +304,16 @@ export const Attachment: Story = {
           value="Use attached assets for a launch plan."
         >
           <swc-upload-attachment slot="attachment" type="card" dismissible>
-            <div slot="thumbnail" role="img" aria-label="PDF"></div>
+            <swc-asset slot="thumbnail">
+              <img src="images/landscape-asset.jpg" alt="PDF" />
+            </swc-asset>
             <span slot="title">Brand guidelines</span>
-            <span slot="subtitle">PDF</span>
+            <swc-badge slot="badge" size="s" subtle>PDF</swc-badge>
           </swc-upload-attachment>
           <swc-upload-attachment slot="attachment" type="card" dismissible>
-            <div slot="thumbnail" role="img" aria-label="Spreadsheet"></div>
+            <swc-asset slot="thumbnail">
+              <img src="images/card-preview.jpg" alt="Spreadsheet" />
+            </swc-asset>
             <span slot="title">Q2 metrics draft</span>
             <span slot="subtitle">XLSX</span>
           </swc-upload-attachment>
@@ -323,21 +329,15 @@ export const Attachment: Story = {
           value="Review these storyboard frames."
         >
           <swc-upload-attachment slot="attachment" type="media" dismissible>
-            <div
-              slot="thumbnail"
-              role="img"
-              aria-label="Campaign still"
-              style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#a78bfa,#f472b6);"
-            ></div>
+            <swc-asset slot="thumbnail">
+              <img src="images/landscape-asset.jpg" alt="Campaign still" />
+            </swc-asset>
           </swc-upload-attachment>
           <swc-upload-attachment slot="attachment" type="media" dismissible>
-            <div
-              slot="thumbnail"
-              role="img"
-              aria-label="Storyboard frame"
-              style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#f472b6,#facc15);"
-            ></div>
-            <span slot="badge">PDF</span>
+            <swc-asset slot="thumbnail">
+              <img src="images/portrait-asset.jpg" alt="Storyboard frame" />
+            </swc-asset>
+            <swc-badge slot="badge" size="s" subtle>PDF</swc-badge>
           </swc-upload-attachment>
           ${legalDisclaimerSlot}
         </swc-prompt-field>
@@ -354,7 +354,9 @@ export const Attachment: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
           <swc-upload-attachment slot="attachment" type="card" dismissible>
-            <div slot="thumbnail" role="img" aria-label="PDF"></div>
+            <swc-asset slot="thumbnail">
+              <img src="images/landscape-asset.jpg" alt="PDF" />
+            </swc-asset>
             <span slot="title">Hilton commercial assets</span>
             <span slot="subtitle">2026</span>
           </swc-upload-attachment>
@@ -365,12 +367,9 @@ export const Attachment: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
           <swc-upload-attachment slot="attachment" type="media" dismissible>
-            <div
-              slot="thumbnail"
-              role="img"
-              aria-label="Attachment preview"
-              style="inline-size:100%;block-size:100%;background:linear-gradient(135deg,#a78bfa,#f472b6);"
-            ></div>
+            <swc-asset slot="thumbnail">
+              <img src="images/landscape-asset.jpg" alt="Attachment preview" />
+            </swc-asset>
           </swc-upload-attachment>
           ${legalDisclaimerSlot}
         </swc-prompt-field>
@@ -381,20 +380,39 @@ export const Attachment: Story = {
   tags: ['options'],
 };
 
-const multiAttachmentScrollGradients = [
-  'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-  'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-  'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-  'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-  'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-  'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
-  'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-  'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)',
-  'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
-  'linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%)',
-  'linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)',
-  'linear-gradient(135deg, #f77062 0%, #fe5196 100%)',
+// Distinct color pairs stand in for real thumbnails; rendered as inline SVG
+// gradients (valid `swc-asset` content) so each scroll tile stays visually
+// distinguishable without a network image request.
+const multiAttachmentScrollColors = [
+  ['#667eea', '#764ba2'],
+  ['#f093fb', '#f5576c'],
+  ['#4facfe', '#00f2fe'],
+  ['#43e97b', '#38f9d7'],
+  ['#fa709a', '#fee140'],
+  ['#30cfd0', '#330867'],
+  ['#a8edea', '#fed6e3'],
+  ['#ff9a9e', '#fecfef'],
+  ['#ffecd2', '#fcb69f'],
+  ['#ff6e7f', '#bfe9ff'],
+  ['#e0c3fc', '#8ec5fc'],
+  ['#f77062', '#fe5196'],
 ] as const;
+
+const gradientSwatch = (
+  id: number,
+  [start, end]: readonly [string, string],
+  label: string
+) => html`
+  <svg role="img" aria-label=${label} viewBox="0 0 100 100">
+    <defs>
+      <linearGradient id="scroll-gradient-${id}" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color=${start}></stop>
+        <stop offset="100%" stop-color=${end}></stop>
+      </linearGradient>
+    </defs>
+    <rect width="100" height="100" fill="url(#scroll-gradient-${id})"></rect>
+  </svg>
+`;
 
 const multiAttachmentScrollBadges: Record<number, string> = {
   9: 'MP4',
@@ -412,20 +430,21 @@ export const MultiAttachmentScroll: Story = {
         overflowing strip uses the platform's native scrollbar.
       </p>
       <swc-prompt-field label="Prompt" value="Review these storyboard frames.">
-        ${multiAttachmentScrollGradients.map(
-          (gradient, index) => html`
+        ${multiAttachmentScrollColors.map(
+          (colors, index) => html`
             <swc-upload-attachment slot="attachment" type="media" dismissible>
-              <div
-                slot="thumbnail"
-                role="img"
-                aria-label="Storyboard frame ${index + 1}"
-                style="inline-size:100%;block-size:100%;background:${gradient};"
-              ></div>
+              <swc-asset slot="thumbnail">
+                ${gradientSwatch(
+                  index,
+                  colors,
+                  `Storyboard frame ${index + 1}`
+                )}
+              </swc-asset>
               ${multiAttachmentScrollBadges[index]
                 ? html`
-                    <span slot="badge">
+                    <swc-badge slot="badge" size="s" subtle>
                       ${multiAttachmentScrollBadges[index]}
-                    </span>
+                    </swc-badge>
                   `
                 : nothing}
             </swc-upload-attachment>
@@ -631,24 +650,29 @@ class PromptFieldBehaviorDemo extends LitElement {
           >
             ${attachment.thumbnailUrl
               ? html`
-                  <img
-                    slot="thumbnail"
-                    src=${attachment.thumbnailUrl}
-                    alt=${attachment.fileName}
-                    style="inline-size:100%;block-size:100%;object-fit:cover;"
-                  />
+                  <swc-asset slot="thumbnail">
+                    <img
+                      src=${attachment.thumbnailUrl}
+                      alt=${attachment.fileName}
+                    />
+                  </swc-asset>
                 `
               : html`
-                  <div
-                    slot="thumbnail"
-                    role="img"
-                    aria-label=${attachment.fileName}
-                    style="inline-size:100%;block-size:100%;background:#f3f3f3;"
-                  ></div>
+                  <swc-asset slot="thumbnail">
+                    <svg
+                      role="img"
+                      aria-label=${attachment.fileName}
+                      viewBox="0 0 100 100"
+                    >
+                      <rect width="100" height="100" fill="#f3f3f3"></rect>
+                    </svg>
+                  </swc-asset>
                 `}
             ${attachment.badgeLabel
               ? html`
-                  <span slot="badge">${attachment.badgeLabel}</span>
+                  <swc-badge slot="badge" size="s" subtle>
+                    ${attachment.badgeLabel}
+                  </swc-badge>
                 `
               : nothing}
           </swc-upload-attachment>
