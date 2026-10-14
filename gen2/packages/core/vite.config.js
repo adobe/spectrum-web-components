@@ -107,7 +107,7 @@ export default defineConfig({
     dts({
       include: ['**/*.ts'],
       exclude: ['**/*.test.ts', '**/*.stories.ts'],
-      outDir: 'dist',
+      outDirs: 'dist',
       insertTypesEntry: true,
     }),
   ],

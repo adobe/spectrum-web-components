@@ -1,0 +1,28 @@
+diff --git a/dist/index.js b/dist/index.js
+index 468a76af1d8bf1c70aeb2bcf6d6b19c9d4ad78f7..793637ca5b4fb43141f28ed3e069ad4253f34409 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -327,7 +327,7 @@ function getAttributesAndProperties(component, enabled = true) {
+           member.name,
+           member.deprecated
+         ),
+-        defaultValue,
++        defaultValue: void 0,
+         control: enabled && !member.readonly && control ? control : false,
+         options: options2,
+         table: {
+@@ -405,14 +405,6 @@ function getReactEvents(component) {
+ function getCssProperties(component, enabled = true) {
+   const resets = {};
+   const args = {};
+-  component?.cssProperties?.forEach((part) => {
+-    resets[part.name] = {
+-      name: part.name,
+-      table: {
+-        disable: true
+-      }
+-    };
+-  });
+   component?.cssProperties?.forEach((property) => {
+     args[property.name] = {
+       name: property.name,

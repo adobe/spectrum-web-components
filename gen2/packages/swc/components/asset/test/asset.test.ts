@@ -666,6 +666,8 @@ export const NoConfigurationDoesNotCollapseTest: Story = {
   `,
   play: async ({ canvasElement, step }) => {
     const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+    // The asset sizes to the image's intrinsic size, so wait for it to load.
+    await canvasElement.querySelector('img')?.decode();
 
     await step(
       'renders at a non-zero size standalone with no aspectRatio/width/height and no ancestor default',
@@ -688,6 +690,8 @@ export const NoConfigurationDoesNotCollapseInSizedContainerTest: Story = {
   `,
   play: async ({ canvasElement, step }) => {
     const asset = await getComponent<Asset>(canvasElement, 'swc-asset');
+    // The asset sizes to the image's intrinsic size, so wait for it to load.
+    await canvasElement.querySelector('img')?.decode();
 
     await step(
       'renders at a non-zero size inside a sized flex container, standing in for an embedding parent (e.g. Card)',

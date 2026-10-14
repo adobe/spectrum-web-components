@@ -53,7 +53,7 @@ export default defineConfig({
         '**/*.vrt.ts',
       ],
       entryRoot: 'src',
-      outDir: 'dist',
+      outDirs: 'dist',
       beforeWriteFile: (filePath, content) => {
         return {
           filePath,

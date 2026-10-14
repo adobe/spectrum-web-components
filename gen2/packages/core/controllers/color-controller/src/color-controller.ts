@@ -174,6 +174,14 @@ function debugWarn(
 }
 
 /**
+ * colorjs.io represents `none` coordinates (for example, the hue of an
+ * achromatic color) as `null`. Resolve them to `0`, as CSS does.
+ */
+function noneToZero(coords: readonly (number | null)[]): number[] {
+  return coords.map((coord) => coord ?? 0);
+}
+
+/**
  * Derives a colorjs.io space id from a loose color object based on which channel
  * keys are present. Shared by the `color` setter and the `colorValue` getter so
  * the detection logic lives in one place.
@@ -435,8 +443,8 @@ export class ColorController {
     const { r, g, b } = (this._color.to('srgb') as Color).srgb;
     const a = this._color.alpha;
 
-    const toHex = (channel: number): string =>
-      Math.round(channel * 255)
+    const toHex = (channel: number | null): string =>
+      Math.round((channel ?? 0) * 255)
         .toString(16)
         .padStart(2, '0');
 
@@ -575,7 +583,7 @@ export class ColorController {
       switch (spaceId) {
         case 'hsv': {
           const hadAlpha = this._colorOrigin[3] === 'a';
-          const { h, s, v } = (this._color.to('hsv') as Color).hsv;
+          const [h, s, v] = noneToZero((this._color.to('hsv') as Color).coords);
           const a = this._color.alpha;
           return `hsv${hadAlpha ? `a` : ''}(${Math.round(
             h
@@ -583,7 +591,7 @@ export class ColorController {
         }
         case 'hsl': {
           const hadAlpha = this._colorOrigin[3] === 'a';
-          const { h, s, l } = (this._color.to('hsl') as Color).hsl;
+          const [h, s, l] = noneToZero((this._color.to('hsl') as Color).coords);
           const a = this._color.alpha;
           return `hsl${hadAlpha ? `a` : ''}(${Math.round(
             h
@@ -605,7 +613,9 @@ export class ColorController {
         }
         //rgb
         default: {
-          const { r, g, b } = (this._color.to('srgb') as Color).srgb;
+          const [r, g, b] = noneToZero(
+            (this._color.to('srgb') as Color).coords
+          );
           const hadAlpha = this._colorOrigin[3] === 'a';
           const a = this._color.alpha;
           if (this._colorOrigin.search('%') > -1) {
@@ -638,7 +648,7 @@ export class ColorController {
     }
     switch (spaceId) {
       case 'hsv': {
-        const { h, s, v } = (this._color.to('hsv') as Color).hsv;
+        const [h, s, v] = noneToZero((this._color.to('hsv') as Color).coords);
         return {
           h,
           s: s / 100,
@@ -647,7 +657,7 @@ export class ColorController {
         };
       }
       case 'hsl': {
-        const { h, s, l } = (this._color.to('hsl') as Color).hsl;
+        const [h, s, l] = noneToZero((this._color.to('hsl') as Color).coords);
         return {
           h,
           s: s / 100,
@@ -656,7 +666,7 @@ export class ColorController {
         };
       }
       case 'srgb': {
-        const { r, g, b } = (this._color.to('srgb') as Color).srgb;
+        const [r, g, b] = noneToZero((this._color.to('srgb') as Color).coords);
         if (
           this._colorOrigin &&
           typeof (this._colorOrigin as { r: string }).r === 'string' &&

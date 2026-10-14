@@ -101,7 +101,7 @@ export default defineConfig({
         '**/*.stories.ts',
         '**/*.vrt.ts',
       ],
-      outDir: 'dist',
+      outDirs: 'dist',
       beforeWriteFile: (filePath, content) => {
         return {
           filePath,

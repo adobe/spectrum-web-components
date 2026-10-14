@@ -38,6 +38,12 @@ function createController(): ColorController {
 
 const noRender = (): typeof nothing => nothing;
 
+// colorjs.io 0.6+ remembers the parsed string format in `toString()`. The
+// controller builds colors from parsed coordinates, so compare against a
+// format-neutral serialization.
+const serialize = (color: string): string =>
+  new Color(color).to('srgb').toString();
+
 export const Initialization: Story = {
   render: noRender,
   play: async () => {
@@ -99,7 +105,7 @@ export const SetsColor: Story = {
     // String input.
     colorController.color = 'rgba(255, 0, 0, 1)';
     expect(colorController.color.toString()).toBe(
-      new Color('rgba(255, 0, 0, 1)').toString()
+      serialize('rgba(255, 0, 0, 1)')
     );
 
     // Object input is accepted without throwing.
@@ -108,13 +114,9 @@ export const SetsColor: Story = {
 
     // Hex with and without alpha.
     colorController.color = '#ff573380';
-    expect(colorController.color.toString()).toBe(
-      new Color('#ff573380').toString()
-    );
+    expect(colorController.color.toString()).toBe(serialize('#ff573380'));
     colorController.color = '#ff5733';
-    expect(colorController.color.toString()).toBe(
-      new Color('#ff5733').toString()
-    );
+    expect(colorController.color.toString()).toBe(serialize('#ff5733'));
   },
 };
 
@@ -137,7 +139,7 @@ export const HueConversionAndPreviousColor: Story = {
     colorController.color = 'rgba(0, 255, 0, 1)';
     colorController.restorePreviousColor();
     expect(colorController.color.toString()).toBe(
-      new Color('rgba(255, 0, 0, 1)').toString()
+      serialize('rgba(255, 0, 0, 1)')
     );
   },
 };

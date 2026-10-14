@@ -7,7 +7,8 @@
     "paths": {
       "@adobe/spectrum-wc-core/*": ["./*"]
     },
-    "rootDir": "./"
+    "rootDir": "./",
+    "types": ["node"]
   },
   "exclude": [
     "node_modules",
