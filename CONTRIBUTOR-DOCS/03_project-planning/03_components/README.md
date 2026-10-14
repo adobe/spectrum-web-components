@@ -53,6 +53,8 @@
     - [Button Group migration roadmap](button-group/rendering-and-styling-migration-analysis.md)
 - Card
     - [Card family plan](card/migration-plan.md)
+- Card View
+    - [CardView implementation approach](card-view/implementation-approach.md)
 - Checkbox
     - [Checkbox accessibility migration analysis](checkbox/accessibility-migration-analysis.md)
     - [Checkbox migration roadmap](checkbox/rendering-and-styling-migration-analysis.md)

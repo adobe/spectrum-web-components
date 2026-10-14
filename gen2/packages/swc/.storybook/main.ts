@@ -136,6 +136,12 @@ const VRT_STORIES = [
   { ...ICONS_STORIES, files: '**/*.vrt.ts' },
 ];
 
+// Local-only CardView accessibility prototype (gen2/cardView-prototype). The
+// story embeds the static prototype in an iframe, so it ships in dev mode only.
+const PROTOTYPE_STORIES = [
+  { directory: '../../../cardView-prototype', files: '*.stories.ts' },
+];
+
 // What each mode builds, spelled out per-mode rather than composed from
 // flags, so "what does build actually include?" is answered by reading one
 // array instead of tracing conditionals scattered through the file.
@@ -152,6 +158,7 @@ const STORIES_BY_MODE: Record<StorybookMode, StorybookConfig['stories']> = {
     ...GUIDES,
     ...TEST_FIXTURES,
     ...VRT_STORIES,
+    ...PROTOTYPE_STORIES,
   ],
   // Production build: same as dev, minus internal-only stories/docs, core
   // controllers, contributor docs (both can pull in 1st-gen-linked
@@ -229,7 +236,13 @@ const config: StorybookConfig = {
       disabledAddons: [],
     },
   },
-  staticDirs: ['../public', { from: '../coverage', to: '/coverage' }],
+  staticDirs: [
+    '../public',
+    { from: '../coverage', to: '/coverage' },
+    ...(storybookMode === 'dev'
+      ? [{ from: '../../../cardView-prototype', to: '/card-view-prototype' }]
+      : []),
+  ],
   addons,
   experimental_indexers: [testStoryIndexer, vrtStoryIndexer],
   // Cross-link to the 1st-gen Storybook. Omitted from the minimal ci-a11y test
