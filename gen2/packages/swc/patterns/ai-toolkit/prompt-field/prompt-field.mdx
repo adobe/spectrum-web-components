@@ -70,6 +70,19 @@ Every prompt field in production must include Legal-approved disclaimer copy bel
 
 Slotted `legal` content inherits the footer typography automatically. When it contains links, add the `swc-Typography--links` class to the wrapping element so the links inherit that typography and render in the subdued neutral color instead of the default accent blue. `swc-prompt-field` logs a development warning when the `legal` slot is empty.
 
+```html
+<swc-prompt-field>
+  <p slot="legal" class="swc-Typography--links">
+    Responses are generated using AI, and may be inaccurate. Check before using.
+    <a
+      href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+    >
+      AI User Guidelines
+    </a>
+  </p>
+</swc-prompt-field>
+```
+
 ### Attachment
 
 Attachment layout is inferred from the **`attachment`** slot content:
@@ -101,20 +114,22 @@ Attachments own dismiss behavior via **`dismissible`** and emit **`swc-upload-at
 
 ### Multi-attachment scroll
 
-When several attachments exceed the composer width, the strip scrolls horizontally at full width. Round chevron buttons flank the strip and render only when scrolling is possible in that direction. Each click advances by one viewport width and settles on a tile boundary; the browser's native scroll clamping keeps the final page from overshooting the end. Edge fades on both sides signal overflow and hide at the ends of the list.
+When the attachments don't fit, the strip scrolls horizontally. This works the same for `type="card"` and `type="media"` tiles.
 
-Trackpad, wheel, touch scrolling, and the platform's native scrollbar all work on the attachment strip. Chevron paging does not reveal the scrollbar.
+- Round chevron buttons show on each side when there is more content in that direction. `>` moves the tile that is partly hidden at the end to the start of the strip; `<` does the reverse.
+- Edge fades show that more content is off screen. The fades and chevrons come in as soon as the strip scrolls.
+- Users can also scroll with a trackpad, mouse wheel, or touch. The strip has no visible scrollbar and doesn't snap to tile edges.
 
 <Canvas of={PromptFieldStories.MultiAttachmentScroll} />
 
 ### Upload action menu
 
-`swc-prompt-field` fires `swc-prompt-field-upload-click` from the **`+`** button and leaves the resulting UI entirely to the consuming product; the component has no opinion on what opens. Design recommends the **`+`** button open a menu with, at minimum:
+`swc-prompt-field` fires `swc-prompt-field-upload-click` from the **`+`** button. The consuming product decides what opens. Design recommends a menu with at least:
 
 - **Add from Adobe cloud storage**
 - **Attach files**
 
-Product teams control the exact menu contents and may add more sources, but these two are the recommended baseline. Attachments added through either path should surface as staged attachments using the same **`swc-upload-attachment`** error/invalid state as a directly-dropped file, since the attachment strip does not distinguish attachments by origin.
+Products can add more sources. Show files from every source as `swc-upload-attachment` tiles, with the same error/invalid state as a dropped file.
 
 ## States
 
@@ -146,9 +161,9 @@ The status loader stays static by default. Set `animate-loader` to animate it wh
 
 ### Drag and drop
 
-Dragging a file anywhere over `swc-prompt-field` applies a high-intensity solid fill to the container surface and a blue focus ring around the drop target, regardless of the field's own `variant` or `generating` state: a drop target should be unmistakable even on a `subtle` field. Text and URL drags, plus fields in `disabled` mode, are rejected (the OS cursor shows "not allowed"). Dropping fires **`swc-prompt-field-drop`** with `detail: { files: File[] }`; consumers build and slot `<swc-upload-attachment>` elements from those files the same way they do for the **`+`** button's external picker flow.
+Dragging a file over `swc-prompt-field` shows a solid fill and a blue focus ring, for every `variant` and also while `generating`. Text and URL drags are rejected, and so are all drags on a `disabled` field. Dropping fires **`swc-prompt-field-drop`** with `detail: { files: File[] }`. Build and slot `<swc-upload-attachment>` elements from those files, the same as for the **`+`** button's picker flow.
 
-Once those tiles land in the `attachment` slot, `swc-prompt-field` manages focus for the drop automatically. If the textarea had focus at drop time, focus stays there. Otherwise, the new tile becomes the attachment strip's roving-tabindex entry point either way, but focus only jumps there immediately when the document is already in a keyboard-driven focus state (checked via `:focus-visible`); a plain mouse drag from the file system leaves focus untouched at drop time, and a later Tab into the strip lands on that same new tile instead of the previous entry point.
+When the new tiles land in the `attachment` slot, the first new tile becomes the strip's Tab entry point. If the textarea had focus at drop time, focus stays there. Otherwise, focus moves to the new tile only during keyboard use (`:focus-visible`); after a mouse drag, focus stays where it was.
 
 <Canvas of={PromptFieldStories.DragAndDrop} />
 
@@ -168,13 +183,13 @@ The `<swc-prompt-field>` element implements the following accessibility features
 
 #### Attachment strip keyboard navigation
 
-The attachment strip is a `role="region"` landmark (labeled `attachment-strip-label`, default "Uploaded assets strip") wrapping roving-tabindex thumbnails; the landmark itself is not a tab stop:
+The attachment strip is a `role="region"` landmark (labeled by `attachment-strip-label`, default "Uploaded assets strip") that contains roving-tabindex thumbnails. The landmark itself is not a tab stop.
 
-- **Tab**: moves through the previous chevron when present, then directly to the active thumbnail (the first one, until Arrow keys move that roving stop elsewhere), then that thumbnail's Close button, then the next chevron when present, then out of the strip
-- **Arrow Left/Right**: move the active thumbnail one tile at a time and scroll it into view (distinct from the `<`/`>` chevrons, which page by a full set)
-- **Shift+Tab** from Close: returns to the thumbnail; **Shift+Tab** from a thumbnail exits the strip entirely
-- Activating the `>` chevron (click, Enter, or Space) keeps focus on the chevron and scrolls the next set of tiles into view; **Shift+Tab** from it then moves into that newly displayed set (its active thumbnail's Close button when shown, otherwise the thumbnail). The `<` chevron is the mirror: activating it keeps focus there, and **Tab** moves into the newly displayed set
-- At either end of the strip, the `<`/`>` chevron becomes `aria-disabled` rather than being removed; if it had focus when scrolling reached that end, focus moves to the active thumbnail so it is never stranded on the now-hidden chevron
+- **Tab**: moves to the previous chevron (when shown), the active thumbnail (the first one until the arrow keys move it), that thumbnail's Close button, the next chevron (when shown), and then out of the strip
+- **Arrow Left/Right**: move to the previous or next thumbnail and scroll it into view
+- **Shift+Tab** from a Close button returns to its thumbnail; **Shift+Tab** from a thumbnail leaves the strip
+- Activating a chevron (click, Enter, or Space) scrolls the strip and keeps focus on the chevron. **Shift+Tab** from `>`, or **Tab** from `<`, moves into the tiles that are now shown
+- At the end of the strip, the chevron for that direction is hidden. If it had focus, focus moves to the thumbnail at that end: the last one for `>`, the first one for `<`
 
 ### Best practices
 
@@ -182,7 +197,8 @@ The attachment strip is a `role="region"` landmark (labeled `attachment-strip-la
 - Use `accessible-label` only when a distinct non-visual name is required
 - Use `placeholder` as a hint, not a replacement for the label
 - Ensure attachment content slotted into `attachment` slot includes descriptive text
-- Drag and drop is a progressive enhancement, not the only way to attach a file: native browser drag-and-drop has no keyboard equivalent, so the **`+`** button must stay available and fully functional for keyboard and screen reader users
+- Give every `swc-upload-attachment` a `title` slot (for example, the file name) or an `accessible-label`. This includes `type="media"` tiles, which don't show the title. Screen readers use it as the tile's name
+- Keep the **`+`** button available: drag and drop has no keyboard equivalent, so keyboard and screen reader users attach files with the button
 
 <Canvas of={PromptFieldStories.Accessibility} />
 
