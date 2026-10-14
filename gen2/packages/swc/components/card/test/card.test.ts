@@ -17,6 +17,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import type { Card } from '@adobe/spectrum-wc/card';
 import {
   CARD_DENSITIES,
+  CARD_VALID_SIZES,
   CARD_VARIANTS,
   SWC_CARD_CLICK_EVENT,
 } from '@adobe/spectrum-wc-core/components/card/index.js';
@@ -51,6 +52,92 @@ export default {
 const previewImage = (slot = 'preview'): ReturnType<typeof html> => html`
   <img slot=${slot} src="./images/card-preview.jpg" alt="" />
 `;
+
+export const LongTextWrappingTest: Story = {
+  render: () => html`
+    <div style="inline-size: 320px;">
+      <swc-card title-as-link>
+        <a slot="title" href="https://example.com/profile">
+          bartholomew.fitzgerald@northwind-industries-holdings.example.com
+        </a>
+        <swc-action-button slot="actions" quiet accessible-label="More actions">
+          More
+        </swc-action-button>
+        <span slot="description">
+          bartholomew.fitzgerald@northwind-industries-holdings.example.com
+        </span>
+        <p>
+          https://example.com/workspaces/acme/projects/q3-launch/docs/9f8e7d6c5b4a?tab=comments&filter=unresolved
+        </p>
+        <span slot="footer">Benachrichtigungseinstellungen</span>
+      </swc-card>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const card = await getComponent<Card>(canvasElement, 'swc-card');
+    const action = card.querySelector<HTMLElement>('[slot="actions"]')!;
+
+    for (const size of CARD_VALID_SIZES) {
+      for (const direction of ['ltr', 'rtl']) {
+        await step(
+          `${size} text stays inside the card in ${direction}`,
+          async () => {
+            if (size === 'xs') {
+              action.remove();
+            } else {
+              card.append(action);
+            }
+            card.size = size;
+            card.dir = direction;
+            await card.updateComplete;
+            await document.fonts.ready;
+
+            const host = card.getBoundingClientRect();
+            const fields = card.querySelectorAll<HTMLElement>(
+              '[slot="title"], [slot="description"], [slot="footer"], p'
+            );
+            for (const field of fields) {
+              const range = document.createRange();
+              range.selectNodeContents(field);
+              for (const rect of range.getClientRects()) {
+                expect(
+                  rect.left,
+                  `${field.slot || 'body'} left edge`
+                ).toBeGreaterThanOrEqual(host.left - 1);
+                expect(
+                  rect.right,
+                  `${field.slot || 'body'} right edge`
+                ).toBeLessThanOrEqual(host.right + 1);
+              }
+              if (field.clientWidth > 0) {
+                expect(
+                  field.scrollWidth,
+                  `${field.slot || 'body'} does not overflow its text box`
+                ).toBeLessThanOrEqual(field.clientWidth + 1);
+              }
+            }
+            if (size !== 'xs') {
+              const title = card.querySelector<HTMLElement>('[slot="title"]')!;
+              const titleRect = title.getBoundingClientRect();
+              const actionRect = action.getBoundingClientRect();
+              expect(
+                actionRect.left,
+                'action stays inside the card'
+              ).toBeGreaterThanOrEqual(host.left - 1);
+              expect(actionRect.right).toBeLessThanOrEqual(host.right + 1);
+              expect(
+                direction === 'ltr'
+                  ? titleRect.right <= actionRect.left
+                  : titleRect.left >= actionRect.right,
+                'title and action do not overlap'
+              ).toBe(true);
+            }
+          }
+        );
+      }
+    }
+  },
+};
 
 // ──────────────────────────────────────────────────────────────
 // TEST: Defaults
