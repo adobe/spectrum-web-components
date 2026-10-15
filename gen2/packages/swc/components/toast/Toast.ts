@@ -101,7 +101,7 @@ export class Toast extends ToastBase {
       case 'info':
         return html`
           <swc-icon-info-circle
-            class="swc-Toast-typeIcon"
+            class="swc-Toast-icon"
             size="m"
             accessible-label=${ifDefined(accessibleLabel)}
           ></swc-icon-info-circle>
@@ -109,7 +109,7 @@ export class Toast extends ToastBase {
       case 'positive':
         return html`
           <swc-icon-checkmark-circle
-            class="swc-Toast-typeIcon"
+            class="swc-Toast-icon"
             size="m"
             accessible-label=${ifDefined(accessibleLabel)}
           ></swc-icon-checkmark-circle>
@@ -117,7 +117,7 @@ export class Toast extends ToastBase {
       case 'negative':
         return html`
           <swc-icon-alert-triangle
-            class="swc-Toast-typeIcon"
+            class="swc-Toast-icon"
             size="m"
             accessible-label=${ifDefined(accessibleLabel)}
           ></swc-icon-alert-triangle>

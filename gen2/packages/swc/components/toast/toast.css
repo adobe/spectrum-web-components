@@ -44,7 +44,7 @@
   font-weight: token("regular-font-weight");
   line-height: token("line-height-font-size-100");
   color: token("white");
-  background-color: var(--swc-toast-background-color, token("neutral-subdued-background-color-default"));
+  background-color: token("neutral-subdued-background-color-default");
   border-radius: token("corner-radius-700");
   opacity: 1;
   transition:
@@ -81,11 +81,11 @@
   text-align: start;
 }
 
-.swc-Toast-typeIcon {
+.swc-Toast-icon {
   flex-shrink: 0;
 
-  /* TODO: re-check against Figma; this is 0 on desktop and ~1px on mobile, so remove it if unneeded. */
-  margin-block: calc((token("line-height-font-size-100") - token("workflow-icon-medium")) / 2);
+  /* Centers the icon against the first line of text. */
+  margin-block: calc((1lh - token("workflow-icon-medium")) / 2);
 }
 
 .swc-Toast-text {
@@ -98,20 +98,19 @@
 }
 
 .swc-Toast-close {
-  /* TODO: copied from spectrum-css and untested; remove if the close button never shrinks without it. */
-  flex-shrink: 0;
+  align-self: flex-start;
 }
 
-:host([variant="info"]) {
-  --swc-toast-background-color: token("informative-background-color-default");
+:host([variant="info"]) .swc-Toast {
+  background-color: token("informative-background-color-default");
 }
 
-:host([variant="positive"]) {
-  --swc-toast-background-color: token("positive-background-color-default");
+:host([variant="positive"]) .swc-Toast {
+  background-color: token("positive-background-color-default");
 }
 
-:host([variant="negative"]) {
-  --swc-toast-background-color: token("negative-background-color-default");
+:host([variant="negative"]) .swc-Toast {
+  background-color: token("negative-background-color-default");
 }
 
 /* Closed state is the exit target; `@starting-style` below is the enter origin. */
@@ -120,8 +119,7 @@
   transform: translateY(var(--_swc-toast-animation-distance));
 }
 
-/* Two frames of delay keep the empty live region transparent until its message renders.
-   TODO: confirm in a real browser that the region stays transparent for those two frames, and replace the hardcoded 34ms guess if a token fits. */
+/* Approximates the two-frame content delay to avoid showing an empty toast. */
 :host([open]) .swc-Toast {
   transition-delay: 34ms;
 }
