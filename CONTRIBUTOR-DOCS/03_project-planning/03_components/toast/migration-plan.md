@@ -432,17 +432,17 @@ Planned rendering shape:
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] Add `.swc-Toast` to the internal semantic element in `render()`; keep styling off `:host`
-- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `toast.css` as baseline
-- [ ] Update class and custom property prefixes from `.spectrum-Toast`/`--spectrum-toast-*` to `.swc-Toast`/`--swc-toast-*`; remove all `--mod-*` chains per [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
+- [x] Add `.swc-Toast` to the internal semantic element in `render()`; keep styling off `:host`
+- [x] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `toast.css` as baseline
+- [x] Update class and custom property prefixes from `.spectrum-Toast`/`--spectrum-toast-*` to `.swc-Toast`/`--swc-toast-*`; remove all `--mod-*` chains per [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 
 #### Visual model and regressions
 
-- [ ] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source
-- [ ] Add `@cssprop` JSDoc tag for every exposed `--swc-*` property
-- [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
-- [ ] Set `overflow-wrap: break-word` and `word-break: break-word` on the message content wrapper (SWC-475: long unbroken words overflow the toast bounds in 1st-gen; RSP S2 already does this)
-- [ ] The open transition starts transparent for at least the two frames before the message renders (Q11), so the empty live region is never painted. Do not reserve height: it comes from the slot.
+- [x] Verify i18n size modifiers (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) if present in S2 source
+- [ ] Add `@cssprop` JSDoc tag for every exposed `--swc-*` property; revisit after the container is built
+- [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
+- [x] Set `overflow-wrap: anywhere` on the message content wrapper so long unbroken words wrap within the toast bounds
+- [x] The open transition starts transparent for at least the two frames before the message renders (Q11), so the empty live region is never painted. Do not reserve height: it comes from the slot. Manually verified by the implementer.
 
 #### Container and queue visuals
 
@@ -450,7 +450,7 @@ Planned rendering shape:
 - [ ] Author peek-stack depth CSS: positional offset and opacity falloff behind the front toast (`opacity: 0` beyond the third position), matching RSP S2
 - [ ] Author the Show all row layout on the front toast (`gridTemplateAreas` alongside the toast action) and the expanded-view Clear all and Collapse action buttons
 - [ ] Author the expanded-view full-screen layout: scrim, list layout, and the collapsed/expanded transition
-- [ ] Toast's own open/close transition CSS carries over from 1st-gen (opacity/transform), updated to S2 tokens; gates `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` via the shared `runAfterTransition`
+- [x] Toast's own open/close transition CSS carries over from 1st-gen (opacity/transform), updated to S2 tokens; gates `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close` via the shared `runAfterTransition`
 - [ ] Cross-position repositioning animation (peek/front/expanded) depends on Q8; do not implement until that's resolved. Either way, peek layers stay contentless per Q14, and `prefers-reduced-motion` must fall back to a cross-fade instead of animating position, matching RSP S2 and this codebase's `progress-circle` precedent
 
 ### Accessibility
@@ -506,9 +506,9 @@ Checklist items for this migration; resolve Q9 before treating this section as f
 
 #### General
 
-- [ ] JSDoc on all public props, slots, and CSS custom properties
-- [ ] Storybook stories for each variant, with/without action, with/without icon-label override
-- [ ] Storybook story demonstrating text wrapping with a long message
+- [x] JSDoc on all current public props and slots; no public CSS custom properties are exposed
+- [x] Storybook stories for each variant, with/without action; icon-label overrides are available through Playground controls
+- [x] Storybook story demonstrating text wrapping with a long message
 - [ ] Storybook story demonstrating the container: multiple queued toasts, the peek stack, expand/collapse, and clear-all
 
 #### Breaking changes
