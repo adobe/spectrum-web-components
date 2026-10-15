@@ -27,10 +27,6 @@ const { args, argTypes, template } = getStorybookHelpers('swc-toast');
 
 args['default-slot'] = 'File saved';
 
-argTypes['eventName-event'] = { table: { disable: true } };
-argTypes['SWC_TOAST_CLOSE_EVENT-event'] = { table: { disable: true } };
-argTypes['SWC_TOAST_OPEN_EVENT-event'] = { table: { disable: true } };
-
 argTypes.variant = {
   ...argTypes.variant,
   control: { type: 'select' },
@@ -87,6 +83,10 @@ export const Playground: Story = {
   },
   parameters: {
     flexLayout: 'column-center',
+    layout: 'padded',
+    styles: {
+      alignItems: 'start',
+    },
   },
   tags: ['dev'],
 };
