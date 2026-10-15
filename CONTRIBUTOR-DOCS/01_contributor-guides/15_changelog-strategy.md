@@ -51,9 +51,9 @@ Run `yarn changeset:gen2` to start the interactive CLI, scoped to gen2's own cha
 | Package | When to select |
 |---|---|
 | `@adobe/spectrum-wc` | Any component change (new component, feature, bug fix) |
-| `@adobe/spectrum-wc-core` | Changes to shared core logic (mixins, controllers, base classes) |
+| `@adobe/spectrum-wc-core` | Changes to shared core logic (mixins, controllers, base classes). Always list `@adobe/spectrum-wc` in the same changeset too; see [Rules](#rules) |
 
-1st-gen (`@spectrum-web-components/*`) has its own separate changesets setup in `1st-gen/.changeset/` (`yarn changeset:1st-gen`) and follows a separate process. If your PR changes both core and a component, run `yarn changeset:gen2` twice and create one changeset for each package.
+1st-gen (`@spectrum-web-components/*`) has its own separate changesets setup in `1st-gen/.changeset/` (`yarn changeset:1st-gen`) and follows a separate process. If your PR changes core, select both packages in the same changeset.
 
 After selecting the package, choose a bump type, then write the body using the format above.
 
@@ -120,13 +120,15 @@ Bump types follow [semantic versioning](https://semver.org/) — the version num
 ### Rules
 
 - **One changeset per PR** is the default. Most PRs touch a single component and need a single changeset. Create multiple changesets only when the PR contains changes with different bump types (e.g., a minor addition and a patch fix).
-- **Select the right package** in the changeset frontmatter. The `linked` config in `gen2/.changeset/config.json` keeps `@adobe/spectrum-wc` and `@adobe/spectrum-wc-core` at the same version automatically — you only need to list the one you touched:
+- **Select the right package** in the changeset frontmatter. The `linked` config in `gen2/.changeset/config.json` keeps `@adobe/spectrum-wc` and `@adobe/spectrum-wc-core` at the same version automatically. List `@adobe/spectrum-wc` for every component or core change, and add `@adobe/spectrum-wc-core` when core changed:
 
   | What changed | Frontmatter |
   |---|---|
   | Component change (e.g., added `<swc-checkbox>`) | `'@adobe/spectrum-wc': minor` |
-  | Core change (e.g., new mixin in core) | `'@adobe/spectrum-wc-core': minor` |
-  | Both core and component in the same PR | Create **two changesets** — one for each package, each describing its own change |
+  | Core change (e.g., new mixin in core) | `'@adobe/spectrum-wc-core': minor` and `'@adobe/spectrum-wc': minor` in the same changeset |
+  | Both core and component in the same PR | One changeset listing both packages |
+
+- **Keep core out of the changelog.** `@adobe/spectrum-wc-core` is internal, so it has no public changelog and is never named in one. A changeset that lists only core still bumps core, but its entry appears in no changelog. List `@adobe/spectrum-wc` alongside core, and describe the effect on components without naming core or its classes.
 
 - **Write for consumers, not contributors.** Describe user-visible impact, not implementation details. Use **past simple tense** ("Added", "Fixed", "Removed" — not "Adds", "Fixing", "Will remove"). When a change requires consumer action, append a `Consumer action:` note; for changes that need no action, omit it.
 
@@ -186,6 +188,9 @@ Changesets asks the generator for one entry at a time, so the wrapper waits unti
 - Entries under each bump type are grouped by the component named at the start of the first line, and the groups are sorted alphabetically.
 - Entries without a recognizable component keep their original order after the groups.
 - The `Updated dependencies` entry stays last, as before.
+- Internal packages (`@adobe/spectrum-wc-core`) are left out of the `Updated dependencies` entry. When core is the only updated dependency, the entry is dropped.
+
+Changesets always writes a `CHANGELOG.md` for every released package, so the release workflow (`.github/workflows/publish-gen2.yml`) deletes `gen2/packages/core/CHANGELOG.md` right after `yarn changeset version`.
 
 ## Gen1's changelog rollup
 

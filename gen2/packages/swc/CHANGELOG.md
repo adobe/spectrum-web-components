@@ -44,9 +44,6 @@
   - `<swc-message-sources>` spaces the first source inside the list without leaving an empty gap when closed. `<swc-user-message>` spacing is also corrected.
   - Response-status steps have tighter icon spacing and an updated label shimmer animation.
 
-- Updated dependencies [[`47d8337`](https://github.com/adobe/spectrum-web-components/commit/47d8337520627732d7a758abd9c0d04275227444), [`c310499`](https://github.com/adobe/spectrum-web-components/commit/c3104990927a7927a5579a16380cd80eb3e96b6c)]:
-  - @adobe/spectrum-wc-core@2.0.0-beta.5
-
 ## 2.0.0-beta.4
 
 ### Minor Changes
@@ -186,9 +183,6 @@
 
 - [#6595](https://github.com/adobe/spectrum-web-components/pull/6595) [`1f85e54`](https://github.com/adobe/spectrum-web-components/commit/1f85e545d6cf3cff80888995f3184fbaea7fd154) Tooltip now uses `popover="manual"` instead of `popover="auto"`. Opening a tooltip on hover no longer light-dismisses an open `<swc-popover>` (or menu, picker, or select); a hover tooltip and an open popover coexist in both directions. Escape and close-on-leave are handled internally, so no dismissal behavior is lost. Tooltip also joins the shared dismissible stack, so when a tooltip is open on top of a popover, Escape closes only the tooltip first and leaves the popover open; a second Escape closes the popover.
 
-- Updated dependencies [[`2b26e0b`](https://github.com/adobe/spectrum-web-components/commit/2b26e0b3b6e25d4852e9984472737bd3caa2dfae), [`346746c`](https://github.com/adobe/spectrum-web-components/commit/346746cacd405fa1cd58b7fae3f164457968dec7), [`3110850`](https://github.com/adobe/spectrum-web-components/commit/31108509505dcaf485e4d2582074ea5fa8189922), [`d429a49`](https://github.com/adobe/spectrum-web-components/commit/d429a4991a51339b5325f726bd39d0d3c4ef447e), [`afe0beb`](https://github.com/adobe/spectrum-web-components/commit/afe0beb9e487d3f2838bb1ec7e98f131f53606af), [`4a30997`](https://github.com/adobe/spectrum-web-components/commit/4a309978f86b9d050cb54ed03db7418e40cb464a), [`74a0c56`](https://github.com/adobe/spectrum-web-components/commit/74a0c56e25be120309a40c540ad750b7f1081f4b), [`9b9695a`](https://github.com/adobe/spectrum-web-components/commit/9b9695a1e157ac300234d56882a4923d81dbf724), [`735a6df`](https://github.com/adobe/spectrum-web-components/commit/735a6dfbd16767af716c5b3fe9a89b09714874a4), [`86f40a1`](https://github.com/adobe/spectrum-web-components/commit/86f40a1e0bc46d74c796e712f47d3428e0e4c7e5), [`bd6c017`](https://github.com/adobe/spectrum-web-components/commit/bd6c017708de0b362c0504ad8b28a7f37a3b17da), [`1f85e54`](https://github.com/adobe/spectrum-web-components/commit/1f85e545d6cf3cff80888995f3184fbaea7fd154)]:
-  - @adobe/spectrum-wc-core@2.0.0-beta.3
-
 ## 2.0.0-beta.2
 
 ### Minor Changes
@@ -265,9 +259,6 @@
   - **Added**: `<swc-response-status-step>` as a dedicated step element with its own styles and exports.
   - **Updated**: AI stories, docs, and regression/a11y coverage for the new API and behaviors.
 
-- Updated dependencies [[`36052f3`](https://github.com/adobe/spectrum-web-components/commit/36052f305622ad8f46b44bf5d71e2b02ebd8229c), [`b0c6e37`](https://github.com/adobe/spectrum-web-components/commit/b0c6e375760ccc1ec6c1773ed1aa4015aa3b0f03), [`f27f690`](https://github.com/adobe/spectrum-web-components/commit/f27f6906f142f824dcc28f588e205271a36ec04a), [`41e0483`](https://github.com/adobe/spectrum-web-components/commit/41e0483f59d3956ce973bbe50b2d54a1d8c73e9f), [`9e7995a`](https://github.com/adobe/spectrum-web-components/commit/9e7995ad8189970d6788a7872007d611af247663), [`1e053fe`](https://github.com/adobe/spectrum-web-components/commit/1e053fe761c20b1df70c842cb3f9dcee94e02d8d), [`7f0c3e9`](https://github.com/adobe/spectrum-web-components/commit/7f0c3e937e697e3e1d5d3973ce4f709542f1bbef), [`5da5474`](https://github.com/adobe/spectrum-web-components/commit/5da54741eadcf61d60fd37d700ff457419a4d2ca), [`6049706`](https://github.com/adobe/spectrum-web-components/commit/6049706e5d08bb92cd6531cbf7661c282b3ab409)]:
-  - @adobe/spectrum-wc-core@2.0.0-beta.2
-
 ## 2.0.0-beta.1
 
 ### Minor Changes
@@ -282,11 +273,6 @@
 - [#6454](https://github.com/adobe/spectrum-web-components/pull/6454) [`591fa65`](https://github.com/adobe/spectrum-web-components/commit/591fa65574f7f8175373683e7495059b8ca27fa4) - Added an `actions` slot to `<swc-illustrated-message>` for placing a `<swc-button>` or `<swc-button-group>` below the description. The component automatically propagates its `size` to every slotted element. Also adds `SlotAttributePropagationController`, an internal Lit `ReactiveController` that propagates any host attribute to slotted children; used by `IllustratedMessage` and `ButtonGroup`.
 
 - [#6382](https://github.com/adobe/spectrum-web-components/pull/6382) [`a314298`](https://github.com/adobe/spectrum-web-components/commit/a3142985a20668ddbc8e9f0fe41c92739f8c4114) - `Link` — Added gen2 link styles for native `<a href>` elements (no `swc-link` custom element). Default prose and link-list appearance ships with Typography; explicit modifiers live in `link.css`, with optional `global-link.css` for application-wide bare-anchor baseline. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-link--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-link-migration-guide--docs). Consumer action: replace `<sp-link>` with native `<a href>` and the classes or Typography wrappers documented in the migration guide.
-
-### Patch Changes
-
-- Updated dependencies [[`57a77bc`](https://github.com/adobe/spectrum-web-components/commit/57a77bcee7eeb8f5a7b1084f3ad91543c2f92034), [`b4740eb`](https://github.com/adobe/spectrum-web-components/commit/b4740eb58f8a9410dbfae2969ca7a21c07bc63bd), [`591fa65`](https://github.com/adobe/spectrum-web-components/commit/591fa65574f7f8175373683e7495059b8ca27fa4)]:
-  - @spectrum-web-components/core@2.0.0-beta.1
 
 ## 2.0.0-beta.0
 
@@ -319,11 +305,6 @@
   - **Controllers**: `HoverController` manages hover and keyboard-focus wiring with warm-up/cooldown timing; `PlacementController` handles viewport-aware pixel positioning via Floating UI with automatic flip on viewport collision.
   - **Docs and tests**: per-component Storybook docs page, consumer migration guide, and full unit + accessibility test coverage.
 
-### Patch Changes
-
-- Updated dependencies [[`b4740eb`](https://github.com/adobe/spectrum-web-components/commit/b4740eb58f8a9410dbfae2969ca7a21c07bc63bd), [`fe85234`](https://github.com/adobe/spectrum-web-components/commit/fe8523478348419aaeb7dc3f925ef00c4b8b40aa), [`7c1d0c5`](https://github.com/adobe/spectrum-web-components/commit/7c1d0c574c918474196fa0f6007b9f905455f772), [`e334d4f`](https://github.com/adobe/spectrum-web-components/commit/e334d4f4d622325984912b9689aae05e5ac179ce), [`64a3d50`](https://github.com/adobe/spectrum-web-components/commit/64a3d50a6f4284cc32b8e13f2c8e05489012cef6)]:
-  - @spectrum-web-components/core@2.0.0-beta.0
-
 ## 0.2.0
 
 ### Minor Changes
@@ -350,11 +331,6 @@
   `Status Light` — Migrated to gen2; removed `disabled` attribute and `accent` variant, defaults to `variant="neutral"`. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-status-light--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-status-light-migration-guide--docs).
 
 - [#6183](https://github.com/adobe/spectrum-web-components/pull/6183) [`8aa488e`](https://github.com/adobe/spectrum-web-components/commit/8aa488e3867725b1ed93b2b5c31cba686f116688) - `Tabs` — Added `<swc-tabs>`, `<swc-tab>`, and `<swc-tab-panel>` with Spectrum 2 styling, selection indicator, and keyboard navigation. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-tabs-migration-guide--docs).
-
-### Patch Changes
-
-- Updated dependencies [[`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0), [`7b153b5`](https://github.com/adobe/spectrum-web-components/commit/7b153b5433a8f6d47850f8939b058f7bc431c48c), [`8aa488e`](https://github.com/adobe/spectrum-web-components/commit/8aa488e3867725b1ed93b2b5c31cba686f116688)]:
-  - @spectrum-web-components/core@0.1.0
 
 ## 0.0.4
 

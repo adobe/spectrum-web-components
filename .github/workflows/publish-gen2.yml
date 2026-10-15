@@ -270,6 +270,9 @@ jobs:
             (cd gen2 && yarn changeset pre enter beta)
           fi
           (cd gen2 && yarn changeset version)
+          # @adobe/spectrum-wc-core is internal, so it has no public changelog.
+          # Changesets always writes one per released package, so drop it here.
+          rm -f gen2/packages/core/CHANGELOG.md
           node scripts/generate-versions.js --gen=gen2
           yarn install --refresh-lockfile
 

@@ -27,10 +27,17 @@
  * batch at once, resolves the first line of each bump type with the grouped
  * block, and resolves the rest with an empty string, which changesets drops.
  *
+ * Internal packages (`@adobe/spectrum-wc-core`) are left out of the
+ * `Updated dependencies` lines of the packages that depend on them. Their own
+ * `CHANGELOG.md` is deleted by the gen2 release workflow, since changesets
+ * always writes one for every released package.
+ *
  * Configured in `gen2/.changeset/config.json`.
  */
 
 'use strict';
+
+const INTERNAL_PACKAGES = new Set(['@adobe/spectrum-wc-core']);
 
 const LINK_PREFIX =
   /^-\s+(?:\[#\d+\]\([^)]*\)\s*)?(?:\[`[0-9a-f]+`\]\([^)]*\)\s*)?(?:Thanks\s[^!]*!\s*)?(?:-\s+)?/;
@@ -178,9 +185,18 @@ function createChangelogFunctions(loadBase) {
     },
     getDependencyReleaseLine(changesets, dependenciesUpdated, options) {
       flush();
+      const publicDependencies = dependenciesUpdated.filter(
+        ({ name }) => !INTERNAL_PACKAGES.has(name)
+      );
+      if (!publicDependencies.length) {
+        return Promise.resolve('');
+      }
+      const ids = new Set(
+        publicDependencies.flatMap((dependency) => dependency.changesets ?? [])
+      );
       return loadBase().getDependencyReleaseLine(
-        changesets,
-        dependenciesUpdated,
+        changesets.filter(({ id }) => ids.has(id)),
+        publicDependencies,
         options
       );
     },

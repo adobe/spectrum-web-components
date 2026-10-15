@@ -19,9 +19,6 @@
 
 - [#6821](https://github.com/adobe/spectrum-web-components/pull/6821) [`71cd416`](https://github.com/adobe/spectrum-web-components/commit/71cd4165c055d9c282a2d128d16a684c33cd4954) Thanks [@caseyisonit](https://github.com/caseyisonit)! - **fix(icons):** The element stylesheet (`stylesheets/icon-base.css`) is now a generated, verbatim copy of the shared `<swc-icon>` stylesheet in `@adobe/spectrum-wc`, so workflow icons can no longer drift from `<swc-icon>` and `<swc-ui-icon>`. The copy adds `box-sizing: border-box` to the inner `svg`, which has no visual effect. Contributors edit `gen2/packages/swc/stylesheets/_lit-styles/icon-base.css` and run `yarn generate:icon-styles`; the package build fails if the copy is out of date.
 
-- Updated dependencies [[`47d8337`](https://github.com/adobe/spectrum-web-components/commit/47d8337520627732d7a758abd9c0d04275227444), [`c310499`](https://github.com/adobe/spectrum-web-components/commit/c3104990927a7927a5579a16380cd80eb3e96b6c)]:
-  - @adobe/spectrum-wc-core@2.0.0-beta.5
-
 ## 2.0.0-beta.4
 
 ## 2.0.0-beta.3
