@@ -199,24 +199,15 @@ const settleAndForceFocus = async ({
 
 // VRT stories
 
-// Light / LTR: variants, action, wrapping, CJK, focus, closed.
+// CJK is LTR, so it appears only in the light/LTR block.
 export const Permutations: Story = {
   render: () => html`
     ${theme(content({ cjk: true }), 'light', 'ltr')}
-  `,
-  parameters: vrtParameters,
-  play: settleAndForceFocus,
-};
-
-// Dark / RTL: same axes minus CJK, which is LTR.
-export const PermutationsRtl: Story = {
-  render: () => html`
     ${theme(content(), 'dark', 'rtl')}
   `,
   parameters: vrtParameters,
   play: settleAndForceFocus,
 };
-PermutationsRtl.storyName = 'Permutations RTL';
 
 export const ForcedColors: Story = {
   render: () => html`
