@@ -1,0 +1,547 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+import { html } from 'lit';
+import { expect } from '@storybook/test';
+import type { Meta, StoryObj as Story } from '@storybook/web-components';
+
+import { Toast } from '@adobe/spectrum-wc/toast';
+import {
+  SWC_TOAST_ACTION_EVENT,
+  type ToastVariant,
+} from '@adobe/spectrum-wc-core/components/toast';
+
+import '@adobe/spectrum-wc/components/toast/swc-toast.js';
+
+import {
+  getComponent,
+  waitForEvent,
+  withWarningSpy,
+} from '../../../utils/test-utils.js';
+import meta, { Overview } from '../stories/toast.stories.js';
+
+// These tests cover standalone Toast only; queue and container behavior gets separate tests.
+// TODO(SWC-2567): add queue tests: timeout floor, action disables timeout with its dev warning, pause and resume.
+// TODO(SWC-2655): add collapsed-stack tests: peek layers, Show all, front-toast countdown.
+// TODO(SWC-2654): add expanded-view tests: scrim, Escape, Collapse, Clear all, focus management.
+
+export default {
+  ...meta,
+  title: 'Toast/Tests',
+  parameters: {
+    ...meta.parameters,
+    docs: { disable: true, page: null },
+  },
+  tags: ['!autodocs', 'dev'],
+} as Meta;
+
+const nextFrame = (): Promise<void> =>
+  new Promise((resolve) => requestAnimationFrame(() => resolve()));
+
+const messageSlot = (toast: Toast): HTMLSlotElement | null =>
+  toast.shadowRoot?.querySelector('.swc-Toast-text slot') ?? null;
+
+// ──────────────────────────
+//    API
+// ──────────────────────────
+
+export const OverviewTest: Story = {
+  ...Overview,
+  args: {
+    ...Overview.args,
+    open: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+
+    await step('the custom element is registered', () => {
+      expect(customElements.get('swc-toast')).toBe(Toast);
+    });
+
+    await step('the element is an instance of Toast', () => {
+      expect(toast).toBeInstanceOf(Toast);
+    });
+
+    await step('it exposes reflected open and variant properties', async () => {
+      expect(toast.open).toBe(false);
+      expect(toast.hasAttribute('open')).toBe(false);
+      expect(toast.variant).toBe('neutral');
+      expect(toast.getAttribute('variant')).toBe('neutral');
+
+      toast.open = true;
+      toast.variant = 'positive';
+      await toast.updateComplete;
+
+      expect(toast.hasAttribute('open')).toBe(true);
+      expect(toast.getAttribute('variant')).toBe('positive');
+    });
+
+    await step('it does not warn for valid variants', async () => {
+      await withWarningSpy(async (warnCalls) => {
+        for (const variant of ['neutral', 'info', 'positive', 'negative']) {
+          toast.variant = variant as ToastVariant;
+          await toast.updateComplete;
+        }
+
+        expect(warnCalls).toHaveLength(0);
+      });
+    });
+
+    await step('it warns when variant is invalid', async () => {
+      await withWarningSpy(async (warnCalls) => {
+        toast.variant = 'invalid' as ToastVariant;
+        await toast.updateComplete;
+
+        expect(warnCalls).toHaveLength(1);
+        expect(warnCalls[0][1]).toContain(
+          'expects "variant" to be one of: neutral, info, positive, negative'
+        );
+      });
+    });
+  },
+};
+
+export const VariantIconTest: Story = {
+  render: () => html`
+    <swc-toast open>Update available</swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+    const icon = (): Element | null =>
+      toast.shadowRoot?.querySelector('.swc-Toast-icon') ?? null;
+
+    await step('each variant renders its icon', async () => {
+      const expectedIcons: Record<ToastVariant, string | null> = {
+        neutral: null,
+        info: 'swc-icon-info-circle',
+        positive: 'swc-icon-checkmark-circle',
+        negative: 'swc-icon-alert-triangle',
+      };
+
+      for (const [variant, tagName] of Object.entries(expectedIcons)) {
+        toast.variant = variant as ToastVariant;
+        await toast.updateComplete;
+
+        expect(icon()?.localName ?? null).toBe(tagName);
+      }
+    });
+
+    await step('the icon is decorative without icon-label', async () => {
+      toast.variant = 'info';
+      await toast.updateComplete;
+
+      expect(icon()?.hasAttribute('accessible-label')).toBe(false);
+    });
+
+    await step('icon-label is forwarded to the icon', async () => {
+      toast.iconLabel = 'Information';
+      await toast.updateComplete;
+
+      expect(icon()?.getAttribute('accessible-label')).toBe('Information');
+    });
+
+    await step('an empty icon-label makes the icon decorative', async () => {
+      toast.iconLabel = '';
+      await toast.updateComplete;
+
+      expect(icon()?.hasAttribute('accessible-label')).toBe(false);
+    });
+  },
+};
+
+export const ActionButtonTest: Story = {
+  render: () => html`
+    <swc-toast open>File archived</swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+    const action = (): HTMLElement | null =>
+      toast.shadowRoot?.querySelector('swc-button') ?? null;
+
+    await step('no action renders without action-label', () => {
+      expect(action()).toBeNull();
+      expect(toast.shadowRoot?.querySelector('slot[name="action"]')).toBeNull();
+    });
+
+    await step('the action is rendered and receives its label', async () => {
+      toast.actionLabel = 'Undo';
+      await toast.updateComplete;
+
+      expect(action()?.textContent?.trim()).toBe('Undo');
+    });
+
+    await step('the action receives the fixed Spectrum 2 treatment', () => {
+      expect(action()?.getAttribute('size')).toBe('m');
+      expect(action()?.getAttribute('variant')).toBe('secondary');
+      expect(action()?.getAttribute('fill-style')).toBe('outline');
+      expect(action()?.getAttribute('static-color')).toBe('white');
+    });
+
+    await step('the action emits an event without closing the toast', () => {
+      let actionEvent: Event | undefined;
+      canvasElement.addEventListener(
+        SWC_TOAST_ACTION_EVENT,
+        (event) => {
+          actionEvent = event;
+        },
+        { once: true }
+      );
+
+      action()?.click();
+
+      expect(actionEvent).toBeInstanceOf(Event);
+      expect(actionEvent?.target).toBe(toast);
+      expect(actionEvent?.bubbles).toBe(true);
+      expect(actionEvent?.composed).toBe(true);
+      expect(toast.open).toBe(true);
+    });
+
+    await step('clearing action-label removes the action', async () => {
+      toast.actionLabel = undefined;
+      await toast.updateComplete;
+
+      expect(action()).toBeNull();
+    });
+  },
+};
+
+// ──────────────────────────
+//    ACCESSIBILITY
+// ──────────────────────────
+
+export const AccessibilitySemanticsTest: Story = {
+  render: () => html`
+    <swc-toast>File saved</swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+
+    await step('the closed host exposes alert dialog semantics', () => {
+      expect(toast.getAttribute('role')).toBe('alertdialog');
+      expect(toast.getAttribute('aria-modal')).toBe('false');
+      expect(toast.getAttribute('tabindex')).toBe('0');
+      expect(toast.getAttribute('aria-label')).toBe('File saved');
+      expect(toast.getAttribute('aria-hidden')).toBe('true');
+    });
+
+    await step('the inner wrapper exposes an atomic alert', () => {
+      const alert = toast.shadowRoot?.querySelector('[role="alert"]');
+      expect(alert).toBeTruthy();
+      expect(alert?.getAttribute('aria-atomic')).toBe('true');
+    });
+
+    await step('the accessible name follows message changes', async () => {
+      toast.textContent = 'Upload complete';
+      await Promise.resolve();
+      await toast.updateComplete;
+
+      expect(toast.getAttribute('aria-label')).toBe('Upload complete');
+    });
+  },
+};
+
+export const LabelledMessageTest: Story = {
+  render: () => html`
+    <swc-toast open><span id="toast-message">File saved</span></swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+
+    await step('an ID-bearing message labels the host by reference', () => {
+      expect(toast.getAttribute('aria-labelledby')).toBe('toast-message');
+      expect(toast.hasAttribute('aria-label')).toBe(false);
+    });
+
+    // TODO(SWC-2567): drop the bare-text fallback steps if the container becomes the only creator of toasts.
+    await step('bare text falls back to aria-label', async () => {
+      toast.textContent = 'Upload complete';
+      await Promise.resolve();
+      await toast.updateComplete;
+
+      expect(toast.getAttribute('aria-label')).toBe('Upload complete');
+      expect(toast.hasAttribute('aria-labelledby')).toBe(false);
+    });
+
+    await step(
+      'more than one message element falls back to aria-label',
+      async () => {
+        toast.innerHTML =
+          '<span id="first-part">File</span> <span>saved</span>';
+        await Promise.resolve();
+        await toast.updateComplete;
+
+        expect(toast.getAttribute('aria-label')).toBe('File saved');
+        expect(toast.hasAttribute('aria-labelledby')).toBe(false);
+      }
+    );
+  },
+};
+
+export const EmptySlotMessageTest: Story = {
+  render: () => html`
+    <swc-toast>
+      <span slot="">File saved</span>
+    </swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+
+    await step(
+      'a slot="" text element labels the host like default-slot content',
+      () => {
+        expect(toast.getAttribute('aria-label')).toBe('File saved');
+        expect(toast.hasAttribute('aria-labelledby')).toBe(false);
+      }
+    );
+  },
+};
+
+export const EmptySlotLabelledMessageTest: Story = {
+  render: () => html`
+    <swc-toast>
+      <span slot="" id="toast-message">File saved</span>
+    </swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+
+    await step(
+      'a slot="" ID-bearing element labels the host by reference',
+      () => {
+        expect(toast.getAttribute('aria-labelledby')).toBe('toast-message');
+        expect(toast.hasAttribute('aria-label')).toBe(false);
+      }
+    );
+  },
+};
+
+// ──────────────────────────
+//    LIFECYCLE
+// ──────────────────────────
+
+export const OpenLifecycleTest: Story = {
+  render: () => html`
+    <swc-toast>File saved</swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+    const events: string[] = [];
+    const openAttributesDuringEvent: boolean[] = [];
+    toast.addEventListener('swc-open', () => {
+      openAttributesDuringEvent.push(toast.hasAttribute('open'));
+      events.push('swc-open');
+    });
+    toast.addEventListener('swc-after-open', () =>
+      events.push('swc-after-open')
+    );
+    const afterOpen = waitForEvent(toast, 'swc-after-open');
+    const activeElement = document.activeElement;
+
+    await step('opening exposes the host without moving focus', async () => {
+      toast.open = true;
+      await toast.updateComplete;
+
+      expect(toast.hasAttribute('aria-hidden')).toBe(false);
+      expect(document.activeElement).toBe(activeElement);
+      expect(openAttributesDuringEvent).toEqual([false]);
+      expect(events).toEqual(['swc-open']);
+    });
+
+    // TODO(SWC-2567): confirm the container connects toasts closed and opens them after the first update (Q11).
+    await step(
+      'the live region stays empty for two frames, then receives the message (Q10, Q11)',
+      async () => {
+        expect(messageSlot(toast)).toBeNull();
+
+        await nextFrame();
+        expect(messageSlot(toast)).toBeNull();
+
+        await nextFrame();
+        await toast.updateComplete;
+        expect(messageSlot(toast)).not.toBeNull();
+      }
+    );
+
+    await step('swc-after-open follows swc-open', async () => {
+      await afterOpen;
+      expect(events).toEqual(['swc-open', 'swc-after-open']);
+    });
+
+    await step('reopening repeats the two-frame delay', async () => {
+      const afterClose = waitForEvent(toast, 'swc-after-close');
+      toast.close();
+      await afterClose;
+
+      toast.open = true;
+      await toast.updateComplete;
+      expect(messageSlot(toast)).toBeNull();
+
+      await nextFrame();
+      await nextFrame();
+      await toast.updateComplete;
+      expect(messageSlot(toast)).not.toBeNull();
+    });
+  },
+};
+
+export const InitiallyOpenTest: Story = {
+  render: () => html`
+    <swc-toast open>File saved</swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+
+    await step('a toast rendered open shows its message at once', () => {
+      expect(toast.hasAttribute('aria-hidden')).toBe(false);
+      expect(messageSlot(toast)).not.toBeNull();
+    });
+
+    await step('the open host is focusable', () => {
+      toast.focus();
+      expect(document.activeElement).toBe(toast);
+      toast.blur();
+    });
+  },
+};
+
+export const SameTurnOpenTest: Story = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'a toast opened in the turn it is created skips the delay (Q11)',
+      async () => {
+        const toast = document.createElement('swc-toast') as Toast;
+        toast.textContent = 'File saved';
+        canvasElement.append(toast);
+        toast.open = true;
+        await toast.updateComplete;
+
+        expect(messageSlot(toast)).not.toBeNull();
+      }
+    );
+  },
+};
+
+export const CloseInteractionTest: Story = {
+  render: () => html`
+    <swc-toast open>File saved</swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+    const closeButton = toast.shadowRoot?.querySelector(
+      'swc-close-button'
+    ) as HTMLElement;
+
+    await step('the close button has an accessible name and treatment', () => {
+      expect(closeButton).toBeTruthy();
+      expect(closeButton.getAttribute('accessible-label')).toBe('Close');
+      expect(closeButton.getAttribute('static-color')).toBe('white');
+    });
+
+    await step('swc-close can cancel dismissal', async () => {
+      const preventClose = (event: Event): void => event.preventDefault();
+      toast.addEventListener('swc-close', preventClose);
+      closeButton.click();
+      await toast.updateComplete;
+
+      expect(toast.open).toBe(true);
+      toast.removeEventListener('swc-close', preventClose);
+    });
+
+    await step('close() can be canceled the same way', async () => {
+      const preventClose = (event: Event): void => event.preventDefault();
+      toast.addEventListener('swc-close', preventClose);
+      toast.close();
+      await toast.updateComplete;
+
+      expect(toast.open).toBe(true);
+      toast.removeEventListener('swc-close', preventClose);
+    });
+
+    await step(
+      'assigning open = false fires a cancelable swc-close before state changes',
+      async () => {
+        const openAttributesDuringEvent: boolean[] = [];
+        const preventClose = (event: Event): void => {
+          openAttributesDuringEvent.push(toast.hasAttribute('open'));
+          event.preventDefault();
+        };
+        toast.addEventListener('swc-close', preventClose);
+
+        toast.open = false;
+        await toast.updateComplete;
+
+        expect(openAttributesDuringEvent).toEqual([true]);
+        expect(toast.open).toBe(true);
+        expect(toast.hasAttribute('open')).toBe(true);
+        toast.removeEventListener('swc-close', preventClose);
+      }
+    );
+
+    await step('accepted dismissal emits lifecycle events', async () => {
+      const events: string[] = [];
+      toast.addEventListener('swc-close', () => events.push('swc-close'));
+      toast.addEventListener('swc-after-close', () =>
+        events.push('swc-after-close')
+      );
+      const afterClose = waitForEvent(toast, 'swc-after-close');
+
+      closeButton.click();
+      await toast.updateComplete;
+
+      expect(toast.open).toBe(false);
+      expect(toast.getAttribute('aria-hidden')).toBe('true');
+      expect(events).toEqual(['swc-close']);
+
+      await afterClose;
+      expect(events).toEqual(['swc-close', 'swc-after-close']);
+    });
+  },
+};
+
+export const ReconnectTest: Story = {
+  render: () => html`
+    <swc-toast variant="positive">File saved</swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+
+    await step('variant and semantics survive reconnection', async () => {
+      toast.remove();
+      canvasElement.append(toast);
+      await toast.updateComplete;
+
+      expect(toast.getAttribute('variant')).toBe('positive');
+      expect(toast.getAttribute('role')).toBe('alertdialog');
+      expect(toast.getAttribute('aria-label')).toBe('File saved');
+    });
+
+    await step(
+      'disconnecting during the two-frame delay still shows the message after reconnection',
+      async () => {
+        toast.open = true;
+        await toast.updateComplete;
+        expect(messageSlot(toast)).toBeNull();
+
+        toast.remove();
+        canvasElement.append(toast);
+        await nextFrame();
+        await nextFrame();
+        await toast.updateComplete;
+
+        expect(messageSlot(toast)).not.toBeNull();
+      }
+    );
+  },
+};
