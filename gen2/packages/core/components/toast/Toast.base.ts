@@ -90,6 +90,10 @@ export abstract class ToastBase extends SpectrumElement {
       characterData: true,
       subtree: true,
     });
+    // Restarts a reveal that disconnection interrupted, so the message is still announced.
+    if (!this._contentRevealed) {
+      this.scheduleContentReveal();
+    }
   }
 
   public override disconnectedCallback(): void {
@@ -98,7 +102,6 @@ export abstract class ToastBase extends SpectrumElement {
     this._cancelAfterTransition = undefined;
     this._cancelContentReveal?.();
     this._cancelContentReveal = undefined;
-    this._contentRevealed = true;
     this._closeEventDispatched = false;
     super.disconnectedCallback();
   }
