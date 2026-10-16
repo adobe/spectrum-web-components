@@ -11,7 +11,6 @@
  */
 
 import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
-import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
@@ -52,36 +51,35 @@ export class Toast extends ToastBase {
 
   protected override render(): TemplateResult {
     return html`
-      <div
-        class=${classMap({
-          'swc-Toast': true,
-          [`swc-Toast--${this.variant}`]: true,
-        })}
-      >
-        <div class="swc-Toast-body" role="alert" aria-atomic="true">
-          <div class="swc-Toast-content">
-            ${this.contentRevealed
-              ? html`
-                  ${this.renderIcon()}
-                  <div class="swc-Toast-text"><slot></slot></div>
-                `
-              : nothing}
+      <div class="swc-Toast">
+        <div class="swc-Toast-main">
+          <div class="swc-Toast-body" role="alert" aria-atomic="true">
+            <div class="swc-Toast-content">
+              ${this.contentRevealed
+                ? html`
+                    ${this.renderIcon()}
+                    <div class="swc-Toast-text"><slot></slot></div>
+                  `
+                : nothing}
+            </div>
           </div>
+          ${this.actionLabel
+            ? html`
+                <swc-button
+                  class="swc-Toast-action"
+                  size="m"
+                  variant="secondary"
+                  fill-style="outline"
+                  static-color="white"
+                  @click=${this.requestAction}
+                >
+                  ${this.actionLabel}
+                </swc-button>
+              `
+            : nothing}
         </div>
-        ${this.actionLabel
-          ? html`
-              <swc-button
-                size="m"
-                variant="secondary"
-                fill-style="outline"
-                static-color="white"
-                @click=${this.requestAction}
-              >
-                ${this.actionLabel}
-              </swc-button>
-            `
-          : nothing}
         <swc-close-button
+          class="swc-Toast-close"
           size="m"
           static-color="white"
           accessible-label="Close"
@@ -103,7 +101,7 @@ export class Toast extends ToastBase {
       case 'info':
         return html`
           <swc-icon-info-circle
-            class="swc-Toast-typeIcon"
+            class="swc-Toast-icon"
             size="m"
             accessible-label=${ifDefined(accessibleLabel)}
           ></swc-icon-info-circle>
@@ -111,7 +109,7 @@ export class Toast extends ToastBase {
       case 'positive':
         return html`
           <swc-icon-checkmark-circle
-            class="swc-Toast-typeIcon"
+            class="swc-Toast-icon"
             size="m"
             accessible-label=${ifDefined(accessibleLabel)}
           ></swc-icon-checkmark-circle>
@@ -119,7 +117,7 @@ export class Toast extends ToastBase {
       case 'negative':
         return html`
           <swc-icon-alert-triangle
-            class="swc-Toast-typeIcon"
+            class="swc-Toast-icon"
             size="m"
             accessible-label=${ifDefined(accessibleLabel)}
           ></swc-icon-alert-triangle>
