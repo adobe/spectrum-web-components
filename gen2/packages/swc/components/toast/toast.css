@@ -14,6 +14,7 @@
   display: inline-block;
   place-self: start;
   max-inline-size: min(token("toast-maximum-width"), 90vw);
+  outline: none;
 
   /* Keeps the host rendered until the exit transition on .swc-Toast finishes. */
   transition: display token("animation-duration-100") allow-discrete;
