@@ -158,6 +158,7 @@ export class TextField extends TextFieldBase {
             )}
             @input=${this.handleInput}
             @change=${this.handleChange}
+            @keydown=${this.handleKeydown}
           />
           ${this.invalid && !this.effectiveDisabled
             ? html`

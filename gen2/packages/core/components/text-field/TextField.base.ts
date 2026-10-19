@@ -270,6 +270,59 @@ export abstract class TextFieldBase extends SizedMixin(
     this.fieldAssoc.formDisabledCallback(disabled);
   }
 
+  protected handleKeydown(event: KeyboardEvent): void {
+    if (event.key !== 'Enter' || event.isComposing || event.keyCode === 229) {
+      return;
+    }
+    // Let the event finish propagating so consumer handlers can cancel it.
+    setTimeout(() => {
+      const form = this.form;
+      if (
+        event.defaultPrevented ||
+        this.effectiveDisabled ||
+        !this.isConnected ||
+        !form
+      ) {
+        return;
+      }
+      const root = form.getRootNode();
+      const candidates = (
+        root instanceof Document || root instanceof ShadowRoot ? root : form
+      ).querySelectorAll<HTMLButtonElement | HTMLInputElement>('button, input');
+      const submitter = Array.from(candidates).find(
+        (element) =>
+          element.form === form &&
+          (element.type === 'submit' || element.type === 'image')
+      );
+      if (submitter) {
+        submitter.click();
+        return;
+      }
+      const blockingFields = Array.from(form.elements).filter(
+        (element) =>
+          element instanceof TextFieldBase ||
+          (element instanceof HTMLInputElement &&
+            [
+              'text',
+              'search',
+              'url',
+              'tel',
+              'email',
+              'password',
+              'date',
+              'month',
+              'week',
+              'time',
+              'datetime-local',
+              'number',
+            ].includes(element.type))
+      );
+      if (blockingFields.length === 1) {
+        form.requestSubmit();
+      }
+    });
+  }
+
   // ──────────────────────
   //     TEXT SELECTION
   // ──────────────────────
@@ -295,6 +348,18 @@ export abstract class TextFieldBase extends SizedMixin(
     direction?: 'forward' | 'backward' | 'none'
   ): void {
     this.inputElement?.setSelectionRange(start, end, direction);
+  }
+
+  protected override willUpdate(changedProperties: PropertyValues): void {
+    super.willUpdate(changedProperties);
+    if (changedProperties.has('value') || changedProperties.has('type')) {
+      const input = this.inputElement ?? document.createElement('input');
+      if (input.type !== this.type) {
+        input.type = this.type;
+      }
+      input.value = this.value;
+      this.value = input.value;
+    }
   }
 
   protected override updated(changedProperties: PropertyValues): void {

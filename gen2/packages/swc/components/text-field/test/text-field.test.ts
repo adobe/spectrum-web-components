@@ -12,6 +12,7 @@
 import { html } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { userEvent as browserUserEvent } from 'vitest/browser';
 
 import { TextField } from '@adobe/spectrum-wc/text-field';
 
@@ -1274,3 +1275,293 @@ export const ChangeEventTest: Story = {
   },
 };
 ChangeEventTest.storyName = 'Change event';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Native implicit form submission
+// ──────────────────────────────────────────────────────────────
+
+export const ImplicitSubmitTest: Story = {
+  render: () => html`
+    <button
+      type="submit"
+      form="text-field-implicit-form"
+      name="action"
+      value="first"
+    >
+      Save
+    </button>
+    <form id="text-field-implicit-form">
+      <swc-text-field
+        accessible-label="Email"
+        name="email"
+        type="email"
+        value="person@example.com"
+        required
+      ></swc-text-field>
+      <button type="submit" name="action" value="second">Send</button>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const button = canvasElement.querySelector('button');
+    const input = field.roleElement;
+    if (!form || !button || !input) {
+      throw new Error('form, submit button, or input not found');
+    }
+    const submissions: (HTMLElement | null)[] = [];
+    let clicks = 0;
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      submissions.push(event.submitter);
+    });
+    button.addEventListener('click', () => clicks++);
+    input.focus();
+
+    await step('Enter clicks the first associated submit button', async () => {
+      await browserUserEvent.keyboard('{Enter}');
+      expect(clicks).toBe(1);
+      expect(submissions).toEqual([button]);
+    });
+
+    await step('native validation blocks an invalid submission', async () => {
+      field.value = '';
+      await field.updateComplete;
+      await browserUserEvent.keyboard('{Enter}');
+      expect(clicks).toBe(2);
+      expect(submissions).toHaveLength(1);
+      field.value = 'person@example.com';
+      await field.updateComplete;
+    });
+
+    await step(
+      'formnovalidate on the default submitter is respected',
+      async () => {
+        field.value = '';
+        button.formNoValidate = true;
+        await field.updateComplete;
+        await browserUserEvent.keyboard('{Enter}');
+        expect(submissions).toEqual([button, button]);
+        button.formNoValidate = false;
+        field.value = 'person@example.com';
+        await field.updateComplete;
+      }
+    );
+
+    await step(
+      'a disabled default submitter does not fall through',
+      async () => {
+        button.disabled = true;
+        await browserUserEvent.keyboard('{Enter}');
+        expect(clicks).toBe(3);
+        expect(submissions).toHaveLength(2);
+        button.disabled = false;
+      }
+    );
+
+    await step('consumers can cancel Enter on the host', async () => {
+      field.addEventListener('keydown', (event) => event.preventDefault(), {
+        once: true,
+      });
+      await browserUserEvent.keyboard('{Enter}');
+      expect(clicks).toBe(3);
+      expect(submissions).toHaveLength(2);
+    });
+
+    await step('composition and non-Enter keys do not submit', async () => {
+      input.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'Enter',
+          isComposing: true,
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })
+      );
+      input.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'Enter',
+          keyCode: 229,
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })
+      );
+      await browserUserEvent.keyboard('{ArrowLeft}');
+      expect(clicks).toBe(3);
+      expect(submissions).toHaveLength(2);
+    });
+
+    await step(
+      'a canceled submit-button click prevents submission',
+      async () => {
+        button.addEventListener('click', (event) => event.preventDefault(), {
+          once: true,
+        });
+        await browserUserEvent.keyboard('{Enter}');
+        expect(clicks).toBe(4);
+        expect(submissions).toHaveLength(2);
+      }
+    );
+
+    await step('an image input can be the default submitter', async () => {
+      const image = document.createElement('input');
+      image.type = 'image';
+      image.alt = 'Save';
+      image.setAttribute('form', form.id);
+      button.before(image);
+      await browserUserEvent.keyboard('{Enter}');
+      expect(submissions).toEqual([button, button, image]);
+      image.remove();
+    });
+  },
+};
+ImplicitSubmitTest.storyName = 'Implicit submission';
+
+export const ImplicitSubmitWithoutButtonTest: Story = {
+  render: () => html`
+    <form>
+      <swc-text-field
+        accessible-label="Username"
+        name="username"
+      ></swc-text-field>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.roleElement;
+    if (!form || !input) {
+      throw new Error('form or input not found');
+    }
+    const submissions: (HTMLElement | null)[] = [];
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      submissions.push(event.submitter);
+    });
+    input.focus();
+
+    await step('a single field submits without a submit button', async () => {
+      await browserUserEvent.keyboard('{Enter}');
+      expect(submissions).toEqual([null]);
+    });
+
+    await step(
+      'another native text input blocks implicit submission',
+      async () => {
+        const otherInput = document.createElement('input');
+        otherInput.setAttribute('aria-label', 'Other');
+        form.append(otherInput);
+        await browserUserEvent.keyboard('{Enter}');
+        expect(submissions).toHaveLength(1);
+        otherInput.remove();
+      }
+    );
+
+    await step(
+      'another custom text field blocks implicit submission',
+      async () => {
+        const otherField = document.createElement('swc-text-field');
+        otherField.accessibleLabel = 'Other';
+        form.append(otherField);
+        await otherField.updateComplete;
+        await browserUserEvent.keyboard('{Enter}');
+        expect(submissions).toHaveLength(1);
+        otherField.remove();
+      }
+    );
+  },
+};
+ImplicitSubmitWithoutButtonTest.storyName =
+  'Implicit submission without a button';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Native single-line value sanitization
+// ──────────────────────────────────────────────────────────────
+
+export const ValueSanitizationTest: Story = {
+  render: () => html`
+    <form>
+      <swc-text-field
+        accessible-label="Email"
+        name="email"
+        type="email"
+        value=" person@example.com "
+      ></swc-text-field>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.roleElement;
+    if (!form || !input) {
+      throw new Error('form or input not found');
+    }
+    let events = 0;
+    field.addEventListener('input', () => events++);
+    field.addEventListener('change', () => events++);
+
+    await step('initial values use native email sanitization', () => {
+      expect(input.value).toBe('person@example.com');
+      expect(field.value).toBe(input.value);
+      expect(new FormData(form).get('email')).toBe(input.value);
+    });
+
+    await step(
+      'programmatic values follow each native input type',
+      async () => {
+        for (const type of [
+          'text',
+          'email',
+          'url',
+          'tel',
+          'password',
+        ] as const) {
+          const native = document.createElement('input');
+          native.type = type;
+          native.value = ' \tperson\n@example.com\r ';
+          field.type = type;
+          field.value = ' \tperson\n@example.com\r ';
+          await field.updateComplete;
+          expect(field.value, type).toBe(native.value);
+          expect(input.value, type).toBe(native.value);
+          expect(new FormData(form).get('email'), type).toBe(native.value);
+        }
+      }
+    );
+
+    await step('changing type sanitizes an existing value', async () => {
+      field.type = 'text';
+      field.value = ' person@example.com ';
+      await field.updateComplete;
+      field.type = 'email';
+      await field.updateComplete;
+      expect(field.value).toBe('person@example.com');
+      expect(new FormData(form).get('email')).toBe(field.value);
+    });
+
+    await step(
+      'reset sanitizes the authored default without emitting events',
+      async () => {
+        field.value = 'different@example.com';
+        await field.updateComplete;
+        form.reset();
+        await field.updateComplete;
+        expect(field.value).toBe('person@example.com');
+        expect(input.value).toBe(field.value);
+        expect(new FormData(form).get('email')).toBe(field.value);
+        expect(events).toBe(0);
+      }
+    );
+  },
+};
+ValueSanitizationTest.storyName = 'Native value sanitization';
