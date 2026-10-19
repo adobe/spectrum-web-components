@@ -1,8 +1,6 @@
 ---
 name: accessibility-migration-analysis
 description: Create accessibility migration analysis docs for gen2 component migration. Use when on the "analyze accessibility" step for one or more components.
-globs: CONTRIBUTOR-DOCS/**/accessibility-migration-analysis.md
-alwaysApply: false
 ---
 
 # Component migration: analyze accessibility
@@ -59,6 +57,7 @@ Use these existing docs when matching structure, headings, tables, and phrasing:
 ### Important
 
 - Verify behavior and ARIA in **gen2 source** before stating what the component exposes — do not document ARIA the code does not set
+- **React Spectrum references:** Treat **RSP** as shorthand for **React Spectrum**. When the user supplies a React Spectrum component URL such as `https://react-spectrum.adobe.com/ComponentName`, include that URL as the link in the migration document. Before using the reference, read the full API from its LLM-friendly counterpart at `https://react-spectrum.adobe.com/ComponentName.md`; use the `.md` page for research, but do not replace the user-facing component link with the `.md` URL. Apply this rule to every supplied React Spectrum component URL.
 - Ask clarifying questions for uncertain mappings instead of guessing
 - **Dual or conditional host roles:** When 1st-gen source, RSP/Figma, or migration notes show the **same component** taking **more than one host `role`** (for example `toolbar` vs `radiogroup`, or a property that swaps roles), **stop and prompt the user** before writing Recommendations. A component that legitimately serves **two or more ARIA roles** should **most likely be two distinct components**—not one element whose role changes. Do not document multiple host roles as acceptable without an explicit product decision; see [Dual or conditional ARIA roles](#dual-or-conditional-aria-roles) in **Full instructions**.
 - When the doc covers **progress**, **loading**, **busy**, or **spinner** UX, align guidance with Adobe’s Figma file **Loading animation discovery** ([Loading animation discovery](https://www.figma.com/design/42VzvpW262EAUbYsadO4e8/Loading-animation-discovery)); if you cite or rely on it in the doc body, **also** list that link under **`## References`**
@@ -153,7 +152,7 @@ Body text under each `###` is normal paragraphs and/or bullets.
 - **Split** — name the **two (or more) distinct gen2 components** and which role each owns; note 1st-gen API surfaces that map to each.
 - **Wrapper pattern** — when only a **landmark** role differs (for example `toolbar` around a `group`), document **outer wrapper + inner component**, not role swapping on the inner host.
 
-Do **not** guess which role wins when multiple are plausible—use the **ask-questions** skill if needed.
+Do **not** guess which role wins when multiple are plausible—use the **ask-questions-if-underspecified** skill if needed.
 
 ## Recommendations: ARIA roles, states, and properties
 
@@ -334,7 +333,7 @@ Review the [{{component-readable-name}} accessibility migration analysis](https:
 
 ## Related rules and skills
 
-- `contributor-doc-update.mdc` — when to run `update-nav.js` after heading or structure changes.
-- `ask-questions` skill — when dual or conditional host roles need a product decision before Recommendations are written.
+- `contributor-doc-update` rule — when to run `update-nav.js` after heading or structure changes.
+- `ask-questions-if-underspecified` skill — when dual or conditional host roles need a product decision before Recommendations are written.
 - `component-migration-analysis` skill — for `rendering-and-styling-migration-analysis.md`, not this file.
-- `stories-documentation.mdc` / `stories-format.mdc` — Storybook docs, separate from this contributor planning doc.
+- `stories-documentation` / `stories-format` rules and skills — Storybook docs, separate from this contributor planning doc.

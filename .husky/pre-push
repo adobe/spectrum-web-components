@@ -1,9 +1,10 @@
-# Block the push if the generated Copilot and Cursor instructions are out of sync with
-# .ai/ sources. sync.js reads the working tree, so run it only when the sources and
-# generated folders match HEAD; otherwise warn and leave it to CI (`lint:ai`). When it
-# updates files, they aren't in this push, so stop and let the author commit them.
-AI_PATHS=".ai/rules .ai/memory .github/instructions .cursor/rules"
-GENERATED_PATHS=".github/instructions .cursor/rules"
+# Block the push if the generated Copilot and Cursor instructions or the README catalog
+# are out of sync with .ai/ sources. sync.js reads the working tree, so run it only when
+# the sources and generated files match HEAD; otherwise warn and leave it to CI
+# (`lint:ai`). When it updates files, they aren't in this push, so stop and let the
+# author commit them.
+AI_PATHS=".ai/rules .ai/memory .ai/skills .ai/README.md .github/instructions .cursor/rules"
+GENERATED_PATHS=".github/instructions .cursor/rules .ai/README.md"
 if git diff HEAD --quiet -- $AI_PATHS &&
   [ -z "$(git ls-files --others --exclude-standard -- $AI_PATHS)" ]; then
   sync_output=$(node .ai/scripts/sync.js 2>&1) || {

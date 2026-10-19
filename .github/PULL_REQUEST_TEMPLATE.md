@@ -1,6 +1,6 @@
 <!---
     - Following conventional commit format, provide a general summary of your changes in the title above.
-    - Acceptable commit types in order of severity (high to low): feat, fix, docs, style, chore, perf, and test. Commit types are defined in PULL_REQUESTS.md.
+    - Use a conventional commit type allowed by commitlint (`@commitlint/config-conventional`), such as feat, fix, docs, style, refactor, perf, test, or chore. See CONTRIBUTOR-DOCS/01_contributor-guides/04_making-a-pull-request.md.
     - For example,`type(component): general summary`
 -->
 

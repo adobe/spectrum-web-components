@@ -9,7 +9,7 @@ description: Phase 3 of 1st-gen to gen2 component migration. Use to move propert
 
 ## Mindset
 
-You are defining a contract, not writing logic. Every property and type you place here is a public commitment. Put shared things in core, generation-specific things in SWC, and mark anything temporary with a `@todo`. If you are unsure where something belongs, ask the user, and/or use the `ask-questions` skill.
+You are defining a contract, not writing logic. Every property and type you place here is a public commitment. Put shared things in core, generation-specific things in SWC, and mark anything temporary with a `@todo`. If you are unsure where something belongs, ask the user, and/or use the `ask-questions-if-underspecified` skill.
 
 Before implementing new behavior, check [gen2 shared resources](../../../CONTRIBUTOR-DOCS/01_contributor-guides/16_gen2-shared-resources.md) — a controller, mixin, or utility may already exist for it (trigger resolution, positioning, slot observation, busy state, locale formatting, dev-mode validation, etc.).
 

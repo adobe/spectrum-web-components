@@ -1,0 +1,70 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as IconStories from './stories/icon.stories';
+
+<Meta of={IconStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+An icon is a single graphic you provide:
+
+- **Rendered graphic**: your `<svg>`, placed in the default slot. The frame gives it a size box, color, and accessibility.
+
+<Canvas of={IconStories.Anatomy} />
+
+## Usage
+
+`<swc-icon>` is the frame for a custom, non-Spectrum SVG. For Spectrum's own art, use a [workflow icon](../?path=/docs/icons-workflow-icons--docs), or, inside a control, a [UI icon](../?path=/docs/components-ui-icons--docs); reach for `<swc-icon>` only when the drawing is your own.
+
+Import the element, then slot your SVG:
+
+```ts
+import '@adobe/spectrum-wc/components/icon/swc-icon.js';
+```
+
+```html
+<swc-icon accessible-label="Favorite">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="…" fill="currentColor" />
+  </svg>
+</swc-icon>
+```
+
+### The custom SVG contract
+
+For your SVG to size and color correctly inside the frame, it must follow a small contract:
+
+- **Single `<svg>` root.** Slot exactly one `<svg>` element into the default slot.
+- **Include a `viewBox`.** The frame scales the drawing to the `size` box; without a `viewBox` it cannot scale.
+- **Do not set `width` or `height`** on the `<svg>`. The frame owns the box through `size` (or the `--swc-icon-*` custom properties).
+- **Color with `currentColor`.** Use `fill="currentColor"` (or omit `fill`) so the icon follows text color and `--swc-icon-color`. A hardcoded `fill` responds to neither.
+- **Keep it presentational.** Do not add `role`, `title`, or `aria-*` to the SVG; the host owns accessibility (see below).
+
+## Options
+
+### Sizes
+
+`size` sets the box the drawing scales to, from `xs` to `xl`. Because the frame scales one drawing, resizing with CSS is safe.
+
+<Canvas of={IconStories.Sizes} />
+
+### Color
+
+The icon follows the inherited CSS `color` by default. Set `--swc-icon-color` to color the icon independently of the surrounding text color.
+
+<Canvas of={IconStories.Color} />
+
+## Accessibility
+
+The host owns semantics, so accessibility is set on `<swc-icon>`, never on the slotted SVG:
+
+- **Decorative by default.** With no `accessible-label`, the host is `aria-hidden="true"` and assistive technology skips it. Use this when nearby text already names the icon.
+- **Meaningful icons.** Set `accessible-label` and the host is exposed as an image (`role="img"` with that label). Reserve this for the icon-only case where nothing else names it.
+- **Not focusable.** For an interactive icon, wrap it in a `<button>` or `<a>` and put the accessible name on that wrapper.
+
+<Canvas of={IconStories.Accessibility} />
+
+<DocsFooter />
