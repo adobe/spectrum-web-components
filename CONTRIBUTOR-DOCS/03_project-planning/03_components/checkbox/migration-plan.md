@@ -256,7 +256,7 @@ gen2 (planned; see [Architecture](#architecture-core-vs-swc-split)):
 
 ### Dependency-aware recommendation
 
-**Proceed independently, after the text field branch merges.** `swc-checkbox` does not extend another gen2 component and does not need to wait on any other component migration. Its only hard prerequisite is the shared form foundation (`LabellingMixin`, `FieldDescriptionMixin`, `FieldAssociationController`), which is implemented and tested on the text field branch (Epic SWC-2323) but not yet on `main`. Checkbox should be that foundation's second consumer, which also validates its boolean-field path. `FieldAssociationController`'s docs already name checkbox, and its `setValue(value, state)` signature supports a checked-state restore value.
+**Proceed independently, after the text field branch merges.** `swc-checkbox` does not extend another gen2 component and does not need to wait on any other component migration. Its only hard prerequisite is the shared form foundation (`LabellingMixin`, `FieldDescriptionMixin`, `FieldAssociationController`), which is implemented and tested on the text field branch (Epic SWC-2323) but not yet on `main`. Checkbox joins text field and radio group as a consumer of that foundation, and is its first boolean field, which validates the boolean-field path. `FieldAssociationController`'s docs already name checkbox, and its `setValue(value, state)` signature supports a checked-state restore value.
 
 ### Related components and ordering notes
 
