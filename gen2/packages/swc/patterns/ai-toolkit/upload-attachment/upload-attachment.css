@@ -100,6 +100,18 @@
   --swc-asset-aspect-ratio: 1 / 1;
 }
 
+/* swc-asset handles its own sizing/object-fit internally via the aspect-ratio
+ * hook above, but a bare <img> (no swc-asset wrapper) forwarded into the
+ * media tile's fixed-size grid cell needs its own fill + cover rule, since
+ * swc-card's `align-items: start` on its grid means it otherwise renders at
+ * its natural size instead of stretching to the cell. */
+:host([type="media"]) ::slotted(img[slot="thumbnail"]) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
 .swc-UploadAttachment-surface {
   display: flex;
   background: var(--_swc-upload-attachment-tint);
@@ -140,6 +152,12 @@
 .swc-UploadAttachment-actions ::slotted(*) {
   display: inline-flex;
   align-items: center;
+}
+
+/* Media tiles are small, fixed-size thumbnails with no room for trailing
+ * actions beyond the dismiss button; actions are card-type only. */
+:host([type="media"]) .swc-UploadAttachment-actions {
+  display: none;
 }
 
 :host([type="card"]) .swc-UploadAttachment-surface {

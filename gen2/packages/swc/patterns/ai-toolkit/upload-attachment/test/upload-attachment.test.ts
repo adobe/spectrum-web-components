@@ -203,7 +203,6 @@ export const MediaBadgeTest: Story = {
           slot="thumbnail"
           src="https://picsum.photos/id/823/68/68"
           alt="Tagged preview"
-          style="inline-size:100%;block-size:100%;object-fit:cover;"
         />
         <swc-badge slot="badge">PDF</swc-badge>
       </swc-upload-attachment>
@@ -212,7 +211,6 @@ export const MediaBadgeTest: Story = {
           slot="thumbnail"
           src="https://picsum.photos/id/64/68/68"
           alt="Plain preview"
-          style="inline-size:100%;block-size:100%;object-fit:cover;"
         />
       </swc-upload-attachment>
     </div>

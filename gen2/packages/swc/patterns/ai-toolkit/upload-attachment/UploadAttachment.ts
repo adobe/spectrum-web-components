@@ -135,12 +135,21 @@ export class UploadAttachment extends SpectrumElement {
     if (this._titleSlot) {
       this._observeTitleSlot(this._titleSlot);
     }
+    // Force a re-sync: `_wasLoading` was reset in `disconnectedCallback`, so
+    // if still loading, this re-arms a fresh 1s delay instead of staying
+    // stuck hidden (the edge-detection in `_syncProgressVisibility` would
+    // otherwise see `loading === _wasLoading` as unchanged and no-op).
+    this.requestUpdate();
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
     this._titleObserver.disconnect();
     this._clearProgressTimer();
+    // Reset the edge-detection flag so reconnecting (e.g. the attachment
+    // strip reordering tiles) re-arms the delay instead of leaving the
+    // progress circle stuck hidden; see `_syncProgressVisibility`.
+    this._wasLoading = false;
   }
 
   protected override willUpdate(_changed: PropertyValues<this>): void {
