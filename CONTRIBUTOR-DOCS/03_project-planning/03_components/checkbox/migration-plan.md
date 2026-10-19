@@ -460,7 +460,7 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] gen2 API decisions drafted
-- [x] [Figma `S2 / Web` component frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9392-43644) reviewed
+- [x] [Figma `S2 / Web` component frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9961-2510) reviewed
 - [x] Open gen1 issues table populated from Jira
 - [x] Out-of-scope work recorded in [Additive](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-gen2) (A1–A5)
 - [ ] Deferred ticket filed for A1 (Q12)
