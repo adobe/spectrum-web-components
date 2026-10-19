@@ -1210,7 +1210,7 @@ export class PromptField extends SpectrumElement {
       ? DEFAULT_LOADER_ICON
       : (this.loader as PixelLoaderIconName);
     return html`
-      <span class="swc-PromptField-status-icon" aria-hidden="true">
+      <span class="swc-PromptField-status-icon">
         <swc-pixel-loader
           icon=${icon}
           preset=${ifDefined(preset)}

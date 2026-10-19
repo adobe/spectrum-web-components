@@ -66,7 +66,7 @@ function renderPromptField(
       ?disabled=${storyArgs.disabled ?? false}
       ?generating=${storyArgs.generating ?? false}
       ?animate-loader=${storyArgs['animate-loader'] ?? false}
-      accessible-label=${storyArgs['accessible-label'] ?? ''}
+      accessible-label=${storyArgs['accessible-label'] ?? 'AI Prompt'}
       send-label=${storyArgs['send-label'] ?? 'Send'}
       stop-label=${storyArgs['stop-label'] ?? 'Stop generating'}
       upload-label=${storyArgs['upload-label'] ?? 'Add attachment'}

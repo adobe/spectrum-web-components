@@ -652,7 +652,12 @@ export class PixelLoader extends SpectrumElement {
     const radii = computeCornerRadii(cells);
 
     return html`
-      <div class="swc-PixelLoader" role="progressbar" aria-label=${this.label}>
+      <div
+        class="swc-PixelLoader"
+        role="progressbar"
+        id="pixel-loader"
+        aria-label=${this.label}
+      >
         ${cells.map((cell, index) => this._renderCell(cell, radii[index]))}
       </div>
     `;
