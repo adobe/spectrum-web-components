@@ -22,7 +22,6 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  * .storybook/test-runner.ts). Both are included in the `test:a11y` command.
  */
 
-// TODO(SWC-2567): add container region, landmark, and focus-on-close snapshots.
 // TODO(SWC-2654, SWC-2655): add peek-stack and expanded-view snapshots.
 
 test.describe('Toast - ARIA Snapshots', () => {
@@ -31,7 +30,7 @@ test.describe('Toast - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'components-toast--overview',
+      'components-toast-container--toast-playground',
       'swc-toast'
     );
     await expect(root).toMatchAriaSnapshot(`
@@ -46,7 +45,7 @@ test.describe('Toast - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'components-toast--anatomy',
+      'components-toast-container--toast-anatomy',
       'swc-toast'
     );
     await expect(root).toMatchAriaSnapshot(`
@@ -62,7 +61,7 @@ test.describe('Toast - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'components-toast--overview',
+      'components-toast-container--toast-playground',
       'swc-toast'
     );
     await page.evaluate(async () => {
@@ -85,18 +84,23 @@ test.describe('Toast - ARIA Snapshots', () => {
   test('ID-bearing message names the alertdialog by reference', async ({
     page,
   }) => {
-    // TODO(SWC-2567): once the aria-label fallback is removed, this snapshot also proves the aria-labelledby path.
     const root = await gotoStory(
       page,
-      'components-toast--accessibility',
+      'components-toast-container--toast-variants',
       'swc-toast'
     );
     await expect(root).toMatchAriaSnapshot(`
+      - alertdialog "Draft moved to archive":
+        - alert: Draft moved to archive
+        - button "Close"
+      - alertdialog "A new version is available":
+        - alert: A new version is available
+        - button "Close"
       - alertdialog "File saved":
         - alert: File saved
         - button "Close"
-      - alertdialog "Upload complete":
-        - alert: Upload complete
+      - alertdialog "File could not be saved":
+        - alert: File could not be saved
         - button "Close"
     `);
   });
@@ -115,7 +119,11 @@ test.describe('Toast - Keyboard', () => {
   test('Tab reaches the host, the action, then close; Enter closes', async ({
     page,
   }) => {
-    await gotoStory(page, 'components-toast--anatomy', 'swc-toast');
+    await gotoStory(
+      page,
+      'components-toast-container--toast-anatomy',
+      'swc-toast'
+    );
     const toast = page.locator('swc-toast');
 
     await page.keyboard.press('Tab');
@@ -152,7 +160,11 @@ const hostTransitionDuration = (toast: Locator): Promise<string> =>
 test.describe('Toast - Reduced motion', () => {
   test('removes the fade but keeps the two-frame delay', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await gotoStory(page, 'components-toast--overview', 'swc-toast');
+    await gotoStory(
+      page,
+      'components-toast-container--toast-playground',
+      'swc-toast'
+    );
     const toast = page.locator('swc-toast');
 
     expect(await surfaceStyle(toast, 'transitionDuration')).toMatch(INSTANT);
@@ -162,7 +174,11 @@ test.describe('Toast - Reduced motion', () => {
 
   test('keeps the fade when motion is not reduced', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'no-preference' });
-    await gotoStory(page, 'components-toast--overview', 'swc-toast');
+    await gotoStory(
+      page,
+      'components-toast-container--toast-playground',
+      'swc-toast'
+    );
     const toast = page.locator('swc-toast');
 
     expect(await surfaceStyle(toast, 'transitionDuration')).not.toMatch(

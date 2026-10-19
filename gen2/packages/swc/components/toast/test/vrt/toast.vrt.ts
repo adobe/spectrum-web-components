@@ -36,7 +36,7 @@ import {
 // Metadata
 
 const meta: Meta = {
-  title: 'Toast/Toast VRT',
+  title: 'Toast container/Toast VRT',
   component: 'swc-toast',
   tags: ['dev'],
 };

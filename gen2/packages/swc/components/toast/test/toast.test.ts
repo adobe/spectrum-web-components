@@ -28,18 +28,15 @@ import {
   waitForEvent,
   withWarningSpy,
 } from '../../../utils/test-utils.js';
-import meta, { Overview } from '../stories/toast.stories.js';
 
-// These tests cover standalone Toast only; queue and container behavior gets separate tests.
-// TODO(SWC-2567): add queue tests: timeout floor, action disables timeout with its dev warning, pause and resume.
+// These tests cover standalone Toast only; queue and container behavior is tested in toast-container.
 // TODO(SWC-2655): add collapsed-stack tests: peek layers, Show all, front-toast countdown.
 // TODO(SWC-2654): add expanded-view tests: scrim, Escape, Collapse, Clear all, focus management.
 
 export default {
-  ...meta,
-  title: 'Toast/Tests',
+  title: 'Toast container/Tests/Toast',
+  component: 'swc-toast',
   parameters: {
-    ...meta.parameters,
     docs: { disable: true, page: null },
   },
   tags: ['!autodocs', 'dev'],
@@ -71,11 +68,9 @@ const cancelNextClose = (
 // ──────────────────────────────────────────────────────────────
 
 export const OverviewTest: Story = {
-  ...Overview,
-  args: {
-    ...Overview.args,
-    open: false,
-  },
+  render: () => html`
+    <swc-toast><span id="toast-message">File saved</span></swc-toast>
+  `,
   play: async ({ canvasElement, step }) => {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
 
@@ -239,7 +234,7 @@ export const ActionButtonTest: Story = {
 
 export const AccessibilitySemanticsTest: Story = {
   render: () => html`
-    <swc-toast>File saved</swc-toast>
+    <swc-toast><span id="toast-message">File saved</span></swc-toast>
   `,
   play: async ({ canvasElement, step }) => {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
@@ -248,9 +243,10 @@ export const AccessibilitySemanticsTest: Story = {
       expect(toast.getAttribute('role'), 'host role').toBe('alertdialog');
       expect(toast.getAttribute('aria-modal'), 'host aria-modal').toBe('false');
       expect(toast.getAttribute('tabindex'), 'host tabindex').toBe('0');
-      expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
-        'File saved'
-      );
+      expect(
+        toast.getAttribute('aria-labelledby'),
+        'host aria-labelledby'
+      ).toBe('toast-message');
       expect(toast.getAttribute('aria-hidden'), 'host aria-hidden').toBe(
         'true'
       );
@@ -267,13 +263,15 @@ export const AccessibilitySemanticsTest: Story = {
     await step(
       'updates the accessible name when the message changes',
       async () => {
-        toast.textContent = 'Upload complete';
+        toast.innerHTML =
+          '<span id="updated-toast-message">Upload complete</span>';
         await Promise.resolve();
         await toast.updateComplete;
 
-        expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
-          'Upload complete'
-        );
+        expect(
+          toast.getAttribute('aria-labelledby'),
+          'host aria-labelledby'
+        ).toBe('updated-toast-message');
       }
     );
   },
@@ -296,14 +294,13 @@ export const LabelledMessageTest: Story = {
       );
     });
 
-    // TODO(SWC-2567): drop the bare-text fallback steps if the container becomes the only creator of toasts.
-    await step('bare text falls back to aria-label', async () => {
+    await step('bare text does not create an aria-label fallback', async () => {
       toast.textContent = 'Upload complete';
       await Promise.resolve();
       await toast.updateComplete;
 
-      expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
-        'Upload complete'
+      expect(toast.hasAttribute('aria-label'), 'host aria-label presence').toBe(
+        false
       );
       expect(
         toast.hasAttribute('aria-labelledby'),
@@ -312,20 +309,51 @@ export const LabelledMessageTest: Story = {
     });
 
     await step(
-      'more than one message element falls back to aria-label',
+      'more than one message element does not create an aria-label fallback',
       async () => {
         toast.innerHTML =
           '<span id="first-part">File</span> <span>saved</span>';
         await Promise.resolve();
         await toast.updateComplete;
 
-        expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
-          'File saved'
-        );
+        expect(
+          toast.hasAttribute('aria-label'),
+          'host aria-label presence'
+        ).toBe(false);
         expect(
           toast.hasAttribute('aria-labelledby'),
           'host aria-labelledby presence'
         ).toBe(false);
+      }
+    );
+    await step(
+      'naming updates leave a caller-provided aria-label untouched',
+      async () => {
+        toast.setAttribute('aria-label', 'Caller label');
+        toast.innerHTML = '<span id="updated-message">Upload complete</span>';
+        await Promise.resolve();
+        await toast.updateComplete;
+
+        expect(
+          toast.getAttribute('aria-labelledby'),
+          'host aria-labelledby'
+        ).toBe('updated-message');
+        expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
+          'Caller label'
+        );
+
+        toast.replaceChildren();
+        await Promise.resolve();
+        await toast.updateComplete;
+
+        expect(
+          toast.hasAttribute('aria-labelledby'),
+          'host aria-labelledby presence after clearing'
+        ).toBe(false);
+        expect(
+          toast.getAttribute('aria-label'),
+          'host aria-label after clearing'
+        ).toBe('Caller label');
       }
     );
   },
@@ -341,11 +369,12 @@ export const EmptySlotMessageTest: Story = {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
 
     await step(
-      'labels the host from a slot="" text element like default-slot content',
+      'a slot="" element without an ID does not create a naming fallback',
       () => {
-        expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
-          'File saved'
-        );
+        expect(
+          toast.hasAttribute('aria-label'),
+          'host aria-label presence'
+        ).toBe(false);
         expect(
           toast.hasAttribute('aria-labelledby'),
           'host aria-labelledby presence'
@@ -418,7 +447,6 @@ export const OpenLifecycleTest: Story = {
       expect(events, 'events after opening').toEqual(['swc-open']);
     });
 
-    // TODO(SWC-2567): confirm the container connects toasts closed and opens them after the first update (Q11).
     await step(
       'keeps the live region empty for two frames, then adds the message (Q10, Q11)',
       async () => {
@@ -603,7 +631,9 @@ export const CloseInteractionTest: Story = {
 
 export const ReconnectTest: Story = {
   render: () => html`
-    <swc-toast variant="positive">File saved</swc-toast>
+    <swc-toast variant="positive">
+      <span id="toast-message">File saved</span>
+    </swc-toast>
   `,
   play: async ({ canvasElement, step }) => {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
@@ -615,9 +645,10 @@ export const ReconnectTest: Story = {
 
       expect(toast.getAttribute('variant'), 'host variant').toBe('positive');
       expect(toast.getAttribute('role'), 'host role').toBe('alertdialog');
-      expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
-        'File saved'
-      );
+      expect(
+        toast.getAttribute('aria-labelledby'),
+        'host aria-labelledby'
+      ).toBe('toast-message');
     });
 
     await step(

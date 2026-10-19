@@ -67,10 +67,10 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 | Utility | What it does | Used by |
 | --- | --- | --- |
 | `resolveTrigger()` | Resolves `for` ID / `triggerElement` to a trigger, and its AT-facing inner `<button>` across shadow boundaries | `tooltip`, `popover`, `menu` |
-| `getActiveElement()` | Deepest focused element, across shadow boundaries | `popover`, `conversation-thread`, `prompt-field`, `menu` |
-| `deepContains()` | Shadow-piercing containment check | `popover`, `prompt-field`, `menu` |
+| `getActiveElement()` | Deepest focused element, across shadow boundaries | `popover`, `conversation-thread`, `prompt-field`, `menu`, `toast-container` |
+| `deepContains()` | Shadow-piercing containment check | `popover`, `prompt-field`, `menu`, `toast-container` |
 | `registerDismissible()` / `unregisterDismissible()` / `isTopDismissible()` (`dismissibleStack`) | LIFO stack coordinating Escape handling across top-layer mechanisms | `popover`, `tooltip`, `menu` |
-| `warnIf()`, `validateEnum()` | Batched, deduped dev-mode warning framework (see below and [Debug and validation](../02_style-guide/02_typescript/17_debug-validation.md)) | 10+ components, `prompt-field`, `pixel-loader` |
+| `warnIf()`, `validateEnum()` | Batched, deduped dev-mode warning framework (see below and [Debug and validation](../02_style-guide/02_typescript/17_debug-validation.md)) | 10+ components, `prompt-field`, `pixel-loader`, `toast-container` |
 | `focusableSelector` | Spec-based focusable-element selector. See [Focus management](14_focus-management.md#focusableselector-and-tabbableselector) | `prompt-field` |
 | `tabbableSelector` | Spec-based tabbable-element selector | none |
 | `isFocusVisibleInTree()` | `:focus-visible` check across shadow roots | none |
@@ -80,7 +80,7 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 | `capitalize()` | Capitalizes first character of a string | `progress-circle`, `divider` |
 | `physicalSide()` | Drops alignment suffix from a placement (`bottom-start` to `bottom`) | `popover`, `menu` |
 | `runAfterTransition()` | Runs a callback once an element's CSS transition settles (or synchronously if none will run); built on `hasActiveTransition()`/`maxTransitionDurationMs()` in the same file | `popover`, `toast` |
-| `uniqueId()` (`swc/utils/id.ts`, not `core`) | Collision-resistant component ID generation | `prompt-field`, `suggestion`, `response-status`, `message-sources` |
+| `uniqueId()` (`swc/utils/id.ts`, not `core`) | Collision-resistant component ID generation | `prompt-field`, `suggestion`, `response-status`, `message-sources`, `toast-container` |
 
 ## Directives
 
