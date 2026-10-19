@@ -57,8 +57,13 @@
 
 .swc-PromptField-box {
   --_swc-prompt-field-recede-surface: token("background-layer-2-color");
+
+  /* Receded (subtle idle and focused) contrast treatment: transparent-neutral-125 border and transparent-static-black-75 drop shadow. Built from opacity-* on purpose: the legacy transparent-black-75 token is 5%, not the design's 3%. */
+  --_swc-prompt-field-recede-border-color: light-dark(rgb(0 0 0 / token("opacity-125")), rgb(255 255 255 / token("opacity-125")));
+  --_swc-prompt-field-recede-shadow-color: rgb(0 0 0 / token("opacity-75"));
   --_swc-prompt-field-border-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), rgb(255 255 255 / 5%));
   --_swc-prompt-field-drop-shadow-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 58.26% 0.2265 calc(h - 0.4) / 5%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 5%));
+  --_swc-prompt-field-container-shadow-color: transparent;
   --_swc-prompt-field-inset-shadow-color: rgb(255 255 255 / token("opacity-100"));
 
   display: flex;
@@ -72,7 +77,8 @@
   border-radius: 24px;
   box-shadow:
     0 20px 20px -24px var(--_swc-prompt-field-prominent-outer-glow-color, transparent),
-    0 -3px 10px 1px var(--_swc-prompt-field-drop-shadow-color);
+    0 -3px 10px 1px var(--_swc-prompt-field-drop-shadow-color),
+    0 8px 32px 0 var(--_swc-prompt-field-container-shadow-color);
   overflow: clip;
   cursor: text;
   transition:
@@ -347,8 +353,9 @@
   --_swc-prompt-field-bg-stop-2: var(--_swc-prompt-field-recede-surface);
   --_swc-prompt-field-bg-stop-3: var(--_swc-prompt-field-recede-surface);
   --_swc-prompt-field-bg-stop-4: var(--_swc-prompt-field-recede-surface);
-  --_swc-prompt-field-border-color: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%));
+  --_swc-prompt-field-border-color: var(--_swc-prompt-field-recede-border-color);
   --_swc-prompt-field-drop-shadow-color: transparent;
+  --_swc-prompt-field-container-shadow-color: var(--_swc-prompt-field-recede-shadow-color);
 }
 
 :host([variant="subtle"]:not([generating])) :where(.swc-PromptField-outer-border:hover) .swc-PromptField-box {
@@ -359,9 +366,10 @@
   --_swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 22.42% 0.072 calc(h - 288.8)) 40%));
   --_swc-prompt-field-border-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), rgb(255 255 255 / 5%));
   --_swc-prompt-field-drop-shadow-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 58.26% 0.2265 calc(h - 0.4) / 5%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 5%));
+  --_swc-prompt-field-container-shadow-color: transparent;
 }
 
-/* Unlike subtle, balanced/prominent never override border-color/drop-shadow-color -- always the box's own base values. */
+/* Unlike subtle, balanced/prominent never override border-color/drop-shadow-color/container-shadow-color -- always the box's own base values. */
 :host([variant="balanced"]:not([generating])) .swc-PromptField-box {
   --_swc-prompt-field-con-hue-opacity: 12.5%;
   --_swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.18% 0.0231 calc(h - 44.5)) 12.5%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 20%));
@@ -461,9 +469,10 @@
   --_swc-prompt-field-bg-stop-2: var(--_swc-prompt-field-recede-surface);
   --_swc-prompt-field-bg-stop-3: var(--_swc-prompt-field-recede-surface);
   --_swc-prompt-field-bg-stop-4: var(--_swc-prompt-field-recede-surface);
-  --_swc-prompt-field-border-color: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%));
+  --_swc-prompt-field-border-color: var(--_swc-prompt-field-recede-border-color);
   --_swc-prompt-field-inset-shadow-color: transparent;
   --_swc-prompt-field-drop-shadow-color: transparent;
+  --_swc-prompt-field-container-shadow-color: var(--_swc-prompt-field-recede-shadow-color);
   --_swc-prompt-field-prominent-outer-glow-color: transparent;
   --_swc-prompt-field-prominent-inset-glow-color: transparent;
 }
@@ -475,6 +484,7 @@
   box-shadow:
     0 20px 20px -24px var(--_swc-prompt-field-prominent-outer-glow-color, transparent),
     0 -3px 10px 1px var(--_swc-prompt-field-drop-shadow-color),
+    0 8px 32px 0 var(--_swc-prompt-field-container-shadow-color),
     var(--_swc-prompt-field-generating-glow);
 }
 

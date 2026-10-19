@@ -155,6 +155,7 @@ type FieldCase = {
   attachment?: AttachmentKind;
   buttonState?: ButtonState;
   fieldHover?: boolean;
+  fieldFocus?: boolean;
 };
 
 // Fields render at a roomy composer width by default. Long prompts and the
@@ -171,6 +172,7 @@ const renderField = ({
   attachment = 'none',
   buttonState,
   fieldHover = false,
+  fieldFocus = false,
 }: FieldCase) => {
   const constrained = value === LONG_PROMPT || attachment === 'manyMedia';
   const width = constrained
@@ -190,6 +192,7 @@ const renderField = ({
         value=${value}
         data-button-state=${buttonState ?? nothing}
         data-field-hover=${fieldHover ? '' : nothing}
+        data-field-focus=${fieldFocus ? '' : nothing}
       >
         ${attachmentSlot(attachment)} ${legalDisclaimerSlot}
       </swc-prompt-field>
@@ -220,6 +223,15 @@ const ANATOMY_PERMUTATIONS = createPermutations([
     generating: [false, true],
     value: [SHORT_PROMPT],
     fieldHover: [true],
+  },
+  // Focus recedes the treatment to the contrast border and drop shadow on
+  // every variant while idle; generating keeps its wash through focus.
+  {
+    group: ['Focus'],
+    variant: VARIANTS,
+    generating: [false, true],
+    value: [SHORT_PROMPT],
+    fieldFocus: [true],
   },
   {
     group: ['Content'],
@@ -287,6 +299,12 @@ const SIZE_PERMUTATIONS = createPermutations([
     value: [SHORT_PROMPT],
     attachment: ['manyMedia'],
     buttonState: ['hover'],
+  },
+  {
+    group: ['Small size — focus'],
+    size: ['s'],
+    value: [SHORT_PROMPT],
+    fieldFocus: [true],
   },
 ]);
 
@@ -394,6 +412,18 @@ const forceFieldHover = ({ canvasElement }: { canvasElement: HTMLElement }) => {
     );
 };
 
+// Forces the composer's :focus-within treatment. The box and the ring each
+// key their own recede rules off :focus-within, so both get the forced
+// attribute.
+const forceFieldFocus = ({ canvasElement }: { canvasElement: HTMLElement }) => {
+  canvasElement
+    .querySelectorAll<HTMLElement>('swc-prompt-field[data-field-focus]')
+    .forEach((field) => {
+      forcePseudoState(field, 'focus-within', '.swc-PromptField-box');
+      forcePseudoState(field, 'focus-within', '.swc-PromptField-outer-border');
+    });
+};
+
 // Stack a group's fields vertically instead of packing them side by side.
 const stack = (cases: FieldCase[]) => html`
   <div
@@ -427,6 +457,7 @@ export const Permutations: Story = {
     await forceButtonStates(context);
     await forceDraggedStates(context);
     forceFieldHover(context);
+    forceFieldFocus(context);
     await pauseLoaders(context);
   },
 };

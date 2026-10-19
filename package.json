@@ -33,7 +33,7 @@
     "generate:workflow-icons": "yarn workspace @adobe/spectrum-wc-icons generate:workflow-icons",
     "lint": "run-s --continue-on-error lint:eslint lint:styles lint:prettier lint:ai",
     "lint:1st-gen": "LINT_PATH=1st-gen yarn lint",
-    "lint:ai": "node .ai/scripts/validate.js",
+    "lint:ai": "node .ai/scripts/validate.js && node --test .ai/scripts/sync.test.js",
     "lint:docs-pages": "node scripts/validate-docs-pages.js",
     "lint:eslint": "echo 'Linting with ESLint...' && eslint ${LINT_PATH:-.} --cache",
     "lint:gen2": "LINT_PATH=gen2 yarn lint",
