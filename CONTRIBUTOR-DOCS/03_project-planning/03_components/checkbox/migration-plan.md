@@ -715,7 +715,7 @@ A2–A5 have no tickets by decision (Q11): they are on-request or follow from sh
 - [React Spectrum S2 Checkbox source](https://github.com/adobe/react-spectrum/blob/main/packages/%40react-spectrum/s2/src/Checkbox.tsx)
 - [Spectrum CSS `spectrum-two`, `components/checkbox/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/checkbox/index.css): reviewed via sibling checkout, along with `components/checkbox/stories/template.js`
 - gen2 UI icons: [`Checkmark` and `Dash`](../../../../gen2/packages/swc/components/ui-icons/icon-set/index.ts)
-- [Figma `S2 / Web` checkbox component frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9392-43644): size × selection × emphasis × state × text wrap
+- [Figma `S2 / Web` checkbox component frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9961-2510): size × selection × emphasis × state × text wrap
 - [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - Epic: SWC-2340, Checkbox migration epic
 - SWC-2341: checkbox accessibility research (source of the accessibility migration analysis)
