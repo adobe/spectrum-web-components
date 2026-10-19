@@ -60,7 +60,7 @@
 >
 > This plan covers **`swc-checkbox`, the individual checkbox, only.** Unlike `swc-radio`, a checkbox is a complete control on its own (a single required consent box is a first-class use case), so `swc-checkbox` can ship and be documented independently. `swc-checkbox-group` is planned separately (Q10). The [accessibility migration analysis](./accessibility-migration-analysis.md) is authoritative for gen2 semantics and was authored against the approved [forms strategy RFC](../../05_strategies/forms-strategy-rfc.md).
 >
-> **Status: ready for review.** Core migration questions are resolved in the [Decision log](#decision-log), except Q7, which blocks the API phase. Q8 and Q9 are settled during implementation and do not change the API.
+> **Status: ready for review.** Core migration questions are resolved in the [Decision log](#decision-log), except Q7, which blocks the API phase, and Q14, which blocks the accessibility phase. Q8 and Q9 are settled during implementation and do not change the API.
 
 ---
 
@@ -76,6 +76,7 @@
 ### Most blocking open questions
 
 - **Q7**: how to keep the per-item description visible and associated while error text shows, as the accessibility analysis requires. Blocks the API phase.
+- **Q14**: where to suppress the native validation bubble without losing focus on a failed submit, shared with `swc-text-field`. Blocks the accessibility phase.
 
 Q8, Q9, Q12, and Q13 are open but do not block implementation; see [Blockers and open questions](#blockers-and-open-questions).
 
@@ -584,7 +585,8 @@ Form participation (in a native `<form>` with native submit and reset buttons, p
 
 - [ ] Checked submits `name=value`; unchecked contributes nothing; default `value` is `on`
 - [ ] Two checkboxes with the same `name` each contribute independently
-- [ ] `required` and unchecked blocks submit; `checkValidity()` is `false`; `reportValidity()` reports it; `:invalid` and `:user-invalid` match; checking clears it
+- [ ] `required` and unchecked blocks submit in a form without `novalidate`; `checkValidity()` is `false`; `reportValidity()` shows the Spectrum error presentation instead of the native bubble (Q14); the host matches `:invalid`; checking clears it
+- [ ] After a user interaction or a failed submit, the host matches `:state(user-invalid)`. The native `:user-invalid` applies only to `input`, `textarea`, and `select`, so it never matches the host ([whatwg/html#9639](https://github.com/whatwg/html/issues/9639))
 - [ ] `form.reset()` restores the default checked state
 - [ ] `formStateRestoreCallback` with state `'true'` or `'false'` restores `checked`
 - [ ] `<fieldset disabled>` disables the checkbox and excludes it from `FormData` and validation
@@ -652,6 +654,7 @@ _None currently; Q1 and Q2 resolved, see [Decision log](#decision-log)._
 | Q7 | How to keep the per-item description visible and associated while error text shows, as the [accessibility analysis](./accessibility-migration-analysis.md) requires for a standalone required checkbox. `FieldDescriptionMixin` on the text field branch replaces the description with `error-text` while `invalid` and `error-text` has content. Options: (a) add a `FieldDescriptionMixin` option that renders and associates both; (b) render both in checkbox itself. | Yes | Open: blocks the API phase | Implementation + accessibility reviewer |
 | Q9 | Exact read-only mechanism (likely `preventDefault()` on the inner input's `click` while read-only, which also blocks <kbd>Space</kbd>). Settle in API phase with a test first. | No | Open | Implementation |
 | Q13 | The [accessibility analysis](./accessibility-migration-analysis.md) names the inner input through `ariaLabelledByElements` pointing at the shadow label, confirmed against the PoC. `LabellingMixin` on the text field branch uses a native `<label for>` for the slotted label and `aria-label` for `accessible-label`, and sets `ariaLabelledByElements` only for `accessible-labelledby`. Confirm with the analysis author whether that wiring meets the requirement, or extend the mixin to wire the slotted label through `ariaLabelledByElements` too. Internal wiring only; no public API change. | No | Open: settle before the accessibility phase | Accessibility reviewer |
+| Q14 | Where to suppress the native validation bubble, shared with `swc-text-field`. Cancelling the host's `invalid` event suppresses the bubble and keeps submit blocking, but the browser then skips focusing the field on a failed submit. The shared behavior must therefore cancel the event, turn on the invalid presentation, and focus the first invalid field. Recommended: one opt-in behavior on `FieldAssociationController`, which needs the host passed in to listen for `invalid`. Text field currently relies on `novalidate` plus a consumer submit handler, and its [accessibility analysis](../text-field/accessibility-migration-analysis.md) defers the decision to the forms strategy. Open edge case: in a form that mixes native and `swc-` fields, a later native field can take focus ahead of an earlier `swc-` field. | Yes | Open: blocks the accessibility phase | Forms strategy owners + accessibility reviewer |
 
 ### Scope and prerequisites
 
