@@ -394,7 +394,7 @@ Figma shows no emphasized unchecked or emphasized disabled rows: `emphasized` ch
 Additional Figma-confirmed presentation modes:
 
 - Sizes `s`, `m`, `l`, `xl`
-- Label text wrap (`Text wrap = true`): the label wraps across lines and the box stays aligned to the first line. CSS behavior, not a property.
+- Label text wrap (`Text wrap = true`): the label wraps across lines and the box stays aligned to the first line. CSS behavior, not a property; take it from `swc-radio`'s `radio.css` (Q8).
 
 Not shown in the Figma frame, sourced elsewhere:
 
@@ -508,7 +508,7 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 
 - [ ] Add `.swc-Checkbox` to the internal wrapper in `render()`; keep styling off `:host`
 - [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `checkbox.css` as baseline
-- [ ] After the baseline copy, align `checkbox.css` with `swc-radio`'s `radio.css` where it fits (Q8): the box-and-label grid, first-line box alignment, size custom properties, label typography, and state colors, including `disabled-content-color` for disabled. Leave out its description layout and description font sizes (the in-group layout that Q7 defers), its host focus selectors (checkbox focuses the inner input), and its group read-only container query (checkbox read-only is per item)
+- [ ] After the baseline copy, align `checkbox.css` with `swc-radio`'s `radio.css` where it fits (Q8): the box-and-label grid, label wrapping and first-line box alignment, size custom properties, label typography, and state colors, including `disabled-content-color` for disabled. Leave out its description layout and description font sizes (the in-group layout that Q7 defers), its host focus selectors (checkbox focuses the inner input), and its group read-only container query (checkbox read-only is per item)
 - [ ] Map `.is-indeterminate`, `.is-readOnly`, `--emphasized`, and `--size*` selectors to host attribute selectors
 - [ ] Q8: settle both open choices, record them in the Decision log, then implement them. Error text needs styles from the shared `form-fields` rules or `checkbox.css`; `radio.css` has none
 - [ ] Style the label and required indicator that `renderLabel()` emits, per Q8. Its `swc-FormFieldLabel`, `swc-FormFieldLabel-requiredIndicator`, and `swc-FormFieldLabel-necessityLabel` classes are fixed; `checkbox.css` supplies the indicator and necessity-label styles
