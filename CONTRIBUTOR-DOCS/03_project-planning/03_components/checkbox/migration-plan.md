@@ -595,7 +595,7 @@ Unit (`test/checkbox.test.ts`):
 Form participation (in a native `<form>` with native submit and reset buttons, per forms RFC §3.5):
 
 - [ ] Checked submits `name=value`; unchecked contributes nothing; default `value` is `on`
-- [ ] Two checkboxes with the same `name` each contribute independently
+- [ ] Checkboxes that share a `name` each submit their own `value` when checked, so `FormData.getAll(name)` returns one entry per checked box, in document order
 - [ ] `required` and unchecked blocks submit in a form without `novalidate`; `checkValidity()` is `false`; `reportValidity()` shows the Spectrum error presentation instead of the native bubble (Q14); the host matches `:invalid`; checking clears it
 - [ ] `invalid` blocks submit even when checked; `checkValidity()` is `false` and `validity.customError` is `true`; clearing `invalid` clears both (B17)
 - [ ] A read-only checkbox is barred from validation: `willValidate` is `false`, and neither `required` nor `invalid` blocks submit (B17)
