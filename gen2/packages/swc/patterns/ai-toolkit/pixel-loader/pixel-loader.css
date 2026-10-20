@@ -44,6 +44,12 @@
   transform-origin: center;
 }
 
+.swc-PixelLoader-cell--fully-rounded {
+  /* Fully rounded cells can rasterize briefly as thin when their first
+     `scale`/`translate` animation starts; promote these cells up front. */
+  will-change: translate, scale;
+}
+
 @media (forced-colors: active) {
   .swc-PixelLoader-cell {
     background: CanvasText;

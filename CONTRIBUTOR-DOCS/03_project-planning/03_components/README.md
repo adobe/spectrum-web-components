@@ -166,6 +166,7 @@
 - Swatch Group
     - [Swatch Group migration roadmap](swatch-group/rendering-and-styling-migration-analysis.md)
 - Switch
+    - [Switch accessibility migration analysis](switch/accessibility-migration-analysis.md)
     - [Switch migration roadmap](switch/rendering-and-styling-migration-analysis.md)
 - Tabs
     - [Tabs accessibility migration analysis](tabs/accessibility-migration-analysis.md)

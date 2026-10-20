@@ -178,7 +178,6 @@ debug-storybook.log
 # transient icon source SVGs: downloaded per family, transformed by the icon
 # generator, and not persisted after the generated art is committed. The family
 # folders stay tracked (via their README) so teammates can find where to add icons;
-# only the raw .svg assets are ignored. See
-# gen2/packages/swc/icon-source/README.md
-gen2/packages/swc/icon-source/ui/*.svg
-gen2/packages/swc/icon-source/workflow/*.svg
+# only the raw .svg assets are ignored. See each folder's README.md.
+gen2/packages/swc/components/ui-icons/icon-source/*.svg
+gen2/packages/icons/icon-source/*.svg

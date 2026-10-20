@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.5](https://github.com/adobe/spectrum-web-components/compare/gen1-1.12.4...gen1-1.12.5) (2026-10-01)
+
+## Patch Changes
+
+**sp-overlay**: **fix(overlay):** Do not leave an orphaned focus trap after a modal overlay closes, reopens, or is removed while opening.
+
+Previously, a modal overlay could create its focus trap after it closed or was removed during the lazy `focus-trap` import. It could also replace an active trap without deactivating it when opening restarted. The orphaned trap then blocked later clicks elsewhere on the page. The overlay now creates a trap only while it is still open and connected, and reuses its existing trap when opening restarts.
+
 # [1.12.4](https://github.com/adobe/spectrum-web-components/compare/gen1-1.12.3...gen1-1.12.4) (2026-09-24)
 
 ## Patch Changes
