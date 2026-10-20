@@ -58,7 +58,7 @@
 
 > **Epic SWC-2340** · Planning output for SWC-2342. Must be reviewed before implementation begins.
 >
-> This plan covers **`swc-checkbox`, the individual checkbox, only.** Unlike `swc-radio`, a checkbox is a complete control on its own (a single required consent box is a first-class use case), so `swc-checkbox` can ship and be documented independently. `swc-checkbox-group` is planned separately (Q10). The [accessibility migration analysis](./accessibility-migration-analysis.md) is authoritative for gen2 semantics, except where Q7 overrides it on description and error text. It was authored against the approved [forms strategy RFC](../../05_strategies/forms-strategy-rfc.md).
+> This plan covers **`swc-checkbox`, the individual checkbox, only.** Unlike `swc-radio`, a checkbox is a complete control on its own (a single required consent box is a first-class use case), so `swc-checkbox` can ship and be documented independently. `swc-checkbox-group` is planned separately (Q10). The [accessibility migration analysis](./accessibility-migration-analysis.md) is authoritative for gen2 semantics, except where Q7 (description and error text) and Q13 (name wiring) override it. It was authored against the approved [forms strategy RFC](../../05_strategies/forms-strategy-rfc.md).
 >
 > **Status: ready for review.** Core migration questions are resolved in the [Decision log](#decision-log), except Q14, which blocks the accessibility phase. Q8 and Q9 are settled during implementation and do not change the API.
 
@@ -77,7 +77,7 @@
 
 - **Q14**: where to suppress the native validation bubble without losing focus on a failed submit, shared with `swc-text-field`. Blocks the accessibility phase.
 
-Q8, Q9, Q12, and Q13 are open but do not block implementation; see [Blockers and open questions](#blockers-and-open-questions).
+Q8, Q9, and Q12 are open but do not block implementation; see [Blockers and open questions](#blockers-and-open-questions).
 
 ---
 
@@ -205,7 +205,7 @@ gen2 (planned; see [Architecture](#architecture-core-vs-swc-split)):
 | `isEmphasized` | `boolean` | `emphasized` | Inherited from `CheckboxGroup` context when inside one. |
 | `size` | `'S' \| 'M' \| 'L' \| 'XL'` | `size` | Default `M`. |
 | `description` | `ReactNode` | `description` slot | New in gen2. On a standalone checkbox, help text starts under the box at the control's text size; inside a `CheckboxGroup`, it moves under the label, one size smaller (Q7). |
-| `errorMessage` | `ReactNode \| (v) => ReactNode` | `error-text` slot | React's `HelpText` shows the error **instead of** the description while invalid; gen2 does the same through `FieldDescriptionMixin` (Q7). Renders with an error icon (`showErrorIcon`). |
+| `errorMessage` | `ReactNode \| (v) => ReactNode` | `error-text` slot | React's `HelpText` shows the error **instead of** the description while invalid; gen2 does the same through `FieldDescriptionMixin`, except that the description stays when `error-text` is empty (Q7). Renders with an error icon (`showErrorIcon`). |
 | `name`, `value`, `form` | `string` | `name`, `value`; `form` via `ElementInternals` | |
 | `validate`, `validationBehavior` | function, `'aria' \| 'native'` | Not mapped | Deferred (A3). |
 | `autoFocus` | `boolean` | native `autofocus` | |
@@ -231,7 +231,7 @@ gen2 (planned; see [Architecture](#architecture-core-vs-swc-split)):
 | `@spectrum-web-components/icons-ui` | 1.12.4 | 1st-gen: `sp-icon-checkmark75`–`300`, `sp-icon-dash75`–`300` elements. **Replaced** by gen2 `Checkmark` and `Dash` from [`gen2/packages/swc/components/ui-icons/icon-set/`](../../../../gen2/packages/swc/components/ui-icons/icon-set/index.ts) (already built). Size mapping follows the Spectrum CSS S2 template: `s` → 50, `m` → 75, `l` → 100, `xl` → 200. |
 | `@spectrum-web-components/shared` | 1.12.4 | 1st-gen: `Focusable`, used only by `CheckboxBase` for `sp-switch`. **Dropped.** |
 | `SizedMixin` (gen2 core) | already built | `size` with explicit default `m`. |
-| `LabellingMixin` (gen2 core) | **unmerged** (text field branch) | `label` slot presence, `renderLabel()` (`<label for>`), `accessible-label`, `accessible-labelledby`, `ariaLabelledByElements` wiring, missing-name dev warnings. See Q3. |
+| `LabellingMixin` (gen2 core) | **unmerged** (text field branch) | `label` slot presence, `renderLabel()` (`<label for>`), `accessible-label`, `accessible-labelledby`, `ariaLabelledByElements` wiring for `accessible-labelledby`, missing-name dev warnings. See Q3, Q13. |
 | `FieldDescriptionMixin` (gen2 core) | **unmerged** (text field branch) | `description` and `error-text` slots, `renderFieldDescription()`, `accessible-describedby`, `ariaDescribedByElements` wiring. The forms RFC and the accessibility analysis call it `HelpTextMixin`. See Q3, Q7. |
 | `FieldAssociationController` (gen2 core, SWC-2467) | **unmerged** (text field branch) | Wraps `ElementInternals`: `setValue()` (form value plus restore state), `formDisabledCallback`, validity reads. Host keeps `formAssociated`, `attachInternals()`, `setValidity()`, and `formResetCallback`. See Q3. |
 | `SlotPresenceController` (gen2 core) | already built | Used internally by both mixins. |
@@ -425,7 +425,7 @@ Initial expectation for Checkbox is a small reviewed set. Candidates: control si
 
 ### Accessibility semantics notes (gen2)
 
-The [accessibility migration analysis](./accessibility-migration-analysis.md) is authoritative, except where Q7 overrides it; the [Accessibility checklist](#accessibility) turns it into implementation items. Two points shape the design beyond that checklist:
+The [accessibility migration analysis](./accessibility-migration-analysis.md) is authoritative, except where Q7 and Q13 override it; the [Accessibility checklist](#accessibility) turns it into implementation items. Two points shape the design beyond that checklist:
 
 - **Item-level state, unlike radio.** `invalid`, `required`, `readonly`, and form value all live on each checkbox, because a single checkbox is a complete control.
 - **Expected axe false positive.** axe reports `label` on the roleless host. Exclude it per story with a `// reason:` comment that links the upstream axe-core issue, following forms RFC §3.4.
@@ -520,7 +520,7 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 
 - [ ] Host sets no `role`; the inner native input supplies `checkbox`
 - [ ] `delegatesFocus: true`; <kbd>Tab</kbd> and `focus()` land on the inner input
-- [ ] Name precedence `accessible-labelledby` > `accessible-label` > `label` slot resolves through `ariaLabelledByElements` on the inner input, wired by `LabellingMixin` and confirmed against the PoC's `checkbox-hybrid.js`/`labelling-controller.js` (Q13)
+- [ ] Name precedence `accessible-labelledby` > `accessible-label` > `label` slot resolves on the inner input through `LabellingMixin` (Q13)
 - [ ] `description` and `error-text` associate through `ariaDescribedByElements` only (the `aria-describedby` relationship); while `invalid` with error text, `error-text` replaces `description` in both the rendering and the association (Q7)
 - [ ] Dev warning when no accessible name is available
 
@@ -576,7 +576,7 @@ Unit (`test/checkbox.test.ts`):
 - [ ] `disabled`: inner input `disabled`; `click()` no-op
 - [ ] `invalid`: `aria-invalid="true"` only when `true`; attribute removed when `false`
 - [ ] `required`: inner input `required`
-- [ ] Label slot content names the input; `accessible-label` names it without a label slot; `accessible-labelledby` wins over both
+- [ ] Label slot content names the input; `accessible-label` names it without a label slot and wins over slotted label content; `accessible-labelledby` wins over both
 - [ ] `description` associated by default; while `invalid` with error text, `error-text` replaces it in the rendering and the association; `description` returns when `invalid` clears (Q7)
 - [ ] `accessible-describedby` adds the referenced elements to the inner input's description
 - [ ] Dev warning fires with no name source
@@ -652,7 +652,6 @@ _None currently; Q1 and Q2 resolved, see [Decision log](#decision-log)._
 | --- | ---- | --------- | ------ | ----- |
 | Q8 | Recommended, needs confirmation: consume only the description and error styles from the shared `form-fields` `_lit-styles/` fragment, because the checkbox label sits inline next to the box (Spectrum CSS `.spectrum-Checkbox-label`) and keeps its own styles. Open details: how to import that portion, which depends on how the text field branch splits the fragment; and how to style the inline label, since `renderLabel()` emits a fixed `swc-FormFieldLabel` class and the required indicator with no class hook (target that class or add a hook to the directive). | No | Open: confirm the recommendation; settle details after the text field branch merges | CSS reviewer |
 | Q9 | Exact read-only mechanism (likely `preventDefault()` on the inner input's `click` while read-only, which also blocks <kbd>Space</kbd>). Settle in API phase with a test first. | No | Open | Implementation |
-| Q13 | The [accessibility analysis](./accessibility-migration-analysis.md) names the inner input through `ariaLabelledByElements` pointing at the shadow label, confirmed against the PoC. `LabellingMixin` on the text field branch uses a native `<label for>` for the slotted label and `aria-label` for `accessible-label`, and sets `ariaLabelledByElements` only for `accessible-labelledby`. Confirm with the analysis author whether that wiring meets the requirement, or extend the mixin to wire the slotted label through `ariaLabelledByElements` too. Internal wiring only; no public API change. | No | Open: settle before the accessibility phase | Accessibility reviewer |
 | Q14 | Where to suppress the native validation bubble, shared with `swc-text-field`. Cancelling the host's `invalid` event suppresses the bubble and keeps submit blocking, but the browser then skips focusing the field on a failed submit. The shared behavior must therefore cancel the event, turn on the invalid presentation, and focus the first invalid field. Recommended: one opt-in behavior on `FieldAssociationController`, which needs the host passed in to listen for `invalid`. Text field currently relies on `novalidate` plus a consumer submit handler, and its [accessibility analysis](../text-field/accessibility-migration-analysis.md) defers the decision to the forms strategy. Open edge case: in a form that mixes native and `swc-` fields, a later native field can take focus ahead of an earlier `swc-` field. | Yes | Open: blocks the accessibility phase | Forms strategy owners + accessibility reviewer |
 
 ### Scope and prerequisites
@@ -694,6 +693,7 @@ A2–A5 have no tickets by decision (Q11): they are on-request or follow from sh
 | Q7 | Description and error text. **Swap:** use `FieldDescriptionMixin` unchanged, so `error-text` replaces `description` while `invalid` and `error-text` has content. **Placement:** on a standalone checkbox, both sit fully below the box and label, starting at the box's inline-start edge, at the control's text size. | Swapping is the correct default: it matches React S2 and `swc-text-field`, which uses the same mixin, and the description returns once `invalid` clears. The need to show both came partly from an earlier idea of wrapping a single checkbox in a checkbox group to get the in-group layout. Grid layout or slot placement inside `swc-checkbox` can produce either layout, so no wrapper is needed. This supersedes the accessibility analysis's two notes that a standalone required checkbox keeps its description alongside the error, under [ARIA roles, states, and properties](./accessibility-migration-analysis.md#aria-roles-states-and-properties) and [Shadow DOM and cross-root ARIA issues](./accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues). Placement follows React S2's standalone layout. In a group, React S2 moves the description under the label, one size smaller, and `swc-radio` plans the same under-label placement; the group layout waits for `swc-checkbox-group` (A1), because the item needs a way to flag group membership. |
 | Q10 | `swc-checkbox-group` is outside this migration. | The checkbox works standalone, so it ships first. Details: [Related components and ordering notes](#related-components-and-ordering-notes). |
 | Q11 | Only A1 gets a deferred ticket; A2–A5 are tracked in the Additive table without tickets. | A2 and A4 are on-request; A3 belongs to the shared forms strategy; A5 comes with `FieldDescriptionMixin`. Keeps the backlog limited to real, scheduled work. |
+| Q13 | Use `LabellingMixin`'s name wiring unchanged: an in-shadow `<label for>` names the inner input from the `label` slot, `aria-label` carries `accessible-label`, and `ariaLabelledByElements` carries `accessible-labelledby`. | Testing during plan review found an in-shadow `<label for>` acceptable, and it matches `swc-text-field`. Browsers rank `aria-labelledby` over `aria-label` over a native label, so the precedence matches the order the accessibility analysis specifies. Internal wiring only; no public API change. This supersedes the accessibility analysis's description of the slotted label wired through `ariaLabelledByElements`, under [ARIA roles, states, and properties](./accessibility-migration-analysis.md#aria-roles-states-and-properties), [Shadow DOM and cross-root ARIA issues](./accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues), and [Summary checklist](./accessibility-migration-analysis.md#summary-checklist). |
 
 ---
 
