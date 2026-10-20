@@ -302,19 +302,19 @@ export const Sizes: Story = {
     >
       <swc-text-field size="s" placeholder="Small placeholder">
         <span slot="label">Small</span>
-        <span slot="description">Used for compact layouts.</span>
+        <span slot="description">Description for the small input.</span>
       </swc-text-field>
       <swc-text-field size="m" placeholder="Medium placeholder">
         <span slot="label">Medium</span>
-        <span slot="description">Default field sizing.</span>
+        <span slot="description">Description for the medium input.</span>
       </swc-text-field>
       <swc-text-field size="l" placeholder="Large placeholder">
         <span slot="label">Large</span>
-        <span slot="description">For denser form surfaces.</span>
+        <span slot="description">Description for the large input.</span>
       </swc-text-field>
       <swc-text-field size="xl" placeholder="Extra-large placeholder">
         <span slot="label">Extra-large</span>
-        <span slot="description">For prominent entry points.</span>
+        <span slot="description">Description for the extra-large input.</span>
       </swc-text-field>
     </div>
   `,
