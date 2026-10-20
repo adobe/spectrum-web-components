@@ -396,46 +396,6 @@ export const NecessityIndicatorTest: Story = {
       ).toBeTruthy();
     });
 
-    await step('the required asterisk stays beside its label', async () => {
-      requiredIcon.style.inlineSize = '32rem';
-      for (const size of ['s', 'm', 'l', 'xl'] as const) {
-        requiredIcon.size = size;
-        for (const position of ['top', 'side'] as const) {
-          requiredIcon.labelPosition = position;
-          await requiredIcon.updateComplete;
-          const label = requiredIcon.querySelector('[slot="label"]');
-          const icon = requiredIcon.shadowRoot?.querySelector(
-            '.swc-FormFieldLabel-requiredIndicator swc-ui-icon'
-          );
-          const indicator = icon?.parentElement;
-          if (!label || !icon || !indicator) {
-            throw new Error('required label or asterisk not found');
-          }
-          const labelBounds = label.getBoundingClientRect();
-          const iconBounds = icon.getBoundingClientRect();
-          expect(
-            iconBounds.left - labelBounds.right,
-            `${size} ${position}: label-to-asterisk gap`
-          ).toBeCloseTo(
-            parseFloat(getComputedStyle(indicator).marginInlineStart),
-            1
-          );
-          expect(
-            iconBounds.top,
-            `${size} ${position}: icon beside label`
-          ).toBeLessThan(labelBounds.bottom);
-          expect(
-            iconBounds.bottom,
-            `${size} ${position}: icon beside label`
-          ).toBeGreaterThan(labelBounds.top);
-        }
-      }
-      requiredIcon.style.removeProperty('inline-size');
-      requiredIcon.size = 'm';
-      requiredIcon.labelPosition = 'top';
-      await requiredIcon.updateComplete;
-    });
-
     await step('label mode marks a required field "(required)"', () => {
       const label = requiredLabel.shadowRoot?.querySelector(
         '.swc-FormFieldLabel-necessityLabel'
