@@ -90,6 +90,10 @@ export abstract class TextFieldBase extends SizedMixin(
   @property({ type: String, reflect: true })
   public type: TextFieldType = 'text';
 
+  protected get inputType(): TextFieldType {
+    return TEXT_FIELD_TYPES.find((type) => type === this.type) ?? 'text';
+  }
+
   /**
    * Placeholder text shown when the field is empty. Never used as the accessible name.
    */
@@ -379,8 +383,8 @@ export abstract class TextFieldBase extends SizedMixin(
     super.willUpdate(changedProperties);
     if (changedProperties.has('value') || changedProperties.has('type')) {
       const input = this.inputElement ?? document.createElement('input');
-      if (input.type !== this.type) {
-        input.type = this.type;
+      if (input.type !== this.inputType) {
+        input.type = this.inputType;
       }
       if (input.value !== this.value) {
         input.value = this.value;

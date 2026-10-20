@@ -22,6 +22,8 @@ A text field consists of:
 
 ## Options
 
+The supported input types are `text`, `url`, `tel`, `email`, and `password`. Unsupported values render as `text` and produce an enum-validation warning in debug mode.
+
 ### Labelling
 
 Three sources can provide the field's accessible name. When more than one is set, the browser's [accessible-name computation](https://www.w3.org/TR/accname-1.2/) decides which one is announced, in this order:
@@ -50,7 +52,7 @@ In `side` position, the input aligns with the label's first line. A short label 
 
 ### Necessity indicator
 
-`necessity-indicator` chooses how the field's necessity is marked in the visible label. The default, `icon`, appends an asterisk to required fields only. `label` appends `(required)` to required fields and `(optional)` to optional ones, marking both; use it when most fields in a form share the opposite state (Spectrum's [required or optional](https://spectrum.adobe.com/web/rsp/components/text-field#usage-guidelines) pattern). The indicator needs a visible label and is decorative; the requirement itself is conveyed by the input's native `required` state.
+`necessity-indicator` chooses how the field's necessity is marked in the visible label. The default, `icon`, appends a decorative asterisk to required fields only. `label` appends `(required)` to required fields and `(optional)` to optional ones, marking both; use it when most fields in a form share the opposite state (Spectrum's [required or optional](https://spectrum.adobe.com/web/rsp/components/text-field#usage-guidelines) pattern). The indicator needs a visible label. Text indicators contribute to the accessible name; the input's native `required` state also conveys the requirement.
 
 <Canvas of={TextFieldStories.NecessityIndicator} />
 

@@ -143,7 +143,7 @@ export class TextField extends TextFieldBase {
           <input
             id=${INPUT_ID}
             class="swc-TextField-input"
-            type=${this.type}
+            type=${this.inputType}
             .value=${live(this.value)}
             placeholder=${ifDefined(this.placeholder || undefined)}
             pattern=${ifDefined(this.pattern)}

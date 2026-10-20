@@ -248,7 +248,7 @@ test.describe('Text field - ARIA Snapshots', () => {
     `);
   });
 
-  test('exposes an identical accessible name across necessity-indicator modes', async ({
+  test('includes textual necessity indicators in accessible names', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -256,14 +256,10 @@ test.describe('Text field - ARIA Snapshots', () => {
       'components-text-field--necessity-indicator',
       'swc-text-field'
     );
-    // The necessity-indicator span is `aria-hidden="true"` (see
-    // `renderNecessityIndicator` in `render-label.ts`), so the "(required)"
-    // and "(optional)" text is excluded from the accessible name. All three
-    // fields expose the same name; the mode only affects visible presentation.
     await expect(root).toMatchAriaSnapshot(`
       - textbox "Email address"
-      - textbox "Email address"
-      - textbox "Email address"
+      - textbox "Email address (required)"
+      - textbox "Email address (optional)"
     `);
     const fields = root.locator('swc-text-field');
     await expect(fields.nth(0).locator('input')).toHaveAttribute(
@@ -273,6 +269,9 @@ test.describe('Text field - ARIA Snapshots', () => {
     await expect(fields.nth(1).locator('input')).toHaveAttribute(
       'required',
       ''
+    );
+    await expect(fields.nth(2).locator('input')).not.toHaveAttribute(
+      'required'
     );
   });
 

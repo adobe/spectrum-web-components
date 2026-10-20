@@ -60,7 +60,7 @@ export interface LabellingInterface {
 
   /**
    * Renders the visible label as a `<label for>` targeting the role-element `id`.
-   * Options append a decorative necessity indicator: `required` marks the state,
+   * Options append a necessity indicator: `required` marks the state,
    * and `necessityIndicator` picks the asterisk (`icon`, which needs
    * `necessityIcon` to render) or consumer-provided text (`label`).
    */

@@ -21,6 +21,7 @@
 .swc-TextField-control {
   --_swc-text-field-border-width: token("border-width-200");
   --_swc-text-field-validation-icon-size: var(--swc-text-field-validation-icon-size, token("workflow-icon-medium"));
+  --_swc-text-field-min-block-size: token("component-height-100");
 
   display: grid;
   grid-area: input;
@@ -127,6 +128,18 @@ slot[name="prefix"]::slotted(*) {
   border-color: token("gray-900");
 }
 
+:host([size="s"]) .swc-TextField-control {
+  --_swc-text-field-min-block-size: token("component-height-75");
+}
+
+:host([size="l"]) .swc-TextField-control {
+  --_swc-text-field-min-block-size: token("component-height-200");
+}
+
+:host([size="xl"]) .swc-TextField-control {
+  --_swc-text-field-min-block-size: token("component-height-300");
+}
+
 /* Gated on the `keyboard-focused` state set by `TextFieldBase`, not
    `:focus-visible`: text inputs match `:focus-visible` on pointer click too,
    which would show the ring on mouse click. */
@@ -178,7 +191,6 @@ slot[name="prefix"]::slotted(*) {
 /* ── Sizes ────────────────────────────────────────── */
 
 :host([size="s"]) {
-  --_swc-text-field-min-block-size: token("component-height-75");
   --swc-text-field-padding-block: token("base-padding-vertical-small");
   --swc-text-field-padding-inline: token("base-padding-horizontal-small");
   --swc-text-field-affix-gap: token("base-gap-small");
@@ -190,7 +202,6 @@ slot[name="prefix"]::slotted(*) {
 }
 
 :host([size="l"]) {
-  --_swc-text-field-min-block-size: token("component-height-200");
   --swc-text-field-padding-block: token("base-padding-vertical-large");
   --swc-text-field-padding-inline: token("base-padding-horizontal-large");
   --swc-text-field-affix-gap: token("base-gap-large");
@@ -202,7 +213,6 @@ slot[name="prefix"]::slotted(*) {
 }
 
 :host([size="xl"]) {
-  --_swc-text-field-min-block-size: token("component-height-300");
   --swc-text-field-padding-block: token("base-padding-vertical-extra-large");
   --swc-text-field-padding-inline: token("base-padding-horizontal-extra-large");
   --swc-text-field-affix-gap: token("base-gap-extra-large");

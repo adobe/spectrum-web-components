@@ -600,6 +600,11 @@ export const NecessityIndicatorTest: Story = {
         ),
         'required icon mode renders the asterisk'
       ).toBeTruthy();
+      expect(
+        requiredIcon.shadowRoot?.querySelector(
+          '.swc-FormFieldLabel-requiredIndicator'
+        )
+      ).toHaveAttribute('aria-hidden', 'true');
     });
 
     await step('label mode marks a required field "(required)"', () => {
@@ -611,8 +616,8 @@ export const NecessityIndicatorTest: Story = {
       );
       expect(
         label?.getAttribute('aria-hidden'),
-        'necessity label is hidden from assistive technology'
-      ).toBe('true');
+        'necessity text remains available to assistive technology'
+      ).toBeNull();
     });
 
     await step('label mode marks an optional field "(optional)"', () => {
@@ -622,6 +627,7 @@ export const NecessityIndicatorTest: Story = {
       expect(label?.textContent?.trim(), 'optional label is shown').toBe(
         '(optional)'
       );
+      expect(label?.hasAttribute('aria-hidden')).toBe(false);
     });
 
     await step(
@@ -900,6 +906,40 @@ export const EnumValidationTest: Story = {
         ).toBe(true);
         field.parentElement?.remove();
       })
+    );
+
+    await step(
+      'unsupported native types fall back to text without changing the value',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          for (const type of ['color', 'number', 'checkbox', 'bogus']) {
+            const field = await fixture<TextField>(html`
+              <swc-text-field
+                accessible-label="Named"
+                type=${type}
+                value="Unchanged text"
+              ></swc-text-field>
+            `);
+            expect(field.roleElement?.type).toBe('text');
+            expect(field.value).toBe('Unchanged text');
+            expect(field.roleElement?.value).toBe('Unchanged text');
+            expect(
+              warnCalls.some((call) =>
+                String(call?.[1]).includes(`Received "${type}"`)
+              )
+            ).toBe(true);
+
+            field.type = 'email';
+            await field.updateComplete;
+            expect(field.roleElement?.type).toBe('email');
+            field.setAttribute('type', type);
+            await field.updateComplete;
+            expect(field.roleElement?.type).toBe('text');
+            expect(field.value).toBe('Unchanged text');
+            expect(field.roleElement?.value).toBe('Unchanged text');
+            field.parentElement?.remove();
+          }
+        })
     );
 
     await step('warns when "label-position" is not a supported value', () =>
