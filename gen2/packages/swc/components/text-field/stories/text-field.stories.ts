@@ -382,7 +382,7 @@ LabelOverflow.storyName = 'Label overflow';
 // submission no longer natively blocks on an invalid field either. Mirror that
 // blocking decision here and surface it through the field's own invalid
 // presentation (icon + error text) instead.
-const handleSubmit = (event: SubmitEvent): void => {
+const handleSubmit = async (event: SubmitEvent): Promise<void> => {
   event.preventDefault();
   const form = event.currentTarget as HTMLFormElement;
   const field = form.querySelector('swc-text-field');
@@ -390,11 +390,14 @@ const handleSubmit = (event: SubmitEvent): void => {
   if (!field || !output) {
     return;
   }
+  // Clear the demo's previous error before checking the current constraints.
+  field.invalid = false;
+  await field.updateComplete;
   field.invalid = !field.checkValidity();
   if (field.invalid) {
     return;
   }
-  output.textContent = [...new FormData(form)]
+  output.value = [...new FormData(form)]
     .map(([name, value]) => `${name}: ${value}`)
     .join('\n');
 };
@@ -409,7 +412,7 @@ const showValidity = (event: Event): void => {
   if (field && output) {
     const fieldValid = field.checkValidity();
     const formValid = form.checkValidity();
-    output.textContent = [
+    output.value = [
       `field.checkValidity(): ${fieldValid ? 'valid' : 'invalid'}`,
       `form.checkValidity(): ${formValid ? 'valid' : 'invalid'}`,
       field.validity.valueMissing ? 'validity.valueMissing: true' : '',

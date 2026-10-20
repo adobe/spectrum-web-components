@@ -90,7 +90,7 @@ export class TextField extends TextFieldBase {
    * onto. Queried by its stable `id` (referenced by the rendered `<label for>`).
    */
   public override get roleElement(): HTMLInputElement | null {
-    return this.renderRoot.querySelector('input#input');
+    return this.renderRoot?.querySelector('input#input') ?? null;
   }
 
   private handleInput(event: Event): void {

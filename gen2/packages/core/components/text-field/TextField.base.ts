@@ -139,7 +139,8 @@ export abstract class TextFieldBase extends SizedMixin(
   public required = false;
 
   /**
-   * Whether the field is in an invalid state.
+   * Whether the application marks the field invalid. Shows the error state and
+   * blocks constraint validation independently of native or custom errors.
    */
   @property({ type: Boolean, reflect: true })
   public invalid = false;
@@ -191,6 +192,8 @@ export abstract class TextFieldBase extends SizedMixin(
     onDisabledChange: () => this.requestUpdate(),
   });
 
+  private customValidityMessage = '';
+
   // Text inputs match `:focus-visible` even on pointer click (the platform always
   // shows a ring on elements that take keyboard text), so CSS alone can't suppress
   // the ring on click. Track modality here and expose a `keyboard-focused` custom
@@ -240,7 +243,7 @@ export abstract class TextFieldBase extends SizedMixin(
     return this.fieldAssoc.validity;
   }
 
-  /** The localized validation message. */
+  /** The current validation message; empty when valid or barred from validation. */
   public get validationMessage(): string {
     return this.fieldAssoc.validationMessage;
   }
@@ -253,6 +256,17 @@ export abstract class TextFieldBase extends SizedMixin(
   /** Runs constraint validation; returns whether the field is valid. */
   public checkValidity(): boolean {
     return this.fieldAssoc.checkValidity();
+  }
+
+  /**
+   * Sets a custom validation error without changing `invalid`. Pass an empty
+   * string to clear only this error. Calls before first render are preserved.
+   * Once rendered, validity is synchronized immediately.
+   */
+  public setCustomValidity(message: string): void {
+    this.customValidityMessage = message;
+    this.syncValidity();
+    this.requestUpdate();
   }
 
   /** Runs constraint validation and reports any problem to the user. */
@@ -373,11 +387,20 @@ export abstract class TextFieldBase extends SizedMixin(
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
+    this.syncValidity();
+  }
+
+  private syncValidity(): void {
     const input = this.inputElement;
     if (input) {
+      const message =
+        this.customValidityMessage || (this.invalid ? 'Invalid value.' : '');
+      input.setCustomValidity(message);
       this.internals.setValidity(
         input.validity,
-        input.validationMessage,
+        // Disabled and readonly inputs hide validationMessage, but setValidity
+        // still requires a message when customError is set.
+        message || input.validationMessage,
         input
       );
     }

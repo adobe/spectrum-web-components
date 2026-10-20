@@ -55,7 +55,10 @@ import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 | `prefix` slot                                       | Non-interactive content (icon, symbol, avatar) rendered inside the field before the input.                                                                                                                                                                              |
 | Native form association                             | `ElementInternals`-based participation: `formResetCallback`, `formDisabledCallback`, `fieldset[disabled]` cascade, plus the constraint-validation surface (`form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, `reportValidity()`) on the host. |
 | Keyboard-only focus ring                            | Focus ring shows only on keyboard focus; pointer focus is indicated by a border color change.                                                                                                                                                                           |
+| `setCustomValidity(message)`                        | Adds an application-specific validation error. Pass `''` to clear only this message. Calls before first render are preserved.                                                                                                                                           |
 | `delegatesFocus`                                    | Focus lands directly on the internal `<input>`; the field is a single tab stop.                                                                                                                                                                                         |
+
+`invalid` now makes eligible fields fail validation and blocks native submission unless validation is bypassed. Clear authored errors with `invalid = false` and custom messages with `setCustomValidity('')`. Neither clears the other or overrides native constraints. Application-set errors are not automatically cleared on input, blur, or submission. See [Native form behavior](?path=/docs/components-text-field--docs#native-form-behavior).
 
 ### Removed in Spectrum 2
 
@@ -247,4 +250,5 @@ Spectrum 2 exposes a reduced set of `--swc-*` custom properties on `<swc-text-fi
 - [ ] Replace `<sp-textfield multiline>` with `<swc-text-area>` (once migrated); move `grows` and `rows`.
 - [ ] Remove `quiet` and `tooltip-placement`.
 - [ ] Move `autocomplete="list"` or `autocomplete="none"` markup to a combobox.
+- [ ] Clear application-authored `invalid` and custom validation messages when their errors are resolved; both now participate in native form validation.
 - [ ] Remove all `--mod-textfield-*` overrides; adopt the `--swc-*` properties above where needed.
