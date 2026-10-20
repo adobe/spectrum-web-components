@@ -1013,6 +1013,86 @@ export const FormParticipationTest: Story = {
 FormParticipationTest.storyName = 'Form participation';
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Form state restoration
+// ──────────────────────────────────────────────────────────────
+
+export const FormStateRestoreTest: Story = {
+  ...FormParticipationTest,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.shadowRoot?.querySelector('input');
+    if (!form || !input) {
+      throw new Error('form or input not found');
+    }
+    const events: string[] = [];
+    field.addEventListener('input', () => events.push('input'));
+    field.addEventListener('change', () => events.push('change'));
+    field.required = true;
+    await field.updateComplete;
+
+    await step(
+      'restored strings synchronize the host, input, and form',
+      async () => {
+        for (const state of ['Restored', '', 'Restored\nvalue']) {
+          field.formStateRestoreCallback(state);
+          await field.updateComplete;
+          const expected = state.replace(/\n/g, '');
+          expect(field.value, 'host value is restored and sanitized').toBe(
+            expected
+          );
+          expect(input.value, 'displayed value matches the host').toBe(
+            expected
+          );
+          expect(
+            new FormData(form).get('username'),
+            'form value is restored'
+          ).toBe(expected);
+          expect(
+            field.validity.valueMissing,
+            'required validity follows the restored value'
+          ).toBe(expected === '');
+        }
+      }
+    );
+
+    await step('non-string state leaves the text value unchanged', async () => {
+      for (const state of [
+        null,
+        new File(['value'], 'state.txt'),
+        new FormData(),
+      ]) {
+        field.formStateRestoreCallback(state);
+        await field.updateComplete;
+        expect(field.value).toBe('Restoredvalue');
+        expect(input.value).toBe('Restoredvalue');
+        expect(new FormData(form).get('username')).toBe('Restoredvalue');
+      }
+    });
+
+    await step('restoration preserves the authored reset value', async () => {
+      expect(field.getAttribute('value')).toBe('Example');
+      form.reset();
+      await field.updateComplete;
+      expect(field.value).toBe('Example');
+      expect(input.value).toBe('Example');
+      expect(new FormData(form).get('username')).toBe('Example');
+    });
+
+    await step(
+      'restoration and reset do not emit input or change events',
+      () => {
+        expect(events).toEqual([]);
+      }
+    );
+  },
+};
+FormStateRestoreTest.storyName = 'Form state restoration';
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Native form validation, reset, and submit behavior
 // ──────────────────────────────────────────────────────────────
 

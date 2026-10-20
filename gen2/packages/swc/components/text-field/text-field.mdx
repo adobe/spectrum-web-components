@@ -84,6 +84,8 @@ Pressing <kbd>Enter</kbd> activates the form's first associated submit button, i
 
 Values follow the native input type's sanitization rules. Single-line inputs remove line breaks; email and URL inputs also remove leading and trailing ASCII whitespace. After an update, the `value` property, displayed input, and submitted form value agree. Programmatic value changes and form resets do not emit `input` or `change` events.
 
+When the browser supplies saved string state through `formStateRestoreCallback()`, the field restores its value using the same sanitization rules without emitting `input` or `change` events. Restoration leaves the authored `value` attribute unchanged, so a later form reset still restores the initial value. Browser support for invoking this callback during navigation or autofill varies.
+
 <Canvas of={TextFieldStories.FormBehavior} />
 
 ## Accessibility

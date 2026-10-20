@@ -265,6 +265,15 @@ export abstract class TextFieldBase extends SizedMixin(
     this.value = this.getAttribute('value') ?? '';
   }
 
+  /** Restores string state supplied by the browser for navigation or autofill. */
+  public formStateRestoreCallback(
+    state: string | File | FormData | null
+  ): void {
+    if (typeof state === 'string') {
+      this.value = state;
+    }
+  }
+
   /** Delegates the ancestor form / fieldset disabled cascade to the controller. */
   public formDisabledCallback(disabled: boolean): void {
     this.fieldAssoc.formDisabledCallback(disabled);

@@ -368,6 +368,7 @@ Initial expectation for Text field is a small reviewed set (likely field width/m
 
 - **Validation:** keep native constraint validation via a real `<input>`; `checkValidity()` remains public. Reflect `required`/`pattern`/`minlength`/`maxlength` to the native input. Suppress the native validation bubble in favor of the inline error message; mechanism and the full validation-behavior model (RS `native` vs `aria`, custom `validate`, server errors) deferred to the forms-strategy work (Q19).
 - **Form reset:** `FieldAssociationController.formResetCallback()` restores a defined **default value** (the RS `defaultValue` concept, typically the initial attribute value). The reset target must be specified, not left implicit.
+- **Form state restoration:** `TextFieldBase.formStateRestoreCallback()` restores saved string state supplied by the browser, including an empty string. It uses the existing value sanitization and form-value synchronization without emitting `input` or `change` events or changing the authored reset value. Non-string state is not applicable to this string-valued field and leaves its value unchanged.
 - **Events:** keep `input` and `change` (composed, bubbling), matching native semantics.
 - **Selection API:** keep `setSelectionRange()` and `select()`.
 - **Focus:** `delegatesFocus: true`; keyboard-only focus ring via JS modality tracking + a `keyboard-focused` custom state (See B12 and the [Decision log](#decision-log)).
@@ -425,7 +426,7 @@ Planned rendering shape:
 
 - [x] `TextField.types.ts`: define `TextFieldType`, the `size` union, and the `label-position` (`top`/`side`) union; export public types
 - [x] `TextField.base.ts`: implement `accessible-label`, `value` (string), `type`, `placeholder`, `pattern`, `inputmode`, `autocomplete`, `maxlength`/`minlength`, `readonly`, `required`, `invalid`/`valid`, `label-position` (core; default `top`), `necessity-indicator`, `size`, `disabled`, form validity, and selection methods. `accessible-labelledby`/`accessible-describedby` are implemented through the shared mixin path
-- [x] Remove `quiet`, `multiline`, `grows`, `rows`, `focused`, `tooltip-placement` — not carried into 2nd-gen; deprecated on 1st-gen `Textfield` with `@deprecated` + `__swc.warn`
+- [x] Remove `quiet`, `multiline`, `grows`, `rows`, `focused`, `tooltip-placement` from the 2nd-gen API; leave the 1st-gen API unchanged, without new deprecation annotations or warnings, per PR review
 - [ ] Resolve `allowedKeys` (Q11) before finalizing the surface
 
 #### Alignment checks
@@ -475,6 +476,7 @@ Planned rendering shape:
 - [x] Port applicable coverage from `1st-gen/packages/textfield/test/` (single-line only)
 - [x] Add Playwright `text-field.a11y.spec.ts` with `toMatchAriaSnapshot` (name/value/description across states and label positions)
 - [x] Unit: same-root unique ids; `aria-describedby` only when description/error present; form participation (`FormData`, reset, `fieldset[disabled]`)
+- [x] Form state restoration: directly exercise the browser lifecycle callback with string, empty, and non-string state; verify sanitized host/input/form values, required validity, preserved reset defaults, and no synthetic `input`/`change` events in Chromium, Firefox, and WebKit
 
 #### Behavior
 
