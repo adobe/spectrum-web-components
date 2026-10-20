@@ -224,7 +224,7 @@ gen2 (planned; see [Architecture](#architecture-core-vs-swc-split)):
 | `inputRef` | ref | Not exposed | Inner input stays private (B7). |
 | `styles`, `UNSAFE_className`, `UNSAFE_style` | | Not mapped | React styling escape hatches. |
 
-**Visual facts from the React source** that inform styling: box border `gray-800`, checked/indeterminate fill neutral (`accent-900` when emphasized), disabled `gray-400`, forced colors use `Highlight`/`GrayText`, press scale on the box, icon one size step smaller than the control (`S` → `XS`). gen2 does not use React's invalid box colors (B14).
+**Visual facts from the React source** that inform styling: box border `gray-800`, checked/indeterminate fill neutral (`accent-900` when emphasized), disabled `gray-400` (gen2 uses `disabled-content-color`; C6), forced colors use `Highlight`/`GrayText`, press scale on the box, icon one size step smaller than the control (`S` → `XS`). gen2 does not use React's invalid box colors (B14).
 
 ---
 
@@ -385,11 +385,11 @@ Based on the [Figma `S2 / Web` checkbox component frame](https://www.figma.com/d
 
 | Selection | Default | Emphasized | Hover | Disabled |
 | --------- | ------- | ---------- | ----- | -------- |
-| Unchecked | Yes | Not shown | Yes | Yes |
-| Indeterminate (Figma: Partial) | Yes, neutral fill | Yes, accent fill | Yes | Yes, gray |
-| Checked (Figma: Selected) | Yes, neutral fill | Yes, accent fill | Yes | Yes, gray |
+| Unchecked | Yes | Not shown | Yes | Yes, `disabled-content-color` border |
+| Indeterminate (Figma: Partial) | Yes, neutral fill | Yes, accent fill | Yes | Yes, `disabled-content-color` fill |
+| Checked (Figma: Selected) | Yes, neutral fill | Yes, accent fill | Yes | Yes, `disabled-content-color` fill |
 
-Figma shows no emphasized unchecked or emphasized disabled rows: `emphasized` changes only the checked and indeterminate fill. Disabled is gray with or without `emphasized` (**Inferred** from React S2, which uses `gray-400` either way).
+Figma shows no emphasized unchecked or emphasized disabled rows: `emphasized` changes only the checked and indeterminate fill. Disabled uses the `disabled-content-color` token with or without `emphasized`: for the box border, the checked and indeterminate fill, the label, and the description, with `GrayText` in forced colors. Disabled also suppresses the down-state shift. This matches `swc-radio`'s `radio.css`. **Confirmed (C6).**
 
 Additional Figma-confirmed presentation modes:
 
@@ -399,7 +399,7 @@ Additional Figma-confirmed presentation modes:
 Not shown in the Figma frame, sourced elsewhere:
 
 - **Focus-visible**: Spectrum CSS focus ring on `.spectrum-Checkbox-box::after`. **Inferred.**
-- **Down (active)**: Spectrum CSS perspective shift, suppressed when read-only; React has the matching `pressScale`. **Inferred.**
+- **Down (active)**: Spectrum CSS perspective shift, suppressed when read-only or disabled (C6); React has the matching `pressScale`. **Inferred.**
 - **Invalid**: box colors unchanged; an error icon shows beside the help text, or alone (B14). **Confirmed (Q1).**
 - **Read-only**: No distinct visual; keeps Spectrum CSS's suppression of the down-state transform. **Confirmed (Q2).**
 - **Forced colors**: Spectrum CSS `@media (forced-colors: active)` block. **Confirmed** by Spectrum CSS and React.
@@ -508,7 +508,7 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 
 - [ ] Add `.swc-Checkbox` to the internal wrapper in `render()`; keep styling off `:host`
 - [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `checkbox.css` as baseline
-- [ ] After the baseline copy, align `checkbox.css` with `swc-radio`'s `radio.css` where it fits (Q8): the box-and-label grid, first-line box alignment, size custom properties, label typography, and state colors. Leave out its description rules and description font sizes (the in-group layout that Q7 defers), its host focus selectors (checkbox focuses the inner input), and its group read-only container query (checkbox read-only is per item)
+- [ ] After the baseline copy, align `checkbox.css` with `swc-radio`'s `radio.css` where it fits (Q8): the box-and-label grid, first-line box alignment, size custom properties, label typography, and state colors, including `disabled-content-color` for disabled. Leave out its description layout and description font sizes (the in-group layout that Q7 defers), its host focus selectors (checkbox focuses the inner input), and its group read-only container query (checkbox read-only is per item)
 - [ ] Map `.is-indeterminate`, `.is-readOnly`, `--emphasized`, and `--size*` selectors to host attribute selectors
 - [ ] Q8: settle both open choices, record them in the Decision log, then implement them. Error text needs styles from the shared `form-fields` rules or `checkbox.css`; `radio.css` has none
 - [ ] Style the label and required indicator that `renderLabel()` emits, per Q8. Its `swc-FormFieldLabel`, `swc-FormFieldLabel-requiredIndicator`, and `swc-FormFieldLabel-necessityLabel` classes are fixed; `checkbox.css` supplies the indicator and necessity-label styles
@@ -688,7 +688,7 @@ A2–A4 have no tickets by decision (Q11): they are on-request or follow from sh
 
 ## Decision log
 
-`C#` rows record decisions made while drafting that never had a `Q` or `B` id.
+`C#` rows record decisions made while drafting or in review that never had a `Q` or `B` id.
 
 | Ref | Decision | Rationale / context |
 | --- | -------- | ------------------- |
@@ -697,6 +697,7 @@ A2–A4 have no tickets by decision (Q11): they are on-request or follow from sh
 | C3 | Implement `disabled` as native `disabled` on the inner input, in place of `DisabledMixin`. | `DisabledMixin` sets `aria-disabled` on the host and swaps the host `tabindex`, which suits host-role components. The checkbox host has no role, B6 removes the swap, and the accessibility analysis requires native `disabled` on the inner input. |
 | C4 | Use `LabellingMixin` (unlike `swc-radio`). | Checkboxes without visible text are an evidenced pattern (table row selection, card selection), so `accessible-label`/`accessible-labelledby` are needed. |
 | C5 | Icon size mapping 50/75/100/200 for `s`/`m`/`l`/`xl`. | Spectrum CSS `spectrum-two` template; matches React's "one size smaller than the control" rule. |
+| C6 | Disabled uses the `disabled-content-color` token, as specified in the note under the visual matrix in [Public API](#public-api). | From plan review: matches `swc-radio`'s `radio.css`, and replaces the earlier inference from React S2's `gray-400`. |
 | Q1 / B14 | Invalid leaves the box colors unchanged; a decorative error icon marks the state, as specified in B14. | Design decided, in a Slack discussion relayed in plan review, that invalid does not change the input's border or fill. This matches Figma, where checkbox has no invalid state, and follows Spectrum CSS, which already removed radio's invalid styles ([spectrum-css#2209](https://github.com/adobe/spectrum-css/pull/2209)). The error icon copies the `swc-radio-group` decision: it shows whenever `invalid` is set, so the state never relies on color alone. This replaces the earlier plan to follow React S2's negative box colors and brings the error icon, formerly A5, into scope. |
 | Q2 | Read-only has no distinct visual treatment; it looks like the enabled state. Spectrum CSS's suppression of the down-state transform for read-only is kept. | Follows React S2, whose checkbox styles have no read-only condition. Figma's component frame has no read-only state. Read-only is conveyed to assistive technology by `aria-readonly="true"`. |
 | Q3 | Build on the shared form mixins and controller; start Setup (SWC-2343) after the text field branch and the radio branch both merge to `main`. | The foundation exists only on the text field branch; building on it avoids a second labelling and form implementation and validates its boolean-field path. Plan review asked to wait for the radio branch too, so checkbox reuses settled radio patterns instead of chasing them while they shift; that branch also carries the `errorIcon` option that B14 needs. Details: [Dependency-aware recommendation](#dependency-aware-recommendation). |
