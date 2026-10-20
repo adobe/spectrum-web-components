@@ -381,7 +381,7 @@ Events: `change` (`Event`, `bubbles`, `composed`, not cancelable; B10). The nati
 
 #### Visual matrix (gen2)
 
-Based on the [Figma `S2 / Web` checkbox component frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9392-43644):
+Based on the [Figma `S2 / Web` checkbox component frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9961-2510):
 
 | Selection | Default | Emphasized | Hover | Disabled |
 | --------- | ------- | ---------- | ----- | -------- |
