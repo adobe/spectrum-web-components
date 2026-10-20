@@ -31,11 +31,13 @@ const resolvedBrowserInstances =
 // files in parallel (one browser context each), a WebKit-only CI run exhausts
 // the container's memory and gets OOM-killed mid-suite. CircleCI sharding
 // handles wall-clock time; this cap bounds *peak* memory by limiting how many
-// WebKit contexts are alive at once. Chromium and Firefox are lighter and run
-// at the default (CPU-count) parallelism.
+// WebKit contexts are alive at once.
 const isWebkitOnly =
   resolvedBrowserInstances.length === 1 &&
   resolvedBrowserInstances[0].browser === 'webkit';
+const isFirefoxOnly =
+  resolvedBrowserInstances.length === 1 &&
+  resolvedBrowserInstances[0].browser === 'firefox';
 const browserMemoryLimits = isWebkitOnly
   ? { maxWorkers: 2, minWorkers: 1 }
   : {};
@@ -168,6 +170,7 @@ export default mergeConfig(
           },
           test: {
             name: 'storybook',
+            ...(process.env.CI && isFirefoxOnly ? { maxWorkers: 2 } : {}),
             browser: {
               enabled: true,
               provider: playwright(),
