@@ -67,11 +67,11 @@
 ## TL;DR
 
 - **A form-associated custom element with a real native input.** gen2 keeps 1st-gen's native `<input type="checkbox">` in the shadow root, so role, `checked`, `mixed`, and <kbd>Space</kbd> come from the browser. It adds host form participation through `ElementInternals` (B16), which 1st-gen lacks: `sp-checkbox` never submits with a `<form>`.
-- **Built on the shared form foundation from the text field epic.** `LabellingMixin` (label slot, `accessible-label`, `accessible-labelledby`), `FieldDescriptionMixin` (`description` and `error-text` slots, `accessible-describedby`), and `FieldAssociationController` exist only on the unmerged text field branch (Epic SWC-2323). Checkbox implementation starts after it merges (Q3).
+- **Built on the shared form foundation from the text field epic.** `LabellingMixin` (label slot, `accessible-label`, `accessible-labelledby`), `FieldDescriptionMixin` (`description` and `error-text` slots, `accessible-describedby`), and `FieldAssociationController` exist only on the unmerged text field branch (Epic SWC-2323). Checkbox implementation starts after it merges, and B14 also needs the `errorIcon` option of `renderFieldDescription()` from the radio branch (Q3).
 - **Read-only gets fixed (B15).** 1st-gen fakes `readonly` by disabling the inner input, so screen readers announce it as disabled and it leaves the tab order. gen2 keeps it focusable, exposes `aria-readonly="true"`, and blocks the toggle.
 - **Consumer-facing changes:** B1, B4, B5, B6, B7, B9, B10, B11, B12, B15, B16, B17, B18, and B21 each name a migration path. The largest: label content moves to a named `label` slot (B1); the `checked` attribute becomes the default state, as on a native checkbox (B9); `change` is no longer cancelable (B10); `--mod-checkbox-*` is removed (B11); and read-only checkboxes become Tab stops (B15).
-- **Visual options carry over.** The [Figma `S2 / Web` checkbox frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9961-2510) confirms sizes `s`/`m`/`l`/`xl`, unchecked, indeterminate, and checked selection, `emphasized` (accent fill on checked and indeterminate), hover, disabled, and wrapping labels. Figma has no invalid state; gen2 follows React S2 (B14).
-- **MVP (minimum viable product) scope:** `swc-checkbox` with the full [public API](#public-api), including the `label`, `description`, and `error-text` slots, plus form participation and every accessibility item. **Out of scope:** everything in [Additive](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-gen2) (A1–A5), including `swc-checkbox-group`.
+- **Visual options carry over.** The [Figma `S2 / Web` checkbox frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9961-2510) confirms sizes `s`/`m`/`l`/`xl`, unchecked, indeterminate, and checked selection, `emphasized` (accent fill on checked and indeterminate), hover, disabled, and wrapping labels. Figma has no invalid state; per Design, invalid leaves the box colors unchanged and shows an error icon instead (B14).
+- **MVP (minimum viable product) scope:** `swc-checkbox` with the full [public API](#public-api), including the `label`, `description`, and `error-text` slots, plus form participation and every accessibility item. **Out of scope:** everything in [Additive](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-gen2) (A1–A4), including `swc-checkbox-group`.
 
 ### Most blocking open questions
 
@@ -183,7 +183,13 @@ gen2 (planned; see [Architecture](#architecture-core-vs-swc-split)):
   <!-- FieldDescriptionMixin.renderFieldDescription(), placed per Q7 -->
   <span class="swc-FormFieldDescription"><slot name="description"></slot></span>
   <!-- or, while invalid with error text, in its place: -->
-  <span class="swc-FormFieldErrorText"><slot name="error-text"></slot></span>
+  <span class="swc-FormFieldErrorText">
+    <!-- error icon markup from the radio branch; other placements: B14 -->
+    <span class="swc-FormFieldErrorText-icon">
+      <swc-icon-alert-triangle aria-hidden="true"></swc-icon-alert-triangle>
+    </span>
+    <span class="swc-FormFieldErrorText-text"><slot name="error-text"></slot></span>
+  </span>
 </swc-checkbox>
 ```
 
@@ -205,7 +211,7 @@ gen2 (planned; see [Architecture](#architecture-core-vs-swc-split)):
 | `isEmphasized` | `boolean` | `emphasized` | Inherited from `CheckboxGroup` context when inside one. |
 | `size` | `'S' \| 'M' \| 'L' \| 'XL'` | `size` | Default `M`. |
 | `description` | `ReactNode` | `description` slot | New in gen2. On a standalone checkbox, help text starts under the box at the control's text size; inside a `CheckboxGroup`, it moves under the label, one size smaller (Q7). |
-| `errorMessage` | `ReactNode \| (v) => ReactNode` | `error-text` slot | React's `HelpText` shows the error **instead of** the description while invalid; gen2 does the same through `FieldDescriptionMixin`, except that the description stays when `error-text` is empty (Q7). Renders with an error icon (`showErrorIcon`). |
+| `errorMessage` | `ReactNode \| (v) => ReactNode` | `error-text` slot | React's `HelpText` shows the error **instead of** the description while invalid; gen2 does the same through `FieldDescriptionMixin`, except that the description stays when `error-text` is empty (Q7). Renders with an error icon (`showErrorIcon`); gen2 also renders one, even with no error text (B14). |
 | `name`, `value`, `form` | `string` | `name`, `value`; `form` via `ElementInternals` | |
 | `validate`, `validationBehavior` | function, `'aria' \| 'native'` | Not mapped | Deferred (A3). |
 | `autoFocus` | `boolean` | native `autofocus` | |
@@ -218,7 +224,7 @@ gen2 (planned; see [Architecture](#architecture-core-vs-swc-split)):
 | `inputRef` | ref | Not exposed | Inner input stays private (B7). |
 | `styles`, `UNSAFE_className`, `UNSAFE_style` | | Not mapped | React styling escape hatches. |
 
-**Visual facts from the React source** that inform styling: box border `gray-800`, checked/indeterminate fill neutral (`accent-900` when emphasized), disabled `gray-400`, forced colors use `Highlight`/`GrayText`, press scale on the box, icon one size step smaller than the control (`S` → `XS`). Invalid colors are in B14.
+**Visual facts from the React source** that inform styling: box border `gray-800`, checked/indeterminate fill neutral (`accent-900` when emphasized), disabled `gray-400`, forced colors use `Highlight`/`GrayText`, press scale on the box, icon one size step smaller than the control (`S` → `XS`). gen2 does not use React's invalid box colors (B14).
 
 ---
 
@@ -232,7 +238,8 @@ gen2 (planned; see [Architecture](#architecture-core-vs-swc-split)):
 | `@spectrum-web-components/shared` | 1.12.4 | 1st-gen: `Focusable`, used only by `CheckboxBase` for `sp-switch`. **Dropped.** |
 | `SizedMixin` (gen2 core) | already built | `size` with explicit default `m`. |
 | `LabellingMixin` (gen2 core) | **unmerged** (text field branch) | `label` slot presence, `renderLabel()` (`<label for>`), `accessible-label`, `accessible-labelledby`, `ariaLabelledByElements` wiring for `accessible-labelledby`, missing-name dev warnings. See Q3, Q13. |
-| `FieldDescriptionMixin` (gen2 core) | **unmerged** (text field branch) | `description` and `error-text` slots, `renderFieldDescription()`, `accessible-describedby`, `ariaDescribedByElements` wiring. The forms RFC and the accessibility analysis call it `HelpTextMixin`. See Q3, Q7. |
+| `FieldDescriptionMixin` (gen2 core) | **unmerged** (text field branch) | `description` and `error-text` slots, `renderFieldDescription()`, `accessible-describedby`, `ariaDescribedByElements` wiring. The `errorIcon` option of `renderFieldDescription()`, needed for B14, exists only on the radio branch so far. The forms RFC and the accessibility analysis call it `HelpTextMixin`. See Q3, Q7, B14. |
+| `swc-icon-alert-triangle` (`@adobe/spectrum-wc-icons`) | already built | Error icon passed to `renderFieldDescription()`'s `errorIcon` option (B14), as `swc-radio-group` does. |
 | `FieldAssociationController` (gen2 core, SWC-2467) | **unmerged** (text field branch) | Wraps `ElementInternals`: `setValue()` (form value plus restore state), `formDisabledCallback`, validity reads. Host keeps `formAssociated`, `attachInternals()`, `setValidity()`, and `formResetCallback`. See Q3. |
 | `SlotPresenceController` (gen2 core) | already built | Used internally by both mixins. |
 | `warnIf` / `isDebug` (gen2 core) | already built | Dev-mode warnings (missing accessible name comes from `LabellingMixin`). |
@@ -256,13 +263,13 @@ gen2 (planned; see [Architecture](#architecture-core-vs-swc-split)):
 
 ### Dependency-aware recommendation
 
-**Proceed independently, after the text field branch merges.** `swc-checkbox` does not extend another gen2 component and does not need to wait on any other component migration. Its only hard prerequisite is the shared form foundation (`LabellingMixin`, `FieldDescriptionMixin`, `FieldAssociationController`), which is implemented and tested on the text field branch (Epic SWC-2323) but not yet on `main`. Checkbox joins text field and radio group as a consumer of that foundation, and is its first boolean field, which validates the boolean-field path. `FieldAssociationController`'s docs already name checkbox, and its `setValue(value, state)` signature supports a checked-state restore value.
+**Proceed independently, after the shared form foundation merges.** `swc-checkbox` does not extend another gen2 component and does not need to wait on any other component migration. It has two hard prerequisites. The first is the shared form foundation (`LabellingMixin`, `FieldDescriptionMixin`, `FieldAssociationController`), which is implemented and tested on the text field branch (Epic SWC-2323) but not yet on `main`. The second is the `errorIcon` option of `renderFieldDescription()` that B14 needs, which exists only on the radio branch (`seckles/radio-migration`) so far. Checkbox joins text field and radio group as a consumer of that foundation, and is its first boolean field, which validates the boolean-field path. `FieldAssociationController`'s docs already name checkbox, and its `setValue(value, state)` signature supports a checked-state restore value.
 
 ### Related components and ordering notes
 
 - **`swc-switch`**: 1st-gen `sp-switch` extends `CheckboxBase` (`CheckboxMixin(Focusable)`). **Decision (Q4): no shared base class in gen2.** Switch composes the same mixins and controller in its own `Switch.base.ts`; the switch accessibility analysis already frames the relationship as a shared foundation (different role, no `mixed`, no `invalid`). The cost is a few duplicated lines (`checked`, the read-only toggle guard, form value), in exchange for two independent public APIs. If the duplication grows during switch's migration, extract a `ToggleFieldMixin` into core then.
 - **`swc-checkbox-group`**: Has its own [accessibility migration analysis](../checkbox-group/accessibility-migration-analysis.md); SWC-2548 concluded a dedicated `swc-checkbox-group` replaces `sp-field-group` for checkboxes. **Decision (Q10): planned separately, outside this migration.** The checkbox is usable standalone, so it ships first. The group will later propagate `size`/`emphasized` with `SlotAttributePropagationController` and, when invalid, mark every item invalid while showing one group-level error message in place of per-item error text (as React does). Both behaviors leave this item's API unchanged. The group will also change where each item places its description, which needs a way to flag group membership on each item (Q7).
-- **`swc-radio`**: Sibling form control with no hard ordering dependency. Radio renders its own label and does not use `LabellingMixin`; checkbox does (C4). Its styles inform checkbox's (Q8); if the radio branch (`seckles/radio-migration`) has not merged when the Styling phase starts, read them from that branch.
+- **`swc-radio`**: Sibling form control. Checkbox needs the radio branch's `errorIcon` option (B14, Q3) but not `swc-radio` itself. Radio renders its own label and does not use `LabellingMixin`; checkbox does (C4). Its styles inform checkbox's (Q8); if the radio branch has not merged when the Styling phase starts, read them from that branch.
 - **Shared `_lit-styles/` fragment**: The text field plan creates a shared `form-fields` stylesheet for label, required indicator, description, and error. How much of it checkbox shares is open (Q8).
 - **Shared render template**: None. Checkbox anatomy (box, inline label, description below) is not shared with another component today; switch may become a second consumer later.
 - **Global element stylesheet**: N/A. Checkbox is not a bare global element.
@@ -310,7 +317,7 @@ Q8 (open until the Styling phase): recommended local description and error rules
 | B11 | `--mod-checkbox-*` and `--system-checkbox-*` removed | 38 modifiers plus 6 system bridges | Not exposed; a small reviewed `--swc-*` set only. Source: CSS style guide, [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure). | Remove overrides; request `--swc-*` properties if needed. |
 | B12 | Icon elements replaced with inline S2 UI icons | `sp-icon-checkmark*`/`sp-icon-dash*` elements with ids `checkmark`/`partial-checkmark` | Inline `Checkmark`/`Dash` SVGs inside `.swc-Checkbox-box`, sized 50/75/100/200 for `s`/`m`/`l`/`xl` (C5). Source: Spectrum CSS `spectrum-two` template, gen2 UI icon set. | None for normal usage; tests querying `#checkmark` must change. |
 | B13 | S2 visual refresh | S1 tokens | S2 tokens, including the new down-state perspective shift on the box. Source: Spectrum CSS `spectrum-two`. | None. |
-| B14 | Invalid visual treatment | Negative border via `.is-invalid` | **Confirmed (Q1).** Follows React S2: negative border when unchecked; negative fill (border hidden) when checked or indeterminate, overriding `emphasized`; disabled overrides invalid; `Mark` in forced colors. Always paired with `error-text` so color is not the only signal, as the accessibility analysis requires; this settles the rendering question the analysis cites. Source: React S2; Spectrum CSS `.is-invalid` (normal colors only). | None. |
+| B14 | Invalid visual treatment | Negative border via `.is-invalid` | **Confirmed (Q1).** The box's border and fill colors do not change for invalid, per Design. A decorative error icon (`swc-icon-alert-triangle`, `aria-hidden`) shows whenever `invalid` is `true`: beside the error text, beside the description when there is no error text, and alone when there is neither, so the state never relies on color. The icon follows `invalid` even while disabled, as in `swc-radio-group`. Rendered through `renderFieldDescription()`'s `errorIcon` option, as `swc-radio-group` does. This settles the rendering question the accessibility analysis cites. Source: Design, in a Slack discussion relayed in plan review; `swc-radio-group` (radio branch). | None. |
 
 #### Accessibility and behavior
 
@@ -333,7 +340,6 @@ Unchanged from 1st-gen: the host sets no `role`, `delegatesFocus` stays `true`, 
 | A2 | Additional `--swc-*` custom properties | Beyond the initial reviewed set, only on confirmed need. |
 | A3 | Custom validation (`validate`) and `validationBehavior` | React parity; no 1st-gen equivalent. Revisit once the forms strategy settles a shared `setValidity()` pattern. B17 already makes `invalid` block submit; an `aria`-only mode, where `invalid` does not block, would come with A3. |
 | A4 | Custom states (`:state(checked)`, `:state(indeterminate)`) | Styling hook for consumers now that `checked` no longer reflects (B9). Add on request. |
-| A5 | Error icon in `error-text` | React renders one. Out of scope unless `FieldDescriptionMixin` adds it for `swc-text-field`; checkbox then inherits it with no extra work. |
 
 ---
 
@@ -393,9 +399,9 @@ Not shown in the Figma frame, sourced elsewhere:
 
 - **Focus-visible**: Spectrum CSS focus ring on `.spectrum-Checkbox-box::after`. **Inferred.**
 - **Down (active)**: Spectrum CSS perspective shift, suppressed when read-only; React has the matching `pressScale`. **Inferred.**
-- **Invalid**: React S2 treatment (B14). **Confirmed (Q1).**
+- **Invalid**: box colors unchanged; an error icon shows beside the help text, or alone (B14). **Confirmed (Q1).**
 - **Read-only**: No distinct visual; keeps Spectrum CSS's suppression of the down-state transform. **Confirmed (Q2).**
-- **Forced colors**: Spectrum CSS `@media (forced-colors: active)` block, plus the invalid `Mark` treatment from B14, which that block lacks. **Confirmed** by Spectrum CSS and React.
+- **Forced colors**: Spectrum CSS `@media (forced-colors: active)` block. **Confirmed** by Spectrum CSS and React.
 
 #### Slots (gen2)
 
@@ -446,7 +452,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_gen2-component-mi
 Planned rendering shape:
 
 - Core owns API normalization, form participation, validity, and warnings.
-- SWC renders: a `.swc-Checkbox` wrapper (position context) containing the visually hidden but full-size native input (Spectrum CSS pattern, so the whole box-plus-label area is the hit target), the `.swc-Checkbox-box` with the size-mapped `Checkmark`/`Dash` SVG, and `renderLabel()` output; then `renderFieldDescription()` output, placed per Q7 and outside the hit target, as React S2 keeps help text outside `CheckboxButton`.
+- SWC renders: a `.swc-Checkbox` wrapper (position context) containing the visually hidden but full-size native input (Spectrum CSS pattern, so the whole box-plus-label area is the hit target), the `.swc-Checkbox-box` with the size-mapped `Checkmark`/`Dash` SVG, and `renderLabel()` output; then `renderFieldDescription()` output with the error icon (B14), placed per Q7 and outside the hit target, as React S2 keeps help text outside `CheckboxButton`.
 
 Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in the [Decision log](#decision-log).
 
@@ -463,7 +469,7 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 - [x] gen2 API decisions drafted
 - [x] [Figma `S2 / Web` component frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9961-2510) reviewed
 - [x] Open gen1 issues table populated from Jira
-- [x] Out-of-scope work recorded in [Additive](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-gen2) (A1–A5)
+- [x] Out-of-scope work recorded in [Additive](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-gen2) (A1–A4)
 - [ ] Deferred ticket filed for A1 (Q12)
 - [ ] Reviewer confirms Q11, which narrows SWC-2342's "tickets for all out-of-scope work" criterion to A1
 - [ ] Plan reviewed by at least one other engineer
@@ -471,6 +477,7 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 ### Setup
 
 - [ ] Confirm the text field branch (shared form mixins and controller) has merged to `main` (Q3)
+- [ ] Confirm the `errorIcon` option of `renderFieldDescription()` (radio branch) has merged to `main` (B14, Q3)
 - [ ] Create `gen2/packages/core/components/checkbox/`
 - [ ] Create `gen2/packages/swc/components/checkbox/`
 - [ ] Wire exports in both `package.json` files
@@ -501,11 +508,11 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 - [ ] Add `.swc-Checkbox` to the internal wrapper in `render()`; keep styling off `:host`
 - [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `checkbox.css` as baseline
 - [ ] After the baseline copy, align `checkbox.css` with `swc-radio`'s `radio.css` where it fits (Q8): the box-and-label grid, first-line box alignment, size custom properties, label typography, and state colors. Leave out its description rules and description font sizes (the in-group layout that Q7 defers), its host focus selectors (checkbox focuses the inner input), and its group read-only container query (checkbox read-only is per item)
-- [ ] Map `.is-indeterminate`, `.is-invalid`, `.is-readOnly`, `--emphasized`, and `--size*` selectors to host attribute selectors
+- [ ] Map `.is-indeterminate`, `.is-readOnly`, `--emphasized`, and `--size*` selectors to host attribute selectors
 - [ ] Q8: settle both open choices, record them in the Decision log, then implement them. Error text needs styles from the shared `form-fields` rules or `checkbox.css`; `radio.css` has none
 - [ ] Style the label and required indicator that `renderLabel()` emits, per Q8. Its `swc-FormFieldLabel`, `swc-FormFieldLabel-requiredIndicator`, and `swc-FormFieldLabel-necessityLabel` classes are fixed; `checkbox.css` supplies the indicator and necessity-label styles
 - [ ] Implement the Q7 standalone placement for description and error text
-- [ ] Apply invalid styling per B14. Spectrum CSS `.is-invalid` rules match in normal colors; add the forced-colors `Mark` treatment, which the S2 source lacks
+- [ ] After the baseline copy, remove the `.is-invalid` box color rules. Style the error icon to match `swc-radio-group`: negative color, one line tall, the `--swc-form-field-invalid-icon-gap` gap, and `CanvasText` in forced colors; copy these from the shared `form-fields` fragment if Q8 picks local rules (B14)
 
 #### Visual model and regressions
 
@@ -532,11 +539,11 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 - [ ] `indeterminate` clears on the next activation and stays out of the form value
 - [ ] Effective disabled (B19) maps to native `disabled`, which removes the checkbox from the tab order
 - [ ] `readonly` is focusable, exposes `aria-readonly="true"`, blocks toggling, and is not announced as disabled
-- [ ] `invalid` sets `aria-invalid="true"` only when `true`, with associated error text; not color alone; host `customError` (B17)
+- [ ] `invalid` sets `aria-invalid="true"` only when `true`, with associated error text; the error icon shows even without error text, so the state does not rely on color (B14); host `customError` (B17)
 - [ ] `required` exposes `aria-required` (native) and host `valueMissing`
 - [ ] Each checkbox is independently form-associated and submits its own `name`/`value`
 - [ ] The box-plus-label hit target meets [WCAG 2.5.8](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html) target size at every size
-- [ ] The box, checkmark, and dash meet 3:1 [non-text contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html) in unchecked, checked, and mixed states
+- [ ] The box, checkmark, and dash meet 3:1 [non-text contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html) in unchecked, checked, and mixed states, and the error icon meets it while invalid
 
 ### Testing
 
@@ -580,6 +587,7 @@ Unit (`test/checkbox.test.ts`):
 - [ ] `required`: inner input `required`
 - [ ] Label slot content names the input; `accessible-label` names it without a label slot and wins over slotted label content; `accessible-labelledby` wins over both
 - [ ] `description` associated by default; while `invalid` with error text, `error-text` replaces it in the rendering and the association; `description` returns when `invalid` clears (Q7)
+- [ ] While `invalid`, the `aria-hidden` error icon renders beside the error text, beside the description when there is no error text, and alone when there is neither; it is gone when `invalid` clears (B14)
 - [ ] `accessible-describedby` adds the referenced elements to the inner input's description
 - [ ] Dev warning fires with no name source
 
@@ -612,7 +620,7 @@ Accessibility (`checkbox.a11y.spec.ts` plus Storybook axe):
 
 - [ ] VRT for every "Yes" cell of the visual matrix in [Public API](#public-api), at each size
 - [ ] VRT for wrapped labels at every size
-- [ ] VRT for invalid across unchecked, checked, indeterminate, emphasized, disabled, and forced colors (B14)
+- [ ] VRT for invalid: box colors unchanged across unchecked, checked, indeterminate, emphasized, and disabled; error icon with error text, with only a description, and alone; error icon visible in forced colors (B14)
 - [ ] VRT for focus-visible ring, including that it is not clipped
 - [ ] VRT for forced-colors mode across checked, indeterminate, and disabled
 - [ ] VRT for description and error text placement (Q7), at every size and with a wrapped label
@@ -673,7 +681,7 @@ _Q10 and Q11 are settled in the [Decision log](#decision-log)._
 
 _None yet (Q12)._
 
-A2–A5 have no tickets by decision (Q11): they are on-request or follow from shared work, and the [Additive](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-gen2) table is their record.
+A2–A4 have no tickets by decision (Q11): they are on-request or follow from shared work, and the [Additive](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-gen2) table is their record.
 
 ---
 
@@ -688,15 +696,15 @@ A2–A5 have no tickets by decision (Q11): they are on-request or follow from sh
 | C3 | Implement `disabled` as native `disabled` on the inner input, in place of `DisabledMixin`. | `DisabledMixin` sets `aria-disabled` on the host and swaps the host `tabindex`, which suits host-role components. The checkbox host has no role, B6 removes the swap, and the accessibility analysis requires native `disabled` on the inner input. |
 | C4 | Use `LabellingMixin` (unlike `swc-radio`). | Checkboxes without visible text are an evidenced pattern (table row selection, card selection), so `accessible-label`/`accessible-labelledby` are needed. |
 | C5 | Icon size mapping 50/75/100/200 for `s`/`m`/`l`/`xl`. | Spectrum CSS `spectrum-two` template; matches React's "one size smaller than the control" rule. |
-| Q1 / B14 | Invalid styling follows React S2, as specified in B14. | Figma has no invalid state. React S2 ships this treatment for a standalone checkbox, with per-item error text since [react-spectrum#9877](https://github.com/adobe/react-spectrum/pull/9877). Spectrum CSS `spectrum-two` keeps checkbox `.is-invalid` ([spectrum-css#3531](https://github.com/adobe/spectrum-css/pull/3531), [spectrum-css#3617](https://github.com/adobe/spectrum-css/pull/3617)) but removed the radio version ([spectrum-css#2209](https://github.com/adobe/spectrum-css/pull/2209)). |
+| Q1 / B14 | Invalid leaves the box colors unchanged; a decorative error icon marks the state, as specified in B14. | Design decided, in a Slack discussion relayed in plan review, that invalid does not change the input's border or fill. This matches Figma, where checkbox has no invalid state, and follows Spectrum CSS, which already removed radio's invalid styles ([spectrum-css#2209](https://github.com/adobe/spectrum-css/pull/2209)). The error icon copies the `swc-radio-group` decision: it shows whenever `invalid` is set, so the state never relies on color alone. This replaces the earlier plan to follow React S2's negative box colors and brings the error icon, formerly A5, into scope. |
 | Q2 | Read-only has no distinct visual treatment; it looks like the enabled state. Spectrum CSS's suppression of the down-state transform for read-only is kept. | Follows React S2, whose checkbox styles have no read-only condition. Figma's component frame has no read-only state. Read-only is conveyed to assistive technology by `aria-readonly="true"`. |
-| Q3 | Build on the shared form mixins and controller; start Setup (SWC-2343) after the text field branch merges to `main`. | The foundation exists only on the text field branch; building on it avoids a second labelling and form implementation and validates its boolean-field path. Details: [Dependency-aware recommendation](#dependency-aware-recommendation). |
+| Q3 | Build on the shared form mixins and controller; start Setup (SWC-2343) after the text field branch merges to `main`. | The foundation exists only on the text field branch; building on it avoids a second labelling and form implementation and validates its boolean-field path. B14 adds the radio branch's `errorIcon` option as a second prerequisite, pending team confirmation. Details: [Dependency-aware recommendation](#dependency-aware-recommendation). |
 | Q4 | No shared toggle base class with `swc-switch`. | Switch has a different role and no `mixed` or `invalid`; composing the same mixins keeps the two public APIs independent. Details: [Related components and ordering notes](#related-components-and-ordering-notes). |
 | Q5 / B9 | `checked` follows native semantics, as specified in B9. | A reflected attribute cannot serve as the reset default. Matches `<input type="checkbox">` and React's controlled/uncontrolled split (`isSelected`/`defaultSelected`). Custom states (A4) remain available as a styling hook. |
 | Q6 / B10 | `change` follows native semantics, as specified in B10. | Matches native checkbox behavior; React has no cancel. Removes the 1st-gen revert path in `handleChange()`. |
 | Q7 | Description and error text. **Swap:** use `FieldDescriptionMixin` unchanged, so `error-text` replaces `description` while `invalid` and `error-text` has content. **Placement:** on a standalone checkbox, both sit fully below the box and label, starting at the box's inline-start edge, at the control's text size. | Swapping is the correct default: it matches React S2 and `swc-text-field`, which uses the same mixin, and the description returns once `invalid` clears. The need to show both came partly from an earlier idea of wrapping a single checkbox in a checkbox group to get the in-group layout. Grid layout or slot placement inside `swc-checkbox` can produce either layout, so no wrapper is needed. This supersedes the accessibility analysis's two notes that a standalone required checkbox keeps its description alongside the error, under [ARIA roles, states, and properties](./accessibility-migration-analysis.md#aria-roles-states-and-properties) and [Shadow DOM and cross-root ARIA issues](./accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues). Placement follows React S2's standalone layout. In a group, React S2 moves the description under the label, one size smaller, and `swc-radio` uses the same under-label placement; the group layout waits for `swc-checkbox-group` (A1), because the item needs a way to flag group membership. |
 | Q10 | `swc-checkbox-group` is outside this migration. | The checkbox works standalone, so it ships first. Details: [Related components and ordering notes](#related-components-and-ordering-notes). |
-| Q11 | Only A1 gets a deferred ticket; A2–A5 are tracked in the Additive table without tickets. | A2 and A4 are on-request; A3 belongs to the shared forms strategy; A5 comes with `FieldDescriptionMixin`. Keeps the backlog limited to real, scheduled work. |
+| Q11 | Only A1 gets a deferred ticket; A2–A4 are tracked in the Additive table without tickets. | A2 and A4 are on-request; A3 belongs to the shared forms strategy. Keeps the backlog limited to real, scheduled work. The former A5, the error icon, moved into scope with B14. |
 | Q13 | Use `LabellingMixin`'s name wiring unchanged: an in-shadow `<label for>` names the inner input from the `label` slot, `aria-label` carries `accessible-label`, and `ariaLabelledByElements` carries `accessible-labelledby`. | Testing during plan review found an in-shadow `<label for>` acceptable, and it matches `swc-text-field`. Browsers rank `aria-labelledby` over `aria-label` over a native label, so the precedence matches the order the accessibility analysis specifies. Internal wiring only; no public API change. This supersedes the accessibility analysis's description of the slotted label wired through `ariaLabelledByElements`, under [ARIA roles, states, and properties](./accessibility-migration-analysis.md#aria-roles-states-and-properties), [Shadow DOM and cross-root ARIA issues](./accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues), and [Summary checklist](./accessibility-migration-analysis.md#summary-checklist). |
 | B17 | `invalid` sets host `customError` validity, so it blocks native submit and `checkValidity()` even when the box is checked. | Settled in plan review. It covers errors the application sets, such as a checked option the application then rejects, and matches `swc-radio-group` and `swc-text-field`. Details, including the read-only and disabled exceptions: B17. |
 
