@@ -75,7 +75,7 @@ Subtitle truncates with a trailing ellipsis when the attachment is narrower than
 
 ### Upload progress
 
-Set `progress` (0-100) on a `type="media"` tile to show a progress-circle overlay on the preview while an upload is in flight. It's hidden when `progress` is unset or reaches 100.
+Set `progress` (0-100) on a `type="media"` tile to show a progress-circle overlay on the preview while an upload is in flight. It's hidden when `progress` is unset or reaches 100. The `thumbnail` slot stays hidden for the whole transfer so a partially uploaded asset is never shown; the progress-circle overlay itself is delayed by 1 second after `progress` is first set, so a fast upload doesn't flash the loading state.
 
 <Canvas of={UploadAttachmentStories.UploadProgress} />
 

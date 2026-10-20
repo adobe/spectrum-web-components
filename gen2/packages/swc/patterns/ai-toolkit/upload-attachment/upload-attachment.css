@@ -11,8 +11,6 @@
  */
 
 :host {
-  --_swc-upload-attachment-tint: light-dark(token("transparent-black-50"), token("transparent-white-50"));
-
   display: block;
   position: relative;
   max-inline-size: 100%;
@@ -27,7 +25,7 @@
  * attachment strip's scroll/card overflow boundaries at the first/last tile.
  * The 2px margin/inset on .swc-UploadAttachment-surface (below) leaves this
  * ring a real empty gap to sit in, instead of being painted over by that
- * (opaque) surface. */
+ * surface's 3% tint. */
 :host(:focus-visible) {
   border-radius: 12px;
   outline: token("focus-indicator-thickness") solid var(--swc-upload-attachment-focus-indicator-color, light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color")));
@@ -112,6 +110,8 @@
 }
 
 .swc-UploadAttachment-surface {
+  --_swc-upload-attachment-tint: light-dark(token("transparent-black-50"), token("transparent-white-50"));
+
   display: flex;
   background: var(--_swc-upload-attachment-tint);
 }
@@ -252,13 +252,18 @@
 /* Progress circle and badge project into swc-card's own `media` slot
  * instead of a separate overlay. */
 :host([type="media"]) .swc-UploadAttachment-surface {
-  --swc-card-base-background-color: var(--_swc-upload-attachment-tint);
-  --swc-card-base-grid-template-rows: 1fr;
-
   /* Override the base `display: flex`: as a flex item, swc-card's internal
    * `.swc-CardBase` shrinks to content width instead of filling the tile. */
   display: grid;
   position: absolute;
+
+  /* Media tiles have no title/content/footer, so the default "auto 1fr auto"
+   * rows leave the "media" row (which holds the progress circle and badge)
+   * sized to its own content instead of the full tile height; forcing it to
+   * the only ("1fr") row makes it fill the tile so `place-self: center`
+   * below centers against the whole surface, not just the circle's own
+   * content box. */
+  --swc-card-base-grid-template-rows: 1fr;
 
   /* 2px inset gives the host's inward focus ring empty space to sit in. */
   inset: token("spacing-50");
@@ -270,7 +275,6 @@
 
 :host([type="media"]) .swc-UploadAttachment-progress {
   display: flex;
-  grid-area: media;
   place-self: center;
 }
 

@@ -246,6 +246,94 @@ export const MediaBadgeTest: Story = {
   },
 };
 
+export const ProgressDelayTest: Story = {
+  render: () => html`
+    <swc-upload-attachment type="media">
+      <div slot="thumbnail" role="img" aria-label="Preview"></div>
+    </swc-upload-attachment>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<UploadAttachment>(
+      canvasElement,
+      'swc-upload-attachment'
+    );
+    const progressCircle = () =>
+      el.shadowRoot?.querySelector('.swc-UploadAttachment-progress');
+    const thumbnailSlot = () =>
+      el.shadowRoot?.querySelector('slot[name="thumbnail"]');
+
+    await step('no progress circle while progress is unset', async () => {
+      expect(el.progress).toBeUndefined();
+      expect(progressCircle()).toBeNull();
+      expect(thumbnailSlot()).not.toBeNull();
+    });
+
+    await step(
+      'thumbnail hides immediately (not delayed) once progress is set',
+      async () => {
+        el.progress = 10;
+        await el.updateComplete;
+        expect(thumbnailSlot()).toBeNull();
+      }
+    );
+
+    await step(
+      'progress circle stays hidden for the first second after progress is set',
+      async () => {
+        expect(progressCircle()).toBeNull();
+      }
+    );
+
+    await step(
+      'progress circle appears once the 1s delay elapses',
+      async () => {
+        await waitFor(() => expect(progressCircle()).not.toBeNull(), {
+          timeout: 2000,
+        });
+      }
+    );
+
+    await step('progress circle hides immediately at 100', async () => {
+      el.progress = 100;
+      await el.updateComplete;
+      expect(progressCircle()).toBeNull();
+      expect(thumbnailSlot()).not.toBeNull();
+    });
+
+    await step(
+      'explicitly setting progress to undefined matches the unset state',
+      async () => {
+        el.progress = 5;
+        el.progress = undefined;
+        await el.updateComplete;
+        expect(progressCircle()).toBeNull();
+
+        // Confirm no stray timer was left armed from the momentary `progress = 5`.
+        await new Promise((resolve) => setTimeout(resolve, 1200));
+        expect(progressCircle()).toBeNull();
+      }
+    );
+
+    await step(
+      'disconnecting and reconnecting while loading re-arms the delay instead of getting stuck hidden',
+      async () => {
+        el.progress = 20;
+        await el.updateComplete;
+
+        const parent = el.parentElement;
+        const nextSibling = el.nextSibling;
+        parent?.removeChild(el);
+        parent?.insertBefore(el, nextSibling);
+
+        expect(progressCircle()).toBeNull();
+        await waitFor(() => expect(progressCircle()).not.toBeNull(), {
+          timeout: 2000,
+        });
+      }
+    );
+  },
+};
+
 export const TitleTruncationTest: Story = {
   render: () => html`
     <div style="display:flex;gap:16px;max-inline-size:360px;">

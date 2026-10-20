@@ -6,7 +6,7 @@
 
 Added:
 
-- `progress` (0-100): shows a `swc-progress-circle` overlay on the `type="media"` preview while an upload is in flight. Hidden when unset or at 100 (complete); the `thumbnail` slot is hidden while loading so the overlay reads against a plain background instead of stacking on the image.
+- `progress` (0-100): shows a `swc-progress-circle` overlay on the `type="media"` preview while an upload is in flight. Hidden when unset or at 100 (complete); the `thumbnail` slot is hidden while loading so the overlay reads against a plain background instead of stacking on the image. The overlay itself is delayed by 1 second after `progress` is first set, so a fast upload doesn't flash the loading state.
 - `size` (`m`/`l`, default `m`): 64px vs. 96px tile for `type="media"`. Has no effect on `type="card"`.
 
 Removed/renamed custom properties (`type="media"` sizing is now driven by `size` instead):

@@ -106,8 +106,9 @@ export class UploadAttachment extends SpectrumElement {
    * Upload progress percentage (0-100), shown as a `swc-progress-circle`
    * overlay on the `type="media"` preview. Hidden when unset or at 100
    * (complete); update as the upload advances to show it mid-transfer.
-   * The overlay itself is delayed by 1s after upload starts, so a fast
-   * upload doesn't flash the loading state.
+   * The thumbnail itself stays hidden for the whole transfer so a partially
+   * uploaded asset is never shown; the progress-circle overlay is delayed by
+   * 1s after upload starts, so a fast upload doesn't flash the loading state.
    */
   @property({ type: Number, reflect: true })
   public progress?: number;
@@ -291,7 +292,10 @@ export class UploadAttachment extends SpectrumElement {
   }
 
   private _renderMediaSurface(): TemplateResult {
-    const loading = this._progressVisible;
+    // The thumbnail hides immediately once an upload starts (not delayed
+    // like the progress circle below), so a partially-uploaded asset is
+    // never revealed before it's complete.
+    const loading = this._shouldShowProgress();
     return html`
       <swc-card class="swc-UploadAttachment-surface" variant="quiet">
         ${loading
@@ -299,7 +303,7 @@ export class UploadAttachment extends SpectrumElement {
           : html`
               <slot name="thumbnail" slot="preview"></slot>
             `}
-        ${loading
+        ${this._progressVisible
           ? html`
               <swc-progress-circle
                 class="swc-UploadAttachment-progress"
@@ -329,9 +333,9 @@ export class UploadAttachment extends SpectrumElement {
     );
     return html`
       <div class="swc-UploadAttachment-surface">
-        <swc-card class="swc-UploadAttachment-thumbnail" variant="quiet">
-          <slot name="thumbnail" slot="preview"></slot>
-        </swc-card>
+        <div class="swc-UploadAttachment-thumbnail">
+          <slot name="thumbnail"></slot>
+        </div>
         <div class="swc-UploadAttachment-meta">
           <div class="swc-UploadAttachment-title">
             <span class="swc-UploadAttachment-title-start" aria-hidden="true">
