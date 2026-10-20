@@ -69,7 +69,7 @@
 - **A form-associated custom element with a real native input.** gen2 keeps 1st-gen's native `<input type="checkbox">` in the shadow root, so role, `checked`, `mixed`, and <kbd>Space</kbd> come from the browser. It adds host form participation through `ElementInternals` (B16), which 1st-gen lacks: `sp-checkbox` never submits with a `<form>`.
 - **Built on the shared form foundation from the text field epic.** `LabellingMixin` (label slot, `accessible-label`, `accessible-labelledby`), `FieldDescriptionMixin` (`description` and `error-text` slots, `accessible-describedby`), and `FieldAssociationController` exist only on the unmerged text field branch (Epic SWC-2323). Checkbox implementation starts after it merges (Q3).
 - **Read-only gets fixed (B15).** 1st-gen fakes `readonly` by disabling the inner input, so screen readers announce it as disabled and it leaves the tab order. gen2 keeps it focusable, exposes `aria-readonly="true"`, and blocks the toggle.
-- **Consumer-facing changes:** B1, B4, B5, B6, B7, B9, B10, B11, B12, B15, B18, and B21 each name a migration path. The largest: label content moves to a named `label` slot (B1); the `checked` attribute becomes the default state, as on a native checkbox (B9); `change` is no longer cancelable (B10); `--mod-checkbox-*` is removed (B11); and read-only checkboxes become Tab stops (B15).
+- **Consumer-facing changes:** B1, B4, B5, B6, B7, B9, B10, B11, B12, B15, B16, B17, B18, and B21 each name a migration path. The largest: label content moves to a named `label` slot (B1); the `checked` attribute becomes the default state, as on a native checkbox (B9); `change` is no longer cancelable (B10); `--mod-checkbox-*` is removed (B11); and read-only checkboxes become Tab stops (B15).
 - **Visual options carry over.** The [Figma `S2 / Web` checkbox frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9961-2510) confirms sizes `s`/`m`/`l`/`xl`, unchecked, indeterminate, and checked selection, `emphasized` (accent fill on checked and indeterminate), hover, disabled, and wrapping labels. Figma has no invalid state; gen2 follows React S2 (B14).
 - **MVP (minimum viable product) scope:** `swc-checkbox` with the full [public API](#public-api), including the `label`, `description`, and `error-text` slots, plus form participation and every accessibility item. **Out of scope:** everything in [Additive](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-gen2) (A1–A5), including `swc-checkbox-group`.
 
@@ -317,8 +317,8 @@ Q8 (open until the Styling phase): recommended local description and error rules
 | #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ------------- | ----------------------- |
 | B15 | Read-only fixed | Inner input `disabled`; announced as disabled; not focusable | Focusable; `aria-readonly="true"` on the inner input; toggle blocked. Source: accessibility analysis, forms RFC §3.1 (native `readonly` does not apply to checkboxes). | None. Behavior change: read-only checkboxes become Tab stops. |
-| B16 | Form participation | None; never submits | `static formAssociated = true`; `FieldAssociationController.setValue(checked ? value : null, String(checked))`; `formResetCallback` restores the default checked state; `formDisabledCallback` cascade; `formStateRestoreCallback`. Source: accessibility analysis, forms RFC §3.1. | None. Checkboxes in a `<form>` now submit. |
-| B17 | Required validity | None | Host `setValidity({ valueMissing: true }, message, input)` while `required && !checked`; cleared when checked. Source: accessibility analysis (`required`), forms RFC §3.1. | None. |
+| B16 | Form participation | None; never submits | `static formAssociated = true`; `FieldAssociationController.setValue(checked ? value : null, String(checked))`; `formResetCallback` restores the default checked state; `formDisabledCallback` cascade; `formStateRestoreCallback`. Source: accessibility analysis, forms RFC §3.1. | Checked checkboxes in a `<form>` now add `name=value` to its data; drop any code that collected them by hand. |
+| B17 | Required and invalid validity | None | Host `setValidity()`, anchored to the inner input: `valueMissing` while `required && !checked`, cleared when checked; `customError` while `invalid`, so an application-set error blocks native submit and `checkValidity()` even when the box is checked. Neither applies while disabled or read-only: HTML [bars a form-associated custom element with `readonly`](https://html.spec.whatwg.org/multipage/custom-elements.html#attr-face-readonly) from constraint validation, unlike a native checkbox, which ignores `readonly`. `setValidity()` needs a non-empty message while a flag is set; the message source matches `swc-text-field`: its default custom message while `invalid`, otherwise the inner input's native message. Source: accessibility analysis (`required`), forms RFC §3.1; `swc-radio-group` (radio branch) and `swc-text-field` (text field branch) both turn `invalid` into `customError`. | Clear `invalid` once the error is resolved; while it is set, the form does not submit. |
 | B18 | Invalid association | `aria-invalid` only | `aria-invalid="true"` on the inner input plus `error-text` associated with `ariaDescribedByElements` (the `aria-describedby` relationship that forms RFC §3.3 standardizes on). Source: accessibility analysis, forms RFC §3.3. | Provide `error-text` content with `invalid`. |
 | B19 | Effective disabled includes form disabling | Own `disabled` only | Effective disabled = `disabled \|\| formDisabled`, where `formDisabled` comes from `formDisabledCallback` (an ancestor `<fieldset disabled>` or owning form). Applied as native `disabled` on the inner input. Source: forms RFC §3.1. | None. |
 | B20 | Missing-name dev warning | None | `LabellingMixin` warns when no label slot, `accessible-label`, or resolvable `accessible-labelledby` is present. Source: accessibility analysis (axe and Storybook row), `LabellingMixin`. | Dev-time only. |
@@ -331,7 +331,7 @@ Unchanged from 1st-gen: the host sets no `role`, `delegatesFocus` stays `true`, 
 | --- | ------------- | ----- |
 | A1 | `swc-checkbox-group` | Group label, description, error, "select at least one" validity, `size`/`emphasized` propagation, and in-group item layout (Q7). |
 | A2 | Additional `--swc-*` custom properties | Beyond the initial reviewed set, only on confirmed need. |
-| A3 | Custom validation (`validate`) and `validationBehavior` | React parity; no 1st-gen equivalent. Revisit once the forms strategy settles a shared `setValidity()` pattern. |
+| A3 | Custom validation (`validate`) and `validationBehavior` | React parity; no 1st-gen equivalent. Revisit once the forms strategy settles a shared `setValidity()` pattern. B17 already makes `invalid` block submit; an `aria`-only mode, where `invalid` does not block, would come with A3. |
 | A4 | Custom states (`:state(checked)`, `:state(indeterminate)`) | Styling hook for consumers now that `checked` no longer reflects (B9). Add on request. |
 | A5 | Error icon in `error-text` | React renders one. Out of scope unless `FieldDescriptionMixin` adds it for `swc-text-field`; checkbox then inherits it with no extra work. |
 
@@ -356,7 +356,7 @@ These are derived from the 1st-gen implementation, the [Figma `S2 / Web` checkbo
 | `disabled` | `boolean` | `false` | `disabled` (reflect) | **Confirmed.** Native `disabled` on the inner input (B19). |
 | `readonly` | `boolean` | `false` | `readonly` (reflect) | **Confirmed.** Focusable, `aria-readonly="true"`, toggle blocked (B15). |
 | `required` | `boolean` | `false` | `required` (reflect) | **Confirmed (new).** Native `required` on the inner input plus host validity. |
-| `invalid` | `boolean` | `false` | `invalid` (reflect) | **Confirmed.** `aria-invalid="true"` only when `true` (B18); `error-text` replaces `description` while `error-text` has content (Q7). |
+| `invalid` | `boolean` | `false` | `invalid` (reflect) | **Confirmed.** `aria-invalid="true"` only when `true` (B18); sets host `customError` validity, which blocks form submission (B17); `error-text` replaces `description` while `error-text` has content (Q7). |
 | `emphasized` | `boolean` | `false` | `emphasized` (reflect) | **Confirmed** by Figma: accent fill on checked and indeterminate only. |
 | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | `size` (reflect) | **Confirmed** by Figma (four sizes) and React default. |
 | `name` | `string \| undefined` | `undefined` | `name` (reflect) | **Confirmed.** Form field name. |
@@ -420,8 +420,8 @@ Initial expectation for Checkbox is a small reviewed set. Candidates: control si
 - **Read-only:** focus works. The `click` is cancelled, which reverts the native input's provisional toggle, so neither `input` nor `change` fires (mechanism: Q9).
 - **Disabled:** effective disabled (B19) sets native `disabled`; `click()` is a no-op; the field is excluded from validation (`willValidate === false`).
 - **Form value:** checked submits `name=value`; unchecked submits nothing (`setValue(null)`). The restore state is the checked boolean so back/forward navigation restores state, not just value.
-- **Reset:** `formResetCallback` restores `checked` to its default (the `checked` attribute, B9). It leaves `indeterminate` untouched, matching native reset.
-- **Validity:** `required && !checked` sets `valueMissing`, with the inner input as the validation anchor so `reportValidity()` points at the box.
+- **Reset:** `formResetCallback` restores `checked` to its default (the `checked` attribute, B9). It leaves `indeterminate` untouched, matching native reset, and leaves `invalid` set, as a native custom validity message survives a reset.
+- **Validity:** `required && !checked` sets `valueMissing`, and `invalid` sets `customError` (B17). Disabled and read-only checkboxes are barred from validation. The inner input is the validation anchor, so `reportValidity()` points at the box.
 
 ### Accessibility semantics notes (gen2)
 
@@ -485,7 +485,7 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 - [ ] Compose `LabellingMixin` and `FieldDescriptionMixin`; override `roleElement` to return the inner input
 - [ ] `static formAssociated = true`, `attachInternals()`, `FieldAssociationController` with `onDisabledChange`
 - [ ] `formResetCallback`, `formStateRestoreCallback`, `formDisabledCallback` delegation
-- [ ] `setValidity()` for `valueMissing`, anchored to the inner input
+- [ ] `setValidity()` for `valueMissing` and for `customError` while `invalid`, anchored to the inner input (B17)
 - [ ] `click()` forwarding; non-cancelable `change` (B10); `checked` attribute as default, property live (B9)
 - [ ] Keep the inner input reference and change handler private (B7); focus order relies on the native host `tabindex` (B6)
 - [ ] Q9: write the read-only unit test first and confirm it fails, implement the guard, then record the mechanism in the Decision log
@@ -532,7 +532,7 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 - [ ] `indeterminate` clears on the next activation and stays out of the form value
 - [ ] Effective disabled (B19) maps to native `disabled`, which removes the checkbox from the tab order
 - [ ] `readonly` is focusable, exposes `aria-readonly="true"`, blocks toggling, and is not announced as disabled
-- [ ] `invalid` sets `aria-invalid="true"` only when `true`, with associated error text; not color alone
+- [ ] `invalid` sets `aria-invalid="true"` only when `true`, with associated error text; not color alone; host `customError` (B17)
 - [ ] `required` exposes `aria-required` (native) and host `valueMissing`
 - [ ] Each checkbox is independently form-associated and submits its own `name`/`value`
 - [ ] The box-plus-label hit target meets [WCAG 2.5.8](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html) target size at every size
@@ -588,8 +588,10 @@ Form participation (in a native `<form>` with native submit and reset buttons, p
 - [ ] Checked submits `name=value`; unchecked contributes nothing; default `value` is `on`
 - [ ] Two checkboxes with the same `name` each contribute independently
 - [ ] `required` and unchecked blocks submit in a form without `novalidate`; `checkValidity()` is `false`; `reportValidity()` shows the Spectrum error presentation instead of the native bubble (Q14); the host matches `:invalid`; checking clears it
+- [ ] `invalid` blocks submit even when checked; `checkValidity()` is `false` and `validity.customError` is `true`; clearing `invalid` clears both (B17)
+- [ ] A read-only checkbox is barred from validation: `willValidate` is `false`, and neither `required` nor `invalid` blocks submit (B17)
 - [ ] After a user interaction or a failed submit, the host matches `:state(user-invalid)`. The native `:user-invalid` applies only to `input`, `textarea`, and `select`, so it never matches the host ([whatwg/html#9639](https://github.com/whatwg/html/issues/9639))
-- [ ] `form.reset()` restores the default checked state
+- [ ] `form.reset()` restores the default checked state and leaves `invalid` and its `customError` in place
 - [ ] `formStateRestoreCallback` with state `'true'` or `'false'` restores `checked`
 - [ ] `<fieldset disabled>` disables the checkbox and excludes it from `FormData` and validation
 - [ ] Value read programmatically matches the submitted value across checked, unchecked, and post-reset states
@@ -626,7 +628,7 @@ Accessibility (`checkbox.a11y.spec.ts` plus Storybook axe):
 
 #### Breaking changes
 
-- [ ] `migration-guide.mdx` has one entry per B row whose Consumer migration path asks consumers to act or changes behavior they can observe: B1, B4, B5, B6, B7, B9, B10, B11, B12, B15, B18, B21
+- [ ] `migration-guide.mdx` has one entry per B row whose Consumer migration path asks consumers to act or changes behavior they can observe: B1, B4, B5, B6, B7, B9, B10, B11, B12, B15, B16, B17, B18, B21
 
 ### Review
 
@@ -654,7 +656,7 @@ _None currently; Q1 and Q2 resolved, see [Decision log](#decision-log)._
 | --- | ---- | --------- | ------ | ----- |
 | Q8 | Direction from review: checkbox mostly uses custom styles, with `swc-radio`'s `radio.css` as a base where it fits, and likely won't fully share the shared `form-fields` `_lit-styles/` fragment. The fragment's `.swc-FormFieldLabel` rules lay out the labels of `swc-text-field` and `swc-radio-group` above or to the side of the field, not inline after a control, so the checkbox label needs its own styles. Open choices: (a) whether description and error text reuse the fragment's `.swc-FormFieldDescription` and `.swc-FormFieldErrorText` rules or get local rules, judged against the Q7 placement; (b) whether `checkbox.css` styles the fixed `swc-FormFieldLabel*` classes that `renderLabel()` emits, or the directive gains a class option. Recommended: local rules for (a), and the fixed classes for (b), which needs no core change. | No | Open: settle in the Styling phase | CSS reviewer |
 | Q9 | Exact read-only mechanism (likely `preventDefault()` on the inner input's `click` while read-only, which also blocks <kbd>Space</kbd>). Settle in API phase with a test first. | No | Open | Implementation |
-| Q14 | Where to suppress the native validation bubble, shared with `swc-text-field`. Cancelling the host's `invalid` event suppresses the bubble and keeps submit blocking, but the browser then skips focusing the field on a failed submit. The shared behavior must therefore cancel the event, turn on the invalid presentation, and focus the first invalid field. Recommended: one opt-in behavior on `FieldAssociationController`, which needs the host passed in to listen for `invalid`. Text field currently relies on `novalidate` plus a consumer submit handler, and its [accessibility analysis](../text-field/accessibility-migration-analysis.md) defers the decision to the forms strategy. Open edge case: in a form that mixes native and `swc-` fields, a later native field can take focus ahead of an earlier `swc-` field. | Yes | Open: blocks the accessibility phase | Forms strategy owners + accessibility reviewer |
+| Q14 | Where to suppress the native validation bubble, shared with `swc-text-field`. Cancelling the host's `invalid` event suppresses the bubble and keeps submit blocking, but the browser then skips focusing the field on a failed submit. The shared behavior must therefore cancel the event, turn on the invalid presentation through `:state(user-invalid)`, and focus the first invalid field. It must not set `invalid`, which adds a `customError` that checking the box cannot clear (B17). Recommended: one opt-in behavior on `FieldAssociationController`, which needs the host passed in to listen for `invalid`. Text field currently relies on `novalidate` plus a consumer submit handler, and its [accessibility analysis](../text-field/accessibility-migration-analysis.md) defers the decision to the forms strategy. Open edge case: in a form that mixes native and `swc-` fields, a later native field can take focus ahead of an earlier `swc-` field. | Yes | Open: blocks the accessibility phase | Forms strategy owners + accessibility reviewer |
 
 ### Scope and prerequisites
 
@@ -696,6 +698,7 @@ A2–A5 have no tickets by decision (Q11): they are on-request or follow from sh
 | Q10 | `swc-checkbox-group` is outside this migration. | The checkbox works standalone, so it ships first. Details: [Related components and ordering notes](#related-components-and-ordering-notes). |
 | Q11 | Only A1 gets a deferred ticket; A2–A5 are tracked in the Additive table without tickets. | A2 and A4 are on-request; A3 belongs to the shared forms strategy; A5 comes with `FieldDescriptionMixin`. Keeps the backlog limited to real, scheduled work. |
 | Q13 | Use `LabellingMixin`'s name wiring unchanged: an in-shadow `<label for>` names the inner input from the `label` slot, `aria-label` carries `accessible-label`, and `ariaLabelledByElements` carries `accessible-labelledby`. | Testing during plan review found an in-shadow `<label for>` acceptable, and it matches `swc-text-field`. Browsers rank `aria-labelledby` over `aria-label` over a native label, so the precedence matches the order the accessibility analysis specifies. Internal wiring only; no public API change. This supersedes the accessibility analysis's description of the slotted label wired through `ariaLabelledByElements`, under [ARIA roles, states, and properties](./accessibility-migration-analysis.md#aria-roles-states-and-properties), [Shadow DOM and cross-root ARIA issues](./accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues), and [Summary checklist](./accessibility-migration-analysis.md#summary-checklist). |
+| B17 | `invalid` sets host `customError` validity, so it blocks native submit and `checkValidity()` even when the box is checked. | Settled in plan review. It covers errors the application sets, such as a checked option the application then rejects, and matches `swc-radio-group` and `swc-text-field`. Details, including the read-only and disabled exceptions: B17. |
 
 ---
 
