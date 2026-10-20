@@ -51,11 +51,12 @@ const PREFIX_AVATAR_SIZE = {
  *
  * @cssprop --swc-field-label-max-inline-size - `label-position="side"` only: max inline size of the label's grid column. Defaults to 50% of the field width (the label wraps within its column instead of kicking the input out). Set it to widen or tighten the ceiling for a specific field.
  * @cssprop --swc-field-input-min-inline-size - Minimum inline size of the input control. Defaults to the component height for the field size.
- * @cssprop --swc-field-input-max-inline-size - Maximum inline size of the input control. Defaults to the medium field width token.
+ * @cssprop --swc-field-input-max-inline-size - Maximum inline size of the input control. Defaults to the field width token for the selected size.
  * @cssprop --swc-text-field-padding-block - Vertical padding of the text-field control. Changes by size.
  * @cssprop --swc-text-field-padding-inline - Horizontal padding of the text-field control. Changes by size.
  * @cssprop --swc-text-field-affix-gap - Gap between the input and affixes. Changes by size.
  * @cssprop --swc-form-field-row-gap - Vertical gap between the label, control, and help text. Changes by size.
+ * @cssprop --swc-form-field-necessity-gap - Inline gap between the visible label and its necessity indicator. Changes by size.
  * @cssprop --swc-text-field-font-size - Font size of the input. Changes by size.
  * @cssprop --swc-text-field-line-height - Line height of the input. Defaults to the browser's normal input line height.
  * @cssprop --swc-text-field-border-radius - Corner radius of the text-field control. Changes by size.
@@ -131,9 +132,8 @@ export class TextField extends TextFieldBase {
           required: this.required,
           necessityIndicator: this.necessityIndicator,
           necessityIndicatorText: NECESSITY_INDICATOR_TEXT,
-          necessityIcon: html`
-            <swc-ui-icon icon="asterisk" size=${this.size}></swc-ui-icon>
-          `,
+          // prettier-ignore
+          necessityIcon: html`<swc-ui-icon icon="asterisk" size=${this.size}></swc-ui-icon>`,
         })}
         <div
           class="swc-TextField-control"

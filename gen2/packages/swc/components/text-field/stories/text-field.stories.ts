@@ -14,6 +14,12 @@ import { html, type TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import {
+  TEXT_FIELD_LABEL_POSITIONS,
+  TEXT_FIELD_NECESSITY_INDICATORS,
+  TEXT_FIELD_VALID_SIZES,
+} from '@adobe/spectrum-wc-core/components/text-field';
+
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 import '@adobe/spectrum-wc-icons/swc-icon-mention.js';
@@ -24,6 +30,32 @@ import '@adobe/spectrum-wc-icons/swc-icon-mention.js';
 
 const { events, args, argTypes, template } =
   getStorybookHelpers('swc-text-field');
+
+argTypes['label-position'] = {
+  ...argTypes['label-position'],
+  control: { type: 'inline-radio' },
+  options: TEXT_FIELD_LABEL_POSITIONS,
+  table: {
+    ...argTypes['label-position']?.table,
+    defaultValue: { summary: 'top' },
+  },
+};
+
+argTypes['necessity-indicator'] = {
+  ...argTypes['necessity-indicator'],
+  control: { type: 'inline-radio' },
+  options: TEXT_FIELD_NECESSITY_INDICATORS,
+  table: {
+    ...argTypes['necessity-indicator']?.table,
+    defaultValue: { summary: 'icon' },
+  },
+};
+
+argTypes.size = {
+  ...argTypes.size,
+  control: { type: 'select' },
+  options: TEXT_FIELD_VALID_SIZES,
+};
 
 /**
  * A single-line text field for entering and editing text.

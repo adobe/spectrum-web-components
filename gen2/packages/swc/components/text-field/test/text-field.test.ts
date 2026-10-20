@@ -51,6 +51,36 @@ export default {
 } as Meta;
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Playground option controls
+// ──────────────────────────────────────────────────────────────
+
+export const OptionControlsTest: Story = {
+  ...TextFieldStories.Playground,
+  play: async ({ step }) => {
+    await step(
+      'enum controls expose their supported values and defaults',
+      () => {
+        expect(meta.argTypes?.['label-position']).toMatchObject({
+          control: { type: 'inline-radio' },
+          options: ['top', 'side'],
+          table: { defaultValue: { summary: 'top' } },
+        });
+        expect(meta.argTypes?.['necessity-indicator']).toMatchObject({
+          control: { type: 'inline-radio' },
+          options: ['icon', 'label'],
+          table: { defaultValue: { summary: 'icon' } },
+        });
+        expect(meta.argTypes?.size).toMatchObject({
+          control: { type: 'select' },
+          options: ['s', 'm', 'l', 'xl'],
+        });
+      }
+    );
+  },
+};
+OptionControlsTest.storyName = 'Playground option controls';
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Labelling precedence in context
 // ──────────────────────────────────────────────────────────────
 

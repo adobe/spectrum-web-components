@@ -143,6 +143,83 @@ test.describe('Text field - ARIA Snapshots', () => {
     ).toBeVisible();
   });
 
+  test('keeps the required icon inline across sizes and label positions', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-text-field--required',
+      'swc-text-field'
+    );
+    const field = root.locator('swc-text-field');
+    await page.evaluate(() => document.fonts.ready);
+    for (const size of ['s', 'm', 'l', 'xl']) {
+      for (const position of ['top', 'side']) {
+        for (const text of [
+          'Full name',
+          'A longer field label that wraps across several lines in this example',
+        ]) {
+          await field.evaluate(
+            (field, { size, position, text }) => {
+              field.setAttribute('size', size);
+              field.setAttribute('label-position', position);
+              field.setAttribute('style', 'inline-size: 260px;');
+              const label = field.querySelector('[slot="label"]');
+              if (!label) {
+                throw new Error('Field label not found');
+              }
+              label.textContent = text;
+            },
+            { size, position, text }
+          );
+          await expect
+            .poll(
+              () =>
+                field.evaluate((field) => {
+                  const label = field.querySelector('[slot="label"]');
+                  const icon = field.shadowRoot?.querySelector(
+                    '.swc-FormFieldLabel-requiredIndicator swc-ui-icon'
+                  );
+                  if (!label || !icon || !icon.parentElement) {
+                    throw new Error('Field label or required icon not found');
+                  }
+                  const range = document.createRange();
+                  range.selectNodeContents(label);
+                  const lines = Array.from(range.getClientRects());
+                  const lastLine = lines[lines.length - 1];
+                  const bounds = icon.getBoundingClientRect();
+                  if (label.textContent?.startsWith('A longer')) {
+                    const labelBounds = field.shadowRoot
+                      ?.querySelector('label')
+                      ?.getBoundingClientRect();
+                    if (!labelBounds) {
+                      throw new Error('Rendered field label not found');
+                    }
+                    return (
+                      lines.length > 1 &&
+                      bounds.left >= labelBounds.left &&
+                      bounds.right <= labelBounds.right &&
+                      bounds.bottom <= labelBounds.bottom
+                    );
+                  }
+                  return (
+                    bounds.top < lastLine.bottom &&
+                    bounds.bottom > lastLine.top &&
+                    bounds.left - lastLine.right <=
+                      parseFloat(
+                        getComputedStyle(icon.parentElement).marginInlineStart
+                      ) +
+                        0.5
+                  );
+                }),
+              { message: `${size}/${position}: ${text}` }
+            )
+            .toBe(true);
+        }
+      }
+    }
+  });
+
   test('names each textbox across sizes', async ({ page }) => {
     const root = await gotoStory(
       page,
