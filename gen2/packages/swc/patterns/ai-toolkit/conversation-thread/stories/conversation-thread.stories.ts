@@ -660,9 +660,9 @@ class ConversationFullPatternDemo extends LitElement {
           ${renderDemoAttachmentThumbnail(attachment)}
           ${attachment.badge
             ? html`
-                <swc-badge slot="badge" size="s" subtle
-                  >${attachment.badge}</swc-badge
-                >
+                <swc-badge slot="badge" size="s" subtle>
+                  ${attachment.badge}
+                </swc-badge>
               `
             : ''}
         </swc-upload-attachment>
