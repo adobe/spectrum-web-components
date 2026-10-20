@@ -72,8 +72,8 @@ function captioned(
 export const Playground: Story = {
   tags: ['dev'],
   args: {
-    'label-slot': 'Favorite food',
-    placeholder: 'Pasta, tacos, or sushi',
+    'label-slot': 'Name',
+    placeholder: 'Enter your full name',
   },
   render: (args) => html`
     ${template({ ...args })}
@@ -87,8 +87,11 @@ export const Playground: Story = {
 export const Overview: Story = {
   tags: ['overview'],
   render: () => html`
-    <swc-text-field style="inline-size: 220px;">
-      <span slot="label">Favorite food</span>
+    <swc-text-field
+      placeholder="Enter your full name"
+      style="inline-size: 220px;"
+    >
+      <span slot="label">Name</span>
     </swc-text-field>
   `,
 };
@@ -99,20 +102,20 @@ export const Overview: Story = {
 
 export const Anatomy: Story = {
   render: () => html`
-    <swc-text-field autocomplete="email">
+    <swc-text-field autocomplete="email" style="inline-size: 220px;">
       <span slot="label">Email address</span>
       <span slot="description">Used for order updates only.</span>
     </swc-text-field>
-    <swc-text-field autocomplete="email" invalid>
+    <swc-text-field autocomplete="email" invalid style="inline-size: 220px;">
       <span slot="label">Email address</span>
       <span slot="error-text">Enter a valid email address.</span>
     </swc-text-field>
   `,
   tags: ['anatomy'],
   parameters: {
-    flexLayout: 'column-stretch',
+    flexLayout: 'row-wrap',
     styles: {
-      'inline-size': '220px',
+      'align-items': 'flex-start',
     },
   },
 };
@@ -124,48 +127,153 @@ export const Anatomy: Story = {
 export const Labelling: Story = {
   render: () => html`
     <div
-      style="display: flex; flex-direction: column; gap: 24px; max-inline-size: 44ch;"
+      style="display: flex; flex-direction: column; gap: 24px; inline-size: 100%; max-inline-size: 28rem;"
     >
-      ${captioned(
-        html`
-          Slotted
-          <code>label</code>
-        `,
-        html`
-          <swc-text-field autocomplete="email">
-            <span slot="label">Email address</span>
-          </swc-text-field>
-        `
-      )}
-      ${captioned(
-        html`
-          <code>accessible-label</code>
-          : named for assistive tech, no visible label
-        `,
-        html`
-          <swc-text-field
-            autocomplete="email"
+      <section
+        aria-labelledby="labelling-external-heading"
+        style="display: grid; gap: 12px; min-inline-size: 0;"
+      >
+        <div>
+          <h4
+            id="labelling-external-heading"
+            class="swc-Heading swc-Heading--sizeXS"
+            style="margin: 0 0 4px;"
+          >
+            Name from row and column headers
+          </h4>
+          <code style="font-size: 0.875rem;">accessible-labelledby</code>
+        </div>
+        <div
+          role="region"
+          aria-label="Scrollable delivery address table"
+          tabindex="0"
+          style="min-inline-size: 0; overflow: auto;"
+        >
+          <table
+            aria-label="Delivery addresses"
+            style="border-spacing: 8px; text-align: start;"
+          >
+            <thead>
+              <tr>
+                <td></td>
+                <th
+                  id="labelling-col-header"
+                  scope="col"
+                  style="text-align: start;"
+                >
+                  Street address
+                </th>
+                <th
+                  id="labelling-city-header"
+                  scope="col"
+                  style="text-align: start;"
+                >
+                  City
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th
+                  id="labelling-row-header"
+                  scope="row"
+                  style="text-align: start;"
+                >
+                  Billing
+                </th>
+                <td>
+                  <swc-text-field
+                    id="labelling-labelledby-field"
+                    autocomplete="billing street-address"
+                    accessible-labelledby="labelling-row-header labelling-col-header"
+                    value="12 Oak St"
+                    style="inline-size: 132px;"
+                  ></swc-text-field>
+                </td>
+                <td>
+                  <swc-text-field
+                    id="labelling-billing-city"
+                    autocomplete="billing address-level2"
+                    accessible-labelledby="labelling-row-header labelling-city-header"
+                    value="Oakland"
+                    style="inline-size: 112px;"
+                  ></swc-text-field>
+                </td>
+              </tr>
+              <tr>
+                <th
+                  id="labelling-shipping-header"
+                  scope="row"
+                  style="text-align: start;"
+                >
+                  Shipping
+                </th>
+                <td>
+                  <swc-text-field
+                    id="labelling-shipping-street"
+                    autocomplete="shipping street-address"
+                    accessible-labelledby="labelling-shipping-header labelling-col-header"
+                    value="34 Pine St"
+                    style="inline-size: 132px;"
+                  ></swc-text-field>
+                </td>
+                <td>
+                  <swc-text-field
+                    id="labelling-shipping-city"
+                    autocomplete="shipping address-level2"
+                    accessible-labelledby="labelling-shipping-header labelling-city-header"
+                    value="Berkeley"
+                    style="inline-size: 112px;"
+                  ></swc-text-field>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section
+        aria-labelledby="labelling-string-heading"
+        style="display: grid; gap: 12px; min-inline-size: 0;"
+      >
+        <div>
+          <h4
+            id="labelling-string-heading"
+            class="swc-Heading swc-Heading--sizeXS"
+            style="margin: 0 0 4px;"
+          >
+            Accessible name only
+          </h4>
+          <code style="font-size: 0.875rem;">
             accessible-label="Email address"
-          ></swc-text-field>
-        `
-      )}
-      ${captioned(
-        html`
-          <code>accessible-labelledby</code>
-          : named by other elements
-        `,
-        html`
-          <div style="margin-block-end: 8px;">
-            <span id="labelling-row-header">Billing</span>
-            <span id="labelling-col-header">Street address</span>
-          </div>
-          <swc-text-field
-            id="labelling-labelledby-field"
-            autocomplete="billing street-address"
-            accessible-labelledby="labelling-row-header labelling-col-header"
-          ></swc-text-field>
-        `
-      )}
+          </code>
+        </div>
+        <swc-text-field
+          autocomplete="email"
+          accessible-label="Email address"
+          style="inline-size: 180px; max-inline-size: 100%;"
+        ></swc-text-field>
+      </section>
+      <section
+        aria-labelledby="labelling-slot-heading"
+        style="display: grid; gap: 12px; min-inline-size: 0;"
+      >
+        <div>
+          <h4
+            id="labelling-slot-heading"
+            class="swc-Heading swc-Heading--sizeXS"
+            style="margin: 0 0 4px;"
+          >
+            Visible field label
+          </h4>
+          <code style="font-size: 0.875rem;">slot="label"</code>
+        </div>
+        <swc-text-field
+          autocomplete="email"
+          style="inline-size: 180px; max-inline-size: 100%;"
+        >
+          <span slot="label">Email address</span>
+        </swc-text-field>
+      </section>
     </div>
   `,
   tags: ['options'],
@@ -176,7 +284,12 @@ export const Labelling: Story = {
       // a missing label that resolves fine in browsers/AT. See the forms-strategy
       // RFC axe-core policy (CONTRIBUTOR-DOCS, "3.4 axe-core policy").
       exclude: {
-        label: ['#labelling-labelledby-field'],
+        label: [
+          '#labelling-labelledby-field',
+          '#labelling-billing-city',
+          '#labelling-shipping-street',
+          '#labelling-shipping-city',
+        ],
       },
     },
   },
@@ -287,94 +400,152 @@ export const Prefix: Story = {
 //    STATES STORIES
 // ──────────────────────────
 
-export const States: Story = {
+export const Default: Story = {
+  args: {
+    'label-slot': 'Full name',
+  },
+  tags: ['states'],
+  parameters: {
+    styles: { 'inline-size': '220px' },
+  },
+};
+
+export const Required: Story = {
+  args: {
+    required: true,
+    'label-slot': 'Full name',
+  },
+  tags: ['states'],
+  parameters: {
+    styles: { 'inline-size': '220px' },
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+    value: 'person@example.com',
+    'label-slot': 'Email address',
+  },
+  tags: ['states'],
+  parameters: {
+    styles: { 'inline-size': '220px' },
+  },
+};
+
+export const ReadOnly: Story = {
+  args: {
+    readonly: true,
+    value: 'sam.rivera',
+    'label-slot': 'Username',
+  },
+  tags: ['states'],
+  parameters: {
+    styles: { 'inline-size': '220px' },
+  },
+};
+ReadOnly.storyName = 'Read-only';
+
+export const Invalid: Story = {
+  args: {
+    invalid: true,
+    autocomplete: 'email',
+    'label-slot': 'Email address',
+    'description-slot': "We'll never share your email.",
+    'error-text-slot': 'Enter a valid email address.',
+  },
+  tags: ['states'],
+  parameters: {
+    styles: { 'inline-size': '220px' },
+  },
+};
+
+export const DisabledInvalid: Story = {
   render: () => html`
-    <swc-text-field accessible-label="Default">
-      <span slot="label">Default</span>
-    </swc-text-field>
-    <swc-text-field required>
-      <span slot="label">Full name</span>
-    </swc-text-field>
-    <swc-text-field
-      accessible-label="Read-only"
-      readonly
-      value="Read-only value"
-    ></swc-text-field>
-    <swc-text-field disabled value="Disabled value">
-      <span slot="label">Disabled</span>
-    </swc-text-field>
-    <swc-text-field
-      accessible-label="Disabled placeholder"
-      disabled
-      placeholder="Placeholder"
-    ></swc-text-field>
-    <swc-text-field
-      autocomplete="email"
-      accessible-label="Email address"
-      invalid
-    >
-      <span slot="description">We'll never share your email.</span>
-      <span slot="error-text">Enter a valid email address.</span>
-    </swc-text-field>
     <swc-text-field autocomplete="email" disabled invalid value="not-an-email">
       <span slot="label">Email address</span>
-      <span id="disabled-field-description" slot="description">
-        We'll never share your email.
+      <span slot="description">We'll never share your email.</span>
+      <span id="disabled-field-error" slot="error-text">
+        Enter a valid email address.
       </span>
-      <span slot="error-text">Enter a valid email address.</span>
     </swc-text-field>
   `,
   tags: ['states'],
   parameters: {
     a11y: {
       // WCAG 1.4.3 exempts text that is part of an inactive UI component.
-      // axe cannot infer that this slotted description belongs to the
+      // axe cannot infer that this slotted error text belongs to the
       // disabled custom element, so exclude only its color-contrast result.
       exclude: {
-        'color-contrast': ['#disabled-field-description'],
+        'color-contrast': ['#disabled-field-error'],
       },
     },
-    flexLayout: 'column-stretch',
     styles: {
       'inline-size': '220px',
     },
   },
 };
+DisabledInvalid.storyName = 'Disabled and invalid';
 
 // ──────────────────────────────
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
 export const LabelOverflow: Story = {
-  // A narrow fixed-width column: the field has no default width (it fills its
-  // container), so a constrained container is what makes the long labels wrap.
   render: () => html`
-    <div
-      style="display: flex; flex-direction: column; gap: 24px; inline-size: 260px;"
-    >
-      <swc-text-field placeholder="My favorite book">
-        <span slot="label">
-          This top label wraps onto multiple lines instead of clipping
-        </span>
-      </swc-text-field>
-      <swc-text-field label-position="side" placeholder="My favorite book">
-        <span slot="label">Short side label</span>
-      </swc-text-field>
-      <swc-text-field label-position="side" placeholder="My favorite book">
-        <span slot="label">
-          This side label wraps and pushes over the input
-        </span>
-      </swc-text-field>
-      <swc-text-field
-        label-position="side"
-        placeholder="My favorite book"
-        style="--swc-field-label-max-inline-size: 80px;"
-      >
-        <span slot="label">Tightly capped label wraps early</span>
-      </swc-text-field>
-    </div>
+    ${captioned(
+      html`
+        Top label in a 180px container
+      `,
+      html`
+        <div style="inline-size: 180px;">
+          <swc-text-field placeholder="My favorite book">
+            <span slot="label">
+              This top label wraps onto multiple lines instead of clipping
+            </span>
+          </swc-text-field>
+        </div>
+      `
+    )}
+    ${captioned(
+      html`
+        Side label with the default column cap
+      `,
+      html`
+        <swc-text-field
+          label-position="side"
+          placeholder="My favorite book"
+          style="inline-size: 260px;"
+        >
+          <span slot="label">
+            This side label wraps within its column beside the input
+          </span>
+        </swc-text-field>
+      `
+    )}
+    ${captioned(
+      html`
+        Side label with an 80px column cap
+      `,
+      html`
+        <swc-text-field
+          label-position="side"
+          placeholder="My favorite book"
+          style="inline-size: 260px; --swc-field-label-max-inline-size: 80px;"
+        >
+          <span slot="label">Tightly capped label wraps early</span>
+        </swc-text-field>
+      `
+    )}
   `,
   tags: ['behaviors'],
+  parameters: {
+    flexLayout: 'column-stretch',
+    styles: {
+      'align-items': 'flex-start',
+      gap: 'var(--swc-spacing-200)',
+    },
+  },
 };
 LabelOverflow.storyName = 'Label overflow';
 

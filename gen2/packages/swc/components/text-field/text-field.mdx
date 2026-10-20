@@ -30,6 +30,8 @@ Three sources can provide the field's accessible name. When more than one is set
 2. **`accessible-label`**: a string accessible name for a field with no visible label of its own.
 3. **A slotted `label`** (lowest precedence): the default, recommended path for an ordinary standalone field. Renders as a real, same-root `<label for>`, giving native click-to-focus.
 
+The examples follow precedence order. Each table input combines its row and column headers: Billing and City produce "Billing City".
+
 <Canvas of={TextFieldStories.Labelling} />
 
 ### Sizes
@@ -40,7 +42,9 @@ Text fields come in four sizes. Size controls the field height, typography, inli
 
 ### Label positions
 
-The `label-position` attribute places the visible label above the input (`top`, the default) or beside it (`side`).
+The `label-position` attribute places the label above the input (`top`, the default) or beside it (`side`).
+
+In `side` position, the input aligns with the label's first line. A short label reads as centered against the input; a long label grows downward while the input stays aligned with its first line.
 
 <Canvas of={TextFieldStories.LabelPositions} />
 
@@ -58,21 +62,49 @@ The `prefix` slot places non-interactive content before the input, inside the fi
 
 ## States
 
-Text fields can exist in various states:
+### Default
 
-- **Default**: normal, editable state
-- **Required**: the native `required` attribute is reflected onto the input; no separate `aria-required` is set
-- **Read-only**: focusable and selectable, but not editable; distinct from disabled
-- **Disabled**: not editable and removed from the tab order
-- **Invalid**: shows the slotted `error-text` in place of the description, associates it via `aria-describedby`, and blocks native constraint validation and submission when the field is eligible for validation
+The default state is editable and accepts keyboard input.
 
-<Canvas of={TextFieldStories.States} />
+<Canvas of={TextFieldStories.Default} />
+
+### Required
+
+`required` sets the native input's required state and prevents an empty field from passing constraint validation. With a visible label, the default necessity indicator adds a decorative asterisk. The input uses native `required`, not a separate `aria-required`.
+
+<Canvas of={TextFieldStories.Required} />
+
+### Disabled
+
+A disabled field retains its value but cannot be edited or reached with <kbd>Tab</kbd>. It does not block form validation.
+
+<Canvas of={TextFieldStories.Disabled} />
+
+### Read-only
+
+A read-only field remains focusable and its value can be selected, but not edited. Unlike a disabled field, it remains in the tab order.
+
+<Canvas of={TextFieldStories.ReadOnly} />
+
+### Invalid
+
+`invalid` shows the slotted `error-text` in place of the description, associates it via `aria-describedby`, and blocks native constraint validation and submission when the field is eligible for validation. The application controls this state; native validation failures do not enable it automatically.
+
+<Canvas of={TextFieldStories.Invalid} />
+
+### Disabled and invalid
+
+Disabling an invalid field hides its validation icon but preserves the error text with disabled styling. The error remains associated with the input in place of the normal description, and `aria-invalid` stays `true`. Re-enabling restores the error color and validation icon. A disabled field does not block validation.
+
+<Canvas of={TextFieldStories.DisabledInvalid} />
 
 ## Behaviors
 
 ### Label overflow
 
-A long visible label wraps onto multiple lines instead of clipping. In `side` position, the label wraps within its column (capped at 50% of the field width by default) and the input aligns to the label's first line: a short side label reads as centered against the input, while a long one keeps the input at the top and grows downward past it. Set `--swc-field-label-max-inline-size` to widen or tighten that column cap for a specific field, or set `inline-size` on the host to widen the field.
+A long visible label wraps onto multiple lines instead of clipping. The top-label example constrains one field inside a 180px container. The side-label examples each use a 260px host; their labels wrap within a column capped at 50% of the host width by default, or at the value of `--swc-field-label-max-inline-size`.
+
+The host's `inline-size` controls the space available to the layout, not the control's maximum width. The control can shrink with a narrower container, but stops growing at the default maximum for its size. To let it fill a wider host, also set `--swc-field-input-max-inline-size: 100%`.
 
 <Canvas of={TextFieldStories.LabelOverflow} />
 

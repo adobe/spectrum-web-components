@@ -29,22 +29,25 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  */
 
 test.describe('Text field - ARIA Snapshots', () => {
-  test('exposes a textbox with the slotted label as its name', async ({
-    page,
-  }) => {
-    const root = await gotoStory(
-      page,
-      'components-text-field--overview',
-      'swc-text-field'
-    );
-    await expect(root).toMatchAriaSnapshot(`
-      - textbox "Favorite food"
-    `);
-  });
+  for (const story of ['overview', 'playground']) {
+    test(`shows the Name example in ${story}`, async ({ page }) => {
+      const root = await gotoStory(
+        page,
+        `components-text-field--${story}`,
+        'swc-text-field'
+      );
+      await expect(root).toMatchAriaSnapshot(`
+        - textbox "Name"
+      `);
+      await expect(root.locator('input')).toHaveAttribute(
+        'placeholder',
+        'Enter your full name'
+      );
+    });
+  }
 
-  test('names each anatomy variation (description and error-text)', async ({
-    page,
-  }) => {
+  test('shows named anatomy variations side by side', async ({ page }) => {
+    await page.setViewportSize({ width: 1000, height: 800 });
     const root = await gotoStory(
       page,
       'components-text-field--anatomy',
@@ -54,9 +57,40 @@ test.describe('Text field - ARIA Snapshots', () => {
       - textbox "Email address"
       - textbox "Email address"
     `);
+    const fields = root.locator('swc-text-field');
+    await expect(fields).toHaveCount(2);
+    const [description, error] = await fields.evaluateAll((fields) =>
+      fields.map((field) => {
+        const { left, right, top } = field.getBoundingClientRect();
+        return { left, right, top };
+      })
+    );
+    expect(error.top).toBeCloseTo(description.top, 1);
+    expect(error.left).toBeGreaterThanOrEqual(description.right);
   });
 
-  test('resolves each accessible name source (slot, accessible-label, accessible-labelledby)', async ({
+  test('stacks label-overflow examples vertically', async ({ page }) => {
+    await page.setViewportSize({ width: 1000, height: 800 });
+    const root = await gotoStory(
+      page,
+      'components-text-field--label-overflow',
+      'swc-text-field'
+    );
+    const fields = root.locator('swc-text-field');
+    await expect(fields).toHaveCount(3);
+    const bounds = await fields.evaluateAll((fields) =>
+      fields.map((field) => {
+        const { left, top, bottom } = field.getBoundingClientRect();
+        return { left, top, bottom };
+      })
+    );
+    bounds.slice(1).forEach((field, index) => {
+      expect(field.left).toBeCloseTo(bounds[0].left, 1);
+      expect(field.top).toBeGreaterThanOrEqual(bounds[index].bottom);
+    });
+  });
+
+  test('resolves each accessible name source in precedence order', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -65,25 +99,48 @@ test.describe('Text field - ARIA Snapshots', () => {
       'swc-text-field'
     );
     const fields = root.locator('swc-text-field');
-    await expect(fields.nth(0)).toMatchAriaSnapshot(`
+    await expect(fields).toHaveCount(6);
+    await expect(fields.nth(4)).toMatchAriaSnapshot(`
       - textbox "Email address"
     `);
-    await expect(fields.nth(1)).toMatchAriaSnapshot(`
+    await expect(fields.nth(5)).toMatchAriaSnapshot(`
       - textbox "Email address"
     `);
-    // Chromium's `ariaLabelledByElements` getter enforces a same-tree
-    // check, so a cross-root labelling reference does not compute a name
-    // for `toHaveAccessibleName` / `toMatchAriaSnapshot`. Real browsers
-    // and AT still announce it. Assert the mixin's actual contract: the
-    // referenced elements are set on the input.
-    const labelledbyRefText = await fields.nth(2).evaluate((field) => {
-      const input = (field as HTMLElement).shadowRoot?.querySelector('input');
-      const refs =
-        (input as HTMLInputElement & { ariaLabelledByElements?: Element[] })
-          ?.ariaLabelledByElements ?? null;
-      return refs?.map((element) => element.textContent?.trim() ?? '') ?? null;
-    });
-    expect(labelledbyRefText).toEqual(['Billing', 'Street address']);
+    // Assert the mapping directly: Playwright's name matchers do not
+    // consistently represent cross-shadow element-reference relationships.
+    const labelledbyNames = await root
+      .locator('swc-text-field[accessible-labelledby]')
+      .evaluateAll((fields) =>
+        fields.map((field) =>
+          field.shadowRoot
+            ?.querySelector('input')
+            ?.ariaLabelledByElements?.map(
+              (element) => element.textContent?.trim() ?? ''
+            )
+            .join(' ')
+        )
+      );
+    expect(labelledbyNames).toEqual([
+      'Billing Street address',
+      'Billing City',
+      'Shipping Street address',
+      'Shipping City',
+    ]);
+    await expect(
+      root.getByRole('table', { name: 'Delivery addresses' })
+    ).toBeVisible();
+    await expect(
+      root.getByRole('rowheader', { name: 'Billing' })
+    ).toBeVisible();
+    await expect(
+      root.getByRole('columnheader', { name: 'Street address' })
+    ).toBeVisible();
+    await expect(
+      root.getByRole('rowheader', { name: 'Shipping' })
+    ).toBeVisible();
+    await expect(
+      root.getByRole('columnheader', { name: 'City' })
+    ).toBeVisible();
   });
 
   test('names each textbox across sizes', async ({ page }) => {
@@ -156,31 +213,75 @@ test.describe('Text field - ARIA Snapshots', () => {
     `);
   });
 
-  test('reflects native form states (required / readonly / disabled / invalid)', async ({
-    page,
-  }) => {
+  for (const { story, snapshot } of [
+    { story: 'default', snapshot: '- textbox "Full name"' },
+    { story: 'required', snapshot: '- textbox "Full name"' },
+    { story: 'read-only', snapshot: '- textbox "Username": sam.rivera' },
+    { story: 'invalid', snapshot: '- textbox "Email address"' },
+    {
+      story: 'disabled-invalid',
+      snapshot: '- textbox "Email address" [disabled]: not-an-email',
+    },
+  ]) {
+    test(`exposes the ${story} state as a standalone story`, async ({
+      page,
+    }) => {
+      const root = await gotoStory(
+        page,
+        `components-text-field--${story}`,
+        'swc-text-field'
+      );
+      const input = root.locator('input');
+      await expect(input).toMatchAriaSnapshot(snapshot);
+      if (story === 'required') {
+        await expect(input).toHaveAttribute('required', '');
+      } else if (story === 'read-only') {
+        await expect(input).toHaveAttribute('readonly', '');
+      } else if (story === 'invalid') {
+        await expect(input).toHaveAttribute('aria-invalid', 'true');
+      } else if (story === 'disabled-invalid') {
+        await expect(input).toHaveAttribute('aria-invalid', 'true');
+        await expect(root.locator('.swc-FormFieldErrorText')).toBeVisible();
+        await expect(root.locator('.swc-FormFieldDescription')).toHaveCount(0);
+      }
+    });
+  }
+
+  for (const forcedColors of ['none', 'active'] as const) {
+    test(`preserves disabled error text styling with forced colors ${forcedColors}`, async ({
+      page,
+    }) => {
+      await page.emulateMedia({ forcedColors });
+      const root = await gotoStory(
+        page,
+        'components-text-field--disabled-invalid',
+        'swc-text-field'
+      );
+      const error = root.locator('.swc-FormFieldErrorText');
+      const labelColor = await root
+        .locator('.swc-FormFieldLabel')
+        .evaluate((label) => getComputedStyle(label).color);
+      await expect(error).toBeVisible();
+      await expect(root.locator('[slot="error-text"]')).toBeVisible();
+      await expect(root.locator('[slot="error-text"]')).toHaveText(
+        'Enter a valid email address.'
+      );
+      await expect(error).toHaveCSS('color', labelColor);
+      await expect(root.locator('.swc-TextField-invalidIcon')).toHaveCount(0);
+    });
+  }
+
+  test('shows one disabled field with an existing value', async ({ page }) => {
     const root = await gotoStory(
       page,
-      'components-text-field--states',
+      'components-text-field--disabled',
       'swc-text-field'
     );
-    await expect(root).toMatchAriaSnapshot(`
-      - text: Default
-      - textbox "Default"
-      - text: Full name
-      - textbox "Full name"
-      - textbox "Read-only": Read-only value
-      - text: Disabled
-      - textbox "Disabled" [disabled]: Disabled value
-      - textbox "Disabled placeholder" [disabled]
-      - textbox "Email address"
-      - text: Enter a valid email address. Email address
-      - textbox "Email address" [disabled]
-      - text: We'll never share your email.
+    const fields = root.locator('swc-text-field');
+    await expect(fields).toHaveCount(1);
+    await expect(fields.nth(0).locator('input')).toMatchAriaSnapshot(`
+      - textbox "Email address" [disabled]: person@example.com
     `);
-    await expect(
-      root.locator('swc-text-field').nth(1).locator('input')
-    ).toHaveAttribute('required', '');
   });
 
   test('associates description text via aria-describedby', async ({ page }) => {
@@ -213,6 +314,55 @@ test.describe('Text field - ARIA Snapshots', () => {
 });
 
 test.describe('Text field - Keyboard interactions', () => {
+  test('fits the address matrix at 390px without horizontal scrolling', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    const root = await gotoStory(
+      page,
+      'components-text-field--labelling',
+      'swc-text-field'
+    );
+    const dimensions = await root
+      .getByRole('region', { name: 'Scrollable delivery address table' })
+      .evaluate((element) => ({
+        available: element.clientWidth,
+        content: element.scrollWidth,
+        page: element.ownerDocument.documentElement.scrollWidth,
+        viewport: element.ownerDocument.documentElement.clientWidth,
+      }));
+    expect(dimensions.content).toBeLessThanOrEqual(dimensions.available);
+    expect(dimensions.page).toBeLessThanOrEqual(dimensions.viewport);
+  });
+
+  test('keeps the address matrix keyboard-scrollable on narrow screens', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 320, height: 844 });
+    const root = await gotoStory(
+      page,
+      'components-text-field--labelling',
+      'swc-text-field'
+    );
+    const region = root.getByRole('region', {
+      name: 'Scrollable delivery address table',
+    });
+    const dimensions = await region.evaluate((element) => ({
+      available: element.clientWidth,
+      content: element.scrollWidth,
+      page: element.ownerDocument.documentElement.scrollWidth,
+      viewport: element.ownerDocument.documentElement.clientWidth,
+    }));
+    expect(dimensions.content).toBeGreaterThan(dimensions.available);
+    expect(dimensions.page).toBeLessThanOrEqual(dimensions.viewport);
+    await expect(region).toHaveAttribute('tabindex', '0');
+    await region.focus();
+    await page.keyboard.press('ArrowRight');
+    await expect
+      .poll(() => region.evaluate((element) => element.scrollLeft))
+      .toBeGreaterThan(0);
+  });
+
   test('tab focus lands on the internal input via delegatesFocus', async ({
     page,
   }) => {
@@ -254,23 +404,23 @@ test.describe('Text field - Keyboard interactions', () => {
   });
 
   test('a disabled field is not reachable via Tab', async ({ page }) => {
-    await gotoStory(page, 'components-text-field--states', 'swc-text-field');
-
-    for (let i = 0; i < 10; i++) {
-      await page.keyboard.press('Tab');
-      const active = await page.evaluate(() => {
-        const host = document.activeElement as HTMLElement | null;
-        return {
-          tag: host?.tagName.toLowerCase() ?? '',
-          disabled: host?.hasAttribute('disabled') ?? false,
-        };
-      });
-      if (active.tag === 'swc-text-field') {
-        expect(
-          active.disabled,
-          'Tab must never land on a disabled swc-text-field'
-        ).toBe(false);
-      }
-    }
+    const root = await gotoStory(
+      page,
+      'components-text-field--disabled',
+      'swc-text-field'
+    );
+    await root.evaluate((root) => {
+      const before = document.createElement('button');
+      before.textContent = 'Before disabled field';
+      const after = document.createElement('button');
+      after.textContent = 'After disabled field';
+      root.prepend(before);
+      root.append(after);
+    });
+    await page.getByRole('button', { name: 'Before disabled field' }).focus();
+    await page.keyboard.press('Tab');
+    await expect(
+      page.getByRole('button', { name: 'After disabled field' })
+    ).toBeFocused();
   });
 });

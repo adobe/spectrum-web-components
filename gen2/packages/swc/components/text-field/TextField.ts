@@ -154,9 +154,7 @@ export class TextField extends TextFieldBase {
             ?readonly=${this.readonly}
             ?required=${this.required}
             ?disabled=${this.effectiveDisabled}
-            aria-invalid=${ifDefined(
-              this.invalid && !this.effectiveDisabled ? 'true' : undefined
-            )}
+            aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
             @input=${this.handleInput}
             @change=${this.handleChange}
             @keydown=${this.handleKeydown}
@@ -170,9 +168,7 @@ export class TextField extends TextFieldBase {
               `
             : nothing}
         </div>
-        ${this.renderFieldDescription({
-          invalid: this.invalid && !this.effectiveDisabled,
-        })}
+        ${this.renderFieldDescription()}
       </div>
     `;
   }

@@ -140,13 +140,15 @@
 /* ── Disabled ─────────────────────────────────────── */
 
 :host(:disabled) .swc-FormFieldLabel,
-:host(:disabled) .swc-FormFieldDescription {
+:host(:disabled) .swc-FormFieldDescription,
+:host(:disabled) .swc-FormFieldErrorText {
   color: token("disabled-content-color");
 }
 
 @media (forced-colors: active) {
   :host(:disabled) .swc-FormFieldLabel,
-  :host(:disabled) .swc-FormFieldDescription {
+  :host(:disabled) .swc-FormFieldDescription,
+  :host(:disabled) .swc-FormFieldErrorText {
     color: GrayText;
   }
 }

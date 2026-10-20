@@ -25,14 +25,18 @@ import {
   getComponents,
   withWarningSpy,
 } from '../../../utils/test-utils.js';
+import * as TextFieldStories from '../stories/text-field.stories.js';
 import meta from '../stories/text-field.stories.js';
 import {
   Accessibility,
+  DisabledInvalid,
   FormBehavior,
+  Invalid,
   Labelling,
+  LabelOverflow,
   NecessityIndicator,
+  Required,
   Sizes,
-  States,
 } from '../stories/text-field.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
@@ -57,7 +61,55 @@ export const LabellingTest: Story = {
       canvasElement,
       'swc-text-field'
     );
-    const [slotOnly, labelOnly, labelledbyWins] = fields;
+    const [, , , , labelOnly, slotOnly] = fields;
+
+    await step('the naming methods have distinct, readable sections', () => {
+      const canvas = within(canvasElement);
+      for (const { heading, api, count } of [
+        {
+          heading: 'Name from row and column headers',
+          api: 'accessible-labelledby',
+          count: 4,
+        },
+        {
+          heading: 'Accessible name only',
+          api: 'accessible-label="Email address"',
+          count: 1,
+        },
+        {
+          heading: 'Visible field label',
+          api: 'slot="label"',
+          count: 1,
+        },
+      ]) {
+        const section = canvas.getByRole('region', { name: heading });
+        const example = within(section);
+        expect(
+          example.getByRole('heading', { name: heading, level: 4 })
+        ).toBeVisible();
+        expect(example.getByText(api, { selector: 'code' })).toBeVisible();
+        expect(section.querySelectorAll('swc-text-field')).toHaveLength(count);
+      }
+    });
+
+    await step('external labels are actual row and column headers', () => {
+      const canvas = within(canvasElement);
+      expect(
+        canvas.getByRole('table', { name: 'Delivery addresses' })
+      ).toBeVisible();
+      expect(
+        canvas.getByRole('rowheader', { name: 'Billing' })
+      ).toHaveAttribute('id', 'labelling-row-header');
+      expect(
+        canvas.getByRole('columnheader', { name: 'Street address' })
+      ).toHaveAttribute('id', 'labelling-col-header');
+      expect(
+        canvas.getByRole('rowheader', { name: 'Shipping' })
+      ).toHaveAttribute('id', 'labelling-shipping-header');
+      expect(
+        canvas.getByRole('columnheader', { name: 'City' })
+      ).toHaveAttribute('id', 'labelling-city-header');
+    });
 
     await step('slotted label renders as a real <label for>', () => {
       const label = slotOnly.shadowRoot?.querySelector('label');
@@ -79,17 +131,104 @@ export const LabellingTest: Story = {
     await step(
       'accessible-labelledby resolves external row/column headers',
       () => {
-        const input = labelledbyWins.shadowRoot?.querySelector('input');
-        const resolved = input?.ariaLabelledByElements;
-        expect(resolved, 'both labelledby references resolve').toHaveLength(2);
-        expect(
-          resolved?.map((el) => el.id),
-          'labelledby references preserve row-then-column order'
-        ).toEqual(['labelling-row-header', 'labelling-col-header']);
+        const expectedNames = [
+          'Billing Street address',
+          'Billing City',
+          'Shipping Street address',
+          'Shipping City',
+        ];
+        expect(fields).toHaveLength(6);
+        fields.slice(0, 4).forEach((field, index) => {
+          const resolved = field.roleElement?.ariaLabelledByElements;
+          expect(resolved, expectedNames[index]).toHaveLength(2);
+          expect(resolved?.map((element) => element.tagName)).toEqual([
+            'TH',
+            'TH',
+          ]);
+          expect(
+            resolved?.map((element) => element.textContent?.trim()).join(' ')
+          ).toBe(expectedNames[index]);
+        });
       }
     );
   },
 };
+
+export const StateStoriesTest: Story = {
+  ...Labelling,
+  play: async ({ step }) => {
+    await step('each state has its own discoverable story', () => {
+      for (const name of [
+        'Default',
+        'Required',
+        'Disabled',
+        'ReadOnly',
+        'Invalid',
+        'DisabledInvalid',
+      ]) {
+        expect(TextFieldStories).toHaveProperty(`${name}.tags`, ['states']);
+      }
+      expect(TextFieldStories).not.toHaveProperty('States');
+    });
+  },
+};
+StateStoriesTest.storyName = 'Discoverable state stories';
+
+export const LabelOverflowTest: Story = {
+  ...LabelOverflow,
+  play: async ({ canvasElement, step }) => {
+    const fields = await getComponents<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const [topField] = fields;
+    const control = topField.shadowRoot?.querySelector<HTMLElement>(
+      '.swc-TextField-control'
+    );
+    const container = topField.parentElement;
+    if (!control || !container) {
+      throw new Error('control or container not found');
+    }
+
+    await step(
+      'individual fields demonstrate constrained label wrapping',
+      () => {
+        expect(fields).toHaveLength(3);
+        expect(topField.getBoundingClientRect().width).toBeCloseTo(180, 1);
+        expect(control.getBoundingClientRect().width).toBeCloseTo(180, 1);
+        for (const field of fields) {
+          const label = field.shadowRoot?.querySelector('label');
+          if (!label) {
+            throw new Error('label not found');
+          }
+          expect(label.getBoundingClientRect().height).toBeGreaterThan(
+            parseFloat(getComputedStyle(label).lineHeight)
+          );
+        }
+      }
+    );
+
+    await step(
+      'host width does not override the default control maximum',
+      () => {
+        container.style.inlineSize = '320px';
+        expect(topField.getBoundingClientRect().width).toBeCloseTo(320, 1);
+        expect(control.getBoundingClientRect().width).toBeCloseTo(208, 1);
+      }
+    );
+
+    await step(
+      'the public maximum-width override lets the control fill the host',
+      () => {
+        topField.style.setProperty('--swc-field-input-max-inline-size', '100%');
+        expect(control.getBoundingClientRect().width).toBeCloseTo(320, 1);
+        topField.style.removeProperty('--swc-field-input-max-inline-size');
+        container.style.inlineSize = '180px';
+      }
+    );
+  },
+};
+LabelOverflowTest.storyName = 'Constrained label overflow';
 
 // ──────────────────────────────────────────────────────────────
 // TEST: Size-specific field widths
@@ -227,18 +366,16 @@ export const InvalidWidthTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: States: required reflection + invalid description/error wiring
+// TEST: Invalid description/error wiring
 // ──────────────────────────────────────────────────────────────
 
-export const StatesTest: Story = {
-  ...States,
+export const InvalidStateTest: Story = {
+  ...Invalid,
   play: async ({ canvasElement, step }) => {
-    const fields = await getComponents<TextField>(
+    const invalidField = await getComponent<TextField>(
       canvasElement,
       'swc-text-field'
     );
-    const invalidField = fields[fields.length - 2];
-    const disabledInvalidField = fields[fields.length - 1];
     const input = invalidField.shadowRoot?.querySelector('input');
 
     await step('invalid input carries aria-invalid', () => {
@@ -262,59 +399,6 @@ export const StatesTest: Story = {
     );
 
     await step(
-      'disabled invalid fields suppress invalid presentation and association',
-      () => {
-        const disabledInput =
-          disabledInvalidField.shadowRoot?.querySelector('input');
-        expect(
-          disabledInput?.getAttribute('aria-invalid'),
-          'disabled invalid field omits aria-invalid'
-        ).toBeNull();
-        expect(
-          disabledInvalidField.shadowRoot?.querySelector(
-            '.swc-FormFieldErrorText'
-          ),
-          'disabled invalid field hides error text'
-        ).toBeNull();
-        expect(
-          disabledInvalidField.shadowRoot?.querySelector(
-            '.swc-TextField-invalidIcon'
-          ),
-          'disabled invalid field hides validation icon'
-        ).toBeNull();
-        expect(
-          disabledInput?.ariaDescribedByElements?.some((element) =>
-            element.className.includes('swc-FormFieldErrorText')
-          ),
-          'disabled invalid field omits error text from describedby'
-        ).toBe(false);
-      }
-    );
-
-    await step('re-enabling restores the invalid presentation', async () => {
-      disabledInvalidField.disabled = false;
-      await disabledInvalidField.updateComplete;
-      const reenabledInput =
-        disabledInvalidField.shadowRoot?.querySelector('input');
-      expect(
-        reenabledInput?.getAttribute('aria-invalid'),
-        're-enabled invalid field restores aria-invalid'
-      ).toBe('true');
-      expect(
-        disabledInvalidField.shadowRoot?.querySelector(
-          '.swc-FormFieldErrorText'
-        ),
-        're-enabled invalid field restores error text'
-      ).toBeTruthy();
-      expect(
-        disabledInvalidField.shadowRoot?.querySelector(
-          '.swc-TextField-invalidIcon'
-        ),
-        're-enabled invalid field restores validation icon'
-      ).toBeTruthy();
-    });
-
-    await step(
       'error text replaces the description in ariaDescribedByElements while invalid',
       () => {
         const resolved = input?.ariaDescribedByElements ?? [];
@@ -333,29 +417,6 @@ export const StatesTest: Story = {
       }
     );
 
-    await step('required is reflected onto the native input', () => {
-      const requiredField = fields[1];
-      const requiredInput = requiredField.shadowRoot?.querySelector('input');
-      expect(
-        requiredInput?.required,
-        'required property reaches the input'
-      ).toBe(true);
-    });
-
-    await step(
-      'a required field with a visible label shows a decorative asterisk',
-      () => {
-        const indicator = fields[1].shadowRoot?.querySelector(
-          '.swc-FormFieldLabel-requiredIndicator'
-        );
-        expect(indicator, 'required label renders its asterisk').toBeTruthy();
-        expect(
-          indicator?.getAttribute('aria-hidden'),
-          'required asterisk is hidden from assistive technology'
-        ).toBe('true');
-      }
-    );
-
     await step('an invalid field renders a decorative validation icon', () => {
       const icon = invalidField.shadowRoot?.querySelector(
         '.swc-TextField-invalidIcon'
@@ -365,12 +426,127 @@ export const StatesTest: Story = {
         icon?.getAttribute('aria-hidden'),
         'validation icon is hidden from assistive technology'
       ).toBe('true');
-      // A valid field renders no validation icon.
+    });
+
+    await step('clearing invalid removes the validation icon', async () => {
+      invalidField.invalid = false;
+      await invalidField.updateComplete;
       expect(
-        fields[0].shadowRoot?.querySelector('.swc-TextField-invalidIcon'),
+        invalidField.shadowRoot?.querySelector('.swc-TextField-invalidIcon'),
         'valid field omits the validation icon'
       ).toBeNull();
     });
+  },
+};
+
+export const RequiredStateTest: Story = {
+  ...Required,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+
+    await step('required is reflected onto the native input', () => {
+      expect(
+        field.roleElement?.required,
+        'required property reaches the input'
+      ).toBe(true);
+    });
+
+    await step('the visible label shows a decorative asterisk', () => {
+      const indicator = field.shadowRoot?.querySelector(
+        '.swc-FormFieldLabel-requiredIndicator'
+      );
+      expect(indicator, 'required label renders its asterisk').toBeTruthy();
+      expect(
+        indicator?.getAttribute('aria-hidden'),
+        'required asterisk is hidden from assistive technology'
+      ).toBe('true');
+    });
+  },
+};
+
+export const DisabledInvalidStateTest: Story = {
+  ...DisabledInvalid,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const input = field.roleElement;
+    if (!input) {
+      throw new Error('input not found');
+    }
+    const disabledColor = getComputedStyle(input).color;
+
+    await step(
+      'disabled invalid fields preserve the error with disabled styling',
+      () => {
+        expect(field.invalid).toBe(true);
+        expect(input.disabled).toBe(true);
+        expect(input.getAttribute('aria-invalid')).toBe('true');
+        const error = field.shadowRoot?.querySelector(
+          '.swc-FormFieldErrorText'
+        );
+        expect(error).toBeVisible();
+        expect(error).toHaveStyle({ color: disabledColor });
+        expect(
+          field.shadowRoot?.querySelector('.swc-TextField-invalidIcon')
+        ).toBeNull();
+        const resolved = input.ariaDescribedByElements ?? [];
+        expect(resolved).toHaveLength(1);
+        expect(resolved[0]).toHaveClass('swc-FormFieldErrorText');
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldDescription')
+        ).toBeNull();
+        expect(field.willValidate).toBe(false);
+        expect(field.checkValidity()).toBe(true);
+      }
+    );
+
+    await step(
+      're-enabling restores the icon and error color without changing the message',
+      async () => {
+        field.disabled = false;
+        await field.updateComplete;
+        expect(field.invalid).toBe(true);
+        expect(input.getAttribute('aria-invalid')).toBe('true');
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+        ).toBeVisible();
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+        ).not.toHaveStyle({ color: disabledColor });
+        expect(
+          field.shadowRoot?.querySelector('.swc-TextField-invalidIcon')
+        ).toBeTruthy();
+        expect(input.ariaDescribedByElements?.[0]).toHaveClass(
+          'swc-FormFieldErrorText'
+        );
+        expect(field.checkValidity()).toBe(false);
+      }
+    );
+
+    await step(
+      'clearing invalid while disabled restores the description',
+      async () => {
+        field.disabled = true;
+        field.invalid = false;
+        await field.updateComplete;
+        expect(input.disabled).toBe(true);
+        expect(input.hasAttribute('aria-invalid')).toBe(false);
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+        ).toBeNull();
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldDescription')
+        ).toBeVisible();
+        expect(input.ariaDescribedByElements?.[0]).toHaveClass(
+          'swc-FormFieldDescription'
+        );
+      }
+    );
   },
 };
 
@@ -1667,7 +1843,11 @@ export const DisabledStateTest: Story = {
           name="username"
           value="Example"
           accessible-label="Username"
-        ></swc-text-field>
+          invalid
+        >
+          <span slot="description">Choose a username.</span>
+          <span slot="error-text">This username is unavailable.</span>
+        </swc-text-field>
       </fieldset>
     </form>
   `,
@@ -1725,6 +1905,17 @@ export const DisabledStateTest: Story = {
           new FormData(form).has('username'),
           'excluded while cascaded'
         ).toBe(false);
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+        ).toBeVisible();
+        expect(
+          field.shadowRoot?.querySelector('.swc-TextField-invalidIcon')
+        ).toBeNull();
+        expect(field.roleElement).toHaveAttribute('aria-invalid', 'true');
+        expect(field.roleElement?.ariaDescribedByElements?.[0]).toHaveClass(
+          'swc-FormFieldErrorText'
+        );
+        expect(field.checkValidity()).toBe(true);
 
         fieldset.disabled = false;
         await field.updateComplete;
