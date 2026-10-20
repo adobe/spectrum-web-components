@@ -55,7 +55,6 @@ import type {
 import { PIXEL_LOADER_PRESET_NAMES } from '../pixel-loader/index.js';
 import { ChevronUpIcon, PlusIcon, StopIcon } from '../utils/icons/index.js';
 
-import visuallyHiddenStyles from '../../../stylesheets/_lit-styles/visually-hidden.css';
 import styles from './prompt-field.css';
 
 export interface PromptFieldSubmitDetail {
@@ -87,7 +86,7 @@ const SUPPORTS_FIELD_SIZING =
  * @element swc-prompt-field
  *
  * @example
- * <swc-prompt-field label="Prompt">
+ * <swc-prompt-field accessible-label="AI prompt">
  *   <div slot="legal">Responses are generated using AI and may be inaccurate.</div>
  * </swc-prompt-field>
  *
@@ -114,7 +113,7 @@ const SUPPORTS_FIELD_SIZING =
  * @since 2.0.0-beta.3
  */
 export class PromptField extends SpectrumElement {
-  private readonly labelId = uniqueId('swc-prompt-field-label');
+  private readonly aiMarkId = uniqueId('swc-prompt-field-ai-mark');
 
   /** Disables the textarea and all actions. */
   @property({ type: Boolean, reflect: true })
@@ -150,37 +149,39 @@ export class PromptField extends SpectrumElement {
   @property({ type: Boolean, reflect: true, attribute: 'animate-loader' })
   public animateLoader = false;
 
-  /** Accessible name for the textarea; visually hidden. */
-  @property({ type: String })
-  public label = 'Prompt';
-
-  /** Optional accessible label override for the textarea. */
+  /** Accessible name for the AI mark, which also names the textarea through `aria-labelledby`. Not rendered as visible text. */
   @property({ type: String, attribute: 'accessible-label' })
-  public accessibleLabel = '';
+  public accessibleLabel = 'AI prompt';
 
-  /** Accessible label for the send action button. */
-  @property({ type: String, attribute: 'send-label' })
-  public sendLabel = 'Send';
+  /** Accessible name for the send button. */
+  @property({ type: String, attribute: 'send-accessible-label' })
+  public sendAccessibleLabel = 'Submit AI prompt';
 
-  /** Accessible label for the stop action button while generating. */
-  @property({ type: String, attribute: 'stop-label' })
-  public stopLabel = 'Stop generating';
+  /** Accessible name for the send button while it acts as stop during `generating`. */
+  @property({ type: String, attribute: 'stop-accessible-label' })
+  public stopAccessibleLabel = 'Stop';
 
-  /** Accessible label for the upload button. */
-  @property({ type: String, attribute: 'upload-label' })
-  public uploadLabel = 'Add attachment';
+  /** Accessible name for the upload button. */
+  @property({ type: String, attribute: 'upload-accessible-label' })
+  public uploadAccessibleLabel = 'Add attachment';
 
-  /** Accessible label for the previous-attachment scroll button. */
-  @property({ type: String, attribute: 'attachment-scroll-prev-label' })
-  public attachmentScrollPrevLabel = 'Show previous attachments';
+  /** Accessible name for the previous-attachment scroll button. */
+  @property({
+    type: String,
+    attribute: 'attachment-scroll-prev-accessible-label',
+  })
+  public attachmentScrollPrevAccessibleLabel = 'Show previous attachments';
 
-  /** Accessible label for the next-attachment scroll button. */
-  @property({ type: String, attribute: 'attachment-scroll-next-label' })
-  public attachmentScrollNextLabel = 'Show more attachments';
+  /** Accessible name for the next-attachment scroll button. */
+  @property({
+    type: String,
+    attribute: 'attachment-scroll-next-accessible-label',
+  })
+  public attachmentScrollNextAccessibleLabel = 'Show more attachments';
 
   /** Accessible name for the uploaded-attachments strip landmark. */
-  @property({ type: String, attribute: 'attachment-strip-label' })
-  public attachmentStripLabel = 'Uploaded assets strip';
+  @property({ type: String, attribute: 'attachment-strip-accessible-label' })
+  public attachmentStripAccessibleLabel = 'Uploaded assets strip';
 
   /** Placeholder text shown inside the textarea. */
   @property({ type: String })
@@ -312,7 +313,7 @@ export class PromptField extends SpectrumElement {
   }
 
   public static override get styles(): CSSResultArray {
-    return [styles, visuallyHiddenStyles];
+    return [styles];
   }
 
   public override connectedCallback(): void {
@@ -397,6 +398,14 @@ export class PromptField extends SpectrumElement {
 
   private _isFocusableOrSlotted(element: Element): boolean {
     return element.matches(`${focusableSelector}, slot`);
+  }
+
+  private _handleActionClick(): void {
+    if (this.generating) {
+      this._handleStopClick();
+      return;
+    }
+    this._handleSendClick();
   }
 
   private _handleSendClick(): void {
@@ -1109,7 +1118,7 @@ export class PromptField extends SpectrumElement {
             ? html`
                 <swc-action-button
                   class="swc-PromptField-attachments-scroll-prev"
-                  accessible-label=${this.attachmentScrollPrevLabel}
+                  accessible-label=${this.attachmentScrollPrevAccessibleLabel}
                   aria-disabled=${!this._attachmentCanScrollPrev}
                   tabindex=${this._attachmentCanScrollPrev ? nothing : -1}
                   @click=${this._handleAttachmentScrollPrev}
@@ -1125,7 +1134,7 @@ export class PromptField extends SpectrumElement {
           <div
             class="swc-PromptField-attachments-viewport"
             role="region"
-            aria-label=${this.attachmentStripLabel}
+            aria-label=${this.attachmentStripAccessibleLabel}
           >
             <div
               class=${classMap({
@@ -1149,7 +1158,7 @@ export class PromptField extends SpectrumElement {
             ? html`
                 <swc-action-button
                   class="swc-PromptField-attachments-scroll-next"
-                  accessible-label=${this.attachmentScrollNextLabel}
+                  accessible-label=${this.attachmentScrollNextAccessibleLabel}
                   aria-disabled=${!this._attachmentCanScrollNext}
                   tabindex=${this._attachmentCanScrollNext ? nothing : -1}
                   @click=${this._handleAttachmentScrollNext}
@@ -1167,29 +1176,35 @@ export class PromptField extends SpectrumElement {
     `;
   }
 
-  private _renderSendButton(): TemplateResult {
+  /**
+   * One persistent button for send and stop, so focus survives the
+   * `generating` swap and the new name lands on the focused control. An empty
+   * prompt uses `aria-disabled`, not `disabled`, so clearing the value after
+   * submit doesn't blur it; `Button.base` blocks clicks while aria-disabled.
+   */
+  private _renderActionButton(): TemplateResult {
+    const generating = this.generating;
     return html`
       <swc-action-button
-        class="swc-PromptField-send"
+        class=${classMap({
+          'swc-PromptField-send': !generating,
+          'swc-PromptField-stop': generating,
+        })}
         size=${this.size}
-        ?disabled=${!this._isPopulated || this.disabled}
-        accessible-label=${this.sendLabel}
-        @click=${this._handleSendClick}
+        ?disabled=${this.disabled && !generating}
+        aria-disabled=${ifDefined(
+          !generating && !this.disabled && !this._isPopulated
+            ? 'true'
+            : undefined
+        )}
+        accessible-label=${generating
+          ? this.stopAccessibleLabel
+          : this.sendAccessibleLabel}
+        @click=${this._handleActionClick}
       >
-        <swc-icon slot="icon" aria-hidden="true">${ChevronUpIcon()}</swc-icon>
-      </swc-action-button>
-    `;
-  }
-
-  private _renderStopButton(): TemplateResult {
-    return html`
-      <swc-action-button
-        class="swc-PromptField-stop"
-        size=${this.size}
-        accessible-label=${this.stopLabel}
-        @click=${this._handleStopClick}
-      >
-        <swc-icon slot="icon" aria-hidden="true">${StopIcon()}</swc-icon>
+        <swc-icon slot="icon" aria-hidden="true">
+          ${generating ? StopIcon() : ChevronUpIcon()}
+        </swc-icon>
       </swc-action-button>
     `;
   }
@@ -1209,8 +1224,16 @@ export class PromptField extends SpectrumElement {
     const icon = isPreset
       ? DEFAULT_LOADER_ICON
       : (this.loader as PixelLoaderIconName);
+    // The AI mark is the textarea's name source (via aria-labelledby) but stays
+    // aria-hidden so it isn't announced twice. Don't reference the pixel loader
+    // itself: it's a progressbar named "Loading".
     return html`
-      <span class="swc-PromptField-status-icon" aria-hidden="true">
+      <span
+        id=${this.aiMarkId}
+        class="swc-PromptField-status-icon"
+        aria-hidden="true"
+        aria-label=${this.accessibleLabel}
+      >
         <swc-pixel-loader
           icon=${icon}
           preset=${ifDefined(preset)}
@@ -1221,7 +1244,6 @@ export class PromptField extends SpectrumElement {
   }
 
   protected override render(): TemplateResult {
-    const showStop = this.generating;
     const hasAttachments = (this._assignedAttachmentElements?.length ?? 0) > 0;
 
     return html`
@@ -1243,12 +1265,6 @@ export class PromptField extends SpectrumElement {
                 : ''}"
             >
               ${this._renderAttachment()}
-              <span
-                id=${this.labelId}
-                class="swc-PromptField-label swc-VisuallyHidden"
-              >
-                ${this.label}
-              </span>
               <div class="swc-PromptField-controls">
                 <div class="swc-PromptField-text-group">
                   ${this._renderStatusIcon()}
@@ -1256,12 +1272,7 @@ export class PromptField extends SpectrumElement {
                     class="swc-PromptField-textarea"
                     .value=${this.value}
                     placeholder=${this.placeholder}
-                    aria-labelledby=${this.labelId}
-                    aria-label=${ifDefined(
-                      this.accessibleLabel.trim().length > 0
-                        ? this.accessibleLabel.trim()
-                        : undefined
-                    )}
+                    aria-labelledby=${this.aiMarkId}
                     aria-placeholder=${ifDefined(this.placeholder || undefined)}
                     ?disabled=${this.disabled}
                     rows=${this._normalizedMinRows}
@@ -1288,7 +1299,7 @@ export class PromptField extends SpectrumElement {
                       quiet
                       class="swc-PromptField-upload"
                       size=${this.size}
-                      accessible-label=${this.uploadLabel}
+                      accessible-label=${this.uploadAccessibleLabel}
                       ?disabled=${this.disabled}
                       @click=${this._handleUploadClick}
                     >
@@ -1298,9 +1309,7 @@ export class PromptField extends SpectrumElement {
                     </swc-action-button>
                   </div>
                 </div>
-                ${showStop
-                  ? this._renderStopButton()
-                  : this._renderSendButton()}
+                ${this._renderActionButton()}
               </div>
             </div>
           </div>

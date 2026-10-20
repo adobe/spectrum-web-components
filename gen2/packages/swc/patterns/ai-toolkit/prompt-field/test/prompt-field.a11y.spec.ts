@@ -33,10 +33,9 @@ test.describe('PromptField - ARIA Snapshots', () => {
       'swc-prompt-field'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - text: Prompt
-      - textbox "Prompt"
+      - textbox "AI prompt"
       - button "Add attachment"
-      - button "Send" [disabled]
+      - button "Submit AI prompt" [disabled]
     `);
   });
 
@@ -50,9 +49,8 @@ test.describe('PromptField - ARIA Snapshots', () => {
     );
     const collapsedField = root.locator('swc-prompt-field').nth(1);
     await expect(collapsedField).toMatchAriaSnapshot(`
-      - text: Prompt
-      - textbox "Prompt"
-      - button "Send" [disabled]
+      - textbox "AI prompt"
+      - button "Submit AI prompt" [disabled]
     `);
   });
 });
