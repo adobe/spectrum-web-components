@@ -56,7 +56,7 @@ import styles from './upload-attachment.css';
  * </swc-upload-attachment>
  *
  * @slot thumbnail - Shared visual slot for icon/thumbnail/preview image. When slotting `swc-asset`, it defaults to a square aspect ratio; pass `aspect-ratio` on it to override.
- * @slot badge - Optional file-type badge rendered over `type="media"` previews (for example, "PDF"). Use only at `size="l"` and above; it crowds the default `size="m"` (64px) preview.
+ * @slot badge - Optional file-type badge rendered over `type="media"` previews (for example, "PDF"). Requires a `swc-badge` element; other content (for example a bare `<span>`) isn't positioned and gets clipped. Use only at `size="l"` and above; it crowds the default `size="m"` (64px) preview.
  * @slot title - Primary text label.
  * @slot subtitle - Secondary text label.
  * @slot actions - Optional trailing actions.
@@ -90,6 +90,10 @@ export class UploadAttachment extends SpectrumElement {
    */
   @property({ type: String, attribute: 'dismiss-label' })
   public dismissLabel = '';
+
+  /** Accessible label for the upload-progress circle shown while `loading`. */
+  @property({ type: String, attribute: 'progress-label' })
+  public progressLabel = 'Uploading';
 
   /**
    * Accessible name for the tile itself. When unset, derives from the `title`
@@ -302,7 +306,7 @@ export class UploadAttachment extends SpectrumElement {
                 slot="media"
                 size="s"
                 progress=${this.progress}
-                label="Uploading"
+                label=${this.progressLabel}
               ></swc-progress-circle>
             `
           : nothing}

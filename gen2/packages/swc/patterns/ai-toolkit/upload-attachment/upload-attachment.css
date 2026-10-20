@@ -11,7 +11,6 @@
  */
 
 :host {
-  --swc-upload-attachment-focus-indicator-color: light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color"));
   --_swc-upload-attachment-tint: light-dark(token("transparent-black-50"), token("transparent-white-50"));
 
   display: block;
@@ -31,7 +30,7 @@
  * (opaque) surface. */
 :host(:focus-visible) {
   border-radius: 12px;
-  outline: token("focus-indicator-thickness") solid var(--swc-upload-attachment-focus-indicator-color);
+  outline: token("focus-indicator-thickness") solid var(--swc-upload-attachment-focus-indicator-color, light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color")));
   outline-offset: calc(token("focus-indicator-thickness") * -1);
 }
 
@@ -57,7 +56,7 @@
   --swc-action-button-content-color-default: token("gray-700");
 
   /* Ring tracks the same hook as the tile so both stay consistent and a consumer can retheme both at once. */
-  --swc-action-button-focus-indicator-color: var(--swc-upload-attachment-focus-indicator-color);
+  --swc-action-button-focus-indicator-color: var(--swc-upload-attachment-focus-indicator-color, light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color")));
 
   position: absolute;
   z-index: 2;
@@ -237,8 +236,10 @@
 }
 
 :host([type="media"]) {
-  inline-size: token("thumbnail-size-1000");
-  block-size: token("thumbnail-size-1000");
+  /* Fixed (not token("thumbnail-size-1000"), which scales to 72px at
+   * large scale) so the m/l size gap stays constant across scales. */
+  inline-size: 64px;
+  block-size: 64px;
   border-radius: token("corner-radius-large-default");
   overflow: visible;
 }

@@ -308,7 +308,7 @@ export const Attachment: Story = {
               <img src="images/landscape-asset.jpg" alt="PDF" />
             </swc-asset>
             <span slot="title">Brand guidelines</span>
-            <swc-badge slot="badge" size="s" subtle>PDF</swc-badge>
+            <span slot="subtitle">PDF</span>
           </swc-upload-attachment>
           <swc-upload-attachment slot="attachment" type="card" dismissible>
             <swc-asset slot="thumbnail">
@@ -333,7 +333,12 @@ export const Attachment: Story = {
               <img src="images/landscape-asset.jpg" alt="Campaign still" />
             </swc-asset>
           </swc-upload-attachment>
-          <swc-upload-attachment slot="attachment" type="media" dismissible>
+          <swc-upload-attachment
+            slot="attachment"
+            type="media"
+            size="l"
+            dismissible
+          >
             <swc-asset slot="thumbnail">
               <img src="images/portrait-asset.jpg" alt="Storyboard frame" />
             </swc-asset>
@@ -432,7 +437,12 @@ export const MultiAttachmentScroll: Story = {
       <swc-prompt-field label="Prompt" value="Review these storyboard frames.">
         ${multiAttachmentScrollColors.map(
           (colors, index) => html`
-            <swc-upload-attachment slot="attachment" type="media" dismissible>
+            <swc-upload-attachment
+              slot="attachment"
+              type="media"
+              size="l"
+              dismissible
+            >
               <swc-asset slot="thumbnail">
                 ${gradientSwatch(
                   index,
@@ -643,6 +653,7 @@ class PromptFieldBehaviorDemo extends LitElement {
           <swc-upload-attachment
             slot="attachment"
             type="media"
+            size="l"
             dismissible
             accessible-label=${`${attachment.fileName}, ${attachment.sizeLabel}`}
             dismiss-label=${`Remove ${attachment.fileName}`}
