@@ -398,7 +398,7 @@ Additional Figma-confirmed presentation modes:
 
 Not shown in the Figma frame, sourced elsewhere:
 
-- **Focus-visible**: Spectrum CSS focus ring on `.spectrum-Checkbox-box::after`. **Inferred.**
+- **Focus-visible**: the focus ring draws on the box (`.swc-Checkbox-box::after`), not on the native input, which is visually hidden. The inner input drives it through a sibling selector, as Spectrum CSS does (`.spectrum-Checkbox-input:focus-visible + .spectrum-Checkbox-box`), and the label takes its focus color the same way. **Inferred.**
 - **Down (active)**: Spectrum CSS perspective shift, suppressed when read-only or disabled (C6); React has the matching `pressScale`. **Inferred.**
 - **Invalid**: box colors unchanged; an error icon shows beside the help text, or alone (B14). **Confirmed (Q1).**
 - **Read-only**: No distinct visual; keeps Spectrum CSS's suppression of the down-state transform. **Confirmed (Q2).**
@@ -520,7 +520,7 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 - [ ] Carry over the CJK line-height rule (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) from the S2 source
 - [ ] Verify label wrap keeps the box aligned to the first line at every size
 - [ ] Carry over the `@media (forced-colors: active)` block from the S2 source
-- [ ] Focus ring: use the shared focus modality controller (`keyboard-focused` state, SWC-2604) if available; otherwise native `:focus-visible` on the inner input
+- [ ] Focus ring: draw it on `.swc-Checkbox-box`, not the visually hidden native input, and apply the label's focus color. Drive both from the inner input's `:focus-visible` with sibling selectors (`+` for the box; `~` for the label, which follows the box), or from the host's `keyboard-focused` state if the shared focus modality controller (SWC-2604) is available. Radio's host focus selectors don't apply (Q8)
 - [ ] Add `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-*` property (e.g. `@cssprop --swc-checkbox-control-size - Inline and block size of the checkbox box.`)
 - [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
@@ -610,6 +610,7 @@ Keyboard (Playwright):
 - [ ] Standalone checkbox is one Tab stop; <kbd>Space</kbd> toggles; <kbd>Enter</kbd> does not
 - [ ] Several checkboxes are each a Tab stop; arrow keys do not move focus
 - [ ] Disabled is skipped by <kbd>Tab</kbd>; read-only is reached but does not toggle
+- [ ] <kbd>Tab</kbd> shows the focus ring on the box and the label focus color; a pointer click does not show the ring
 
 Accessibility (`checkbox.a11y.spec.ts` plus Storybook axe):
 
@@ -622,7 +623,7 @@ Accessibility (`checkbox.a11y.spec.ts` plus Storybook axe):
 - [ ] VRT for every "Yes" cell of the visual matrix in [Public API](#public-api), at each size
 - [ ] VRT for wrapped labels at every size
 - [ ] VRT for invalid: box colors unchanged across unchecked, checked, indeterminate, emphasized, and disabled; error icon with error text, with only a description, and alone; error icon visible in forced colors (B14)
-- [ ] VRT for focus-visible ring, including that it is not clipped
+- [ ] VRT for the focus-visible ring on the box, including that it is not clipped
 - [ ] VRT for forced-colors mode across checked, indeterminate, and disabled
 - [ ] VRT for description and error text placement (Q7), at every size and with a wrapped label
 - [ ] Custom-properties VRT for each exposed `--swc-*` property
