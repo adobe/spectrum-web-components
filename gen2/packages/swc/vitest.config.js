@@ -36,9 +36,6 @@ const resolvedBrowserInstances =
 const isWebkitOnly =
   resolvedBrowserInstances.length === 1 &&
   resolvedBrowserInstances[0].browser === 'webkit';
-const isFirefoxOnly =
-  resolvedBrowserInstances.length === 1 &&
-  resolvedBrowserInstances[0].browser === 'firefox';
 const browserMemoryLimits = isWebkitOnly
   ? { maxWorkers: 2, minWorkers: 1 }
   : {};
@@ -171,7 +168,6 @@ export default mergeConfig(
           },
           test: {
             name: 'storybook',
-            ...(process.env.CI && isFirefoxOnly ? { maxWorkers: 2 } : {}),
             browser: {
               enabled: true,
               provider: playwright(),

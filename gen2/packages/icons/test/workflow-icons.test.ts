@@ -173,15 +173,8 @@ export const ManifestCoverageTest: Story = {
   `,
   play: async ({ step }) => {
     // Register the full set here, not at module load, so only this test defines all
-    // manifest elements.
-    const importStarted = performance.now();
-    console.warn(
-      `[workflow-icons] Starting import of ${WORKFLOW_ICONS.length} icon registrations`
-    );
+    // ~413 elements.
     await import('../src/elements.js');
-    console.warn(
-      `[workflow-icons] Icon registration import completed in ${(performance.now() - importStarted).toFixed(1)} ms`
-    );
 
     await step('every manifest tag is a registered custom element', () => {
       expect(WORKFLOW_ICONS.length, 'ships the full set').toBeGreaterThan(400);
@@ -195,6 +188,5 @@ export const ManifestCoverageTest: Story = {
       const tags = WORKFLOW_ICONS.map((i) => i.tag);
       expect(new Set(tags).size, 'all tags are distinct').toBe(tags.length);
     });
-    console.warn('[workflow-icons] Manifest coverage checks completed');
   },
 };

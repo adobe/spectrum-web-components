@@ -390,11 +390,6 @@ jobs:
       - run:
           name: Run gen2 << parameters.browser >> tests (shard $CIRCLE_NODE_INDEX/$CIRCLE_NODE_TOTAL)
           command: |
-            if [ "<< parameters.browser >>" = "firefox" ]; then
-              export DEBUG=pw:browser
-            elif [ "<< parameters.browser >>" = "chromium" ]; then
-              export DEBUG=pw:browser,vitest:browser:pool
-            fi
             VITEST_BROWSER_INSTANCES=<< parameters.browser >> \
               yarn workspace @spectrum-web-components/gen2 run test \
               --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL
