@@ -72,21 +72,35 @@ export function exitStartOf(cell: Cell): number {
   return cell.stagger + DROP_SETTLE + HOLD_FRAMES;
 }
 
+function maxStaggerOf(cells: readonly Cell[]): number {
+  let maxStagger = 1;
+  for (const cell of cells) {
+    maxStagger = Math.max(maxStagger, cell.stagger);
+  }
+  return maxStagger;
+}
+
 /**
  * Loop length in frames. It grows with the icon's stagger spread so every cell
  * shares one settle -> hold -> exit cadence.
  */
 export function loopFramesFor(cells: readonly Cell[]): number {
-  let maxStagger = 1;
-  for (const cell of cells) {
-    maxStagger = Math.max(maxStagger, cell.stagger);
-  }
-  return maxStagger + DROP_SETTLE + HOLD_FRAMES + EXIT_FALL;
+  return maxStaggerOf(cells) + DROP_SETTLE + HOLD_FRAMES + EXIT_FALL;
 }
 
 /** Duration of one assemble/hold/disassemble cycle for the given icon, in ms. */
 export function durationForCells(cells: readonly Cell[]): number {
   return (loopFramesFor(cells) / FPS) * 1000;
+}
+
+/**
+ * Time, in ms, at which every cell has finished its entry drop and the icon
+ * reads as fully assembled. Used to fast-forward a fresh play past the entry
+ * build when the loader already shows this settled frame (e.g. coming off
+ * `paused`), skipping straight to the hold/exit that follows.
+ */
+export function buildCompleteMsFor(cells: readonly Cell[]): number {
+  return ((maxStaggerOf(cells) + DROP_SETTLE) / FPS) * 1000;
 }
 
 function offset(frame: number, total: number): number {

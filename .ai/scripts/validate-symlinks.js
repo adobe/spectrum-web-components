@@ -17,13 +17,16 @@
  * Cursor skills: directory symlink (.cursor/skills → ../.ai/skills)
  *
  * Cursor rules (.cursor/rules/*.mdc) are generated files, not symlinks: `sync.js` writes
- * them and `sync.js --check` verifies them. A leftover per-file symlink is an error.
+ * them and `sync.js --check` verifies them. A leftover per-file symlink tracked by git is
+ * an error.
  *
  * Returns { errors, fileCount } for integration with validate.js.
  */
 
-import { existsSync, lstatSync, readdirSync, readlinkSync } from 'fs';
-import { join } from 'path';
+import { existsSync, lstatSync, readlinkSync } from 'fs';
+import { join, posix } from 'path';
+
+import { trackedFiles } from './ai-files.js';
 
 const ROOT = new URL('../../', import.meta.url).pathname.replace(/\/$/, '');
 
@@ -47,15 +50,20 @@ function checkDirectorySymlink(linkPath, expectedTarget, errors) {
 }
 
 function checkNoCursorRuleSymlinks(errors) {
-  const dir = join(ROOT, '.cursor/rules');
-  if (!existsSync(dir)) {
-    return 0;
-  }
-  const files = readdirSync(dir);
+  // Only tracked entries: an untracked local file never reaches the repository.
+  const files = trackedFiles().filter(
+    (f) => posix.dirname(f) === '.cursor/rules'
+  );
   for (const file of files) {
-    if (lstatSync(join(dir, file)).isSymbolicLink()) {
+    let stat;
+    try {
+      stat = lstatSync(join(ROOT, file));
+    } catch {
+      continue;
+    }
+    if (stat.isSymbolicLink()) {
       errors.push(
-        `.cursor/rules/${file} is a symlink; Cursor rules are generated now, so run \`yarn ai:sync\``
+        `${file} is a symlink; Cursor rules are generated now, so run \`yarn ai:sync\``
       );
     }
   }

@@ -1,6 +1,6 @@
 {
   "name": "@adobe/spectrum-wc-core",
-  "version": "2.0.0-beta.4",
+  "version": "2.0.0-beta.5",
   "description": "Abstract base classes for Spectrum Web Components",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -150,6 +150,14 @@
     "./components/infield-button/index.js": {
       "types": "./dist/components/infield-button/index.d.ts",
       "import": "./dist/components/infield-button/index.js"
+    },
+    "./components/menu": {
+      "types": "./dist/components/menu/index.d.ts",
+      "import": "./dist/components/menu/index.js"
+    },
+    "./components/menu/index.js": {
+      "types": "./dist/components/menu/index.d.ts",
+      "import": "./dist/components/menu/index.js"
     },
     "./components/meter": {
       "types": "./dist/components/meter/index.d.ts",
@@ -482,6 +490,12 @@
       ],
       "components/infield-button/index.js": [
         "dist/components/infield-button/index.d.ts"
+      ],
+      "components/menu": [
+        "dist/components/menu/index.d.ts"
+      ],
+      "components/menu/index.js": [
+        "dist/components/menu/index.d.ts"
       ],
       "components/meter": [
         "dist/components/meter/index.d.ts"
