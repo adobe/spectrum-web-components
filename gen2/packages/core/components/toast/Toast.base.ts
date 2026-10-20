@@ -44,6 +44,19 @@ export abstract class ToastBase extends SpectrumElement {
   @property({ type: Boolean, reflect: true })
   public open = false;
 
+  /** The configured auto-dismiss duration in milliseconds, not remaining time. */
+  @property({ type: Number })
+  public set timeout(value: number | null) {
+    const previous = this._timeout;
+    this._timeout = value !== null && value > 0 ? Math.max(6000, value) : null;
+    this.requestUpdate('timeout', previous);
+  }
+
+  public get timeout(): number | null {
+    return this._timeout;
+  }
+  private _timeout: number | null = null;
+
   /**
    * The semantic variant of the toast.
    */
@@ -89,8 +102,6 @@ export abstract class ToastBase extends SpectrumElement {
     this.setAttribute('aria-modal', 'false');
     this._contentObserver.observe(this, {
       childList: true,
-      characterData: true,
-      subtree: true,
     });
     // Restarts a reveal that disconnection interrupted, so the message is still announced.
     if (!this._contentRevealed) {
@@ -242,7 +253,6 @@ export abstract class ToastBase extends SpectrumElement {
       // slot attribute at all.
       return !(node as Element).getAttribute('slot');
     });
-    // Prefers aria-labelledby when the message is one element with an id; SWC-2567 settles the final naming path with the container.
     const idTarget =
       messageNodes.length === 1 && messageNodes[0] instanceof HTMLElement
         ? messageNodes[0].id
@@ -250,21 +260,10 @@ export abstract class ToastBase extends SpectrumElement {
 
     if (idTarget) {
       this.setAttribute('aria-labelledby', idTarget);
-      this.removeAttribute('aria-label');
       return;
     }
 
     this.removeAttribute('aria-labelledby');
-    const label = messageNodes
-      .map((node) => node.textContent ?? '')
-      .join(' ')
-      .replace(/\s+/g, ' ')
-      .trim();
-    if (label) {
-      this.setAttribute('aria-label', label);
-    } else {
-      this.removeAttribute('aria-label');
-    }
   }
 
   /**

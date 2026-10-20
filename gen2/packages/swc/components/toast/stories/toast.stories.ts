@@ -19,11 +19,24 @@ import { TOAST_VARIANTS } from '@adobe/spectrum-wc-core/components/toast/index.j
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/toast/swc-toast.js';
 
+import { uniqueId } from '../../../utils/id.js';
+
 // ────────────────
 //    METADATA
 // ────────────────
 
-const { args, argTypes, template } = getStorybookHelpers('swc-toast');
+const {
+  args,
+  argTypes,
+  template: renderTemplate,
+} = getStorybookHelpers('swc-toast');
+
+const template = (storyArgs: Parameters<typeof renderTemplate>[0] = {}) => {
+  const message = document.createElement('span');
+  message.id = uniqueId('toast-message');
+  message.textContent = String(storyArgs['default-slot'] ?? '');
+  return renderTemplate({ ...storyArgs, 'default-slot': message.outerHTML });
+};
 
 args['default-slot'] = 'File saved';
 
@@ -107,14 +120,12 @@ export const Overview: Story = {
 // ──────────────────────────
 
 export const Anatomy: Story = {
-  render: (args) =>
-    template({
-      ...args,
-      open: true,
-      variant: 'info',
-      'default-slot': 'File archived',
-      'action-label': 'Undo',
-    }),
+  args: {
+    open: true,
+    variant: 'info',
+    'default-slot': 'File archived',
+    'action-label': 'Undo',
+  },
   tags: ['anatomy'],
 };
 
@@ -207,8 +218,7 @@ export const Accessibility: Story = {
     ${template({
       ...args,
       open: true,
-      'default-slot':
-        '<span id="toast-labelled-message">Upload complete</span>',
+      'default-slot': 'Upload complete',
     })}
   `,
   parameters: { flexLayout: 'row-wrap' },

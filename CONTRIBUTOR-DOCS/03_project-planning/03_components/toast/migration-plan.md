@@ -404,20 +404,21 @@ Planned rendering shape:
 
 > Q5, Q9, and Q13 are resolved. Build the initial single-visible-toast container and queue first, with tests and stories alongside the code. Peek layers, stacking direction, nearest-remaining-toast focus movement, Show all, the expanded view, and repositioning animation follow separately. Q8 and Q16 do not block the initial container; standalone use remains unsupported (Q15).
 
-- [ ] Define `swc-toast-container` with `ToastContainerBase` in core and `ToastContainer` in SWC; export from both packages, per [Architecture](#architecture-core-vs-swc-split)
-- [ ] `placement` attribute on `swc-toast-container`: `top`/`top-end`/`bottom`/`bottom-end`, default `bottom`
-- [ ] Export the same `ToastQueue` instance from core and SWC: `add(message, options)` returns an opaque key, `close(key)` closes that entry, and `clear()` clears the queue; no per-variant methods (Q13)
-- [ ] Add Toast's `timeout` property/attribute (`number \| null`, default `null`), with a 6000ms minimum for positive values; apply queue options to it and have the container controller read it as configuration, not remaining time (Q1, Q13)
-- [ ] Queue options wire `actionLabel`, `onAction`, and `shouldCloseOnAction` (default `false`); actionable toasts do not auto-dismiss and warn via `warnIf()` (Q2, Q3)
-- [ ] Optional `onClose` fires once on individual removal, after `swc-after-close` for a rendered toast or directly for a waiting entry; canceled closure, demotion, repeated closure, and `clear()` do not invoke it (Q13)
-- [ ] Initially render only the front toast; waiting entries remain in queue data without elements
-- [ ] Dev warning (`warnIf()`) if a second `swc-toast-container` connects while one is already present
-- [ ] Mount rule (Q11): connect each toast closed, wait for its first update to finish, then set `open`, so the two-frame live-region delay runs
-- [ ] `swc-toast-container` listens for each toast's `swc-after-close` (already `composed`/`bubbles`) to evict it from the queue once that toast's own exit animation completes
-- [ ] An unrendered waiting entry has no timer; explicit closure or `clear()` removes it directly. Later decorative peek layers follow the same rule (Q14); timeout dismissal waits until promotion to front and `swc-after-close` (Q12)
-- [ ] Countdown `ReactiveController` in `gen2/packages/core/components/toast-container/` (Q5): read Toast's configured timeout; run only for the collapsed front toast and start fresh on promotion (Q12); no auto-dismiss in the expanded view; pause/resume preserves remaining time only while that toast stays front (Q7)
-- [ ] Queue construct: `clear()` method, empties every queued toast at once, surfaced as a Clear all `swc-action-button` at size `s`
-- [ ] Queue construct: new toasts join the front, not the back; no cap on how many stay tracked
+- [x] Define `swc-toast-container` with `ToastContainerBase` in core and `ToastContainer` in SWC; export from both packages, per [Architecture](#architecture-core-vs-swc-split)
+- [x] `placement` attribute on `swc-toast-container`: `top`/`top-end`/`bottom`/`bottom-end`, default `bottom`
+- [x] Export the same `ToastQueue` instance from core and SWC: `add(message, options)` returns an opaque key, `close(key)` closes that entry, and `clear()` clears the queue; no per-variant methods (Q13)
+- [x] Add Toast's `timeout` property/attribute (`number \| null`, default `null`), with a 6000ms minimum for positive values; apply queue options to it and have the container controller read it as configuration, not remaining time (Q1, Q13)
+- [x] Queue options wire `actionLabel`, `onAction`, and `shouldCloseOnAction` (default `false`); actionable toasts do not auto-dismiss and warn via `warnIf()` (Q2, Q3)
+- [x] Optional `onClose` fires once on individual removal, after `swc-after-close` for a rendered toast or directly for a waiting entry; canceled closure, demotion, repeated closure, and `clear()` do not invoke it (Q13)
+- [x] Initially render only the front toast; waiting entries remain in queue data without elements
+- [x] Dev warning (`warnIf()`) if a second `swc-toast-container` connects while one is already present
+- [x] Mount rule (Q11): connect each toast closed, wait for its first update to finish, then set `open`, so the two-frame live-region delay runs
+- [x] `swc-toast-container` listens for each toast's `swc-after-close` (already `composed`/`bubbles`) to evict it from the queue once that toast's own exit animation completes
+- [x] An unrendered waiting entry has no timer; explicit closure or `clear()` removes it directly. Later decorative peek layers follow the same rule (Q14); timeout dismissal waits until promotion to front and `swc-after-close` (Q12)
+- [x] Countdown `ReactiveController` in `gen2/packages/core/components/toast-container/` (Q5): read Toast's configured timeout; run only for the collapsed front toast and start fresh on promotion (Q12); pause/resume preserves remaining time only while that toast stays front (Q7). Expanded-view behavior remains for the later expanded-view work
+- [x] Queue construct: `clear()` method removes waiting entries directly and closes the rendered entry through its lifecycle, without `onClose` callbacks
+- [ ] Surface `clear()` as a Clear all `swc-action-button` at size `s` in the later expanded view
+- [x] Queue construct: new toasts join the front, not the back; no cap on how many stay tracked
 - [ ] Peek-stack rendering: only the front toast is a real `alertdialog`; the rest render as empty, non-interactive `role="presentation"` layers (Q14); anything further back stays in the DOM at `opacity: 0`
 - [ ] Show all control on the front toast, shown once two or more toasts are queued: `swc-action-button` with `quiet` and `static-color="white"` at the default size (`m`), plus an accordion-style chevron (`swc-ui-icon` `icon="chevron"`), laid out below the message alongside the toast action
 - [ ] Expanded-list rendering: every toast becomes its own real `alertdialog`
@@ -426,7 +427,7 @@ Planned rendering shape:
 - [ ] `Escape`-to-collapse wired through the shared `dismissibleStack` (`registerDismissible()`/`isTopDismissible()`), proposed pending Q16 alongside `<dialog>.showModal()`
 - [ ] Scroll lock for the expanded view via `PageScrollLockController`
 - [ ] Focus management via `getActiveElement()`/`deepContains()` (which toast has focus, what was focused before entering the region). Enumerating the expanded list's focusable elements with `focusableSelector` is part of the proposed `<dialog>.showModal()` and `dismissibleStack` approach, pending Q16
-- [ ] Container region: `role="region"` + `aria-label` + `tabindex="-1"` (programmatically focusable for the collapse-to-region behavior, not part of the normal Tab sequence)
+- [x] Container region: `role="region"` + dynamic count `aria-label` + `tabindex="-1"` (programmatically focusable for the later collapse-to-region behavior, not part of the normal Tab sequence)
 - [ ] Clicking anywhere on the collapsed stack expands it, guarded so clicking an actual button (close, action, expand) does not also trigger expansion
 - [ ] Expanded list navigates with <kbd>Tab</kbd> only; no arrow-key handling (`FocusgroupNavigationController` deliberately not used)
 
@@ -453,7 +454,7 @@ Planned rendering shape:
 
 #### Container and queue visuals
 
-- [ ] Initial container supports `top`, `top-end`, `bottom`, and `bottom-end`, defaulting to `bottom`, with logical RTL-aware `-end` placement
+- [x] Initial container supports `top`, `top-end`, `bottom`, and `bottom-end`, defaulting to `bottom`, with logical RTL-aware `-end` placement
 - [ ] Stacking direction flips with `placement`: newest toast closest to whichever edge the container is anchored to (top or bottom), matching RSP S2's `flexDirection: column`/`column-reverse` split
 - [ ] Author peek-stack depth CSS: positional offset and opacity falloff behind the front toast (`opacity: 0` beyond the third position), matching RSP S2
 - [ ] Author the Show all row layout on the front toast (`gridTemplateAreas` alongside the toast action) and the expanded-view Clear all and Collapse action buttons
@@ -468,19 +469,20 @@ Checklist items for the full migration; Q9 settles naming. The initial container
 #### Naming and semantics
 
 - [x] Host: `role="alertdialog"`, `aria-modal="false"`, `aria-labelledby` referencing the message element's `id`
-- [ ] Container builds the default-slot message wrapper with `uniqueId()`; remove Toast's bare-text `aria-label` fallback and the naming comment deferring to container work (Q9)
+- [x] Container builds the default-slot message wrapper with `uniqueId()`; remove Toast's bare-text `aria-label` fallback and the naming comment deferring to container work (Q9)
 - [x] Inner wrapper: `role="alert"`, `aria-atomic="true"`
 - [x] Inner wrapper's message content is added to the live region only after the region is already exposed and empty, two frames after opening; do not populate it in the same step that creates or reveals the region, and do not reveal it by toggling `aria-hidden` (Q10, Q11)
 - [x] `aria-hidden="true"` on host when `open` is false
 
 #### State verification
 
-- [ ] Collapsed front toast pauses on `pointerenter` + `focusin` anywhere in the region, preserves remaining time only while it stays front, and resumes only when both clear (Q7). Peek layers do not count down, and the expanded view does not auto-dismiss (Q12). Mouseout does not resume any other toast's timer
-- [ ] Auto-dismiss runs only for the collapsed front toast, including when it is the last toast in the queue; no toast auto-dismisses in the expanded view (Q12)
-- [ ] `timeout` hard-disabled when the queue configures an action (`actionLabel` and `onAction`), checked from that configuration when the toast opens; paired with a `warnIf()` dev warning, matching the "mutually exclusive / no-effect combination" pattern used elsewhere (e.g. Badge's `outline` + non-semantic `variant`) (Q2)
+- [x] Collapsed front toast pauses on `pointerenter` + `focusin` anywhere in the region, preserves remaining time only while it stays front, and resumes only when both clear (Q7). Waiting entries do not count down; mouseout does not resume another entry's timer
+- [x] Auto-dismiss runs only for the collapsed front toast, including when it is the last toast in the queue (Q12)
+- [ ] Verify no auto-dismiss while the later expanded view is open (Q12)
+- [x] `timeout` hard-disabled when the queue configures an action (`actionLabel` and `onAction`), checked from that configuration when the toast opens; paired with a `warnIf()` dev warning, matching the "mutually exclusive / no-effect combination" pattern used elsewhere (e.g. Badge's `outline` + non-semantic `variant`) (Q2)
 - [x] `tabindex="0"` on host always; opening a toast does not move focus there
 - [ ] Focus management on toast-close: nearest remaining toast for keyboard users, out of the region entirely for pointer users
-- [ ] When the last toast closes and the queue empties, focus returns to whatever was focused before the user entered the region, regardless of modality
+- [x] When the last toast closes and the queue empties, focus returns to whatever was focused before the user entered the region; do not redirect focus if the user has already left the region
 - [ ] Collapsing the expanded view sends focus to the container region
 - [ ] Container region reachable via landmark navigation (<kbd>F6</kbd>/<kbd>Shift</kbd> + <kbd>F6</kbd>), no additional code required
 
@@ -491,21 +493,21 @@ Checklist items for the full migration; Q9 settles naming. The initial container
 
 #### Behavior
 
-- [ ] Initial container tests cover queue ordering, front-only rendering, rendered removal after `swc-after-close`, direct removal of waiting entries, and `onClose` once per individual removal but never for `clear()` or canceled closure
-- [ ] Action tests cover `onAction`, default `shouldCloseOnAction=false`, opt-in closure, and the auto-dismiss prohibition with its dev warning
-- [ ] Initial container tests cover focus return when the queue empties, dynamic region count labels, and the second-container dev warning
-- [ ] Add a Playwright ARIA snapshot for the region containing a single toast, and Storybook stories for adding toasts and all four placements; broader docs and full-suite review remain separate work
-- [ ] Countdown pause/resume unit tests for the collapsed front toast (pointer, focus, both simultaneously); demotion discards any saved remainder; mouseout does not resume a non-front toast
-- [ ] Timeout floor enforcement test
-- [ ] Demotion stops the countdown; promotion back to the collapsed front starts a fresh full timeout, not a saved remainder (Q12; see [Architecture](#architecture-core-vs-swc-split))
+- [x] Initial container tests cover queue ordering, front-only rendering, rendered removal after `swc-after-close`, direct removal of waiting entries, and `onClose` once per individual removal but never for `clear()` or canceled closure
+- [x] Action tests cover `onAction`, default `shouldCloseOnAction=false`, opt-in closure, and the auto-dismiss prohibition with its dev warning
+- [x] Initial container tests cover focus return when the queue empties, dynamic region count labels, and the second-container dev warning
+- [x] Add a Playwright ARIA snapshot for the region containing a single toast, and Storybook stories for adding toasts and all four placements; broader docs and full-suite review remain separate work
+- [x] Queue operations are tested in a Storybook fixture under `swc/components/toast-container/test/`. Playwright clock tests cover region pause/resume (pointer alone, focus alone, both together), front-only countdown, fresh promotion timeout, and no auto-dismiss with an action
+- [x] Timeout floor enforcement test
+- [x] Demotion stops the countdown; promotion back to the collapsed front starts a fresh full timeout, not a saved remainder (Q12; see [Architecture](#architecture-core-vs-swc-split))
 - [ ] No toast auto-dismisses while the expanded view is open, including toasts that were counting before expand (Q12)
-- [ ] The last toast in the queue still auto-dismisses once it is the collapsed front toast (Q12)
-- [ ] `clear()` empties the whole queue in one action
+- [x] The last toast in the queue still auto-dismisses once it is the collapsed front toast (Q12)
+- [x] `clear()` empties the whole queue in one action
 - [ ] Peek-stack rendering: only the front toast is a real `alertdialog`; the rest render `role="presentation"` as wholly separate, empty elements (Q14)
 - [ ] Peek layers have zero focusable descendants: Tab never lands on a demoted toast's close or action button while collapsed (Q14)
 - [ ] Expand/collapse interaction: scrim click, <kbd>Escape</kbd>, and the Collapse control (an `swc-action-button` at size `s`, beside Clear all) each collapse the expanded view
 - [ ] Focus management: modality branching on toast-close, collapse-to-region, and last-toast-close returning focus to whatever was focused before entering the region
-- [ ] New toasts join the front of the queue, not the back
+- [x] New toasts join the front of the queue, not the back
 - [x] A toast opened in the same turn it is created skips the two-frame delay; one opened after its first update reveals its message through it (Q11)
 
 #### Visual regression
@@ -533,6 +535,9 @@ Checklist items for the full migration; Q9 settles naming. The initial container
 ### Review
 
 - [x] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
+- [x] Initial-container verification: `yarn build:gen2` and core/SWC typechecking pass; all 34 focused browser tests pass; all 36 Playwright timing/snapshot/keyboard runs pass with three repetitions and retries disabled; all six container fixtures also pass through ordinary Storybook's play path
+- [x] Initial-container placement checked at desktop (1280 x 800) and mobile (390 x 844) sizes, including all four placements, RTL mirroring, and long-message wrapping
+- [ ] Manual VoiceOver/NVDA announcement and landmark-navigation checks for the initial container; automated ARIA snapshots do not establish spoken announcements
 - [ ] Update or remove `accessibility-migration-analysis.md` after the container is implemented, so Toast does not merge to `main` with stale content (host naming, action rendering, timer pause)
 - [ ] Status table in workstream doc updated
 - [ ] PR created with description referencing Epic SWC-2257
