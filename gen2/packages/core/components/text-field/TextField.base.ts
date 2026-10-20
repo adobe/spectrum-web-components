@@ -122,6 +122,8 @@ export abstract class TextFieldBase extends SizedMixin(
 
   /**
    * The minimum number of characters the value may contain.
+   * Like a native input, this constraint applies to user-edited values, not
+   * programmatically assigned values.
    */
   @property({ type: Number })
   public minlength?: number;
@@ -380,7 +382,9 @@ export abstract class TextFieldBase extends SizedMixin(
       if (input.type !== this.type) {
         input.type = this.type;
       }
-      input.value = this.value;
+      if (input.value !== this.value) {
+        input.value = this.value;
+      }
       this.value = input.value;
     }
   }

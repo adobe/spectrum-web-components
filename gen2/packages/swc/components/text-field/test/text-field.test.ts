@@ -2053,3 +2053,103 @@ export const ValueSanitizationTest: Story = {
   },
 };
 ValueSanitizationTest.storyName = 'Native value sanitization';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Native minimum-length validation
+// ──────────────────────────────────────────────────────────────
+
+export const MinimumLengthValidationTest: Story = {
+  render: () => html`
+    <form>
+      <swc-text-field
+        accessible-label="Username"
+        name="username"
+        minlength="5"
+      ></swc-text-field>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.roleElement;
+    if (!form || !input) {
+      throw new Error('form or input not found');
+    }
+    let submissions = 0;
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      submissions++;
+    });
+    input.focus();
+
+    await step('trusted typing below minlength blocks submission', async () => {
+      await browserUserEvent.keyboard('abc');
+      await field.updateComplete;
+      expect(field.value).toBe('abc');
+      expect(input.validity.tooShort).toBe(true);
+      expect(field.validity.tooShort).toBe(true);
+      expect(field.validationMessage).toBe(input.validationMessage);
+      expect(field.checkValidity()).toBe(false);
+      expect(form.checkValidity()).toBe(false);
+      form.requestSubmit();
+      expect(submissions).toBe(0);
+    });
+
+    await step('unrelated renders preserve user-edit validity', async () => {
+      field.placeholder = 'Enter a username';
+      await field.updateComplete;
+      expect(input.validity.tooShort).toBe(true);
+      expect(field.validity.tooShort).toBe(true);
+    });
+
+    await step('exactly minlength characters permit submission', async () => {
+      await browserUserEvent.keyboard('de');
+      await field.updateComplete;
+      expect(field.value).toBe('abcde');
+      expect(input.validity.tooShort).toBe(false);
+      expect(field.validity.tooShort).toBe(false);
+      expect(field.validationMessage).toBe('');
+      expect(field.checkValidity()).toBe(true);
+      expect(form.checkValidity()).toBe(true);
+      form.requestSubmit();
+      expect(submissions).toBe(1);
+      expect(new FormData(form).get('username')).toBe('abcde');
+    });
+
+    await step('deleting below minlength blocks submission again', async () => {
+      await browserUserEvent.keyboard('{Backspace}{Backspace}');
+      await field.updateComplete;
+      expect(field.value).toBe('abc');
+      expect(input.validity.tooShort).toBe(true);
+      expect(field.validity.tooShort).toBe(true);
+      form.requestSubmit();
+      expect(submissions).toBe(1);
+    });
+
+    await step('an empty optional field remains valid', async () => {
+      input.select();
+      await browserUserEvent.keyboard('{Backspace}');
+      await field.updateComplete;
+      expect(field.value).toBe('');
+      expect(field.validity.tooShort).toBe(false);
+      expect(form.checkValidity()).toBe(true);
+    });
+
+    await step(
+      'programmatic values retain native validation semantics',
+      async () => {
+        field.value = 'abc';
+        await field.updateComplete;
+        expect(input.value).toBe('abc');
+        expect(input.validity.tooShort).toBe(false);
+        expect(field.validity.tooShort).toBe(false);
+        expect(form.checkValidity()).toBe(true);
+        expect(new FormData(form).get('username')).toBe('abc');
+      }
+    );
+  },
+};
+MinimumLengthValidationTest.storyName = 'Minimum length validation';

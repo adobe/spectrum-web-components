@@ -12,6 +12,7 @@
 
 import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { live } from 'lit/directives/live.js';
 
 import {
   TextFieldBase,
@@ -143,7 +144,7 @@ export class TextField extends TextFieldBase {
             id=${INPUT_ID}
             class="swc-TextField-input"
             type=${this.type}
-            .value=${this.value}
+            .value=${live(this.value)}
             placeholder=${ifDefined(this.placeholder || undefined)}
             pattern=${ifDefined(this.pattern)}
             inputmode=${ifDefined(this.inputmode)}
