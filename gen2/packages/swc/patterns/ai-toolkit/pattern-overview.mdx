@@ -2,6 +2,7 @@ import { Meta, Canvas } from '@storybook/addon-docs/blocks';
 import { addons } from '@storybook/preview-api';
 
 import * as ConversationThreadStories from './conversation-thread/stories/conversation-thread.stories';
+import * as ConversationalPatternStories from './stories/conversational-pattern-playground.stories';
 import * as ConversationTurnStories from './conversation-turn/stories/conversation-turn.stories';
 import * as PromptFieldStories from './prompt-field/stories/prompt-field.stories';
 import * as UploadAttachmentStories from './upload-attachment/stories/upload-attachment.stories';
@@ -25,19 +26,20 @@ A composable set of web components for building AI interfaces with Spectrum. The
 
 An end-to-end conversation with streaming generation, file upload, feedback, and follow-up suggestions. This example illustrates interactions like sending prompts, attaching files (via the upload button or by dropping them directly onto the field), and selecting suggestions.
 
-<Canvas of={ConversationThreadStories.FullPattern} sourceState="none" />
+<Canvas of={ConversationalPatternStories.Playground} sourceState="none" />
 
 ---
 
 ## Anatomy of a conversation
 
-A complete chat surface composes three layers:
+A complete chat surface composes four layers:
 
-1. **Thread**: `swc-conversation-thread` wraps the running conversation and provides arrow-key navigation across turns.
-2. **Turns**: each `swc-conversation-turn` is one column-aligned message group, typed `user` or `system`.
-3. **Messages and supporting parts**: turns contain `swc-user-message` or `swc-system-message`, plus optional response status, feedback, sources, and follow-up suggestions.
+1. **Input**: `swc-prompt-field` sits below the thread and is where the user types a prompt, stops generation, and stages files. Each staged file is an `swc-upload-attachment` in the `attachment` slot.
+2. **Thread**: `swc-conversation-thread` wraps the running conversation and provides arrow-key navigation across turns.
+3. **Turns**: each `swc-conversation-turn` is one column-aligned message group, typed `user` or `system`.
+4. **Messages and supporting parts**: turns contain `swc-user-message` or `swc-system-message`, plus optional response status, feedback, sources, and follow-up suggestions.
 
-A minimal composition tree:
+A minimal composition tree, in DOM order:
 
 ```html
 <swc-conversation-thread>
@@ -59,6 +61,9 @@ A minimal composition tree:
 </swc-conversation-thread>
 
 <swc-prompt-field>
+  <swc-upload-attachment slot="attachment" type="card" dismissible>
+    <span slot="title">…</span>
+  </swc-upload-attachment>
   <p slot="legal" class="swc-Typography--links">
     Responses are generated using AI, and may be inaccurate. Check before using.
     <a
