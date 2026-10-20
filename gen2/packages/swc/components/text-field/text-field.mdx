@@ -64,7 +64,7 @@ Text fields can exist in various states:
 - **Required**: the native `required` attribute is reflected onto the input; no separate `aria-required` is set
 - **Read-only**: focusable and selectable, but not editable; distinct from disabled
 - **Disabled**: not editable and removed from the tab order
-- **Invalid**: shows the slotted `error-text` in place of the description and associates it via `aria-describedby`
+- **Invalid**: shows the slotted `error-text` in place of the description, associates it via `aria-describedby`, and blocks native constraint validation and submission when the field is eligible for validation
 
 <Canvas of={TextFieldStories.States} />
 
@@ -76,9 +76,28 @@ A long visible label wraps onto multiple lines instead of clipping. In `side` po
 
 <Canvas of={TextFieldStories.LabelOverflow} />
 
-### Native form behavior
+### Form participation
 
-`swc-text-field` participates in a native HTML form. Its `required` state is included in browser constraint validation, `Check validity` reports both the field and form validity, `Reset` restores the initial value, and `Submit` includes the field value in `FormData` when valid. The demo form sets `novalidate` so an invalid submission surfaces through the field's own invalid presentation (icon + `error-text`) instead of the browser's native validation bubble.
+`swc-text-field` participates in native forms through constraint validation, reset, and `FormData`. This example uses `novalidate` and an application submit handler to show inline errors instead of browser validation bubbles. The handler accepts data only when the field passes validation; it does not navigate or send data to a server.
+
+`invalid` shows the inline error and sets `validity.customError`, making eligible fields fail validation. The application must clear it explicitly; input, blur, and submission do not clear it automatically. Disabled and read-only fields do not block submission.
+
+`setCustomValidity(message)` adds an application-specific error without changing `invalid` or inline error presentation. Clear it with `setCustomValidity('')`. Authored `invalid`, custom messages, and native constraints are independent. Pre-render calls are preserved; after rendering, custom validity updates immediately. Reactive property changes take effect after `updateComplete`.
+
+`validationMessage` uses the custom message, or "Invalid value." for authored `invalid` without one. Supply a localized custom message when needed. Slotted `error-text` is separate; native validation failures do not automatically show it or set `invalid`.
+
+```js
+field.setCustomValidity('Username is already taken.');
+field.invalid = true;
+await field.updateComplete;
+
+// Clear both errors.
+field.setCustomValidity('');
+field.invalid = false;
+await field.updateComplete;
+```
+
+This demo clears its own `invalid` state before revalidating on Submit. A rejected attempt replaces the previous submission result with a blocked message. Submit refreshes the latest validation result after updating `invalid`; Check validity refreshes it on demand. Both panels are snapshots, not live state. Reset restores the value and panels but preserves authored errors.
 
 Pressing <kbd>Enter</kbd> activates the form's first associated submit button, including a button outside the form linked by its `form` attribute. A disabled default button prevents submission. Without a submit button, a form submits only when the text field is its sole input that blocks implicit submission; additional native text-like inputs or `swc-text-field` elements prevent it. Composition input does not trigger submission, and consumers can cancel it with `preventDefault()` on the `keydown` event.
 

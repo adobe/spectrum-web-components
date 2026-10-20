@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { expect, userEvent, waitFor } from '@storybook/test';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { userEvent as browserUserEvent } from 'vitest/browser';
 
@@ -394,6 +394,46 @@ export const NecessityIndicatorTest: Story = {
         ),
         'required icon mode renders the asterisk'
       ).toBeTruthy();
+    });
+
+    await step('the required asterisk stays beside its label', async () => {
+      requiredIcon.style.inlineSize = '32rem';
+      for (const size of ['s', 'm', 'l', 'xl'] as const) {
+        requiredIcon.size = size;
+        for (const position of ['top', 'side'] as const) {
+          requiredIcon.labelPosition = position;
+          await requiredIcon.updateComplete;
+          const label = requiredIcon.querySelector('[slot="label"]');
+          const icon = requiredIcon.shadowRoot?.querySelector(
+            '.swc-FormFieldLabel-requiredIndicator swc-ui-icon'
+          );
+          const indicator = icon?.parentElement;
+          if (!label || !icon || !indicator) {
+            throw new Error('required label or asterisk not found');
+          }
+          const labelBounds = label.getBoundingClientRect();
+          const iconBounds = icon.getBoundingClientRect();
+          expect(
+            iconBounds.left - labelBounds.right,
+            `${size} ${position}: label-to-asterisk gap`
+          ).toBeCloseTo(
+            parseFloat(getComputedStyle(indicator).marginInlineStart),
+            1
+          );
+          expect(
+            iconBounds.top,
+            `${size} ${position}: icon beside label`
+          ).toBeLessThan(labelBounds.bottom);
+          expect(
+            iconBounds.bottom,
+            `${size} ${position}: icon beside label`
+          ).toBeGreaterThan(labelBounds.top);
+        }
+      }
+      requiredIcon.style.removeProperty('inline-size');
+      requiredIcon.size = 'm';
+      requiredIcon.labelPosition = 'top';
+      await requiredIcon.updateComplete;
     });
 
     await step('label mode marks a required field "(required)"', () => {
@@ -1399,6 +1439,36 @@ export const FormBehaviorTest: Story = {
       throw new Error('form, input, outputs, or validity button not found');
     }
 
+    await step('headings distinguish the form, actions, and results', () => {
+      const canvas = within(canvasElement);
+      expect(
+        canvas.getByRole('heading', { name: 'Form participation', level: 2 })
+      ).toBeVisible();
+      for (const name of [
+        'Form actions',
+        'Last submission',
+        'Latest validation result',
+      ]) {
+        const heading = canvas.getByRole('heading', { name, level: 3 });
+        expect(heading).toBeVisible();
+        expect(heading).toHaveClass('swc-Heading--sizeXS');
+      }
+      for (const result of [output, validityOutput]) {
+        expect(parseFloat(getComputedStyle(result).fontSize)).toBeLessThan(
+          parseFloat(getComputedStyle(form).fontSize)
+        );
+      }
+      expect(output.value).toBe('Submit the form to see its data.');
+      expect(validityOutput.value).toBe(
+        'Submit or click Check validity to inspect the field and form validity.'
+      );
+      expect(
+        canvas.getByText(/Inline error text is supplied by the application/)
+      ).toHaveTextContent(
+        'Inline error text is supplied by the application. validationMessage comes from native validation or a custom error.'
+      );
+    });
+
     await step('required participates in native validation', async () => {
       field.value = '';
       await field.updateComplete;
@@ -1425,7 +1495,8 @@ export const FormBehaviorTest: Story = {
       ).toBe(
         'field.checkValidity(): invalid\n' +
           'form.checkValidity(): invalid\n' +
-          'validity.valueMissing: true'
+          'validity.valueMissing: true\n' +
+          `validationMessage: ${field.validationMessage}`
       );
 
       field.value = 'Filled';
@@ -1447,6 +1518,26 @@ export const FormBehaviorTest: Story = {
         validityOutput.textContent?.trim(),
         'validity output reports the filled field'
       ).toBe('field.checkValidity(): valid\nform.checkValidity(): valid');
+    });
+
+    await step('validity results explain application-set errors', async () => {
+      field.invalid = true;
+      await field.updateComplete;
+      checkValidityButton.click();
+      expect(validityOutput.value).toBe(
+        'field.checkValidity(): invalid\n' +
+          'form.checkValidity(): invalid\n' +
+          'validity.customError: true\n' +
+          `validationMessage: ${field.validationMessage}`
+      );
+      field.setCustomValidity('Username is already taken.');
+      checkValidityButton.click();
+      expect(validityOutput.value).toContain(
+        'validationMessage: Username is already taken.'
+      );
+      field.setCustomValidity('');
+      field.invalid = false;
+      await field.updateComplete;
     });
 
     await step('reset restores the initial (empty) value', async () => {
@@ -1484,7 +1575,16 @@ export const FormBehaviorTest: Story = {
         expect(
           output.textContent?.trim(),
           'invalid submission does not show submitted form data'
-        ).toBe('Submit the form to see its data.');
+        ).toBe('Submission blocked: the field is invalid.');
+        await waitFor(() =>
+          expect(validityOutput.value).toBe(
+            'field.checkValidity(): invalid\n' +
+              'form.checkValidity(): invalid\n' +
+              'validity.valueMissing: true\n' +
+              'validity.customError: true\n' +
+              `validationMessage: ${field.validationMessage}`
+          )
+        );
       }
     );
 
@@ -1505,6 +1605,9 @@ export const FormBehaviorTest: Story = {
           output.textContent?.trim(),
           'output displays the submitted username'
         ).toBe('username: Submitted')
+      );
+      expect(validityOutput.value).toBe(
+        'field.checkValidity(): valid\nform.checkValidity(): valid'
       );
     });
 
@@ -1528,15 +1631,40 @@ export const FormBehaviorTest: Story = {
           'Submit the form to see its data.'
         );
         expect(validityOutput.textContent?.trim()).toBe(
-          'Click Check validity to inspect the field and form validity.'
+          'Submit or click Check validity to inspect the field and form validity.'
         );
         expect(field.validity.valueMissing).toBe(true);
         checkValidityButton.click();
         expect(validityOutput.textContent?.trim()).toBe(
           'field.checkValidity(): invalid\n' +
             'form.checkValidity(): invalid\n' +
-            'validity.valueMissing: true'
+            'validity.valueMissing: true\n' +
+            `validationMessage: ${field.validationMessage}`
         );
+      }
+    );
+
+    await step(
+      'a blocked attempt replaces the previous submission result',
+      async () => {
+        field.value = 'Previous';
+        await field.updateComplete;
+        form.requestSubmit();
+        await waitFor(() => expect(output.value).toBe('username: Previous'));
+        field.value = '';
+        await field.updateComplete;
+        form.requestSubmit();
+        await waitFor(() =>
+          expect(output.value).toBe('Submission blocked: the field is invalid.')
+        );
+        expect(
+          canvasElement
+            .querySelector('#submitted-form-data-label')
+            ?.textContent?.trim()
+        ).toBe('Last submission');
+        expect(
+          canvasElement.querySelector('#validity-label')?.textContent?.trim()
+        ).toBe('Latest validation result');
       }
     );
 
@@ -1569,7 +1697,7 @@ export const FormBehaviorTest: Story = {
     );
   },
 };
-FormBehaviorTest.storyName = 'Native form behavior';
+FormBehaviorTest.storyName = 'Form participation example';
 
 export const DisabledStateTest: Story = {
   render: () => html`

@@ -394,7 +394,10 @@ const handleSubmit = async (event: SubmitEvent): Promise<void> => {
   field.invalid = false;
   await field.updateComplete;
   field.invalid = !field.checkValidity();
+  await field.updateComplete;
+  updateValidity(form);
   if (field.invalid) {
+    output.value = 'Submission blocked: the field is invalid.';
     return;
   }
   output.value = [...new FormData(form)]
@@ -402,11 +405,7 @@ const handleSubmit = async (event: SubmitEvent): Promise<void> => {
     .join('\n');
 };
 
-const showValidity = (event: Event): void => {
-  const form = (event.currentTarget as HTMLElement).closest('form');
-  if (!form) {
-    return;
-  }
+const updateValidity = (form: HTMLFormElement): void => {
   const field = form.querySelector('swc-text-field');
   const output = form.querySelector<HTMLOutputElement>('[data-validity]');
   if (field && output) {
@@ -416,9 +415,20 @@ const showValidity = (event: Event): void => {
       `field.checkValidity(): ${fieldValid ? 'valid' : 'invalid'}`,
       `form.checkValidity(): ${formValid ? 'valid' : 'invalid'}`,
       field.validity.valueMissing ? 'validity.valueMissing: true' : '',
+      field.validity.customError ? 'validity.customError: true' : '',
+      field.validationMessage
+        ? `validationMessage: ${field.validationMessage}`
+        : '',
     ]
       .filter(Boolean)
       .join('\n');
+  }
+};
+
+const showValidity = (event: Event): void => {
+  const form = (event.currentTarget as HTMLElement).closest('form');
+  if (form) {
+    updateValidity(form);
   }
 };
 
@@ -435,65 +445,108 @@ export const FormBehavior: Story = {
   render: () => html`
     <form
       novalidate
-      style="display: flex; flex-direction: column; gap: 16px; inline-size: 220px;"
+      aria-labelledby="form-participation-heading"
+      style="display: flex; flex-direction: column; gap: 24px; inline-size: 100%; max-inline-size: 26rem;"
       @submit=${handleSubmit}
     >
-      <fieldset style="margin: 0; min-inline-size: 0;">
-        <legend>Account details</legend>
+      <h2
+        id="form-participation-heading"
+        class="swc-Heading swc-Heading--sizeM"
+        style="margin: 0;"
+      >
+        Form participation
+      </h2>
+      <fieldset
+        style="margin: 0; min-inline-size: 0; padding: 16px; border: 1px solid var(--swc-gray-300); border-radius: var(--swc-corner-radius-100);"
+      >
+        <legend class="swc-Heading swc-Heading--sizeXS">Account details</legend>
         <swc-text-field name="username" required>
           <span slot="label">Username</span>
           <span slot="error-text">Enter a username.</span>
         </swc-text-field>
       </fieldset>
-      <div style="display: flex; gap: 8px;">
-        <button type="submit" class="swc-Button">
-          <span class="swc-Button-label">Submit</span>
-        </button>
-        <button type="reset" class="swc-Button swc-Button--secondary">
-          <span class="swc-Button-label">Reset</span>
-        </button>
+      <section
+        aria-labelledby="form-actions-heading"
+        style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px;"
+      >
+        <h3
+          id="form-actions-heading"
+          class="swc-Heading swc-Heading--sizeXS"
+          style="margin: 0;"
+        >
+          Form actions
+        </h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <button type="submit" class="swc-Button">
+            <span class="swc-Button-label">Submit</span>
+          </button>
+          <button type="reset" class="swc-Button swc-Button--secondary">
+            <span class="swc-Button-label">Reset</span>
+          </button>
+          <button
+            type="button"
+            class="swc-Button swc-Button--secondary"
+            @click=${showValidity}
+          >
+            <span class="swc-Button-label">Check validity</span>
+          </button>
+        </div>
         <button
           type="button"
           class="swc-Button swc-Button--secondary"
-          @click=${showValidity}
+          data-toggle-fieldset
+          aria-pressed="false"
+          @click=${toggleFieldsetDisabled}
         >
-          <span class="swc-Button-label">Check validity</span>
+          <span class="swc-Button-label">Disable</span>
         </button>
-      </div>
-      <button
-        type="button"
-        class="swc-Button swc-Button--secondary"
-        data-toggle-fieldset
-        aria-pressed="false"
-        @click=${toggleFieldsetDisabled}
+      </section>
+      <section
+        aria-labelledby="submitted-form-data-label"
+        style="display: flex; flex-direction: column; gap: 12px;"
       >
-        <span class="swc-Button-label">Toggle fieldset disabled</span>
-      </button>
-      <section aria-labelledby="submitted-form-data-label">
-        <div id="submitted-form-data-label">Submitted form data</div>
+        <h3
+          id="submitted-form-data-label"
+          class="swc-Heading swc-Heading--sizeXS"
+          style="margin: 0;"
+        >
+          Last submission
+        </h3>
         <output
           data-form-data
           aria-live="polite"
-          style="display: block; min-block-size: 2lh; white-space: pre-wrap;"
-        >
-          Submit the form to see its data.
-        </output>
+          style="display: block; min-block-size: 2lh; padding: 12px; border-radius: var(--swc-corner-radius-100); background: var(--swc-background-layer-1-color); font-family: monospace; font-size: 0.875rem; white-space: pre-wrap; overflow-wrap: anywhere;"
+          .defaultValue=${'Submit the form to see its data.'}
+        ></output>
       </section>
-      <section aria-labelledby="validity-label">
-        <div id="validity-label">Validity state</div>
+      <section
+        aria-labelledby="validity-label"
+        style="display: flex; flex-direction: column; gap: 12px;"
+      >
+        <h3
+          id="validity-label"
+          class="swc-Heading swc-Heading--sizeXS"
+          style="margin: 0;"
+        >
+          Latest validation result
+        </h3>
         <output
           data-validity
           aria-live="polite"
-          style="display: block; min-block-size: 3lh; white-space: pre-wrap;"
-        >
-          Click Check validity to inspect the field and form validity.
-        </output>
+          style="display: block; min-block-size: 2lh; padding: 12px; border-radius: var(--swc-corner-radius-100); background: var(--swc-background-layer-1-color); font-family: monospace; font-size: 0.875rem; white-space: pre-wrap; overflow-wrap: anywhere;"
+          .defaultValue=${'Submit or click Check validity to inspect the field and form validity.'}
+        ></output>
+        <p style="margin: 0;">
+          Inline error text is supplied by the application.
+          <code>validationMessage</code>
+          comes from native validation or a custom error.
+        </p>
       </section>
     </form>
   `,
   tags: ['behaviors'],
 };
-FormBehavior.storyName = 'Native form behavior';
+FormBehavior.storyName = 'Form participation';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

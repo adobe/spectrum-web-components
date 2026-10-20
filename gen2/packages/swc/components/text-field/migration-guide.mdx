@@ -58,7 +58,7 @@ import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 | `setCustomValidity(message)`                        | Adds an application-specific validation error. Pass `''` to clear only this message. Calls before first render are preserved.                                                                                                                                           |
 | `delegatesFocus`                                    | Focus lands directly on the internal `<input>`; the field is a single tab stop.                                                                                                                                                                                         |
 
-`invalid` now makes eligible fields fail validation and blocks native submission unless validation is bypassed. Clear authored errors with `invalid = false` and custom messages with `setCustomValidity('')`. Neither clears the other or overrides native constraints. Application-set errors are not automatically cleared on input, blur, or submission. See [Native form behavior](?path=/docs/components-text-field--docs#native-form-behavior).
+`invalid` now makes eligible fields fail validation and blocks native submission unless validation is bypassed. Clear authored errors with `invalid = false` and custom messages with `setCustomValidity('')`. Neither clears the other or overrides native constraints. Application-set errors are not automatically cleared on input, blur, or submission. See [Form participation](?path=/docs/components-text-field--docs#form-participation).
 
 ### Removed in Spectrum 2
 
