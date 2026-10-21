@@ -8,7 +8,7 @@
 
 - Removed `label`. The textarea is now named by `accessible-label` (default "AI prompt"), applied directly as its `aria-label`.
 - Renamed `send-label` to `send-accessible-label`. The default changed from "Send" to "Submit AI prompt".
-- Renamed `stop-label` to `stop-accessible-label`. The default changed from "Stop generating" to "Stop".
+- Renamed `stop-label` to `stop-accessible-label`. The default stays "Stop generating".
 - Renamed `upload-label` to `upload-accessible-label`.
 - Renamed `attachment-scroll-prev-label` and `attachment-scroll-next-label` to `attachment-scroll-prev-accessible-label` and `attachment-scroll-next-accessible-label`.
 - Renamed `attachment-strip-label` to `attachment-strip-accessible-label`.

@@ -64,7 +64,7 @@ export const OverviewTest: Story = {
       expect('label' in el).toBe(false);
       expect(el.accessibleLabel).toBe('AI prompt');
       expect(el.sendAccessibleLabel).toBe('Submit AI prompt');
-      expect(el.stopAccessibleLabel).toBe('Stop');
+      expect(el.stopAccessibleLabel).toBe('Stop generating');
       expect(el.uploadAccessibleLabel).toBe('Add attachment');
       expect(el.attachmentScrollPrevAccessibleLabel).toBe(
         'Show previous attachments'
@@ -178,7 +178,7 @@ export const ActionButtonStateTest: Story = {
     });
 
     await step(
-      'the same button becomes "Stop" and keeps focus while generating',
+      'the same button becomes "Stop generating" and keeps focus while generating',
       async () => {
         button?.focus();
         el.generating = true;
@@ -186,7 +186,9 @@ export const ActionButtonStateTest: Story = {
 
         expect(actionButton()).toBe(button);
         expect(button?.classList.contains('swc-PromptField-stop')).toBe(true);
-        expect(button?.getAttribute('accessible-label')).toBe('Stop');
+        expect(button?.getAttribute('accessible-label')).toBe(
+          'Stop generating'
+        );
         expect(el.shadowRoot?.activeElement).toBe(button);
       }
     );

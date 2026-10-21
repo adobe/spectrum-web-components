@@ -50,7 +50,7 @@ A pixel loader sits at the start of the input row. It rests on a settled frame w
 
 The two name sets don't overlap, so one attribute covers both.
 
-The indicator is decorative and hidden from assistive technology (`aria-hidden`). The generating state is conveyed by the action button, whose accessible name changes from "Submit AI prompt" to "Stop".
+The indicator is decorative and hidden from assistive technology (`aria-hidden`). The generating state is conveyed by the action button, whose accessible name changes from "Submit AI prompt" to "Stop generating".
 
 The textarea grows with content up to `--swc-prompt-field-max-block-size` (default `40vh`). Override the custom property to raise or lower this ceiling, e.g. `40%` of a sized parent:
 
@@ -165,7 +165,7 @@ The `<swc-prompt-field>` element implements the following accessibility features
 
 #### Send and stop action
 
-- Send and stop are one persistent button, so keyboard focus stays on it when `generating` toggles and screen readers announce the new name ("Submit AI prompt" or "Stop") on the focused control
+- Send and stop are one persistent button, so keyboard focus stays on it when `generating` toggles and screen readers announce the new name ("Submit AI prompt" or "Stop generating") on the focused control
 - With no prompt content, the button uses `aria-disabled="true"` rather than native `disabled`, so clearing the value after submit doesn't drop focus to the page
 
 #### Status announcements

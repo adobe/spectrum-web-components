@@ -156,7 +156,7 @@ export class PromptField extends SpectrumElement {
 
   /** Accessible name for the send button while it acts as stop during `generating`. */
   @property({ type: String, attribute: 'stop-accessible-label' })
-  public stopAccessibleLabel = 'Stop';
+  public stopAccessibleLabel = 'Stop generating';
 
   /** Accessible name for the upload button. */
   @property({ type: String, attribute: 'upload-accessible-label' })
