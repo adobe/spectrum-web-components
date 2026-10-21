@@ -13,16 +13,24 @@
  */
 
 /**
- * Entry point for AI tooling CI validation.
+ * Entry point for AI tooling CI validation (`yarn lint:ai`).
  *
- * Runs five checks:
- *   1. Story tags — valid tags in gen2 *.stories.ts files
- *   2. AGENTS.md paths — relative links in AGENTS.md files resolve to real files
- *   3. Config schema — .ai/config.json structure and regex validity
- *   4. Symlinks — .cursor/ and .claude/ adapter symlinks point to .ai/ sources
- *   5. Docs pages — per-unit MDX docs pages for gen2 components, internal
+ * Runs seven checks:
+ *   1. Story tags: valid tags in gen2 *.stories.ts files
+ *   2. Links: relative links in AGENTS.md files and `.ai/` Markdown resolve to real files
+ *   3. Conventions: branch and commit types documented in .ai/skills/ match the types
+ *      commitlint enforces (this replaced the old .ai/config.json schema check)
+ *   4. Frontmatter: `.ai/` instruction and skill metadata matches the canonical schema,
+ *      `paths` globs match tracked files, skill names and descriptions load in Copilot,
+ *      and generated folders hold only generated files
+ *   5. Symlinks: the .claude/ and .cursor/ directory symlinks point to .ai/ sources
+ *   6. Generated files: .github/instructions/ and .cursor/rules/ match `yarn ai:sync`
+ *   7. Docs pages: per-unit MDX docs pages for gen2 components, internal
  *      components, patterns, and controllers conform to the per-unit MDX
  *      authoring standards in `.ai/rules/stories-documentation.md`
+ *
+ * Checks 1 through 6 read only git-tracked files (staged new files count), so untracked or
+ * ignored local files, such as tool caches and `.ai/handoffs/` notes, never fail the run.
  *
  * Exits with code 1 if any check has errors; warnings are printed but do not fail.
  *
@@ -31,8 +39,10 @@
  */
 
 import { validateDocsPages } from '../../scripts/validate-docs-pages.js';
-import { validateAgentsPaths } from './validate-agents-paths.js';
-import { validateConfigSchema } from './validate-config-schema.js';
+import { syncAi } from './sync.js';
+import { validateConventions } from './validate-conventions.js';
+import { validateFrontmatter } from './validate-frontmatter.js';
+import { validateLinks } from './validate-links.js';
 import { validateStoryTags } from './validate-story-tags.js';
 import { validateSymlinks } from './validate-symlinks.js';
 
@@ -68,22 +78,37 @@ const tags = validateStoryTags();
 totalErrors += tags.errors.length;
 printSection('Story tags', tags.errors, [], tags.fileCount);
 
-// 2. AGENTS.md paths
-const agents = validateAgentsPaths();
-totalErrors += agents.errors.length;
-printSection('AGENTS.md paths', agents.errors, [], agents.fileCount);
-
-// 3. Config schema
-const config = validateConfigSchema();
-totalErrors += config.errors.length;
+// 2. Links
+const links = validateLinks();
+totalErrors += links.errors.length;
 printSection(
-  'Config schema (.ai/config.json)',
-  config.errors,
-  config.warnings,
-  1
+  'Links (AGENTS.md and .ai/)',
+  links.errors,
+  links.warnings,
+  links.fileCount
 );
 
-// 4. Symlinks
+// 3. Conventions
+const conventions = validateConventions();
+totalErrors += conventions.errors.length;
+printSection(
+  'Commit and branch conventions (commitlint)',
+  conventions.errors,
+  conventions.warnings,
+  conventions.fileCount
+);
+
+// 4. Frontmatter
+const frontmatter = validateFrontmatter();
+totalErrors += frontmatter.errors.length;
+printSection(
+  'Instruction and skill frontmatter (.ai/)',
+  frontmatter.errors,
+  frontmatter.warnings,
+  frontmatter.fileCount
+);
+
+// 5. Symlinks
 const symlinks = validateSymlinks();
 totalErrors += symlinks.errors.length;
 printSection(
@@ -93,7 +118,17 @@ printSection(
   symlinks.fileCount
 );
 
-// 5. Docs pages
+// 6. Generated files
+const generated = await syncAi({ write: false });
+totalErrors += generated.errors.length;
+printSection(
+  'Generated files (yarn ai:sync --check)',
+  generated.errors,
+  [],
+  generated.fileCount
+);
+
+// 7. Docs pages
 const docsPages = validateDocsPages();
 totalErrors += docsPages.errors.length;
 printSection(

@@ -31,9 +31,20 @@ const PSEUDO_TO_FORCED_ATTRIBUTE: Record<string, string> = {
   ':hover': '[data-forced-hover]',
   ':focus-visible': '[data-forced-focus-visible]',
   ':active': '[data-forced-active]',
+  ':focus-within': '[data-forced-focus-within]',
+  // Some components (e.g. text field) draw their keyboard-focus ring off a
+  // custom element-internals state instead of :focus-visible, because
+  // native :focus-visible also matches pointer clicks on text inputs. Same
+  // forced attribute — it's the same visual "focus-visible" state, just a
+  // different CSS hook.
+  ':state(keyboard-focused)': '[data-forced-focus-visible]',
 };
 
-export type ForcedPseudoState = 'hover' | 'focus-visible' | 'active';
+export type ForcedPseudoState =
+  | 'hover'
+  | 'focus-visible'
+  | 'active'
+  | 'focus-within';
 
 /**
  * Mirror sheets already computed, keyed by the *adopted* stylesheet rather

@@ -48,7 +48,24 @@ jobs:
         run: |
           # Independent of 1st-gen in every trigger - this workflow never reads
           # 1st-gen/.changeset/.
-          COUNT=$(find gen2/.changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
+          # In pre mode `changeset version` leaves consumed changesets on disk and lists
+          # them in pre.json, so only files missing from that list are still pending.
+          # Counting every *.md would never reach 0 after a release PR merges.
+          COUNT=$(node -e "
+            const fs = require('fs');
+            const dir = 'gen2/.changeset';
+            const preFile = dir + '/pre.json';
+            const consumed = new Set(
+              fs.existsSync(preFile)
+                ? JSON.parse(fs.readFileSync(preFile, 'utf8')).changesets
+                : []
+            );
+            const pending = fs
+              .readdirSync(dir)
+              .filter((f) => f.endsWith('.md') && f !== 'README.md')
+              .filter((f) => !consumed.has(f.replace(/\.md\$/, '')));
+            console.log(pending.length);
+          ")
 
           if [ "$COUNT" -ne 0 ]; then
             echo "has_changesets=true" >> $GITHUB_OUTPUT
@@ -118,6 +135,8 @@ jobs:
 
       - name: Setup job and install dependencies
         uses: ./.github/actions/setup-job
+        with:
+          build-command: yarn build:gen2
 
       - name: Determine snapshot tag
         id: extract-tag
@@ -173,7 +192,7 @@ jobs:
       - name: Refresh lockfile and rebuild
         run: |
           yarn install --refresh-lockfile
-          yarn build
+          yarn build:gen2
 
       - name: Publish gen2 packages (snapshot)
         id: publish
@@ -240,6 +259,8 @@ jobs:
 
       - name: Setup job and install dependencies
         uses: ./.github/actions/setup-job
+        with:
+          build-command: yarn build:gen2
 
       - name: Version gen2 packages
         env:
@@ -260,6 +281,7 @@ jobs:
           branch: changeset-release/gen2
           base: main
           delete-branch: true
+          labels: skip_vrt
           add-paths: |
             gen2
             yarn.lock
@@ -277,7 +299,6 @@ jobs:
     # Main-only - a snapshot runs from a feature branch, so the ref check keeps them apart.
     if: >-
       github.ref == 'refs/heads/main' &&
-      needs.check-changesets.outputs.has_changesets == 'false' &&
       needs.check-changesets.outputs.needs_publish == 'true'
     runs-on: ubuntu-latest
     environment: npm-publish
@@ -293,6 +314,8 @@ jobs:
 
       - name: Setup job and install dependencies
         uses: ./.github/actions/setup-job
+        with:
+          build-command: yarn build:gen2
 
       - name: Verify NPM authentication
         id: npm-auth
@@ -315,7 +338,7 @@ jobs:
             exit 0
           fi
           yarn install --refresh-lockfile
-          yarn build
+          yarn build:gen2
           # No --tag here: changesets forbids a custom dist-tag while in pre mode
           # (throws "Releasing under custom tag is not allowed in pre mode", exit 1),
           # so `changeset publish` ships to the pre tag (beta).

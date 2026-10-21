@@ -1,13 +1,11 @@
 ---
 description: Rules for consistent styling in component CSS
-globs: '*.css'
 paths:
-  - '*.css'
-alwaysApply: true
+  - '**/*.css'
 ---
 
 1. Follow rules outlined in the `CONTRIBUTOR-DOCS/02_style-guide` style guide directory.
-2. Auto-fix results based on settings defined by the `../../stylelint.config.js` unless it requires rewriting more than 30% of the line. Changes that impact more than 30% of the original content should prompt for update.
+2. Auto-fix results based on settings defined by the root `stylelint.config.js` unless it requires rewriting more than 30% of the line. Changes that impact more than 30% of the original content should prompt for update.
 3. Copyrights should reflect the current year.
 4. Comments added should always use sentence, never title case.
 5. Any files removed should also be removed from the exports of the component's package.json.

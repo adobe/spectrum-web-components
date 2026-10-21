@@ -1,0 +1,12 @@
+---
+description: Points to the accessibility-migration-analysis skill when an accessibility migration analysis document is being written or edited.
+paths:
+  - 'CONTRIBUTOR-DOCS/**/accessibility-migration-analysis.md'
+excludeAgent: code-review
+---
+
+# Accessibility migration analysis documents
+
+You're working on an accessibility migration analysis document for the "analyze accessibility" step of the gen2 component migration.
+
+Before you write or change content, load the `accessibility-migration-analysis` skill at `.ai/skills/accessibility-migration-analysis/SKILL.md`. It defines the required section order, the ARIA recommendations structure, Shadow DOM guidance, keyboard and focus conventions, and the testing table format.

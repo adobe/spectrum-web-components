@@ -61,6 +61,7 @@ A `Container` can further customize the implementation of the `RovingTabindexCon
 - `focusInIndex` to control what element will recieve `tabindex=0` while focus is outside of the `Container` and accepts a method with a signature of `(_elements: T[]) => number`
 - `isFocusableElement` describes the state an element much be in to receive `focus` via a method with a signature of `(el: T) => boolean`
 - `listenerScope` outlines which parts on a container's DOM when listening for arrow key presses via an element reference or a method returning an element reference with the signature `() => HTMLElement`
+- `mirrorHorizontalInRTL` swaps `ArrowLeft` and `ArrowRight` when the container resolves to a right-to-left direction, so focus follows the visual order. Accepts a boolean or a method returning one, such as `() => this.horizontal` for a container that can render as a row or a column. Defaults to `true` for `direction: 'horizontal'` and `false` otherwise. Pass `false` for containers that position elements physically, and `true` for `both` or `grid` containers that lay elements out along the inline axis
 
 #### Horizontal navigation
 
@@ -400,12 +401,12 @@ The `RovingTabindexController` provides the following keyboard interactions:
         <sp-table-row>
             <sp-table-cell><kbd>→</kbd> (Right Arrow)</sp-table-cell>
             <sp-table-cell>horizontal, both, grid</sp-table-cell>
-            <sp-table-cell>Moves focus to the next element</sp-table-cell>
+            <sp-table-cell>Moves focus to the next element, or to the previous element when <code>mirrorHorizontalInRTL</code> applies in a right-to-left context</sp-table-cell>
         </sp-table-row>
         <sp-table-row>
             <sp-table-cell><kbd>←</kbd>(Left Arrow)</sp-table-cell>
             <sp-table-cell>horizontal, both, grid</sp-table-cell>
-            <sp-table-cell>Moves focus to the previous element</sp-table-cell>
+            <sp-table-cell>Moves focus to the previous element, or to the next element when <code>mirrorHorizontalInRTL</code> applies in a right-to-left context</sp-table-cell>
         </sp-table-row>
         <sp-table-row>
             <sp-table-cell><kbd>↓</kbd> (Down Arrow)</sp-table-cell>
@@ -416,6 +417,16 @@ The `RovingTabindexController` provides the following keyboard interactions:
             <sp-table-cell><kbd>↑</kbd> (Up Arrow)</sp-table-cell>
             <sp-table-cell>vertical, both, grid</sp-table-cell>
             <sp-table-cell>Moves focus to the previous element (or up in grid)</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>Home</kbd></sp-table-cell>
+            <sp-table-cell>All</sp-table-cell>
+            <sp-table-cell>Moves focus to the first focusable element, in any text direction</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>End</kbd></sp-table-cell>
+            <sp-table-cell>All</sp-table-cell>
+            <sp-table-cell>Moves focus to the last focusable element, in any text direction</sp-table-cell>
         </sp-table-row>
     </sp-table-body>
 </sp-table>
