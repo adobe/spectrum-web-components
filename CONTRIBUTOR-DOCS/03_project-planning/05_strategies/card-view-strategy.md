@@ -91,7 +91,9 @@ These observations are not independently verified. A product precedent or passin
 
 ## Prototype comparison
 
-The prototypes are `swc-card-view-option-1a` and `swc-card-view-option-1b` through `swc-card-view-option-6a`. Each has grid, waterfall, and accessibility stories.
+Prototype numbers identify the semantic structure; letters distinguish variations within that structure. Option 1 is a single-column grid (1A–1C), option 2 is a single-row grid (2A–2B), option 3 is a native list (3A), option 4 is a feed (4A), option 5 is a toolbar (5A), and option 6 is a native fieldset (6A).
+
+Element names use lowercase letters, for example `swc-card-view-option-1a`. Each prototype has grid, waterfall, and accessibility stories. Option 1A is the former unnumbered baseline.
 
 “Sequential” means collection order. “Spatial” means measured visual position. Collection-order horizontal movement is mirrored in right-to-left layouts.
 

@@ -15,8 +15,15 @@ import { expect, type Locator, type Page, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 const prototypes = [
-  'baseline',
-  ...Array.from({ length: 8 }, (_, index) => `option-${index + 1}`),
+  'option-1a',
+  'option-1b',
+  'option-1c',
+  'option-2a',
+  'option-2b',
+  'option-3a',
+  'option-4a',
+  'option-5a',
+  'option-6a',
 ];
 
 async function openPrototype(
@@ -24,8 +31,7 @@ async function openPrototype(
   prototype: string,
   layout: string
 ): Promise<Locator> {
-  const suffix = prototype === 'baseline' ? '' : `-${prototype}`;
-  const tag = `swc-card-view${suffix}`;
+  const tag = `swc-card-view-${prototype}`;
   const root = await gotoStory(
     page,
     `components-card-view-${prototype}--${layout}`,

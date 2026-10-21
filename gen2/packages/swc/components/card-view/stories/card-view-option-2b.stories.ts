@@ -26,7 +26,7 @@ const meta: Meta = {
   parameters: {
     ...prototypeMeta('swc-card-view-option-2b').parameters,
     docs: {
-      subtitle: 'Option 1B semantics with vertical-only waterfall traversal.',
+      subtitle: 'Single-row grid with vertical-only waterfall traversal.',
     },
   },
   tags: ['migrated'],
