@@ -1,0 +1,1315 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#173f36" />
+    <meta
+      name="description"
+      content="A tarot-themed field guide to accessible card views: six semantic families, fifteen prototypes, and no foretold winner."
+    />
+    <title>The card view oracle · Strategy TL;DR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --paper: #fcfbf8;
+        --ink: #25251f;
+        --forest: #173f36;
+        --wine: #75283e;
+        --gold: #f0cc79;
+        --pink: #f7d8df;
+        --line: #d2d3c8;
+        --muted: #595e51;
+        --serif: 'Cormorant Garamond', Georgia, serif;
+        --sans: 'DM Sans', sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 24px;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font: 16px/1.6 var(--sans);
+      }
+      button,
+      select {
+        font: inherit;
+      }
+      a {
+        color: inherit;
+        text-underline-offset: 4px;
+      }
+      a:hover {
+        text-decoration-thickness: 2px;
+      }
+      :focus-visible {
+        outline: 3px solid var(--wine);
+        outline-offset: 5px;
+      }
+      .dark :focus-visible {
+        outline-color: var(--gold);
+      }
+      .skip {
+        position: absolute;
+        top: -100px;
+        left: 16px;
+        padding: 12px;
+        z-index: 10;
+        background: white;
+      }
+      .skip:focus {
+        top: 12px;
+      }
+      .wrap {
+        width: min(1180px, calc(100% - 64px));
+        margin-inline: auto;
+      }
+      .masthead {
+        border-bottom: 1px solid var(--line);
+      }
+      .masthead .wrap {
+        display: flex;
+        gap: 24px;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 76px;
+      }
+      .imprint {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .imprint span {
+        color: var(--wine);
+        margin-right: 10px;
+        font-size: 22px;
+        vertical-align: middle;
+      }
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 25px;
+        font-size: 13px;
+      }
+      nav a {
+        text-decoration: none;
+        padding-block: 8px;
+      }
+      .hero {
+        padding: 50px 0 34px;
+        text-align: center;
+        background-image: repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 79px,
+          #173f3605 80px
+        );
+      }
+      .eyebrow {
+        margin: 0 0 12px;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 11px;
+      }
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: var(--serif);
+        line-height: 1.05;
+        font-weight: 600;
+        letter-spacing: 0;
+      }
+      h1 {
+        font-size: 76px;
+        margin-bottom: 14px;
+      }
+      h1 em {
+        color: var(--wine);
+        font-weight: 500;
+      }
+      .hero .lede {
+        max-width: 630px;
+        margin: 0 auto;
+        font-size: 17px;
+      }
+      .ornament {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        width: min(380px, 100%);
+        margin: 24px auto 0;
+        color: var(--wine);
+      }
+      .ornament::before,
+      .ornament::after {
+        content: '';
+        height: 1px;
+        background: var(--line);
+        flex: 1;
+      }
+      .deck-section {
+        padding: 28px 0 58px;
+      }
+      .section-line {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        align-items: baseline;
+        margin-bottom: 20px;
+      }
+      .section-line h2 {
+        font-size: 32px;
+        margin: 0;
+      }
+      .small {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .deck {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .tarot {
+        display: block;
+        min-width: 0;
+        border: 0;
+        padding: 0 0 8px;
+        background: transparent;
+        color: inherit;
+        text-align: center;
+        cursor: pointer;
+      }
+      .portrait {
+        display: block;
+        position: relative;
+        aspect-ratio: 0.58;
+        background: var(--forest);
+        border: 1px solid var(--ink);
+        border-radius: 3px;
+        overflow: hidden;
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease;
+      }
+      .portrait img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .tarot:nth-child(even) .portrait {
+        transform: translateY(10px);
+      }
+      .tarot:hover .portrait,
+      .tarot[aria-pressed='true'] .portrait {
+        transform: translateY(-7px);
+        box-shadow: 0 9px 0 var(--wine);
+      }
+      .tarot[aria-pressed='true'] .card-title {
+        color: var(--wine);
+        text-decoration: underline;
+        text-underline-offset: 5px;
+      }
+      .card-number {
+        display: block;
+        margin-top: 25px;
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--wine);
+        text-transform: uppercase;
+      }
+      .card-title {
+        display: block;
+        font-family: var(--serif);
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1.12;
+        margin-top: 5px;
+      }
+      .card-role {
+        display: block;
+        font-size: 11px;
+        margin-top: 7px;
+        color: var(--muted);
+      }
+      .reading {
+        margin-top: 34px;
+        padding: 30px 0 0;
+        border-top: 1px solid var(--line);
+        display: grid;
+        grid-template-columns: 1fr 1.7fr;
+        gap: 50px;
+      }
+      .reading h3 {
+        font-size: 38px;
+        margin-bottom: 12px;
+      }
+      .reading p {
+        margin-bottom: 14px;
+      }
+      .reading .caution {
+        color: var(--wine);
+        font-size: 14px;
+      }
+      .variants {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .variants li {
+        display: grid;
+        grid-template-columns: 45px 1fr;
+        gap: 16px;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px;
+      }
+      .variant-id {
+        color: var(--wine);
+        font-weight: 700;
+      }
+      .variants strong {
+        font-weight: 600;
+      }
+      .status {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+      .dark {
+        background: var(--forest);
+        color: var(--paper);
+      }
+      .dilemma {
+        padding: 55px 0;
+      }
+      .dilemma .wrap {
+        display: grid;
+        grid-template-columns: 0.8fr 1.5fr;
+        gap: 70px;
+      }
+      .dark .eyebrow {
+        color: var(--gold);
+      }
+      h2 {
+        font-size: 48px;
+        margin-bottom: 18px;
+      }
+      .dilemma h2 em {
+        color: var(--gold);
+        font-weight: 500;
+      }
+      .omens {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        counter-reset: omens;
+      }
+      .omens li {
+        display: grid;
+        grid-template-columns: 32px 1fr;
+        gap: 16px;
+        padding-block: 14px;
+        border-bottom: 1px solid #ffffff30;
+      }
+      .omens li::before {
+        counter-increment: omens;
+        content: '0' counter(omens);
+        color: var(--gold);
+        font-family: var(--serif);
+        font-size: 26px;
+      }
+      .omens strong {
+        display: block;
+        color: var(--gold);
+        margin-bottom: 3px;
+      }
+      .omens p {
+        margin: 0;
+        font-size: 14px;
+      }
+      .lore {
+        padding: 64px 0;
+      }
+      .lore-intro {
+        max-width: 660px;
+      }
+      .lore-intro p {
+        color: var(--muted);
+      }
+      .spells {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        margin-top: 30px;
+      }
+      .spell {
+        padding: 25px 22px;
+        border-left: 1px solid var(--line);
+      }
+      .spell:first-child {
+        border-left: 0;
+        padding-left: 0;
+      }
+      .spell h3 {
+        font-size: 29px;
+        margin-block: 16px 10px;
+      }
+      .spell p {
+        font-size: 14px;
+        margin-bottom: 16px;
+      }
+      .spell .pair {
+        font-weight: 700;
+        color: var(--wine);
+        font-size: 12px;
+      }
+      .diagram {
+        display: grid;
+        grid-template-columns: repeat(3, 22px);
+        gap: 5px;
+        width: fit-content;
+        height: 49px;
+        position: relative;
+      }
+      .diagram i {
+        display: block;
+        height: 22px;
+        border: 1px solid var(--forest);
+        background: #dfe9e2;
+      }
+      .diagram i.active {
+        background: var(--wine);
+        border-color: var(--wine);
+      }
+      .diagram i.exit {
+        background: var(--gold);
+        border-color: var(--forest);
+      }
+      .spell .glyph {
+        display: block;
+        color: var(--wine);
+        font-size: 30px;
+        line-height: 49px;
+      }
+      .note {
+        font-size: 13px;
+        margin: 20px 0 0;
+        color: var(--muted);
+      }
+      .verdict {
+        background: var(--pink);
+        padding: 56px 0;
+        border-top: 1px solid #d9acb6;
+        border-bottom: 1px solid #d9acb6;
+      }
+      .verdict .wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+      }
+      .verdict h2 {
+        font-size: 52px;
+        color: var(--wine);
+      }
+      .verdict p {
+        max-width: 480px;
+      }
+      .plan {
+        padding-left: 22px;
+        margin: 0;
+      }
+      .plan li {
+        padding: 0 0 15px 10px;
+        font-size: 15px;
+      }
+      .plan li::marker {
+        font-family: var(--serif);
+        font-weight: 700;
+        color: var(--wine);
+        font-size: 23px;
+      }
+      .plan strong {
+        display: block;
+      }
+      .receipts {
+        padding: 48px 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+      }
+      .receipts h2 {
+        font-size: 33px;
+      }
+      .receipts p,
+      .receipts li {
+        font-size: 14px;
+      }
+      .receipts ul {
+        padding-left: 20px;
+      }
+      .source-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 24px;
+        margin-top: 20px;
+        font-size: 13px;
+      }
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 24px 0;
+      }
+      footer .wrap {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .credit {
+        max-width: 650px;
+      }
+      .noscript {
+        border-top: 1px solid var(--line);
+        padding-top: 20px;
+      }
+      .noscript h3 {
+        font-size: 26px;
+        margin-bottom: 8px;
+      }
+      @media (max-width: 1000px) {
+        .deck {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 30px 22px;
+        }
+        .portrait {
+          max-height: 310px;
+        }
+        .spells {
+          grid-template-columns: 1fr 1fr;
+        }
+        .spell:nth-child(3) {
+          border-left: 0;
+          padding-left: 0;
+          border-top: 1px solid var(--line);
+        }
+        .spell:nth-child(4) {
+          border-top: 1px solid var(--line);
+        }
+        .dilemma .wrap {
+          gap: 35px;
+        }
+      }
+      @media (max-width: 640px) {
+        .wrap {
+          width: calc(100% - 36px);
+        }
+        .masthead .wrap {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 2px;
+          padding-block: 13px;
+        }
+        nav {
+          gap: 10px 19px;
+          font-size: 12px;
+        }
+        .hero {
+          padding-top: 32px;
+        }
+        h1 {
+          font-size: 49px;
+        }
+        .hero .lede {
+          font-size: 15px;
+        }
+        .section-line {
+          display: block;
+        }
+        .section-line .small {
+          display: block;
+          margin-top: 9px;
+        }
+        .deck {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 24px 16px;
+        }
+        .portrait {
+          max-height: none;
+        }
+        .card-title {
+          font-size: 25px;
+        }
+        .card-number {
+          margin-top: 22px;
+        }
+        .reading,
+        .dilemma .wrap,
+        .verdict .wrap,
+        .receipts {
+          grid-template-columns: 1fr;
+          gap: 22px;
+        }
+        .reading h3 {
+          font-size: 34px;
+        }
+        .dilemma,
+        .lore,
+        .verdict {
+          padding-block: 40px;
+        }
+        h2,
+        .verdict h2 {
+          font-size: 40px;
+        }
+        .spell {
+          padding: 20px 0 20px 16px;
+        }
+        .spell h3 {
+          font-size: 25px;
+        }
+        .spell p {
+          font-size: 13px;
+        }
+        .receipts {
+          padding-block: 35px;
+        }
+        footer .wrap {
+          flex-direction: column;
+          gap: 10px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          transition: none !important;
+          animation: none !important;
+        }
+      }
+      @media (forced-colors: active) {
+        .portrait,
+        .spell,
+        .variants li,
+        .omens li {
+          border-color: CanvasText;
+        }
+        .tarot[aria-pressed='true'] {
+          outline: 3px solid Highlight;
+          outline-offset: 5px;
+        }
+        .diagram i.active {
+          background: Highlight;
+          forced-color-adjust: none;
+        }
+      }
+      @media print {
+        nav,
+        .skip,
+        .deck,
+        .status {
+          display: none;
+        }
+        .wrap {
+          width: 100%;
+        }
+        body,
+        .dark,
+        .verdict {
+          background: white;
+          color: black;
+        }
+        .dark .eyebrow,
+        .omens strong,
+        .omens li::before,
+        .dilemma h2 em {
+          color: black;
+        }
+        .hero,
+        .deck-section,
+        .dilemma,
+        .lore,
+        .verdict,
+        .receipts {
+          padding-block: 15px;
+        }
+        .reading {
+          margin-top: 0;
+        }
+        .spell,
+        .reading,
+        .verdict {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to the reading</a>
+    <header class="masthead">
+      <div class="wrap">
+        <div class="imprint">
+          <span aria-hidden="true">✦</span>
+          The component reading room
+        </div>
+        <nav aria-label="Sections">
+          <a href="#deck">The deck</a>
+          <a href="#dilemma">The bad omens</a>
+          <a href="#lore">Arrow lore</a>
+          <a href="#verdict">The verdict</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <section class="hero" aria-labelledby="title">
+        <div class="wrap">
+          <p class="eyebrow">
+            A little divination. A lot of keyboard navigation.
+          </p>
+          <h1 id="title">
+            The card view
+            <em>oracle</em>
+          </h1>
+          <p class="lede">
+            Fifteen prototypes. Six possible destinies.
+            <br />
+            One question: can people actually use the cards?
+          </p>
+          <div class="ornament" aria-hidden="true">
+            ✧ &nbsp; I · XV &nbsp; ✧
+          </div>
+        </div>
+      </section>
+
+      <section class="deck-section wrap" id="deck" aria-labelledby="deck-title">
+        <div class="section-line">
+          <h2 id="deck-title">Meet the six suits of semantics.</h2>
+          <span class="small">
+            The role is the promise. The keyboard has to keep it.
+          </span>
+        </div>
+        <div class="deck" aria-label="Semantic families">
+          <button
+            class="tarot"
+            type="button"
+            data-reading="column"
+            aria-pressed="true"
+            aria-controls="reading"
+          >
+            <span class="portrait">
+              <img
+                src="card-strategy-tldr-assets/magician.jpg"
+                alt=""
+                width="300"
+                height="520"
+              />
+            </span>
+            <span class="card-number">I · Options 1A–1F</span>
+            <span class="card-title">The illusionist</span>
+            <span class="card-role">The single-column grid</span>
+          </button>
+          <button
+            class="tarot"
+            type="button"
+            data-reading="row"
+            aria-pressed="false"
+            aria-controls="reading"
+          >
+            <span class="portrait">
+              <img
+                src="card-strategy-tldr-assets/priestess.jpg"
+                alt=""
+                width="300"
+                height="520"
+              />
+            </span>
+            <span class="card-number">II · Options 2A–2E</span>
+            <span class="card-title">The long revelation</span>
+            <span class="card-role">The single-row grid</span>
+          </button>
+          <button
+            class="tarot"
+            type="button"
+            data-reading="list"
+            aria-pressed="false"
+            aria-controls="reading"
+          >
+            <span class="portrait">
+              <img
+                src="card-strategy-tldr-assets/hermit.jpg"
+                alt=""
+                width="300"
+                height="520"
+              />
+            </span>
+            <span class="card-number">III · Option 3A</span>
+            <span class="card-title">The familiar path</span>
+            <span class="card-role">The native list</span>
+          </button>
+          <button
+            class="tarot"
+            type="button"
+            data-reading="feed"
+            aria-pressed="false"
+            aria-controls="reading"
+          >
+            <span class="portrait">
+              <img
+                src="card-strategy-tldr-assets/star.jpg"
+                alt=""
+                width="300"
+                height="520"
+              />
+            </span>
+            <span class="card-number">IV · Option 4A</span>
+            <span class="card-title">The endless story</span>
+            <span class="card-role">The feed</span>
+          </button>
+          <button
+            class="tarot"
+            type="button"
+            data-reading="toolbar"
+            aria-pressed="false"
+            aria-controls="reading"
+          >
+            <span class="portrait">
+              <img
+                src="card-strategy-tldr-assets/chariot.jpg"
+                alt=""
+                width="300"
+                height="520"
+              />
+            </span>
+            <span class="card-number">V · Option 5A</span>
+            <span class="card-title">The commander</span>
+            <span class="card-role">The toolbar</span>
+          </button>
+          <button
+            class="tarot"
+            type="button"
+            data-reading="fieldset"
+            aria-pressed="false"
+            aria-controls="reading"
+          >
+            <span class="portrait">
+              <img
+                src="card-strategy-tldr-assets/world.jpg"
+                alt=""
+                width="300"
+                height="520"
+              />
+            </span>
+            <span class="card-number">VI · Option 6A</span>
+            <span class="card-title">The gathering</span>
+            <span class="card-role">The native fieldset</span>
+          </button>
+        </div>
+        <div
+          class="reading"
+          id="reading"
+          role="region"
+          aria-labelledby="reading-title"
+        >
+          <div>
+            <p class="eyebrow" id="reading-label">
+              The single-column grid · Six variations
+            </p>
+            <h3 id="reading-title">
+              Looks like many.
+              <br />
+              Announces as one.
+            </h3>
+            <p id="reading-summary">
+              A visual wall of cards, but one semantic column. Each card gets a
+              row. The screen reader's map and the arrow keys' route may tell
+              different fortunes.
+            </p>
+            <p class="caution" id="reading-caution">
+              Watch the mismatch: “one column” does not explain why moving down
+              misses cards in other visual columns.
+            </p>
+          </div>
+          <ul class="variants" id="variants">
+            <li>
+              <span class="variant-id">1A</span>
+              <span>
+                <strong>The RSP baseline.</strong>
+                Left/Right is sequential in grid, spatial in waterfall. Up/Down
+                is spatial.
+              </span>
+            </li>
+            <li>
+              <span class="variant-id">1B</span>
+              <span>
+                <strong>Follow the geometry.</strong>
+                All arrows are spatial. No wrapping.
+              </span>
+            </li>
+            <li>
+              <span class="variant-id">1C</span>
+              <span>
+                <strong>Stay in the circle.</strong>
+                Spatial arrows wrap within the same aligned visual row or
+                column.
+              </span>
+            </li>
+            <li>
+              <span class="variant-id">1D</span>
+              <span>
+                <strong>The historical RSP contract.</strong>
+                Sequential Left/Right, spatial Up/Down. Uses rowheaders.
+              </span>
+            </li>
+            <li>
+              <span class="variant-id">1E</span>
+              <span>
+                <strong>The eternal return.</strong>
+                Each arrow cycles through the entire enabled collection.
+              </span>
+            </li>
+            <li>
+              <span class="variant-id">1F</span>
+              <span>
+                <strong>Next column, please.</strong>
+                Sequential Left/Right; Up/Down follows columns, continuing into
+                the next one.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p class="status" role="status" id="reading-status"></p>
+        <noscript>
+          <div class="noscript">
+            <h3>The rest of the deck</h3>
+            <p>
+              <strong>Single row:</strong>
+              2A uses sequential Left/Right and spatial Up/Down; 2B is spatial
+              without wrapping; 2C wraps within an aligned visual row or column;
+              2D cycles through the collection; 2E follows columns vertically in
+              waterfall, with horizontal arrows inactive.
+            </p>
+            <p>
+              <strong>3A:</strong>
+              Native list and ordinary tabbable controls.
+              <strong>4A:</strong>
+              Feed and articles, with PageUp/PageDown.
+              <strong>5A:</strong>
+              Toolbar with grouped controls.
+              <strong>6A:</strong>
+              Native fieldset and legend, with grouped controls.
+            </p>
+          </div>
+        </noscript>
+      </section>
+
+      <section
+        class="dilemma dark"
+        id="dilemma"
+        aria-labelledby="dilemma-title"
+      >
+        <div class="wrap">
+          <div>
+            <p class="eyebrow">Three bad omens</p>
+            <h2 id="dilemma-title">
+              The visuals say grid.
+              <br />
+              The voices say
+              <em>what?</em>
+            </h2>
+            <p>
+              Pretty cards are not the problem.
+              <br />
+              A confusing map is.
+            </p>
+          </div>
+          <ol class="omens">
+            <li>
+              <div>
+                <strong>The vanishing cards</strong>
+                <p>
+                  Down can stop at a visual column's bottom before every card is
+                  visited. Has the collection ended, or is there another route?
+                </p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>The unreliable prophecy</strong>
+                <p>
+                  Reported speech includes “1 of 1” and inconsistent position
+                  feedback. ARIA metadata alone cannot promise “7 of 100.”
+                </p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>The shifting floor</strong>
+                <p>
+                  Waterfall changes the geometry. Virtualization adds loading,
+                  reading-order, and focus risks. Test those separately.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="lore wrap" id="lore" aria-labelledby="lore-title">
+        <div class="lore-intro">
+          <p class="eyebrow">Know your navigation spells</p>
+          <h2 id="lore-title">Not all circles lead everywhere.</h2>
+          <p>
+            “Wrapping” can mean two very different things. One circles a visual
+            band. The other visits the whole collection.
+          </p>
+        </div>
+        <div class="spells">
+          <article class="spell">
+            <div class="diagram" aria-hidden="true">
+              <i></i>
+              <i></i>
+              <i class="active"></i>
+              <i></i>
+              <i></i>
+              <i></i>
+            </div>
+            <h3>The compass</h3>
+            <p>
+              Spatial arrows choose a nearby aligned card. At the edge, stop.
+              Repeating one key will not visit everything.
+            </p>
+            <span class="pair">1B + 2B · Spatial, no wrap</span>
+          </article>
+          <article class="spell">
+            <div class="diagram" aria-hidden="true">
+              <i class="exit"></i>
+              <i></i>
+              <i class="active"></i>
+              <i></i>
+              <i></i>
+              <i></i>
+            </div>
+            <h3>The small circle</h3>
+            <p>
+              At the edge, return to the other end of the same aligned row or
+              column. You can loop without seeing the rest.
+            </p>
+            <span class="pair">1C + 2C · Local wrapping</span>
+          </article>
+          <article class="spell">
+            <div class="diagram" aria-hidden="true">
+              <i></i>
+              <i></i>
+              <i class="active"></i>
+              <i class="exit"></i>
+              <i></i>
+              <i></i>
+            </div>
+            <h3>The thread</h3>
+            <p>
+              Left/Right follows collection order; Up/Down follows geometry. The
+              sequential route stops at collection boundaries.
+            </p>
+            <span class="pair">1D + 2A · One sequential pair</span>
+          </article>
+          <article class="spell">
+            <div class="diagram" aria-hidden="true">
+              <i class="exit"></i>
+              <i></i>
+              <i></i>
+              <i></i>
+              <i></i>
+              <i class="active"></i>
+            </div>
+            <h3>The eternal return</h3>
+            <p>
+              Every arrow follows collection order and cycles. Any one repeated
+              arrow visits every enabled item from any start.
+            </p>
+            <span class="pair">1E + 2D · Full cycling</span>
+          </article>
+        </div>
+        <p class="note">
+          Spatial alignment uses overlap on the perpendicular axis. In
+          waterfall, a “row” is a visual band, not necessarily a neat horizontal
+          line. Sequential horizontal directions mirror in RTL.
+        </p>
+      </section>
+
+      <section class="verdict" id="verdict" aria-labelledby="verdict-title">
+        <div class="wrap">
+          <div>
+            <p class="eyebrow">Your future is not yet selected</p>
+            <h2 id="verdict-title">
+              The winning card?
+              <br />
+              Ask the people.
+            </h2>
+            <p>
+              A passing axe scan is not a blessing from the accessibility
+              universe. Neither is “Google does it.” The winner must work for
+              keyboard and screen reader users.
+            </p>
+            <p>
+              <strong>
+                Start with a repaired layout grid versus a native list.
+              </strong>
+              No option is approved yet.
+            </p>
+          </div>
+          <ol class="plan">
+            <li>
+              <strong>First, a fair reading.</strong>
+              Use a fully loaded, uniform layout with identical content and
+              actions.
+            </li>
+            <li>
+              <strong>Make the task real.</strong>
+              Find card seven, visit every card, select two, and use a bulk
+              action.
+            </li>
+            <li>
+              <strong>Keep the spells separate.</strong>
+              Selecting a card, opening it, and using its child controls must
+              not trigger one another.
+            </li>
+            <li>
+              <strong>Then shake the table.</strong>
+              Test waterfall, resizing, removal, and focus visibility. Add
+              virtualization last.
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="receipts wrap" aria-labelledby="receipts-title">
+        <div>
+          <p class="eyebrow">Read the leaves, then the receipts</p>
+          <h2 id="receipts-title">Guidance, not gospel.</h2>
+          <p>
+            APG permits layout grids and optional wrapping. The original RSP
+            spec informs 1D; current RSP and Piyush's PR inform 1A. Reported
+            Google Drive semantics inspire the single-row experiments.
+          </p>
+          <p>
+            Higley and Roselli caution against choosing a grid just because it
+            looks like one or saves tab stops. A feed suits reading; a toolbar
+            suits commands. The role should match the task.
+          </p>
+          <div class="source-links">
+            <a href="card-view-strategy.md">The full strategy</a>
+            <a href="https://www.w3.org/WAI/ARIA/apg/patterns/grid/">
+              APG grid pattern
+            </a>
+            <a href="https://sarahmhigley.com/writing/grids-part1/">
+              Higley on grids
+            </a>
+            <a
+              href="https://adrianroselli.com/2020/07/aria-grid-as-an-anti-pattern.html"
+            >
+              Roselli's caution
+            </a>
+          </div>
+        </div>
+        <div>
+          <p class="eyebrow">The non-negotiables</p>
+          <h2>Good fortune is usable.</h2>
+          <ul>
+            <li>Every enabled card and child control is reachable.</li>
+            <li>Focus stays visible, stable, and clear of action bars.</li>
+            <li>
+              Position, total, and selected state are tested in real speech.
+            </li>
+            <li>Keyboard users can enter, leave, and reverse their route.</li>
+          </ul>
+          <p class="small">
+            Test NVDA, JAWS, VoiceOver, Narrator, mobile screen readers, and
+            keyboard-only use. Reports are not independently verified findings.
+            Automated tests do not establish usability or WCAG conformance.
+          </p>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="wrap">
+        <span>
+          ✦ The card view oracle · A strategy reading, not a prediction.
+        </span>
+        <span class="credit">
+          Tarot art: Pamela Colman Smith, Rider–Waite–Smith deck (1909), public
+          domain, via Wikimedia Commons.
+          <a
+            href="https://commons.wikimedia.org/wiki/Category:Rider-Waite_tarot_deck"
+          >
+            Image sources
+          </a>
+          .
+        </span>
+      </div>
+    </footer>
+    <script>
+      const readings = {
+        row: {
+          label: 'The single-row grid · Five variations',
+          title: 'One row. A whole lot of columns.',
+          summary:
+            'One semantic row contains every card as a gridcell. Each card has a stable collection-order column index, even when the visual layout wraps.',
+          caution:
+            'Reported “x of y” speech is encouraging, not a guarantee. One semantic row still does not explain vertical arrows.',
+          variants: [
+            [
+              '2A',
+              'The closest baseline.',
+              'Sequential Left/Right and spatial Up/Down in both layouts.',
+            ],
+            [
+              '2B',
+              'Follow the geometry.',
+              'All four arrows are spatial, without wrapping.',
+            ],
+            [
+              '2C',
+              'Stay in the circle.',
+              'Spatial arrows wrap within the same aligned visual row or column.',
+            ],
+            [
+              '2D',
+              'The eternal return.',
+              'Each arrow cycles through the entire enabled collection.',
+            ],
+            [
+              '2E',
+              'The vertical journey.',
+              'In grid, sequential Left/Right and spatial Up/Down. In waterfall, Up/Down traverses columns in order; horizontal arrows do not navigate.',
+            ],
+          ],
+        },
+        list: {
+          label: 'The native list · One variation',
+          title: 'Sometimes the old path is the good path.',
+          summary:
+            'A native ul and li preserve familiar content semantics. Each checkbox and action stays in the ordinary page tab order. Selection belongs to the checkbox, not aria-selected on a list item.',
+          caution:
+            'More tab stops. Supplementary arrows may not be available in browse mode. Position metadata has not reliably produced spoken “x of y.”',
+          variants: [
+            [
+              '3A',
+              'The native-list alternative.',
+              'Sequential Left/Right and spatial Up/Down are supplementary. Every enabled child control is normally tabbable; no custom range selection.',
+            ],
+          ],
+        },
+        feed: {
+          label: 'The feed · One variation',
+          title: 'A story, not necessarily a selection tool.',
+          summary:
+            'A labelled feed contains focusable articles with position and total metadata. Each article keeps its real checkbox and action buttons.',
+          caution:
+            'Does an asset picker really behave like a content stream? This fully loaded prototype does not test feed loading behavior.',
+          variants: [
+            [
+              '4A',
+              'The reading-oriented experiment.',
+              'PageDown and PageUp move one article at a time. All enabled child controls stay in normal tab order; no custom range selection.',
+            ],
+          ],
+        },
+        toolbar: {
+          label: 'The toolbar · One variation',
+          title: 'Command the cards. But are they commands?',
+          summary:
+            'A labelled horizontal toolbar groups each card’s checkbox, Open button, and Share button. The cards themselves are not focusable controls.',
+          caution:
+            'A toolbar announces commands, not content objects. Spatial vertical arrows extend the usual horizontal-toolbar contract.',
+          variants: [
+            [
+              '5A',
+              'The command-grouping experiment.',
+              'Left/Right moves sequentially between checkboxes; Up/Down is spatial. Tab reaches the active card’s actions. With selection disabled, Open is the navigation target.',
+            ],
+          ],
+        },
+        fieldset: {
+          label: 'The native fieldset · One variation',
+          title: 'A gathering needs more than a name.',
+          summary:
+            'A native fieldset and visible legend name the collection. Each card is a labelled group containing native selection and action controls. There are no grid or toolbar roles.',
+          caution:
+            'Native grouping does not establish arrow navigation, roving focus, or collection-position announcements. Those expectations still need testing.',
+          variants: [
+            [
+              '6A',
+              'The form-grouping experiment.',
+              'Uses the same sequential horizontal and spatial vertical control navigation as 5A. Tab visits the active card’s actions. Selection stays in native checkboxes.',
+            ],
+          ],
+        },
+      };
+      const panel = document.getElementById('reading');
+      const initialReading = panel.innerHTML;
+      document.querySelectorAll('[data-reading]').forEach((button) => {
+        button.addEventListener('click', () => {
+          document.querySelectorAll('[data-reading]').forEach((card) => {
+            card.setAttribute('aria-pressed', String(card === button));
+          });
+          const selection = button.dataset.reading;
+          if (selection === 'column') {
+            panel.innerHTML = initialReading;
+          } else {
+            const reading = readings[selection];
+            document.getElementById('reading-label').textContent =
+              reading.label;
+            document.getElementById('reading-title').textContent =
+              reading.title;
+            document.getElementById('reading-summary').textContent =
+              reading.summary;
+            document.getElementById('reading-caution').textContent =
+              reading.caution;
+            const variants = document.getElementById('variants');
+            variants.replaceChildren(
+              ...reading.variants.map(([identifier, title, summary]) => {
+                const item = document.createElement('li');
+                const number = document.createElement('span');
+                number.className = 'variant-id';
+                number.textContent = identifier;
+                const description = document.createElement('span');
+                const lead = document.createElement('strong');
+                lead.textContent = title;
+                description.append(lead, ` ${summary}`);
+                item.append(number, description);
+                return item;
+              })
+            );
+          }
+          document.getElementById('reading-status').textContent =
+            document.getElementById('reading-label').textContent;
+        });
+      });
+    </script>
+  </body>
+</html>
