@@ -31,7 +31,7 @@ import '../card/swc-card.js';
 
 import styles from './card-view.css';
 
-export class CardView extends CardViewBase {
+export class CardViewOption1A extends CardViewBase {
   protected readonly model: CardViewModel = 'baseline';
 
   @property({ reflect: true })
@@ -431,54 +431,54 @@ export class CardView extends CardViewBase {
   }
 }
 
-export class CardViewOption1 extends CardView {
+export class CardViewOption1B extends CardViewOption1A {
   protected override readonly model: CardViewModel = 'sequential';
 }
 
-export class CardViewOption2 extends CardView {
+export class CardViewOption1C extends CardViewOption1A {
   protected override readonly model: CardViewModel = 'wrapping';
 }
 
-export class CardViewOption3 extends CardView {
+export class CardViewOption3A extends CardViewOption1A {
   protected override readonly model: CardViewModel = 'list';
 }
 
-export class CardViewOption4 extends CardView {
+export class CardViewOption4A extends CardViewOption1A {
   protected override readonly model: CardViewModel = 'feed';
 }
 
 /**
  * Experimental card collection with one semantic row and a cell per card.
  *
- * @element swc-card-view-option-5
+ * @element swc-card-view-option-2a
  */
-export class CardViewOption5 extends CardView {
+export class CardViewOption2A extends CardViewOption1A {
   protected override readonly model: CardViewModel = 'single-row';
 }
 
 /**
  * Experimental layout grid with sequential vertical waterfall navigation.
  *
- * @element swc-card-view-option-6
+ * @element swc-card-view-option-2b
  */
-export class CardViewOption6 extends CardView {
+export class CardViewOption2B extends CardViewOption1A {
   protected override readonly model: CardViewModel = 'vertical';
 }
 
 /**
  * Experimental toolbar grouping each card's selection and action controls.
  *
- * @element swc-card-view-option-7
+ * @element swc-card-view-option-5a
  */
-export class CardViewOption7 extends CardView {
+export class CardViewOption5A extends CardViewOption1A {
   protected override readonly model: CardViewModel = 'toolbar';
 }
 
 /**
  * Experimental fieldset grouping card selection and action controls.
  *
- * @element swc-card-view-option-8
+ * @element swc-card-view-option-6a
  */
-export class CardViewOption8 extends CardView {
+export class CardViewOption6A extends CardViewOption1A {
   protected override readonly model: CardViewModel = 'fieldset';
 }

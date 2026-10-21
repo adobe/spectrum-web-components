@@ -13,21 +13,16 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 
 import { photos, prototypeMeta } from './story-helpers.js';
 
-// ────────────────
-//    METADATA
-// ────────────────
-
 /**
- * Compares native fieldset grouping with checkbox collection navigation.
+ * Tests the historical RSP recommendation with a stable collection-order horizontal route.
  */
 const meta: Meta = {
-  ...prototypeMeta('swc-card-view-option-8'),
-  title: 'Card view/Option 8',
+  ...prototypeMeta('swc-card-view-option-1b'),
+  title: 'Card view/Option 1B',
   parameters: {
-    ...prototypeMeta('swc-card-view-option-8').parameters,
+    ...prototypeMeta('swc-card-view-option-1b').parameters,
     docs: {
-      subtitle:
-        'Fieldset with checkbox arrow navigation and active-card action tab stops.',
+      subtitle: 'Single-column grid with sequential Left/Right navigation.',
     },
   },
   tags: ['migrated'],
@@ -35,24 +30,14 @@ const meta: Meta = {
 
 export default meta;
 
-// ──────────────────────────
-//    OPTIONS STORIES
-// ──────────────────────────
-
 export const Grid: StoryObj = {
   args: { layout: 'grid' },
   tags: ['overview', 'options'],
 };
-
 export const Waterfall: StoryObj = {
   args: { layout: 'waterfall' },
   tags: ['options'],
 };
-
-// ────────────────────────────────
-//    ACCESSIBILITY STORIES
-// ────────────────────────────────
-
 export const Accessibility: StoryObj = {
   args: {
     items: photos.map((item, index) => ({ ...item, disabled: index === 2 })),

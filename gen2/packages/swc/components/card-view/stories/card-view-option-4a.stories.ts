@@ -13,20 +13,18 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 
 import { photos, prototypeMeta } from './story-helpers.js';
 
-// ────────────────
-//    METADATA
-// ────────────────
-
 /**
- * Tests a stable single-row grid with sequential navigation in both visual layouts.
+ * Explores feed/article semantics while keeping independent card controls.
+ * This fully loaded prototype does not demonstrate dynamic feed loading.
  */
 const meta: Meta = {
-  ...prototypeMeta('swc-card-view-option-5'),
-  title: 'Card view/Option 5',
+  ...prototypeMeta('swc-card-view-option-4a'),
+  title: 'Card view/Option 4A',
   parameters: {
-    ...prototypeMeta('swc-card-view-option-5').parameters,
+    ...prototypeMeta('swc-card-view-option-4a').parameters,
     docs: {
-      subtitle: 'Single-row grid with one semantic column per card.',
+      subtitle:
+        'Feed articles with Page Up/Down navigation and real checkboxes.',
     },
   },
   tags: ['migrated'],
@@ -34,24 +32,14 @@ const meta: Meta = {
 
 export default meta;
 
-// ──────────────────────────
-//    OPTIONS STORIES
-// ──────────────────────────
-
 export const Grid: StoryObj = {
   args: { layout: 'grid' },
   tags: ['overview', 'options'],
 };
-
 export const Waterfall: StoryObj = {
   args: { layout: 'waterfall' },
   tags: ['options'],
 };
-
-// ────────────────────────────────
-//    ACCESSIBILITY STORIES
-// ────────────────────────────────
-
 export const Accessibility: StoryObj = {
   args: {
     items: photos.map((item, index) => ({ ...item, disabled: index === 2 })),

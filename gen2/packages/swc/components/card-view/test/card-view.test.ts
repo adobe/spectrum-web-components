@@ -13,23 +13,23 @@ import { html } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/web-components';
 
-import '../swc-card-view.js';
-import '../swc-card-view-option-1.js';
-import '../swc-card-view-option-2.js';
-import '../swc-card-view-option-3.js';
-import '../swc-card-view-option-4.js';
-import '../swc-card-view-option-5.js';
-import '../swc-card-view-option-6.js';
-import '../swc-card-view-option-7.js';
-import '../swc-card-view-option-8.js';
+import '../swc-card-view-option-1a.js';
+import '../swc-card-view-option-1b.js';
+import '../swc-card-view-option-1c.js';
+import '../swc-card-view-option-3a.js';
+import '../swc-card-view-option-4a.js';
+import '../swc-card-view-option-2a.js';
+import '../swc-card-view-option-2b.js';
+import '../swc-card-view-option-5a.js';
+import '../swc-card-view-option-6a.js';
 
 const tags = [
-  'swc-card-view',
-  'swc-card-view-option-1',
-  'swc-card-view-option-2',
-  'swc-card-view-option-3',
-  'swc-card-view-option-4',
-  'swc-card-view-option-5',
+  'swc-card-view-option-1a',
+  'swc-card-view-option-1b',
+  'swc-card-view-option-1c',
+  'swc-card-view-option-3a',
+  'swc-card-view-option-4a',
+  'swc-card-view-option-2a',
 ];
 
 const items = Array.from({ length: 8 }, (_, index) => ({
@@ -81,7 +81,11 @@ export const SemanticWaterfallNavigation: StoryObj = {
   `,
   play: async ({ canvasElement }) => {
     for (const layout of ['grid', 'waterfall']) {
-      const view = await mount(canvasElement, 'swc-card-view-option-6', layout);
+      const view = await mount(
+        canvasElement,
+        'swc-card-view-option-2b',
+        layout
+      );
       view.items = items.map((item, index) => ({
         ...item,
         disabled: index === 1,
@@ -164,7 +168,7 @@ export const ToolbarControls: StoryObj = {
     for (const layout of ['grid', 'waterfall']) {
       const toolbar = await mount(
         canvasElement,
-        'swc-card-view-option-7',
+        'swc-card-view-option-5a',
         layout
       );
       const toolbarRoot = toolbar.shadowRoot!;
@@ -234,7 +238,7 @@ export const CommandNavigationEdges: StoryObj = {
     };
     const toolbar = await mount(
       canvasElement,
-      'swc-card-view-option-7',
+      'swc-card-view-option-5a',
       'waterfall'
     );
     toolbar.items = items.map((item, index) => ({
@@ -281,7 +285,11 @@ export const ListArrowNavigation: StoryObj = {
   `,
   play: async ({ canvasElement }) => {
     for (const layout of ['grid', 'waterfall']) {
-      const view = await mount(canvasElement, 'swc-card-view-option-3', layout);
+      const view = await mount(
+        canvasElement,
+        'swc-card-view-option-3a',
+        layout
+      );
       view.items = items.map((item, index) => ({
         ...item,
         disabled: index === 2,
@@ -342,7 +350,11 @@ export const FieldsetNavigation: StoryObj = {
   `,
   play: async ({ canvasElement }) => {
     for (const layout of ['grid', 'waterfall']) {
-      const view = await mount(canvasElement, 'swc-card-view-option-8', layout);
+      const view = await mount(
+        canvasElement,
+        'swc-card-view-option-6a',
+        layout
+      );
       const root = view.shadowRoot!;
       expect(root.querySelector('fieldset legend')?.textContent).toBe('Photos');
       expect(root.querySelector('[role="toolbar"], [role="grid"]')).toBeNull();
@@ -504,7 +516,11 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
   `,
   play: async ({ canvasElement }) => {
     for (const layout of ['grid', 'waterfall']) {
-      const view = await mount(canvasElement, 'swc-card-view-option-5', layout);
+      const view = await mount(
+        canvasElement,
+        'swc-card-view-option-2a',
+        layout
+      );
       view.items = items.map((item, index) => ({
         ...item,
         disabled: index === 2,
@@ -644,7 +660,11 @@ export const WrappingReachesEveryCard: StoryObj = {
   `,
   play: async ({ canvasElement }) => {
     for (const layout of ['grid', 'waterfall']) {
-      const view = await mount(canvasElement, 'swc-card-view-option-2', layout);
+      const view = await mount(
+        canvasElement,
+        'swc-card-view-option-1c',
+        layout
+      );
       const root = view.shadowRoot!;
       root.querySelector<HTMLElement>('[data-focus]')!.focus();
       const visited = new Set<string>();
@@ -684,7 +704,7 @@ export const FeedExitAndReflow: StoryObj = {
     <div></div>
   `,
   play: async ({ canvasElement }) => {
-    const view = await mount(canvasElement, 'swc-card-view-option-4');
+    const view = await mount(canvasElement, 'swc-card-view-option-4a');
     const root = view.shadowRoot!;
     const expectArticleMetadata = () => {
       const articles = [...root.querySelectorAll<HTMLElement>('article')];

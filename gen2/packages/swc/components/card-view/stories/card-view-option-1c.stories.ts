@@ -14,18 +14,14 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { photos, prototypeMeta } from './story-helpers.js';
 
 /**
- * Explores feed/article semantics while keeping independent card controls.
- * This fully loaded prototype does not demonstrate dynamic feed loading.
+ * Compares complete column traversal with the non-wrapping RSP-style baseline.
  */
 const meta: Meta = {
-  ...prototypeMeta('swc-card-view-option-4'),
-  title: 'Card view/Option 4',
+  ...prototypeMeta('swc-card-view-option-1c'),
+  title: 'Card view/Option 1C',
   parameters: {
-    ...prototypeMeta('swc-card-view-option-4').parameters,
-    docs: {
-      subtitle:
-        'Feed articles with Page Up/Down navigation and real checkboxes.',
-    },
+    ...prototypeMeta('swc-card-view-option-1c').parameters,
+    docs: { subtitle: 'Layout grid with Up/Down column-boundary wrapping.' },
   },
   tags: ['migrated'],
 };

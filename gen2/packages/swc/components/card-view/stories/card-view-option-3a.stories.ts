@@ -14,17 +14,16 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { photos, prototypeMeta } from './story-helpers.js';
 
 /**
- * Adapts the default RSP-style model from PR #6798 into a Lit collection.
- * This is an experimental comparison baseline, not a production accessibility recommendation.
+ * Preserves native reading structure and independent controls without a composite widget.
  */
 const meta: Meta = {
-  ...prototypeMeta('swc-card-view'),
-  title: 'Card view/Baseline',
+  ...prototypeMeta('swc-card-view-option-3a'),
+  title: 'Card view/Option 3A',
   parameters: {
-    ...prototypeMeta('swc-card-view').parameters,
+    ...prototypeMeta('swc-card-view-option-3a').parameters,
     docs: {
       subtitle:
-        'PR reference: spatial navigation and single-column grid semantics.',
+        'Native list with list-item arrows and normal child-control Tab access.',
     },
   },
   tags: ['migrated'],

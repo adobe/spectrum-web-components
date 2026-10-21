@@ -11,12 +11,12 @@
  */
 import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
 
-import { CardViewOption4 } from './CardView.js';
+import { CardViewOption2B } from './CardView.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'swc-card-view-option-4': CardViewOption4;
+    'swc-card-view-option-2b': CardViewOption2B;
   }
 }
 
-defineElement('swc-card-view-option-4', CardViewOption4);
+defineElement('swc-card-view-option-2b', CardViewOption2B);

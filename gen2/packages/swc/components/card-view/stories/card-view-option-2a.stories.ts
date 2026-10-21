@@ -13,29 +13,45 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 
 import { photos, prototypeMeta } from './story-helpers.js';
 
+// ────────────────
+//    METADATA
+// ────────────────
+
 /**
- * Compares complete column traversal with the non-wrapping RSP-style baseline.
+ * Tests a stable single-row grid with sequential navigation in both visual layouts.
  */
 const meta: Meta = {
-  ...prototypeMeta('swc-card-view-option-2'),
-  title: 'Card view/Option 2',
+  ...prototypeMeta('swc-card-view-option-2a'),
+  title: 'Card view/Option 2A',
   parameters: {
-    ...prototypeMeta('swc-card-view-option-2').parameters,
-    docs: { subtitle: 'Layout grid with Up/Down column-boundary wrapping.' },
+    ...prototypeMeta('swc-card-view-option-2a').parameters,
+    docs: {
+      subtitle: 'Single-row grid with one semantic column per card.',
+    },
   },
   tags: ['migrated'],
 };
 
 export default meta;
 
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
 export const Grid: StoryObj = {
   args: { layout: 'grid' },
   tags: ['overview', 'options'],
 };
+
 export const Waterfall: StoryObj = {
   args: { layout: 'waterfall' },
   tags: ['options'],
 };
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
 export const Accessibility: StoryObj = {
   args: {
     items: photos.map((item, index) => ({ ...item, disabled: index === 2 })),

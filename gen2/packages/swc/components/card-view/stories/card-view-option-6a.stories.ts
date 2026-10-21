@@ -18,15 +18,16 @@ import { photos, prototypeMeta } from './story-helpers.js';
 // ────────────────
 
 /**
- * Compares Option 1 with semantic-order vertical waterfall navigation.
+ * Compares native fieldset grouping with checkbox collection navigation.
  */
 const meta: Meta = {
-  ...prototypeMeta('swc-card-view-option-6'),
-  title: 'Card view/Option 6',
+  ...prototypeMeta('swc-card-view-option-6a'),
+  title: 'Card view/Option 6A',
   parameters: {
-    ...prototypeMeta('swc-card-view-option-6').parameters,
+    ...prototypeMeta('swc-card-view-option-6a').parameters,
     docs: {
-      subtitle: 'Option 1 semantics with vertical-only waterfall traversal.',
+      subtitle:
+        'Fieldset with checkbox arrow navigation and active-card action tab stops.',
     },
   },
   tags: ['migrated'],

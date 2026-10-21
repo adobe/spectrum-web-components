@@ -13,17 +13,20 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 
 import { photos, prototypeMeta } from './story-helpers.js';
 
+// ────────────────
+//    METADATA
+// ────────────────
+
 /**
- * Preserves native reading structure and independent controls without a composite widget.
+ * Compares Option 1B with semantic-order vertical waterfall navigation.
  */
 const meta: Meta = {
-  ...prototypeMeta('swc-card-view-option-3'),
-  title: 'Card view/Option 3',
+  ...prototypeMeta('swc-card-view-option-2b'),
+  title: 'Card view/Option 2B',
   parameters: {
-    ...prototypeMeta('swc-card-view-option-3').parameters,
+    ...prototypeMeta('swc-card-view-option-2b').parameters,
     docs: {
-      subtitle:
-        'Native list with list-item arrows and normal child-control Tab access.',
+      subtitle: 'Option 1B semantics with vertical-only waterfall traversal.',
     },
   },
   tags: ['migrated'],
@@ -31,14 +34,24 @@ const meta: Meta = {
 
 export default meta;
 
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
 export const Grid: StoryObj = {
   args: { layout: 'grid' },
   tags: ['overview', 'options'],
 };
+
 export const Waterfall: StoryObj = {
   args: { layout: 'waterfall' },
   tags: ['options'],
 };
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
 export const Accessibility: StoryObj = {
   args: {
     items: photos.map((item, index) => ({ ...item, disabled: index === 2 })),

@@ -14,15 +14,15 @@ import type { Meta } from '@storybook/web-components';
 
 import type { CardViewItem } from '@adobe/spectrum-wc-core/components/card-view/index.js';
 
-import '../swc-card-view.js';
-import '../swc-card-view-option-1.js';
-import '../swc-card-view-option-2.js';
-import '../swc-card-view-option-3.js';
-import '../swc-card-view-option-4.js';
-import '../swc-card-view-option-5.js';
-import '../swc-card-view-option-6.js';
-import '../swc-card-view-option-7.js';
-import '../swc-card-view-option-8.js';
+import '../swc-card-view-option-1a.js';
+import '../swc-card-view-option-1b.js';
+import '../swc-card-view-option-1c.js';
+import '../swc-card-view-option-3a.js';
+import '../swc-card-view-option-4a.js';
+import '../swc-card-view-option-2a.js';
+import '../swc-card-view-option-2b.js';
+import '../swc-card-view-option-5a.js';
+import '../swc-card-view-option-6a.js';
 
 const photoTemplates: CardViewItem[] = [
   {
