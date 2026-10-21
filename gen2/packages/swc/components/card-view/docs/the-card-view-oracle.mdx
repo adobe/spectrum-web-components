@@ -298,6 +298,14 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         background: var(--line);
         flex: 1;
       }
+      #card-view-oracle .strategy-callout {
+        padding: 16px 20px;
+        border-inline-start: 4px solid var(--wine);
+        background: var(--pink);
+      }
+      #card-view-oracle .strategy-callout p {
+        margin: 0;
+      }
       #card-view-oracle .deck-section {
         padding: 28px 0 58px;
       }
@@ -328,7 +336,7 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         padding: 0 0 8px;
         background: transparent;
         color: inherit;
-        text-align: center;
+        text-align: left;
         margin: 0;
         overflow-wrap: anywhere;
       }
@@ -829,10 +837,16 @@ export const Oracle = () => {
 <br />
 {" One question: can people actually use the cards? "}</p>
 {" "}
-<div className="ornament" aria-hidden="true">{" ✧ I · XV ✧ "}</div>
+<div className="ornament" aria-hidden="true">{" ✧ I · VI ✧ "}</div>
 {" "}</div>
 {" "}</section>
 {" "}
+<aside className="strategy-callout wrap" aria-label="Full strategy">
+  <p>
+    <strong>The full strategy.</strong>{' '}Explore the requirements, tradeoffs, and evaluation plan in{' '}
+    <a href="/?path=/docs/contributor-docs-project-planning-strategies-card-view-strategy--docs" target="_top">the card view strategy</a>.
+  </p>
+</aside>
 <section className="deck-section wrap" id="oracle-deck" aria-labelledby="oracle-deck-title">{" "}
 <div className="section-line">{" "}
 <h2 id="oracle-deck-title">{"Meet the six suits of semantics."}</h2>
@@ -914,7 +928,7 @@ export const Oracle = () => {
 {" "}</figcaption></figure>
 {" "}</div>
 {" "}
-{['column', 'row', 'list', 'feed', 'toolbar', 'fieldset'].map((family) => {
+{['column', 'row', 'list', 'feed', 'toolbar', 'fieldset'].filter((family) => readings[family].variants.length > 1).map((family) => {
   const reading = readings[family];
   return (
     <section className="reading" key={family} aria-labelledby={`oracle-reading-title-${family}`}>
@@ -927,7 +941,7 @@ export const Oracle = () => {
       <ul className="variants">
         {reading.variants.map(([identifier, title, summary]) => (
           <li key={identifier}>
-            <span className="variant-id">{identifier}</span>
+            <a className="variant-id" href={`/?path=/docs/components-card-view-option-${identifier.toLowerCase()}--docs`} target="_top" aria-label={`Option ${identifier}`}>{identifier}</a>
             <span><strong>{title}</strong>{' '}{summary}</span>
           </li>
         ))}
@@ -936,6 +950,53 @@ export const Oracle = () => {
   );
 })}
 {" "}
+
+<section className="reading" aria-labelledby="oracle-other-variations-title">
+  <div>
+    <h3 id="oracle-other-variations-title">Other variations</h3>
+    <p>
+      Keep the native list as a comparison; the other roles are weaker fits.
+    </p>
+  </div>
+  <ul className="variants">
+    {[
+      [
+        '3A',
+        'Native list.',
+        'Keep as the baseline: familiar semantics, but more tab stops.',
+      ],
+      [
+        '4A',
+        'Feed.',
+        'Poor fit for asset selection: feeds describe reading streams.',
+      ],
+      [
+        '5A',
+        'Toolbar.',
+        'Poor fit: toolbars group commands, not content cards.',
+      ],
+      [
+        '6A',
+        'Fieldset.',
+        'Lower priority: native grouping does not establish arrow navigation or position announcements.',
+      ],
+    ].map(([identifier, title, summary]) => (
+      <li key={identifier}>
+        <a
+          className="variant-id"
+          href={`/?path=/docs/components-card-view-option-${identifier.toLowerCase()}--docs`}
+          target="_top"
+          aria-label={`Option ${identifier}`}
+        >
+          {identifier}
+        </a>
+        <span>
+          <strong>{title}</strong> {summary}
+        </span>
+      </li>
+    ))}
+  </ul>
+</section>
 
 {" "}</section>
 {" "}
@@ -1133,7 +1194,7 @@ export const Oracle = () => {
 <p>{" Higley and Roselli caution against choosing a grid just because it looks like one or saves tab stops. A feed suits reading; a toolbar suits commands. The role should match the task. "}</p>
 {" "}
 <div className="source-links">{" "}
-<a href="https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/03_project-planning/05_strategies/card-view-strategy.md">{"The full strategy"}</a>
+<a href="/?path=/docs/contributor-docs-project-planning-strategies-card-view-strategy--docs" target="_top">{"The full strategy"}</a>
 {" "}
 <a href="https://www.w3.org/WAI/ARIA/apg/patterns/grid/">{" APG grid pattern "}</a>
 {" "}
@@ -1173,6 +1234,7 @@ export const Oracle = () => {
 {" "}
 
 {" "}
+
 </div>
 );
 };
