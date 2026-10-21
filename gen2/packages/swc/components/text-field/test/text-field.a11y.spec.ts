@@ -394,6 +394,97 @@ test.describe('Text field - ARIA Snapshots', () => {
   });
 });
 
+test.describe('Text field - Events', () => {
+  test('exposes input, change, and invalid with their documented behavior', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-text-field--overview',
+      'swc-text-field'
+    );
+    const field = root.locator('swc-text-field');
+    const input = field.locator('input');
+    await field.evaluate((field: TextField) => {
+      const events: {
+        type: string;
+        targetIsHost: boolean;
+        bubbles: boolean;
+        composed: boolean;
+        cancelable: boolean;
+        value: string;
+      }[] = [];
+      field.dataset.events = JSON.stringify(events);
+      for (const type of ['input', 'change', 'invalid']) {
+        field.addEventListener(type, (event) => {
+          events.push({
+            type: event.type,
+            targetIsHost: event.target === field,
+            bubbles: event.bubbles,
+            composed: event.composed,
+            cancelable: event.cancelable,
+            value: field.value,
+          });
+          field.dataset.events = JSON.stringify(events);
+        });
+      }
+    });
+
+    const expected = [
+      {
+        type: 'input',
+        targetIsHost: true,
+        bubbles: true,
+        composed: true,
+        cancelable: false,
+        value: 'Sam',
+      },
+      {
+        type: 'change',
+        targetIsHost: true,
+        bubbles: true,
+        composed: true,
+        cancelable: false,
+        value: 'Sam',
+      },
+      {
+        type: 'invalid',
+        targetIsHost: true,
+        bubbles: false,
+        composed: false,
+        cancelable: true,
+        value: '',
+      },
+    ];
+    await input.fill('Sam');
+    await expect(field).toHaveAttribute(
+      'data-events',
+      JSON.stringify(expected.slice(0, 1))
+    );
+    await input.blur();
+    await expect(field).toHaveAttribute(
+      'data-events',
+      JSON.stringify(expected.slice(0, 2))
+    );
+    await field.evaluate(async (field: TextField) => {
+      field.value = '';
+      field.required = true;
+      await field.updateComplete;
+    });
+    await expect(field).toHaveAttribute(
+      'data-events',
+      JSON.stringify(expected.slice(0, 2))
+    );
+    expect(
+      await field.evaluate((field: TextField) => field.checkValidity())
+    ).toBe(false);
+    await expect(field).toHaveAttribute(
+      'data-events',
+      JSON.stringify(expected)
+    );
+  });
+});
+
 test.describe('Text field - Border color customization', () => {
   for (const status of [undefined, 'invalid', 'readonly'] as const) {
     test(`supports independent border colors when ${status ?? 'default'}`, async ({

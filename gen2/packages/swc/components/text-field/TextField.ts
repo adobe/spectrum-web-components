@@ -49,6 +49,10 @@ const PREFIX_AVATAR_SIZE = {
  * @element swc-text-field
  * @since 2.0.0-beta.1
  *
+ * @fires {InputEvent} input - Fired during user edits after `value` updates. Bubbles and crosses shadow boundaries; not cancelable.
+ * @fires {Event} change - Fired when the user commits an edited value, such as when leaving the input. Bubbles and crosses shadow boundaries; not cancelable.
+ * @fires {Event} invalid - Fired on the host when constraint validation fails. Cancelable, but does not bubble or cross shadow boundaries. Canceling suppresses native validation UI, not the validation failure.
+ *
  * @cssprop --swc-field-label-max-inline-size - `label-position="side"` only: max inline size of the label's grid column. Defaults to 50% of the field width (the label wraps within its column instead of kicking the input out). Set it to widen or tighten the ceiling for a specific field.
  * @cssprop --swc-field-input-min-inline-size - Minimum inline size of the input control. Defaults to the component height for the field size.
  * @cssprop --swc-field-input-max-inline-size - Maximum inline size of the input control. Defaults to the field width token for the selected size.

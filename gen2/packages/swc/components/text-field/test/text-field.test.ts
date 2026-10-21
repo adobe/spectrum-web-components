@@ -819,6 +819,7 @@ export const EnumValidationTest: Story = {
     await step('warns when "type" is not a supported value', () =>
       withWarningSpy(async (warnCalls) => {
         const field = await fixture<TextField>(html`
+          <!-- @ts-ignore: "bogus" is intentionally unsupported to test the enum warning. -->
           <swc-text-field
             accessible-label="Named"
             type="bogus"
@@ -840,6 +841,7 @@ export const EnumValidationTest: Story = {
         withWarningSpy(async (warnCalls) => {
           for (const type of ['color', 'number', 'checkbox', 'bogus']) {
             const field = await fixture<TextField>(html`
+              <!-- @ts-ignore: Unsupported types intentionally test the text fallback and warning. -->
               <swc-text-field
                 accessible-label="Named"
                 type=${type}
@@ -871,6 +873,7 @@ export const EnumValidationTest: Story = {
     await step('warns when "label-position" is not a supported value', () =>
       withWarningSpy(async (warnCalls) => {
         const field = await fixture<TextField>(html`
+          <!-- @ts-ignore: "sideways" is intentionally unsupported to test the enum warning. -->
           <swc-text-field
             accessible-label="Named"
             label-position="sideways"
@@ -891,6 +894,7 @@ export const EnumValidationTest: Story = {
       () =>
         withWarningSpy(async (warnCalls) => {
           const field = await fixture<TextField>(html`
+            <!-- @ts-ignore: "star" is intentionally unsupported to test the enum warning. -->
             <swc-text-field
               accessible-label="Named"
               necessity-indicator="star"

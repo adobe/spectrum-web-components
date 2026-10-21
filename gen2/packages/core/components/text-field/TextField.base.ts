@@ -100,7 +100,7 @@ export abstract class TextFieldBase extends SizedMixin(
    * Placeholder text shown when the field is empty. Never used as the accessible name.
    */
   @property({ type: String })
-  public placeholder = '';
+  public override placeholder = '';
 
   /**
    * A regular expression the value is checked against during constraint validation.
@@ -229,11 +229,6 @@ export abstract class TextFieldBase extends SizedMixin(
     return this.fieldStatus === 'disabled' || this.fieldAssoc.formDisabled;
   }
 
-  /** Exposes the placeholder to `LabellingMixin`'s placeholder-only-name warning. */
-  public override get placeholderText(): string | undefined {
-    return this.placeholder || undefined;
-  }
-
   /** The form the field participates in, or `null`. */
   public get form(): HTMLFormElement | null {
     return this.fieldAssoc.form;
@@ -275,12 +270,12 @@ export abstract class TextFieldBase extends SizedMixin(
     return this.fieldAssoc.reportValidity();
   }
 
-  /** Restores the authored `value` attribute (unreflected, so it holds the initial value) on native form reset. */
+  /** @internal Restores the authored `value` attribute (unreflected, so it holds the initial value) on native form reset. */
   public formResetCallback(): void {
     this.value = this.getAttribute('value') ?? '';
   }
 
-  /** Restores string state supplied by the browser for navigation or autofill. */
+  /** @internal Restores string state supplied by the browser for navigation or autofill. */
   public formStateRestoreCallback(
     state: string | File | FormData | null
   ): void {
@@ -289,7 +284,7 @@ export abstract class TextFieldBase extends SizedMixin(
     }
   }
 
-  /** Delegates the ancestor form / fieldset disabled cascade to the controller. */
+  /** @internal Delegates the ancestor form / fieldset disabled cascade to the controller. */
   public formDisabledCallback(disabled: boolean): void {
     this.fieldAssoc.formDisabledCallback(disabled);
   }

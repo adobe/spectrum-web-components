@@ -52,7 +52,7 @@ export interface FieldDescriptionInterface {
    */
   readonly describedByInternals: ElementInternals | null;
 
-  /** Renders the description/error-text markup for the current state. */
+  /** @internal Renders the description/error-text markup for the current state. */
   renderFieldDescription(options?: {
     invalid?: boolean;
   }): RenderFieldDescriptionResult;
@@ -169,6 +169,7 @@ export function FieldDescriptionMixin<T extends Constructor<ReactiveElement>>(
         .filter((element): element is HTMLElement => element !== null);
     }
 
+    /** @internal */
     public renderFieldDescription(options?: {
       invalid?: boolean;
     }): RenderFieldDescriptionResult {

@@ -53,12 +53,14 @@ export interface LabellingInterface {
   readonly labelInternals: ElementInternals | null;
 
   /**
-   * @internal The host's placeholder, exposed so the mixin can warn on a
-   * placeholder-only name. Defaults to `undefined`; a host overrides it.
+   * @internal Optional host placeholder, read for the placeholder-only-name
+   * warning. The mixin does not initialize or register this property.
    */
-  readonly placeholderText: string | undefined;
+  placeholder?: string;
 
   /**
+   * @internal
+   *
    * Renders the visible label as a `<label for>` targeting the role-element `id`.
    * Options append a necessity indicator: `required` marks the state,
    * and `necessityIndicator` picks the asterisk (`icon`, which needs
@@ -124,9 +126,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
     }
 
     /** @internal */
-    public get placeholderText(): string | undefined {
-      return undefined;
-    }
+    declare public placeholder?: string;
 
     /** @internal Docs URL for dev warnings, derived from the tag name. */
     protected get docsHref(): string {
@@ -158,6 +158,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
       );
     }
 
+    /** @internal */
     public renderLabel(
       forId: string,
       options: {
@@ -226,7 +227,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
         return;
       }
       // A placeholder-only field gets the more specific placeholder warning.
-      if (this.placeholderText) {
+      if (this.placeholder) {
         return;
       }
       warnIf(
@@ -247,7 +248,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
 
     /** @internal Warns when a field is named only by its `placeholder` (unreliable as an accessible name). */
     private _warnPlaceholderOnlyName(): void {
-      if (this._hasAccessibleName || !this.placeholderText) {
+      if (this._hasAccessibleName || !this.placeholder) {
         return;
       }
       warnIf(
