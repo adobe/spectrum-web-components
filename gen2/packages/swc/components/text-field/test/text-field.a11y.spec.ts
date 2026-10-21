@@ -484,15 +484,127 @@ test.describe('Text field - Border color customization', () => {
 });
 
 test.describe('Text field - Keyboard interactions', () => {
+  for (const { slot, index } of [
+    { slot: 'description', index: 0 },
+    { slot: 'error-text', index: 1 },
+  ]) {
+    for (const focused of [false, true]) {
+      test(`clicking ${slot} with input ${focused ? 'focused' : 'unfocused'} does not focus the input`, async ({
+        page,
+      }) => {
+        const root = await gotoStory(
+          page,
+          'components-text-field--anatomy',
+          'swc-text-field'
+        );
+        const field = root.locator('swc-text-field').nth(index);
+        const input = field.locator('input');
+        const control = field.locator('.swc-TextField-control');
+        await expect(input).not.toBeFocused();
+        if (focused) {
+          await input.focus();
+          await expect(control).toHaveCSS('outline-style', 'solid');
+        }
+        await field.locator(`[slot="${slot}"]`).click();
+        await expect(input).not.toBeFocused();
+        await expect(control).toHaveCSS('outline-style', 'none');
+      });
+    }
+  }
+
+  test('messages do not add keyboard tab stops', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'components-text-field--anatomy',
+      'swc-text-field'
+    );
+    const inputs = root.locator('swc-text-field input');
+    await root.evaluate((root) => {
+      const after = document.createElement('input');
+      after.setAttribute('aria-label', 'After fields');
+      root.append(after);
+    });
+    await inputs.nth(0).focus();
+    await page.keyboard.press('Tab');
+    await expect(inputs.nth(1)).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(
+      root.getByRole('textbox', { name: 'After fields' })
+    ).toBeFocused();
+  });
+
+  test('label, control padding, and prefix clicks still focus the input', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-text-field--prefix',
+      'swc-text-field'
+    );
+    const field = root.locator('swc-text-field').first();
+    const input = field.locator('input');
+    await field.locator('[slot="label"]').click();
+    await expect(input).toBeFocused();
+    await input.evaluate((input: HTMLInputElement) => input.blur());
+    await field.locator('.swc-TextField-control').click({
+      position: { x: 1, y: 1 },
+    });
+    await expect(input).toBeFocused();
+    await input.evaluate((input: HTMLInputElement) => input.blur());
+    const prefix = await field.locator('[slot="prefix"]').boundingBox();
+    if (!prefix) {
+      throw new Error('Prefix click test requires a visible prefix');
+    }
+    await page.mouse.click(
+      prefix.x + prefix.width / 2,
+      prefix.y + prefix.height / 2
+    );
+    await expect(input).toBeFocused();
+  });
+
+  test('description text remains selectable and links remain usable', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-text-field--anatomy',
+      'swc-text-field'
+    );
+    const field = root.locator('swc-text-field').first();
+    const description = field.locator('[slot="description"]');
+    await description.dblclick({ position: { x: 10, y: 8 } });
+    expect(
+      await page.evaluate(() => window.getSelection()?.toString().trim())
+    ).toContain('Used');
+    await description.evaluate((description) => {
+      const link = document.createElement('a');
+      link.href = '#field-help';
+      link.textContent = 'More help';
+      description.append(link);
+    });
+    const link = description.getByRole('link', { name: 'More help' });
+    await link.click();
+    await expect(page).toHaveURL(/#field-help$/);
+    await expect(field.locator('input')).not.toBeFocused();
+  });
+
   test('preserves native minimum-length validation with trusted input', async ({
     page,
   }) => {
     const root = await gotoStory(
       page,
-      'components-text-field-tests--minimum-length-validation-test',
+      'components-text-field--overview',
       'swc-text-field'
     );
     const field = root.locator('swc-text-field');
+    await field.evaluate(async (field: TextField) => {
+      const form = document.createElement('form');
+      field.before(form);
+      form.append(field);
+      field.name = 'username';
+      field.minlength = 5;
+      await field.updateComplete;
+    });
     const input = field.locator('input');
     const form = root.locator('form');
     await form.evaluate((form) => {

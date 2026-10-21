@@ -56,14 +56,22 @@ export function renderFieldDescription({
   return html`
     ${showDescription
       ? html`
-          <span class="swc-FormFieldDescription" ${ref(onDescriptionElement)}>
+          <span
+            class="swc-FormFieldDescription"
+            tabindex="-1"
+            ${ref(onDescriptionElement)}
+          >
             <slot name="description"></slot>
           </span>
         `
       : nothing}
     ${showError
       ? html`
-          <span class="swc-FormFieldErrorText" ${ref(onErrorTextElement)}>
+          <span
+            class="swc-FormFieldErrorText"
+            tabindex="-1"
+            ${ref(onErrorTextElement)}
+          >
             <slot name="error-text"></slot>
           </span>
         `

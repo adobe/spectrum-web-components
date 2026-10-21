@@ -23,6 +23,7 @@ import {
 
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
+import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
 import '@adobe/spectrum-wc-icons/swc-icon-mention.js';
 
 // ────────────────
@@ -680,7 +681,7 @@ export const FormBehavior: Story = {
         >
           Form actions
         </h3>
-        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <swc-button-group aria-labelledby="form-actions-heading">
           <button type="submit" class="swc-Button">
             <span class="swc-Button-label">Submit</span>
           </button>
@@ -694,7 +695,7 @@ export const FormBehavior: Story = {
           >
             <span class="swc-Button-label">Check validity</span>
           </button>
-        </div>
+        </swc-button-group>
         <button
           type="button"
           class="swc-Button swc-Button--secondary"

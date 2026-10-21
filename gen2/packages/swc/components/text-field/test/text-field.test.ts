@@ -2243,20 +2243,3 @@ export const ValueSanitizationTest: Story = {
   },
 };
 ValueSanitizationTest.storyName = 'Native value sanitization';
-
-// ──────────────────────────────────────────────────────────────
-// TEST: Native minimum-length validation
-// ──────────────────────────────────────────────────────────────
-
-export const MinimumLengthValidationTest: Story = {
-  render: () => html`
-    <form>
-      <swc-text-field
-        accessible-label="Username"
-        name="username"
-        minlength="5"
-      ></swc-text-field>
-    </form>
-  `,
-};
-MinimumLengthValidationTest.storyName = 'Minimum length validation';
