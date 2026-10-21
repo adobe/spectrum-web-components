@@ -10,11 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import {
+  BUTTON_FILL_STYLES,
+  BUTTON_STATIC_COLORS,
+} from '@adobe/spectrum-wc-core/components/button';
+
+import {
   FORCED_STATES,
+  forcedColorsVrtParameters,
   forcePseudoStates,
   row,
   staticColorBackground,
@@ -49,14 +55,27 @@ const globalIconSvg = html`
 
 // One <a> and one <button>, both with the same classes. The whole point of
 // the global stylesheet is that both element types render identically.
-const asLinkAndButton = (classes: string, label: string) => [
+const asLinkAndButton = (
+  classes: string,
+  label: string,
+  forceState?: (typeof FORCED_STATES)[number]
+) => [
   html`
-    <a href="#" class="swc-Button ${classes}" onclick="return false;">
+    <a
+      href="#"
+      class="swc-Button ${classes}"
+      data-force-state=${forceState ?? nothing}
+      onclick="return false;"
+    >
       ${label} (link)
     </a>
   `,
   html`
-    <button type="button" class="swc-Button ${classes}">
+    <button
+      type="button"
+      class="swc-Button ${classes}"
+      data-force-state=${forceState ?? nothing}
+    >
       ${label} (button)
     </button>
   `,
@@ -181,31 +200,49 @@ const globalStylesContent = () => html`
     ],
     'Justified'
   )}
-  ${staticColorBackground(
-    row(
-      [
-        ...asLinkAndButton('swc-Button--staticWhite', 'White'),
-        ...asLinkAndButton(
-          'swc-Button--staticWhite swc-Button--secondary',
-          'White secondary'
-        ),
-      ],
-      'Static white'
-    ),
-    'white'
-  )}
-  ${staticColorBackground(
-    row(
-      [
-        ...asLinkAndButton('swc-Button--staticBlack', 'Black'),
-        ...asLinkAndButton(
-          'swc-Button--staticBlack swc-Button--secondary',
-          'Black secondary'
-        ),
-      ],
-      'Static black'
-    ),
-    'black'
+  ${BUTTON_STATIC_COLORS.map((color) =>
+    staticColorBackground(
+      ['primary', 'secondary'].flatMap((variant) => {
+        const classes = [
+          color === 'white'
+            ? 'swc-Button--staticWhite'
+            : 'swc-Button--staticBlack',
+          variant === 'secondary' ? 'swc-Button--secondary' : '',
+        ].join(' ');
+
+        return [
+          ...([undefined, ...FORCED_STATES] as const).map((state) =>
+            row(
+              BUTTON_FILL_STYLES.flatMap((fillStyle) =>
+                asLinkAndButton(
+                  `${classes} ${fillStyle === 'outline' ? 'swc-Button--outline' : ''}`,
+                  fillStyle,
+                  state
+                )
+              ),
+              `Static ${color} · ${variant} · ${state ?? 'default'}`
+            )
+          ),
+          row(
+            BUTTON_FILL_STYLES.map(
+              (fillStyle) => html`
+                <button
+                  type="button"
+                  class="swc-Button ${classes} ${fillStyle === 'outline'
+                    ? 'swc-Button--outline'
+                    : ''}"
+                  disabled
+                >
+                  ${fillStyle} (button)
+                </button>
+              `
+            ),
+            `Static ${color} · ${variant} · disabled`
+          ),
+        ];
+      }),
+      color
+    )
   )}
   ${row(
     FORCED_STATES.flatMap((state) => [
@@ -239,5 +276,11 @@ export const GlobalStyles: Story = {
   parameters: vrtParameters,
   // No shadowRoot on these plain elements, so forcePseudoState() mirrors
   // from document.styleSheets instead. See helpers/pseudo-state.ts.
+  play: forcePseudoStates('.swc-Button[data-force-state]'),
+};
+
+export const GlobalStylesForcedColors: Story = {
+  render: () => theme(globalStylesContent(), 'light', 'ltr'),
+  parameters: forcedColorsVrtParameters,
   play: forcePseudoStates('.swc-Button[data-force-state]'),
 };
