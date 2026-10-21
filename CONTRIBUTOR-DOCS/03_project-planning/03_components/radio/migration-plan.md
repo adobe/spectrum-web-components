@@ -55,20 +55,20 @@
 
 > **Epic SWC-2348** · Planning output. Must be reviewed before implementation begins.
 >
-> This plan covers **`swc-radio`, the individual radio item, only.** `swc-radio-group` (sibling discovery, mutual exclusion, roving tabindex, group-level `invalid`/`readonly`, and form participation for the set) has its own separate migration plan. `swc-radio` cannot ship independently: it has no supported standalone usage (B3) and is documented only as part of `swc-radio-group`'s Storybook page (see [Related components and ordering notes](#related-components-and-ordering-notes) for the resulting delivery model). No open blockers remain in this plan; all resolved decisions are recorded in the [Decision log](#decision-log). Everything else draws on the [accessibility migration analysis](./accessibility-migration-analysis.md), which is authoritative for the gen2 semantic design and was authored against the approved [forms strategy RFC](../../05_strategies/forms-strategy-rfc.md) (SWC-1888).
+> This plan covers **`swc-radio`, the individual radio item, only.** `swc-radio-group` (sibling discovery, mutual exclusion, roving tabindex, group-level `invalid`/`readonly`, and form participation for the set) has its own separate migration plan. `swc-radio` cannot ship independently: it has no supported standalone usage (B3) and is documented only as part of `swc-radio-group`'s Storybook page (see [Related components and ordering notes](#related-components-and-ordering-notes) for the resulting delivery model). No open blockers remain in this plan; all resolved decisions are recorded in the [Decision log](#decision-log). The [accessibility migration analysis](./accessibility-migration-analysis.md) informs the gen2 semantic design, with implementation findings and resolved decisions in this plan taking precedence where they differ.
 
 ---
 
 ## TL;DR
 
-- **Biggest architectural change: role and state move to `ElementInternals` on the host.** 1st-gen `sp-radio` sets `role="radio"` on the host and hand-writes `aria-checked`/`aria-disabled`/`aria-invalid` attributes in `updated()`. gen2 sets `role="radio"`, `aria-checked`, `aria-disabled`, and `aria-posinset`/`aria-setsize` on the host through its own `ElementInternals`, with no native input. A native `<input type="radio">` per item was tried and dropped: each item has its own shadow root, so the browser treats every input as an isolated radio group of size 1 and position/size never announce correctly (see the [Decision log](#decision-log)). `FocusVisiblePolyfillMixin` and its synthetic-keydown trick are replaced by native `:focus-visible`.
+- **Biggest architectural change: role and state are exposed as host attributes.** 1st-gen `sp-radio` sets `role="radio"` on the host and hand-writes `aria-checked`/`aria-disabled`/`aria-invalid` attributes in `updated()`. gen2 reflects `role="radio"`, `aria-checked`, `aria-disabled`, and `aria-posinset`/`aria-setsize` as host attributes, with no native input or duplicate `ElementInternals` ARIA assignments. A native `<input type="radio">` per item was tried and dropped: each item has its own shadow root, so the browser treats every input as an isolated radio group of size 1 and position/size never announce correctly (see the [Decision log](#decision-log)). `FocusVisiblePolyfillMixin` and its synthetic-keydown trick are replaced by native `:focus-visible`.
 - **`invalid` and `readonly` move entirely to `swc-radio-group`.** Neither is a per-item concept: 1st-gen's own `readonly` was never actually enforced (`click()`/`activate()` never checked it), and `invalid` describes the selection as a whole, not one option. Both are removed from `swc-radio` and implemented once, correctly, on the group.
 - **No standalone Tab stop.** 1st-gen `sp-radio` defaults its own `tabIndex` to `0` and answers `Space` itself so it can be used outside a group. gen2 drops that: tabindex management is delegated entirely to the enclosing `swc-radio-group`, matching the APG radio pattern. `swc-radio` is not supported as a standalone control.
-- **The item's accessible name includes its `description`.** Item semantics live on the host (`role="radio"` via `ElementInternals`), so the slotted `description` is content in the item's own accessible subtree and is announced as part of its name, not as a separate description. Adding `aria-describedby` re-announced the same text in VoiceOver. Names are longer for NVDA and JAWS users; document this in the component docs and consumer migration guide.
+- **The item's accessible name includes its `description`.** Item semantics live on the host (`role="radio"`), so the slotted `description` is content in the item's own accessible subtree and is announced as part of its name, not as a separate description. Adding `aria-describedby` re-announced the same text in VoiceOver. Names are longer for NVDA and JAWS users; document this in the component docs and consumer migration guide.
 
 - **Per-item `description` ships as a new capability: a named `description` slot.** [React Spectrum's `Radio`](https://react-spectrum.adobe.com/RadioGroup) supports an optional description per item (the reference screenshot supplied for this plan shows "Standard Shipping (Free)" / "Delivers in 5–7 business days"). Design has confirmed this is in scope. Rendered as plain content inside the item's own accessible subtree, with no `aria-describedby` (see the [Decision log](#decision-log)).
 - **No dependency on `LabellingMixin` or `FieldDescriptionMixin`; label/description are implemented directly** by slotting content into the host's own accessible subtree and gating the description container with the already-built `SlotPresenceController`. See the [Decision log](#decision-log) for why.
-- **Form-value participation lives entirely on `swc-radio-group`, not per-item (Q12, officially signed off by the a11y SME).** `swc-radio` does not depend on `FieldAssociationController`. See [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites) and [Decision log](#decision-log) for the reasoning.
+- **Form-value participation lives entirely on `swc-radio-group`, not per-item (Q12, officially signed off by the a11y SME).** `swc-radio` does not depend on `FieldAssociationController` or `ElementInternals`. See [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites) and [Decision log](#decision-log) for the reasoning.
 - **Group-level coordination (`RadioGroupController`, SWC-2470) is explicitly out of scope for this plan.** It affects how `swc-radio-group` discovers and drives its items, not this item's own API; tracked as a subticket of `swc-radio-group`'s own migration-plan ticket, SWC-2546.
 - **Visual API is close to a straight carryover.** Sizes (`s`/`m`/`l`/`xl`), `emphasized`, checked/unchecked, hover, and disabled all match between 1st-gen, the rendering analysis, and the Figma size/state/emphasis matrix supplied for this plan. The 30 `--mod-radio-*` custom properties are not carried forward.
 - **Delivery is combined with `swc-radio-group` on a shared feature branch.** `swc-radio` cannot ship or be documented independently, so implementation (Phase 2 onward) is tracked jointly with `swc-radio-group` rather than as two parallel component migrations. See [Related components and ordering notes](#related-components-and-ordering-notes).
@@ -139,7 +139,7 @@ This full modifier surface will not be carried forward to gen2.
 </sp-radio>
 ```
 
-gen2 (role and state on the host via `ElementInternals`; no native input, no `delegatesFocus`; the description container renders only when the `description` slot has content — see [Public API](#public-api), [Decision log](#decision-log), and the [accessibility analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties)):
+gen2 (role and state on the host as attributes; no native input, no `delegatesFocus`; the description container renders only when the `description` slot has content — see [Public API](#public-api), [Decision log](#decision-log), and the [accessibility analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties)):
 
 ```html
 <swc-radio role="radio" aria-checked="false" aria-posinset="1" aria-setsize="3" tabindex="-1">
@@ -154,7 +154,7 @@ gen2 (role and state on the host via `ElementInternals`; no native input, no `de
 </swc-radio>
 ```
 
-Role and state come from `ElementInternals` (shown above as attributes for readability; they are not host attributes). The description container is omitted when the `description` slot is empty (detected via `SlotPresenceController`).
+Role and state are reflected as host attributes (see B6). The description container is omitted when the `description` slot is empty (detected via `SlotPresenceController`).
 
 ---
 
@@ -184,7 +184,7 @@ Role and state come from `ElementInternals` (shown above as attributes for reada
 
 `swc-radio` does not extend another gen2 component and is not itself a shared base. It depends on one already-built shared controller (`SlotPresenceController`) and does not depend on `LabellingMixin` or `FieldAssociationController` (see the [Decision log](#decision-log) for both).
 
-**Resolved: form-value participation belongs to `swc-radio-group` alone, not `swc-radio`.** `swc-radio` renders no native input, so an ancestor light-DOM `<form>` sees nothing from it, and the mechanism is needed somewhere, but not per item. Per the HTML spec, a "radio button group" is scoped to a single tree and each item has its own shadow root, so native cross-item mutual exclusion was never available anyway; `swc-radio-group` hand-rolls that in JS. Centralizing form participation there too (one `ElementInternals`, one `setFormValue(this.selected)` call site driven by the group's already-authoritative `selected` state) avoids keeping N per-item `ElementInternals` instances in lockstep with that same state, and matches how `invalid`, `readonly`, coordinated reset, and constraint validation already concentrate at the group level in both a11y docs. Officially signed off by the a11y SME. This reverses what `accessibility-migration-analysis.md` (this item's own doc) and `radio-group/accessibility-migration-analysis.md` originally specified, both of which said value submission happens per-item. This item's own doc has been updated to reflect the group-only direction; the corresponding update to `radio-group/accessibility-migration-analysis.md` is tracked on that component's own workstream.
+**Resolved: form-value participation belongs to `swc-radio-group` alone, not `swc-radio`.** `swc-radio` renders no native input, so an ancestor light-DOM `<form>` sees nothing from it, and the mechanism is needed somewhere, but not per item. Per the HTML spec, a "radio button group" is scoped to a single tree and each item has its own shadow root, so native cross-item mutual exclusion was never available anyway; `swc-radio-group` hand-rolls that in JS. Centralizing form participation there too (one `ElementInternals`, one `setFormValue(this.selected)` call site driven by the group's already-authoritative `selected` state) avoids per-item form-association logic and matches how `invalid`, `readonly`, coordinated reset, and constraint validation already concentrate at the group level in both a11y docs. Officially signed off by the a11y SME. This reverses what `accessibility-migration-analysis.md` (this item's own doc) and `radio-group/accessibility-migration-analysis.md` originally specified, both of which said value submission happens per-item. This item's own doc has been updated to reflect the group-only direction; the corresponding update to `radio-group/accessibility-migration-analysis.md` is tracked on that component's own workstream.
 
 1. `swc-radio` has no dependency on `FieldAssociationController`; no sequencing wait on `swc-text-field`'s controller work applies to this item.
 2. `swc-radio-group`'s plan picks up `FieldAssociationController` as its own dependency, sequenced behind `swc-text-field` proving it out.
@@ -235,7 +235,7 @@ Label and description rendering (`SlotPresenceController`) were never affected b
 
 | #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
-| B6 | `role="radio"` and state move to `ElementInternals` on the host | `#input`/`#button`/`#label` are custom `div`/`span` elements; role/state hand-written as host attributes | `role="radio"`, `aria-checked`, `aria-disabled`, and `aria-posinset`/`aria-setsize` are set on the host via `ElementInternals`; no native input (see [Decision log](#decision-log)) | None for normal slotted usage; anyone reading `role`/`aria-checked` as host attributes must read them from the accessibility tree instead. |
+| B6 | Role and state are exposed as host attributes | `#input`/`#button`/`#label` are custom `div`/`span` elements; role/state hand-written as host attributes | `role="radio"`, `aria-checked`, `aria-disabled`, and `aria-posinset`/`aria-setsize` are reflected as host attributes; no native input or duplicate `ElementInternals` ARIA assignments (see [Decision log](#decision-log)) | None for normal slotted usage; the attributes expose accessibility semantics and are not application state. |
 | B7 | `--mod-radio-*` surface removed | ~27 `--mod-radio-*` custom properties | Not exposed; a small reviewed `--swc-*` set only | Remove `--mod-*` overrides; file requests for any needed `--swc-*`. |
 | B8 | Keyboard-focus differentiation via native `:focus-visible` | `FocusVisiblePolyfillMixin` plus a synthetic `keydown` dispatch in `manageAutoFocus()` to fool the polyfill | Native `:focus-visible` on the host; no polyfill or synthetic-event workaround needed | None (internal implementation simplification). |
 
@@ -245,9 +245,9 @@ Label and description rendering (`SlotPresenceController`) were never affected b
 
 | #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
-| B9 | `checked`/`aria-checked` exposed via `ElementInternals` | Hand-written `aria-checked` in `updated()` | `aria-checked` is set on the host via `ElementInternals` from `checked`, which the group sets from its `selected` (source: [a11y analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties)) | None. |
-| B10 | `disabled` exposed as `aria-disabled` via `ElementInternals` | Hand-written `aria-disabled` in `updated()`; `pointer-events: none` via CSS | `aria-disabled` set on the host via `ElementInternals`; activation is guarded, and the group excludes disabled items from roving tabindex | None. |
-| B11 | Native form association | No `ElementInternals`; no native input to associate with a form at all | `swc-radio` uses `ElementInternals` for ARIA only, with no form-value participation of its own; `FieldAssociationController` (SWC-2467) is `swc-radio-group`'s dependency (see [Decision log](#decision-log)). | None for basic forms; gains real `FormData` participation via the group. |
+| B9 | `checked`/`aria-checked` exposed as host attributes | Hand-written `aria-checked` in `updated()` | `aria-checked` is reflected on the host from `checked`, which the group sets from its `selected` state (see [Decision log](#decision-log)) | None. |
+| B10 | `disabled` exposed as `aria-disabled` | Hand-written `aria-disabled` in `updated()`; `pointer-events: none` via CSS | `aria-disabled` is reflected on the host; activation is guarded, and the group excludes disabled items from roving tabindex | None. |
+| B11 | Native form association | No `ElementInternals`; no native input to associate with a form at all | `swc-radio` has no form-value participation or `ElementInternals` of its own; `FieldAssociationController` (SWC-2467) is `swc-radio-group`'s dependency (see [Decision log](#decision-log)). | None for basic forms; gains real `FormData` participation via the group. |
 | B12 | `name` propagation onto the inner input — dropped | N/A (no native input) | The a11y analysis originally recommended `swc-radio-group` forwarding `name` onto each item's inner input, but that input never reaches the outer `<form>` regardless of its `name` (form participation is entirely `swc-radio-group`'s, via its own `ElementInternals`), so propagating it would be cosmetic only. Not implemented. | None; `name` for form-submission purposes lives at the group level. |
 | B13 | No `aria-describedby` for `description` | N/A | Not set; the description is plain content in the item's own accessible subtree and contributes to its accessible name (see [Decision log](#decision-log)) | None (tied to B4). |
 | B15 | Dev-mode warning for standalone usage | N/A | If `swc-radio` renders with no enclosing `swc-radio-group`, warn rather than silently rendering an inert control. | None (dev-time only). |
@@ -277,8 +277,8 @@ These are derived from the 1st-gen implementation, the [accessibility migration 
 | Property | Type | Default | Attribute | Notes |
 | -------- | ---- | ------- | --------- | ----- |
 | `value` | `string` | `''` | `value` (reflect) | **Confirmed.** Plain content attribute, not ARIA; identifies this option within the group's shared `name`. |
-| `checked` | `boolean` | `false` | `checked` (reflect) | **Confirmed.** Set by the enclosing group from its `selected`; exposed as `aria-checked` via `ElementInternals`; never emits `"mixed"`. |
-| `disabled` | `boolean` | `false` | `disabled` (reflect) | **Confirmed.** Reflected onto `aria-disabled` via `ElementInternals`; also guards activation. |
+| `checked` | `boolean` | `false` | `checked` (reflect) | **Confirmed.** Set by the enclosing group from its `selected`; reflected as the host's `aria-checked` attribute; never emits `"mixed"`. |
+| `disabled` | `boolean` | `false` | `disabled` (reflect) | **Confirmed.** Reflected as the host's `aria-disabled` attribute; also guards activation. |
 | `emphasized` | — | — | `emphasized` (attribute) | **Not an item property.** `swc-radio-group` sets it as an attribute (via `SlotAttributePropagationController`) so the item can style the checked indicator's accent color. Radios only exist inside a group, so consumers set it once on the group. Unchecked + emphasized renders identically to unchecked + default. |
 | `size` | — | — | `size` (attribute) | **Not an item property.** `swc-radio-group` owns `SizedMixin` (default `m`) and sets `size` as an attribute on each item for styling. |
 | `autofocus` | `boolean` | `false` | `autofocus` | Inherited HTML attribute/property; no Lit override or component-managed autofocus. The focus-visible-polyfill synthetic-keydown trick is dropped (B8). |
@@ -326,7 +326,7 @@ The exposed set follows the custom property guidelines: size-driven values (cont
   - **Declarative pre-check (item → group, first render only):** a consumer may mark a single `<swc-radio checked>` in markup to pre-select it. On its first update, `swc-radio-group` reads its light-DOM children for one with `checked` already set and adopts that item's `value` as its own initial `selected`, preferring the pre-checked item over any `selected` attribute the group itself was given (1st-gen's `willUpdate` does exactly this).
   - **Imperative sync (group → item, every selection change):** after the first render, `swc-radio-group` is the single source of truth. Whenever its `selected` changes (user interaction or a script setting `selected` directly), the group sets `checked` on each item to `item.value === this.selected`, so exactly one is ever checked and each item's own `checked` is always a reflection of the group's decision, never a competing source of truth (1st-gen's `validateRadios()` does this today).
   - `swc-radio` itself does not decide whether it's checked in steady state; it only proposes a change (via user activation, dispatching `change`) for the group to accept or reject.
-- **Disabled:** exposed as `aria-disabled` on the host via `ElementInternals`, and activation is a no-op. The group's roving tabindex skips disabled items. Group-level `disabled` cascades to every item; an item's own `disabled` is not independent of that cascade.
+- **Disabled:** exposed as `aria-disabled` on the host as an attribute, and activation is a no-op. The group's roving tabindex skips disabled items. Group-level `disabled` cascades to every item; an item's own `disabled` is not independent of that cascade.
 - **Form participation:** none on `swc-radio` itself. `swc-radio-group` alone is the `FieldAssociationController` consumer, driven by its own `selected` state (resolved — see [Decision log](#decision-log)).
 - **Value/name:** `value` is a plain attribute the group reads and the form submits. `name` is not forwarded onto items; see B12.
 - **Accessible name:** computed from content by the host's `role="radio"`: the slotted `label` content, plus the `description` content when present (see [Decision log](#decision-log)).
@@ -335,7 +335,7 @@ The exposed set follows the custom property guidelines: size-driven values (cont
 
 ### Accessibility semantics notes (gen2)
 
-Authoritative source: [accessibility migration analysis](./accessibility-migration-analysis.md). Key points: the host sets `role="radio"`, `aria-checked`, `aria-disabled`, and `aria-posinset`/`aria-setsize` via `ElementInternals` (no native input); accessible name comes from slotted content (not `LabellingMixin` — see [Decision log](#decision-log)); per-item `description` is plain content in the same subtree, gated by `SlotPresenceController`, with no `aria-describedby`; no per-item `invalid`/`readonly`; `swc-radio` has no independent Tab stop.
+Implementation reference: this migration plan; the [accessibility migration analysis](./accessibility-migration-analysis.md) provides background. Key points: the host exposes `role="radio"`, `aria-checked`, `aria-disabled`, and `aria-posinset`/`aria-setsize` as attributes (no native input or duplicate `ElementInternals` ARIA assignments); accessible name comes from slotted content (not `LabellingMixin` — see [Decision log](#decision-log)); per-item `description` is plain content in the same subtree, gated by `SlotPresenceController`, with no `aria-describedby`; no per-item `invalid`/`readonly`; `swc-radio` has no independent Tab stop.
 
 ---
 
@@ -353,7 +353,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_gen2-component-mi
 Planned rendering shape:
 
 - Core owns API normalization, `checked`/`value` sync, and controller wiring.
-- SWC renders: a `.swc-Radio` wrapper containing an `aria-hidden` visual button indicator (styled from the host's `checked` attribute), a `.swc-Radio-content` block with the slotted label, and a `SlotPresenceController`-gated description container. Role and state are set by core via `ElementInternals`; label and description are implemented directly here, not via a shared labelling controller — see [Decision log](#decision-log).
+- SWC renders: a `.swc-Radio` wrapper containing an `aria-hidden` visual button indicator (styled from the host's `checked` attribute), a `.swc-Radio-content` block with the slotted label, and a `SlotPresenceController`-gated description container. Role and state are reflected by core as host attributes; label and description are implemented directly here, not via a shared labelling controller — see [Decision log](#decision-log).
 
 **Relationship to `swc-radio-group`.** This plan and its item-level API decisions hold regardless of how `swc-radio-group` internally coordinates its items (dedicated `RadioGroupController` vs. inline composition, SWC-2470). The item exposes whatever minimal `select()`/`deselect()`-style hook the group's chosen coordination shape needs; that hook's exact signature is the group plan's decision, not this one's.
 
@@ -384,7 +384,7 @@ Planned rendering shape:
 #### Naming and public surface
 
 - [x] `Radio.types.ts`: define the `size` union (`s`/`m`/`l`/`xl`, explicit default `m`); export public types — lives in the merged `RadioGroup.types.ts` (`RADIO_VALID_SIZES`/`RadioSize`, shared with the group)
-- [x] `Radio.base.ts`: implement `value`, `checked`, `disabled`, `autofocus`; `size` and `emphasized` are attributes set by the group, not properties
+- [x] `Radio.base.ts`: implement `value`, `checked`, and `disabled`; retain the inherited `autofocus` attribute without a Lit override or component-managed focus behavior. `size` and `emphasized` are attributes set by the group, not properties.
 - [x] Remove `invalid`, `readonly` from the item surface (B1, B2)
 - [x] Do not add `accessible-label`/`accessible-labelledby`/`accessible-describedby` (deferred — see A4, [Decision log](#decision-log))
 - [x] Rename the label slot from default to named `label` (B14); update stories/tests accordingly
@@ -419,7 +419,7 @@ Planned rendering shape:
 
 #### Naming and semantics
 
-- [x] `swc-radio` sets `role="radio"` on its own host via `ElementInternals`
+- [x] `swc-radio` exposes `role="radio"` on its own host as an attribute
 - [x] No `delegatesFocus`; focus lands on the host, which the group's roving tabindex manages
 - [x] Accessible name comes from the slotted label content (no `LabellingMixin` dependency — see [Decision log](#decision-log))
 - [x] Per-item `description` is plain content gated by `SlotPresenceController`; no `aria-describedby` is set
@@ -427,10 +427,10 @@ Planned rendering shape:
 
 #### State verification
 
-- [x] `aria-checked` is set from `checked` via `ElementInternals`; never emits `"mixed"`
-- [x] `disabled` is exposed as `aria-disabled` via `ElementInternals`, and activation is guarded
+- [x] `aria-checked` is reflected from `checked` as a host attribute; never emits `"mixed"`
+- [x] `disabled` is exposed as the host's `aria-disabled` attribute, and activation is guarded
 - [x] No per-item `readonly` or `invalid`/`aria-invalid` remains on `swc-radio`
-- [x] `swc-radio` uses `ElementInternals` for ARIA only, with no form-value participation of its own; `FieldAssociationController` lives entirely on `swc-radio-group`
+- [x] `swc-radio` uses no `ElementInternals` or form-value participation; `FieldAssociationController` lives entirely on `swc-radio-group`
 - [x] `name` is not propagated onto items (B12)
 - [x] Receiving focus via Tab or `.focus()` never auto-selects; receiving focus via the group's arrow-key roving always does — `FocusgroupNavigationController` (on `RadioGroupBase`) filters its `handleNavigationActiveChange` on `source === 'keyboard'`; Tab-entry lands on the checked item via `syncCheckedState`'s `setActiveItem` call without changing selection
 
@@ -438,14 +438,14 @@ Planned rendering shape:
 
 <!-- Fill in comprehensive test cases -->
 
-- [ ] Port `1st-gen/packages/radio/test/radio.test.ts` coverage that still applies (item only, not `radio-group.test.ts`)
-- [ ] Add Playwright `radio.a11y.spec.ts` with `toMatchAriaSnapshot`
+- [x] Port `1st-gen/packages/radio/test/radio.test.ts` coverage that still applies (item only, not `radio-group.test.ts`); the legacy component-managed autofocus test is not applicable (see B8)
+- [x] Add Playwright `radio.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Behavior
 
-- [ ] `swc-radio` exposes `role="radio"`, `aria-checked`, `aria-disabled`, and `aria-posinset`/`aria-setsize` via `ElementInternals`
-- [ ] `change` event dispatches on click and on <kbd>Space</kbd> keyup, and not when disabled
-- [ ] Form-value participation happens on `swc-radio-group` alone (its `FieldAssociationController` calls `setFormValue`/`setFormValue(null)` off its own `selected` state), not on `swc-radio`
+- [x] `swc-radio` exposes `role="radio"`, `aria-checked`, `aria-disabled`, and `aria-posinset`/`aria-setsize` as host attributes
+- [x] `change` event dispatches on click and on <kbd>Space</kbd> keyup, and not when disabled
+- [x] Form-value participation happens on `swc-radio-group` alone (its `FieldAssociationController` calls `setFormValue`/`setFormValue(null)` off its own `selected` state), not on `swc-radio`
 
 #### Visual regression
 
@@ -453,10 +453,10 @@ Planned rendering shape:
 Retain this section for any components with visual rendering, modifying as needed for the component's specs and variants. Replace the example bullets below with VRT items that match this component, and reference real bug tickets only when they apply to this component.
 -->
 
-- [ ] Add VRT coverage for the size × emphasis × selection × state matrix confirmed in [Visual matrix (gen2)](#visual-matrix-gen2), including hover and disabled
-- [ ] Add VRT coverage for wrapped (multi-line) labels at every size
-- [ ] Add focus-visible regression coverage for the keyboard ring on the host
-- [ ] Add forced-colors (high-contrast) coverage for checked/disabled states
+- [x] Add VRT coverage for the size × emphasis × selection × state matrix confirmed in [Visual matrix (gen2)](#visual-matrix-gen2), including hover and disabled
+- [x] Add VRT coverage for wrapped (multi-line) labels at every size
+- [x] Add focus-visible regression coverage for the keyboard ring on the host
+- [x] Add forced-colors (high-contrast) coverage for checked/disabled states
 
 ### Documentation
 
@@ -513,6 +513,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 
 | Ref | Decision | Rationale / context |
 | --- | -------- | -------------------- |
+| B6 | Host attributes are the canonical source for the radio's role and ARIA state; `swc-radio` does not duplicate them through `ElementInternals`. | The browser accessibility snapshots used by the Phase 6 tests did not expose the expected role and states from `ElementInternals` alone. Reflecting the semantics as host attributes makes them available to the browser accessibility tree and keeps one source of truth. `swc-radio-group` retains its separate `ElementInternals` use for native form association. |
 | Q5 / B5 | `swc-radio` does not depend on `LabellingMixin`. Label association uses a real, same-root `<label for="…">` targeting the inner input's generated `id`, matching Spectrum CSS's own reference anatomy (`spectrum-Radio-label` is a real `<label for>`, not an ARIA-wired span) — zero ARIA or JS needed for the ordinary case. The optional per-item `description` is gated by the already-built `SlotPresenceController` and wired via a same-root `aria-describedby`, implemented directly in `Radio.base.ts`. `accessible-label`, `accessible-labelledby`, and `accessible-describedby` are deferred out of the public API entirely (tracked as additive A4, not must-ship). | Unlike `swc-text-field` (where an unlabeled-but-placeholder'd field, or a grid-composed external label, are real, evidenced use cases), a radio option without its own visible label isn't a usable pattern — you can't compare unlabeled options. The three-way accessible-name precedence problem `LabellingMixin` exists to solve for text-field has no corresponding evidenced use case for a single radio item, so depending on it (and shipping the override properties it enables) would be premature API surface. |
 | Q1 | Per-item `description` ships as a named `description` slot, not a string property (B4). | Consistent with `swc-text-field`'s `description` slot naming; the item's primary label is already slot-based, so a slot is the natural fit. |
 | — / B14 | Label content moves to a named `label` slot; the default (unnamed) slot goes unused. | Matches the established `LinearProgressMixin` precedent (meter, progress-bar use `[slot="label"]`/`[slot="description"]`, not a default slot) and `swc-text-field`'s plan. Naming consistency across the label-bearing gen2 components was judged more valuable than preserving 1st-gen's default-slot usage. |
@@ -524,7 +525,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 | Q8 | `size` gets an explicit default of `m`, dropping `noDefaultSize`. | Follows `swc-text-field`'s precedent; removes a 1st-gen quirk where the effective default depended on consumer CSS rather than the component itself. |
 | — | `swc-radio` has no `size` or `emphasized` properties; the group sets them as attributes for styling. | Radios can't exist outside a group, which owns `SizedMixin` and the values, so the item API doesn't need them (supersedes Q8's item-level default). Design does not recolor radios for `invalid` (the group shows an error icon instead), so `invalid` is not propagated. Container style queries stay progressive enhancement only (recent Firefox support), so critical styling uses attributes. |
 | Q10 | `swc-radio` does not consume the shared `form-fields` `_lit-styles/` fragment or a shared render template. `swc-radio-group` may still be a consumer of the shared stylesheet. | `swc-radio`'s anatomy (button, inline label, optional description; no label-position modes, no item-level error state) is a genuinely different grid shape from the field-family template `swc-text-field` is building, so radio items don't fit it. The group, which owns label/description/error placement for the whole set, is more field-like and may still benefit from the shared stylesheet — that's its plan's decision. |
-| — | **Supersedes Q5/B5's native `<input type="radio">` / `<label for>` design.** `swc-radio` no longer renders an inner native input at all: `role="radio"`, `aria-checked`, `aria-disabled`, and `aria-posinset`/`aria-setsize` are set directly on the item's own host via `ElementInternals`. The accessible name still comes from the slotted `label` content (now plain content inside the host's own accessible subtree, not a `<label for>` association), and the optional `description` no longer has its own `aria-describedby` (see the next entry). | A dedicated cross-browser/AT test matrix (VoiceOver/Safari, NVDA, JAWS+Chrome/Firefox) found that a native `<input type="radio">` per item, each in its own shadow root, is computed by the browser as an isolated native radio-button-group of size 1 — `aria-posinset`/`aria-setsize` set on the input (Q5/B5's design) never announced a real position, regardless of mechanism (plain attribute or the input's own `ElementInternals`), because native radio-button-group scoping can't span shadow roots. `ElementInternals` host-role sidesteps this entirely: there's no native grouping computation to be isolated by a shadow root in the first place. See `radio-group/migration-plan.md`'s decision log for the separate group-side fix: placing the group's `role="radiogroup"` on its host can break item positioning or group labeling associations, or both, depending on the browser/AT combination. |
+| — | **Supersedes Q5/B5's native `<input type="radio">` / `<label for>` design.** `swc-radio` no longer renders an inner native input at all. Its role and states are exposed as host attributes (see B6). The accessible name still comes from the slotted `label` content, and the optional `description` no longer has its own `aria-describedby` (see the next entry). | A dedicated cross-browser/AT test matrix (VoiceOver/Safari, NVDA, JAWS+Chrome/Firefox) found that a native `<input type="radio">` per item, each in its own shadow root, is computed by the browser as an isolated native radio-button-group of size 1. `aria-posinset`/`aria-setsize` set on the input never announced a real position because native radio-button-group scoping cannot span shadow roots. See `radio-group/migration-plan.md`'s decision log for the separate group-side fix: placing the group's `role="radiogroup"` on its host can break item positioning or group labeling associations, or both, depending on the browser/AT combination. |
 | — | `swc-radio` no longer sets `aria-describedby` on itself for its own slotted `description`. | The description renders as plain content inside the item's own accessible subtree, so it already contributes to the item's accessible name computation alongside the label; adding `aria-describedby` on top caused VoiceOver to re-announce the same text a second time as a "description". |
 | — | Remove the component's Lit `autofocus` override; retain the inherited HTML attribute/property. | The override no longer has an inner input to forward to and does not implement automatic focus. Removing it avoids shadowing the native property or implying component-managed focus behavior. |
 

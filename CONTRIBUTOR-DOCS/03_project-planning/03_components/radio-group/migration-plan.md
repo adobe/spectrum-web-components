@@ -424,23 +424,24 @@ Planned rendering shape:
 - [x] Arrow/Home/End movement always selects; Tab-entry and programmatic `.focus()` never do (reacting only to `source: 'keyboard'`) — `FocusgroupNavigationController` wired (`direction: 'both'`, `wrap: true`); `handleNavigationActiveChange` filters on `source === 'keyboard'`
 - [x] Disabled items are fully skipped by both Tab-entry and arrow movement — `skipDisabled: true` on the controller
 - [x] Coordinated reset restores the initial selection adopted from the first checked radio, or authored `selected` when none is checked, and synchronizes item checked state.
-- [ ] Help/error container does not default to `aria-live="assertive"` (B12)
+- [x] Help/error container does not default to `aria-live="assertive"` (B12); verified by `ErrorIconTest`
 - [x] Duplicate `value`s among slotted radios trigger the dev-mode console warning (B14)
 
 ### Testing
 
 <!-- Fill in comprehensive test cases -->
 
-- [ ] Port `1st-gen/packages/radio/test/radio-group.test.ts` coverage that still applies
-- [ ] Add Playwright `radio-group.a11y.spec.ts` with `toMatchAriaSnapshot`
+- [x] Port `1st-gen/packages/radio/test/radio-group.test.ts` coverage that still applies
+- [x] Add Playwright `radio-group.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Behavior
 
-- [ ] All four arrow keys move focus and select, with wraparound
-- [ ] `Space` checks a focused, unchecked item independent of arrow movement
+- [x] All four arrow keys move focus and select, with wraparound
+- [x] `Space` checks a focused, unchecked item independent of arrow movement
 - [x] Read-only keeps focus movement but blocks selection change — `ReadOnlySelectionTest`
-- [ ] `change` event is cancelable; a cancelled change reverts `selected`
-- [ ] Two slotted radios sharing a `value` trigger the dev-mode console warning (B14); production build is silent
+- [x] `change` event is cancelable; a cancelled change reverts `selected`
+- [x] Two slotted radios sharing a `value` trigger the dev-mode console warning (B14); unique values do not warn
+- [ ] Verify the duplicate-value warning is silent in a production build
 
 #### Visual regression
 
@@ -448,10 +449,10 @@ Planned rendering shape:
 Retain this section for any components with visual rendering, modifying as needed for the component's specs and variants. Replace the example bullets below with VRT items that match this component, and reference real bug tickets only when they apply to this component.
 -->
 
-- [ ] Add VRT coverage for the size × label-position × state matrix confirmed in [Visual matrix (gen2)](#visual-matrix-gen2)
-- [ ] Add VRT coverage for both `orientation` values (`horizontal`/`vertical`)
-- [ ] Add focus-visible regression coverage for the roving focus indicator as it moves between items
-- [ ] Add forced-colors (high-contrast) coverage for invalid/disabled/read-only states
+- [x] Add VRT coverage for the size × label-position × state matrix confirmed in [Visual matrix (gen2)](#visual-matrix-gen2)
+- [x] Add VRT coverage for both `orientation` values (`horizontal`/`vertical`)
+- [x] Add focus-visible regression coverage for the roving focus indicator as it moves between items
+- [x] Add forced-colors (high-contrast) coverage for invalid/disabled/read-only states
 
 ### Documentation
 

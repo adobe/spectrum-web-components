@@ -255,6 +255,16 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   private readonly disabledItemStates = new Map<RadioBase, boolean>();
 
+  private setItemDisabled(item: RadioBase, disabled: boolean): void {
+    item.disabled = disabled;
+    // Navigation refreshes before the child's Lit update can reflect this state.
+    if (disabled) {
+      item.setAttribute('aria-disabled', 'true');
+    } else {
+      item.removeAttribute('aria-disabled');
+    }
+  }
+
   private syncDisabledState(): boolean {
     const items = this.assignedItems();
     const assigned = new Set(items);
@@ -262,7 +272,7 @@ export abstract class RadioGroupBase extends SizedMixin(
     for (const [item, disabled] of this.disabledItemStates) {
       if (!this.effectiveDisabled || !assigned.has(item)) {
         changed ||= item.disabled !== disabled;
-        item.disabled = disabled;
+        this.setItemDisabled(item, disabled);
         this.disabledItemStates.delete(item);
       }
     }
@@ -274,7 +284,7 @@ export abstract class RadioGroupBase extends SizedMixin(
         this.disabledItemStates.set(item, item.disabled);
       }
       changed ||= !item.disabled;
-      item.disabled = true;
+      this.setItemDisabled(item, true);
     }
     return changed;
   }
