@@ -42,6 +42,8 @@ import styles from './popover.css';
  * @fires swc-after-close - Dispatched after the close transition completes.
  */
 export class Popover extends PopoverBase {
+  public static override readonly tagName = 'swc-popover';
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }

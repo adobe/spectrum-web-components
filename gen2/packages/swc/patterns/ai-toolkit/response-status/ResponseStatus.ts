@@ -27,11 +27,9 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
+import { Icon } from '@adobe/spectrum-wc/components/icon/Icon.js';
+import { UiIcon } from '@adobe/spectrum-wc/components/ui-icons/UiIcon.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-
-import '@adobe/spectrum-wc/components/icon/swc-icon.js';
-import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
-import '../pixel-loader/swc-pixel-loader.js';
 
 import { uniqueId } from '../../../utils/id.js';
 import {
@@ -40,6 +38,7 @@ import {
   type PixelLoaderIconName,
   type PixelLoaderPresetName,
 } from '../pixel-loader/data.js';
+import { PixelLoader } from '../pixel-loader/PixelLoader.js';
 import { CheckCircleIcon } from '../utils/icons/index.js';
 import {
   RESPONSE_STATUS_STEP_STATUSES,
@@ -71,6 +70,9 @@ export type ResponseStatusStatus = (typeof RESPONSE_STATUSES)[number];
  * @since 2.0.0-beta.3
  */
 export class ResponseStatus extends SpectrumElement {
+  public static override readonly tagName = 'swc-response-status';
+  public static override readonly dependencies = [Icon, UiIcon, PixelLoader];
+
   private static readonly STATUS_LABEL_CLASS =
     'swc-ResponseStatus-label swc-Body swc-Body--sizeS';
 

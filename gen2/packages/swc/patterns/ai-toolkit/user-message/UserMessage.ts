@@ -32,6 +32,8 @@ export type UserMessageType = 'copy' | 'card' | 'media';
  * @since 2.0.0-beta.3
  */
 export class UserMessage extends SpectrumElement {
+  public static override readonly tagName = 'swc-user-message';
+
   /**
    * Visual content type for the user message bubble.
    */

@@ -12,9 +12,18 @@
 
 import { LitElement } from 'lit';
 
+import { defineElement } from './define-element.js';
+import { ScopedElementMixin } from './scoped-registry.js';
 import { coreVersion, version } from './version.js';
 
-export class SpectrumElement extends LitElement {
+/**
+ * A class that can define itself in a custom element registry.
+ */
+export interface DefinableElement {
+  define(registry?: CustomElementRegistry): void;
+}
+
+export class SpectrumElement extends ScopedElementMixin(LitElement) {
   /**
    * @internal
    */
@@ -24,6 +33,44 @@ export class SpectrumElement extends LitElement {
    * @internal
    */
   static CORE_VERSION = coreVersion;
+
+  /**
+   * The custom element name that `define()` uses. Each concrete component
+   * declares its own.
+   *
+   * @internal
+   */
+  declare static readonly tagName?: string;
+
+  /**
+   * Elements this component renders in its shadow root. `define()` defines
+   * them in the same registry first.
+   *
+   * @internal
+   */
+  static readonly dependencies: readonly DefinableElement[] = [];
+
+  /**
+   * Defines this component, and the elements it renders, in `registry`. The
+   * global registry is the default. Pass a scoped registry to use more than
+   * one version of Spectrum Web Components on a page.
+   *
+   * @param registry - The registry to define the elements in.
+   */
+  static define(registry: CustomElementRegistry = customElements): void {
+    if (
+      !Object.prototype.hasOwnProperty.call(this, 'tagName') ||
+      !this.tagName
+    ) {
+      throw new Error(
+        `${this.name} must declare its own static tagName before it can be defined.`
+      );
+    }
+    for (const dependency of this.dependencies) {
+      dependency.define(registry);
+    }
+    defineElement(this.tagName, this, registry);
+  }
 }
 
 /**

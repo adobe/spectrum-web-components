@@ -28,6 +28,9 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 
+import { ActionButton } from '@adobe/spectrum-wc/components/action-button/ActionButton.js';
+import { Icon } from '@adobe/spectrum-wc/components/icon/Icon.js';
+import { UiIcon } from '@adobe/spectrum-wc/components/ui-icons/UiIcon.js';
 import {
   DragAndDropController,
   focusgroupNavigationActiveChange,
@@ -42,17 +45,13 @@ import {
   isFocusVisibleInTree,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
-import '@adobe/spectrum-wc/components/icon/swc-icon.js';
-import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
-import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
-import '../pixel-loader/swc-pixel-loader.js';
-
 import { uniqueId } from '../../../utils/id.js';
 import type {
   PixelLoaderIconName,
   PixelLoaderPresetName,
 } from '../pixel-loader/index.js';
 import { PIXEL_LOADER_PRESET_NAMES } from '../pixel-loader/index.js';
+import { PixelLoader } from '../pixel-loader/PixelLoader.js';
 import { ChevronUpIcon, PlusIcon, StopIcon } from '../utils/icons/index.js';
 
 import visuallyHiddenStyles from '../../../stylesheets/_lit-styles/visually-hidden.css';
@@ -114,6 +113,14 @@ const SUPPORTS_FIELD_SIZING =
  * @since 2.0.0-beta.3
  */
 export class PromptField extends SpectrumElement {
+  public static override readonly tagName = 'swc-prompt-field';
+  public static override readonly dependencies = [
+    Icon,
+    UiIcon,
+    ActionButton,
+    PixelLoader,
+  ];
+
   private readonly labelId = uniqueId('swc-prompt-field-label');
 
   /** Disables the textarea and all actions. */

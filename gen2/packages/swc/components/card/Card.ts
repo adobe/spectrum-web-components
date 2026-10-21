@@ -57,6 +57,8 @@ import styles from './card.css';
  * @cssprop --swc-card-gallery-preview-aspect-ratio - Aspect ratio of the preview image in the gallery layout (a preview-only card). Defaults to 1 (square).
  */
 export class Card extends CardBase {
+  public static override readonly tagName = 'swc-card';
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────

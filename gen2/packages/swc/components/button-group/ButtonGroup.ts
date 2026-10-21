@@ -29,6 +29,8 @@ import styles from './button-group.css';
  * @cssprop --swc-button-group-justify-content - Alignment of buttons within the group along the main axis.
  */
 export class ButtonGroup extends ButtonGroupBase {
+  public static override readonly tagName = 'swc-button-group';
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────

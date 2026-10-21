@@ -49,6 +49,8 @@ import styles from './status-light.css';
  * @cssprop --swc-status-light-content-color - Color of the label text.
  */
 export class StatusLight extends StatusLightBase {
+  public static override readonly tagName = 'swc-status-light';
+
   // ────────────────────
   //     API OVERRIDES
   // ────────────────────

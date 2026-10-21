@@ -1,0 +1,107 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Scoped registries" />
+
+# Scoped registries
+
+Spectrum Web Components register their elements in the browser's global custom element registry. A page can then run one version of each element, such as `<swc-button>`.
+
+[Scoped custom element registries](https://html.spec.whatwg.org/multipage/custom-elements.html#scoped-custom-element-registries) let independently built apps on one page each use their own version of Spectrum Web Components with the same tag names. Each app renders into a shadow root that uses its own registry.
+
+> ⚠️ **Important:** This API is experimental and can change before the 2.0.0 release. Don't use scoped registries in production until a polyfill that implements the standard API is released.
+
+## When to use them
+
+Use scoped registries only when apps on one page need different versions. A page that uses one version keeps the global registration imports:
+
+```js
+import '@adobe/spectrum-wc/components/button/swc-button.js';
+```
+
+## Define components in a registry
+
+Every component class has a static `define()` method. It defines the component and the elements it renders internally. With no argument, it uses the global registry.
+
+```js
+import { CloseButton } from '@adobe/spectrum-wc/close-button';
+
+const registry = new CustomElementRegistry();
+// Defines <swc-close-button> and its internal <swc-ui-icon>.
+CloseButton.define(registry);
+```
+
+Each loaded copy of `@adobe/spectrum-wc` also owns a registry. Import it from `@adobe/spectrum-wc/registry`. It is also published at `window.__swc.scopedRegistries.get(version)`, so a host can find the registry of a copy that another app loaded. Apps that load the same copy can share it:
+
+```js
+import { Button } from '@adobe/spectrum-wc/button';
+import { registry } from '@adobe/spectrum-wc/registry';
+
+Button.define(registry);
+```
+
+Create a registry for each app instead when apps on the same copy define their own elements with the same names, or when you remount an app to change its version.
+
+## Mount an app
+
+Define the app's own elements in the registry, attach the registry to the app's shadow root, and render with `scopedRenderOptions()`:
+
+```js
+import { html, render } from 'lit';
+import { scopedRenderOptions } from '@adobe/spectrum-wc/registry';
+
+registry.define('image-panel', ImagePanel);
+
+const root = host.attachShadow({
+  mode: 'open',
+  customElementRegistry: registry,
+});
+render(
+  html`
+    <image-panel></image-panel>
+  `,
+  root,
+  scopedRenderOptions(registry)
+);
+```
+
+App elements built with Lit that render Spectrum Web Components use `ScopedElementMixin`. Their shadow roots and templates then use the registry the element was created in:
+
+```js
+import { html, LitElement } from 'lit';
+import { ScopedElementMixin } from '@adobe/spectrum-wc/registry';
+
+class ImagePanel extends ScopedElementMixin(LitElement) {
+  render() {
+    return html`
+      <swc-button>Save</swc-button>
+    `;
+  }
+}
+```
+
+Spectrum Web Components use the same mechanism internally. Lit creates elements in the global registry by default. `scopedRenderOptions()` and `ScopedElementMixin` bridge that gap until Lit supports scoped registries, and will then be deprecated.
+
+## Things to know
+
+- **No fallback to global:** A scoped shadow root never uses global definitions. Define every element the app renders, including its own, in the app's registry.
+- **Creation decides the registry:** `document.createElement('swc-button')` creates a global element, even after you append it to a scoped root. Pass `{ customElementRegistry: registry }`.
+- **No redefinition:** A registry can't replace a definition. To change an app's version, mount the app again with a new registry.
+- **Design tokens:** `tokens.css` targets `:root`, so all apps on the page share one set of token values.
+- **Workflow icons:** Each `swc-icon-*.js` module from `@adobe/spectrum-wc-icons` defines its element globally when imported, so two copies on one page conflict. In a scoped app, render the icon's SVG function inside `<swc-icon>` instead, for example `` html`<swc-icon>${unsafeSVG(Icon_Star())}</swc-icon>` `` with `Icon_Star` from `@adobe/spectrum-wc-icons/Star.js`.
+
+## Browser support
+
+Chrome and Edge 146+, and Safari 26+, support scoped registries natively. Firefox supports them in Nightly only.
+
+In unsupported browsers, importing `@adobe/spectrum-wc/registry` throws an error. Spectrum Web Components never fall back to the global registry, because two versions would then collide without an error. Check support before you load the scoped path, and render the app in an iframe or load one version per page otherwise:
+
+```js
+const supported =
+  typeof CustomElementRegistry !== 'undefined' &&
+  'initialize' in CustomElementRegistry.prototype;
+
+if (supported) {
+  const { registry } = await import('@adobe/spectrum-wc/registry');
+  // Mount the app with `registry`.
+}
+```

@@ -28,6 +28,8 @@ import styles from './divider.css';
  * @cssprop --swc-divider-thickness - Thickness of the divider.
  */
 export class Divider extends DividerBase {
+  public static override readonly tagName = 'swc-divider';
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────

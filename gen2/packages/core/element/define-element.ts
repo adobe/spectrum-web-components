@@ -14,12 +14,23 @@ interface CustomElementConstructor {
   new (...params: unknown[]): HTMLElement;
 }
 
+/**
+ * Defines a custom element in a registry, the global registry by default.
+ * Defining the same constructor again does nothing, so components that share
+ * a dependency can each define it. A different constructor for a defined name
+ * throws.
+ */
 export function defineElement(
   name: string,
-  constructor: CustomElementConstructor
+  constructor: CustomElementConstructor,
+  registry: CustomElementRegistry = customElements
 ): void {
+  const existing = registry.get(name);
+  if (existing === constructor) {
+    return;
+  }
   if (window.__swc && window.__swc.DEBUG) {
-    if (customElements.get(name)) {
+    if (existing) {
       window.__swc.warn(
         undefined,
         `Attempted to redefine <${name}>. This usually indicates that multiple versions of the same web component were loaded onto a single page.`,
@@ -27,5 +38,5 @@ export function defineElement(
       );
     }
   }
-  customElements.define(name, constructor);
+  registry.define(name, constructor);
 }

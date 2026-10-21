@@ -31,6 +31,8 @@ import styles from './thumbnail.css';
  * </swc-thumbnail>
  */
 export class Thumbnail extends ThumbnailBase {
+  public static override readonly tagName = 'swc-thumbnail';
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────

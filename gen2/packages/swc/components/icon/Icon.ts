@@ -35,6 +35,8 @@ import styles from '../../stylesheets/_lit-styles/icon-base.css';
  * @cssprop --swc-icon-block-size - Block size of the icon.
  */
 export class Icon extends IconBase {
+  public static override readonly tagName = 'swc-icon';
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────

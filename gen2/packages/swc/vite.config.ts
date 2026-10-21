@@ -136,6 +136,7 @@ export default defineConfig({
         ...glob.sync(resolve(__dirname, 'patterns/*/*/swc-*.ts')),
         ...glob.sync(resolve(__dirname, 'patterns/*/*/*/index.ts')),
         ...glob.sync(resolve(__dirname, 'patterns/*/*/*/swc-*.ts')),
+        resolve(__dirname, 'registry/index.ts'),
       ].reduce(
         (entries, file) => {
           const name = file
@@ -199,6 +200,12 @@ export default defineConfig({
       {
         find: '@adobe/spectrum-wc/patterns',
         replacement: resolve(__dirname, 'patterns'),
+      },
+      // The scoped registry entry (`@adobe/spectrum-wc/registry`) lives outside
+      // `./components`, mirroring the published `./registry` export.
+      {
+        find: '@adobe/spectrum-wc/registry',
+        replacement: resolve(__dirname, 'registry'),
       },
       // Short-form imports (e.g. `@adobe/spectrum-wc/badge`) point at the source
       // package layout under `./components`, mirroring the published package's
