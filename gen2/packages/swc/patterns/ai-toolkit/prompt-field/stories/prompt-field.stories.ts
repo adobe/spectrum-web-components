@@ -65,6 +65,7 @@ function renderPromptField(
       loader=${storyArgs.loader ?? 'aiLogo'}
       ?disabled=${storyArgs.disabled ?? false}
       ?generating=${storyArgs.generating ?? false}
+      ?collapsed=${storyArgs.collapsed ?? false}
       ?animate-loader=${storyArgs['animate-loader'] ?? false}
       accessible-label=${storyArgs['accessible-label'] ?? ''}
       send-label=${storyArgs['send-label'] ?? 'Send'}
