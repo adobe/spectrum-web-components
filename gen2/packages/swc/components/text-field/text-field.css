@@ -34,7 +34,7 @@
   padding-inline: calc(var(--swc-text-field-padding-inline, token("base-padding-horizontal-medium")) - var(--_swc-text-field-border-width));
   font-size: var(--swc-text-field-font-size, token("font-size-100"));
   background-color: token("gray-25");
-  border-color: token("gray-300");
+  border-color: var(--swc-text-field-border-color-default, token("gray-300"));
   border-style: solid;
   border-width: var(--_swc-text-field-border-width);
   border-radius: var(--swc-text-field-border-radius, token("corner-radius-medium-size-medium"));
@@ -117,15 +117,15 @@ slot[name="prefix"]::slotted(*) {
 /* ── Interaction states (on the control) ──────────── */
 
 .swc-TextField-control:hover {
-  border-color: token("gray-400");
+  border-color: var(--swc-text-field-border-color-hover, token("gray-400"));
 }
 
 .swc-TextField-control:focus-within {
-  border-color: token("gray-800");
+  border-color: var(--swc-text-field-border-color-focus, token("gray-800"));
 }
 
 .swc-TextField-control:focus-within:hover {
-  border-color: token("gray-900");
+  border-color: var(--swc-text-field-border-color-focus-hover, token("gray-900"));
 }
 
 :host([size="s"]) .swc-TextField-control {
@@ -150,8 +150,11 @@ slot[name="prefix"]::slotted(*) {
 
 /* ── Disabled ─────────────────────────────────────── */
 
-:host(:disabled) .swc-TextField-control {
-  border-color: token("disabled-border-color");
+:host(:disabled) {
+  --swc-text-field-border-color-default: token("disabled-border-color");
+  --swc-text-field-border-color-hover: token("disabled-border-color");
+  --swc-text-field-border-color-focus: token("disabled-border-color");
+  --swc-text-field-border-color-focus-hover: token("disabled-border-color");
 }
 
 :host(:disabled) .swc-TextField-input {
@@ -168,20 +171,11 @@ slot[name="prefix"]::slotted(*) {
 
 /* ── Invalid ──────────────────────────────────────── */
 
-:host([field-status="invalid"]:not(:disabled)) .swc-TextField-control {
-  border-color: token("negative-border-color-default");
-}
-
-:host([field-status="invalid"]:not(:disabled)) .swc-TextField-control:hover {
-  border-color: token("negative-border-color-hover");
-}
-
-:host([field-status="invalid"]:not(:disabled)) .swc-TextField-control:focus-within {
-  border-color: token("negative-border-color-focus");
-}
-
-:host([field-status="invalid"]:not(:disabled)) .swc-TextField-control:focus-within:hover {
-  border-color: token("negative-border-color-focus-hover");
+:host([field-status="invalid"]:not(:disabled)) {
+  --swc-text-field-border-color-default: token("negative-border-color-default");
+  --swc-text-field-border-color-hover: token("negative-border-color-hover");
+  --swc-text-field-border-color-focus: token("negative-border-color-focus");
+  --swc-text-field-border-color-focus-hover: token("negative-border-color-focus-hover");
 }
 
 :host([field-status="invalid"]:not(:disabled)) .swc-TextField-invalidIcon {

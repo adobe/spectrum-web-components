@@ -12,15 +12,19 @@
 
 import { html, nothing } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { expect } from '@storybook/test';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 
-import type { CustomPropertyCase } from '../../../../.storybook/helpers/index.js';
+import type {
+  CustomPropertyCase,
+  ForcedPseudoState,
+} from '../../../../.storybook/helpers/index.js';
 import {
   coveredCustomProperties,
   customPropertyRows,
+  forcePseudoState,
   theme,
   verifyCustomPropertyCoverage,
   vrtParameters,
@@ -44,7 +48,9 @@ export default meta;
 // ────────────────
 
 type TextFieldPropertyCase =
-  CustomPropertyCase<`--swc-${'field' | 'text-field' | 'form-field'}-${string}`>;
+  CustomPropertyCase<`--swc-${'field' | 'text-field' | 'form-field'}-${string}`> & {
+    forceStates?: readonly ForcedPseudoState[];
+  };
 
 const MOD_PROPERTY_CASES: readonly TextFieldPropertyCase[] = [
   { property: '--swc-field-label-max-inline-size', value: '80px' },
@@ -54,17 +60,35 @@ const MOD_PROPERTY_CASES: readonly TextFieldPropertyCase[] = [
   { property: '--swc-text-field-padding-inline', value: '24px' },
   { property: '--swc-text-field-affix-gap', value: '24px' },
   { property: '--swc-form-field-row-gap', value: '24px' },
+  { property: '--swc-form-field-necessity-gap', value: '24px' },
   { property: '--swc-text-field-font-size', value: '24px' },
   { property: '--swc-text-field-line-height', value: '2.5' },
   { property: '--swc-text-field-border-radius', value: '20px' },
+  {
+    property: '--swc-text-field-border-color-default',
+    value: 'magenta',
+    forceStates: [],
+  },
+  {
+    property: '--swc-text-field-border-color-hover',
+    value: 'magenta',
+    forceStates: ['hover'],
+  },
+  {
+    property: '--swc-text-field-border-color-focus',
+    value: 'magenta',
+    forceStates: ['focus-within'],
+  },
+  {
+    property: '--swc-text-field-border-color-focus-hover',
+    value: 'magenta',
+    forceStates: ['focus-within', 'hover'],
+  },
   { property: '--swc-text-field-validation-icon-size', value: '32px' },
   { property: '--swc-form-field-label-font-size', value: '24px' },
   { property: '--swc-form-field-description-font-size', value: '20px' },
 ];
 
-// Two properties need extra context to be visible: the affix-gap needs a
-// slotted prefix, and the validation-icon-size needs the invalid state.
-// A long label makes the label-max-inline-size wrap visibly.
 const renderModPropertyCase = (
   { property }: TextFieldPropertyCase,
   overrideStyle?: string
@@ -82,6 +106,12 @@ const renderModPropertyCase = (
         value="Sample value"
         field-status=${ifDefined(showsError ? 'invalid' : undefined)}
         label-position="side"
+        ?required=${property === '--swc-form-field-necessity-gap'}
+        data-border-property=${ifDefined(
+          property.startsWith('--swc-text-field-border-color-')
+            ? property
+            : undefined
+        )}
       >
         <span slot="label">${label}</span>
         ${showsPrefix
@@ -118,6 +148,16 @@ const verifyCoverage = async ({
     coveredProperties: coveredTextFieldCustomProperties,
   });
 
+  for (const { property, forceStates } of MOD_PROPERTY_CASES) {
+    for (const field of canvasElement.querySelectorAll(
+      `swc-text-field[data-border-property="${property}"]`
+    )) {
+      for (const state of forceStates ?? []) {
+        forcePseudoState(field, state, '.swc-TextField-control');
+      }
+    }
+  }
+
   const fields = canvasElement.querySelectorAll<HTMLElement>(
     'swc-text-field[style*="--swc-"]'
   );
@@ -129,6 +169,17 @@ const verifyCoverage = async ({
       getComputedStyle(field).getPropertyValue(property ?? ''),
       `${property} override reaches the text field`
     ).toBe(field.style.getPropertyValue(property ?? ''));
+    if (field.hasAttribute('data-border-property')) {
+      const control = field.shadowRoot?.querySelector('.swc-TextField-control');
+      if (!control) {
+        throw new Error('Border-color override requires a rendered control');
+      }
+      await waitFor(() =>
+        expect(getComputedStyle(control).borderTopColor).toBe(
+          'rgb(255, 0, 255)'
+        )
+      );
+    }
   }
 };
 

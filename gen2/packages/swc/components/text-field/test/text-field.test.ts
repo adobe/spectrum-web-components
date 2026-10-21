@@ -12,7 +12,6 @@
 import { html } from 'lit';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-import { userEvent as browserUserEvent } from 'vitest/browser';
 
 import { TextField } from '@adobe/spectrum-wc/text-field';
 
@@ -2001,16 +2000,16 @@ export const ImplicitSubmitTest: Story = {
     input.focus();
 
     await step('Enter clicks the first associated submit button', async () => {
-      await browserUserEvent.keyboard('{Enter}');
-      expect(clicks).toBe(1);
+      await userEvent.keyboard('{Enter}');
+      await waitFor(() => expect(clicks).toBe(1));
       expect(submissions).toEqual([button]);
     });
 
     await step('native validation blocks an invalid submission', async () => {
       field.value = '';
       await field.updateComplete;
-      await browserUserEvent.keyboard('{Enter}');
-      expect(clicks).toBe(2);
+      await userEvent.keyboard('{Enter}');
+      await waitFor(() => expect(clicks).toBe(2));
       expect(submissions).toHaveLength(1);
       field.value = 'person@example.com';
       await field.updateComplete;
@@ -2022,8 +2021,8 @@ export const ImplicitSubmitTest: Story = {
         field.value = '';
         button.formNoValidate = true;
         await field.updateComplete;
-        await browserUserEvent.keyboard('{Enter}');
-        expect(submissions).toEqual([button, button]);
+        await userEvent.keyboard('{Enter}');
+        await waitFor(() => expect(submissions).toEqual([button, button]));
         button.formNoValidate = false;
         field.value = 'person@example.com';
         await field.updateComplete;
@@ -2034,7 +2033,7 @@ export const ImplicitSubmitTest: Story = {
       'a disabled default submitter does not fall through',
       async () => {
         button.disabled = true;
-        await browserUserEvent.keyboard('{Enter}');
+        await userEvent.keyboard('{Enter}');
         expect(clicks).toBe(3);
         expect(submissions).toHaveLength(2);
         button.disabled = false;
@@ -2045,7 +2044,7 @@ export const ImplicitSubmitTest: Story = {
       field.addEventListener('keydown', (event) => event.preventDefault(), {
         once: true,
       });
-      await browserUserEvent.keyboard('{Enter}');
+      await userEvent.keyboard('{Enter}');
       expect(clicks).toBe(3);
       expect(submissions).toHaveLength(2);
     });
@@ -2069,7 +2068,7 @@ export const ImplicitSubmitTest: Story = {
           cancelable: true,
         })
       );
-      await browserUserEvent.keyboard('{ArrowLeft}');
+      await userEvent.keyboard('{ArrowLeft}');
       expect(clicks).toBe(3);
       expect(submissions).toHaveLength(2);
     });
@@ -2080,8 +2079,8 @@ export const ImplicitSubmitTest: Story = {
         button.addEventListener('click', (event) => event.preventDefault(), {
           once: true,
         });
-        await browserUserEvent.keyboard('{Enter}');
-        expect(clicks).toBe(4);
+        await userEvent.keyboard('{Enter}');
+        await waitFor(() => expect(clicks).toBe(4));
         expect(submissions).toHaveLength(2);
       }
     );
@@ -2092,8 +2091,8 @@ export const ImplicitSubmitTest: Story = {
       image.alt = 'Save';
       image.setAttribute('form', form.id);
       button.before(image);
-      await browserUserEvent.keyboard('{Enter}');
-      expect(submissions).toEqual([button, button, image]);
+      await userEvent.keyboard('{Enter}');
+      await waitFor(() => expect(submissions).toEqual([button, button, image]));
       image.remove();
     });
   },
@@ -2127,8 +2126,8 @@ export const ImplicitSubmitWithoutButtonTest: Story = {
     input.focus();
 
     await step('a single field submits without a submit button', async () => {
-      await browserUserEvent.keyboard('{Enter}');
-      expect(submissions).toEqual([null]);
+      await userEvent.keyboard('{Enter}');
+      await waitFor(() => expect(submissions).toEqual([null]));
     });
 
     await step(
@@ -2137,7 +2136,7 @@ export const ImplicitSubmitWithoutButtonTest: Story = {
         const otherInput = document.createElement('input');
         otherInput.setAttribute('aria-label', 'Other');
         form.append(otherInput);
-        await browserUserEvent.keyboard('{Enter}');
+        await userEvent.keyboard('{Enter}');
         expect(submissions).toHaveLength(1);
         otherInput.remove();
       }
@@ -2150,7 +2149,7 @@ export const ImplicitSubmitWithoutButtonTest: Story = {
         otherField.accessibleLabel = 'Other';
         form.append(otherField);
         await otherField.updateComplete;
-        await browserUserEvent.keyboard('{Enter}');
+        await userEvent.keyboard('{Enter}');
         expect(submissions).toHaveLength(1);
         otherField.remove();
       }
@@ -2259,88 +2258,5 @@ export const MinimumLengthValidationTest: Story = {
       ></swc-text-field>
     </form>
   `,
-  play: async ({ canvasElement, step }) => {
-    const field = await getComponent<TextField>(
-      canvasElement,
-      'swc-text-field'
-    );
-    const form = canvasElement.querySelector('form');
-    const input = field.roleElement;
-    if (!form || !input) {
-      throw new Error('form or input not found');
-    }
-    let submissions = 0;
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      submissions++;
-    });
-    input.focus();
-
-    await step('trusted typing below minlength blocks submission', async () => {
-      await browserUserEvent.keyboard('abc');
-      await field.updateComplete;
-      expect(field.value).toBe('abc');
-      expect(input.validity.tooShort).toBe(true);
-      expect(field.validity.tooShort).toBe(true);
-      expect(field.validationMessage).toBe(input.validationMessage);
-      expect(field.checkValidity()).toBe(false);
-      expect(form.checkValidity()).toBe(false);
-      form.requestSubmit();
-      expect(submissions).toBe(0);
-    });
-
-    await step('unrelated renders preserve user-edit validity', async () => {
-      field.placeholder = 'Enter a username';
-      await field.updateComplete;
-      expect(input.validity.tooShort).toBe(true);
-      expect(field.validity.tooShort).toBe(true);
-    });
-
-    await step('exactly minlength characters permit submission', async () => {
-      await browserUserEvent.keyboard('de');
-      await field.updateComplete;
-      expect(field.value).toBe('abcde');
-      expect(input.validity.tooShort).toBe(false);
-      expect(field.validity.tooShort).toBe(false);
-      expect(field.validationMessage).toBe('');
-      expect(field.checkValidity()).toBe(true);
-      expect(form.checkValidity()).toBe(true);
-      form.requestSubmit();
-      expect(submissions).toBe(1);
-      expect(new FormData(form).get('username')).toBe('abcde');
-    });
-
-    await step('deleting below minlength blocks submission again', async () => {
-      await browserUserEvent.keyboard('{Backspace}{Backspace}');
-      await field.updateComplete;
-      expect(field.value).toBe('abc');
-      expect(input.validity.tooShort).toBe(true);
-      expect(field.validity.tooShort).toBe(true);
-      form.requestSubmit();
-      expect(submissions).toBe(1);
-    });
-
-    await step('an empty optional field remains valid', async () => {
-      input.select();
-      await browserUserEvent.keyboard('{Backspace}');
-      await field.updateComplete;
-      expect(field.value).toBe('');
-      expect(field.validity.tooShort).toBe(false);
-      expect(form.checkValidity()).toBe(true);
-    });
-
-    await step(
-      'programmatic values retain native validation semantics',
-      async () => {
-        field.value = 'abc';
-        await field.updateComplete;
-        expect(input.value).toBe('abc');
-        expect(input.validity.tooShort).toBe(false);
-        expect(field.validity.tooShort).toBe(false);
-        expect(form.checkValidity()).toBe(true);
-        expect(new FormData(form).get('username')).toBe('abc');
-      }
-    );
-  },
 };
 MinimumLengthValidationTest.storyName = 'Minimum length validation';

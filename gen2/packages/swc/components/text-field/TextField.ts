@@ -60,6 +60,10 @@ const PREFIX_AVATAR_SIZE = {
  * @cssprop --swc-text-field-font-size - Font size of the input. Changes by size.
  * @cssprop --swc-text-field-line-height - Line height of the input. Defaults to the browser's normal input line height.
  * @cssprop --swc-text-field-border-radius - Corner radius of the text-field control. Changes by size.
+ * @cssprop --swc-text-field-border-color-default - Border color when the control is neither hovered nor focused. Changes with field status.
+ * @cssprop --swc-text-field-border-color-hover - Border color when the control is hovered without focus. Changes with field status.
+ * @cssprop --swc-text-field-border-color-focus - Border color when the control contains focus without hover. Changes with field status.
+ * @cssprop --swc-text-field-border-color-focus-hover - Border color when the control is both hovered and contains focus. Changes with field status.
  * @cssprop --swc-text-field-validation-icon-size - Size of the invalid-state icon. Changes by size.
  * @cssprop --swc-form-field-label-font-size - Font size of the visible field label. Defaults to the field size typography scale.
  * @cssprop --swc-form-field-description-font-size - Font size of the description and error text. Defaults to the field size typography scale.

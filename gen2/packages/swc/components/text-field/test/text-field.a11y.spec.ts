@@ -12,6 +12,8 @@
 
 import { expect, test } from '@playwright/test';
 
+import type { TextField } from '@adobe/spectrum-wc/text-field';
+
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
@@ -392,7 +394,221 @@ test.describe('Text field - ARIA Snapshots', () => {
   });
 });
 
+test.describe('Text field - Border color customization', () => {
+  for (const status of [undefined, 'invalid', 'readonly'] as const) {
+    test(`supports independent border colors when ${status ?? 'default'}`, async ({
+      page,
+    }) => {
+      const root = await gotoStory(
+        page,
+        'components-text-field--overview',
+        'swc-text-field'
+      );
+      const field = root.locator('swc-text-field');
+      const input = field.locator('input');
+      const control = field.locator('.swc-TextField-control');
+      await field.evaluate(async (field: TextField, status) => {
+        field.fieldStatus = status;
+        field.style.setProperty(
+          '--swc-text-field-border-color-default',
+          'rgb(1, 2, 3)'
+        );
+        field.style.setProperty(
+          '--swc-text-field-border-color-hover',
+          'rgb(4, 5, 6)'
+        );
+        field.style.setProperty(
+          '--swc-text-field-border-color-focus',
+          'rgb(7, 8, 9)'
+        );
+        field.style.setProperty(
+          '--swc-text-field-border-color-focus-hover',
+          'rgb(10, 11, 12)'
+        );
+        await field.updateComplete;
+      }, status);
+      await control.evaluate((control: HTMLElement) => {
+        control.style.transition = 'none';
+      });
+
+      for (const { focus, hover, color } of [
+        { focus: false, hover: false, color: 'rgb(1, 2, 3)' },
+        { focus: false, hover: true, color: 'rgb(4, 5, 6)' },
+        { focus: true, hover: false, color: 'rgb(7, 8, 9)' },
+        { focus: true, hover: true, color: 'rgb(10, 11, 12)' },
+      ]) {
+        if (focus) {
+          await input.focus();
+        } else {
+          await input.evaluate((input: HTMLInputElement) => input.blur());
+        }
+        if (hover) {
+          await control.hover();
+        } else {
+          await page.mouse.move(1000, 700);
+        }
+        await expect(control).toHaveCSS('border-top-color', color);
+      }
+    });
+  }
+
+  test('disabled border color wins over hover after invalid', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-text-field--overview',
+      'swc-text-field'
+    );
+    const field = root.locator('swc-text-field');
+    const control = field.locator('.swc-TextField-control');
+    await field.evaluate(async (field: TextField) => {
+      field.fieldStatus = 'disabled';
+      await field.updateComplete;
+    });
+    await control.evaluate((control: HTMLElement) => {
+      control.style.transition = 'none';
+    });
+    const disabledColor = await control.evaluate(
+      (control) => getComputedStyle(control).borderTopColor
+    );
+    await field.evaluate(async (field: TextField) => {
+      field.fieldStatus = 'invalid';
+      await field.updateComplete;
+      field.fieldStatus = 'disabled';
+      await field.updateComplete;
+    });
+    await control.hover();
+    await expect(control).toHaveCSS('border-top-color', disabledColor);
+  });
+});
+
 test.describe('Text field - Keyboard interactions', () => {
+  test('preserves native minimum-length validation with trusted input', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-text-field-tests--minimum-length-validation-test',
+      'swc-text-field'
+    );
+    const field = root.locator('swc-text-field');
+    const input = field.locator('input');
+    const form = root.locator('form');
+    await form.evaluate((form) => {
+      form.dataset.submissions = '0';
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        form.dataset.submissions = String(Number(form.dataset.submissions) + 1);
+      });
+    });
+    await input.evaluate((input) => {
+      input.addEventListener('input', (event) => {
+        input.dataset.trustedInput = String(event.isTrusted);
+      });
+    });
+    const readValidity = () =>
+      field.evaluate((field: TextField) => {
+        const input = field.roleElement;
+        const form = field.form;
+        if (!input || !form) {
+          throw new Error('Minimum-length test requires a form and input');
+        }
+        return {
+          value: field.value,
+          inputValue: input.value,
+          nativeTooShort: input.validity.tooShort,
+          tooShort: field.validity.tooShort,
+          messageMatchesNative:
+            field.validationMessage === input.validationMessage,
+          validationMessage: field.validationMessage,
+          valid: field.checkValidity(),
+          formValid: form.checkValidity(),
+          formValue: new FormData(form).get('username'),
+          submissions: Number(form.dataset.submissions),
+          trustedInput: input.dataset.trustedInput,
+        };
+      });
+
+    await input.focus();
+    await test.step('trusted typing below minlength blocks submission', async () => {
+      await page.keyboard.type('abc');
+      await expect.poll(readValidity).toMatchObject({
+        value: 'abc',
+        nativeTooShort: true,
+        tooShort: true,
+        messageMatchesNative: true,
+        valid: false,
+        formValid: false,
+        trustedInput: 'true',
+      });
+      await form.evaluate((form: HTMLFormElement) => form.requestSubmit());
+      expect((await readValidity()).submissions).toBe(0);
+    });
+
+    await test.step('unrelated renders preserve user-edit validity', async () => {
+      await field.evaluate(async (field: TextField) => {
+        field.placeholder = 'Enter a username';
+        await field.updateComplete;
+      });
+      expect(await readValidity()).toMatchObject({
+        nativeTooShort: true,
+        tooShort: true,
+      });
+    });
+
+    await test.step('exactly minlength characters permit submission', async () => {
+      await page.keyboard.type('de');
+      await expect.poll(readValidity).toMatchObject({
+        value: 'abcde',
+        nativeTooShort: false,
+        tooShort: false,
+        validationMessage: '',
+        valid: true,
+        formValid: true,
+        formValue: 'abcde',
+      });
+      await form.evaluate((form: HTMLFormElement) => form.requestSubmit());
+      expect((await readValidity()).submissions).toBe(1);
+    });
+
+    await test.step('deleting below minlength blocks submission again', async () => {
+      await page.keyboard.press('Backspace');
+      await page.keyboard.press('Backspace');
+      await expect.poll(readValidity).toMatchObject({
+        value: 'abc',
+        nativeTooShort: true,
+        tooShort: true,
+      });
+      await form.evaluate((form: HTMLFormElement) => form.requestSubmit());
+      expect((await readValidity()).submissions).toBe(1);
+    });
+
+    await test.step('an empty optional field remains valid', async () => {
+      await input.evaluate((input: HTMLInputElement) => input.select());
+      await page.keyboard.press('Backspace');
+      await expect.poll(readValidity).toMatchObject({
+        value: '',
+        tooShort: false,
+        formValid: true,
+      });
+    });
+
+    await test.step('programmatic values retain native validation semantics', async () => {
+      await field.evaluate(async (field: TextField) => {
+        field.value = 'abc';
+        await field.updateComplete;
+      });
+      expect(await readValidity()).toMatchObject({
+        inputValue: 'abc',
+        nativeTooShort: false,
+        tooShort: false,
+        formValid: true,
+        formValue: 'abc',
+      });
+    });
+  });
+
   test('fits the address matrix at 390px without horizontal scrolling', async ({
     page,
   }) => {

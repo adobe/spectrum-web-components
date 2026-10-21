@@ -80,6 +80,12 @@ const forceTextFieldStates = async ({
     ).toHaveAttribute('data-forced-focus-within');
     expect(field).toHaveAttribute('data-forced-focus-visible');
   }
+  for (const field of canvasElement.querySelectorAll(
+    'swc-text-field[data-force-state="focus-hover"]'
+  )) {
+    forcePseudoState(field, 'focus-within', '.swc-TextField-control');
+    forcePseudoState(field, 'hover', '.swc-TextField-control');
+  }
 };
 
 type TextFieldCase = {
@@ -97,7 +103,12 @@ type TextFieldCase = {
   fieldStatus?: TextFieldStatus;
   extraStyle?: string;
   lang?: string;
-  forceState?: 'hover' | 'focus-visible' | 'focus-within' | 'keyboard-focus';
+  forceState?:
+    | 'hover'
+    | 'focus-visible'
+    | 'focus-within'
+    | 'keyboard-focus'
+    | 'focus-hover';
 };
 
 const renderCase = ({
@@ -400,6 +411,23 @@ const permutationContent = () => html`
       }),
     ],
     'Keyboard focus'
+  )}
+  ${row(
+    [
+      renderCase({ label: 'Default', forceState: 'focus-hover' }),
+      renderCase({
+        label: 'Invalid',
+        fieldStatus: 'invalid',
+        errorText: 'Enter a valid value',
+        forceState: 'focus-hover',
+      }),
+      renderCase({
+        label: 'Disabled',
+        fieldStatus: 'disabled',
+        forceState: 'focus-hover',
+      }),
+    ],
+    'Focus within and hover'
   )}
   ${row(
     renderCase({
