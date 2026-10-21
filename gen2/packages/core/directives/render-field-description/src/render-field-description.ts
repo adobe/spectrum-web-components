@@ -22,7 +22,7 @@ export interface RenderFieldDescriptionOptions {
   hasDescriptionSlotContent: boolean;
   /** Whether slotted `error-text` content is present in the host's light DOM. */
   hasErrorTextSlotContent: boolean;
-  /** Whether the host is currently in an invalid state. Gates the error-text element. */
+  /** Whether the host is invalid. Hides the description and gates the error-text element. */
   invalid: boolean;
   /** Called with the rendered description element (or `undefined` on removal). */
   onDescriptionElement: (element: Element | undefined) => void;
@@ -32,8 +32,8 @@ export interface RenderFieldDescriptionOptions {
 
 /**
  * Renders the shared description/error-text markup for form-field
- * components. Returns `nothing` when there is no description and no active
- * (`invalid`) error message, so callers can interpolate unconditionally.
+ * components. Invalid fields show only supplied error text, never the description.
+ * Returns `nothing` when the current state has no message to show.
  *
  * Most consumers use `FieldDescriptionMixin`'s `renderFieldDescription()` instead, which calls
  * this with its resolved state and the element callbacks that build
@@ -49,11 +49,12 @@ export function renderFieldDescription({
   onErrorTextElement,
 }: RenderFieldDescriptionOptions): RenderFieldDescriptionResult {
   const showError = invalid && hasErrorTextSlotContent;
-  if (!hasDescriptionSlotContent && !showError) {
+  const showDescription = !invalid && hasDescriptionSlotContent;
+  if (!showDescription && !showError) {
     return nothing;
   }
   return html`
-    ${hasDescriptionSlotContent && !showError
+    ${showDescription
       ? html`
           <span class="swc-FormFieldDescription" ${ref(onDescriptionElement)}>
             <slot name="description"></slot>

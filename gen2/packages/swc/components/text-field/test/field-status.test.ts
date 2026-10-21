@@ -134,6 +134,37 @@ export const StatusTransitions: Story = {
 };
 StatusTransitions.storyName = 'Exclusive status transitions';
 
+export const InvalidWithoutErrorText: Story = {
+  render: () => html`
+    <swc-text-field value="alex">
+      <span slot="label">Username</span>
+      <span slot="description">Choose a username.</span>
+    </swc-text-field>
+  `,
+  play: async ({ canvasElement }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+
+    field.fieldStatus = 'invalid';
+    await field.updateComplete;
+    expect(
+      field.shadowRoot?.querySelector('.swc-FormFieldDescription')
+    ).toBeNull();
+    expect(
+      field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+    ).toBeNull();
+    expect(field.roleElement?.ariaDescribedByElements ?? []).toHaveLength(0);
+    expect(field.roleElement).toHaveAttribute('aria-invalid', 'true');
+    expect(
+      field.shadowRoot?.querySelector('.swc-TextField-invalidIcon')
+    ).toHaveAttribute('aria-hidden', 'true');
+    expect(field.checkValidity()).toBe(false);
+  },
+};
+InvalidWithoutErrorText.storyName = 'Invalid without error text';
+
 export const ValidationSources: Story = {
   ...StatusTransitions,
   play: async ({ canvasElement, step }) => {

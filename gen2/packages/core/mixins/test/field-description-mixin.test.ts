@@ -11,7 +11,7 @@
  */
 
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../stories/demo-hosts.js';
@@ -149,6 +149,93 @@ export const ErrorTextGatingTest: Story = {
 // ──────────────────────────────────────────────────────────────
 // TEST: Invalid state presentation
 // ──────────────────────────────────────────────────────────────
+
+export const InvalidWithoutErrorTextTest: Story = {
+  render: () => html`
+    <p id="field-description-no-error-external">External rules</p>
+    <demo-field-description-host
+      accessible-describedby="field-description-no-error-external"
+    >
+      <span slot="description">Help shown only when not invalid</span>
+    </demo-field-description-host>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = canvasElement.querySelector<DemoFieldDescriptionHost>(
+      'demo-field-description-host'
+    );
+    const external = canvasElement.querySelector(
+      '#field-description-no-error-external'
+    );
+    if (!host || !external) {
+      throw new Error('Description host or external description not found');
+    }
+    await host.updateComplete;
+
+    await step(
+      'invalid hides the description even without error text',
+      async () => {
+        host.invalid = true;
+        await host.updateComplete;
+        expect(
+          host.shadowRoot?.querySelector('.swc-FormFieldDescription')
+        ).toBeNull();
+        expect(
+          host.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+        ).toBeNull();
+        expect(host.roleElement?.ariaDescribedByElements).toEqual([external]);
+      }
+    );
+
+    await step(
+      'adding and removing error text never reveals the description while invalid',
+      async () => {
+        const errorText = document.createElement('span');
+        errorText.slot = 'error-text';
+        errorText.textContent = 'Enter a valid value.';
+        host.append(errorText);
+        await waitFor(() =>
+          expect(
+            host.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+          ).toBeVisible()
+        );
+        expect(
+          host.shadowRoot?.querySelector('.swc-FormFieldDescription')
+        ).toBeNull();
+        expect(host.roleElement?.ariaDescribedByElements).toEqual([
+          host.shadowRoot?.querySelector('.swc-FormFieldErrorText'),
+          external,
+        ]);
+        errorText.remove();
+        await waitFor(() => {
+          expect(
+            host.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+          ).toBeNull();
+          expect(
+            host.shadowRoot?.querySelector('.swc-FormFieldDescription')
+          ).toBeNull();
+          expect(host.roleElement?.ariaDescribedByElements).toEqual([external]);
+        });
+      }
+    );
+
+    await step(
+      'clearing invalid restores the description association',
+      async () => {
+        host.invalid = false;
+        await host.updateComplete;
+        const description = host.shadowRoot?.querySelector(
+          '.swc-FormFieldDescription'
+        );
+        expect(description).toBeVisible();
+        expect(host.roleElement?.ariaDescribedByElements).toEqual([
+          description,
+          external,
+        ]);
+      }
+    );
+  },
+};
+InvalidWithoutErrorTextTest.storyName = 'Invalid without error text';
 
 export const InvalidPresentationTest: Story = {
   render: () => html`

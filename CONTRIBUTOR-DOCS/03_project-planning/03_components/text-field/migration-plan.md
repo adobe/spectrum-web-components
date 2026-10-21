@@ -467,6 +467,7 @@ Planned rendering shape:
 
 - [x] `aria-invalid="true"` only when invalid (never explicit "false")
 - [x] error text replaces the description in `aria-describedby` only while `field-status="invalid"`; `aria-errormessage` intentionally not used (see [Decision log](#decision-log))
+- [x] Hide the slotted description while invalid even without error text; render no inline message or hidden-description association, preserve independent external description references, and restore the description when invalid clears
 - [x] `FieldAssociationController` wires `formAssociated`, `attachInternals`, `setFormValue`, `formResetCallback`, `formDisabledCallback`
 - [x] Invalid icon stays `aria-hidden="true"`; a valid checkmark remains deferred
 - [x] Textual necessity indicators contribute to accessible names; the decorative asterisk stays hidden and native `required` is preserved. Manual screen-reader verification remains pending.

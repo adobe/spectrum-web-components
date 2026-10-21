@@ -92,7 +92,7 @@ The default state is editable and accepts keyboard input.
 
 ### Invalid
 
-`field-status="invalid"` shows the slotted `error-text` in place of the description, associates it via `aria-describedby`, and blocks native constraint validation and submission when the field is eligible for validation. The application controls this state; native validation failures do not enable it automatically.
+`field-status="invalid"` hides the description and shows the slotted `error-text` when supplied, associating it via `aria-describedby`. Without error text, no inline message is shown; the invalid border and icon remain. The status blocks native constraint validation and submission when the field is eligible for validation. The application controls this state; native validation failures do not enable it automatically.
 
 <Canvas of={TextFieldStories.Invalid} />
 

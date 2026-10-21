@@ -128,7 +128,7 @@ If your Spectrum 1 code relied on the placeholder being used as the accessible n
 </swc-text-field>
 ```
 
-The `error-text` slot is shown in place of the `description` slot while `field-status="invalid"`. Do not manage that swap yourself.
+The `description` slot is hidden while `field-status="invalid"`, and the `error-text` slot is shown instead when supplied. Without error text, no inline message is shown. Do not manage that swap yourself.
 
 ### 4. Replace multiline fields
 
