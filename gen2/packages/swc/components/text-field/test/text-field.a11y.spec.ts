@@ -295,8 +295,8 @@ test.describe('Text field - ARIA Snapshots', () => {
     { story: 'read-only', snapshot: '- textbox "Username": sam.rivera' },
     { story: 'invalid', snapshot: '- textbox "Email address"' },
     {
-      story: 'disabled-invalid',
-      snapshot: '- textbox "Email address" [disabled]: not-an-email',
+      story: 'valid',
+      snapshot: '- textbox "Email address": person@example.com',
     },
   ]) {
     test(`exposes the ${story} state as a standalone story`, async ({
@@ -315,10 +315,6 @@ test.describe('Text field - ARIA Snapshots', () => {
         await expect(input).toHaveAttribute('readonly', '');
       } else if (story === 'invalid') {
         await expect(input).toHaveAttribute('aria-invalid', 'true');
-      } else if (story === 'disabled-invalid') {
-        await expect(input).toHaveAttribute('aria-invalid', 'true');
-        await expect(root.locator('.swc-FormFieldErrorText')).toBeVisible();
-        await expect(root.locator('.swc-FormFieldDescription')).toHaveCount(0);
       }
     });
   }
@@ -330,9 +326,16 @@ test.describe('Text field - ARIA Snapshots', () => {
       await page.emulateMedia({ forcedColors });
       const root = await gotoStory(
         page,
-        'components-text-field--disabled-invalid',
+        'components-text-field--invalid',
         'swc-text-field'
       );
+      await root.locator('swc-text-field').evaluate((field) => {
+        const fieldset = document.createElement('fieldset');
+        field.before(fieldset);
+        fieldset.append(field);
+        fieldset.disabled = true;
+      });
+      await expect(root.locator('input')).toBeDisabled();
       const error = root.locator('.swc-FormFieldErrorText');
       const labelColor = await root
         .locator('.swc-FormFieldLabel')

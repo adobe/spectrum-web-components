@@ -24,12 +24,14 @@ import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
 import {
   TEXT_FIELD_LABEL_POSITIONS,
   TEXT_FIELD_NECESSITY_INDICATORS,
+  TEXT_FIELD_STATUSES,
   TEXT_FIELD_TYPES,
   TEXT_FIELD_VALID_SIZES,
   type TextFieldAutocomplete,
   type TextFieldLabelPosition,
   type TextFieldNecessityIndicator,
   type TextFieldSize,
+  type TextFieldStatus,
   type TextFieldType,
 } from './TextField.types.js';
 
@@ -44,7 +46,7 @@ const DOCS_URL =
  * @slot label - Visible label content, rendered as a same-root `<label for>` by `LabellingMixin`.
  * @slot prefix - Non-interactive content shown before the input inside the field (e.g. an icon, symbol, or avatar).
  * @slot description - Guidance / non-error help text, associated via `aria-describedby`.
- * @slot error-text - Error message shown when `invalid`, folded into `aria-describedby`.
+ * @slot error-text - Error message shown when `field-status="invalid"`, folded into `aria-describedby`.
  */
 export abstract class TextFieldBase extends SizedMixin(
   FieldDescriptionMixin(LabellingMixin(SpectrumElement)),
@@ -133,30 +135,24 @@ export abstract class TextFieldBase extends SizedMixin(
   public minlength?: number;
 
   /**
-   * Whether the field is focusable but not editable. Distinct from `disabled`.
-   */
-  @property({ type: Boolean, reflect: true })
-  public readonly = false;
-
-  /**
    * Whether the field must have a value for the form to submit.
    */
   @property({ type: Boolean, reflect: true })
   public required = false;
 
   /**
-   * Whether the application marks the field invalid. Shows the error state and
-   * blocks constraint validation independently of native or custom errors.
+   * The application-authored status. Disabled, invalid, valid, and read-only
+   * are mutually exclusive; `undefined` leaves the field editable with no
+   * authored validation presentation. Invalid blocks eligible validation.
+   * Valid does not override native constraints or custom errors.
+   * The valid-state checkmark remains deferred.
    */
-  @property({ type: Boolean, reflect: true })
-  public invalid = false;
-
-  /**
-   * Whether the field is in a valid state. The value lets consumers react to a
-   * valid state; the visual checkmark is deferred.
-   */
-  @property({ type: Boolean, reflect: true })
-  public valid = false;
+  @property({
+    attribute: 'field-status',
+    reflect: true,
+    converter: { fromAttribute: (value: string | null) => value ?? undefined },
+  })
+  public fieldStatus?: TextFieldStatus;
 
   /**
    * Position of the visible label relative to the input.
@@ -179,12 +175,6 @@ export abstract class TextFieldBase extends SizedMixin(
     attribute: 'necessity-indicator',
   })
   public necessityIndicator: TextFieldNecessityIndicator = 'icon';
-
-  /**
-   * Whether the field is disabled: not editable and removed from tab order.
-   */
-  @property({ type: Boolean, reflect: true })
-  public disabled = false;
 
   // ──────────────────────
   //     IMPLEMENTATION
@@ -227,11 +217,11 @@ export abstract class TextFieldBase extends SizedMixin(
   }
 
   /**
-   * The host's own `disabled` OR the cascaded form / `<fieldset disabled>` state.
+   * The authored disabled status OR the native disabled callback state.
    * The subclass render reads it to disable the inner control.
    */
   protected get effectiveDisabled(): boolean {
-    return this.disabled || this.fieldAssoc.formDisabled;
+    return this.fieldStatus === 'disabled' || this.fieldAssoc.formDisabled;
   }
 
   /** Exposes the placeholder to `LabellingMixin`'s placeholder-only-name warning. */
@@ -265,7 +255,7 @@ export abstract class TextFieldBase extends SizedMixin(
   }
 
   /**
-   * Sets a custom validation error without changing `invalid`. Pass an empty
+   * Sets a custom validation error without changing `fieldStatus`. Pass an empty
    * string to clear only this error. Calls before first render are preserved.
    * Once rendered, validity is synchronized immediately.
    */
@@ -402,7 +392,8 @@ export abstract class TextFieldBase extends SizedMixin(
     const input = this.inputElement;
     if (input) {
       const message =
-        this.customValidityMessage || (this.invalid ? 'Invalid value.' : '');
+        this.customValidityMessage ||
+        (this.fieldStatus === 'invalid' ? 'Invalid value.' : '');
       input.setCustomValidity(message);
       this.internals.setValidity(
         input.validity,
@@ -433,8 +424,17 @@ export abstract class TextFieldBase extends SizedMixin(
       valid: TEXT_FIELD_NECESSITY_INDICATORS,
       url: DOCS_URL,
     });
-    if (changedProperties.has('disabled')) {
-      this.toggleAttribute('disabled', this.disabled);
+    if (this.fieldStatus !== undefined) {
+      validateEnum(this, {
+        prop: 'field-status',
+        value: this.fieldStatus,
+        valid: TEXT_FIELD_STATUSES,
+        url: DOCS_URL,
+      });
+    }
+    if (changedProperties.has('fieldStatus')) {
+      this.toggleAttribute('disabled', this.fieldStatus === 'disabled');
+      this.toggleAttribute('readonly', this.fieldStatus === 'readonly');
     }
     super.update(changedProperties);
     // Push the current value into the form; exclude it entirely when disabled.

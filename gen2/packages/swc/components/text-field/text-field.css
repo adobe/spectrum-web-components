@@ -168,23 +168,23 @@ slot[name="prefix"]::slotted(*) {
 
 /* ── Invalid ──────────────────────────────────────── */
 
-:host([invalid]:not(:disabled)) .swc-TextField-control {
+:host([field-status="invalid"]:not(:disabled)) .swc-TextField-control {
   border-color: token("negative-border-color-default");
 }
 
-:host([invalid]:not(:disabled)) .swc-TextField-control:hover {
+:host([field-status="invalid"]:not(:disabled)) .swc-TextField-control:hover {
   border-color: token("negative-border-color-hover");
 }
 
-:host([invalid]:not(:disabled)) .swc-TextField-control:focus-within {
+:host([field-status="invalid"]:not(:disabled)) .swc-TextField-control:focus-within {
   border-color: token("negative-border-color-focus");
 }
 
-:host([invalid]:not(:disabled)) .swc-TextField-control:focus-within:hover {
+:host([field-status="invalid"]:not(:disabled)) .swc-TextField-control:focus-within:hover {
   border-color: token("negative-border-color-focus-hover");
 }
 
-:host([invalid]:not(:disabled)) .swc-TextField-invalidIcon {
+:host([field-status="invalid"]:not(:disabled)) .swc-TextField-invalidIcon {
   --swc-icon-color: token("negative-visual-color");
 }
 
@@ -243,7 +243,7 @@ slot[name="prefix"]::slotted(*) {
     outline-color: Highlight;
   }
 
-  :host([invalid]:not(:disabled)) .swc-TextField-invalidIcon {
+  :host([field-status="invalid"]:not(:disabled)) .swc-TextField-invalidIcon {
     --swc-icon-color: CanvasText;
   }
 }

@@ -28,6 +28,8 @@ import * as Stories from './stories/field-description-mixin.stories';
 2. Override `roleElement` to return the element the description/error-message relationships should be wired onto.
 3. Call `renderFieldDescription()` in your template.
 
+For a host whose invalid state comes from another API, pass it explicitly, for example `renderFieldDescription({ invalid: this.fieldStatus === 'invalid' })` in text field. The component owns resolving that state; the mixin owns rendering and associating the appropriate description or error text.
+
 ```typescript
 import { html, LitElement } from 'lit';
 import { FieldDescriptionMixin } from '@adobe/spectrum-wc-core/mixins';

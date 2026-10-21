@@ -35,6 +35,13 @@ export const TEXT_FIELD_LABEL_POSITIONS = ['top', 'side'] as const;
 
 export const TEXT_FIELD_NECESSITY_INDICATORS = ['icon', 'label'] as const;
 
+export const TEXT_FIELD_STATUSES = [
+  'disabled',
+  'invalid',
+  'valid',
+  'readonly',
+] as const;
+
 // ──────────────────
 //     TYPES
 // ──────────────────
@@ -45,6 +52,7 @@ export type TextFieldLabelPosition =
   (typeof TEXT_FIELD_LABEL_POSITIONS)[number];
 export type TextFieldNecessityIndicator =
   (typeof TEXT_FIELD_NECESSITY_INDICATORS)[number];
+export type TextFieldStatus = (typeof TEXT_FIELD_STATUSES)[number];
 
 /**
  * Valid `autocomplete` tokens for the text field. Aliases the platform `AutoFill` union

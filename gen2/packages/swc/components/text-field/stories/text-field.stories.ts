@@ -17,6 +17,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import {
   TEXT_FIELD_LABEL_POSITIONS,
   TEXT_FIELD_NECESSITY_INDICATORS,
+  TEXT_FIELD_STATUSES,
   TEXT_FIELD_VALID_SIZES,
 } from '@adobe/spectrum-wc-core/components/text-field';
 
@@ -56,6 +57,17 @@ argTypes.size = {
   control: { type: 'select' },
   options: TEXT_FIELD_VALID_SIZES,
 };
+
+argTypes['field-status'] = {
+  ...argTypes['field-status'],
+  control: { type: 'select' },
+  options: [undefined, ...TEXT_FIELD_STATUSES],
+};
+args['field-status'] = undefined;
+
+for (const attribute of ['disabled', 'readonly']) {
+  argTypes[attribute] = { table: { disable: true }, control: false };
+}
 
 /**
  * A single-line text field for entering and editing text.
@@ -138,7 +150,11 @@ export const Anatomy: Story = {
       <span slot="label">Email address</span>
       <span slot="description">Used for order updates only.</span>
     </swc-text-field>
-    <swc-text-field autocomplete="email" invalid style="inline-size: 220px;">
+    <swc-text-field
+      autocomplete="email"
+      field-status="invalid"
+      style="inline-size: 220px;"
+    >
       <span slot="label">Email address</span>
       <span slot="error-text">Enter a valid email address.</span>
     </swc-text-field>
@@ -455,7 +471,7 @@ export const Required: Story = {
 
 export const Disabled: Story = {
   args: {
-    disabled: true,
+    'field-status': 'disabled',
     value: 'person@example.com',
     'label-slot': 'Email address',
   },
@@ -467,7 +483,7 @@ export const Disabled: Story = {
 
 export const ReadOnly: Story = {
   args: {
-    readonly: true,
+    'field-status': 'readonly',
     value: 'sam.rivera',
     'label-slot': 'Username',
   },
@@ -480,7 +496,7 @@ ReadOnly.storyName = 'Read-only';
 
 export const Invalid: Story = {
   args: {
-    invalid: true,
+    'field-status': 'invalid',
     autocomplete: 'email',
     'label-slot': 'Email address',
     'description-slot': "We'll never share your email.",
@@ -492,32 +508,17 @@ export const Invalid: Story = {
   },
 };
 
-export const DisabledInvalid: Story = {
-  render: () => html`
-    <swc-text-field autocomplete="email" disabled invalid value="not-an-email">
-      <span slot="label">Email address</span>
-      <span slot="description">We'll never share your email.</span>
-      <span id="disabled-field-error" slot="error-text">
-        Enter a valid email address.
-      </span>
-    </swc-text-field>
-  `,
+export const Valid: Story = {
+  args: {
+    'field-status': 'valid',
+    value: 'person@example.com',
+    'label-slot': 'Email address',
+  },
   tags: ['states'],
   parameters: {
-    a11y: {
-      // WCAG 1.4.3 exempts text that is part of an inactive UI component.
-      // axe cannot infer that this slotted error text belongs to the
-      // disabled custom element, so exclude only its color-contrast result.
-      exclude: {
-        'color-contrast': ['#disabled-field-error'],
-      },
-    },
-    styles: {
-      'inline-size': '220px',
-    },
+    styles: { 'inline-size': '220px' },
   },
 };
-DisabledInvalid.storyName = 'Disabled and invalid';
 
 // ──────────────────────────────
 //    BEHAVIORS STORIES
@@ -594,12 +595,12 @@ const handleSubmit = async (event: SubmitEvent): Promise<void> => {
     return;
   }
   // Clear the demo's previous error before checking the current constraints.
-  field.invalid = false;
+  field.fieldStatus = undefined;
   await field.updateComplete;
-  field.invalid = !field.checkValidity();
+  field.fieldStatus = field.checkValidity() ? undefined : 'invalid';
   await field.updateComplete;
   updateValidity(form);
-  if (field.invalid) {
+  if (field.fieldStatus === 'invalid') {
     output.value = 'Submission blocked: the field is invalid.';
     return;
   }

@@ -11,6 +11,7 @@
  */
 
 import { html, nothing } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
@@ -79,7 +80,7 @@ const renderModPropertyCase = (
       <swc-text-field
         style=${overrideStyle}
         value="Sample value"
-        ?invalid=${showsError}
+        field-status=${ifDefined(showsError ? 'invalid' : undefined)}
         label-position="side"
       >
         <span slot="label">${label}</span>

@@ -151,15 +151,17 @@ export class TextField extends TextFieldBase {
             autocomplete=${ifDefined(this.autocomplete)}
             maxlength=${ifDefined(this.maxlength)}
             minlength=${ifDefined(this.minlength)}
-            ?readonly=${this.readonly}
+            ?readonly=${this.fieldStatus === 'readonly'}
             ?required=${this.required}
             ?disabled=${this.effectiveDisabled}
-            aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
+            aria-invalid=${ifDefined(
+              this.fieldStatus === 'invalid' ? 'true' : undefined
+            )}
             @input=${this.handleInput}
             @change=${this.handleChange}
             @keydown=${this.handleKeydown}
           />
-          ${this.invalid && !this.effectiveDisabled
+          ${this.fieldStatus === 'invalid' && !this.effectiveDisabled
             ? html`
                 <swc-icon-alert-triangle
                   class="swc-TextField-invalidIcon"
@@ -168,7 +170,9 @@ export class TextField extends TextFieldBase {
               `
             : nothing}
         </div>
-        ${this.renderFieldDescription()}
+        ${this.renderFieldDescription({
+          invalid: this.fieldStatus === 'invalid',
+        })}
       </div>
     `;
   }
