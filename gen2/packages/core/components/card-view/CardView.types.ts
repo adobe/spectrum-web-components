@@ -10,6 +10,12 @@
  * governing permissions and limitations under the License.
  */
 export type CardViewLayout = 'grid' | 'waterfall';
+export type CardViewNavigation =
+  | 'legacy'
+  | 'spatial'
+  | 'spatial-wrap'
+  | 'sequential-axis'
+  | 'cycle';
 export type CardViewModel =
   | 'baseline'
   | 'sequential'

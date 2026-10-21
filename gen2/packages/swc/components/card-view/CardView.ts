@@ -24,6 +24,7 @@ import {
   CardViewBase,
   type CardViewItem,
   type CardViewModel,
+  type CardViewNavigation,
   type CardViewPosition,
 } from '@adobe/spectrum-wc-core/components/card-view/index.js';
 
@@ -431,8 +432,20 @@ export class CardViewOption1E extends CardViewBase {
   }
 }
 
+export class CardViewOption1A extends CardViewOption1E {
+  protected override readonly navigation: CardViewNavigation = 'spatial';
+}
+
+export class CardViewOption1B extends CardViewOption1A {
+  protected override readonly navigation: CardViewNavigation = 'spatial-wrap';
+}
+
 export class CardViewOption1C extends CardViewOption1E {
   protected override readonly model: CardViewModel = 'sequential';
+}
+
+export class CardViewOption1D extends CardViewOption1A {
+  protected override readonly navigation: CardViewNavigation = 'cycle';
 }
 
 export class CardViewOption1F extends CardViewOption1E {
@@ -454,6 +467,19 @@ export class CardViewOption4A extends CardViewOption1E {
  */
 export class CardViewOption2A extends CardViewOption1E {
   protected override readonly model: CardViewModel = 'single-row';
+}
+
+export class CardViewOption2B extends CardViewOption2A {
+  protected override readonly navigation: CardViewNavigation = 'spatial-wrap';
+}
+
+export class CardViewOption2C extends CardViewOption2A {
+  protected override readonly navigation: CardViewNavigation =
+    'sequential-axis';
+}
+
+export class CardViewOption2D extends CardViewOption2A {
+  protected override readonly navigation: CardViewNavigation = 'cycle';
 }
 
 /**

@@ -14,6 +14,12 @@ import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/web-components';
 
 import '../swc-card-view-option-1e.js';
+import '../swc-card-view-option-1a.js';
+import '../swc-card-view-option-1b.js';
+import '../swc-card-view-option-1d.js';
+import '../swc-card-view-option-2b.js';
+import '../swc-card-view-option-2c.js';
+import '../swc-card-view-option-2d.js';
 import '../swc-card-view-option-1c.js';
 import '../swc-card-view-option-1f.js';
 import '../swc-card-view-option-3a.js';
@@ -76,7 +82,9 @@ export default {
 } satisfies Meta;
 
 export const GridNavigationMatrix: StoryObj = {
-  render: () => html`<div></div>`,
+  render: () => html`
+    <div></div>
+  `,
   play: async ({ canvasElement }) => {
     for (const family of [1, 2]) {
       for (const variation of ['a', 'b', 'c', 'd']) {
@@ -122,9 +130,9 @@ export const GridNavigationMatrix: StoryObj = {
           expect(await move(0, 'ArrowUp')).toBe(
             variation === 'b' ? 6 : variation === 'd' ? 7 : 0
           );
-          expect(view.shadowRoot!.querySelectorAll('[role="row"]')).toHaveLength(
-            family === 1 ? 8 : 1
-          );
+          expect(
+            view.shadowRoot!.querySelectorAll('[role="row"]')
+          ).toHaveLength(family === 1 ? 8 : 1);
           if (variation === 'd') {
             for (const key of [
               'ArrowLeft',

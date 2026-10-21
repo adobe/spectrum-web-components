@@ -16,6 +16,7 @@ import type {
   CardViewItem,
   CardViewLayout,
   CardViewModel,
+  CardViewNavigation,
   CardViewPosition,
   CardViewSelectionMode,
 } from './CardView.types.js';
@@ -46,6 +47,7 @@ export abstract class CardViewBase extends SpectrumElement {
   }
 
   protected abstract readonly model: CardViewModel;
+  protected readonly navigation: CardViewNavigation = 'legacy';
   protected abstract get positions(): CardViewPosition[];
   protected abstract get focusTargets(): HTMLElement[];
 
@@ -209,6 +211,73 @@ export abstract class CardViewBase extends SpectrumElement {
     return best;
   }
 
+  protected wrappedSpatial(index: number, key: string): number {
+    const next = this.spatial(index, key);
+    const current = this.positions[index];
+    if (next !== index || !current) {
+      return next;
+    }
+    const horizontal = key === 'ArrowLeft' || key === 'ArrowRight';
+    const forward = key === 'ArrowRight' || key === 'ArrowDown';
+    const aligned = this.positions
+      .map((position, itemIndex) => ({ ...position, itemIndex }))
+      .filter((position) => {
+        if (
+          position.itemIndex === index ||
+          this.items[position.itemIndex]?.disabled
+        ) {
+          return false;
+        }
+        return horizontal
+          ? Math.min(
+              current.top + current.height,
+              position.top + position.height
+            ) > Math.max(current.top, position.top)
+          : Math.min(
+              current.left + current.width,
+              position.left + position.width
+            ) > Math.max(current.left, position.left);
+      });
+    const edge = (position: CardViewPosition) =>
+      horizontal
+        ? forward
+          ? position.left
+          : -(position.left + position.width)
+        : forward
+          ? position.top
+          : -(position.top + position.height);
+    const offset = (position: CardViewPosition) =>
+      Math.abs(
+        horizontal
+          ? position.top +
+              position.height / 2 -
+              current.top -
+              current.height / 2
+          : position.left +
+              position.width / 2 -
+              current.left -
+              current.width / 2
+      );
+    aligned.sort(
+      (first, second) =>
+        edge(first) - edge(second) ||
+        offset(first) - offset(second) ||
+        first.itemIndex - second.itemIndex
+    );
+    return aligned[0]?.itemIndex ?? index;
+  }
+
+  protected cycle(index: number, direction: number): number {
+    for (let step = 1; step <= this.items.length; step++) {
+      const next =
+        (index + direction * step + this.items.length) % this.items.length;
+      if (!this.items[next].disabled) {
+        return next;
+      }
+    }
+    return index;
+  }
+
   protected columnStep(index: number, direction: number): number {
     const order = this.positions
       .map((position, itemIndex) => ({ ...position, itemIndex }))
@@ -299,6 +368,23 @@ export abstract class CardViewBase extends SpectrumElement {
       next = this.items.findIndex((item) => !item.disabled);
     } else if (event.key === 'End') {
       next = this.items.map((item) => !item.disabled).lastIndexOf(true);
+    } else if (
+      this.navigation !== 'legacy' &&
+      ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)
+    ) {
+      const horizontal =
+        event.key === 'ArrowLeft' || event.key === 'ArrowRight';
+      const forward = event.key === 'ArrowRight' || event.key === 'ArrowDown';
+      const rtl = getComputedStyle(this).direction === 'rtl';
+      const direction = (forward ? 1 : -1) * (horizontal && rtl ? -1 : 1);
+      next =
+        this.navigation === 'cycle'
+          ? this.cycle(index, direction)
+          : this.navigation === 'sequential-axis' && horizontal
+            ? this.sequential(index, direction)
+            : this.navigation === 'spatial-wrap'
+              ? this.wrappedSpatial(index, event.key)
+              : this.spatial(index, event.key);
     } else if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
       if (this.model === 'vertical' && this.layout === 'waterfall') {
         return;
