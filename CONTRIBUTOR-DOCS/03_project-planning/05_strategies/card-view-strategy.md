@@ -35,6 +35,8 @@
 
 <!-- Document content (editable) -->
 
+For an illustrated summary, read [The card view oracle](card-strategy-tldr.html).
+
 ## Purpose and current recommendation
 
 Choose an accessible interaction model for Spectrum Web Components (SWC) card view. Users need to reach every card, understand their position and selection, and use card actions without confusing keyboard behavior.
