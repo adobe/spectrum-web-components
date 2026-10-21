@@ -55,9 +55,9 @@
 
 <!-- Document content (editable) -->
 
-> **Epic SWC-####** · Planning output. Must be reviewed before implementation begins.
+> **Epic SWC-2569** · Planning output for SWC-2571. Must be reviewed before implementation begins.
 >
-> **Status: provisional draft.** The epic number (Q11), the Figma `S2 / Web` PNG (Q1), and the Jira-sourced open gen1 issues table (Q12) were not available while drafting. Sections that depend on them are marked **provisional**. The [accessibility migration analysis](./accessibility-migration-analysis.md) is authoritative for gen2 semantics. The in-flight [checkbox migration plan (#6834)](https://github.com/adobe/spectrum-web-components/pull/6834) is treated as the closest precedent: switch shares the same native-input-in-shadow-DOM and form-associated foundation, and this plan deliberately aligns with checkbox's decisions so the two toggle controls behave the same way wherever their semantics overlap.
+> **Status: ready for review, with provisional architecture decisions.** The Figma `S2 / Web` frame, the epic, and the Jira open-issue query are now incorporated (Q1, Q11, Q12 in the [Decision log](#decision-log)). Q4, Q5, Q6, and Q13 still need confirmation and are marked **provisional** where they affect a section. The [accessibility migration analysis](./accessibility-migration-analysis.md) is authoritative for gen2 semantics. The in-flight [checkbox migration plan (#6834)](https://github.com/adobe/spectrum-web-components/pull/6834) is treated as the closest precedent: switch shares the same native-input-in-shadow-DOM and form-associated foundation, and this plan deliberately aligns with checkbox's decisions so the two toggle controls behave the same way wherever their semantics overlap.
 
 ---
 
@@ -68,6 +68,7 @@
 - **Built on the shared form foundation from the text field epic.** `LabellingMixin` (`label` slot, `accessible-label`, `accessible-labelledby`), `FieldDescriptionMixin` (`description` and `error-text` slots, `accessible-describedby`), and `FieldAssociationController` exist only on the unmerged text field branch ([#6724](https://github.com/adobe/spectrum-web-components/pull/6724)). Switch implementation cannot start before that merges (Q13).
 - **Read-only gets fixed (B14).** 1st-gen inherits `CheckboxMixin`'s hack of disabling the inner input, so a read-only switch is announced as disabled and leaves the Tab order. gen2 keeps it focusable, exposes `aria-readonly="true"`, and blocks the toggle, matching checkbox.
 - **Largest consumer-facing changes:** label content moves to a named `label` slot (B1); the `Focusable` focus/tabindex proxy surface is removed in favor of `delegatesFocus` (B7); the `checked` attribute becomes the default state (B9); `change` is no longer cancelable (B10); all 46 `--mod-switch-*` properties are removed (B12).
+- **Visual options carry over.** The [Figma `S2 / Web` switch frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9397-4673) confirms sizes `s`/`m`/`l`/`xl`, not selected and selected, `emphasized` (accent fill when selected only), and default, hover, and disabled states. The S2 down-state handle shift comes from Spectrum CSS.
 - **Biggest open decision: shared toggle logic with checkbox (Q4).** The checkbox plan chose "no shared base class; extract a mixin if duplication grows during switch's migration." Most of switch's core behavior (B9, B10, B14, B16, B17, B19) is identical to checkbox's, so this plan recommends extracting that logic into a shared core mixin during switch's API phase. This needs explicit confirmation.
 
 ### Most blocking open questions
@@ -76,9 +77,7 @@
 - **Q5** in [Architecture and behavior](#architecture-and-behavior): whether `swc-switch` ships `invalid` and `error-text`. The accessibility analysis and React S2 say yes; the checkbox plan's Q4 rationale says switch has no `invalid`. Changes the public API.
 - **Q6** in [Architecture and behavior](#architecture-and-behavior): how `description` and `error-text` coexist while invalid. Shares checkbox's open Q7; switch should adopt the same resolution. Blocks the API phase.
 - **Q13** in [Scope and prerequisites](#scope-and-prerequisites): sequencing behind the text field foundation and `swc-checkbox`. Determines when Setup can start.
-- **Q1** in [Design](#design): Figma `S2 / Web` PNG not yet supplied, so the visual matrix is provisional.
-
-Q11 (epic number) and Q12 (Jira open gen1 issues) are required before the plan is finalized but do not change any recommendation.
+Q2 and Q3 (invalid and read-only visuals, which the Figma frame does not define) and Q7 to Q10 are open but do not block implementation.
 
 ---
 
@@ -237,9 +236,11 @@ No `aria-checked` is hand-written: a native checkbox input with `role="switch"` 
 
 ## Open gen1 issues
 
-| Jira | Type | Status (snapshot) | Summary | Notes |
-| ---- | ---- | ----------------- | ------- | ----- |
-| Not yet queried | n/a | n/a | Jira was unreachable while drafting (Q12). | Run `project = SWC AND component = "Switch" AND statusCategory != Done AND type not in (Epic, Initiative)`, drop rows labeled `a11y` or `gen2`, and replace this row. A GitHub search for open `sp-switch` issues returned none. |
+<!-- Queried live: project = SWC AND component = "Switch" AND statusCategory != Done AND type not in (Epic, Initiative). All six results (SWC-2571 to SWC-2576) are this epic's `gen2` phase tickets and are excluded by label. A GitHub search for open `sp-switch` issues also returned none. -->
+
+| Jira | Type | Status (snapshot) | Summary |
+| ---- | ---- | ----------------- | ------- |
+| None | n/a | n/a | No open gen1 issues; every open Switch ticket carries the `gen2` label. |
 
 ## Migration sequencing and prerequisites
 
@@ -337,7 +338,7 @@ Unchanged from 1st-gen: the host sets no `role`, and <kbd>Enter</kbd> does not t
 
 ## gen2 API decisions
 
-These are derived from the 1st-gen implementation, the React S2 implementation, Spectrum CSS `spectrum-two`, the [accessibility migration analysis](./accessibility-migration-analysis.md), the [forms strategy RFC](../../05_strategies/forms-strategy-rfc.md), and the checkbox plan. The Figma `S2 / Web` switch frame was not available as a PNG while drafting (Q1); visual items cite the Figma states described in the accessibility analysis. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
+These are derived from the 1st-gen implementation, the [Figma `S2 / Web` switch component frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9397-4673), the React S2 implementation, Spectrum CSS `spectrum-two`, the [accessibility migration analysis](./accessibility-migration-analysis.md), the [forms strategy RFC](../../05_strategies/forms-strategy-rfc.md), and the checkbox plan. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
 
 - **Confirmed**: directly supported by source material
 - **Inferred**: recommended based on multiple signals, but not explicitly specified in one authoritative source
@@ -371,17 +372,24 @@ Events: `change` (`Event`, `bubbles`, `composed`, not cancelable; B10). The nati
 
 #### Visual matrix (gen2)
 
-**Provisional (Q1).** Based on the Figma `S2 / Web` switch states listed in the [accessibility analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties), Spectrum CSS `spectrum-two`, and React S2:
+**Confirmed** by the [Figma `S2 / Web` switch component frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9397-4673), which defines 36 variants: `Size` (Small, Medium, Large, Extra-large) × `State` (Default, Hover, Disabled) × three selection rows (Not selected; Selected; Selected and Emphasized):
 
-| Selection | Default | Emphasized | Hover | Down | Disabled |
-| --------- | ------- | ---------- | ----- | ---- | -------- |
-| Not selected | Yes | Same as default | Yes | Yes | Yes |
-| Selected | Yes, neutral fill | Yes, accent fill | Yes | Yes | Yes, gray |
+| Selection | Default | Hover | Disabled |
+| --------- | ------- | ----- | -------- |
+| Not selected | Yes, neutral outline track | Yes, darker outline | Yes, gray outline and label |
+| Selected | Yes, neutral fill | Yes, darker fill | Yes, gray fill and label |
+| Selected + emphasized | Yes, accent (blue) fill | Yes, darker accent fill | Yes, gray fill (identical to disabled selected) |
+
+Figma has no "emphasized, not selected" variant: `emphasized` changes only the selected fill, which matches Spectrum CSS (the `--emphasized` modifier overrides only the `selected` color tokens). Disabled ignores `emphasized`.
 
 Additional presentation modes:
 
-- Sizes `s`, `m`, `l`, `xl` (**Confirmed**).
-- Label text wrap: the label wraps and the track stays aligned to the first line. CSS behavior, not a property (**Inferred**; confirm against the Figma PNG).
+- Sizes `s`, `m`, `l`, `xl` (**Confirmed** by Figma; default `m` matches the Figma playground and React).
+- Every Figma variant includes a visible "Label"; the hero example shows a settings list ("Available offline", "Require password", "Allow commenting") with one switch per row.
+- Label text wrap: the label wraps and the track stays aligned to the first line. CSS behavior, not a property (**Inferred**; Figma shows single-line labels only).
+
+Not shown in the Figma frame, sourced elsewhere:
+
 - **Down (active):** S2 perspective shift on the handle, new for S2 (**Confirmed** by the rendering analysis and Spectrum CSS).
 - **Focus-visible:** Spectrum CSS focus ring on `.spectrum-Switch-switch::after` (**Confirmed** by Spectrum CSS).
 - **RTL:** handle travel flips with `:dir(rtl)` (**Confirmed** by Spectrum CSS).
@@ -454,9 +462,9 @@ Planned rendering shape:
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] gen2 API decisions drafted
-- [ ] Figma `S2 / Web` switch component frame reviewed as PNG (Q1)
-- [ ] Open gen1 issues table populated from Jira (Q12)
-- [ ] Epic number confirmed (Q11)
+- [x] [Figma `S2 / Web` switch component frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9397-4673) reviewed (Q1)
+- [x] Open gen1 issues table populated from Jira (Q12)
+- [x] Epic number confirmed: SWC-2569 (Q11)
 - [ ] Q4, Q5, and Q13 confirmed
 - [ ] Plan reviewed by at least one other engineer
 
@@ -487,7 +495,7 @@ Planned rendering shape:
 #### Alignment checks
 
 - [ ] `form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, and `reportValidity()` exist on the host with the same types as `swc-text-field` and `swc-checkbox`
-- [ ] Property names and defaults match React S2 `Switch` and the Figma PNG (Q1)
+- [ ] Property names and defaults match React S2 `Switch` and the Figma `Size`/`State`/`Selected`/`Emphasized` variant properties
 
 ### Styling
 
@@ -593,7 +601,7 @@ Accessibility (`switch.a11y.spec.ts` plus Storybook axe):
 
 #### Visual regression
 
-- [ ] VRT for every cell of the visual matrix in [Public API](#public-api), at each size
+- [ ] VRT for every cell of the Figma visual matrix in [Public API](#public-api) (36 variants: 4 sizes × 3 states × 3 selection rows)
 - [ ] VRT for down state, including RTL
 - [ ] VRT for wrapped labels at every size
 - [ ] VRT for focus-visible ring, including that it is not clipped
@@ -617,7 +625,7 @@ Accessibility (`switch.a11y.spec.ts` plus Storybook axe):
 
 - [ ] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
 - [ ] Status table in workstream doc updated
-- [ ] PR created with description referencing Epic SWC-####
+- [ ] PR created with description referencing Epic SWC-2569
 - [ ] Peer engineer sign-off
 
 ---
@@ -630,9 +638,8 @@ During drafting, this section tracks active blockers and open questions. As each
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q1 | Figma `S2 / Web` switch component frame (with variants) not supplied as a PNG. The visual matrix uses the states listed in the accessibility analysis plus Spectrum CSS and React. Next action: copy the frame as PNG and confirm the matrix, label wrap, and any states not listed. | Yes, before finalizing | Open | Design + implementation |
-| Q2 | Invalid visual: recommend no track treatment, with invalid conveyed by `error-text` (React S2 has no invalid track styling; Spectrum CSS has no `.is-invalid` for switch). Confirm with Design once Q5 is settled. | No | Open | Design |
-| Q3 | Read-only visual: recommend no distinct treatment and suppressing the down-state shift, matching checkbox's Q2. Confirm with Design. | No | Open | Design |
+| Q2 | Invalid visual (not defined in the Figma frame): recommend no track treatment, with invalid conveyed by `error-text` (React S2 has no invalid track styling; Spectrum CSS has no `.is-invalid` for switch). Confirm with Design once Q5 is settled. | No | Open | Design |
+| Q3 | Read-only visual (not defined in the Figma frame): recommend no distinct treatment and suppressing the down-state shift, matching checkbox's Q2. Confirm with Design. | No | Open | Design |
 
 ### Architecture and behavior
 
@@ -650,10 +657,8 @@ During drafting, this section tracks active blockers and open questions. As each
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q11 | Epic number for the switch migration is not yet known; the header and Review checklist keep `Epic SWC-####` until it is supplied. The accessibility analysis PR referenced SWC-2570, which likely sits under the same epic. | Yes, before finalizing | Open | Ticket owner |
-| Q12 | Open gen1 issues table: Jira was unreachable while drafting. Run the JQL in [Open gen1 issues](#open-gen1-issues), drop `a11y`/`gen2`-labeled rows, and replace the placeholder row. | Yes, before finalizing | Open | Ticket owner |
 | Q13 | Sequencing: start Setup after the text field foundation merges ([#6724](https://github.com/adobe/spectrum-web-components/pull/6724)) and after `swc-checkbox`'s API phase ([#6834](https://github.com/adobe/spectrum-web-components/pull/6834)), so Q4's mixin is extracted from tested code and Q6/Q10 inherit checkbox's answers. Alternative: start in parallel with checkbox and co-design the mixin. Must confirm. | Yes | Open: provisional recommendation | Team |
-| Q14 | File `deferred` tickets under the switch epic for any Additive items the team wants scheduled (A5 is the only candidate; A1 to A4 are on-request or come with shared work). Then replace this row with the deferred-ticket table. | No | Open | Team |
+| Q14 | File `deferred` tickets under Epic SWC-2569 for any Additive items the team wants scheduled (A5 is the only candidate; A1 to A4 are on-request or come with shared work). Then replace this row with the deferred-ticket table. | No | Open | Team |
 
 ---
 
@@ -670,6 +675,9 @@ During drafting, this section tracks active blockers and open questions. As each
 | C5 | No custom <kbd>Enter</kbd> activation. | Native behavior and the accessibility analysis; [SWC-209](https://jira.corp.adobe.com/browse/SWC-209) resolved Won't Fix. |
 | C6 | No shared render template in this migration. | Track-and-handle markup differs from checkbox's box-and-icon; the shared label and description parts already come from the mixins. |
 | C7 | Global element stylesheet is N/A. | A switch is not a bare global element. |
+| Q1 | Visual matrix confirmed against the Figma `S2 / Web` switch frame: four sizes; Default, Hover, and Disabled states; Not selected, Selected, and Selected + emphasized rows. | Figma variant properties `Size`, `State`, `Selected`, `Emphasized` (36 variants). No emphasized-unselected variant, and disabled ignores `emphasized`, matching Spectrum CSS. Down, focus-visible, invalid, and read-only are not in the frame and are sourced from Spectrum CSS and React (Q2, Q3). |
+| Q11 | Epic is SWC-2569 (Gen2 Migration: Switch); this plan is the deliverable for SWC-2571. | SWC-2571 is a child of SWC-2569 and blocks SWC-2572 and SWC-2576. |
+| Q12 | No open gen1 issues to list. | The Jira query returned only SWC-2571 to SWC-2576, all labeled `gen2`, so the exclusion rule drops them. |
 
 ---
 
@@ -693,8 +701,8 @@ During drafting, this section tracks active blockers and open questions. As each
 - [1st-gen README](../../../../1st-gen/packages/switch/README.md)
 - [React Spectrum S2 Switch](https://react-spectrum.adobe.com/Switch) and [source](https://github.com/adobe/react-spectrum/blob/main/packages/%40react-spectrum/s2/src/Switch.tsx)
 - [Spectrum CSS `spectrum-two` switch source](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/switch/index.css) and [template](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/switch/stories/template.js)
-- [Switch S2 Figma design](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9397-4673&p=f&m=dev) (PNG pending, Q1)
+- [Figma `S2 / Web` switch component frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9397-4673)
 - [WAI-ARIA APG: Switch pattern](https://www.w3.org/WAI/ARIA/apg/patterns/switch/)
 - [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
-- Epic: SWC-#### - Switch epic (Q11)
+- Epic: [SWC-2569](https://jira.corp.adobe.com/browse/SWC-2569) - Gen2 Migration: Switch; planning ticket [SWC-2571](https://jira.corp.adobe.com/browse/SWC-2571); phase tickets SWC-2572 to SWC-2576
 - 1st-gen accessibility tickets: [SWC-1115](https://jira.corp.adobe.com/browse/SWC-1115) (checked contrast), [SWC-1194](https://jira.corp.adobe.com/browse/SWC-1194) (emphasized contrast), [SWC-209](https://jira.corp.adobe.com/browse/SWC-209) (<kbd>Enter</kbd> does not toggle, Won't Fix)
