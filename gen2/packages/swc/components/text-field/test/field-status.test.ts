@@ -216,6 +216,88 @@ export const ValidationSources: Story = {
 };
 ValidationSources.storyName = 'Status and independent validation sources';
 
+export const BarredNativeConstraints: Story = {
+  render: () => html`
+    <form>
+      <fieldset>
+        <swc-text-field name="email" type="email" value="not-an-email">
+          <span slot="label">Email</span>
+        </swc-text-field>
+      </fieldset>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const fieldset = canvasElement.querySelector('fieldset');
+    const input = field.roleElement;
+    if (!form || !fieldset || !input) {
+      throw new Error(
+        'Native constraint test requires a form, fieldset, and input'
+      );
+    }
+
+    expect(field.validity.typeMismatch).toBe(true);
+    expect(field.checkValidity()).toBe(false);
+
+    for (const status of ['disabled', 'readonly'] as const) {
+      await step(`${status} suspends native constraint errors`, async () => {
+        field.fieldStatus = status;
+        await field.updateComplete;
+        expect(input.validity.typeMismatch).toBe(true);
+        expect(input.validationMessage).toBe('');
+        expect(field.validity.valid).toBe(true);
+        expect(field.willValidate).toBe(false);
+        expect(field.checkValidity()).toBe(true);
+        expect(form.checkValidity()).toBe(true);
+
+        field.setCustomValidity('The server rejected this email.');
+        expect(field.validity.customError).toBe(true);
+        expect(field.validity.typeMismatch).toBe(false);
+        expect(field.checkValidity()).toBe(true);
+        field.setCustomValidity('');
+        expect(field.validity.valid).toBe(true);
+
+        field.setCustomValidity('The server rejected this email.');
+        field.fieldStatus = undefined;
+        await field.updateComplete;
+        expect(field.willValidate).toBe(true);
+        expect(field.validity.typeMismatch).toBe(true);
+        expect(field.validity.customError).toBe(true);
+        expect(field.validationMessage).toBe('The server rejected this email.');
+        expect(field.checkValidity()).toBe(false);
+        field.setCustomValidity('');
+        expect(field.validity.customError).toBe(false);
+        expect(field.validity.typeMismatch).toBe(true);
+        expect(field.checkValidity()).toBe(false);
+        expect(form.checkValidity()).toBe(false);
+      });
+    }
+
+    await step(
+      'inherited fieldset disabling suspends native errors',
+      async () => {
+        fieldset.disabled = true;
+        await field.updateComplete;
+        expect(input.disabled).toBe(true);
+        expect(field.validity.valid).toBe(true);
+        expect(field.checkValidity()).toBe(true);
+        expect(form.checkValidity()).toBe(true);
+        fieldset.disabled = false;
+        await field.updateComplete;
+        expect(field.willValidate).toBe(true);
+        expect(field.validity.typeMismatch).toBe(true);
+        expect(field.checkValidity()).toBe(false);
+        expect(form.checkValidity()).toBe(false);
+      }
+    );
+  },
+};
+BarredNativeConstraints.storyName = 'Disabled and read-only native constraints';
+
 export const StatusWarnings: Story = {
   render: () => html`
     <span></span>

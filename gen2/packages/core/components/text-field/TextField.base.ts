@@ -395,10 +395,17 @@ export abstract class TextFieldBase extends SizedMixin(
         this.customValidityMessage ||
         (this.fieldStatus === 'invalid' ? 'Invalid value.' : '');
       input.setCustomValidity(message);
+      if (input.disabled || input.readOnly) {
+        // Barred inputs can retain native error flags without a validation message.
+        this.internals.setValidity(
+          message ? { customError: true } : {},
+          message,
+          input
+        );
+        return;
+      }
       this.internals.setValidity(
         input.validity,
-        // Disabled and readonly inputs hide validationMessage, but setValidity
-        // still requires a message when customError is set.
         message || input.validationMessage,
         input
       );
