@@ -2,7 +2,7 @@
 
 ## Scope
 
-Create a baseline `swc-card-view-option-1a` and seven experimental elements named `swc-card-view-option-1b` through `swc-card-view-option-5a`. Keep their rendering, registration, stories, tests, and comparison docs together under the card-view component folder. Follow gen2's core/rendering separation for reusable collection behavior.
+Create nine experimental elements grouped by semantics: single-column grids 1A–1C, single-row grids 2A–2B, list 3A, feed 4A, toolbar 5A, and fieldset 6A. Element names use lowercase suffixes, such as `swc-card-view-option-1a` for the baseline. Keep their rendering, registration, stories, tests, and comparison docs together under the card-view component folder. Follow gen2's core/rendering separation for reusable collection behavior.
 
 These are accessibility comparison prototypes, not a completed production CardView migration. The strategy calls for a fully loaded collection before adding virtualization. Each prototype needs a regular grid and a shortest-column waterfall layout, identical card content, checkbox-style selection, and a distinct documented interaction contract.
 

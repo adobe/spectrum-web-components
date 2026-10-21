@@ -39,9 +39,14 @@ export default meta;
 //    OPTIONS STORIES
 // ──────────────────────────
 
+export const Overview: StoryObj = {
+  args: { layout: 'grid', items: photos.slice(0, 6) },
+  tags: ['overview'],
+};
+
 export const Grid: StoryObj = {
   args: { layout: 'grid' },
-  tags: ['overview', 'options'],
+  tags: ['options'],
 };
 
 export const Waterfall: StoryObj = {
