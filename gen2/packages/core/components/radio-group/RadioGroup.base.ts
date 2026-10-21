@@ -219,9 +219,10 @@ export abstract class RadioGroupBase extends SizedMixin(
   /** The initial selection (pre-checked item or `selected`), restored on form reset. */
   private defaultSelected = '';
 
-  /** Restores the initial selection on native form reset. */
+  /** Restores the initial selection and clears custom invalid state on reset. */
   public formResetCallback(): void {
     this.selected = this.defaultSelected;
+    this.invalid = false;
   }
 
   /** Delegates the ancestor form / fieldset disabled cascade to the controller. */

@@ -57,24 +57,36 @@ export class RadioGroup extends RadioGroupBase {
     return this.renderRoot.querySelector('.swc-RadioGroup');
   }
 
+  protected override willUpdate(changedProperties: PropertyValues): void {
+    super.willUpdate(changedProperties);
+    const target = this.roleElement;
+    if (target?.getAttribute('aria-labelledby') === 'swc-radio-group-label') {
+      target.removeAttribute('aria-labelledby');
+    }
+  }
+
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
-    // Must run after `super.updated()`: the mixin resets `ariaLabelledByElements`
-    // each update, so the slotted-label fallback is re-applied here.
+    // Must run after `super.updated()` so explicit accessible-name properties
+    // take precedence over the visible slotted-label fallback.
     const target = this.roleElement as
       | (Element & {
           ariaLabelledByElements: Element[] | null;
         })
       | null;
-    if (
-      !target ||
-      target.ariaLabelledByElements?.length ||
-      this.accessibleLabel
-    ) {
+    if (!target) {
+      return;
+    }
+    if (target.ariaLabelledByElements?.length || this.accessibleLabel) {
       return;
     }
     const label = this.renderRoot.querySelector('.swc-FormFieldLabel');
-    target.ariaLabelledByElements = label ? [label] : null;
+    if (label) {
+      label.id = 'swc-radio-group-label';
+      target.setAttribute('aria-labelledby', label.id);
+    } else {
+      target.removeAttribute('aria-labelledby');
+    }
   }
 
   protected override render(): TemplateResult {

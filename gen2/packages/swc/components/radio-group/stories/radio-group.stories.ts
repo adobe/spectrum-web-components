@@ -16,6 +16,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
 import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
+import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
 
 // ────────────────
 //    METADATA
@@ -74,6 +75,23 @@ const group = (args: Record<string, unknown>, overrides = {}) =>
     'default-slot': ITEMS,
     ...overrides,
   });
+
+const handleFormSubmit = async (event: SubmitEvent): Promise<void> => {
+  event.preventDefault();
+
+  const form = event.currentTarget as HTMLFormElement;
+  const field = form.querySelector('swc-radio-group');
+
+  if (!field) {
+    return;
+  }
+
+  // Clear the demo's previous error before checking the current constraints.
+  field.invalid = false;
+
+  await field.updateComplete;
+  field.invalid = !field.checkValidity();
+};
 
 // ────────────────────
 //    PLAYGROUND STORY
@@ -334,3 +352,37 @@ export const TextWrapping: Story = {
   tags: ['behaviors'],
 };
 TextWrapping.storyName = 'Text wrapping';
+
+/* TODO: possibly update pending availability of Forms page prior to finalizing */
+export const FormParticipation: Story = {
+  render: () => html`
+    <form
+      novalidate
+      @submit=${handleFormSubmit}
+      style="display: grid; gap: var(--swc-spacing-300);"
+    >
+      <swc-radio-group name="shipping" required>
+        <span slot="label">Shipping method</span>
+        <span slot="description">Choose your preferred shipping method.</span>
+        <span slot="error-text">You must select a shipping method.</span>
+        <swc-radio value="standard">
+          <span slot="label">Standard shipping</span>
+        </swc-radio>
+        <swc-radio value="express">
+          <span slot="label">Express shipping</span>
+        </swc-radio>
+      </swc-radio-group>
+
+      <swc-button-group>
+        <button class="swc-Button" type="submit">Submit</button>
+        <button class="swc-Button swc-Button--secondary" type="reset">
+          Reset
+        </button>
+      </swc-button-group>
+    </form>
+  `,
+  parameters: {
+    styles: { 'inline-size': 'min(240px, 100vw)' },
+  },
+  tags: ['behaviors'],
+};

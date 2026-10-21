@@ -296,12 +296,12 @@ Based on the Figma size/state/emphasis matrix supplied for this plan, the suppor
 | Emphasis | Default (neutral checked indicator), Emphasized (accent checked indicator) |
 | Selection | Default (unchecked), Selected (checked) |
 | Interaction state | Default, Hover, Disabled |
-| Label wrap | Single line, wrapped (label text wraps across multiple lines at every size) |
+| Label wrap | Single line, wrapped (one representative wrapped-label example at the default size) |
 
 Additional Figma-confirmed presentation notes:
 
 - The Emphasized row is only visually distinct once checked, matching 1st-gen's CSS scoping of `--emphasized` selectors to `:checked`; there is no separate "emphasized + unchecked" treatment.
-- Label text wrap is a CSS behavior confirmation (the label must wrap correctly at every size), not a new boolean property — no 1st-gen or Figma evidence supports a truncation mode.
+- Label text wrap is a CSS behavior confirmation, not a new boolean property — no 1st-gen or Figma evidence supports a truncation mode. Phase 6 uses one representative wrapped-label example at the default size, per the confirmed VRT scope.
 - Focus-visible, invalid, and readonly are **not** shown in this matrix because they are not item-level states in gen2 (invalid/readonly move to the group; focus-visible is a keyboard-only ring layered on top of any of the above rather than a distinct row). The item still reacts visually to the group's `readonly` state: its pressed (`:active`) transform is suppressed through the private `--_swc-radio-group-is-readonly` signal.
 
 #### Slots (gen2)
@@ -453,10 +453,8 @@ Planned rendering shape:
 Retain this section for any components with visual rendering, modifying as needed for the component's specs and variants. Replace the example bullets below with VRT items that match this component, and reference real bug tickets only when they apply to this component.
 -->
 
-- [x] Add VRT coverage for the size × emphasis × selection × state matrix confirmed in [Visual matrix (gen2)](#visual-matrix-gen2), including hover and disabled
-- [x] Add VRT coverage for wrapped (multi-line) labels at every size
-- [x] Add focus-visible regression coverage for the keyboard ring on the host
-- [x] Add forced-colors (high-contrast) coverage for checked/disabled states
+- [x] Add VRT rows for all sizes, emphasized selection, hover, and keyboard focus; disabled and forced-colors group coverage lives in the RadioGroup VRT to avoid duplication
+- [x] Add a representative wrapped-label example at the default size and CJK language examples
 
 ### Documentation
 
@@ -528,6 +526,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 | — | **Supersedes Q5/B5's native `<input type="radio">` / `<label for>` design.** `swc-radio` no longer renders an inner native input at all. Its role and states are exposed as host attributes (see B6). The accessible name still comes from the slotted `label` content, and the optional `description` no longer has its own `aria-describedby` (see the next entry). | A dedicated cross-browser/AT test matrix (VoiceOver/Safari, NVDA, JAWS+Chrome/Firefox) found that a native `<input type="radio">` per item, each in its own shadow root, is computed by the browser as an isolated native radio-button-group of size 1. `aria-posinset`/`aria-setsize` set on the input never announced a real position because native radio-button-group scoping cannot span shadow roots. See `radio-group/migration-plan.md`'s decision log for the separate group-side fix: placing the group's `role="radiogroup"` on its host can break item positioning or group labeling associations, or both, depending on the browser/AT combination. |
 | — | `swc-radio` no longer sets `aria-describedby` on itself for its own slotted `description`. | The description renders as plain content inside the item's own accessible subtree, so it already contributes to the item's accessible name computation alongside the label; adding `aria-describedby` on top caused VoiceOver to re-announce the same text a second time as a "description". |
 | — | Remove the component's Lit `autofocus` override; retain the inherited HTML attribute/property. | The override no longer has an inner input to forward to and does not implement automatic focus. Removing it avoids shadowing the native property or implying component-managed focus behavior. |
+| — | Radio VRT coverage uses labeled representative rows rather than the full size × emphasis × selection × state Cartesian product. | Phase 6 groups all sizes together, includes the emphasized selected state, hover and keyboard focus, and uses one default-size wrapped-label example. RadioGroup owns disabled and forced-colors coverage so those group-level states are not duplicated. |
 
 ---
 
