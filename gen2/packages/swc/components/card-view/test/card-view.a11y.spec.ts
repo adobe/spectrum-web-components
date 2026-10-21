@@ -158,7 +158,7 @@ for (const prototype of prototypes) {
         }
       });
 
-      if (prototype === 'option-5' || prototype === 'option-6') {
+      if (prototype === 'option-2a' || prototype === 'option-2b') {
         test('single semantic row preserves visual arrow navigation', async ({
           page,
         }) => {
@@ -216,7 +216,7 @@ for (const prototype of prototypes) {
               .sort((first, second) => second.left - first.left)[0].index;
             let next = start;
             if (
-              prototype === 'option-6' &&
+              prototype === 'option-2b' &&
               (horizontal || layout === 'waterfall')
             ) {
               if (!(horizontal && layout === 'waterfall')) {
@@ -271,7 +271,7 @@ for (const prototype of prototypes) {
         });
       }
 
-      if (prototype === 'option-6') {
+      if (prototype === 'option-2b') {
         test('Tab enters grid child controls and exits without a trap', async ({
           page,
         }) => {
@@ -310,7 +310,7 @@ for (const prototype of prototypes) {
         });
       }
 
-      if (['option-7', 'option-8'].includes(prototype)) {
+      if (['option-5a', 'option-6a'].includes(prototype)) {
         test('Tab enters the active card actions and exits without a trap', async ({
           page,
         }) => {
