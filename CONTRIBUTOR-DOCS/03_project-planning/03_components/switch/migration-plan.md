@@ -57,7 +57,7 @@
 
 > **Epic SWC-2569** · Planning output for SWC-2571. Must be reviewed before implementation begins.
 >
-> **Status: ready for review, with provisional architecture decisions.** The Figma `S2 / Web` frame, the epic, and the Jira open-issue query are now incorporated (Q1, Q11, Q12 in the [Decision log](#decision-log)). Q4, Q5, Q6, and Q13 still need confirmation and are marked **provisional** where they affect a section. The [accessibility migration analysis](./accessibility-migration-analysis.md) is authoritative for gen2 semantics. The in-flight [checkbox migration plan (#6834)](https://github.com/adobe/spectrum-web-components/pull/6834) is treated as the closest precedent: switch shares the same native-input-in-shadow-DOM and form-associated foundation, and this plan deliberately aligns with checkbox's decisions so the two toggle controls behave the same way wherever their semantics overlap.
+> **Status: ready for review.** The Figma `S2 / Web` frame, the epic, the Jira open-issue query, and the shared-mixin decision are incorporated (Q1, Q4, Q11, Q12 in the [Decision log](#decision-log)). Q5, Q6, and Q13 still need confirmation and are marked **provisional** where they affect a section. The [accessibility migration analysis](./accessibility-migration-analysis.md) is authoritative for gen2 semantics. The in-flight [checkbox migration plan (#6834)](https://github.com/adobe/spectrum-web-components/pull/6834) is treated as the closest precedent: switch shares the same native-input-in-shadow-DOM and form-associated foundation, and this plan deliberately aligns with checkbox's decisions so the two toggle controls behave the same way wherever their semantics overlap.
 
 ---
 
@@ -69,11 +69,10 @@
 - **Read-only gets fixed (B14).** 1st-gen inherits `CheckboxMixin`'s hack of disabling the inner input, so a read-only switch is announced as disabled and leaves the Tab order. gen2 keeps it focusable, exposes `aria-readonly="true"`, and blocks the toggle, matching checkbox.
 - **Largest consumer-facing changes:** label content moves to a named `label` slot (B1); the `Focusable` focus/tabindex proxy surface is removed in favor of `delegatesFocus` (B7); the `checked` attribute becomes the default state (B9); `change` is no longer cancelable (B10); all 46 `--mod-switch-*` properties are removed (B12).
 - **Visual options carry over.** The [Figma `S2 / Web` switch frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9397-4673) confirms sizes `s`/`m`/`l`/`xl`, not selected and selected, `emphasized` (accent fill when selected only), and default, hover, and disabled states. The S2 down-state handle shift comes from Spectrum CSS.
-- **Biggest open decision: shared toggle logic with checkbox (Q4).** The checkbox plan chose "no shared base class; extract a mixin if duplication grows during switch's migration." Most of switch's core behavior (B9, B10, B14, B16, B17, B19) is identical to checkbox's, so this plan recommends extracting that logic into a shared core mixin during switch's API phase. This needs explicit confirmation.
+- **Shared toggle logic moves into a core mixin (Q4, decided).** Most of switch's core behavior (B9, B10, B14, B16, B17, B19) is identical to checkbox's. Switch's API phase extracts it from `Checkbox.base.ts` into a shared core mixin and moves checkbox onto it in the same change. The two components keep separate public classes, consistent with the checkbox plan's "no shared base class" decision.
 
 ### Most blocking open questions
 
-- **Q4** in [Architecture and behavior](#architecture-and-behavior): extract a shared toggle-field core mixin with `swc-checkbox` now (recommended) or duplicate the logic in `Switch.base.ts`. Changes the core file layout and sequencing.
 - **Q5** in [Architecture and behavior](#architecture-and-behavior): whether `swc-switch` ships `invalid` and `error-text`. The accessibility analysis and React S2 say yes; the checkbox plan's Q4 rationale says switch has no `invalid`. Changes the public API.
 - **Q6** in [Architecture and behavior](#architecture-and-behavior): how `description` and `error-text` coexist while invalid. Shares checkbox's open Q7; switch should adopt the same resolution. Blocks the API phase.
 - **Q13** in [Scope and prerequisites](#scope-and-prerequisites): sequencing behind the text field foundation and `swc-checkbox`. Determines when Setup can start.
@@ -150,7 +149,7 @@ This full modifier surface will not be carried forward to gen2.
 </sp-switch>
 ```
 
-gen2 (planned, provisional on Q4, Q5, and Q6; see [Architecture](#architecture-core-vs-swc-split)):
+gen2 (planned, provisional on Q5 and Q6; see [Architecture](#architecture-core-vs-swc-split)):
 
 ```html
 <swc-switch name="notifications" value="on" checked>
@@ -217,13 +216,13 @@ No `aria-checked` is hand-written: a native checkbox input with `role="switch"` 
 | Package | Version | Role |
 | ------- | ------- | ---- |
 | `@spectrum-web-components/base` | 1.12.5 | 1st-gen: `SizedMixin`, decorators. gen2 equivalents: `SpectrumElement` and `SizedMixin` from `@adobe/spectrum-wc-core`. |
-| `@spectrum-web-components/checkbox` | 1.12.5 | 1st-gen: `CheckboxBase`/`CheckboxMixin`. **Dropped**; the checkbox plan removes these subpath exports (its B21). gen2 shares logic through core mixins instead (Q4). |
+| `@spectrum-web-components/checkbox` | 1.12.5 | 1st-gen: `CheckboxBase`/`CheckboxMixin`. **Dropped**; the checkbox plan removes these subpath exports (its B21). gen2 shares logic through a core mixin instead (Q4). |
 | `@spectrum-web-components/shared` (via checkbox) | 1.12.5 | 1st-gen: `Focusable`. **Dropped**; `delegatesFocus` and native `tabindex` replace it (B7). |
 | `SizedMixin` (gen2 core) | already built | `size` with default `m`. |
 | `LabellingMixin` (gen2 core) | **unmerged** (text field branch) | `label` slot, `renderLabel()` (`<label for>`), `accessible-label`, `accessible-labelledby`, missing-name dev warning. See Q10, Q13. |
 | `FieldDescriptionMixin` (gen2 core) | **unmerged** (text field branch) | `description` and `error-text` slots, `renderFieldDescription()`, `accessible-describedby`. The forms RFC and the accessibility analysis call it `HelpTextMixin`. See Q6, Q13. |
 | `FieldAssociationController` (gen2 core) | **unmerged** (text field branch) | `ElementInternals` value, restore state, disabled cascade, validity reads. See Q13. |
-| Shared toggle-field core mixin | **proposed** (Q4) | Checked default/live semantics, read-only guard, form value/reset/restore, required validity, `click()` forwarding, `change` dispatch, shared with `swc-checkbox`. |
+| Shared toggle-field core mixin | **to be extracted** (Q4, decided) | Checked default/live semantics, read-only guard, form value/reset/restore, required validity, effective disabled, `click()` forwarding, `change` dispatch, shared with `swc-checkbox`. Extracted from `Checkbox.base.ts` during switch's API phase. |
 | `SlotPresenceController` (gen2 core) | already built | Used internally by both form mixins. |
 | `warnIf` / `isDebug` (gen2 core) | already built | Dev-mode warnings. |
 | Focus modality controller (gen2 core) | **not built** | Soft dependency, same as checkbox: native `:focus-visible` on a checkbox-type input already matches keyboard focus only. Adopt if it lands before Styling. |
@@ -255,7 +254,7 @@ Switch does not extend another gen2 component, and no other component depends on
 
 ### Related components and ordering notes
 
-- **`swc-checkbox`**: 1st-gen `sp-switch` extends `CheckboxBase`. The checkbox plan (Q4 there) decided **no shared base class**, composing the same mixins in each component, and said to "extract a `ToggleFieldMixin` into core" if duplication grows during switch's migration. Comparing the two plans, the overlap is most of the base class: B9 (checked default vs live), B10 (non-cancelable `change`), B14 (read-only guard), B16 (form value, reset, restore), B17 (required validity), B19 (effective disabled), plus `click()` forwarding. Only role, `indeterminate`, and visuals differ. **Recommendation (Q4):** extract a shared core mixin during switch's API phase and refactor `Checkbox.base.ts` onto it in the same change. This keeps two independent public classes (honoring checkbox's "no shared base class" decision) while avoiding two copies of the form logic.
+- **`swc-checkbox`**: 1st-gen `sp-switch` extends `CheckboxBase`. The checkbox plan (Q4 there) decided **no shared base class**, composing the same mixins in each component, and said to "extract a `ToggleFieldMixin` into core" if duplication grows during switch's migration. Comparing the two plans, the overlap is most of the base class: B9 (checked default vs live), B10 (non-cancelable `change`), B14 (read-only guard), B16 (form value, reset, restore), B17 (required validity), B19 (effective disabled), plus `click()` forwarding. Only role, `indeterminate`, and visuals differ. **Decision (Q4):** extract a shared core mixin during switch's API phase and refactor `Checkbox.base.ts` onto it in the same change. This keeps two independent public classes (honoring checkbox's "no shared base class" decision) while avoiding two copies of the form logic.
 - **Checkbox plan inconsistency to resolve (Q5):** the checkbox plan's Q4 rationale says switch has "no `mixed` or `invalid`." The `mixed` part is correct. The `invalid` part conflicts with the [switch accessibility analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties) (required and invalid state, visible error text) and React S2 (`isInvalid`, `errorMessage`). This plan recommends switch ships `invalid` and `error-text`; if confirmed, the shared mixin from Q4 can own `invalid` too.
 - **`swc-text-field`**: owner of the shared form foundation; no API coupling beyond consuming it.
 - **Shared `_lit-styles/` fragment**: same recommendation as checkbox (its Q8): consume only the description and error styles from the shared `form-fields` fragment; the switch label sits inline beside the track and keeps its own styles (Q9).
@@ -265,11 +264,10 @@ Switch does not extend another gen2 component, and no other component depends on
 
 ### User confirmation needed
 
-- **Q4** (must-confirm): extract a shared toggle-field core mixin with `swc-checkbox` during this migration.
 - **Q13** (must-confirm): sequence switch after the text field foundation merges and after `swc-checkbox`'s API phase.
 - **Q9** (provisional): consume only description and error styles from the shared `form-fields` fragment, matching checkbox.
 
-Sections marked provisional in [Architecture](#architecture-core-vs-swc-split) and [Dependencies](#dependencies) follow these recommendations until confirmed.
+[Setup](#setup) follows the Q13 recommendation until confirmed.
 
 ---
 
@@ -442,8 +440,8 @@ Follow the [Badge migration reference](../../02_workstreams/02_gen2-component-mi
 
 | Layer    | Path                                         | Contains                                                                                                                                                                                                                                          |
 | -------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Core** | `gen2/packages/core/components/switch/` | `Switch.base.ts`, `Switch.types.ts`, `index.ts`. Composes `SizedMixin`, `LabellingMixin`, `FieldDescriptionMixin`, and (provisional, Q4) the shared toggle-field mixin; owns `formAssociated`, `attachInternals()`, `FieldAssociationController`, validity, reset/restore callbacks, checked/readonly state, and `change` dispatch (via the shared mixin if Q4 is confirmed). Overrides `roleElement` to return the inner input. No rendering. |
-| **Core (shared, provisional Q4)** | `gen2/packages/core/mixins/` | Shared toggle-field mixin extracted from `Checkbox.base.ts`, consumed by both `swc-checkbox` and `swc-switch`. Name to be settled with Q4. |
+| **Core** | `gen2/packages/core/components/switch/` | `Switch.base.ts`, `Switch.types.ts`, `index.ts`. Composes `SizedMixin`, `LabellingMixin`, `FieldDescriptionMixin`, and the shared toggle-field mixin (Q4); owns `formAssociated`, `attachInternals()`, `FieldAssociationController`, validity, reset/restore callbacks, checked/readonly state, and `change` dispatch (via the shared mixin). Overrides `roleElement` to return the inner input. No rendering. |
+| **Core (shared, Q4)** | `gen2/packages/core/mixins/` | Shared toggle-field mixin extracted from `Checkbox.base.ts`, consumed by both `swc-checkbox` and `swc-switch`. Name settled in the API phase (`ToggleFieldMixin` is the checkbox plan's working name). |
 | **SWC**  | `gen2/packages/swc/components/switch/`  | `Switch.ts`, `switch.css`, `swc-switch.ts`, `index.ts`, `switch.mdx`, `migration-guide.mdx`, stories, tests, and the S2 rendering/styling for `swc-switch`. |
 
 Planned rendering shape:
@@ -465,13 +463,14 @@ Planned rendering shape:
 - [x] [Figma `S2 / Web` switch component frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9397-4673) reviewed (Q1)
 - [x] Open gen1 issues table populated from Jira (Q12)
 - [x] Epic number confirmed: SWC-2569 (Q11)
-- [ ] Q4, Q5, and Q13 confirmed
+- [x] Q4 decided: shared core mixin
+- [ ] Q5 and Q13 confirmed
 - [ ] Plan reviewed by at least one other engineer
 
 ### Setup
 
 - [ ] Confirm the text field branch (shared form mixins and controller) has merged to `main` (Q13)
-- [ ] Confirm `swc-checkbox`'s API phase has landed, or agree to extract the shared mixin without it (Q4, Q13)
+- [ ] Confirm `swc-checkbox`'s API phase has landed, or agree to extract the shared mixin without it (Q13)
 - [ ] Create `gen2/packages/core/components/switch/`
 - [ ] Create `gen2/packages/swc/components/switch/`
 - [ ] Wire exports in both `package.json` files
@@ -482,7 +481,7 @@ Planned rendering shape:
 #### Naming and public surface
 
 - [ ] `Switch.types.ts`: define the `size` union with default `m` and the public interface
-- [ ] Q4: extract the shared toggle-field mixin from `Checkbox.base.ts` and refactor checkbox onto it in the same change, or record the decision to duplicate
+- [ ] Extract the shared toggle-field mixin from `Checkbox.base.ts` into `gen2/packages/core/mixins/` and move checkbox onto it in the same change (Q4); checkbox tests must stay green
 - [ ] `Switch.base.ts`: implement `checked`, `disabled`, `readonly`, `required`, `invalid` (Q5), `emphasized`, `size`, `name`, `value`
 - [ ] Compose `LabellingMixin` and `FieldDescriptionMixin`; override `roleElement` to return the inner input
 - [ ] `static formAssociated = true`, `attachInternals()`, `FieldAssociationController` with `onDisabledChange`
@@ -645,7 +644,6 @@ During drafting, this section tracks active blockers and open questions. As each
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q4 | Shared toggle-field logic with `swc-checkbox`. Recommendation: extract a core mixin (checked default/live semantics, read-only guard, form value/reset/restore, required validity, effective disabled, `click()` forwarding, `change` dispatch) during switch's API phase and refactor `Checkbox.base.ts` onto it. Tradeoff: one more core abstraction and a checkbox refactor, versus two copies of the form logic that must stay in sync. Alternative: duplicate in `Switch.base.ts` per checkbox's current Q4. Must confirm. | Yes | Open: provisional recommendation | Architecture reviewer + checkbox plan owner |
 | Q5 | Does `swc-switch` ship `invalid` and `error-text`? Recommendation: yes. Supported by the accessibility analysis (required and invalid state, visible error text) and React S2 (`isInvalid`, `errorMessage`). Conflicts with the checkbox plan's Q4 rationale ("no `mixed` or `invalid`"); update that rationale once confirmed. | Yes | Open | Accessibility reviewer + implementation |
 | Q6 | How `description` and `error-text` coexist while invalid. The accessibility analysis asks for an explicit decision; `FieldDescriptionMixin` replaces the description with error text. Recommendation: adopt checkbox's Q7 resolution unchanged. | Yes, blocks API phase | Open: waiting on checkbox Q7 | Implementation + accessibility reviewer |
 | Q7 | Native checkedness exposed as the switch state on `<input type="checkbox" role="switch">` without a hand-written `aria-checked`. Recommendation: rely on native mapping, verify with ARIA snapshots in Chromium, Firefox, and WebKit, and keep an explicit `aria-checked` only if an engine fails. | No | Open: settle in API phase with a test | Implementation |
@@ -674,6 +672,7 @@ During drafting, this section tracks active blockers and open questions. As each
 | C4 | Use `LabellingMixin` (like checkbox, unlike radio). | Unlabelled switches are an evidenced pattern (the 1st-gen README documents a switch next to a panel title with a visually hidden label), so `accessible-label`/`accessible-labelledby` are needed. |
 | C5 | No custom <kbd>Enter</kbd> activation. | Native behavior and the accessibility analysis; [SWC-209](https://jira.corp.adobe.com/browse/SWC-209) resolved Won't Fix. |
 | C6 | No shared render template in this migration. | Track-and-handle markup differs from checkbox's box-and-icon; the shared label and description parts already come from the mixins. |
+| Q4 | Extract a shared toggle-field core mixin with `swc-checkbox` during switch's API phase; checkbox moves onto it in the same change. | Confirmed by the plan owner. Switch and checkbox share checked default/live semantics, the read-only guard, form value/reset/restore, required validity, effective disabled, `click()` forwarding, and `change` dispatch. One mixin avoids two copies that must stay in sync, while each component keeps its own public class, as the checkbox plan's Q4 requires. |
 | C7 | Global element stylesheet is N/A. | A switch is not a bare global element. |
 | Q1 | Visual matrix confirmed against the Figma `S2 / Web` switch frame: four sizes; Default, Hover, and Disabled states; Not selected, Selected, and Selected + emphasized rows. | Figma variant properties `Size`, `State`, `Selected`, `Emphasized` (36 variants). No emphasized-unselected variant, and disabled ignores `emphasized`, matching Spectrum CSS. Down, focus-visible, invalid, and read-only are not in the frame and are sourced from Spectrum CSS and React (Q2, Q3). |
 | Q11 | Epic is SWC-2569 (Gen2 Migration: Switch); this plan is the deliverable for SWC-2571. | SWC-2571 is a child of SWC-2569 and blocks SWC-2572 and SWC-2576. |
