@@ -54,14 +54,12 @@ export class Toast extends ToastBase {
       <div class="swc-Toast">
         <div class="swc-Toast-main">
           <div class="swc-Toast-body" role="alert" aria-atomic="true">
-            <div class="swc-Toast-content">
-              ${this.contentRevealed
-                ? html`
-                    ${this.renderIcon()}
-                    <div class="swc-Toast-text"><slot></slot></div>
-                  `
-                : nothing}
-            </div>
+            ${this.contentRevealed
+              ? html`
+                  ${this.renderIcon()}
+                  <div class="swc-Toast-text"><slot></slot></div>
+                `
+              : nothing}
           </div>
           ${this.actionLabel
             ? html`

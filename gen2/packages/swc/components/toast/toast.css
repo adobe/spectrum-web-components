@@ -30,6 +30,7 @@
 
 .swc-Toast {
   --_swc-toast-animation-distance: token("spacing-75");
+  --_swc-toast-background-color: token("neutral-subdued-background-color-default");
 
   display: flex;
   gap: token("group-gap-medium");
@@ -45,7 +46,7 @@
   font-weight: token("regular-font-weight");
   line-height: token("line-height-font-size-100");
   color: token("white");
-  background-color: token("neutral-subdued-background-color-default");
+  background-color: var(--_swc-toast-background-color);
   border-radius: token("corner-radius-700");
   opacity: 1;
   transition:
@@ -71,14 +72,14 @@
 }
 
 .swc-Toast-body {
-  flex: 1 1 auto;
-  min-inline-size: 0;
-}
-
-.swc-Toast-content {
   display: flex;
+  flex: 1 1 auto;
   gap: token("group-gap-medium");
   align-items: flex-start;
+  min-inline-size: 0;
+
+  /* Centers the first line against the close button regardless of wrapping. */
+  margin-block: calc((token("component-height-100") - 1lh) / 2);
   text-align: start;
 }
 
@@ -91,6 +92,7 @@
 
 .swc-Toast-text {
   min-inline-size: 0;
+  text-wrap: pretty;
   overflow-wrap: anywhere;
 }
 
@@ -103,15 +105,15 @@
 }
 
 :host([variant="info"]) .swc-Toast {
-  background-color: token("informative-background-color-default");
+  --_swc-toast-background-color: token("informative-background-color-default");
 }
 
 :host([variant="positive"]) .swc-Toast {
-  background-color: token("positive-background-color-default");
+  --_swc-toast-background-color: token("positive-background-color-default");
 }
 
 :host([variant="negative"]) .swc-Toast {
-  background-color: token("negative-background-color-default");
+  --_swc-toast-background-color: token("negative-background-color-default");
 }
 
 /* Closed state is the exit target; `@starting-style` below is the enter origin. */
@@ -120,7 +122,7 @@
   transform: translateY(var(--_swc-toast-animation-distance));
 }
 
-/* Approximates the two-frame content delay to avoid showing an empty toast. */
+/* Two frames at 60Hz (34ms): keeps the toast transparent until its message renders, so the empty live region is never painted. */
 :host([open]) .swc-Toast {
   transition-delay: 34ms;
 }
