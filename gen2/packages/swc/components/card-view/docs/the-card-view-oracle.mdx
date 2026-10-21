@@ -5,6 +5,7 @@ import artwork2 from '../../../../../../CONTRIBUTOR-DOCS/03_project-planning/05_
 import artwork3 from '../../../../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/card-strategy-tldr-assets/endless.png';
 import artwork4 from '../../../../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/card-strategy-tldr-assets/commander.png';
 import artwork5 from '../../../../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/card-strategy-tldr-assets/gathering.png';
+import borderArtwork from '../../../../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/card-strategy-tldr-assets/border.png';
 
 <Meta title="Card view/The card view oracle" />
 
@@ -297,6 +298,11 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         height: 1px;
         background: var(--line);
         flex: 1;
+      }
+      #card-view-oracle .border-artwork {
+        display: block;
+        height: auto;
+        margin-block: 0 24px;
       }
       #card-view-oracle .strategy-callout {
         padding: 16px 20px;
@@ -825,6 +831,7 @@ export const Oracle = () => {
 {" "}</header>
 {" "}
 <main id="oracle-main">{" "}
+<img className="border-artwork wrap" src={borderArtwork} alt="" width="1456" height="176" />
 <section className="hero" aria-labelledby="oracle-title">{" "}
 <div className="wrap">{" "}
 <p className="eyebrow">{" A little divination. A lot of keyboard navigation. "}</p>
