@@ -454,7 +454,7 @@ export const SemanticsAndNavigation: StoryObj = {
     for (const tag of tags) {
       const view = await mount(canvasElement, tag);
       const root = view.shadowRoot!;
-      if (tag.endsWith('3')) {
+      if (tag === 'swc-card-view-option-3a') {
         expect(root.querySelector('ul')).not.toBeNull();
         expect(root.querySelectorAll('li')).toHaveLength(8);
         expect(root.querySelector('[aria-selected]')).toBeNull();
@@ -463,7 +463,7 @@ export const SemanticsAndNavigation: StoryObj = {
             (control) => control.tabIndex === 0
           )
         ).toBe(true);
-      } else if (tag.endsWith('4')) {
+      } else if (tag === 'swc-card-view-option-4a') {
         expect(root.querySelector('[role="feed"]')).not.toBeNull();
         expect(root.querySelectorAll('article')).toHaveLength(8);
         const first = root.querySelector<HTMLElement>('article')!;
@@ -480,9 +480,9 @@ export const SemanticsAndNavigation: StoryObj = {
       } else {
         expect(
           root.querySelector('[role="grid"]')?.getAttribute('aria-colcount')
-        ).toBe(tag.endsWith('5') ? '8' : '1');
+        ).toBe(tag === 'swc-card-view-option-2a' ? '8' : '1');
         expect(root.querySelectorAll('[role="row"]')).toHaveLength(
-          tag.endsWith('5') ? 1 : 8
+          tag === 'swc-card-view-option-2a' ? 1 : 8
         );
         const first = root.querySelector<HTMLElement>('[data-focus]')!;
         first.focus();
