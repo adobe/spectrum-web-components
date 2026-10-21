@@ -126,25 +126,18 @@ export const AccessibleNameTest: Story = {
     );
     const textarea = (): HTMLTextAreaElement | null | undefined =>
       el.shadowRoot?.querySelector<HTMLTextAreaElement>('textarea');
-    const labellingElement = (): HTMLElement | null | undefined => {
-      const id = textarea()?.getAttribute('aria-labelledby');
-      return id ? el.shadowRoot?.getElementById(id) : null;
-    };
+    const aiMark = (): HTMLElement | null | undefined =>
+      el.shadowRoot?.querySelector<HTMLElement>('.swc-PromptField-status-icon');
 
-    await step(
-      'textarea takes its name from the AI mark via aria-labelledby',
-      async () => {
-        const aiMark = labellingElement();
-        expect(aiMark?.classList.contains('swc-PromptField-status-icon')).toBe(
-          true
-        );
-        expect(aiMark?.getAttribute('aria-label')).toBe('AI prompt');
-        expect(textarea()?.hasAttribute('aria-label')).toBe(false);
-      }
-    );
+    await step('textarea is named by aria-label', async () => {
+      expect(textarea()?.getAttribute('aria-label')).toBe('AI prompt');
+      expect(textarea()?.hasAttribute('aria-labelledby')).toBe(false);
+    });
 
-    await step('AI mark stays out of the accessibility tree', async () => {
-      expect(labellingElement()?.getAttribute('aria-hidden')).toBe('true');
+    await step('AI mark is decorative', async () => {
+      expect(aiMark()?.getAttribute('aria-hidden')).toBe('true');
+      expect(aiMark()?.hasAttribute('aria-label')).toBe(false);
+      expect(aiMark()?.hasAttribute('id')).toBe(false);
     });
 
     await step('no visually hidden label text is rendered', async () => {
@@ -152,12 +145,10 @@ export const AccessibleNameTest: Story = {
       expect(el.shadowRoot?.querySelector('.swc-VisuallyHidden')).toBeNull();
     });
 
-    await step('accessible-label renames the AI mark', async () => {
+    await step('accessible-label renames the textarea', async () => {
       el.accessibleLabel = 'Ask Firefly';
       await el.updateComplete;
-      expect(labellingElement()?.getAttribute('aria-label')).toBe(
-        'Ask Firefly'
-      );
+      expect(textarea()?.getAttribute('aria-label')).toBe('Ask Firefly');
       el.accessibleLabel = 'AI prompt';
       await el.updateComplete;
     });

@@ -47,7 +47,6 @@ import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '../pixel-loader/swc-pixel-loader.js';
 
-import { uniqueId } from '../../../utils/id.js';
 import type {
   PixelLoaderIconName,
   PixelLoaderPresetName,
@@ -113,8 +112,6 @@ const SUPPORTS_FIELD_SIZING =
  * @since 2.0.0-beta.3
  */
 export class PromptField extends SpectrumElement {
-  private readonly aiMarkId = uniqueId('swc-prompt-field-ai-mark');
-
   /** Disables the textarea and all actions. */
   @property({ type: Boolean, reflect: true })
   public disabled = false;
@@ -149,7 +146,7 @@ export class PromptField extends SpectrumElement {
   @property({ type: Boolean, reflect: true, attribute: 'animate-loader' })
   public animateLoader = false;
 
-  /** Accessible name for the AI mark, which also names the textarea through `aria-labelledby`. Not rendered as visible text. */
+  /** Accessible name for the textarea, applied as `aria-label`. Not rendered as visible text. */
   @property({ type: String, attribute: 'accessible-label' })
   public accessibleLabel = 'AI prompt';
 
@@ -1224,16 +1221,8 @@ export class PromptField extends SpectrumElement {
     const icon = isPreset
       ? DEFAULT_LOADER_ICON
       : (this.loader as PixelLoaderIconName);
-    // The AI mark is the textarea's name source (via aria-labelledby) but stays
-    // aria-hidden so it isn't announced twice. Don't reference the pixel loader
-    // itself: it's a progressbar named "Loading".
     return html`
-      <span
-        id=${this.aiMarkId}
-        class="swc-PromptField-status-icon"
-        aria-hidden="true"
-        aria-label=${this.accessibleLabel}
-      >
+      <span class="swc-PromptField-status-icon" aria-hidden="true">
         <swc-pixel-loader
           icon=${icon}
           preset=${ifDefined(preset)}
@@ -1272,7 +1261,7 @@ export class PromptField extends SpectrumElement {
                     class="swc-PromptField-textarea"
                     .value=${this.value}
                     placeholder=${this.placeholder}
-                    aria-labelledby=${this.aiMarkId}
+                    aria-label=${this.accessibleLabel}
                     aria-placeholder=${ifDefined(this.placeholder || undefined)}
                     ?disabled=${this.disabled}
                     rows=${this._normalizedMinRows}
