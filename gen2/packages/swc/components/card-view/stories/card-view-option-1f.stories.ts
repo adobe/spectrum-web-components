@@ -14,16 +14,14 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { photos, prototypeMeta } from './story-helpers.js';
 
 /**
- * Tests the historical RSP recommendation with a stable collection-order horizontal route.
+ * Compares complete column traversal with the non-wrapping RSP-style baseline.
  */
 const meta: Meta = {
-  ...prototypeMeta('swc-card-view-option-1b'),
-  title: 'Card view/Option 1B',
+  ...prototypeMeta('swc-card-view-option-1f'),
+  title: 'Card view/Option 1F',
   parameters: {
-    ...prototypeMeta('swc-card-view-option-1b').parameters,
-    docs: {
-      subtitle: 'Single-column grid with sequential Left/Right navigation.',
-    },
+    ...prototypeMeta('swc-card-view-option-1f').parameters,
+    docs: { subtitle: 'Layout grid with Up/Down column-boundary wrapping.' },
   },
   tags: ['migrated'],
 };

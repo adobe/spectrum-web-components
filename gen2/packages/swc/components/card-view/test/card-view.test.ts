@@ -13,20 +13,20 @@ import { html } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/web-components';
 
-import '../swc-card-view-option-1a.js';
-import '../swc-card-view-option-1b.js';
+import '../swc-card-view-option-1e.js';
 import '../swc-card-view-option-1c.js';
+import '../swc-card-view-option-1f.js';
 import '../swc-card-view-option-3a.js';
 import '../swc-card-view-option-4a.js';
 import '../swc-card-view-option-2a.js';
-import '../swc-card-view-option-2b.js';
+import '../swc-card-view-option-2e.js';
 import '../swc-card-view-option-5a.js';
 import '../swc-card-view-option-6a.js';
 
 const tags = [
-  'swc-card-view-option-1a',
-  'swc-card-view-option-1b',
+  'swc-card-view-option-1e',
   'swc-card-view-option-1c',
+  'swc-card-view-option-1f',
   'swc-card-view-option-3a',
   'swc-card-view-option-4a',
   'swc-card-view-option-2a',
@@ -75,6 +75,79 @@ export default {
   parameters: { docs: { disable: true, page: null } },
 } satisfies Meta;
 
+export const GridNavigationMatrix: StoryObj = {
+  render: () => html`<div></div>`,
+  play: async ({ canvasElement }) => {
+    for (const family of [1, 2]) {
+      for (const variation of ['a', 'b', 'c', 'd']) {
+        for (const layout of ['grid', 'waterfall']) {
+          const tag = `swc-card-view-option-${family}${variation}`;
+          const view = await mount(canvasElement, tag, layout);
+          Object.defineProperty(view, 'positions', {
+            get: () =>
+              items.map((_, index) => ({
+                left: (index % 3) * 120,
+                top: Math.floor(index / 3) * 120,
+                width: 100,
+                height: 100,
+                column: index % 3,
+              })),
+          });
+          const targets = [
+            ...view.shadowRoot!.querySelectorAll<HTMLElement>('[data-focus]'),
+          ];
+          const move = async (index: number, key: string) => {
+            targets[index].focus();
+            targets[index].dispatchEvent(
+              new KeyboardEvent('keydown', {
+                key,
+                bubbles: true,
+                composed: true,
+              })
+            );
+            await view.updateComplete;
+            return Number(
+              view.shadowRoot!.activeElement?.getAttribute('data-index')
+            );
+          };
+          expect(await move(2, 'ArrowRight')).toBe(
+            variation === 'a' ? 2 : variation === 'b' ? 0 : 3
+          );
+          expect(await move(0, 'ArrowLeft')).toBe(
+            variation === 'b' ? 2 : variation === 'd' ? 7 : 0
+          );
+          expect(await move(7, 'ArrowDown')).toBe(
+            variation === 'b' ? 1 : variation === 'd' ? 0 : 7
+          );
+          expect(await move(0, 'ArrowUp')).toBe(
+            variation === 'b' ? 6 : variation === 'd' ? 7 : 0
+          );
+          expect(view.shadowRoot!.querySelectorAll('[role="row"]')).toHaveLength(
+            family === 1 ? 8 : 1
+          );
+          if (variation === 'd') {
+            for (const key of [
+              'ArrowLeft',
+              'ArrowRight',
+              'ArrowUp',
+              'ArrowDown',
+            ]) {
+              let current = 3;
+              const visited = new Set([current]);
+              for (let step = 0; step < items.length; step++) {
+                current = await move(current, key);
+                visited.add(current);
+              }
+              expect(visited.size).toBe(items.length);
+              expect(current).toBe(3);
+            }
+          }
+        }
+      }
+    }
+  },
+};
+
 export const SemanticWaterfallNavigation: StoryObj = {
   render: () => html`
     <div></div>
@@ -83,7 +156,7 @@ export const SemanticWaterfallNavigation: StoryObj = {
     for (const layout of ['grid', 'waterfall']) {
       const view = await mount(
         canvasElement,
-        'swc-card-view-option-2b',
+        'swc-card-view-option-2e',
         layout
       );
       view.items = items.map((item, index) => ({
@@ -662,7 +735,7 @@ export const WrappingReachesEveryCard: StoryObj = {
     for (const layout of ['grid', 'waterfall']) {
       const view = await mount(
         canvasElement,
-        'swc-card-view-option-1c',
+        'swc-card-view-option-1f',
         layout
       );
       const root = view.shadowRoot!;

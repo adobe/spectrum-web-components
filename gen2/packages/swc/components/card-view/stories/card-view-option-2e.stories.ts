@@ -18,13 +18,13 @@ import { photos, prototypeMeta } from './story-helpers.js';
 // ────────────────
 
 /**
- * Compares Option 1B with semantic-order vertical waterfall navigation.
+ * Compares Option 1C with semantic-order vertical waterfall navigation.
  */
 const meta: Meta = {
-  ...prototypeMeta('swc-card-view-option-2b'),
-  title: 'Card view/Option 2B',
+  ...prototypeMeta('swc-card-view-option-2e'),
+  title: 'Card view/Option 2E',
   parameters: {
-    ...prototypeMeta('swc-card-view-option-2b').parameters,
+    ...prototypeMeta('swc-card-view-option-2e').parameters,
     docs: {
       subtitle: 'Single-row grid with vertical-only waterfall traversal.',
     },

@@ -8,53 +8,53 @@ import * as Stories from './stories/card-view-option-1c.stories';
 
 ## Anatomy
 
-`swc-card-view-option-1c` retains one semantic row per card and a single-column grid, with the same photo, checkbox, and action controls as Option 1B. It changes vertical navigation to traverse every visual column.
+`swc-card-view-option-1c` implements the historical RSP recommendation: one semantic row per card, containing a focusable `rowheader`. Each card contains a photo, checkbox, primary action, and Share action. The collection reports one semantic column regardless of visual layout.
 
 ## Options
 
 ### Grid
 
-Down walks each visual column from top to bottom, then moves to the top of the next column. Up reverses that route. The endpoints do not cycle back to the start.
+Cards align in uniform rows. Left/Right visits enabled cards in collection order; Up/Down uses spatial overlap.
 
 <Canvas of={Stories.Grid} />
 
 ### Waterfall
 
-The same rule follows measured column membership and top positions. Column assignment uses shortest-column placement; navigation remains deterministic for the current measured layout.
+Cards are placed into the shortest column using their measured heights. Left/Right remains sequential even when the next card is not a visual neighbor.
 
 <Canvas of={Stories.Waterfall} />
 
 ## Behaviors
 
-Left/Right follows collection order. Home/End follows collection order, not column traversal order. Space toggles selection; Enter opens the card. Shift plus an arrow selects a range in collection order, which can differ from the spatial route. Tab reaches the active card's checkbox and actions, then exits.
+Space toggles selection; Enter opens the focused card. Home/End reaches the first/last enabled card. Shift plus an arrow selects a collection-order range. Tab visits the active card's checkbox and actions, then exits the collection. Child actions do not also select the card.
 
 ## Accessibility
 
 ### Features
 
-Forward Down traversal and reverse Up traversal can reach every enabled card rather than stopping at a visual column boundary. The semantics and positional metadata remain stable during visual reflow. The column-wrap behavior is an experiment based on the APG's optional layout-grid wrapping.
+Row count and row index describe collection positions, not visual rows. Selected states and a selected-count status communicate selection. Disabled cards are skipped. Resize measurement changes visual positions without changing semantic structure or replacing the focused item.
 
 <Canvas of={Stories.Accessibility} />
 
 ### Pros
 
-- Reduces the risk of interpreting the bottom of a visual column as the end of the entire collection.
-- Preserves a separate sequential horizontal route and independent child controls.
-- Defines both forward and reverse wrapping, including waterfall column membership.
+- Provides a predictable sequential route to every enabled card in both layouts.
+- Retains grid selection and independently interactive children.
+- Closely follows the original RSP keyboard recommendation rather than the waterfall baseline's divergence.
 
 ### Cons
 
 - In observed screen reader output, every card is read as "1 of 1" rather than its position in the full collection.
-- Jumping from a column bottom to the next column's top may surprise sighted users.
-- Vertical traversal order differs from the announced collection indices and from horizontal traversal.
-- Resizing may change the next visual target; row count/index still cannot guarantee spoken position feedback.
+- Down still uses geometry and can stop before every card has been visited.
+- The single-column announcement does not convey the visual vertical-navigation model.
+- Sequential horizontal movement in waterfall may look surprising, and position announcements remain screen reader dependent.
 
 ### Best practices
 
-Test whether wrapping is understood, not only whether every item is technically reachable. Compare repeated Down with repeated Right, check reverse traversal, and evaluate disabled cards, uneven heights, selection ranges, resize, and zoom. Screen reader speech and usability require manual evaluation.
+This is a testable hypothesis, not an accessibility sign-off. Evaluate whether users discover Left/Right as the complete traversal route without changing screen reader settings. Test Tab and Shift+Tab entry/exit, controls, disabled items, zoom, and position announcements across the documented matrix.
 
 ## Upcoming features
 
-The separate single-row semantic experiment mentioned in the strategy is not part of this element. Virtualization and loading remain deferred.
+Virtualization and production focus/selection API decisions are deferred. The initial prototype is fully loaded.
 
 <DocsFooter />

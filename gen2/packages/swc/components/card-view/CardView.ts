@@ -31,7 +31,7 @@ import '../card/swc-card.js';
 
 import styles from './card-view.css';
 
-export class CardViewOption1A extends CardViewBase {
+export class CardViewOption1E extends CardViewBase {
   protected readonly model: CardViewModel = 'baseline';
 
   @property({ reflect: true })
@@ -431,19 +431,19 @@ export class CardViewOption1A extends CardViewBase {
   }
 }
 
-export class CardViewOption1B extends CardViewOption1A {
+export class CardViewOption1C extends CardViewOption1E {
   protected override readonly model: CardViewModel = 'sequential';
 }
 
-export class CardViewOption1C extends CardViewOption1A {
+export class CardViewOption1F extends CardViewOption1E {
   protected override readonly model: CardViewModel = 'wrapping';
 }
 
-export class CardViewOption3A extends CardViewOption1A {
+export class CardViewOption3A extends CardViewOption1E {
   protected override readonly model: CardViewModel = 'list';
 }
 
-export class CardViewOption4A extends CardViewOption1A {
+export class CardViewOption4A extends CardViewOption1E {
   protected override readonly model: CardViewModel = 'feed';
 }
 
@@ -452,16 +452,16 @@ export class CardViewOption4A extends CardViewOption1A {
  *
  * @element swc-card-view-option-2a
  */
-export class CardViewOption2A extends CardViewOption1A {
+export class CardViewOption2A extends CardViewOption1E {
   protected override readonly model: CardViewModel = 'single-row';
 }
 
 /**
  * Experimental layout grid with sequential vertical waterfall navigation.
  *
- * @element swc-card-view-option-2b
+ * @element swc-card-view-option-2e
  */
-export class CardViewOption2B extends CardViewOption1A {
+export class CardViewOption2E extends CardViewOption1E {
   protected override readonly model: CardViewModel = 'vertical';
 }
 
@@ -470,7 +470,7 @@ export class CardViewOption2B extends CardViewOption1A {
  *
  * @element swc-card-view-option-5a
  */
-export class CardViewOption5A extends CardViewOption1A {
+export class CardViewOption5A extends CardViewOption1E {
   protected override readonly model: CardViewModel = 'toolbar';
 }
 
@@ -479,6 +479,6 @@ export class CardViewOption5A extends CardViewOption1A {
  *
  * @element swc-card-view-option-6a
  */
-export class CardViewOption6A extends CardViewOption1A {
+export class CardViewOption6A extends CardViewOption1E {
   protected override readonly model: CardViewModel = 'fieldset';
 }

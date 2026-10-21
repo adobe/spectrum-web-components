@@ -15,11 +15,11 @@ import { expect, type Locator, type Page, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 const prototypes = [
-  'option-1a',
-  'option-1b',
+  'option-1e',
   'option-1c',
+  'option-1f',
   'option-2a',
-  'option-2b',
+  'option-2e',
   'option-3a',
   'option-4a',
   'option-5a',
@@ -158,7 +158,7 @@ for (const prototype of prototypes) {
         }
       });
 
-      if (prototype === 'option-2a' || prototype === 'option-2b') {
+      if (prototype === 'option-2a' || prototype === 'option-2e') {
         test('single semantic row preserves visual arrow navigation', async ({
           page,
         }) => {
@@ -216,7 +216,7 @@ for (const prototype of prototypes) {
               .sort((first, second) => second.left - first.left)[0].index;
             let next = start;
             if (
-              prototype === 'option-2b' &&
+              prototype === 'option-2e' &&
               (horizontal || layout === 'waterfall')
             ) {
               if (!(horizontal && layout === 'waterfall')) {
@@ -271,7 +271,7 @@ for (const prototype of prototypes) {
         });
       }
 
-      if (prototype === 'option-2b') {
+      if (prototype === 'option-2e') {
         test('Tab enters grid child controls and exits without a trap', async ({
           page,
         }) => {

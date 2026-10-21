@@ -18,10 +18,10 @@ import { photos, prototypeMeta } from './story-helpers.js';
  * This is an experimental comparison baseline, not a production accessibility recommendation.
  */
 const meta: Meta = {
-  ...prototypeMeta('swc-card-view-option-1a'),
-  title: 'Card view/Option 1A',
+  ...prototypeMeta('swc-card-view-option-1e'),
+  title: 'Card view/Option 1E',
   parameters: {
-    ...prototypeMeta('swc-card-view-option-1a').parameters,
+    ...prototypeMeta('swc-card-view-option-1e').parameters,
     docs: {
       subtitle:
         'PR reference: spatial navigation and single-column grid semantics.',
