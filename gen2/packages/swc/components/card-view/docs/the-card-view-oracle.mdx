@@ -948,7 +948,7 @@ export const Oracle = () => {
       <ul className="variants">
         {reading.variants.map(([identifier, title, summary]) => (
           <li key={identifier}>
-            <a className="variant-id" href={`?path=/docs/components-card-view-option-${identifier.toLowerCase()}--docs`} target="_top" aria-label={`Option ${identifier}`}>{identifier}</a>
+            <a className="variant-id" href={`./?path=/docs/components-card-view-option-${identifier.toLowerCase()}--docs`} target="_top" aria-label={`Option ${identifier}`}>{identifier}</a>
             <span><strong>{title}</strong>{' '}{summary}</span>
           </li>
         ))}
@@ -991,7 +991,7 @@ export const Oracle = () => {
       <li key={identifier}>
         <a
           className="variant-id"
-          href={`?path=/docs/components-card-view-option-${identifier.toLowerCase()}--docs`}
+          href={`./?path=/docs/components-card-view-option-${identifier.toLowerCase()}--docs`}
           target="_top"
           aria-label={`Option ${identifier}`}
         >
