@@ -14,18 +14,18 @@ import type { Meta } from '@storybook/web-components';
 
 import type { CardViewItem } from '@adobe/spectrum-wc-core/components/card-view/index.js';
 
-import '../swc-card-view-option-1e.js';
 import '../swc-card-view-option-1a.js';
 import '../swc-card-view-option-1b.js';
-import '../swc-card-view-option-1d.js';
-import '../swc-card-view-option-2b.js';
-import '../swc-card-view-option-2c.js';
-import '../swc-card-view-option-2d.js';
 import '../swc-card-view-option-1c.js';
+import '../swc-card-view-option-1e.js';
+import '../swc-card-view-option-2c.js';
+import '../swc-card-view-option-2a.js';
+import '../swc-card-view-option-2d.js';
+import '../swc-card-view-option-1d.js';
 import '../swc-card-view-option-1f.js';
 import '../swc-card-view-option-3a.js';
 import '../swc-card-view-option-4a.js';
-import '../swc-card-view-option-2a.js';
+import '../swc-card-view-option-2b.js';
 import '../swc-card-view-option-2e.js';
 import '../swc-card-view-option-5a.js';
 import '../swc-card-view-option-6a.js';

@@ -15,10 +15,10 @@ import { expect, type Locator, type Page, test } from '@playwright/test';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 const prototypes = [
-  'option-1e',
-  'option-1c',
+  'option-1a',
+  'option-1d',
   'option-1f',
-  'option-2a',
+  'option-2b',
   'option-2e',
   'option-3a',
   'option-4a',
@@ -158,7 +158,7 @@ for (const prototype of prototypes) {
         }
       });
 
-      if (prototype === 'option-2a' || prototype === 'option-2e') {
+      if (prototype === 'option-2b' || prototype === 'option-2e') {
         test('single semantic row preserves visual arrow navigation', async ({
           page,
         }) => {

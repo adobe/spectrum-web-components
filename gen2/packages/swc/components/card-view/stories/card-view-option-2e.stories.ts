@@ -18,7 +18,7 @@ import { photos, prototypeMeta } from './story-helpers.js';
 // ────────────────
 
 /**
- * Compares Option 1C with semantic-order vertical waterfall navigation.
+ * Compares Option 1D with semantic-order vertical waterfall navigation.
  */
 const meta: Meta = {
   ...prototypeMeta('swc-card-view-option-2e'),

@@ -32,7 +32,7 @@ import '../card/swc-card.js';
 
 import styles from './card-view.css';
 
-export class CardViewOption1E extends CardViewBase {
+export class CardViewOption1A extends CardViewBase {
   protected readonly model: CardViewModel = 'baseline';
 
   @property({ reflect: true })
@@ -432,53 +432,53 @@ export class CardViewOption1E extends CardViewBase {
   }
 }
 
-export class CardViewOption1A extends CardViewOption1E {
+export class CardViewOption1B extends CardViewOption1A {
   protected override readonly navigation: CardViewNavigation = 'spatial';
 }
 
-export class CardViewOption1B extends CardViewOption1A {
+export class CardViewOption1C extends CardViewOption1B {
   protected override readonly navigation: CardViewNavigation = 'spatial-wrap';
 }
 
-export class CardViewOption1C extends CardViewOption1E {
+export class CardViewOption1D extends CardViewOption1A {
   protected override readonly model: CardViewModel = 'sequential';
 }
 
-export class CardViewOption1D extends CardViewOption1A {
+export class CardViewOption1E extends CardViewOption1B {
   protected override readonly navigation: CardViewNavigation = 'cycle';
 }
 
-export class CardViewOption1F extends CardViewOption1E {
+export class CardViewOption1F extends CardViewOption1A {
   protected override readonly model: CardViewModel = 'wrapping';
 }
 
-export class CardViewOption3A extends CardViewOption1E {
+export class CardViewOption3A extends CardViewOption1A {
   protected override readonly model: CardViewModel = 'list';
 }
 
-export class CardViewOption4A extends CardViewOption1E {
+export class CardViewOption4A extends CardViewOption1A {
   protected override readonly model: CardViewModel = 'feed';
 }
 
 /**
  * Experimental card collection with one semantic row and a cell per card.
  *
- * @element swc-card-view-option-2a
+ * @element swc-card-view-option-2b
  */
-export class CardViewOption2A extends CardViewOption1E {
+export class CardViewOption2B extends CardViewOption1A {
   protected override readonly model: CardViewModel = 'single-row';
 }
 
-export class CardViewOption2B extends CardViewOption2A {
+export class CardViewOption2C extends CardViewOption2B {
   protected override readonly navigation: CardViewNavigation = 'spatial-wrap';
 }
 
-export class CardViewOption2C extends CardViewOption2A {
+export class CardViewOption2A extends CardViewOption2B {
   protected override readonly navigation: CardViewNavigation =
     'sequential-axis';
 }
 
-export class CardViewOption2D extends CardViewOption2A {
+export class CardViewOption2D extends CardViewOption2B {
   protected override readonly navigation: CardViewNavigation = 'cycle';
 }
 
@@ -487,7 +487,7 @@ export class CardViewOption2D extends CardViewOption2A {
  *
  * @element swc-card-view-option-2e
  */
-export class CardViewOption2E extends CardViewOption1E {
+export class CardViewOption2E extends CardViewOption1A {
   protected override readonly model: CardViewModel = 'vertical';
 }
 
@@ -496,7 +496,7 @@ export class CardViewOption2E extends CardViewOption1E {
  *
  * @element swc-card-view-option-5a
  */
-export class CardViewOption5A extends CardViewOption1E {
+export class CardViewOption5A extends CardViewOption1A {
   protected override readonly model: CardViewModel = 'toolbar';
 }
 
@@ -505,6 +505,6 @@ export class CardViewOption5A extends CardViewOption1E {
  *
  * @element swc-card-view-option-6a
  */
-export class CardViewOption6A extends CardViewOption1E {
+export class CardViewOption6A extends CardViewOption1A {
   protected override readonly model: CardViewModel = 'fieldset';
 }

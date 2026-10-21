@@ -18,10 +18,7 @@ const meta: Meta = {
   title: 'Card view/Option 2C',
   parameters: {
     ...prototypeMeta('swc-card-view-option-2c').parameters,
-    docs: {
-      subtitle:
-        'Single-row grid with sequential Left/Right and spatial Up/Down.',
-    },
+    docs: { subtitle: 'Single-row grid with spatial row and column wrapping.' },
   },
   tags: ['migrated'],
 };

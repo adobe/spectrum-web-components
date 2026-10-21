@@ -66,11 +66,11 @@ The [original RSP Card accessibility specification](https://github.com/adobe/rea
 - Spatial navigation with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd>.
 - Selection states, labelled controls, and <kbd>Tab</kbd> access to the active card's interactive children.
 
-Option 1C follows this historical contract. Its spatial algorithm is an approximation, not an exact implementation of the specification.
+Option 1D follows this historical contract. Its spatial algorithm is an approximation, not an exact implementation of the specification.
 
-The baseline, `swc-card-view-option-1e`, more closely follows [current RSP CardView](https://react-spectrum.adobe.com/CardView). It uses `gridcell` rather than `rowheader` and changes horizontal navigation to spatial movement in waterfall. It adapts Piyush's [PR #6798](https://github.com/adobe/spectrum-web-components/pull/6798), not the complete production implementation.
+The baseline, `swc-card-view-option-1a`, more closely follows [current RSP CardView](https://react-spectrum.adobe.com/CardView). It uses `gridcell` rather than `rowheader` and changes horizontal navigation to spatial movement in waterfall. It adapts Piyush's [PR #6798](https://github.com/adobe/spectrum-web-components/pull/6798), not the complete production implementation.
 
-Current RSP uses virtualization and spatial waterfall range selection. The SWC prototypes are fully loaded, and the baseline retains collection-order range selection. Neither baseline nor option 1C provides full RSP parity.
+Current RSP uses virtualization and spatial waterfall range selection. The SWC prototypes are fully loaded, and the baseline retains collection-order range selection. Neither baseline nor option 1D provides full RSP parity.
 
 ### APG and expert guidance
 
@@ -85,27 +85,37 @@ These sources support different approaches. Use them to form testable hypotheses
 Reported observations provide two additional references:
 
 - **Google Docs:** Uses a listbox with interactive children; an axe DevTools scan flags an error. The [APG listbox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/) does not support independently interactive controls inside options.
-- **Google Drive:** Uses a single-row grid; an axe DevTools scan does not flag the pattern. This informs options 2A and 2E.
+- **Google Drive:** Uses a single-row grid; an axe DevTools scan does not flag the pattern. This informs options 2B and 2E.
 
 These observations are not independently verified. A product precedent or passing scan does not establish accessible interaction.
 
 ## Prototype comparison
 
-Prototype numbers identify the semantic structure; letters distinguish variations within that structure. Option 1 is a single-column grid (1E–1F), option 2 is a single-row grid (2A–2E), option 3 is a native list (3A), option 4 is a feed (4A), option 5 is a toolbar (5A), and option 6 is a native fieldset (6A).
+Prototype numbers identify the semantic structure; letters distinguish variations within that structure. Option 1 is a single-column grid (1A–1F), option 2 is a single-row grid (2A–2E), option 3 is a native list (3A), option 4 is a feed (4A), option 5 is a toolbar (5A), and option 6 is a native fieldset (6A). The comparison covers all 15 implemented options.
 
-Element names use lowercase letters, for example `swc-card-view-option-1e`. Each prototype has grid, waterfall, and accessibility stories. Option 1E is the former unnumbered baseline.
+Element names use lowercase letters, for example `swc-card-view-option-1a`. Each prototype has a six-item overview plus larger grid, waterfall, and accessibility stories. Option 1A is the former unnumbered RSP baseline. Option 2A is the closest single-row comparison: it retains the historical sequential-horizontal and spatial-vertical contract, rather than reproducing the current baseline's spatial horizontal waterfall navigation.
 
 “Sequential” means collection order. “Spatial” means measured visual position. Collection-order horizontal movement is mirrored in right-to-left layouts.
+
+The paired navigation experiments are 1B/2B for spatial movement without wrapping, 1C/2C for spatial wrapping, 1D/2A for sequential Left/Right with spatial Up/Down, and 1E/2D for collection cycling. Options 1F and 2E retain the separate cross-column and vertical-waterfall experiments. Letters start with the closest baseline, so the same letter does not always imply identical navigation across families.
+
+Spatial wrapping returns to the opposite end of the same aligned visual row or column; it does not advance to the next row or column. Alignment uses overlap on the perpendicular axis, so waterfall rows are visual bands rather than fixed-height rows. Local wrapping does not guarantee that one repeated key visits every card. Collection cycling does: each arrow independently visits every enabled item from any starting item, then repeats. The other sequential routes stop at collection boundaries.
 
 ### Semantics and navigation
 
 | Prototype | Structure | Navigation | Basis and main question |
 | --- | --- | --- | --- |
-| Option 1E (baseline) | `grid` → one `row` per card → `gridcell`; one semantic column. | <kbd>ArrowLeft</kbd>/<kbd>ArrowRight</kbd> is sequential in grid and spatial in waterfall. <kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd> is spatial. | Piyush's PR comparison and current RSP behavior. Does the announced structure explain movement? |
-| Option 1C | `grid` → one `row` per card → `rowheader`; one semantic column. | <kbd>ArrowLeft</kbd>/<kbd>ArrowRight</kbd> is sequential in both layouts. <kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd> is spatial. | Historical RSP specification. Does a consistent sequential route improve reachability? |
-| Option 1F | Same structure as option 1C. | Adds vertical column wrapping in both layouts: moving down from a column's bottom continues at the next column's top. Reverse movement mirrors this. Retains sequential horizontal navigation. | APG optional wrapping. Does wrapping help users find every card without surprising them? Waterfall usability needs separate evaluation. |
-| Option 2A | `grid` → one `row` → one `gridcell` per card, in both layouts. | All four arrows move spatially and stop at visual boundaries. Waterfall fills top-to-bottom, then across columns. | Google Drive's reported single-row structure, with experimental spatial navigation. Does positional feedback improve without making movement harder to predict? |
-| Option 2E | Same single-row structure as option 2A, in both layouts. | Grid: sequential <kbd>ArrowLeft</kbd>/<kbd>ArrowRight</kbd> and spatial <kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd>. Waterfall: <kbd>ArrowDown</kbd>/<kbd>ArrowUp</kbd> follows collection order down each column, then across columns; horizontal arrows do not navigate. | SWC comparison with option 2A. Does predictable waterfall traversal improve reachability and understanding? |
+| Option 1A (baseline) | `grid` → one `row` per card → `gridcell`; one semantic column. | <kbd>ArrowLeft</kbd>/<kbd>ArrowRight</kbd> is sequential in grid and spatial in waterfall. <kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd> is spatial. | Piyush's PR comparison and current RSP behavior. Does the announced structure explain movement? |
+| Option 1B | `grid` → one `row` per card → `gridcell`; one semantic column. | All four arrows move spatially and stop when no aligned enabled card exists. | SWC spatial-navigation experiment. Can users predict movement and discover every card without a sequential route? |
+| Option 1C | Same single-column structure as option 1B. | All four arrows move spatially. At an aligned row or column boundary, movement wraps to the opposite end of that same visual band. | SWC spatial-wrapping experiment. Does local wrapping help users, or make the collection boundary harder to recognize? |
+| Option 1D | `grid` → one `row` per card → `rowheader`; one semantic column. | <kbd>ArrowLeft</kbd>/<kbd>ArrowRight</kbd> is sequential in both layouts. <kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd> is spatial. | Historical RSP specification. Does a consistent sequential route improve reachability? |
+| Option 1E | Same single-column structure as option 1B. | Every arrow follows collection order and cycles at collection boundaries. Right/Down moves forward; Left/Up moves backward, with horizontal directions mirrored in RTL. | SWC collection-cycling experiment. Can users reach every enabled item with one repeated key without mistaking collection order for spatial movement? |
+| Option 1F | Same structure as option 1D. | Adds vertical column wrapping in both layouts: moving down from a column's bottom continues at the next column's top. Reverse movement mirrors this. Retains sequential horizontal navigation. | APG optional wrapping. Does wrapping help users find every card without surprising them? Waterfall usability needs separate evaluation. |
+| Option 2A | Same single-row structure as option 2C. | Left/Right moves sequentially in collection order in both layouts. Up/Down moves spatially. Movement stops at collection boundaries or when no aligned card exists. | Historical RSP-style keyboard contract with single-row semantics. Does a stable sequential horizontal route improve reachability? |
+| Option 2B | `grid` → one `row` → one `gridcell` per card, in both layouts. | All four arrows move spatially and stop at visual boundaries. Waterfall fills top-to-bottom, then across columns. | Google Drive's reported single-row structure, with experimental spatial navigation. Does positional feedback improve without making movement harder to predict? |
+| Option 2C | `grid` → one `row` → one `gridcell` per card, in both layouts. | All four arrows move spatially, wrapping to the opposite end of the same aligned visual row or column at its boundary. | SWC spatial-wrapping comparison with option 1C. Does a single semantic row change users' understanding of local wrapping? |
+| Option 2D | Same single-row structure as option 2C. | Every arrow follows collection order and cycles at collection boundaries, with the same directions as option 1E. | SWC collection-cycling comparison with option 1E. Does single-row position feedback make the sequential route easier to understand? |
+| Option 2E | Same single-row structure as option 2B, in both layouts. | Grid: sequential <kbd>ArrowLeft</kbd>/<kbd>ArrowRight</kbd> and spatial <kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd>. Waterfall: <kbd>ArrowDown</kbd>/<kbd>ArrowUp</kbd> follows collection order down each column, then across columns; horizontal arrows do not navigate. | SWC comparison with option 2B. Does predictable waterfall traversal improve reachability and understanding? |
 | Option 3A | Native `ul` → `li`, with `aria-posinset` and `aria-setsize`. | Supplementary sequential <kbd>ArrowLeft</kbd>/<kbd>ArrowRight</kbd> and spatial <kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd>. One list item has a roving tab stop. | Native-list alternative. Can ordinary reading and control access outweigh the extra tab stops? |
 | Option 4A | Labelled `feed` → focusable `article`, with position and total metadata. | <kbd>PageDown</kbd>/<kbd>PageUp</kbd> moves one article forward/backward in collection order. | APG feed pattern. Does the collection genuinely fit a reading-oriented content stream? |
 | Option 5A | Labelled horizontal `toolbar` → labelled `group` per card → native controls. | Sequential <kbd>ArrowLeft</kbd>/<kbd>ArrowRight</kbd> between checkboxes; spatial <kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd>. Open becomes the navigation target when selection is disabled. | Toolbar-inspired experiment. Does command-group semantics fit a content collection? |
@@ -117,7 +127,7 @@ The arrow-navigation variants also provide <kbd>Home</kbd>/<kbd>End</kbd> for th
 
 | Prototypes | Child-control access | Selection |
 | --- | --- | --- |
-| Options 1E–1F and 2A–2E | <kbd>Tab</kbd> visits the active card's controls, then leaves the collection. Inactive-card controls are not tabbable. | Native checkbox controls and grid selection states; supports keyboard range selection. |
+| Options 1A–1F and 2A–2E | <kbd>Tab</kbd> visits the active card's controls, then leaves the collection. Inactive-card controls are not tabbable. | Native checkbox controls and grid selection states; supports keyboard range selection. |
 | Options 3A and 4A | Every enabled checkbox and action remains in normal page tab order. Child-control arrows remain native. | Native checkboxes; no custom range selection. |
 | Options 5A and 6A | <kbd>Tab</kbd> visits the active card's Open and Share actions, then leaves. Action-button arrows remain native. | Native checkboxes; selection and actions remain independent. |
 
@@ -125,8 +135,11 @@ The arrow-navigation variants also provide <kbd>Home</kbd>/<kbd>End</kbd> for th
 
 ### Main tradeoffs and reported results
 
-- **Options 1E–1F:** Observed screen reader output announces each card as “1 of 1.” The announced single column can also conflict with spatial movement.
-- **Option 2A:** Reported output provides useful “x of y” feedback. However, one semantic row does not explain vertical arrows, and spatial movement does not provide a simple sequential traversal route.
+- **Options 1A, 1D, and 1F:** Reported screen reader output announces each card as “1 of 1.” The announced single column can also conflict with spatial movement. The newer variants 1B, 1C, and 1E need their own spoken-output checks; shared semantics do not establish equivalent usability.
+- **Option 2B:** Reported output provides useful “x of y” feedback. However, one semantic row does not explain vertical arrows, and spatial movement does not provide a simple sequential traversal route.
+- **Options 1C and 2C:** Local spatial wrapping preserves the current visual band but can make a collection boundary harder to recognize. Users may keep cycling within one band without discovering the rest of the collection.
+- **Options 1E and 2D:** Every arrow can visit the entire enabled collection. This trades spatial predictability and a stopping boundary for complete traversal with one repeated key. Test whether users understand the cycle and recognize repeated items.
+- **Options 1D and 2A:** Left/Right provides a collection-order route, while Up/Down follows geometry. Users must discover which pair reaches every item; a single repeated key only traverses the full collection from the appropriate starting boundary.
 - **Option 2E:** Provides predictable sequential waterfall traversal, but reaching distant cards can require many key presses. Recheck spoken output after the change to single-row semantics.
 - **Option 3A:** Preserves native content and control semantics, but adds tab stops. Reported output does not announce “x of y” despite list-position metadata. Supplementary arrows may be unavailable in screen reader browse mode.
 - **Option 4A:** Preserves rich content, but one-article-at-a-time <kbd>PageUp</kbd>/<kbd>PageDown</kbd> navigation can feel slow and unexpected. A fully loaded prototype does not test the feed's loading behavior.
@@ -169,7 +182,7 @@ Virtualization is a separate implementation stage. It must preserve focused elem
 ### Test stages
 
 1. Compare the baseline, repaired grid, and native list in a fully loaded uniform layout.
-2. Use the other options to test specific hypotheses about wrapping, semantics, positional feedback, and control access.
+2. Compare the paired grid experiments: 1B/2B for spatial movement, 1C/2C for local wrapping, 1D/2A for a sequential horizontal route, and 1E/2D for full collection cycling. Evaluate 1F and 2E separately because their cross-column traversal differs from local wrapping. Use 4A, 5A, and 6A to test feed and control-grouping semantics.
 3. Compare waterfall navigation using the same content and actions.
 4. Add virtualization only after choosing a clear interaction contract.
 

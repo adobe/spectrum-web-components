@@ -13,29 +13,29 @@ import { html } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/web-components';
 
-import '../swc-card-view-option-1e.js';
 import '../swc-card-view-option-1a.js';
 import '../swc-card-view-option-1b.js';
-import '../swc-card-view-option-1d.js';
-import '../swc-card-view-option-2b.js';
-import '../swc-card-view-option-2c.js';
-import '../swc-card-view-option-2d.js';
 import '../swc-card-view-option-1c.js';
+import '../swc-card-view-option-1e.js';
+import '../swc-card-view-option-2c.js';
+import '../swc-card-view-option-2a.js';
+import '../swc-card-view-option-2d.js';
+import '../swc-card-view-option-1d.js';
 import '../swc-card-view-option-1f.js';
 import '../swc-card-view-option-3a.js';
 import '../swc-card-view-option-4a.js';
-import '../swc-card-view-option-2a.js';
+import '../swc-card-view-option-2b.js';
 import '../swc-card-view-option-2e.js';
 import '../swc-card-view-option-5a.js';
 import '../swc-card-view-option-6a.js';
 
 const tags = [
-  'swc-card-view-option-1e',
-  'swc-card-view-option-1c',
+  'swc-card-view-option-1a',
+  'swc-card-view-option-1d',
   'swc-card-view-option-1f',
   'swc-card-view-option-3a',
   'swc-card-view-option-4a',
-  'swc-card-view-option-2a',
+  'swc-card-view-option-2b',
 ];
 
 const items = Array.from({ length: 8 }, (_, index) => ({
@@ -89,7 +89,11 @@ export const GridNavigationMatrix: StoryObj = {
     for (const family of [1, 2]) {
       for (const variation of ['a', 'b', 'c', 'd']) {
         for (const layout of ['grid', 'waterfall']) {
-          const tag = `swc-card-view-option-${family}${variation}`;
+          const letter =
+            family === 1
+              ? { a: 'b', b: 'c', c: 'd', d: 'e' }[variation]
+              : { a: 'b', b: 'c', c: 'a', d: 'd' }[variation];
+          const tag = `swc-card-view-option-${family}${letter}`;
           const view = await mount(canvasElement, tag, layout);
           Object.defineProperty(view, 'positions', {
             get: () =>
@@ -561,9 +565,9 @@ export const SemanticsAndNavigation: StoryObj = {
       } else {
         expect(
           root.querySelector('[role="grid"]')?.getAttribute('aria-colcount')
-        ).toBe(tag === 'swc-card-view-option-2a' ? '8' : '1');
+        ).toBe(tag === 'swc-card-view-option-2b' ? '8' : '1');
         expect(root.querySelectorAll('[role="row"]')).toHaveLength(
-          tag === 'swc-card-view-option-2a' ? 1 : 8
+          tag === 'swc-card-view-option-2b' ? 1 : 8
         );
         const first = root.querySelector<HTMLElement>('[data-focus]')!;
         first.focus();
@@ -599,7 +603,7 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
     for (const layout of ['grid', 'waterfall']) {
       const view = await mount(
         canvasElement,
-        'swc-card-view-option-2a',
+        'swc-card-view-option-2b',
         layout
       );
       view.items = items.map((item, index) => ({

@@ -13,30 +13,20 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 
 import { photos, prototypeMeta } from './story-helpers.js';
 
-// ────────────────
-//    METADATA
-// ────────────────
-
-/**
- * Tests a stable single-row grid with sequential navigation in both visual layouts.
- */
 const meta: Meta = {
   ...prototypeMeta('swc-card-view-option-2a'),
   title: 'Card view/Option 2A',
   parameters: {
     ...prototypeMeta('swc-card-view-option-2a').parameters,
     docs: {
-      subtitle: 'Single-row grid with one semantic column per card.',
+      subtitle:
+        'Single-row grid with sequential Left/Right and spatial Up/Down.',
     },
   },
   tags: ['migrated'],
 };
 
 export default meta;
-
-// ──────────────────────────
-//    OPTIONS STORIES
-// ──────────────────────────
 
 export const Overview: StoryObj = {
   args: { layout: 'grid', items: photos.slice(0, 6) },
@@ -52,10 +42,6 @@ export const Waterfall: StoryObj = {
   args: { layout: 'waterfall' },
   tags: ['options'],
 };
-
-// ────────────────────────────────
-//    ACCESSIBILITY STORIES
-// ────────────────────────────────
 
 export const Accessibility: StoryObj = {
   args: {

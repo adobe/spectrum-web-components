@@ -1,40 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/web-components';
-
-import { photos, prototypeMeta } from './story-helpers.js';
-
-const meta: Meta = {
-  ...prototypeMeta('swc-card-view-option-2b'),
-  title: 'Card view/Option 2B',
-  parameters: {
-    ...prototypeMeta('swc-card-view-option-2b').parameters,
-    docs: { subtitle: 'Single-row grid with spatial row and column wrapping.' },
-  },
-  tags: ['migrated'],
-};
-
-export default meta;
-
-export const Overview: StoryObj = {
-  args: { layout: 'grid', items: photos.slice(0, 6) },
-  tags: ['overview'],
-};
-
-export const Grid: StoryObj = {
-  args: { layout: 'grid' },
-  tags: ['options'],
-};
-
-export const Waterfall: StoryObj = {
-  args: { layout: 'waterfall' },
-  tags: ['options'],
-};
-
-export const Accessibility: StoryObj = {
-  args: {
-    items: photos.map((item, index) => ({ ...item, disabled: index === 2 })),
-  },
-  tags: ['a11y'],
-}; /**
+/**
  * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
@@ -52,3 +16,50 @@ import { photos, prototypeMeta } from './story-helpers.js';
 // ────────────────
 //    METADATA
 // ────────────────
+
+/**
+ * Tests a stable single-row grid with sequential navigation in both visual layouts.
+ */
+const meta: Meta = {
+  ...prototypeMeta('swc-card-view-option-2b'),
+  title: 'Card view/Option 2B',
+  parameters: {
+    ...prototypeMeta('swc-card-view-option-2b').parameters,
+    docs: {
+      subtitle: 'Single-row grid with one semantic column per card.',
+    },
+  },
+  tags: ['migrated'],
+};
+
+export default meta;
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+export const Overview: StoryObj = {
+  args: { layout: 'grid', items: photos.slice(0, 6) },
+  tags: ['overview'],
+};
+
+export const Grid: StoryObj = {
+  args: { layout: 'grid' },
+  tags: ['options'],
+};
+
+export const Waterfall: StoryObj = {
+  args: { layout: 'waterfall' },
+  tags: ['options'],
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+export const Accessibility: StoryObj = {
+  args: {
+    items: photos.map((item, index) => ({ ...item, disabled: index === 2 })),
+  },
+  tags: ['a11y'],
+};

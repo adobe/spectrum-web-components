@@ -13,13 +13,16 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 
 import { photos, prototypeMeta } from './story-helpers.js';
 
+/**
+ * Tests the historical RSP recommendation with a stable collection-order horizontal route.
+ */
 const meta: Meta = {
   ...prototypeMeta('swc-card-view-option-1d'),
   title: 'Card view/Option 1D',
   parameters: {
     ...prototypeMeta('swc-card-view-option-1d').parameters,
     docs: {
-      subtitle: 'Single-column grid with collection cycling on every arrow.',
+      subtitle: 'Single-column grid with sequential Left/Right navigation.',
     },
   },
   tags: ['migrated'],
@@ -36,12 +39,10 @@ export const Grid: StoryObj = {
   args: { layout: 'grid' },
   tags: ['options'],
 };
-
 export const Waterfall: StoryObj = {
   args: { layout: 'waterfall' },
   tags: ['options'],
 };
-
 export const Accessibility: StoryObj = {
   args: {
     items: photos.map((item, index) => ({ ...item, disabled: index === 2 })),

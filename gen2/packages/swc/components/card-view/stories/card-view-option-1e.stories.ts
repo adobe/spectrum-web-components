@@ -13,18 +13,13 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 
 import { photos, prototypeMeta } from './story-helpers.js';
 
-/**
- * Adapts the default RSP-style model from PR #6798 into a Lit collection.
- * This is an experimental comparison baseline, not a production accessibility recommendation.
- */
 const meta: Meta = {
   ...prototypeMeta('swc-card-view-option-1e'),
   title: 'Card view/Option 1E',
   parameters: {
     ...prototypeMeta('swc-card-view-option-1e').parameters,
     docs: {
-      subtitle:
-        'PR reference: spatial navigation and single-column grid semantics.',
+      subtitle: 'Single-column grid with collection cycling on every arrow.',
     },
   },
   tags: ['migrated'],
@@ -41,10 +36,12 @@ export const Grid: StoryObj = {
   args: { layout: 'grid' },
   tags: ['options'],
 };
+
 export const Waterfall: StoryObj = {
   args: { layout: 'waterfall' },
   tags: ['options'],
 };
+
 export const Accessibility: StoryObj = {
   args: {
     items: photos.map((item, index) => ({ ...item, disabled: index === 2 })),
