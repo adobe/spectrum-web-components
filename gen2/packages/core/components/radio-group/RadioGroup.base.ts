@@ -337,6 +337,8 @@ export abstract class RadioGroupBase extends SizedMixin(
     getItems: () => this.assignedItems(),
   });
 
+  private itemDisabledObserver: MutationObserver | null = null;
+
   /**
    * Only keyboard movement (arrows, Home, End) selects the active item;
    * Tab-entry and `.focus()` do not.
@@ -357,6 +359,16 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   public override connectedCallback(): void {
     super.connectedCallback();
+    this.itemDisabledObserver ??= new MutationObserver((records) => {
+      if (records.some(({ target }) => target instanceof RadioBase)) {
+        this.navigation.refresh();
+      }
+    });
+    this.itemDisabledObserver.observe(this, {
+      attributes: true,
+      attributeFilter: ['disabled'],
+      subtree: true,
+    });
     this.addEventListener(
       focusgroupNavigationActiveChange,
       this.handleNavigationActiveChange
@@ -368,6 +380,7 @@ export abstract class RadioGroupBase extends SizedMixin(
       focusgroupNavigationActiveChange,
       this.handleNavigationActiveChange
     );
+    this.itemDisabledObserver?.disconnect();
     super.disconnectedCallback();
   }
 

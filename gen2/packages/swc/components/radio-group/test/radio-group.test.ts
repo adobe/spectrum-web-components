@@ -507,6 +507,40 @@ export const DisabledStateLifecycleTest: Story = {
   },
 };
 
+export const SelectedItemDisabledRovingTabindexTest: Story = {
+  render: () => html`
+    <swc-radio-group selected="standard">
+      <span slot="label">Shipping</span>
+      <swc-radio value="standard">
+        <span slot="label">Standard</span>
+      </swc-radio>
+      <swc-radio value="express">
+        <span slot="label">Express</span>
+      </swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const [selected, next] = Array.from(
+      group.querySelectorAll<Radio>('swc-radio')
+    );
+
+    await waitFor(() => {
+      expect([selected.tabIndex, next.tabIndex]).toEqual([0, -1]);
+    });
+
+    selected.disabled = true;
+    await selected.updateComplete;
+
+    await waitFor(() => {
+      expect([selected.tabIndex, next.tabIndex]).toEqual([-1, 0]);
+    });
+  },
+};
+
 export const InvalidFormSubmissionTest: Story = {
   render: () => html`
     <form>
