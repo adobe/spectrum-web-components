@@ -56,10 +56,9 @@ import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 | `prefix` slot                                       | Non-interactive content (icon, symbol, avatar) rendered inside the field before the input.                                                                                                                                                                              |
 | Native form association                             | `ElementInternals`-based participation: `formResetCallback`, `formDisabledCallback`, `fieldset[disabled]` cascade, plus the constraint-validation surface (`form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, `reportValidity()`) on the host. |
 | Keyboard-only focus ring                            | Focus ring shows only on keyboard focus; pointer focus is indicated by a border color change.                                                                                                                                                                           |
-| `setCustomValidity(message)`                        | Adds an application-specific validation error. Pass `''` to clear only this message. Calls before first render are preserved.                                                                                                                                           |
 | `delegatesFocus`                                    | Focus lands directly on the internal `<input>`; the field is a single tab stop.                                                                                                                                                                                         |
 
-`field-status="invalid"` makes eligible fields fail validation and blocks native submission unless validation is bypassed. Clear authored errors with `fieldStatus = undefined` and custom messages with `setCustomValidity('')`. Neither clears the other or overrides native constraints. Application-set errors are not automatically cleared on input, blur, or submission. See [Form participation](?path=/docs/components-text-field--docs#form-participation).
+`field-status="invalid"` makes eligible fields fail validation and uses the plain text of `error-text` as the validation message. Missing or empty text uses "Invalid value."; provide localized error text when needed. Clear the application error with `fieldStatus = undefined`; native constraints still apply. Error text alone does not invalidate the field, and application-set status is not automatically cleared on input, blur, or submission. The host does not expose `setCustomValidity()`. See [Form participation](?path=/docs/components-text-field--docs#form-participation).
 
 ### Removed in Spectrum 2
 
@@ -195,7 +194,7 @@ field.fieldStatus = 'invalid';
 field.fieldStatus = undefined;
 ```
 
-The default is `undefined`, not `valid`. Remove `field-status` or assign `undefined` to clear the authored status. A `valid` status does not override native constraints or custom messages and does not show a checkmark.
+The default is `undefined`, not `valid`. Remove `field-status` or assign `undefined` to clear the authored status and its derived validation error. A `valid` status does not override native constraints and does not show a checkmark.
 
 ## Accessibility
 
@@ -278,5 +277,5 @@ Spectrum 2 exposes a reduced set of `--swc-*` custom properties on `<swc-text-fi
 - [ ] Replace `<sp-textfield multiline>` with `<swc-text-area>` (once migrated); move `grows` and `rows`.
 - [ ] Remove `quiet` and `tooltip-placement`.
 - [ ] Move `autocomplete="list"` or `autocomplete="none"` markup to a combobox.
-- [ ] Replace the status booleans with `fieldStatus` / `field-status` and clear authored invalid status and custom validation messages when their errors are resolved; both participate in native form validation.
+- [ ] Replace the status booleans with `fieldStatus` / `field-status`, supply application error messages through `error-text`, and clear invalid status when the error is resolved.
 - [ ] Remove all `--mod-textfield-*` overrides; adopt the `--swc-*` properties above where needed.

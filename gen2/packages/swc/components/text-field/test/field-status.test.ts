@@ -172,8 +172,7 @@ export const ValidationSources: Story = {
       canvasElement,
       'swc-text-field'
     );
-    await step('custom messages survive all status transitions', async () => {
-      field.setCustomValidity('The server rejected this username.');
+    await step('slotted messages apply only while invalid', async () => {
       for (const status of [
         'invalid',
         'disabled',
@@ -183,20 +182,17 @@ export const ValidationSources: Story = {
       ] as const) {
         field.fieldStatus = status;
         await field.updateComplete;
-        expect(field.validity.customError).toBe(true);
-        expect(field.checkValidity()).toBe(
-          status === 'disabled' || status === 'readonly'
-        );
+        expect(field.validity.customError).toBe(status === 'invalid');
+        expect(field.checkValidity()).toBe(status !== 'invalid');
         if (field.willValidate) {
           expect(field.validationMessage).toBe(
-            'The server rejected this username.'
+            status === 'invalid' ? 'This username is unavailable.' : ''
           );
         }
         expect(field.roleElement?.getAttribute('aria-invalid')).toBe(
           status === 'invalid' ? 'true' : null
         );
       }
-      field.setCustomValidity('');
       expect(field.checkValidity()).toBe(true);
     });
 
@@ -254,22 +250,10 @@ export const BarredNativeConstraints: Story = {
         expect(field.checkValidity()).toBe(true);
         expect(form.checkValidity()).toBe(true);
 
-        field.setCustomValidity('The server rejected this email.');
-        expect(field.validity.customError).toBe(true);
-        expect(field.validity.typeMismatch).toBe(false);
-        expect(field.checkValidity()).toBe(true);
-        field.setCustomValidity('');
-        expect(field.validity.valid).toBe(true);
-
-        field.setCustomValidity('The server rejected this email.');
         field.fieldStatus = undefined;
         await field.updateComplete;
         expect(field.willValidate).toBe(true);
         expect(field.validity.typeMismatch).toBe(true);
-        expect(field.validity.customError).toBe(true);
-        expect(field.validationMessage).toBe('The server rejected this email.');
-        expect(field.checkValidity()).toBe(false);
-        field.setCustomValidity('');
         expect(field.validity.customError).toBe(false);
         expect(field.validity.typeMismatch).toBe(true);
         expect(field.checkValidity()).toBe(false);

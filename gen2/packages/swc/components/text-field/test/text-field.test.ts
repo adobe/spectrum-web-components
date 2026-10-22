@@ -1381,10 +1381,10 @@ export const InvalidContractTest: Story = {
 InvalidContractTest.storyName = 'Application-controlled invalid state';
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Custom validity
+// TEST: Slot-backed validation
 // ──────────────────────────────────────────────────────────────
 
-export const CustomValidityTest: Story = {
+export const SlottedErrorLifecycleTest: Story = {
   ...FormParticipationTest,
   play: async ({ canvasElement, step }) => {
     const field = await getComponent<TextField>(
@@ -1396,6 +1396,10 @@ export const CustomValidityTest: Story = {
     if (!form || !input) {
       throw new Error('form or input not found');
     }
+    const error = document.createElement('span');
+    error.slot = 'error-text';
+    error.textContent = 'Username is already taken.';
+    field.append(error);
     const events: string[] = [];
     field.addEventListener('input', () => events.push('input'));
     field.addEventListener('change', () => events.push('change'));
@@ -1406,9 +1410,10 @@ export const CustomValidityTest: Story = {
     });
 
     await step(
-      'custom messages immediately block validity and submit',
+      'slotted errors block validity and submit while invalid',
       async () => {
-        field.setCustomValidity('Username is already taken.');
+        field.fieldStatus = 'invalid';
+        await field.updateComplete;
         expect(field.validity.customError).toBe(true);
         expect(field.validationMessage).toBe('Username is already taken.');
         expect(field.checkValidity()).toBe(false);
@@ -1417,13 +1422,13 @@ export const CustomValidityTest: Story = {
         expect(submissions).toBe(0);
         await field.updateComplete;
         expect(input.validationMessage).toBe('Username is already taken.');
-        expect(field.fieldStatus).toBeUndefined();
-        expect(input.hasAttribute('aria-invalid')).toBe(false);
+        expect(field.fieldStatus).toBe('invalid');
+        expect(input.getAttribute('aria-invalid')).toBe('true');
       }
     );
 
     await step(
-      'updates, reset, and restoration preserve custom errors',
+      'updates, reset, and restoration preserve authored errors',
       async () => {
         field.value = 'Updated';
         field.size = 'l';
@@ -1438,7 +1443,7 @@ export const CustomValidityTest: Story = {
     );
 
     await step(
-      'disabled fieldsets suspend but do not clear custom errors',
+      'disabled fieldsets suspend but do not clear authored errors',
       async () => {
         const fieldset = document.createElement('fieldset');
         field.before(fieldset);
@@ -1454,8 +1459,9 @@ export const CustomValidityTest: Story = {
       }
     );
 
-    await step('clearing the message restores native validity', async () => {
-      field.setCustomValidity('');
+    await step('clearing invalid status restores native validity', async () => {
+      field.fieldStatus = undefined;
+      await field.updateComplete;
       expect(field.validity.customError).toBe(false);
       expect(field.validationMessage).toBe('');
       expect(field.checkValidity()).toBe(true);
@@ -1466,7 +1472,117 @@ export const CustomValidityTest: Story = {
     });
   },
 };
-CustomValidityTest.storyName = 'Custom validity';
+SlottedErrorLifecycleTest.storyName = 'Slotted error lifecycle';
+
+export const SlotBackedValidationTest: Story = {
+  ...FormParticipationTest,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const error = document.createElement('span');
+    error.slot = 'error-text';
+    error.textContent = 'Username is already taken.';
+    field.append(error);
+    field.fieldStatus = 'invalid';
+    await field.updateComplete;
+
+    await step('uses the inline error as the validation message', () => {
+      expect(field.validationMessage).toBe('Username is already taken.');
+      expect(field.roleElement?.validationMessage).toBe(
+        'Username is already taken.'
+      );
+      expect(field.validity.customError).toBe(true);
+      expect(field.checkValidity()).toBe(false);
+      expect('setCustomValidity' in field).toBe(false);
+    });
+
+    await step('tracks text edits and replacement error elements', async () => {
+      error.textContent = 'Choose another username.';
+      await waitFor(() =>
+        expect(field.validationMessage).toBe('Choose another username.')
+      );
+      const replacement = document.createElement('span');
+      replacement.slot = 'error-text';
+      replacement.innerHTML = 'Try <strong>a different name</strong>.';
+      error.replaceWith(replacement);
+      await waitFor(() =>
+        expect(field.validationMessage).toBe('Try a different name.')
+      );
+      const text = replacement.querySelector('strong')?.firstChild;
+      if (!text) {
+        throw new Error('Expected nested error text');
+      }
+      text.textContent = 'another name';
+      await waitFor(() =>
+        expect(field.validationMessage).toBe('Try another name.')
+      );
+      replacement.slot = 'prefix';
+      await waitFor(() => {
+        expect(field.validationMessage).toBe('Invalid value.');
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+        ).toBeNull();
+      });
+      replacement.slot = 'error-text';
+      await waitFor(() => {
+        expect(field.validationMessage).toBe('Try another name.');
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+        ).not.toBeNull();
+      });
+      replacement.remove();
+      await waitFor(() =>
+        expect(field.validationMessage).toBe('Invalid value.')
+      );
+      replacement.textContent = 'A new application error.';
+      field.append(replacement);
+      await waitFor(() =>
+        expect(field.validationMessage).toBe('A new application error.')
+      );
+      replacement.textContent = '   ';
+      await waitFor(() =>
+        expect(field.validationMessage).toBe('Invalid value.')
+      );
+    });
+
+    await step(
+      'clears derived errors without clearing native constraints',
+      async () => {
+        field.required = true;
+        field.value = '';
+        field.fieldStatus = undefined;
+        await field.updateComplete;
+        expect(field.validity.customError).toBe(false);
+        expect(field.validity.valueMissing).toBe(true);
+        expect(field.validationMessage).toBe(
+          field.roleElement?.validationMessage
+        );
+        expect(field.checkValidity()).toBe(false);
+        field.value = 'available';
+        await field.updateComplete;
+        expect(field.validationMessage).toBe('');
+        expect(field.checkValidity()).toBe(true);
+      }
+    );
+
+    await step('reads changed error text after reconnection', async () => {
+      field.fieldStatus = 'invalid';
+      await field.updateComplete;
+      field.remove();
+      const message = field.querySelector('[slot="error-text"]');
+      if (!message) {
+        throw new Error('Expected error content');
+      }
+      message.textContent = 'Updated while disconnected.';
+      canvasElement.append(field);
+      await field.updateComplete;
+      expect(field.validationMessage).toBe('Updated while disconnected.');
+    });
+  },
+};
+SlotBackedValidationTest.storyName = 'Slot-backed validation';
 
 export const ValidationSourcesTest: Story = {
   ...FormParticipationTest,
@@ -1476,81 +1592,79 @@ export const ValidationSourcesTest: Story = {
       'swc-text-field'
     );
 
+    const error = document.createElement('span');
+    error.slot = 'error-text';
+    error.textContent = 'Username is already taken.';
+    field.append(error);
     await step(
-      'authored invalid and custom messages clear independently',
+      'clearing authored invalid clears its derived custom error',
       async () => {
         field.fieldStatus = 'invalid';
-        field.setCustomValidity('Username is already taken.');
         await field.updateComplete;
         expect(field.validationMessage).toBe('Username is already taken.');
         field.fieldStatus = undefined;
         await field.updateComplete;
-        expect(field.validity.customError).toBe(true);
-        expect(field.validationMessage).toBe('Username is already taken.');
-        field.fieldStatus = 'invalid';
-        await field.updateComplete;
-        field.setCustomValidity('');
-        await field.updateComplete;
-        expect(field.fieldStatus).toBe('invalid');
-        expect(field.validity.customError).toBe(true);
-        expect(field.validationMessage.length).toBeGreaterThan(0);
-        expect(field.checkValidity()).toBe(false);
-        field.fieldStatus = undefined;
-        await field.updateComplete;
+        expect(field.validity.customError).toBe(false);
+        expect(field.validationMessage).toBe('');
         expect(field.validity.valid).toBe(true);
       }
     );
 
-    await step('clearing custom messages preserves native errors', async () => {
-      for (const value of ['', '123']) {
-        field.required = true;
-        field.pattern = '[A-Za-z]+';
-        field.value = value;
-        field.setCustomValidity('Choose another username.');
-        await field.updateComplete;
-        expect(field.validity.customError).toBe(true);
-        expect(field.validity.valueMissing).toBe(value === '');
-        expect(field.validity.patternMismatch).toBe(value === '123');
-        field.setCustomValidity('');
-        expect(field.validity.customError).toBe(false);
-        expect(field.checkValidity()).toBe(false);
-        expect(field.validationMessage).toBe(
-          field.roleElement?.validationMessage
-        );
-      }
-    });
-  },
-};
-ValidationSourcesTest.storyName = 'Independent validation sources';
-
-export const BeforeRenderCustomValidityTest: Story = {
-  render: () => html`
-    <span></span>
-  `,
-  play: async ({ canvasElement, step }) => {
     await step(
-      'preserves custom messages supplied before first render',
+      'clearing authored invalid preserves native errors',
       async () => {
-        const field = new TextField();
-        field.accessibleLabel = 'Username';
-        field.setCustomValidity('Username is already taken.');
-        canvasElement.append(field);
-        try {
+        for (const value of ['', '123']) {
+          field.required = true;
+          field.pattern = '[A-Za-z]+';
+          field.value = value;
+          field.fieldStatus = 'invalid';
           await field.updateComplete;
-          expect(field.validationMessage).toBe('Username is already taken.');
           expect(field.validity.customError).toBe(true);
+          expect(field.validity.valueMissing).toBe(value === '');
+          expect(field.validity.patternMismatch).toBe(value === '123');
+          field.fieldStatus = undefined;
+          await field.updateComplete;
+          expect(field.validity.customError).toBe(false);
           expect(field.checkValidity()).toBe(false);
-          field.setCustomValidity('');
-          expect(field.checkValidity()).toBe(true);
-        } finally {
-          field.remove();
+          expect(field.validationMessage).toBe(
+            field.roleElement?.validationMessage
+          );
         }
       }
     );
   },
 };
-BeforeRenderCustomValidityTest.storyName =
-  'Custom validity before first render';
+ValidationSourcesTest.storyName = 'Native and authored validation sources';
+
+export const BeforeRenderErrorTextTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ canvasElement, step }) => {
+    await step('uses error text supplied before first render', async () => {
+      const field = new TextField();
+      field.accessibleLabel = 'Username';
+      field.fieldStatus = 'invalid';
+      const error = document.createElement('span');
+      error.slot = 'error-text';
+      error.textContent = 'Username is already taken.';
+      field.append(error);
+      canvasElement.append(field);
+      try {
+        await field.updateComplete;
+        expect(field.validationMessage).toBe('Username is already taken.');
+        expect(field.validity.customError).toBe(true);
+        expect(field.checkValidity()).toBe(false);
+        field.fieldStatus = undefined;
+        await field.updateComplete;
+        expect(field.checkValidity()).toBe(true);
+      } finally {
+        field.remove();
+      }
+    });
+  },
+};
+BeforeRenderErrorTextTest.storyName = 'Error text before first render';
 
 // ──────────────────────────────────────────────────────────────
 // TEST: Native form validation, reset, and submit behavior
@@ -1601,7 +1715,7 @@ export const FormBehaviorTest: Story = {
       expect(
         canvas.getByText(/Inline error text is supplied by the application/)
       ).toHaveTextContent(
-        'Inline error text is supplied by the application. validationMessage comes from native validation or a custom error.'
+        'Inline error text is supplied by the application and becomes the validationMessage while the field is invalid.'
       );
     });
 
@@ -1666,12 +1780,18 @@ export const FormBehaviorTest: Story = {
           'validity.customError: true\n' +
           `validationMessage: ${field.validationMessage}`
       );
-      field.setCustomValidity('Username is already taken.');
+      const error = field.querySelector('[slot="error-text"]');
+      if (!error) {
+        throw new Error('Expected inline error text');
+      }
+      error.textContent = 'Username is already taken.';
+      await waitFor(() =>
+        expect(field.validationMessage).toBe('Username is already taken.')
+      );
       checkValidityButton.click();
       expect(validityOutput.value).toContain(
         'validationMessage: Username is already taken.'
       );
-      field.setCustomValidity('');
       field.fieldStatus = undefined;
       await field.updateComplete;
     });

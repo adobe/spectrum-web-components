@@ -742,9 +742,9 @@ export const FormBehavior: Story = {
           .defaultValue=${'Submit or click Check validity to inspect the field and form validity.'}
         ></output>
         <p style="margin: 0;">
-          Inline error text is supplied by the application.
+          Inline error text is supplied by the application and becomes the
           <code>validationMessage</code>
-          comes from native validation or a custom error.
+          while the field is invalid.
         </p>
       </section>
     </form>

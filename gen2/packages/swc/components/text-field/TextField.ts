@@ -49,28 +49,28 @@ const PREFIX_AVATAR_SIZE = {
  * @element swc-text-field
  * @since 2.0.0-beta.1
  *
- * @fires {InputEvent} input - Fired during user edits after `value` updates. Bubbles and crosses shadow boundaries; not cancelable.
- * @fires {Event} change - Fired when the user commits an edited value, such as when leaving the input. Bubbles and crosses shadow boundaries; not cancelable.
- * @fires {Event} invalid - Fired on the host when constraint validation fails. Cancelable, but does not bubble or cross shadow boundaries. Canceling suppresses native validation UI, not the validation failure.
+ * @fires {InputEvent} input - Fires during user edits, after `value` updates. Bubbles and crosses shadow boundaries; not cancelable.
+ * @fires {Event} change - Fires when the user commits an edited value, such as on blur. Bubbles and crosses shadow boundaries; not cancelable.
+ * @fires {Event} invalid - Fires on the host when validation fails. Cancelable; does not bubble or cross shadow boundaries. Canceling suppresses native validation UI, not the failure.
  *
- * @cssprop --swc-field-label-max-inline-size - `label-position="side"` only: max inline size of the label's grid column. Defaults to 50% of the field width (the label wraps within its column instead of kicking the input out). Set it to widen or tighten the ceiling for a specific field.
- * @cssprop --swc-field-input-min-inline-size - Minimum inline size of the input control. Defaults to the component height for the field size.
- * @cssprop --swc-field-input-max-inline-size - Maximum inline size of the input control. Defaults to the field width token for the selected size.
- * @cssprop --swc-text-field-padding-block - Vertical padding of the text-field control. Changes by size.
- * @cssprop --swc-text-field-padding-inline - Horizontal padding of the text-field control. Changes by size.
- * @cssprop --swc-text-field-affix-gap - Gap between the input and affixes. Changes by size.
- * @cssprop --swc-form-field-row-gap - Vertical gap between the label, control, and help text. Changes by size.
- * @cssprop --swc-form-field-necessity-gap - Inline gap between the visible label and its necessity indicator. Changes by size.
- * @cssprop --swc-text-field-font-size - Font size of the input. Changes by size.
- * @cssprop --swc-text-field-line-height - Line height of the input. Defaults to the browser's normal input line height.
- * @cssprop --swc-text-field-border-radius - Corner radius of the text-field control. Changes by size.
- * @cssprop --swc-text-field-border-color-default - Border color when the control is neither hovered nor focused. Changes with field status.
- * @cssprop --swc-text-field-border-color-hover - Border color when the control is hovered without focus. Changes with field status.
- * @cssprop --swc-text-field-border-color-focus - Border color when the control contains focus without hover. Changes with field status.
- * @cssprop --swc-text-field-border-color-focus-hover - Border color when the control is both hovered and contains focus. Changes with field status.
- * @cssprop --swc-text-field-validation-icon-size - Size of the invalid-state icon. Changes by size.
- * @cssprop --swc-form-field-label-font-size - Font size of the visible field label. Defaults to the field size typography scale.
- * @cssprop --swc-form-field-description-font-size - Font size of the description and error text. Defaults to the field size typography scale.
+ * @cssprop --swc-field-label-max-inline-size - Maximum label inline size for `label-position="side"`. Defaults to `50%` of the field's inline size.
+ * @cssprop --swc-field-input-min-inline-size - Minimum control inline size. Defaults to the control height for the selected `size`.
+ * @cssprop --swc-field-input-max-inline-size - Maximum control inline size. Defaults to the field width for the selected `size`.
+ * @cssprop --swc-text-field-padding-block - Block-axis control padding. Varies with `size`.
+ * @cssprop --swc-text-field-padding-inline - Inline-axis control padding. Varies with `size`.
+ * @cssprop --swc-text-field-affix-gap - Spacing between prefix content and the input. Varies with `size`.
+ * @cssprop --swc-form-field-row-gap - Block-axis spacing between the label, control, and help text. Varies with `size`.
+ * @cssprop --swc-form-field-necessity-gap - Inline spacing between the label and its necessity marker. Varies with `size`.
+ * @cssprop --swc-text-field-font-size - Input and prefix font size. Varies with `size`.
+ * @cssprop --swc-text-field-line-height - Input and prefix line height. Defaults to `normal`.
+ * @cssprop --swc-text-field-border-radius - Control corner radius. Varies with `size`.
+ * @cssprop --swc-text-field-border-color-default - Border color when neither hovered nor focused. Defaults vary with `field-status`.
+ * @cssprop --swc-text-field-border-color-hover - Border color when hovered without focus. Defaults vary with `field-status`.
+ * @cssprop --swc-text-field-border-color-focus - Border color when focused without hover. Defaults vary with `field-status`.
+ * @cssprop --swc-text-field-border-color-focus-hover - Border color when both hovered and focused. Defaults vary with `field-status`.
+ * @cssprop --swc-text-field-validation-icon-size - Inline and block size of the invalid-status icon. Varies with `size`.
+ * @cssprop --swc-form-field-label-font-size - Visible label font size. Defaults to the typography scale for the selected `size`.
+ * @cssprop --swc-form-field-description-font-size - Description and error-text font size. Defaults to the typography scale for the selected `size`.
  *
  * @example
  * <swc-text-field></swc-text-field>
@@ -95,9 +95,7 @@ export class TextField extends TextFieldBase {
   }
 
   /**
-   * The `<input>` that both `LabellingMixin` (accessible name / `<label for>`)
-   * and `FieldDescriptionMixin` (resolved description) wire their ARIA relationships
-   * onto. Queried by its stable `id` (referenced by the rendered `<label for>`).
+   * Native input element, or `null` before rendering.
    */
   public override get roleElement(): HTMLInputElement | null {
     return this.renderRoot?.querySelector('input#input') ?? null;

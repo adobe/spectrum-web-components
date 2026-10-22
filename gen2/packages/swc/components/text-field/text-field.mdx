@@ -98,7 +98,7 @@ The default state is editable and accepts keyboard input.
 
 ### Valid
 
-`field-status="valid"` records an application-authored valid status without bypassing native constraints or custom validation errors. It does not show a checkmark; that visual remains deferred.
+`field-status="valid"` records an application-authored valid status without bypassing native constraints. It does not show a checkmark; that visual remains deferred.
 
 <Canvas of={TextFieldStories.Valid} />
 
@@ -114,34 +114,56 @@ The host's `inline-size` controls the space available to the layout, not the con
 
 ### Form participation
 
-`swc-text-field` participates in native forms through constraint validation, reset, and `FormData`. This example uses `novalidate` and an application submit handler to show inline errors instead of browser validation bubbles. The handler accepts data only when the field passes validation; it does not navigate or send data to a server.
+`swc-text-field` works with native forms, including validation, reset, and `FormData`.
 
-`field-status="invalid"` shows the inline error and sets `validity.customError`, making eligible fields fail validation. The application must clear or replace this status explicitly; input, blur, and submission do not clear it automatically. Disabled and read-only fields do not block submission.
+#### Showing and clearing errors
 
-`setCustomValidity(message)` adds an application-specific error without changing `fieldStatus` or inline error presentation. Clear it with `setCustomValidity('')`. Authored invalid status, custom messages, and native constraints are independent. Pre-render calls are preserved; after rendering, custom validity updates immediately. Reactive property changes take effect after `updateComplete`.
+Supply a message through `error-text` and set `fieldStatus = 'invalid'` to show it. Its plain text also becomes `validationMessage` and updates automatically when the content changes.
 
-`validationMessage` uses the custom message, or "Invalid value." for an authored invalid status without one. Supply a localized custom message when needed. Slotted `error-text` is separate; native validation failures do not automatically show it or set `fieldStatus`.
+```html
+<swc-text-field id="username" name="username" required>
+  <span slot="label">Username</span>
+  <span slot="error-text">Enter a username.</span>
+</swc-text-field>
+```
 
 ```js
-field.setCustomValidity('Username is already taken.');
+const field = document.querySelector('#username');
+const errorText = field.querySelector('[slot="error-text"]');
+errorText.textContent = 'Username is already taken.';
 field.fieldStatus = 'invalid';
 await field.updateComplete;
 
-// Clear both errors.
-field.setCustomValidity('');
+// When the application error is resolved:
 field.fieldStatus = undefined;
 await field.updateComplete;
 ```
 
-This demo clears its own invalid status before revalidating on Submit. A rejected attempt replaces the previous submission result with a blocked message. Submit refreshes the latest validation result after updating `fieldStatus`; Check validity refreshes it on demand. Both panels are snapshots, not live state. Reset restores the value and panels but preserves authored errors.
+Clear the error with `fieldStatus = undefined` or by removing `field-status`. It does not clear automatically. Native rules, such as `required`, still apply, but do not automatically show inline errors. Error text alone does not make a field invalid. Await `field.updateComplete` after property changes before checking validity.
 
-Pressing <kbd>Enter</kbd> activates the form's first associated submit button, including a button outside the form linked by its `form` attribute. A disabled default button prevents submission. Without a submit button, a form submits only when the text field is its sole input that blocks implicit submission; additional native text-like inputs or `swc-text-field` elements prevent it. Composition input does not trigger submission, and consumers can cancel it with `preventDefault()` on the `keydown` event.
+#### Validating a form
 
-Values follow the native input type's sanitization rules. Single-line inputs remove line breaks; email and URL inputs also remove leading and trailing ASCII whitespace. After an update, the `value` property, displayed input, and submitted form value agree. Programmatic value changes and form resets do not emit `input` or `change` events.
+Use `novalidate` on the form and `checkValidity()` in your submit handler for inline errors instead of browser validation bubbles. Your handler must block submission when validation fails and set `fieldStatus` to show the error. Disabled and read-only fields do not block validation.
 
-When the browser supplies saved string state through `formStateRestoreCallback()`, the field restores its value using the same sanitization rules without emitting `input` or `change` events. Restoration leaves the authored `value` attribute unchanged, so a later form reset still restores the initial value. Browser support for invoking this callback during navigation or autofill varies.
+In this example, **Submit** clears the previous error and rechecks native rules; **Check validity** inspects the current state without changing it. Accepted submissions display `FormData` only; no data is sent.
 
 <Canvas of={TextFieldStories.FormBehavior} />
+
+#### Reset
+
+Reset restores the initial value from the `value` attribute, but does not clear an application error. This example also resets its result panels.
+
+<details>
+<summary>Additional form behavior</summary>
+
+- **Validation methods**: `checkValidity()` fires `invalid` on failure without changing `fieldStatus` or showing browser validation UI. `reportValidity()` also requests that UI, even with `novalidate`. Canceling `invalid` suppresses reporting without making validation pass. An invalid status sets `validity.customError`.
+- **Submitting with the keyboard**: <kbd>Enter</kbd> activates the form's first associated submit button, including one outside the form linked by its `form` attribute. If that button is disabled, submission is blocked. Without a submit button, <kbd>Enter</kbd> submits only when this field is the form's sole text-like input. Text composition does not trigger submission; your application can also cancel it with `preventDefault()` on the `keydown` event.
+- **Value formatting**: Single-line inputs remove line breaks. Email and URL inputs also remove leading and trailing ASCII whitespace. After an update, the `value` property, displayed text, and submitted value agree.
+- **Restoring saved values**: When the browser restores a saved value during navigation or autofill, the field applies the same formatting rules. Restoration does not change the initial `value` attribute, so reset still returns to that initial value. Browser support for restoring saved values varies.
+
+Setting `value` in code, resetting the form, and restoring a saved value do not fire `input` or `change` events.
+
+</details>
 
 ## Accessibility
 

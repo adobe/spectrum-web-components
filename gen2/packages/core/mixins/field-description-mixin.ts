@@ -83,9 +83,8 @@ export function FieldDescriptionMixin<T extends Constructor<ReactiveElement>>(
     );
 
     /**
-     * Space-separated element `id`s, resolved against the host's root node,
-     * that describe the role element. Combines with (does not override) a
-     * slotted `description`.
+     * Space-separated description IDs in the field's document or shadow root.
+     * Combines with the visible description or error text.
      */
     @property({ attribute: 'accessible-describedby' })
     public accessibleDescribedby?: string;

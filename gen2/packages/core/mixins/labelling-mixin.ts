@@ -97,15 +97,15 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
     );
 
     /**
-     * Accessible name for the role element, applied as `aria-label`. Lowest
-     * precedence; use when no visible label is slotted.
+     * Accessible name supplied as `aria-label`.
+     * `accessible-labelledby` takes precedence when both are set.
      */
     @property({ type: String, attribute: 'accessible-label' })
     public accessibleLabel = '';
 
     /**
-     * Space-separated element `id`s, resolved against the host's root node,
-     * that provide the role element's accessible name. Highest precedence.
+     * Space-separated label IDs in the field's document or shadow root.
+     * Takes precedence over `accessible-label` and the visible label.
      */
     @property({ attribute: 'accessible-labelledby' })
     public accessibleLabelledby?: string;
