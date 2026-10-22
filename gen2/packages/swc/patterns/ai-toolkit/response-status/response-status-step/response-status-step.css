@@ -353,8 +353,7 @@
    padding-inline-end above (reserved for a vertical scrollbar beside
    wrapped text) only leaves dead space after the last column once scrolled
    fully to the end. Dropped here so the code reaches the panel's edge.
-   Toggled from script (ResponseStatusStep.ts): `:has(::slotted(pre))`
-   isn't supported, since `:has()` forbids pseudo-elements in its argument. */
+   Toggled from script; see ResponseStatusStep.ts for why. */
 .swc-ResponseStatusStep-detailScroll--code {
   padding-inline-end: 0;
 }
