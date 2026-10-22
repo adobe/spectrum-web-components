@@ -78,17 +78,17 @@ The default state is editable and accepts keyboard input.
 
 <Canvas of={TextFieldStories.Required} />
 
-### Disabled
-
-`field-status="disabled"` retains the field's value but prevents editing and <kbd>Tab</kbd> access. The field does not block form validation and is excluded from `FormData`.
-
-<Canvas of={TextFieldStories.Disabled} />
-
 ### Read-only
 
-`field-status="readonly"` keeps the field focusable and its value selectable, but not editable. Unlike a disabled field, it remains in the tab order and in `FormData`. It does not block validation.
+`field-status="readonly"` keeps the field focusable and its value selectable, but not editable. Unlike a disabled field, it remains in the tab order and in `FormData`. It does not block validation. Screen readers can announce the field during [focus-mode navigation](../?path=/docs/guides-accessibility-screen-reader-testing--docs#screen-reader-modes). Prefer read-only when users need access to a non-editable value.
 
 <Canvas of={TextFieldStories.ReadOnly} />
+
+### Disabled
+
+`field-status="disabled"` retains the field's value but prevents editing and <kbd>Tab</kbd> access. The field does not block form validation and is excluded from `FormData`. Because it cannot receive focus, it is skipped during [focus-mode navigation](../?path=/docs/guides-accessibility-screen-reader-testing--docs#screen-reader-modes). Use read-only instead when users need to review or copy the value.
+
+<Canvas of={TextFieldStories.Disabled} />
 
 ### Invalid
 
@@ -182,7 +182,8 @@ Setting `value` in code, resetting the form, and restoring a saved value do not 
 - Prefer a slotted `label` for ordinary fields; reserve `accessible-label`/`accessible-labelledby` for fields with no visible label of their own or a name composed from elements the field doesn't own.
 - When a field has both a visible label and a programmatic name, make sure the programmatic name contains the visible text, per [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html). Do not set both `accessible-label` and `accessible-labelledby`; a dev-mode warning flags that combination.
 - Set `autocomplete` when a field collects a recognized personal-data type, such as `email` or `billing street-address`, so browsers and assistive technology can identify its purpose and offer appropriate autofill. See [`autocomplete` HTML attribute (MDN)](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete).
-- Always pair `field-status="invalid"` with slotted `error-text` so the invalid state is not conveyed by color or the validation icon alone.
+- Always pair `field-status="invalid"` with slotted `error-text` so the invalid state is not conveyed by color or the validation icon alone. Explain what happened, why (if known), and how to fix it. See [Spectrum's writing for errors](https://spectrum.adobe.com/content/writing-for-errors).
+- Avoid disabling a `<fieldset>` that contains invalid `<swc-text-field>` elements. This prevents users from focusing or correcting those fields and excludes them from form validation and submission. Keep invalid fields enabled so users can review the errors and correct their values.
 - Use `accessible-describedby` for a description composed from light-DOM content the field doesn't own; it combines with, rather than replaces, a slotted `description`.
 
 <Canvas of={TextFieldStories.Accessibility} />
