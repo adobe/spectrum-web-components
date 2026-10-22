@@ -142,6 +142,7 @@ const permutationContent = () => html`
 const stateCases: Array<[string, RadioCase]> = [
   ['Emphasized', { selected: true, emphasized: true }],
   ['Hover', { forceState: 'hover' }],
+  ['Active', { forceState: 'active' }],
   ['Keyboard focus', { forceState: 'focus-visible' }],
 ];
 

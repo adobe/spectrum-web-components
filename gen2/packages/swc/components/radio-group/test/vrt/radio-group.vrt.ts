@@ -57,6 +57,7 @@ type GroupCase = {
   orientation?: Orientation;
   necessityIndicator?: 'icon' | 'label';
   selected?: boolean | 'express';
+  emphasized?: boolean;
   invalid?: boolean;
   disabled?: boolean;
   readonly?: boolean;
@@ -77,6 +78,7 @@ const renderGroup = ({
   orientation = 'vertical',
   necessityIndicator,
   selected = false,
+  emphasized = false,
   invalid = false,
   disabled = false,
   readonly = false,
@@ -98,6 +100,7 @@ const renderGroup = ({
     selected=${ifDefined(
       selected ? (selected === true ? 'standard' : selected) : undefined
     )}
+    ?emphasized=${emphasized}
     ?invalid=${invalid}
     ?disabled=${disabled}
     ?readonly=${readonly}
@@ -205,6 +208,7 @@ const permutationContent = () => html`
 const stateCases: Array<[string, GroupCase]> = [
   ['Default', {}],
   ['Selected', { selected: true }],
+  ['Emphasized', { selected: true, emphasized: true }],
   ['Invalid', { selected: true, invalid: true }],
   [
     'Invalid with help text only',
