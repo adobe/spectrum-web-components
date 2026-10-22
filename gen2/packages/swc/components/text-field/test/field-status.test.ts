@@ -239,31 +239,121 @@ ResetStatus.storyName = 'Reset status';
 
 export const InvalidWithoutErrorText: Story = {
   render: () => html`
-    <swc-text-field value="alex">
-      <span slot="label">Username</span>
-      <span slot="description">Choose a username.</span>
-    </swc-text-field>
+    <fieldset>
+      <legend>Account details</legend>
+      <swc-text-field value="alex">
+        <span slot="label">Username</span>
+        <span slot="description">Choose a username.</span>
+      </swc-text-field>
+      <swc-text-field field-status="invalid">
+        <span slot="label">Email</span>
+        <span slot="error-text">Enter a valid email address.</span>
+      </swc-text-field>
+    </fieldset>
   `,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const field = await getComponent<TextField>(
       canvasElement,
       'swc-text-field'
     );
+    const fieldset = canvasElement.querySelector('fieldset');
+    const errorField =
+      canvasElement.querySelectorAll<TextField>('swc-text-field')[1];
+    const description = field.shadowRoot?.querySelector(
+      '.swc-FormFieldDescription'
+    );
+    const error = errorField.shadowRoot?.querySelector(
+      '.swc-FormFieldErrorText'
+    );
+    if (!fieldset || !description || !error) {
+      throw new Error('Fieldset, description, or reference error not found');
+    }
+    const normalColor = getComputedStyle(description).color;
+    const errorColor = getComputedStyle(error).color;
+    expect(errorColor).not.toBe(normalColor);
 
-    field.fieldStatus = 'invalid';
-    await field.updateComplete;
-    expect(
-      field.shadowRoot?.querySelector('.swc-FormFieldDescription')
-    ).toBeNull();
-    expect(
-      field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
-    ).toBeNull();
-    expect(field.roleElement?.ariaDescribedByElements ?? []).toHaveLength(0);
-    expect(field.roleElement).toHaveAttribute('aria-invalid', 'true');
-    expect(
-      field.shadowRoot?.querySelector('.swc-TextField-invalidIcon')
-    ).toHaveAttribute('aria-hidden', 'true');
-    expect(field.checkValidity()).toBe(false);
+    await step(
+      'invalid keeps the description visible in the error color',
+      async () => {
+        field.fieldStatus = 'invalid';
+        await field.updateComplete;
+        const invalidDescription = field.shadowRoot?.querySelector(
+          '.swc-FormFieldDescription'
+        );
+        expect(invalidDescription).toBeVisible();
+        expect(
+          invalidDescription && getComputedStyle(invalidDescription).color
+        ).toBe(errorColor);
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+        ).toBeNull();
+        expect(field.roleElement?.ariaDescribedByElements).toEqual([
+          invalidDescription,
+        ]);
+        expect(field.roleElement).toHaveAttribute('aria-invalid', 'true');
+        expect(
+          field.shadowRoot?.querySelector('.swc-TextField-invalidIcon')
+        ).toHaveAttribute('aria-hidden', 'true');
+        expect(field.checkValidity()).toBe(false);
+        expect(field.validationMessage).toBe('Enter a valid value.');
+      }
+    );
+
+    await step('inherited disabling overrides the error color', async () => {
+      fieldset.disabled = true;
+      await field.updateComplete;
+      await errorField.updateComplete;
+      const disabledDescription = field.shadowRoot?.querySelector(
+        '.swc-FormFieldDescription'
+      );
+      expect(disabledDescription).toBeVisible();
+      expect(
+        disabledDescription && getComputedStyle(disabledDescription).color
+      ).toBe(getComputedStyle(error).color);
+      expect(getComputedStyle(error).color).not.toBe(errorColor);
+      expect(field.willValidate).toBe(false);
+      fieldset.disabled = false;
+      await field.updateComplete;
+      await errorField.updateComplete;
+    });
+
+    await step(
+      'clearing invalid restores the normal description color',
+      async () => {
+        field.fieldStatus = undefined;
+        await field.updateComplete;
+        const restoredDescription = field.shadowRoot?.querySelector(
+          '.swc-FormFieldDescription'
+        );
+        expect(restoredDescription).toBeVisible();
+        expect(
+          restoredDescription && getComputedStyle(restoredDescription).color
+        ).toBe(normalColor);
+        expect(field.roleElement?.ariaDescribedByElements).toEqual([
+          restoredDescription,
+        ]);
+        expect(field.checkValidity()).toBe(true);
+      }
+    );
+
+    await step(
+      'invalid without either message renders no description',
+      async () => {
+        field.querySelector('[slot="description"]')?.remove();
+        field.fieldStatus = 'invalid';
+        await field.updateComplete;
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldDescription')
+        ).toBeNull();
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+        ).toBeNull();
+        expect(field.roleElement?.ariaDescribedByElements ?? []).toHaveLength(
+          0
+        );
+        expect(field.checkValidity()).toBe(false);
+      }
+    );
   },
 };
 InvalidWithoutErrorText.storyName = 'Invalid without error text';

@@ -50,7 +50,8 @@ const DEMO_STYLES = css`
     font-size: smaller;
   }
 
-  .swc-FormFieldErrorText {
+  .swc-FormFieldErrorText,
+  .swc-FormFieldDescription--invalid {
     color: var(--_swc-demo-negative-color);
   }
 `;

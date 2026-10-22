@@ -156,7 +156,7 @@ export const InvalidWithoutErrorTextTest: Story = {
     <demo-field-description-host
       accessible-describedby="field-description-no-error-external"
     >
-      <span slot="description">Help shown only when not invalid</span>
+      <span slot="description">Choose a value from the list.</span>
     </demo-field-description-host>
   `,
   play: async ({ canvasElement, step }) => {
@@ -172,22 +172,29 @@ export const InvalidWithoutErrorTextTest: Story = {
     await host.updateComplete;
 
     await step(
-      'invalid hides the description even without error text',
+      'invalid without error text keeps the description visible and associated in the error color',
       async () => {
         host.invalid = true;
         await host.updateComplete;
-        expect(
-          host.shadowRoot?.querySelector('.swc-FormFieldDescription')
-        ).toBeNull();
+        const description = host.shadowRoot?.querySelector(
+          '.swc-FormFieldDescription'
+        );
+        expect(description).toBeVisible();
+        expect(description && getComputedStyle(description).color).toBe(
+          'rgb(215, 55, 63)'
+        );
         expect(
           host.shadowRoot?.querySelector('.swc-FormFieldErrorText')
         ).toBeNull();
-        expect(host.roleElement?.ariaDescribedByElements).toEqual([external]);
+        expect(host.roleElement?.ariaDescribedByElements).toEqual([
+          description,
+          external,
+        ]);
       }
     );
 
     await step(
-      'adding and removing error text never reveals the description while invalid',
+      'adding error text replaces the description and removing it restores the description',
       async () => {
         const errorText = document.createElement('span');
         errorText.slot = 'error-text';
@@ -210,16 +217,23 @@ export const InvalidWithoutErrorTextTest: Story = {
           expect(
             host.shadowRoot?.querySelector('.swc-FormFieldErrorText')
           ).toBeNull();
-          expect(
-            host.shadowRoot?.querySelector('.swc-FormFieldDescription')
-          ).toBeNull();
-          expect(host.roleElement?.ariaDescribedByElements).toEqual([external]);
+          const description = host.shadowRoot?.querySelector(
+            '.swc-FormFieldDescription'
+          );
+          expect(description).toBeVisible();
+          expect(description && getComputedStyle(description).color).toBe(
+            'rgb(215, 55, 63)'
+          );
+          expect(host.roleElement?.ariaDescribedByElements).toEqual([
+            description,
+            external,
+          ]);
         });
       }
     );
 
     await step(
-      'clearing invalid restores the description association',
+      'clearing invalid restores the normal description color and keeps its association',
       async () => {
         host.invalid = false;
         await host.updateComplete;
@@ -227,6 +241,9 @@ export const InvalidWithoutErrorTextTest: Story = {
           '.swc-FormFieldDescription'
         );
         expect(description).toBeVisible();
+        expect(description && getComputedStyle(description).color).toBe(
+          getComputedStyle(host).color
+        );
         expect(host.roleElement?.ariaDescribedByElements).toEqual([
           description,
           external,

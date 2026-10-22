@@ -58,7 +58,7 @@ import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 | Keyboard-only focus ring                            | Focus ring shows only on keyboard focus; pointer focus is indicated by a border color change.                                                                                                                                                                           |
 | `delegatesFocus`                                    | Focus lands directly on the internal `<input>`; the field is a single tab stop.                                                                                                                                                                                         |
 
-`field-status="invalid"` makes eligible fields fail validation and uses the plain text of `error-text` as the validation message. Missing or empty text uses "Enter a valid value."; provide localized error text when needed. Clear the application error with `fieldStatus = undefined`; native constraints still apply. Error text alone does not invalidate the field, and application-set status is not automatically cleared on input, blur, or submission. The host does not expose `setCustomValidity()`. See [Form participation](?path=/docs/components-text-field--docs#form-participation).
+`field-status="invalid"` makes eligible fields fail validation and uses the plain text of `error-text` as the validation message. Missing or empty text uses "Enter a valid value."; provide localized error text when needed. Clear the application error with `fieldStatus = undefined`; native constraints still apply. Error text alone does not invalidate the field, and application-set status is not automatically cleared on input, blur, or submission. See [Form participation](?path=/docs/components-text-field--docs#form-participation).
 
 Form reset restores the initial value and clears `valid` or `invalid` status. Disabled and read-only status are preserved; native validation rules still apply.
 
@@ -129,7 +129,7 @@ If your Spectrum 1 code relied on the placeholder being used as the accessible n
 </swc-text-field>
 ```
 
-The `description` slot is hidden while `field-status="invalid"`, and the `error-text` slot is shown instead when supplied. Without error text, no inline message is shown. Do not manage that swap yourself.
+While `field-status="invalid"`, supplied `error-text` replaces the `description`. Without an `error-text` slot, the description stays visible in the error color and associated with the input.
 
 ### 4. Replace multiline fields
 
@@ -173,7 +173,7 @@ Ordinary `autocomplete` values (`email`, `name`, `street-address`, etc.) work un
 
 ### 7. Replace status booleans with one field status
 
-Replace `disabled`, `readonly`, `invalid`, or `valid` with the corresponding `field-status` value. Only one can be authored at a time. The old boolean properties are not aliases. Keep `required` separate.
+Replace `disabled`, `readonly`, `invalid`, or `valid` with the corresponding `field-status` value. Only one status can be set at a time. Keep `required` separate.
 
 ```html
 <!-- Before -->

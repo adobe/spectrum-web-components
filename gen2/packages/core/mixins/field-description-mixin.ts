@@ -64,10 +64,8 @@ export interface FieldDescriptionInterface {
  * tracking, `renderFieldDescription()`, and a dev-mode warning for unresolved
  * `accessible-describedby` id references.
  *
- * A rendering subclass overrides {@link roleElement} to return the element the
- * description is wired onto (usually the rendered `<input>`). While `invalid`,
- * the error message replaces the description in both the rendered output and
- * `aria-describedby`.
+ * A rendering subclass overrides {@link roleElement} to return the element
+ * described by the visible description or error text (usually an `<input>`).
  */
 export function FieldDescriptionMixin<T extends Constructor<ReactiveElement>>(
   constructor: T

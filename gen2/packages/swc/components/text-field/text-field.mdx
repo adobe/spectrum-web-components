@@ -64,7 +64,7 @@ The `prefix` slot places non-interactive content before the input, inside the fi
 
 ## States
 
-Use `fieldStatus` (the `field-status` attribute) for one authored status: `disabled`, `invalid`, `valid`, or `readonly`. The default is `undefined`, not `valid`. Assigning another status replaces the previous one; assign `undefined` or remove the attribute to return to the default. The former `disabled`, `readonly`, `invalid`, and `valid` boolean properties are not supported. `required` remains independent.
+`fieldStatus` (the `field-status` attribute) accepts one status at a time: `disabled`, `invalid`, `valid`, or `readonly`. The default is `undefined`. Assign `undefined` or remove the attribute to clear the status. `required` remains independent.
 
 ### Default
 
@@ -92,13 +92,13 @@ The default state is editable and accepts keyboard input.
 
 ### Invalid
 
-`field-status="invalid"` hides the description and shows the slotted `error-text` when supplied, associating it via `aria-describedby`. Without error text, no inline message is shown; the invalid border and icon remain. The status blocks native constraint validation and submission when the field is eligible for validation. The application controls this state; native validation failures do not enable it automatically.
+`field-status="invalid"` shows supplied `error-text` instead of the description. Without an `error-text` slot, the description stays visible in the error color. The input shows an invalid border and icon. Eligible fields fail validation and block submission. Set this status in your application; native validation does not set it automatically.
 
 <Canvas of={TextFieldStories.Invalid} />
 
 ### Valid
 
-`field-status="valid"` records an application-authored valid status without bypassing native constraints. It does not show a checkmark; that visual remains deferred.
+`field-status="valid"` records that your application has validated the value. Native constraints still apply. This status does not display a validation icon.
 
 <Canvas of={TextFieldStories.Valid} />
 
@@ -172,7 +172,7 @@ Setting `value` in code, resetting the form, and restoring a saved value do not 
 - **Native role**: the host sets no ARIA role; the real `<input>` supplies the implicit `textbox` role.
 - **Browser-resolved name**: each source is wired independently, and the browser's accessible-name computation picks the one that is announced, in the order `accessible-labelledby` &gt; `accessible-label` &gt; slotted label. A slotted visible label always renders as a real `<label for>`, keeping native click-to-focus.
 - **Combining descriptions**: a slotted `description` and an external `accessible-describedby` reference combine rather than override each other; the in-shadow description comes first.
-- **Error text replaces the description while invalid**: the slotted `error-text` replaces the description while `field-status="invalid"`, so `aria-describedby` references only the message on screen rather than pointing at the error separately via `aria-errormessage`, since AT support for that attribute is still inconsistent.
+- **Visible-message association**: `aria-describedby` references the visible description or error text. `aria-errormessage` is not used because assistive technology support is inconsistent.
 - **Dev-mode warnings**: a field with no visible label, no `accessible-label`, and no `accessible-labelledby` triggers a console warning, and so does a field that sets both `accessible-labelledby` and `accessible-label`.
 
 > **Known axe-core false positive.** A field named only via `accessible-labelledby` fails automated axe-core scans with a "Form element does not have a label" (`label` rule) violation, even though the name resolves correctly in real browsers and assistive technology. axe-core inspects DOM attributes and has no standardized way to read `ariaLabelledByElements`, the ARIA element-reflection API in use.

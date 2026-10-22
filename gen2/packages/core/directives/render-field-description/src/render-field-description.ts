@@ -11,6 +11,7 @@
  */
 
 import { html, nothing, type TemplateResult } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import { ref } from 'lit/directives/ref.js';
 
 /** Return type of {@link renderFieldDescription}: the field-description template, or `nothing`. */
@@ -22,7 +23,7 @@ export interface RenderFieldDescriptionOptions {
   hasDescriptionSlotContent: boolean;
   /** Whether slotted `error-text` content is present in the host's light DOM. */
   hasErrorTextSlotContent: boolean;
-  /** Whether the host is invalid. Hides the description and gates the error-text element. */
+  /** Whether the host is invalid. Gates error text and applies invalid description styling. */
   invalid: boolean;
   /** Called with the rendered description element (or `undefined` on removal). */
   onDescriptionElement: (element: Element | undefined) => void;
@@ -32,7 +33,8 @@ export interface RenderFieldDescriptionOptions {
 
 /**
  * Renders the shared description/error-text markup for form-field
- * components. Invalid fields show only supplied error text, never the description.
+ * components. Invalid fields show supplied error text or keep the description
+ * with invalid styling when no error text is supplied.
  * Returns `nothing` when the current state has no message to show.
  *
  * Most consumers use `FieldDescriptionMixin`'s `renderFieldDescription()` instead, which calls
@@ -49,7 +51,7 @@ export function renderFieldDescription({
   onErrorTextElement,
 }: RenderFieldDescriptionOptions): RenderFieldDescriptionResult {
   const showError = invalid && hasErrorTextSlotContent;
-  const showDescription = !invalid && hasDescriptionSlotContent;
+  const showDescription = hasDescriptionSlotContent && !showError;
   if (!showDescription && !showError) {
     return nothing;
   }
@@ -57,7 +59,10 @@ export function renderFieldDescription({
     ${showDescription
       ? html`
           <span
-            class="swc-FormFieldDescription"
+            class=${classMap({
+              'swc-FormFieldDescription': true,
+              'swc-FormFieldDescription--invalid': invalid,
+            })}
             tabindex="-1"
             ${ref(onDescriptionElement)}
           >

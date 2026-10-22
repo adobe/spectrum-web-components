@@ -496,6 +496,13 @@ export const ReadOnly: Story = {
 ReadOnly.storyName = 'Read-only';
 
 export const Invalid: Story = {
+  render: (args) => html`
+    ${template(args)}
+    <swc-text-field field-status="invalid">
+      <span slot="label">Username</span>
+      <span slot="description">Choose a username.</span>
+    </swc-text-field>
+  `,
   args: {
     'field-status': 'invalid',
     autocomplete: 'email',
@@ -505,7 +512,7 @@ export const Invalid: Story = {
   },
   tags: ['states'],
   parameters: {
-    styles: { 'inline-size': '220px' },
+    flexLayout: 'row-wrap',
   },
 };
 

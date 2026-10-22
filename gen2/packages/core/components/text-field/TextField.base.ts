@@ -45,7 +45,7 @@ const DOCS_URL =
  *
  * @slot label - Visible label. Clicking it focuses the input.
  * @slot prefix - Non-interactive content before the input, such as an icon, symbol, or avatar.
- * @slot description - Help text included in the accessible description. Hidden while `field-status="invalid"`.
+ * @slot description - Help text included in the accessible description. While `field-status="invalid"`, shown in the error color unless replaced by supplied `error-text`.
  * @slot error-text - Error text shown, included in the accessible description, and used as the validation message while `field-status="invalid"`. Supply translated text when needed. Missing or whitespace-only text uses "Enter a valid value." for validation without showing a fallback inline message.
  */
 export abstract class TextFieldBase extends SizedMixin(

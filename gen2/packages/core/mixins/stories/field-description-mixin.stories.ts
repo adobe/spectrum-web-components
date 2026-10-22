@@ -105,8 +105,12 @@ export const ErrorTextGating: Story = {
       <span slot="description">Hidden while invalid</span>
       <span slot="error-text">Replaces the description while invalid</span>
     </demo-field-description-host>
+    <demo-field-description-host invalid>
+      <span slot="description">Choose a value from the list.</span>
+    </demo-field-description-host>
   `,
   tags: ['behaviors'],
+  parameters: { flexLayout: 'row-wrap' },
 };
 ErrorTextGating.storyName = 'Error text replaces the description while invalid';
 
