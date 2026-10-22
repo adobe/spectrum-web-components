@@ -18,7 +18,32 @@ A toast consists of:
 
 <Canvas of={ToastStories.Anatomy} />
 
+## Options
+
+### Variants
+
+A toast has four semantic variants: `neutral` (default), `info`, `positive`, and
+`negative`. The `info`, `positive`, and `negative` variants show a matching icon.
+
+<Canvas of={ToastStories.Variants} />
+
+### Action
+
+Set `action-label` to show an optional action button. Toast renders the button
+with or without a variant icon and dispatches `swc-toast-action` when it is
+activated.
+
+<Canvas of={ToastStories.Action} />
+
 ## Behaviors
+
+### Text wrapping
+
+Long messages wrap within the toast's maximum width. When the toast has an
+action, the action moves below the text. Long unbroken words break instead of
+overflowing the toast.
+
+<Canvas of={ToastStories.TextWrapping} />
 
 ### Methods
 
