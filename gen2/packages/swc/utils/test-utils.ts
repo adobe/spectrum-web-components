@@ -134,6 +134,30 @@ export async function getComponents<T extends HTMLElement>(
 }
 
 /**
+ * Awaits a DOM event, rejecting after `timeout` ms so a missing event fails
+ * with the event name rather than hanging.
+ */
+export function waitForEvent<T extends Event>(
+  el: EventTarget,
+  eventName: string,
+  timeout = 1000
+): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(() => {
+      el.removeEventListener(eventName, handler);
+      reject(
+        new Error(`Timed out after ${timeout}ms waiting for "${eventName}"`)
+      );
+    }, timeout);
+    const handler = (event: Event): void => {
+      clearTimeout(timer);
+      resolve(event as T);
+    };
+    el.addEventListener(eventName, handler, { once: true });
+  });
+}
+
+/**
  * Helper to render a Lit template and return the first element.
  *
  * @example

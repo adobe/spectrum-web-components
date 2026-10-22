@@ -8,3 +8,8 @@ README.md merge=ours
 # `yarn generate:workflow-icons`; collapse in GitHub diffs and exclude from language
 # stats. GitHub-only: local git diff/blame are unaffected.
 gen2/packages/icons/src/*.ts linguist-generated=true
+
+# Generated from .ai/ by `yarn ai:sync`; edit the .ai/ source instead. Collapse in
+# GitHub diffs.
+.github/instructions/*.instructions.md linguist-generated=true
+.cursor/rules/*.mdc linguist-generated=true
