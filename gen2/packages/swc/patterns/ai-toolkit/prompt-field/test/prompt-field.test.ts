@@ -337,6 +337,47 @@ export const LegalMissingWarningTest: Story = {
   },
 };
 
+export const EmptyAccessibleLabelWarningTest: Story = {
+  render: () => '',
+  play: async ({ canvasElement, step }) => {
+    await withWarningSpy(async (warnCalls) => {
+      render(
+        html`
+          <swc-prompt-field accessible-label="">
+            <p slot="legal">Approved legal copy.</p>
+          </swc-prompt-field>
+        `,
+        canvasElement
+      );
+
+      const el = await getComponent<PromptField>(
+        canvasElement,
+        'swc-prompt-field'
+      );
+      await el.updateComplete;
+
+      await step(
+        'logs a development warning when accessible-label is empty',
+        async () => {
+          expect(
+            warnCalls.some(([, message]) =>
+              String(message).includes('accessible-label is empty')
+            ),
+            'an empty accessible-label emits a debug warning'
+          ).toBe(true);
+        }
+      );
+
+      el.accessibleLabel = 'AI prompt';
+      await el.updateComplete;
+      expect(
+        warnCalls,
+        'a non-empty accessible-label emits no additional warning'
+      ).toHaveLength(1);
+    });
+  },
+};
+
 export const MixedAttachmentWarningTest: Story = {
   render: () => '',
   play: async ({ canvasElement, step }) => {

@@ -18,3 +18,4 @@
 - Send and stop are now one persistent button, so focus stays on it when `generating` toggles and screen readers announce the new name on the focused control. Before, the button was replaced and focus dropped to the page.
 - With no prompt content, the button uses `aria-disabled="true"` instead of native `disabled`, so it stays focusable after the value is cleared.
 - Removed the visually hidden label element and its `aria-labelledby` reference, which overrode the textarea's `aria-label` so `accessible-label` never took effect.
+- Logs a dev-mode accessibility warning when `accessible-label` is empty, because the textarea then has no accessible name.

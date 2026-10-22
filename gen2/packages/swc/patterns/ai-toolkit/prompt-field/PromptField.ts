@@ -112,11 +112,19 @@ const SUPPORTS_FIELD_SIZING =
  * @since 2.0.0-beta.3
  */
 export class PromptField extends SpectrumElement {
-  /** Disables the textarea and all actions. */
+  /**
+   * Disables the textarea, the upload button, file drop, and send. While
+   * `generating`, the stop button stays enabled so generation can still be
+   * stopped.
+   */
   @property({ type: Boolean, reflect: true })
   public disabled = false;
 
-  /** Shows the stop button in place of send while a response is generating. */
+  /**
+   * Replaces the send button with a stop button that fires
+   * `swc-prompt-field-stop`. The textarea stays editable, but Enter doesn't
+   * submit until `generating` is removed.
+   */
   @property({ type: Boolean, reflect: true })
   public generating = false;
 
@@ -332,6 +340,9 @@ export class PromptField extends SpectrumElement {
 
   protected override updated(changedProperties: PropertyValues<this>): void {
     this._warnIfMissingLegalContent();
+    if (changedProperties.has('accessibleLabel')) {
+      this._warnIfMissingAccessibleLabel();
+    }
     if (changedProperties.has('value')) {
       this._autosizeTextarea();
     }
@@ -977,6 +988,31 @@ export class PromptField extends SpectrumElement {
   private _warnedMixedAttachmentTypes = false;
 
   private _warnedMissingLegalContent = false;
+
+  private _warnedMissingAccessibleLabel = false;
+
+  private _warnIfMissingAccessibleLabel(): void {
+    if (!window.__swc?.DEBUG) {
+      return;
+    }
+
+    if ((this.accessibleLabel ?? '').trim().length > 0) {
+      this._warnedMissingAccessibleLabel = false;
+      return;
+    }
+
+    if (this._warnedMissingAccessibleLabel) {
+      return;
+    }
+
+    this._warnedMissingAccessibleLabel = true;
+    window.__swc.warn(
+      this,
+      'The accessible-label is empty, so the prompt textarea has no accessible name. Set accessible-label to a localized name such as "AI prompt".',
+      'https://spectrum-web-components.adobe.com/patterns/ai-toolkit/prompt-field/',
+      { type: 'accessibility', level: 'high' }
+    );
+  }
 
   private _warnIfMixedAttachmentTypes(): void {
     if (!window.__swc?.DEBUG) {

@@ -170,8 +170,11 @@ The `<swc-prompt-field>` element implements the following accessibility features
 
 #### Status announcements
 
-- `swc-prompt-field` doesn't announce generation progress itself; pair it with `swc-response-status`, which renders a `role="status"` live region while a response is in progress
-- If your product doesn't use `swc-response-status`, provide your own status message for generation start and completion (WCAG 4.1.3 Status Messages)
+- `swc-prompt-field` doesn't announce generation progress itself; pair it with `swc-response-status`
+- Without steps, `swc-response-status` renders its label as a `role="status"` live region while `status="active"`, so the start of generation is announced
+- With steps, the status header is a disclosure button instead of a live region, so neither the start of generation nor step changes are announced
+- Completion and stopping aren't announced in either case, because the live region is removed when `status` leaves `active`
+- Provide your own status message wherever `swc-response-status` stays silent, at minimum for generation start, completion, and stopping (WCAG 4.1.3 Status Messages)
 
 #### Attachment strip keyboard navigation
 

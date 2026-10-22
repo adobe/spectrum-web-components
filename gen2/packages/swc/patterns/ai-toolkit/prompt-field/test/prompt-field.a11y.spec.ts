@@ -39,6 +39,22 @@ test.describe('PromptField - ARIA Snapshots', () => {
     `);
   });
 
+  test('should have correct accessibility tree while generating', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'patterns-ai-toolkit-prompt-field--states',
+      'swc-prompt-field'
+    );
+    const generatingField = root.locator('swc-prompt-field[generating]');
+    await expect(generatingField).toMatchAriaSnapshot(`
+      - textbox "AI prompt"
+      - button "Add attachment"
+      - button "Stop generating"
+    `);
+  });
+
   test('should have correct accessibility tree for collapsed prompt field', async ({
     page,
   }) => {
