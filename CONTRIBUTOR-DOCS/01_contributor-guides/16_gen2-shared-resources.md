@@ -11,17 +11,16 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [gen2 shared resources quick reference](#gen2-shared-resources-quick-reference)
-  - [Overview](#overview)
-  - [Controllers](#controllers)
-  - [Mixins](#mixins)
-  - [Utilities](#utilities)
-  - [Directives](#directives)
-  - [Base class and dev-mode warnings](#base-class-and-dev-mode-warnings)
-  - [Not yet adopted](#not-yet-adopted)
-  - [Patterns (`swc/patterns/ai-toolkit`)](#patterns-swcpatternsai-toolkit)
-  - [Attribute and slot vocabulary](#attribute-and-slot-vocabulary)
-  - [Where to go deeper](#where-to-go-deeper)
+- [Overview](#overview)
+- [Controllers](#controllers)
+- [Mixins](#mixins)
+- [Utilities](#utilities)
+- [Directives](#directives)
+- [Base class and dev-mode warnings](#base-class-and-dev-mode-warnings)
+- [Not yet adopted](#not-yet-adopted)
+- [Patterns (`swc/patterns/ai-toolkit`)](#patterns-swcpatternsai-toolkit)
+- [Attribute and slot vocabulary](#attribute-and-slot-vocabulary)
+- [Where to go deeper](#where-to-go-deeper)
 
 </details>
 

@@ -19,14 +19,7 @@ import {
   validateEnum,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
-import {
-  SWC_TOAST_AFTER_CLOSE_EVENT,
-  SWC_TOAST_AFTER_OPEN_EVENT,
-  SWC_TOAST_CLOSE_EVENT,
-  SWC_TOAST_OPEN_EVENT,
-  TOAST_VARIANTS,
-  type ToastVariant,
-} from './Toast.types.js';
+import { TOAST_VARIANTS, type ToastVariant } from './Toast.types.js';
 
 /**
  * Abstract base class for toast. Owns shared API and behavior; rendering lives in SWC.
@@ -130,7 +123,7 @@ export abstract class ToastBase extends SpectrumElement {
       return;
     }
     const accepted = this.dispatchEvent(
-      new CustomEvent(SWC_TOAST_CLOSE_EVENT, {
+      new CustomEvent('swc-close', {
         bubbles: true,
         cancelable: true,
         composed: true,
@@ -148,7 +141,7 @@ export abstract class ToastBase extends SpectrumElement {
     if (this.open && changedProperties.get('open') === false) {
       this._contentRevealed = false;
       this.dispatchEvent(
-        new CustomEvent(SWC_TOAST_OPEN_EVENT, {
+        new CustomEvent('swc-open', {
           bubbles: true,
           composed: true,
         })
@@ -159,7 +152,7 @@ export abstract class ToastBase extends SpectrumElement {
       !this._closeEventDispatched
     ) {
       const accepted = this.dispatchEvent(
-        new CustomEvent(SWC_TOAST_CLOSE_EVENT, {
+        new CustomEvent('swc-close', {
           bubbles: true,
           cancelable: true,
           composed: true,
@@ -206,14 +199,28 @@ export abstract class ToastBase extends SpectrumElement {
         return;
       }
       this.scheduleContentReveal();
-      this.dispatchAfterTransition(SWC_TOAST_AFTER_OPEN_EVENT);
+      this.dispatchAfterTransition(() => {
+        this.dispatchEvent(
+          new CustomEvent('swc-after-open', {
+            bubbles: true,
+            composed: true,
+          })
+        );
+      });
       return;
     }
 
     this._cancelContentReveal?.();
     this._contentRevealed = true;
     this._closeEventDispatched = false;
-    this.dispatchAfterTransition(SWC_TOAST_AFTER_CLOSE_EVENT);
+    this.dispatchAfterTransition(() => {
+      this.dispatchEvent(
+        new CustomEvent('swc-after-close', {
+          bubbles: true,
+          composed: true,
+        })
+      );
+    });
   }
 
   private updateAccessibleName(): void {
@@ -276,7 +283,7 @@ export abstract class ToastBase extends SpectrumElement {
     };
   }
 
-  private dispatchAfterTransition(eventName: string): void {
+  private dispatchAfterTransition(callback: () => void): void {
     this._cancelAfterTransition?.();
     const element = this.internalElement;
     if (!element) {
@@ -284,9 +291,7 @@ export abstract class ToastBase extends SpectrumElement {
     }
     this._cancelAfterTransition = runAfterTransition(element, () => {
       this._cancelAfterTransition = undefined;
-      this.dispatchEvent(
-        new CustomEvent(eventName, { bubbles: true, composed: true })
-      );
+      callback();
     });
   }
 }
