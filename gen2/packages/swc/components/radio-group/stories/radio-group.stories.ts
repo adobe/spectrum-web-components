@@ -353,7 +353,6 @@ export const TextWrapping: Story = {
 };
 TextWrapping.storyName = 'Text wrapping';
 
-/* TODO: possibly update pending availability of Forms page prior to finalizing */
 export const FormParticipation: Story = {
   render: () => html`
     <form

@@ -119,6 +119,7 @@ export abstract class RadioBase extends SpectrumElement {
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
+    this.setAttribute('role', 'radio');
     if (!this.hasAttribute('tabindex')) {
       // Roving tabindex is owned by the enclosing group's
       // `FocusgroupNavigationController`, which assigns 0/-1 directly.
@@ -135,7 +136,6 @@ export abstract class RadioBase extends SpectrumElement {
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
-    this.setAttribute('role', 'radio');
     this.setAttribute('aria-checked', this.checked ? 'true' : 'false');
     if (this.disabled) {
       this.setAttribute('aria-disabled', 'true');

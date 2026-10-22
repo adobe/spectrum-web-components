@@ -14,6 +14,8 @@ import { html, nothing } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
+import { RADIO_VALID_SIZES } from '@adobe/spectrum-wc-core/components/radio-group/index.js';
+
 import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
 import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
 
@@ -46,12 +48,11 @@ export default meta;
 
 // Helpers
 
-const SIZES = ['s', 'm', 'l', 'xl'] as const;
 type LabelPosition = 'side' | 'top';
 type Orientation = 'vertical' | 'horizontal';
 
 type GroupCase = {
-  size?: (typeof SIZES)[number];
+  size?: (typeof RADIO_VALID_SIZES)[number];
   labelPosition?: LabelPosition;
   orientation?: Orientation;
   necessityIndicator?: 'icon' | 'label';
@@ -139,7 +140,7 @@ const forceRadioStates = forcePseudoStates('swc-radio[data-force-state]');
 
 const permutationContent = () => html`
   ${row(
-    SIZES.map((size) =>
+    RADIO_VALID_SIZES.map((size) =>
       captioned(renderGroup({ selected: true, size }), `Size ${size}`)
     ),
     'Sizes'
