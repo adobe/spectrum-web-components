@@ -24,7 +24,7 @@ import meta from '../stories/radio-group.stories.js';
 
 export default {
   ...meta,
-  title: 'Radio/Tests',
+  title: 'Radio group/Tests - radio',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },

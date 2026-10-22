@@ -40,7 +40,7 @@ type ReflectedAriaElement = Element & {
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
   ...meta,
-  title: 'Radio group/Tests',
+  title: 'Radio group/Tests - radio group',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },

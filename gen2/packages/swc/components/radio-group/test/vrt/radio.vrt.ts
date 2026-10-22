@@ -35,7 +35,7 @@ import customElementsManifest from '../../../../dist/custom-elements.json';
 // Metadata
 
 const meta: Meta = {
-  title: 'Radio/Radio VRT',
+  title: 'Radio group/Radio VRT',
   component: 'swc-radio',
   tags: ['dev'],
 };
