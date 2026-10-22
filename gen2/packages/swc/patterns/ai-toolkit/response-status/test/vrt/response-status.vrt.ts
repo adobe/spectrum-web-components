@@ -49,6 +49,69 @@ const statusLabels: Record<ResponseStatusStatus, string> = {
 const LONG_DESCRIPTION =
   'Prioritizing data from your documents like the ‘2023 Annual Report’ and press releases. Cross-referencing each source against the quarterly figures, reconciling discrepancies between the filed numbers and the summary tables, and flagging any line items that need a second pass. Prioritizing data from your documents like the ‘2023 Annual Report’ and press releases. Cross-referencing each source against the quarterly figures, reconciling discrepancies between the filed numbers and the summary tables, and flagging any line items that need a second pass.';
 
+// A realistic completed-step trail feeding into a current step that carries
+// a description long enough to exceed the step detail's vertical scroll cap,
+// used by the ContainerCheck story below alongside the pasted-code case,
+// which exercises the detail panel's horizontal scroll instead.
+const CONTAINER_CHECK_PRIOR_STEPS = [
+  {
+    label: 'Looked through linked repositories and shared drives',
+    description:
+      'Indexed every folder shared with this conversation, including the finance, investor-relations, and engineering drives, to find the source documents referenced in the request.',
+  },
+  { label: 'Opened the 2023 and 2024 annual reports' },
+  {
+    label: 'Extracted quarterly figures from investor call transcripts',
+    description:
+      'Pulled revenue, margin, and headcount figures mentioned across all four quarterly earnings calls for both fiscal years.',
+  },
+  { label: 'Cross-referenced press releases against internal summaries' },
+] as const;
+
+const CONTAINER_CHECK_STEP_DESCRIPTION =
+  'Cross-referencing the 2023 and 2024 annual reports against the quarterly filings, reconciling discrepancies between the filed numbers and the summary tables circulated internally, flagging line items that need a second pass, and noting which figures still need sign-off from finance before they can be cited in the final response.';
+
+// Pasted straight into a step's description, same shape an agent echoing a
+// tool result would produce: multi-line, unbroken code lines long enough to
+// force `.swc-ResponseStatusStep-detailScroll`'s horizontal scrollbar
+// instead of wrapping (see response-status-step.css `::slotted(pre)`).
+const CONTAINER_CHECK_STEP_CODE = `document.querySelectorAll('.annual-gallery').forEach((gallery) => {
+	const months = gallery.querySelectorAll('.annual-gallery__month');
+	const previous = gallery.querySelector('.annual-gallery__prev');
+	const next = gallery.querySelector('.annual-gallery__next');
+	const counter = gallery.querySelector('.annual-gallery__counter');
+
+	// Automatically start on the current month
+	let current = new Date().getMonth();
+
+	const update = () => {
+		months.forEach((month, index) => {
+			month.hidden = index !== current;
+		});
+
+		counter.textContent = \`\${current + 1} / \${months.length}\`;
+
+		previous.disabled = current === 0;
+		next.disabled = current === months.length - 1;
+	};
+
+	previous.addEventListener('click', () => {
+		if (current > 0) {
+			current--;
+			update();
+		}
+	});
+
+	next.addEventListener('click', () => {
+		if (current < months.length - 1) {
+			current++;
+			update();
+		}
+	});
+
+	update();
+});`;
+
 type ForcedState = 'hover' | 'focus-visible';
 
 type StepCase = {
@@ -407,6 +470,56 @@ const permutationContent = () => html`
   )}
 `;
 
+// Realistic, worst-case content at the response status's own min/max
+// container-width cap: a long trail of completed steps feeding into a
+// current step whose description either exceeds the detail panel's
+// vertical scroll cap (prose) or its horizontal scroll cap (pasted code),
+// so the panel's two scroll axes are each exercised by their own row.
+const containerCheckStatus = (
+  status: ResponseStatusStatus,
+  {
+    priorStepCount = 4,
+    descriptionIsCode = false,
+  }: { priorStepCount?: number; descriptionIsCode?: boolean } = {}
+) =>
+  renderStatus({
+    status,
+    label: statusLabels[status],
+    open: true,
+    // Fluid, not the suite's default 320px cap: this story snapshots the
+    // component's own min/max clamp() reacting to the Chromatic viewport
+    // modes below, which a fixed inline size would otherwise override.
+    maxInlineSize: '100%',
+    steps: html`
+      ${CONTAINER_CHECK_PRIOR_STEPS.slice(0, priorStepCount).map(
+        (step) => html`
+          <swc-response-status-step status="complete">
+            <span slot="label">${step.label}</span>
+            ${'description' in step
+              ? html`
+                  <span slot="description">${step.description}</span>
+                `
+              : nothing}
+          </swc-response-status-step>
+        `
+      )}
+      <swc-response-status-step status=${status} open>
+        <span slot="label">
+          Reconciling quarterly filings against internal summaries
+        </span>
+        ${descriptionIsCode
+          ? html`
+              <pre slot="description">${CONTAINER_CHECK_STEP_CODE}</pre>
+            `
+          : html`
+              <span slot="description">
+                ${CONTAINER_CHECK_STEP_DESCRIPTION}
+              </span>
+            `}
+      </swc-response-status-step>
+    `,
+  });
+
 // VRT stories
 
 // Rendered once in light/ltr and once in dark/rtl (that combination covers
@@ -427,5 +540,44 @@ export const Permutations: Story = {
 export const ForcedColors: Story = {
   render: () => theme(permutationContent(), 'light', 'ltr'),
   parameters: forcedColorsVrtParameters,
+  play: forceAll,
+};
+
+// Its own snapshot (rather than a row in Permutations) so it can claim
+// taller Chromatic viewports: this content is long enough that the default
+// viewport modes would clip it.
+export const ContainerCheck: Story = {
+  render: () =>
+    theme(
+      html`
+        ${row([containerCheckStatus('active')], 'Active')}
+        ${row(
+          [containerCheckStatus('stopped', { priorStepCount: 2 })],
+          'Stopped'
+        )}
+        ${row([containerCheckStatus('complete')], 'Complete')}
+        ${row(
+          [
+            containerCheckStatus('active', {
+              priorStepCount: 0,
+              descriptionIsCode: true,
+            }),
+          ],
+          'Active with code sample (horizontal scroll)'
+        )}
+      `,
+      'light',
+      'ltr'
+    ),
+  parameters: {
+    ...vrtParameters,
+    chromatic: {
+      modes: {
+        mobile: { viewport: { width: 320, height: 1300 } },
+        tablet: { viewport: { width: 500, height: 1300 } },
+        desktop: { viewport: { width: 1280, height: 1500 } },
+      },
+    },
+  },
   play: forceAll,
 };

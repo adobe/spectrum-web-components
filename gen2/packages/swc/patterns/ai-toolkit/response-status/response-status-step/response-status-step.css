@@ -329,17 +329,34 @@
    property to tune the height cap. `content-box` so the 20px scrollbar
    offset is added to the fit-content size instead of eating into the
    content. `max-inline-size` matches `.swc-ResponseStatusStep-detail`'s own
-   cap so unwrapped code scrolls here instead of growing the panel. */
+   cap so unwrapped code scrolls here instead of growing the panel.
+   The `100%` half of `min()` matters when the step's own container is
+   narrower than 340px (e.g. a narrow `swc-response-status` host): without
+   it, this `fit-content` box's shrink-to-fit sizing uses its max-content
+   (up to 340px) rather than its actual available space, so it renders
+   wider than its `overflow: hidden` `.detailScroll`'s own clip ancestor and
+   gets clipped there, scrolling fully internally while the clip still cuts
+   off the last stretch of content. */
 .swc-ResponseStatusStep-detailScroll {
   box-sizing: content-box;
   inline-size: fit-content;
-  max-inline-size: 340px;
+  max-inline-size: min(340px, 100%);
   max-block-size: var(--swc-response-status-step-detail-max-block-size, 120px);
   padding-inline-end: token("spacing-500");
   overflow: auto;
   overscroll-behavior: contain;
   scrollbar-color: token("gray-500") transparent;
   scrollbar-width: thin;
+}
+
+/* A slotted `<pre>` scrolls horizontally instead of wrapping, so the
+   padding-inline-end above (reserved for a vertical scrollbar beside
+   wrapped text) only leaves dead space after the last column once scrolled
+   fully to the end. Dropped here so the code reaches the panel's edge.
+   Toggled from script (ResponseStatusStep.ts): `:has(::slotted(pre))`
+   isn't supported, since `:has()` forbids pseudo-elements in its argument. */
+.swc-ResponseStatusStep-detailScroll--code {
+  padding-inline-end: 0;
 }
 
 /* Chromium/Safari: `scrollbar-color`/`-width` above cover Firefox; these
@@ -373,32 +390,83 @@
   outline-offset: token("focus-ring-gap");
 }
 
-/* Fade cues while the description overflows. Scroll-driven: with no overflow
-   the scroll timeline is inactive, so the base (unmasked) style applies and
-   short descriptions never fade. At the start only the bottom fades; while
-   scrolled both edges fade; at the end only the top fades. */
+/* Fade cues while the description overflows, drawn as overlays rather than a
+   `mask-image` on the scroll box itself: masking `.detailScroll` directly
+   also dims its `::-webkit-scrollbar`, since the scrollbar paints as part of
+   that element's own masked output. These sticky pseudo-elements sit inside
+   the scroll box and fade their own background independently, leaving the
+   scrollbar (always painted above an element's content by the UA)
+   untouched. Negative margins reclaim the layout space they'd otherwise add
+   to the scrollable content. */
+.swc-ResponseStatusStep-detailScroll::before,
+.swc-ResponseStatusStep-detailScroll::after {
+  display: block;
+  position: sticky;
+
+  /* Sticky only pins the axis with an inset: without this, the code
+     sample's horizontal scroll would carry the overlay along with it. */
+  inset-inline-start: 0;
+  z-index: 1;
+  inline-size: 100%;
+  block-size: 24px;
+  pointer-events: none;
+  content: "";
+  opacity: 0;
+}
+
+.swc-ResponseStatusStep-detailScroll::before {
+  inset-block-start: 0;
+  margin-block-end: -24px;
+  background: linear-gradient(to bottom, var(--swc-background-layer-1-color), transparent);
+}
+
+.swc-ResponseStatusStep-detailScroll::after {
+  inset-block-end: 0;
+  margin-block-start: -24px;
+  background: linear-gradient(to top, var(--swc-background-layer-1-color), transparent);
+}
+
+/* Scroll-driven: with no overflow the scroll timeline is inactive, so the
+   base (hidden) style above applies and short descriptions never fade. At
+   the start only the bottom fades; while scrolled both edges fade; at the
+   end only the top fades. */
 @supports (animation-timeline: scroll()) {
   /* Longhands, not the `animation` shorthand: the shorthand resets
      `animation-timeline` to auto, which would disable the scroll timeline. */
-  .swc-ResponseStatusStep-detailScroll {
-    animation-timeline: scroll(self block);
-    animation-name: swc-response-status-detail-fade;
+
+  /* `nearest`, not `self`: a pseudo-element's own box is never itself a
+     scroll container, so `self` can't resolve a timeline source here. */
+  .swc-ResponseStatusStep-detailScroll::before,
+  .swc-ResponseStatusStep-detailScroll::after {
+    animation-timeline: scroll(nearest block);
+    animation-name: swc-response-status-detail-fade-top;
     animation-timing-function: linear;
     animation-fill-mode: both;
   }
 
-  @keyframes swc-response-status-detail-fade {
+  .swc-ResponseStatusStep-detailScroll::after {
+    animation-name: swc-response-status-detail-fade-bottom;
+  }
+
+  @keyframes swc-response-status-detail-fade-top {
     0% {
-      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 100%) calc(100% - 24px), rgb(0 0 0 / 0%) 100%);
+      opacity: 0;
     }
 
     15%,
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes swc-response-status-detail-fade-bottom {
+    0%,
     85% {
-      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0%) 0, rgb(0 0 0 / 100%) 24px, rgb(0 0 0 / 100%) calc(100% - 24px), rgb(0 0 0 / 0%) 100%);
+      opacity: 1;
     }
 
     100% {
-      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0%) 0, rgb(0 0 0 / 100%) 24px, rgb(0 0 0 / 100%) 100%);
+      opacity: 0;
     }
   }
 }
@@ -428,9 +496,9 @@
   }
 
   /* Keep every line fully legible in forced colors; rely on the scrollbar. */
-  .swc-ResponseStatusStep-detailScroll {
-    mask-image: none;
-    animation: none;
+  .swc-ResponseStatusStep-detailScroll::before,
+  .swc-ResponseStatusStep-detailScroll::after {
+    display: none;
   }
 
   .swc-ResponseStatusStep-toggle:focus-visible,
