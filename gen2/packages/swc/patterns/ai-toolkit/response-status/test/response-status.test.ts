@@ -880,18 +880,18 @@ export const AgenticWidthTest: Story = {
     );
 
     await step(
-      'fills a narrow container and interpolates down to 65% in a wide one',
+      'caps at 90% of a narrow container and interpolates down to 65% in a wide one',
       async () => {
         expect(container).toBeTruthy();
         expect(content).toBeTruthy();
         expect(el.getBoundingClientRect().width).toBe(320);
-        expect(content!.getBoundingClientRect().width).toBe(320);
+        expect(content!.getBoundingClientRect().width).toBe(288);
 
         el.style.maxInlineSize = 'none';
         el.style.inlineSize = '100%';
         for (const [width, expected] of [
-          [240, 240],
-          [320, 320],
+          [240, 216],
+          [320, 288],
           [640, 472],
           [960, 624],
           [1280, 832],
