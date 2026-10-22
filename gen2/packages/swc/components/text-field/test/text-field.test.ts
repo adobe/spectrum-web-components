@@ -1518,7 +1518,7 @@ export const SlotBackedValidationTest: Story = {
       );
       replacement.slot = 'prefix';
       await waitFor(() => {
-        expect(field.validationMessage).toBe('Invalid value.');
+        expect(field.validationMessage).toBe('Enter a valid value.');
         expect(
           field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
         ).toBeNull();
@@ -1532,7 +1532,7 @@ export const SlotBackedValidationTest: Story = {
       });
       replacement.remove();
       await waitFor(() =>
-        expect(field.validationMessage).toBe('Invalid value.')
+        expect(field.validationMessage).toBe('Enter a valid value.')
       );
       replacement.textContent = 'A new application error.';
       field.append(replacement);
@@ -1541,7 +1541,7 @@ export const SlotBackedValidationTest: Story = {
       );
       replacement.textContent = '   ';
       await waitFor(() =>
-        expect(field.validationMessage).toBe('Invalid value.')
+        expect(field.validationMessage).toBe('Enter a valid value.')
       );
     });
 
@@ -2261,13 +2261,16 @@ export const ImplicitSubmitWithoutButtonTest: Story = {
     });
 
     await step(
-      'another native text input blocks implicit submission',
+      'native inputs with supported text-field types block implicit submission',
       async () => {
         const otherInput = document.createElement('input');
-        otherInput.setAttribute('aria-label', 'Other');
+        otherInput.setAttribute('aria-label', 'Additional field');
         form.append(otherInput);
-        await userEvent.keyboard('{Enter}');
-        expect(submissions).toHaveLength(1);
+        for (const type of ['text', 'url', 'tel', 'email', 'password']) {
+          otherInput.type = type;
+          await userEvent.keyboard('{Enter}');
+          expect(submissions, `${type} blocks submission`).toHaveLength(1);
+        }
         otherInput.remove();
       }
     );
@@ -2282,6 +2285,38 @@ export const ImplicitSubmitWithoutButtonTest: Story = {
         await userEvent.keyboard('{Enter}');
         expect(submissions).toHaveLength(1);
         otherField.remove();
+      }
+    );
+
+    await step(
+      'other native types block only when the browser falls back to text',
+      async () => {
+        const otherInput = document.createElement('input');
+        otherInput.setAttribute('aria-label', 'Additional field');
+        form.append(otherInput);
+        for (const type of [
+          'search',
+          'date',
+          'month',
+          'week',
+          'time',
+          'datetime-local',
+          'number',
+        ]) {
+          otherInput.type = type;
+          // Firefox and WebKit fall back to text for month and week inputs.
+          const expectedSubmissions =
+            submissions.length + (otherInput.type === 'text' ? 0 : 1);
+          await userEvent.keyboard('{Enter}');
+          await waitFor(() =>
+            expect(
+              submissions,
+              `${type} resolves to ${otherInput.type}`
+            ).toHaveLength(expectedSubmissions)
+          );
+          expect(submissions[submissions.length - 1]).toBeNull();
+        }
+        otherInput.remove();
       }
     );
   },

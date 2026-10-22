@@ -46,7 +46,7 @@ const DOCS_URL =
  * @slot label - Visible label. Clicking it focuses the input.
  * @slot prefix - Non-interactive content before the input, such as an icon, symbol, or avatar.
  * @slot description - Help text included in the accessible description. Hidden while `field-status="invalid"`.
- * @slot error-text - Error text shown, included in the accessible description, and used as the validation message while `field-status="invalid"`. Supply translated text when needed. Missing or whitespace-only text uses "Invalid value." for validation without showing a fallback inline message.
+ * @slot error-text - Error text shown, included in the accessible description, and used as the validation message while `field-status="invalid"`. Supply translated text when needed. Missing or whitespace-only text uses "Enter a valid value." for validation without showing a fallback inline message.
  */
 export abstract class TextFieldBase extends SizedMixin(
   FieldDescriptionMixin(LabellingMixin(SpectrumElement)),
@@ -312,20 +312,7 @@ export abstract class TextFieldBase extends SizedMixin(
         (element) =>
           element instanceof TextFieldBase ||
           (element instanceof HTMLInputElement &&
-            [
-              'text',
-              'search',
-              'url',
-              'tel',
-              'email',
-              'password',
-              'date',
-              'month',
-              'week',
-              'time',
-              'datetime-local',
-              'number',
-            ].includes(element.type))
+            TEXT_FIELD_TYPES.some((type) => type === element.type))
       );
       if (blockingFields.length === 1) {
         form.requestSubmit();
@@ -408,7 +395,9 @@ export abstract class TextFieldBase extends SizedMixin(
         .join(' ')
         .trim();
       const message =
-        this.fieldStatus === 'invalid' ? errorText || 'Invalid value.' : '';
+        this.fieldStatus === 'invalid'
+          ? errorText || 'Enter a valid value.'
+          : '';
       input.setCustomValidity(message);
       if (input.disabled || input.readOnly) {
         // Barred inputs can retain native error flags without a validation message.
