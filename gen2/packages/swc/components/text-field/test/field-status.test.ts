@@ -134,6 +134,109 @@ export const StatusTransitions: Story = {
 };
 StatusTransitions.storyName = 'Exclusive status transitions';
 
+export const ResetStatus: Story = {
+  ...StatusTransitions,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.roleElement;
+    if (!form || !input) {
+      throw new Error('Reset status test requires a form and input');
+    }
+    const events: string[] = [];
+    field.addEventListener('input', () => events.push('input'));
+    field.addEventListener('change', () => events.push('change'));
+
+    await step('reset clears valid and invalid status', async () => {
+      for (const status of ['valid', 'invalid'] as const) {
+        field.value = 'Updated';
+        field.fieldStatus = status;
+        await field.updateComplete;
+        expect(field.validity.customError).toBe(status === 'invalid');
+
+        form.reset();
+        await field.updateComplete;
+
+        expect(field.fieldStatus).toBeUndefined();
+        expect(field).not.toHaveAttribute('field-status');
+        expect(field.value).toBe('alex');
+        expect(new FormData(form).get('username')).toBe('alex');
+        expect(field.validity.customError).toBe(false);
+        expect(field.checkValidity()).toBe(true);
+        expect(input).not.toHaveAttribute('aria-invalid');
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+        ).toBeNull();
+        expect(
+          field.shadowRoot?.querySelector('.swc-TextField-invalidIcon')
+        ).toBeNull();
+        expect(input.ariaDescribedByElements?.[0]).toHaveClass(
+          'swc-FormFieldDescription'
+        );
+      }
+    });
+
+    await step('reset preserves interaction status', async () => {
+      for (const status of ['disabled', 'readonly', undefined] as const) {
+        field.value = 'Updated';
+        field.fieldStatus = status;
+        await field.updateComplete;
+
+        form.reset();
+        await field.updateComplete;
+
+        expect(field.fieldStatus).toBe(status);
+        expect(field.value).toBe('alex');
+        expect(input.disabled).toBe(status === 'disabled');
+        expect(input.readOnly).toBe(status === 'readonly');
+        expect(new FormData(form).has('username')).toBe(status !== 'disabled');
+      }
+    });
+
+    await step('reset preserves inherited fieldset disabling', async () => {
+      const fieldset = document.createElement('fieldset');
+      field.before(fieldset);
+      fieldset.append(field);
+      field.fieldStatus = 'invalid';
+      fieldset.disabled = true;
+      await field.updateComplete;
+
+      form.reset();
+      await field.updateComplete;
+
+      expect(field.fieldStatus).toBeUndefined();
+      expect(field.willValidate).toBe(false);
+      expect(input.disabled).toBe(true);
+      expect(new FormData(form).has('username')).toBe(false);
+      fieldset.disabled = false;
+      await field.updateComplete;
+      expect(field.checkValidity()).toBe(true);
+    });
+
+    await step('native constraints still apply after reset', async () => {
+      field.removeAttribute('value');
+      field.value = 'Updated';
+      field.fieldStatus = 'invalid';
+      await field.updateComplete;
+
+      form.reset();
+      await field.updateComplete;
+
+      expect(field.value).toBe('');
+      expect(field.fieldStatus).toBeUndefined();
+      expect(field.validity.customError).toBe(false);
+      expect(field.validity.valueMissing).toBe(true);
+      expect(field.checkValidity()).toBe(false);
+      expect(input).not.toHaveAttribute('aria-invalid');
+      expect(events).toEqual([]);
+    });
+  },
+};
+ResetStatus.storyName = 'Reset status';
+
 export const InvalidWithoutErrorText: Story = {
   render: () => html`
     <swc-text-field value="alex">

@@ -1428,12 +1428,10 @@ export const SlottedErrorLifecycleTest: Story = {
     );
 
     await step(
-      'updates, reset, and restoration preserve authored errors',
+      'updates and restoration preserve application errors',
       async () => {
         field.value = 'Updated';
         field.size = 'l';
-        await field.updateComplete;
-        form.reset();
         await field.updateComplete;
         field.formStateRestoreCallback('Restored');
         await field.updateComplete;
@@ -1882,9 +1880,17 @@ export const FormBehaviorTest: Story = {
         expect(validityOutput.textContent?.trim()).toBe(
           'field.checkValidity(): valid\nform.checkValidity(): valid'
         );
+        field.fieldStatus = 'invalid';
+        await field.updateComplete;
         await userEvent.click(resetButton);
         await field.updateComplete;
         expect(field.value).toBe('');
+        expect(field.fieldStatus).toBeUndefined();
+        expect(field.validity.customError).toBe(false);
+        expect(field.roleElement).not.toHaveAttribute('aria-invalid');
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+        ).toBeNull();
         expect(output.textContent?.trim()).toBe(
           'Submit the form to see its data.'
         );

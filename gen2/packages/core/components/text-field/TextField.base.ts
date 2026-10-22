@@ -258,9 +258,12 @@ export abstract class TextFieldBase extends SizedMixin(
     return this.fieldAssoc.reportValidity();
   }
 
-  /** @internal Restores the authored `value` attribute (unreflected, so it holds the initial value) on native form reset. */
+  /** @internal Restores the initial value and clears validation status on native form reset. */
   public formResetCallback(): void {
     this.value = this.getAttribute('value') ?? '';
+    if (this.fieldStatus === 'valid' || this.fieldStatus === 'invalid') {
+      this.fieldStatus = undefined;
+    }
   }
 
   /** @internal Restores string state supplied by the browser for navigation or autofill. */
