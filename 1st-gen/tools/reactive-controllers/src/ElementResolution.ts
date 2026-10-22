@@ -119,7 +119,7 @@ export class ElementResolutionController implements ReactiveController {
   }
 
   private resolveElement(): void {
-    if (!this.selector) {
+    if (!this.selector || !this.host.isConnected) {
       this.releaseElement();
       return;
     }
