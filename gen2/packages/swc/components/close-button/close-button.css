@@ -99,11 +99,11 @@
   --swc-close-button-background-color-focus: token("transparent-static-white-200");
   --swc-close-button-background-color-hover: token("transparent-static-white-200");
   --swc-close-button-focus-indicator-color: token("static-white-focus-indicator-color");
-  --swc-close-button-icon-color-default: token("white");
+  --swc-close-button-icon-color-default: token("transparent-static-white-1000");
   --swc-close-button-icon-color-disabled: token("disabled-static-white-background-color");
-  --swc-close-button-icon-color-down: token("white");
-  --swc-close-button-icon-color-focus: token("white");
-  --swc-close-button-icon-color-hover: token("white");
+  --swc-close-button-icon-color-down: token("transparent-static-white-1000");
+  --swc-close-button-icon-color-focus: token("transparent-static-white-1000");
+  --swc-close-button-icon-color-hover: token("transparent-static-white-1000");
 }
 
 :host([static-color="black"]) {
@@ -112,9 +112,9 @@
   --swc-close-button-background-color-focus: token("transparent-static-black-150");
   --swc-close-button-background-color-hover: token("transparent-static-black-150");
   --swc-close-button-focus-indicator-color: token("static-black-focus-indicator-color");
-  --swc-close-button-icon-color-default: token("black");
+  --swc-close-button-icon-color-default: token("transparent-static-black-1000");
   --swc-close-button-icon-color-disabled: token("disabled-static-black-background-color");
-  --swc-close-button-icon-color-down: token("black");
-  --swc-close-button-icon-color-focus: token("black");
-  --swc-close-button-icon-color-hover: token("black");
+  --swc-close-button-icon-color-down: token("transparent-static-black-1000");
+  --swc-close-button-icon-color-focus: token("transparent-static-black-1000");
+  --swc-close-button-icon-color-hover: token("transparent-static-black-1000");
 }
