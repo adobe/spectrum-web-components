@@ -295,7 +295,6 @@ test.describe('Text field - ARIA Snapshots', () => {
     { story: 'default', snapshot: '- textbox "Full name"' },
     { story: 'required', snapshot: '- textbox "Full name"' },
     { story: 'read-only', snapshot: '- textbox "Username": sam.rivera' },
-    { story: 'invalid', snapshot: '- textbox "Email address"' },
     {
       story: 'valid',
       snapshot: '- textbox "Email address": person@example.com',
@@ -315,14 +314,58 @@ test.describe('Text field - ARIA Snapshots', () => {
         await expect(input).toHaveAttribute('required', '');
       } else if (story === 'read-only') {
         await expect(input).toHaveAttribute('readonly', '');
-      } else if (story === 'invalid') {
-        await expect(input).toHaveAttribute('aria-invalid', 'true');
       }
     });
   }
 
+  test('exposes invalid fields with error text or a description', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-text-field--invalid',
+      'swc-text-field'
+    );
+    const fields = root.locator('swc-text-field');
+    await expect(fields).toHaveCount(2);
+    await expect(fields.nth(0).locator('input')).toMatchAriaSnapshot(`
+      - textbox "Email address"
+    `);
+    await expect(fields.nth(1).locator('input')).toMatchAriaSnapshot(`
+      - textbox "Username"
+    `);
+    for (const [index, slot, text] of [
+      [0, 'error-text', 'Enter a valid email address.'],
+      [1, 'description', 'Choose a username.'],
+    ] as const) {
+      const field = fields.nth(index);
+      await expect(field.locator('input')).toHaveAttribute(
+        'aria-invalid',
+        'true'
+      );
+      await expect(field.locator(`[slot="${slot}"]`)).toBeVisible();
+      await expect(field.locator(`[slot="${slot}"]`)).toHaveText(text);
+      const describedSlots = await field
+        .locator('input')
+        .evaluate((input) =>
+          input.ariaDescribedByElements?.map(
+            (element) => element.querySelector('slot')?.name
+          )
+        );
+      expect(describedSlots).toEqual([slot]);
+    }
+    const errorColor = await fields
+      .nth(0)
+      .locator('.swc-FormFieldErrorText')
+      .evaluate((element) => getComputedStyle(element).color);
+    await expect(fields.nth(1).locator('.swc-FormFieldDescription')).toHaveCSS(
+      'color',
+      errorColor
+    );
+  });
+
   for (const forcedColors of ['none', 'active'] as const) {
-    test(`preserves disabled error text styling with forced colors ${forcedColors}`, async ({
+    test(`preserves disabled message styling with forced colors ${forcedColors}`, async ({
       page,
     }) => {
       await page.emulateMedia({ forcedColors });
@@ -331,23 +374,31 @@ test.describe('Text field - ARIA Snapshots', () => {
         'components-text-field--invalid',
         'swc-text-field'
       );
-      await root.locator('swc-text-field').evaluate((field) => {
+      const fields = root.locator('swc-text-field');
+      await expect(fields).toHaveCount(2);
+      await fields.evaluateAll((fields) => {
         const fieldset = document.createElement('fieldset');
-        field.before(fieldset);
-        fieldset.append(field);
+        fields[0].before(fieldset);
+        fieldset.append(...fields);
         fieldset.disabled = true;
       });
-      await expect(root.locator('input')).toBeDisabled();
-      const error = root.locator('.swc-FormFieldErrorText');
-      const labelColor = await root
-        .locator('.swc-FormFieldLabel')
-        .evaluate((label) => getComputedStyle(label).color);
-      await expect(error).toBeVisible();
+      for (let index = 0; index < 2; index++) {
+        const field = fields.nth(index);
+        await expect(field.locator('input')).toBeDisabled();
+        const message = field.locator(
+          '.swc-FormFieldErrorText, .swc-FormFieldDescription'
+        );
+        const labelColor = await field
+          .locator('.swc-FormFieldLabel')
+          .evaluate((label) => getComputedStyle(label).color);
+        await expect(message).toBeVisible();
+        await expect(message).toHaveCSS('color', labelColor);
+      }
       await expect(root.locator('[slot="error-text"]')).toBeVisible();
       await expect(root.locator('[slot="error-text"]')).toHaveText(
         'Enter a valid email address.'
       );
-      await expect(error).toHaveCSS('color', labelColor);
+      await expect(root.locator('[slot="description"]').last()).toBeVisible();
       await expect(root.locator('.swc-TextField-invalidIcon')).toHaveCount(0);
     });
   }
