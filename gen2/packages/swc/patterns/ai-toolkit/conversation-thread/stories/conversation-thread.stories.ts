@@ -25,6 +25,7 @@ import '../../suggestion/swc-suggestion-group.js';
 import '../../suggestion-item/swc-suggestion-item.js';
 import '../../prompt-field/swc-prompt-field.js';
 import '../../upload-attachment/swc-upload-attachment.js';
+import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
 import { uniqueId } from '../../../../utils/id.js';
 
@@ -659,7 +660,9 @@ class ConversationFullPatternDemo extends LitElement {
           ${renderDemoAttachmentThumbnail(attachment)}
           ${attachment.badge
             ? html`
-                <span slot="badge">${attachment.badge}</span>
+                <swc-badge slot="badge" size="s" subtle>
+                  ${attachment.badge}
+                </swc-badge>
               `
             : ''}
         </swc-upload-attachment>
@@ -797,7 +800,7 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
         aria-label="Hilton commercial assets"
         style="inline-size:100%;block-size:100%;background:#f3f3f3;"
       ></div>
-      <span slot="badge">PDF</span>
+      <swc-badge slot="badge" size="s" subtle>PDF</swc-badge>
     </swc-upload-attachment>
     <p slot="legal" class="swc-Typography--links">
       Responses are generated using AI, and may be inaccurate. Check before
