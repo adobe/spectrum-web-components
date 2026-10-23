@@ -13,7 +13,7 @@ import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { defineConfig, mergeConfig } from 'vitest/config';
+import { configDefaults, defineConfig, mergeConfig } from 'vitest/config';
 
 import viteConfig from './vite.config.ts';
 
@@ -74,6 +74,7 @@ export default mergeConfig(
           '**/*.test.ts',
           '**/*.stories.ts',
           '**/*.vrt.ts',
+          '**/test/vrt/**',
           '**/.storybook/**',
           '**/utils/**',
           '**/node_modules/**',
@@ -165,6 +166,9 @@ export default mergeConfig(
           },
           test: {
             name: 'storybook',
+            // .vrt.ts stories are authored for Chromatic snapshots, which
+            // runs their play functions itself; keep them out of Vitest.
+            exclude: [...configDefaults.exclude, '**/*.vrt.ts'],
             browser: {
               enabled: true,
               provider: playwright(),
