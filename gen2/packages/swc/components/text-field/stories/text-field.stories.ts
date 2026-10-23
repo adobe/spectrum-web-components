@@ -497,11 +497,26 @@ ReadOnly.storyName = 'Read-only';
 
 export const Invalid: Story = {
   render: (args) => html`
-    ${template(args)}
-    <swc-text-field field-status="invalid">
-      <span slot="label">Username</span>
-      <span slot="description">Choose a username.</span>
-    </swc-text-field>
+    ${captioned(
+      html`
+        With
+        <code>error-text</code>
+      `,
+      template({ ...args })
+    )}
+    ${captioned(
+      html`
+        With
+        <code>description</code>
+        only
+      `,
+      html`
+        <swc-text-field field-status="invalid">
+          <span slot="label">Username</span>
+          <span slot="description">Choose a username.</span>
+        </swc-text-field>
+      `
+    )}
   `,
   args: {
     'field-status': 'invalid',
@@ -512,7 +527,7 @@ export const Invalid: Story = {
   },
   tags: ['states'],
   parameters: {
-    flexLayout: 'row-wrap',
+    flexLayout: 'column-center',
   },
 };
 
@@ -607,7 +622,6 @@ const handleSubmit = async (event: SubmitEvent): Promise<void> => {
   await field.updateComplete;
   field.fieldStatus = field.checkValidity() ? undefined : 'invalid';
   await field.updateComplete;
-  updateValidity(form);
   if (field.fieldStatus === 'invalid') {
     output.value = 'Submission blocked: the field is invalid.';
     return;
@@ -615,33 +629,6 @@ const handleSubmit = async (event: SubmitEvent): Promise<void> => {
   output.value = [...new FormData(form)]
     .map(([name, value]) => `${name}: ${value}`)
     .join('\n');
-};
-
-const updateValidity = (form: HTMLFormElement): void => {
-  const field = form.querySelector('swc-text-field');
-  const output = form.querySelector<HTMLOutputElement>('[data-validity]');
-  if (field && output) {
-    const fieldValid = field.checkValidity();
-    const formValid = form.checkValidity();
-    output.value = [
-      `field.checkValidity(): ${fieldValid ? 'valid' : 'invalid'}`,
-      `form.checkValidity(): ${formValid ? 'valid' : 'invalid'}`,
-      field.validity.valueMissing ? 'validity.valueMissing: true' : '',
-      field.validity.customError ? 'validity.customError: true' : '',
-      field.validationMessage
-        ? `validationMessage: ${field.validationMessage}`
-        : '',
-    ]
-      .filter(Boolean)
-      .join('\n');
-  }
-};
-
-const showValidity = (event: Event): void => {
-  const form = (event.currentTarget as HTMLElement).closest('form');
-  if (form) {
-    updateValidity(form);
-  }
 };
 
 const toggleFieldsetDisabled = (event: Event): void => {
@@ -658,7 +645,7 @@ export const FormBehavior: Story = {
     <form
       novalidate
       aria-labelledby="form-participation-heading"
-      style="display: flex; flex-direction: column; gap: 24px; inline-size: 100%; max-inline-size: 26rem;"
+      style="display: flex; flex-direction: column; gap: 24px; inline-size: 26rem; max-inline-size: 100%;"
       @submit=${handleSubmit}
     >
       <h2
@@ -698,20 +685,13 @@ export const FormBehavior: Story = {
           <button
             type="button"
             class="swc-Button swc-Button--secondary"
-            @click=${showValidity}
+            data-toggle-fieldset
+            aria-pressed="false"
+            @click=${toggleFieldsetDisabled}
           >
-            <span class="swc-Button-label">Check validity</span>
+            <span class="swc-Button-label">Disable</span>
           </button>
         </swc-button-group>
-        <button
-          type="button"
-          class="swc-Button swc-Button--secondary"
-          data-toggle-fieldset
-          aria-pressed="false"
-          @click=${toggleFieldsetDisabled}
-        >
-          <span class="swc-Button-label">Disable</span>
-        </button>
       </section>
       <section
         aria-labelledby="submitted-form-data-label"
@@ -730,29 +710,6 @@ export const FormBehavior: Story = {
           style="display: block; min-block-size: 2lh; padding: 12px; border-radius: var(--swc-corner-radius-100); background: var(--swc-background-layer-1-color); font-family: monospace; font-size: 0.875rem; white-space: pre-wrap; overflow-wrap: anywhere;"
           .defaultValue=${'Submit the form to see its data.'}
         ></output>
-      </section>
-      <section
-        aria-labelledby="validity-label"
-        style="display: flex; flex-direction: column; gap: 12px;"
-      >
-        <h3
-          id="validity-label"
-          class="swc-Heading swc-Heading--sizeXS"
-          style="margin: 0;"
-        >
-          Latest validation result
-        </h3>
-        <output
-          data-validity
-          aria-live="polite"
-          style="display: block; min-block-size: 2lh; padding: 12px; border-radius: var(--swc-corner-radius-100); background: var(--swc-background-layer-1-color); font-family: monospace; font-size: 0.875rem; white-space: pre-wrap; overflow-wrap: anywhere;"
-          .defaultValue=${'Submit or click Check validity to inspect the field and form validity.'}
-        ></output>
-        <p style="margin: 0;">
-          Inline error text is supplied by the application and becomes the
-          <code>validationMessage</code>
-          while the field is invalid.
-        </p>
       </section>
     </form>
   `,

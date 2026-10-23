@@ -34,7 +34,6 @@ const singleBrowser =
   resolvedBrowserInstances.length === 1
     ? resolvedBrowserInstances[0].browser
     : undefined;
-const isFirefoxOnly = singleBrowser === 'firefox';
 const browserMemoryLimits = maxWorkersByBrowser[singleBrowser]
   ? { maxWorkers: maxWorkersByBrowser[singleBrowser], minWorkers: 1 }
   : {};
@@ -166,7 +165,6 @@ export default mergeConfig(
           },
           test: {
             name: 'storybook',
-            ...(process.env.CI && isFirefoxOnly ? { maxWorkers: 2 } : {}),
             browser: {
               enabled: true,
               provider: playwright(),

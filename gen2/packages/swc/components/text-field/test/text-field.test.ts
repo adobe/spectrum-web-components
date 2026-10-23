@@ -1800,43 +1800,34 @@ export const FormBehaviorTest: Story = {
     const form = canvasElement.querySelector('form');
     const input = field.shadowRoot?.querySelector('input');
     const output = form?.querySelector<HTMLOutputElement>('[data-form-data]');
-    const validityOutput =
-      form?.querySelector<HTMLOutputElement>('[data-validity]');
-    const checkValidityButton = form?.querySelector<HTMLButtonElement>(
-      'button[type="button"]'
-    );
-    if (!form || !input || !output || !validityOutput || !checkValidityButton) {
-      throw new Error('form, input, outputs, or validity button not found');
+    if (!form || !input || !output) {
+      throw new Error('form, input, or submission output not found');
     }
+
+    await step('only basic form controls are shown', () => {
+      const canvas = within(canvasElement);
+      expect(canvas.getAllByRole('button')).toHaveLength(3);
+      for (const name of ['Submit', 'Reset', 'Disable']) {
+        expect(canvas.getByRole('button', { name })).toBeVisible();
+      }
+      expect(form.querySelector('details')).toBeNull();
+      expect(form.querySelector('[data-validity]')).toBeNull();
+    });
 
     await step('headings distinguish the form, actions, and results', () => {
       const canvas = within(canvasElement);
       expect(
         canvas.getByRole('heading', { name: 'Form participation', level: 2 })
       ).toBeVisible();
-      for (const name of [
-        'Form actions',
-        'Last submission',
-        'Latest validation result',
-      ]) {
+      for (const name of ['Form actions', 'Last submission']) {
         const heading = canvas.getByRole('heading', { name, level: 3 });
         expect(heading).toBeVisible();
         expect(heading).toHaveClass('swc-Heading--sizeXS');
       }
-      for (const result of [output, validityOutput]) {
-        expect(parseFloat(getComputedStyle(result).fontSize)).toBeLessThan(
-          parseFloat(getComputedStyle(form).fontSize)
-        );
-      }
+      expect(parseFloat(getComputedStyle(output).fontSize)).toBeLessThan(
+        parseFloat(getComputedStyle(form).fontSize)
+      );
       expect(output.value).toBe('Submit the form to see its data.');
-      expect(validityOutput.value).toBe(
-        'Submit or click Check validity to inspect the field and form validity.'
-      );
-      expect(
-        canvas.getByText(/Inline error text is supplied by the application/)
-      ).toHaveTextContent(
-        'Inline error text is supplied by the application and becomes the validationMessage while the field is invalid.'
-      );
     });
 
     await step('required participates in native validation', async () => {
@@ -1858,17 +1849,6 @@ export const FormBehaviorTest: Story = {
         form.checkValidity(),
         'form fails while required field is empty'
       ).toBe(false);
-      checkValidityButton.click();
-      expect(
-        validityOutput.textContent?.trim(),
-        'validity output reports the empty required field'
-      ).toBe(
-        'field.checkValidity(): invalid\n' +
-          'form.checkValidity(): invalid\n' +
-          'validity.valueMissing: true\n' +
-          `validationMessage: ${field.validationMessage}`
-      );
-
       field.value = 'Filled';
       await field.updateComplete;
       expect(
@@ -1883,37 +1863,6 @@ export const FormBehaviorTest: Story = {
         form.checkValidity(),
         'form is valid when required field is filled'
       ).toBe(true);
-      checkValidityButton.click();
-      expect(
-        validityOutput.textContent?.trim(),
-        'validity output reports the filled field'
-      ).toBe('field.checkValidity(): valid\nform.checkValidity(): valid');
-    });
-
-    await step('validity results explain application-set errors', async () => {
-      field.fieldStatus = 'invalid';
-      await field.updateComplete;
-      checkValidityButton.click();
-      expect(validityOutput.value).toBe(
-        'field.checkValidity(): invalid\n' +
-          'form.checkValidity(): invalid\n' +
-          'validity.customError: true\n' +
-          `validationMessage: ${field.validationMessage}`
-      );
-      const error = field.querySelector('[slot="error-text"]');
-      if (!error) {
-        throw new Error('Expected inline error text');
-      }
-      error.textContent = 'Username is already taken.';
-      await waitFor(() =>
-        expect(field.validationMessage).toBe('Username is already taken.')
-      );
-      checkValidityButton.click();
-      expect(validityOutput.value).toContain(
-        'validationMessage: Username is already taken.'
-      );
-      field.fieldStatus = undefined;
-      await field.updateComplete;
     });
 
     await step('reset restores the initial (empty) value', async () => {
@@ -1953,15 +1902,7 @@ export const FormBehaviorTest: Story = {
           output.textContent?.trim(),
           'invalid submission does not show submitted form data'
         ).toBe('Submission blocked: the field is invalid.');
-        await waitFor(() =>
-          expect(validityOutput.value).toBe(
-            'field.checkValidity(): invalid\n' +
-              'form.checkValidity(): invalid\n' +
-              'validity.valueMissing: true\n' +
-              'validity.customError: true\n' +
-              `validationMessage: ${field.validationMessage}`
-          )
-        );
+        expect(field.validationMessage).toBe('Enter a username.');
       }
     );
 
@@ -1984,51 +1925,31 @@ export const FormBehaviorTest: Story = {
           'output displays the submitted username'
         ).toBe('username: Submitted')
       );
-      expect(validityOutput.value).toBe(
-        'field.checkValidity(): valid\nform.checkValidity(): valid'
-      );
     });
 
-    await step(
-      'Reset clears the previous submission and validity results',
-      async () => {
-        const resetButton = form.querySelector<HTMLButtonElement>(
-          'button[type="reset"]'
-        );
-        if (!resetButton) {
-          throw new Error('reset button not found');
-        }
-        checkValidityButton.click();
-        expect(validityOutput.textContent?.trim()).toBe(
-          'field.checkValidity(): valid\nform.checkValidity(): valid'
-        );
-        field.fieldStatus = 'invalid';
-        await field.updateComplete;
-        await userEvent.click(resetButton);
-        await field.updateComplete;
-        expect(field.value).toBe('');
-        expect(field.fieldStatus).toBeUndefined();
-        expect(field.validity.customError).toBe(false);
-        expect(field.roleElement).not.toHaveAttribute('aria-invalid');
-        expect(
-          field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
-        ).toBeNull();
-        expect(output.textContent?.trim()).toBe(
-          'Submit the form to see its data.'
-        );
-        expect(validityOutput.textContent?.trim()).toBe(
-          'Submit or click Check validity to inspect the field and form validity.'
-        );
-        expect(field.validity.valueMissing).toBe(true);
-        checkValidityButton.click();
-        expect(validityOutput.textContent?.trim()).toBe(
-          'field.checkValidity(): invalid\n' +
-            'form.checkValidity(): invalid\n' +
-            'validity.valueMissing: true\n' +
-            `validationMessage: ${field.validationMessage}`
-        );
+    await step('Reset clears the previous submission and error', async () => {
+      const resetButton = form.querySelector<HTMLButtonElement>(
+        'button[type="reset"]'
+      );
+      if (!resetButton) {
+        throw new Error('reset button not found');
       }
-    );
+      field.fieldStatus = 'invalid';
+      await field.updateComplete;
+      await userEvent.click(resetButton);
+      await field.updateComplete;
+      expect(field.value).toBe('');
+      expect(field.fieldStatus).toBeUndefined();
+      expect(field.validity.customError).toBe(false);
+      expect(field.roleElement).not.toHaveAttribute('aria-invalid');
+      expect(
+        field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+      ).toBeNull();
+      expect(output.textContent?.trim()).toBe(
+        'Submit the form to see its data.'
+      );
+      expect(field.validity.valueMissing).toBe(true);
+    });
 
     await step(
       'a blocked attempt replaces the previous submission result',
@@ -2048,9 +1969,6 @@ export const FormBehaviorTest: Story = {
             .querySelector('#submitted-form-data-label')
             ?.textContent?.trim()
         ).toBe('Last submission');
-        expect(
-          canvasElement.querySelector('#validity-label')?.textContent?.trim()
-        ).toBe('Latest validation result');
       }
     );
 
@@ -2072,15 +1990,45 @@ export const FormBehaviorTest: Story = {
         await field.updateComplete;
         expect(fieldset.disabled).toBe(true);
         expect(input.disabled).toBe(true);
+        expect(toggleButton).toHaveAttribute('aria-pressed', 'true');
         expect(toggleButton).toBeEnabled();
+        expect(field.willValidate).toBe(false);
+        expect(new FormData(form).has('username')).toBe(false);
 
         await userEvent.click(toggleButton);
         await field.updateComplete;
         expect(fieldset.disabled).toBe(false);
         expect(input.disabled).toBe(false);
+        expect(toggleButton).toHaveAttribute('aria-pressed', 'false');
         expect(toggleButton).toBeEnabled();
       }
     );
+
+    await step('content changes do not resize the form', async () => {
+      form.reset();
+      await field.updateComplete;
+      const initialWidth = form.getBoundingClientRect().width;
+
+      form.requestSubmit();
+      await waitFor(() =>
+        expect(output.value).toBe('Submission blocked: the field is invalid.')
+      );
+      expect(form.getBoundingClientRect().width).toBeCloseTo(initialWidth, 1);
+
+      const longUsername = 'long-username-'.repeat(30);
+      field.value = longUsername;
+      await field.updateComplete;
+      form.requestSubmit();
+      await waitFor(() =>
+        expect(output.value).toBe(`username: ${longUsername}`)
+      );
+      expect(form.getBoundingClientRect().width).toBeCloseTo(initialWidth, 1);
+
+      form.reset();
+      await field.updateComplete;
+      expect(output.value).toBe('Submit the form to see its data.');
+      expect(form.getBoundingClientRect().width).toBeCloseTo(initialWidth, 1);
+    });
   },
 };
 FormBehaviorTest.storyName = 'Form participation example';
