@@ -21,9 +21,9 @@
 
 ## Overview
 
-This doc will capture **rendering**, **layout**, **virtualization**, and **styling** for **`swc-grid`** (gen2 successor to 1st-gen **`sp-grid`** in [`1st-gen/tools/grid`](../../../../1st-gen/tools/grid/)). **`swc-grid`** is a **tooling / layout** host built on **`lit-virtualizer`**, not a Spectrum-visual “component” in the same sense as **`swc-button`**.
+This doc records the original rendering, layout, virtualization, and styling proposal for `swc-grid`, based on 1st-gen `sp-grid` in [`1st-gen/tools/grid`](../../../../1st-gen/tools/grid/). Grid is being deprecated: Card will use card-view instead of grid. The standalone `swc-grid` proposal and planned scope below are superseded; retain them as historical research rather than a current implementation plan.
 
-**Primary consumer:** planned **`swc-card-view`** (aligned with [React Spectrum CardView](https://react-spectrum.adobe.com/CardView))—a virtualized collection of cards with selection, async loading, and bulk actions.
+**Current direction:** `swc-card-view` owns the virtualized collection of cards, selection, async loading, and bulk actions rather than consuming `swc-grid`. See the [Card view accessibility requirements](../card-view/accessibility-migration-analysis.md), aligned with [React Spectrum CardView](https://react-spectrum.adobe.com/CardView).
 
 **Accessibility:** [Grid accessibility migration analysis](./accessibility-migration-analysis.md) (**`role="grid"`**, **`FocusgroupNavigationController`** with **`direction: 'grid'`**, virtualization + focus, selection).
 
