@@ -70,7 +70,7 @@ const threadExampleSource = `<div style="max-inline-size: 720px;">
     </swc-conversation-turn>
     <swc-conversation-turn type="system">
       <swc-system-message>
-        <swc-response-status slot="status" status="complete"><span slot="label">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</span></swc-response-status>
+        <swc-response-status slot="status" status="complete" style="--swc-response-status-label-max-lines: 1;"><span slot="label">I interpreted your request as an executive narrative task and prioritized a concise, audience-ready structure.</span></swc-response-status>
         <div class="swc-Typography--prose">
           <h3>Big idea/core narrative: The warmth of welcome</h3>
           <p>Hospitality begins the moment our customers set foot off their plane.</p>
@@ -99,7 +99,11 @@ const renderThread = () => html`
 
       <swc-conversation-turn type="system">
         <swc-system-message>
-          <swc-response-status slot="status" status="complete">
+          <swc-response-status
+            slot="status"
+            status="complete"
+            style="--swc-response-status-label-max-lines: 1;"
+          >
             <span slot="label">
               I interpreted your request as an executive narrative task and
               prioritized a concise, audience-ready structure.

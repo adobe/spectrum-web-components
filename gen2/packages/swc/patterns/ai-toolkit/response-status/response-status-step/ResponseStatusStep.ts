@@ -50,6 +50,8 @@ export type ResponseStatusStepStatus =
  * `status="active"`.
  * @slot description - Step detail shown in the expanded timeline. Falls back
  * to bare/unslotted children when no `slot="description"` element is present.
+ * A `<pre>` inside this slot (e.g. a pasted code sample) automatically gets
+ * monospace styling; lines never wrap and scroll horizontally instead.
  * @fires swc-response-status-step-open-change - Internal signal consumed by
  * the parent to re-dispatch its public `swc-response-status-step-toggle`
  * event with an index; not intended for external use. Detail:
@@ -83,6 +85,16 @@ export class ResponseStatusStep extends SpectrumElement {
   /** Mirrors the label text for the shimmer overlay clone (see .css). */
   @state()
   private _labelText = '';
+
+  /**
+   * Whether the slotted description contains a `<pre>` (a pasted code
+   * sample). `.swc-ResponseStatusStep-detailScroll`'s trailing end padding
+   * exists to keep a vertical scrollbar off wrapped text; for code that
+   * scrolls horizontally instead, that padding only leaves dead space after
+   * the last column, so it's dropped when this is true (see .css).
+   */
+  @state()
+  private _hasCode = false;
 
   /**
    * Whether the open detail region overflows its capped height. Only steps
@@ -217,6 +229,14 @@ export class ResponseStatusStep extends SpectrumElement {
       this._hasDescription = hasDescription;
     }
 
+    // `:has(::slotted(pre))` isn't supported by any engine (`:has()`
+    // forbids pseudo-elements in its argument), so this is read from the
+    // host's own light DOM rather than expressed purely in CSS.
+    const hasCode = Boolean(this.querySelector('pre'));
+    if (hasCode !== this._hasCode) {
+      this._hasCode = hasCode;
+    }
+
     const label = this._readLabel();
     if (label !== this._labelText) {
       this._labelText = label;
@@ -323,7 +343,10 @@ export class ResponseStatusStep extends SpectrumElement {
       >
         <div class="swc-ResponseStatusStep-detailClip">
           <div
-            class="swc-ResponseStatusStep-detailScroll"
+            class=${classMap({
+              'swc-ResponseStatusStep-detailScroll': true,
+              'swc-ResponseStatusStep-detailScroll--code': this._hasCode,
+            })}
             role="group"
             aria-labelledby=${this._toggleId}
             tabindex=${ifDefined(this._overflows ? '0' : undefined)}
