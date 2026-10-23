@@ -157,6 +157,11 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
   @query('slot')
   private slotEl!: HTMLSlotElement;
 
+  @query('slot[name="tab-panel"]')
+  private panelSlotEl!: HTMLSlotElement;
+
+  private readonly managedPanelLabels = new WeakMap<TabPanel, string>();
+
   @query('#list')
   private tabList!: HTMLDivElement;
 
@@ -366,13 +371,27 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
   protected managePanels({
     target,
   }: Event & { target: HTMLSlotElement }): void {
-    const panels = target.assignedElements() as TabPanel[];
+    this.linkPanels(target.assignedElements() as TabPanel[]);
+  }
+
+  private linkPanels(panels: TabPanel[]): void {
     panels.map((panel) => {
       const { value, id } = panel;
-      const tab = this.querySelector(`[role="tab"][value="${value}"]`);
+      const tab = value
+        ? this.tabs.find((el) => el.value === value)
+        : undefined;
       if (tab) {
         tab.setAttribute('aria-controls', id);
         panel.setAttribute('aria-labelledby', tab.id);
+        this.managedPanelLabels.set(panel, tab.id);
+      } else {
+        if (
+          panel.getAttribute('aria-labelledby') ===
+          this.managedPanelLabels.get(panel)
+        ) {
+          panel.removeAttribute('aria-labelledby');
+        }
+        this.managedPanelLabels.delete(panel);
       }
       panel.selected = value === this.selected;
     });
@@ -506,6 +525,10 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
       .assignedElements()
       .filter((el) => el.getAttribute('role') === 'tab') as Tab[];
     this.updateCheckedState();
+    // Tabs can change without the panel slot changing, so relink the panels.
+    if (this.panelSlotEl) {
+      this.linkPanels(this.panelSlotEl.assignedElements() as TabPanel[]);
+    }
   }
 
   private updateCheckedState = (): void => {
