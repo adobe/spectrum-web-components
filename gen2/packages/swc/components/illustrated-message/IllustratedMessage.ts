@@ -57,6 +57,8 @@ import styles from './illustrated-message.css';
  * @cssprop --swc-illustrated-message-description-line-height - Line height of the description.
  */
 export class IllustratedMessage extends IllustratedMessageBase {
+  public static override readonly tagName = 'swc-illustrated-message';
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────

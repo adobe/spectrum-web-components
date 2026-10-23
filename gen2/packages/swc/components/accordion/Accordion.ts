@@ -33,6 +33,8 @@ import styles from './accordion.css';
  * @cssprop --swc-accordion-min-inline-size - Minimum inline size of the accordion.
  */
 export class Accordion extends AccordionBase {
+  public static override readonly tagName = 'swc-accordion';
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }

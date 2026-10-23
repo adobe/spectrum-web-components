@@ -129,6 +129,19 @@ if (targetGeneration === 'all' || targetGeneration === 'gen2') {
   });
 }
 
+// Generate the @adobe/spectrum-wc package version. It keys the package's
+// scoped registry, and can differ from core because changesets links (rather
+// than fixes) the gen2 package versions.
+const swcPkgPath = path.join(root, 'gen2/packages/swc/package.json');
+const swcOutputPath = path.join(root, 'gen2/packages/swc/registry/version.ts');
+
+if (targetGeneration === 'all' || targetGeneration === 'gen2') {
+  generateVersion(swcPkgPath, swcOutputPath, {
+    generationName: 'gen2',
+    coreVersion: JSON.parse(fs.readFileSync(gen2PkgPath, 'utf-8')).version,
+  });
+}
+
 // Generate 1st-gen version. coreVersion defaults to 1st-gen's own package
 // version, since @spectrum-web-components/base is 1st-gen's own core base
 // package and has no relationship to gen2's version.

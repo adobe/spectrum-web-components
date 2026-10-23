@@ -79,6 +79,8 @@ const DOCS_URL =
  * @since 2.0.0-beta.3
  */
 export class PixelLoader extends SpectrumElement {
+  public static override readonly tagName = 'swc-pixel-loader';
+
   // Relative so the rounding scales with `--swc-pixel-loader-size` and reads as
   // a soft "squircle" pixel at every size (a fixed px radius looks square when
   // the loader is enlarged). Only outward-facing corners round; see geometry.ts.

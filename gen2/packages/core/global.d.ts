@@ -52,5 +52,25 @@ interface Window {
     ignoreWarningLevels: Record<WarningLevel, boolean>;
     ignoreWarningLocalNames: Record<ElementLocalName, boolean>;
     verbose?: boolean;
+    /**
+     * Scoped registries of loaded Spectrum Web Components copies, by version.
+     * The first copy of a version to load keeps its entry.
+     */
+    scopedRegistries?: Map<string, CustomElementRegistry>;
   };
+}
+
+/**
+ * Scoped custom element registry members. Not yet in the TypeScript DOM lib.
+ */
+interface CustomElementRegistry {
+  initialize(root: Node): void;
+}
+
+interface Element {
+  readonly customElementRegistry: CustomElementRegistry | null;
+}
+
+interface ShadowRoot {
+  readonly customElementRegistry: CustomElementRegistry | null;
 }

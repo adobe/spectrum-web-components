@@ -32,6 +32,8 @@ import styles from './tab-panel.css';
  * </swc-tab-panel>
  */
 export class TabPanel extends TabPanelBase {
+  public static override readonly tagName = 'swc-tab-panel';
+
   // ─────────────────────────────
   //     RENDERING & STYLING
   // ─────────────────────────────

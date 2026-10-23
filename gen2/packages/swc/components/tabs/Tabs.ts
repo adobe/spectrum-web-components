@@ -45,6 +45,8 @@ import styles from './tabs.css';
  * @cssprop --swc-tabs-indicator-color - Color of the selection indicator.
  */
 export class Tabs extends TabsBase {
+  public static override readonly tagName = 'swc-tabs';
+
   /**
    * @internal
    *

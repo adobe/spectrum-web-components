@@ -17,9 +17,8 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
+import { Icon } from '@adobe/spectrum-wc/components/icon/Icon.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-
-import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import { uniqueId } from '../../../../utils/id.js';
 import {
@@ -62,6 +61,9 @@ export type ResponseStatusStepStatus =
  * @since 2.0.0-beta.3
  */
 export class ResponseStatusStep extends SpectrumElement {
+  public static override readonly tagName = 'swc-response-status-step';
+  public static override readonly dependencies = [Icon];
+
   private readonly _toggleId = uniqueId('swc-response-status-step-toggle');
 
   private readonly _detailId = uniqueId('swc-response-status-step-detail');

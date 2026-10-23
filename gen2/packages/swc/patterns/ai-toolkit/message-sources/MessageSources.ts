@@ -14,9 +14,8 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { ref } from 'lit/directives/ref.js';
 
+import { UiIcon } from '@adobe/spectrum-wc/components/ui-icons/UiIcon.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-
-import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 
 import { uniqueId } from '../../../utils/id.js';
 
@@ -37,6 +36,9 @@ import styles from './message-sources.css';
  * @since 2.0.0-beta.3
  */
 export class MessageSources extends SpectrumElement {
+  public static override readonly tagName = 'swc-message-sources';
+  public static override readonly dependencies = [UiIcon];
+
   private readonly panelId = uniqueId('swc-sources-panel');
   private readonly toggleId = uniqueId('swc-message-sources-toggle');
 

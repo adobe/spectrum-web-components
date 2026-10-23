@@ -43,6 +43,8 @@ import styles from './tab.css';
  * @cssprop --swc-tab-padding-block-end - Block-end padding of the tab.
  */
 export class Tab extends TabBase {
+  public static override readonly tagName = 'swc-tab';
+
   // ─────────────────────────────
   //     RENDERING & STYLING
   // ─────────────────────────────

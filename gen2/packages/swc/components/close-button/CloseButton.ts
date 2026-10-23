@@ -21,7 +21,7 @@ import {
 } from '@adobe/spectrum-wc-core/components/button';
 import { validateEnum } from '@adobe/spectrum-wc-core/utils';
 
-import '../ui-icons/swc-ui-icon.js';
+import { UiIcon } from '../ui-icons/UiIcon.js';
 
 import styles from './close-button.css';
 
@@ -58,6 +58,9 @@ import styles from './close-button.css';
  * @cssprop --swc-close-button-focus-indicator-color - Focus ring color. Defaults to the focus indicator color token.
  */
 export class CloseButton extends ButtonBase {
+  public static override readonly tagName = 'swc-close-button';
+  public static override readonly dependencies = [UiIcon];
+
   /**
    * Static color treatment for display over colored or image backgrounds.
    */

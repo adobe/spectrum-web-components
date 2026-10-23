@@ -36,6 +36,8 @@ import styles from './suggestion-group.css';
  * @since 2.0.0-beta.3
  */
 export class SuggestionGroup extends SpectrumElement {
+  public static override readonly tagName = 'swc-suggestion-group';
+
   /**
    * Accessible name override for the host `role="group"`. When set, it takes
    * precedence over `aria-labelledby` from the heading slot.

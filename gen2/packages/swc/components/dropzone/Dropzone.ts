@@ -59,6 +59,8 @@ import styles from './dropzone.css';
  * @cssprop --swc-illustrated-message-illustration-color - Illustration color cascaded into a slotted `swc-illustrated-message`. Unset by default; overridden to the accent-content-color-default token in the dragged state.
  */
 export class Dropzone extends DropzoneBase {
+  public static override readonly tagName = 'swc-dropzone';
+
   // ───────────────────
   //     API ADDITIONS
   // ───────────────────

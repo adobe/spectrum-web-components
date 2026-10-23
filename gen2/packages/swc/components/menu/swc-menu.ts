@@ -10,8 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
-
 import { Menu } from './Menu.js';
 
 declare global {
@@ -20,4 +18,4 @@ declare global {
   }
 }
 
-defineElement('swc-menu', Menu);
+Menu.define();

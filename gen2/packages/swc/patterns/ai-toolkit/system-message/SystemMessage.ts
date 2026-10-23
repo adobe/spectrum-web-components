@@ -40,6 +40,8 @@ import styles from './system-message.css';
  * @since 2.0.0-beta.3
  */
 export class SystemMessage extends SpectrumElement {
+  public static override readonly tagName = 'swc-system-message';
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }
