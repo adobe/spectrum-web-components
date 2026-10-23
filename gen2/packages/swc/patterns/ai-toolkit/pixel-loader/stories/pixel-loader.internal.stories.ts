@@ -16,7 +16,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '../swc-pixel-loader.js';
 
-import { PIXEL_LOADER_ICON_NAMES, PIXEL_LOADER_PRESET_NAMES } from '../data.js';
+import { PIXEL_LOADER_PRESET_NAMES } from '../data.js';
 
 // ────────────────
 //    METADATA
@@ -24,15 +24,10 @@ import { PIXEL_LOADER_ICON_NAMES, PIXEL_LOADER_PRESET_NAMES } from '../data.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-pixel-loader');
 
-argTypes.icon = {
-  ...argTypes.icon,
-  control: { type: 'select' },
-  options: PIXEL_LOADER_ICON_NAMES,
-};
-
+// The empty option is a sentinel, not a preset: it clears `preset` so the
+// loader falls back to `icon`. The manifest cannot express that.
 argTypes.preset = {
   ...argTypes.preset,
-  control: { type: 'select' },
   options: ['', ...PIXEL_LOADER_PRESET_NAMES],
 };
 
