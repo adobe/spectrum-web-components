@@ -25,13 +25,17 @@ Coverage is collected by the Storybook Vitest project using the V8 provider.
 
 We enforce per-path thresholds in `vitest.config.js`:
 
-| Path pattern | Target | What it covers |
+| Path pattern | Threshold | What it covers |
 | --- | --- | --- |
-| `components/**/*.{ts,js}` | **100%** lines, functions, statements | SWC component implementations |
-| `**/packages/core/components/**/*.{ts,js}` | **100%** lines, functions, statements | Core component base classes |
-| `**/packages/core/shared/**/*.{ts,js}` | **70%** lines, functions, statements | Shared utilities |
+| `components/**/*.{ts,js}` | **99%** lines, functions, statements | SWC component implementations |
+| `../core/components/**/*.{ts,js}` | **95%** lines, **94%** functions, **95%** statements | Core component base classes |
+| `../core/controllers/*.{ts,js}` | **85%** lines, **90%** functions, **85%** statements | Reactive controllers |
+| `../core/element/*.{ts,js}` | **94%** lines, **100%** functions, **94%** statements | Base element |
+| `../core/mixins/*.{ts,js}` | **99%** lines, **100%** functions, **99%** statements | Shared mixins |
 
-Component code and base classes require 100% coverage. Shared utilities have a lower threshold that ratchets upward as coverage improves.
+Component code and base classes aim for 100% coverage. Each threshold is the current coverage rounded down and ratchets upward as coverage improves.
+
+Threshold globs match file paths relative to `gen2/packages/swc`, so core files must be written as `../core/...`. A glob that matches no files passes silently.
 
 ## Auto-updating thresholds
 
@@ -48,7 +52,7 @@ When your tests push coverage above the current threshold, the config file updat
 ## Checking coverage
 
 ```bash
-yarn workspace @adobe/swc test:coverage
+yarn workspace @spectrum-web-components/gen2 test:coverage
 ```
 
 Review the generated report. If coverage drops below the threshold, add tests to cover the gap before merging.
