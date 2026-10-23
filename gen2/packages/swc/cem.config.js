@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { getTsProgram, typeParserPlugin } from '@wc-toolkit/type-parser';
 
@@ -31,14 +32,18 @@ const isBail = (arg) =>
   typeof arg === 'string' &&
   arg.includes('[type-parser] - Skipped parsing type');
 
-console.warn = (...args) => {
-  const bail = args.find(isBail);
-  if (bail) {
-    skippedExpansions.push(bail);
-    return;
-  }
-  originalWarn(...args);
-};
+/** Starts collecting type-parser bails for one analysis run. */
+function captureSkippedExpansions() {
+  skippedExpansions.length = 0;
+  console.warn = (...args) => {
+    const bail = args.find(isBail);
+    if (bail) {
+      skippedExpansions.push(bail);
+      return;
+    }
+    originalWarn(...args);
+  };
+}
 
 /**
  * Restores `console.warn` and summarises what type-parser skipped.
@@ -238,7 +243,10 @@ function expandRemainingTypeAliases() {
   return {
     name: 'cem-plugin-expand-remaining-type-aliases',
     packageLinkPhase({ customElementsManifest }) {
-      if (!tsProgram || !tsChecker) return;
+      if (!tsProgram || !tsChecker) {
+        reportSkippedExpansions([]);
+        return;
+      }
       collectAliases();
 
       /** `Class.property` entries a select control cannot be built from. */
@@ -386,21 +394,18 @@ function accessorDefaults() {
   };
 }
 
-const SOURCE_GLOBS = [
-  'components/**/*.ts',
-  'patterns/**/*.ts',
-  '../core/components/**/*.ts',
-  '../core/controllers/**/*.ts',
-  '../core/element/**/*.ts',
-  '../core/mixins/**/*.ts',
-  '../core/utils/**/*.ts',
-];
+// The TypeScript program is built from `tsconfig.cem.json`, so its `include`
+// list is the single source of truth for which files CEM analyzes.
+const { include: SOURCE_GLOBS } = JSON.parse(
+  readFileSync(new URL('./tsconfig.cem.json', import.meta.url), 'utf8')
+);
 
 export default {
   globs: SOURCE_GLOBS,
   // Give type-parser the TypeScript type checker so it can expand referenced
   // type aliases (e.g. `(typeof ARRAY)[number]` unions) into literal values.
   overrideModuleCreation({ ts, globs }) {
+    captureSkippedExpansions();
     // Pass the glob *patterns*, not CEM's resolved file list: `getTsProgram`
     // feeds this argument to `ts.parseJsonConfigFileContent` as `include`, and
     // several hundred absolute paths there compile into a huge matcher that
