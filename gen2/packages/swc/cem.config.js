@@ -381,11 +381,51 @@ function accessorDefaults() {
             if (value === undefined) continue;
 
             member.default = value;
-            const attribute = (declaration.attributes ?? []).find(
-              (candidate) => candidate.fieldName === member.name
+          }
+        }
+      }
+    },
+  };
+}
+
+/**
+ * CEM plugin that makes each attribute agree with the field it reflects.
+ *
+ * The field is the reliable side: type-parser resolves it with the checker in
+ * the context of its own class, so a `SizedMixin` `size` narrows to that
+ * component's valid sizes. The attribute is resolved by alias name alone, and
+ * type-parser caches the first result per name, so `swc-action-button` lost
+ * `'xs'` and `swc-menu` listed all seven `ElementSize` values. The analyzer
+ * also records inherited field defaults on the field only. Copy both across
+ * whenever the two sides declare the same type.
+ *
+ * Runs last, after the other plugins have settled field types and defaults.
+ *
+ * @returns {object} The CEM plugin.
+ */
+function syncAttributesWithFields() {
+  return {
+    name: 'cem-plugin-sync-attributes-with-fields',
+    packageLinkPhase({ customElementsManifest }) {
+      for (const module of customElementsManifest.modules ?? []) {
+        for (const declaration of module.declarations ?? []) {
+          for (const attribute of declaration.attributes ?? []) {
+            const field = (declaration.members ?? []).find(
+              (member) =>
+                member.kind === 'field' && member.name === attribute.fieldName
             );
-            if (attribute && attribute.default === undefined) {
-              attribute.default = value;
+            if (!field || field.type?.text !== attribute.type?.text) continue;
+
+            if (field.parsedType) {
+              attribute.parsedType = { ...field.parsedType };
+            } else {
+              delete attribute.parsedType;
+            }
+            if (
+              attribute.default === undefined &&
+              field.default !== undefined
+            ) {
+              attribute.default = field.default;
             }
           }
         }
@@ -443,5 +483,6 @@ export default {
     typeParserPlugin(),
     expandRemainingTypeAliases(),
     accessorDefaults(),
+    syncAttributesWithFields(),
   ],
 };
