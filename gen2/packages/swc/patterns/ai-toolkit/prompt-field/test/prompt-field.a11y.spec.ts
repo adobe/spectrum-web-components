@@ -33,10 +33,25 @@ test.describe('PromptField - ARIA Snapshots', () => {
       'swc-prompt-field'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - text: Prompt
-      - textbox "Prompt"
+      - textbox "AI prompt"
       - button "Add attachment"
-      - button "Send" [disabled]
+      - button "Submit AI prompt" [disabled]
+    `);
+  });
+
+  test('should have correct accessibility tree while generating', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'patterns-ai-toolkit-prompt-field--states',
+      'swc-prompt-field'
+    );
+    const generatingField = root.locator('swc-prompt-field[generating]');
+    await expect(generatingField).toMatchAriaSnapshot(`
+      - textbox "AI prompt"
+      - button "Add attachment"
+      - button "Stop generating"
     `);
   });
 
@@ -50,9 +65,8 @@ test.describe('PromptField - ARIA Snapshots', () => {
     );
     const collapsedField = root.locator('swc-prompt-field').nth(1);
     await expect(collapsedField).toMatchAriaSnapshot(`
-      - text: Prompt
-      - textbox "Prompt"
-      - button "Send" [disabled]
+      - textbox "AI prompt"
+      - button "Submit AI prompt" [disabled]
     `);
   });
 });

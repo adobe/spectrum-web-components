@@ -131,7 +131,7 @@
     "lit-html"
   ],
   "engines": {
-    "node": ">=24.11.1",
+    "node": ">=24.22.1",
     "yarn": ">=4.6.0"
   },
   "packageManager": "yarn@4.9.2"
