@@ -30,6 +30,7 @@ export type StoryArgs = {
   value?: string;
   disabledItems?: string[];
   autocomplete?: 'list' | 'none';
+  hapticFeedback?: boolean;
   size?: ElementSize;
   onChange?: (val: string) => void;
   onInput?: (val: string) => void;
