@@ -169,27 +169,39 @@ function expandRemainingTypeAliases() {
     const visit = (node) => {
       if (typeScript.isTypeAliasDeclaration(node)) {
         const name = node.name.text;
-        if (!expansions.has(name)) {
-          const symbol = tsChecker.getSymbolAtLocation(node.name);
-          const type = symbol && tsChecker.getDeclaredTypeOfSymbol(symbol);
-          const parts = type?.isUnion() ? type.types : undefined;
-          const isLiteralUnion =
-            parts &&
-            parts.length > 1 &&
-            parts.every((part) => part.flags & literalFlags());
+        const symbol = tsChecker.getSymbolAtLocation(node.name);
+        const type = symbol && tsChecker.getDeclaredTypeOfSymbol(symbol);
+        const parts = type?.isUnion() ? type.types : undefined;
+        const isLiteralUnion =
+          parts &&
+          parts.length > 1 &&
+          parts.every((part) => part.flags & literalFlags());
 
-          expansions.set(name, {
-            text: isLiteralUnion
-              ? parts.map(formatLiteral).join(' | ')
-              : undefined,
-            // A union carrying at least one literal is enum-like, so failing to
-            // expand it costs a select control. A union of object shapes
-            // (colorjs’ `ColorTypes`) was never a select candidate.
-            isEnumLike: Boolean(
-              parts?.some((part) => part.flags & literalFlags())
-            ),
-          });
-        }
+        const entry = {
+          text: isLiteralUnion
+            ? parts.map(formatLiteral).join(' | ')
+            : undefined,
+          // A union carrying at least one literal is enum-like, so failing to
+          // expand it costs a select control. A union of object shapes
+          // (colorjs’ `ColorTypes`) was never a select candidate.
+          isEnumLike: Boolean(
+            parts?.some((part) => part.flags & literalFlags())
+          ),
+        };
+
+        // Aliases are matched by bare name, so two declarations of the same
+        // name with different values are ambiguous. Leave them unexpanded so
+        // the summary flags them instead of documenting the wrong values.
+        const existing = expansions.get(name);
+        expansions.set(
+          name,
+          existing && existing.text !== entry.text
+            ? {
+                text: undefined,
+                isEnumLike: existing.isEnumLike || entry.isEnumLike,
+              }
+            : entry
+        );
       }
       typeScript.forEachChild(node, visit);
     };
