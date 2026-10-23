@@ -27,17 +27,21 @@ const browserInstances = (process.env.VITEST_BROWSER_INSTANCES ?? 'chromium')
 const resolvedBrowserInstances =
   browserInstances.length > 0 ? browserInstances : [{ browser: 'chromium' }];
 
-// WebKit browser contexts are memory-heavy. When Vitest runs several test
-// files in parallel (one browser context each), a WebKit-only CI run exhausts
-// the container's memory and gets OOM-killed mid-suite. CircleCI sharding
-// handles wall-clock time; this cap bounds *peak* memory by limiting how many
-// WebKit contexts are alive at once. Chromium and Firefox are lighter and run
+// WebKit and Firefox browser contexts are memory-heavy. When Vitest runs several
+// test files in parallel (one browser context each), a WebKit- or Firefox-only
+// CI run exhausts the container's 8 GiB and the kernel OOM-kills a browser
+// process mid-suite ("Browser connection was closed while running tests").
+// Vitest sizes its pool from the cgroup CPU quota (8 on CircleCI `large`), so
+// Firefox would otherwise run 7 contexts at once. CircleCI sharding handles
+// wall-clock time; these caps bound *peak* memory. Chromium is lighter and runs
 // at the default (CPU-count) parallelism.
-const isWebkitOnly =
-  resolvedBrowserInstances.length === 1 &&
-  resolvedBrowserInstances[0].browser === 'webkit';
-const browserMemoryLimits = isWebkitOnly
-  ? { maxWorkers: 2, minWorkers: 1 }
+const maxWorkersByBrowser = { webkit: 2, firefox: 4 };
+const singleBrowser =
+  resolvedBrowserInstances.length === 1
+    ? resolvedBrowserInstances[0].browser
+    : undefined;
+const browserMemoryLimits = maxWorkersByBrowser[singleBrowser]
+  ? { maxWorkers: maxWorkersByBrowser[singleBrowser], minWorkers: 1 }
   : {};
 
 export default mergeConfig(
@@ -53,8 +57,8 @@ export default mergeConfig(
       // https://vitest.dev/guide/learn/writing-tests-with-ai.html
       clearMocks: true,
       restoreMocks: true,
-      // Bound peak memory for WebKit-only runs (see browserMemoryLimits).
-      // No-op for Chromium/Firefox.
+      // Bound peak memory for WebKit- and Firefox-only runs (see
+      // browserMemoryLimits). No-op for Chromium.
       ...browserMemoryLimits,
       // JUnit reporter for CI test results
       reporters: process.env.CI
