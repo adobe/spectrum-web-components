@@ -137,7 +137,7 @@ const preview = {
   ],
   parameters: {
     layout: 'centered',
-    // The Storybook patch (.yarn/patches/storybook-npm-10.4.1.patch) gates play
+    // The Storybook patch (.yarn/patches/storybook-npm-10.6.3.patch) gates play
     // functions on initial render behind `parameters.autoplay` so they do not run
     // automatically while browsing the dev UI. Chromatic renders each story via that
     // same initial path, so without this it would snapshot the pre-play state. Enable
