@@ -27,19 +27,15 @@ const browserInstances = (process.env.VITEST_BROWSER_INSTANCES ?? 'chromium')
 const resolvedBrowserInstances =
   browserInstances.length > 0 ? browserInstances : [{ browser: 'chromium' }];
 
-// WebKit browser contexts are memory-heavy. When Vitest runs several test
-// files in parallel (one browser context each), a WebKit-only CI run exhausts
-// the container's memory and gets OOM-killed mid-suite. CircleCI sharding
-// handles wall-clock time; this cap bounds *peak* memory by limiting how many
-// WebKit contexts are alive at once.
-const isWebkitOnly =
-  resolvedBrowserInstances.length === 1 &&
-  resolvedBrowserInstances[0].browser === 'webkit';
-const isFirefoxOnly =
-  resolvedBrowserInstances.length === 1 &&
-  resolvedBrowserInstances[0].browser === 'firefox';
-const browserMemoryLimits = isWebkitOnly
-  ? { maxWorkers: 2, minWorkers: 1 }
+// Cap parallel browser contexts for memory-heavy browsers. At the default
+// (CPU-count) parallelism they exceed CI's 8 GiB and get OOM-killed.
+const maxWorkersByBrowser = { webkit: 2, firefox: 4 };
+const singleBrowser =
+  resolvedBrowserInstances.length === 1
+    ? resolvedBrowserInstances[0].browser
+    : undefined;
+const browserMemoryLimits = maxWorkersByBrowser[singleBrowser]
+  ? { maxWorkers: maxWorkersByBrowser[singleBrowser], minWorkers: 1 }
   : {};
 
 export default mergeConfig(
@@ -55,8 +51,7 @@ export default mergeConfig(
       // https://vitest.dev/guide/learn/writing-tests-with-ai.html
       clearMocks: true,
       restoreMocks: true,
-      // Bound peak memory for WebKit-only runs (see browserMemoryLimits).
-      // No-op for Chromium/Firefox.
+      // See browserMemoryLimits.
       ...browserMemoryLimits,
       // JUnit reporter for CI test results
       reporters: process.env.CI
