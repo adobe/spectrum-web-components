@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { expect, fn, waitFor } from '@storybook/test';
+import { expect, fn, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Radio, RadioGroup } from '@adobe/spectrum-wc/radio-group';
@@ -18,8 +18,13 @@ import { Radio, RadioGroup } from '@adobe/spectrum-wc/radio-group';
 import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
 import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
 
-import { fixture, getComponent } from '../../../utils/test-utils.js';
+import {
+  fixture,
+  getComponent,
+  withWarningSpy,
+} from '../../../utils/test-utils.js';
 import meta, {
+  FormParticipation,
   Invalid,
   NecessityIndicator,
   Playground,
@@ -35,7 +40,7 @@ type ReflectedAriaElement = Element & {
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
   ...meta,
-  title: 'Radio group/Tests',
+  title: 'Radio group/Tests - radio group',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
@@ -283,7 +288,18 @@ export const ErrorIconTest: Story = {
     const icon = group.shadowRoot?.querySelector(
       '.swc-FormFieldErrorText-icon'
     );
-    expect(icon?.getAttribute('aria-hidden')).toBe('true');
+    expect(icon?.hasAttribute('aria-hidden')).toBe(false);
+    expect(
+      icon
+        ?.querySelector('swc-icon-alert-triangle')
+        ?.getAttribute('aria-hidden')
+    ).toBe('true');
+    expect(
+      group.shadowRoot
+        ?.querySelector('.swc-FormFieldErrorText')
+        ?.hasAttribute('aria-live'),
+      'error text does not create a live region by default'
+    ).toBe(false);
     expect(
       (group.roleElement as ReflectedAriaElement).ariaDescribedByElements
     ).toEqual([group.shadowRoot?.querySelector('.swc-FormFieldErrorText')]);
@@ -323,7 +339,12 @@ export const ErrorIconWithoutErrorTextTest: Story = {
       icon(withDescription),
       'icon shows beside the description'
     ).toBeTruthy();
-    expect(icon(withDescription)?.getAttribute('aria-hidden')).toBe('true');
+    expect(icon(withDescription)?.hasAttribute('aria-hidden')).toBe(false);
+    expect(
+      icon(withDescription)
+        ?.querySelector('swc-icon-alert-triangle')
+        ?.getAttribute('aria-hidden')
+    ).toBe('true');
     expect(
       withDescription.shadowRoot?.querySelector('slot[name="description"]'),
       'the description stays visible'
@@ -336,7 +357,12 @@ export const ErrorIconWithoutErrorTextTest: Story = {
       icon(bare),
       'icon shows with no description or error text'
     ).toBeTruthy();
-    expect(icon(bare)?.getAttribute('aria-hidden')).toBe('true');
+    expect(icon(bare)?.hasAttribute('aria-hidden')).toBe(false);
+    expect(
+      icon(bare)
+        ?.querySelector('swc-icon-alert-triangle')
+        ?.getAttribute('aria-hidden')
+    ).toBe('true');
     expect(describedBy(bare), 'nothing to describe').toHaveLength(0);
 
     withDescription.invalid = false;
@@ -477,6 +503,40 @@ export const DisabledStateLifecycleTest: Story = {
     await waitFor(() => {
       expect(items.map((item) => item.disabled)).toEqual([false, true]);
       expect(items.map((item) => item.tabIndex)).toEqual([0, -1]);
+    });
+  },
+};
+
+export const SelectedItemDisabledRovingTabindexTest: Story = {
+  render: () => html`
+    <swc-radio-group selected="standard">
+      <span slot="label">Shipping</span>
+      <swc-radio value="standard">
+        <span slot="label">Standard</span>
+      </swc-radio>
+      <swc-radio value="express">
+        <span slot="label">Express</span>
+      </swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const [selected, next] = Array.from(
+      group.querySelectorAll<Radio>('swc-radio')
+    );
+
+    await waitFor(() => {
+      expect([selected.tabIndex, next.tabIndex]).toEqual([0, -1]);
+    });
+
+    selected.disabled = true;
+    await selected.updateComplete;
+
+    await waitFor(() => {
+      expect([selected.tabIndex, next.tabIndex]).toEqual([-1, 0]);
     });
   },
 };
@@ -797,6 +857,220 @@ export const ReadOnlySelectionTest: Story = {
     expect(group.selected).toBe('2');
     press(items[1], 'ArrowRight');
     expect(group.selected).toBe('3');
+  },
+};
+
+export const KeyboardNavigationTest: Story = {
+  render: () => html`
+    <swc-radio-group selected="1">
+      <span slot="label">Shipping method</span>
+      <swc-radio value="1"><span slot="label">Standard</span></swc-radio>
+      <swc-radio value="2"><span slot="label">Priority</span></swc-radio>
+      <swc-radio value="3" disabled>
+        <span slot="label">Unavailable</span>
+      </swc-radio>
+      <swc-radio value="4"><span slot="label">Express</span></swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+    const press = (target: Radio, key: string) =>
+      target.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key,
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })
+      );
+
+    items[0].focus();
+    press(items[0], 'ArrowLeft');
+    expect(document.activeElement, 'ArrowLeft wraps to the last item').toBe(
+      items[3]
+    );
+    expect(group.selected).toBe('4');
+
+    press(items[3], 'ArrowUp');
+    expect(document.activeElement, 'ArrowUp moves to the previous item').toBe(
+      items[1]
+    );
+    expect(group.selected).toBe('2');
+
+    press(items[1], 'ArrowRight');
+    expect(document.activeElement, 'ArrowRight skips the disabled item').toBe(
+      items[3]
+    );
+    expect(group.selected).toBe('4');
+
+    press(items[3], 'ArrowDown');
+    expect(document.activeElement, 'ArrowDown wraps to the first item').toBe(
+      items[0]
+    );
+    expect(group.selected).toBe('1');
+  },
+};
+
+export const ChangeCancellationTest: Story = {
+  render: () => html`
+    <swc-radio-group selected="1">
+      <span slot="label">Shipping method</span>
+      <swc-radio value="1"><span slot="label">Standard</span></swc-radio>
+      <swc-radio value="2"><span slot="label">Express</span></swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+    let changeEvent: Event | undefined;
+    const cancelChange = (event: Event): void => {
+      if (event.target !== group) {
+        return;
+      }
+      changeEvent = event;
+      event.preventDefault();
+    };
+
+    group.addEventListener('change', cancelChange);
+    await userEvent.click(items[1]);
+    await group.updateComplete;
+    group.removeEventListener('change', cancelChange);
+
+    expect(changeEvent?.cancelable).toBe(true);
+    expect(group.selected, 'a cancelled change restores the old value').toBe(
+      '1'
+    );
+    expect(items.map((item) => item.checked)).toEqual([true, false]);
+  },
+};
+
+export const FormParticipationTest: Story = {
+  ...FormParticipation,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const form = canvasElement.querySelector('form')!;
+    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+    const submittedEntries: [string, FormDataEntryValue][][] = [];
+    const submit = (event: Event): void => {
+      event.preventDefault();
+      submittedEntries.push([...new FormData(form).entries()]);
+    };
+    form.addEventListener('submit', submit);
+
+    try {
+      expect(group.selected).toBe('');
+      expect([...new FormData(form).entries()]).toEqual([]);
+      form.requestSubmit();
+      await waitFor(() => expect(group.invalid).toBe(true));
+      expect(
+        group.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+      ).toBeTruthy();
+      expect(submittedEntries).toEqual([[]]);
+
+      await userEvent.click(items[0]);
+      await group.updateComplete;
+      expect(group.selected).toBe('standard');
+      expect(
+        group.invalid,
+        'changing selection alone does not clear the error before resubmission'
+      ).toBe(true);
+      expect(
+        group.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+      ).toBeTruthy();
+      expect([...new FormData(form).entries()]).toEqual([
+        ['shipping', 'standard'],
+      ]);
+      form.requestSubmit();
+      await waitFor(() => expect(group.invalid).toBe(false));
+      expect(submittedEntries).toEqual([[], [['shipping', 'standard']]]);
+
+      group.selected = '';
+      await group.updateComplete;
+      form.requestSubmit();
+      await waitFor(() => expect(group.invalid).toBe(true));
+      expect(
+        group.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+      ).toBeTruthy();
+
+      await userEvent.click(
+        form.querySelector<HTMLButtonElement>('button[type="reset"]')!
+      );
+      await group.updateComplete;
+      expect(group.invalid, 'reset clears the custom invalid state').toBe(
+        false
+      );
+      expect(group.selected, 'reset restores the authored default').toBe('');
+      expect(
+        group.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+      ).toBeNull();
+      expect([...new FormData(form).entries()]).toEqual([]);
+      expect(group.validity.valueMissing).toBe(true);
+    } finally {
+      form.removeEventListener('submit', submit);
+    }
+  },
+};
+
+export const DuplicateValueWarningTest: Story = {
+  play: async () => {
+    await withWarningSpy(async (warnCalls) => {
+      const group = await fixture<RadioGroup>(html`
+        <swc-radio-group>
+          <span slot="label">Shipping method</span>
+          <swc-radio value="same">
+            <span slot="label">Standard</span>
+          </swc-radio>
+          <swc-radio value="same">
+            <span slot="label">Express</span>
+          </swc-radio>
+        </swc-radio-group>
+      `);
+
+      expect(
+        warnCalls.some(
+          ([, message]) =>
+            typeof message === 'string' &&
+            message.includes('share the value "same"')
+        )
+      ).toBe(true);
+      group.parentElement?.remove();
+    });
+  },
+};
+
+export const UniqueValueNoWarningTest: Story = {
+  play: async () => {
+    await withWarningSpy(async (warnCalls) => {
+      const group = await fixture<RadioGroup>(html`
+        <swc-radio-group>
+          <span slot="label">Shipping method</span>
+          <swc-radio value="standard">
+            <span slot="label">Standard</span>
+          </swc-radio>
+          <swc-radio value="express">
+            <span slot="label">Express</span>
+          </swc-radio>
+        </swc-radio-group>
+      `);
+
+      expect(
+        warnCalls.some(
+          ([, message]) =>
+            typeof message === 'string' && message.includes('share the value')
+        )
+      ).toBe(false);
+      group.parentElement?.remove();
+    });
   },
 };
 

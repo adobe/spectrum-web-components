@@ -219,9 +219,10 @@ export abstract class RadioGroupBase extends SizedMixin(
   /** The initial selection (pre-checked item or `selected`), restored on form reset. */
   private defaultSelected = '';
 
-  /** Restores the initial selection on native form reset. */
+  /** Restores the initial selection and clears custom invalid state on reset. */
   public formResetCallback(): void {
     this.selected = this.defaultSelected;
+    this.invalid = false;
   }
 
   /** Delegates the ancestor form / fieldset disabled cascade to the controller. */
@@ -255,6 +256,16 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   private readonly disabledItemStates = new Map<RadioBase, boolean>();
 
+  private setItemDisabled(item: RadioBase, disabled: boolean): void {
+    item.disabled = disabled;
+    // Navigation refreshes before the child's Lit update can reflect this state.
+    if (disabled) {
+      item.setAttribute('aria-disabled', 'true');
+    } else {
+      item.removeAttribute('aria-disabled');
+    }
+  }
+
   private syncDisabledState(): boolean {
     const items = this.assignedItems();
     const assigned = new Set(items);
@@ -262,7 +273,7 @@ export abstract class RadioGroupBase extends SizedMixin(
     for (const [item, disabled] of this.disabledItemStates) {
       if (!this.effectiveDisabled || !assigned.has(item)) {
         changed ||= item.disabled !== disabled;
-        item.disabled = disabled;
+        this.setItemDisabled(item, disabled);
         this.disabledItemStates.delete(item);
       }
     }
@@ -274,7 +285,7 @@ export abstract class RadioGroupBase extends SizedMixin(
         this.disabledItemStates.set(item, item.disabled);
       }
       changed ||= !item.disabled;
-      item.disabled = true;
+      this.setItemDisabled(item, true);
     }
     return changed;
   }
@@ -326,6 +337,8 @@ export abstract class RadioGroupBase extends SizedMixin(
     getItems: () => this.assignedItems(),
   });
 
+  private itemDisabledObserver: MutationObserver | null = null;
+
   /**
    * Only keyboard movement (arrows, Home, End) selects the active item;
    * Tab-entry and `.focus()` do not.
@@ -346,6 +359,16 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   public override connectedCallback(): void {
     super.connectedCallback();
+    this.itemDisabledObserver ??= new MutationObserver((records) => {
+      if (records.some(({ target }) => target instanceof RadioBase)) {
+        this.navigation.refresh();
+      }
+    });
+    this.itemDisabledObserver.observe(this, {
+      attributes: true,
+      attributeFilter: ['disabled'],
+      subtree: true,
+    });
     this.addEventListener(
       focusgroupNavigationActiveChange,
       this.handleNavigationActiveChange
@@ -357,6 +380,7 @@ export abstract class RadioGroupBase extends SizedMixin(
       focusgroupNavigationActiveChange,
       this.handleNavigationActiveChange
     );
+    this.itemDisabledObserver?.disconnect();
     super.disconnectedCallback();
   }
 

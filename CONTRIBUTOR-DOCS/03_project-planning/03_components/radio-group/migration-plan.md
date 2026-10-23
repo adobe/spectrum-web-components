@@ -424,23 +424,25 @@ Planned rendering shape:
 - [x] Arrow/Home/End movement always selects; Tab-entry and programmatic `.focus()` never do (reacting only to `source: 'keyboard'`) — `FocusgroupNavigationController` wired (`direction: 'both'`, `wrap: true`); `handleNavigationActiveChange` filters on `source === 'keyboard'`
 - [x] Disabled items are fully skipped by both Tab-entry and arrow movement — `skipDisabled: true` on the controller
 - [x] Coordinated reset restores the initial selection adopted from the first checked radio, or authored `selected` when none is checked, and synchronizes item checked state.
-- [ ] Help/error container does not default to `aria-live="assertive"` (B12)
+- [x] Help/error container does not default to `aria-live="assertive"` (B12); verified by `ErrorIconTest`
 - [x] Duplicate `value`s among slotted radios trigger the dev-mode console warning (B14)
 
 ### Testing
 
 <!-- Fill in comprehensive test cases -->
 
-- [ ] Port `1st-gen/packages/radio/test/radio-group.test.ts` coverage that still applies
-- [ ] Add Playwright `radio-group.a11y.spec.ts` with `toMatchAriaSnapshot`
+- [x] Port `1st-gen/packages/radio/test/radio-group.test.ts` coverage that still applies
+- [x] Add Playwright `radio-group.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Behavior
 
-- [ ] All four arrow keys move focus and select, with wraparound
-- [ ] `Space` checks a focused, unchecked item independent of arrow movement
+- [x] All four arrow keys move focus and select, with wraparound
+- [x] `Space` checks a focused, unchecked item independent of arrow movement
 - [x] Read-only keeps focus movement but blocks selection change — `ReadOnlySelectionTest`
-- [ ] `change` event is cancelable; a cancelled change reverts `selected`
-- [ ] Two slotted radios sharing a `value` trigger the dev-mode console warning (B14); production build is silent
+- [x] `change` event is cancelable; a cancelled change reverts `selected`
+- [x] Two slotted radios sharing a `value` trigger the dev-mode console warning (B14); unique values do not warn
+- [x] Native form participation covers empty and selected `FormData`, required/custom validity, submission behavior, programmatic value reads, and reset to the authored default
+- [x] Verify the duplicate-value warning is silent in a production build; the production-built warning helper emits no warning when `NODE_ENV` is `production`, even with debug enabled
 
 #### Visual regression
 
@@ -448,10 +450,11 @@ Planned rendering shape:
 Retain this section for any components with visual rendering, modifying as needed for the component's specs and variants. Replace the example bullets below with VRT items that match this component, and reference real bug tickets only when they apply to this component.
 -->
 
-- [ ] Add VRT coverage for the size × label-position × state matrix confirmed in [Visual matrix (gen2)](#visual-matrix-gen2)
-- [ ] Add VRT coverage for both `orientation` values (`horizontal`/`vertical`)
-- [ ] Add focus-visible regression coverage for the roving focus indicator as it moves between items
-- [ ] Add forced-colors (high-contrast) coverage for invalid/disabled/read-only states
+- [x] Add one labeled row covering all sizes; use the default medium size for the separately labeled state, description, and label-position cases rather than repeating every state at every size
+- [x] Add VRT coverage for both `orientation` values (`horizontal`/`vertical`)
+- [x] Add focus-visible regression coverage for the roving focus indicator as it moves between items
+- [x] Add forced-colors (high-contrast) coverage for invalid/disabled/read-only states
+- [x] Add labeled rows for group/item description combinations, invalid states with and without help/error text, and text-based required/optional necessity indicators
 
 ### Documentation
 
@@ -522,6 +525,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 | — | Synchronize item checked state after every item-slot refresh. | After propagating item attributes, updating positions, and refreshing navigation, reapply `selected` to all assigned radios and place the roving tab stop on the checked item. A radio added after the initial render with a value matching `selected` must become checked without requiring another selection change. |
 | — | Initial checked-item discovery runs before the first render and considers only default-slotted radio children. Warn when multiple radios are initially checked; the first checked radio wins. | The item slot does not exist yet in `willUpdate()`, so `assignedItems()` cannot replace pre-render child discovery. Preserve attribute-based discovery for un-upgraded `swc-radio` elements, ignore labels and named-slot content, and retain the adopted selection as the form-reset default. |
 | Q1 | Horizontal item stacking remains supported, confirmed via React Spectrum's identical `orientation` prop even though the supplied Figma reference only shows vertical stacking. | 1st-gen's two independent `horizontal`/`vertical` booleans are merged into a single `orientation: 'horizontal' \| 'vertical'` property (default `vertical`), matching `label-position`'s enum pattern and React Spectrum's own naming (B13). |
+| — | RadioGroup VRT shows all sizes together in one labeled row and uses the default medium size for other cases. | The user confirmed that repeating every state across every size is unnecessary. Separately labeled medium-size rows cover default, selected, invalid and disabled states; label-position/orientation, focus, descriptions, necessity indicators, and forced-colors cases remain individually represented without duplicating Radio's item-level visual coverage. |
 | — | No `aria-errormessage` on `swc-radio-group`; `aria-describedby` alone associates the error text. | Decided while implementing `swc-text-field`: `FieldDescriptionMixin` does not wire `aria-errormessage` because assistive-technology support for it is still insufficiently consistent, while `aria-describedby` is universally read. `swc-radio-group` consumes that same mixin and inherits the same decision — not a gap specific to this component. |
 | — | **Supersedes the `ElementInternals` host-role decisions above.** `role="radiogroup"`, `aria-required`, `aria-invalid`, and `aria-readonly` live on the rendered outer `.swc-RadioGroup` element, which contains the label, the role-free `.swc-RadioGroup-items` layout wrapper, and the description. `labelInternals`/`describedByInternals` (host `ElementInternals`) are no longer overridden; `roleElement` is overridden instead, pointing at `.swc-RadioGroup`. Accessible name/description still resolve via `ariaLabelledByElements`/`ariaDescribedByElements`, now assigned directly to that element. The rendering class wires the slotted group label onto `roleElement.ariaLabelledByElements` in `updated()`, after the mixins synchronize naming and description. | A dedicated cross-browser/AT test matrix (VoiceOver with Chrome and Safari, NVDA, JAWS with Chrome and Firefox) found that placing `role="radiogroup"` on the host via `ElementInternals` can break item positioning or group labeling associations, or both, depending on the browser/AT combination. A rendered role element was the most compatible across combinations. JAWS with Firefox announced positioning but had a group-labeling gap; that gap was not independently root-caused. `ariaLabelledByElements`/`ariaDescribedByElements` element reflection is confirmed to work on connected elements without `ElementInternals` and to resolve across the shadow boundary (verified via Chromium's real accessibility tree, not just the JS property readback), so moving off `ElementInternals` retains accessible-name support. A `div` with `role="radiogroup"` cannot use native `<label for>` association, so the slotted-label fallback applies only when the mixin supplies neither resolved external label references nor an `accessible-label`; unresolved external IDs do not suppress a valid slotted label. |
 | — | `swc-radio` no longer sets `aria-describedby` on itself for its own slotted `description`. | The description renders as plain content inside the item's own accessible subtree (no shadow boundary to cross, unlike the group's label/description), so it already contributes to the item's accessible name computation alongside the label. Adding `aria-describedby` on top caused VoiceOver to re-announce the same text a second time as a "description". |

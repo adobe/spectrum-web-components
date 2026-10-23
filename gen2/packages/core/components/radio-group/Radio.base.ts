@@ -23,8 +23,9 @@ const DOCS_URL =
  * A single selectable option within a `swc-radio-group`. Rendering lives in `swc-radio`.
  *
  * Role and state (`role="radio"`, `aria-checked`, `aria-disabled`,
- * `aria-posinset`/`aria-setsize`) live on the host via `ElementInternals`, not
- * a nested `<input type="radio">` because each item has its own shadow root, so a
+ * `aria-posinset`/`aria-setsize`) are reflected as host attributes so the
+ * browser exposes them consistently in the accessibility tree. There is no
+ * nested `<input type="radio">` because each item has its own shadow root, so a
  * native input never successfully announces a real group position.
  * Do not add `aria-describedby` for the `description` slot; it is already part
  * of the accessible name.
@@ -36,11 +37,8 @@ const DOCS_URL =
  * @slot description - Optional secondary/help text for this item.
  */
 export abstract class RadioBase extends SpectrumElement {
-  private readonly internals = this.attachInternals();
-
   constructor() {
     super();
-    this.internals.role = 'radio';
     this.addEventListener('click', this.handleActivate);
     this.addEventListener('keydown', this.handleKeydown);
     this.addEventListener('keyup', this.handleKeyup);
@@ -121,6 +119,7 @@ export abstract class RadioBase extends SpectrumElement {
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
+    this.setAttribute('role', 'radio');
     if (!this.hasAttribute('tabindex')) {
       // Roving tabindex is owned by the enclosing group's
       // `FocusgroupNavigationController`, which assigns 0/-1 directly.
@@ -137,9 +136,13 @@ export abstract class RadioBase extends SpectrumElement {
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
-    this.internals.ariaChecked = this.checked ? 'true' : 'false';
-    this.internals.ariaDisabled = this.disabled ? 'true' : null;
-    this.internals.ariaPosInSet = String(this.posInSet);
-    this.internals.ariaSetSize = String(this.setSize);
+    this.setAttribute('aria-checked', this.checked ? 'true' : 'false');
+    if (this.disabled) {
+      this.setAttribute('aria-disabled', 'true');
+    } else {
+      this.removeAttribute('aria-disabled');
+    }
+    this.setAttribute('aria-posinset', String(this.posInSet));
+    this.setAttribute('aria-setsize', String(this.setSize));
   }
 }
