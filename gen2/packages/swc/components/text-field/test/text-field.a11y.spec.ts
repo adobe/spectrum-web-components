@@ -730,6 +730,67 @@ test.describe('Text field - Keyboard interactions', () => {
     await expect(field.locator('input')).not.toBeFocused();
   });
 
+  test('synchronizes form state before trusted input listeners run', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-text-field--overview',
+      'swc-text-field'
+    );
+    const field = root.locator('swc-text-field');
+    await field.evaluate(async (field: TextField) => {
+      const form = document.createElement('form');
+      field.before(form);
+      form.append(field);
+      field.name = 'username';
+      field.required = true;
+      await field.updateComplete;
+      const states: {
+        listener: string;
+        trusted: boolean;
+        value: string;
+        formValue: FormDataEntryValue | null;
+        valid: boolean;
+        formValid: boolean;
+      }[] = [];
+      for (const [listener, target] of [
+        ['field', field],
+        ['form', form],
+      ] as const) {
+        target.addEventListener('input', (event) => {
+          states.push({
+            listener,
+            trusted: event.isTrusted,
+            value: field.value,
+            formValue: new FormData(form).get('username'),
+            valid: field.checkValidity(),
+            formValid: form.checkValidity(),
+          });
+          field.dataset.inputStates = JSON.stringify(states);
+        });
+      }
+    });
+    await field.locator('input').focus();
+    await page.keyboard.type('ab');
+    await page.keyboard.press('Backspace');
+    await page.keyboard.press('Backspace');
+    const expected = ['a', 'ab', 'a', ''].flatMap((value) =>
+      ['field', 'form'].map((listener) => ({
+        listener,
+        trusted: true,
+        value,
+        formValue: value,
+        valid: value !== '',
+        formValid: value !== '',
+      }))
+    );
+    await expect(field).toHaveAttribute(
+      'data-input-states',
+      JSON.stringify(expected)
+    );
+  });
+
   test('preserves native minimum-length validation with trusted input', async ({
     page,
   }) => {

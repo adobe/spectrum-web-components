@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { html } from 'lit';
+import { html, type PropertyValues } from 'lit';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
@@ -1187,6 +1187,128 @@ export const FormParticipationTest: Story = {
   },
 };
 FormParticipationTest.storyName = 'Form participation';
+
+class UpdateTimingTextField extends TextField {
+  public formValueAfterUpdate: FormDataEntryValue | null = null;
+
+  protected override update(changedProperties: PropertyValues): void {
+    super.update(changedProperties);
+    const form = this.form;
+    this.formValueAfterUpdate = form
+      ? new FormData(form).get('username')
+      : null;
+  }
+}
+if (!customElements.get('test-text-field-update-timing')) {
+  customElements.define('test-text-field-update-timing', UpdateTimingTextField);
+}
+
+export const FormUpdateTimingTest: Story = {
+  render: () => html`
+    <form>
+      <test-text-field-update-timing
+        name="username"
+        value="Example"
+        accessible-label="Username"
+      ></test-text-field-update-timing>
+    </form>
+  `,
+  play: async ({ canvasElement }) => {
+    const field = await getComponent<UpdateTimingTextField>(
+      canvasElement,
+      'test-text-field-update-timing'
+    );
+    field.value = 'Updated';
+    await field.updateComplete;
+    expect(field.formValueAfterUpdate).toBe('Updated');
+  },
+};
+FormUpdateTimingTest.storyName = 'Form value after super.update';
+
+export const InputEventFormStateTest: Story = {
+  render: () => html`
+    <form>
+      <swc-text-field name="username" required accessible-label="Username">
+        <span slot="error-text">This username is unavailable.</span>
+      </swc-text-field>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = field.form;
+    const input = field.roleElement;
+    if (!form || !input) {
+      throw new Error('Input event test requires a form and input');
+    }
+    const states: {
+      listener: string;
+      value: string;
+      formValue: FormDataEntryValue | null;
+      valid: boolean;
+      formValid: boolean;
+      customError: boolean;
+    }[] = [];
+    for (const [listener, target] of [
+      ['field', field],
+      ['form', form],
+    ] as const) {
+      target.addEventListener('input', () => {
+        states.push({
+          listener,
+          value: field.value,
+          formValue: new FormData(form).get('username'),
+          valid: field.checkValidity(),
+          formValid: form.checkValidity(),
+          customError: field.validity.customError,
+        });
+      });
+    }
+    const expectState = (
+      value: string,
+      valid: boolean,
+      customError = false
+    ): void => {
+      expect(states).toEqual(
+        ['field', 'form'].map((listener) => ({
+          listener,
+          value,
+          formValue: value,
+          valid,
+          formValid: valid,
+          customError,
+        }))
+      );
+      states.length = 0;
+    };
+
+    await step('the first edit synchronizes value and validity', async () => {
+      await userEvent.type(input, 'a');
+      expectState('a', true);
+    });
+    await step('subsequent edits submit the current value', async () => {
+      await userEvent.type(input, 'b');
+      expectState('ab', true);
+    });
+    await step('clearing a required field is immediately invalid', async () => {
+      await userEvent.type(input, '{Backspace}');
+      expectState('a', true);
+      await userEvent.type(input, '{Backspace}');
+      expectState('', false);
+    });
+    await step('editing preserves application errors', async () => {
+      field.fieldStatus = 'invalid';
+      await field.updateComplete;
+      await userEvent.type(input, 'b');
+      expectState('b', false, true);
+      expect(field.fieldStatus).toBe('invalid');
+      expect(field.validationMessage).toBe('This username is unavailable.');
+    });
+  },
+};
+InputEventFormStateTest.storyName = 'Form state during input events';
 
 // ──────────────────────────────────────────────────────────────
 // TEST: Form state restoration

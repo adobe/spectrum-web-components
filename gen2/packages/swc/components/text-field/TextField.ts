@@ -49,7 +49,7 @@ const PREFIX_AVATAR_SIZE = {
  * @element swc-text-field
  * @since 2.0.0-beta.1
  *
- * @fires {InputEvent} input - Fires during user edits, after `value` updates. Bubbles and crosses shadow boundaries; not cancelable.
+ * @fires {InputEvent} input - Fires during user edits, after the value, form data, and validity update. Bubbles and crosses shadow boundaries; not cancelable.
  * @fires {Event} change - Fires when the user commits an edited value, such as on blur. Bubbles and crosses shadow boundaries; not cancelable.
  * @fires {Event} invalid - Fires on the host when validation fails. Cancelable; does not bubble or cross shadow boundaries. Canceling suppresses native validation UI, not the failure.
  *
@@ -103,6 +103,7 @@ export class TextField extends TextFieldBase {
 
   private handleInput(event: Event): void {
     this.value = (event.target as HTMLInputElement).value;
+    this.syncFormState();
   }
 
   /**

@@ -661,6 +661,18 @@
       "directives/pending-spinner/index.js": [
         "dist/directives/pending-spinner/index.d.ts"
       ],
+      "directives/render-field-description": [
+        "dist/directives/render-field-description/index.d.ts"
+      ],
+      "directives/render-field-description/index.js": [
+        "dist/directives/render-field-description/index.d.ts"
+      ],
+      "directives/render-label": [
+        "dist/directives/render-label/index.d.ts"
+      ],
+      "directives/render-label/index.js": [
+        "dist/directives/render-label/index.d.ts"
+      ],
       "element": [
         "dist/element/index.d.ts"
       ],

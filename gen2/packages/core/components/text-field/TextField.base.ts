@@ -385,6 +385,12 @@ export abstract class TextFieldBase extends SizedMixin(
     this.syncValidity();
   }
 
+  /** @internal */
+  protected syncFormState(): void {
+    this.fieldAssoc.setValue(this.effectiveDisabled ? null : this.value);
+    this.syncValidity();
+  }
+
   private syncValidity(): void {
     const input = this.inputElement;
     if (input) {
