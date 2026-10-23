@@ -1,0 +1,53 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
+import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
+
+import {
+    {{constantCase name}}_VALID_SIZES,
+    type {{pascalCase name}}Size,
+} from './{{pascalCase name}}.types.js';
+
+/**
+ * {{titleName name}}: [one-sentence description of what this component does].
+ *
+ * The base class owns shared, non-visual API and logic so that both Spectrum 1
+ * and Spectrum 2 concrete classes can extend it. Keep visual or version-specific
+ * properties on the concrete SWC class unless the migration plan says otherwise.
+ *
+ * @attribute {ElementSize} size - The size of the {{dashCase name}}.
+ *
+ * @slot - Default slot content.
+ */
+export abstract class {{pascalCase name}}Base extends SizedMixin(SpectrumElement, {
+    validSizes: {{constantCase name}}_VALID_SIZES,
+    defaultSize: 'm',
+}) {
+    /**
+     * The size of the {{dashCase name}}.
+     *
+     * @default m
+     */
+    declare public size: {{pascalCase name}}Size;
+
+    // ──────────────────
+    //     SHARED API
+    // ──────────────────
+
+    // Add shared, non-visual properties here. Example:
+    // /**
+    //  * Whether the {{dashCase name}} is disabled.
+    //  */
+    // @property({ type: Boolean, reflect: true })
+    // public disabled = false;
+}
