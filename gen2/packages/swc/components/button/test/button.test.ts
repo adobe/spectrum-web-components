@@ -23,6 +23,7 @@ import {
 } from '@adobe/spectrum-wc-core/components/button';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
+import '@adobe/spectrum-wc-icons/swc-icon-add.js';
 
 import {
   getComponent,
@@ -512,17 +513,7 @@ export const StatesTest: Story = {
 export const DisabledBehaviorTest: Story = {
   render: () => html`
     <swc-button disabled>
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 36 36"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
-        />
-      </svg>
+      <swc-icon-add slot="icon"></swc-icon-add>
       Save
     </swc-button>
   `,
@@ -568,17 +559,7 @@ export const DisabledBehaviorTest: Story = {
 export const IconOnlyPendingAriaTest: Story = {
   render: () => html`
     <swc-button accessible-label="Add item" pending>
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 36 36"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
-        />
-      </svg>
+      <swc-icon-add slot="icon"></swc-icon-add>
     </swc-button>
   `,
   play: async ({ canvasElement, step }) => {
@@ -896,17 +877,7 @@ export const PendingAndDisabledWarningTest: Story = {
 export const IconOnlyMissingLabelWarningTest: Story = {
   render: () => html`
     <swc-button>
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 36 36"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
-        />
-      </svg>
+      <swc-icon-add slot="icon"></swc-icon-add>
     </swc-button>
   `,
   play: async ({ canvasElement, step }) => {
@@ -933,17 +904,7 @@ export const IconOnlyMissingLabelWarningTest: Story = {
 export const LabelSlotUpdatesDynamicallyTest: Story = {
   render: () => html`
     <swc-button>
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 36 36"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
-        />
-      </svg>
+      <swc-icon-add slot="icon"></swc-icon-add>
       Save
     </swc-button>
   `,

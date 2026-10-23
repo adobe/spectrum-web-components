@@ -138,6 +138,10 @@ export class PromptField extends SpectrumElement {
   @property({ type: String, reflect: true })
   public variant: 'subtle' | 'balanced' | 'prominent' = 'balanced';
 
+  /** Size of the prompt field. */
+  @property({ type: String, reflect: true })
+  public size: 's' | 'm' = 'm';
+
   /** Status loader artwork: a single icon name (static), or a preset name (`cc`, `dc`, `exp`, `analyze`, `mega`) that cycles a themed sequence. Routed to the loader's icon/preset in `_renderStatusIcon`. */
   @property({ type: String, reflect: true })
   public loader: PixelLoaderIconName | PixelLoaderPresetName = 'aiLogo';
@@ -1167,6 +1171,7 @@ export class PromptField extends SpectrumElement {
     return html`
       <swc-action-button
         class="swc-PromptField-send"
+        size=${this.size}
         ?disabled=${!this._isPopulated || this.disabled}
         accessible-label=${this.sendLabel}
         @click=${this._handleSendClick}
@@ -1180,6 +1185,7 @@ export class PromptField extends SpectrumElement {
     return html`
       <swc-action-button
         class="swc-PromptField-stop"
+        size=${this.size}
         accessible-label=${this.stopLabel}
         @click=${this._handleStopClick}
       >
@@ -1281,6 +1287,7 @@ export class PromptField extends SpectrumElement {
                     <swc-action-button
                       quiet
                       class="swc-PromptField-upload"
+                      size=${this.size}
                       accessible-label=${this.uploadLabel}
                       ?disabled=${this.disabled}
                       @click=${this._handleUploadClick}

@@ -46,9 +46,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 /**
  * Render a markdown table from headers and rows.
  *
- * @param {string[]} headers
- * @param {string[][]} rows
- * @returns {string}
+ * @param {string[]} headers - Column header labels.
+ * @param {string[][]} rows - Table rows, one array of cell values per row.
+ * @returns {string} The rendered markdown table.
  */
 function mdTable(headers, rows) {
   // Escape pipes so union types like `'card' | 'media'` don't break the table.

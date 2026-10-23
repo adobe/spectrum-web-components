@@ -74,6 +74,7 @@ For the full inventory (what each one does and which components/patterns use it)
 | `LiveSelectionController` | `core/controllers/live-selection-controller/` | Coordinates single/multiple selection across event-dispatching children |
 | `PageScrollLockController` | `core/controllers/page-scroll-lock-controller/` | Reference-counted page scroll lock for stacked blocking surfaces |
 | `ColorController` | `core/controllers/color-controller/` | `colorjs.io` conversion wrapper (not yet adopted by a component) |
+| `TriggerPressController` | `core/controllers/trigger-press-controller/` | Click-to-toggle wiring for a trigger that opens a light-dismissible surface, without reopening on the same click that closed it |
 
 ## Planned controllers
 

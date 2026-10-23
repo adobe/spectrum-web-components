@@ -48,6 +48,8 @@ jobs:
       - name: Setup Job and Install Dependencies
         if: ${{ env.SKIP_VRT != 'true' }}
         uses: ./.github/actions/setup-job
+        with:
+          build-command: yarn build:gen2
 
       - name: Generate Custom Elements Manifest
         if: ${{ env.SKIP_VRT != 'true' }}

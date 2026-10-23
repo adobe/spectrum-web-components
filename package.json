@@ -14,6 +14,7 @@
   },
   "type": "module",
   "scripts": {
+    "ai:sync": "node .ai/scripts/sync.js",
     "build": "run-s build:gen2 build:1st-gen",
     "build:1st-gen": "yarn workspace @spectrum-web-components/1st-gen build",
     "build:gen2": "yarn workspace @spectrum-web-components/gen2 build",
@@ -25,11 +26,14 @@
     "format:eslint": "eslint ${LINT_PATH:-.} --cache --fix",
     "format:prettier": "prettier ${LINT_PATH:-.} --cache --write",
     "format:styles": "stylelint '${LINT_PATH:+$LINT_PATH/**/*.css}${LINT_PATH:-**/*.css}' --cache --fix --allow-empty-input",
+    "generate:icon-styles": "yarn workspace @adobe/spectrum-wc-icons generate:icon-styles",
     "generate:llms": "node scripts/generate-llms-txt.js",
     "generate:skills": "node scripts/generate-agent-skills.mjs",
+    "generate:ui-icons": "yarn workspace @adobe/spectrum-wc generate:ui-icons",
+    "generate:workflow-icons": "yarn workspace @adobe/spectrum-wc-icons generate:workflow-icons",
     "lint": "run-s --continue-on-error lint:eslint lint:styles lint:prettier lint:ai",
     "lint:1st-gen": "LINT_PATH=1st-gen yarn lint",
-    "lint:ai": "node .ai/scripts/validate.js",
+    "lint:ai": "node .ai/scripts/validate.js && node --test .ai/scripts/sync.test.js",
     "lint:docs-pages": "node scripts/validate-docs-pages.js",
     "lint:eslint": "echo 'Linting with ESLint...' && eslint ${LINT_PATH:-.} --cache",
     "lint:gen2": "LINT_PATH=gen2 yarn lint",
@@ -113,6 +117,7 @@
     "stylelint-order": "7.0.1",
     "typescript": "5.9.2",
     "typescript-eslint": "8.54.0",
+    "yaml": "2.8.1",
     "yargs": "17.7.2"
   },
   "keywords": [
@@ -126,7 +131,7 @@
     "lit-html"
   ],
   "engines": {
-    "node": ">=24.11.1",
+    "node": ">=24.22.1",
     "yarn": ">=4.6.0"
   },
   "packageManager": "yarn@4.9.2"

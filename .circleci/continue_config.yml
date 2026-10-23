@@ -58,7 +58,7 @@ parameters:
   # 3. Commit this change to the PR branch where the changes exist.
   current_golden_images_hash:
     type: string
-    default: a66188883f3e77bbd345ed838155618375a85e02
+    default: c789d6535940421238d3f52ab423d1d51339f62f
 
 commands:
   install-azcopy:
@@ -93,6 +93,21 @@ commands:
     description: 'Checkout code and install node dependencies'
     steps:
       - checkout
+      # The Playwright image ships its own Node (22.x). Install the version from
+      # .nvmrc so CircleCI matches GitHub Actions and local development.
+      - run:
+          name: Install Node from .nvmrc
+          command: |
+            NODE_VERSION=$(tr -d '[:space:]' < .nvmrc)
+            NODE_DIST="node-${NODE_VERSION}-linux-x64.tar.gz"
+            cd /tmp
+            curl -fsSLO "https://nodejs.org/dist/${NODE_VERSION}/${NODE_DIST}"
+            curl -fsSL "https://nodejs.org/dist/${NODE_VERSION}/SHASUMS256.txt" | grep " ${NODE_DIST}\$" | sha256sum -c -
+            tar -xzf "$NODE_DIST" -C /usr/local --strip-components=1 --no-same-owner
+            rm "$NODE_DIST"
+            hash -r
+            [ "$(node -v)" = "$NODE_VERSION" ] || { echo "Expected Node $NODE_VERSION, got $(node -v)"; exit 1; }
+            echo "Using Node $(node -v)"
       - restore_cache:
           keys:
             - cache-deps-yarn-{{ arch }}-{{ checksum "yarn.lock" }}

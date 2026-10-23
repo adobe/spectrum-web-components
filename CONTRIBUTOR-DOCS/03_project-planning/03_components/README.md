@@ -54,7 +54,10 @@
 - Card
     - [Card family plan](card/migration-plan.md)
 - Checkbox
+    - [Checkbox accessibility migration analysis](checkbox/accessibility-migration-analysis.md)
     - [Checkbox migration roadmap](checkbox/rendering-and-styling-migration-analysis.md)
+- Checkbox Group
+    - [Checkbox group accessibility migration analysis](checkbox-group/accessibility-migration-analysis.md)
 - Close Button
     - [Close button accessibility migration analysis](close-button/accessibility-migration-analysis.md)
     - [Close button migration plan](close-button/migration-plan.md)
@@ -163,6 +166,7 @@
 - Swatch Group
     - [Swatch Group migration roadmap](swatch-group/rendering-and-styling-migration-analysis.md)
 - Switch
+    - [Switch accessibility migration analysis](switch/accessibility-migration-analysis.md)
     - [Switch migration roadmap](switch/rendering-and-styling-migration-analysis.md)
 - Tabs
     - [Tabs accessibility migration analysis](tabs/accessibility-migration-analysis.md)

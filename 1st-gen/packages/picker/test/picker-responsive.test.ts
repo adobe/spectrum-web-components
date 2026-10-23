@@ -245,6 +245,9 @@ describe('Picker, responsive', () => {
 
       const changeSpy = spy();
       el.addEventListener('change', changeSpy);
+      const menuItem = el.querySelector(
+        'sp-menu-item[value="option-2"]'
+      ) as MenuItem;
 
       /**
        * This is a hack to set the `isTouchDevice` property to true
@@ -262,52 +265,28 @@ describe('Picker, responsive', () => {
       el.open = true;
       await opened;
 
-      // Wait for cascading updates to settle (overlay/popover can trigger
-      // additional update cycles).
-      await el.updateComplete;
-      await new Promise((resolve) => requestAnimationFrame(resolve));
-      await el.updateComplete;
-
-      // Wait for menu to be ready with explicit timeout.
+      // Wait for the item to be registered with the menu before selecting it.
       await waitUntil(
-        () => el.optionsMenu && el.optionsMenu.childItems.length > 0,
-        'Menu should be initialized',
+        () =>
+          el.optionsMenu?.childItems.includes(menuItem) &&
+          menuItem.getAttribute('role') === 'option' &&
+          menuItem.menuData?.selectionRoot === el.optionsMenu,
+        'Menu item should be registered for selection',
         { timeout: 2000 }
       );
-
-      // Wait for menu to be fully updated.
-      await el.optionsMenu.updateComplete;
-      await elementUpdated(el.optionsMenu);
 
       // Verify shouldSupportDragAndSelect is false on touch devices.
       expect(el.optionsMenu.shouldSupportDragAndSelect).to.be.false;
-
-      // Get the second menu item (value="option-2") from childItems.
-      const menuItem = el.optionsMenu.childItems[1] as MenuItem;
-      expect(menuItem).to.not.be.null;
-
-      // Wait for menu item to be fully registered with its role and
-      // selectionRoot. This is critical because the menu's click handler
-      // uses role="option" to find the target and selectionRoot to
-      // determine if selection should occur.
-      await waitUntil(
-        () =>
-          menuItem.getAttribute('role') === 'option' &&
-          menuItem.menuData?.selectionRoot === el.optionsMenu,
-        'Menu item should be fully registered with role and selectionRoot',
-        { timeout: 2000 }
-      );
-
-      await elementUpdated(menuItem);
 
       // Ensure menu is not in scrolling state immediately before click
       // (which would prevent selection).
       el.optionsMenu.isScrolling = false;
 
       // Click the menu item and wait for the change event.
-      const changed = oneEvent(el, 'change');
       menuItem.click();
-      await changed;
+      await waitUntil(() => changeSpy.calledOnce, 'Picker should emit change', {
+        timeout: 2000,
+      });
 
       // Verify the change event was dispatched.
       expect(changeSpy.callCount).to.equal(1);

@@ -12,16 +12,21 @@
  * Validates that the .cursor/ and .claude/ adapter symlinks correctly point to
  * their .ai/ canonical sources.
  *
- * Cursor rules: per-file symlinks (.cursor/rules/<name>.mdc → ../../.ai/rules/<name>.md)
- * Cursor skills: directory symlink (.cursor/skills → ../.ai/skills)
  * Claude rules: directory symlink (.claude/rules → ../.ai/rules)
  * Claude skills: directory symlink (.claude/skills → ../.ai/skills)
+ * Cursor skills: directory symlink (.cursor/skills → ../.ai/skills)
+ *
+ * Cursor rules (.cursor/rules/*.mdc) are generated files, not symlinks: `sync.js` writes
+ * them and `sync.js --check` verifies them. A leftover per-file symlink tracked by git is
+ * an error.
  *
  * Returns { errors, fileCount } for integration with validate.js.
  */
 
-import { existsSync, lstatSync, readdirSync, readlinkSync } from 'fs';
-import { basename, join } from 'path';
+import { existsSync, lstatSync, readlinkSync } from 'fs';
+import { join, posix } from 'path';
+
+import { trackedFiles } from './ai-files.js';
 
 const ROOT = new URL('../../', import.meta.url).pathname.replace(/\/$/, '');
 
@@ -29,7 +34,7 @@ function checkDirectorySymlink(linkPath, expectedTarget, errors) {
   const rel = linkPath.replace(ROOT + '/', '');
   if (!existsSync(linkPath)) {
     errors.push(
-      `${rel} does not exist — run one-time setup (see .ai/README.md)`
+      `${rel} does not exist; recreate it with: ln -s ${expectedTarget} ${rel}`
     );
     return;
   }
@@ -44,59 +49,25 @@ function checkDirectorySymlink(linkPath, expectedTarget, errors) {
   }
 }
 
-function checkCursorRuleSymlinks(errors) {
-  const rulesDir = join(ROOT, '.ai/rules');
-  const cursorRulesDir = join(ROOT, '.cursor/rules');
-  let checks = 0;
-
-  const sourceFiles = readdirSync(rulesDir)
-    .filter((f) => f.endsWith('.md'))
-    .map((f) => basename(f, '.md'));
-
-  for (const name of sourceFiles) {
-    checks++;
-    const linkPath = join(cursorRulesDir, `${name}.mdc`);
-    const expectedTarget = `../../.ai/rules/${name}.md`;
-    const rel = linkPath.replace(ROOT + '/', '');
-
+function checkNoCursorRuleSymlinks(errors) {
+  // Only tracked entries: an untracked local file never reaches the repository.
+  const files = trackedFiles().filter(
+    (f) => posix.dirname(f) === '.cursor/rules'
+  );
+  for (const file of files) {
     let stat;
     try {
-      stat = lstatSync(linkPath);
+      stat = lstatSync(join(ROOT, file));
     } catch {
+      continue;
+    }
+    if (stat.isSymbolicLink()) {
       errors.push(
-        `${rel} does not exist — run one-time setup (see .ai/README.md)`
+        `${file} is a symlink; Cursor rules are generated now, so run \`yarn ai:sync\``
       );
-      continue;
-    }
-
-    if (!stat.isSymbolicLink()) {
-      errors.push(`${rel} exists but is not a symlink`);
-      continue;
-    }
-
-    const actual = readlinkSync(linkPath);
-    if (actual !== expectedTarget) {
-      errors.push(`${rel} points to "${actual}", expected "${expectedTarget}"`);
     }
   }
-
-  // Check for stale .mdc symlinks (no matching .ai/rules/*.md source)
-  if (existsSync(cursorRulesDir)) {
-    const cursorFiles = readdirSync(cursorRulesDir).filter((f) =>
-      f.endsWith('.mdc')
-    );
-    for (const file of cursorFiles) {
-      const name = basename(file, '.mdc');
-      if (!sourceFiles.includes(name)) {
-        checks++;
-        errors.push(
-          `.cursor/rules/${file} has no matching .ai/rules/${name}.md — stale symlink`
-        );
-      }
-    }
-  }
-
-  return checks;
+  return files.length;
 }
 
 /**
@@ -105,10 +76,10 @@ function checkCursorRuleSymlinks(errors) {
 export function validateSymlinks() {
   const errors = [];
 
-  const ruleChecks = checkCursorRuleSymlinks(errors);
-  checkDirectorySymlink(join(ROOT, '.cursor/skills'), '../.ai/skills', errors);
   checkDirectorySymlink(join(ROOT, '.claude/rules'), '../.ai/rules', errors);
   checkDirectorySymlink(join(ROOT, '.claude/skills'), '../.ai/skills', errors);
+  checkDirectorySymlink(join(ROOT, '.cursor/skills'), '../.ai/skills', errors);
+  const cursorRules = checkNoCursorRuleSymlinks(errors);
 
-  return { errors, fileCount: ruleChecks + 3 };
+  return { errors, fileCount: 3 + cursorRules };
 }
