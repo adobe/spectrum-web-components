@@ -233,9 +233,9 @@ Red/green TDD. Each item below should fail before the implementation exists.
 
 | Decision | Source |
 | --- | --- |
-| Link rows move to `swc-menu-link`; `swc-menu-item` is never a link | `swc-menu` plan, Q17 (nikkimk) |
-| `role="menuitem"` on exactly one node, no competing role | `swc-menu` plan, Q19 (5t3ph) |
-| Named `label` slot rather than the default slot | `swc-menu` plan, Phase A surface table (5t3ph) |
+| Link rows move to `swc-menu-link`; `swc-menu-item` is never a link | `swc-menu` plan, Q17 |
+| `role="menuitem"` on exactly one node, no competing role | `swc-menu` plan, Q19 |
+| Named `label` slot rather than the default slot | `swc-menu` plan, Phase A surface table |
 | Disabled rows stay in the roving set | `swc-menu` plan, B7 |
 | Migration order among menu siblings still undecided | `swc-menu` plan, Q15 |
 
