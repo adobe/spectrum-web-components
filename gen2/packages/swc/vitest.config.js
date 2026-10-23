@@ -88,35 +88,39 @@ export default mergeConfig(
 
           // SWC component implementations
           'components/**/*.{ts,js}': {
-            lines: 98,
-            functions: 98,
-            statements: 98,
+            lines: 99,
+            functions: 99,
+            statements: 99,
           },
+
+          // Threshold globs match paths relative to this package's root, so
+          // core files resolve as `../core/...`. A `**/packages/core/...` glob
+          // matches nothing and passes silently.
 
           // Core component logic
-          '**/packages/core/components/**/*.{ts,js}': {
-            lines: 98,
-            functions: 98,
-            statements: 98,
+          '../core/components/**/*.{ts,js}': {
+            lines: 95,
+            functions: 94,
+            statements: 95,
           },
 
-          // Shared utilities (lower bar while starting out)
-          '**/packages/core/controllers/*.{ts,js}': {
-            lines: 70,
-            functions: 70,
-            statements: 70,
+          // Shared controllers, element, mixins, and utils
+          '../core/controllers/*.{ts,js}': {
+            lines: 85,
+            functions: 90,
+            statements: 85,
           },
-          '**/packages/core/element/*.{ts,js}': {
-            lines: 70,
-            functions: 70,
-            statements: 70,
+          '../core/element/*.{ts,js}': {
+            lines: 94,
+            functions: 100,
+            statements: 94,
           },
-          '**/packages/core/mixins/*.{ts,js}': {
-            lines: 70,
-            functions: 70,
-            statements: 70,
+          '../core/mixins/*.{ts,js}': {
+            lines: 99,
+            functions: 100,
+            statements: 99,
           },
-          '**/packages/core/utils/*.{ts,js}': {
+          '../core/utils/*.{ts,js}': {
             lines: 70,
             functions: 70,
             statements: 70,
