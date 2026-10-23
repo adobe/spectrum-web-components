@@ -1,5 +1,36 @@
 # @adobe/spectrum-wc
 
+## 2.0.0-beta.6
+
+### Minor Changes
+
+- **prompt-field**:
+  - [#6842](https://github.com/adobe/spectrum-web-components/pull/6842) [`bb61c01`](https://github.com/adobe/spectrum-web-components/commit/bb61c012cd09e49daaa9ba647eaa5e0c1609af20) Thanks [@caseyisonit](https://github.com/caseyisonit)! - **feat(prompt-field):** Make `<swc-prompt-field>` name its textarea without visually hidden text, and keep focus on the send/stop button when `generating` changes.
+
+    **Breaking changes** to the beta API. Every attribute that sets a non-visible name now ends in `-accessible-label`:
+    - Removed `label`. The textarea is now named by `accessible-label` (default "AI prompt"), applied directly as its `aria-label`.
+    - Renamed `send-label` to `send-accessible-label`. The default changed from "Send" to "Submit AI prompt".
+    - Renamed `stop-label` to `stop-accessible-label`. The default stays "Stop generating".
+    - Renamed `upload-label` to `upload-accessible-label`.
+    - Renamed `attachment-scroll-prev-label` and `attachment-scroll-next-label` to `attachment-scroll-prev-accessible-label` and `attachment-scroll-next-accessible-label`.
+    - Renamed `attachment-strip-label` to `attachment-strip-accessible-label`.
+
+    **Accessibility fixes:**
+    - Send and stop are now one persistent button, so focus stays on it when `generating` toggles and screen readers announce the new name on the focused control. Before, the button was replaced and focus dropped to the page.
+    - With no prompt content, the button uses `aria-disabled="true"` instead of native `disabled`, so it stays focusable after the value is cleared.
+    - Removed the visually hidden label element and its `aria-labelledby` reference, which overrode the textarea's `aria-label` so `accessible-label` never took effect.
+    - Logs a dev-mode accessibility warning when `accessible-label` is empty, because the textarea then has no accessible name.
+
+- [#6848](https://github.com/adobe/spectrum-web-components/pull/6848) [`5fc65af`](https://github.com/adobe/spectrum-web-components/commit/5fc65afb073485102ac33bf9b9e95aa8eb781511) Thanks [@5t3ph](https://github.com/5t3ph)! - **Updated**: Increase horizontal padding for large and extra-large Button and Action Button, and button-containing components, which increases their rendered width. `base-padding-horizontal-large` changes from `14px` to `16px`, and `base-padding-horizontal-extra-large` changes from `16px` to `18px`.
+
+- [#6724](https://github.com/adobe/spectrum-web-components/pull/6724) [`3f8f64e`](https://github.com/adobe/spectrum-web-components/commit/3f8f64e6cab1d3a4379459bf63eb8d81cb7e82a3) Thanks [@miwha-adobe](https://github.com/miwha-adobe)! - Add Spectrum 2 `<swc-text-field>` with accessible labelling, validation, and native form participation.
+  - **Appearance and interaction**: Support sizes `s`, `m`, `l`, and `xl`, `label-position="top|side"`, a non-interactive `prefix` slot, and customizable control widths. The field has one tab stop, supports click-to-focus, and exposes native text selection through `select()` and `setSelectionRange()`.
+  - **Accessible labels and descriptions**: Provide a clickable slotted label, an `accessible-label`, or external labels through `accessible-labelledby`. Combine a slotted `description` with external `accessible-describedby` references.
+  - **Field states**: Use `field-status` for disabled, read-only, invalid, or valid status. Keep `required` independent, and use `necessity-indicator="icon|label"` to show an icon or required/optional text.
+  - **Descriptions and errors**: While invalid, supplied `error-text` replaces the description. Without an `error-text` slot, keep the description visible in the error color. Associate the visible message with the input for assistive technology.
+  - **Validation**: Invalid status makes eligible fields fail validation, using the plain text of `error-text` as the message. Missing or empty text uses "Enter a valid value." for validation without adding fallback inline text. Clearing invalid status clears the application error; native constraints still apply.
+  - **Forms and reset**: Support `FormData`, ancestor fieldset disabling, and Enter-key submission. Form reset restores the initial value and clears valid or invalid status without changing disabled or read-only status.
+
 ## 2.0.0-beta.5
 
 ### Minor Changes
