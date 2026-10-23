@@ -219,6 +219,7 @@ const preview = {
           [
             '*',
             [
+              'The card view oracle',
               'Docs',
               'Playground',
               'Migration guide',
