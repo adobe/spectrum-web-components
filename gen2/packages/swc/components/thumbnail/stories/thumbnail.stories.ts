@@ -13,7 +13,6 @@ import { html } from 'lit';
 import type { Args, Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { Thumbnail } from '@adobe/spectrum-wc/thumbnail';
 import {
   THUMBNAIL_VALID_FITS,
   THUMBNAIL_VALID_SIZES,
@@ -27,18 +26,6 @@ import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 // ────────────────
 
 const { args, argTypes, template } = getStorybookHelpers('swc-thumbnail');
-
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: Thumbnail.VALID_SIZES.map(String),
-};
-
-argTypes.fit = {
-  ...argTypes.fit,
-  control: { type: 'select' },
-  options: THUMBNAIL_VALID_FITS,
-};
 
 /**
  * Wraps a slotted image, such as an asset preview or a layer in a layers
