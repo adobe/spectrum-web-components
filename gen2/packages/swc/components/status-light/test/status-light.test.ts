@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { expect } from '@storybook/test';
 import type {
   Meta,
@@ -26,7 +26,11 @@ import {
 
 import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
 
-import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '../../../utils/test-utils.js';
 import meta, {
   Anatomy,
   NonSemanticVariants,
@@ -35,6 +39,26 @@ import meta, {
   SemanticVariants,
   Sizes,
 } from '../stories/status-light.stories.js';
+
+const renderLineHeightCases = () => html`
+  ${['en', 'zh-TW', 'ja', 'ko'].map(
+    (language) => html`
+      <div lang=${language}>
+        ${[undefined, ...STATUS_LIGHT_VALID_SIZES].map(
+          (size) => html`
+            <swc-status-light
+              size=${size ?? nothing}
+              data-size=${size ?? 'omitted'}
+              style="max-inline-size: 140px;"
+            >
+              Document review pending approval
+            </swc-status-light>
+          `
+        )}
+      </div>
+    `
+  )}
+`;
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -67,6 +91,64 @@ export const DefaultTest: Story = {
         'default slot has text content'
       ).toBeTruthy();
     });
+  },
+};
+
+export const LineHeightDefaultsTest: Story = {
+  render: renderLineHeightCases,
+  play: async ({ canvasElement, step }) => {
+    const statusLights = await getComponents<StatusLight>(
+      canvasElement,
+      'swc-status-light'
+    );
+    expect(statusLights, 'all language and size cases').toHaveLength(20);
+
+    for (const statusLight of statusLights) {
+      const language = statusLight.parentElement?.lang;
+      const label = statusLight.shadowRoot?.querySelector('.swc-StatusLight');
+      if (!label) {
+        throw new Error('status light label not found');
+      }
+
+      await step(
+        `preserves default line height for ${language}, size ${statusLight.dataset.size}`,
+        async () => {
+          statusLight.lang = 'en';
+          await statusLight.updateComplete;
+          const englishLineHeight = getComputedStyle(label).lineHeight;
+
+          statusLight.removeAttribute('lang');
+          await statusLight.updateComplete;
+          const inheritedStyle = getComputedStyle(label);
+          const inheritedLineHeight = inheritedStyle.lineHeight;
+          if (language === 'en') {
+            expect(inheritedLineHeight, 'inherited English line height').toBe(
+              englishLineHeight
+            );
+          } else {
+            expect(
+              parseFloat(inheritedLineHeight),
+              'inherited CJK line height'
+            ).toBeCloseTo(parseFloat(inheritedStyle.fontSize) * 1.5, 4);
+          }
+
+          statusLight.lang = language ?? '';
+          await statusLight.updateComplete;
+          expect(getComputedStyle(label).lineHeight, 'explicit language').toBe(
+            inheritedLineHeight
+          );
+
+          statusLight.lang = 'en';
+          await statusLight.updateComplete;
+          expect(
+            getComputedStyle(label).lineHeight,
+            'restored English default'
+          ).toBe(englishLineHeight);
+          statusLight.removeAttribute('lang');
+          await statusLight.updateComplete;
+        }
+      );
+    }
   },
 };
 
@@ -121,6 +203,61 @@ export const SizesTest: Story = {
         ).toBe(size);
       }
     });
+  },
+};
+
+export const LineHeightCustomizationTest: Story = {
+  render: renderLineHeightCases,
+  play: async ({ canvasElement, step }) => {
+    const statusLights = await getComponents<StatusLight>(
+      canvasElement,
+      'swc-status-light'
+    );
+    expect(statusLights, 'all language and size cases').toHaveLength(20);
+
+    for (const statusLight of statusLights) {
+      const language = statusLight.parentElement?.lang;
+      const label = statusLight.shadowRoot?.querySelector('.swc-StatusLight');
+      if (!label) {
+        throw new Error('status light label not found');
+      }
+
+      await step(
+        `honors the line-height hook for ${language}, size ${statusLight.dataset.size}`,
+        async () => {
+          const defaultLineHeight = getComputedStyle(label).lineHeight;
+          const defaultFontSize = getComputedStyle(label).fontSize;
+          statusLight.style.setProperty(
+            '--swc-status-light-line-height',
+            '32px'
+          );
+          await statusLight.updateComplete;
+
+          expect(
+            getComputedStyle(label).lineHeight,
+            'inherited language hook'
+          ).toBe('32px');
+          expect(getComputedStyle(label).fontSize, 'unchanged font size').toBe(
+            defaultFontSize
+          );
+
+          statusLight.lang = language ?? '';
+          await statusLight.updateComplete;
+          expect(
+            getComputedStyle(label).lineHeight,
+            'explicit language hook'
+          ).toBe('32px');
+
+          statusLight.style.removeProperty('--swc-status-light-line-height');
+          statusLight.removeAttribute('lang');
+          await statusLight.updateComplete;
+          expect(
+            getComputedStyle(label).lineHeight,
+            'restored default line height'
+          ).toBe(defaultLineHeight);
+        }
+      );
+    }
   },
 };
 

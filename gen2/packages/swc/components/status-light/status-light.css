@@ -34,12 +34,6 @@
   line-height: var(--_swc-status-light-line-height);
   color: var(--swc-status-light-content-color, token("neutral-content-color-default"));
 
-  &:lang(ja),
-  &:lang(zh),
-  &:lang(ko) {
-    line-height: token("cjk-line-height-100");
-  }
-
   /* Dot */
   &::before {
     --_swc-status-light-dot-size: var(--swc-status-light-dot-size, token("status-light-dot-size-medium"));
@@ -74,6 +68,12 @@
   --swc-status-light-dot-size: token("status-light-dot-size-extra-large");
   --swc-status-light-font-size: token("font-size-300");
   --swc-status-light-line-height: token("line-height-font-size-300");
+}
+
+:host(:lang(ja)),
+:host(:lang(zh)),
+:host(:lang(ko)) {
+  --swc-status-light-line-height: token("cjk-line-height-100");
 }
 
 /* NOTE: `neutral` is the default variant */
