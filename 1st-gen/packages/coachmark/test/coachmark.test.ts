@@ -134,6 +134,19 @@ describe('Coachmark', () => {
 
     await expect(el).to.be.accessible();
   });
+  it('uses the localized step count connector for its default pagination', async () => {
+    const el = await fixture<Coachmark>(html`
+      <sp-coachmark
+        current-step="1"
+        total-steps="3"
+        step-count-of="von"
+      ></sp-coachmark>
+    `);
+    await elementUpdated(el);
+
+    const stepCount = el.shadowRoot?.querySelector('span[aria-live="polite"]');
+    expect(stepCount?.textContent?.trim()).to.equal('1 von 3');
+  });
   it('loads primary button with text "Ok" for a single coachmark', async () => {
     const el = await fixture<Coachmark>(single());
 
