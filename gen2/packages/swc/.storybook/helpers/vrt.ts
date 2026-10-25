@@ -67,6 +67,9 @@ export const vrtParameters = {
     gap: 'var(--swc-spacing-500)',
   },
   autoplay: true,
+  // VRT stories aren't part of the enforced a11y check (`ci-a11y`); skip the
+  // non-blocking axe run, which can push large grids past the test timeout.
+  a11y: { test: 'off' },
 };
 
 export const forcedColorsVrtParameters = {
