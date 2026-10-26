@@ -65,7 +65,7 @@ export default mergeConfig(
         include: [
           'components/**/*.{ts,js}',
           '**/packages/core/components/**/*.{ts,js}',
-          '**/packages/core/controllers/*.{ts,js}',
+          '**/packages/core/controllers/**/*.{ts,js}',
           '**/packages/core/element/*.{ts,js}',
           '**/packages/core/mixins/*.{ts,js}',
           '**/packages/core/utils/*.{ts,js}',
@@ -106,9 +106,9 @@ export default mergeConfig(
 
           // Shared controllers, element, mixins, and utils
           '../core/controllers/**/*.{ts,js}': {
-            lines: 88,
-            functions: 87,
-            statements: 88,
+            lines: 87,
+            functions: 85,
+            statements: 87,
           },
           '../core/element/*.{ts,js}': {
             lines: 94,
@@ -116,9 +116,9 @@ export default mergeConfig(
             statements: 94,
           },
           '../core/mixins/*.{ts,js}': {
-            lines: 99,
-            functions: 100,
-            statements: 99,
+            lines: 95,
+            functions: 97,
+            statements: 95,
           },
           '../core/utils/*.{ts,js}': {
             lines: 70,

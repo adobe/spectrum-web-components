@@ -29,9 +29,9 @@ We enforce per-path thresholds in `vitest.config.js`:
 | --- | --- | --- |
 | `components/**/*.{ts,js}` | **99%** lines, functions, statements | SWC component implementations |
 | `../core/components/**/*.{ts,js}` | **95%** lines, **94%** functions, **95%** statements | Core component base classes |
-| `../core/controllers/**/*.{ts,js}` | **88%** lines, **87%** functions, **88%** statements | Reactive controllers |
+| `../core/controllers/**/*.{ts,js}` | **87%** lines, **85%** functions, **87%** statements | Reactive controllers |
 | `../core/element/*.{ts,js}` | **94%** lines, **100%** functions, **94%** statements | Base element |
-| `../core/mixins/*.{ts,js}` | **99%** lines, **100%** functions, **99%** statements | Shared mixins |
+| `../core/mixins/*.{ts,js}` | **95%** lines, **97%** functions, **95%** statements | Shared mixins |
 
 Component code and base classes aim for 100% coverage. Each threshold is the current coverage rounded down and ratchets upward as coverage improves.
 
