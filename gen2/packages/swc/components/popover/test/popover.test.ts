@@ -648,7 +648,7 @@ export const TipOrientationGateTest: Story = {
             if (tipVisible()) {
               expect(
                 popover.hasAttribute('actual-placement'),
-                'visible tip is oriented'
+                `visible tip is oriented (open: ${popover.open}, surface display: ${getComputedStyle(tip().parentElement!).display}, in layout: ${tip().checkVisibility()})`
               ).toBe(true);
             }
             await new Promise((r) => requestAnimationFrame(() => r(null)));
