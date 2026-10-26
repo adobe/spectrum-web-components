@@ -708,25 +708,11 @@ jobs:
       - run:
           name: Mark << parameters.gen >>-tests passed
           command: |
-            # Fork builds often lack a token that can write commit statuses on
-            # adobe/* (curl 401). The real gen unit tests already passed via
-            # `requires`; don't fail the fan-in job over the status post.
-            if [ -z "${GITHUB_TOKEN:-}" ]; then
-              echo "No GITHUB_TOKEN; skipping << parameters.gen >>-tests-status post (fork)."
-              exit 0
-            fi
-            HTTP=$(curl -sS -o /tmp/gen-status.json -w "%{http_code}" -X POST \
+            curl -sSf -X POST \
               -H "Authorization: Bearer $GITHUB_TOKEN" \
               -H "Accept: application/vnd.github+json" \
               "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/statuses/$CIRCLE_SHA1" \
-              -d '{"state":"success","context":"<< parameters.gen >>-tests-status","description":"All << parameters.gen >> checks passed"}' || true)
-            if [ "$HTTP" = "201" ] || [ "$HTTP" = "200" ]; then
-              echo "Posted << parameters.gen >>-tests-status success (HTTP $HTTP)"
-              exit 0
-            fi
-            echo "WARN: status post HTTP ${HTTP:-curl-failed}; not failing fan-in (common on forks)."
-            cat /tmp/gen-status.json 2>/dev/null || true
-            exit 0
+              -d '{"state":"success","context":"<< parameters.gen >>-tests-status","description":"All << parameters.gen >> checks passed"}'
 
 workflows:
   # ---------------------------------------------------------------------------
