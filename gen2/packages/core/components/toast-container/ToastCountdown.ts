@@ -23,6 +23,7 @@ export class ToastCountdown implements ReactiveController {
   }
 
   public start(timeout: number | null, onTimeout: () => void): void {
+    // resume() ignores a running timer, so end any previous run first.
     this.stop();
     if (timeout === null || timeout <= 0) {
       return;

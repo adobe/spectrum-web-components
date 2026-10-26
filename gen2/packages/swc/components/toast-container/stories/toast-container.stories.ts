@@ -13,7 +13,10 @@ import { html } from 'lit';
 import { fn } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { TOAST_VARIANTS } from '@adobe/spectrum-wc-core/components/toast/index.js';
+import {
+  TOAST_VARIANTS,
+  type ToastVariant,
+} from '@adobe/spectrum-wc-core/components/toast/index.js';
 import {
   TOAST_CONTAINER_PLACEMENTS,
   type ToastContainerPlacement,
@@ -33,6 +36,11 @@ type ToastContainerArgs = ToastQueueOptions & {
   placement: ToastContainerPlacement;
 };
 
+/**
+ * The toast container shows temporary notifications from a shared queue. Add
+ * toasts with `ToastQueue.add()`; the container renders one toast at a time and
+ * owns placement, auto-dismiss timing, and focus return.
+ */
 const meta: Meta<ToastContainerArgs> = {
   title: 'Toast container',
   component: 'swc-toast-container',
@@ -59,7 +67,12 @@ const meta: Meta<ToastContainerArgs> = {
   parameters: {
     layout: 'fullscreen',
     flexLayout: 'row-wrap',
-    docs: { disable: true, page: null },
+    docs: {
+      subtitle:
+        'Fixed region that shows queued toast notifications, one at a time.',
+      // position: fixed needs its own viewport, so render docs canvases in iframes.
+      story: { inline: false, height: '260px' },
+    },
   },
   beforeEach: () => {
     ToastQueue.clear();
@@ -100,6 +113,20 @@ export default meta;
 //    HELPERS
 // ───────────────
 
+const variantLabels = {
+  neutral: 'Neutral',
+  info: 'Info',
+  positive: 'Positive',
+  negative: 'Negative',
+} as const satisfies Record<ToastVariant, string>;
+
+const variantMessages = {
+  neutral: 'Draft moved to archive',
+  info: 'A new version is available',
+  positive: 'File saved',
+  negative: 'File could not be saved',
+} as const satisfies Record<ToastVariant, string>;
+
 const addToast = (args: ToastContainerArgs, suffix = ''): string =>
   ToastQueue.add(`${args.message}${suffix}`, {
     variant: args.variant,
@@ -132,8 +159,44 @@ export const Overview: Story<ToastContainerArgs> = {
 };
 
 // ──────────────────
+//    ANATOMY STORY
+// ──────────────────
+
+export const Anatomy: Story<ToastContainerArgs> = {
+  ...Overview,
+  args: { ...Overview.args, actionLabel: 'Undo', onAction: fn() },
+  tags: ['anatomy'],
+};
+
+// ──────────────────
 //    OPTIONS STORIES
 // ──────────────────
+
+export const Variants: Story<ToastContainerArgs> = {
+  args: { timeout: null },
+  render: (args) => {
+    const addVariant = (event: Event): void => {
+      const variant = (event.currentTarget as HTMLElement).dataset
+        .variant as ToastVariant;
+      addToast({ ...args, variant, message: variantMessages[variant] });
+    };
+    return html`
+      ${TOAST_VARIANTS.map(
+        (variant) => html`
+          <swc-button
+            variant="secondary"
+            data-variant=${variant}
+            @click=${addVariant}
+          >
+            ${variantLabels[variant]}
+          </swc-button>
+        `
+      )}
+      <swc-toast-container .placement=${args.placement}></swc-toast-container>
+    `;
+  },
+  tags: ['options'],
+};
 
 export const Top: Story<ToastContainerArgs> = {
   ...Overview,
@@ -166,4 +229,13 @@ export const BottomEnd: Story<ToastContainerArgs> = {
 export const Action: Story<ToastContainerArgs> = {
   args: { actionLabel: 'Undo', timeout: 6000 },
   tags: ['behaviors'],
+};
+
+// ──────────────────────────
+//    ACCESSIBILITY STORY
+// ──────────────────────────
+
+export const Accessibility: Story<ToastContainerArgs> = {
+  ...Overview,
+  tags: ['a11y'],
 };

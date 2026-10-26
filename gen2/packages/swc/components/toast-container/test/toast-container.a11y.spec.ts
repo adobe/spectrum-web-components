@@ -123,6 +123,29 @@ test('only the front counts down and promotion starts a full timeout', async ({
   await expect(page.locator('swc-toast')).toHaveCount(0);
 });
 
+test('a pointer still inside the region keeps the promoted toast paused', async ({
+  page,
+}) => {
+  await openTimedStory(page);
+  const add = page.getByRole('button', { name: 'Add toast', exact: true });
+  await add.click();
+  await disableCloseTransition(page);
+  await add.click();
+  await disableCloseTransition(page);
+  const region = page.getByRole('region');
+  await region.dispatchEvent('pointerenter');
+  await page.getByRole('button', { name: 'Close newest', exact: true }).click();
+  await expect(region).toHaveAttribute('aria-label', '1 notification.');
+  await page.clock.runFor(10000);
+  await expect(page.locator('swc-toast')).toHaveCount(1);
+  await region.dispatchEvent('pointerleave');
+  await disableCloseTransition(page);
+  await page.clock.runFor(5999);
+  await expect(page.locator('swc-toast')).toHaveCount(1);
+  await page.clock.runFor(1);
+  await expect(page.locator('swc-toast')).toHaveCount(0);
+});
+
 test('an emptied region does not retain a stale pointer pause', async ({
   page,
 }) => {

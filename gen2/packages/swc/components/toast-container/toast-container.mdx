@@ -1,0 +1,111 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as ToastContainerStories from './stories/toast-container.stories';
+
+<Meta of={ToastContainerStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A toast container consists of:
+
+- **Region**: a fixed-position wrapper with `role="region"` and a label that counts the queued notifications
+- **Toast**: the front `<swc-toast>` that the container renders, with an optional variant icon, a message, an optional action button, and a close button
+
+The container does not take children. Add toasts to the shared `ToastQueue` and the container renders them.
+
+<Canvas of={ToastContainerStories.Anatomy} />
+
+## Options
+
+### Variants
+
+Set `variant` when you add a toast. A toast has four semantic variants: `neutral` (default), `info`, `positive`, and `negative`. The `info`, `positive`, and `negative` variants show a matching icon.
+
+<Canvas of={ToastContainerStories.Variants} />
+
+### Placement
+
+Set `placement` on the container to choose where toasts appear: `bottom` (default), `bottom-end`, `top`, or `top-end`. The `-end` placements sit at the end side of the viewport, which is the right in left-to-right layouts and the left in right-to-left layouts.
+
+<Canvas of={ToastContainerStories.Bottom} />
+
+<Canvas of={ToastContainerStories.BottomEnd} />
+
+<Canvas of={ToastContainerStories.Top} />
+
+<Canvas of={ToastContainerStories.TopEnd} />
+
+## Behaviors
+
+### Adding and removing toasts
+
+Add one `<swc-toast-container>` to your page, then use `ToastQueue` to manage toasts. `ToastQueue.add()` returns a key that identifies the entry.
+
+```javascript
+import '@adobe/spectrum-wc/components/toast-container/swc-toast-container.js';
+import { ToastQueue } from '@adobe/spectrum-wc/components/toast-container/index.js';
+
+const key = ToastQueue.add('File saved', { variant: 'positive' });
+
+ToastQueue.close(key);
+ToastQueue.clear();
+```
+
+`add()` accepts these options:
+
+- `variant`: `neutral` (default), `info`, `positive`, or `negative`
+- `iconLabel`: a label for the variant icon
+- `timeout`: the auto-dismiss duration in milliseconds
+- `actionLabel`: the label for the action button
+- `onAction`: called when the action button is activated
+- `shouldCloseOnAction`: closes the toast after the action runs, default `false`
+- `onClose`: called once when the toast is removed
+
+The queue keeps every toast you add, but the container renders only the newest one. When it closes, the next toast in the queue appears. The region label counts every queued toast, including the ones that are waiting.
+
+`ToastQueue.close(key)` closes one toast and calls its `onClose`. `ToastQueue.clear()` removes all toasts and does not call any `onClose` callbacks. A toast that a listener keeps open by canceling its `swc-close` event stays in the queue and does not call `onClose`.
+
+Connect only one `<swc-toast-container>` per page. A second container logs a warning during development.
+
+### Auto-dismiss
+
+A toast stays until it is closed unless you set `timeout`. Positive values are raised to a minimum of 6000 milliseconds. `null`, `0`, and negative values turn auto-dismiss off.
+
+Only the toast that is showing counts down. When the next toast appears, its timer starts from the full duration. The timer pauses while a pointer or keyboard focus is anywhere in the region, and it resumes when both have left.
+
+### Actions
+
+Set `actionLabel` and `onAction` to add an action button to a toast. Activating the button calls `onAction` and leaves the toast open unless you set `shouldCloseOnAction`. A toast with an action never auto-dismisses, so users have time to reach the button. If you also set `timeout`, a warning appears during development and the timeout is ignored.
+
+<Canvas of={ToastContainerStories.Action} />
+
+### Focus
+
+Opening a toast does not move focus. When the last toast closes while focus is inside the region, focus returns to the element that had it before the user entered the region. If focus has already moved elsewhere, it stays where it is.
+
+## Accessibility
+
+### Features
+
+The region has `role="region"` and an accessible name that reads "1 notification." or "N notifications." based on the number of queued toasts. It has `tabindex="-1"`, so it can receive focus from script but is not part of the normal Tab sequence.
+
+Each `<swc-toast>` has `role="alertdialog"`, `aria-modal="false"`, and `tabindex="0"`, with an inner `role="alert"` wrapper so screen readers announce the message. The container reveals the message shortly after the toast opens, so assistive technology registers the live region first. The toast's accessible name comes from its message.
+
+### Best practices
+
+- Write a message that communicates the variant on its own, because the variant icon is decorative by default and screen readers do not announce it.
+- Set `iconLabel` only when the icon needs its own announcement. If the message already states the status, a label makes screen readers say it twice.
+- Provide a descriptive `actionLabel` for the action button.
+
+<Canvas of={ToastContainerStories.Accessibility} />
+
+## Upcoming features
+
+- A stacked presentation for waiting toasts, an expanded view, and actions to show all or clear all toasts.
+- Moving focus to the nearest remaining toast when a focused toast closes.
+
+<DocsFooter />

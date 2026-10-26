@@ -1,11 +1,13 @@
 import { Canvas, Meta } from '@storybook/addon-docs/blocks';
 import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
 
-import * as ToastStories from './stories/toast.stories';
+import * as ToastStories from './stories/toast.internal.stories';
 
 <Meta of={ToastStories} />
 
 <DocsHeader />
+
+> `swc-toast` is the notification element that `swc-toast-container` renders. It is not meant to be used on its own. To show toasts in an application, use the [toast container](../?path=/docs/components-toast-container--docs) and `ToastQueue`.
 
 ## Anatomy
 
@@ -81,7 +83,6 @@ The host's accessible name comes from the message in the default slot.
 
 ## Upcoming features
 
-- A first-party toast container will manage queued notifications, placement, focus routing, and expanded multi-toast presentation.
-- Auto-dismiss timing and region-wide pause behavior will be managed by the container.
+- Stacked and expanded multi-toast presentation will be managed by the container.
 
 <DocsFooter />

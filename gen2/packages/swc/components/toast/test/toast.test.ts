@@ -28,7 +28,7 @@ import {
   waitForEvent,
   withWarningSpy,
 } from '../../../utils/test-utils.js';
-import meta, { Overview } from '../stories/toast.stories.js';
+import meta, { Overview } from '../stories/toast.internal.stories.js';
 
 // These tests cover standalone Toast only; queue and container behavior gets separate tests.
 // TODO(SWC-2567): add queue tests: timeout floor, action disables timeout with its dev warning, pause and resume.
