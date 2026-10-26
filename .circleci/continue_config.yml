@@ -16,8 +16,9 @@ executors:
   # xlarge — heavy builds (Vite, Storybook), VRT, and single-container coverage.
   node:
     parameters:
-      # Gen1's Web Test Runner needs page.accessibility.snapshot(), removed in
-      # Playwright 1.57. Match the root resolution and install:browsers:1st-gen.
+      # Gen1's Web Test Runner stays on its golden-image browser version and
+      # needs page.accessibility.snapshot(), removed in Playwright 1.57.
+      # Match the root resolution and install:browsers:1st-gen.
       playwright-version:
         type: string
         default: v1.64.1-resolute
@@ -334,7 +335,7 @@ jobs:
   test-chromium:
     executor:
       name: node-large
-      playwright-version: v1.56.1-noble
+      playwright-version: v1.53.1-noble
     parallelism: 5
     steps:
       - downstream
@@ -349,7 +350,7 @@ jobs:
   test-chromium-coverage:
     executor:
       name: node
-      playwright-version: v1.56.1-noble
+      playwright-version: v1.53.1-noble
     steps:
       - downstream
       - run:
@@ -364,7 +365,7 @@ jobs:
   test-chromium-memory:
     executor:
       name: node-large
-      playwright-version: v1.56.1-noble
+      playwright-version: v1.53.1-noble
     parallelism: 5
     steps:
       - downstream
@@ -380,7 +381,7 @@ jobs:
   test-firefox:
     executor:
       name: node-large
-      playwright-version: v1.56.1-noble
+      playwright-version: v1.53.1-noble
     parallelism: 5
     steps:
       - downstream
@@ -395,7 +396,7 @@ jobs:
   test-webkit:
     executor:
       name: node-large
-      playwright-version: v1.56.1-noble
+      playwright-version: v1.53.1-noble
     parallelism: 5
     steps:
       - downstream
@@ -538,7 +539,7 @@ jobs:
   hcm-visual:
     executor:
       name: node
-      playwright-version: v1.56.1-noble
+      playwright-version: v1.53.1-noble
     steps:
       - downstream
       - restore_cache:
@@ -662,7 +663,7 @@ jobs:
   visual:
     executor:
       name: node
-      playwright-version: v1.56.1-noble
+      playwright-version: v1.53.1-noble
     parameters:
       system:
         type: string

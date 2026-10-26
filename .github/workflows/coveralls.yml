@@ -38,7 +38,7 @@ jobs:
     # branch-protection checks, so no extra gate job is needed.
     if: needs.detect-changes.outputs.first_gen == 'true'
     name: Generate and upload coverage report
-    # Gen1's last compatible Playwright release supports Ubuntu 24.04.
+    # Gen1's legacy Web Test Runner browser supports Ubuntu 24.04.
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout PR branch

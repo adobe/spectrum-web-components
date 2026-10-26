@@ -31,7 +31,7 @@
     "generate:skills": "node scripts/generate-agent-skills.mjs",
     "generate:ui-icons": "yarn workspace @adobe/spectrum-wc generate:ui-icons",
     "generate:workflow-icons": "yarn workspace @adobe/spectrum-wc-icons generate:workflow-icons",
-    "install:browsers:1st-gen": "yarn dlx playwright@1.56.1 install --with-deps",
+    "install:browsers:1st-gen": "yarn dlx playwright@1.53.1 install --with-deps",
     "lint": "run-s --continue-on-error lint:eslint lint:styles lint:prettier lint:ai",
     "lint:1st-gen": "LINT_PATH=1st-gen yarn lint",
     "lint:ai": "node .ai/scripts/validate.js && node --test .ai/scripts/sync.test.js",
@@ -71,7 +71,7 @@
   ],
   "resolutions": {
     "@web/test-runner-coverage-v8": "patch:@web/test-runner-coverage-v8@npm%3A0.8.0#~/.yarn/patches/@web-test-runner-coverage-v8-npm-0.8.0-b19cf60e5f.patch",
-    "@web/test-runner-playwright/playwright": "1.56.1",
+    "@web/test-runner-playwright/playwright": "1.53.1",
     "axe-core": "4.13.0",
     "basic-ftp": "5.2.0"
   },
