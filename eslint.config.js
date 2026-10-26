@@ -446,6 +446,26 @@ export default defineConfig([
   },
 
   // ────────────────────────────────────────────────────────────────────────────
+  // Changesets changelog generator: Node globals and release-tooling imports
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['gen2/.changeset/changelog-grouped.cjs'],
+    languageOptions: {
+      globals: globals.node,
+    },
+    rules: {
+      'import/no-extraneous-dependencies': [
+        'error',
+        {
+          devDependencies: true,
+          optionalDependencies: false,
+          peerDependencies: false,
+        },
+      ],
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
   // Storybook config files: Node globals and tooling imports
   // ────────────────────────────────────────────────────────────────────────────
   {
