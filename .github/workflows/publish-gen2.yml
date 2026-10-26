@@ -27,7 +27,7 @@ concurrency:
 
 jobs:
   check-changesets:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     # Only feeds version-pr/publish (the main-only release path), so gate it to main. The
     # snapshot job does not need it - it synthesizes its own changeset - so a feature-branch
     # dispatch skips straight to snapshot without running this.
@@ -37,7 +37,7 @@ jobs:
       needs_publish: ${{ steps.check.outputs.needs_publish }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # Always main (this job is gated to main below), so the changeset count reflects
           # the release path. The feature-branch snapshot job does its own checkout.
@@ -119,7 +119,7 @@ jobs:
     if: >-
       github.event_name == 'workflow_dispatch' &&
       github.ref != 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     environment: npm-publish
     permissions:
       contents: read # snapshot never writes back - no commit, tag, or PR
@@ -127,7 +127,7 @@ jobs:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # The dispatched feature branch itself (github.ref). No cross-branch checkout,
           # so there's nothing to point at a fork.
@@ -245,7 +245,7 @@ jobs:
     if: >-
       github.ref == 'refs/heads/main' &&
       needs.check-changesets.outputs.has_changesets == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     permissions:
       contents: write # commits the Version PR branch
       pull-requests: write # opens/updates the Version PR
@@ -253,7 +253,7 @@ jobs:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -303,7 +303,7 @@ jobs:
     if: >-
       github.ref == 'refs/heads/main' &&
       needs.check-changesets.outputs.needs_publish == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     environment: npm-publish
     permissions:
       contents: write # pushes the release git tag
@@ -311,7 +311,7 @@ jobs:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
