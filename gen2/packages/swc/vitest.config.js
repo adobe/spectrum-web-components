@@ -105,10 +105,10 @@ export default mergeConfig(
           },
 
           // Shared controllers, element, mixins, and utils
-          '../core/controllers/*.{ts,js}': {
-            lines: 85,
-            functions: 90,
-            statements: 85,
+          '../core/controllers/**/*.{ts,js}': {
+            lines: 88,
+            functions: 87,
+            statements: 88,
           },
           '../core/element/*.{ts,js}': {
             lines: 94,
@@ -172,7 +172,13 @@ export default mergeConfig(
             name: 'storybook',
             // .vrt.ts stories are authored for Chromatic snapshots, which
             // runs their play functions itself; keep them out of Vitest.
-            exclude: [...configDefaults.exclude, '**/*.vrt.ts'],
+            // `**` doesn't match `..`, so sibling packages (icons) need
+            // their own pattern.
+            exclude: [
+              ...configDefaults.exclude,
+              '**/*.vrt.ts',
+              '../**/*.vrt.ts',
+            ],
             browser: {
               enabled: true,
               provider: playwright(),
