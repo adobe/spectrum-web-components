@@ -37,7 +37,7 @@ jobs:
       needs_publish: ${{ steps.check.outputs.needs_publish }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # Always main (this job is gated to main below), so the changeset count reflects
           # the release path. The feature-branch snapshot job does its own checkout.
@@ -127,7 +127,7 @@ jobs:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # The dispatched feature branch itself (github.ref). No cross-branch checkout,
           # so there's nothing to point at a fork.
@@ -253,7 +253,7 @@ jobs:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -311,7 +311,7 @@ jobs:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 

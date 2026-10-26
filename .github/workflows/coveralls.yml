@@ -22,11 +22,11 @@ jobs:
       first_gen: ${{ steps.filter.outputs.first_gen_any_changed }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Detect 1st-gen-relevant changes
         id: filter
-        uses: step-security/changed-files@v46
+        uses: step-security/changed-files@v47
         with:
           files_yaml: |
             first_gen:
@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Job and Install Dependencies
         uses: ./.github/actions/setup-job

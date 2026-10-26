@@ -41,7 +41,7 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -58,7 +58,7 @@ jobs:
 
       - name: Publish to Chromatic
         id: chromatic
-        uses: chromaui/action@v15
+        uses: chromaui/action@v18
         with:
           projectToken: ${{ secrets.CHROMATIC_TOKEN }}
           workingDir: gen2/packages/swc

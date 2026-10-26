@@ -32,12 +32,12 @@ jobs:
     steps:
       ## --- SETUP --- ##
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Use Node version from .nvmrc
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: yarn
@@ -57,7 +57,7 @@ jobs:
       - name: Check for cached dependencies
         continue-on-error: true
         id: cache-dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             .cache/yarn
@@ -188,7 +188,7 @@ jobs:
           echo "  - Gen2 Storybook (prod): ${gen2_storybook_prod_url}"
 
       - name: Post Previews Comment
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const { buildPreviewURLComment } = await import('${{ github.workspace }}/.github/scripts/build-preview-urls-comment.js');
@@ -208,7 +208,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Wait for deployment
         env:
@@ -252,7 +252,7 @@ jobs:
           NODE_ENV: CI
 
       - name: Upload Playwright Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: playwright-report
@@ -266,7 +266,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Check out code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Generate PR hash
