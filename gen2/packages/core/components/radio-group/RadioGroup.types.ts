@@ -10,7 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-import type { ElementSize } from '@adobe/spectrum-wc-core/mixins/index.js';
+import type {
+  ElementSize,
+  FieldStatus,
+} from '@adobe/spectrum-wc-core/mixins/index.js';
 
 // ──────────────────
 //     SHARED
@@ -29,6 +32,13 @@ export const RADIO_GROUP_ORIENTATIONS = ['horizontal', 'vertical'] as const;
 
 export const RADIO_GROUP_NECESSITY_INDICATORS = ['icon', 'label'] as const;
 
+/** The shared field statuses that apply to a radio group; it has no `valid`. */
+export const RADIO_GROUP_STATUSES = [
+  'disabled',
+  'invalid',
+  'readonly',
+] as const satisfies readonly FieldStatus[];
+
 // ──────────────────
 //     TYPES
 // ──────────────────
@@ -39,3 +49,4 @@ export type RadioGroupLabelPosition =
 export type RadioGroupOrientation = (typeof RADIO_GROUP_ORIENTATIONS)[number];
 export type RadioGroupNecessityIndicator =
   (typeof RADIO_GROUP_NECESSITY_INDICATORS)[number];
+export type RadioGroupStatus = (typeof RADIO_GROUP_STATUSES)[number];
