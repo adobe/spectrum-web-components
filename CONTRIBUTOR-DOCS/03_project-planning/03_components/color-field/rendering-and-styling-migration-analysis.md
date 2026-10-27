@@ -156,7 +156,7 @@ There is no CSS implementation for this component; it only exists in SWC.
 
 ### Inherited from TextfieldBase
 
-The ColorField component extends TextfieldBase, which means it will inherit all the changes and improvements made to the Textfield component in Spectrum 2 CSS, for example:
+The ColorField component extends `TextfieldBase`, which means it will inherit all the changes and improvements made to the text field component in Spectrum 2 CSS, for example:
 
 - **Quiet variant**: removed in Spectrum 2
 - **Label position**: CSS supports side label as well as the default top label

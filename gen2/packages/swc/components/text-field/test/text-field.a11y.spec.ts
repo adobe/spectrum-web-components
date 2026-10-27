@@ -17,7 +17,7 @@ import type { TextField } from '@adobe/spectrum-wc/text-field';
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
- * Accessibility tests for the gen2 Text Field component.
+ * Accessibility tests for the gen2 text field component.
  *
  * ARIA snapshot tests validate the accessibility tree (the `textbox` role,
  * its accessible name, and its description) across every labelling source,

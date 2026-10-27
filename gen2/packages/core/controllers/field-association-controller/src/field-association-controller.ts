@@ -32,7 +32,7 @@ export interface FieldAssociationControllerOptions {
 
 /**
  * Wraps the `ElementInternals` form-participation surface shared by every field
- * component (textfield, checkbox, radio, combobox): form value, the
+ * component (text field, checkbox, radio, combobox): form value, the
  * `<fieldset disabled>` cascade, and the validity reads. Extracted so each
  * field doesn't re-implement it.
  *

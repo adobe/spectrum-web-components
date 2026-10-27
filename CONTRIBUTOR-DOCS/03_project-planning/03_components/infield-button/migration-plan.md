@@ -433,7 +433,7 @@ html`
 - [x] Style the slotted icon with `slot[name="icon"]::slotted(*)` (color + size-specific padding), as `swc-button` does; do **not** put a `.swc-InfieldButton-icon` class on the consumer-slotted node (the S2 `.spectrum-InfieldButton-icon` rule targets an inline SVG in the CSS-only template, which does not apply to the slotted web-component case)
 - [x] Verify whether `.swc-InfieldButton-fill` (inner `<div>`) is required by S2 selectors or can be removed in favour of `::slotted()` alone; **Phase 5 decision: fill wrapper dropped.** `::slotted()` alone is sufficient. Background color, border, border-radius, and icon centering flex are applied directly to the inner `<button>`, simplifying the shadow DOM structure.
 - [x] Do **not** carry forward `.spectrum-InfieldButton--top` / `--bottom` stacked classes; S2 uses a consistent corner radius on the button itself
-- [x] The `.swc-InfieldButton-inline` wrapper is **not** rendered by this component; it belongs to the parent field host (number-field/textfield) that composes stepper/clear groups
+- [x] The `.swc-InfieldButton-inline` wrapper is **not** rendered by this component; it belongs to the parent field host (number-field/text-field) that composes stepper/clear groups
 
 #### Visual model and regressions
 

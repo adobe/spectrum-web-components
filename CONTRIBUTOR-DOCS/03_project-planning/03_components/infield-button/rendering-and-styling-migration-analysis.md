@@ -293,7 +293,7 @@ None found for this component.
 - **Enhanced iconography**: Switched from chevron-based icons to more intuitive action icons (Dash/Add), providing clearer visual cues for increment/decrement operations.
 - **Streamlined state management**: Removed `isInvalid`/`isFocused` states while preserving essential interaction feedback (`isHovered`/`isActive`).
 - **Flexible template structure**: Inline variant automatically creates paired buttons for common operations, while single variant provides direct click handling for custom actions.
-- **Focus state inheritance**: Infield buttons no longer manage their own focus states, instead inheriting focus styling from their parent components (like textfields or pickers). This creates a more cohesive user experience where the entire input field appears focused rather than individual button elements.
+- **Focus state inheritance**: Infield buttons no longer manage their own focus states, instead inheriting focus styling from their parent components (like text fields or pickers). This creates a more cohesive user experience where the entire input field appears focused rather than individual button elements.
 
 #### Removed modifiers
 

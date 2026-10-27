@@ -84,7 +84,7 @@ Use this decision tree for every component:
 2. **Does the host element itself receive focus?** (e.g., button, menu item)
    - **Yes** → Use `DisabledMixin` only. No delegation needed.
 
-3. **Should focus go to a single inner element?** (e.g., textfield → `<input>`, link → `<a>`)
+3. **Should focus go to a single inner element?** (e.g., text field → `<input>`, link → `<a>`)
    - **Yes** → Use `delegatesFocus: true`. Ensure the focus target is the **first focusable element** in the shadow DOM template.
 
 Most components also need `DisabledMixin` regardless of which focus strategy they use.
@@ -95,7 +95,7 @@ Most components also need `DisabledMixin` regardless of which focus strategy the
 
 ### When to use
 
-Use `delegatesFocus` when there is **exactly one place focus should ever go** inside the shadow root. This covers components like textfields, checkboxes, links, color inputs, and accordion items.
+Use `delegatesFocus` when there is **exactly one place focus should ever go** inside the shadow root. This covers components like text fields, checkboxes, links, color inputs, and accordion items.
 
 **Do not use** when:
 - The component has multiple internal focus targets (e.g., combobox, multi-handle slider)
@@ -275,7 +275,7 @@ The mixin uses `aria-disabled` on the host instead of the native `disabled` attr
 
 Custom elements are not native form controls — the browser's `disabled` attribute has no built-in effect on a custom element host. Using `aria-disabled` keeps the element discoverable by assistive technology, which is generally better UX.
 
-**Components wrapping native form controls** (textfield, checkbox, etc.) should **also** set `disabled` on the inner element in `render()` to get correct platform behavior.
+**Components wrapping native form controls** (text field, checkbox, etc.) should **also** set `disabled` on the inner element in `render()` to get correct platform behavior.
 
 For the full rationale, see [On disabled and aria-disabled attributes](https://kittygiraudel.com/2024/03/29/on-disabled-and-aria-disabled-attributes/).
 

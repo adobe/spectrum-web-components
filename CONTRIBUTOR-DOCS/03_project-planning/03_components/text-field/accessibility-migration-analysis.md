@@ -43,7 +43,7 @@ gen2 also retires `sp-field-label` and `sp-help-text` as separate components tha
 
 ### Also read
 
-- [Textfield and Textarea migration roadmap](../textfield/rendering-and-styling-migration-analysis.md) for layout, CSS, and DOM changes (still filed under the combined 1st-gen `textfield/` folder pending a rendering-doc split).
+- [Text field and text area migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, CSS, and DOM changes. The combined rendering analysis lives under `text-field/`.
 - [Text area accessibility migration analysis](../text-area/accessibility-migration-analysis.md) for the multiline sibling.
 
 ### What it is
@@ -219,6 +219,6 @@ Component tag may change until API freeze. `swc-text-field` covers only the sing
 - [`renderPendingSpinner` (this repo)](../../../../gen2/packages/core/directives/pending-spinner/src/pending-spinner.ts) — the shared-directive structural precedent `LabellingMixin` follows
 - [Spectrum 2: Text field](https://s2.spectrum.corp.adobe.com/page/text-field/), [Spectrum 2: Field label](https://s2.spectrum.corp.adobe.com/page/field-label/) (internal, SSO-gated — verify directly if you have access; not independently fetchable while drafting this doc)
 - 1st-gen: [`sp-textfield`](../../../../1st-gen/packages/textfield/README.md), [`sp-field-label`](../../../../1st-gen/packages/field-label/README.md), [`sp-help-text`](../../../../1st-gen/packages/help-text/README.md)
-- [Textfield and Textarea migration roadmap (this repo)](../textfield/rendering-and-styling-migration-analysis.md)
+- [Text field and text area migration roadmap (this repo)](./rendering-and-styling-migration-analysis.md)
 - [Text area accessibility migration analysis (this repo)](../text-area/accessibility-migration-analysis.md)
 - Jira: [SWC-2323](https://jira.corp.adobe.com/browse/SWC-2323) (epic), [SWC-2324](https://jira.corp.adobe.com/browse/SWC-2324) (this research ticket), [SWC-2466](https://jira.corp.adobe.com/browse/SWC-2466) (`LabellingMixin`), [SWC-2467](https://jira.corp.adobe.com/browse/SWC-2467) (`FieldAssociationController`), [SWC-1888](https://jira.corp.adobe.com/browse/SWC-1888) (RFC: form field strategy for gen2 migration)

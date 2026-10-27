@@ -163,7 +163,7 @@ export const OptionalAttributeRemoval: Story = {
   render: () => html`
     <demo-slot-propagation-optional id="optional-attribute-host">
       <input
-        class="swc-Textfield"
+        class="swc-TextField"
         aria-label="Email address"
         placeholder="you@example.com"
       />

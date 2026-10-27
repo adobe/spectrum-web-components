@@ -412,7 +412,7 @@
 
 - Base class changes from `.spectrum-Stepper` to `.spectrum-NumberField`
 - Addition of field label with `.spectrum-NumberField-fieldLabel` class
-- New wrapper div with `.spectrum-NumberField-inputs` class around textfield and buttons
+- New wrapper div with `.spectrum-NumberField-inputs` class around text field and buttons
 - Removal of `--top` and `--bottom` modifier classes from infield buttons
 
 ```diff
@@ -482,8 +482,8 @@
 | `.spectrum-NumberField:lang(ja), .spectrum-NumberField:lang(ko), .spectrum-NumberField:lang(zh)` | Language-specific styling                                        | Implemented                                                   |
 | `.spectrum-NumberField-buttons`                                                                  | Stepper buttons (`<span class="buttons"`)                        | Implemented                                                   |
 | `.spectrum-NumberField-input`                                                                    | Input element (`<div class="input">`)                            | Implemented                                                   |
-| `.spectrum-NumberField-inputs`                                                                   | Wrapper for textfield and button inputs (`<div id="textfield">`) | Implemented                                                   |
-| `.spectrum-NumberField-textfield`                                                                | Textfield wrapper inside of `<div id="textfield">`               | Missing from WC (markup updated for S2)                       |
+| `.spectrum-NumberField-inputs`                                                                   | Wrapper for text field and button inputs (`<div id="textfield">`) | Implemented                                                   |
+| `.spectrum-NumberField-textfield`                                                                | Text field wrapper inside of `<div id="textfield">`               | Missing from WC (markup updated for S2)                       |
 | `.spectrum-NumberField--sideLabel`                                                               | `label-position`                                                 | Missing from WC (SWC has different side label implementation) |
 
 ## Summary of changes
@@ -492,8 +492,8 @@
 
 The following features are missing from the web component implementation:
 
-- **Side label positioning**: As also seen in textfield, CSS supports `--sideLabel` modifier but there's no corresponding attribute in the web component
-- **Quiet variant removal**: Also seen in textfield, the quiet variant no longer exists in full-fidelity Spectrum 2 implementations.
+- **Side label positioning**: As also seen in text field, CSS supports `--sideLabel` modifier but there's no corresponding attribute in the web component
+- **Quiet variant removal**: Also seen in text field, the quiet variant no longer exists in full-fidelity Spectrum 2 implementations.
 
 Note: There are some differences in markup between SWC and Spectrum 2 CSS that will likely require some additional adjustment during SWC migration.
 

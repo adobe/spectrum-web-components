@@ -138,7 +138,7 @@ The class is split `TextfieldBase` → `Textfield`, where `TextfieldBase extends
 
 ### CSS custom properties
 
-1st-gen exposes a large `--mod-textfield-*` / `--mod-text-area-*` modifier surface (border colors across every focus/hover/invalid permutation, spacing, typography, icon sizing/spacing, character-count spacing, width/height). See the [rendering-and-styling migration analysis](../textfield/rendering-and-styling-migration-analysis.md) for the full list.
+1st-gen exposes a large `--mod-textfield-*` / `--mod-text-area-*` modifier surface (border colors across every focus/hover/invalid permutation, spacing, typography, icon sizing/spacing, character-count spacing, width/height). See the [rendering-and-styling migration analysis](./rendering-and-styling-migration-analysis.md) for the full list.
 
 This full modifier surface will not be carried forward to 2nd-gen.
 
@@ -255,7 +255,7 @@ Migrate `swc-text-field` **first among the field family**, using it as the provi
 
 | #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
-| B1 | Remove `quiet` | `quiet` attribute renders a no-background field | Attribute removed (confirmed by Design; sources: [rendering analysis](../textfield/rendering-and-styling-migration-analysis.md#css-spectrum-2-changes) + Figma matrix) | Remove `quiet`; dense/table use case maps to the inline variant (Q17). |
+| B1 | Remove `quiet` | `quiet` attribute renders a no-background field | Attribute removed (confirmed by Design; sources: [rendering analysis](./rendering-and-styling-migration-analysis.md#css-spectrum-2-changes) + Figma matrix) | Remove `quiet`; dense/table use case maps to the inline variant (Q17). |
 | B2 | Rename `label` → `accessible-label` | `label` sets `aria-label` and falls back to `placeholder` | `accessible-label` sets `aria-label`; placeholder fallback removed and dev-warned; visible label is slotted and rendered in-shadow (source: [a11y analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties)) | Rename `label` → `accessible-label`, or provide a slotted visible label. Unlabeled fields now dev-warn. |
 | B3 | Split multiline into `swc-text-area` | `sp-textfield[multiline]` | `swc-text-field` is single-line only; use `swc-text-area` for multiline | Replace `<sp-textfield multiline>` with `<swc-text-area>`; `grows`/`rows` move there. |
 | B4 | Drop truncated-value tooltip | `TruncatedValueTooltipController` + `tooltip-placement` | Removed; full value reachable natively; optional pointer-only `title` (source: [a11y analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties)) | Remove `tooltip-placement`; no replacement needed. |
@@ -268,7 +268,7 @@ Migrate `swc-text-field` **first among the field family**, using it as the provi
 | #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | B6 | `--mod-*` surface removed | ~60 `--mod-textfield-*`/`--mod-text-area-*` custom properties | Not exposed; a small reviewed `--swc-*` set only | Remove `--mod-*` overrides; file requests for any needed `--swc-*`. |
-| B7 | Validation icons updated | `Alert` (invalid), simple `Checkmark` (valid) | `AlertTriangle` (invalid) ships; the valid **checkmark is deferred** (source: [rendering analysis](../textfield/rendering-and-styling-migration-analysis.md#css-spectrum-2-changes)) | Internal; no consumer action. Invalid icon stays `aria-hidden`. |
+| B7 | Validation icons updated | `Alert` (invalid), simple `Checkmark` (valid) | `AlertTriangle` (invalid) ships; the valid **checkmark is deferred** (source: [rendering analysis](./rendering-and-styling-migration-analysis.md#css-spectrum-2-changes)) | Internal; no consumer action. Invalid icon stays `aria-hidden`. |
 
 > **Valid-state icon (deferred):** the valid checkmark is **not shown in React Spectrum or the newer Figma**, and per Design and RS it is **deferred** (tracked as additive A8). Consumers can author `field-status="valid"`; only the icon is deferred.
 
@@ -299,7 +299,7 @@ Migrate `swc-text-field` **first among the field family**, using it as the provi
 | #   | What is added | Notes |
 | --- | ------------- | ----- |
 | A1 | Character count | 1st-gen never implemented it, and React Spectrum does not support it yet, so deferral is confirmed. If added later it will need a dedicated a11y plan: `aria-describedby` alone is not sufficient given the complexities of announcing a live count. |
-| A2 | In-field pending state | **Documented in Spectrum CSS** as a boolean `Loading` state (rendered via `spectrum-InfieldProgressCircle`; see the DOM in the [rendering analysis](../textfield/rendering-and-styling-migration-analysis.md#css-spectrum-2-changes)). Not yet shown in React Spectrum or the Figma state matrix Design shared, so reconcile the gap with Design. Depends on `infield-progress-circle` (not yet built). SWC terminology is "pending"; Spectrum CSS calls it "Loading"; align naming when scheduled. |
+| A2 | In-field pending state | **Documented in Spectrum CSS** as a boolean `Loading` state (rendered via `spectrum-InfieldProgressCircle`; see the DOM in the [rendering analysis](./rendering-and-styling-migration-analysis.md#css-spectrum-2-changes)). Not yet shown in React Spectrum or the Figma state matrix Design shared, so reconcile the gap with Design. Depends on `infield-progress-circle` (not yet built). SWC terminology is "pending"; Spectrum CSS calls it "Loading"; align naming when scheduled. |
 | A4 | Required-without-asterisk styling | S2 adds `isRequiredWithoutAsterisk`; needs Design confirmation (Q4). |
 | A5 | Inline text-field variant | New in S2; **published in Figma** (the source of truth) as a separate "Text field (In-line)" component: corrects the earlier "not in Figma yet." Not yet built in SWC and **not yet supported in React**. Deferral confirmed; whether to schedule it now is Q17. |
 | A6 | `prefix` affix | **Pulled into scope** during implementation (was deferred pending a Design decision; Design confirmed doing it now). Ships as a non-interactive `prefix` slot for leading content (icon, symbol, avatar). See the [Decision log](#decision-log). |
@@ -310,7 +310,7 @@ Migrate `swc-text-field` **first among the field family**, using it as the provi
 
 ## 2nd-gen API decisions
 
-These are derived from the 1st-gen implementation, the [accessibility migration analysis](./accessibility-migration-analysis.md), the [rendering-and-styling analysis](../textfield/rendering-and-styling-migration-analysis.md), the approved forms strategy (SWC-1888), and React Spectrum. The Figma `S2 / Web (Desktop scale)` visual spec and a `spectrum-css@spectrum-two` checkout were not available while drafting; visual-matrix items are provisional.
+These are derived from the 1st-gen implementation, the [accessibility migration analysis](./accessibility-migration-analysis.md), the [rendering-and-styling analysis](./rendering-and-styling-migration-analysis.md), the approved forms strategy (SWC-1888), and React Spectrum. The Figma `S2 / Web (Desktop scale)` visual spec and a `spectrum-css@spectrum-two` checkout were not available while drafting; visual-matrix items are provisional.
 
 - **Confirmed**: directly supported by source material
 - **Inferred**: recommended from multiple signals, not stated in one authoritative source
@@ -544,7 +544,6 @@ Planned rendering shape:
 | Q17 | Inline text-field variant is **published in Figma** (separate "Text field (In-line)" component; Figma is the source of truth); the earlier "not in Figma/Spectrum CSS yet" rationale is stale and not the deciding factor. It is a new **additive** S2 variant not yet built in SWC; default is to defer until scheduled unless prioritized into this migration. | No | Deferred (additive, A5): defer unless prioritized | Scope |
 | Q18 | Pull non-a11y gen1 `sp-textfield` Jira issues into the Open gen1 issues table. | No | Open: needs Jira export | Ticket owner |
 | Q20 | Finalize the visual matrix and styling baseline from Figma `S2 / Web (Desktop scale)`: **the source of truth**. The state × variant matrix is now available (see the 2026-08-18 note) and is **complete on the visual axis** (all four sizes × top/side × five states × content/error variants) except an explicit valid state (deferred, A8; read-only has no distinct visual treatment). **Tokens live in Figma** but need deeper inspection to extract exact values (spacing, radius, focus-ring width); a `spectrum-css@spectrum-two` checkout is an optional cross-reference, not a prerequisite. | No (blocks finalizing token values) | Open: visual matrix complete; token values pending deeper Figma inspection | Ticket owner |
-| Q21 | Consolidate doc folder slug to `text-field` (move `rendering-and-styling-migration-analysis.md` out of `textfield/`). | No | Open: recommend `text-field` | Ticket owner |
 | Q26 | "Labeled Value" component vs read-only: React Spectrum's Labeled Value displays non-editable information alongside editable fields, overlapping conceptually with a read-only text field. Check whether read-only and Labeled Value are distinct in S2, and ensure Labeled Value is on the 2nd-gen component-creation list. Deferrable. | No | Open: surfaced in review | Design + Scope |
 
 ---
@@ -555,6 +554,7 @@ Settled decisions from planning and PR review, kept here as a historical record 
 
 | Ref | Decision | Rationale / context |
 | --- | -------- | ------------------- |
+| Q21 | Consolidate text field planning docs under `text-field/` | Move the combined rendering and styling analysis alongside the accessibility analysis and migration plan; update incoming links and generated navigation. Preserve literal 1st-gen API names and external Spectrum CSS selectors. |
 | Forms checkpoint (authored status) | Replace `disabled`, `readonly`, `invalid`, and `valid` booleans with optional `fieldStatus` / `field-status` | Confirmed after the forms checkpoint discussion: values are `disabled`, `invalid`, `valid`, or `readonly`; untouched is `undefined`. No compatibility aliases. Required remains independent. Component-owned status resolution projects native disabled/read-only attributes and passes an explicit invalid option to `FieldDescriptionMixin`; existing form/description resources remain responsible for their current plumbing. No new controller or mixin. The custom-validity follow-up is settled in Q19 below. The former authored disabled+invalid combination is no longer supported; inherited fieldset disabling retains existing platform behavior pending a separate team decision. Necessity-indicator overrides, disabled/`aria-disabled` semantics, and other checkpoint work remain outside this slice. |
 | Q1 / B1 | Remove `quiet` | Removed in S2; confirmed intentional by Design. Corroborated by spectrum-css, the rendering analysis, and the Figma matrix; the "keep it" impression was only 1st-gen legacy docs. The dense/table use case maps to the inline variant (Q17). |
 | Q6 / B3 | Single-line `swc-text-field`; multiline moves to `swc-text-area` | Confirmed by the a11y analysis (plan source of truth) and PR review. `multiline`/`grows`/`rows` leave this component's surface. |
@@ -583,7 +583,7 @@ Settled decisions from planning and PR review, kept here as a historical record 
 - [Washing machine workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [2nd-gen migration status table](../../02_workstreams/02_2nd-gen-component-migration/01_status.md)
 - [Accessibility migration analysis](./accessibility-migration-analysis.md)
-- [Rendering and styling migration analysis](../textfield/rendering-and-styling-migration-analysis.md): currently under the `textfield/` slug; see Q21
+- [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md): consolidated under `text-field/`; see Q21
 - [Forms strategy RFC (SWC-1888)](../../05_strategies/forms-strategy-rfc.md)
 - [Text area accessibility migration analysis](../text-area/accessibility-migration-analysis.md)
 - [CSS style guide: Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)

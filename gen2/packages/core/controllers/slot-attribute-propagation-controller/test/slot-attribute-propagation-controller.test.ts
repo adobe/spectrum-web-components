@@ -419,7 +419,7 @@ SelectorFiltersAssignedElements.storyName =
 export const NullValueRemovesAttribute: Story = {
   render: () => html`
     <demo-slot-propagation-optional>
-      <input class="swc-Textfield" />
+      <input class="swc-TextField" />
     </demo-slot-propagation-optional>
   `,
   play: async ({ canvasElement, step }) => {

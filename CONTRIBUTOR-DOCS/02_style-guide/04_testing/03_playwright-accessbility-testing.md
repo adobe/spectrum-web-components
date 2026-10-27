@@ -290,7 +290,7 @@ Different components need different levels of accessibility testing. Use this ta
 | Non-interactive (badge, status light) | Role only (if any) | Not needed | Yes | Yes |
 | Simple interactive (button, link) | Role, label, disabled | Click via Enter/Space | Yes | Yes |
 | Selection (tabs, radio group, menu) | Role, selected, expanded | Arrow keys, Enter, Space, focus movement | Yes | Yes |
-| Form controls (textfield, checkbox, slider) | Role, label, value, checked, invalid | Arrow keys, Enter, Space, value changes | Yes | Yes |
+| Form controls (text field, checkbox, slider) | Role, label, value, checked, invalid | Arrow keys, Enter, Space, value changes | Yes | Yes |
 | Overlay (dialog, popover, tooltip) | Role, label, expanded, modal | Escape, Tab trapping, focus return | Yes | Yes |
 
 ## ARIA snapshot tests

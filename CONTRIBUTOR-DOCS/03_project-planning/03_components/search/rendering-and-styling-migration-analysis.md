@@ -500,7 +500,7 @@
 | `.spectrum-Search .spectrum-HelpText`                                                 | `help-text` slot          | Implemented                  |
 | `.spectrum-Search:lang(ja)`, `.spectrum-Search:lang(ko)`, `.spectrum-Search:lang(zh)` | Language-specific styling | Implemented                  |
 | `.spectrum-Search .spectrum-Search-clearButton`                                       | `<sp-clear-button>`       | Implemented                  |
-| `.spectrum-Search .spectrum-Search-textfield`                                         | Textfield functionality   | Implemented                  |
+| `.spectrum-Search .spectrum-Search-textfield`                                         | Text field functionality   | Implemented                  |
 | `.spectrum-Search .spectrum-Search-icon`                                              | `<sp-icon-search>`        | Implemented                  |
 | `.spectrum-Search .spectrum-Search-input`                                             | Input element             | Implemented                  |
 | `.spectrum-Search.is-collapsed`                                                       |                           | Missing from WC (new for S2) |
@@ -512,14 +512,14 @@
 
 The primary implementation gap between CSS and SWC is the S2 implementation of the collapsed Search variant, which allows for expansion and collapse of the search field to and from a quiet action button that uses the same magnifying glass icon. In CSS, these collapsed/expanded states and controlled by the classes `.spectrum-Search.is-collapsed` and `.spectrum-Search.is-expanded`.
 
-Also, because Search extends Textfield, S2 updates to Textfield also apply here. The most notable update to S2 Textfield is the removal of the quiet variant. **Therefore, there is no quiet variant in S2 Search.**
+Also, because Search extends `Textfield`, S2 updates to the text field also apply here. The most notable update to S2 text field is the removal of the quiet variant. **Therefore, there is no quiet variant in S2 Search.**
 
 ### CSS Spectrum 2 changes
 
 The most notable changes seen in Spectrum 2 migration work include:
 
 - **Collapsible functionality**: Added support and styling for collapsed/expanded states
-- **ActionButton integration**: When collapsed, the search shows as a quiet action button instead of a textfield
+- **ActionButton integration**: When collapsed, the search shows as a quiet action button instead of a text field
 - **Icon change**: Changed from "Magnify" icon to "Search" icon with workflow icon set
 - **Quiet variant**: Removed `isQuiet` parameter and `--quiet` modifier support
 

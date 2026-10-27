@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Textfield / Textfield and Textarea migration roadmap
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Text Field / Text field and text area migration roadmap
 
 <!-- Document title (editable) -->
 
-# Textfield and Textarea migration roadmap
+# Text field and text area migration roadmap
 
 <!-- Generated TOC - DO NOT EDIT -->
 
@@ -243,7 +243,7 @@ None found for this component.
 
 **Inherited from SizedMixin:**
 
-- `size` - Size of the textfield (s, m, l, xl)
+- `size` - Size of the text field (s, m, l, xl)
 
 **Inherited from Focusable:**
 
@@ -576,7 +576,7 @@ None found for this component.
 | `input[required]`, `textarea[required]`                                                                                                      | `required`              | Implemented (standard HTML)                                                        |
 | `input[autocomplete]`, `textarea[autocomplete]`                                                                                              | `autocomplete`          | Implemented (standard HTML)                                                        |
 | `input[allowed-keys]` (custom attribute)                                                                                                     | `allowed-keys`          | Implemented (custom)                                                               |
-| `.spectrum-Textfield--sideLabel`                                                                                                             | `labelPosition` (side)  | Missing from SWC textfield but exists within SWC field label                       |
+| `.spectrum-Textfield--sideLabel`                                                                                                             | `labelPosition` (side)  | Missing from SWC text field but exists within SWC field label                       |
 | `.spectrum-Textfield-characterCount`                                                                                                         | Character count feature | Missing from SWC (existed in S1 but never implemented in SWC)                      |
 | `.spectrum-Textfield--quiet`                                                                                                                 | `quiet`                 | Deprecated for S2                                                                  |
 
@@ -586,19 +586,19 @@ There are a few changes in CSS migration to S2 that are relevant to related comp
 
 There also doesn't appear to be support for rendering a progress circle inside of `<sp-textfield>`, which will need to be added.
 
-Side label exists as a variant of field label in SWC, but in CSS, the variant is controlled by textfield.
+Side label exists as a variant of field label in SWC, but in CSS, the variant is controlled by text field.
 
-**Note:** Field label's required option isn't new to SWC, but because Adobe design allows an input to be marked as required by noting it in the field label, see [the textfield design docs](https://spectrum.adobe.com/page/text-field/#Required-or-optional), without an asterisk, that's something we'll likely want to support.
+**Note:** Field label's required option isn't new to SWC, but because Adobe design allows an input to be marked as required by noting it in the field label, see [the text field design docs](https://spectrum.adobe.com/page/text-field/#Required-or-optional), without an asterisk, that's something we'll likely want to support.
 
-**Also noteworthy**: there is an additional inline textfield variant that has not yet been implemented in Spectrum CSS or Spectrum Web Components.
+**Also noteworthy**: there is an additional inline text field variant that has not yet been implemented in Spectrum CSS or Spectrum Web Components.
 
-In comparing Legacy CSS to Spectrum 2 CSS, and CSS to SWC, here are the changes for textfield and textarea that would need to be made in SWC:
+In comparing Legacy CSS to Spectrum 2 CSS, and CSS to SWC, here are the changes for text field and text area that would need to be made in SWC:
 
-- Look into adding side label position option to textfield
+- Look into adding side label position option to text field
 - Implement character count (note that this appears next to the field label for a top label, and on the opposite side of the input for a side label)
 - Removal of the quiet variant
-- Use of the inline progress circle component for the textfield's progress circle (**Note**: Spectrum CSS doesn't currently show textfield with the progress circle as there is no design spec for it)
-- Implementation of the new inline textfield variant
+- Use of the inline progress circle component for the text field's progress circle (**Note**: Spectrum CSS doesn't currently show text field with the progress circle as there is no design spec for it)
+- Implementation of the new inline text field variant
 - Applying the `required` attribute to the text input without displaying the asterisk in the field label to accommodate the [two styling options available](https://spectrum.adobe.com/page/text-field/#Required-or-optional) for required text fields
 - Look into keyboard focus state, determine if this should differ from mouse focused state
 
@@ -606,25 +606,25 @@ See below for more details.
 
 ### CSS => SWC implementation gaps
 
-#### Textfield implementation gaps
+#### Text field implementation gaps
 
 The mapping analysis reveals several key differences present in the CSS implementation but not the SWC implementation:
 
-- **Label position**: This is controlled by field label in SWC, but controlled by textfield in CSS
+- **Label position**: This is controlled by field label in SWC, but controlled by text field in CSS
 - **Character count**: SWC doesn't currently support a visible character count that would track the number of characters within the text field
 - **Keyboard focus state**: CSS has slightly different styling for focused vs. keyboard-focused state (keyboard focus shows the blue outline, mouse focus does not), this distinction is not visible in the current SWC implementation
 
 #### Textarea implementation gaps
 
-The textarea component (implemented as `sp-textfield[multiline]`) has the same missing features as the textfield component, since it uses the same underlying implementation. All the gaps mentioned in the textfield section apply to textarea as well.
+The textarea component (implemented as `sp-textfield[multiline]`) has the same missing features as the text field component, since it uses the same underlying implementation. All the gaps mentioned in the text field section apply to textarea as well.
 
 ### CSS Spectrum 2 changes
 
-#### Textfield changes
+#### Text field changes
 
 The main API change for Spectrum 2 is the removal of the `quiet` variant.
 
-Additionally, the progress circle used within the textfield component is now the new infield progress circle rather than the standalone progress circle.
+Additionally, the progress circle used within the text field component is now the new infield progress circle rather than the standalone progress circle.
 
 The comparison between CSS `main` and CSS `spectrum-two` branches reveals several noteworthy changes:
 
@@ -640,7 +640,7 @@ The comparison between CSS `main` and CSS `spectrum-two` branches reveals severa
 
 #### Textarea changes
 
-All the changes mentioned in the textfield section apply to textarea as well, since textarea is implemented as `sp-textfield[multiline]`. The multiline variant will inherit all the same changes.
+All the changes mentioned in the text field section apply to textarea as well, since textarea is implemented as `sp-textfield[multiline]`. The multiline variant will inherit all the same changes.
 
 ## Resources
 

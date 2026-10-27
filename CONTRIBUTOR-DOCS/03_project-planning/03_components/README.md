@@ -181,8 +181,7 @@
 - Text Field
     - [Text field accessibility migration analysis](text-field/accessibility-migration-analysis.md)
     - [Text field migration plan](text-field/migration-plan.md)
-- Textfield
-    - [Textfield and Textarea migration roadmap](textfield/rendering-and-styling-migration-analysis.md)
+    - [Text field and text area migration roadmap](text-field/rendering-and-styling-migration-analysis.md)
 - Thumbnail
     - [Thumbnail accessibility migration analysis](thumbnail/accessibility-migration-analysis.md)
     - [Thumbnail migration plan](thumbnail/migration-plan.md)

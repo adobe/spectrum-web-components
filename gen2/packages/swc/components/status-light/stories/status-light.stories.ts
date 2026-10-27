@@ -269,7 +269,7 @@ export const Accessibility: Story = {
 
 /**
  * Wraps content in a div with the optional lang attribute and injects translated
- * textfield.value from translations.json based on context.globals.lang.
+ * fieldlabel.label from translations.json based on context.globals.lang.
  * Used by the Fonts guide and for locale/font demos. This story is "docs-only."
  */
 // @todo: a withLocaleWrapper could be pulled up into a global decorator/helper to be implemented by more components. SWC-1872

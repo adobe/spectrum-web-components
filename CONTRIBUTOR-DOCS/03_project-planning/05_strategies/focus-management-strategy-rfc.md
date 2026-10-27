@@ -236,7 +236,7 @@ For **web components**, `aria-disabled` is the right default because:
 
 - Custom elements are not native form controls — the browser's `disabled` attribute has no built-in effect on a custom element host. We'd be reimplementing the behavior either way.
 - Keeping the host discoverable (focusable + announced) is generally better UX — screen reader users can still find the element, understand what it does, and learn why it's disabled via surrounding context or tooltips.
-- Components that wrap a native form control (e.g., textfield wrapping `<input>`) should **also** set the native `disabled` on the inner element to get correct platform behavior (no value submission, native styling). The mixin handles the host; the component's `render()` handles the inner element.
+- Components that wrap a native form control (e.g., text field wrapping `<input>`) should **also** set the native `disabled` on the inner element to get correct platform behavior (no value submission, native styling). The mixin handles the host; the component's `render()` handles the inner element.
 - Components where true removal from the tab order is desired (rare) can supplement with `tabindex="-1"` — the mixin already does this.
 
 **When a component might need the native `disabled`:** If a component participates in `<form>` submission via `ElementInternals` and should exclude its value when disabled, the component should set `this.internals.setFormValue(null)` in its disabled handler. The mixin provides the reactive `disabled` property; the component decides how to act on it.
@@ -275,7 +275,7 @@ class MyTextfield extends DisabledMixin(SpectrumElement) {
 }
 ```
 
-**Template requirement:** The intended focus target must be the **first focusable element** in the shadow DOM template. During migration, verify or restructure each component's template to ensure this. For most components (textfields, checkboxes, links, color inputs), the interactive element is already first.
+**Template requirement:** The intended focus target must be the **first focusable element** in the shadow DOM template. During migration, verify or restructure each component's template to ensure this. For most components (text fields, checkboxes, links, color inputs), the interactive element is already first.
 
 #### Implementation Gotchas
 
@@ -298,7 +298,7 @@ class MyTextfield extends DisabledMixin(SpectrumElement) {
 #### CSS Considerations
 
 - **`:focus-visible` on the inner element** — Use this for focus ring styling on the actual interactive element (input, button, etc.)
-- **`:focus-within` on the host** — Use this for container-level styling when any descendant is focused (e.g., border color changes on a textfield wrapper)
+- **`:focus-within` on the host** — Use this for container-level styling when any descendant is focused (e.g., border color changes on a text field wrapper)
 - **`:focus` on the host** — With `delegatesFocus`, the host matches `:focus` when the inner element is focused. This enables host-level focus styling without JavaScript. Prefer `:focus-within` for clarity unless specifically targeting the delegated focus state.
 - **Remove `outline` from the host** — If the host has a default focus outline, suppress it (`outline: none` on `:host`) and style the inner element's focus ring instead to avoid double focus indicators
 
@@ -580,7 +580,7 @@ These components delegate focus to an inner element. Add `delegatesFocus: true` 
 
 | Component | Focus Target | Migration Notes |
 |-----------|-------------|-----------------|
-| Textfield | Inner `<input>` / `<textarea>` | Verify `<input>` is first focusable in template |
+| Text field | Inner `<input>` / `<textarea>` | Verify `<input>` is first focusable in template |
 | Link | Inner `<a>` | Verify `<a>` is first focusable in template |
 | Checkbox | Inner `<input>` | Already uses `delegatesFocus` in 1st-gen |
 | TopNavItem | Inner `<a>` | Verify `<a>` is first focusable in template |
