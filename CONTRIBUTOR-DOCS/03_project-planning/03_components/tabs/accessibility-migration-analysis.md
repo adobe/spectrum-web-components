@@ -37,7 +37,7 @@
 
 ## Overview
 
-This doc describes how `swc-tabs` (with `swc-tab` and `swc-tab-panel`) should behave for accessibility in 2nd-gen, targeting **WCAG 2.2 Level AA**. It aligns with the WAI-ARIA tabs pattern, documents **automatic vs manual activation**, and ties tablist keyboard behavior to the proposed `FocusgroupNavigationController` ([spectrum-web-components#6129](https://github.com/adobe/spectrum-web-components/pull/6129)).
+This doc describes how `swc-tabs` (with `swc-tab` and `swc-tab-panel`) should behave for accessibility in gen2, targeting **WCAG 2.2 Level AA**. It aligns with the WAI-ARIA tabs pattern, documents **automatic vs manual activation**, and ties tablist keyboard behavior to the proposed `FocusgroupNavigationController` ([spectrum-web-components#6129](https://github.com/adobe/spectrum-web-components/pull/6129)).
 
 ### Also read
 
@@ -130,7 +130,7 @@ This doc describes how `swc-tabs` (with `swc-tab` and `swc-tab-panel`) should be
 
 - **Automatic pattern** (`auto` true) — matches [tabs with automatic activation](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/examples/tabs-automatic/): when roving focus enters a tab, `elementEnterAction` runs `selectTarget(el)`, so selection (and visible panel) follows arrow navigation without a separate Enter or Space. Click still selects via `onClick`.
 
-**2nd-gen note:** 1st-gen uses `RovingTabindexController` from `@spectrum-web-components/reactive-controllers`. 2nd-gen should use `FocusgroupNavigationController` ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)) for arrow navigation inside the tablist while preserving the same `auto` semantics (selection on focus move vs selection only on activate).
+**gen2 note:** 1st-gen uses `RovingTabindexController` from `@spectrum-web-components/reactive-controllers`. gen2 should use `FocusgroupNavigationController` ([#6129](https://github.com/adobe/spectrum-web-components/pull/6129)) for arrow navigation inside the tablist while preserving the same `auto` semantics (selection on focus move vs selection only on activate).
 
 ### Guidelines that apply
 
@@ -171,7 +171,7 @@ This doc describes how `swc-tabs` (with `swc-tab` and `swc-tab-panel`) should be
 
 ### Shadow DOM and cross-root ARIA Issues
 
-`aria-controls` and `aria-labelledby` rely on **ID references** that must resolve in the document tree. If tabs and panels split across shadow roots without a supported cross-root strategy, IDs may not resolve as expected. Prefer a composition where references resolve in the same document subtree as the referencing node, or document the 2nd-gen plan (ElementInternals, explicit light DOM slots, synchronized ids on light children, etc.) once implementation exists. Until then, treat cross-root IDREF as a design constraint to solve in the rendering migration.
+`aria-controls` and `aria-labelledby` rely on **ID references** that must resolve in the document tree. If tabs and panels split across shadow roots without a supported cross-root strategy, IDs may not resolve as expected. Prefer a composition where references resolve in the same document subtree as the referencing node, or document the gen2 plan (ElementInternals, explicit light DOM slots, synchronized ids on light children, etc.) once implementation exists. Until then, treat cross-root IDREF as a design constraint to solve in the rendering migration.
 
 ### Accessibility tree expectations
 

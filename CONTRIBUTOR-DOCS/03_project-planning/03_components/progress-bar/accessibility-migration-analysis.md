@@ -39,7 +39,7 @@
 
 ## Overview
 
-This doc explains how **`swc-progress-bar`** should work for **accessibility**. It supports **WCAG 2.2 Level AA**. Until **`swc-progress-bar`** ships, treat **`1st-gen/packages/progress-bar/src/ProgressBar.ts`** (`<sp-progress-bar>`) as the primary reference for behavior; align 2nd-gen with this doc and the [progress bar migration roadmap](./rendering-and-styling-migration-analysis.md).
+This doc explains how **`swc-progress-bar`** should work for **accessibility**. It supports **WCAG 2.2 Level AA**. Until **`swc-progress-bar`** ships, treat **`1st-gen/packages/progress-bar/src/ProgressBar.ts`** (`<sp-progress-bar>`) as the primary reference for behavior; align gen2 with this doc and the [progress bar migration roadmap](./rendering-and-styling-migration-analysis.md).
 
 ### Also read
 
@@ -96,7 +96,7 @@ This doc explains how **`swc-progress-bar`** should work for **accessibility**. 
 | Topic | What to do |
 |-------|------------|
 | **`role="progressbar"`** | **Prescribed** and **fixed** on the **host**. It must **not** be author-overridable in implementation or docs. If another role is needed, use a **different** component or pattern—not a role change on **`swc-progress-bar`**. This element satisfies **one** semantic role only. |
-| **Name (required)** | Provide a **name** via **`label`**, **default slot** text, **`aria-label`**, or **`aria-labelledby`** ([WCAG 4.1.2](https://www.w3.org/TR/WCAG22/#name-role-value)). Prefer **`aria-labelledby`** when a **visible** label exists; use **`aria-label`** when it does not. Keep **dev-mode** warnings accurate for **`swc-progress-bar`** (1st-gen’s warning text incorrectly references **progress-circle** in one bullet—fix in 2nd-gen). |
+| **Name (required)** | Provide a **name** via **`label`**, **default slot** text, **`aria-label`**, or **`aria-labelledby`** ([WCAG 4.1.2](https://www.w3.org/TR/WCAG22/#name-role-value)). Prefer **`aria-labelledby`** when a **visible** label exists; use **`aria-label`** when it does not. Keep **dev-mode** warnings accurate for **`swc-progress-bar`** (1st-gen’s warning text incorrectly references **progress-circle** in one bullet—fix in gen2). |
 | **Known percent** (`indeterminate` = false) | Set **`aria-valuemin="0"`**, **`aria-valuemax="100"`**, **`aria-valuenow`** = **`progress`**, **`aria-valuetext`** = **localized** percent string. Update when **`progress`** or locale changes. |
 | **0% appearance ([WCAG 1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast))** | When **`progress`** is **0**, show a **small** visible **fill** width (or another treatment that keeps **track** / **fill** details at **at least 3:1** with adjacent colors). A **fully invisible** fill with a **weak** track often fails **non-text contrast**. **`aria-valuenow`**, **`aria-valuetext`**, and visible **percent** must still read as **0%**. |
 | **Unknown time** (`indeterminate` = true) | **Remove** min, max, now, and valuetext. |
@@ -133,12 +133,12 @@ None
 
 ## Known 1st-gen issues
 
-Gaps in **1st-gen** **`<sp-progress-bar>`** (`1st-gen/packages/progress-bar/src/ProgressBar.ts`) that **2nd-gen** **`swc-progress-bar`** should fix or cover with regression tests.
+Gaps in **1st-gen** **`<sp-progress-bar>`** (`1st-gen/packages/progress-bar/src/ProgressBar.ts`) that **gen2** **`swc-progress-bar`** should fix or cover with regression tests.
 
 ### Non-text contrast at 0% (WCAG 1.4.11)
 
 - At **`progress` = 0**, the **fill** is drawn with **zero** width (`transform: scaleX(calc(${this.progress} / 100))`), so only the **track** shows. If the **track** does **not** meet **at least 3:1** contrast with **adjacent** colors, the bar can **violate** [**WCAG 2.2 Success Criterion 1.4.11** (Non-text contrast, Level AA)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast)—users with low vision may not perceive the control.
-- Treat this as a **known 1st-gen** risk on many backgrounds. **2nd-gen** should follow the **0% appearance** row under **Recommendations** and validate **0%** with **contrast** tooling (including **`static-color`** and photo backgrounds).
+- Treat this as a **known 1st-gen** risk on many backgrounds. **gen2** should follow the **0% appearance** row under **Recommendations** and validate **0%** with **contrast** tooling (including **`static-color`** and photo backgrounds).
 
 ### Developer warning copy
 
@@ -153,8 +153,8 @@ Gaps in **1st-gen** **`<sp-progress-bar>`** (`1st-gen/packages/progress-bar/src/
 | Kind of test | What to check |
 |--------------|----------------|
 | **Unit** | **`role="progressbar"`**. **Determinate** vs **indeterminate** **ARIA** matches rules above (verify in **`swc-progress-bar`** or **`ProgressBar.ts`** during migration). Host is **not** focusable. **Name** from **`label`**, **slot**, or **`aria-label`**. |
-| **aXe + Storybook** | **WCAG 2.x** on progress-bar stories (1st-gen today; 2nd-gen when migrated). |
-| **Playwright ARIA snapshots** | Add or keep **`progress-bar.a11y.spec.ts`** for 2nd-gen when available; mirror **determinate**, **indeterminate**, **sizes**, and **`static-color`** coverage patterns from **progress-circle**. |
+| **aXe + Storybook** | **WCAG 2.x** on progress-bar stories (1st-gen today; gen2 when migrated). |
+| **Playwright ARIA snapshots** | Add or keep **`progress-bar.a11y.spec.ts`** for gen2 when available; mirror **determinate**, **indeterminate**, **sizes**, and **`static-color`** coverage patterns from **progress-circle**. |
 | **Contrast** | **`static-color`**, **0%**, and **indeterminate** stories. |
 | **Motion / reduced motion** | **Indeterminate** animation meets **WCAG 2.2.2** and product **reduced-motion** rules. |
 

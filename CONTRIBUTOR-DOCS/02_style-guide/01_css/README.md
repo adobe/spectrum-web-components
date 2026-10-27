@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / 2nd-Gen CSS
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / gen2 CSS
 
 <!-- Document title (editable) -->
 
-# 2nd-Gen CSS
+# gen2 CSS
 
 <!-- Generated TOC - DO NOT EDIT -->
 
@@ -23,4 +23,4 @@
 
 <!-- Document content (editable) -->
 
-This section contains style guides for CSS authoring and maintenance for **2nd-gen** component styles.
+This section contains style guides for CSS authoring and maintenance for **gen2** component styles.

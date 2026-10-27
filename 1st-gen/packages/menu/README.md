@@ -358,6 +358,8 @@ The back button label defaults to "Back". Use the `mobile-back-label` attribute 
 
 The slide animation respects the user's `prefers-reduced-motion` setting, and the back-arrow icon mirrors automatically in RTL layouts.
 
+The `<sp-menu mobile-view>` does not render its own tray; compose it inside an `<sp-tray>` (typically via `<overlay-trigger>`) as shown above. When that tray is dismissed while drilled into a submenu, the drill-down resets so reopening returns to the top-level menu.
+
 When using `<sp-action-menu>`, `mobile-view` is applied automatically on mobile devices. To always render a popover instead of a tray (and disable `mobile-view`), add the `force-popover` attribute to `<sp-action-menu>`.
 
 #### "change" event

@@ -9,12 +9,12 @@ on:
 jobs:
   site-build:
     name: Build & publish site
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     # Run the job if manually triggered or if the commit message includes '#publish' & the check suite has passed or if the commit message includes 'docs' and the check suite has passed
     if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '#publish') || contains(github.event.head_commit.message, 'docs:') || contains(github.event.head_commit.message, 'docs(')
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Job and Install Dependencies
         uses: ./.github/actions/setup-job
@@ -22,7 +22,7 @@ jobs:
       - name: Generate Custom Elements Manifest
         run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
 
-      - name: Analyze 2nd-gen components
+      - name: Analyze gen2 components
         run: yarn workspace @adobe/spectrum-wc analyze
 
       - name: Generate LLM reference files

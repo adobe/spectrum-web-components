@@ -296,7 +296,7 @@ Summarize changes in **CSS => SWC mapping** section above. Note any statuses tha
 
 Entries with status indicating that they appear in WC but not CSS might be an indication of implementation differences, but could also be an indication of a deprecated feature.
 
-Entries with status indicating that they appear in CSS but not WC are often an indication of new features that may need to be added when migrating WC to 2nd gen.
+Entries with status indicating that they appear in CSS but not WC are often an indication of new features that may need to be added when migrating WC to gen2.
 
 #### CSS Spectrum 2 changes
 

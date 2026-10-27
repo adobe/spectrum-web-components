@@ -12,7 +12,7 @@
 
 import { LitElement, ReactiveElement } from 'lit';
 
-import { coreVersion, version } from './version.js';
+import { version } from './version.js';
 
 type Constructor<T = Record<string, unknown>> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,8 +67,8 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
       // selector will throw on the following test (Safari, older things).
       // Some won't throw, but will be focusing item rather than the menu and
       // will rely on the polyfill to know whether focus is "visible" or not.
-      // .focus-visible polyfill class will intentionally not be checked in 2nd-gen.
-      // 2nd-gen targets browsers with native support for :focus-visible.
+      // .focus-visible polyfill class will intentionally not be checked in gen2.
+      // gen2 targets browsers with native support for :focus-visible.
       return (
         activeElement.matches(':focus-visible') ||
         activeElement.matches('.focus-visible')
@@ -86,11 +86,6 @@ export class SpectrumElement extends SpectrumMixin(LitElement) {
    * The version of the 1st-gen Spectrum Web Components library.
    */
   static VERSION = version;
-
-  /**
-   * The version of the core base package.
-   */
-  static CORE_VERSION = coreVersion;
 
   public override get dir(): CSSStyleDeclaration['direction'] {
     return getComputedStyle(this).direction ?? 'ltr';

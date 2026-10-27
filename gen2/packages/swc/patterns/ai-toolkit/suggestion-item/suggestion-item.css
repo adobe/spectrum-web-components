@@ -1,0 +1,37 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: inline-block;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* The chip is a restyled `swc-button` (secondary variant). The secondary
+   variant already supplies the gray-100 / gray-200 state colors, the focus
+   ring, and the press animation, so only the chip-specific geometry is
+   overridden here through the button's public custom properties. */
+.swc-SuggestionItem {
+  --swc-button-edge-to-visual: 14px;
+  --swc-button-edge-to-text: token("spacing-300");
+}
+
+/* swc-button renders its label at bold weight with no custom-property hook.
+   This wrapper sits between the button's label span and the slotted text, so
+   its explicit weight wins for the chip label. */
+.swc-SuggestionItem-label {
+  font-weight: token("regular-font-weight");
+}

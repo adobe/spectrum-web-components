@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-gen TypeScript](README.md) / Base class vs concrete class
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 TypeScript](README.md) / Base class vs concrete class
 
 <!-- Document title (editable) -->
 
@@ -25,7 +25,7 @@ This guide explains the split between the **base class** (in the core package) a
 
 ## Why two classes
 
-2nd-gen components are built in two layers: a **base class** in core and a **concrete class** in SWC. The base class holds behavior — validation, state management, accessibility logic. The concrete class adds the visual parts: styles, rendering, and value overrides.
+gen2 components are built in two layers: a **base class** in core and a **concrete class** in SWC. The base class holds behavior — validation, state management, accessibility logic. The concrete class adds the visual parts: styles, rendering, and value overrides.
 
 This split means:
 

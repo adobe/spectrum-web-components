@@ -21,6 +21,13 @@ const root = path.resolve(__dirname, '..');
 
 const CURRENT_YEAR = new Date().getFullYear();
 const YEAR_PLACEHOLDER = `<%= YEAR %>`;
+const args = new Set(process.argv.slice(2));
+const targetGeneration = args.has('--gen=gen2')
+  ? 'gen2'
+  : args.has('--gen=1st-gen')
+    ? '1st-gen'
+    : 'all';
+const runCheck = args.has('--check');
 
 // Read copyright header from linters/HEADER.js
 const COPYRIGHT_HEADER = fs
@@ -28,23 +35,21 @@ const COPYRIGHT_HEADER = fs
   .trim()
   .replace(YEAR_PLACEHOLDER, CURRENT_YEAR);
 
+function getGeneratedContent(packageJsonPath, generationName, coreVersion) {
+  const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+  const version = pkg.version;
+
+  const coreVersionBlock =
+    generationName === '1st-gen'
+      ? ''
+      : `
+
 /**
- * Generate a version TypeScript file from a package.json
- *
- * @param {string} packageJsonPath - Path to package.json
- * @param {string} outputPath - Path to output version.ts file
- * @param {object} options - Generation options
- * @param {string} options.generationName - Name of the generation (e.g., '1st-gen', '2nd-gen')
- * @param {string} [options.coreVersion] - Optional core version to include
+ * The version of the core base package.
  */
-function generateVersion(packageJsonPath, outputPath, options = {}) {
-  const { generationName, coreVersion } = options;
+export const coreVersion = '${coreVersion || version}';`;
 
-  try {
-    const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
-    const version = pkg.version;
-
-    let content = `${COPYRIGHT_HEADER}
+  return `${COPYRIGHT_HEADER}
 
 // Auto-generated from ${path.relative(root, packageJsonPath)}
 // Generation: ${generationName}
@@ -53,17 +58,57 @@ function generateVersion(packageJsonPath, outputPath, options = {}) {
 /**
  * The version of the ${generationName} Spectrum Web Components library.
  */
-export const version = '${version}';
+export const version = '${version}';${coreVersionBlock}
+`;
+}
 
 /**
- * The version of the core base package.
+ * Generate a version TypeScript file from a package.json
+ *
+ * @param {string} packageJsonPath - Path to package.json
+ * @param {string} outputPath - Path to output version.ts file
+ * @param {object} options - Generation options
+ * @param {string} options.generationName - Name of the generation (e.g., '1st-gen', 'gen2')
+ * @param {string} [options.coreVersion] - Optional core version to include
  */
-export const coreVersion = '${coreVersion || version}';
-`;
+function generateVersion(packageJsonPath, outputPath, options = {}) {
+  const { generationName, coreVersion } = options;
+
+  try {
+    const content = getGeneratedContent(
+      packageJsonPath,
+      generationName,
+      coreVersion
+    );
+
+    if (runCheck) {
+      if (!fs.existsSync(outputPath)) {
+        console.error(
+          `✗ Missing generated file: ${path.relative(root, outputPath)}`
+        );
+        process.exit(1);
+      }
+
+      const existingContent = fs.readFileSync(outputPath, 'utf-8');
+      if (existingContent !== content) {
+        console.error(
+          `✗ Generated file is out of date: ${path.relative(root, outputPath)}`
+        );
+        console.error(
+          `Run: node scripts/generate-versions.js${
+            generationName === 'gen2' ? ' --gen=gen2' : ''
+          }${generationName === '1st-gen' ? ' --gen=1st-gen' : ''}`
+        );
+        process.exit(1);
+      }
+
+      console.log(`✓ Checked ${path.relative(root, outputPath)} is up to date`);
+      return;
+    }
 
     fs.writeFileSync(outputPath, content);
     console.log(
-      `✓ Generated ${path.relative(root, outputPath)} with version ${version}`
+      `✓ Generated ${path.relative(root, outputPath)} with version ${JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8')).version}`
     );
   } catch (error) {
     console.error(
@@ -74,25 +119,28 @@ export const coreVersion = '${coreVersion || version}';
   }
 }
 
-// Generate 2nd-gen version first (this is the core)
-const secondGenPkgPath = path.join(root, '2nd-gen/packages/core/package.json');
-const secondGenOutputPath = path.join(
-  root,
-  '2nd-gen/packages/core/element/version.ts'
-);
+// Generate gen2 version first (this is the core)
+const gen2PkgPath = path.join(root, 'gen2/packages/core/package.json');
+const gen2OutputPath = path.join(root, 'gen2/packages/core/element/version.ts');
 
-generateVersion(secondGenPkgPath, secondGenOutputPath, {
-  generationName: '2nd-gen',
-});
+if (targetGeneration === 'all' || targetGeneration === 'gen2') {
+  generateVersion(gen2PkgPath, gen2OutputPath, {
+    generationName: 'gen2',
+  });
+}
 
 // Generate 1st-gen version. coreVersion defaults to 1st-gen's own package
 // version, since @spectrum-web-components/base is 1st-gen's own core base
-// package and has no relationship to 2nd-gen's version.
+// package and has no relationship to gen2's version.
 const firstGenPkgPath = path.join(root, '1st-gen/tools/base/package.json');
 const firstGenOutputPath = path.join(root, '1st-gen/tools/base/src/version.ts');
 
-generateVersion(firstGenPkgPath, firstGenOutputPath, {
-  generationName: '1st-gen',
-});
+if (targetGeneration === 'all' || targetGeneration === '1st-gen') {
+  generateVersion(firstGenPkgPath, firstGenOutputPath, {
+    generationName: '1st-gen',
+  });
+}
 
-console.log('\n✓ All version files generated successfully');
+if (!runCheck) {
+  console.log('\n✓ All version files generated successfully');
+}

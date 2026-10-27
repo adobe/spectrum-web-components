@@ -75,7 +75,7 @@ export function getWorkspacePackages(
       (pkg) =>
         !ignoredPackages.includes(pkg.name) &&
         pkg.name !== '@spectrum-web-components/1st-gen' &&
-        pkg.name !== '@spectrum-web-components/2nd-gen' &&
+        pkg.name !== '@spectrum-web-components/gen2' &&
         // Only include packages in 1st-gen packages/ and tools/ directories
         (pkg.location.startsWith('1st-gen/packages/') ||
           pkg.location.startsWith('1st-gen/tools/'))

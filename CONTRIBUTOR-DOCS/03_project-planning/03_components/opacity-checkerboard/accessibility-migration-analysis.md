@@ -39,19 +39,19 @@
 
 ## Overview
 
-This doc explains how the **opacity checkerboard shared style** should work for **accessibility** in 2nd-gen. It supports **WCAG 2.2 Level AA** as the team target. The checkerboard is **not** implemented as a custom element; it ships as an importable Lit **`css`** fragment (class **`.swc-opacity-checkerboard`**) under `2nd-gen/packages/swc/stylesheets/_lit-styles/`. **Consumer documentation** for components that use the pattern must carry the guidance in this doc; the utility itself has **no** ARIA surface.
+This doc explains how the **opacity checkerboard shared style** should work for **accessibility** in gen2. It supports **WCAG 2.2 Level AA** as the team target. The checkerboard is **not** implemented as a custom element; it ships as an importable Lit **`css`** fragment (class **`.swc-opacity-checkerboard`**) under `gen2/packages/swc/stylesheets/_lit-styles/`. **Consumer documentation** for components that use the pattern must carry the guidance in this doc; the utility itself has **no** ARIA surface.
 
 ### Also read
 
 - [Opacity Checkerboard migration plan](./migration-plan.md) for deliverable form, token mapping, and deprecation of the 1st-gen npm package.
 - [Opacity Checkerboard migration roadmap](./rendering-and-styling-migration-analysis.md) for CSS structure and token names.
 - [Color loupe accessibility migration analysis](../color-loupe/accessibility-migration-analysis.md) for a consumer that inlines the same pattern today.
-- [1st-gen README](../../../../1st-gen/tools/opacity-checkerboard/README.md) for existing consumer-facing examples (to be aligned with this doc in 2nd-gen).
+- [1st-gen README](../../../../1st-gen/tools/opacity-checkerboard/README.md) for existing consumer-facing examples (to be aligned with this doc in gen2).
 
 ### What the shared style is
 
 - A **decorative** **checkerboard background** that helps **sighted users** see **transparency** or **partial opacity** behind a color swatch, loupe, slider track, or similar surface.
-- Applied by adding **`.swc-opacity-checkerboard`** (2nd-gen) or **`.opacity-checkerboard`** (1st-gen) to an element inside a **consumer component's shadow root**, after importing the shared **`css`** fragment into that component's **`styles`** array.
+- Applied by adding **`.swc-opacity-checkerboard`** (gen2) or **`.opacity-checkerboard`** (1st-gen) to an element inside a **consumer component's shadow root**, after importing the shared **`css`** fragment into that component's **`styles`** array.
 - **Pure CSS**: no JavaScript, no custom element, **no Tab stop**, and **no default role or accessible name**.
 
 ### When to use something else
@@ -97,7 +97,7 @@ This doc explains how the **opacity checkerboard shared style** should work for 
 
 ## Recommendations: opacity checkerboard shared style
 
-These recommendations apply to **2nd-gen consumer documentation** and to **SWC components** that import **`opacityCheckerboardStyles`**. The shared **`css`** fragment itself must **not** inject ARIA or roles.
+These recommendations apply to **gen2 consumer documentation** and to **SWC components** that import **`opacityCheckerboardStyles`**. The shared **`css`** fragment itself must **not** inject ARIA or roles.
 
 ### ARIA roles, states, and properties
 
@@ -149,7 +149,7 @@ The checkerboard **shared style** does **not** create a focus target. Consumers 
 
 ## Known 1st-gen consumer patterns
 
-Use these as **reference** when writing **2nd-gen consumer docs**; verify each against the real 2nd-gen source when that component migrates.
+Use these as **reference** when writing **gen2 consumer docs**; verify each against the real gen2 source when that component migrates.
 
 | Consumer | Pattern | Accessibility note |
 | --- | --- | --- |
@@ -175,7 +175,7 @@ Use these as **reference** when writing **2nd-gen consumer docs**; verify each a
 
 ### Manual screen reader testing
 
-The checkerboard is **not** in the **Tab** order, so you will not reach it the same way as **focusable** **controls** when a **screen reader** is in **forms** or **application**-style **focus** **navigation**. Use **browse mode** (document or scan mode) to read the page in **content order** and confirm the checkerboard **does not** add spurious **names** or **roles**, and that the **paired control** announces **color** and **opacity** correctly. See the 2nd-gen Storybook [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide, including **Browse mode (document/scan mode)**.
+The checkerboard is **not** in the **Tab** order, so you will not reach it the same way as **focusable** **controls** when a **screen reader** is in **forms** or **application**-style **focus** **navigation**. Use **browse mode** (document or scan mode) to read the page in **content order** and confirm the checkerboard **does not** add spurious **names** or **roles**, and that the **paired control** announces **color** and **opacity** correctly. See the gen2 Storybook [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide, including **Browse mode (document/scan mode)**.
 
 ---
 
@@ -186,7 +186,7 @@ The checkerboard is **not** in the **Tab** order, so you will not reach it the s
 - [ ] **Shared `css` fragment** sets **no** roles or ARIA; **`forced-color-adjust: none`** under **`forced-colors`** is documented as intentional.
 - [ ] **Examples** do **not** put **`aria-hidden="true"`** on wrappers that contain **meaningful** or **interactive** descendants.
 - [ ] **Swatch**, **slider**, **loupe**, **thumbnail**, and **color-handle** docs (when migrated) link here and show **realistic** **labeled** usage.
-- [ ] **Manual SR testing** uses **browse mode** per the [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide.
+- [ ] **Manual SR testing** uses **browse mode** per the [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide.
 - [ ] **1st-gen README** **`aria-live="assertive"`** example is revised to match this doc (or removed).
 
 ---
@@ -201,4 +201,4 @@ The checkerboard is **not** in the **Tab** order, so you will not reach it the s
 - [Opacity Checkerboard migration roadmap](./rendering-and-styling-migration-analysis.md)
 - [1st-gen opacity-checkerboard README](../../../../1st-gen/tools/opacity-checkerboard/README.md)
 - [Tools vs packages: where code lives](../../../../CONTRIBUTOR-DOCS/01_contributor-guides/12_tools-vs-packages.md)
-- 2nd-gen Storybook: [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- gen2 Storybook: [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)

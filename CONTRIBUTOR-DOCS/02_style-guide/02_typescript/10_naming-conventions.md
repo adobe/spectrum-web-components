@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-gen TypeScript](README.md) / Naming conventions
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 TypeScript](README.md) / Naming conventions
 
 <!-- Document title (editable) -->
 
@@ -23,7 +23,7 @@
 
 <!-- Document content (editable) -->
 
-This guide lists the naming rules for all identifiers in 2nd-gen components.
+This guide lists the naming rules for all identifiers in gen2 components.
 
 ## Class names
 

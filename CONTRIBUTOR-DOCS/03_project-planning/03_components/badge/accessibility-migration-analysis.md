@@ -126,7 +126,7 @@ None
 | Kind of test | What to check |
 |--------------|----------------|
 | **Unit** | Host is **not** focusable by default. Stories with labels have **slot text** (or another name). |
-| **aXe + Storybook** | Run **WCAG 2.x** rules on badge stories (same pipeline as other 2nd-gen components). |
+| **aXe + Storybook** | Run **WCAG 2.x** rules on badge stories (same pipeline as other gen2 components). |
 | **Playwright ARIA snapshots** | Keep **`badge.a11y.spec.ts`** up to date. Cover **text-only**, **icon + text**, and **icon-only** when those stories are stable. |
 | **Color contrast** | Run **color-contrast** checks on semantic and non-semantic variant stories. |
 

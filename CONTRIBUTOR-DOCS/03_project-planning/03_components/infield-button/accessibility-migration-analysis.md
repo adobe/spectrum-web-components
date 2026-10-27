@@ -16,12 +16,12 @@
     - [What it is](#what-it-is)
     - [When to use something else](#when-to-use-something-else)
     - [What it is not](#what-it-is-not)
-    - [Program (2nd-gen, Jira snapshot)](#program-2nd-gen-jira-snapshot)
+    - [Program (gen2, Jira snapshot)](#program-gen2-jira-snapshot)
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
 - [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
-- [1st-gen implementation notes (avoid in 2nd-gen)](#1st-gen-implementation-notes-avoid-in-2nd-gen)
+- [1st-gen implementation notes (avoid in gen2)](#1st-gen-implementation-notes-avoid-in-gen2)
 - [Recommendations: `<swc-infield-button>`](#recommendations-swc-infield-button)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Shadow DOM and cross-root ARIA Issues](#shadow-dom-and-cross-root-aria-issues)
@@ -40,9 +40,9 @@
 
 ## Overview
 
-This doc describes how **`swc-infield-button`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. It pairs with [In-field button migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, tokens, and DOM. **`swc-infield-button`** is an **icon-only** control that sits **inside** or beside **field** chrome (search clear, combobox disclosure, and similar). It **extends** shared **`ButtonBase`** ([`Button.base.ts`](../../../../2nd-gen/packages/core/components/button/Button.base.ts)) with in-field **visual** styling—not a separate keyboard widget type. There is **no** [React Spectrum Infield Button](https://react-spectrum.adobe.com/) component; align semantics with [Button accessibility migration analysis](../button/accessibility-migration-analysis.md) and Spectrum 2 token specs ([S2 Token specs — In-field button (Figma)](https://www.figma.com/design/eoZHKJH9WZLbrCvGQf3GnsY/S2-Token-specs?node-id=814-8689)).
+This doc describes how **`swc-infield-button`** should behave for **accessibility** in gen2, targeting **WCAG 2.2 Level AA**. It pairs with [In-field button migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, tokens, and DOM. **`swc-infield-button`** is an **icon-only** control that sits **inside** or beside **field** chrome (search clear, combobox disclosure, and similar). It **extends** shared **`ButtonBase`** ([`Button.base.ts`](../../../../gen2/packages/core/components/button/Button.base.ts)) with in-field **visual** styling—not a separate keyboard widget type. There is **no** [React Spectrum Infield Button](https://react-spectrum.adobe.com/) component; align semantics with [Button accessibility migration analysis](../button/accessibility-migration-analysis.md) and Spectrum 2 token specs ([S2 Token specs — In-field button (Figma)](https://www.figma.com/design/eoZHKJH9WZLbrCvGQf3GnsY/S2-Token-specs?node-id=814-8689)).
 
-**2nd-gen API direction:** **`accessible-label`** is **required** (icon-only). **`FocusgroupNavigationController`** is **not** on **`swc-infield-button`**—the **parent field host** navigates among the **input**, in-field buttons, and other **siblings**. **`block`** and **`inline`** are **removed**—1st-gen used them mainly to adjust **corner rounding** and edge attachment for **stacked** stepper halves and **inline** groups; Spectrum 2 uses a **consistent corner radius** on in-field buttons, so **stepper** and other multi-affordance fields compose layout in the **parent host** (DOM order, field CSS) without **`block="start"`** / **`block="end"`** or **`inline="start"`** / **`inline="end"`** on each button ([migration roadmap](./rendering-and-styling-migration-analysis.md)). **`pending`** is **not** on **`swc-infield-button`**—the **parent field host** owns field-level **`pending`** (busy UI, announcements, and disabling slotted affordances). 1st-gen **`sp-infield-button`** may still list **`pending`** from **`ButtonBase`** on the public site—do **not** carry that API forward on **`swc-infield-button`**. **`disabled`** may be set on **`swc-infield-button`** **or** applied by a **parent** host (for example **`swc-textfield`**, **`swc-number-field`**, **`swc-picker`**) that passes **`disabled`** to slotted controls—both paths must yield a **non-interactive**, correctly named **button** in the accessibility tree.
+**gen2 API direction:** **`accessible-label`** is **required** (icon-only). **`FocusgroupNavigationController`** is **not** on **`swc-infield-button`**—the **parent field host** navigates among the **input**, in-field buttons, and other **siblings**. **`block`** and **`inline`** are **removed**—1st-gen used them mainly to adjust **corner rounding** and edge attachment for **stacked** stepper halves and **inline** groups; Spectrum 2 uses a **consistent corner radius** on in-field buttons, so **stepper** and other multi-affordance fields compose layout in the **parent host** (DOM order, field CSS) without **`block="start"`** / **`block="end"`** or **`inline="start"`** / **`inline="end"`** on each button ([migration roadmap](./rendering-and-styling-migration-analysis.md)). **`pending`** is **not** on **`swc-infield-button`**—the **parent field host** owns field-level **`pending`** (busy UI, announcements, and disabling slotted affordances). 1st-gen **`sp-infield-button`** may still list **`pending`** from **`ButtonBase`** on the public site—do **not** carry that API forward on **`swc-infield-button`**. **`disabled`** may be set on **`swc-infield-button`** **or** applied by a **parent** host (for example **`swc-textfield`**, **`swc-number-field`**, **`swc-picker`**) that passes **`disabled`** to slotted controls—both paths must yield a **non-interactive**, correctly named **button** in the accessibility tree.
 
 ### Also read
 
@@ -54,7 +54,7 @@ This doc describes how **`swc-infield-button`** should behave for **accessibilit
 - **Layout:** **Placement** (start/end of field, stepper pairs, disclosure, clear) is determined by the **parent field** structure and Spectrum 2 CSS—not **`inline`** or **`block`** on **`swc-infield-button`**. **`quiet`** selects the reduced-emphasis visual variant per [S2 Token specs — In-field button (Figma)](https://www.figma.com/design/eoZHKJH9WZLbrCvGQf3GnsY/S2-Token-specs?node-id=814-8689).
 - **Disabled:** Either **`disabled`** on **`swc-infield-button`** or **`disabled`** (or equivalent) on the **parent** field that sets **`disabled`** on the child—both must remove activation and expose **disabled** semantics on the **focus target** (native **`disabled`** on the inner **`<button>`** when the control should leave the tab order, unless product standardizes **`aria-disabled`** for a specific case—match **`ButtonBase`** / **`swc-button`**).
 - **Pending:** **`swc-infield-button`** does **not** expose **`pending`** or **`pending-label`**. When the **field** is **pending**, the **parent host** (for example **`swc-textfield`**, **`swc-number-field`**) owns busy semantics—typically **`disabled`** (or equivalent) on slotted **`swc-infield-button`** children plus field-level loading chrome and naming on the **input** / **field**—not a spinner or **`aria-disabled`** busy state on the in-field **button** itself.
-- **Focus chrome:** Spectrum 2 treats in-field buttons as part of the **field** focus story—the **parent** often shows the **focus-visible** ring on the **whole** control while the in-field button **inherits** that context ([migration roadmap](./rendering-and-styling-migration-analysis.md) **Focus state inheritance**). The inner **`<button>`** must still be **keyboard** reachable and **named**; do **not** rely on **`role="presentation"`** on the inner **`<button>`** (1st-gen / CSS-only samples used that pattern for styling—**2nd-gen** keeps **button** semantics).
+- **Focus chrome:** Spectrum 2 treats in-field buttons as part of the **field** focus story—the **parent** often shows the **focus-visible** ring on the **whole** control while the in-field button **inherits** that context ([migration roadmap](./rendering-and-styling-migration-analysis.md) **Focus state inheritance**). The inner **`<button>`** must still be **keyboard** reachable and **named**; do **not** rely on **`role="presentation"`** on the inner **`<button>`** (1st-gen / CSS-only samples used that pattern for styling—**gen2** keeps **button** semantics).
 - **Keyboard among siblings:** **`swc-infield-button`** does **not** ship **`FocusgroupNavigationController`** or roving **`tabindex`**. The **parent field host** (for example **`swc-number-field`**, **`swc-textfield`**) is responsible for **focus group** navigation among the **input**, one or more **`swc-infield-button`** instances, and other slotted affordances—**Tab** order, optional **arrow** keys between stepper buttons, and coordination with the **textbox** / **combobox** role per [Keyboard navigation inside components](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents).
 
 ### When to use something else
@@ -66,12 +66,12 @@ This doc describes how **`swc-infield-button`** should behave for **accessibilit
 
 ### What it is not
 
-- **Not a position-attribute layout control:** **`block`** and **`inline`** are **not** part of 2nd-gen **`swc-infield-button`**. They existed in 1st-gen to drive **border-radius** and padding for **stacked** stepper halves and **inline** edge attachment; S2 **stepper** and other patterns use **consistent** button rounding composed by the **field**—do **not** document **`block`** or **`inline`** in Storybook or migration guides; close or supersede audit findings tied only to **stacked** **`sp-infield-button`** layouts ([SWC-1130](https://jira.corp.adobe.com/browse/SWC-1130), [SWC-1197](https://jira.corp.adobe.com/browse/SWC-1197)).
+- **Not a position-attribute layout control:** **`block`** and **`inline`** are **not** part of gen2 **`swc-infield-button`**. They existed in 1st-gen to drive **border-radius** and padding for **stacked** stepper halves and **inline** edge attachment; S2 **stepper** and other patterns use **consistent** button rounding composed by the **field**—do **not** document **`block`** or **`inline`** in Storybook or migration guides; close or supersede audit findings tied only to **stacked** **`sp-infield-button`** layouts ([SWC-1130](https://jira.corp.adobe.com/browse/SWC-1130), [SWC-1197](https://jira.corp.adobe.com/browse/SWC-1197)).
 - **Not a link:** **No** **`href`**, **no** **`LikeAnchor`** / anchor proxying ([Button accessibility migration analysis](../button/accessibility-migration-analysis.md)).
 - **Not its own pending / busy control:** **`swc-infield-button`** does **not** expose **`pending`** or **`pending-label`**. **Field** hosts handle **`pending`** for the composed control (disable in-field affordances, show field-level busy UI, update **input** / **field** accessible name)—same ownership model as **parent-driven** **`disabled`**. Standalone actions outside a field use **`swc-button`** **`pending`** ([Button accessibility migration analysis](../button/accessibility-migration-analysis.md)).
 - **Not a focus-group container:** **`swc-infield-button`** does **not** implement **`FocusgroupNavigationController`** or manage roving **`tabindex`** for **sibling** in-field buttons. The **field** host owns that composite keyboard behavior ([Focus management](../../../01_contributor-guides/14_focus-management.md)).
 
-### Program (2nd-gen, Jira snapshot)
+### Program (gen2, Jira snapshot)
 
 Planning and migration work is tracked in Adobe Jira with **`gen2`** labels (for example [SWC-2105](https://jira.corp.adobe.com/browse/SWC-2105) **epic**, [SWC-2106](https://jira.corp.adobe.com/browse/SWC-2106) accessibility recommendations, [SWC-2107](https://jira.corp.adobe.com/browse/SWC-2107) migration plan analysis, [SWC-2108](https://jira.corp.adobe.com/browse/SWC-2108) implementation). Shared **button** / **`ButtonBase`** work ([SWC-1873](https://jira.corp.adobe.com/browse/SWC-1873) **epic**, [SWC-1874](https://jira.corp.adobe.com/browse/SWC-1874) a11y recommendations) applies to **`swc-infield-button`** through **`ButtonBase`**. Those **`gen2`** items are **out of scope** for the **Related 1st-gen** table below.
 
@@ -102,11 +102,11 @@ Planning and migration work is tracked in Adobe Jira with **`gen2`** labels (for
 
 ## Related 1st-gen accessibility (Jira)
 
-Adobe Jira is authoritative for current status and resolution; refresh cells when you triage. **gen2**-labeled program tickets are omitted here (see **Program (2nd-gen)** above). Audit epic **[SWC-872](https://jira.corp.adobe.com/browse/SWC-872)** is omitted per contributor-doc rules.
+Adobe Jira is authoritative for current status and resolution; refresh cells when you triage. **gen2**-labeled program tickets are omitted here (see **Program (gen2)** above). Audit epic **[SWC-872](https://jira.corp.adobe.com/browse/SWC-872)** is omitted per contributor-doc rules.
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
 | --- | --- | --- | --- | --- |
-| [SWC-1130](https://jira.corp.adobe.com/browse/SWC-1130) | Bug | To Do | Unresolved | Color alone conveys state — `sp-infield-button` (stacked buttons); **obsolete** for 2nd-gen when **`block`** / **`inline`** are removed—verify no regression on **field-composed** disclosure / clear / stepper patterns |
+| [SWC-1130](https://jira.corp.adobe.com/browse/SWC-1130) | Bug | To Do | Unresolved | Color alone conveys state — `sp-infield-button` (stacked buttons); **obsolete** for gen2 when **`block`** / **`inline`** are removed—verify no regression on **field-composed** disclosure / clear / stepper patterns |
 | [SWC-1197](https://jira.corp.adobe.com/browse/SWC-1197) | Bug | Done | Working As Designed | Target size — `sp-infield-button` (stacked buttons) |
 | [SWC-1039](https://jira.corp.adobe.com/browse/SWC-1039) | Bug | Done | Fixed | `button-base` / `aria-label` not updating on change — applies via **`ButtonBase`** |
 | [SWC-1333](https://jira.corp.adobe.com/browse/SWC-1333) | Bug | To Do | Unresolved | `sp-button` / `aria-label` support — superseded by **`accessible-label`** on **`ButtonBase`** |
@@ -116,9 +116,9 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 
 ---
 
-## 1st-gen implementation notes (avoid in 2nd-gen)
+## 1st-gen implementation notes (avoid in gen2)
 
-**`sp-infield-button`** extends 1st-gen **`ButtonBase`** with **`block`**, **`inline`**, **`quiet`**, and **`label`** (maps to **`aria-label`**); public docs may list **`pending`** from **`ButtonBase`**. 1st-gen **`block`** / **`inline`** chiefly adjusted **corner radius** and edge padding for **stacked** and **inline** groups. 2nd-gen should **drop** **`block`**, **`inline`**, and **`pending`** on **`swc-infield-button`** (let the **field** host own **`pending`** and **layout**), standardize on **`accessible-label`**, and **not** ship **`href`** / link APIs inherited from older **button** stacks.
+**`sp-infield-button`** extends 1st-gen **`ButtonBase`** with **`block`**, **`inline`**, **`quiet`**, and **`label`** (maps to **`aria-label`**); public docs may list **`pending`** from **`ButtonBase`**. 1st-gen **`block`** / **`inline`** chiefly adjusted **corner radius** and edge padding for **stacked** and **inline** groups. gen2 should **drop** **`block`**, **`inline`**, and **`pending`** on **`swc-infield-button`** (let the **field** host own **`pending`** and **layout**), standardize on **`accessible-label`**, and **not** ship **`href`** / link APIs inherited from older **button** stacks.
 
 ```39:51:1st-gen/packages/infield-button/src/InfieldButton.ts
   @property()
@@ -131,13 +131,13 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
   quiet = false;
 ```
 
-**Parent-driven disabled:** Fields pass **`?disabled=${...}`** to **`sp-infield-button`** (for example **`sp-number-field`** disables stepper buttons when the field is **disabled**, **readonly**, or at **min**). 2nd-gen parents should keep **explicit** **`disabled`** on **`swc-infield-button`** rather than assuming CSS-only dimming.
+**Parent-driven disabled:** Fields pass **`?disabled=${...}`** to **`sp-infield-button`** (for example **`sp-number-field`** disables stepper buttons when the field is **disabled**, **readonly**, or at **min**). gen2 parents should keep **explicit** **`disabled`** on **`swc-infield-button`** rather than assuming CSS-only dimming.
 
 **Parent-driven pending:** When a **field** is **pending**, the **host** should disable or otherwise make **inactive** slotted **`swc-infield-button`** affordances and surface **busy** state on the **field** / **input**—not **`pending`** on each in-field **button**.
 
 **Parent-driven focus group navigation:** When a **field** contains multiple focusable parts (**input**, **clear**, **stepper** pair, **disclosure**), the **field host** wires **`FocusgroupNavigationController`** (or equivalent) so **Tab** / **arrow** behavior among **siblings** matches product and APG guidance—for example **horizontal** arrows between **increment** / **decrement** **`swc-infield-button`** instances. **`swc-infield-button`** stays a plain **button**; it does **not** own the group controller.
 
-**`role="presentation"` on inner `<button>`:** Spectrum 2 CSS samples added **`role="presentation"`** on the **`<button>`** for styling integration—that **removes** **button** semantics from the node that receives events. **2nd-gen** must keep **native** **button** role on the **focus target** (via **`ButtonBase`**), with **field-level** focus styling handled in CSS—not by stripping **role**.
+**`role="presentation"` on inner `<button>`:** Spectrum 2 CSS samples added **`role="presentation"`** on the **`<button>`** for styling integration—that **removes** **button** semantics from the node that receives events. **gen2** must keep **native** **button** role on the **focus target** (via **`ButtonBase`**), with **field-level** focus styling handled in CSS—not by stripping **role**.
 
 **Position-property audits:** [SWC-1130](https://jira.corp.adobe.com/browse/SWC-1130) and [SWC-1197](https://jira.corp.adobe.com/browse/SWC-1197) target **stacked** **`sp-infield-button`** layouts. Removing **`block`** and **`inline`** matches S2 **consistent corner radius**; re-test **field-composed** **disclosure** / **clear** / **stepper** / **quiet** patterns under [S2 Token specs — In-field button (Figma)](https://www.figma.com/design/eoZHKJH9WZLbrCvGQf3GnsY/S2-Token-specs?node-id=814-8689).
 
@@ -188,11 +188,11 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 
 ### Keyboard and focus
 
-- **`swc-infield-button` (local):** Inner **`<button>`** receives focus when navigated to; **Enter** / **Return** or **Space** activates when not **`disabled`** ([Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)). The component does **not** implement **`FocusgroupNavigationController`**.
+- **`swc-infield-button` (local):** Inner **`<button>`** receives focus when navigated to; **Enter** / **Return** or **Space** activates when not **`disabled`** ([Keyboard testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)). The component does **not** implement **`FocusgroupNavigationController`**.
 - **Parent field host (composite):** The **field** is responsible for **focus group** navigation among the **input**, **`swc-infield-button`** instances, and other siblings—for example **`swc-number-field`** between **increment** / **decrement** and the **spinbutton** input. Use **`FocusgroupNavigationController`** on the **host** with **`getItems`** that returns the navigable set (inner **`<button>`** focus targets or hosts, per field design). Follow [Keyboard navigation inside components](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents); for **toolbar**-like button strips inside a field, see the [Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/) and [Focus management](../../../01_contributor-guides/14_focus-management.md).
 - **Tab vs focus group (parent field):** Each **field** host determines how focus moves among the **input**, **`swc-infield-button`** instances, and other siblings—either **default Tab** stops (each part is its own tab stop in DOM order) or **`FocusgroupNavigationController`** **arrow** navigation (roving **`tabindex`** within a subset or the whole composite). Document that choice on the **field**; **`swc-infield-button`** implements neither pattern.
 - **Focus visible:** Verify with design that **field-level** **focus-visible** styling does **not** hide **which** sub-control is focused; screen reader users still hear **button** when the inner **`<button>`** is focused.
-- **1st-gen gap:** **`label`** instead of **`accessible-label`**; **`block`** / **`inline`** documented in [1st-gen docs](https://opensource.adobe.com/spectrum-web-components/components/infield-button/)—2nd-gen docs must **not** copy **position-attribute** or **stacked** examples.
+- **1st-gen gap:** **`label`** instead of **`accessible-label`**; **`block`** / **`inline`** documented in [1st-gen docs](https://opensource.adobe.com/spectrum-web-components/components/infield-button/)—gen2 docs must **not** copy **position-attribute** or **stacked** examples.
 
 ---
 
@@ -239,6 +239,6 @@ Adobe Jira is authoritative for current status and resolution; refresh cells whe
 - [In-field button migration roadmap](./rendering-and-styling-migration-analysis.md)
 - [Button accessibility migration analysis](../button/accessibility-migration-analysis.md)
 - [Button migration plan](../button/migration-plan.md)
-- [`Button.base.ts` (2nd-gen core)](../../../../2nd-gen/packages/core/components/button/Button.base.ts)
+- [`Button.base.ts` (gen2 core)](../../../../gen2/packages/core/components/button/Button.base.ts)
 - [`InfieldButton.ts` (1st-gen)](../../../../1st-gen/packages/infield-button/src/InfieldButton.ts)
-- [Keyboard testing (2nd-gen Storybook accessibility guide)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
+- [Keyboard testing (gen2 Storybook accessibility guide)](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)

@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / 2nd-gen TypeScript
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / gen2 TypeScript
 
 <!-- Document title (editable) -->
 
-# 2nd-gen TypeScript
+# gen2 TypeScript
 
 <!-- Generated TOC - DO NOT EDIT -->
 
@@ -41,11 +41,11 @@
 
 <!-- Document content (editable) -->
 
-This section covers the TypeScript coding conventions for **2nd-gen** component development. These guides explain how to organize files, structure classes, use decorators, write JSDoc, define types, and compose behavior using mixins, controllers, directives, and interfaces.
+This section covers the TypeScript coding conventions for **gen2** component development. These guides explain how to organize files, structure classes, use decorators, write JSDoc, define types, and compose behavior using mixins, controllers, directives, and interfaces.
 
 The guides are written for both human contributors and AI agents. They use simple language, clear examples, and consistent formatting so anyone can follow them.
 
-> **Reference implementation:** The [Badge](../../../2nd-gen/packages/core/components/badge/Badge.base.ts) component is the primary example throughout these guides. Other 2nd-gen components (Status Light, Progress Circle, Divider, Asset) are used where they show different patterns.
+> **Reference implementation:** The [Badge](../../../gen2/packages/core/components/badge/Badge.base.ts) component is the primary example throughout these guides. Other gen2 components (Status Light, Progress Circle, Divider, Asset) are used where they show different patterns.
 
 ## Guides
 

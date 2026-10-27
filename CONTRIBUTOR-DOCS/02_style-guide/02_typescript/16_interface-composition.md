@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-gen TypeScript](README.md) / Interface composition
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 TypeScript](README.md) / Interface composition
 
 <!-- Document title (editable) -->
 
@@ -21,11 +21,11 @@
 
 <!-- Document content (editable) -->
 
-This guide explains how TypeScript interfaces are used in 2nd-gen components.
+This guide explains how TypeScript interfaces are used in gen2 components.
 
 ## When to use interface vs type
 
-In 2nd-gen, `interface` and `type` serve different purposes:
+In gen2, `interface` and `type` serve different purposes:
 
 | Use `interface` when | Use `type` when |
 |---------------------|-----------------|

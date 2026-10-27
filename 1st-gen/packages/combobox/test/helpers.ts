@@ -21,9 +21,9 @@ import '@spectrum-web-components/combobox/sp-combobox.js';
 import { countries, fruits } from '../stories/index.js';
 
 export type TestableCombobox = HTMLElement & {
-  activeDescendant: ComboboxOption;
+  activeDescendant: ComboboxOption | MenuItem;
   autocomplete: 'none' | 'list';
-  availableOptions: ComboboxOption[];
+  availableOptions: (ComboboxOption | MenuItem)[];
   focused: boolean;
   focusElement: HTMLInputElement;
   open: boolean;

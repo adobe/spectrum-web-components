@@ -19,7 +19,7 @@
     - [Continually improve components](#continually-improve-components)
 - [Strategy](#strategy)
     - [Disruptive vs. non-disruptive change](#disruptive-vs-non-disruptive-change)
-    - [Independent development of 1st-gen and 2nd-gen](#independent-development-of-1st-gen-and-2nd-gen)
+    - [Independent development of 1st-gen and gen2](#independent-development-of-1st-gen-and-gen2)
 
 </details>
 
@@ -55,9 +55,9 @@ This is a two-phase process:
 
     This phase is essentially complete, although some refinement of the `spectrum-two` theme continues.
 
-- **Phase 2:** Deliver a full-fidelity Spectrum 2 implementation as part of our 2nd-gen product.
+- **Phase 2:** Deliver a full-fidelity Spectrum 2 implementation as part of our gen2 product.
 
-    This will entail some breaking changes, but to facilitate incremental migration on a view-by-view or component-by-component basis, it will be possible for customers to use 1st-gen and 2nd-gen SWC components together within a single project.
+    This will entail some breaking changes, but to facilitate incremental migration on a view-by-view or component-by-component basis, it will be possible for customers to use 1st-gen and gen2 SWC components together within a single project.
 
 ### Improve accessibility
 
@@ -75,9 +75,9 @@ At a high level, our strategy for efficiently pursuing our objectives in paralle
 
 - Differentiate inherently disruptive changes from non-disruptive changes.
 
-- Channel disruptive changes into 2nd-gen, where we can take the time to get them right and the care to minimize the disruption they actually cause.
+- Channel disruptive changes into gen2, where we can take the time to get them right and the care to minimize the disruption they actually cause.
 
-- Work on 1st-gen and 2nd-gen side-by-side in the same repository, keeping both visible while maintaining their independence.
+- Work on 1st-gen and gen2 side-by-side in the same repository, keeping both visible while maintaining their independence.
 
 ### Disruptive vs. non-disruptive change
 
@@ -91,20 +91,20 @@ Our first three objectives have aspects that are inherently disruptive, or have 
 
 Meanwhile, most of the **accessibility improvements** and general **component improvements** we want to make aren't inherently disruptive—they can delivered in a continual stream of targeted, mostly non-breaking releases.
 
-### Independent development of 1st-gen and 2nd-gen
+### Independent development of 1st-gen and gen2
 
-We work on 1st-gen and 2nd-gen in the same repository but in **separate, independent workspaces**. There is **no runtime dependency** between them — 2nd-gen code does not affect 1st-gen, and vice versa.
+We work on 1st-gen and gen2 in the same repository but in **separate, independent workspaces**. There is **no runtime dependency** between them — gen2 code does not affect 1st-gen, and vice versa.
 
-**Isolation** of 1st-gen and 2nd-gen in separate workspaces lets us build 2nd-gen iteratively from the ground up, leaving behind as much structural and technical debt as possible, without needing to worry about breaking 1st-gen. Disruptive changes are confined to the `2nd-gen` workspace, while the 1st-gen project continues working essentially "as-is."
+**Isolation** of 1st-gen and gen2 in separate workspaces lets us build gen2 iteratively from the ground up, leaving behind as much structural and technical debt as possible, without needing to worry about breaking 1st-gen. Disruptive changes are confined to the `gen2` workspace, while the 1st-gen project continues working essentially "as-is."
 
-**Colocation** of 1st-gen and 2nd-gen in the same repository keeps both visible to the team and makes it easy to reference existing implementations when building 2nd-gen components. However, **code is not shared between generations at runtime**.
+**Colocation** of 1st-gen and gen2 in the same repository keeps both visible to the team and makes it easy to reference existing implementations when building gen2 components. However, **code is not shared between generations at runtime**.
 
 Here's how this works:
 
-- 2nd-gen Core contains **abstract, non-rendering base classes** that define API and implement behavior.
+- gen2 Core contains **abstract, non-rendering base classes** that define API and implement behavior.
 
-- 2nd-gen SWC contains **concrete, rendering classes** that extend from Core and add styles, templates, and element registration.
+- gen2 SWC contains **concrete, rendering classes** that extend from Core and add styles, templates, and element registration.
 
-- 1st-gen is **self-contained** — it has its own implementations and does not import from 2nd-gen packages.
+- 1st-gen is **self-contained** — it has its own implementations and does not import from gen2 packages.
 
 When migrating a component, we start from the existing 1st-gen implementation as a reference and apply improvements incrementally. This keeps changes scoped and avoids blocking migrations. More dramatic rewrites should be informed by existing bugs, accessibility considerations, or feature disparity — not done speculatively.

@@ -15,7 +15,7 @@
     - [In short](#in-short)
     - [Migration scope (this phase)](#migration-scope-this-phase)
     - [Also read](#also-read)
-    - [What `swc-menu-item` is (2nd-gen)](#what-swc-menu-item-is-2nd-gen)
+    - [What `swc-menu-item` is (gen2)](#what-swc-menu-item-is-gen2)
     - [When to use something else](#when-to-use-something-else)
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
@@ -42,13 +42,13 @@
 
 ## Overview
 
-This page is for 2nd-gen `swc-menu-item` in Spectrum Web Components. Most rows are `role="menuitem"` in the parent’s internal [`role="menu"`](../menu/accessibility-migration-analysis.md) list. That `role="menu"` node is in `swc-menu` / `swc-action-menu` shadow DOM, not on the custom element. Goal: [WCAG 2.2](https://www.w3.org/TR/WCAG22/) Level AA.
+This page is for gen2 `swc-menu-item` in Spectrum Web Components. Most rows are `role="menuitem"` in the parent’s internal [`role="menu"`](../menu/accessibility-migration-analysis.md) list. That `role="menu"` node is in `swc-menu` / `swc-action-menu` shadow DOM, not on the custom element. Goal: [WCAG 2.2](https://www.w3.org/TR/WCAG22/) Level AA.
 
 ### In short
 
 - A row is usually a `menuitem` with a clear name. Dividers are [`swc-menu-separator`](../menu-separator/accessibility-migration-analysis.md), not a menu item.
 - When the `submenu` slot has content, the submenu trigger and child `role="menu"` are in `swc-menu-item`’s shadow tree, not the `<swc-menu-item>` host. Do not add a second `swc-menu` in the list to fake a submenu.
-- This doc does not lock checkbox or radio menu rows for 2nd-gen until product work finishes ([scope below](#migration-scope-this-phase)). When they are implemented, using separate components for them  is highly recommended as they function differently and have a different aria-role than regular menu items.
+- This doc does not lock checkbox or radio menu rows for gen2 until product work finishes ([scope below](#migration-scope-this-phase)). When they are implemented, using separate components for them  is highly recommended as they function differently and have a different aria-role than regular menu items.
 
 ### Migration scope (this phase)
 
@@ -62,7 +62,7 @@ This page is for 2nd-gen `swc-menu-item` in Spectrum Web Components. Most rows a
 - [Menu separator a11y doc](../menu-separator/accessibility-migration-analysis.md) — `swc-menu-separator` in the list, not in a group default slot; `role="separator"`. [Overview](../menu-separator/accessibility-migration-analysis.md#overview).
 - [Action menu a11y doc](../action-menu/accessibility-migration-analysis.md) — `swc-action-menu` next to `swc-menu` (ActionMenu).
 
-### What `swc-menu-item` is (2nd-gen)
+### What `swc-menu-item` is (gen2)
 
 - A command row: `role="menuitem"` with a name and [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) keys.
 - **Placement:** slotted under `swc-menu`, `swc-action-menu`, `swc-menu-group`, or `swc-menu-item`. **Label** slot: text, icons, etc. (check exposed name in source). **Submenu** slot: only `swc-menu-group`, `swc-menu-item`, and `swc-menu-separator` in current allow-list (source).
@@ -122,7 +122,7 @@ See [Menu — Related 1st-gen accessibility (Jira)](../menu/accessibility-migrat
 
 ### Shadow DOM and cross-root ARIA Issues
 
-Follow [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues). On the top-level host, the menu-button trigger and the internal `role="menu"` node are implemented together in `swc-menu` / `swc-action-menu` shadow DOM; a `swc-menu-item` may still be slotted from the light DOM and does not need to be a child of that shadow subtree. The menu list pattern does not need IDREF to each item; in-menu movement uses `FocusgroupNavigationController` and roving `tabindex`. IDREF-driven ARIA that pairs IDs across separate roots is still fragile—per the menu and action menu docs, avoid patterns that need that. For a populated `submenu` slot, the submenu trigger and child `role="menu"` are implemented together in `swc-menu-item`’s shadow; submenu list rows can be slotted like top-level items—verify in 2nd-gen source.
+Follow [Menu — Shadow DOM](../menu/accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues). On the top-level host, the menu-button trigger and the internal `role="menu"` node are implemented together in `swc-menu` / `swc-action-menu` shadow DOM; a `swc-menu-item` may still be slotted from the light DOM and does not need to be a child of that shadow subtree. The menu list pattern does not need IDREF to each item; in-menu movement uses `FocusgroupNavigationController` and roving `tabindex`. IDREF-driven ARIA that pairs IDs across separate roots is still fragile—per the menu and action menu docs, avoid patterns that need that. For a populated `submenu` slot, the submenu trigger and child `role="menu"` are implemented together in `swc-menu-item`’s shadow; submenu list rows can be slotted like top-level items—verify in gen2 source.
 
 ### Accessibility tree expectations
 
@@ -143,9 +143,9 @@ Intentionally omitted; see **menu** / **popover** for layered UI motion if neede
 
 ### Keyboard and focus
 
-When the parent menu is open, items take part in roving `tabindex`. **Enter** / **Space** runs a command or opens a submenu (if the `submenu` slot is used). Arrows, Home, and End: `FocusgroupNavigationController` in each `role="menu"` list. Top list: `swc-menu` / `swc-action-menu` shadow; **nested list** (submenu): the child `role="menu"` in **this** `swc-menu-item`’s shadow should use the **same** optional [printable character navigation](../menu/accessibility-migration-analysis.md#printable-character-navigation-optional-not-typeahead) rules as the top-level menu (not combobox typeahead). Check 2nd-gen stories. Submenu keys (arrows, Escape, return) should match cascading menu needs—test with [Action menu — Keyboard](../action-menu/accessibility-migration-analysis.md#keyboard-and-focus) and [Menu — Keyboard](../menu/accessibility-migration-analysis.md#keyboard-and-focus).
+When the parent menu is open, items take part in roving `tabindex`. **Enter** / **Space** runs a command or opens a submenu (if the `submenu` slot is used). Arrows, Home, and End: `FocusgroupNavigationController` in each `role="menu"` list. Top list: `swc-menu` / `swc-action-menu` shadow; **nested list** (submenu): the child `role="menu"` in **this** `swc-menu-item`’s shadow should use the **same** optional [printable character navigation](../menu/accessibility-migration-analysis.md#printable-character-navigation-optional-not-typeahead) rules as the top-level menu (not combobox typeahead). Check gen2 stories. Submenu keys (arrows, Escape, return) should match cascading menu needs—test with [Action menu — Keyboard](../action-menu/accessibility-migration-analysis.md#keyboard-and-focus) and [Menu — Keyboard](../menu/accessibility-migration-analysis.md#keyboard-and-focus).
 
-On a parent `role="menu"` list (top-level or submenu surface as implemented), a `swc-menu-item` is in the roving row set when it is a direct list child or a child of a direct `swc-menu-group`. See [Menu — Keyboard and focus](../menu/accessibility-migration-analysis.md#keyboard-and-focus) and the illustrative `this.querySelectorAll(':scope > swc-menu-item, :scope > swc-menu-group > swc-menu-item')` (verify in 2nd-gen source).
+On a parent `role="menu"` list (top-level or submenu surface as implemented), a `swc-menu-item` is in the roving row set when it is a direct list child or a child of a direct `swc-menu-group`. See [Menu — Keyboard and focus](../menu/accessibility-migration-analysis.md#keyboard-and-focus) and the illustrative `this.querySelectorAll(':scope > swc-menu-item, :scope > swc-menu-group > swc-menu-item')` (verify in gen2 source).
 
 ---
 
@@ -160,11 +160,11 @@ On a parent `role="menu"` list (top-level or submenu surface as implemented), a 
 
 ### Keyboard testing
 
-Follow [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) on a composed **trigger + menu** path ([Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Include **menu item** behaviors: activate, move with arrows, submenu **Escape**/**return** as covered by shared stories; if your build implements it, [printable character navigation](../menu/accessibility-migration-analysis.md#printable-character-navigation-optional-not-typeahead) on the submenu list as well as the top-level list.
+Follow [Keyboard testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) on a composed **trigger + menu** path ([Menu — Keyboard testing](../menu/accessibility-migration-analysis.md#keyboard-testing)). Include **menu item** behaviors: activate, move with arrows, submenu **Escape**/**return** as covered by shared stories; if your build implements it, [printable character navigation](../menu/accessibility-migration-analysis.md#printable-character-navigation-optional-not-typeahead) on the submenu list as well as the top-level list.
 
 ### Manual and screen reader testing
 
-Use [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) with the **composed** menu pattern ([Menu](../menu/accessibility-migration-analysis.md)); verify **link** rows announce **once** and **match** **[Cards](https://inclusive-components.design/cards/)** expectations.
+Use [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) with the **composed** menu pattern ([Menu](../menu/accessibility-migration-analysis.md)); verify **link** rows announce **once** and **match** **[Cards](https://inclusive-components.design/cards/)** expectations.
 
 ---
 
@@ -188,5 +188,5 @@ Use [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/a
 - [WAI-ARIA APG: Disclosure navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/)
 - [spectrum-web-components PR #6129 — Focusgroup navigation controller](https://github.com/adobe/spectrum-web-components/pull/6129)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
-- [2nd-gen Storybook: Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
-- [2nd-gen Storybook: Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- [gen2 Storybook: Keyboard testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
+- [gen2 Storybook: Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)

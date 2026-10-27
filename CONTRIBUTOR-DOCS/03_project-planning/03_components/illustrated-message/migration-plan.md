@@ -22,11 +22,11 @@
 - [Dependencies](#dependencies)
 - [Changes overview](#changes-overview)
     - [Must ship — breaking or a11y-required](#must-ship--breaking-or-a11y-required)
-    - [Additive — ships when ready, zero breakage for consumers already on 2nd-gen](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-2nd-gen)
-- [2nd-gen API decisions](#2nd-gen-api-decisions)
-    - [Properties / attributes (2nd-gen)](#properties--attributes-2nd-gen)
-    - [Slots (2nd-gen)](#slots-2nd-gen)
-    - [CSS custom properties (2nd-gen)](#css-custom-properties-2nd-gen)
+    - [Additive — ships when ready, zero breakage for consumers already on gen2](#additive--ships-when-ready-zero-breakage-for-consumers-already-on-gen2)
+- [gen2 API decisions](#gen2-api-decisions)
+    - [Properties / attributes (gen2)](#properties--attributes-gen2)
+    - [Slots (gen2)](#slots-gen2)
+    - [CSS custom properties (gen2)](#css-custom-properties-gen2)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
 - [Migration checklist](#migration-checklist)
     - [Preparation (this ticket)](#preparation-this-ticket)
@@ -53,7 +53,7 @@
 - [1st-gen API surface](#1st-gen-api-surface)
 - [Dependencies](#dependencies)
 - [Changes overview](#changes-overview)
-- [2nd-gen API decisions](#2nd-gen-api-decisions)
+- [gen2 API decisions](#gen2-api-decisions)
 - [Architecture: core vs SWC split](#architecture-core-vs-swc-split)
 - [Migration checklist](#migration-checklist)
 - [Blockers and open questions](#blockers-and-open-questions)
@@ -113,9 +113,9 @@ The 1st-gen component imports `spectrum-illustratedmessage.css` (Spectrum 1 toke
 | Package | Version | Role |
 |---|---|---|
 | `@spectrum-web-components/base` | `1.11.2` | `SpectrumElement`, `html`, `property` decorator — 1st-gen internal package only |
-| `@spectrum-web-components/styles` | `1.11.2` | `bodyStyles`, `headingStyles` (applied via `static get styles()`). Note: 2nd-gen has typography classes but whether they will be importable in the same way is TBD — tracked in SWC-1545. |
+| `@spectrum-web-components/styles` | `1.11.2` | `bodyStyles`, `headingStyles` (applied via `static get styles()`). Note: gen2 has typography classes but whether they will be importable in the same way is TBD — tracked in SWC-1545. |
 
-No mixins, no shared utilities, no other SWC components composed inside. No dependency on `@adobe/spectrum-wc-core` (2nd-gen).
+No mixins, no shared utilities, no other SWC components composed inside. No dependency on `@adobe/spectrum-wc-core` (gen2).
 
 ---
 
@@ -128,7 +128,7 @@ No mixins, no shared utilities, no other SWC components composed inside. No depe
 
 ### Must ship — breaking or a11y-required
 
-| # | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
+| # | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 |---|---|---|---|---|
 | **B1** | Heading slot content type | Accepts any node inside `<h2>` | Accepts `<span>` only; shadow DOM owns the heading tag | Consumers slotting plain text or `<span>` are unaffected. Consumers who slotted `<h2>`–`<h6>` (incorrect but possible) must switch to `<span>`. Ships now — deferring would cause font property inheritance side-effects and a second migration event. |
 | **B2** | CSS token migration (S1 → S2) | Uses `--spectrum-*` base tokens with `--mod-*` override chains (e.g. `var(--mod-illustrated-message-title-color, var(--spectrum-illustrated-message-title-color))`). Forced-colors override applied on `:host`. | `--mod-*` and `--spectrum-*` chains removed; collapsed into `--swc-*` (exposed) or `--_swc-*` (private) properties per [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure). Forced colors moved to internal `.swc-IllustratedMessage` selector. | Since no `--mod-*` properties were ever documented as public API, there is no consumer breakage. Any new `--swc-*` properties introduced are additive capability. |
@@ -136,7 +136,7 @@ No mixins, no shared utilities, no other SWC components composed inside. No depe
 | **A11y** | Heading level control | Always `<h2>`, no way for consumers to change level | `heading-level` attribute (`2`–`6`, default `2`); shadow DOM renders the correct `<hN>` tag | Consumers using the default are unaffected. Consumers needing a different level add `heading-level`. Required for WCAG 1.3.1 and 2.4.6 compliance. |
 | **A11y** | Illustration accessibility | No handling for decorative vs informative SVGs | Decorative SVGs: `aria-hidden="true"`; informative: `role="img"` + `aria-label` / `<title>` | Slot contract; documented guidance rather than enforced by the component. |
 
-### Additive — ships when ready, zero breakage for consumers already on 2nd-gen
+### Additive — ships when ready, zero breakage for consumers already on gen2
 
 | # | What is added | Notes |
 |---|---|---|
@@ -146,11 +146,11 @@ No mixins, no shared utilities, no other SWC components composed inside. No depe
 
 ---
 
-## 2nd-gen API decisions
+## gen2 API decisions
 
 These are derived from the a11y analysis and rendering roadmap. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
 
-### Properties / attributes (2nd-gen)
+### Properties / attributes (gen2)
 
 | Property | Type | Default | Attribute | Notes |
 |---|---|---|---|---|
@@ -158,7 +158,7 @@ These are derived from the a11y analysis and rendering roadmap. Confirmed items 
 | `size` | `'s' \| 'm' \| 'l'` | `'m'` | `size` | **New.**  `m` is the implicit base style `s` and `l` override via `:host([size="s"])` / `:host([size="l"])` attribute selectors per [selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions). |
 | `orientation` | `'vertical' \| 'horizontal'` | `'vertical'` | `orientation` | **New.** Drives layout variant; `horizontal` places the illustration beside the content. |
 
-### Slots (2nd-gen)
+### Slots (gen2)
 
 | Slot | Content | Notes |
 |---|---|---|
@@ -167,7 +167,7 @@ These are derived from the a11y analysis and rendering roadmap. Confirmed items 
 | `description` | Phrasing content | Links must be real `<a>` or link components with visible names |
 | `button-group` | **New.** Button group (untyped) | Leave untyped. Focus group navigation controller to be implemented in a future follow-up. |
 
-### CSS custom properties (2nd-gen)
+### CSS custom properties (gen2)
 
 No `--mod-*` properties will be exposed. New `--swc-*` component-level properties may be introduced where needed (especially for size variants) — these are additive and not breaking. See [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure) for what to expose and how.
 
@@ -175,14 +175,14 @@ No `--mod-*` properties will be exposed. New `--swc-*` component-level propertie
 
 ## Architecture: core vs SWC split
 
-> The 1st-gen component is a **reference only** — 2nd-gen is built independently. Neither generation imports from the other.
+> The 1st-gen component is a **reference only** — gen2 is built independently. Neither generation imports from the other.
 
-Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
+Follow the [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration) as the concrete pattern for the core/SWC split.
 
 | Layer | Path | Contains |
 |---|---|---|
-| **Core** | `2nd-gen/packages/core/components/illustrated-message/` | Abstract base class, types, behavior, validation. No rendering. |
-| **SWC** | `2nd-gen/packages/swc/components/illustrated-message/` | Extends core base. Rendering, styles, element registration, stories, tests. |
+| **Core** | `gen2/packages/core/components/illustrated-message/` | Abstract base class, types, behavior, validation. No rendering. |
+| **SWC** | `gen2/packages/swc/components/illustrated-message/` | Extends core base. Rendering, styles, element registration, stories, tests. |
 
 ---
 
@@ -193,13 +193,13 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 - [x] 1st-gen API surface documented
 - [x] Dependencies identified
 - [x] Breaking changes documented
-- [x] 2nd-gen API decisions drafted
+- [x] gen2 API decisions drafted
 - [ ] Plan reviewed by at least one other engineer
 
 ### Setup
 
-- [ ] Create `2nd-gen/packages/core/components/illustrated-message/`
-- [ ] Create `2nd-gen/packages/swc/components/illustrated-message/`
+- [ ] Create `gen2/packages/core/components/illustrated-message/`
+- [ ] Create `gen2/packages/swc/components/illustrated-message/`
 - [ ] Wire exports in both `package.json` files
 - [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory
 
@@ -248,7 +248,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 
 ### Review
 
-- [ ] `yarn lint:2nd-gen` passes (ESLint, Stylelint, Prettier)
+- [ ] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
 - [ ] Status table in workstream doc updated
 - [ ] PR created with description referencing SWC-1834
 - [ ] Peer engineer sign-off
@@ -262,19 +262,19 @@ Follow the [Badge migration reference](../../02_workstreams/02_2nd-gen-component
 | **Q1** | **`heading` attribute + `heading` slot precedence:** Slot takes precedence via `<slot name="heading">${this.heading}</slot>` — attribute is the fallback, slot content overrides it when present. | **Resolved** |
 | **Q2** | **`heading-level` clamping vs type-error:** Silently clamp using `Math.max(2, Math.min(6, level))` — consistent with `AccordionItem.getHeadingLevel()` precedent in the codebase. | **Resolved** |
 | **Q3** | **`button-group` slot type:** Leave untyped — consumer slots any button group content. A focus group navigation controller will need to be implemented in a future follow-up. | **Resolved** |
-| **Q4** | **Typography styles dependency (SWC-1545):** 2nd-gen has typography classes but whether they will be importable in the same way as S1's `bodyStyles`/`headingStyles` is TBD. Tracked in SWC-1545. | Open | SWC-1545 |
+| **Q4** | **Typography styles dependency (SWC-1545):** gen2 has typography classes but whether they will be importable in the same way as S1's `bodyStyles`/`headingStyles` is TBD. Tracked in SWC-1545. | Open | SWC-1545 |
 
 ---
 
 ## References
 
-- [Washing machine workflow](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md)
+- [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [Accessibility migration analysis](./accessibility-migration-analysis.md)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
 - [1st-gen source](../../../../1st-gen/packages/illustrated-message/src/IllustratedMessage.ts)
 - [1st-gen tests](../../../../1st-gen/packages/illustrated-message/test/illustrated-message.test.ts)
-- [Badge migration reference](../../02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
+- [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - [spectrum-css migration PR #3246](https://github.com/adobe/spectrum-css/pull/3246)
 - SWC-1834 (this ticket), SWC-1466 (accordion heading level — analogous precedent), SWC-1545 (typography classes)

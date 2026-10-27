@@ -13,11 +13,11 @@
 
 - [Overview](#overview)
     - [Also read](#also-read)
-    - [What popover is (2nd-gen)](#what-popover-is-2nd-gen)
+    - [What popover is (gen2)](#what-popover-is-gen2)
     - [When to use something else](#when-to-use-something-else)
     - [What it is not](#what-it-is-not)
     - [Related](#related)
-- [2nd-gen design update (amends this analysis) — Q4](#2nd-gen-design-update-amends-this-analysis--q4)
+- [gen2 design update (amends this analysis) — Q4](#gen2-design-update-amends-this-analysis--q4)
     - [Trigger-side ARIA the popover now owns](#trigger-side-aria-the-popover-now-owns)
     - [Keyboard, focus, and dismissal (by mode)](#keyboard-focus-and-dismissal-by-mode)
 - [ARIA and WCAG context](#aria-and-wcag-context)
@@ -45,13 +45,13 @@
 
 ## Overview
 
-This document sets accessibility expectations for 2nd-gen **Popover** in Spectrum Web Components: **shared popover styles** (visual layer only) and a **positioning host** (`swc-popover`, name TBD) for **anchor**-relative placement. **`swc-popover` is a container** for **listbox**, **menu**, **tooltip**, and similar **content**—**not** a **replacement** for those patterns. **ARIA** roles, states, and properties, **focus** management, and **keyboard** navigation are implemented by the **components that use** `swc-popover` (for example action menu, combobox, tooltip), not by the popover host. **Modal dialogs** use **shared popover styles** on the **dialog** **surface** when the design needs that **chrome**; they **do** **not** use the **`<swc-popover>`** **component** (that host is for **anchor**-positioned UI only: menus, combobox popups, tooltips, and similar). The target is **WCAG 2.2 Level AA**. Product alignment: [React Spectrum `Popover`](https://react-spectrum.adobe.com/Popover).
+This document sets accessibility expectations for gen2 **Popover** in Spectrum Web Components: **shared popover styles** (visual layer only) and a **positioning host** (`swc-popover`, name TBD) for **anchor**-relative placement. **`swc-popover` is a container** for **listbox**, **menu**, **tooltip**, and similar **content**—**not** a **replacement** for those patterns. **ARIA** roles, states, and properties, **focus** management, and **keyboard** navigation are implemented by the **components that use** `swc-popover` (for example action menu, combobox, tooltip), not by the popover host. **Modal dialogs** use **shared popover styles** on the **dialog** **surface** when the design needs that **chrome**; they **do** **not** use the **`<swc-popover>`** **component** (that host is for **anchor**-positioned UI only: menus, combobox popups, tooltips, and similar). The target is **WCAG 2.2 Level AA**. Product alignment: [React Spectrum `Popover`](https://react-spectrum.adobe.com/Popover).
 
 ### Also read
 
-[Popover migration roadmap](./rendering-and-styling-migration-analysis.md) for the 1st-gen / 2nd-gen split (styles vs positioning), deprecation, and consumer migration ([SWC-2003](https://jira.corp.adobe.com/browse/SWC-2003)).
+[Popover migration roadmap](./rendering-and-styling-migration-analysis.md) for the 1st-gen / gen2 split (styles vs positioning), deprecation, and consumer migration ([SWC-2003](https://jira.corp.adobe.com/browse/SWC-2003)).
 
-### What popover is (2nd-gen)
+### What popover is (gen2)
 
 - **Popover styles** are a shared Spectrum visual layer (for example border, drop shadow, tip). They do not set ARIA or keyboard behavior.
 - **`swc-popover`** is a **positioning container**: it applies those styles and anchored placement (for example [CSS anchor positioning](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning) and/or [Floating UI](https://floating-ui.com/)) around slotted content. It is not a **menu**, **listbox**, or **tooltip** by itself—those are the components or markup patterns you host inside it.
@@ -66,16 +66,16 @@ This document sets accessibility expectations for 2nd-gen **Popover** in Spectru
 
 - **Not** a menu, listbox, tooltip, or other APG widget in one tag—`swc-popover` is only a **container** and positioning **shell**; the components or author markup **inside** provide semantics and interaction.
 - **Not** a full “accessible overlay in one import”: inert backdrops, open state, and focus orchestration are separate (app or higher-level primitives) unless a future doc specifies otherwise.
-- **Not** a wholesale drop-in for every 1st-gen [overlay](../../../../1st-gen/packages/overlay/README.md) use. **Tooltips** are expected to adopt `swc-popover`-style anchoring instead of overlay-driven tooltip placement. **Action menu** (dropdown) and **combobox** (listbox popup) are planned **`swc-popover` host** call sites. **Modals** and **dialogs** use **shared** **popover** **styles** on the dialog surface, **not** the **`swc-popover` host** (see [roadmap — Planned consumers](./rendering-and-styling-migration-analysis.md#planned-consumers-2nd-gen) and [Overview](./rendering-and-styling-migration-analysis.md#overview)).
+- **Not** a wholesale drop-in for every 1st-gen [overlay](../../../../1st-gen/packages/overlay/README.md) use. **Tooltips** are expected to adopt `swc-popover`-style anchoring instead of overlay-driven tooltip placement. **Action menu** (dropdown) and **combobox** (listbox popup) are planned **`swc-popover` host** call sites. **Modals** and **dialogs** use **shared** **popover** **styles** on the dialog surface, **not** the **`swc-popover` host** (see [roadmap — Planned consumers](./rendering-and-styling-migration-analysis.md#planned-consumers-gen2) and [Overview](./rendering-and-styling-migration-analysis.md#overview)).
 
 ### Related
 
 - 1st-gen [`sp-popover`](../../../../1st-gen/packages/popover/README.md) is primarily styling. Many call sites (for example Picker) set `role="presentation"` on the host and place ARIA on child content.
-- 2nd-gen (planned, [roadmap — Planned consumers](./rendering-and-styling-migration-analysis.md#planned-consumers-2nd-gen)): **action menu** (dropdown), **combobox** (listbox), **tooltip** (replacing overlay-based positioning for that pattern). **Modal** / **dialog**: **shared** **popover** **styles** on the surface, **not** the **`swc-popover` host** (see [roadmap — Overview](./rendering-and-styling-migration-analysis.md#overview)).
+- gen2 (planned, [roadmap — Planned consumers](./rendering-and-styling-migration-analysis.md#planned-consumers-gen2)): **action menu** (dropdown), **combobox** (listbox), **tooltip** (replacing overlay-based positioning for that pattern). **Modal** / **dialog**: **shared** **popover** **styles** on the surface, **not** the **`swc-popover` host** (see [roadmap — Overview](./rendering-and-styling-migration-analysis.md#overview)).
 
 ---
 
-## 2nd-gen design update (amends this analysis) — Q4
+## gen2 design update (amends this analysis) — Q4
 
 > This section supersedes the original "role-free, no-behavior shell" framing and the "modals do not use the host" statements below, per the agreed [migration plan](./migration-plan.md). The original sections remain accurate for **default-mode surface semantics** (the popover surface carries no inherent role; slotted content owns its pattern's ARIA), but the popover is no longer behavior-free, and it now has a modal mode. Where the older text conflicts with the items here, this section wins.
 
@@ -83,7 +83,7 @@ This document sets accessibility expectations for 2nd-gen **Popover** in Spectru
 >
 > **Why this is consistent with the primitive concern.** `<swc-popover>` is **not** the shared positioning host for `menu` / `listbox` / `combobox` content. Those components build directly on the shared **`PlacementController`** (the positioning engine) with their own roles and focus; they do **not** wrap the `<swc-popover>` component. The reusable primitive is the **controller**, not the surface. With no consumer needing the surface to be roleless, `<swc-popover>` owns being an accessible **dialog** (the surface for contextual help, coachmark, color editor, and similar), which is what makes a bare popover announce and seat focus for assistive technology. Menu/picker/combobox are tracked as `PlacementController` consumers, not host consumers.
 
-The 2nd-gen `<swc-popover>` is a **self-contained, opinionated** component, not a styles-only positioning shell. Two behavior modes, selected by the `modal` attribute:
+The gen2 `<swc-popover>` is a **self-contained, opinionated** component, not a styles-only positioning shell. Two behavior modes, selected by the `modal` attribute:
 
 - **Default (non-modal):** renders an internal `<div popover="auto" role="dialog">`, opened via `showPopover()`. The browser provides native top-layer rendering and light-dismiss (Escape, click-outside); the component adds dialog semantics (role, forwarded `accessible-label`, focus-in/restore) per the amendment above. Page behind stays interactive and scrollable.
 - **Modal (`modal` attribute):** renders an internal `<dialog>`, opened via `showModal()`. The browser provides **`role="dialog"`, a focus trap, background inert, and Escape via the `cancel` event** natively; the component wires backdrop-click-to-close. **This replaces the original "modals do not use the host" guidance** — anchored modal popovers are now in scope for `<swc-popover>`.
@@ -115,18 +115,18 @@ The surface carries `role="dialog"` in both modes (see the amendment above); thi
 ### Pattern in the APG
 
 - The [APG “read me first”](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/) model does not define a “popover” widget. Overlay **surfaces** are exposed to assistive technology through **dialog**, **listbox** / **menu** / **grid** popup, and other patterns plus their controlling widgets (for example [combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/)).
-- **Name, role, and value** (WCAG 4.1.2) for the interactive experience come from slotted content and the trigger pattern, not from the unlabeled shell. See [Semantic HTML and ARIA (2nd-gen guide)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx).
+- **Name, role, and value** (WCAG 4.1.2) for the interactive experience come from slotted content and the trigger pattern, not from the unlabeled shell. See [Semantic HTML and ARIA (gen2 guide)](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx).
 
 ### Guidelines that apply
 
 | Idea | Plain meaning |
 | --- | --- |
-| [Non-text contrast (1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | Shared popover **chrome** (border, tip, drop shadow) should be distinguishable on typical backgrounds. Do not reintroduce 1st-gen **placement** issues such as [SWC-917](https://jira.corp.adobe.com/browse/SWC-917) (RTL tip) in 2nd-gen. |
+| [Non-text contrast (1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | Shared popover **chrome** (border, tip, drop shadow) should be distinguishable on typical backgrounds. Do not reintroduce 1st-gen **placement** issues such as [SWC-917](https://jira.corp.adobe.com/browse/SWC-917) (RTL tip) in gen2. |
 | [Focus order (2.4.3)](https://www.w3.org/WAI/WCAG22/Understanding/focus-order) and [focus visible (2.4.7)](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible) | The `swc-popover` host does not define tab order. **Modals and dialogs** (popover **styles** on the surface, no `swc-popover` host) and **combobox** / **menu** (with `swc-popover`) each follow their own **focus** pattern. |
 | [Name, role, value (4.1.2)](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value) | Belongs in focusable, labeled content (listbox, menu, dialog body), not unlabeled chrome—whether that is the `swc-popover` host or a **modal** **surface** that only uses **shared** **popover** **styles**. |
 | [Animation from interactions (2.3.3)](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions) (if open or placement transitions) | If the layer adds entry/exit motion, respect `prefers-reduced-motion` (or equivalent). |
 
-**Bottom line:** Shared popover **styles** and the **`swc-popover` host** cover **presentation** and **anchor** placement for **anchored** UIs. **Modals and dialogs** use **popover** **styles** on the **dialog** **surface** but **not** the **`swc-popover` host**—they are not positioned **relative to a trigger** like a **menu** or **tooltip**. Accessibility comes from the **pattern** and **content**; use [Keyboard testing (2nd-gen guide)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) for the pattern you ship.
+**Bottom line:** Shared popover **styles** and the **`swc-popover` host** cover **presentation** and **anchor** placement for **anchored** UIs. **Modals and dialogs** use **popover** **styles** on the **dialog** **surface** but **not** the **`swc-popover` host**—they are not positioned **relative to a trigger** like a **menu** or **tooltip**. Accessibility comes from the **pattern** and **content**; use [Keyboard testing (gen2 guide)](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) for the pattern you ship.
 
 ---
 
@@ -137,7 +137,7 @@ The surface carries `role="dialog"` in both modes (see the amendment above); thi
 | [SWC-933](https://jira.corp.adobe.com/browse/SWC-933) / [SWC-932](https://jira.corp.adobe.com/browse/SWC-932) | Bug | Blocked / To Do | Unresolved | Picker: arrow navigation in list when popover is the overlay |
 | [SWC-917](https://jira.corp.adobe.com/browse/SWC-917) | Bug | To Do | Unresolved | Popover: tip placement in RTL |
 | [SWC-1227](https://jira.corp.adobe.com/browse/SWC-1227) | Story | To Do | Unresolved | docs: migration documentation (Popover, Picker, Combobox, Coach mark, etc.) |
-| [SWC-1994](https://jira.corp.adobe.com/browse/SWC-1994) | Story | To Do | Unresolved | A11y(popover): recommendations for 2nd-gen migration |
+| [SWC-1994](https://jira.corp.adobe.com/browse/SWC-1994) | Story | To Do | Unresolved | A11y(popover): recommendations for gen2 migration |
 
 ---
 
@@ -153,7 +153,7 @@ Component tag may change until API freeze; this section describes the **position
 | **No default ARIA on host** | Do not set a default `role` or `aria-*` on `swc-popover` in the unstyled **geometry** story. **Shared popover** CSS also must not set ARIA. Align with the spirit of [React Spectrum `Popover` props](https://react-spectrum.adobe.com/Popover) (positioning, visual props), not a dialog in one tag. If a build ever exposes a host `role` for a special case, that must be a separate, documented API. |
 | **Not a “semantic widget” host** | The host is not `dialog` or `menu` by default. If another role is required, that belongs in child markup (the dialog surface, the listbox container) or a different primitive, not a role override that pretends the box is a menu or dialog. |
 | **Labels and ids** | `aria-labelledby`, `aria-describedby`, and `id` wiring for a dialog or combobox listbox live in the same document root as the labeled nodes (light DOM in typical Lit usage). Avoid `aria-*` that must resolve across **disconnected** shadow roots for the default `swc-popover` design. |
-| **1st-gen pattern** | Call sites that used `sp-popover` with `role="presentation"` and ARIA on children (for example Picker) are the reference for **chrome vs content**; 2nd-gen continues separating **anchored** **chrome** from **pattern** **ARIA**. |
+| **1st-gen pattern** | Call sites that used `sp-popover` with `role="presentation"` and ARIA on children (for example Picker) are the reference for **chrome vs content**; gen2 continues separating **anchored** **chrome** from **pattern** **ARIA**. |
 
 ### Shadow DOM and cross-root ARIA Issues
 
@@ -206,21 +206,21 @@ The template one-sentence *“Not focusable. Keyboard navigation should skip thi
 
 ### Manual and screen reader testing (mandatory, host alone)
 
-**Does not apply** as a **required** [screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) pass for the **host** with **no** real **content** (scaffold-only stories are not an end user task). Use the screen reader guide for **composed** patterns: `swc-popover` with menu or listbox; **modals** and **dialogs** use **popover** **styles** on the **surface** and a **separate** **modal** / **dialog** **pattern** (not the `swc-popover` host).
+**Does not apply** as a **required** [screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) pass for the **host** with **no** real **content** (scaffold-only stories are not an end user task). Use the screen reader guide for **composed** patterns: `swc-popover` with menu or listbox; **modals** and **dialogs** use **popover** **styles** on the **surface** and a **separate** **modal** / **dialog** **pattern** (not the `swc-popover` host).
 
 ---
 
 ## Summary checklist
 
 - [ ] Consumer guide and 1st-gen deprecation ([SWC-2003](https://jira.corp.adobe.com/browse/SWC-2003), [SWC-1227](https://jira.corp.adobe.com/browse/SWC-1227)) explain shared **popover styles** vs `swc-popover`, and what accessibility the product still owns.
-- [ ] [SWC-1994](https://jira.corp.adobe.com/browse/SWC-1994) and Storybook ([SWC-2002](https://jira.corp.adobe.com/browse/SWC-2002) if used) state **no** default ARIA / focus / keyboard on `swc-popover`, and link to the [Semantic HTML and ARIA](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx) and APG-aligned **composed** examples.
-- [ ] Visual and RTL **tip** placement (SWC-917) does not regress in 2nd-gen.
+- [ ] [SWC-1994](https://jira.corp.adobe.com/browse/SWC-1994) and Storybook ([SWC-2002](https://jira.corp.adobe.com/browse/SWC-2002) if used) state **no** default ARIA / focus / keyboard on `swc-popover`, and link to the [Semantic HTML and ARIA](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx) and APG-aligned **composed** examples.
+- [ ] Visual and RTL **tip** placement (SWC-917) does not regress in gen2.
 
 ## References
 
 - 1st-gen: [`sp-popover`](../../../../1st-gen/packages/popover/README.md), [overlay](../../../../1st-gen/packages/overlay/README.md)
 - [APG: read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
 - [APG: dialog (modal)](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/), [menubutton](https://www.w3.org/WAI/ARIA/apg/patterns/menubutton/), [combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/)
-- 2nd-gen: [Semantic HTML and ARIA](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx), [Keyboard testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx), [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- gen2: [Semantic HTML and ARIA](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx), [Keyboard testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx), [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
 - [React Spectrum: Popover](https://react-spectrum.adobe.com/Popover)
 - [Popover migration roadmap (this repo)](./rendering-and-styling-migration-analysis.md)

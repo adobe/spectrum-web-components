@@ -15,8 +15,15 @@ executors:
     resource_class: medium
   # xlarge — heavy builds (Vite, Storybook), VRT, and single-container coverage.
   node:
+    parameters:
+      # Gen1's Web Test Runner stays on its golden-image browser version and
+      # needs page.accessibility.snapshot(), removed in Playwright 1.57.
+      # Match the root resolution and install:browsers:1st-gen.
+      playwright-version:
+        type: string
+        default: v1.64.1-resolute
     docker:
-      - image: mcr.microsoft.com/playwright:v1.53.1-noble
+      - image: mcr.microsoft.com/playwright:<< parameters.playwright-version >>
     resource_class: xlarge
     environment:
       NODE_ENV: development
@@ -27,8 +34,12 @@ executors:
   # large — sharded test jobs. Each container runs a fraction of the suite
   # (parallelism + test splitting / vitest --shard), so half the RAM is plenty.
   node-large:
+    parameters:
+      playwright-version:
+        type: string
+        default: v1.64.1-resolute
     docker:
-      - image: mcr.microsoft.com/playwright:v1.53.1-noble
+      - image: mcr.microsoft.com/playwright:<< parameters.playwright-version >>
     resource_class: large
     environment:
       NODE_ENV: development
@@ -58,7 +69,7 @@ parameters:
   # 3. Commit this change to the PR branch where the changes exist.
   current_golden_images_hash:
     type: string
-    default: ed6c0abd2a91f0b94fb3214dfced5ad135f1a409
+    default: c789d6535940421238d3f52ab423d1d51339f62f
 
 commands:
   install-azcopy:
@@ -66,7 +77,7 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - azcopy-v10.29.1-{{ arch }}
+            - azcopy-v10.34.1-{{ arch }}
       - run:
           when: always
           name: Install AzCopy
@@ -74,7 +85,7 @@ commands:
             mkdir -p ~/bin
             if [ ! -f ~/bin/azcopy ]; then
               cd ~/bin
-              wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.29.1/azcopy_linux_amd64_10.29.1.tar.gz
+              wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.34.1/azcopy_linux_amd64_10.34.1.tar.gz
               tar -xf azcopy.tar.gz --strip-components=1
               chmod +x azcopy
             fi
@@ -88,14 +99,29 @@ commands:
       - save_cache:
           paths:
             - ~/bin/azcopy
-          key: azcopy-v10.29.1-{{ arch }}
+          key: azcopy-v10.34.1-{{ arch }}
   setup-node-dependencies:
     description: 'Checkout code and install node dependencies'
     steps:
       - checkout
+      # The Playwright image ships its own Node. Install the version from
+      # .nvmrc so CircleCI matches GitHub Actions and local development.
+      - run:
+          name: Install Node from .nvmrc
+          command: |
+            NODE_VERSION=$(tr -d '[:space:]' < .nvmrc)
+            NODE_DIST="node-${NODE_VERSION}-linux-x64.tar.gz"
+            cd /tmp
+            curl -fsSLO "https://nodejs.org/dist/${NODE_VERSION}/${NODE_DIST}"
+            curl -fsSL "https://nodejs.org/dist/${NODE_VERSION}/SHASUMS256.txt" | grep " ${NODE_DIST}\$" | sha256sum -c -
+            tar -xzf "$NODE_DIST" -C /usr/local --strip-components=1 --no-same-owner
+            rm "$NODE_DIST"
+            hash -r
+            [ "$(node -v)" = "$NODE_VERSION" ] || { echo "Expected Node $NODE_VERSION, got $(node -v)"; exit 1; }
+            echo "Using Node $(node -v)"
       - restore_cache:
           keys:
-            - cache-deps-yarn-{{ arch }}-{{ checksum "yarn.lock" }}
+            - cache-deps-yarn-{{ arch }}-{{ checksum ".nvmrc" }}-{{ checksum "yarn.lock" }}
       - run:
           name: Installing Dependencies
           command: |
@@ -107,7 +133,7 @@ commands:
       - save_cache:
           paths:
             - ~/.cache/yarn
-          key: cache-deps-yarn-{{ arch }}-{{ checksum "yarn.lock" }}
+          key: cache-deps-yarn-{{ arch }}-{{ checksum ".nvmrc" }}-{{ checksum "yarn.lock" }}
   downstream:
     steps:
       - setup-node-dependencies
@@ -277,7 +303,7 @@ jobs:
       - setup-node-dependencies
       - run:
           name: Build gen2 project
-          command: yarn build:2nd-gen
+          command: yarn build:gen2
       - run:
           name: Generate Custom Elements Manifest
           command: yarn workspace @adobe/spectrum-wc analyze
@@ -285,8 +311,8 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - 2nd-gen/packages/core/dist
-            - 2nd-gen/packages/swc/dist
+            - gen2/packages/core/dist
+            - gen2/packages/swc/dist
 
   # Build the ci-a11y Storybook once; the a11y and axe jobs attach it. Uses
   # `downstream` because the Storybook build still pulls in gen1 refs.
@@ -301,13 +327,15 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - 2nd-gen/packages/swc/storybook-static
+            - gen2/packages/swc/storybook-static
 
   # ---------------------------------------------------------------------------
   # gen1 unit tests (sharded across 5 containers, split by timings)
   # ---------------------------------------------------------------------------
   test-chromium:
-    executor: node-large
+    executor:
+      name: node-large
+      playwright-version: v1.53.1-noble
     parallelism: 5
     steps:
       - downstream
@@ -320,7 +348,9 @@ jobs:
           path: /root/project/1st-gen/results/
 
   test-chromium-coverage:
-    executor: node
+    executor:
+      name: node
+      playwright-version: v1.53.1-noble
     steps:
       - downstream
       - run:
@@ -333,7 +363,9 @@ jobs:
           path: 1st-gen/coverage
 
   test-chromium-memory:
-    executor: node-large
+    executor:
+      name: node-large
+      playwright-version: v1.53.1-noble
     parallelism: 5
     steps:
       - downstream
@@ -347,7 +379,9 @@ jobs:
           path: /root/project/1st-gen/results/
 
   test-firefox:
-    executor: node-large
+    executor:
+      name: node-large
+      playwright-version: v1.53.1-noble
     parallelism: 5
     steps:
       - downstream
@@ -360,7 +394,9 @@ jobs:
           path: /root/project/1st-gen/results/
 
   test-webkit:
-    executor: node-large
+    executor:
+      name: node-large
+      playwright-version: v1.53.1-noble
     parallelism: 5
     steps:
       - downstream
@@ -390,11 +426,20 @@ jobs:
       - run:
           name: Run gen2 << parameters.browser >> tests (shard $CIRCLE_NODE_INDEX/$CIRCLE_NODE_TOTAL)
           command: |
-            VITEST_BROWSER_INSTANCES=<< parameters.browser >> \
-              yarn workspace @spectrum-web-components/2nd-gen run test \
-              --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL
+            if [ "<< parameters.browser >>" = "webkit" ]; then
+              # Keep one visible WebKit test window on the virtual display.
+              VITEST_BROWSER_INSTANCES=webkit xvfb-run -a \
+                yarn workspace @spectrum-web-components/gen2 run test \
+                --browser.headless=false \
+                --maxWorkers=1 \
+                --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL
+            else
+              VITEST_BROWSER_INSTANCES=<< parameters.browser >> \
+                yarn workspace @spectrum-web-components/gen2 run test \
+                --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL
+            fi
       - store_test_results:
-          path: /root/project/2nd-gen/packages/swc/test-results
+          path: /root/project/gen2/packages/swc/test-results
 
   # gen2 coverage — Chromium only, base=main only. It stays in the gen2 workflow
   # (not a separate is_base_main-gated one) so it can attach the shared
@@ -416,11 +461,11 @@ jobs:
           at: .
       - run:
           name: Run gen2 Chromium coverage
-          command: VITEST_BROWSER_INSTANCES=chromium yarn workspace @spectrum-web-components/2nd-gen test:coverage
+          command: VITEST_BROWSER_INSTANCES=chromium yarn workspace @spectrum-web-components/gen2 test:coverage
       - store_test_results:
-          path: /root/project/2nd-gen/packages/swc/test-results
+          path: /root/project/gen2/packages/swc/test-results
       - store_artifacts:
-          path: 2nd-gen/packages/swc/coverage
+          path: gen2/packages/swc/coverage
 
   # gen2 ARIA snapshot tests (Playwright), against the prebuilt Storybook.
   test-gen2-a11y:
@@ -431,11 +476,11 @@ jobs:
           at: .
       - run:
           name: Run gen2 ARIA snapshot tests
-          command: yarn test:a11y:2nd
+          command: yarn test:a11y:gen2
       - store_test_results:
-          path: /root/project/2nd-gen/test/playwright-a11y/results
+          path: /root/project/gen2/test/playwright-a11y/results
       - store_artifacts:
-          path: 2nd-gen/test/playwright-a11y/report
+          path: gen2/test/playwright-a11y/report
 
   # gen2 axe-core WCAG tests (Storybook test-runner), against the prebuilt Storybook.
   test-gen2-axe:
@@ -447,10 +492,10 @@ jobs:
       - run:
           name: Run axe-core WCAG tests
           command: |
-            mkdir -p 2nd-gen/packages/swc/test-results
-            yarn start-server-and-test "npx http-server 2nd-gen/packages/swc/storybook-static -p 6006 --silent" http://127.0.0.1:6006 "JEST_JUNIT_OUTPUT_DIR=./test-results JEST_JUNIT_OUTPUT_NAME=junit.xml yarn workspace @adobe/spectrum-wc test:storybook --url http://127.0.0.1:6006 --index-json --ci --junit --maxWorkers=2 --testTimeout=30000"
+            mkdir -p gen2/packages/swc/test-results
+            yarn start-server-and-test "npx http-server gen2/packages/swc/storybook-static -p 6006 --silent" http://127.0.0.1:6006 "JEST_JUNIT_OUTPUT_DIR=./test-results JEST_JUNIT_OUTPUT_NAME=junit.xml yarn workspace @adobe/spectrum-wc test:storybook --url http://127.0.0.1:6006 --index-json --ci --junit --maxWorkers=2 --testTimeout=30000"
       - store_test_results:
-          path: /root/project/2nd-gen/packages/swc/test-results
+          path: /root/project/gen2/packages/swc/test-results
 
   # ---------------------------------------------------------------------------
   # Docs + visual regression (gen1)
@@ -501,7 +546,9 @@ jobs:
             echo "Beta Storybook URL: $STORYBOOK_URL"
 
   hcm-visual:
-    executor: node
+    executor:
+      name: node
+      playwright-version: v1.53.1-noble
     steps:
       - downstream
       - restore_cache:
@@ -623,7 +670,9 @@ jobs:
           key: v2-golden-images-{{ .Branch }}-hcm-{{ .Revision }}
 
   visual:
-    executor: node
+    executor:
+      name: node
+      playwright-version: v1.53.1-noble
     parameters:
       system:
         type: string

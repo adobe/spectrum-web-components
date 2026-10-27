@@ -35,7 +35,7 @@ jobs:
   # Returns all changed pull request files.
   # --------------------------------------------------------------
   changed_files:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     name: Capture changed-files
     outputs:
       styles_added_files: ${{ steps.changed-files.outputs.styles_added_files }}
@@ -49,42 +49,45 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Get changed files
         id: changed-files
-        uses: step-security/changed-files@v46
+        uses: step-security/changed-files@v47
         with:
           files_yaml: |
             styles:
               - '*.css'
               - '**/*.css'
+              - '!1st-gen/**'
             eslint:
               - '*.{js,json,ts}'
               - '**/*.{js,json,ts}'
               - '!*.d.ts'
               - '!**/*.d.ts'
+              - '!1st-gen/**'
             prettier:
               - '*.{js,json,ts,css,md,mdx,yaml,yml,html}'
               - '**/*.{js,json,ts,css,md,mdx,yaml,yml,html}'
               - '!*.d.ts'
               - '!**/*.d.ts'
+              - '!1st-gen/**'
 
   # --- Lint pre-compiled assets for consistency --- #
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: [changed_files]
     timeout-minutes: 5
     steps:
       # install but don't build - we're linting pre-compiled assets
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Use Node version from .nvmrc
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: yarn
@@ -96,12 +99,12 @@ jobs:
       - name: Check for cached dependencies
         continue-on-error: true
         id: cache-dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             .cache/yarn
             node_modules
-          key: ubuntu-latest-${{ hashFiles('.nvmrc', 'package.json', 'yarn.lock') }}
+          key: ubuntu-26.04-${{ hashFiles('.nvmrc', 'package.json', 'yarn.lock') }}
 
       ## --- INSTALL --- ##
       # If statement isn't needed here b/c yarn will leverage the cache if it exists
@@ -109,25 +112,28 @@ jobs:
         shell: bash
         run: yarn install --immutable
 
+      - name: Validate generated version files
+        run: node scripts/generate-versions.js --check
+
       - name: Lint styles
         # if: ${{ needs.changed_files.outputs.styles_added_files != '' || needs.changed_files.outputs.styles_modified_files != '' }}
-        uses: reviewdog/action-stylelint@v1.30.2
+        uses: reviewdog/action-stylelint@v1.33.0
         with:
-          fail_level: error
+          fail_level: warning
           filter_mode: diff_context
-          level: error
+          level: warning
           reporter: github-pr-review
-          stylelint_input: '${{ needs.changed_files.outputs.styles_added_files }} ${{ needs.changed_files.outputs.styles_modified_files }} --allow-empty-input --quiet'
+          stylelint_input: '${{ needs.changed_files.outputs.styles_added_files }} ${{ needs.changed_files.outputs.styles_modified_files }} --allow-empty-input'
 
       - name: ESLint
-        uses: reviewdog/action-eslint@v1.33.2
+        uses: reviewdog/action-eslint@v1.36.1
         # if: ${{ needs.changed_files.outputs.eslint_added_files != '' || needs.changed_files.outputs.eslint_modified_files != '' }}
         with:
-          fail_level: error
-          level: error
+          fail_level: warning
+          level: warning
           reporter: github-pr-review
           filter_mode: diff_context
-          eslint_flags: '${{ needs.changed_files.outputs.eslint_added_files }} ${{ needs.changed_files.outputs.eslint_modified_files }} --quiet'
+          eslint_flags: '${{ needs.changed_files.outputs.eslint_added_files }} ${{ needs.changed_files.outputs.eslint_modified_files }}'
 
       - name: Prettier
         if: ${{ needs.changed_files.outputs.prettier_added_files != '' || needs.changed_files.outputs.prettier_modified_files != '' }}

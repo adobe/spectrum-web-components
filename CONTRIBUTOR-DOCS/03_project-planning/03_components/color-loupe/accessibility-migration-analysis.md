@@ -78,7 +78,7 @@ This doc explains how **`swc-color-loupe`** should work for **accessibility**. I
 |------|------|-------------------|-------------------------|---------|
 | [SWC-1193](https://jira.corp.adobe.com/browse/SWC-1193) | Bug | Done | Working As Designed | [Accessibility] Graphical object lacks 3:1 contrast ratio — `sp-color-loupe` (Color Loupe Example) |
 | [RSP-2021](https://jira.corp.adobe.com/browse/RSP-2021) | — | — | — | Adaptive border contrast for color loupe — specification for the dual-border adaptive opacity approach that resolves 1.4.11 on spectrum tracks; see Known 1st-gen issues |
-| [SDS-16402](https://jira.corp.adobe.com/browse/SDS-16402) | — | — | — | Non-text contrast — color loupe adaptive border specification; Spectrum Design System design decision for adaptive border opacity; drives the 2nd-gen implementation |
+| [SDS-16402](https://jira.corp.adobe.com/browse/SDS-16402) | — | — | — | Non-text contrast — color loupe adaptive border specification; Spectrum Design System design decision for adaptive border opacity; drives the gen2 implementation |
 
 ---
 
@@ -117,14 +117,14 @@ None
 
 1st-gen `<sp-color-loupe>` border and outline styling frequently fails the 3:1 non-text contrast threshold required by WCAG 2.2 SC 1.4.11. SWC-1193 recorded this as a case where meeting 1.4.11 may not be achievable given variable background content and Spectrum visual intent, leaving it as a practical-limits exception.
 
-**Resolution for 2nd-gen (RSP-2021, SDS-16402):** An adaptive dual-border approach has been specified and prototyped ([color-area-adaptive-borders.zip](https://jira.corp.adobe.com/secure/attachment/18750666/18750666_color-area-adaptive-borders.zip)) that achieves 3:1 across every color in the HSV cube. The prototype demonstrates four border modes — current static 42% opacity, 100% static, and two adaptive modes (white-first and live α) — with live contrast readouts. The two adaptive modes are the reference for 2nd-gen:
+**Resolution for gen2 (RSP-2021, SDS-16402):** An adaptive dual-border approach has been specified and prototyped ([color-area-adaptive-borders.zip](https://jira.corp.adobe.com/secure/attachment/18750666/18750666_color-area-adaptive-borders.zip)) that achieves 3:1 across every color in the HSV cube. The prototype demonstrates four border modes — current static 42% opacity, 100% static, and two adaptive modes (white-first and live α) — with live contrast readouts. The two adaptive modes are the reference for gen2:
 
 1. **Sample** the 5px ring surrounding the loupe chrome. Classify each sample as gradient adjacency or page-background adjacency (when the loupe overhangs a gradient edge).
 2. **Dark border check (drives α):** composite rgba(0,0,0,α) over the adjacency color; α starts at 42% and increases until 3:1 is reached.
 3. **White separator check (additive):** measure contrast(#FFFFFF, adjacency). Does not lower α; provides an independent pass path.
 4. **Bulletproof rule:** chrome is visible if every present adjacency has either its dark border or its white separator pass 3:1.
 
-2nd-gen should implement adaptive border opacity following this specification. The practical-limits exception recorded in SWC-1193 is superseded by the conformant solution in RSP-2021 and SDS-16402.
+gen2 should implement adaptive border opacity following this specification. The practical-limits exception recorded in SWC-1193 is superseded by the conformant solution in RSP-2021 and SDS-16402.
 
 ---
 

@@ -21,23 +21,23 @@ env:
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'pull_request' && github.event.action != 'closed'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     name: Build and Deploy Job
     timeout-minutes: 30
     outputs:
       first_gen_docs_url: ${{ steps.deploy.outputs.first_gen_docs_url }}
       first_gen_storybook_url: ${{ steps.deploy.outputs.first_gen_storybook_url }}
-      second_gen_storybook_dev_url: ${{ steps.deploy.outputs.second_gen_storybook_dev_url }}
-      second_gen_storybook_prod_url: ${{ steps.deploy.outputs.second_gen_storybook_prod_url }}
+      gen2_storybook_dev_url: ${{ steps.deploy.outputs.gen2_storybook_dev_url }}
+      gen2_storybook_prod_url: ${{ steps.deploy.outputs.gen2_storybook_prod_url }}
     steps:
       ## --- SETUP --- ##
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Use Node version from .nvmrc
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: yarn
@@ -57,12 +57,12 @@ jobs:
       - name: Check for cached dependencies
         continue-on-error: true
         id: cache-dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             .cache/yarn
             node_modules
-          key: ubuntu-latest-${{ hashFiles('.nvmrc', 'package.json', 'yarn.lock') }}
+          key: ubuntu-26.04-${{ hashFiles('.nvmrc', 'package.json', 'yarn.lock') }}
 
       ## --- INSTALL & BUILD --- ##
       - name: Install dependencies
@@ -75,7 +75,7 @@ jobs:
       - name: Generate Custom Elements Manifest
         run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
 
-      - name: Analyze 2nd-gen components
+      - name: Analyze gen2 components
         run: yarn workspace @adobe/spectrum-wc analyze
 
       - name: Generate LLM reference files
@@ -110,7 +110,7 @@ jobs:
 
       - name: Build Gen2 Storybook (prod mode)
         # No NODE_ENV override: this is the same production-trimmed build
-        # that publish-2ndgen-docs.yml deploys to the live site, so
+        # that publish-gen2-docs.yml deploys to the live site, so
         # reviewers can validate exactly what will end up on prod.
         env:
           # Cross-link to this PR's gen1 preview instead of the default
@@ -149,7 +149,7 @@ jobs:
           PR_HASH: ${{ steps.pr_hash.outputs.hash }}
         run: |
           echo "Uploading Gen2 Storybook (dev) to ${PR_HASH}/docs/gen2-storybook-dev/"
-          azcopy copy "2nd-gen/packages/swc/storybook-static-dev/*" \
+          azcopy copy "gen2/packages/swc/storybook-static-dev/*" \
             "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/gen2-storybook-dev/" \
             --recursive \
             --from-to LocalBlob
@@ -160,7 +160,7 @@ jobs:
           PR_HASH: ${{ steps.pr_hash.outputs.hash }}
         run: |
           echo "Uploading Gen2 Storybook (prod) to ${PR_HASH}/docs/gen2-storybook-prod/"
-          azcopy copy "2nd-gen/packages/swc/storybook-static-prod/*" \
+          azcopy copy "gen2/packages/swc/storybook-static-prod/*" \
             "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/gen2-storybook-prod/" \
             --recursive \
             --from-to LocalBlob
@@ -173,22 +173,22 @@ jobs:
         run: |
           first_gen_docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/gen1-docs/"
           first_gen_storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/gen1-storybook/"
-          second_gen_storybook_dev_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/gen2-storybook-dev/"
-          second_gen_storybook_prod_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/gen2-storybook-prod/"
+          gen2_storybook_dev_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/gen2-storybook-dev/"
+          gen2_storybook_prod_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/gen2-storybook-prod/"
 
           echo "first_gen_docs_url=${first_gen_docs_url}" >> "$GITHUB_OUTPUT"
           echo "first_gen_storybook_url=${first_gen_storybook_url}" >> "$GITHUB_OUTPUT"
-          echo "second_gen_storybook_dev_url=${second_gen_storybook_dev_url}" >> "$GITHUB_OUTPUT"
-          echo "second_gen_storybook_prod_url=${second_gen_storybook_prod_url}" >> "$GITHUB_OUTPUT"
+          echo "gen2_storybook_dev_url=${gen2_storybook_dev_url}" >> "$GITHUB_OUTPUT"
+          echo "gen2_storybook_prod_url=${gen2_storybook_prod_url}" >> "$GITHUB_OUTPUT"
 
           echo "📦 All deployments completed:"
           echo "  - Documentation: ${first_gen_docs_url}"
           echo "  - Gen1 Storybook: ${first_gen_storybook_url}"
-          echo "  - Gen2 Storybook (dev): ${second_gen_storybook_dev_url}"
-          echo "  - Gen2 Storybook (prod): ${second_gen_storybook_prod_url}"
+          echo "  - Gen2 Storybook (dev): ${gen2_storybook_dev_url}"
+          echo "  - Gen2 Storybook (prod): ${gen2_storybook_prod_url}"
 
       - name: Post Previews Comment
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const { buildPreviewURLComment } = await import('${{ github.workspace }}/.github/scripts/build-preview-urls-comment.js');
@@ -203,12 +203,12 @@ jobs:
   smoke_tests:
     if: github.event_name == 'pull_request' && github.event.action != 'closed'
     needs: build_and_deploy_job
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     name: Smoke Tests
     timeout-minutes: 15
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Wait for deployment
         env:
@@ -241,18 +241,18 @@ jobs:
       - name: Setup Job and Install Dependencies
         uses: ./.github/actions/setup-job
 
-      - name: Install Playwright Browsers
-        run: cd 1st-gen && yarn playwright install --with-deps
+      - name: Install Chromium
+        run: cd 1st-gen && yarn playwright install --with-deps chromium
 
       - name: Run Playwright tests
-        run: cd 1st-gen && yarn playwright test projects/documentation/e2e/
+        run: cd 1st-gen && yarn playwright test projects/documentation/e2e/ --browser chromium
         env:
           DOC_PREVIEW_URL: ${{ needs.build_and_deploy_job.outputs.first_gen_docs_url }}
           SWC_DIR: pr-${{ github.event.pull_request.number }}
           NODE_ENV: CI
 
       - name: Upload Playwright Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: playwright-report
@@ -261,12 +261,12 @@ jobs:
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     name: Clean up PR deployment
     timeout-minutes: 5
     steps:
       - name: Check out code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Generate PR hash

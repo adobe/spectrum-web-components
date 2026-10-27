@@ -13,7 +13,7 @@
  */
 
 /**
- * Validate per-unit MDX docs pages for 2nd-gen components, internal
+ * Validate per-unit MDX docs pages for gen2 components, internal
  * components, patterns, and controllers.
  *
  * Each in-scope MDX file is checked for:
@@ -44,8 +44,9 @@
  * Or as part of the umbrella lint suite (runs in CI and the pre-commit hook):
  *   yarn lint:ai
  *
- * See `.ai/rules/stories-documentation.md` for the per-unit MDX authoring
- * standards this check enforces.
+ * See `.ai/rules/stories-documentation.md` (constraints) and
+ * `.ai/skills/stories-documentation/SKILL.md` (full procedure) for the per-unit
+ * MDX authoring standards this check enforces.
  */
 
 import fs from 'fs';
@@ -108,13 +109,13 @@ const SECTION_TAGS = ['anatomy', 'options', 'states', 'behaviors', 'a11y'];
  *   requireMeta: boolean,
  *   requireCanvasForTaggedStories: boolean,
  *   storiesGlob: string | null,
- * }}
+ * }} The resolved genre and validation rules for the file.
  */
 function classify(relPath) {
   // Internal components (exclude migration guides that happen to use the
   // .internal.mdx suffix)
   if (
-    /^2nd-gen\/packages\/swc\/components\/[^/]+\/[^/]+\.internal\.mdx$/.test(
+    /^gen2\/packages\/swc\/components\/[^/]+\/[^/]+\.internal\.mdx$/.test(
       relPath
     ) &&
     !relPath.includes('migration-guide')
@@ -130,7 +131,7 @@ function classify(relPath) {
 
   // Component (regular)
   if (
-    /^2nd-gen\/packages\/swc\/components\/[^/]+\/[^/]+\.mdx$/.test(relPath) &&
+    /^gen2\/packages\/swc\/components\/[^/]+\/[^/]+\.mdx$/.test(relPath) &&
     !relPath.includes('migration-guide')
   ) {
     return {
@@ -144,9 +145,7 @@ function classify(relPath) {
 
   // Pattern
   if (
-    /^2nd-gen\/packages\/swc\/patterns\/[^/]+\/[^/]+\/[^/]+\.mdx$/.test(
-      relPath
-    ) &&
+    /^gen2\/packages\/swc\/patterns\/[^/]+\/[^/]+\/[^/]+\.mdx$/.test(relPath) &&
     !relPath.includes('pattern-overview') &&
     !relPath.includes('migration-guide')
   ) {
@@ -160,9 +159,7 @@ function classify(relPath) {
   }
 
   // Controller
-  if (
-    /^2nd-gen\/packages\/core\/controllers\/[^/]+\/[^/]+\.mdx$/.test(relPath)
-  ) {
+  if (/^gen2\/packages\/core\/controllers\/[^/]+\/[^/]+\.mdx$/.test(relPath)) {
     return {
       genre: 'controller',
       requireMeta: true,
@@ -186,9 +183,9 @@ function classify(relPath) {
 // ────────────────────────────────────────────────────────────────────────────
 
 const ROOTS = [
-  '2nd-gen/packages/swc/components',
-  '2nd-gen/packages/swc/patterns',
-  '2nd-gen/packages/core/controllers',
+  'gen2/packages/swc/components',
+  'gen2/packages/swc/patterns',
+  'gen2/packages/core/controllers',
 ];
 
 /**
@@ -381,7 +378,7 @@ function resolveStoriesPath(mdxAbsPath, importSource) {
  *
  * The parser is regex-based and intentionally tolerant — it does not try to
  * cover every TypeScript edge case, just the conventions documented in
- * `.ai/rules/stories-format.md`.
+ * `.ai/skills/stories-format/SKILL.md`.
  */
 function parseStoryTags(storiesPath) {
   const content = fs.readFileSync(storiesPath, 'utf8');

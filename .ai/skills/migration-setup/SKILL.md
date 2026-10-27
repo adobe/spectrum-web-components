@@ -1,11 +1,11 @@
 ---
 name: migration-setup
-description: Phase 2 of 1st-gen to 2nd-gen component migration. Use to create the 2nd-gen file and folder structure, wire up exports, and confirm the build passes before implementation begins.
+description: Phase 2 of 1st-gen to gen2 component migration. Use to create the gen2 file and folder structure, wire up exports, and confirm the build passes before implementation begins.
 ---
 
 # Migration setup (Phase 2)
 
-[Phase 2](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/README.md) of the 1st-gen → 2nd-gen component migration. The goal is to create the core and SWC directory structure, stub out the required files, and confirm the component is importable before any implementation work begins.
+[Phase 2](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/README.md) of the 1st-gen → gen2 component migration. The goal is to create the core and SWC directory structure, stub out the required files, and confirm the component is importable before any implementation work begins.
 
 ## Mindset
 
@@ -24,9 +24,9 @@ If the plan's API checklist and an architectural decision section contradict eac
 ## When to use this skill
 
 - Phase 1 (migration-prep) is complete and the migration plan is approved
-- The user asks to "set up" or "scaffold" a component for 2nd-gen migration
+- The user asks to "set up" or "scaffold" a component for gen2 migration
 - The user asks to create the core/SWC file structure for a component
-- The user refers to "Phase 2" of the 2nd-gen component migration workstream
+- The user refers to "Phase 2" of the gen2 component migration workstream
 
 ## When NOT to use
 
@@ -36,7 +36,7 @@ If the plan's API checklist and an architectural decision section contradict eac
 ## How to invoke
 
 - "Set up [component] for migration"
-- "Scaffold [component] for 2nd-gen"
+- "Scaffold [component] for gen2"
 - "Phase 2 for [component] migration"
 - "Create the core and SWC structure for [component]"
 
@@ -49,12 +49,12 @@ Before creating any files:
 1. **Read the migration plan's architecture sections** — specifically "Architecture: core vs SWC split", "Shared semantics reuse", and any other section that constrains what belongs on the base vs. the concrete class. Write down the decisions before touching files.
 2. **Identify any contradiction** between the plan's API checklist items and its architectural decisions. If a checklist item places properties on the base class that an architectural section says belong on the SWC class, the architectural section wins — update the checklist and note the reason before proceeding.
 
-Then follow **[Phase 2: Setup](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_2nd-gen-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-2-setup)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
+Then follow **[Phase 2: Setup](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-2-setup)** in the washing machine workflow doc — it covers what to do, what to check, common problems, and the quality gate for this phase.
 
 **Key file split (SWC package):**
 
 - `index.ts` — class re-export only (`export * from './Component.js'`). No `defineElement`, no `HTMLElementTagNameMap` augmentation.
-- `swc-<tag>.ts` — side-effect entry point. Contains `defineElement('swc-<tag>', Component)` and the `HTMLElementTagNameMap` augmentation. Use `2nd-gen/packages/swc/components/badge/swc-badge.ts` as the reference.
+- `swc-<tag>.ts` — side-effect entry point. Contains `defineElement('swc-<tag>', Component)` and the `HTMLElementTagNameMap` augmentation. Use `gen2/packages/swc/components/badge/swc-badge.ts` as the reference.
 - `package.json` — must export `./components/<name>/swc-<tag>.js` so consumers can import `@adobe/spectrum-wc/components/<name>/swc-<tag>.js` to register the element without pulling in a class re-export.
 
 If the required file layout or naming in code would drift from the migration plan, follow [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).

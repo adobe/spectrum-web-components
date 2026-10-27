@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-Gen CSS](README.md) / Custom Properties
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 CSS](README.md) / Custom Properties
 
 <!-- Document title (editable) -->
 
@@ -58,7 +58,7 @@ CSS custom properties *normally* can't actually be "private". However, due to sh
 
 > **Declaring `--_swc-*` properties on `:host` or `:host()` does not protect them.** Properties set on the host element are part of the component's external style surface — consumers can set them from outside the shadow root. The `--_swc-*` prefix signals internal intent only. For genuine encapsulation, declare private properties on the internal wrapper (`.swc-ComponentName`), not on `:host`.
 
-**Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)** — private properties for internal calculations, with exposed properties consumed inline via `var()`:
+**Example from [Badge](../../../gen2/packages/swc/components/badge/badge.css)** — private properties for internal calculations, with exposed properties consumed inline via `var()`:
 
 ```css
 .swc-Badge {
@@ -72,7 +72,7 @@ CSS custom properties *normally* can't actually be "private". However, due to sh
 }
 ```
 
-**Example from [Status Light](../../../2nd-gen/packages/swc/components/status-light/status-light.css)** — private properties as passthroughs for size variants:
+**Example from [Status Light](../../../gen2/packages/swc/components/status-light/status-light.css)** — private properties as passthroughs for size variants:
 
 ```css
 .swc-StatusLight {

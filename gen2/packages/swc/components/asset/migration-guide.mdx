@@ -1,0 +1,233 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Asset/Migration guide" />
+
+# Asset migration guide
+
+Replace `<sp-asset>` with `<swc-asset>`, update the import, and replace any `variant="file"`/`variant="folder"` icon with real slotted content.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/asset
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/asset/sp-asset.js';
+
+// After
+import '@adobe/spectrum-wc/components/asset/swc-asset.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/asset/swc-asset.js`) registers and loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area             | Spectrum 1 (`sp-asset`)                               | Spectrum 2 (`swc-asset`)                                                                                                                                              |
+| ---------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tag              | `sp-asset`                                            | `swc-asset`                                                                                                                                                           |
+| Import path      | `@spectrum-web-components/asset`                      | `@adobe/spectrum-wc/components/asset/swc-asset.js`                                                                                                                    |
+| CSS custom props | `--mod-asset-*`                                       | `--swc-asset-*` (see [Styling](#styling))                                                                                                                             |
+| `label`          | Accessible label for the `file`/`folder` variant only | `accessible-label` (property `accessibleLabel`); a fallback accessible name for any slotted `<img>`/`<svg>` (see [step 3](#3-ensure-an-accessible-label-is-provided)) |
+
+### Added in Spectrum 2
+
+| Addition                                                                        | Notes                                                                                                |
+| ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `aspect-ratio` / `width` / `height` attributes                                  | Dedicated sizing attributes, in place of sizing the host with plain CSS                              |
+| `fit` attribute (`cover`, `contain`)                                            | Default `cover`; see [step 2](#2-replace-variant-with-slotted-content) for preserving the prior look |
+| `background` attribute (`transparent`, `solid`, `checkerboard`)                 | Fill shown behind slotted content; default `transparent`                                             |
+| `decorative` boolean attribute                                                  | Removes the asset from the accessibility tree                                                        |
+| `load-state` attribute (readonly) and `swc-asset-load`/`swc-asset-error` events | See [step 5](#5-optional-listen-for-load-state)                                                      |
+
+### Removed in Spectrum 2
+
+| Removed                                                                                                                                                                                             | Replacement                                                                                   |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `variant` attribute (`file`, `folder`)                                                                                                                                                              | Slot a real `<img>` or `<svg>` element. See [step 2](#2-replace-variant-with-slotted-content) |
+| `--mod-asset-folder-background-color`, `--mod-asset-file-background-color`, `--mod-asset-icon-outline-color`, `--mod-asset-icon-min-width`, `--mod-asset-icon-max-width`, `--mod-asset-icon-margin` | No replacement; these only styled the removed file/folder icons                               |
+
+## Update your code
+
+### 1. Rename the tag
+
+```html
+<!-- Before -->
+<sp-asset>
+  <img src="demo.jpg" alt="Demo image" />
+</sp-asset>
+
+<!-- After -->
+<swc-asset>
+  <img src="demo.jpg" alt="Demo image" />
+</swc-asset>
+```
+
+### 2. Replace `variant` with slotted content
+
+`<swc-asset>` no longer renders a built-in file/folder icon. Slot an `<img>` or a raw `<svg>` element directly:
+
+```html
+<!-- Before -->
+<sp-asset variant="file" label="Named File Asset"></sp-asset>
+
+<!-- After -->
+<swc-asset accessible-label="Named File Asset">
+  <img src="file-thumbnail.png" />
+</swc-asset>
+```
+
+Only a direct `<img>` or `<svg>` child is supported; a custom icon element (e.g. `<swc-icon-file-text>`) is not, since `<swc-asset>` checks the slotted child's tag name directly.
+
+Slotted content also now defaults to `fit="cover"` instead of always fitting via `contain`. Add `fit="contain"` to preserve the prior look:
+
+```html
+<!-- Before (always contain) -->
+<sp-asset style="height: 128px">
+  <img src="demo.jpg" alt="Demo image" />
+</sp-asset>
+
+<!-- After: add fit="contain" to preserve the prior look -->
+<swc-asset style="height: 128px" fit="contain">
+  <img src="demo.jpg" alt="Demo image" />
+</swc-asset>
+```
+
+### 3. Ensure an accessible label is provided
+
+Rename `label` to `accessible-label`. Unlike Spectrum 1's `label`, which only applied to the built-in `file`/`folder` icon, `accessible-label` is a fallback that applies to any slotted `<img>`/`<svg>`, but only when the slotted content doesn't already carry its own accessible name:
+
+```html
+<!-- Before -->
+<sp-asset label="Demo image">
+  <img src="demo.jpg" />
+</sp-asset>
+
+<!-- After -->
+<swc-asset accessible-label="Demo image">
+  <img src="demo.jpg" />
+</swc-asset>
+```
+
+Prefer naming the slotted element directly over relying on the fallback:
+
+```html
+<!-- Before -->
+<swc-asset accessible-label="Demo image">
+  <img src="demo.jpg" />
+</swc-asset>
+
+<!-- After: name the image directly -->
+<swc-asset>
+  <img src="demo.jpg" alt="Demo image" />
+</swc-asset>
+```
+
+For a slotted `<svg>`, use of an `aria-label`, `aria-labelledby`, or child `<title>` element all count as an accessible name. `<swc-asset>` adds `role="img"` automatically when one of these is present and `role` is missing.
+
+**If the asset is purely decorative**, set `decorative` instead of an empty `alt`:
+
+```html
+<!-- Before -->
+<sp-asset>
+  <img src="decoration.jpg" alt="" />
+</sp-asset>
+
+<!-- After -->
+<swc-asset decorative>
+  <img src="decoration.jpg" />
+</swc-asset>
+```
+
+### 4. (Optional) Adopt sizing and background attributes
+
+```html
+<!-- Before -->
+<sp-asset style="width: 160px; height: 160px;">
+  <img src="photo.jpg" alt="Photo" />
+</sp-asset>
+
+<!-- After -->
+<swc-asset width="160px" height="160px" background="solid">
+  <img src="photo.jpg" alt="Photo" />
+</swc-asset>
+```
+
+### 5. (Optional) Listen for load state
+
+```js
+const asset = document.querySelector('swc-asset');
+const spinner = document.querySelector('swc-progress-circle');
+
+spinner.hidden = asset.loadState !== 'loading';
+asset.addEventListener('swc-asset-load', () => (spinner.hidden = true));
+asset.addEventListener('swc-asset-error', () => (spinner.hidden = true));
+```
+
+`load-state` and its events only track a slotted `<img>`; a slotted `<svg>` is always `loaded` immediately.
+
+## Accessibility
+
+- Every visible asset needs an accessible name: `alt` on a slotted `<img>` (or `aria-label`/`aria-labelledby`/a child `<title>` on a slotted `<svg>`), `accessible-label` on `<swc-asset>`, or `decorative`. See [step 3](#3-ensure-an-accessible-label-is-provided).
+- Don't manually add `role="img"` to a named `<svg>`; `<swc-asset>` adds it automatically when needed.
+
+## Styling
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1 <code>{'--mod-asset-*'}</code>{' '}
+  properties <strong>do not apply</strong> to <code>{'<swc-asset>'}</code>. They
+  only styled the removed file/folder icons and have no replacement.
+</div>
+
+{/* @todo Replace the Description column with the `@cssprop` JSDoc descriptions from `<swc-asset>`'s CEM entry once they are added in a follow-up PR. */}
+
+| Custom property                | Description                                                                                        |
+| ------------------------------ | -------------------------------------------------------------------------------------------------- |
+| `--swc-asset-aspect-ratio`     | Fallback aspect ratio applied when `aspect-ratio` is unset; an ancestor can set this as a default. |
+| `--swc-asset-background-color` | Background color used when `background="solid"`. Defaults to `token("gray-100")`.                  |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-asset-*'}</code> private properties, and shadow DOM are{' '}
+  <strong>not public API</strong>. Styling applied to them will break without
+  warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Update imports
+- [ ] Rename all `<sp-asset>` to `<swc-asset>`
+- [ ] Replace every `variant="file"`/`variant="folder"` asset with a slotted `<img>` or `<svg>`
+- [ ] Add `fit="contain"` where the prior always-contain look must be preserved
+- [ ] Rename `label` to `accessible-label`
+- [ ] Add an accessible name directly to every slotted `<img>`/`<svg>`, or set `decorative`
+- [ ] Remove `--mod-asset-*` overrides (no replacement)
+- [ ] Adopt `aspect-ratio`/`width`/`height`/`background` where useful
+- [ ] Listen for `swc-asset-load`/`swc-asset-error` if you need a loading indicator

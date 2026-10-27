@@ -13,7 +13,7 @@
 
 - [Overview](#overview)
     - [Also read](#also-read)
-    - [What a link is (2nd-gen)](#what-a-link-is-2nd-gen)
+    - [What a link is (gen2)](#what-a-link-is-gen2)
     - [When to use something else](#when-to-use-something-else)
     - [Button-shaped navigation to another route](#button-shaped-navigation-to-another-route)
     - [Why avoid a link component (for default content)](#why-avoid-a-link-component-for-default-content)
@@ -38,13 +38,13 @@
 
 ## Overview
 
-2nd-gen does not ship a `<swc-link>` custom element. Link is delivered as Spectrum link styles on native **`<a href="…">`** (the same class / token set as the default link look inside prose / typography blocks) so long passages of text get consistent styling without a custom element. This doc targets **WCAG 2.2 Level AA** and should be read with the [Link migration roadmap](./rendering-and-styling-migration-analysis.md) and the 2nd-gen **Semantic HTML and ARIA** guide ([repo](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx)).
+gen2 does not ship a `<swc-link>` custom element. Link is delivered as Spectrum link styles on native **`<a href="…">`** (the same class / token set as the default link look inside prose / typography blocks) so long passages of text get consistent styling without a custom element. This doc targets **WCAG 2.2 Level AA** and should be read with the [Link migration roadmap](./rendering-and-styling-migration-analysis.md) and the gen2 **Semantic HTML and ARIA** guide ([repo](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx)).
 
 ### Also read
 
 [Link migration roadmap](./rendering-and-styling-migration-analysis.md).
 
-### What a link is (2nd-gen)
+### What a link is (gen2)
 
 - A real **HTML** anchor with a `href`, class names from the design system (inline, quiet, static color, etc.—see the roadmap and [Typography: Prose container (Storybook preview)](https://swcpreviews.z13.web.core.windows.net/docs/?path=/docs/components-typography--readme#prose-container)), and no `sp-` custom element for in-body copy. Markup uses the open document tree, not a shadow-encapsulated proxy anchor by default.
 
@@ -55,7 +55,7 @@
 
 ### Button-shaped navigation to another route
 
-1st-gen has been moving away from “links as buttons” (for example, anchors or `href`-driven custom elements that use button visuals to move between routes). 2nd-gen continues that direction: for in-app navigation when the design is button-shaped, prefer a real **`<button type="button">`** (or a framework control with the same **role** and keyboard behavior) with Spectrum button styles, and wire routing from that control, instead of link styling or a link-like `href` surface to get a button look. Inline text links in prose still use a classed **`<a href>`**.
+1st-gen has been moving away from “links as buttons” (for example, anchors or `href`-driven custom elements that use button visuals to move between routes). gen2 continues that direction: for in-app navigation when the design is button-shaped, prefer a real **`<button type="button">`** (or a framework control with the same **role** and keyboard behavior) with Spectrum button styles, and wire routing from that control, instead of link styling or a link-like `href` surface to get a button look. Inline text links in prose still use a classed **`<a href>`**.
 
 ### Why avoid a link component (for default content)
 
@@ -78,7 +78,7 @@
 | Idea | Plain meaning |
 |------|---------------|
 | [Link purpose (2.4.4 / 2.4.9)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context.html) | Link text (or name from image/label) must make sense in context. Avoid “click here” as the only label. If you support 2.4.9, destination information must meet that criterion. |
-| [Use of color (1.4.1)](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html) & [contrast (1.4.3 / 1.4.6)](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum) | Do not mark links by color alone. Link text and states (default, hover, **focus-visible**, visited if styled) must be readable; [SWC-1160](https://jira.corp.adobe.com/browse/SWC-1160) tracks 1st-gen `sp-link` contrast next to body text—2nd-gen **CSS** and tokens should not reintroduce that failure. |
+| [Use of color (1.4.1)](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html) & [contrast (1.4.3 / 1.4.6)](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum) | Do not mark links by color alone. Link text and states (default, hover, **focus-visible**, visited if styled) must be readable; [SWC-1160](https://jira.corp.adobe.com/browse/SWC-1160) tracks 1st-gen `sp-link` contrast next to body text—gen2 **CSS** and tokens should not reintroduce that failure. |
 | Quiet / minimal link presentation | **Quiet** styling (for example, links without underlines) should be used only in **sections** such as **footers** (or similar scoped regions) where the **section** itself provides enough **visible** context to indicate that each item is a link—not in undifferentiated body copy. |
 | [Focus visible (2.4.7 / 1.4.11 as applicable)](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible) | Prose and static-color link styles should not remove perceivable focus treatment without a deliberate replacement. |
 | [Non-text content (1.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content) | Icon-only or image-only links: sufficient `alt`, or `aria-label`, or visible text plus a visually hidden label if needed. |
@@ -121,13 +121,13 @@ There is no `<swc-link>` host in this model. Authors apply shared link classes t
 ### Accessibility tree expectations
 
 - **Role:** **link** from a valid `a href` (or an `area` in image maps, if you document that explicitly).
-- **Name:** from link text, `aria-label`, or image `alt` with supporting text; relationship to lists and headings from surrounding semantic HTML ([Semantic HTML and ARIA](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx)).
+- **Name:** from link text, `aria-label`, or image `alt` with supporting text; relationship to lists and headings from surrounding semantic HTML ([Semantic HTML and ARIA](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx)).
 
 ### Keyboard and focus
 
-Native links participate in the **tab** order; **Enter** (and platform conventions) activate them. Do not add `tabindex` to reorder without an accessibility review and a concrete need. Do not rely on JavaScript to **proxy** a click in place of a real `href` for standard navigation in prose (see [Semantic HTML and ARIA](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx) on preferring native semantics).
+Native links participate in the **tab** order; **Enter** (and platform conventions) activate them. Do not add `tabindex` to reorder without an accessibility review and a concrete need. Do not rely on JavaScript to **proxy** a click in place of a real `href` for standard navigation in prose (see [Semantic HTML and ARIA](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx) on preferring native semantics).
 
-**Manual screen reader testing** in browse mode (as required for custom widgets that are not focusable) is not a separate extra step for a plain `a`—use the general [Screen reader testing](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide for prose and navigation checks.
+**Manual screen reader testing** in browse mode (as required for custom widgets that are not focusable) is not a separate extra step for a plain `a`—use the general [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) guide for prose and navigation checks.
 
 ---
 
@@ -145,10 +145,10 @@ Native links participate in the **tab** order; **Enter** (and platform conventio
 
 ## Summary checklist
 
-- [ ] Typography and prose **Storybook** docs and examples show classed **`<a href>`**; 2nd-gen in-body copy does not require **`<sp-link>`**.
+- [ ] Typography and prose **Storybook** docs and examples show classed **`<a href>`**; gen2 in-body copy does not require **`<sp-link>`**.
 - [ ] Deprecate or document away `disabled` on `sp-link`; align consumer guides with [SWC-966](https://jira.corp.adobe.com/browse/SWC-966) (see [roadmap](./rendering-and-styling-migration-analysis.md)).
 - [ ] Contrast and 1.4.1 for link vs surrounding text: avoid repeating [SWC-1160](https://jira.corp.adobe.com/browse/SWC-1160); use [SWC-926](https://jira.corp.adobe.com/browse/SWC-926) and [SWC-1428](https://jira.corp.adobe.com/browse/SWC-1428) as pointers from 1st-gen / roadmap to native anchor styling.
-- [ ] [Semantic HTML and ARIA examples](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx) and link-purpose guidance appear in or alongside prose docs; **Storybook** and usage docs call out that **quiet** (non-underline) link styles are for **section**-scoped patterns such as **footers**, not generic body text.
+- [ ] [Semantic HTML and ARIA examples](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx) and link-purpose guidance appear in or alongside prose docs; **Storybook** and usage docs call out that **quiet** (non-underline) link styles are for **section**-scoped patterns such as **footers**, not generic body text.
 - [ ] Program-level (gen2) Jira is tracked in Jira, not duplicated in the 1st-gen table above, per the accessibility-migration skill.
 
 ## References
@@ -158,7 +158,7 @@ Native links participate in the **tab** order; **Enter** (and platform conventio
 - [WCAG: Link purpose in context (2.4.4)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context)
 - [WCAG: Use of color (1.4.1)](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color)
 - [WAI-ARIA APG: read me first](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
-- [2nd-gen: Semantic HTML and ARIA (repo)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx)
-- [2nd-gen: Screen reader testing (repo)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
+- [gen2: Semantic HTML and ARIA (repo)](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx)
+- [gen2: Screen reader testing (repo)](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx)
 - [Storybook: Typography, prose (preview) — Prose container](https://swcpreviews.z13.web.core.windows.net/docs/?path=/docs/components-typography--readme#prose-container)
 - [Link migration roadmap](./rendering-and-styling-migration-analysis.md)

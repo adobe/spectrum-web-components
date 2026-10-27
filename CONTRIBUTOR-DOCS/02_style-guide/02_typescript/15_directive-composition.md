@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-gen TypeScript](README.md) / Directive composition
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 TypeScript](README.md) / Directive composition
 
 <!-- Document title (editable) -->
 
@@ -12,7 +12,7 @@
 <summary><strong>In this doc</strong></summary>
 
 - [What is a directive](#what-is-a-directive)
-- [Built-in directives used in 2nd-gen](#built-in-directives-used-in-2nd-gen)
+- [Built-in directives used in gen2](#built-in-directives-used-in-gen2)
     - [classMap](#classmap)
     - [when](#when)
     - [choose](#choose)
@@ -24,7 +24,7 @@
 
 <!-- Document content (editable) -->
 
-This guide explains how Lit directives are used in 2nd-gen component templates.
+This guide explains how Lit directives are used in gen2 component templates.
 
 For the official Lit documentation, see [Lit — Built-in directives](https://lit.dev/docs/templates/directives/).
 
@@ -34,7 +34,7 @@ A directive is a function that controls how values are rendered in a Lit `html` 
 
 Directives are imported from `lit/directives/*.js` and used directly in template expressions.
 
-## Built-in directives used in 2nd-gen
+## Built-in directives used in gen2
 
 | Directive | Import | Used in | Purpose |
 |-----------|--------|---------|---------|
@@ -246,7 +246,7 @@ style=${styleMap({
 
 ## Custom directives
 
-2nd-gen has one custom directive so far: `renderPendingSpinner` (`core/directives/pending-spinner/`), which renders the busy-state spinner and is called via `PendingController.renderPendingState()` (used by `PendingMixin`, and in turn by `button`/`action-button`). See [2nd-gen shared resources](../../01_contributor-guides/16_2nd-gen-shared-resources.md#directives).
+gen2 has one custom directive so far: `renderPendingSpinner` (`core/directives/pending-spinner/`), which renders the busy-state spinner and is called via `PendingController.renderPendingState()` (used by `PendingMixin`, and in turn by `button`/`action-button`). See [gen2 shared resources](../../01_contributor-guides/16_gen2-shared-resources.md#directives).
 
 For anything else, prefer Lit's built-in directives. A new custom directive should follow Lit's custom directive pattern:
 

@@ -50,7 +50,7 @@
 
 ## Overview
 
-This doc explains how **`swc-color-handle`** should work for **accessibility**. It targets **WCAG 2.2 Level AA**, including full conformance for non-text contrast on handle borders via the adaptive dual-border approach specified in RSP-2021 and SDS-16402. Until **`swc-color-handle`** ships under `2nd-gen/`, use **`1st-gen/packages/color-handle/src/ColorHandle.ts`** (`<sp-color-handle>`) as the behavioral reference and update this spec against the real 2nd-gen source when it lands.
+This doc explains how **`swc-color-handle`** should work for **accessibility**. It targets **WCAG 2.2 Level AA**, including full conformance for non-text contrast on handle borders via the adaptive dual-border approach specified in RSP-2021 and SDS-16402. Until **`swc-color-handle`** ships under `gen2/`, use **`1st-gen/packages/color-handle/src/ColorHandle.ts`** (`<sp-color-handle>`) as the behavioral reference and update this spec against the real gen2 source when it lands.
 
 ### Also read
 
@@ -77,7 +77,7 @@ This doc explains how **`swc-color-handle`** should work for **accessibility**. 
 ### Related
 
 - **`swc-color-loupe`** ➜ [Color loupe accessibility migration analysis](../color-loupe/accessibility-migration-analysis.md).
-- **Parent pickers** (each owns labeling and slider semantics) ➜ `sp-color-area`, `sp-color-slider`, `sp-color-wheel` (2nd-gen migration docs pending).
+- **Parent pickers** (each owns labeling and slider semantics) ➜ `sp-color-area`, `sp-color-slider`, `sp-color-wheel` (gen2 migration docs pending).
 
 ---
 
@@ -97,7 +97,7 @@ This doc explains how **`swc-color-handle`** should work for **accessibility**. 
 | [Use of color (WCAG 1.4.1)](https://www.w3.org/TR/WCAG22/#use-of-color) | The **fill** shows **color**; meaning must **not** rely on the handle **alone**. **Text**, **hex** inputs, or **slider** **value** announcements must state what is selected. |
 | [Non-text contrast (WCAG 1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | Handle borders and focus chrome must meet 3:1 against adjacent colors. The **adaptive dual-border** approach achieves this across the full HSV cube: a dark border at variable opacity (floor 42%, climbing until 3:1 is met) combined with a white separator, checked additively — the handle passes if either border meets 3:1 on every adjacency. See RSP-2021, SDS-16402, and Known 1st-gen issues. |
 | [Non-text content (WCAG 1.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content) | The handle **fill** and **borders** are **graphical** relative to assistive tech when the **parent** already exposes **value** and **purpose**. Do **not** add a conflicting **`role="img"`** on the host unless product and a11y agree on a **redundant** name strategy. |
-| [Focus appearance (WCAG 2.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance) / [Focus visible (WCAG 2.4.7)](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible) | Keyboard users must see **which** picker has focus. **1st-gen** reflects focus with **`[focused]`** / **`:focus-visible`** **size** expansion and **border** treatment on the handle while **`outline: none`** is set on **`:host(:focus)`**; verify **2nd-gen** keeps a **visible** focus indicator aligned with parent behavior. |
+| [Focus appearance (WCAG 2.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance) / [Focus visible (WCAG 2.4.7)](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible) | Keyboard users must see **which** picker has focus. **1st-gen** reflects focus with **`[focused]`** / **`:focus-visible`** **size** expansion and **border** treatment on the handle while **`outline: none`** is set on **`:host(:focus)`**; verify **gen2** keeps a **visible** focus indicator aligned with parent behavior. |
 
 **Bottom line:** `swc-color-handle` stays role-less on the host, carries no default accessible name, and relies on parent color widgets for slider semantics. Preserve the touch loupe behavior. Implement the **adaptive dual-border** approach (RSP-2021, SDS-16402) to achieve 3:1 non-text contrast across all track colors; the essential-presentation exception for this control is superseded by the conformant solution.
 
@@ -112,7 +112,7 @@ This doc explains how **`swc-color-handle`** should work for **accessibility**. 
 | [SWC-1132](https://jira.corp.adobe.com/browse/SWC-1132) | Bug | To Do | Unresolved | [Accessibility] Visible label missing — `sp-color-slider` (Default, Vertical section) | **Parent** owns **`label`** / **`aria-label`** on internal range input |
 | [SWC-1166](https://jira.corp.adobe.com/browse/SWC-1166) | Bug | Done | Working As Designed | [Accessibility] Color alone is used to convey info — `sp-color-area` (Anatomy and Accessible Label section) | **Fill** is **visual**; **parent** **sliders** announce **values** |
 | [RSP-2021](https://jira.corp.adobe.com/browse/RSP-2021) | — | — | — | Adaptive border contrast for color area handle | Specification for the dual-border adaptive opacity approach that resolves 1.4.11 on spectrum tracks; see Known 1st-gen issues |
-| [SDS-16402](https://jira.corp.adobe.com/browse/SDS-16402) | — | — | — | Non-text contrast — color area handle adaptive border specification | Spectrum Design System design decision for adaptive border opacity; drives the 2nd-gen implementation |
+| [SDS-16402](https://jira.corp.adobe.com/browse/SDS-16402) | — | — | — | Non-text contrast — color area handle adaptive border specification | Spectrum Design System design decision for adaptive border opacity; drives the gen2 implementation |
 
 ---
 
@@ -184,7 +184,7 @@ Does not apply. The handle does **not** own **value** announcements. **Parents**
 
 1st-gen `<sp-color-handle>` uses a static dark border at 42% opacity (with a second dark border on the focused handle) against whatever gradient color underlies the thumb. This frequently fails the 3:1 non-text contrast threshold required by WCAG 2.2 SC 1.4.11 on bright, saturated, or light gradient areas. SWC-1134 was closed "Working As Designed" under the Adobe Accessibility [essential presentations](https://accessibility.corp.adobe.com/docs/visual_design/color/#essential-presentations) rationale.
 
-**Resolution for 2nd-gen (RSP-2021, SDS-16402):** An adaptive dual-border approach has been specified and prototyped ([color-area-adaptive-borders.zip](https://jira.corp.adobe.com/secure/attachment/18750666/18750666_color-area-adaptive-borders.zip)) that achieves 3:1 across every color in the HSV cube without breaking the visual character of the control. The prototype demonstrates four border modes — the current static 42% opacity, a 100% static mode, and two adaptive modes (white-first and live α) — alongside live contrast readouts, keyboard- and drag-movable handles, and a drag-anywhere color area. The two adaptive modes are the reference for 2nd-gen:
+**Resolution for gen2 (RSP-2021, SDS-16402):** An adaptive dual-border approach has been specified and prototyped ([color-area-adaptive-borders.zip](https://jira.corp.adobe.com/secure/attachment/18750666/18750666_color-area-adaptive-borders.zip)) that achieves 3:1 across every color in the HSV cube without breaking the visual character of the control. The prototype demonstrates four border modes — the current static 42% opacity, a 100% static mode, and two adaptive modes (white-first and live α) — alongside live contrast readouts, keyboard- and drag-movable handles, and a drag-anywhere color area. The two adaptive modes are the reference for gen2:
 
 1. **Sample** the 5px ring surrounding the handle. Classify each sample as gradient adjacency or page-background adjacency (when the handle overhangs a gradient edge).
 2. **Dark border check (drives α):** composite rgba(0,0,0,α) over the adjacency color, then measure contrast. Start α at the floor (42%) and increase until 3:1 is reached for the gradient adjacency.
@@ -192,13 +192,13 @@ Does not apply. The handle does **not** own **value** announcements. **Parents**
 4. **Strict edge mode:** when enabled, α is the maximum needed across both gradient and page-background adjacencies, so the dark border meets 3:1 on every side at edges.
 5. **Bulletproof rule:** the handle is visible if every present adjacency has either its dark border or its white separator pass 3:1.
 
-2nd-gen should implement adaptive border opacity following this specification. The essential-presentation exception for this control is superseded by the conformant solution in RSP-2021 and SDS-16402.
+gen2 should implement adaptive border opacity following this specification. The essential-presentation exception for this control is superseded by the conformant solution in RSP-2021 and SDS-16402.
 
 ---
 
 ## Implementation: adaptive dual-border algorithm
 
-This section translates the prototype in [color-area-adaptive-borders.zip](https://jira.corp.adobe.com/secure/attachment/18750666/18750666_color-area-adaptive-borders.zip) into the steps a 2nd-gen implementer needs to follow. The loupe rendering variant is described below in [Loupe SVG rendering](#loupe-svg-rendering); the sampling and alpha computation are shared.
+This section translates the prototype in [color-area-adaptive-borders.zip](https://jira.corp.adobe.com/secure/attachment/18750666/18750666_color-area-adaptive-borders.zip) into the steps a gen2 implementer needs to follow. The loupe rendering variant is described below in [Loupe SVG rendering](#loupe-svg-rendering); the sampling and alpha computation are shared.
 
 ### Contrast utilities
 
@@ -390,7 +390,7 @@ When the handle overhangs a control boundary, `pageBgWeight > 0` and some ring s
 - **Default (non-strict):** α is computed against the gradient adjacency only. The page-background adjacency is measured and shown in diagnostics, but it does not drive α.
 - **Strict:** α is the maximum needed across both gradient and page-background adjacencies, ensuring the dark border meets 3:1 on every side at edges.
 
-For 2nd-gen, evaluate whether strict mode should be the default based on how often handles sit at control edges in production color picker layouts.
+For gen2, evaluate whether strict mode should be the default based on how often handles sit at control edges in production color picker layouts.
 
 ---
 
@@ -410,7 +410,7 @@ For 2nd-gen, evaluate whether strict mode should be the default based on how oft
 
 ## Summary checklist
 
-- [ ] **2nd-gen** host sets **no** default **`role`** and **no** **`aria-label`**; **slider** semantics stay on **parent** pickers.
+- [ ] **gen2** host sets **no** default **`role`** and **no** **`aria-label`**; **slider** semantics stay on **parent** pickers.
 - [ ] **`disabled`**, **`focused`**, and **`open`** behavior matches **1st-gen** and **S2** **states** docs without inventing **ARIA** **mappings**.
 - [ ] **Touch** **`open`** still drives **`swc-color-loupe`**; **loupe** doc **decisions** (**1.4.11**, **decorative** **SVG**) remain **aligned**.
 - [ ] **Opacity checkerboard** on **`:host`** follows [Opacity checkerboard accessibility migration analysis](../opacity-checkerboard/accessibility-migration-analysis.md).

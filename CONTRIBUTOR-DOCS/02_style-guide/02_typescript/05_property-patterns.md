@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-gen TypeScript](README.md) / Property patterns
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 TypeScript](README.md) / Property patterns
 
 <!-- Document title (editable) -->
 
@@ -22,7 +22,7 @@
 
 <!-- Document content (editable) -->
 
-This guide explains how to declare and order properties in 2nd-gen component classes. It covers ordering rules, decorator usage, and when to use a custom getter/setter vs Lit's default behavior.
+This guide explains how to declare and order properties in gen2 component classes. It covers ordering rules, decorator usage, and when to use a custom getter/setter vs Lit's default behavior.
 
 ## Property ordering
 
@@ -64,7 +64,7 @@ private _fixed?: FixedValues;
 
 ## Static properties
 
-Static properties hold values that are the same for every instance of a component. In 2nd-gen, they are used for:
+Static properties hold values that are the same for every instance of a component. In gen2, they are used for:
 
 - Arrays of valid values (`VARIANTS`, `VALID_SIZES`, `STATIC_COLORS`)
 - The `styles` getter in concrete classes

@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-Gen CSS](README.md) / Component CSS
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 CSS](README.md) / Component CSS
 
 <!-- Document title (editable) -->
 
@@ -46,7 +46,7 @@ The following are high-level guidelines for the CSS creation for components.
 
 ## Contributor TL;DR
 
-> For examples of all of these rules in practice, review [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css) and [Status Light](../../../2nd-gen/packages/swc/components/status-light/status-light.css) as reference implementations, the [reference migration for Badge](04_spectrum-swc-migration.md#reference-migration-badge), and the [anti-patterns guide](05_anti-patterns.md).
+> For examples of all of these rules in practice, review [Badge](../../../gen2/packages/swc/components/badge/badge.css) and [Status Light](../../../gen2/packages/swc/components/status-light/status-light.css) as reference implementations, the [reference migration for Badge](04_spectrum-swc-migration.md#reference-migration-badge), and the [anti-patterns guide](05_anti-patterns.md).
 
 - `:host` is for defining how the container participates in the global layout, not the core component styles
 - Follow the prescribed rule order
@@ -120,7 +120,7 @@ Inside each ruleset, order properties in a consistent way. This makes stylesheet
 
 For the full list and annotated examples, see the [property order quick reference](06_property-order-quick-reference.md).
 
-**Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)**:
+**Example from [Badge](../../../gen2/packages/swc/components/badge/badge.css)**:
 
 ```css
 .swc-Badge {
@@ -152,7 +152,7 @@ Use these patterns so class names are predictable across components.
 
 > **Note**: Classes are not the only way to apply variants and states — attribute selectors (e.g., `:host([variant="positive"])`) are preferred when exposing a customization surface. See [Variant implementation patterns](#variant-implementation-patterns) for guidance on when to use classes vs. attributes.
 
-**Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)**:
+**Example from [Badge](../../../gen2/packages/swc/components/badge/badge.css)**:
 
 ```css
 .swc-Badge { /* base */ }
@@ -162,7 +162,7 @@ Use these patterns so class names are predictable across components.
 .swc-Badge--gray { /* color variant */ }
 ```
 
-**Example from [Status Light](../../../2nd-gen/packages/swc/components/status-light/status-light.css)**:
+**Example from [Status Light](../../../gen2/packages/swc/components/status-light/status-light.css)**:
 
 ```css
 .swc-StatusLight { /* base */ }
@@ -185,7 +185,7 @@ Use comments to explain non-obvious choices. Keep them short and use sentence ca
 - Use `/* NOTE: */` for important caveats
 - Do not comment what the selector or property value already communicates
 
-**Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)**:
+**Example from [Badge](../../../gen2/packages/swc/components/badge/badge.css)**:
 
 ```css
 /* NOTE: `neutral` is the default color */
@@ -309,7 +309,7 @@ Variants change how the component looks. Use the right selector based on customi
 | Geometric          | `.swc-ComponentName--fixed-inline-start` | No exposure; layout modifier                  |
 | Derived state      | `.swc-ComponentName--iconOnly`           | Computed from slots; not consumer-settable    |
 
-**Example from [Badge](../../../2nd-gen/packages/swc/components/badge/badge.css)**:
+**Example from [Badge](../../../gen2/packages/swc/components/badge/badge.css)**:
 
 ```css
 :host([variant="positive"]) {
@@ -368,7 +368,7 @@ Custom properties set on the internal wrapper still cascade correctly to its des
 
 Size variants (s, m, l, xl) use `:host([size="..."])` and update custom properties. Do not add size classes to `render()`.
 
-**Example from [Status Light](../../../2nd-gen/packages/swc/components/status-light/status-light.css)**:
+**Example from [Status Light](../../../gen2/packages/swc/components/status-light/status-light.css)**:
 
 ```css
 :host([size="s"]) {
@@ -443,7 +443,7 @@ Use `@keyframes` at the top of the file. Apply animations via custom properties 
 }
 ```
 
-**Example from [Progress Circle](../../../2nd-gen/packages/swc/components/progress-circle/progress-circle.css)**.
+**Example from [Progress Circle](../../../gen2/packages/swc/components/progress-circle/progress-circle.css)**.
 
 **Transitions**: Prefer design tokens for duration and easing. Use `transition` in the Transitions/Animations category of the property order.
 
@@ -458,7 +458,7 @@ Forced colors mode (Windows High Contrast, etc.) replaces colors with system val
 3. **Use internal selectors**: Target `.swc-ComponentName` or internal elements, not `:host`. This prevents accidental consumer overrides from breaking accessibility.
 4. **Reuse custom properties**: Override component custom properties (e.g. `--swc-status-light-content-color`) so the rest of the stylesheet still works.
 
-**Example from [Status Light](../../../2nd-gen/packages/swc/components/status-light/status-light.css)**:
+**Example from [Status Light](../../../gen2/packages/swc/components/status-light/status-light.css)**:
 
 ```css
 @media (forced-colors: active) {
@@ -663,12 +663,12 @@ When setting block padding on a component, choose the token family based on the 
 
 | Token family | Generation | Intent |
 | --- | --- | --- |
-| `component-padding-vertical-{scale}` | S2 (2nd-gen) | True block padding; produces visually centered text with Adobe Clean VF |
+| `component-padding-vertical-{scale}` | S2 (gen2) | True block padding; produces visually centered text with Adobe Clean VF |
 | `component-top-to-text-{scale}` / `component-bottom-to-text-{scale}` | S1 / legacy S2 | Offset values that compensated for glyph positioning in the old typeface |
 
 The distinction exists because Adobe Clean VF improved glyph positioning within the text box. In S1 and early S2 Spectrum CSS, `component-top-to-text-*` and `component-bottom-to-text-*` were offset values applied to balance out the extra space above/below glyphs and achieve visual centering. With the improved typeface, that offset is no longer needed — `component-padding-vertical-*` represents the actual design intent.
 
-**Rule**: Use `component-padding-vertical-*` in 2nd-gen components. If you encounter `component-top-to-text-*` or `component-bottom-to-text-*` in a source file being migrated, replace them with `component-padding-vertical-*` at the same scale index — do not carry the offset tokens forward.
+**Rule**: Use `component-padding-vertical-*` in gen2 components. If you encounter `component-top-to-text-*` or `component-bottom-to-text-*` in a source file being migrated, replace them with `component-padding-vertical-*` at the same scale index — do not carry the offset tokens forward.
 
 ## Color Themes
 
@@ -676,7 +676,7 @@ Spectrum supports a light and dark theme. Any tokens that represent colors that 
 
 ### Modifying Non-Color Properties
 
-While not currently present in the system, should a need arise to change non-color properties (ex. `border-width`), those changes should be exposed as global tokens. Global tokens that are exclusive to SWC and not foundational token data can be added in the global 2nd-gen stylesheet, `swc.css`.
+While not currently present in the system, should a need arise to change non-color properties (ex. `border-width`), those changes should be exposed as global tokens. Global tokens that are exclusive to SWC and not foundational token data can be added in the global gen2 stylesheet, `swc.css`.
 
 Non-color tokens that should relate to color themes should be nested within the corresponding theme classes. This example illustrates a mock token addition.
 

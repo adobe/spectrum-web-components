@@ -17,7 +17,7 @@
     - [When to use something else](#when-to-use-something-else)
     - [What it is not](#what-it-is-not)
     - [Related](#related)
-    - [Program (2nd-gen, Jira snapshot)](#program-2nd-gen-jira-snapshot)
+    - [Program (gen2, Jira snapshot)](#program-gen2-jira-snapshot)
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
@@ -42,22 +42,22 @@
 
 ## Overview
 
-This doc describes how **`swc-action-group`** should behave for **accessibility** in 2nd-gen, targeting **WCAG 2.2 Level AA**. It pairs with [Action group migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, tokens, and DOM. **`1st-gen/packages/action-group/src/ActionGroup.ts`** (`<sp-action-group>`) is historical reference for **roving tabindex** only — **`selects`** / **`selected`** were dropped entirely in 2nd-gen (see [Recommendations](#recommendations-swc-action-group)).
+This doc describes how **`swc-action-group`** should behave for **accessibility** in gen2, targeting **WCAG 2.2 Level AA**. It pairs with [Action group migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, tokens, and DOM. **`1st-gen/packages/action-group/src/ActionGroup.ts`** (`<sp-action-group>`) is historical reference for **roving tabindex** only — **`selects`** / **`selected`** were dropped entirely in gen2 (see [Recommendations](#recommendations-swc-action-group)).
 
 React Spectrum names the pattern [**ActionButtonGroup**](https://react-spectrum.adobe.com/ActionButtonGroup); Spectrum 2 documents [**Action group**](https://s2.spectrum.corp.adobe.com/page/action-group/). **`swc-action-group`** groups related **`swc-action-button`** and **`swc-action-menu`** controls with Spectrum spacing in **horizontal** or **vertical** layout. The host **always** maps to **`role="group"`** (prescribed and fixed). The main accessibility difference from **`swc-button-group`** is **composite keyboard navigation**: **`swc-action-group`** owns **roving **`tabindex`**** (**one Tab stop** into the strip, **arrow keys** among items), while **`swc-button-group`** also uses **`role="group"`** but **Tab** visits **each** **`swc-button`** ([Button group accessibility migration analysis](../button-group/accessibility-migration-analysis.md)).
 
 ### Also read
 
-[Action group migration roadmap](./rendering-and-styling-migration-analysis.md). [Action button accessibility migration analysis](../action-button/accessibility-migration-analysis.md) (**`swc-action-button`** must stay **`role="button"`** only; **no** **`role="radio"`** / **`role="checkbox"`** on children in 2nd-gen). [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md) when **`swc-action-menu`** is slotted. [Button group accessibility migration analysis](../button-group/accessibility-migration-analysis.md) (**spacing** vs **overflow** vs **no roving tabindex**). [Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md) and [Focus management contributor guide](../../../01_contributor-guides/14_focus-management.md) (**`FocusgroupNavigationController`**, [SWC-1676](https://jira.corp.adobe.com/browse/SWC-1676)). Spectrum 2 visuals: [Action group (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=19083-360&p=f&m=dev). 1st-gen consumer docs: [Action group — Spectrum Web Components](https://opensource.adobe.com/spectrum-web-components/components/action-group/).
+[Action group migration roadmap](./rendering-and-styling-migration-analysis.md). [Action button accessibility migration analysis](../action-button/accessibility-migration-analysis.md) (**`swc-action-button`** must stay **`role="button"`** only; **no** **`role="radio"`** / **`role="checkbox"`** on children in gen2). [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md) when **`swc-action-menu`** is slotted. [Button group accessibility migration analysis](../button-group/accessibility-migration-analysis.md) (**spacing** vs **overflow** vs **no roving tabindex**). [Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md) and [Focus management contributor guide](../../../01_contributor-guides/14_focus-management.md) (**`FocusgroupNavigationController`**, [SWC-1676](https://jira.corp.adobe.com/browse/SWC-1676)). Spectrum 2 visuals: [Action group (Figma)](https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=19083-360&p=f&m=dev). 1st-gen consumer docs: [Action group — Spectrum Web Components](https://opensource.adobe.com/spectrum-web-components/components/action-group/).
 
 ### What it is
 
 - **`swc-action-group`:** A **composite** container for **related** **compact** actions (**`swc-action-button`**, **`swc-action-menu`**) with shared **size**, **quiet**, **emphasized**, and **`static-color`** passthroughs.
-- **Keyboard:** Implements **roving **`tabindex`**** among slotted focusable items (**Tab** enters the group; **Arrow** keys move between items; **Home** / **End** when supported). 1st-gen uses **`RovingTabindexController`**; 2nd-gen should migrate to **`FocusgroupNavigationController`** ([SWC-1676](https://jira.corp.adobe.com/browse/SWC-1676)).
+- **Keyboard:** Implements **roving **`tabindex`**** among slotted focusable items (**Tab** enters the group; **Arrow** keys move between items; **Home** / **End** when supported). 1st-gen uses **`RovingTabindexController`**; gen2 should migrate to **`FocusgroupNavigationController`** ([SWC-1676](https://jira.corp.adobe.com/browse/SWC-1676)).
 - **Host focus:** 1st-gen sets **`delegatesFocus: true`** on the shadow root so **`focus()`** on the host targets the current roving item.
 - **Naming:** **`label`** reflects to **`aria-label`** on the host when authors supply a non-empty string; **`aria-labelledby`** remains valid for visible legend association (1st-gen README pattern).
 - **Host role:** **`role="group"`** on the **host** in all modes. **Must not** switch to **`role="toolbar"`** or **`role="radiogroup"`** (breaking change from 1st-gen). A page-level **`role="toolbar"`** landmark, when needed, belongs on an **outer wrapper**, not on **`swc-action-group`**.
-- **Selection (1st-gen only):** 1st-gen offers optional **`selects="single"`** / **`selects="multiple"`** with a **`selected`** array and **`change`** events, re-typing the host and children. **Dropped in 2nd-gen:** **`swc-action-group`** has no selection API; **`swc-action-button`** children stay **`role="button"`** only. Selection UX belongs on **`swc-segmented-control`** (exclusive choice) or **`swc-toggle-button-group`** (toggle / multi-select) once those ship.
+- **Selection (1st-gen only):** 1st-gen offers optional **`selects="single"`** / **`selects="multiple"`** with a **`selected`** array and **`change`** events, re-typing the host and children. **Dropped in gen2:** **`swc-action-group`** has no selection API; **`swc-action-button`** children stay **`role="button"`** only. Selection UX belongs on **`swc-segmented-control`** (exclusive choice) or **`swc-toggle-button-group`** (toggle / multi-select) once those ship.
 
 ### When to use something else
 
@@ -75,18 +75,18 @@ React Spectrum names the pattern [**ActionButtonGroup**](https://react-spectrum.
 
 ### Related
 
-- **`swc-action-button`** — slotted **commit** control; always **`role="button"`** on the focus target in 2nd-gen.
+- **`swc-action-button`** — slotted **commit** control; always **`role="button"`** on the focus target in gen2.
 - **`swc-action-menu`** — slotted **menu button**; participates in the same **roving** sequence as adjacent action buttons.
 - **`swc-button-group`** — sibling **`role="group"`** wrapper for **`swc-button`** clusters (**Tab** through each button, no roving). Multiple **`swc-action-group`** / **`swc-button-group`** instances may sit inside an **outer **`role="toolbar"`** wrapper** per [APG Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/).
 
-### Program (2nd-gen, Jira snapshot)
+### Program (gen2, Jira snapshot)
 
 Gen2 program work is tracked separately from the **1st-gen** table below (omit **`gen2`** rows there per contributor-doc rules):
 
 | Jira | Type | Status (snapshot) | Summary |
 | --- | --- | --- | --- |
 | [SWC-2212](https://jira.corp.adobe.com/browse/SWC-2212) | Epic | To Do | Gen2 migration: Action Group |
-| [SWC-2213](https://jira.corp.adobe.com/browse/SWC-2213) | Story | Research | Accessibility recommendations for 2nd-gen migration |
+| [SWC-2213](https://jira.corp.adobe.com/browse/SWC-2213) | Story | Research | Accessibility recommendations for gen2 migration |
 | [SWC-2214](https://jira.corp.adobe.com/browse/SWC-2214) | Story | To Do | Analyze component and create migration plan |
 | [SWC-2215](https://jira.corp.adobe.com/browse/SWC-2215) | Story | To Do | Update file structure, API, TypeScript, and accessibility |
 | [SWC-2219](https://jira.corp.adobe.com/browse/SWC-2219) | Story | To Do | Review and finalize migration |
@@ -99,7 +99,7 @@ Gen2 program work is tracked separately from the **1st-gen** table below (omit *
 
 - [Toolbar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/) and [Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/) — the **Copy / Cut / Paste** cluster is a **named **`role="group"`**** inside an **outer **`role="toolbar"`**. **`swc-action-group`** maps to that **inner group** shape (plus **roving tabindex** among its items). The **toolbar** landmark lives on a **wrapper**, not on **`swc-action-group`**.
 - [ARIA17: Using grouping roles to identify related form controls](https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA17) — **`role="group"`** for **related** controls; name the group when it clarifies purpose.
-- [Radio group pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/) — **mutually exclusive** choice belongs on **`swc-segmented-control`**, **not** **`role="radiogroup"`** on **`swc-action-group`**. 1st-gen **`selects="single"`** used **radiogroup** on the host ([SWC-1121](https://jira.corp.adobe.com/browse/SWC-1121)); 2nd-gen fixes label association on **`role="group"`** instead.
+- [Radio group pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/) — **mutually exclusive** choice belongs on **`swc-segmented-control`**, **not** **`role="radiogroup"`** on **`swc-action-group`**. 1st-gen **`selects="single"`** used **radiogroup** on the host ([SWC-1121](https://jira.corp.adobe.com/browse/SWC-1121)); gen2 fixes label association on **`role="group"`** instead.
 - [Keyboard navigation inside components](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#keyboardnavigationinsidecomponents) and [Roving tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex) — **`swc-action-group`** **owns** this behavior via **`FocusgroupNavigationController`** (direction follows **`vertical`** / horizontal layout). **`swc-button-group`** does **not**.
 - [Focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols) — when the group or its items are disabled, use **`aria-disabled`** (not the HTML **`disabled`** attribute) so items remain keyboard-reachable and discoverable.
 
@@ -120,13 +120,13 @@ Gen2 program work is tracked separately from the **1st-gen** table below (omit *
 
 ## Related 1st-gen accessibility (Jira)
 
-Adobe Jira is authoritative for current status and resolution; refresh cells when you triage. **`gen2`**-labeled program tickets appear under **Program (2nd-gen)** only. Audit epic **[SWC-872](https://jira.corp.adobe.com/browse/SWC-872)** is omitted per contributor-doc rules.
+Adobe Jira is authoritative for current status and resolution; refresh cells when you triage. **`gen2`**-labeled program tickets appear under **Program (gen2)** only. Audit epic **[SWC-872](https://jira.corp.adobe.com/browse/SWC-872)** is omitted per contributor-doc rules.
 
 | Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary | Notes |
 | --- | --- | --- | --- | --- | --- |
-| [SWC-1121](https://jira.corp.adobe.com/browse/SWC-1121) | Bug | To Do | Unresolved | Group of radio buttons not associated with group label — **`sp-action-group`** (Selected) | **WCAG 1.3.1** audit; 1st-gen **`radiogroup`**; 2nd-gen fixes via **`role="group"`** + name |
+| [SWC-1121](https://jira.corp.adobe.com/browse/SWC-1121) | Bug | To Do | Unresolved | Group of radio buttons not associated with group label — **`sp-action-group`** (Selected) | **WCAG 1.3.1** audit; 1st-gen **`radiogroup`**; gen2 fixes via **`role="group"`** + name |
 | [SWC-1123](https://jira.corp.adobe.com/browse/SWC-1123) | Bug | To Do | Unresolved | Color alone used to convey control state — **`sp-action-group`** (Multiple) | **WCAG 1.4.1** audit; **`selects="multiple"`** |
-| [SWC-1612](https://jira.corp.adobe.com/browse/SWC-1612) | Story | To Do | Unresolved | Migrate **`sp-action-group`** to use **`FormFieldMixin`** | **Does not apply to 2nd-gen** — **`swc-action-group`** is a composite keyboard widget, not a form field; see [Form-associated custom properties](#form-associated-custom-properties-labels-elementinternals) |
+| [SWC-1612](https://jira.corp.adobe.com/browse/SWC-1612) | Story | To Do | Unresolved | Migrate **`sp-action-group`** to use **`FormFieldMixin`** | **Does not apply to gen2** — **`swc-action-group`** is a composite keyboard widget, not a form field; see [Form-associated custom properties](#form-associated-custom-properties-labels-elementinternals) |
 | [SWC-621](https://jira.corp.adobe.com/browse/SWC-621) | Story | To Do | Unresolved | **`disabled`** attribute should disable all **`sp-action-button`** children | Group-level disable |
 | [SWC-889](https://jira.corp.adobe.com/browse/SWC-889) | Bug | To Do | Unresolved | **`change`** event fires before selection change | Event ordering |
 | [SWC-1342](https://jira.corp.adobe.com/browse/SWC-1342) | Bug | To Do | Unresolved | **`sp-action-group`** sets **z-index** on focused button | Focus stacking / visibility |
@@ -154,7 +154,7 @@ Verified in **`ActionGroup.ts`**:
 - Slotted **`sp-action-menu`** participates in roving focus (see **`action-group.test.ts`** keyboard test).
 - **`selects`** on host **overrides** author **`role="group"`** when toggled to **`single`** (test **accepts role attribute override**).
 
-**Avoid in 2nd-gen (align with [Action button accessibility migration analysis](../action-button/accessibility-migration-analysis.md)):**
+**Avoid in gen2 (align with [Action button accessibility migration analysis](../action-button/accessibility-migration-analysis.md)):**
 
 - Host **`role="toolbar"`**, **`role="radiogroup"`**, or any role **other than **`group`**** on **`swc-action-group`** (including author **`role`** overrides).
 - Assigning **`role="radio"`** or **`role="checkbox"`** to **`swc-action-button`** hosts.
@@ -187,7 +187,7 @@ Slotted **`swc-action-button`** / **`swc-action-menu`** live in **light DOM**; *
 
 ### Form-associated custom properties (labels, `ElementInternals`)
 
-**Does not apply.** **`swc-action-group`** is a **composite keyboard widget** (a named **`role="group"`** of action controls), **not a form field**. [SWC-1612](https://jira.corp.adobe.com/browse/SWC-1612) (`FormFieldMixin`) must **not** be applied to this component in 2nd-gen. **`swc-action-group`** does not submit values, does not participate in form validation, and has no semantic relationship to form elements that would warrant `ElementInternals`. The **`label`** attribute reflects to **`aria-label`** on the host only (1st-gen behavior); it does not constitute field-label association and should not be redesigned as one.
+**Does not apply.** **`swc-action-group`** is a **composite keyboard widget** (a named **`role="group"`** of action controls), **not a form field**. [SWC-1612](https://jira.corp.adobe.com/browse/SWC-1612) (`FormFieldMixin`) must **not** be applied to this component in gen2. **`swc-action-group`** does not submit values, does not participate in form validation, and has no semantic relationship to form elements that would warrant `ElementInternals`. The **`label`** attribute reflects to **`aria-label`** on the host only (1st-gen behavior); it does not constitute field-label association and should not be redesigned as one.
 
 ### Accessibility tree expectations
 
@@ -215,9 +215,9 @@ Slotted **`swc-action-button`** / **`swc-action-menu`** live in **light DOM**; *
 - **Home / End:** Support when the controller and product spec include them (1st-gen **`selects="single"`** tests dispatch **Home** / **End** on the host).
 - **Activation:** **Enter** / **Space** on **`swc-action-button`**; **Enter** / **Space** / **ArrowDown** (menu pattern) on **`swc-action-menu`** per [Action menu accessibility migration analysis](../action-menu/accessibility-migration-analysis.md). Opening a **menu** must **not** trap focus in the **group** after close; focus returns to the **trigger**.
 - **Disabled items:** When the group or individual items carry **`aria-disabled="true"`**, items **remain in the roving sequence** so keyboard users can discover them — do **not** skip **`aria-disabled`** items. Only skip items with the **HTML `disabled` attribute** (natively inert). Per [APG: Focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols), items that are disabled but still focusable give users context about what actions exist. Align **`skipDisabled`** behavior in **`FocusgroupNavigationController`** accordingly with [Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md).
-- **Mouse focus:** Preserve **roving **`tabindex="0"`** on the item clicked** ([SWC-250](https://jira.corp.adobe.com/browse/SWC-250)); finish skipped mouse test in 1st-gen (**`action-group.test.ts`** **`it.skip`**) in 2nd-gen.
+- **Mouse focus:** Preserve **roving **`tabindex="0"`** on the item clicked** ([SWC-250](https://jira.corp.adobe.com/browse/SWC-250)); finish skipped mouse test in 1st-gen (**`action-group.test.ts`** **`it.skip`**) in gen2.
 - **Focus visibility / stacking:** Resolve focused-child **z-index** stacking without hiding focus indicators ([SWC-1342](https://jira.corp.adobe.com/browse/SWC-1342)).
-- **Controller migration:** Replace **`RovingTabindexController`** with **`FocusgroupNavigationController`** from **`2nd-gen/packages/core/controllers/focusgroup-navigation-controller/`**; keep **`delegatesFocus`** (or equivalent) on the host.
+- **Controller migration:** Replace **`RovingTabindexController`** with **`FocusgroupNavigationController`** from **`gen2/packages/core/controllers/focusgroup-navigation-controller/`**; keep **`delegatesFocus`** (or equivalent) on the host.
 
 ---
 
@@ -234,7 +234,7 @@ Slotted **`swc-action-button`** / **`swc-action-menu`** live in **light DOM**; *
 
 ### Keyboard testing
 
-Exercise **Tab**, **Shift+Tab**, **Arrow** keys, **Home** / **End**, and **Enter** / **Space** using the [Keyboard testing (2nd-gen Storybook accessibility guide)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx). Include:
+Exercise **Tab**, **Shift+Tab**, **Arrow** keys, **Home** / **End**, and **Enter** / **Space** using the [Keyboard testing (gen2 Storybook accessibility guide)](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx). Include:
 
 - **Action button only** strip.
 - **Action button + action menu** strip (open menu, arrow inside menu, **Escape** back to trigger).
@@ -255,8 +255,8 @@ Exercise **Tab**, **Shift+Tab**, **Arrow** keys, **Home** / **End**, and **Enter
 - [x] Storybook shows **outer **`role="toolbar"`** wrapper** + **`swc-action-group`** (**`role="group"`**) per [APG Toolbar example](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/) — `Accessibility` story (standalone + horizontal/vertical wrapper examples) and `ToolbarComposition` story; ARIA tree verified in `action-group.a11y.spec.ts`.
 - [x] **`aria-orientation`** is **never** set on the host, in any orientation — **`role="group"`** does not support it per the ARIA spec (matches **`swc-button-group`**); direction is driven by **`FocusgroupNavigationController`**'s **`direction`** option, tied to the **`orientation`** property.
 - [x] **Mouse** roving tabindex ([SWC-250](https://jira.corp.adobe.com/browse/SWC-250)) — covered in `action-group.test.ts`.
-- [skip] **action-menu-in-group** keyboard tests — deferred until **`swc-action-menu`** ships in 2nd-gen (migration plan §Deferred implementation tickets; SWC-2464, SWC-2509). Out of scope for action-button-only delivery.
-- [x] Consumer docs distinguish **`swc-action-group`** vs **`swc-button-group`** (composite keyboard navigation vs independent Tab stops) — stories meta JSDoc, reciprocal button-group link, `action-group.mdx` keyboard section. Figma / [ActionButtonGroup](https://react-spectrum.adobe.com/ActionButtonGroup) links remain in contributor docs only (not part of 2nd-gen consumer MDX convention).
+- [skip] **action-menu-in-group** keyboard tests — deferred until **`swc-action-menu`** ships in gen2 (migration plan §Deferred implementation tickets; SWC-2464, SWC-2509). Out of scope for action-button-only delivery.
+- [x] Consumer docs distinguish **`swc-action-group`** vs **`swc-button-group`** (composite keyboard navigation vs independent Tab stops) — stories meta JSDoc, reciprocal button-group link, `action-group.mdx` keyboard section. Figma / [ActionButtonGroup](https://react-spectrum.adobe.com/ActionButtonGroup) links remain in contributor docs only (not part of gen2 consumer MDX convention).
 
 ---
 
@@ -280,6 +280,6 @@ Exercise **Tab**, **Shift+Tab**, **Arrow** keys, **Home** / **End**, and **Enter
 - [Button group accessibility migration analysis](../button-group/accessibility-migration-analysis.md)
 - [Focus management strategy RFC](../../05_strategies/focus-management-strategy-rfc.md)
 - [Focus management contributor guide](../../../01_contributor-guides/14_focus-management.md)
-- [Keyboard testing (2nd-gen Storybook accessibility guide)](../../../../2nd-gen/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
+- [Keyboard testing (gen2 Storybook accessibility guide)](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx)
 - [`ActionGroup.ts` (1st-gen)](../../../../1st-gen/packages/action-group/src/ActionGroup.ts)
-- [`focusgroup-navigation-controller.ts` (2nd-gen core)](../../../../2nd-gen/packages/core/controllers/focusgroup-navigation-controller/src/focusgroup-navigation-controller.ts)
+- [`focusgroup-navigation-controller.ts` (gen2 core)](../../../../gen2/packages/core/controllers/focusgroup-navigation-controller/src/focusgroup-navigation-controller.ts)

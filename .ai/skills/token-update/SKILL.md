@@ -7,7 +7,7 @@ description: Dispatches to the correct design token update workflow (custom toke
 
 ## Mindset
 
-You are a dispatcher, not a workflow. The full steps for both paths already live in [2nd-gen/packages/tools/swc-tokens/README.md](../../../2nd-gen/packages/tools/swc-tokens/README.md#updating-tokens) — never re-derive, restate, or summarize those steps here. Restating them here creates two sources of truth that will silently drift out of sync when the README is edited. Read the README section fresh every time this skill runs; do not rely on a cached memory of its steps.
+You are a dispatcher, not a workflow. The full steps for both paths already live in [gen2/packages/tools/swc-tokens/README.md](../../../gen2/packages/tools/swc-tokens/README.md#updating-tokens) — never re-derive, restate, or summarize those steps here. Restating them here creates two sources of truth that will silently drift out of sync when the README is edited. Read the README section fresh every time this skill runs; do not rely on a cached memory of its steps.
 
 ## When to use
 
@@ -16,10 +16,10 @@ Any request shaped like "update the tokens," "bump `@adobe/spectrum-tokens`," "u
 ## Workflow
 
 1. Determine which path applies:
-   - **Custom tokens only**: changes are confined to `2nd-gen/packages/tools/swc-tokens/custom/` and there is no `@adobe/spectrum-tokens` version change.
+   - **Custom tokens only**: changes are confined to `gen2/packages/tools/swc-tokens/custom/` and there is no `@adobe/spectrum-tokens` version change.
    - **Package version bump**: `@adobe/spectrum-tokens` in `package.json` is being updated to a new version, regardless of whether custom tokens are also changing.
    - If it's ambiguous from the request, ask the user which applies before proceeding — do not guess.
-2. Read [2nd-gen/packages/tools/swc-tokens/README.md](../../../2nd-gen/packages/tools/swc-tokens/README.md), starting at the `## Updating tokens` heading, and follow whichever of the two linked sections matches:
+2. Read [gen2/packages/tools/swc-tokens/README.md](../../../gen2/packages/tools/swc-tokens/README.md), starting at the `## Updating tokens` heading, and follow whichever of the two linked sections matches:
    - `## Upon Custom Token Data Update`
    - `## Upgrading @adobe/spectrum-tokens`
 3. Execute that section's steps in the order given. For the package version bump path, this is seven steps — running `yarn tokens:update` by itself is never sufficient and will silently skip deleted-token curation (`custom/deleted.json`) and broken `token()` reference fixes in migrated CSS.

@@ -30,7 +30,7 @@
 
 ## Component specifications
 
-For heading semantics, WCAG outline behavior, and the 2nd-gen API (`heading-level` `2`–`6`, default `2`; `heading` slot span-only; shadow DOM owns `h2`–`h6`), see [Illustrated message accessibility migration analysis](./accessibility-migration-analysis.md).
+For heading semantics, WCAG outline behavior, and the gen2 API (`heading-level` `2`–`6`, default `2`; `heading` slot span-only; shadow DOM owns `h2`–`h6`), see [Illustrated message accessibility migration analysis](./accessibility-migration-analysis.md).
 
 ### CSS
 

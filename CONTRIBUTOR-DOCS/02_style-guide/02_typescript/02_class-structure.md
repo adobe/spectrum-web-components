@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [2nd-gen TypeScript](README.md) / Class structure
+[CONTRIBUTOR-DOCS](../../README.md) / [Style guide](../README.md) / [gen2 TypeScript](README.md) / Class structure
 
 <!-- Document title (editable) -->
 
@@ -28,20 +28,20 @@
 
 <!-- Document content (editable) -->
 
-This guide explains how to organize a component class in 2nd-gen. Every component has two classes: a **base class** in core and a **concrete class** in SWC. Each class uses section comments to group related code.
+This guide explains how to organize a component class in gen2. Every component has two classes: a **base class** in core and a **concrete class** in SWC. Each class uses section comments to group related code.
 
 ## Overview
 
 The base class holds behavior and API. The concrete class holds styles, rendering, and anything specific to the visual layer. This separation keeps logic testable and reusable independently of rendering.
 
-> **Reference implementation:** [Badge.base.ts](../../../2nd-gen/packages/core/components/badge/Badge.base.ts) (base) and [Badge.ts](../../../2nd-gen/packages/swc/components/badge/Badge.ts) (concrete).
+> **Reference implementation:** [Badge.base.ts](../../../gen2/packages/core/components/badge/Badge.base.ts) (base) and [Badge.ts](../../../gen2/packages/swc/components/badge/Badge.ts) (concrete).
 
 ## Two classes per component
 
 | Class | Package | Location | Purpose |
 |-------|---------|----------|---------|
 | Base (abstract) | core | `core/components/<name>/Component.base.ts` | Behavior, validation, and API |
-| Concrete | swc | `swc/components/<name>/Component.ts` | Styles, rendering, and 2nd-gen API |
+| Concrete | swc | `swc/components/<name>/Component.ts` | Styles, rendering, and gen2 API |
 
 The base class is `abstract`. You cannot create an instance of it directly. The concrete class extends the base and provides everything needed to render the component.
 
@@ -239,7 +239,7 @@ public override variant: BadgeVariant = 'informative';
 
 ### Section: API ADDITIONS
 
-This section holds properties that exist **only** in this generation. They are not declared in the base class. Use this section when 2nd-gen introduces new features that 1st-gen does not have.
+This section holds properties that exist **only** in this generation. They are not declared in the base class. Use this section when gen2 introduces new features that 1st-gen does not have.
 
 **What goes here:**
 

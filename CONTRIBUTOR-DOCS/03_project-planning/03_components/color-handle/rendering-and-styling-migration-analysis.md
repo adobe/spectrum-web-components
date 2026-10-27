@@ -19,7 +19,7 @@
 
 ## Overview
 
-This roadmap will capture **rendering**, **DOM**, **CSS**, and **token** migration for **`swc-color-handle`**. Full analysis is **in progress** as part of the [S2 color handle migration workstream](../../02_workstreams/02_2nd-gen-component-migration/01_status.md).
+This roadmap will capture **rendering**, **DOM**, **CSS**, and **token** migration for **`swc-color-handle`**. Full analysis is **in progress** as part of the [S2 color handle migration workstream](../../02_workstreams/02_gen2-component-migration/01_status.md).
 
 Until this doc is expanded, use:
 

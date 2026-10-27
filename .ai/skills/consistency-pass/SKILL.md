@@ -83,14 +83,14 @@ This check also applies during plan authoring. If you are writing or editing the
 
 ## Part 3: Shared resources
 
-`CONTRIBUTOR-DOCS/01_contributor-guides/16_2nd-gen-shared-resources.md` is the index of shared controllers, mixins, utilities, and directives in `@adobe/spectrum-wc-core` (and a couple of sibling-package helpers) and who uses each one. It goes stale silently: nothing fails to build or lint if it isn't updated.
+`CONTRIBUTOR-DOCS/01_contributor-guides/16_gen2-shared-resources.md` is the index of shared controllers, mixins, utilities, and directives in `@adobe/spectrum-wc-core` (and a couple of sibling-package helpers) and who uses each one. It goes stale silently: nothing fails to build or lint if it isn't updated.
 
 Skip the verification below if the phase touched no code that composes or defines a shared resource, whether in `core` or a sibling shared-utils location (e.g. a pure styling or test-only phase) — report `not applicable` for this part rather than spending effort on a no-op check, but keep the single report line so the three-part report stays uniform.
 
 Otherwise, check the files changed in this phase for:
 
 - A new `extends XMixin(...)`, a new `private x = new XController(this)` field, or a new import of a utility/directive from `@adobe/spectrum-wc-core` **or from a sibling shared-utils location** (e.g. `swc/utils`, the way `uniqueId()` lives outside `core`) — an existing resource gained a consumer. Add the component or pattern to its "Used by" entry.
-- A new controller, mixin, utility, or directive defined under `2nd-gen/packages/core`, **or a new shared runtime helper added to a sibling location like `swc/utils`** (something promoted out of this component's own logic because it turned out to be general, even if it didn't land in `core` itself) — a new resource exists. Add a row for it.
+- A new controller, mixin, utility, or directive defined under `gen2/packages/core`, **or a new shared runtime helper added to a sibling location like `swc/utils`** (something promoted out of this component's own logic because it turned out to be general, even if it didn't land in `core` itself) — a new resource exists. Add a row for it.
 
 Update the doc in the same commit as the code change; don't defer it to a follow-up.
 

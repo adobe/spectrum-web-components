@@ -1,13 +1,13 @@
 ---
 name: code-conformance
-description: Review 2nd-gen component files against project style guides, run linters, and surface guideline gaps. Apply whenever reviewing or auditing 2nd-gen component code for style conformance.
+description: Review gen2 component files against project style guides, run linters, and surface guideline gaps. Apply whenever reviewing or auditing gen2 component code for style conformance.
 ---
 
 # Code conformance
 
 ## When to use this skill
 
-- Reviewing or auditing 2nd-gen component TypeScript, CSS, test, or Storybook story files for style-guide conformance
+- Reviewing or auditing gen2 component TypeScript, CSS, test, or Storybook story files for style-guide conformance
 - As part of the `migration-conformance` sub-task, after Phase 6 (testing) and before Phase 7 (documentation) of a component migration
 - Before a consistency pass (see `consistency-pass`), which delegates its code-conformance check to this skill
 
@@ -15,7 +15,7 @@ description: Review 2nd-gen component files against project style guides, run li
 
 - Say "check code conformance", "audit this component's style", "review this against the style guide", or "run conformance checks for [component]"
 
-Use this skill when auditing 2nd-gen component files for alignment with project style guides. It covers four domains: TypeScript, CSS, test files, and Storybook stories. Always run automated linters first, then perform the manual review for each domain.
+Use this skill when auditing gen2 component files for alignment with project style guides. It covers four domains: TypeScript, CSS, test files, and Storybook stories. Always run automated linters first, then perform the manual review for each domain.
 
 ## Linting commands
 
@@ -87,7 +87,7 @@ Reference: [Linting tools](../../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-t
 
 ## Test files
 
-**Vitest reference:** see [.ai/references/vitest.md](../../references/vitest.md) for the canonical AI-friendly Vitest docs (index + per-page fetch pattern) and project-specific config notes.
+**Vitest reference:** see [`references/vitest.md`](references/vitest.md) for the canonical AI-friendly Vitest docs (index + per-page fetch pattern) and project-specific config notes.
 
 **Style guide:**
 
@@ -110,8 +110,8 @@ Reference: [Linting tools](../../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-t
 
 **Authoring guidelines:**
 
-- Stories format: `.ai/rules/stories-format.md` — file structure, meta, tags, layout, visual separators
-- Stories documentation: `.ai/rules/stories-documentation.md` — per-unit MDX authoring (section content, anatomy, options, states, behaviors, accessibility)
+- Stories format: `.ai/rules/stories-format.md` (constraints) and `.ai/skills/stories-format/SKILL.md` (full reference) — file structure, meta, tags, layout, visual separators
+- Stories documentation: `.ai/rules/stories-documentation.md` (constraints) and `.ai/skills/stories-documentation/SKILL.md` (full procedure) — per-unit MDX authoring (section content, anatomy, options, states, behaviors, accessibility)
 
 **What to check (`<unit>.stories.ts`):**
 
@@ -124,7 +124,7 @@ Reference: [Linting tools](../../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-t
 - `flexLayout: 'row-wrap'` is used for multi-item stories
 - Internal DOM attributes the component writes itself via `setAttribute` (not declared `@property`, e.g. Tooltip's `actual-placement`) are declared in `argTypes` with `{ table: { disable: true }, control: false }`; otherwise the Storybook helper's attribute observer round-trips them through `args` and re-applies stale values via its `spread` directive, clobbering the component's own state
 - All examples use accessible, meaningful content: no placeholder text, no missing labels
-- Image assets use `picsum.photos` with static IDs
+- Image assets use checked-in local assets rather than third-party services
 
 **What to check (`<unit>.mdx`):**
 

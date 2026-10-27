@@ -1,0 +1,25 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/**
+ * A4U exposes no per-icon mirror flag, so directional icons are mirrored in RTL via this curated, hand-maintained list rather than per-icon metadata.
+ * Consuming components no longer need their own RTL mirror rule for these icons; this is the single place that owns the decision.
+ *
+ * The selector list below must stay in sync with `DIRECTIONAL_UI_ICONS` in ui-icon-direction.ts.
+ *
+ * Per CSS Scoping 1 the shadow host is "featureless" and is matched only by :host, :host(), and :host-context(), so an [icon] compound appended outside :host() has nothing to select against. This is permanent and engine-independent, not a browser quirk; keep new entries in this same compound form rather than "simplifying" back to the chained one.
+ */
+:host(:dir(rtl)[icon="chevron"]),
+:host(:dir(rtl)[icon="arrow"]),
+:host(:dir(rtl)[icon="corner-triangle"]) {
+  scale: -1 1;
+}
