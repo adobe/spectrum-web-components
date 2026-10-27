@@ -28,6 +28,7 @@ import '../swc-card-view-waterfall-nowrap.js';
 import '../swc-card-view-waterfall-loop.js';
 import '../swc-card-view-waterfall-advance.js';
 import '../swc-card-view-waterfall-semantic.js';
+import '../swc-card-view-waterfall-top-to-bottom.js';
 
 const photoTemplates: CardViewItem[] = [
   {
@@ -135,7 +136,11 @@ export function navigationMeta(tag: string, subtitle: string): Partial<Meta> {
   return {
     ...base,
     decorators: [
-      ...(base.decorators ?? []),
+      ...(Array.isArray(base.decorators)
+        ? base.decorators
+        : base.decorators
+          ? [base.decorators]
+          : []),
       (story, context) =>
         context.viewMode === 'story'
           ? staticHtml`
@@ -167,6 +172,19 @@ export function prototypeMeta(
   const element = unsafeStatic(tag);
   return {
     component: tag,
+    decorators: [
+      (story, context) =>
+        context.viewMode === 'docs'
+          ? staticHtml`
+            <style>
+              .sbdocs-preview:has([id^="story--components-card-view-"]) > .docs-story > div {
+                width: 100%;
+              }
+            </style>
+            ${story()}
+          `
+          : story(),
+    ],
     args: {
       layout: 'grid',
       label: 'Photo library',

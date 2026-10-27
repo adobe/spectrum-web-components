@@ -544,3 +544,8 @@ export class CardViewWaterfallSemantic extends CardViewGridSemantic {
     return true;
   }
 }
+
+/** @element swc-card-view-waterfall-top-to-bottom */
+export class CardViewWaterfallTopToBottom extends CardViewWaterfallNoWrap {
+  protected override readonly navigation: CardViewNavigation = 'visual-column';
+}

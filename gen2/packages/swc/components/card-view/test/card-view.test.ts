@@ -247,7 +247,13 @@ export const WaterfallLayoutNavigation: StoryObj = {
       { left: 120, top: 300, height: 100, column: 1 },
       { left: 0, top: 360, height: 100, column: 0 },
     ];
-    for (const mode of ['nowrap', 'loop', 'advance', 'semantic']) {
+    for (const mode of [
+      'nowrap',
+      'loop',
+      'advance',
+      'semantic',
+      'top-to-bottom',
+    ]) {
       const tag = `swc-card-view-waterfall-${mode}`;
       expect((document.createElement(tag) as Prototype).layout).toBe(
         'waterfall'
@@ -279,6 +285,33 @@ export const WaterfallLayoutNavigation: StoryObj = {
           view.shadowRoot!.activeElement?.getAttribute('data-index')
         );
       };
+      if (mode === 'top-to-bottom') {
+        const order = [0, 5, 7, 1, 3, 6, 2, 4];
+        for (const [position, index] of order.entries()) {
+          const next = order[(position + 1) % order.length];
+          const previous = order[(position + order.length - 1) % order.length];
+          expect(await move(index, 'ArrowDown')).toBe(next);
+          expect(await move(index, 'ArrowRight')).toBe(next);
+          expect(await move(index, 'ArrowUp')).toBe(previous);
+          expect(await move(index, 'ArrowLeft')).toBe(previous);
+        }
+        expect(await move(4, 'Home')).toBe(0);
+        expect(await move(0, 'End')).toBe(4);
+        view.items = items.map((item, index) => ({
+          ...item,
+          disabled: index === 5,
+        }));
+        await view.updateComplete;
+        expect(await move(0, 'ArrowDown')).toBe(7);
+        view.items = items;
+        view.dir = 'rtl';
+        await view.updateComplete;
+        expect(await move(4, 'ArrowRight')).toBe(1);
+        expect(await move(7, 'ArrowDown')).toBe(2);
+        expect(await move(0, 'Home')).toBe(2);
+        expect(await move(2, 'End')).toBe(7);
+        continue;
+      }
       expect(await move(2, 'ArrowRight')).toBe(
         mode === 'nowrap' ? 2 : mode === 'loop' ? 0 : 3
       );

@@ -37,10 +37,10 @@ export const readings = {
     ],
   },
   waterfall: {
-    label: 'Waterfall · Four keyboard policies',
+    label: 'Waterfall · Five keyboard policies',
     title: 'The cards do not share a horizontal row.',
     summary:
-      'The same single-row semantics now contain unequal-height cards. NoWrap, Loop, and Advance place each card in the shortest column. Semantic fills top to bottom, then across columns.',
+      'The same single-row semantics now contain unequal-height cards. NoWrap, Loop, Advance, and Top to bottom use shortest-column placement. Semantic places cards in collection order down each column, then across columns.',
     caution:
       'Several cards may overlap the active card vertically. Which one should Left or Right choose? Test the geometry instead of assuming a horizontal row exists.',
     variants: [
@@ -64,6 +64,11 @@ export const readings = {
         'Semantic.',
         'Visit every enabled item in semantic order. Right/Down advances even when the next card is visually below.',
       ],
+      [
+        'top-to-bottom',
+        'Top to bottom.',
+        'Move down each visual column, then right to the next. Left/Up reverses the route. Cycle at the collection boundary.',
+      ],
     ],
   },
 };
@@ -83,7 +88,7 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         --forest: #173f36;
         --wine: #75283e;
         --gold: #f0cc79;
-        --pink: #f7d8df;
+        --pale-yellow: #f5f0df;
         --line: #d2d3c8;
         --muted: #595e51;
         --serif: 'Cormorant Garamond', Georgia, serif;
@@ -112,6 +117,11 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
       }
       #card-view-oracle a:hover {
         text-decoration-thickness: 2px;
+      }
+      #card-view-oracle :is(nav a, .variant-id, .source-links a, footer a) {
+        display: inline-block;
+        min-width: 24px;
+        min-height: 24px;
       }
       #card-view-oracle :focus-visible {
         outline: 3px solid var(--wine);
@@ -146,7 +156,7 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         min-height: 76px;
       }
       #card-view-oracle .imprint {
-        font-size: 12px;
+        font-size: 14px;
         font-weight: 700;
         text-transform: uppercase;
       }
@@ -160,9 +170,10 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         display: flex;
         flex-wrap: wrap;
         gap: 12px 25px;
-        font-size: 13px;
+        font-size: 14px !important;
       }
       #card-view-oracle nav a {
+        font-size: inherit;
         text-decoration: none;
         padding-block: 8px;
       }
@@ -180,7 +191,7 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         margin: 0 0 12px;
         text-transform: uppercase;
         font-weight: 600;
-        font-size: 11px;
+        font-size: 14px;
       }
       #card-view-oracle h1,#card-view-oracle
       h2,#card-view-oracle
@@ -230,9 +241,10 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         margin-block: 0 24px;
       }
       #card-view-oracle .strategy-callout {
+        margin-block-start: 40px;
         padding: 16px 20px;
-        border-inline-start: 4px solid var(--wine);
-        background: var(--pink);
+        border-inline-start: 4px solid var(--gold);
+        background: var(--pale-yellow);
       }
       #card-view-oracle .strategy-callout p {
         margin: 0;
@@ -252,7 +264,7 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         margin: 0;
       }
       #card-view-oracle .small {
-        font-size: 12px;
+        font-size: 14px;
         color: var(--muted);
       }
       #card-view-oracle .deck {
@@ -295,7 +307,7 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
       #card-view-oracle .card-number {
         display: block;
         margin-top: 25px;
-        font-size: 10px;
+        font-size: 14px;
         font-weight: 700;
         color: var(--wine);
         text-transform: uppercase;
@@ -310,7 +322,7 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
       }
       #card-view-oracle .card-role {
         display: block;
-        font-size: 11px;
+        font-size: 14px;
         margin-top: 7px;
         color: var(--muted);
       }
@@ -339,9 +351,7 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         list-style: none;
       }
       #card-view-oracle .variants li {
-        display: grid;
-        grid-template-columns: 45px 1fr;
-        gap: 16px;
+        display: block;
         padding: 11px 0;
         border-bottom: 1px solid var(--line);
         font-size: 14px;
@@ -364,6 +374,9 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
       #card-view-oracle .dark {
         background: var(--forest);
         color: var(--paper);
+      }
+      #card-view-oracle .dark .small {
+        color: inherit;
       }
       #card-view-oracle .dilemma {
         padding: 55px 0;
@@ -448,7 +461,7 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
       #card-view-oracle .spell .pair {
         font-weight: 700;
         color: var(--wine);
-        font-size: 12px;
+        font-size: 14px;
       }
       #card-view-oracle .diagram {
         display: grid;
@@ -479,15 +492,67 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         line-height: 49px;
       }
       #card-view-oracle .note {
-        font-size: 13px;
+        font-size: 14px;
         margin: 20px 0 0;
         color: var(--muted);
       }
-      #card-view-oracle .verdict {
-        background: var(--pink);
+      #card-view-oracle .spell.visual-order-spell {
+        grid-column: 1 / -1;
+        border-left: 0;
+        border-top: 1px solid var(--line);
+        padding-left: 0;
+      }
+      #card-view-oracle .layout-explainer {
+        background: #edf7fc;
         padding: 56px 0;
-        border-top: 1px solid #d9acb6;
-        border-bottom: 1px solid #d9acb6;
+      }
+      #card-view-oracle .layout-diagrams {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 36px;
+        margin-top: 28px;
+      }
+      #card-view-oracle .layout-diagrams figure {
+        margin: 0;
+        min-width: 0;
+      }
+      #card-view-oracle .layout-diagrams h3 {
+        font-size: 30px;
+        margin: 18px 0 8px;
+      }
+      #card-view-oracle .layout-diagram {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        height: 288px;
+        padding: 12px;
+        background: #dceef7;
+      }
+      #card-view-oracle .uniform-layout {
+        grid-template-rows: repeat(3, 1fr);
+      }
+      #card-view-oracle .layout-column {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-width: 0;
+      }
+      #card-view-oracle .layout-card {
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+        border: 1px solid #6b909e;
+        border-radius: 4px;
+        background: var(--paper);
+        color: var(--wine);
+        font-size: 18px;
+        font-weight: 700;
+      }
+      #card-view-oracle .verdict {
+        background: var(--pale-yellow);
+        padding: 56px 0;
+        border-top: 1px solid #dfcc8f;
+        border-bottom: 1px solid #dfcc8f;
       }
       #card-view-oracle .verdict .wrap {
         display: grid;
@@ -519,13 +584,15 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         display: block;
       }
       #card-view-oracle .receipts {
-        padding: 48px 0;
+        padding: 55px 0;
+      }
+      #card-view-oracle .receipts .wrap {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 60px;
       }
-      #card-view-oracle .receipts h2 {
-        font-size: 33px;
+      #card-view-oracle .dark .source-links a {
+        color: var(--gold);
       }
       #card-view-oracle .receipts p,#card-view-oracle
       .receipts li {
@@ -539,7 +606,7 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         flex-wrap: wrap;
         gap: 12px 24px;
         margin-top: 20px;
-        font-size: 13px;
+        font-size: 14px;
       }
       #card-view-oracle footer {
         border-top: 1px solid var(--line);
@@ -549,7 +616,7 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         display: flex;
         justify-content: space-between;
         gap: 24px;
-        font-size: 11px;
+        font-size: 14px;
         color: var(--muted);
       }
       #card-view-oracle .credit {
@@ -598,7 +665,7 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         }
         #card-view-oracle nav {
           gap: 10px 19px;
-          font-size: 12px;
+          font-size: 14px;
         }
         #card-view-oracle .hero {
           padding-top: 32px;
@@ -629,10 +696,11 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         #card-view-oracle .card-number {
           margin-top: 22px;
         }
-        #card-view-oracle .reading,#card-view-oracle
+        #card-view-oracle .layout-diagrams,#card-view-oracle
+        .reading,#card-view-oracle
         .dilemma .wrap,#card-view-oracle
         .verdict .wrap,#card-view-oracle
-        .receipts {
+        .receipts .wrap {
           grid-template-columns: 1fr;
           gap: 22px;
         }
@@ -655,10 +723,10 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
           font-size: 25px;
         }
         #card-view-oracle .spell p {
-          font-size: 13px;
+          font-size: 14px;
         }
         #card-view-oracle .receipts {
-          padding-block: 35px;
+          padding-block: 40px;
         }
         #card-view-oracle footer .wrap {
           flex-direction: column;
@@ -744,13 +812,13 @@ export const Oracle = () => {
 {" The component reading room "}</div>
 {" "}
 <nav aria-label="Sections">{" "}
-<a href="#oracle-deck">{"The deck"}</a>
-{" "}
 <a href="#oracle-dilemma">{"The bad omens"}</a>
 {" "}
-<a href="#oracle-lore">{"Arrow lore"}</a>
+<a href="#oracle-deck">{"The deck"}</a>
 {" "}
 <a href="#oracle-verdict">{"The verdict"}</a>
+{" "}
+<a href="#oracle-lore">{"Arrow lore"}</a>
 {" "}</nav>
 {" "}</div>
 {" "}</header>
@@ -765,7 +833,7 @@ export const Oracle = () => {
 <em>{"oracle"}</em>
 {" "}</h1>
 {" "}
-<p className="lede">{" One recommended semantic row. Eight keyboard experiments. "}
+<p className="lede">{" One recommended semantic row. Nine keyboard experiments. "}
 <br />
 {" One question: can everyone find their way through the cards? "}</p>
 {" "}
@@ -773,12 +841,50 @@ export const Oracle = () => {
 {" "}</div>
 {" "}</section>
 {" "}
-<aside className="strategy-callout wrap" aria-label="Full strategy">
-  <p>
-    <strong>The full strategy.</strong>{' '}Explore the requirements, tradeoffs, and evaluation plan in{' '}
-    <a href="./?path=/docs/contributor-docs-project-planning-strategies-card-view-strategy--docs" target="_top">the card view strategy</a>.
-  </p>
-</aside>
+<section className="dilemma dark" id="oracle-dilemma" aria-labelledby="oracle-dilemma-title">{" "}
+<div className="wrap">{" "}
+<div>{" "}
+<p className="eyebrow">{"Three bad omens"}</p>
+{" "}
+<h2 id="oracle-dilemma-title">{" The visuals say grid. "}
+<br />
+{" The voices say "}
+<em>{"what?"}</em>
+{" "}</h2>
+{" "}
+<p>{" Pretty cards are not the problem. "}
+<br />
+{" A confusing map is. "}</p>
+{" "}</div>
+{" "}
+<ol className="omens">{" "}
+<li>{" "}
+<div>{" "}
+<strong>{"The unreliable prophecy"}</strong>
+{" "}
+<p>{" Users need the current position and total: “7 of 50,” not “1 of 1.” We recommend a single-row grid for that feedback, while verifying actual speech in real screen readers. "}</p>
+{" "}</div>
+{" "}</li>
+{" "}
+<li>{" "}
+<div>{" "}
+<strong>{"One sequence. Two dimensions."}</strong>
+{" "}
+<p>{" Users relying on semantics know one ordered sequence. Sighted keyboard users see a two-dimensional grid. A route must be understandable from both perspectives, not just whichever map its designer sees. "}</p>
+{" "}</div>
+{" "}</li>
+{" "}
+<li>{" "}
+<div>{" "}
+<strong>{"The shifting floor"}</strong>
+{" "}
+<p>{" Waterfall cards have no aligned horizontal rows. Several neighbors may overlap vertically. Which card should Left or Right reach, and what happens at an edge? That is a navigation question, not another semantic choice. "}</p>
+{" "}</div>
+{" "}</li>
+{" "}</ol>
+{" "}</div>
+{" "}</section>
+{" "}
 <section className="deck-section wrap" id="oracle-deck" aria-labelledby="oracle-deck-title">{" "}
 <div className="section-line">{" "}
 <h2 id="oracle-deck-title">{"The semantic reading is in."}</h2>
@@ -860,29 +966,6 @@ export const Oracle = () => {
 {" "}</figcaption></figure>
 {" "}</div>
 {" "}
-{['grid', 'waterfall'].map((family) => {
-  const reading = readings[family];
-  return (
-    <section className="reading" key={family} aria-labelledby={`oracle-reading-title-${family}`}>
-      <div>
-        <p className="eyebrow">{reading.label}</p>
-        <h3 id={`oracle-reading-title-${family}`}>{reading.title}</h3>
-        <p>{reading.summary}</p>
-        <p className="caution">{reading.caution}</p>
-      </div>
-      <ul className="variants">
-        {reading.variants.map(([identifier, title, summary]) => (
-          <li key={identifier}>
-            <a className="variant-id" href={`./?path=/docs/components-card-view-${family}-${identifier}--docs`} target="_top" aria-label={`${family} ${identifier} documentation`}>{title.slice(0, 1)}</a>
-            <span><strong>{title}</strong>{' '}{summary}</span>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-})}
-{" "}
-
 <section className="reading" aria-labelledby="oracle-other-variations-title">
   <div>
     <h3 id="oracle-other-variations-title">The reference shelf</h3>
@@ -924,19 +1007,18 @@ export const Oracle = () => {
         'Fieldset.',
         'Lower priority: native grouping does not establish arrow navigation or position announcements.',
       ],
-    ].map(([identifier, title, summary], index) => (
+    ].map(([identifier, title, summary]) => (
       <li key={identifier}>
-        <a
-          className="variant-id"
-          href={`./?path=/docs/components-card-view-${identifier}--docs`}
-          target="_top"
-          aria-label={`${title} documentation`}
-        >
-          {['II', 'I', 'III', 'IV', 'V', 'VI'][index]}
-        </a>
-        <span>
-          <strong>{title}</strong> {summary}
-        </span>
+        <strong>
+          <a
+            className="variant-id"
+            href={`./?path=/docs/components-card-view-${identifier}--docs`}
+            target="_top"
+            aria-label={`${title} documentation`}
+          >
+            {title}
+          </a>
+        </strong>{' '}{summary}
       </li>
     ))}
   </ul>
@@ -945,57 +1027,46 @@ export const Oracle = () => {
 {" "}</section>
 {" "}
 
-<section className="dilemma dark" id="oracle-dilemma" aria-labelledby="oracle-dilemma-title">{" "}
+<section className="verdict" id="oracle-verdict" aria-labelledby="oracle-verdict-title">{" "}
 <div className="wrap">{" "}
 <div>{" "}
-<p className="eyebrow">{"Three bad omens"}</p>
+<p className="eyebrow">{"The semantics are recommended. The keyboard route is still open."}</p>
 {" "}
-<h2 id="oracle-dilemma-title">{" The visuals say grid. "}
+<h2 id="oracle-verdict-title">{" The winning card? "}
 <br />
-{" The voices say "}
-<em>{"what?"}</em>
-{" "}</h2>
+{" Ask the people. "}</h2>
 {" "}
-<p>{" Pretty cards are not the problem. "}
-<br />
-{" A confusing map is. "}</p>
+<p>{" A passing axe scan is not a blessing from the accessibility universe. Neither is “Google does it.” The winner must work for keyboard and screen reader users. "}</p>
+{" "}
+<p>{" "}
+<strong>{" Use a single-row grid for “x of y” feedback. "}</strong>
+{" Hold those semantics fixed while users test four grid policies and five waterfall policies. The remaining decision is navigation, not another vote on semantics. "}</p>
 {" "}</div>
 {" "}
-<ol className="omens">{" "}
+<ol className="plan">{" "}
 <li>{" "}
-<div>{" "}
-<strong>{"The unreliable prophecy"}</strong>
-{" "}
-<p>{" Users need the current position and total: “7 of 50,” not “1 of 1.” We recommend a single-row grid for that feedback, while verifying actual speech in real screen readers. "}</p>
-{" "}</div>
-{" "}</li>
+<strong>{"First, a fair reading."}</strong>
+{" Compare nine examples with identical single-row semantics, 50 cards, content, and actions. Verify positional speech. "}</li>
 {" "}
 <li>{" "}
-<div>{" "}
-<strong>{"One sequence. Two dimensions."}</strong>
-{" "}
-<p>{" Users relying on semantics know one ordered sequence. Sighted keyboard users see a two-dimensional grid. A route must be understandable from both perspectives, not just whichever map its designer sees. "}</p>
-{" "}</div>
-{" "}</li>
+<strong>{"Make the task real."}</strong>
+{" Select the 7th, 23rd, 24th, and 46th cards, then deselect the 23rd card. Confirm that only the 7th, 24th, and 46th cards remain selected. "}</li>
 {" "}
 <li>{" "}
-<div>{" "}
-<strong>{"The shifting floor"}</strong>
-{" "}
-<p>{" Waterfall cards have no aligned horizontal rows. Several neighbors may overlap vertically. Which card should Left or Right reach, and what happens at an edge? That is a navigation question, not another semantic choice. "}</p>
-{" "}</div>
-{" "}</li>
+<strong>{"Keep the spells separate."}</strong>
+{" Selecting a card, opening it, and using its child controls must not trigger one another. "}</li>
 {" "}</ol>
 {" "}</div>
 {" "}</section>
 {" "}
-<section className="lore wrap" id="oracle-lore" aria-labelledby="oracle-lore-title">{" "}
+<div className="deck-section wrap">
+<section className="lore" id="oracle-lore" aria-labelledby="oracle-lore-title">{" "}
 <div className="lore-intro">{" "}
 <p className="eyebrow">{"Know your navigation spells"}</p>
 {" "}
-<h2 id="oracle-lore-title">{"Not all circles lead everywhere."}</h2>
+<h2 id="oracle-lore-title">{"Four shared policies. One waterfall variation."}</h2>
 {" "}
-<p>{" Four keyboard policies share one semantic structure. Compare stopping, looping, advancing, and semantic-order cycling without changing the meaning of the cards. "}</p>
+<p>{" NoWrap, Loop, Advance, and Semantic share the recommended single-row grid semantics. Each policy has a uniform-grid and waterfall playground. Compare their arrow-key destinations and boundary behavior without changing the meaning of the cards. "}</p>
 {" "}</div>
 {" "}
 <div className="spells">{" "}
@@ -1014,9 +1085,9 @@ export const Oracle = () => {
 <i></i>
 {" "}</div>
 {" "}
-<h3>{"The compass"}</h3>
+<h3 id="oracle-nowrap">{"NoWrap"}</h3>
 {" "}
-<p>{" Spatial arrows choose a nearby aligned card. At the edge, stop. Repeating one key will not visit everything. "}</p>
+<p>{" Arrow keys move to an enabled visual neighbor in the pressed direction. Candidates must overlap on the perpendicular axis: the same visual row or column in a grid, or an overlapping band in a waterfall. If no candidate exists, focus stays put. Repeating one arrow does not necessarily visit every card. "}</p>
 {" "}
 <span className="pair">{"Grid + waterfall · NoWrap"}</span>
 {" "}</article>
@@ -1036,9 +1107,9 @@ export const Oracle = () => {
 <i></i>
 {" "}</div>
 {" "}
-<h3>{"The small circle"}</h3>
+<h3 id="oracle-loop">{"Loop"}</h3>
 {" "}
-<p>{" At the edge, return to the other end of the same aligned row or column. You can loop without seeing the rest. "}</p>
+<p>{" Move spatially like NoWrap. At an edge, loop to the opposite end of the same visual row, overlapping waterfall band, or visual column. Do not advance to another band or column. Repeating one arrow can stay in a local loop rather than visiting the whole collection. "}</p>
 {" "}
 <span className="pair">{"Grid + waterfall · Loop"}</span>
 {" "}</article>
@@ -1058,9 +1129,9 @@ export const Oracle = () => {
 <i></i>
 {" "}</div>
 {" "}
-<h3>{"The next passage"}</h3>
+<h3 id="oracle-advance">{"Advance"}</h3>
 {" "}
-<p>{" Move spatially until an edge, then advance to the next visual row or column, or retreat to the previous one. At the outer boundary, cycle. "}</p>
+<p>{" Move spatially until an edge. Then cross into the next visual row or waterfall band for horizontal movement, or the next visual column for vertical movement; reverse arrows retreat to the previous one. Unlike Loop, movement leaves the current band or column. At the outer collection boundary, cycle to the opposite end. "}</p>
 {" "}
 <span className="pair">{"Grid + waterfall · Advance"}</span>
 {" "}</article>
@@ -1080,54 +1151,98 @@ export const Oracle = () => {
 <i className="active"></i>
 {" "}</div>
 {" "}
-<h3>{"The eternal return"}</h3>
+<h3 id="oracle-semantic">{"Semantic"}</h3>
 {" "}
-<p>{" Right/Down means next; Left/Up means previous. Geometry does not decide the destination. Cycle at the collection edge and visit every enabled item. "}</p>
+<p>{" Right/Down moves to the next enabled item in semantic collection order; Left/Up moves to the previous one, including in RTL. Geometry does not decide the destination. Cycle between the last and first enabled items at the collection boundary. Repeating an arrow visits every enabled item. The waterfall version places cards top to bottom, then across columns, to match that sequence. "}</p>
 {" "}
 <span className="pair">{"Grid + waterfall · Semantic"}</span>
 {" "}</article>
+<article className="spell visual-order-spell">
+  <div className="diagram" role="img" aria-label="Current card at the bottom of the first column; next card at the top of the second column.">
+    <i></i>
+    <i className="exit"></i>
+    <i></i>
+    <i className="active"></i>
+    <i></i>
+    <i></i>
+  </div>
+  <h3 id="oracle-top-to-bottom">Top to bottom</h3>
+  <p>Keep shortest-column placement. Down/Right follows the cards from top to bottom within a visual column, then moves right to the next column. Left/Up reverses the route. Skip disabled cards and cycle at the collection boundary. Home/End reaches the first/last enabled card in this visual order. Columns are visited physically left to right, including in RTL.</p>
+  <p>Unlike Semantic, this policy uses measured visual positions, not collection indices. For example, the numbered waterfall diagram below is visited in this order: 1, 6, 9, 2, 4, 8, 3, 5, 7. Position announcements can jump between numbers. Resizing can change the route.</p>
+  <span className="pair">Waterfall only · Visual column order</span>
+</article>
 {" "}</div>
 {" "}
-<p className="note">{" Spatial alignment uses perpendicular overlap. A waterfall band is not a horizontal row. The Semantic policy keeps Right/Down as next, even in RTL; its waterfall fills top to bottom, then across visual columns. All eight playgrounds contain 50 Picsum photos with semantic-position image IDs. "}</p>
+<p className="note">{" Spatial alignment uses perpendicular overlap. A waterfall band is not a horizontal row. Semantic follows collection order; Top to bottom follows visual column order. All nine playgrounds contain 50 Picsum photos with collection-position image IDs. "}</p>
 {" "}</section>
 {" "}
-<section className="verdict" id="oracle-verdict" aria-labelledby="oracle-verdict-title">{" "}
+{" "}</div>
+<section className="layout-explainer" aria-labelledby="oracle-layouts-title">
+  <div className="wrap">
+    <p className="eyebrow">The shape of the collection</p>
+    <h2 id="oracle-layouts-title">Two layouts. The same collection.</h2>
+    <p>Grid and waterfall describe visual placement, not different semantics. Both expose one semantic row with a stable column index per card. The numbers below show collection order; the shapes show where those cards appear.</p>
+    <div className="layout-diagrams">
+      <figure>
+        <div className="layout-diagram uniform-layout" role="img" aria-label="Uniform grid: cards 1 through 9 run left to right across three aligned rows of three equal-height cards.">
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((position) => (
+            <span className="layout-card" key={position}>{position}</span>
+          ))}
+        </div>
+        <figcaption>
+          <h3 id="oracle-uniform-layout">Uniform grid</h3>
+          <p>Cards have equal heights and align in visual rows and columns. Left/Right has an obvious row to follow; Up/Down has an aligned column. Visual row boundaries do not create extra semantic rows.</p>
+        </figcaption>
+      </figure>
+      <figure>
+        <div className="layout-diagram waterfall-layout" role="img" aria-label="Waterfall: unequal-height cards fill the shortest column. The columns contain 1, 6, 9; 2, 4, 8; and 3, 5, 7. Cards do not form aligned horizontal rows.">
+          {[
+            [[1, 96], [6, 64], [9, 64]],
+            [[2, 64], [4, 88], [8, 72]],
+            [[3, 80], [5, 56], [7, 88]],
+          ].map((column, columnIndex) => (
+            <div className="layout-column" key={columnIndex}>
+              {column.map(([position, height]) => (
+                <span className="layout-card" key={position} style={{ height }}>{position}</span>
+              ))}
+            </div>
+          ))}
+        </div>
+        <figcaption>
+          <h3 id="oracle-waterfall-layout">Waterfall</h3>
+          <p>Cards have unequal heights. NoWrap, Loop, Advance, and Top to bottom place each next card in the shortest column, as shown here. Horizontal neighbors can overlap at different heights, so there is no single aligned row to follow.</p>
+          <p>The Semantic waterfall instead fills top to bottom, then across columns. Its visual placement follows the semantic sequence; its arrow keys do not choose destinations by geometry.</p>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+<div className="deck-section wrap">
+{['grid', 'waterfall'].map((family) => {
+  const reading = readings[family];
+  return (
+    <section className="reading" key={family} aria-labelledby={`oracle-reading-title-${family}`}>
+      <div>
+        <p className="eyebrow">{reading.label}</p>
+        <h3 id={`oracle-reading-title-${family}`}>{reading.title}</h3>
+        <p>{reading.summary}</p>
+        <p className="caution">{reading.caution}</p>
+      </div>
+      <ul className="variants policy-variants">
+        {reading.variants.map(([identifier, title, summary]) => (
+          <li key={identifier}>
+            <strong><a className="variant-id" href={`./?path=/docs/components-card-view-${family}-${identifier}--docs`} target="_top" aria-label={`${family} ${identifier} documentation`}>{title}</a></strong>{' '}{summary}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+})}
+{" "}
+{" "}</div>
+{" "}
+<section className="receipts dark" aria-labelledby="oracle-receipts-title">{" "}
 <div className="wrap">{" "}
-<div>{" "}
-<p className="eyebrow">{"The semantics are recommended. The keyboard route is still open."}</p>
-{" "}
-<h2 id="oracle-verdict-title">{" The winning card? "}
-<br />
-{" Ask the people. "}</h2>
-{" "}
-<p>{" A passing axe scan is not a blessing from the accessibility universe. Neither is “Google does it.” The winner must work for keyboard and screen reader users. "}</p>
-{" "}
-<p>{" "}
-<strong>{" Use a single-row grid for “x of y” feedback. "}</strong>
-{" Hold those semantics fixed while users test the four keyboard policies in both layouts. The remaining decision is navigation, not another vote on semantics. "}</p>
-{" "}</div>
-{" "}
-<ol className="plan">{" "}
-<li>{" "}
-<strong>{"First, a fair reading."}</strong>
-{" Compare four routes with identical single-row semantics, 50 cards, content, and actions. Verify positional speech. "}</li>
-{" "}
-<li>{" "}
-<strong>{"Make the task real."}</strong>
-{" Find card seven, visit every card, select two, and use a bulk action. "}</li>
-{" "}
-<li>{" "}
-<strong>{"Keep the spells separate."}</strong>
-{" Selecting a card, opening it, and using its child controls must not trigger one another. "}</li>
-{" "}
-<li>{" "}
-<strong>{"Then shake the table."}</strong>
-{" Test horizontal waterfall neighbors, reverse traversal, RTL, resizing, removal, and focus visibility. Add virtualization last. "}</li>
-{" "}</ol>
-{" "}</div>
-{" "}</section>
-{" "}
-<section className="receipts wrap" aria-labelledby="oracle-receipts-title">{" "}
 <div>{" "}
 <p className="eyebrow">{"Read the leaves, then the receipts"}</p>
 {" "}
@@ -1138,8 +1253,6 @@ export const Oracle = () => {
 <p>{" Higley and Roselli caution against choosing a grid just because it looks like one or saves tab stops. A feed suits reading; a toolbar suits commands. The role should match the task. "}</p>
 {" "}
 <div className="source-links">{" "}
-<a href="./?path=/docs/contributor-docs-project-planning-strategies-card-view-strategy--docs" target="_top">{"The full strategy"}</a>
-{" "}
 <a href="https://www.w3.org/WAI/ARIA/apg/patterns/grid/">{" APG grid pattern "}</a>
 {" "}
 <a href="https://sarahmhigley.com/writing/grids-part1/">{" Higley on grids "}</a>
@@ -1165,7 +1278,14 @@ export const Oracle = () => {
 {" "}
 <p className="small">{" Test NVDA, JAWS, VoiceOver, Narrator, mobile screen readers, and keyboard-only use. Reports are not independently verified findings. Automated tests do not establish usability or WCAG conformance. "}</p>
 {" "}</div>
+{" "}</div>
 {" "}</section>
+<aside className="strategy-callout wrap" aria-label="Full strategy">
+  <p>
+    <strong>The full strategy.</strong>{' '}Explore the requirements, tradeoffs, and evaluation plan in{' '}
+    <a href="./?path=/docs/contributor-docs-project-planning-strategies-card-view-strategy--docs" target="_top">the card view strategy</a>.
+  </p>
+</aside>
 {" "}</main>
 {" "}
 <footer>{" "}
