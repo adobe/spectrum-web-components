@@ -188,23 +188,7 @@ export const LifecycleEventsTest: Story = {
 
       menu.open = true;
       await openPromise;
-      await afterOpenPromise.catch((error: Error) => {
-        const surface = menu.shadowRoot!.querySelector('.swc-Menu')!;
-        throw new Error(
-          `${error.message}\nMenu state: ${JSON.stringify({
-            open: menu.open,
-            placement: menu.getAttribute('actual-placement'),
-            opacity: getComputedStyle(surface).opacity,
-            display: getComputedStyle(surface).display,
-            visibility: document.visibilityState,
-            animations: surface.getAnimations().map((animation) => ({
-              playState: animation.playState,
-              currentTime: animation.currentTime,
-              timing: animation.effect?.getComputedTiming(),
-            })),
-          })}`
-        );
-      });
+      await afterOpenPromise;
     });
 
     await step('fires swc-close and swc-after-close when closed', async () => {

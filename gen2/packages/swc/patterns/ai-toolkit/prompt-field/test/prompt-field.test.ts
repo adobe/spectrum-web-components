@@ -522,24 +522,10 @@ export const AttachmentScrollPaginationTest: Story = {
         nextButton?.click();
         // Paging is a smooth scroll; wait until it has advanced by more than
         // half a viewport (its settled position) rather than a fixed delay.
-        await waitFor(
-          () =>
-            expect(
-              (scrollEl?.scrollLeft ?? 0) - initialScrollLeft
-            ).toBeGreaterThan(clientWidth / 2),
-          {
-            onTimeout: (error) =>
-              new Error(
-                `${error.message}\nScroll state: ${JSON.stringify({
-                  scrollLeft: scrollEl?.scrollLeft,
-                  scrollWidth: scrollEl?.scrollWidth,
-                  clientWidth: scrollEl?.clientWidth,
-                  nextDisabled: nextButton?.getAttribute('aria-disabled'),
-                  visibility: document.visibilityState,
-                  behavior: getComputedStyle(scrollEl!).scrollBehavior,
-                })}`
-              ),
-          }
+        await waitFor(() =>
+          expect(
+            (scrollEl?.scrollLeft ?? 0) - initialScrollLeft
+          ).toBeGreaterThan(clientWidth / 2)
         );
 
         expect(scrollEl?.clientWidth).toBe(clientWidth);
@@ -1132,29 +1118,10 @@ export const DragAndDropTest: Story = {
         expect(getComputedStyle(box!, '::after').transitionProperty).toContain(
           'box-shadow'
         );
-        await waitFor(
-          () => {
-            expect(getComputedStyle(outerBorder!).boxShadow).toBe('none');
-            expect(getComputedStyle(box!).boxShadow).toBe('none');
-          },
-          {
-            onTimeout: (error) =>
-              new Error(
-                `${error.message}\nShadow state: ${JSON.stringify(
-                  [outerBorder!, box!].map((element) => ({
-                    className: element.className,
-                    shadow: getComputedStyle(element).boxShadow,
-                    animations: element.getAnimations().map((animation) => ({
-                      playState: animation.playState,
-                      currentTime: animation.currentTime,
-                      timing: animation.effect?.getComputedTiming(),
-                    })),
-                    visibility: document.visibilityState,
-                  }))
-                )}`
-              ),
-          }
-        );
+        await waitFor(() => {
+          expect(getComputedStyle(outerBorder!).boxShadow).toBe('none');
+          expect(getComputedStyle(box!).boxShadow).toBe('none');
+        });
 
         el.generating = true;
         await el.updateComplete;
