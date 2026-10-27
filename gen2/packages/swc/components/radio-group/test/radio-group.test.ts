@@ -321,6 +321,42 @@ export const ErrorIconTest: Story = {
   },
 };
 
+export const ErrorIconDisabledFieldsetTest: Story = {
+  render: () => html`
+    <fieldset>
+      <swc-radio-group name="a" field-status="invalid">
+        <span slot="label">Shipping</span>
+        <swc-radio value="1"><span slot="label">Red</span></swc-radio>
+        <span slot="error-text">Choose an available option.</span>
+      </swc-radio-group>
+    </fieldset>
+  `,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const fieldset = canvasElement.querySelector('fieldset')!;
+    const icon = () =>
+      group.shadowRoot?.querySelector('.swc-FormFieldErrorText-icon');
+
+    expect(icon(), 'enabled and invalid shows the icon').toBeTruthy();
+
+    fieldset.disabled = true;
+    await waitFor(() => expect(group.matches(':state(disabled)')).toBe(true));
+    await group.updateComplete;
+    expect(icon(), 'a disabled fieldset hides the icon').toBeNull();
+    expect(
+      group.shadowRoot?.querySelector('.swc-FormFieldErrorText'),
+      'the error text stays'
+    ).toBeTruthy();
+    expect(group.roleElement?.getAttribute('aria-invalid')).toBe('true');
+
+    fieldset.disabled = false;
+    await waitFor(() => expect(icon()).toBeTruthy());
+  },
+};
+
 export const ErrorIconWithoutErrorTextTest: Story = {
   render: () => html`
     <swc-radio-group id="with-description" name="a" field-status="invalid">

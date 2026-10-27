@@ -117,9 +117,11 @@ export class RadioGroup extends RadioGroupBase {
         </div>
         ${this.renderFieldDescription({
           invalid,
-          errorIcon: html`
-            <swc-icon-alert-triangle></swc-icon-alert-triangle>
-          `,
+          errorIcon: this.effectiveDisabled
+            ? undefined
+            : html`
+                <swc-icon-alert-triangle></swc-icon-alert-triangle>
+              `,
         })}
       </div>
     `;
