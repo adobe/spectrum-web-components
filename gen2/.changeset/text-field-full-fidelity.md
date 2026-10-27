@@ -3,7 +3,11 @@
 '@adobe/spectrum-wc': minor
 ---
 
-**feat(core, text-field):** Delivered the full-fidelity Spectrum 2 render and behavior for `swc-text-field`, building on the API, labelling, help-text, and form-association work already landed.
+Add Spectrum 2 `<swc-text-field>` with accessible labelling, validation, and native form participation.
 
-- **`@adobe/spectrum-wc`**: `swc-text-field` now ships its complete Spectrum 2 appearance and interaction — label, control wrapper, native `<input>`, `prefix` slot, trailing validation icon, and help text, with hover / focus / invalid / disabled states (including cascaded `<fieldset disabled>`). Sizes `s` / `m` / `l` / `xl` have size-specific default control widths, overridable via `--swc-field-input-max-inline-size`, with label wrapping controllable via the `--swc-field-label-max-inline-size` custom property. Adds the `necessity-indicator` (`icon` | `label`) API, the non-interactive `prefix` slot, and text-selection delegation (`setSelectionRange()`, `select()`) to the native input. A single tab stop via `delegatesFocus`; clicking anywhere in the field (including the prefix) focuses the input.
-- **`@adobe/spectrum-wc-core`**: shared form-field styling extracted to `_lit-styles/form-fields.css` for reuse across form components.
+- **Appearance and interaction**: Support sizes `s`, `m`, `l`, and `xl`, `label-position="top|side"`, a non-interactive `prefix` slot, and customizable control widths. The field has one tab stop, supports click-to-focus, and exposes native text selection through `select()` and `setSelectionRange()`.
+- **Accessible labels and descriptions**: Provide a clickable slotted label, an `accessible-label`, or external labels through `accessible-labelledby`. Combine a slotted `description` with external `accessible-describedby` references.
+- **Field states**: Use `field-status` for disabled, read-only, invalid, or valid status. Keep `required` independent, and use `necessity-indicator="icon|label"` to show an icon or required/optional text.
+- **Descriptions and errors**: While invalid, supplied `error-text` replaces the description. Without an `error-text` slot, keep the description visible in the error color. Associate the visible message with the input for assistive technology.
+- **Validation**: Invalid status makes eligible fields fail validation, using the plain text of `error-text` as the message. Missing or empty text uses "Enter a valid value." for validation without adding fallback inline text. Clearing invalid status clears the application error; native constraints still apply.
+- **Forms and reset**: Support `FormData`, ancestor fieldset disabling, and Enter-key submission. Form reset restores the initial value and clears valid or invalid status without changing disabled or read-only status.

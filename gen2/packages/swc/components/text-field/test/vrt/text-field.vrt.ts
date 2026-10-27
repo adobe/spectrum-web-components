@@ -21,6 +21,7 @@ import {
   type TextFieldLabelPosition,
   type TextFieldNecessityIndicator,
   type TextFieldSize,
+  type TextFieldStatus,
 } from '@adobe/spectrum-wc-core/components/text-field';
 
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
@@ -79,6 +80,12 @@ const forceTextFieldStates = async ({
     ).toHaveAttribute('data-forced-focus-within');
     expect(field).toHaveAttribute('data-forced-focus-visible');
   }
+  for (const field of canvasElement.querySelectorAll(
+    'swc-text-field[data-force-state="focus-hover"]'
+  )) {
+    forcePseudoState(field, 'focus-within', '.swc-TextField-control');
+    forcePseudoState(field, 'hover', '.swc-TextField-control');
+  }
 };
 
 type TextFieldCase = {
@@ -93,12 +100,15 @@ type TextFieldCase = {
   value?: string;
   prefix?: TemplateResult;
   required?: boolean;
-  readonly?: boolean;
-  disabled?: boolean;
-  invalid?: boolean;
+  fieldStatus?: TextFieldStatus;
   extraStyle?: string;
   lang?: string;
-  forceState?: 'hover' | 'focus-visible' | 'focus-within' | 'keyboard-focus';
+  forceState?:
+    | 'hover'
+    | 'focus-visible'
+    | 'focus-within'
+    | 'keyboard-focus'
+    | 'focus-hover';
 };
 
 const renderCase = ({
@@ -113,9 +123,7 @@ const renderCase = ({
   value = '',
   prefix,
   required = false,
-  readonly = false,
-  disabled = false,
-  invalid = false,
+  fieldStatus,
   extraStyle,
   lang,
   forceState,
@@ -131,9 +139,7 @@ const renderCase = ({
         placeholder=${ifDefined(placeholder)}
         .value=${value}
         ?required=${required}
-        ?readonly=${readonly}
-        ?disabled=${disabled}
-        ?invalid=${invalid}
+        field-status=${ifDefined(fieldStatus)}
         lang=${ifDefined(lang)}
         data-force-state=${ifDefined(forceState)}
       >
@@ -207,32 +213,30 @@ const permutationContent = () => html`
       renderCase({ label: 'Default', value: 'Sample value' }),
       renderCase({
         label: 'Read-only',
-        readonly: true,
+        fieldStatus: 'readonly',
         value: 'Read-only value',
       }),
       renderCase({
         label: 'Disabled',
-        disabled: true,
+        fieldStatus: 'disabled',
         value: 'Disabled value',
       }),
       renderCase({
         label: 'Disabled placeholder',
-        disabled: true,
+        fieldStatus: 'disabled',
         placeholder: 'Placeholder',
       }),
       renderCase({
         label: 'Invalid',
-        invalid: true,
+        fieldStatus: 'invalid',
         description: 'Field help text',
         errorText: 'Enter a valid value',
       }),
       renderCase({
-        label: 'Invalid + disabled',
-        invalid: true,
-        disabled: true,
-        value: 'Disabled invalid value',
+        label: 'Valid',
+        fieldStatus: 'valid',
+        value: 'Valid value',
         description: 'Field help text',
-        errorText: 'Enter a valid value',
       }),
     ],
     'States'
@@ -287,7 +291,7 @@ const permutationContent = () => html`
         size,
         label: `Invalid · ${SIZE_LABELS[size]}`,
         value: 'Invalid value',
-        invalid: true,
+        fieldStatus: 'invalid',
         description: 'Field help text',
         errorText: 'Enter a valid value',
       })
@@ -366,7 +370,7 @@ const permutationContent = () => html`
         label: `Invalid value · ${SIZE_LABELS[size]}`,
         value:
           'A very long invalid value that should truncate with an ellipsis',
-        invalid: true,
+        fieldStatus: 'invalid',
         errorText: 'Enter a valid value',
       })
     ),
@@ -377,7 +381,7 @@ const permutationContent = () => html`
       renderCase({ label: 'Default', forceState: 'hover' }),
       renderCase({
         label: 'Invalid',
-        invalid: true,
+        fieldStatus: 'invalid',
         errorText: 'Enter a valid value',
         forceState: 'hover',
       }),
@@ -389,7 +393,7 @@ const permutationContent = () => html`
       renderCase({ label: 'Default', forceState: 'focus-within' }),
       renderCase({
         label: 'Invalid',
-        invalid: true,
+        fieldStatus: 'invalid',
         errorText: 'Enter a valid value',
         forceState: 'focus-within',
       }),
@@ -401,12 +405,29 @@ const permutationContent = () => html`
       renderCase({ label: 'Default', forceState: 'focus-visible' }),
       renderCase({
         label: 'Invalid',
-        invalid: true,
+        fieldStatus: 'invalid',
         errorText: 'Enter a valid value',
         forceState: 'focus-visible',
       }),
     ],
     'Keyboard focus'
+  )}
+  ${row(
+    [
+      renderCase({ label: 'Default', forceState: 'focus-hover' }),
+      renderCase({
+        label: 'Invalid',
+        fieldStatus: 'invalid',
+        errorText: 'Enter a valid value',
+        forceState: 'focus-hover',
+      }),
+      renderCase({
+        label: 'Disabled',
+        fieldStatus: 'disabled',
+        forceState: 'focus-hover',
+      }),
+    ],
+    'Focus within and hover'
   )}
   ${row(
     renderCase({

@@ -24,12 +24,14 @@ import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
 import {
   TEXT_FIELD_LABEL_POSITIONS,
   TEXT_FIELD_NECESSITY_INDICATORS,
+  TEXT_FIELD_STATUSES,
   TEXT_FIELD_TYPES,
   TEXT_FIELD_VALID_SIZES,
   type TextFieldAutocomplete,
   type TextFieldLabelPosition,
   type TextFieldNecessityIndicator,
   type TextFieldSize,
+  type TextFieldStatus,
   type TextFieldType,
 } from './TextField.types.js';
 
@@ -39,12 +41,12 @@ const DOCS_URL =
 /**
  * A single-line text field for entering and editing text.
  *
- * @attribute {ElementSize} size - The size of the text field.
+ * @attribute {ElementSize} size - Size of the control, label, and supporting text.
  *
- * @slot label - Visible label content, rendered as a same-root `<label for>` by `LabellingMixin`.
- * @slot prefix - Non-interactive content shown before the input inside the field (e.g. an icon, symbol, or avatar).
- * @slot description - Guidance / non-error help text, associated via `aria-describedby`.
- * @slot error-text - Error message shown when `invalid`, folded into `aria-describedby`.
+ * @slot label - Visible label. Clicking it focuses the input.
+ * @slot prefix - Non-interactive content before the input, such as an icon, symbol, or avatar.
+ * @slot description - Help text included in the accessible description. While `field-status="invalid"`, shown in the error color unless replaced by supplied `error-text`.
+ * @slot error-text - Error text shown, included in the accessible description, and used as the validation message while `field-status="invalid"`. Supply translated text when needed. Missing or whitespace-only text uses "Enter a valid value." for validation without showing a fallback inline message.
  */
 export abstract class TextFieldBase extends SizedMixin(
   FieldDescriptionMixin(LabellingMixin(SpectrumElement)),
@@ -66,93 +68,91 @@ export abstract class TextFieldBase extends SizedMixin(
   static formAssociated = true;
 
   /**
-   * The size of the text field.
+   * Size of the control, label, and supporting text.
    *
    * @default m
    */
   declare public size: TextFieldSize;
 
   /**
-   * The value of the input.
+   * Current input value, normalized using the native input type's rules.
    */
   @property({ type: String })
   public value = '';
 
   /**
-   * The form control name submitted with the field's value.
+   * Name used for the field's entry in `FormData`.
    */
   @property({ type: String, reflect: true })
   public name: string | undefined;
 
   /**
-   * The type of input to render.
+   * Native input type. Unsupported values fall back to `text`.
    */
   @property({ type: String, reflect: true })
   public type: TextFieldType = 'text';
 
-  /**
-   * Placeholder text shown when the field is empty. Never used as the accessible name.
-   */
-  @property({ type: String })
-  public placeholder = '';
+  protected get inputType(): TextFieldType {
+    return TEXT_FIELD_TYPES.find((type) => type === this.type) ?? 'text';
+  }
 
   /**
-   * A regular expression the value is checked against during constraint validation.
+   * Hint displayed when the field is empty. Does not replace a visible label.
+   */
+  @property({ type: String })
+  public override placeholder = '';
+
+  /**
+   * Regular expression the entire nonempty value must match to pass validation.
    */
   @property({ type: String })
   public pattern?: string;
 
   /**
-   * Hint for the virtual keyboard to display.
+   * Suggests a virtual keyboard layout without changing validation.
    */
   @property({ type: String })
   public inputmode?: string;
 
   /**
-   * Hint for the browser's autofill feature.
+   * Browser autofill hint, such as `email` or `username`.
    */
   @property({ type: String, reflect: true })
   public autocomplete?: TextFieldAutocomplete;
 
   /**
-   * The maximum number of characters the value may contain.
+   * Maximum length for user input, measured in UTF-16 code units.
    */
   @property({ type: Number })
   public maxlength?: number;
 
   /**
-   * The minimum number of characters the value may contain.
+   * Minimum nonempty input length, measured in UTF-16 code units.
+   * Applies to user edits, not programmatically assigned values.
    */
   @property({ type: Number })
   public minlength?: number;
 
   /**
-   * Whether the field is focusable but not editable. Distinct from `disabled`.
-   */
-  @property({ type: Boolean, reflect: true })
-  public readonly = false;
-
-  /**
-   * Whether the field must have a value for the form to submit.
+   * Requires a nonempty value when the field participates in validation.
    */
   @property({ type: Boolean, reflect: true })
   public required = false;
 
   /**
-   * Whether the field is in an invalid state.
+   * Sets one interaction or validation status. `undefined` clears authored status.
+   * An eligible field with `invalid` fails validation; `valid` does not override
+   * native constraints.
    */
-  @property({ type: Boolean, reflect: true })
-  public invalid = false;
+  @property({
+    attribute: 'field-status',
+    reflect: true,
+    converter: { fromAttribute: (value: string | null) => value ?? undefined },
+  })
+  public fieldStatus?: TextFieldStatus;
 
   /**
-   * Whether the field is in a valid state. The value lets consumers react to a
-   * valid state; the visual checkmark is deferred.
-   */
-  @property({ type: Boolean, reflect: true })
-  public valid = false;
-
-  /**
-   * Position of the visible label relative to the input.
+   * Position of the visible label relative to the control.
    *
    * @default top
    */
@@ -160,9 +160,8 @@ export abstract class TextFieldBase extends SizedMixin(
   public labelPosition: TextFieldLabelPosition = 'top';
 
   /**
-   * How the field's necessity is marked in the visible label. `icon` shows an
-   * asterisk only when `required`. `label` appends `(required)` when required and
-   * `(optional)` when not required. Requires a visible label to show.
+   * Necessity marker added to a visible label. `icon` shows an asterisk only
+   * when required; `label` shows `(required)` or `(optional)`.
    *
    * @default icon
    */
@@ -172,12 +171,6 @@ export abstract class TextFieldBase extends SizedMixin(
     attribute: 'necessity-indicator',
   })
   public necessityIndicator: TextFieldNecessityIndicator = 'icon';
-
-  /**
-   * Whether the field is disabled: not editable and removed from tab order.
-   */
-  @property({ type: Boolean, reflect: true })
-  public disabled = false;
 
   // ──────────────────────
   //     IMPLEMENTATION
@@ -191,6 +184,11 @@ export abstract class TextFieldBase extends SizedMixin(
     onDisabledChange: () => this.requestUpdate(),
   });
 
+  // Slot-presence tracking does not notify when only the message text changes.
+  private readonly errorTextObserver = new MutationObserver(() => {
+    this.syncValidity();
+  });
+
   // Text inputs match `:focus-visible` even on pointer click (the platform always
   // shows a ring on elements that take keyboard text), so CSS alone can't suppress
   // the ring on click. Track modality here and expose a `keyboard-focused` custom
@@ -202,9 +200,14 @@ export abstract class TextFieldBase extends SizedMixin(
     // Capture-phase so the flag is set before any inner `pointerdown` handler
     // (e.g. the control's click-to-focus, which calls `.focus()` on the input
     // and synchronously fires `focusin`) runs and reads it.
-    this.addEventListener('pointerdown', () => (this.#pointerFocus = true), {
-      capture: true,
-    });
+    this.addEventListener(
+      'pointerdown',
+      () => {
+        this.#pointerFocus = true;
+        this.internals.states.delete('keyboard-focused');
+      },
+      { capture: true }
+    );
     this.addEventListener('focusin', () => {
       this.internals.states[this.#pointerFocus ? 'delete' : 'add'](
         'keyboard-focused'
@@ -218,56 +221,103 @@ export abstract class TextFieldBase extends SizedMixin(
   }
 
   /**
-   * The host's own `disabled` OR the cascaded form / `<fieldset disabled>` state.
+   * The authored disabled status OR the native disabled callback state.
    * The subclass render reads it to disable the inner control.
    */
   protected get effectiveDisabled(): boolean {
-    return this.disabled || this.fieldAssoc.formDisabled;
+    return this.fieldStatus === 'disabled' || this.fieldAssoc.formDisabled;
   }
 
-  /** Exposes the placeholder to `LabellingMixin`'s placeholder-only-name warning. */
-  public override get placeholderText(): string | undefined {
-    return this.placeholder || undefined;
-  }
-
-  /** The form the field participates in, or `null`. */
+  /** Associated form, or `null` when the field is not associated with a form. */
   public get form(): HTMLFormElement | null {
     return this.fieldAssoc.form;
   }
 
-  /** The field's constraint-validation state. */
+  /** Current native and application-controlled constraint-validation flags. */
   public get validity(): ValidityState {
     return this.fieldAssoc.validity;
   }
 
-  /** The localized validation message. */
+  /** Validation message, or `''` when valid or excluded from validation. */
   public get validationMessage(): string {
     return this.fieldAssoc.validationMessage;
   }
 
-  /** Whether the field is a candidate for constraint validation. */
+  /** Whether the field participates in constraint validation. */
   public get willValidate(): boolean {
     return this.fieldAssoc.willValidate;
   }
 
-  /** Runs constraint validation; returns whether the field is valid. */
+  /** Returns whether the field passes validation. Fires `invalid` on failure. */
   public checkValidity(): boolean {
     return this.fieldAssoc.checkValidity();
   }
 
-  /** Runs constraint validation and reports any problem to the user. */
+  /** Returns whether the field passes validation and reports failures through native validation UI. */
   public reportValidity(): boolean {
     return this.fieldAssoc.reportValidity();
   }
 
-  /** Restores the authored `value` attribute (unreflected, so it holds the initial value) on native form reset. */
+  /** @internal Restores the initial value and clears validation status on native form reset. */
   public formResetCallback(): void {
     this.value = this.getAttribute('value') ?? '';
+    if (this.fieldStatus === 'valid' || this.fieldStatus === 'invalid') {
+      this.fieldStatus = undefined;
+    }
   }
 
-  /** Delegates the ancestor form / fieldset disabled cascade to the controller. */
+  /** @internal Restores string state supplied by the browser for navigation or autofill. */
+  public formStateRestoreCallback(
+    state: string | File | FormData | null
+  ): void {
+    if (typeof state === 'string') {
+      this.value = state;
+    }
+  }
+
+  /** @internal Delegates the ancestor form / fieldset disabled cascade to the controller. */
   public formDisabledCallback(disabled: boolean): void {
     this.fieldAssoc.formDisabledCallback(disabled);
+  }
+
+  protected handleKeydown(event: KeyboardEvent): void {
+    if (event.key !== 'Enter' || event.isComposing || event.keyCode === 229) {
+      return;
+    }
+    // Let the event finish propagating so consumer handlers can cancel it.
+    setTimeout(() => {
+      const form = this.form;
+      if (
+        event.defaultPrevented ||
+        this.effectiveDisabled ||
+        !this.isConnected ||
+        !form
+      ) {
+        return;
+      }
+      const root = form.getRootNode();
+      const candidates = (
+        root instanceof Document || root instanceof ShadowRoot ? root : form
+      ).querySelectorAll<HTMLButtonElement | HTMLInputElement>('button, input');
+      const submitter = Array.from(candidates).find(
+        (element) =>
+          element.form === form &&
+          (element.type === 'submit' || element.type === 'image')
+      );
+      if (submitter) {
+        submitter.click();
+        return;
+      }
+      const blockingFields = Array.from(form.elements).filter(
+        (element) =>
+          element instanceof TextFieldBase ||
+          (element instanceof HTMLInputElement &&
+            TEXT_FIELD_TYPES.some((type) => type === element.type))
+      );
+      if (blockingFields.length === 1) {
+        form.requestSubmit();
+      }
+    });
   }
 
   // ──────────────────────
@@ -288,7 +338,7 @@ export abstract class TextFieldBase extends SizedMixin(
     this.inputElement?.select();
   }
 
-  /** Sets the start and end positions of the current text selection. */
+  /** Sets the selection's start, end, and optional direction. */
   public setSelectionRange(
     start: number | null,
     end: number | null,
@@ -297,13 +347,76 @@ export abstract class TextFieldBase extends SizedMixin(
     this.inputElement?.setSelectionRange(start, end, direction);
   }
 
+  /** @internal */
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.errorTextObserver.observe(this, {
+      childList: true,
+      characterData: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['slot'],
+    });
+    this.syncValidity();
+  }
+
+  /** @internal */
+  public override disconnectedCallback(): void {
+    this.errorTextObserver.disconnect();
+    super.disconnectedCallback();
+  }
+
+  protected override willUpdate(changedProperties: PropertyValues): void {
+    super.willUpdate(changedProperties);
+    if (changedProperties.has('value') || changedProperties.has('type')) {
+      const input = this.inputElement ?? document.createElement('input');
+      if (input.type !== this.inputType) {
+        input.type = this.inputType;
+      }
+      if (input.value !== this.value) {
+        input.value = this.value;
+      }
+      this.value = input.value;
+    }
+  }
+
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
+    this.syncValidity();
+  }
+
+  /** @internal */
+  protected syncFormState(): void {
+    this.fieldAssoc.setValue(this.effectiveDisabled ? null : this.value);
+    this.syncValidity();
+  }
+
+  private syncValidity(): void {
     const input = this.inputElement;
     if (input) {
+      const errorText = Array.from(
+        this.querySelectorAll(':scope > [slot="error-text"]'),
+        (element) => element.textContent ?? ''
+      )
+        .join(' ')
+        .trim();
+      const message =
+        this.fieldStatus === 'invalid'
+          ? errorText || 'Enter a valid value.'
+          : '';
+      input.setCustomValidity(message);
+      if (input.disabled || input.readOnly) {
+        // Barred inputs can retain native error flags without a validation message.
+        this.internals.setValidity(
+          message ? { customError: true } : {},
+          message,
+          input
+        );
+        return;
+      }
       this.internals.setValidity(
         input.validity,
-        input.validationMessage,
+        message || input.validationMessage,
         input
       );
     }
@@ -328,8 +441,17 @@ export abstract class TextFieldBase extends SizedMixin(
       valid: TEXT_FIELD_NECESSITY_INDICATORS,
       url: DOCS_URL,
     });
-    if (changedProperties.has('disabled')) {
-      this.toggleAttribute('disabled', this.disabled);
+    if (this.fieldStatus !== undefined) {
+      validateEnum(this, {
+        prop: 'field-status',
+        value: this.fieldStatus,
+        valid: TEXT_FIELD_STATUSES,
+        url: DOCS_URL,
+      });
+    }
+    if (changedProperties.has('fieldStatus')) {
+      this.toggleAttribute('disabled', this.fieldStatus === 'disabled');
+      this.toggleAttribute('readonly', this.fieldStatus === 'readonly');
     }
     super.update(changedProperties);
     // Push the current value into the form; exclude it entirely when disabled.

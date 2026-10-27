@@ -53,16 +53,18 @@ export interface LabellingInterface {
   readonly labelInternals: ElementInternals | null;
 
   /**
-   * @internal The host's placeholder, exposed so the mixin can warn on a
-   * placeholder-only name. Defaults to `undefined`; a host overrides it.
+   * @internal Optional host placeholder, read for the placeholder-only-name
+   * warning. The mixin does not initialize or register this property.
    */
-  readonly placeholderText: string | undefined;
+  placeholder?: string;
 
   /**
+   * @internal
+   *
    * Renders the visible label as a `<label for>` targeting the role-element `id`
    * (or a `<span>` when `forId` is `undefined`, for a group with no labelable
    * control).
-   * Options append a decorative necessity indicator: `required` marks the state,
+   * Options append a necessity indicator: `required` marks the state,
    * and `necessityIndicator` picks the asterisk (`icon`, which needs
    * `necessityIcon` to render) or consumer-provided text (`label`).
    */
@@ -97,15 +99,15 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
     );
 
     /**
-     * Accessible name for the role element, applied as `aria-label`. Lowest
-     * precedence; use when no visible label is slotted.
+     * Accessible name supplied as `aria-label`.
+     * `accessible-labelledby` takes precedence when both are set.
      */
     @property({ type: String, attribute: 'accessible-label' })
     public accessibleLabel = '';
 
     /**
-     * Space-separated element `id`s, resolved against the host's root node,
-     * that provide the role element's accessible name. Highest precedence.
+     * Space-separated label IDs in the field's document or shadow root.
+     * Takes precedence over `accessible-label` and the visible label.
      */
     @property({ attribute: 'accessible-labelledby' })
     public accessibleLabelledby?: string;
@@ -126,9 +128,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
     }
 
     /** @internal */
-    public get placeholderText(): string | undefined {
-      return undefined;
-    }
+    declare public placeholder?: string;
 
     /** @internal Docs URL for dev warnings, derived from the tag name. */
     protected get docsHref(): string {
@@ -160,6 +160,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
       );
     }
 
+    /** @internal */
     public renderLabel(
       forId: string | undefined,
       options: {
@@ -228,7 +229,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
         return;
       }
       // A placeholder-only field gets the more specific placeholder warning.
-      if (this.placeholderText) {
+      if (this.placeholder) {
         return;
       }
       warnIf(
@@ -249,7 +250,7 @@ export function LabellingMixin<T extends Constructor<ReactiveElement>>(
 
     /** @internal Warns when a field is named only by its `placeholder` (unreliable as an accessible name). */
     private _warnPlaceholderOnlyName(): void {
-      if (this._hasAccessibleName || !this.placeholderText) {
+      if (this._hasAccessibleName || !this.placeholder) {
         return;
       }
       warnIf(

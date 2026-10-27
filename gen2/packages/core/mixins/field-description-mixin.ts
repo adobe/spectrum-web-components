@@ -53,7 +53,7 @@ export interface FieldDescriptionInterface {
   readonly describedByInternals: ElementInternals | null;
 
   /**
-   * Renders the description/error-text markup for the current state.
+   * @internal Renders the description/error-text markup for the current state.
    * `errorIcon` prepends a decorative icon to the error message, for controls
    * with no invalid icon of their own (e.g. a radio group).
    */
@@ -69,10 +69,8 @@ export interface FieldDescriptionInterface {
  * tracking, `renderFieldDescription()`, and a dev-mode warning for unresolved
  * `accessible-describedby` id references.
  *
- * A rendering subclass overrides {@link roleElement} to return the element the
- * description is wired onto (usually the rendered `<input>`). While `invalid`,
- * the error message replaces the description in both the rendered output and
- * `aria-describedby`.
+ * A rendering subclass overrides {@link roleElement} to return the element
+ * described by the visible description or error text (usually an `<input>`).
  */
 export function FieldDescriptionMixin<T extends Constructor<ReactiveElement>>(
   constructor: T
@@ -88,9 +86,8 @@ export function FieldDescriptionMixin<T extends Constructor<ReactiveElement>>(
     );
 
     /**
-     * Space-separated element `id`s, resolved against the host's root node,
-     * that describe the role element. Combines with (does not override) a
-     * slotted `description`.
+     * Space-separated description IDs in the field's document or shadow root.
+     * Combines with the visible description or error text.
      */
     @property({ attribute: 'accessible-describedby' })
     public accessibleDescribedby?: string;
@@ -174,6 +171,7 @@ export function FieldDescriptionMixin<T extends Constructor<ReactiveElement>>(
         .filter((element): element is HTMLElement => element !== null);
     }
 
+    /** @internal */
     public renderFieldDescription(options?: {
       invalid?: boolean;
       errorIcon?: TemplateResult;

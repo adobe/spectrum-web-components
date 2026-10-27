@@ -11,6 +11,7 @@
  */
 
 import { html, nothing, type TemplateResult } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import { ref } from 'lit/directives/ref.js';
 
 /** Return type of {@link renderFieldDescription}: the field-description template, or `nothing`. */
@@ -22,7 +23,7 @@ export interface RenderFieldDescriptionOptions {
   hasDescriptionSlotContent: boolean;
   /** Whether slotted `error-text` content is present in the host's light DOM. */
   hasErrorTextSlotContent: boolean;
-  /** Whether the host is currently in an invalid state. Gates the error-text element. */
+  /** Whether the host is invalid. Gates error text and applies invalid description styling. */
   invalid: boolean;
   /** Called with the rendered description element (or `undefined` on removal). */
   onDescriptionElement: (element: Element | undefined) => void;
@@ -42,8 +43,9 @@ export interface RenderFieldDescriptionOptions {
 
 /**
  * Renders the shared description/error-text markup for form-field
- * components. Returns `nothing` when there is no description and no active
- * (`invalid`) error message, so callers can interpolate unconditionally.
+ * components. Invalid fields show supplied error text or keep the description
+ * with invalid styling when no error text is supplied.
+ * Returns `nothing` when the current state has no message to show.
  *
  * Most consumers use `FieldDescriptionMixin`'s `renderFieldDescription()` instead, which calls
  * this with its resolved state and the element callbacks that build
@@ -60,9 +62,10 @@ export function renderFieldDescription({
   errorIcon,
 }: RenderFieldDescriptionOptions): RenderFieldDescriptionResult {
   const showError = invalid && hasErrorTextSlotContent;
+  const showDescription = hasDescriptionSlotContent && !showError;
   const showInvalidIcon =
     invalid && !hasErrorTextSlotContent && errorIcon !== undefined;
-  if (!hasDescriptionSlotContent && !showError && !showInvalidIcon) {
+  if (!showDescription && !showError && !showInvalidIcon) {
     return nothing;
   }
   const icon = errorIcon
@@ -71,9 +74,16 @@ export function renderFieldDescription({
       `
     : nothing;
   return html`
-    ${hasDescriptionSlotContent && !showError
+    ${showDescription
       ? html`
-          <span class="swc-FormFieldDescription" ${ref(onDescriptionElement)}>
+          <span
+            class=${classMap({
+              'swc-FormFieldDescription': true,
+              'swc-FormFieldDescription--invalid': invalid,
+            })}
+            tabindex="-1"
+            ${ref(onDescriptionElement)}
+          >
             ${showInvalidIcon
               ? html`
                   ${icon}
@@ -94,7 +104,11 @@ export function renderFieldDescription({
       : nothing}
     ${showError
       ? html`
-          <span class="swc-FormFieldErrorText" ${ref(onErrorTextElement)}>
+          <span
+            class="swc-FormFieldErrorText"
+            tabindex="-1"
+            ${ref(onErrorTextElement)}
+          >
             ${icon}
             <span class="swc-FormFieldErrorText-text">
               <slot name="error-text"></slot>
@@ -104,3 +118,4 @@ export function renderFieldDescription({
       : nothing}
   `;
 }
+

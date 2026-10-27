@@ -35,8 +35,9 @@ export interface RenderFieldLabelOptions {
   forId?: string;
 
   /**
-   * Whether the field is required. The indicator it appends is `aria-hidden`;
-   * the requirement is conveyed to AT by the role element's own `required` state.
+   * Whether the field is required. The icon indicator is decorative; text
+   * indicators contribute to the label. The role element retains its own
+   * `required` state.
    */
   required?: boolean;
 
@@ -97,8 +98,8 @@ export function renderFieldLabel({
 }
 
 /**
- * The `aria-hidden` necessity indicator span; see `necessityIndicator` for the
- * icon-vs-label behavior. With no whitespace text node between the slot and
+ * The necessity indicator span; only the icon is hidden from assistive
+ * technology. With no whitespace text node between the slot and
  * this span, the indicator stays on the same wrap line as the last word; its
  * gap from the label text is applied by CSS, not a literal space character.
  */
@@ -115,11 +116,11 @@ function renderNecessityIndicator({
 }): RenderFieldLabelResult {
   if (indicator === 'label' && labels) {
     // prettier-ignore
-    return html`<span class="swc-FormFieldLabel-necessityLabel" aria-hidden="true">${required ? labels.required : labels.optional}</span>`;
+    return html`<span class="swc-FormFieldLabel-necessityLabel">${required ? labels.required : labels.optional}</span>`;
   }
   if (!required || !icon) {
     return nothing;
   }
   // prettier-ignore
-  return html`<span class="swc-FormFieldLabel-requiredIndicator" aria-hidden="true">${icon}</span>`;
+  return html`<span class="swc-FormFieldLabel-requiredIndicator">${icon}</span>`;
 }

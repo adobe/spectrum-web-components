@@ -86,7 +86,7 @@ Open the browser console: each example below triggers a distinct labelling warni
 
 - Prefer a slotted label for ordinary fields. Reserve `accessible-label` and `accessible-labelledby` for fields with no visible label of their own, or a name composed from elements the field doesn't own (for example, a grid cell named by its row and column headers).
 - When a field has both a visible label and a programmatic name, make sure the programmatic name contains the visible text, per [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html). Do not set both `accessible-label` and `accessible-labelledby`; a dev-mode warning flags that combination.
-- `accessible-labelledby` `id`s are resolved against the field's root node (the document or shadow root that contains it) once per render, so the referenced elements must already exist when the field renders. An element inserted afterward is not picked up until the next render; reassign `accessible-labelledby` after inserting it to force a re-resolution.
+- `accessible-labelledby` `id`s are resolved against the field's root node (the document or shadow root that contains it) once per render, so the referenced elements must already exist when the field renders. For an element inserted afterward, call `requestUpdate()` on the field and await `updateComplete` to resolve the references again.
 
 <Canvas of={Stories.Accessibility} />
 
@@ -98,13 +98,13 @@ Open the browser console: each example below triggers a distinct labelling warni
 
 ### Members
 
-| Member                 | Description                                                                                         |
-| ---------------------- | --------------------------------------------------------------------------------------------------- |
-| `accessibleLabel`      | Accessible name, applied as `aria-label`. Lowest precedence after `accessibleLabelledby`.           |
-| `accessibleLabelledby` | Space-separated element `id`s that provide the accessible name. Highest precedence.                 |
-| `hasLabelSlotContent`  | Read-only. Whether slotted `label` content is present.                                              |
-| `roleElement`          | `@internal`. The element the resolved name is wired onto. Override to return the real role element. |
-| `renderLabel(forId)`   | Renders the label markup for the current state (via the `renderFieldLabel` directive).              |
+| Member                 | Description                                                                                                      |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `accessibleLabel`      | Accessible name, applied as `aria-label`. Takes precedence over a slotted label, but not `accessibleLabelledby`. |
+| `accessibleLabelledby` | Space-separated element `id`s that provide the accessible name. Highest precedence.                              |
+| `hasLabelSlotContent`  | Read-only. Whether slotted `label` content is present.                                                           |
+| `roleElement`          | `@internal`. The element the resolved name is wired onto. Override to return the real role element.              |
+| `renderLabel(forId)`   | Renders the label markup for the current state (via the `renderFieldLabel` directive).                           |
 
 ### Related primitives
 

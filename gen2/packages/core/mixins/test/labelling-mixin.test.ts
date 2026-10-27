@@ -132,6 +132,48 @@ export const MissingAccessibleNameTest: Story = {
         host.remove();
       })
     );
+    for (const placeholder of ['', 'Enter your name']) {
+      await step(
+        `reads the host placeholder directly when ${placeholder ? 'nonempty' : 'empty'}`,
+        () =>
+          withWarningSpy(async (warnCalls) => {
+            const host = document.createElement('demo-labelling-host');
+            host.setAttribute('placeholder', placeholder);
+            document.body.append(host);
+            await host.updateComplete;
+            const messages = warnCalls.map((call) => String(call?.[1] ?? ''));
+            expect(
+              messages.some((message) =>
+                message.includes('named only by its placeholder')
+              )
+            ).toBe(Boolean(placeholder));
+            expect(
+              messages.some((message) =>
+                message.includes('requires an accessible name')
+              )
+            ).toBe(!placeholder);
+            host.remove();
+          })
+      );
+    }
+    await step('a labelled host with a placeholder does not warn', () =>
+      withWarningSpy(async (warnCalls) => {
+        const host = document.createElement('demo-labelling-host');
+        host.setAttribute('placeholder', 'Enter your name');
+        host.setAttribute('accessible-label', 'Name');
+        document.body.append(host);
+        await host.updateComplete;
+        const messages = warnCalls.map((call) => String(call?.[1] ?? ''));
+        expect(
+          messages.some(
+            (message) =>
+              message.includes('requires an accessible name') ||
+              message.includes('named only by its placeholder')
+          )
+        ).toBe(false);
+        host.remove();
+      })
+    );
   },
 };
 

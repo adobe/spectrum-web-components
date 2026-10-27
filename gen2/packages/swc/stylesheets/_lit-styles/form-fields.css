@@ -121,7 +121,8 @@
   color: token("neutral-subdued-content-color-default");
 }
 
-.swc-FormFieldErrorText-text {
+.swc-FormFieldErrorText,
+.swc-FormFieldDescription--invalid {
   color: token("negative-content-color-default");
 }
 
@@ -170,13 +171,15 @@
 /* ── Disabled ─────────────────────────────────────── */
 
 :host(:disabled) .swc-FormFieldLabel,
-:host(:disabled) .swc-FormFieldDescription {
+:host(:disabled) .swc-FormFieldDescription,
+:host(:disabled) .swc-FormFieldErrorText {
   color: token("disabled-content-color");
 }
 
 @media (forced-colors: active) {
   :host(:disabled) .swc-FormFieldLabel,
-  :host(:disabled) .swc-FormFieldDescription {
+  :host(:disabled) .swc-FormFieldDescription,
+  :host(:disabled) .swc-FormFieldErrorText {
     color: GrayText;
   }
 

@@ -9,8 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { html } from 'lit';
-import { expect, userEvent } from '@storybook/test';
+import { html, type PropertyValues } from 'lit';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { TextField } from '@adobe/spectrum-wc/text-field';
@@ -24,14 +24,17 @@ import {
   getComponents,
   withWarningSpy,
 } from '../../../utils/test-utils.js';
+import * as TextFieldStories from '../stories/text-field.stories.js';
 import meta from '../stories/text-field.stories.js';
 import {
   Accessibility,
   FormBehavior,
+  Invalid,
   Labelling,
+  LabelOverflow,
   NecessityIndicator,
+  Required,
   Sizes,
-  States,
 } from '../stories/text-field.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
@@ -46,6 +49,47 @@ export default {
 } as Meta;
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Playground option controls
+// ──────────────────────────────────────────────────────────────
+
+export const OptionControlsTest: Story = {
+  ...TextFieldStories.Playground,
+  play: async ({ step }) => {
+    await step(
+      'enum controls expose their supported values and defaults',
+      () => {
+        expect(meta.argTypes?.['label-position']).toMatchObject({
+          control: { type: 'inline-radio' },
+          options: ['top', 'side'],
+          table: { defaultValue: { summary: 'top' } },
+        });
+        expect(meta.argTypes?.['necessity-indicator']).toMatchObject({
+          control: { type: 'inline-radio' },
+          options: ['icon', 'label'],
+          table: { defaultValue: { summary: 'icon' } },
+        });
+        expect(meta.argTypes?.size).toMatchObject({
+          control: { type: 'select' },
+          options: ['s', 'm', 'l', 'xl'],
+        });
+        expect(meta.argTypes?.['field-status']).toMatchObject({
+          control: { type: 'select' },
+          options: [undefined, 'disabled', 'invalid', 'valid', 'readonly'],
+        });
+        expect(meta.args?.['field-status']).toBeUndefined();
+        for (const attribute of ['disabled', 'readonly']) {
+          expect(meta.argTypes?.[attribute]).toMatchObject({
+            table: { disable: true },
+            control: false,
+          });
+        }
+      }
+    );
+  },
+};
+OptionControlsTest.storyName = 'Playground option controls';
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Labelling precedence in context
 // ──────────────────────────────────────────────────────────────
 
@@ -56,7 +100,55 @@ export const LabellingTest: Story = {
       canvasElement,
       'swc-text-field'
     );
-    const [slotOnly, labelOnly, labelledbyWins] = fields;
+    const [, , , , labelOnly, slotOnly] = fields;
+
+    await step('the naming methods have distinct, readable sections', () => {
+      const canvas = within(canvasElement);
+      for (const { heading, api, count } of [
+        {
+          heading: 'Name from row and column headers',
+          api: 'accessible-labelledby',
+          count: 4,
+        },
+        {
+          heading: 'Accessible name only',
+          api: 'accessible-label="Email address"',
+          count: 1,
+        },
+        {
+          heading: 'Visible field label',
+          api: 'slot="label"',
+          count: 1,
+        },
+      ]) {
+        const section = canvas.getByRole('region', { name: heading });
+        const example = within(section);
+        expect(
+          example.getByRole('heading', { name: heading, level: 4 })
+        ).toBeVisible();
+        expect(example.getByText(api, { selector: 'code' })).toBeVisible();
+        expect(section.querySelectorAll('swc-text-field')).toHaveLength(count);
+      }
+    });
+
+    await step('external labels are actual row and column headers', () => {
+      const canvas = within(canvasElement);
+      expect(
+        canvas.getByRole('table', { name: 'Delivery addresses' })
+      ).toBeVisible();
+      expect(
+        canvas.getByRole('rowheader', { name: 'Billing' })
+      ).toHaveAttribute('id', 'labelling-row-header');
+      expect(
+        canvas.getByRole('columnheader', { name: 'Street address' })
+      ).toHaveAttribute('id', 'labelling-col-header');
+      expect(
+        canvas.getByRole('rowheader', { name: 'Shipping' })
+      ).toHaveAttribute('id', 'labelling-shipping-header');
+      expect(
+        canvas.getByRole('columnheader', { name: 'City' })
+      ).toHaveAttribute('id', 'labelling-city-header');
+    });
 
     await step('slotted label renders as a real <label for>', () => {
       const label = slotOnly.shadowRoot?.querySelector('label');
@@ -78,17 +170,104 @@ export const LabellingTest: Story = {
     await step(
       'accessible-labelledby resolves external row/column headers',
       () => {
-        const input = labelledbyWins.shadowRoot?.querySelector('input');
-        const resolved = input?.ariaLabelledByElements;
-        expect(resolved, 'both labelledby references resolve').toHaveLength(2);
-        expect(
-          resolved?.map((el) => el.id),
-          'labelledby references preserve row-then-column order'
-        ).toEqual(['labelling-row-header', 'labelling-col-header']);
+        const expectedNames = [
+          'Billing Street address',
+          'Billing City',
+          'Shipping Street address',
+          'Shipping City',
+        ];
+        expect(fields).toHaveLength(6);
+        fields.slice(0, 4).forEach((field, index) => {
+          const resolved = field.roleElement?.ariaLabelledByElements;
+          expect(resolved, expectedNames[index]).toHaveLength(2);
+          expect(resolved?.map((element) => element.tagName)).toEqual([
+            'TH',
+            'TH',
+          ]);
+          expect(
+            resolved?.map((element) => element.textContent?.trim()).join(' ')
+          ).toBe(expectedNames[index]);
+        });
       }
     );
   },
 };
+
+export const StateStoriesTest: Story = {
+  ...Labelling,
+  play: async ({ step }) => {
+    await step('each state has its own discoverable story', () => {
+      for (const name of [
+        'Default',
+        'Required',
+        'Disabled',
+        'ReadOnly',
+        'Invalid',
+        'Valid',
+      ]) {
+        expect(TextFieldStories).toHaveProperty(`${name}.tags`, ['states']);
+      }
+      expect(TextFieldStories).not.toHaveProperty('States');
+    });
+  },
+};
+StateStoriesTest.storyName = 'Discoverable state stories';
+
+export const LabelOverflowTest: Story = {
+  ...LabelOverflow,
+  play: async ({ canvasElement, step }) => {
+    const fields = await getComponents<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const [topField] = fields;
+    const control = topField.shadowRoot?.querySelector<HTMLElement>(
+      '.swc-TextField-control'
+    );
+    const container = topField.parentElement;
+    if (!control || !container) {
+      throw new Error('control or container not found');
+    }
+
+    await step(
+      'individual fields demonstrate constrained label wrapping',
+      () => {
+        expect(fields).toHaveLength(3);
+        expect(topField.getBoundingClientRect().width).toBeCloseTo(180, 1);
+        expect(control.getBoundingClientRect().width).toBeCloseTo(180, 1);
+        for (const field of fields) {
+          const label = field.shadowRoot?.querySelector('label');
+          if (!label) {
+            throw new Error('label not found');
+          }
+          expect(label.getBoundingClientRect().height).toBeGreaterThan(
+            parseFloat(getComputedStyle(label).lineHeight)
+          );
+        }
+      }
+    );
+
+    await step(
+      'host width does not override the default control maximum',
+      () => {
+        container.style.inlineSize = '320px';
+        expect(topField.getBoundingClientRect().width).toBeCloseTo(320, 1);
+        expect(control.getBoundingClientRect().width).toBeCloseTo(208, 1);
+      }
+    );
+
+    await step(
+      'the public maximum-width override lets the control fill the host',
+      () => {
+        topField.style.setProperty('--swc-field-input-max-inline-size', '100%');
+        expect(control.getBoundingClientRect().width).toBeCloseTo(320, 1);
+        topField.style.removeProperty('--swc-field-input-max-inline-size');
+        container.style.inlineSize = '180px';
+      }
+    );
+  },
+};
+LabelOverflowTest.storyName = 'Constrained label overflow';
 
 // ──────────────────────────────────────────────────────────────
 // TEST: Size-specific field widths
@@ -165,7 +344,7 @@ export const InvalidWidthTest: Story = {
         const validControlRect = control?.getBoundingClientRect();
         const validInputRect = input?.getBoundingClientRect();
 
-        field.invalid = true;
+        field.fieldStatus = 'invalid';
         await field.updateComplete;
 
         const invalidControlRect = control?.getBoundingClientRect();
@@ -226,18 +405,16 @@ export const InvalidWidthTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: States: required reflection + invalid description/error wiring
+// TEST: Invalid description/error wiring
 // ──────────────────────────────────────────────────────────────
 
-export const StatesTest: Story = {
-  ...States,
+export const InvalidStateTest: Story = {
+  ...Invalid,
   play: async ({ canvasElement, step }) => {
-    const fields = await getComponents<TextField>(
+    const invalidField = await getComponent<TextField>(
       canvasElement,
       'swc-text-field'
     );
-    const invalidField = fields[fields.length - 2];
-    const disabledInvalidField = fields[fields.length - 1];
     const input = invalidField.shadowRoot?.querySelector('input');
 
     await step('invalid input carries aria-invalid', () => {
@@ -261,59 +438,6 @@ export const StatesTest: Story = {
     );
 
     await step(
-      'disabled invalid fields suppress invalid presentation and association',
-      () => {
-        const disabledInput =
-          disabledInvalidField.shadowRoot?.querySelector('input');
-        expect(
-          disabledInput?.getAttribute('aria-invalid'),
-          'disabled invalid field omits aria-invalid'
-        ).toBeNull();
-        expect(
-          disabledInvalidField.shadowRoot?.querySelector(
-            '.swc-FormFieldErrorText'
-          ),
-          'disabled invalid field hides error text'
-        ).toBeNull();
-        expect(
-          disabledInvalidField.shadowRoot?.querySelector(
-            '.swc-TextField-invalidIcon'
-          ),
-          'disabled invalid field hides validation icon'
-        ).toBeNull();
-        expect(
-          disabledInput?.ariaDescribedByElements?.some((element) =>
-            element.className.includes('swc-FormFieldErrorText')
-          ),
-          'disabled invalid field omits error text from describedby'
-        ).toBe(false);
-      }
-    );
-
-    await step('re-enabling restores the invalid presentation', async () => {
-      disabledInvalidField.disabled = false;
-      await disabledInvalidField.updateComplete;
-      const reenabledInput =
-        disabledInvalidField.shadowRoot?.querySelector('input');
-      expect(
-        reenabledInput?.getAttribute('aria-invalid'),
-        're-enabled invalid field restores aria-invalid'
-      ).toBe('true');
-      expect(
-        disabledInvalidField.shadowRoot?.querySelector(
-          '.swc-FormFieldErrorText'
-        ),
-        're-enabled invalid field restores error text'
-      ).toBeTruthy();
-      expect(
-        disabledInvalidField.shadowRoot?.querySelector(
-          '.swc-TextField-invalidIcon'
-        ),
-        're-enabled invalid field restores validation icon'
-      ).toBeTruthy();
-    });
-
-    await step(
       'error text replaces the description in ariaDescribedByElements while invalid',
       () => {
         const resolved = input?.ariaDescribedByElements ?? [];
@@ -332,29 +456,6 @@ export const StatesTest: Story = {
       }
     );
 
-    await step('required is reflected onto the native input', () => {
-      const requiredField = fields[1];
-      const requiredInput = requiredField.shadowRoot?.querySelector('input');
-      expect(
-        requiredInput?.required,
-        'required property reaches the input'
-      ).toBe(true);
-    });
-
-    await step(
-      'a required field with a visible label shows a decorative asterisk',
-      () => {
-        const indicator = fields[1].shadowRoot?.querySelector(
-          '.swc-FormFieldLabel-requiredIndicator'
-        );
-        expect(indicator, 'required label renders its asterisk').toBeTruthy();
-        expect(
-          indicator?.getAttribute('aria-hidden'),
-          'required asterisk is hidden from assistive technology'
-        ).toBe('true');
-      }
-    );
-
     await step('an invalid field renders a decorative validation icon', () => {
       const icon = invalidField.shadowRoot?.querySelector(
         '.swc-TextField-invalidIcon'
@@ -364,11 +465,43 @@ export const StatesTest: Story = {
         icon?.getAttribute('aria-hidden'),
         'validation icon is hidden from assistive technology'
       ).toBe('true');
-      // A valid field renders no validation icon.
+    });
+
+    await step('clearing invalid removes the validation icon', async () => {
+      invalidField.fieldStatus = undefined;
+      await invalidField.updateComplete;
       expect(
-        fields[0].shadowRoot?.querySelector('.swc-TextField-invalidIcon'),
+        invalidField.shadowRoot?.querySelector('.swc-TextField-invalidIcon'),
         'valid field omits the validation icon'
       ).toBeNull();
+    });
+  },
+};
+
+export const RequiredStateTest: Story = {
+  ...Required,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+
+    await step('required is reflected onto the native input', () => {
+      expect(
+        field.roleElement?.required,
+        'required property reaches the input'
+      ).toBe(true);
+    });
+
+    await step('the visible label shows a decorative asterisk', () => {
+      const indicator = field.shadowRoot?.querySelector(
+        '.swc-FormFieldLabel-requiredIndicator'
+      );
+      expect(indicator, 'required label renders its asterisk').toBeTruthy();
+      expect(
+        indicator?.getAttribute('aria-hidden'),
+        'required asterisk is hidden from assistive technology'
+      ).toBe('true');
     });
   },
 };
@@ -393,6 +526,11 @@ export const NecessityIndicatorTest: Story = {
         ),
         'required icon mode renders the asterisk'
       ).toBeTruthy();
+      expect(
+        requiredIcon.shadowRoot?.querySelector(
+          '.swc-FormFieldLabel-requiredIndicator'
+        )
+      ).toHaveAttribute('aria-hidden', 'true');
     });
 
     await step('label mode marks a required field "(required)"', () => {
@@ -404,8 +542,8 @@ export const NecessityIndicatorTest: Story = {
       );
       expect(
         label?.getAttribute('aria-hidden'),
-        'necessity label is hidden from assistive technology'
-      ).toBe('true');
+        'necessity text remains available to assistive technology'
+      ).toBeNull();
     });
 
     await step('label mode marks an optional field "(optional)"', () => {
@@ -415,6 +553,7 @@ export const NecessityIndicatorTest: Story = {
       expect(label?.textContent?.trim(), 'optional label is shown').toBe(
         '(optional)'
       );
+      expect(label?.hasAttribute('aria-hidden')).toBe(false);
     });
 
     await step(
@@ -607,7 +746,7 @@ export const BindingsTest: Story = {
 
     await step('readonly reflects onto the native input', async () => {
       expect(input().readOnly, 'input starts editable').toBe(false);
-      field.readonly = true;
+      field.fieldStatus = 'readonly';
       await field.updateComplete;
       expect(input().readOnly, 'readonly property reaches the input').toBe(
         true
@@ -619,7 +758,7 @@ export const BindingsTest: Story = {
         input().getAttribute('aria-invalid'),
         'valid input omits aria-invalid'
       ).toBe(null);
-      field.invalid = true;
+      field.fieldStatus = 'invalid';
       await field.updateComplete;
       expect(
         input().getAttribute('aria-invalid'),
@@ -680,6 +819,7 @@ export const EnumValidationTest: Story = {
     await step('warns when "type" is not a supported value', () =>
       withWarningSpy(async (warnCalls) => {
         const field = await fixture<TextField>(html`
+          <!-- @ts-ignore: "bogus" is intentionally unsupported to test the enum warning. -->
           <swc-text-field
             accessible-label="Named"
             type="bogus"
@@ -695,9 +835,45 @@ export const EnumValidationTest: Story = {
       })
     );
 
+    await step(
+      'unsupported native types fall back to text without changing the value',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          for (const type of ['color', 'number', 'checkbox', 'bogus']) {
+            const field = await fixture<TextField>(html`
+              <!-- @ts-ignore: Unsupported types intentionally test the text fallback and warning. -->
+              <swc-text-field
+                accessible-label="Named"
+                type=${type}
+                value="Unchanged text"
+              ></swc-text-field>
+            `);
+            expect(field.roleElement?.type).toBe('text');
+            expect(field.value).toBe('Unchanged text');
+            expect(field.roleElement?.value).toBe('Unchanged text');
+            expect(
+              warnCalls.some((call) =>
+                String(call?.[1]).includes(`Received "${type}"`)
+              )
+            ).toBe(true);
+
+            field.type = 'email';
+            await field.updateComplete;
+            expect(field.roleElement?.type).toBe('email');
+            field.setAttribute('type', type);
+            await field.updateComplete;
+            expect(field.roleElement?.type).toBe('text');
+            expect(field.value).toBe('Unchanged text');
+            expect(field.roleElement?.value).toBe('Unchanged text');
+            field.parentElement?.remove();
+          }
+        })
+    );
+
     await step('warns when "label-position" is not a supported value', () =>
       withWarningSpy(async (warnCalls) => {
         const field = await fixture<TextField>(html`
+          <!-- @ts-ignore: "sideways" is intentionally unsupported to test the enum warning. -->
           <swc-text-field
             accessible-label="Named"
             label-position="sideways"
@@ -718,6 +894,7 @@ export const EnumValidationTest: Story = {
       () =>
         withWarningSpy(async (warnCalls) => {
           const field = await fixture<TextField>(html`
+            <!-- @ts-ignore: "star" is intentionally unsupported to test the enum warning. -->
             <swc-text-field
               accessible-label="Named"
               necessity-indicator="star"
@@ -973,13 +1150,13 @@ export const FormParticipationTest: Story = {
     });
 
     await step('disabling excludes it, re-enabling recovers', async () => {
-      field.disabled = true;
+      field.fieldStatus = 'disabled';
       await field.updateComplete;
       expect(
         new FormData(form).has('username'),
         'disabled field is excluded from FormData'
       ).toBe(false);
-      field.disabled = false;
+      field.fieldStatus = undefined;
       await field.updateComplete;
       expect(
         new FormData(form).get('username'),
@@ -1011,6 +1188,604 @@ export const FormParticipationTest: Story = {
 };
 FormParticipationTest.storyName = 'Form participation';
 
+class UpdateTimingTextField extends TextField {
+  public formValueAfterUpdate: FormDataEntryValue | null = null;
+
+  protected override update(changedProperties: PropertyValues): void {
+    super.update(changedProperties);
+    const form = this.form;
+    this.formValueAfterUpdate = form
+      ? new FormData(form).get('username')
+      : null;
+  }
+}
+if (!customElements.get('test-text-field-update-timing')) {
+  customElements.define('test-text-field-update-timing', UpdateTimingTextField);
+}
+
+export const FormUpdateTimingTest: Story = {
+  render: () => html`
+    <form>
+      <test-text-field-update-timing
+        name="username"
+        value="Example"
+        accessible-label="Username"
+      ></test-text-field-update-timing>
+    </form>
+  `,
+  play: async ({ canvasElement }) => {
+    const field = await getComponent<UpdateTimingTextField>(
+      canvasElement,
+      'test-text-field-update-timing'
+    );
+    field.value = 'Updated';
+    await field.updateComplete;
+    expect(field.formValueAfterUpdate).toBe('Updated');
+  },
+};
+FormUpdateTimingTest.storyName = 'Form value after super.update';
+
+export const InputEventFormStateTest: Story = {
+  render: () => html`
+    <form>
+      <swc-text-field name="username" required accessible-label="Username">
+        <span slot="error-text">This username is unavailable.</span>
+      </swc-text-field>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = field.form;
+    const input = field.roleElement;
+    if (!form || !input) {
+      throw new Error('Input event test requires a form and input');
+    }
+    const states: {
+      listener: string;
+      value: string;
+      formValue: FormDataEntryValue | null;
+      valid: boolean;
+      formValid: boolean;
+      customError: boolean;
+    }[] = [];
+    for (const [listener, target] of [
+      ['field', field],
+      ['form', form],
+    ] as const) {
+      target.addEventListener('input', () => {
+        states.push({
+          listener,
+          value: field.value,
+          formValue: new FormData(form).get('username'),
+          valid: field.checkValidity(),
+          formValid: form.checkValidity(),
+          customError: field.validity.customError,
+        });
+      });
+    }
+    const expectState = (
+      value: string,
+      valid: boolean,
+      customError = false
+    ): void => {
+      expect(states).toEqual(
+        ['field', 'form'].map((listener) => ({
+          listener,
+          value,
+          formValue: value,
+          valid,
+          formValid: valid,
+          customError,
+        }))
+      );
+      states.length = 0;
+    };
+
+    await step('the first edit synchronizes value and validity', async () => {
+      await userEvent.type(input, 'a');
+      expectState('a', true);
+    });
+    await step('subsequent edits submit the current value', async () => {
+      await userEvent.type(input, 'b');
+      expectState('ab', true);
+    });
+    await step('clearing a required field is immediately invalid', async () => {
+      await userEvent.type(input, '{Backspace}');
+      expectState('a', true);
+      await userEvent.type(input, '{Backspace}');
+      expectState('', false);
+    });
+    await step('editing preserves application errors', async () => {
+      field.fieldStatus = 'invalid';
+      await field.updateComplete;
+      await userEvent.type(input, 'b');
+      expectState('b', false, true);
+      expect(field.fieldStatus).toBe('invalid');
+      expect(field.validationMessage).toBe('This username is unavailable.');
+    });
+  },
+};
+InputEventFormStateTest.storyName = 'Form state during input events';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Form state restoration
+// ──────────────────────────────────────────────────────────────
+
+export const FormStateRestoreTest: Story = {
+  ...FormParticipationTest,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.shadowRoot?.querySelector('input');
+    if (!form || !input) {
+      throw new Error('form or input not found');
+    }
+    const events: string[] = [];
+    field.addEventListener('input', () => events.push('input'));
+    field.addEventListener('change', () => events.push('change'));
+    field.required = true;
+    await field.updateComplete;
+
+    await step(
+      'restored strings synchronize the host, input, and form',
+      async () => {
+        for (const state of ['Restored', '', 'Restored\nvalue']) {
+          field.formStateRestoreCallback(state);
+          await field.updateComplete;
+          const expected = state.replace(/\n/g, '');
+          expect(field.value, 'host value is restored and sanitized').toBe(
+            expected
+          );
+          expect(input.value, 'displayed value matches the host').toBe(
+            expected
+          );
+          expect(
+            new FormData(form).get('username'),
+            'form value is restored'
+          ).toBe(expected);
+          expect(
+            field.validity.valueMissing,
+            'required validity follows the restored value'
+          ).toBe(expected === '');
+        }
+      }
+    );
+
+    await step('non-string state leaves the text value unchanged', async () => {
+      for (const state of [
+        null,
+        new File(['value'], 'state.txt'),
+        new FormData(),
+      ]) {
+        field.formStateRestoreCallback(state);
+        await field.updateComplete;
+        expect(field.value).toBe('Restoredvalue');
+        expect(input.value).toBe('Restoredvalue');
+        expect(new FormData(form).get('username')).toBe('Restoredvalue');
+      }
+    });
+
+    await step('restoration preserves the authored reset value', async () => {
+      expect(field.getAttribute('value')).toBe('Example');
+      form.reset();
+      await field.updateComplete;
+      expect(field.value).toBe('Example');
+      expect(input.value).toBe('Example');
+      expect(new FormData(form).get('username')).toBe('Example');
+    });
+
+    await step(
+      'restoration and reset do not emit input or change events',
+      () => {
+        expect(events).toEqual([]);
+      }
+    );
+  },
+};
+FormStateRestoreTest.storyName = 'Form state restoration';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Application-controlled invalid state
+// ──────────────────────────────────────────────────────────────
+
+export const InvalidContractTest: Story = {
+  ...FormParticipationTest,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.roleElement;
+    if (!form || !input) {
+      throw new Error('form or input not found');
+    }
+    let submissions = 0;
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      submissions++;
+    });
+
+    await step(
+      'authored invalid blocks native validation and submit',
+      async () => {
+        field.fieldStatus = 'invalid';
+        await field.updateComplete;
+        expect(field.validity.customError).toBe(true);
+        expect(field.checkValidity()).toBe(false);
+        expect(form.checkValidity()).toBe(false);
+        expect(field.validationMessage.length).toBeGreaterThan(0);
+        expect(field.reportValidity()).toBe(false);
+        expect(field.shadowRoot?.activeElement).toBe(input);
+        form.requestSubmit();
+        expect(submissions).toBe(0);
+        expect(input.getAttribute('aria-invalid')).toBe('true');
+      }
+    );
+
+    await step(
+      'typing does not clear application-authored invalid',
+      async () => {
+        await userEvent.type(input, 'Updated');
+        await field.updateComplete;
+        expect(field.fieldStatus).toBe('invalid');
+        expect(field.checkValidity()).toBe(false);
+      }
+    );
+
+    await step('clearing invalid permits a valid field to submit', async () => {
+      field.fieldStatus = undefined;
+      await field.updateComplete;
+      expect(field.validity.customError).toBe(false);
+      expect(field.validationMessage).toBe('');
+      expect(field.checkValidity()).toBe(true);
+      expect(input.hasAttribute('aria-invalid')).toBe(false);
+      form.requestSubmit();
+      expect(submissions).toBe(1);
+    });
+
+    await step('native errors do not automatically set invalid', async () => {
+      field.required = true;
+      field.value = '';
+      await field.updateComplete;
+      expect(field.validity.valueMissing).toBe(true);
+      expect(field.checkValidity()).toBe(false);
+      expect(field.fieldStatus).toBeUndefined();
+      expect(input.hasAttribute('aria-invalid')).toBe(false);
+      form.requestSubmit();
+      expect(submissions).toBe(1);
+    });
+
+    await step(
+      'clearing invalid preserves native constraint errors',
+      async () => {
+        field.fieldStatus = 'invalid';
+        await field.updateComplete;
+        expect(field.validity.customError).toBe(true);
+        expect(field.validity.valueMissing).toBe(true);
+        field.fieldStatus = undefined;
+        await field.updateComplete;
+        expect(field.validity.customError).toBe(false);
+        expect(field.validity.valueMissing).toBe(true);
+        expect(field.validationMessage).toBe(input.validationMessage);
+        expect(field.checkValidity()).toBe(false);
+      }
+    );
+
+    await step(
+      'disabled and readonly fields do not block submission',
+      async () => {
+        field.fieldStatus = 'invalid';
+        await field.updateComplete;
+        for (const status of ['disabled', 'readonly'] as const) {
+          field.fieldStatus = status;
+          await field.updateComplete;
+          expect(field.willValidate).toBe(false);
+          expect(field.checkValidity()).toBe(true);
+          expect(form.checkValidity()).toBe(true);
+          form.requestSubmit();
+          field.fieldStatus = 'invalid';
+          await field.updateComplete;
+          expect(field.fieldStatus).toBe('invalid');
+          expect(field.checkValidity()).toBe(false);
+        }
+        expect(submissions).toBe(3);
+      }
+    );
+  },
+};
+InvalidContractTest.storyName = 'Application-controlled invalid state';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Slot-backed validation
+// ──────────────────────────────────────────────────────────────
+
+export const SlottedErrorLifecycleTest: Story = {
+  ...FormParticipationTest,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.roleElement;
+    if (!form || !input) {
+      throw new Error('form or input not found');
+    }
+    const error = document.createElement('span');
+    error.slot = 'error-text';
+    error.textContent = 'Username is already taken.';
+    field.append(error);
+    const events: string[] = [];
+    field.addEventListener('input', () => events.push('input'));
+    field.addEventListener('change', () => events.push('change'));
+    let submissions = 0;
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      submissions++;
+    });
+
+    await step(
+      'slotted errors block validity and submit while invalid',
+      async () => {
+        field.fieldStatus = 'invalid';
+        await field.updateComplete;
+        expect(field.validity.customError).toBe(true);
+        expect(field.validationMessage).toBe('Username is already taken.');
+        expect(field.checkValidity()).toBe(false);
+        expect(form.checkValidity()).toBe(false);
+        form.requestSubmit();
+        expect(submissions).toBe(0);
+        await field.updateComplete;
+        expect(input.validationMessage).toBe('Username is already taken.');
+        expect(field.fieldStatus).toBe('invalid');
+        expect(input.getAttribute('aria-invalid')).toBe('true');
+      }
+    );
+
+    await step(
+      'updates and restoration preserve application errors',
+      async () => {
+        field.value = 'Updated';
+        field.size = 'l';
+        await field.updateComplete;
+        field.formStateRestoreCallback('Restored');
+        await field.updateComplete;
+        expect(field.validationMessage).toBe('Username is already taken.');
+        expect(field.checkValidity()).toBe(false);
+      }
+    );
+
+    await step(
+      'disabled fieldsets suspend but do not clear authored errors',
+      async () => {
+        const fieldset = document.createElement('fieldset');
+        field.before(fieldset);
+        fieldset.append(field);
+        fieldset.disabled = true;
+        await field.updateComplete;
+        expect(field.willValidate).toBe(false);
+        expect(form.checkValidity()).toBe(true);
+        fieldset.disabled = false;
+        await field.updateComplete;
+        expect(field.validationMessage).toBe('Username is already taken.');
+        expect(field.checkValidity()).toBe(false);
+      }
+    );
+
+    await step('clearing invalid status restores native validity', async () => {
+      field.fieldStatus = undefined;
+      await field.updateComplete;
+      expect(field.validity.customError).toBe(false);
+      expect(field.validationMessage).toBe('');
+      expect(field.checkValidity()).toBe(true);
+      await field.updateComplete;
+      form.requestSubmit();
+      expect(submissions).toBe(1);
+      expect(events).toEqual([]);
+    });
+  },
+};
+SlottedErrorLifecycleTest.storyName = 'Slotted error lifecycle';
+
+export const SlotBackedValidationTest: Story = {
+  ...FormParticipationTest,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const error = document.createElement('span');
+    error.slot = 'error-text';
+    error.textContent = 'Username is already taken.';
+    field.append(error);
+    field.fieldStatus = 'invalid';
+    await field.updateComplete;
+
+    await step('uses the inline error as the validation message', () => {
+      expect(field.validationMessage).toBe('Username is already taken.');
+      expect(field.roleElement?.validationMessage).toBe(
+        'Username is already taken.'
+      );
+      expect(field.validity.customError).toBe(true);
+      expect(field.checkValidity()).toBe(false);
+      expect('setCustomValidity' in field).toBe(false);
+    });
+
+    await step('tracks text edits and replacement error elements', async () => {
+      error.textContent = 'Choose another username.';
+      await waitFor(() =>
+        expect(field.validationMessage).toBe('Choose another username.')
+      );
+      const replacement = document.createElement('span');
+      replacement.slot = 'error-text';
+      replacement.innerHTML = 'Try <strong>a different name</strong>.';
+      error.replaceWith(replacement);
+      await waitFor(() =>
+        expect(field.validationMessage).toBe('Try a different name.')
+      );
+      const text = replacement.querySelector('strong')?.firstChild;
+      if (!text) {
+        throw new Error('Expected nested error text');
+      }
+      text.textContent = 'another name';
+      await waitFor(() =>
+        expect(field.validationMessage).toBe('Try another name.')
+      );
+      replacement.slot = 'prefix';
+      await waitFor(() => {
+        expect(field.validationMessage).toBe('Enter a valid value.');
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+        ).toBeNull();
+      });
+      replacement.slot = 'error-text';
+      await waitFor(() => {
+        expect(field.validationMessage).toBe('Try another name.');
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+        ).not.toBeNull();
+      });
+      replacement.remove();
+      await waitFor(() =>
+        expect(field.validationMessage).toBe('Enter a valid value.')
+      );
+      replacement.textContent = 'A new application error.';
+      field.append(replacement);
+      await waitFor(() =>
+        expect(field.validationMessage).toBe('A new application error.')
+      );
+      replacement.textContent = '   ';
+      await waitFor(() =>
+        expect(field.validationMessage).toBe('Enter a valid value.')
+      );
+    });
+
+    await step(
+      'clears derived errors without clearing native constraints',
+      async () => {
+        field.required = true;
+        field.value = '';
+        field.fieldStatus = undefined;
+        await field.updateComplete;
+        expect(field.validity.customError).toBe(false);
+        expect(field.validity.valueMissing).toBe(true);
+        expect(field.validationMessage).toBe(
+          field.roleElement?.validationMessage
+        );
+        expect(field.checkValidity()).toBe(false);
+        field.value = 'available';
+        await field.updateComplete;
+        expect(field.validationMessage).toBe('');
+        expect(field.checkValidity()).toBe(true);
+      }
+    );
+
+    await step('reads changed error text after reconnection', async () => {
+      field.fieldStatus = 'invalid';
+      await field.updateComplete;
+      field.remove();
+      const message = field.querySelector('[slot="error-text"]');
+      if (!message) {
+        throw new Error('Expected error content');
+      }
+      message.textContent = 'Updated while disconnected.';
+      canvasElement.append(field);
+      await field.updateComplete;
+      expect(field.validationMessage).toBe('Updated while disconnected.');
+    });
+  },
+};
+SlotBackedValidationTest.storyName = 'Slot-backed validation';
+
+export const ValidationSourcesTest: Story = {
+  ...FormParticipationTest,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+
+    const error = document.createElement('span');
+    error.slot = 'error-text';
+    error.textContent = 'Username is already taken.';
+    field.append(error);
+    await step(
+      'clearing authored invalid clears its derived custom error',
+      async () => {
+        field.fieldStatus = 'invalid';
+        await field.updateComplete;
+        expect(field.validationMessage).toBe('Username is already taken.');
+        field.fieldStatus = undefined;
+        await field.updateComplete;
+        expect(field.validity.customError).toBe(false);
+        expect(field.validationMessage).toBe('');
+        expect(field.validity.valid).toBe(true);
+      }
+    );
+
+    await step(
+      'clearing authored invalid preserves native errors',
+      async () => {
+        for (const value of ['', '123']) {
+          field.required = true;
+          field.pattern = '[A-Za-z]+';
+          field.value = value;
+          field.fieldStatus = 'invalid';
+          await field.updateComplete;
+          expect(field.validity.customError).toBe(true);
+          expect(field.validity.valueMissing).toBe(value === '');
+          expect(field.validity.patternMismatch).toBe(value === '123');
+          field.fieldStatus = undefined;
+          await field.updateComplete;
+          expect(field.validity.customError).toBe(false);
+          expect(field.checkValidity()).toBe(false);
+          expect(field.validationMessage).toBe(
+            field.roleElement?.validationMessage
+          );
+        }
+      }
+    );
+  },
+};
+ValidationSourcesTest.storyName = 'Native and authored validation sources';
+
+export const BeforeRenderErrorTextTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ canvasElement, step }) => {
+    await step('uses error text supplied before first render', async () => {
+      const field = new TextField();
+      field.accessibleLabel = 'Username';
+      field.fieldStatus = 'invalid';
+      const error = document.createElement('span');
+      error.slot = 'error-text';
+      error.textContent = 'Username is already taken.';
+      field.append(error);
+      canvasElement.append(field);
+      try {
+        await field.updateComplete;
+        expect(field.validationMessage).toBe('Username is already taken.');
+        expect(field.validity.customError).toBe(true);
+        expect(field.checkValidity()).toBe(false);
+        field.fieldStatus = undefined;
+        await field.updateComplete;
+        expect(field.checkValidity()).toBe(true);
+      } finally {
+        field.remove();
+      }
+    });
+  },
+};
+BeforeRenderErrorTextTest.storyName = 'Error text before first render';
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Native form validation, reset, and submit behavior
 // ──────────────────────────────────────────────────────────────
@@ -1025,14 +1800,35 @@ export const FormBehaviorTest: Story = {
     const form = canvasElement.querySelector('form');
     const input = field.shadowRoot?.querySelector('input');
     const output = form?.querySelector<HTMLOutputElement>('[data-form-data]');
-    const validityOutput =
-      form?.querySelector<HTMLOutputElement>('[data-validity]');
-    const checkValidityButton = form?.querySelector<HTMLButtonElement>(
-      'button[type="button"]'
-    );
-    if (!form || !input || !output || !validityOutput || !checkValidityButton) {
-      throw new Error('form, input, outputs, or validity button not found');
+    if (!form || !input || !output) {
+      throw new Error('form, input, or submission output not found');
     }
+
+    await step('only basic form controls are shown', () => {
+      const canvas = within(canvasElement);
+      expect(canvas.getAllByRole('button')).toHaveLength(3);
+      for (const name of ['Submit', 'Reset', 'Disable']) {
+        expect(canvas.getByRole('button', { name })).toBeVisible();
+      }
+      expect(form.querySelector('details')).toBeNull();
+      expect(form.querySelector('[data-validity]')).toBeNull();
+    });
+
+    await step('headings distinguish the form, actions, and results', () => {
+      const canvas = within(canvasElement);
+      expect(
+        canvas.getByRole('heading', { name: 'Form participation', level: 2 })
+      ).toBeVisible();
+      for (const name of ['Form actions', 'Last submission']) {
+        const heading = canvas.getByRole('heading', { name, level: 3 });
+        expect(heading).toBeVisible();
+        expect(heading).toHaveClass('swc-Heading--sizeXS');
+      }
+      expect(parseFloat(getComputedStyle(output).fontSize)).toBeLessThan(
+        parseFloat(getComputedStyle(form).fontSize)
+      );
+      expect(output.value).toBe('Submit the form to see its data.');
+    });
 
     await step('required participates in native validation', async () => {
       field.value = '';
@@ -1053,16 +1849,6 @@ export const FormBehaviorTest: Story = {
         form.checkValidity(),
         'form fails while required field is empty'
       ).toBe(false);
-      checkValidityButton.click();
-      expect(
-        validityOutput.textContent?.trim(),
-        'validity output reports the empty required field'
-      ).toBe(
-        'field.checkValidity(): invalid\n' +
-          'form.checkValidity(): invalid\n' +
-          'validity.valueMissing: true'
-      );
-
       field.value = 'Filled';
       await field.updateComplete;
       expect(
@@ -1077,11 +1863,6 @@ export const FormBehaviorTest: Story = {
         form.checkValidity(),
         'form is valid when required field is filled'
       ).toBe(true);
-      checkValidityButton.click();
-      expect(
-        validityOutput.textContent?.trim(),
-        'validity output reports the filled field'
-      ).toBe('field.checkValidity(): valid\nform.checkValidity(): valid');
     });
 
     await step('reset restores the initial (empty) value', async () => {
@@ -1103,21 +1884,25 @@ export const FormBehaviorTest: Story = {
       'invalid submission surfaces the field-level invalid state',
       async () => {
         field.value = '';
-        field.invalid = false;
+        field.fieldStatus = undefined;
         await field.updateComplete;
         form.requestSubmit();
         await field.updateComplete;
-        expect(field.invalid, 'empty submission marks the field invalid').toBe(
-          true
-        );
         expect(
-          field.shadowRoot?.querySelector('.swc-TextField-invalidIcon'),
-          'invalid submission renders the validation icon'
-        ).toBeTruthy();
+          field.fieldStatus,
+          'empty submission marks the field invalid'
+        ).toBe('invalid');
+        await waitFor(() =>
+          expect(
+            field.shadowRoot?.querySelector('.swc-TextField-invalidIcon'),
+            'invalid submission renders the validation icon'
+          ).toBeTruthy()
+        );
         expect(
           output.textContent?.trim(),
           'invalid submission does not show submitted form data'
-        ).toBe('Submit the form to see its data.');
+        ).toBe('Submission blocked: the field is invalid.');
+        expect(field.validationMessage).toBe('Enter a username.');
       }
     );
 
@@ -1126,18 +1911,66 @@ export const FormBehaviorTest: Story = {
       await field.updateComplete;
       form.requestSubmit();
       await field.updateComplete;
-      expect(field.invalid, 'valid submission clears invalid state').toBe(
-        false
-      );
+      expect(
+        field.fieldStatus,
+        'valid submission clears invalid state'
+      ).toBeUndefined();
       expect(
         new FormData(form).get('username'),
         'submitted username is included in FormData'
       ).toBe('Submitted');
-      expect(
-        output.textContent?.trim(),
-        'output displays the submitted username'
-      ).toBe('username: Submitted');
+      await waitFor(() =>
+        expect(
+          output.textContent?.trim(),
+          'output displays the submitted username'
+        ).toBe('username: Submitted')
+      );
     });
+
+    await step('Reset clears the previous submission and error', async () => {
+      const resetButton = form.querySelector<HTMLButtonElement>(
+        'button[type="reset"]'
+      );
+      if (!resetButton) {
+        throw new Error('reset button not found');
+      }
+      field.fieldStatus = 'invalid';
+      await field.updateComplete;
+      await userEvent.click(resetButton);
+      await field.updateComplete;
+      expect(field.value).toBe('');
+      expect(field.fieldStatus).toBeUndefined();
+      expect(field.validity.customError).toBe(false);
+      expect(field.roleElement).not.toHaveAttribute('aria-invalid');
+      expect(
+        field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+      ).toBeNull();
+      expect(output.textContent?.trim()).toBe(
+        'Submit the form to see its data.'
+      );
+      expect(field.validity.valueMissing).toBe(true);
+    });
+
+    await step(
+      'a blocked attempt replaces the previous submission result',
+      async () => {
+        field.value = 'Previous';
+        await field.updateComplete;
+        form.requestSubmit();
+        await waitFor(() => expect(output.value).toBe('username: Previous'));
+        field.value = '';
+        await field.updateComplete;
+        form.requestSubmit();
+        await waitFor(() =>
+          expect(output.value).toBe('Submission blocked: the field is invalid.')
+        );
+        expect(
+          canvasElement
+            .querySelector('#submitted-form-data-label')
+            ?.textContent?.trim()
+        ).toBe('Last submission');
+      }
+    );
 
     await step(
       'the fieldset toggle can disable and re-enable the field',
@@ -1157,18 +1990,48 @@ export const FormBehaviorTest: Story = {
         await field.updateComplete;
         expect(fieldset.disabled).toBe(true);
         expect(input.disabled).toBe(true);
+        expect(toggleButton).toHaveAttribute('aria-pressed', 'true');
         expect(toggleButton).toBeEnabled();
+        expect(field.willValidate).toBe(false);
+        expect(new FormData(form).has('username')).toBe(false);
 
         await userEvent.click(toggleButton);
         await field.updateComplete;
         expect(fieldset.disabled).toBe(false);
         expect(input.disabled).toBe(false);
+        expect(toggleButton).toHaveAttribute('aria-pressed', 'false');
         expect(toggleButton).toBeEnabled();
       }
     );
+
+    await step('content changes do not resize the form', async () => {
+      form.reset();
+      await field.updateComplete;
+      const initialWidth = form.getBoundingClientRect().width;
+
+      form.requestSubmit();
+      await waitFor(() =>
+        expect(output.value).toBe('Submission blocked: the field is invalid.')
+      );
+      expect(form.getBoundingClientRect().width).toBeCloseTo(initialWidth, 1);
+
+      const longUsername = 'long-username-'.repeat(30);
+      field.value = longUsername;
+      await field.updateComplete;
+      form.requestSubmit();
+      await waitFor(() =>
+        expect(output.value).toBe(`username: ${longUsername}`)
+      );
+      expect(form.getBoundingClientRect().width).toBeCloseTo(initialWidth, 1);
+
+      form.reset();
+      await field.updateComplete;
+      expect(output.value).toBe('Submit the form to see its data.');
+      expect(form.getBoundingClientRect().width).toBeCloseTo(initialWidth, 1);
+    });
   },
 };
-FormBehaviorTest.storyName = 'Native form behavior';
+FormBehaviorTest.storyName = 'Form participation example';
 
 export const DisabledStateTest: Story = {
   render: () => html`
@@ -1178,7 +2041,11 @@ export const DisabledStateTest: Story = {
           name="username"
           value="Example"
           accessible-label="Username"
-        ></swc-text-field>
+          field-status="invalid"
+        >
+          <span slot="description">Choose a username.</span>
+          <span slot="error-text">This username is unavailable.</span>
+        </swc-text-field>
       </fieldset>
     </form>
   `,
@@ -1202,7 +2069,7 @@ export const DisabledStateTest: Story = {
     });
 
     await step('own disabled matches native :disabled', async () => {
-      field.disabled = true;
+      field.fieldStatus = 'disabled';
       await field.updateComplete;
       expect(field.matches(':disabled'), 'own disabled matches :disabled').toBe(
         true
@@ -1211,13 +2078,14 @@ export const DisabledStateTest: Story = {
         new FormData(form).has('username'),
         'disabled field is excluded from FormData'
       ).toBe(false);
-      field.disabled = false;
+      field.fieldStatus = undefined;
       await field.updateComplete;
     });
 
     await step(
       'cascaded <fieldset disabled> matches :disabled on the host',
       async () => {
+        field.fieldStatus = 'invalid';
         fieldset.disabled = true;
         await field.updateComplete;
         expect(
@@ -1225,9 +2093,9 @@ export const DisabledStateTest: Story = {
           'cascade matches :disabled without the host property'
         ).toBe(true);
         expect(
-          field.disabled,
-          'the public property stays false under the cascade'
-        ).toBe(false);
+          field.fieldStatus,
+          'the authored status stays invalid under the cascade'
+        ).toBe('invalid');
         expect(
           field.shadowRoot?.querySelector('input')?.disabled,
           'inner input is disabled'
@@ -1236,6 +2104,17 @@ export const DisabledStateTest: Story = {
           new FormData(form).has('username'),
           'excluded while cascaded'
         ).toBe(false);
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+        ).toBeVisible();
+        expect(
+          field.shadowRoot?.querySelector('.swc-TextField-invalidIcon')
+        ).toBeNull();
+        expect(field.roleElement).toHaveAttribute('aria-invalid', 'true');
+        expect(field.roleElement?.ariaDescribedByElements?.[0]).toHaveClass(
+          'swc-FormFieldErrorText'
+        );
+        expect(field.checkValidity()).toBe(true);
 
         fieldset.disabled = false;
         await field.updateComplete;
@@ -1274,3 +2153,328 @@ export const ChangeEventTest: Story = {
   },
 };
 ChangeEventTest.storyName = 'Change event';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Native implicit form submission
+// ──────────────────────────────────────────────────────────────
+
+export const ImplicitSubmitTest: Story = {
+  render: () => html`
+    <button
+      type="submit"
+      form="text-field-implicit-form"
+      name="action"
+      value="first"
+    >
+      Save
+    </button>
+    <form id="text-field-implicit-form">
+      <swc-text-field
+        accessible-label="Email"
+        name="email"
+        type="email"
+        value="person@example.com"
+        required
+      ></swc-text-field>
+      <button type="submit" name="action" value="second">Send</button>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const button = canvasElement.querySelector('button');
+    const input = field.roleElement;
+    if (!form || !button || !input) {
+      throw new Error('form, submit button, or input not found');
+    }
+    const submissions: (HTMLElement | null)[] = [];
+    let clicks = 0;
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      submissions.push(event.submitter);
+    });
+    button.addEventListener('click', () => clicks++);
+    input.focus();
+
+    await step('Enter clicks the first associated submit button', async () => {
+      await userEvent.keyboard('{Enter}');
+      await waitFor(() => expect(clicks).toBe(1));
+      expect(submissions).toEqual([button]);
+    });
+
+    await step('native validation blocks an invalid submission', async () => {
+      field.value = '';
+      await field.updateComplete;
+      await userEvent.keyboard('{Enter}');
+      await waitFor(() => expect(clicks).toBe(2));
+      expect(submissions).toHaveLength(1);
+      field.value = 'person@example.com';
+      await field.updateComplete;
+    });
+
+    await step(
+      'formnovalidate on the default submitter is respected',
+      async () => {
+        field.value = '';
+        button.formNoValidate = true;
+        await field.updateComplete;
+        await userEvent.keyboard('{Enter}');
+        await waitFor(() => expect(submissions).toEqual([button, button]));
+        button.formNoValidate = false;
+        field.value = 'person@example.com';
+        await field.updateComplete;
+      }
+    );
+
+    await step(
+      'a disabled default submitter does not fall through',
+      async () => {
+        button.disabled = true;
+        await userEvent.keyboard('{Enter}');
+        expect(clicks).toBe(3);
+        expect(submissions).toHaveLength(2);
+        button.disabled = false;
+      }
+    );
+
+    await step('consumers can cancel Enter on the host', async () => {
+      field.addEventListener('keydown', (event) => event.preventDefault(), {
+        once: true,
+      });
+      await userEvent.keyboard('{Enter}');
+      expect(clicks).toBe(3);
+      expect(submissions).toHaveLength(2);
+    });
+
+    await step('composition and non-Enter keys do not submit', async () => {
+      input.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'Enter',
+          isComposing: true,
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })
+      );
+      input.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'Enter',
+          keyCode: 229,
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })
+      );
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(clicks).toBe(3);
+      expect(submissions).toHaveLength(2);
+    });
+
+    await step(
+      'a canceled submit-button click prevents submission',
+      async () => {
+        button.addEventListener('click', (event) => event.preventDefault(), {
+          once: true,
+        });
+        await userEvent.keyboard('{Enter}');
+        await waitFor(() => expect(clicks).toBe(4));
+        expect(submissions).toHaveLength(2);
+      }
+    );
+
+    await step('an image input can be the default submitter', async () => {
+      const image = document.createElement('input');
+      image.type = 'image';
+      image.alt = 'Save';
+      image.setAttribute('form', form.id);
+      button.before(image);
+      await userEvent.keyboard('{Enter}');
+      await waitFor(() => expect(submissions).toEqual([button, button, image]));
+      image.remove();
+    });
+  },
+};
+ImplicitSubmitTest.storyName = 'Implicit submission';
+
+export const ImplicitSubmitWithoutButtonTest: Story = {
+  render: () => html`
+    <form>
+      <swc-text-field
+        accessible-label="Username"
+        name="username"
+      ></swc-text-field>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.roleElement;
+    if (!form || !input) {
+      throw new Error('form or input not found');
+    }
+    const submissions: (HTMLElement | null)[] = [];
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      submissions.push(event.submitter);
+    });
+    input.focus();
+
+    await step('a single field submits without a submit button', async () => {
+      await userEvent.keyboard('{Enter}');
+      await waitFor(() => expect(submissions).toEqual([null]));
+    });
+
+    await step(
+      'native inputs with supported text-field types block implicit submission',
+      async () => {
+        const otherInput = document.createElement('input');
+        otherInput.setAttribute('aria-label', 'Additional field');
+        form.append(otherInput);
+        for (const type of ['text', 'url', 'tel', 'email', 'password']) {
+          otherInput.type = type;
+          await userEvent.keyboard('{Enter}');
+          expect(submissions, `${type} blocks submission`).toHaveLength(1);
+        }
+        otherInput.remove();
+      }
+    );
+
+    await step(
+      'another custom text field blocks implicit submission',
+      async () => {
+        const otherField = document.createElement('swc-text-field');
+        otherField.accessibleLabel = 'Other';
+        form.append(otherField);
+        await otherField.updateComplete;
+        await userEvent.keyboard('{Enter}');
+        expect(submissions).toHaveLength(1);
+        otherField.remove();
+      }
+    );
+
+    await step(
+      'other native types block only when the browser falls back to text',
+      async () => {
+        const otherInput = document.createElement('input');
+        otherInput.setAttribute('aria-label', 'Additional field');
+        form.append(otherInput);
+        for (const type of [
+          'search',
+          'date',
+          'month',
+          'week',
+          'time',
+          'datetime-local',
+          'number',
+        ]) {
+          otherInput.type = type;
+          // Firefox and WebKit fall back to text for month and week inputs.
+          const expectedSubmissions =
+            submissions.length + (otherInput.type === 'text' ? 0 : 1);
+          await userEvent.keyboard('{Enter}');
+          await waitFor(() =>
+            expect(
+              submissions,
+              `${type} resolves to ${otherInput.type}`
+            ).toHaveLength(expectedSubmissions)
+          );
+          expect(submissions[submissions.length - 1]).toBeNull();
+        }
+        otherInput.remove();
+      }
+    );
+  },
+};
+ImplicitSubmitWithoutButtonTest.storyName =
+  'Implicit submission without a button';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Native single-line value sanitization
+// ──────────────────────────────────────────────────────────────
+
+export const ValueSanitizationTest: Story = {
+  render: () => html`
+    <form>
+      <swc-text-field
+        accessible-label="Email"
+        name="email"
+        type="email"
+        value=" person@example.com "
+      ></swc-text-field>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.roleElement;
+    if (!form || !input) {
+      throw new Error('form or input not found');
+    }
+    let events = 0;
+    field.addEventListener('input', () => events++);
+    field.addEventListener('change', () => events++);
+
+    await step('initial values use native email sanitization', () => {
+      expect(input.value).toBe('person@example.com');
+      expect(field.value).toBe(input.value);
+      expect(new FormData(form).get('email')).toBe(input.value);
+    });
+
+    await step(
+      'programmatic values follow each native input type',
+      async () => {
+        for (const type of [
+          'text',
+          'email',
+          'url',
+          'tel',
+          'password',
+        ] as const) {
+          const native = document.createElement('input');
+          native.type = type;
+          native.value = ' \tperson\n@example.com\r ';
+          field.type = type;
+          field.value = ' \tperson\n@example.com\r ';
+          await field.updateComplete;
+          expect(field.value, type).toBe(native.value);
+          expect(input.value, type).toBe(native.value);
+          expect(new FormData(form).get('email'), type).toBe(native.value);
+        }
+      }
+    );
+
+    await step('changing type sanitizes an existing value', async () => {
+      field.type = 'text';
+      field.value = ' person@example.com ';
+      await field.updateComplete;
+      field.type = 'email';
+      await field.updateComplete;
+      expect(field.value).toBe('person@example.com');
+      expect(new FormData(form).get('email')).toBe(field.value);
+    });
+
+    await step(
+      'reset sanitizes the authored default without emitting events',
+      async () => {
+        field.value = 'different@example.com';
+        await field.updateComplete;
+        form.reset();
+        await field.updateComplete;
+        expect(field.value).toBe('person@example.com');
+        expect(input.value).toBe(field.value);
+        expect(new FormData(form).get('email')).toBe(field.value);
+        expect(events).toBe(0);
+      }
+    );
+  },
+};
+ValueSanitizationTest.storyName = 'Native value sanitization';

@@ -14,8 +14,16 @@ import { html, type TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import {
+  TEXT_FIELD_LABEL_POSITIONS,
+  TEXT_FIELD_NECESSITY_INDICATORS,
+  TEXT_FIELD_STATUSES,
+  TEXT_FIELD_VALID_SIZES,
+} from '@adobe/spectrum-wc-core/components/text-field';
+
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
+import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
 import '@adobe/spectrum-wc-icons/swc-icon-mention.js';
 
 // ────────────────
@@ -24,6 +32,43 @@ import '@adobe/spectrum-wc-icons/swc-icon-mention.js';
 
 const { events, args, argTypes, template } =
   getStorybookHelpers('swc-text-field');
+
+argTypes['label-position'] = {
+  ...argTypes['label-position'],
+  control: { type: 'inline-radio' },
+  options: TEXT_FIELD_LABEL_POSITIONS,
+  table: {
+    ...argTypes['label-position']?.table,
+    defaultValue: { summary: 'top' },
+  },
+};
+
+argTypes['necessity-indicator'] = {
+  ...argTypes['necessity-indicator'],
+  control: { type: 'inline-radio' },
+  options: TEXT_FIELD_NECESSITY_INDICATORS,
+  table: {
+    ...argTypes['necessity-indicator']?.table,
+    defaultValue: { summary: 'icon' },
+  },
+};
+
+argTypes.size = {
+  ...argTypes.size,
+  control: { type: 'select' },
+  options: TEXT_FIELD_VALID_SIZES,
+};
+
+argTypes['field-status'] = {
+  ...argTypes['field-status'],
+  control: { type: 'select' },
+  options: [undefined, ...TEXT_FIELD_STATUSES],
+};
+args['field-status'] = undefined;
+
+for (const attribute of ['disabled', 'readonly']) {
+  argTypes[attribute] = { table: { disable: true }, control: false };
+}
 
 /**
  * A single-line text field for entering and editing text.
@@ -72,8 +117,8 @@ function captioned(
 export const Playground: Story = {
   tags: ['dev'],
   args: {
-    'label-slot': 'Favorite food',
-    placeholder: 'Pasta, tacos, or sushi',
+    'label-slot': 'Name',
+    placeholder: 'Enter your full name',
   },
   render: (args) => html`
     ${template({ ...args })}
@@ -87,8 +132,11 @@ export const Playground: Story = {
 export const Overview: Story = {
   tags: ['overview'],
   render: () => html`
-    <swc-text-field style="inline-size: 220px;">
-      <span slot="label">Favorite food</span>
+    <swc-text-field
+      placeholder="Enter your full name"
+      style="inline-size: 220px;"
+    >
+      <span slot="label">Name</span>
     </swc-text-field>
   `,
 };
@@ -99,20 +147,24 @@ export const Overview: Story = {
 
 export const Anatomy: Story = {
   render: () => html`
-    <swc-text-field autocomplete="email">
+    <swc-text-field autocomplete="email" style="inline-size: 220px;">
       <span slot="label">Email address</span>
       <span slot="description">Used for order updates only.</span>
     </swc-text-field>
-    <swc-text-field autocomplete="email" invalid>
+    <swc-text-field
+      autocomplete="email"
+      field-status="invalid"
+      style="inline-size: 220px;"
+    >
       <span slot="label">Email address</span>
       <span slot="error-text">Enter a valid email address.</span>
     </swc-text-field>
   `,
   tags: ['anatomy'],
   parameters: {
-    flexLayout: 'column-stretch',
+    flexLayout: 'row-wrap',
     styles: {
-      'inline-size': '220px',
+      'align-items': 'flex-start',
     },
   },
 };
@@ -124,48 +176,153 @@ export const Anatomy: Story = {
 export const Labelling: Story = {
   render: () => html`
     <div
-      style="display: flex; flex-direction: column; gap: 24px; max-inline-size: 44ch;"
+      style="display: flex; flex-direction: column; gap: 24px; inline-size: 100%; max-inline-size: 28rem;"
     >
-      ${captioned(
-        html`
-          Slotted
-          <code>label</code>
-        `,
-        html`
-          <swc-text-field autocomplete="email">
-            <span slot="label">Email address</span>
-          </swc-text-field>
-        `
-      )}
-      ${captioned(
-        html`
-          <code>accessible-label</code>
-          : named for assistive tech, no visible label
-        `,
-        html`
-          <swc-text-field
-            autocomplete="email"
+      <section
+        aria-labelledby="labelling-external-heading"
+        style="display: grid; gap: 12px; min-inline-size: 0;"
+      >
+        <div>
+          <h4
+            id="labelling-external-heading"
+            class="swc-Heading swc-Heading--sizeXS"
+            style="margin: 0 0 4px;"
+          >
+            Name from row and column headers
+          </h4>
+          <code style="font-size: 0.875rem;">accessible-labelledby</code>
+        </div>
+        <div
+          role="region"
+          aria-label="Scrollable delivery address table"
+          tabindex="0"
+          style="min-inline-size: 0; overflow: auto;"
+        >
+          <table
+            aria-label="Delivery addresses"
+            style="border-spacing: 8px; text-align: start;"
+          >
+            <thead>
+              <tr>
+                <td></td>
+                <th
+                  id="labelling-col-header"
+                  scope="col"
+                  style="text-align: start;"
+                >
+                  Street address
+                </th>
+                <th
+                  id="labelling-city-header"
+                  scope="col"
+                  style="text-align: start;"
+                >
+                  City
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th
+                  id="labelling-row-header"
+                  scope="row"
+                  style="text-align: start;"
+                >
+                  Billing
+                </th>
+                <td>
+                  <swc-text-field
+                    id="labelling-labelledby-field"
+                    autocomplete="billing street-address"
+                    accessible-labelledby="labelling-row-header labelling-col-header"
+                    value="12 Oak St"
+                    style="inline-size: 132px;"
+                  ></swc-text-field>
+                </td>
+                <td>
+                  <swc-text-field
+                    id="labelling-billing-city"
+                    autocomplete="billing address-level2"
+                    accessible-labelledby="labelling-row-header labelling-city-header"
+                    value="Oakland"
+                    style="inline-size: 112px;"
+                  ></swc-text-field>
+                </td>
+              </tr>
+              <tr>
+                <th
+                  id="labelling-shipping-header"
+                  scope="row"
+                  style="text-align: start;"
+                >
+                  Shipping
+                </th>
+                <td>
+                  <swc-text-field
+                    id="labelling-shipping-street"
+                    autocomplete="shipping street-address"
+                    accessible-labelledby="labelling-shipping-header labelling-col-header"
+                    value="34 Pine St"
+                    style="inline-size: 132px;"
+                  ></swc-text-field>
+                </td>
+                <td>
+                  <swc-text-field
+                    id="labelling-shipping-city"
+                    autocomplete="shipping address-level2"
+                    accessible-labelledby="labelling-shipping-header labelling-city-header"
+                    value="Berkeley"
+                    style="inline-size: 112px;"
+                  ></swc-text-field>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section
+        aria-labelledby="labelling-string-heading"
+        style="display: grid; gap: 12px; min-inline-size: 0;"
+      >
+        <div>
+          <h4
+            id="labelling-string-heading"
+            class="swc-Heading swc-Heading--sizeXS"
+            style="margin: 0 0 4px;"
+          >
+            Accessible name only
+          </h4>
+          <code style="font-size: 0.875rem;">
             accessible-label="Email address"
-          ></swc-text-field>
-        `
-      )}
-      ${captioned(
-        html`
-          <code>accessible-labelledby</code>
-          : named by other elements
-        `,
-        html`
-          <div style="margin-block-end: 8px;">
-            <span id="labelling-row-header">Billing</span>
-            <span id="labelling-col-header">Street address</span>
-          </div>
-          <swc-text-field
-            id="labelling-labelledby-field"
-            autocomplete="billing street-address"
-            accessible-labelledby="labelling-row-header labelling-col-header"
-          ></swc-text-field>
-        `
-      )}
+          </code>
+        </div>
+        <swc-text-field
+          autocomplete="email"
+          accessible-label="Email address"
+          style="inline-size: 180px; max-inline-size: 100%;"
+        ></swc-text-field>
+      </section>
+      <section
+        aria-labelledby="labelling-slot-heading"
+        style="display: grid; gap: 12px; min-inline-size: 0;"
+      >
+        <div>
+          <h4
+            id="labelling-slot-heading"
+            class="swc-Heading swc-Heading--sizeXS"
+            style="margin: 0 0 4px;"
+          >
+            Visible field label
+          </h4>
+          <code style="font-size: 0.875rem;">slot="label"</code>
+        </div>
+        <swc-text-field
+          autocomplete="email"
+          style="inline-size: 180px; max-inline-size: 100%;"
+        >
+          <span slot="label">Email address</span>
+        </swc-text-field>
+      </section>
     </div>
   `,
   tags: ['options'],
@@ -176,7 +333,12 @@ export const Labelling: Story = {
       // a missing label that resolves fine in browsers/AT. See the forms-strategy
       // RFC axe-core policy (CONTRIBUTOR-DOCS, "3.4 axe-core policy").
       exclude: {
-        label: ['#labelling-labelledby-field'],
+        label: [
+          '#labelling-labelledby-field',
+          '#labelling-billing-city',
+          '#labelling-shipping-street',
+          '#labelling-shipping-city',
+        ],
       },
     },
   },
@@ -189,19 +351,19 @@ export const Sizes: Story = {
     >
       <swc-text-field size="s" placeholder="Small placeholder">
         <span slot="label">Small</span>
-        <span slot="description">Used for compact layouts.</span>
+        <span slot="description">Description for the small input.</span>
       </swc-text-field>
       <swc-text-field size="m" placeholder="Medium placeholder">
         <span slot="label">Medium</span>
-        <span slot="description">Default field sizing.</span>
+        <span slot="description">Description for the medium input.</span>
       </swc-text-field>
       <swc-text-field size="l" placeholder="Large placeholder">
         <span slot="label">Large</span>
-        <span slot="description">For denser form surfaces.</span>
+        <span slot="description">Description for the large input.</span>
       </swc-text-field>
       <swc-text-field size="xl" placeholder="Extra-large placeholder">
         <span slot="label">Extra-large</span>
-        <span slot="description">For prominent entry points.</span>
+        <span slot="description">Description for the extra-large input.</span>
       </swc-text-field>
     </div>
   `,
@@ -287,57 +449,97 @@ export const Prefix: Story = {
 //    STATES STORIES
 // ──────────────────────────
 
-export const States: Story = {
-  render: () => html`
-    <swc-text-field accessible-label="Default">
-      <span slot="label">Default</span>
-    </swc-text-field>
-    <swc-text-field required>
-      <span slot="label">Full name</span>
-    </swc-text-field>
-    <swc-text-field
-      accessible-label="Read-only"
-      readonly
-      value="Read-only value"
-    ></swc-text-field>
-    <swc-text-field disabled value="Disabled value">
-      <span slot="label">Disabled</span>
-    </swc-text-field>
-    <swc-text-field
-      accessible-label="Disabled placeholder"
-      disabled
-      placeholder="Placeholder"
-    ></swc-text-field>
-    <swc-text-field
-      autocomplete="email"
-      accessible-label="Email address"
-      invalid
-    >
-      <span slot="description">We'll never share your email.</span>
-      <span slot="error-text">Enter a valid email address.</span>
-    </swc-text-field>
-    <swc-text-field autocomplete="email" disabled invalid value="not-an-email">
-      <span slot="label">Email address</span>
-      <span id="disabled-field-description" slot="description">
-        We'll never share your email.
-      </span>
-      <span slot="error-text">Enter a valid email address.</span>
-    </swc-text-field>
-  `,
+export const Default: Story = {
+  args: {
+    'label-slot': 'Full name',
+  },
   tags: ['states'],
   parameters: {
-    a11y: {
-      // WCAG 1.4.3 exempts text that is part of an inactive UI component.
-      // axe cannot infer that this slotted description belongs to the
-      // disabled custom element, so exclude only its color-contrast result.
-      exclude: {
-        'color-contrast': ['#disabled-field-description'],
-      },
-    },
-    flexLayout: 'column-stretch',
-    styles: {
-      'inline-size': '220px',
-    },
+    styles: { 'inline-size': '220px' },
+  },
+};
+
+export const Required: Story = {
+  args: {
+    required: true,
+    'label-slot': 'Full name',
+  },
+  tags: ['states'],
+  parameters: {
+    styles: { 'inline-size': '220px' },
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    'field-status': 'disabled',
+    value: 'person@example.com',
+    'label-slot': 'Email address',
+  },
+  tags: ['states'],
+  parameters: {
+    styles: { 'inline-size': '220px' },
+  },
+};
+
+export const ReadOnly: Story = {
+  args: {
+    'field-status': 'readonly',
+    value: 'sam.rivera',
+    'label-slot': 'Username',
+  },
+  tags: ['states'],
+  parameters: {
+    styles: { 'inline-size': '220px' },
+  },
+};
+ReadOnly.storyName = 'Read-only';
+
+export const Invalid: Story = {
+  render: (args) => html`
+    ${captioned(
+      html`
+        With
+        <code>error-text</code>
+      `,
+      template({ ...args })
+    )}
+    ${captioned(
+      html`
+        With
+        <code>description</code>
+        only
+      `,
+      html`
+        <swc-text-field field-status="invalid">
+          <span slot="label">Username</span>
+          <span slot="description">Choose a username.</span>
+        </swc-text-field>
+      `
+    )}
+  `,
+  args: {
+    'field-status': 'invalid',
+    autocomplete: 'email',
+    'label-slot': 'Email address',
+    'description-slot': "We'll never share your email.",
+    'error-text-slot': 'Enter a valid email address.',
+  },
+  tags: ['states'],
+  parameters: {
+    flexLayout: 'column-center',
+  },
+};
+
+export const Valid: Story = {
+  args: {
+    'field-status': 'valid',
+    value: 'person@example.com',
+    'label-slot': 'Email address',
+  },
+  tags: ['states'],
+  parameters: {
+    styles: { 'inline-size': '220px' },
   },
 };
 
@@ -346,35 +548,60 @@ export const States: Story = {
 // ──────────────────────────────
 
 export const LabelOverflow: Story = {
-  // A narrow fixed-width column: the field has no default width (it fills its
-  // container), so a constrained container is what makes the long labels wrap.
   render: () => html`
-    <div
-      style="display: flex; flex-direction: column; gap: 24px; inline-size: 260px;"
-    >
-      <swc-text-field placeholder="My favorite book">
-        <span slot="label">
-          This top label wraps onto multiple lines instead of clipping
-        </span>
-      </swc-text-field>
-      <swc-text-field label-position="side" placeholder="My favorite book">
-        <span slot="label">Short side label</span>
-      </swc-text-field>
-      <swc-text-field label-position="side" placeholder="My favorite book">
-        <span slot="label">
-          This side label wraps and pushes over the input
-        </span>
-      </swc-text-field>
-      <swc-text-field
-        label-position="side"
-        placeholder="My favorite book"
-        style="--swc-field-label-max-inline-size: 80px;"
-      >
-        <span slot="label">Tightly capped label wraps early</span>
-      </swc-text-field>
-    </div>
+    ${captioned(
+      html`
+        Top label in a 180px container
+      `,
+      html`
+        <div style="inline-size: 180px;">
+          <swc-text-field placeholder="My favorite book">
+            <span slot="label">
+              This top label wraps onto multiple lines instead of clipping
+            </span>
+          </swc-text-field>
+        </div>
+      `
+    )}
+    ${captioned(
+      html`
+        Side label with the default column cap
+      `,
+      html`
+        <swc-text-field
+          label-position="side"
+          placeholder="My favorite book"
+          style="inline-size: 260px;"
+        >
+          <span slot="label">
+            This side label wraps within its column beside the input
+          </span>
+        </swc-text-field>
+      `
+    )}
+    ${captioned(
+      html`
+        Side label with an 80px column cap
+      `,
+      html`
+        <swc-text-field
+          label-position="side"
+          placeholder="My favorite book"
+          style="inline-size: 260px; --swc-field-label-max-inline-size: 80px;"
+        >
+          <span slot="label">Tightly capped label wraps early</span>
+        </swc-text-field>
+      `
+    )}
   `,
   tags: ['behaviors'],
+  parameters: {
+    flexLayout: 'column-stretch',
+    styles: {
+      'align-items': 'flex-start',
+      gap: 'var(--swc-spacing-200)',
+    },
+  },
 };
 LabelOverflow.storyName = 'Label overflow';
 
@@ -382,7 +609,7 @@ LabelOverflow.storyName = 'Label overflow';
 // submission no longer natively blocks on an invalid field either. Mirror that
 // blocking decision here and surface it through the field's own invalid
 // presentation (icon + error text) instead.
-const handleSubmit = (event: SubmitEvent): void => {
+const handleSubmit = async (event: SubmitEvent): Promise<void> => {
   event.preventDefault();
   const form = event.currentTarget as HTMLFormElement;
   const field = form.querySelector('swc-text-field');
@@ -390,33 +617,18 @@ const handleSubmit = (event: SubmitEvent): void => {
   if (!field || !output) {
     return;
   }
-  field.invalid = !field.checkValidity();
-  if (field.invalid) {
+  // Clear the demo's previous error before checking the current constraints.
+  field.fieldStatus = undefined;
+  await field.updateComplete;
+  field.fieldStatus = field.checkValidity() ? undefined : 'invalid';
+  await field.updateComplete;
+  if (field.fieldStatus === 'invalid') {
+    output.value = 'Submission blocked: the field is invalid.';
     return;
   }
-  output.textContent = [...new FormData(form)]
+  output.value = [...new FormData(form)]
     .map(([name, value]) => `${name}: ${value}`)
     .join('\n');
-};
-
-const showValidity = (event: Event): void => {
-  const form = (event.currentTarget as HTMLElement).closest('form');
-  if (!form) {
-    return;
-  }
-  const field = form.querySelector('swc-text-field');
-  const output = form.querySelector<HTMLOutputElement>('[data-validity]');
-  if (field && output) {
-    const fieldValid = field.checkValidity();
-    const formValid = form.checkValidity();
-    output.textContent = [
-      `field.checkValidity(): ${fieldValid ? 'valid' : 'invalid'}`,
-      `form.checkValidity(): ${formValid ? 'valid' : 'invalid'}`,
-      field.validity.valueMissing ? 'validity.valueMissing: true' : '',
-    ]
-      .filter(Boolean)
-      .join('\n');
-  }
 };
 
 const toggleFieldsetDisabled = (event: Event): void => {
@@ -432,65 +644,78 @@ export const FormBehavior: Story = {
   render: () => html`
     <form
       novalidate
-      style="display: flex; flex-direction: column; gap: 16px; inline-size: 220px;"
+      aria-labelledby="form-participation-heading"
+      style="display: flex; flex-direction: column; gap: 24px; inline-size: 26rem; max-inline-size: 100%;"
       @submit=${handleSubmit}
     >
-      <fieldset style="margin: 0; min-inline-size: 0;">
-        <legend>Account details</legend>
+      <h2
+        id="form-participation-heading"
+        class="swc-Heading swc-Heading--sizeM"
+        style="margin: 0;"
+      >
+        Form participation
+      </h2>
+      <fieldset
+        style="margin: 0; min-inline-size: 0; padding: 16px; border: 1px solid var(--swc-gray-300); border-radius: var(--swc-corner-radius-100);"
+      >
+        <legend class="swc-Heading swc-Heading--sizeXS">Account details</legend>
         <swc-text-field name="username" required>
           <span slot="label">Username</span>
           <span slot="error-text">Enter a username.</span>
         </swc-text-field>
       </fieldset>
-      <div style="display: flex; gap: 8px;">
-        <button type="submit" class="swc-Button">
-          <span class="swc-Button-label">Submit</span>
-        </button>
-        <button type="reset" class="swc-Button swc-Button--secondary">
-          <span class="swc-Button-label">Reset</span>
-        </button>
-        <button
-          type="button"
-          class="swc-Button swc-Button--secondary"
-          @click=${showValidity}
-        >
-          <span class="swc-Button-label">Check validity</span>
-        </button>
-      </div>
-      <button
-        type="button"
-        class="swc-Button swc-Button--secondary"
-        data-toggle-fieldset
-        aria-pressed="false"
-        @click=${toggleFieldsetDisabled}
+      <section
+        aria-labelledby="form-actions-heading"
+        style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px;"
       >
-        <span class="swc-Button-label">Toggle fieldset disabled</span>
-      </button>
-      <section aria-labelledby="submitted-form-data-label">
-        <div id="submitted-form-data-label">Submitted form data</div>
+        <h3
+          id="form-actions-heading"
+          class="swc-Heading swc-Heading--sizeXS"
+          style="margin: 0;"
+        >
+          Form actions
+        </h3>
+        <swc-button-group aria-labelledby="form-actions-heading">
+          <button type="submit" class="swc-Button">
+            <span class="swc-Button-label">Submit</span>
+          </button>
+          <button type="reset" class="swc-Button swc-Button--secondary">
+            <span class="swc-Button-label">Reset</span>
+          </button>
+          <button
+            type="button"
+            class="swc-Button swc-Button--secondary"
+            data-toggle-fieldset
+            aria-pressed="false"
+            @click=${toggleFieldsetDisabled}
+          >
+            <span class="swc-Button-label">Disable</span>
+          </button>
+        </swc-button-group>
+      </section>
+      <section
+        aria-labelledby="submitted-form-data-label"
+        style="display: flex; flex-direction: column; gap: 12px;"
+      >
+        <h3
+          id="submitted-form-data-label"
+          class="swc-Heading swc-Heading--sizeXS"
+          style="margin: 0;"
+        >
+          Last submission
+        </h3>
         <output
           data-form-data
           aria-live="polite"
-          style="display: block; min-block-size: 2lh; white-space: pre-wrap;"
-        >
-          Submit the form to see its data.
-        </output>
-      </section>
-      <section aria-labelledby="validity-label">
-        <div id="validity-label">Validity state</div>
-        <output
-          data-validity
-          aria-live="polite"
-          style="display: block; min-block-size: 3lh; white-space: pre-wrap;"
-        >
-          Click Check validity to inspect the field and form validity.
-        </output>
+          style="display: block; min-block-size: 2lh; padding: 12px; border-radius: var(--swc-corner-radius-100); background: var(--swc-background-layer-1-color); font-family: monospace; font-size: 0.875rem; white-space: pre-wrap; overflow-wrap: anywhere;"
+          .defaultValue=${'Submit the form to see its data.'}
+        ></output>
       </section>
     </form>
   `,
   tags: ['behaviors'],
 };
-FormBehavior.storyName = 'Native form behavior';
+FormBehavior.storyName = 'Form participation';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

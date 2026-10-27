@@ -261,6 +261,7 @@ Migrate `swc-text-field` **first among the field family**, using it as the provi
 | B4 | Drop truncated-value tooltip | `TruncatedValueTooltipController` + `tooltip-placement` | Removed; full value reachable natively; optional pointer-only `title` (source: [a11y analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties)) | Remove `tooltip-placement`; no replacement needed. |
 | B5 | Narrow `autocomplete` type | Union widened with combobox-only `'list'`/`'none'` | Dedicated `autocomplete` type without combobox tokens (source: [a11y analysis](./accessibility-migration-analysis.md#aria-roles-states-and-properties)) | Combobox tokens move to the combobox component; ordinary tokens unaffected. |
 | B15 | Rename help/error slots | `help-text` / `negative-help-text` slots (from `ManageHelpText`) | `description` / `error-text` slots, matching React Spectrum and the `LinearProgressMixin` precedent | Rename `slot="help-text"` → `slot="description"` and `slot="negative-help-text"` → `slot="error-text"`. |
+| B16 | Consolidate authored statuses | Separate `disabled`, `readonly`, `invalid`, and `valid` booleans | Optional `fieldStatus` / `field-status` with one value: `disabled`, `invalid`, `valid`, or `readonly`; default `undefined`, no aliases | Replace the boolean with its corresponding status value. Clear it with `undefined` or remove the attribute; keep `required` separate. |
 
 #### Styling and visuals
 
@@ -269,14 +270,14 @@ Migrate `swc-text-field` **first among the field family**, using it as the provi
 | B6 | `--mod-*` surface removed | ~60 `--mod-textfield-*`/`--mod-text-area-*` custom properties | Not exposed; a small reviewed `--swc-*` set only | Remove `--mod-*` overrides; file requests for any needed `--swc-*`. |
 | B7 | Validation icons updated | `Alert` (invalid), simple `Checkmark` (valid) | `AlertTriangle` (invalid) ships; the valid **checkmark is deferred** (source: [rendering analysis](../textfield/rendering-and-styling-migration-analysis.md#css-spectrum-2-changes)) | Internal; no consumer action. Invalid icon stays `aria-hidden`. |
 
-> **Valid-state icon (deferred):** the valid checkmark is **not shown in React Spectrum or the newer Figma**, and per Design and RS it is **deferred** (tracked as additive A8). The `valid` property is still kept for consumers; only the icon is deferred.
+> **Valid-state icon (deferred):** the valid checkmark is **not shown in React Spectrum or the newer Figma**, and per Design and RS it is **deferred** (tracked as additive A8). Consumers can author `field-status="valid"`; only the icon is deferred.
 
 #### Accessibility and behavior
 
 | #   | What changes | 1st-gen behavior | 2nd-gen behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | B8 | In-shadow labelling | `sp-field-label` reaches across shadow roots to set `aria-label`; two-writer hazard | `LabellingMixin` and `FieldDescriptionMixin` render label/required/description/error in one shadow root; single writer by construction | Prefer slotted label or `accessible-label`; external association via `accessible-labelledby`. |
-| B9 | Associate the error via `aria-describedby` | none | While `invalid`, replace the description with the slotted `error-text` in the input's `ariaDescribedByElements`; `aria-errormessage` is intentionally not used (see [Decision log](#decision-log)) | None (additive AT improvement). |
+| B9 | Associate the error via `aria-describedby` | none | While `field-status="invalid"`, replace the description with the slotted `error-text` in the input's `ariaDescribedByElements`; `aria-errormessage` is intentionally not used (see [Decision log](#decision-log)) | None (additive AT improvement). |
 | B10 | Add `inputmode` | none | Author-settable virtual-keyboard hint | None (additive). |
 | B11 | Native form association | Named `<input>` only; no `ElementInternals` | `FieldAssociationController` (`ElementInternals`), incl. `fieldset[disabled]` cascade and form reset | None for basic forms; gains reset/disabled cascade. |
 | B12 | Keyboard-focus differentiation | Same focus styling for pointer and keyboard | Keyboard-only focus ring, JS modality tracking + `keyboard-focused` custom state (fixes [WCAG 2.4.7](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html); see [Decision log](#decision-log)) | None (visual/a11y fix). |
@@ -303,7 +304,7 @@ Migrate `swc-text-field` **first among the field family**, using it as the provi
 | A5 | Inline text-field variant | New in S2; **published in Figma** (the source of truth) as a separate "Text field (In-line)" component: corrects the earlier "not in Figma yet." Not yet built in SWC and **not yet supported in React**. Deferral confirmed; whether to schedule it now is Q17. |
 | A6 | `prefix` affix | **Pulled into scope** during implementation (was deferred pending a Design decision; Design confirmed doing it now). Ships as a non-interactive `prefix` slot for leading content (icon, symbol, avatar). See the [Decision log](#decision-log). |
 | A7 | In-field ContextualHelp | RS supports; future shared field description source. Placement follows RS lead (next to the label), presuming RS validated with Design; see Q23. |
-| A8 | Valid-state checkmark icon | Deferred per Design and RS response (not shown in React Spectrum or the newer Figma). The `valid` property stays in the API for consumers; only the icon is deferred. Revisit if Design reintroduces it. |
+| A8 | Valid-state checkmark icon | Deferred per Design and RS response (not shown in React Spectrum or the newer Figma). `field-status="valid"` stays in the API for consumers; only the icon is deferred. Revisit if Design reintroduces it. |
 
 ---
 
@@ -326,20 +327,17 @@ These are derived from the 1st-gen implementation, the [accessibility migration 
 | `accessibleDescribedby` | element refs | — | `accessible-describedby` | **Confirmed.** External description via `ariaDescribedByElements`. |
 | `value` | `string` | `''` | (property) | **Inferred.** Single-line value is a string; drop the `string \| number` base union (that was for `number-field`). |
 | `name` | `string \| undefined` | `undefined` | `name` (reflect) | **Confirmed.** Form control name. |
-| `type` | `'text' \| 'url' \| 'tel' \| 'email' \| 'password'` | `'text'` | `type` (reflect) | **Confirmed.** Closed 1st-gen set; `search` and `number` are intentionally excluded (own components), diverging from React Spectrum's open union (Q27). Validate via `validateEnum`; drop the `_type` reflection quirk (Q13). |
+| `type` | `'text' \| 'url' \| 'tel' \| 'email' \| 'password'` | `'text'` | `type` (reflect) | **Confirmed.** Closed 1st-gen set; `search` and `number` are intentionally excluded (own components), diverging from React Spectrum's open union (Q27). Unsupported values render and sanitize as `text`, while `validateEnum` warns about the authored value in debug mode; no `_type` backing property (Q13). |
 | `placeholder` | `string` | `''` | `placeholder` | **Confirmed.** Never the accessible name; no `aria-placeholder`. |
 | `pattern` | `string \| undefined` | `undefined` | `pattern` | **Confirmed.** |
 | `inputmode` | `string \| undefined` | `undefined` | `inputmode` | **Confirmed.** New; virtual-keyboard hint. |
 | `autocomplete` | dedicated token type | `undefined` | `autocomplete` (reflect) | **Confirmed.** No combobox tokens. |
 | `maxlength` / `minlength` | `number` | `undefined` | `maxlength` / `minlength` | **Inferred.** Prefer `undefined` over the `-1` sentinel. |
-| `readonly` | `boolean` | `false` | `readonly` (reflect) | **Confirmed.** Focusable but non-editable; distinct from `disabled`. No distinct visual treatment (follows React Spectrum); Q3 resolved. |
 | `required` | `boolean` | `false` | `required` (reflect) | **Confirmed.** Native `required`; no `aria-required`. |
-| `invalid` | `boolean` | `false` | `invalid` (reflect) | **Confirmed.** Drives `aria-invalid` and swaps the description for the error in `aria-describedby` (see [Decision log](#decision-log)). |
-| `valid` | `boolean` | `false` | `valid` (reflect) | **Inferred.** Keep the property: its value is that **consumers can react to a valid state**, independent of the visual checkmark, which is **deferred** (not shown in React or the newer Figma; per Design and RS, tracked as additive A8). |
+| `fieldStatus` | `'disabled' \| 'invalid' \| 'valid' \| 'readonly' \| undefined` | `undefined` | `field-status` (reflect) | **Confirmed (forms checkpoint).** Replaces the four writable status booleans without aliases. Invalid drives error presentation, `aria-invalid`, description association, and `customError`; valid does not bypass constraints and has no checkmark. Disabled and read-only preserve native form semantics. `required` remains independent. |
 | `labelPosition` | `'top' \| 'side'` | `'top'` | `label-position` (reflect) | **Confirmed (core).** Places the visible label above (`top`) or beside (`side`) the input. Owned by the shared `.swc-FormField` grid, mirroring the meter/progress-bar `label-position` in `LinearProgressMixin` (C1). |
-| `necessityIndicator` | `'icon' \| 'label'` | `'icon'` | `necessity-indicator` (reflect) | **Confirmed.** Marks the visible label with an asterisk for required fields, or with `(required)` / `(optional)` text when `label` is selected. |
+| `necessityIndicator` | `'icon' \| 'label'` | `'icon'` | `necessity-indicator` (reflect) | **Confirmed.** Marks the visible label with an asterisk for required fields, or with `(required)` / `(optional)` text when `label` is selected. Only the decorative icon is hidden from assistive technology; text contributes to the accessible name. Native `required` remains unchanged. |
 | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | `size` (reflect) | **Inferred.** Give an explicit default `m` (drop `noDefaultSize`). |
-| `disabled` | `boolean` | `false` | `disabled` (reflect) | **Confirmed.** Removed from tab order; `formDisabledCallback` cascade. |
 | `allowedKeys` | `string` | `''` | `allowed-keys` | **Open question (Q11).** Niche 1st-gen quirk; carry forward or drop. |
 | `focused` | — | — | — | **Inferred: remove.** Replace the reflected `focused` attribute with CSS `:focus-visible`/`:focus-within` (Q12). |
 | `quiet`, `multiline`, `grows`, `rows`, `truncatedValueTooltipPlacement` | — | — | — | **Removed** (see B1, B3, B4). |
@@ -354,7 +352,7 @@ These are derived from the 1st-gen implementation, the [accessibility migration 
 | ---- | ------- | ----- |
 | `label` | Visible label content | **Inferred.** Rendered in-shadow as a real `<label for>` by `LabellingMixin`. Named `label` slot, matching the `LinearProgressMixin` precedent. |
 | `description` | Guidance / non-error help text | **Confirmed (renamed).** Was 1st-gen `help-text`; renamed to `description` to match React Spectrum and the `LinearProgressMixin` precedent, and to disambiguate from contextual-help content. Associated via same-root `aria-describedby` only when present. |
-| `error-text` | Error message shown when `invalid` | **Confirmed (renamed).** Was 1st-gen `negative-help-text`; renamed to `error-text` for simplicity and to match design terminology. Replaces the description in `aria-describedby` while invalid; `aria-errormessage` is intentionally not used (see [Decision log](#decision-log)). |
+| `error-text` | Error message shown when `field-status="invalid"` | **Confirmed (renamed).** Was 1st-gen `negative-help-text`; renamed to `error-text` for simplicity and to match design terminology. Replaces the description in `aria-describedby` while invalid; `aria-errormessage` is intentionally not used (see [Decision log](#decision-log)). |
 
 #### CSS custom properties (2nd-gen)
 
@@ -366,8 +364,9 @@ Initial expectation for Text field is a small reviewed set (likely field width/m
 
 ### Behavioral semantics
 
-- **Validation:** keep native constraint validation via a real `<input>`; `checkValidity()` remains public. Reflect `required`/`pattern`/`minlength`/`maxlength` to the native input. Suppress the native validation bubble in favor of the inline error message; mechanism and the full validation-behavior model (RS `native` vs `aria`, custom `validate`, server errors) deferred to the forms-strategy work (Q19).
-- **Form reset:** `FieldAssociationController.formResetCallback()` restores a defined **default value** (the RS `defaultValue` concept, typically the initial attribute value). The reset target must be specified, not left implicit.
+- **Validation:** keep native constraint validation via a real `<input>`; `checkValidity()` remains public. Reflect `required`/`pattern`/`minlength`/`maxlength` to the native input. Application-authored `field-status="invalid"` sets `customError` and blocks validation/submission for eligible fields. Its validation message comes from the plain text of `error-text`, with "Enter a valid value." as the missing/empty-text fallback. Observe message edits, replacement content, and slot reassignment. Clearing invalid status clears its derived error without bypassing native constraints. The host does not expose `setCustomValidity()`. Typing and native validation failures do not automatically change `fieldStatus` or error presentation. Disabled and read-only fields remain barred from validation. Recommend `novalidate` with application-controlled checks and inline errors; explicit `reportValidity()` can still request native reporting. Component-level native-bubble suppression and the broader validation-behavior model (RS `native` vs `aria`, custom `validate`, server-error orchestration) remain deferred to the forms-strategy work (Q19).
+- **Form reset:** `TextFieldBase.formResetCallback()` restores the initial `value` attribute, or an empty string when absent, and clears `valid` or `invalid` status. Disabled and read-only status, including inherited fieldset disabling, are preserved. Native constraints still apply, and reset does not emit `input` or `change` events. Browser state restoration remains separate and does not clear application-controlled status.
+- **Form state restoration:** `TextFieldBase.formStateRestoreCallback()` restores saved string state supplied by the browser, including an empty string. It uses the existing value sanitization and form-value synchronization without emitting `input` or `change` events or changing the authored reset value. Non-string state is not applicable to this string-valued field and leaves its value unchanged.
 - **Events:** keep `input` and `change` (composed, bubbling), matching native semantics.
 - **Selection API:** keep `setSelectionRange()` and `select()`.
 - **Focus:** `delegatesFocus: true`; keyboard-only focus ring via JS modality tracking + a `keyboard-focused` custom state (See B12 and the [Decision log](#decision-log)).
@@ -424,8 +423,11 @@ Planned rendering shape:
 #### Naming and public surface
 
 - [x] `TextField.types.ts`: define `TextFieldType`, the `size` union, and the `label-position` (`top`/`side`) union; export public types
-- [x] `TextField.base.ts`: implement `accessible-label`, `value` (string), `type`, `placeholder`, `pattern`, `inputmode`, `autocomplete`, `maxlength`/`minlength`, `readonly`, `required`, `invalid`/`valid`, `label-position` (core; default `top`), `necessity-indicator`, `size`, `disabled`, form validity, and selection methods. `accessible-labelledby`/`accessible-describedby` are implemented through the shared mixin path
-- [x] Remove `quiet`, `multiline`, `grows`, `rows`, `focused`, `tooltip-placement` — not carried into 2nd-gen; deprecated on 1st-gen `Textfield` with `@deprecated` + `__swc.warn`
+- [x] Unsupported input types render and sanitize as `text`, preserving the authored value for enum warnings; cover initial values and type changes in Chromium, Firefox, and WebKit
+- [x] `TextField.base.ts`: implement `accessible-label`, `value` (string), `type`, `placeholder`, `pattern`, `inputmode`, `autocomplete`, `maxlength`/`minlength`, `fieldStatus`, `required`, `label-position` (core; default `top`), `necessity-indicator`, `size`, form validity, and selection methods. `accessible-labelledby`/`accessible-describedby` are implemented through the shared mixin path
+- [x] Make application-authored `field-status="invalid"` block eligible native validation using slotted error text; remove host `setCustomValidity()` and test message updates, pre-render content, clearing, native submission, and disabled/read-only behavior
+- [x] Replace the writable status booleans with optional `fieldStatus`, without aliases; project native host/input disabled and read-only state, retain the existing controller and mixins, and migrate affected examples, docs, styles, and tests
+- [x] Remove `quiet`, `multiline`, `grows`, `rows`, `focused`, `tooltip-placement` from the 2nd-gen API; leave the 1st-gen API unchanged, without new deprecation annotations or warnings, per PR review
 - [ ] Resolve `allowedKeys` (Q11) before finalizing the surface
 
 #### Alignment checks
@@ -438,6 +440,7 @@ Planned rendering shape:
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
 - [x] Add `.swc-TextField` to the internal wrapper in `render()`; keep styling off `:host`
+- [x] Declare private minimum-height properties on the internal control, including size variants, rather than on `:host`
 - [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `text-field.css` as baseline
 - [x] Consume the shared label/description/error stylesheet fragment (the `form-fields` stylesheet: `.swc-FormField` grid, `.swc-FormFieldLabel`/`.swc-FormFieldDescription`/`.swc-FormFieldErrorText`) from `_lit-styles/`; author these styles in the shared `form-fields` stylesheet from the start (text-field is the first consumer), not inside `text-field` (Q22)
 - [x] Implement both `label-position` modes (`top` default, `side`) via the `.swc-FormField` grid variant (C1)
@@ -463,10 +466,12 @@ Planned rendering shape:
 #### State verification
 
 - [x] `aria-invalid="true"` only when invalid (never explicit "false")
-- [x] error text replaces the description in `aria-describedby` only while `invalid` is `true`; `aria-errormessage` intentionally not used (see [Decision log](#decision-log))
+- [x] error text replaces the description in `aria-describedby` only while `field-status="invalid"`; `aria-errormessage` intentionally not used (see [Decision log](#decision-log))
+- [x] While invalid without an `error-text` slot, keep the description visible and associated in the error color; preserve independent external description references and restore the normal description color when invalid clears
 - [x] `FieldAssociationController` wires `formAssociated`, `attachInternals`, `setFormValue`, `formResetCallback`, `formDisabledCallback`
 - [x] Invalid icon stays `aria-hidden="true"`; a valid checkmark remains deferred
-- [x] `readonly` vs `disabled` distinct in tab order (not just visually)
+- [x] Textual necessity indicators contribute to accessible names; the decorative asterisk stays hidden and native `required` is preserved. Manual screen-reader verification remains pending.
+- [x] `field-status="readonly"` vs `field-status="disabled"` distinct in tab order (not just visually)
 - [x] Help/error container does not default to `aria-live="assertive"`
 - [ ] Border and focus-ring meet 3:1 non-text contrast ([WCAG 1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)) against S2 tokens (re-check SWC-214)
 
@@ -475,6 +480,7 @@ Planned rendering shape:
 - [x] Port applicable coverage from `1st-gen/packages/textfield/test/` (single-line only)
 - [x] Add Playwright `text-field.a11y.spec.ts` with `toMatchAriaSnapshot` (name/value/description across states and label positions)
 - [x] Unit: same-root unique ids; `aria-describedby` only when description/error present; form participation (`FormData`, reset, `fieldset[disabled]`)
+- [x] Form state restoration: directly exercise the browser lifecycle callback with string, empty, and non-string state; verify sanitized host/input/form values, required validity, preserved reset defaults, and no synthetic `input`/`change` events in Chromium, Firefox, and WebKit
 
 #### Behavior
 
@@ -483,7 +489,7 @@ Planned rendering shape:
 
 #### Visual regression
 
-- [x] Add representative VRT coverage across all sizes for invalid state, text and avatar prefixes, keyboard focus, side labels with help text, long placeholders, and long invalid values; show enabled and invalid+disabled values in standard and forced-colors captures, and keep hover and other non-size-sensitive states at one size
+- [x] Add representative VRT coverage across all sizes for invalid state, text and avatar prefixes, keyboard focus, side labels with help text, long placeholders, and long invalid values; show the mutually exclusive authored statuses in standard and forced-colors captures, and keep hover and other non-size-sensitive states at one size
 - [x] Add focus-visible regression coverage for the keyboard ring (B12)
 - [x] Add forced-colors coverage for disabled labels and descriptions, invalid/valid states, and focus
 
@@ -496,7 +502,8 @@ Planned rendering shape:
 
 #### Breaking changes
 
-- [ ] Consumer migration guide entries for B1–B5 and B15 (quiet removal, `label`→`accessible-label`, multiline→`swc-text-area`, tooltip removal, `autocomplete` narrowing, `help-text`/`negative-help-text` slots → `description`/`error-text`)
+- [ ] Consumer migration guide entries for B1–B5, B15, and B16 (quiet removal, `label`→`accessible-label`, multiline→`swc-text-area`, tooltip removal, `autocomplete` narrowing, `help-text`/`negative-help-text` slots → `description`/`error-text`, status booleans → `fieldStatus`)
+- [x] Document the confirmed `fieldStatus` revision, its `undefined` default, exclusive authored statuses, and slot-backed validation messages in component docs and the consumer migration guide
 
 ### Review
 
@@ -525,8 +532,7 @@ Planned rendering shape:
 | --- | ---- | --------- | ------ | ----- |
 | Q11 | Carry forward or drop `allowedKeys`. | No | Open; lean drop (niche, undocumented) | API |
 | Q12 | Remove reflected `focused` attribute in favor of `:focus-visible`/`:focus-within`. | No | Inferred | Implementation |
-| Q13 | Simplify `type` handling with `validateEnum`; drop the `_type` reflection quirk. | No | Inferred | Implementation |
-| Q19 | Validation behavior model: RS `native` vs `aria`, native-bubble suppression, and whether to expose custom `validate` / server-error APIs. Concretely, once validity is populated (host `setValidity()` from `required`/`pattern`), a native form submit surfaces the browser's default error bubble, which competes with Spectrum's inline `error-text`; suppressing it (`novalidate` on the form, or `formnovalidate` per submit) needs control of the enclosing `<form>`, so it hinges on whether the migration ships a form wrapper. Resolve before wiring validity population. Deferred to forms-strategy (SWC-1888; ties to its `setValidity()` pass-through). | No | Deferred to forms-strategy work (SWC-1888) | Architecture |
+| Q19 | Remaining validation behavior model: RS `native` vs `aria`, component-level native-bubble suppression, and custom `validate` / server-error orchestration. Native constraints and application-authored invalid with slot-backed validation messages are implemented (see [Decision log](#decision-log)). Use `novalidate` with application-managed checks and inline errors; explicitly calling `reportValidity()` can still request native reporting. | No | Broader model deferred to forms-strategy work | Architecture |
 
 ### Scope and prerequisites
 
@@ -549,6 +555,7 @@ Settled decisions from planning and PR review, kept here as a historical record 
 
 | Ref | Decision | Rationale / context |
 | --- | -------- | ------------------- |
+| Forms checkpoint (authored status) | Replace `disabled`, `readonly`, `invalid`, and `valid` booleans with optional `fieldStatus` / `field-status` | Confirmed after the forms checkpoint discussion: values are `disabled`, `invalid`, `valid`, or `readonly`; untouched is `undefined`. No compatibility aliases. Required remains independent. Component-owned status resolution projects native disabled/read-only attributes and passes an explicit invalid option to `FieldDescriptionMixin`; existing form/description resources remain responsible for their current plumbing. No new controller or mixin. The custom-validity follow-up is settled in Q19 below. The former authored disabled+invalid combination is no longer supported; inherited fieldset disabling retains existing platform behavior pending a separate team decision. Necessity-indicator overrides, disabled/`aria-disabled` semantics, and other checkpoint work remain outside this slice. |
 | Q1 / B1 | Remove `quiet` | Removed in S2; confirmed intentional by Design. Corroborated by spectrum-css, the rendering analysis, and the Figma matrix; the "keep it" impression was only 1st-gen legacy docs. The dense/table use case maps to the inline variant (Q17). |
 | Q6 / B3 | Single-line `swc-text-field`; multiline moves to `swc-text-area` | Confirmed by the a11y analysis (plan source of truth) and PR review. `multiline`/`grows`/`rows` leave this component's surface. |
 | Q9 / B4 | Drop the truncated-value tooltip (`TruncatedValueTooltipController`, `tooltip-placement`) | Confirmed dropped; the native caret, selection, and scroll make the full value reachable. Consumers can still implement a reveal themselves. |
@@ -558,15 +565,16 @@ Settled decisions from planning and PR review, kept here as a historical record 
 | Q7 | Field family shares resources, applied iteratively | Follow the `LabellingMixin` + `FieldDescriptionMixin` + `FieldAssociationController` pattern (tickets under epic SWC-2323), the same shared-resource approach meter and progress-bar took with `LinearProgressMixin`. Prove the resources on `text-field` first; introduce a small shared base only if a second consumer proves the need. |
 | Q2 / C1 | `label-position` (`top`/`side`) is a core feature, not additive | Precedent is meter/progress-bar `label-position`. Owned by the shared `.swc-FormField` grid, not `field-label`, since it is a visual style driven by the passed attribute. |
 | Q8 | Shared field behavior is implemented iteratively, not as a plan blocker | `text-field` now uses `LabellingMixin`, `FieldDescriptionMixin`, and `FieldAssociationController`; future field-family consumers can generalize the shared shape when their needs are proven. |
+| Q19 (validation contract) | Use `error-text` as the validation message while invalid; remove host `setCustomValidity()` | A separate host message adds no extra value to the agreed workflow and can be reconsidered if a concrete need emerges. Consumers supply one error message and set `field-status="invalid"`. Clearing that status clears the derived custom error but preserves native constraint failures. Form reset also clears valid or invalid status while preserving disabled and read-only behavior; browser state restoration does not clear status. Hidden error content alone does not invalidate the field. Missing/empty text retains the generic fallback without fallback inline content. Error presentation stays application-controlled. Component-level native-bubble suppression and the broader forms model remain deferred. |
 | Q3 | Read-only has no distinct visual treatment; stays focusable and non-editable | Follows React Spectrum, which applies no visual or cursor change; no Design input needed. See Q26 for a possible "Labeled Value" component overlap. |
-| Q5 / B7 / A8 | Validation icons: `AlertTriangle` (invalid) ships; valid checkmark deferred | Per Design and RS response, the valid checkmark is deferred (not shown in React or the newer Figma); tracked as additive A8. The `valid` property stays for consumers. Invalid-icon sizing is extracted from Figma with the rest of the tokens (Q20). Design confirmed during PR review that the control reserves space for the invalid icon and its gap, preventing `invalid` from changing the field width. |
+| Q5 / B7 / A8 | Validation icons: `AlertTriangle` (invalid) ships; valid checkmark deferred | Per Design and RS response, the valid checkmark is deferred (not shown in React or the newer Figma); tracked as additive A8. Consumers retain `field-status="valid"` after the forms checkpoint. Invalid-icon sizing is extracted from Figma with the rest of the tokens (Q20). Design confirmed during PR review that the control reserves space for the invalid icon and its gap, preventing invalid status from changing the field width. |
 | Q16 / A1 | Character count deferred | React Spectrum does not support it yet; deferral confirmed. If added later it needs a dedicated a11y plan (`aria-describedby` alone is insufficient for announcing a live count). |
 | Q22 (naming) | Shared field styles live in a shared `form-fields` stylesheet from the start; the wrapper and emitted classes use `.swc-FormField*` | Text field is the first consumer, but the styles live shared, not authored in text-field. The implemented wrapper is `.swc-FormField`, with `.swc-FormFieldLabel`, `.swc-FormFieldDescription`, and `.swc-FormFieldErrorText` for shared output. `form-fields`/`FormField` (not `forms`/`Form`) reserves `form`/`Form` for a possible future form-wrapper component or utility. Render-template location/ownership remains open (Q22). |
-| Q27 | `TextFieldType` stays the closed 1st-gen set (`text/url/tel/email/password`); `search` and `number` are excluded | Spectrum models search and number as their own components (`Search` / React Spectrum `SearchField`; `number-field`), so they are not `type` values here. Matches 1st-gen `sp-textfield` and is enforced with `validateEnum`. This intentionally diverges from React Spectrum's TextField, whose `type` is an open `… \| (string & {})` union that also lists `search`; the open escape hatch is incompatible with the closed-enum dev-warning, and search UI belongs to the dedicated component. |
-| B9 | Error text is associated via `aria-describedby` only; `aria-errormessage` is not used | **Reverses the [accessibility migration analysis](./accessibility-migration-analysis.md) recommendation to set both.** While `invalid`, `FieldDescriptionMixin` replaces the description with the slotted `error-text` in the input's `ariaDescribedByElements` (the description is hidden and the error takes its place), following [React Spectrum's TextField](https://react-spectrum.adobe.com/TextField), which swaps the description for the error in one referenced container and associates it through `aria-describedby` alone. Rationale: `aria-errormessage` AT support is still inconsistent while `aria-describedby` is universally read, and referencing only the message currently on screen avoids describing the field with hidden text and the duplicate-announcement and ordering ambiguity of pointing at both. WCAG [Error identification (3.3.1)](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html) is still met (the error is visible and programmatically associated). |
+| Q13 / Q27 | `TextFieldType` stays the closed 1st-gen set (`text/url/tel/email/password`); unsupported values fall back to `text` | Spectrum models search and number as their own components (`Search` / React Spectrum `SearchField`; `number-field`), so they are not `type` values here. Matches 1st-gen `sp-textfield`. Unsupported values use `text` for both native rendering and value sanitization; the authored property remains available to `validateEnum` for debug warnings, without a `_type` backing property. This intentionally diverges from React Spectrum's open union. Native-input implicit-submission blockers also use `TEXT_FIELD_TYPES`. Other native input types do not block submission initiated by this component when no submit button is present. |
+| B9 | Error text is associated via `aria-describedby` only; `aria-errormessage` is not used | **Reverses the [accessibility migration analysis](./accessibility-migration-analysis.md) recommendation to set both.** While `invalid`, `FieldDescriptionMixin` replaces the description with supplied `error-text` in the input's `ariaDescribedByElements`. Without an `error-text` slot, the description stays visible and associated in the error color. Rationale: `aria-errormessage` AT support is still inconsistent while `aria-describedby` is universally read, and referencing only the message currently on screen avoids describing the field with hidden text and the duplicate-announcement and ordering ambiguity of pointing at both. WCAG [Error identification (3.3.1)](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html) is still met when an actionable error is supplied (the error is visible and programmatically associated). |
 | B12 | Focus ring shows on **keyboard focus only**, suppressed on pointer/touch | **Reverses the earlier plan note** ("do not suppress the pointer-focus ring"). Confirmed in PR review after checking with React Spectrum: RSP intentionally hides the ring on pointer, and the focus **border-color** change (shown for both modalities) is a sufficient "field is active" indicator on its own, so suppressing the pointer ring is not an accessibility regression. Because text inputs match `:focus-visible` on pointer clicks too, CSS alone cannot achieve this; modality is tracked in JS (a capture-phase `pointerdown` flag, read on `focusin`) and the ring is keyed off a `keyboard-focused` custom state. |
 | A6 | `prefix` affix pulled into scope (was deferred) | Originally deferred pending a Design decision (not in the Figma matrix at planning time). Design confirmed doing it now, so it ships in this migration as a non-interactive `prefix` slot for leading content (icon, symbol, avatar); clicking the prefix focuses the input. Reverses the "deferred" disposition recorded for A6. |
-| B7 / A8 | A disabled field suppresses invalid presentation and semantics | The design state matrix has no disabled + error cell, and React Spectrum renders a disabled invalid field without invalid presentation. While disabled, the field does not render the trailing `AlertTriangle` or error text and does not expose `aria-invalid` or associate the error description. The authored `invalid` state remains unchanged, so the invalid presentation and semantics return when the field is re-enabled. |
+| B7 / A8 | Historical disabled+invalid overlap, superseded for authored statuses by the forms checkpoint | Review originally confirmed preserved errors with disabled styling after checking the [React Spectrum example](https://stackblitz.com/edit/mukkpxnx?file=src%2FExample.tsx) and [S2 field rendering](https://github.com/adobe/react-spectrum/blob/main/packages/@react-spectrum/s2/src/Field.tsx). The new API cannot author disabled and invalid together. Native inherited fieldset disabling still preserves an authored invalid status, visible associated error text, and `aria-invalid="true"` while hiding the icon and suspending validation. Re-enabling restores the error color and icon. Further policy for that inherited overlap remains deferred. |
 
 ---
 

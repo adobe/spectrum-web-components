@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Text field migration guide
 
-Replace `<sp-textfield>` with `<swc-text-field>`, update the import, provide the label through the `label` slot or `accessible-label`, and rename the `help-text` and `negative-help-text` slots to `description` and `error-text`. Multiline fields will move to `<swc-text-area>` once it is migrated.
+Replace `<sp-textfield>` with `<swc-text-field>`, update the import, provide the label through the `label` slot or `accessible-label`, and rename the `help-text` and `negative-help-text` slots to `description` and `error-text`. Replace the status booleans with `field-status`. Multiline fields will move to `<swc-text-area>` once it is migrated.
 
 ## Installation
 
@@ -32,35 +32,45 @@ import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 
 ### Renamed
 
-| Area             | Spectrum 1 (`sp-textfield`)                             | Spectrum 2 (`swc-text-field`)                                 |
-| ---------------- | ------------------------------------------------------- | ------------------------------------------------------------- |
-| Tag              | `sp-textfield`                                          | `swc-text-field`                                              |
-| Import path      | `@spectrum-web-components/textfield`                    | `@adobe/spectrum-wc/components/text-field/swc-text-field.js`  |
-| Base class       | `Textfield`                                             | `TextField`                                                   |
-| Label attribute  | `label="Name"` (sets `aria-label`)                      | `accessible-label="Name"` or `<span slot="label">Name</span>` |
-| Help text slot   | `slot="help-text"`                                      | `slot="description"`                                          |
-| Error text slot  | `slot="negative-help-text"` (self-managed by `invalid`) | `slot="error-text"` (shown while `invalid`)                   |
-| CSS custom props | `--mod-textfield-*` (~62 properties)                    | `--swc-*` (reduced set, see [Styling](#styling))              |
+| Area             | Spectrum 1 (`sp-textfield`)                             | Spectrum 2 (`swc-text-field`)                                                                       |
+| ---------------- | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| Tag              | `sp-textfield`                                          | `swc-text-field`                                                                                    |
+| Import path      | `@spectrum-web-components/textfield`                    | `@adobe/spectrum-wc/components/text-field/swc-text-field.js`                                        |
+| Base class       | `Textfield`                                             | `TextField`                                                                                         |
+| Label attribute  | `label="Name"` (sets `aria-label`)                      | `accessible-label="Name"` or `<span slot="label">Name</span>`                                       |
+| Help text slot   | `slot="help-text"`                                      | `slot="description"`                                                                                |
+| Error text slot  | `slot="negative-help-text"` (self-managed by `invalid`) | `slot="error-text"` (shown while `field-status="invalid"`)                                          |
+| Field status     | `disabled`, `readonly`, `invalid`, `valid` booleans     | `field-status="disabled\|readonly\|invalid\|valid"`; `fieldStatus` property defaults to `undefined` |
+| CSS custom props | `--mod-textfield-*` (~62 properties)                    | `--swc-*` (reduced set, see [Styling](#styling))                                                    |
 
 ### Added in Spectrum 2
 
-| Addition                                            | Notes                                                                                                                                                                                                                                                                   |
-| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `accessible-labelledby` attribute                   | Space-separated `id`s referencing external elements to compose the accessible name.                                                                                                                                                                                     |
-| `accessible-describedby` attribute                  | Element references combined with a slotted `description` for external description sources.                                                                                                                                                                              |
-| `label-position` attribute (`top` \| `side`)        | Places the visible label above (default) or beside the input.                                                                                                                                                                                                           |
-| `necessity-indicator` attribute (`icon` \| `label`) | Chooses asterisk (`icon`, default) or appended `(required)`/`(optional)` text (`label`).                                                                                                                                                                                |
-| `size` attribute (`s` \| `m` \| `l` \| `xl`)        | Field size and typography scale.                                                                                                                                                                                                                                        |
-| `inputmode` attribute                               | Virtual-keyboard hint passed through to the native `<input>`.                                                                                                                                                                                                           |
-| `prefix` slot                                       | Non-interactive content (icon, symbol, avatar) rendered inside the field before the input.                                                                                                                                                                              |
-| Native form association                             | `ElementInternals`-based participation: `formResetCallback`, `formDisabledCallback`, `fieldset[disabled]` cascade, plus the constraint-validation surface (`form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, `reportValidity()`) on the host. |
-| Keyboard-only focus ring                            | Focus ring shows only on keyboard focus; pointer focus is indicated by a border color change.                                                                                                                                                                           |
-| `delegatesFocus`                                    | Focus lands directly on the internal `<input>`; the field is a single tab stop.                                                                                                                                                                                         |
+| Addition                                                                    | Notes                                                                                                                                                                                                                                                                   |
+| --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `accessible-labelledby` attribute                                           | Space-separated `id`s referencing external elements to compose the accessible name.                                                                                                                                                                                     |
+| `accessible-describedby` attribute                                          | Element references combined with a slotted `description` for external description sources.                                                                                                                                                                              |
+| `label-position` attribute (`top` \| `side`)                                | Places the visible label above (default) or beside the input.                                                                                                                                                                                                           |
+| `necessity-indicator` attribute (`icon` \| `label`)                         | Chooses asterisk (`icon`, default) or appended `(required)`/`(optional)` text (`label`).                                                                                                                                                                                |
+| `size` attribute (`s` \| `m` \| `l` \| `xl`)                                | Field size and typography scale.                                                                                                                                                                                                                                        |
+| `inputmode` attribute                                                       | Virtual-keyboard hint passed through to the native `<input>`.                                                                                                                                                                                                           |
+| `field-status` attribute (`disabled` \| `invalid` \| `valid` \| `readonly`) | Replaces the separate `disabled`, `invalid`, `valid`, and `readonly` booleans with one status. Clear it with `fieldStatus = undefined` or remove the attribute.                                                                                                         |
+| `prefix` slot                                                               | Non-interactive content (icon, symbol, avatar) rendered inside the field before the input.                                                                                                                                                                              |
+| Native form association                                                     | `ElementInternals`-based participation: `formResetCallback`, `formDisabledCallback`, `fieldset[disabled]` cascade, plus the constraint-validation surface (`form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, `reportValidity()`) on the host. |
+| Keyboard-only focus ring                                                    | Focus ring shows only on keyboard focus; pointer focus is indicated by a border color change.                                                                                                                                                                           |
+| `delegatesFocus`                                                            | Focus lands directly on the internal `<input>`; the field is a single tab stop.                                                                                                                                                                                         |
+
+`field-status="invalid"` makes eligible fields fail validation and uses the plain text of `error-text` as the validation message. Missing or empty text uses "Enter a valid value."; provide localized error text when needed. Clear the application error with `fieldStatus = undefined`; native constraints still apply. Error text alone does not invalidate the field, and application-set status is not automatically cleared on input, blur, or submission. See [Form participation](?path=/docs/components-text-field--docs#form-participation).
+
+Form reset restores the initial value and clears `valid` or `invalid` status. Disabled and read-only status are preserved; native validation rules still apply.
 
 ### Removed in Spectrum 2
 
 | Removed                                                 | Replacement                                                                                                                                       |
 | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `disabled` attribute/property                           | Use `field-status="disabled"` or `fieldStatus = 'disabled'`.                                                                                      |
+| `readonly` attribute/property                           | Use `field-status="readonly"` or `fieldStatus = 'readonly'`.                                                                                      |
+| `invalid` attribute/property                            | Use `field-status="invalid"` or `fieldStatus = 'invalid'`.                                                                                        |
+| `valid` attribute/property                              | Use `field-status="valid"` or `fieldStatus = 'valid'`; no validation icon is shown.                                                               |
 | `quiet` attribute                                       | No replacement. Use a table or inline layout for the dense use case.                                                                              |
 | `multiline`, `grows`, `rows` attributes                 | Use `<swc-text-area>` once it is migrated (keep using `<sp-textfield multiline>` until then). `grows` and `rows` are configured on the text area. |
 | `tooltip-placement` attribute (truncated-value tooltip) | No replacement. The full value is reachable natively; add a `title` attribute if you want a pointer hover.                                        |
@@ -124,7 +134,7 @@ If your Spectrum 1 code relied on the placeholder being used as the accessible n
 </swc-text-field>
 ```
 
-The `error-text` slot is shown in place of the `description` slot while the field is `invalid`. Do not manage that swap yourself.
+While `field-status="invalid"`, supplied `error-text` replaces the `description`. Without an `error-text` slot, the description stays visible in the error color and associated with the input.
 
 ### 4. Replace multiline fields
 
@@ -166,13 +176,40 @@ Neither has a Spectrum 2 replacement. Delete both attributes.
 
 Ordinary `autocomplete` values (`email`, `name`, `street-address`, etc.) work unchanged on `<swc-text-field>`.
 
+### 7. Replace status booleans with one field status
+
+Replace `disabled`, `readonly`, `invalid`, or `valid` with the corresponding `field-status` value. Only one status can be set at a time. Keep `required` separate.
+
+```html
+<!-- Before -->
+<sp-textfield invalid required label="Email"></sp-textfield>
+
+<!-- After -->
+<swc-text-field field-status="invalid" required>
+  <span slot="label">Email</span>
+  <span slot="error-text">Enter a valid email address.</span>
+</swc-text-field>
+```
+
+```js
+// Before
+field.invalid = true;
+field.invalid = false;
+
+// After
+field.fieldStatus = 'invalid';
+field.fieldStatus = undefined;
+```
+
+The default is `undefined`, not `valid`. Remove `field-status` or assign `undefined` to clear the authored status and its derived validation error. A `valid` status does not override native constraints and does not show a checkmark.
+
 ## Accessibility
 
 - **Label:** provide one of the three name sources. See [step 2](#2-provide-a-label). Fields with no label trigger a dev-mode warning.
 - **`aria-label` / `aria-labelledby` on the host are ignored.** Setting either on `<swc-text-field>` does not name the field and triggers a dev-mode warning. Use `accessible-label` or `accessible-labelledby` instead.
 - **Label in name:** when a field has both a visible label and a programmatic name (`accessible-label` or `accessible-labelledby`), make sure the programmatic name contains the visible text, per [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html). Setting both `accessible-labelledby` and `accessible-label` triggers a dev-mode warning once `accessible-labelledby` resolves; `accessible-labelledby` wins and `accessible-label` is ignored.
 - **`accessible-labelledby` id resolution:** ids are resolved against the field's root node (document or shadow root) once per render. Unresolved ids trigger a dev-mode warning.
-- **Description and error:** rename the slots. See [step 3](#3-rename-the-help-text-slots). Always pair `invalid` with slotted `error-text` so the invalid state is not conveyed by color or icon alone.
+- **Description and error:** rename the slots. See [step 3](#3-rename-the-help-text-slots). Always pair `field-status="invalid"` with slotted `error-text` so the invalid state is not conveyed by color or icon alone.
 - **`autocomplete`:** set it for fields collecting recognized personal-data types so browsers and assistive technology can identify the field's purpose. See [`autocomplete` HTML attribute (MDN)](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete).
 - **Known axe-core false positive:** a field named only via `accessible-labelledby` fails the axe `label` rule ("Form element does not have a label"), even though the name resolves correctly in browsers and AT. Scope the rule if you run axe against pages containing these fields.
 
@@ -247,4 +284,5 @@ Spectrum 2 exposes a reduced set of `--swc-*` custom properties on `<swc-text-fi
 - [ ] Replace `<sp-textfield multiline>` with `<swc-text-area>` (once migrated); move `grows` and `rows`.
 - [ ] Remove `quiet` and `tooltip-placement`.
 - [ ] Move `autocomplete="list"` or `autocomplete="none"` markup to a combobox.
+- [ ] Replace the status booleans with `fieldStatus` / `field-status`, supply application error messages through `error-text`, and clear invalid status when the error is resolved.
 - [ ] Remove all `--mod-textfield-*` overrides; adopt the `--swc-*` properties above where needed.
