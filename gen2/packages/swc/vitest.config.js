@@ -29,9 +29,7 @@ const resolvedBrowserInstances =
 
 // Cap parallel browser contexts for memory-heavy browsers. At the default
 // (CPU-count) parallelism they exceed CI's 8 GiB and get OOM-killed.
-// Keep WebKit stories in one foreground page so background-page throttling
-// cannot stall animation assertions and lifecycle events.
-const maxWorkersByBrowser = { webkit: 1, firefox: 4 };
+const maxWorkersByBrowser = { webkit: 2, firefox: 4 };
 const singleBrowser =
   resolvedBrowserInstances.length === 1
     ? resolvedBrowserInstances[0].browser
