@@ -131,9 +131,21 @@ export const photos: CardViewItem[] = Array.from(
 );
 
 export function navigationMeta(tag: string, subtitle: string): Partial<Meta> {
-  const base = prototypeMeta(tag);
+  const base = prototypeMeta(tag, false);
   return {
     ...base,
+    decorators: [
+      ...(base.decorators ?? []),
+      (story, context) =>
+        context.viewMode === 'story'
+          ? staticHtml`
+            <style>
+              #storybook-root { width: 90vw; }
+            </style>
+            ${story()}
+          `
+          : story(),
+    ],
     args: {
       ...base.args,
       layout: tag.includes('-waterfall-') ? 'waterfall' : 'grid',
@@ -148,7 +160,10 @@ export function navigationMeta(tag: string, subtitle: string): Partial<Meta> {
   };
 }
 
-export function prototypeMeta(tag: string): Partial<Meta> {
+export function prototypeMeta(
+  tag: string,
+  constrainHeight = true
+): Partial<Meta> {
   const element = unsafeStatic(tag);
   return {
     component: tag,
@@ -187,7 +202,7 @@ export function prototypeMeta(tag: string): Partial<Meta> {
       <div style="max-width: 1200px; margin-inline: auto;">
         <button type="button" style="margin-block-end: 16px;">Photo library</button>
         <${element}
-          style="max-height: 60vh; overflow: auto;"
+          style=${constrainHeight ? 'max-height: 60vh; overflow: auto;' : 'overflow: auto;'}
           .items=${args.items}
           .layout=${args.layout}
           .label=${args.label}
