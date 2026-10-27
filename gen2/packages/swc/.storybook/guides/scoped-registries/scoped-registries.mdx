@@ -96,11 +96,15 @@ Chrome and Edge 146+, and Safari 26+, support scoped registries natively. Firefo
 In unsupported browsers, importing `@adobe/spectrum-wc/registry` throws an error. Spectrum Web Components never fall back to the global registry, because two versions would then collide without an error. Check support before you load the scoped path, and render the app in an iframe or load one version per page otherwise:
 
 ```js
-const supported =
-  typeof CustomElementRegistry !== 'undefined' &&
-  'initialize' in CustomElementRegistry.prototype;
+function supportsScopedRegistries() {
+  try {
+    return typeof new CustomElementRegistry().initialize === 'function';
+  } catch {
+    return false;
+  }
+}
 
-if (supported) {
+if (supportsScopedRegistries()) {
   const { registry } = await import('@adobe/spectrum-wc/registry');
   // Mount the app with `registry`.
 }

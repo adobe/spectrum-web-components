@@ -169,6 +169,35 @@ export const StaticDefineTest: Story = {
 // TEST: Scoped registries (native support only)
 // ──────────────────────────────────────────────────────────────
 
+export const SupportDetectionTest: Story = {
+  play: async ({ step }) => {
+    await step('reports no support when the constructor throws', () => {
+      // Some WebKit builds expose `initialize()` but reject construction.
+      class PartialRegistry {
+        constructor() {
+          throw new TypeError('Illegal constructor');
+        }
+        public initialize(): void {}
+      }
+      const original = window.CustomElementRegistry;
+      Object.defineProperty(window, 'CustomElementRegistry', {
+        configurable: true,
+        writable: true,
+        value: PartialRegistry,
+      });
+      try {
+        expect(supportsScopedRegistries()).toBe(false);
+      } finally {
+        Object.defineProperty(window, 'CustomElementRegistry', {
+          configurable: true,
+          writable: true,
+          value: original,
+        });
+      }
+    });
+  },
+};
+
 export const UnsupportedBrowserTest: Story = {
   play: async ({ step }) => {
     if (scoped) {

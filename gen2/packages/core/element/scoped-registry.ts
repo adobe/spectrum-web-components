@@ -22,10 +22,13 @@ type Constructor<T> = {
  * registry API, natively or through a polyfill.
  */
 export function supportsScopedRegistries(): boolean {
-  return (
-    typeof CustomElementRegistry !== 'undefined' &&
-    typeof CustomElementRegistry.prototype.initialize === 'function'
-  );
+  // Construct a registry: some WebKit builds expose `initialize()` but throw
+  // "Illegal constructor".
+  try {
+    return typeof new CustomElementRegistry().initialize === 'function';
+  } catch {
+    return false;
+  }
 }
 
 function creationScope(
